@@ -4,6 +4,7 @@ import core.ZOSConnection;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Assertions;
@@ -30,6 +31,10 @@ public class JsonRequestTest {
         ZOSConnection connection = new ZOSConnection("", "", "", "");
 
         request = new JsonRequest(connection, httpGet);
+        Whitebox.setInternalState(request, "client", httpClient);
+
+        HttpPut httpPut = Mockito.mock(HttpPut.class);
+        request = new JsonRequest(connection, httpPut, "");
         Whitebox.setInternalState(request, "client", httpClient);
     }
 
@@ -59,6 +64,35 @@ public class JsonRequestTest {
             .thenReturn(json);
 
         JSONObject jsonObject = request.httpGet();
+        Assertions.assertEquals(json, jsonObject.toString());
+    }
+
+    @Test
+    public void testHttpPut_throws_exception() throws IOException {
+        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
+                .thenThrow(new IOException());
+
+        assertThrows(IOException.class, request::httpPut);
+    }
+
+    @Test
+    public void testHttpPut_returns_null_for_invalid_json() throws IOException {
+        String invalidJson = UUID.randomUUID().toString();
+
+        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
+                .thenReturn(invalidJson);
+
+        Assertions.assertNull(request.httpPut());
+    }
+
+    @Test
+    public void testHttpPut_returns_json() throws IOException {
+        String json = "{\"data\":{}}";
+
+        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
+                .thenReturn(json);
+
+        JSONObject jsonObject = request.httpPut();
         Assertions.assertEquals(json, jsonObject.toString());
     }
 }
