@@ -39,7 +39,7 @@ public class JsonRequestTest {
     }
 
     @Test
-    public void testHttpGet_throws_exception() throws IOException {
+    public void testHttpGetThrowsException() throws IOException {
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
             .thenThrow(new IOException());
 
@@ -47,7 +47,7 @@ public class JsonRequestTest {
     }
 
     @Test
-    public void testHttpGet_returns_null_for_invalid_json() throws IOException {
+    public void testHttpGetReturnsNullForInvalidJson() throws IOException {
         String invalidJson = UUID.randomUUID().toString();
 
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
@@ -57,42 +57,13 @@ public class JsonRequestTest {
     }
 
     @Test
-    public void testHttpGet_returns_json() throws IOException {
+    public void testHttpGetReturnsJson() throws IOException {
         String json = "{\"data\":{}}";
 
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
             .thenReturn(json);
 
         JSONObject jsonObject = request.httpGet();
-        Assertions.assertEquals(json, jsonObject.toString());
-    }
-
-    @Test
-    public void testHttpPut_throws_exception() throws IOException {
-        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
-                .thenThrow(new IOException());
-
-        assertThrows(IOException.class, request::httpPut);
-    }
-
-    @Test
-    public void testHttpPut_returns_null_for_invalid_json() throws IOException {
-        String invalidJson = UUID.randomUUID().toString();
-
-        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
-                .thenReturn(invalidJson);
-
-        Assertions.assertNull(request.httpPut());
-    }
-
-    @Test
-    public void testHttpPut_returns_json() throws IOException {
-        String json = "{\"data\":{}}";
-
-        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
-                .thenReturn(json);
-
-        JSONObject jsonObject = request.httpPut();
         Assertions.assertEquals(json, jsonObject.toString());
     }
 }

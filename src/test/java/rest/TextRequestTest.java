@@ -36,7 +36,7 @@ public class TextRequestTest {
     }
 
     @Test
-    public void testHttpGet_throws_exception() throws IOException {
+    public void testHttpGetThrowsException() throws IOException {
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
                 .thenThrow(new IOException());
 
@@ -44,7 +44,7 @@ public class TextRequestTest {
     }
 
     @Test
-    public void testHttpPut_throws_exception() throws IOException {
+    public void testHttpPutThrowsException() throws IOException {
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
                 .thenThrow(new IOException());
 
