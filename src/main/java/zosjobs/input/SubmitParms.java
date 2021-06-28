@@ -47,4 +47,13 @@ public class SubmitParms {
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
     }
 
+    @Override
+    public String toString() {
+        return "SubmitParms{" +
+                "jcl=" + jcl +
+                ", internalReaderRecfm=" + internalReaderRecfm +
+                ", internalReaderLrecl=" + internalReaderLrecl +
+                '}';
+    }
+
 }

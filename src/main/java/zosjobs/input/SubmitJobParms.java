@@ -41,4 +41,12 @@ public class SubmitJobParms {
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
 
+    @Override
+    public String toString() {
+        return "SubmitJobParms{" +
+                "jobDataSet=" + jobDataSet +
+                ", jclSymbols=" + jclSymbols +
+                '}';
+    }
+
 }

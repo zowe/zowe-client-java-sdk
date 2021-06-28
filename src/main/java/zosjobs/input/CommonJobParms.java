@@ -29,4 +29,12 @@ public class CommonJobParms {
         return jobName;
     }
 
+    @Override
+    public String toString() {
+        return "CommonJobParms{" +
+                "jobId=" + jobId +
+                ", jobName=" + jobName +
+                '}';
+    }
+
 }

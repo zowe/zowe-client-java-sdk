@@ -63,4 +63,14 @@ public class SubmitJclParms {
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
 
+    @Override
+    public String toString() {
+        return "SubmitJclParms{" +
+                "jcl=" + jcl +
+                ", internalReaderRecfm=" + internalReaderRecfm +
+                ", internalReaderLrecl=" + internalReaderLrecl +
+                ", jclSymbols=" + jclSymbols +
+                '}';
+    }
+
 }
