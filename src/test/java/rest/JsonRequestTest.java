@@ -66,4 +66,32 @@ public class JsonRequestTest {
         JSONObject jsonObject = request.httpGet();
         Assertions.assertEquals(json, jsonObject.toString());
     }
+    @Test
+    public void tstHttpPutThrowsException() throws IOException {
+        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
+                .thenThrow(new IOException());
+
+        assertThrows(IOException.class, request::httpPut);
+    }
+
+    @Test
+    public void tstHttpPutReturnsNullForInvalidJson() throws IOException {
+        String invalidJson = UUID.randomUUID().toString();
+
+        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
+                .thenReturn(invalidJson);
+
+        Assertions.assertNull(request.httpPut());
+    }
+
+    @Test
+    public void tstHttpPutReturnsJson() throws IOException {
+        String json = "{\"data\":{}}";
+
+        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
+                .thenReturn(json);
+
+        JSONObject jsonObject = request.httpPut();
+        Assertions.assertEquals(json, jsonObject.toString());
+    }
 }
