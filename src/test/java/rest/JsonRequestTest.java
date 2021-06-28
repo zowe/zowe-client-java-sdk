@@ -6,6 +6,7 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,6 +45,7 @@ public class JsonRequestTest {
             .thenThrow(new IOException());
 
         assertThrows(IOException.class, request::httpGet);
+        Mockito.verify(httpClient).execute(any(HttpGet.class), any(BasicResponseHandler.class));
     }
 
     @Test
@@ -64,6 +66,7 @@ public class JsonRequestTest {
             .thenReturn(json);
 
         JSONObject jsonObject = request.httpGet();
+        Mockito.verify(httpClient).execute(any(HttpGet.class), any(BasicResponseHandler.class));
         Assertions.assertEquals(json, jsonObject.toString());
     }
     @Test
