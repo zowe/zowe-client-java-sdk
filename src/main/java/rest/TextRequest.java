@@ -62,6 +62,11 @@ public class TextRequest implements IZoweRequest {
         return (T) client.execute(putRequest, handler);
     }
 
+    @Override
+    public void setHeaders(Map<String, String> headers) {
+        this.headers = headers;
+    }
+
     private void setStandardHeaders() {
         String key = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
         String value = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
@@ -76,11 +81,6 @@ public class TextRequest implements IZoweRequest {
             getRequest.setHeader("Content-Type", "text/plain; charset=UTF-8");
             getRequest.setHeader(key, value);
         }
-    }
-
-    @Override
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
     }
 
 }

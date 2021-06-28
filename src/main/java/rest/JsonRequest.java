@@ -80,6 +80,11 @@ public class JsonRequest implements IZoweRequest {
         return null;
     }
 
+    @Override
+    public void setHeaders(Map<String, String> headers) {
+        this.headers = headers;
+    }
+
     private void setStandardHeaders() {
         String key = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
         String value = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
@@ -94,11 +99,6 @@ public class JsonRequest implements IZoweRequest {
             getRequest.setHeader("Content-Type", "application/json");
             getRequest.setHeader(key, value);
         }
-    }
-
-    @Override
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
     }
 
 }
