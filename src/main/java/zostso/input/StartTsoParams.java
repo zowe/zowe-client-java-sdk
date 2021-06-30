@@ -13,13 +13,24 @@ import java.util.Optional;
 
 public class StartTsoParams {
 
-    public Optional<String> logonProcedure = Optional.empty();
-    public Optional<String> characterSet = Optional.empty();
-    public Optional<String> codePage = Optional.empty();
-    public Optional<String> rows = Optional.empty();
-    public Optional<String> columns = Optional.empty();
-    public Optional<String> account = Optional.empty();
-    public Optional<String> regionSize = Optional.empty();
+    public Optional<String> logonProcedure;
+    public Optional<String> characterSet;
+    public Optional<String> codePage;
+    public Optional<String> rows;
+    public Optional<String> columns;
+    public Optional<String> account;
+    public Optional<String> regionSize;
+
+    public StartTsoParams(String logonProcedure, String characterSet, String codePage, String rows, String columns,
+                          String account, String regionSize) {
+        this.logonProcedure = Optional.ofNullable(logonProcedure);
+        this.characterSet = Optional.ofNullable(characterSet);
+        this.codePage = Optional.ofNullable(codePage);
+        this.rows = Optional.ofNullable(rows);
+        this.columns = Optional.ofNullable(columns);
+        this.account = Optional.ofNullable(account);
+        this.regionSize = Optional.ofNullable(regionSize);
+    }
 
     public Optional<String> getLogonProcedure() {
         return logonProcedure;
@@ -42,7 +53,7 @@ public class StartTsoParams {
     }
 
     public void setCodePage(String codePage) {
-        this.codePage = Optional.of(codePage);;
+        this.codePage = Optional.ofNullable(codePage);
     }
 
     public Optional<String> getRows() {
@@ -50,7 +61,7 @@ public class StartTsoParams {
     }
 
     public void setRows(String rows) {
-        this.rows = Optional.of(rows);;
+        this.rows = Optional.ofNullable(rows);;
     }
 
     public Optional<String> getColumns() {
@@ -58,7 +69,7 @@ public class StartTsoParams {
     }
 
     public void setColumns(String columns) {
-        this.columns = Optional.of(columns);;
+        this.columns = Optional.ofNullable(columns);
     }
 
     public Optional<String> getAccount() {
@@ -66,7 +77,7 @@ public class StartTsoParams {
     }
 
     public void setAccount(String account) {
-        this.account = Optional.of(account);;
+        this.account = Optional.ofNullable(account);
     }
 
     public Optional<String> getRegionSize() {

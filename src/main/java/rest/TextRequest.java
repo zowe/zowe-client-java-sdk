@@ -29,6 +29,7 @@ public class TextRequest implements IZoweRequest {
     private ZOSConnection connection;
     private HttpGet getRequest;
     private HttpPut putRequest;
+    private HttpPut postRequest;
     private String body;
     private Map<String, String> headers = new HashMap<>();
     private HttpClient client = HttpClientBuilder.create().build();
@@ -60,6 +61,12 @@ public class TextRequest implements IZoweRequest {
         putRequest.setEntity(new StringEntity(body));
 
         return (T) client.execute(putRequest, handler);
+    }
+
+    @Override
+    public <T> T httpPost() throws IOException {
+        // TODO
+        return null;
     }
 
     @Override
