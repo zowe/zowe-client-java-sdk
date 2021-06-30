@@ -23,8 +23,11 @@ public class IssueTso {
         Util.checkStateParameter(accountNumber.isEmpty(), "accountNumber is empty");
         Util.checkStateParameter(command.isEmpty(), "command is empty");
 
-        IssueResponse response;
-        
+        IssueResponse response = new IssueResponse(false, null, false, null,
+                null, null);
+        response.setStartResponse(StartTso.start(connection, accountNumber, startParams));
+
+
     }
 
 }

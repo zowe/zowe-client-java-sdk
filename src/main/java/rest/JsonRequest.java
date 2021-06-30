@@ -14,6 +14,7 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -31,6 +32,7 @@ public class JsonRequest implements IZoweRequest {
     private ZOSConnection connection;
     private HttpGet getRequest;
     private HttpPut putRequest;
+    private HttpPost postRequest;
     private String body;
     private Map<String, String> headers = new HashMap<>();
     private final HttpClient client = HttpClientBuilder.create().build();
@@ -44,6 +46,12 @@ public class JsonRequest implements IZoweRequest {
     public JsonRequest(ZOSConnection connection, HttpPut putRequest, String body) {
         this.connection = connection;
         this.putRequest = putRequest;
+        this.body = body;
+    }
+
+    public JsonRequest(ZOSConnection connection, HttpPost postRequest, String body) {
+        this.connection = connection;
+        this.postRequest = postRequest;
         this.body = body;
     }
 
@@ -70,6 +78,23 @@ public class JsonRequest implements IZoweRequest {
         putRequest.setEntity(new StringEntity(body));
 
         String result = client.execute(putRequest, handler);
+
+        JSONParser parser = new JSONParser();
+        try {
+            return (T) parser.parse(result);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public <T> T httpPost() throws IOException {
+        this.setStandardHeaders();
+        if (!headers.isEmpty()) headers.entrySet().stream().forEach(e -> postRequest.setHeader(e.getKey(), e.getValue()));
+        postRequest.setEntity(new StringEntity(body));
+
+        String result = client.execute(postRequest, handler);
 
         JSONParser parser = new JSONParser();
         try {

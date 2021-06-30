@@ -13,6 +13,8 @@ import core.ZOSConnection;
 import org.json.simple.JSONObject;
 import zosjobs.response.Job;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
@@ -54,6 +56,34 @@ public class Util {
                 .jobCorrelator((String) json.get("job-correlator"))
                 .phaseName((String) json.get("phase-name"))
                 .build();
+    }
+
+    /**
+     * Encodes the passed String as UTF-8 using an algorithm that's compatible
+     * with JavaScript's <code>encodeURIComponent</code> function. Returns
+     * <code>null</code> if the String is <code>null</code>.
+     *
+     * @param str The String to be encoded
+     * @return the encoded String
+     */
+    public static String encodeURIComponent(String str)
+    {
+        String result = null;
+
+        try
+        {
+            result = URLEncoder.encode(str, "UTF-8")
+                               .replaceAll("\\+", "%20")
+                               .replaceAll("\\%21", "!")
+                               .replaceAll("\\%27", "'")
+                               .replaceAll("\\%28", "(")
+                               .replaceAll("\\%29", ")")
+                               .replaceAll("\\%7E", "~");
+        } catch (UnsupportedEncodingException e) {
+            result = str;
+        }
+
+        return result;
     }
 
 }
