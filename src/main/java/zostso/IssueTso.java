@@ -15,8 +15,13 @@ import zostso.input.StartTsoParams;
 
 public class IssueTso {
 
-    public static void issueTsoCommand(ZOSConnection connection, String accountNumber,
-                                       String command, StartTsoParams startParams) {
+    public static IssueResponse issueTsoCommand(ZOSConnection connection, String accountNumber,
+                                                String command) throws Exception {
+       return issueTsoCommand(connection, accountNumber, command, null);
+    }
+
+    public static IssueResponse issueTsoCommand(ZOSConnection connection, String accountNumber,
+                                       String command, StartTsoParams startParams) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(accountNumber == null, "accountNumber not specified");
         Util.checkNullParameter(command == null, "command not specified");
@@ -27,7 +32,7 @@ public class IssueTso {
                 null, null);
         response.setStartResponse(StartTso.start(connection, accountNumber, startParams));
 
-
+        return response;
     }
 
 }
