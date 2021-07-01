@@ -22,4 +22,8 @@ public class StartStopResponses {
     public String servletKey;
     public String messages;
 
+    public StartStopResponses(ZosmfTsoResponse zosmfTsoResponse) {
+        this.zosmfTsoResponse = zosmfTsoResponse;
+    }
+
 }

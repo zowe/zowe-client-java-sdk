@@ -49,10 +49,9 @@ public class JsonRequest implements IZoweRequest {
         this.body = body;
     }
 
-    public JsonRequest(ZOSConnection connection, HttpPost postRequest, String body) {
+    public JsonRequest(ZOSConnection connection, HttpPost postRequest) {
         this.connection = connection;
         this.postRequest = postRequest;
-        this.body = body;
     }
 
     @Override
@@ -92,7 +91,6 @@ public class JsonRequest implements IZoweRequest {
     public <T> T httpPost() throws IOException {
         this.setStandardHeaders();
         if (!headers.isEmpty()) headers.entrySet().stream().forEach(e -> postRequest.setHeader(e.getKey(), e.getValue()));
-        postRequest.setEntity(new StringEntity(body));
 
         String result = client.execute(postRequest, handler);
 
