@@ -7,6 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
+
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,10 +21,10 @@ public class SubmitJobsTest {
     private static final Logger LOG = LogManager.getLogger(SubmitJobsTest.class);
 
     public static void main(String[] args) throws IOException {
-        String hostName = "xxxxxxxx";
-        String port = "xxxxxxxx";
-        String userName = "xxxxxxxx";
-        String password = "xxxxxxxx";
+        String hostName = "XXX";
+        String port = "XXX";
+        String userName = "XXX";
+        String password = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
         LOG.info(SubmitJobsTest.tstSubmitJob(connection, "xxx.xxx.xxx.xxx(xxx)"));
