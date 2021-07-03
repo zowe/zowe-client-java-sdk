@@ -38,26 +38,27 @@ public class TextRequest implements IZoweRequest {
     public TextRequest(ZOSConnection connection, HttpGet getRequest) {
         this.connection = connection;
         this.getRequest = getRequest;
+        this.setup();
     }
 
     public TextRequest(ZOSConnection connection, HttpPut putRequest, String body) {
         this.connection = connection;
         this.putRequest = putRequest;
         this.body = body;
+        this.setup();
     }
+
+    private TextRequest() {} // this disables end user from calling default constructor
 
     @Override
     public <T> T httpGet() throws IOException {
-        this.setStandardHeaders();
-        if (!headers.isEmpty()) headers.entrySet().stream().forEach(e -> getRequest.setHeader(e.getKey(), e.getValue()));
-
+        if (!headers.isEmpty()) headers.forEach((key, value) -> getRequest.setHeader(key, value));
         return (T) client.execute(getRequest, handler);
     }
 
     @Override
     public <T> T httpPut() throws IOException {
-        this.setStandardHeaders();
-        if (!headers.isEmpty()) headers.entrySet().stream().forEach(e -> putRequest.setHeader(e.getKey(), e.getValue()));
+        if (!headers.isEmpty()) headers.forEach((key, value) -> putRequest.setHeader(key, value));
         putRequest.setEntity(new StringEntity(body));
 
         return (T) client.execute(putRequest, handler);
@@ -74,6 +75,10 @@ public class TextRequest implements IZoweRequest {
         this.headers = headers;
     }
 
+    private void setup() {
+        this.setStandardHeaders();
+    }
+
     private void setStandardHeaders() {
         String key = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
         String value = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
@@ -87,6 +92,11 @@ public class TextRequest implements IZoweRequest {
             getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
             getRequest.setHeader("Content-Type", "text/plain; charset=UTF-8");
             getRequest.setHeader(key, value);
+        }
+        if (postRequest != null) {
+            postRequest.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
+            postRequest.setHeader("Content-Type", "text/plain; charset=UTF-8");
+            postRequest.setHeader(key, value);
         }
     }
 

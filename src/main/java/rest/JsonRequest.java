@@ -38,27 +38,30 @@ public class JsonRequest implements IZoweRequest {
     private final HttpClient client = HttpClientBuilder.create().build();
     private final ResponseHandler<String> handler = new BasicResponseHandler();
 
+    private JsonRequest() {} // this disables end user from calling default constructor
+
     public JsonRequest(ZOSConnection connection, HttpGet getRequest) {
         this.connection = connection;
         this.getRequest = getRequest;
+        this.setup();
     }
 
     public JsonRequest(ZOSConnection connection, HttpPut putRequest, String body) {
         this.connection = connection;
         this.putRequest = putRequest;
         this.body = body;
+        this.setup();
     }
 
     public JsonRequest(ZOSConnection connection, HttpPost postRequest) {
         this.connection = connection;
         this.postRequest = postRequest;
+        this.setup();
     }
 
     @Override
     public <T> T httpGet() throws IOException {
-        this.setStandardHeaders();
-        if (!headers.isEmpty()) headers.entrySet().stream().forEach(e -> getRequest.setHeader(e.getKey(), e.getValue()));
-
+        if (!headers.isEmpty()) headers.forEach((key, value) -> getRequest.setHeader(key, value));
         String result = client.execute(getRequest, handler);
 
         JSONParser parser = new JSONParser();
@@ -72,8 +75,7 @@ public class JsonRequest implements IZoweRequest {
 
     @Override
     public <T> T httpPut() throws IOException {
-        this.setStandardHeaders();
-        if (!headers.isEmpty()) headers.entrySet().stream().forEach(e -> putRequest.setHeader(e.getKey(), e.getValue()));
+        if (!headers.isEmpty()) headers.forEach((key, value) -> putRequest.setHeader(key, value));
         putRequest.setEntity(new StringEntity(body));
 
         String result = client.execute(putRequest, handler);
@@ -89,9 +91,7 @@ public class JsonRequest implements IZoweRequest {
 
     @Override
     public <T> T httpPost() throws IOException {
-        this.setStandardHeaders();
-        if (!headers.isEmpty()) headers.entrySet().stream().forEach(e -> postRequest.setHeader(e.getKey(), e.getValue()));
-
+        if (!headers.isEmpty()) headers.forEach((key, value) -> postRequest.setHeader(key, value));
         String result = client.execute(postRequest, handler);
 
         JSONParser parser = new JSONParser();
@@ -108,6 +108,10 @@ public class JsonRequest implements IZoweRequest {
         this.headers = headers;
     }
 
+    private void setup() {
+        this.setStandardHeaders();
+    }
+
     private void setStandardHeaders() {
         String key = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
         String value = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
@@ -121,6 +125,11 @@ public class JsonRequest implements IZoweRequest {
             getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
             getRequest.setHeader("Content-Type", "application/json");
             getRequest.setHeader(key, value);
+        }
+        if (postRequest != null) {
+            postRequest.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
+            postRequest.setHeader("Content-Type", "application/json");
+            postRequest.setHeader(key, value);
         }
     }
 
