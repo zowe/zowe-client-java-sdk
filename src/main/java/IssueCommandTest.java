@@ -7,6 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zosconsole.ConsoleResponse;
@@ -21,14 +22,13 @@ public class IssueCommandTest {
     private static final Logger LOG = LogManager.getLogger(IssueCommandTest.class);
 
     public static void main(String[] args) {
-        String hostName = "xxxxxxxx";
-        String port = "xxxxxxxx";
-        String userName = "xxxxxxxx";
-        String password = "xxxxxxxx";
+        String hostName = "XXX";
+        String port = "XXX";
+        String userName = "XXX";
+        String password = "XXX";
+        String command = "D IPLINFO";
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
-
-        String command = "D IPLINFO";
 
         IssueCommandTest.tstConsoleCmdByIssue(connection, command);
         IssueCommandTest.tstConsoleCmdByIssueSimple(connection, command);

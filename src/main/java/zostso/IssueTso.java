@@ -17,11 +17,11 @@ public class IssueTso {
 
     public static IssueResponse issueTsoCommand(ZOSConnection connection, String accountNumber,
                                                 String command) throws Exception {
-       return issueTsoCommand(connection, accountNumber, command, null);
+        return issueTsoCommand(connection, accountNumber, command, null);
     }
 
     public static IssueResponse issueTsoCommand(ZOSConnection connection, String accountNumber,
-                                       String command, StartTsoParams startParams) throws Exception {
+                                                String command, StartTsoParams startParams) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(accountNumber == null, "accountNumber not specified");
         Util.checkNullParameter(command == null, "command not specified");

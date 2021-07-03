@@ -55,7 +55,7 @@ public class StartTso {
 
         String url = getResourcesQuery(connection, commandParms);
         LOG.info("url {}", url);
-        
+
         IZoweRequest request = new JsonRequest(connection, new HttpPost(url));
         JSONObject result = request.httpPost();
 
@@ -77,8 +77,8 @@ public class StartTso {
 
         List<TsoMessages> tsoMessagesLst = new ArrayList<>();
         JSONArray tsoData = (JSONArray) result.get("tsoData");
-        tsoData.forEach(i -> {
-            JSONObject obj = (JSONObject) i;
+        tsoData.forEach(item -> {
+            JSONObject obj = (JSONObject) item;
             TsoMessages tsoMessages = new TsoMessages();
             parseJsonTsoMessage(tsoMessagesLst, obj, tsoMessages);
             parseJsonTsoPrompt(tsoMessagesLst, obj, tsoMessages);
@@ -92,11 +92,11 @@ public class StartTso {
         Map tsoPromptMap = ((Map) obj.get("TSO PROMPT"));
         if (tsoPromptMap != null) {
             TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();
-            tsoPromptMap.forEach((k,v) -> {
-                if ("VERSION".equals(k))
-                    tsoPromptMessage.setVersion((String) v);
-                if ("HIDDEN".equals(k))
-                    tsoPromptMessage.setHidden((String) v);
+            tsoPromptMap.forEach((key, value) -> {
+                if ("VERSION".equals(key))
+                    tsoPromptMessage.setVersion((String) value);
+                if ("HIDDEN".equals(key))
+                    tsoPromptMessage.setHidden((String) value);
             });
             tsoMessages.setTsoPrompt(tsoPromptMessage);
             tsoMessagesLst.add(tsoMessages);
@@ -109,11 +109,11 @@ public class StartTso {
         Map tsoMessageMap = ((Map) obj.get("TSO MESSAGE"));
         if (tsoMessageMap != null) {
             TsoMessage tsoMessage = new TsoMessage();
-            tsoMessageMap.forEach((k,v) -> {
-                if ("DATA".equals(k))
-                    tsoMessage.setData((String) v);
-                if ("VERSION".equals(k))
-                    tsoMessage.setVersion((String) v);
+            tsoMessageMap.forEach((key, value) -> {
+                if ("DATA".equals(key))
+                    tsoMessage.setData((String) value);
+                if ("VERSION".equals(key))
+                    tsoMessage.setVersion((String) value);
             });
             tsoMessages.setTsoMessage(tsoMessage);
             tsoMessagesLst.add(tsoMessages);
@@ -137,7 +137,7 @@ public class StartTso {
         String query = "https://" + connection.getHost() + ":" + connection.getPort();
         query += TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "?";
         query += TsoConstants.PARM_ACCT + "=" + parms.account.get() + "&";
-        query += TsoConstants.PARM_PROC + "=" + parms.logonProcedure.get() +  "&";
+        query += TsoConstants.PARM_PROC + "=" + parms.logonProcedure.get() + "&";
         query += TsoConstants.PARM_CHSET + "=" + parms.characterSet.get() + "&";
         query += TsoConstants.PARM_CPAGE + "=" + parms.codePage.get() + "&";
         query += TsoConstants.PARM_ROWS + "=" + parms.rows.get() + "&";
