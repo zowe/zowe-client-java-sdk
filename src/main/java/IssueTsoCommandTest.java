@@ -18,17 +18,18 @@ public class IssueTsoCommandTest {
     private static final Logger LOG = LogManager.getLogger(IssueTsoCommandTest.class);
 
     public static void main(String[] args) {
-        String hostName = "xxxxxxxx";
-        String port = "xxxxxxxx";
-        String userName = "xxxxxxxx";
-        String password = "xxxxxxxx";
+        String hostName = "XXX";
+        String port = "XXX";
+        String userName = "XXX";
+        String password = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
 
         String command = "status";
-        String accountNumber = "accountNumber";
+        String accountNumber = "XXX";
 
-        IssueTsoCommandTest.tstTsoConsoleCmdByIssue(connection, accountNumber, command);
+        IssueResponse response = IssueTsoCommandTest.tstTsoConsoleCmdByIssue(connection, accountNumber, command);
+        System.out.println(response.startResponse.get().zosmfTsoResponse.getVer());
     }
 
     public static IssueResponse tstTsoConsoleCmdByIssue(ZOSConnection connection, String accountNumber, String cmd) {

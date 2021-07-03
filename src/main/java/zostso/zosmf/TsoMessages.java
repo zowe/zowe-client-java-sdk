@@ -9,12 +9,34 @@
  */
 package zostso.zosmf;
 
-import java.util.Optional;
-
 public class TsoMessages {
 
-    public Optional<TsoMessage> tsoMessage = Optional.empty();
-    public Optional<TsoPromptMessage> tsoPrompt = Optional.empty();
-    public Optional<TsoResponseMessage> tsoRespsonse = Optional.empty();
+    public TsoMessage tsoMessage;
+    public TsoPromptMessage tsoPrompt;
+    public TsoResponseMessage tsoRespsonse;
+
+    public TsoMessage getTsoMessage() {
+        return tsoMessage;
+    }
+
+    public void setTsoMessage(TsoMessage tsoMessage) {
+        this.tsoMessage = tsoMessage;
+    }
+
+    public TsoPromptMessage getTsoPrompt() {
+        return tsoPrompt;
+    }
+
+    public void setTsoPrompt(TsoPromptMessage tsoPrompt) {
+        this.tsoPrompt = tsoPrompt;
+    }
+
+    public TsoResponseMessage getTsoRespsonse() {
+        return tsoRespsonse;
+    }
+
+    public void setTsoRespsonse(TsoResponseMessage tsoRespsonse) {
+        this.tsoRespsonse = tsoRespsonse;
+    }
 
 }
