@@ -21,10 +21,9 @@ public class Dataset {
     private Optional<String> rdate;
     private Optional<String> recfm;
     private Optional<String> sizex;
-    private Optional<String> spaceu;
+    private Optional<String> spacu;
     private Optional<String> used;
     private Optional<String> vol;
-    private Optional<String> vols;
 
     public Dataset(Dataset.Builder builder) {
         if (builder.dsname != null)
@@ -91,9 +90,9 @@ public class Dataset {
             this.sizex = Optional.of(builder.sizex);
         else this.sizex = Optional.empty();
 
-        if (builder.spaceu != null)
-            this.spaceu = Optional.of(builder.spaceu);
-        else this.spaceu = Optional.empty();
+        if (builder.spacu != null)
+            this.spacu = Optional.of(builder.spacu);
+        else this.spacu = Optional.empty();
 
         if (builder.used != null)
             this.used = Optional.of(builder.used);
@@ -103,9 +102,6 @@ public class Dataset {
             this.vol = Optional.of(builder.vol);
         else this.vol = Optional.empty();
 
-        if (builder.vols != null)
-            this.vols = Optional.of(builder.vols);
-        else this.vols = Optional.empty();
     }
 
     public Optional<String> getDsname() {
@@ -172,8 +168,8 @@ public class Dataset {
         return sizex;
     }
 
-    public Optional<String> getSpaceu() {
-        return spaceu;
+    public Optional<String> getSpacu() {
+        return spacu;
     }
 
     public Optional<String> getUsed() {
@@ -184,7 +180,4 @@ public class Dataset {
         return vol;
     }
 
-    public Optional<String> getVols() {
-        return vols;
-    }
 }
