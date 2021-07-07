@@ -36,4 +36,17 @@ public class IssueResponse {
     public void setStartResponse(StartStopResponses startResponse) {
         this.startResponse = Optional.ofNullable(startResponse);
     }
+
+    @Override
+    public String toString() {
+        return "IssueResponse{" +
+                "success=" + success +
+                ", startResponse=" + startResponse +
+                ", startReady=" + startReady +
+                ", stopResponses=" + stopResponses +
+                ", zosmfResponse=" + zosmfResponse +
+                ", commandResponses=" + commandResponses +
+                '}';
+    }
+
 }

@@ -61,7 +61,8 @@ public class StartTsoParams {
     }
 
     public void setRows(String rows) {
-        this.rows = Optional.ofNullable(rows);;
+        this.rows = Optional.ofNullable(rows);
+        ;
     }
 
     public Optional<String> getColumns() {
@@ -85,7 +86,8 @@ public class StartTsoParams {
     }
 
     public void setRegionSize(String regionSize) {
-        this.regionSize = Optional.of(regionSize);;
+        this.regionSize = Optional.of(regionSize);
+        ;
     }
 
     @Override

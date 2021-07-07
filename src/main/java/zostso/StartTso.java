@@ -13,20 +13,13 @@ import core.ZOSConnection;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import rest.IZoweRequest;
 import rest.JsonRequest;
 import utility.Util;
+import utility.UtilTso;
 import zostso.input.StartTsoParams;
-import zostso.zosmf.TsoMessage;
-import zostso.zosmf.TsoMessages;
-import zostso.zosmf.TsoPromptMessage;
 import zostso.zosmf.ZosmfTsoResponse;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class StartTso {
 
@@ -59,67 +52,7 @@ public class StartTso {
         IZoweRequest request = new JsonRequest(connection, new HttpPost(url));
         JSONObject result = request.httpPost();
 
-        return parseJsonTsoResponse(result);
-    }
-
-    private static ZosmfTsoResponse parseJsonTsoResponse(JSONObject result) throws Exception {
-        if (result == null) {
-            throw new Exception("No results for tso command.");
-        }
-        LOG.info(result);
-
-        ZosmfTsoResponse response = new ZosmfTsoResponse();
-        response.setQueueId((String) result.get("queueID"));
-        response.setVer((String) result.get("ver"));
-        response.setServletKey((String) result.get("servletKey"));
-        response.setReused((boolean) result.get("reused"));
-        response.setTimeout((boolean) result.get("timeout"));
-
-        List<TsoMessages> tsoMessagesLst = new ArrayList<>();
-        JSONArray tsoData = (JSONArray) result.get("tsoData");
-        tsoData.forEach(item -> {
-            JSONObject obj = (JSONObject) item;
-            TsoMessages tsoMessages = new TsoMessages();
-            parseJsonTsoMessage(tsoMessagesLst, obj, tsoMessages);
-            parseJsonTsoPrompt(tsoMessagesLst, obj, tsoMessages);
-        });
-        response.setTsoData(tsoMessagesLst);
-
-        return response;
-    }
-
-    private static boolean parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
-        Map tsoPromptMap = ((Map) obj.get("TSO PROMPT"));
-        if (tsoPromptMap != null) {
-            TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();
-            tsoPromptMap.forEach((key, value) -> {
-                if ("VERSION".equals(key))
-                    tsoPromptMessage.setVersion((String) value);
-                if ("HIDDEN".equals(key))
-                    tsoPromptMessage.setHidden((String) value);
-            });
-            tsoMessages.setTsoPrompt(tsoPromptMessage);
-            tsoMessagesLst.add(tsoMessages);
-            return true;
-        }
-        return false;
-    }
-
-    private static boolean parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
-        Map tsoMessageMap = ((Map) obj.get("TSO MESSAGE"));
-        if (tsoMessageMap != null) {
-            TsoMessage tsoMessage = new TsoMessage();
-            tsoMessageMap.forEach((key, value) -> {
-                if ("DATA".equals(key))
-                    tsoMessage.setData((String) value);
-                if ("VERSION".equals(key))
-                    tsoMessage.setVersion((String) value);
-            });
-            tsoMessages.setTsoMessage(tsoMessage);
-            tsoMessagesLst.add(tsoMessages);
-            return true;
-        }
-        return false;
+        return UtilTso.parseJsonTsoResponse(result);
     }
 
     private static StartTsoParams setDefaultAddressSpaceParams(StartTsoParams parms, String accountNumber) {

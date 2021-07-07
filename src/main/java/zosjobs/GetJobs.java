@@ -23,6 +23,7 @@ import rest.IZoweRequest;
 import rest.JsonRequest;
 import rest.TextRequest;
 import utility.Util;
+import utility.UtilJobs;
 import zosjobs.input.CommonJobParms;
 import zosjobs.input.GetJobParms;
 import zosjobs.input.JobFile;
@@ -113,7 +114,7 @@ public class GetJobs {
         JSONArray results = request.httpGet();
         results.forEach(item -> {
             JSONObject jobObj = (JSONObject) item;
-            jobs.add(Util.createJobObjFromJson(jobObj));
+            jobs.add(UtilJobs.createJobObjFromJson(jobObj));
         });
 
         return jobs;
@@ -151,7 +152,7 @@ public class GetJobs {
             throw new Exception("Job not found");
         }
 
-        return Util.createJobObjFromJson(result);
+        return UtilJobs.createJobObjFromJson(result);
     }
 
     public static List<JobFile> getSpoolFiles(ZOSConnection connection, String jobName, String jobId)

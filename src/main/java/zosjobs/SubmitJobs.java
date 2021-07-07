@@ -21,6 +21,7 @@ import rest.JsonRequest;
 import rest.TextRequest;
 import rest.ZosmfHeaders;
 import utility.Util;
+import utility.UtilJobs;
 import zosjobs.input.SubmitJclParms;
 import zosjobs.input.SubmitJobParms;
 import zosjobs.response.Job;
@@ -56,7 +57,7 @@ public class SubmitJobs {
         IZoweRequest request = new JsonRequest(connection, new HttpPut(url), reqBody.toString());
         JSONObject result = request.httpPut();
 
-        return Util.createJobObjFromJson(result);
+        return UtilJobs.createJobObjFromJson(result);
     }
 
     /**
@@ -125,7 +126,7 @@ public class SubmitJobs {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return Util.createJobObjFromJson(json);
+        return UtilJobs.createJobObjFromJson(json);
     }
 
 }

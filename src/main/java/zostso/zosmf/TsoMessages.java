@@ -13,7 +13,7 @@ public class TsoMessages {
 
     public TsoMessage tsoMessage;
     public TsoPromptMessage tsoPrompt;
-    public TsoResponseMessage tsoRespsonse;
+    public TsoResponseMessage tsoResponse;
 
     public TsoMessage getTsoMessage() {
         return tsoMessage;
@@ -31,12 +31,12 @@ public class TsoMessages {
         this.tsoPrompt = tsoPrompt;
     }
 
-    public TsoResponseMessage getTsoRespsonse() {
-        return tsoRespsonse;
+    public TsoResponseMessage getTsoResponse() {
+        return tsoResponse;
     }
 
-    public void setTsoRespsonse(TsoResponseMessage tsoRespsonse) {
-        this.tsoRespsonse = tsoRespsonse;
+    public void setTsoResponse(TsoResponseMessage tsoResponse) {
+        this.tsoResponse = tsoResponse;
     }
 
 }

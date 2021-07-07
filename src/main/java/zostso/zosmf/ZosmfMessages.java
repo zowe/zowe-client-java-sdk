@@ -11,8 +11,32 @@ package zostso.zosmf;
 
 public class ZosmfMessages {
 
-    public String messageTest;
-    public String messageId;
-    public String stackTrace;
+    private String messageText;
+    private String messageId;
+    private String stackTrace;
+
+    public String getMessageText() {
+        return messageText;
+    }
+
+    public void setMessageText(String messageText) {
+        this.messageText = messageText;
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
+    }
+
+    public String getStackTrace() {
+        return stackTrace;
+    }
+
+    public void setStackTrace(String stackTrace) {
+        this.stackTrace = stackTrace;
+    }
 
 }
