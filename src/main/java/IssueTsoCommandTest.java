@@ -21,15 +21,14 @@ public class IssueTsoCommandTest {
     private static final Logger LOG = LogManager.getLogger(IssueTsoCommandTest.class);
 
     public static void main(String[] args) {
-        String hostName = "usilCA31.lvn.broadcom.net";
-        String port = "1443";
-        String userName = "FG892105";
-        String password = "dell101D";
+        String hostName = "XXX";
+        String port = "XXX";
+        String userName = "XXX";
+        String password = "XXX";
+        String command = "XXX";
+        String accountNumber = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
-
-        String command = "Status";
-        String accountNumber = "105200000";
 
         IssueResponse response = null;
         try {
