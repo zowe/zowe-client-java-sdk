@@ -12,6 +12,8 @@ package zostso;
 import core.ZOSConnection;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import rest.IZoweRequest;
 import rest.JsonRequest;
@@ -25,6 +27,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SendTso {
+
+    private static final Logger LOG = LogManager.getLogger(SendTso.class);
 
     public static SendResponse sendDataToTSOCollect(ZOSConnection connection, String servletKey, String data) throws Exception {
         Util.checkNullParameter(servletKey == null, "servletKey is null");
@@ -47,10 +51,13 @@ public class SendTso {
         Util.checkStateParameter(commandParms.getData().isEmpty(), "sendTsoParms data not specified");
         Util.checkStateParameter(commandParms.getSevletKey().isEmpty(), "sendTsoParms sevletKey not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() + "/" +
+        String url = "https://" + connection.getHost() + ":" + connection.getPort() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + commandParms.getSevletKey() + TsoConstants.RES_DONT_READ_REPLY;
+        LOG.info("url {}", url);
 
-        String jobObj = "{TSO RESPONSE\": {VERSION: \"0100\", DATA: " + commandParms.getData() + "}}";
+        String jobObj = "{\"TSO RESPONSE\": {VERSION: \"0100\", DATA: " + commandParms.getData() + "}}";
+        LOG.info("jobObj {}", jobObj);
+
         IZoweRequest request = new JsonRequest(connection, new HttpPut(url), jobObj);
         JSONObject result = request.httpPut();
 

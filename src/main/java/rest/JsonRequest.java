@@ -10,6 +10,7 @@
 package rest;
 
 import core.ZOSConnection;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -21,17 +22,23 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
-import org.apache.logging.log4j.core.util.IOUtils;
+import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import utility.Util;
+import zostso.StartTso;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class JsonRequest implements IZoweRequest {
+
+    private static final Logger LOG = LogManager.getLogger(StartTso.class);
 
     private ZOSConnection connection;
     private HttpGet getRequest;
@@ -42,9 +49,11 @@ public class JsonRequest implements IZoweRequest {
     private Map<String, String> headers = new HashMap<>();
     private final HttpClient client = HttpClientBuilder.create().build();
     private final ResponseHandler<String> handler = new BasicResponseHandler();
+    private HttpContext localContext = new BasicHttpContext();
 
+    // disable end user from calling default constructor
     private JsonRequest() {
-    } // this disables end user from calling default constructor
+    }
 
     public JsonRequest(ZOSConnection connection, HttpGet getRequest) {
         this.connection = connection;
@@ -102,31 +111,30 @@ public class JsonRequest implements IZoweRequest {
     }
 
     @Override
-    public <T> T httpPost() throws IOException {
+    public <T> T httpPost() throws Exception {
+        String result = null;
+
         if (!headers.isEmpty()) headers.forEach((key, value) -> deleteRequest.setHeader(key, value));
 
-//        String result = client.execute(postRequest, handler);
-//
-//        JSONParser parser = new JSONParser();
-//        try {
-//            return (T) parser.parse(result);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
+        HttpResponse response = client.execute(postRequest, localContext);
+        int statusCode = response.getStatusLine().getStatusCode();
 
-        String bodyResponse;
+        LOG.info(response.getStatusLine().getStatusCode());
+        LOG.info(response.toString());
+        LOG.info(response.getEntity().getContent());
 
-        HttpResponse response = client.execute(deleteRequest, (HttpContext) handler);
-        try (InputStream inputStream = new ByteArrayInputStream(response.getEntity().getContent().readAllBytes());
-             ByteArrayOutputStream targetStream = new ByteArrayOutputStream()) {
-            inputStream.transferTo(targetStream);
-            bodyResponse = new String(targetStream.toByteArray());
+        if (statusCode != 200) {
+            return (T) new Response(response.getStatusLine().getReasonPhrase(), statusCode);
+        }
+
+        HttpEntity entity = response.getEntity();
+        if (entity != null) {
+            result = EntityUtils.toString(entity);
         }
 
         JSONParser parser = new JSONParser();
         try {
-            return (T) new Response(parser.parse(bodyResponse), response.getStatusLine().getStatusCode());
+            return (T) new Response(parser.parse(result), statusCode);
         } catch (ParseException e) {
             e.printStackTrace();
         }

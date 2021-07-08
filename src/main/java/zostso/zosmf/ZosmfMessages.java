@@ -15,6 +15,10 @@ public class ZosmfMessages {
     private String messageId;
     private String stackTrace;
 
+    public ZosmfMessages(String messageText) {
+        this.messageText = messageText;
+    }
+
     public String getMessageText() {
         return messageText;
     }

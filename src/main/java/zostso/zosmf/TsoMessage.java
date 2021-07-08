@@ -11,8 +11,8 @@ package zostso.zosmf;
 
 public class TsoMessage {
 
-    public String version;
-    public String data;
+    private String version;
+    private String data;
 
     public String getVersion() {
         return version;

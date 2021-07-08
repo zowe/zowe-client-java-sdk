@@ -16,16 +16,21 @@ import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import rest.IZoweRequest;
 import rest.JsonRequest;
+import rest.Response;
 import utility.Util;
 import utility.UtilTso;
 import zostso.input.StartTsoParams;
+import zostso.zosmf.ZosmfMessages;
 import zostso.zosmf.ZosmfTsoResponse;
+
+import java.util.Arrays;
 
 public class StartTso {
 
     private static final Logger LOG = LogManager.getLogger(StartTso.class);
 
-    public static StartStopResponses start(ZOSConnection connection, String accountNumber, StartTsoParams parms) throws Exception {
+    public static StartStopResponses start(ZOSConnection connection, String accountNumber, StartTsoParams parms)
+            throws Exception {
         Util.checkNullParameter(accountNumber == null, "accountNumber is null");
         Util.checkStateParameter(accountNumber.isEmpty(), "accountNumber not specified");
 
@@ -50,18 +55,32 @@ public class StartTso {
         LOG.info("url {}", url);
 
         IZoweRequest request = new JsonRequest(connection, new HttpPost(url));
-        JSONObject result = request.httpPost();
+        Response response = request.httpPost();
 
-        return UtilTso.parseJsonTsoResponse(result);
+        ZosmfTsoResponse result;
+        if (response.getStatusCode() != 200) {
+            result = new ZosmfTsoResponse.Builder()
+                    .msgData(Arrays.asList(new ZosmfMessages((String) response.getResult()))).build();
+        } else {
+            result = UtilTso.parseJsonTsoResponse((JSONObject) response.getResult());
+        }
+
+        return result;
     }
 
     private static StartTsoParams setDefaultAddressSpaceParams(StartTsoParams parms, String accountNumber) {
-        String proc = (parms == null || !parms.logonProcedure.isPresent()) ? TsoConstants.DEFAULT_PROC : parms.getLogonProcedure().get();
-        String chset = (parms == null || !parms.characterSet.isPresent()) ? TsoConstants.DEFAULT_CHSET : parms.getCharacterSet().get();
-        String cpage = (parms == null || !parms.codePage.isPresent()) ? TsoConstants.DEFAULT_CPAGE : parms.getCodePage().get();
-        String rowNum = (parms == null || !parms.rows.isPresent()) ? TsoConstants.DEFAULT_ROWS : parms.getRows().get();
-        String cols = (parms == null || !parms.columns.isPresent()) ? TsoConstants.DEFAULT_COLS : parms.getColumns().get();
-        String rSize = (parms == null || !parms.regionSize.isPresent()) ? TsoConstants.DEFAULT_RSIZE : parms.getRegionSize().get();
+        String proc = (parms == null || !parms.logonProcedure.isPresent())
+                ? TsoConstants.DEFAULT_PROC : parms.getLogonProcedure().get();
+        String chset = (parms == null || !parms.characterSet.isPresent())
+                ? TsoConstants.DEFAULT_CHSET : parms.getCharacterSet().get();
+        String cpage = (parms == null || !parms.codePage.isPresent())
+                ? TsoConstants.DEFAULT_CPAGE : parms.getCodePage().get();
+        String rowNum = (parms == null || !parms.rows.isPresent())
+                ? TsoConstants.DEFAULT_ROWS : parms.getRows().get();
+        String cols = (parms == null || !parms.columns.isPresent())
+                ? TsoConstants.DEFAULT_COLS : parms.getColumns().get();
+        String rSize = (parms == null || !parms.regionSize.isPresent())
+                ? TsoConstants.DEFAULT_RSIZE : parms.getRegionSize().get();
 
         return new StartTsoParams(proc, chset, cpage, rowNum, cols, accountNumber, rSize);
     }
