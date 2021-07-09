@@ -17,13 +17,13 @@ import zosfiles.response.Dataset;
 
 import java.util.ArrayList;
 
-public class ListDataset {
+public class List {
 
     public static  void listDsn(ZOSConnection connection, String namePattern, Boolean listAttributes, String response ) {
         listAttributes = listAttributes == null ? false : listAttributes;
         Util.checkConnection(connection);
 
-        List<Dataset> datasets = new ArrayList<>();
+        java.util.List<Dataset> datasets = new ArrayList<>();
 
     }
 }

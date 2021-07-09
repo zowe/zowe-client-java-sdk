@@ -1,6 +1,7 @@
 package zosfiles.response;
 
 
+
 import java.util.Optional;
 
 public class Dataset {
@@ -108,7 +109,7 @@ public class Dataset {
         return dsname;
     }
 
-    public Optional<String> getblksz() {
+    public Optional<String> getBlksz() {
         return blksz;
     }
 
@@ -116,9 +117,7 @@ public class Dataset {
         return catnm;
     }
 
-    public Optional<String> getCdate() {
-        return cdate;
-    }
+    public Optional<String> getCdate() { return cdate; }
 
     public Optional<String> getDev() {
         return dev;
@@ -132,17 +131,13 @@ public class Dataset {
         return dsorg;
     }
 
-    public Optional<String> getEdate() {
-        return edate;
-    }
+    public Optional<String> getEdate() { return edate; }
 
     public Optional<String> getExtx() {
         return extx;
     }
 
-    public Optional<String> getLrectl() {
-        return lrectl;
-    }
+    public Optional<String> getLrectl() { return lrectl; }
 
     public Optional<String> getMigr() {
         return migr;
@@ -164,13 +159,9 @@ public class Dataset {
         return recfm;
     }
 
-    public Optional<String> getSizex() {
-        return sizex;
-    }
+    public Optional<String> getSizex() { return sizex; }
 
-    public Optional<String> getSpacu() {
-        return spacu;
-    }
+    public Optional<String> getSpacu() { return spacu; }
 
     public Optional<String> getUsed() {
         return used;
@@ -178,6 +169,154 @@ public class Dataset {
 
     public Optional<String> getVol() {
         return vol;
+    }
+
+    @Override
+    public String toString() {
+        return "Dataset{" +
+                "dsname=" + dsname +
+                ", blksz=" + blksz +
+                ", catnm=" + catnm +
+                ", cdate=" + cdate +
+                ", dev=" + dev +
+                ", dsntp=" + dsntp +
+                ", dsorg=" + dsorg +
+                ", edate=" + edate +
+                ", extx=" + extx +
+                ", lrectl=" + lrectl +
+                ", migr=" + migr +
+                ", mvol=" + mvol +
+                ", ovf=" + ovf +
+                ", rdate=" + rdate +
+                ", recfm=" + recfm +
+                ", sizex=" + sizex +
+                ", spacu=" + spacu +
+                ", used=" + used +
+                ", vol=" + vol +
+                '}';
+    }
+
+    public static class Builder {
+
+        private String dsname;
+        private String blksz;
+        private String catnm;
+        private String cdate;
+        private String dev;
+        private String dsntp;
+        private String dsorg;
+        private String edate;
+        private String extx;
+        private String lrectl;
+        private String migr;
+        private String mvol;
+        private String ovf;
+        private String rdate;
+        private String recfm;
+        private String sizex;
+        private String spacu;
+        private String used;
+        private String vol;
+
+        public Dataset.Builder dsname(String dsname) {
+            this.dsname = dsname;
+            return this;
+        }
+
+        public Dataset.Builder blksz(String blksz) {
+            this.blksz = blksz;
+            return this;
+        }
+
+        public Dataset.Builder catnm(String catnm) {
+            this.catnm = catnm;
+            return this;
+        }
+
+        public Dataset.Builder cdate(String cdate) {
+            this.cdate = cdate;
+            return this;
+        }
+
+        public Dataset.Builder dev(String dev) {
+            this.dev = dev;
+            return this;
+        }
+
+        public Dataset.Builder dsntp(String dsntp) {
+            this.dsntp = dsntp;
+            return this;
+        }
+
+        public Dataset.Builder dsorg(String dsorg) {
+            this.dsorg = dsorg;
+            return this;
+        }
+
+        public Dataset.Builder edate(String edate) {
+            this.edate = edate;
+            return this;
+        }
+
+        public Dataset.Builder extx(String extx) {
+            this.extx = extx;
+            return this;
+        }
+
+        public Dataset.Builder lrectl(String lrectl) {
+            this.lrectl = lrectl;
+            return this;
+        }
+
+        public Dataset.Builder migr(String migr) {
+            this.migr = migr;
+            return this;
+        }
+
+        public Dataset.Builder mvol(String mvol) {
+            this.mvol = mvol;
+            return this;
+        }
+
+        public Dataset.Builder ovf(String ovf) {
+            this.ovf = ovf;
+            return this;
+        }
+
+        public Dataset.Builder rdate(String rdate) {
+            this.rdate = rdate;
+            return this;
+        }
+
+        public Dataset.Builder recfm(String recfm) {
+            this.recfm = recfm;
+            return this;
+        }
+
+        public Dataset.Builder sizex(String sizex) {
+            this.sizex = sizex;
+            return this;
+        }
+
+        public Dataset.Builder spacu(String spacu) {
+            this.spacu = spacu;
+            return this;
+        }
+
+        public Dataset.Builder used(String used) {
+            this.used = used;
+            return this;
+        }
+
+        public Dataset.Builder vol(String vol) {
+            this.vol = vol;
+            return this;
+        }
+
+        public Dataset build() {
+            return new Dataset(this);
+        }
+
     }
 
 }
