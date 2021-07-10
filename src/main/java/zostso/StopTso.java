@@ -11,6 +11,8 @@ package zostso;
 
 import core.ZOSConnection;
 import org.apache.http.client.methods.HttpDelete;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import rest.IZoweRequest;
 import rest.JsonRequest;
@@ -21,18 +23,21 @@ import zostso.zosmf.ZosmfTsoResponse;
 
 public class StopTso {
 
+    private static final Logger LOG = LogManager.getLogger(StopTso.class);
+
     public static ZosmfTsoResponse stopCommon(ZOSConnection connection, StopTsoParms commandParms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(commandParms == null, "commandParms is null");
         Util.checkStateParameter(!commandParms.getServletKey().isPresent(), "servletKey not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() +
-                TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + commandParms.getServletKey();
+                TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + commandParms.getServletKey().get();
+        LOG.info("StopTso::stopCommon url {}" + url);
 
         IZoweRequest request = new JsonRequest(connection, new HttpDelete(url));
         JSONObject result = request.httpDelete();
 
-        return UtilTso.parseJsonTsoResponse(result);
+        return UtilTso.parseJsonStopResponse(result);
     }
 
     /**

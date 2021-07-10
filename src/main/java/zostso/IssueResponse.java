@@ -57,6 +57,14 @@ public class IssueResponse {
         return zosmfResponse;
     }
 
+    public Optional<String> getCommandResponses() {
+        return commandResponses;
+    }
+
+    public void setCommandResponses(String commandResponses) {
+        this.commandResponses = Optional.ofNullable(commandResponses);
+    }
+
     @Override
     public String toString() {
         return "IssueResponse{" +

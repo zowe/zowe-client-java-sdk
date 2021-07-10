@@ -9,19 +9,20 @@
  */
 package zostso;
 
+import zostso.zosmf.ZosmfMessages;
 import zostso.zosmf.ZosmfTsoResponse;
 
 public class TsoResponseService {
 
     public static StartStopResponse populateStartAndStop(ZosmfTsoResponse zosmfResponse) {
         StartStopResponse startStopResponse = new StartStopResponse(false, zosmfResponse,
-                zosmfResponse.getServletKey().isPresent() ? zosmfResponse.getServletKey().get() : "");
+                zosmfResponse.getServletKey().orElse(""));
 
-        if (zosmfResponse.getServletKey().isPresent()) {
-            startStopResponse.setSuccess(true);
-        } else if (zosmfResponse.getMsgData().isPresent()) {
-            startStopResponse.setFailureResponse(zosmfResponse.getMsgData().isPresent() ?
-                             zosmfResponse.getMsgData().get().get(0).getMessageText() : "zosmf error response");
+        startStopResponse.setSuccess(zosmfResponse.getServletKey().isPresent() ? true : false);
+        if (zosmfResponse.getMsgData().isPresent()) {
+            ZosmfMessages zosmfMsg = zosmfResponse.getMsgData().get().get(0);
+            String msgText = zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR);
+            startStopResponse.setFailureResponse(msgText);
         }
 
         return startStopResponse;

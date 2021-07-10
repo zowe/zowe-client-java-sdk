@@ -24,6 +24,7 @@ import zostso.zosmf.ZosmfMessages;
 import zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public class StartTso {
 
@@ -52,15 +53,16 @@ public class StartTso {
         Util.checkNullParameter(commandParms == null, "commandParms is null");
 
         String url = getResourcesQuery(connection, commandParms);
-        LOG.info("url {}", url);
+        LOG.info("StartTso::startCommon - url {}", url);
 
         IZoweRequest request = new JsonRequest(connection, new HttpPost(url));
         Response response = request.httpPost();
 
         ZosmfTsoResponse result;
         if (response.getStatusCode() != 200) {
-            result = new ZosmfTsoResponse.Builder()
-                    .msgData(Arrays.asList(new ZosmfMessages((String) response.getResult()))).build();
+            String errorMsg = (String) response.getResult();
+            ZosmfMessages zosmfMsg = new ZosmfMessages(Optional.of(errorMsg), Optional.empty(), Optional.empty());
+            result = new ZosmfTsoResponse.Builder().msgData(Arrays.asList(zosmfMsg)).build();
         } else {
             result = UtilTso.parseJsonTsoResponse((JSONObject) response.getResult());
         }

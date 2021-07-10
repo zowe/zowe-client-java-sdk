@@ -19,6 +19,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -84,6 +85,7 @@ public class JsonRequest implements IZoweRequest {
     public <T> T httpGet() throws IOException {
         if (!headers.isEmpty()) headers.forEach((key, value) -> getRequest.setHeader(key, value));
         String result = client.execute(getRequest, handler);
+        LOG.info("JsonRequest::httpGet - result = {}", result);
 
         JSONParser parser = new JSONParser();
         try {
@@ -96,10 +98,10 @@ public class JsonRequest implements IZoweRequest {
 
     @Override
     public <T> T httpPut() throws IOException {
-        if (!headers.isEmpty()) headers.forEach((key, value) -> putRequest.setHeader(key, value));
+        if (!headers.isEmpty()) headers.forEach((key, value) -> putRequest.setHeader(key, value));        
         putRequest.setEntity(new StringEntity(body));
-
         String result = client.execute(putRequest, handler);
+        LOG.info("JsonRequest::httpPut - result = {}", result);
 
         JSONParser parser = new JSONParser();
         try {
@@ -113,10 +115,11 @@ public class JsonRequest implements IZoweRequest {
     @Override
     public <T> T httpPost() throws Exception {
         String result = null;
-
-        if (!headers.isEmpty()) headers.forEach((key, value) -> deleteRequest.setHeader(key, value));
+        if (!headers.isEmpty()) headers.forEach((key, value) -> postRequest.setHeader(key, value));
 
         HttpResponse response = client.execute(postRequest, localContext);
+        LOG.info("JsonRequest::httpPost - result = {}", response);
+
         int statusCode = response.getStatusLine().getStatusCode();
 
         LOG.info(response.getStatusLine().getStatusCode());
@@ -144,8 +147,9 @@ public class JsonRequest implements IZoweRequest {
 
     @Override
     public <T> T httpDelete() throws IOException {
-        if (!headers.isEmpty()) headers.forEach((key, value) -> postRequest.setHeader(key, value));
-        String result = client.execute(postRequest, handler);
+        if (!headers.isEmpty()) headers.forEach((key, value) -> deleteRequest.setHeader(key, value));
+        String result = client.execute(deleteRequest, handler);
+        LOG.info("JsonRequest::httpDelete - result = {}", result);
 
         JSONParser parser = new JSONParser();
         try {
@@ -183,6 +187,11 @@ public class JsonRequest implements IZoweRequest {
             postRequest.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
             postRequest.setHeader("Content-Type", "application/json");
             postRequest.setHeader(key, value);
+        }
+        if (deleteRequest != null) {
+            deleteRequest.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
+            deleteRequest.setHeader("Content-Type", "application/json");
+            deleteRequest.setHeader(key, value);
         }
     }
 

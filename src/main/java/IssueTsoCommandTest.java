@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zostso.IssueResponse;
 import zostso.IssueTso;
+import zostso.zosmf.TsoMessage;
 import zostso.zosmf.TsoMessages;
 
 import java.util.List;
@@ -20,15 +21,17 @@ public class IssueTsoCommandTest {
 
     private static final Logger LOG = LogManager.getLogger(IssueTsoCommandTest.class);
 
-    public static void main(String[] args) {
-        String hostName = "XXX";
-        String port = "XXX";
-        String userName = "XXX";
-        String password = "XXX";
-        String command = "XXX";
-        String accountNumber = "XXX";
+    public static void main(String[] args) throws Exception {
+        String hostName = "usilCA31.lvn.broadcom.net";
+        String port = "1443";
+        String userName = "FG892105";
+        String password = "dell101D";
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
+
+        String command = "status";
+        String accountNumber = "105200000";
+
 
         IssueResponse response = null;
         try {
@@ -43,8 +46,10 @@ public class IssueTsoCommandTest {
             List<TsoMessages> tsoMessages = response.getZosmfResponse().get().getTsoData().get();
 
             for (int i = 0; i < tsoMessages.size() - 1; i++) {
-                System.out.println(tsoMessages.get(i).getTsoMessage().getVersion() + " " +
-                        tsoMessages.get(i).getTsoMessage().getData());
+                TsoMessages tsoMsgs = tsoMessages.get(i);
+                TsoMessage tsoMsg = tsoMsgs.getTsoMessage().orElseThrow(Exception::new);
+                System.out.println(tsoMsg.getVersion().orElse("unknown version") + " " +
+                        tsoMsg.getData().orElse("unknown data"));
             }
         }
     }
@@ -54,6 +59,7 @@ public class IssueTsoCommandTest {
         try {
             response = IssueTso.issueTsoCommand(connection, accountNumber, cmd);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception(e.getMessage());
         }
         return response;

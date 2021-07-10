@@ -9,8 +9,11 @@
  */
 package zostso;
 
+import zostso.zosmf.TsoMessages;
+import zostso.zosmf.ZosmfMessages;
 import zostso.zosmf.ZosmfTsoResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,19 +30,20 @@ public class StartStopResponses {
         this.zosmfTsoResponse = Optional.ofNullable(zosmfTsoResponse);
         if (zosmfTsoResponse.getMsgData().isPresent()) {
             this.success = false;
-            if (zosmfTsoResponse.getMsgData().isPresent())
-                this.failureResponse =
-                        Optional.ofNullable(zosmfTsoResponse.getMsgData().get().get(0).getMessageText());
-            else
-                this.failureResponse = Optional.of("Unknown error");
+            ZosmfMessages zosmfMsg = zosmfTsoResponse.getMsgData().get().get(0);
+            this.failureResponse = Optional.of(zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR));
+        } else {
+            this.success = true;
+            this.failureResponse = Optional.empty();
         }
-        else this.success = true;
         if (zosmfTsoResponse.getServletKey().isPresent()) {
             this.servletKey = Optional.of(zosmfTsoResponse.getServletKey().get());
         }
 
-        // TODO
-        // do we put all tsoData tso messages into this.messages?
+        StringBuilder msgs = new StringBuilder();
+        List<TsoMessages> tsoMsgLst = zosmfTsoResponse.getTsoData().orElse(new ArrayList<>());
+        tsoMsgLst.forEach(msg -> msgs.append(msg));
+        this.messages = Optional.of(msgs.toString());
     }
 
     public Optional<ZosmfTsoResponse> getZosmfTsoResponse() {

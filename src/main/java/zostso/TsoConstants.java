@@ -10,6 +10,9 @@
 package zostso;
 
 public class TsoConstants {
+
+    public static final String ZOSMF_UNKNOWN_ERROR = "zOSMF unknown error response";
+
     /**
      * Quert id of logonProcedure passed to z/OSMF URI
      * @static

@@ -48,8 +48,8 @@ public class IssueTso {
                 response.getStartResponse().get().getServletKey().get(), command);
         response.setSuccess(sendResponse.getSuccess().get());
         response.setZosmfResponse(Optional.of(sendResponse.getZosmfResponse().get().get(0)));  // TODO
-//        response.commandResponses = sendResponse.getCommandResponse();
-//        response.stopResponses = Optional.ofNullable(StopTso.stop(connection, response.startResponse.get().servletKey));
+        response.setCommandResponses(sendResponse.getCommandResponse().get());
+        response.stopResponses = Optional.ofNullable(StopTso.stop(connection, response.getStartResponse().get().getServletKey().get()));
 
         return response;
     }

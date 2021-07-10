@@ -17,10 +17,13 @@ import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import rest.IZoweRequest;
 import rest.JsonRequest;
+import rest.Response;
 import utility.Util;
 import utility.UtilTso;
 import zostso.input.SendTsoParms;
+import zostso.zosmf.TsoMessage;
 import zostso.zosmf.TsoMessages;
+import zostso.zosmf.TsoResponseMessage;
 import zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.Arrays;
@@ -53,10 +56,12 @@ public class SendTso {
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + commandParms.getSevletKey() + TsoConstants.RES_DONT_READ_REPLY;
-        LOG.info("url {}", url);
+        LOG.info("SendTso::sendDataToTSOCommon - url {}", url);
 
-        String jobObj = "{\"TSO RESPONSE\": {VERSION: \"0100\", DATA: " + commandParms.getData() + "}}";
-        LOG.info("jobObj {}", jobObj);
+        // Use this to send to httput response ?
+//        TsoResponseMessage msg = new TsoResponseMessage("0100", commandParms.getData());
+        String jobObj = "{ \"TSO RESPONSE\": { \"VERSION\": \"0100\", \"DATA\": \"" + commandParms.getData() + "\" } }";
+        LOG.info("SendTo::sendDataToTSOCommon - jobObj {}", jobObj);
 
         IZoweRequest request = new JsonRequest(connection, new HttpPut(url), jobObj);
         JSONObject result = request.httpPut();
@@ -72,7 +77,9 @@ public class SendTso {
             if (tso.getTsoData().isPresent()) {
                 for (TsoMessages tsoDatum : tso.getTsoData().get()) {
                     if (tsoDatum.getTsoMessage() != null) {
-                        messages.append(tsoDatum.getTsoMessage().getData() + "\n");
+                        TsoMessage tsoMsg = tsoDatum.getTsoMessage().orElseThrow(Exception::new);
+                        String data = tsoMsg.getData().orElseThrow(Exception::new);
+                        messages.append(data + "\n");
                     } else if (tsoDatum.getTsoPrompt() != null) {
                         if (messages.length() > 0) {
                             done = true;
@@ -95,11 +102,12 @@ public class SendTso {
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
+        LOG.info("SendTso::getDataFromTSO - url {}" + url);
 
         IZoweRequest request = new JsonRequest(connection, new HttpPost(url));
-        JSONObject result = request.httpPost();
+        Response result = request.httpPost();
 
-        return UtilTso.parseJsonTsoResponse(result);
+        return UtilTso.parseJsonTsoResponse((JSONObject) result.getResult());
     }
 
     private static SendResponse createResponse(CollectedResponses responses) {

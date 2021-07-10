@@ -9,24 +9,34 @@
  */
 package zostso.zosmf;
 
+import java.util.Optional;
+
 public class TsoMessage {
 
-    private String version;
-    private String data;
+    private Optional<String> version;
+    private Optional<String> data;
 
-    public String getVersion() {
+    public TsoMessage() {
+    }
+
+    public TsoMessage(Optional<String> version, Optional<String> data) {
+        this.version = version;
+        this.data = data;
+    }
+
+    public Optional<String> getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(Optional<String> version) {
         this.version = version;
     }
 
-    public String getData() {
+    public Optional<String> getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Optional<String> data) {
         this.data = data;
     }
 

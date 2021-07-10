@@ -22,6 +22,7 @@ import zostso.zosmf.ZosmfTsoResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class UtilTso {
 
@@ -35,11 +36,9 @@ public class UtilTso {
     public static ZosmfTsoResponse parseJsonTsoResponse(JSONObject result) {
         Util.checkNullParameter(result == null, "No results for tso command.");
 
-        LOG.info("parseJsonTsoResponse {}", result);
-
         ZosmfTsoResponse response = new ZosmfTsoResponse.Builder().queueId((String) result.get("queueID"))
-                        .ver((String) result.get("ver")).servletKey((String) result.get("servletKey"))
-                        .reused((boolean) result.get("reused")).timeout((boolean) result.get("timeout")).build();
+                .ver((String) result.get("ver")).servletKey((String) result.get("servletKey"))
+                .reused((boolean) result.get("reused")).timeout((boolean) result.get("timeout")).build();
 
         List<TsoMessages> tsoMessagesLst = new ArrayList<>();
         JSONArray tsoData = (JSONArray) result.get("tsoData");
@@ -60,11 +59,11 @@ public class UtilTso {
             TsoMessage tsoMessage = new TsoMessage();
             tsoMessageMap.forEach((key, value) -> {
                 if ("DATA".equals(key))
-                    tsoMessage.setData((String) value);
+                    tsoMessage.setData(Optional.of((String) value));
                 if ("VERSION".equals(key))
-                    tsoMessage.setVersion((String) value);
+                    tsoMessage.setVersion(Optional.of((String) value));
             });
-            tsoMessages.setTsoMessage(tsoMessage);
+            tsoMessages.setTsoMessage(Optional.of(tsoMessage));
             tsoMessagesLst.add(tsoMessages);
             return true;
         }
@@ -77,17 +76,22 @@ public class UtilTso {
             TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();
             tsoPromptMap.forEach((key, value) -> {
                 if ("VERSION".equals(key))
-                    tsoPromptMessage.setVersion((String) value);
+                    tsoPromptMessage.setVersion(Optional.of((String) value));
                 if ("HIDDEN".equals(key))
-                    tsoPromptMessage.setHidden((String) value);
+                    tsoPromptMessage.setHidden(Optional.of((String) value));
             });
-            tsoMessages.setTsoPrompt(tsoPromptMessage);
+            tsoMessages.setTsoPrompt(Optional.of(tsoPromptMessage));
             tsoMessagesLst.add(tsoMessages);
             return true;
         }
         return false;
     }
 
-    // TODO
+    public static ZosmfTsoResponse parseJsonStopResponse(JSONObject obj) {
+        return new ZosmfTsoResponse.Builder().ver((String) obj.get("ver")).servletKey((String) obj.get("servletKey"))
+                .reused((boolean) obj.get("reused")).timeout((boolean) obj.get("timeout")).build();
+    }
+
+    // TODO - parseJsonTsoResponse ?
 
 }
