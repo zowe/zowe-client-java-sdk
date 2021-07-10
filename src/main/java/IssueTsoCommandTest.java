@@ -7,37 +7,60 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zostso.IssueResponse;
 import zostso.IssueTso;
+import zostso.zosmf.TsoMessage;
+import zostso.zosmf.TsoMessages;
+
+import java.util.List;
 
 public class IssueTsoCommandTest {
 
     private static final Logger LOG = LogManager.getLogger(IssueTsoCommandTest.class);
 
-    public static void main(String[] args) {
-        String hostName = "XXX";
-        String port = "XXX";
-        String userName = "XXX";
-        String password = "XXX";
-        String command = "status";
-        String accountNumber = "XXX";
+    public static void main(String[] args) throws Exception {
+        String hostName = "usilCA31.lvn.broadcom.net";
+        String port = "1443";
+        String userName = "FG892105";
+        String password = "dell101D";
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
 
-        IssueResponse response = IssueTsoCommandTest.tstTsoConsoleCmdByIssue(connection, accountNumber, command);
-        System.out.println(response.startResponse.get().zosmfTsoResponse.getVer());
+        String command = "status";
+        String accountNumber = "105200000";
+
+
+        IssueResponse response = null;
+        try {
+            response = IssueTsoCommandTest.tstTsoConsoleCmdByIssue(connection, accountNumber, command);
+        } catch (Exception e) {
+            LOG.info(e.getMessage());
+        }
+        if (response != null && response.getStartResponse().isPresent()) {
+            System.out.println(response.getStartResponse().get().isSuccess());
+            System.out.println(response.getStartResponse().get().getZosmfTsoResponse().get().getVer());
+
+            List<TsoMessages> tsoMessages = response.getZosmfResponse().get().getTsoData().get();
+
+            for (int i = 0; i < tsoMessages.size() - 1; i++) {
+                TsoMessages tsoMsgs = tsoMessages.get(i);
+                TsoMessage tsoMsg = tsoMsgs.getTsoMessage().orElseThrow(Exception::new);
+                System.out.println(tsoMsg.getVersion().orElse("unknown version") + " " +
+                        tsoMsg.getData().orElse("unknown data"));
+            }
+        }
     }
 
-    public static IssueResponse tstTsoConsoleCmdByIssue(ZOSConnection connection, String accountNumber, String cmd) {
-        IssueResponse response = null;
+    public static IssueResponse tstTsoConsoleCmdByIssue(ZOSConnection connection, String accountNumber, String cmd) throws Exception {
+        IssueResponse response;
         try {
             response = IssueTso.issueTsoCommand(connection, accountNumber, cmd);
         } catch (Exception e) {
-            LOG.info(e.getMessage());
+            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
         return response;
     }

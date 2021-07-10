@@ -18,7 +18,9 @@ public interface IZoweRequest {
 
     public <T> T httpPut() throws IOException;
 
-    public <T> T httpPost() throws IOException;
+    public <T> T httpPost() throws Exception;
+
+    public <T> T httpDelete() throws IOException;
 
     public void setHeaders(Map<String, String> headers);
 

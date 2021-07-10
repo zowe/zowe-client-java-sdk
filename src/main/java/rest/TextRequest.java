@@ -13,6 +13,7 @@ import core.ZOSConnection;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
@@ -30,6 +31,7 @@ public class TextRequest implements IZoweRequest {
     private HttpGet getRequest;
     private HttpPut putRequest;
     private HttpPut postRequest;
+    private HttpDelete deleteRequest;
     private String body;
     private Map<String, String> headers = new HashMap<>();
     private HttpClient client = HttpClientBuilder.create().build();
@@ -66,6 +68,12 @@ public class TextRequest implements IZoweRequest {
 
     @Override
     public <T> T httpPost() throws IOException {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public <T> T httpDelete() throws IOException {
         // TODO
         return null;
     }

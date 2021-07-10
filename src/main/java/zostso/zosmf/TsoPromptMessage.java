@@ -9,24 +9,34 @@
  */
 package zostso.zosmf;
 
+import java.util.Optional;
+
 public class TsoPromptMessage {
 
-    public String version;
-    public String hidden;
+    public Optional<String> version;
+    public Optional<String> hidden;
 
-    public String getVersion() {
+    public TsoPromptMessage() {
+    }
+
+    public TsoPromptMessage(Optional<String> version, Optional<String> hidden) {
+        this.version = version;
+        this.hidden = hidden;
+    }
+
+    public Optional<String> getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(Optional<String> version) {
         this.version = version;
     }
 
-    public String getHidden() {
+    public Optional<String> getHidden() {
         return hidden;
     }
 
-    public void setHidden(String hidden) {
+    public void setHidden(Optional<String> hidden) {
         this.hidden = hidden;
     }
 

@@ -12,6 +12,9 @@ package zostso;
 import core.ZOSConnection;
 import utility.Util;
 import zostso.input.StartTsoParams;
+import zostso.zosmf.ZosmfTsoResponse;
+
+import java.util.Optional;
 
 public class IssueTso {
 
@@ -23,14 +26,30 @@ public class IssueTso {
     public static IssueResponse issueTsoCommand(ZOSConnection connection, String accountNumber,
                                                 String command, StartTsoParams startParams) throws Exception {
         Util.checkConnection(connection);
-        Util.checkNullParameter(accountNumber == null, "accountNumber not specified");
-        Util.checkNullParameter(command == null, "command not specified");
-        Util.checkStateParameter(accountNumber.isEmpty(), "accountNumber is empty");
-        Util.checkStateParameter(command.isEmpty(), "command is empty");
+        Util.checkNullParameter(accountNumber == null, "accountNumber is null");
+        Util.checkNullParameter(command == null, "command is null");
+        Util.checkStateParameter(accountNumber.isEmpty(), "accountNumber not specified");
+        Util.checkStateParameter(command.isEmpty(), "command not specified");
 
         IssueResponse response = new IssueResponse(false, null, false, null,
                 null, null);
-        response.setStartResponse(StartTso.start(connection, accountNumber, startParams));
+        StartStopResponses StartResponse = StartTso.start(connection, accountNumber, startParams);
+        response.setStartResponse(StartResponse);
+
+        if (response.getStartResponse().isPresent() && !response.getStartResponse().get().isSuccess()) {
+            throw new Exception("TSO address space failed to start. Error: " +
+                    (response.getStartResponse().isPresent() ? response.getStartResponse().get().getFailureResponse() :
+                    "Unknown error"));
+        }
+
+        response.setZosmfResponse(Optional.ofNullable(StartResponse.getZosmfTsoResponse().get()));
+
+        SendResponse sendResponse = SendTso.sendDataToTSOCollect(connection,
+                response.getStartResponse().get().getServletKey().get(), command);
+        response.setSuccess(sendResponse.getSuccess().get());
+        response.setZosmfResponse(Optional.of(sendResponse.getZosmfResponse().get().get(0)));  // TODO
+        response.setCommandResponses(sendResponse.getCommandResponse().get());
+        response.stopResponses = Optional.ofNullable(StopTso.stop(connection, response.getStartResponse().get().getServletKey().get()));
 
         return response;
     }

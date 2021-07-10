@@ -11,11 +11,53 @@ package zostso;
 
 import zostso.zosmf.ZosmfTsoResponse;
 
+import java.util.Optional;
+
 public class StartStopResponse {
 
-    public boolean success;
-    public ZosmfTsoResponse zosmfTsoResponse;
-    public String failureResponse;
-    public String servletKey;
+    public Optional<Boolean> success;
+    public Optional<ZosmfTsoResponse> zosmfTsoResponse;
+    public Optional<String> failureResponse = Optional.empty();
+    public Optional<String> servletKey;
+
+    public StartStopResponse(boolean success, ZosmfTsoResponse zosmfTsoResponse, String servletKey) {
+        this.success = Optional.ofNullable(success);
+        this.zosmfTsoResponse = Optional.ofNullable(zosmfTsoResponse);
+        this.servletKey = Optional.ofNullable(servletKey);
+    }
+
+    public Optional<Boolean> getSuccess() {
+        return success;
+    }
+
+    public Optional<ZosmfTsoResponse> getZosmfTsoResponse() {
+        return zosmfTsoResponse;
+    }
+
+    public Optional<String> getFailureResponse() {
+        return failureResponse;
+    }
+
+    public Optional<String> getServletKey() {
+        return servletKey;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = Optional.ofNullable(success);
+    }
+
+    public void setFailureResponse(String failureResponse) {
+        this.failureResponse = Optional.ofNullable(failureResponse);
+    }
+
+    @Override
+    public String toString() {
+        return "StartStopResponse{" +
+                "success=" + success +
+                ", zosmfTsoResponse=" + zosmfTsoResponse +
+                ", failureResponse=" + failureResponse +
+                ", servletKey=" + servletKey +
+                '}';
+    }
 
 }

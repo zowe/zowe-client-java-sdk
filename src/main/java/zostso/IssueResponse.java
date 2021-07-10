@@ -15,12 +15,12 @@ import java.util.Optional;
 
 public class IssueResponse {
 
-    public Optional<Boolean> success;
-    public Optional<StartStopResponses> startResponse;
-    public Optional<Boolean> startReady;
-    public Optional<StartStopResponse> stopResponses;
-    public Optional<ZosmfTsoResponse> zosmfResponse;
-    public Optional<String> commandResponses;
+    private Optional<Boolean> success;
+    private Optional<StartStopResponses> startResponse;
+    private Optional<Boolean> startReady;
+    private Optional<StartStopResponse> stopResponses;
+    private Optional<ZosmfTsoResponse> zosmfResponse;
+    private Optional<String> commandResponses;
 
     public IssueResponse(boolean success, StartStopResponses startResponse, boolean startReady,
                          StartStopResponse stopResponses, ZosmfTsoResponse zosmfResponse,
@@ -33,7 +33,48 @@ public class IssueResponse {
         this.commandResponses = Optional.ofNullable(commandResponses);
     }
 
+    public void setSuccess(boolean success) {
+        this.success = Optional.ofNullable(success);
+    }
+
+    public Optional<Boolean> getSuccess() {
+        return success;
+    }
+
     public void setStartResponse(StartStopResponses startResponse) {
         this.startResponse = Optional.ofNullable(startResponse);
     }
+
+    public Optional<StartStopResponses> getStartResponse() {
+        return startResponse;
+    }
+
+    public void setZosmfResponse(Optional<ZosmfTsoResponse> zosmfResponse) {
+        this.zosmfResponse = zosmfResponse;
+    }
+
+    public Optional<ZosmfTsoResponse> getZosmfResponse() {
+        return zosmfResponse;
+    }
+
+    public Optional<String> getCommandResponses() {
+        return commandResponses;
+    }
+
+    public void setCommandResponses(String commandResponses) {
+        this.commandResponses = Optional.ofNullable(commandResponses);
+    }
+
+    @Override
+    public String toString() {
+        return "IssueResponse{" +
+                "success=" + success +
+                ", startResponse=" + startResponse +
+                ", startReady=" + startReady +
+                ", stopResponses=" + stopResponses +
+                ", zosmfResponse=" + zosmfResponse +
+                ", commandResponses=" + commandResponses +
+                '}';
+    }
+
 }

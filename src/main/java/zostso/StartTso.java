@@ -13,26 +13,25 @@ import core.ZOSConnection;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import rest.IZoweRequest;
 import rest.JsonRequest;
+import rest.Response;
 import utility.Util;
+import utility.UtilTso;
 import zostso.input.StartTsoParams;
-import zostso.zosmf.TsoMessage;
-import zostso.zosmf.TsoMessages;
-import zostso.zosmf.TsoPromptMessage;
+import zostso.zosmf.ZosmfMessages;
 import zostso.zosmf.ZosmfTsoResponse;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.Optional;
 
 public class StartTso {
 
     private static final Logger LOG = LogManager.getLogger(StartTso.class);
 
-    public static StartStopResponses start(ZOSConnection connection, String accountNumber, StartTsoParams parms) throws Exception {
+    public static StartStopResponses start(ZOSConnection connection, String accountNumber, StartTsoParams parms)
+            throws Exception {
         Util.checkNullParameter(accountNumber == null, "accountNumber is null");
         Util.checkStateParameter(accountNumber.isEmpty(), "accountNumber not specified");
 
@@ -54,81 +53,36 @@ public class StartTso {
         Util.checkNullParameter(commandParms == null, "commandParms is null");
 
         String url = getResourcesQuery(connection, commandParms);
-        LOG.info("url {}", url);
+        LOG.info("StartTso::startCommon - url {}", url);
 
         IZoweRequest request = new JsonRequest(connection, new HttpPost(url));
-        JSONObject result = request.httpPost();
+        Response response = request.httpPost();
 
-        return parseJsonTsoResponse(result);
-    }
-
-    private static ZosmfTsoResponse parseJsonTsoResponse(JSONObject result) throws Exception {
-        if (result == null) {
-            throw new Exception("No results for tso command.");
+        ZosmfTsoResponse result;
+        if (response.getStatusCode() != 200) {
+            String errorMsg = (String) response.getResult();
+            ZosmfMessages zosmfMsg = new ZosmfMessages(Optional.of(errorMsg), Optional.empty(), Optional.empty());
+            result = new ZosmfTsoResponse.Builder().msgData(Arrays.asList(zosmfMsg)).build();
+        } else {
+            result = UtilTso.parseJsonTsoResponse((JSONObject) response.getResult());
         }
-        LOG.info(result);
 
-        ZosmfTsoResponse response = new ZosmfTsoResponse();
-        response.setQueueId((String) result.get("queueID"));
-        response.setVer((String) result.get("ver"));
-        response.setServletKey((String) result.get("servletKey"));
-        response.setReused((boolean) result.get("reused"));
-        response.setTimeout((boolean) result.get("timeout"));
-
-        List<TsoMessages> tsoMessagesLst = new ArrayList<>();
-        JSONArray tsoData = (JSONArray) result.get("tsoData");
-        tsoData.forEach(item -> {
-            JSONObject obj = (JSONObject) item;
-            TsoMessages tsoMessages = new TsoMessages();
-            parseJsonTsoMessage(tsoMessagesLst, obj, tsoMessages);
-            parseJsonTsoPrompt(tsoMessagesLst, obj, tsoMessages);
-        });
-        response.setTsoData(tsoMessagesLst);
-
-        return response;
-    }
-
-    private static boolean parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
-        Map tsoPromptMap = ((Map) obj.get("TSO PROMPT"));
-        if (tsoPromptMap != null) {
-            TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();
-            tsoPromptMap.forEach((key, value) -> {
-                if ("VERSION".equals(key))
-                    tsoPromptMessage.setVersion((String) value);
-                if ("HIDDEN".equals(key))
-                    tsoPromptMessage.setHidden((String) value);
-            });
-            tsoMessages.setTsoPrompt(tsoPromptMessage);
-            tsoMessagesLst.add(tsoMessages);
-            return true;
-        }
-        return false;
-    }
-
-    private static boolean parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
-        Map tsoMessageMap = ((Map) obj.get("TSO MESSAGE"));
-        if (tsoMessageMap != null) {
-            TsoMessage tsoMessage = new TsoMessage();
-            tsoMessageMap.forEach((key, value) -> {
-                if ("DATA".equals(key))
-                    tsoMessage.setData((String) value);
-                if ("VERSION".equals(key))
-                    tsoMessage.setVersion((String) value);
-            });
-            tsoMessages.setTsoMessage(tsoMessage);
-            tsoMessagesLst.add(tsoMessages);
-            return true;
-        }
-        return false;
+        return result;
     }
 
     private static StartTsoParams setDefaultAddressSpaceParams(StartTsoParams parms, String accountNumber) {
-        String proc = (parms == null || !parms.logonProcedure.isPresent()) ? TsoConstants.DEFAULT_PROC : parms.getLogonProcedure().get();
-        String chset = (parms == null || !parms.characterSet.isPresent()) ? TsoConstants.DEFAULT_CHSET : parms.getCharacterSet().get();
-        String cpage = (parms == null || !parms.codePage.isPresent()) ? TsoConstants.DEFAULT_CPAGE : parms.getCodePage().get();
-        String rowNum = (parms == null || !parms.rows.isPresent()) ? TsoConstants.DEFAULT_ROWS : parms.getRows().get();
-        String cols = (parms == null || !parms.columns.isPresent()) ? TsoConstants.DEFAULT_COLS : parms.getColumns().get();
-        String rSize = (parms == null || !parms.regionSize.isPresent()) ? TsoConstants.DEFAULT_RSIZE : parms.getRegionSize().get();
+        String proc = (parms == null || !parms.logonProcedure.isPresent())
+                ? TsoConstants.DEFAULT_PROC : parms.getLogonProcedure().get();
+        String chset = (parms == null || !parms.characterSet.isPresent())
+                ? TsoConstants.DEFAULT_CHSET : parms.getCharacterSet().get();
+        String cpage = (parms == null || !parms.codePage.isPresent())
+                ? TsoConstants.DEFAULT_CPAGE : parms.getCodePage().get();
+        String rowNum = (parms == null || !parms.rows.isPresent())
+                ? TsoConstants.DEFAULT_ROWS : parms.getRows().get();
+        String cols = (parms == null || !parms.columns.isPresent())
+                ? TsoConstants.DEFAULT_COLS : parms.getColumns().get();
+        String rSize = (parms == null || !parms.regionSize.isPresent())
+                ? TsoConstants.DEFAULT_RSIZE : parms.getRegionSize().get();
 
         return new StartTsoParams(proc, chset, cpage, rowNum, cols, accountNumber, rSize);
     }

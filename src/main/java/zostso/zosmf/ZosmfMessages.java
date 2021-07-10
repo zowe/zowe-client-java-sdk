@@ -9,10 +9,42 @@
  */
 package zostso.zosmf;
 
+import java.util.Optional;
+
 public class ZosmfMessages {
 
-    public String messageTest;
-    public String messageId;
-    public String stackTrace;
+    private Optional<String> messageText;
+    private Optional<String> messageId;
+    private Optional<String> stackTrace;
+
+    public ZosmfMessages(Optional<String> messageText, Optional<String> messageId, Optional<String> stackTrace) {
+        this.messageText = messageText;
+        this.messageId = messageId;
+        this.stackTrace = stackTrace;
+    }
+
+    public Optional<String> getMessageText() {
+        return messageText;
+    }
+
+    public void setMessageText(Optional<String> messageText) {
+        this.messageText = messageText;
+    }
+
+    public Optional<String> getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(Optional<String> messageId) {
+        this.messageId = messageId;
+    }
+
+    public Optional<String> getStackTrace() {
+        return stackTrace;
+    }
+
+    public void setStackTrace(Optional<String> stackTrace) {
+        this.stackTrace = stackTrace;
+    }
 
 }

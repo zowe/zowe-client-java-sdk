@@ -9,21 +9,77 @@
  */
 package zostso;
 
+import zostso.zosmf.TsoMessages;
+import zostso.zosmf.ZosmfMessages;
 import zostso.zosmf.ZosmfTsoResponse;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class StartStopResponses {
 
-    public boolean success;
-    public ZosmfTsoResponse zosmfTsoResponse;
-    public List<ZosmfTsoResponse> collectedResponses;
-    public String failureResponse;
-    public String servletKey;
-    public String messages;
+    private Optional<ZosmfTsoResponse> zosmfTsoResponse;
+    private Optional<List<ZosmfTsoResponse>> collectedResponses;
+    private Optional<String> failureResponse;
+    private Optional<String> servletKey;
+    private Optional<String> messages;
+    private boolean success;
 
     public StartStopResponses(ZosmfTsoResponse zosmfTsoResponse) {
-        this.zosmfTsoResponse = zosmfTsoResponse;
+        this.zosmfTsoResponse = Optional.ofNullable(zosmfTsoResponse);
+        if (zosmfTsoResponse.getMsgData().isPresent()) {
+            this.success = false;
+            ZosmfMessages zosmfMsg = zosmfTsoResponse.getMsgData().get().get(0);
+            this.failureResponse = Optional.of(zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR));
+        } else {
+            this.success = true;
+            this.failureResponse = Optional.empty();
+        }
+        if (zosmfTsoResponse.getServletKey().isPresent()) {
+            this.servletKey = Optional.of(zosmfTsoResponse.getServletKey().get());
+        }
+
+        StringBuilder msgs = new StringBuilder();
+        List<TsoMessages> tsoMsgLst = zosmfTsoResponse.getTsoData().orElse(new ArrayList<>());
+        tsoMsgLst.forEach(msg -> msgs.append(msg));
+        this.messages = Optional.of(msgs.toString());
+    }
+
+    public Optional<ZosmfTsoResponse> getZosmfTsoResponse() {
+        return zosmfTsoResponse;
+    }
+
+    public Optional<List<ZosmfTsoResponse>> getCollectedResponses() {
+        return collectedResponses;
+    }
+
+    public void setCollectedResponses(List<ZosmfTsoResponse> collectedResponses) {
+        this.collectedResponses = Optional.ofNullable(collectedResponses);
+    }
+
+    public Optional<String> getFailureResponse() {
+        return failureResponse;
+    }
+
+    public Optional<String> getServletKey() {
+        return servletKey;
+    }
+
+    public void setServletKey(String servletKey) {
+        this.servletKey = Optional.ofNullable(servletKey);
+    }
+
+    public Optional<String> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(String messages) {
+        this.messages = Optional.ofNullable(messages);
+    }
+
+    public boolean isSuccess() {
+        return success;
     }
 
 }
