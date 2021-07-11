@@ -9,8 +9,6 @@
  */
 package utility;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import zostso.TsoConstants;
@@ -26,15 +24,19 @@ import java.util.Optional;
 
 public class UtilTso {
 
-    private static final Logger LOG = LogManager.getLogger(UtilTso.class);
-
     /*
-    following json parsing is being constructed (currently partial) to conform to the following
-    format: https://www.ibm.com/docs/en/zos/2.1.0?topic=services-tsoe-address-space
+    following json parsing is being constructed to conform to the following format:
+    https://www.ibm.com/docs/en/zos/2.1.0?topic=services-tsoe-address-space
     */
 
+    public static ZosmfTsoResponse parseJsonStopResponse(JSONObject obj) {
+        Util.checkNullParameter(obj == null, "No obj to parse.");
+        return new ZosmfTsoResponse.Builder().ver((String) obj.get("ver")).servletKey((String) obj.get("servletKey"))
+                .reused((boolean) obj.get("reused")).timeout((boolean) obj.get("timeout")).build();
+    }
+
     public static ZosmfTsoResponse parseJsonTsoResponse(JSONObject result) {
-        Util.checkNullParameter(result == null, "No results for tso command.");
+        Util.checkNullParameter(result == null, "No results to parse.");
 
         ZosmfTsoResponse response = new ZosmfTsoResponse.Builder().queueId((String) result.get("queueID"))
                 .ver((String) result.get("ver")).servletKey((String) result.get("servletKey"))
@@ -53,7 +55,7 @@ public class UtilTso {
         return response;
     }
 
-    public static boolean parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
+    private static boolean parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
         Map tsoMessageMap = ((Map) obj.get(TsoConstants.TSO_MESSAGE));
         if (tsoMessageMap != null) {
             TsoMessage tsoMessage = new TsoMessage();
@@ -70,7 +72,7 @@ public class UtilTso {
         return false;
     }
 
-    public static boolean parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
+    private static boolean parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
         Map tsoPromptMap = ((Map) obj.get(TsoConstants.TSO_PROMPT));
         if (tsoPromptMap != null) {
             TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();
@@ -86,12 +88,5 @@ public class UtilTso {
         }
         return false;
     }
-
-    public static ZosmfTsoResponse parseJsonStopResponse(JSONObject obj) {
-        return new ZosmfTsoResponse.Builder().ver((String) obj.get("ver")).servletKey((String) obj.get("servletKey"))
-                .reused((boolean) obj.get("reused")).timeout((boolean) obj.get("timeout")).build();
-    }
-
-    // TODO - parseJsonTsoResponse ?
 
 }
