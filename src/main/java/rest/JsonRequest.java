@@ -35,6 +35,7 @@ import zostso.StartTso;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class JsonRequest implements IZoweRequest {
 
@@ -45,7 +46,7 @@ public class JsonRequest implements IZoweRequest {
     private HttpPut putRequest;
     private HttpPost postRequest;
     private HttpDelete deleteRequest;
-    private String body;
+    private Optional<String> body;
     private Map<String, String> headers = new HashMap<>();
     private final HttpClient client = HttpClientBuilder.create().build();
     private final ResponseHandler<String> handler = new BasicResponseHandler();
@@ -61,7 +62,7 @@ public class JsonRequest implements IZoweRequest {
         this.setup();
     }
 
-    public JsonRequest(ZOSConnection connection, HttpPut putRequest, String body) {
+    public JsonRequest(ZOSConnection connection, HttpPut putRequest, Optional<String> body) {
         this.connection = connection;
         this.putRequest = putRequest;
         this.body = body;
@@ -97,14 +98,29 @@ public class JsonRequest implements IZoweRequest {
 
     @Override
     public <T> T httpPut() throws IOException {
-        if (!headers.isEmpty()) headers.forEach((key, value) -> putRequest.setHeader(key, value));        
-        putRequest.setEntity(new StringEntity(body));
-        String result = client.execute(putRequest, handler);
-        LOG.info("JsonRequest::httpPut - result = {}", result);
+        String result = null;
+
+        if (!headers.isEmpty()) headers.forEach((key, value) -> putRequest.setHeader(key, value));
+        putRequest.setEntity(new StringEntity(body.orElse("")));
+
+        HttpResponse response = client.execute(putRequest, localContext);
+        int statusCode = response.getStatusLine().getStatusCode();
+
+        LOG.info("JsonRequest::httpPost - Response statusCode {}, Response {}", response.getStatusLine().getStatusCode(), response.toString());
+
+        if (statusCode != 200) {
+            return (T) new Response(response.getStatusLine().getReasonPhrase(), statusCode);
+        }
+
+        HttpEntity entity = response.getEntity();
+        if (entity != null) {
+            result = EntityUtils.toString(entity);
+            LOG.info("JsonRequest::httpPut - result = {}", result);
+        }
 
         JSONParser parser = new JSONParser();
         try {
-            return (T) parser.parse(result);
+            return (T) new Response(parser.parse(result), statusCode);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -117,12 +133,9 @@ public class JsonRequest implements IZoweRequest {
         if (!headers.isEmpty()) headers.forEach((key, value) -> postRequest.setHeader(key, value));
 
         HttpResponse response = client.execute(postRequest, localContext);
-        LOG.info("JsonRequest::httpPost - result = {}", response);
-
         int statusCode = response.getStatusLine().getStatusCode();
 
-        LOG.info("Response statusLins {}, Response {}, Response content {}",
-                response.getStatusLine().getStatusCode(), response.toString(), response.getEntity().getContent());
+        LOG.info("Response statusCode {}, Response {}", response.getStatusLine().getStatusCode(), response.toString());
 
         if (statusCode != 200) {
             return (T) new Response(response.getStatusLine().getReasonPhrase(), statusCode);
@@ -131,6 +144,7 @@ public class JsonRequest implements IZoweRequest {
         HttpEntity entity = response.getEntity();
         if (entity != null) {
             result = EntityUtils.toString(entity);
+            LOG.info("Response result {}", result);
         }
 
         JSONParser parser = new JSONParser();

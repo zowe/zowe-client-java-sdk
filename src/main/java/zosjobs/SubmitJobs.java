@@ -29,6 +29,7 @@ import zosjobs.response.Job;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class SubmitJobs {
 
@@ -54,7 +55,7 @@ public class SubmitJobs {
             // TODO..
         }
 
-        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), reqBody.toString());
+        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(reqBody.toString()));
         JSONObject result = request.httpPut();
 
         return UtilJobs.createJobObjFromJson(result);

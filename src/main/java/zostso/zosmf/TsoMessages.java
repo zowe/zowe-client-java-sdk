@@ -13,9 +13,9 @@ import java.util.Optional;
 
 public class TsoMessages {
 
-    public Optional<TsoMessage> tsoMessage;
-    public Optional<TsoPromptMessage> tsoPrompt;
-    public Optional<TsoResponseMessage> tsoResponse;
+    public Optional<TsoMessage> tsoMessage = Optional.empty();
+    public Optional<TsoPromptMessage> tsoPrompt = Optional.empty();
+    public Optional<TsoResponseMessage> tsoResponse = Optional.empty();
 
     public Optional<TsoMessage> getTsoMessage() {
         return tsoMessage;

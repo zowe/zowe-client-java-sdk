@@ -22,6 +22,8 @@ import rest.IZoweRequest;
 import rest.JsonRequest;
 import utility.Util;
 
+import java.util.Optional;
+
 public class IssueCommand {
 
     private static final Logger LOG = LogManager.getLogger(IssueCommand.class);
@@ -42,7 +44,7 @@ public class IssueCommand {
         reqBody.put("cmd", commandParms.getCmd().get());
         LOG.debug(reqBody);
 
-        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), reqBody.toString());
+        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(reqBody.toString()));
         JSONObject result = request.httpPut();
 
         if (result == null) {

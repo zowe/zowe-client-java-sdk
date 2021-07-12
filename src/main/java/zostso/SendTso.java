@@ -10,24 +10,20 @@
 package zostso;
 
 import core.ZOSConnection;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONObject;
 import rest.IZoweRequest;
 import rest.JsonRequest;
 import rest.Response;
 import utility.Util;
 import utility.UtilTso;
 import zostso.input.SendTsoParms;
-import zostso.zosmf.TsoMessage;
-import zostso.zosmf.TsoMessages;
-import zostso.zosmf.TsoResponseMessage;
-import zostso.zosmf.ZosmfTsoResponse;
+import zostso.zosmf.*;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SendTso {
 
@@ -58,29 +54,36 @@ public class SendTso {
                 TsoConstants.RES_START_TSO + "/" + commandParms.getSevletKey() + TsoConstants.RES_DONT_READ_REPLY;
         LOG.info("SendTso::sendDataToTSOCommon - url {}", url);
 
-        // Use this to send to httput response ?
-//        TsoResponseMessage msg = new TsoResponseMessage("0100", commandParms.getData());
-        String jobObj = "{ \"TSO RESPONSE\": { \"VERSION\": \"0100\", \"DATA\": \"" + commandParms.getData() + "\" } }";
-        LOG.info("SendTo::sendDataToTSOCommon - jobObj {}", jobObj);
+        TsoResponseMessage tsoResponseMessage = new TsoResponseMessage(Optional.of("0100"),
+                Optional.ofNullable(commandParms.getData()));
+        String jobObj = getTsoResponseSendMessage(tsoResponseMessage);
+        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(jobObj));
 
-        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), jobObj);
-        JSONObject result = request.httpPut();
+        Response response = request.httpPut();
 
-        return UtilTso.parseJsonTsoResponse(result);
+        return UtilTso.getZosmfTsoResponse(response);
+    }
+
+    private static String getTsoResponseSendMessage(TsoResponseMessage tsoResponseMessage) throws Exception {
+        String message = "{\"TSO RESPONSE\":{\"VERSION\":\"" + tsoResponseMessage.getVersion().orElseThrow(Exception::new)
+                + "\",\"DATA\":\"" + tsoResponseMessage.getData().orElseThrow(Exception::new) + "\"}}";
+        LOG.info("SendTo::getTsoResponseSendMessage - message {}", message);
+        return message;
     }
 
     private static CollectedResponses getAllResponses(ZOSConnection connection, ZosmfTsoResponse tso) throws Exception {
         boolean done = false;
         StringBuilder messages = new StringBuilder();
-        List<ZosmfTsoResponse> tsos = Arrays.asList(tso);
+        List<ZosmfTsoResponse> tsos = new ArrayList<>();
+        tsos.add(tso);
         while (!done) {
             if (tso.getTsoData().isPresent()) {
                 for (TsoMessages tsoDatum : tso.getTsoData().get()) {
-                    if (tsoDatum.getTsoMessage() != null) {
+                    if (tsoDatum.getTsoMessage().isPresent()) {
                         TsoMessage tsoMsg = tsoDatum.getTsoMessage().orElseThrow(Exception::new);
                         String data = tsoMsg.getData().orElseThrow(Exception::new);
                         messages.append(data + "\n");
-                    } else if (tsoDatum.getTsoPrompt() != null) {
+                    } else if (tsoDatum.getTsoPrompt().isPresent()) {
                         if (messages.length() > 0) {
                             done = true;
                         }
@@ -89,9 +92,8 @@ public class SendTso {
                 }
             }
             if (!done) {
-                tso = SendTso.getDataFromTSO(connection,
-                        tso.getServletKey().isPresent() ? tso.getServletKey().get() : "");
-                // TODO
+                tso = SendTso.getDataFromTSO(connection, tso.getServletKey().orElseThrow(Exception::new));
+                tsos.add(tso);
             }
         }
         return new CollectedResponses(tsos, messages.toString());
@@ -102,12 +104,12 @@ public class SendTso {
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
-        LOG.info("SendTso::getDataFromTSO - url {}" + url);
+        LOG.info("SendTso::getDataFromTSO - url {}", url);
 
-        IZoweRequest request = new JsonRequest(connection, new HttpPost(url));
-        Response result = request.httpPost();
+        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.empty());
+        Response response = request.httpPut();
 
-        return UtilTso.parseJsonTsoResponse((JSONObject) result.getResult());
+        return UtilTso.getZosmfTsoResponse(response);
     }
 
     private static SendResponse createResponse(CollectedResponses responses) {

@@ -11,16 +11,11 @@ package utility;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import rest.Response;
 import zostso.TsoConstants;
-import zostso.zosmf.TsoMessage;
-import zostso.zosmf.TsoMessages;
-import zostso.zosmf.TsoPromptMessage;
-import zostso.zosmf.ZosmfTsoResponse;
+import zostso.zosmf.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class UtilTso {
 
@@ -35,7 +30,22 @@ public class UtilTso {
                 .reused((boolean) obj.get("reused")).timeout((boolean) obj.get("timeout")).build();
     }
 
-    public static ZosmfTsoResponse parseJsonTsoResponse(JSONObject result) {
+    public static ZosmfTsoResponse getZosmfTsoResponse(Response response) {
+        Util.checkNullParameter(response == null, "response is null");
+        Util.checkNullParameter(response.getResult() == null, "response result is null");
+        ZosmfTsoResponse result;
+        if (response.getStatusCode() != 200) {
+            String errorMsg = (String) response.getResult();
+            ZosmfMessages zosmfMsg = new ZosmfMessages(Optional.of(errorMsg), Optional.empty(), Optional.empty());
+            result = new ZosmfTsoResponse.Builder().msgData(Arrays.asList(zosmfMsg)).build();
+        } else {
+            result = UtilTso.parseJsonTsoResponse((JSONObject) response.getResult());
+        }
+
+        return result;
+    }
+
+    private static ZosmfTsoResponse parseJsonTsoResponse(JSONObject result) {
         Util.checkNullParameter(result == null, "No results to parse.");
 
         ZosmfTsoResponse response = new ZosmfTsoResponse.Builder().queueId((String) result.get("queueID"))
