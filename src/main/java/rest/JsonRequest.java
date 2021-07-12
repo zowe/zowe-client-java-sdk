@@ -19,7 +19,6 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -122,9 +121,8 @@ public class JsonRequest implements IZoweRequest {
 
         int statusCode = response.getStatusLine().getStatusCode();
 
-        LOG.info(response.getStatusLine().getStatusCode());
-        LOG.info(response.toString());
-        LOG.info(response.getEntity().getContent());
+        LOG.info("Response statusLins {}, Response {}, Response content {}",
+                response.getStatusLine().getStatusCode(), response.toString(), response.getEntity().getContent());
 
         if (statusCode != 200) {
             return (T) new Response(response.getStatusLine().getReasonPhrase(), statusCode);
@@ -177,18 +175,15 @@ public class JsonRequest implements IZoweRequest {
             putRequest.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
             putRequest.setHeader("Content-Type", "application/json");
             putRequest.setHeader(key, value);
-        }
-        if (getRequest != null) {
+        } else if (getRequest != null) {
             getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
             getRequest.setHeader("Content-Type", "application/json");
             getRequest.setHeader(key, value);
-        }
-        if (postRequest != null) {
+        } else if (postRequest != null) {
             postRequest.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
             postRequest.setHeader("Content-Type", "application/json");
             postRequest.setHeader(key, value);
-        }
-        if (deleteRequest != null) {
+        } else if (deleteRequest != null) {
             deleteRequest.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
             deleteRequest.setHeader("Content-Type", "application/json");
             deleteRequest.setHeader(key, value);

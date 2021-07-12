@@ -12,7 +12,6 @@ package zostso;
 import core.ZOSConnection;
 import utility.Util;
 import zostso.input.StartTsoParams;
-import zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.Optional;
 
@@ -34,7 +33,7 @@ public class IssueTso {
         IssueResponse response = new IssueResponse(false, null, false, null,
                 null, null);
         StartStopResponses StartResponse = StartTso.start(connection, accountNumber, startParams);
-        response.setStartResponse(StartResponse);
+        response.setStartResponse(Optional.ofNullable(StartResponse));
 
         if (response.getStartResponse().isPresent() && !response.getStartResponse().get().isSuccess()) {
             throw new Exception("TSO address space failed to start. Error: " +
@@ -46,10 +45,11 @@ public class IssueTso {
 
         SendResponse sendResponse = SendTso.sendDataToTSOCollect(connection,
                 response.getStartResponse().get().getServletKey().get(), command);
-        response.setSuccess(sendResponse.getSuccess().get());
+        response.setSuccess(sendResponse.getSuccess());
         response.setZosmfResponse(Optional.of(sendResponse.getZosmfResponse().get().get(0)));  // TODO
-        response.setCommandResponses(sendResponse.getCommandResponse().get());
-        response.stopResponses = Optional.ofNullable(StopTso.stop(connection, response.getStartResponse().get().getServletKey().get()));
+        response.setCommandResponses(sendResponse.getCommandResponse());
+        response.setStopResponse(Optional.ofNullable(
+                StopTso.stop(connection, response.getStartResponse().get().getServletKey().get())));
 
         return response;
     }

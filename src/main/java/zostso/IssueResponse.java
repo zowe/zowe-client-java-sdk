@@ -18,7 +18,7 @@ public class IssueResponse {
     private Optional<Boolean> success;
     private Optional<StartStopResponses> startResponse;
     private Optional<Boolean> startReady;
-    private Optional<StartStopResponse> stopResponses;
+    private Optional<StartStopResponse> stopResponse;
     private Optional<ZosmfTsoResponse> zosmfResponse;
     private Optional<String> commandResponses;
 
@@ -28,41 +28,57 @@ public class IssueResponse {
         this.success = Optional.ofNullable(success);
         this.startResponse = Optional.ofNullable(startResponse);
         this.startReady = Optional.ofNullable(startReady);
-        this.stopResponses = Optional.ofNullable(stopResponses);
+        this.stopResponse = Optional.ofNullable(stopResponses);
         this.zosmfResponse = Optional.ofNullable(zosmfResponse);
         this.commandResponses = Optional.ofNullable(commandResponses);
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = Optional.ofNullable(success);
     }
 
     public Optional<Boolean> getSuccess() {
         return success;
     }
 
-    public void setStartResponse(StartStopResponses startResponse) {
-        this.startResponse = Optional.ofNullable(startResponse);
+    public void setSuccess(Optional<Boolean> success) {
+        this.success = success;
     }
 
     public Optional<StartStopResponses> getStartResponse() {
         return startResponse;
     }
 
-    public void setZosmfResponse(Optional<ZosmfTsoResponse> zosmfResponse) {
-        this.zosmfResponse = zosmfResponse;
+    public void setStartResponse(Optional<StartStopResponses> startResponse) {
+        this.startResponse = startResponse;
+    }
+
+    public Optional<Boolean> getStartReady() {
+        return startReady;
+    }
+
+    public void setStartReady(Optional<Boolean> startReady) {
+        this.startReady = startReady;
+    }
+
+    public Optional<StartStopResponse> getStopResponse() {
+        return stopResponse;
+    }
+
+    public void setStopResponse(Optional<StartStopResponse> stopResponse) {
+        this.stopResponse = stopResponse;
     }
 
     public Optional<ZosmfTsoResponse> getZosmfResponse() {
         return zosmfResponse;
     }
 
+    public void setZosmfResponse(Optional<ZosmfTsoResponse> zosmfResponse) {
+        this.zosmfResponse = zosmfResponse;
+    }
+
     public Optional<String> getCommandResponses() {
         return commandResponses;
     }
 
-    public void setCommandResponses(String commandResponses) {
-        this.commandResponses = Optional.ofNullable(commandResponses);
+    public void setCommandResponses(Optional<String> commandResponses) {
+        this.commandResponses = commandResponses;
     }
 
     @Override
@@ -71,7 +87,7 @@ public class IssueResponse {
                 "success=" + success +
                 ", startResponse=" + startResponse +
                 ", startReady=" + startReady +
-                ", stopResponses=" + stopResponses +
+                ", stopResponse=" + stopResponse +
                 ", zosmfResponse=" + zosmfResponse +
                 ", commandResponses=" + commandResponses +
                 '}';
