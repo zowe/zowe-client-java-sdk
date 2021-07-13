@@ -16,9 +16,12 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.TrustAllStrategy;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
 import utility.Util;
 
 import java.io.IOException;
@@ -35,8 +38,8 @@ public class TextRequest implements IZoweRequest {
     private HttpDelete deleteRequest;
     private Optional<String> body;
     private Map<String, String> headers = new HashMap<>();
-    private HttpClient client = HttpClientBuilder.create().build();
-    private ResponseHandler<String> handler = new BasicResponseHandler();
+    private HttpClient client;
+    private final ResponseHandler<String> handler = new BasicResponseHandler();
 
     public TextRequest(ZOSConnection connection, HttpGet getRequest) {
         this.connection = connection;
@@ -87,6 +90,15 @@ public class TextRequest implements IZoweRequest {
 
     private void setup() {
         this.setStandardHeaders();
+        try {
+            client = HttpClients
+                .custom()
+                .setSSLContext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build())
+                .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
+                .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setStandardHeaders() {

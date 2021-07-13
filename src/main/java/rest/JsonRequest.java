@@ -19,11 +19,14 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.TrustAllStrategy;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,7 +51,7 @@ public class JsonRequest implements IZoweRequest {
     private HttpDelete deleteRequest;
     private Optional<String> body;
     private Map<String, String> headers = new HashMap<>();
-    private final HttpClient client = HttpClientBuilder.create().build();
+    private HttpClient client;
     private final ResponseHandler<String> handler = new BasicResponseHandler();
     private HttpContext localContext = new BasicHttpContext();
     private HttpResponse httpResponse;
@@ -181,6 +184,15 @@ public class JsonRequest implements IZoweRequest {
 
     private void setup() {
         this.setStandardHeaders();
+        try {
+            client = HttpClients
+                .custom()
+                .setSSLContext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build())
+                .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
+                .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setStandardHeaders() {
