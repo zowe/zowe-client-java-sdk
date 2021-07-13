@@ -20,7 +20,7 @@ public class SubmitJobsTest {
 
     private static final Logger LOG = LogManager.getLogger(SubmitJobsTest.class);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         String hostName = "XXX";
         String port = "XXX";
         String userName = "XXX";
@@ -36,7 +36,7 @@ public class SubmitJobsTest {
         return SubmitJobs.submitJcl(connection, jclString, null, null);
     }
 
-    private static Job tstSubmitJob(ZOSConnection connection, String dsMember) throws IOException {
+    private static Job tstSubmitJob(ZOSConnection connection, String dsMember) throws Exception {
         return SubmitJobs.submitJob(connection, dsMember);
     }
 

@@ -51,6 +51,7 @@ public class JsonRequest implements IZoweRequest {
     private final HttpClient client = HttpClientBuilder.create().build();
     private final ResponseHandler<String> handler = new BasicResponseHandler();
     private HttpContext localContext = new BasicHttpContext();
+    private HttpResponse httpResponse;
 
     // disable end user from calling default constructor
     private JsonRequest() {
@@ -103,16 +104,16 @@ public class JsonRequest implements IZoweRequest {
         if (!headers.isEmpty()) headers.forEach((key, value) -> putRequest.setHeader(key, value));
         putRequest.setEntity(new StringEntity(body.orElse("")));
 
-        HttpResponse response = client.execute(putRequest, localContext);
-        int statusCode = response.getStatusLine().getStatusCode();
+        this.httpResponse = client.execute(putRequest, localContext);
+        int statusCode = httpResponse.getStatusLine().getStatusCode();
 
-        LOG.info("JsonRequest::httpPost - Response statusCode {}, Response {}", response.getStatusLine().getStatusCode(), response.toString());
+        LOG.info("JsonRequest::httpPost - Response statusCode {}, Response {}", httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
         if (statusCode != 200) {
-            return (T) new Response(response.getStatusLine().getReasonPhrase(), statusCode);
+            return (T) new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
         }
 
-        HttpEntity entity = response.getEntity();
+        HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
             result = EntityUtils.toString(entity);
             LOG.info("JsonRequest::httpPut - result = {}", result);
@@ -132,16 +133,17 @@ public class JsonRequest implements IZoweRequest {
         String result = null;
         if (!headers.isEmpty()) headers.forEach((key, value) -> postRequest.setHeader(key, value));
 
-        HttpResponse response = client.execute(postRequest, localContext);
-        int statusCode = response.getStatusLine().getStatusCode();
+        this.httpResponse = client.execute(postRequest, localContext);
+        int statusCode = httpResponse.getStatusLine().getStatusCode();
 
-        LOG.info("Response statusCode {}, Response {}", response.getStatusLine().getStatusCode(), response.toString());
+        LOG.info("Response statusCode {}, Response {}", httpResponse.getStatusLine().getStatusCode(),
+                httpResponse.toString());
 
         if (statusCode != 200) {
-            return (T) new Response(response.getStatusLine().getReasonPhrase(), statusCode);
+            return (T) new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
         }
 
-        HttpEntity entity = response.getEntity();
+        HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
             result = EntityUtils.toString(entity);
             LOG.info("Response result {}", result);

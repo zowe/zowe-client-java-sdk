@@ -16,10 +16,7 @@ import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import rest.IZoweRequest;
-import rest.JsonRequest;
-import rest.TextRequest;
-import rest.ZosmfHeaders;
+import rest.*;
 import utility.Util;
 import utility.UtilJobs;
 import zosjobs.input.SubmitJclParms;
@@ -35,11 +32,11 @@ public class SubmitJobs {
 
     private static final Logger LOG = LogManager.getLogger(SubmitJobs.class);
 
-    public static Job submitJob(ZOSConnection connection, String jobDataSet) throws IOException {
+    public static Job submitJob(ZOSConnection connection, String jobDataSet) throws Exception {
         return SubmitJobs.submitJobCommon(connection, new SubmitJobParms(jobDataSet));
     }
 
-    public static Job submitJobCommon(ZOSConnection connection, SubmitJobParms parms) throws IOException {
+    public static Job submitJobCommon(ZOSConnection connection, SubmitJobParms parms) throws Exception {
         Util.checkNullParameter(parms == null, "parms is null");
         Util.checkStateParameter(!parms.getJobDataSet().isPresent(), "jobDataSet not specified");
 
@@ -56,9 +53,12 @@ public class SubmitJobs {
         }
 
         IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(reqBody.toString()));
-        JSONObject result = request.httpPut();
+        Response response = request.httpPut();
 
-        return UtilJobs.createJobObjFromJson(result);
+        if (response.getResult() == null || response.getStatusCode() != 200)
+            throw new Exception("No results for submitted job.");
+
+        return UtilJobs.createJobObjFromJson((JSONObject) response.getResult());
     }
 
     /**
@@ -116,7 +116,7 @@ public class SubmitJobs {
         String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE;
         LOG.debug(url);
 
-        IZoweRequest request = new TextRequest(connection, new HttpPut(url), parms.getJcl().get());
+        IZoweRequest request = new TextRequest(connection, new HttpPut(url), Optional.of(parms.getJcl().get()));
         request.setHeaders(headers);
 
         String result = request.httpPut();

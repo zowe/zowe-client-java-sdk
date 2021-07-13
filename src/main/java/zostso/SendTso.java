@@ -57,9 +57,11 @@ public class SendTso {
         TsoResponseMessage tsoResponseMessage = new TsoResponseMessage(Optional.of("0100"),
                 Optional.ofNullable(commandParms.getData()));
         String jobObj = getTsoResponseSendMessage(tsoResponseMessage);
-        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(jobObj));
 
+        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(jobObj));
         Response response = request.httpPut();
+        if (response.getResult() == null || response.getStatusCode() != 200)
+            throw new Exception("No results from executing tso command after getting TSO address space.");
 
         return UtilTso.getZosmfTsoResponse(response);
     }
@@ -107,7 +109,11 @@ public class SendTso {
         LOG.info("SendTso::getDataFromTSO - url {}", url);
 
         IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.empty());
-        Response response = request.httpPut();
+        Response response =  request.httpPut();
+
+        if (response.getResult() == null || response.getStatusCode() != 200) {
+            throw new Exception("Follow up TSO Messages from TSO command cannot be retrieved.");
+        }
 
         return UtilTso.getZosmfTsoResponse(response);
     }

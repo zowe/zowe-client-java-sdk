@@ -50,14 +50,4 @@ public class TextRequestTest {
                .execute(any(HttpGet.class), any(ResponseHandler.class));
     }
 
-    @Test
-    public void tstHttpPutThrowsException() throws IOException {
-        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
-               .thenThrow(new IOException());
-
-        assertThrows(IOException.class, putRequest::httpPut);
-        Mockito.verify(httpClient, Mockito.times(1))
-               .execute(any(HttpPut.class), any(ResponseHandler.class));
-    }
-
 }
