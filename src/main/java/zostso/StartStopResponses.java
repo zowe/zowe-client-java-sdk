@@ -30,8 +30,8 @@ public class StartStopResponses {
         this.zosmfTsoResponse = Optional.ofNullable(zosmfTsoResponse);
         if (zosmfTsoResponse.getMsgData().isPresent()) {
             this.success = false;
-            ZosmfMessages zosmfMsg = zosmfTsoResponse.getMsgData().get().get(0);
-            this.failureResponse = Optional.of(zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR));
+            ZosmfMessages zOSMFMsg = zosmfTsoResponse.getMsgData().get().get(0);
+            this.failureResponse = Optional.of(zOSMFMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR));
         } else {
             this.success = true;
             this.failureResponse = Optional.empty();
@@ -40,10 +40,10 @@ public class StartStopResponses {
             this.servletKey = Optional.of(zosmfTsoResponse.getServletKey().get());
         }
 
-        StringBuilder msgs = new StringBuilder();
+        StringBuilder buildMessage = new StringBuilder();
         List<TsoMessages> tsoMsgLst = zosmfTsoResponse.getTsoData().orElse(new ArrayList<>());
-        tsoMsgLst.forEach(msg -> msgs.append(msg));
-        this.messages = Optional.of(msgs.toString());
+        tsoMsgLst.forEach(msg -> buildMessage.append(msg));
+        this.messages = Optional.of(buildMessage.toString());
     }
 
     public Optional<ZosmfTsoResponse> getZosmfTsoResponse() {

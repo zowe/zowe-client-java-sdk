@@ -32,7 +32,7 @@ public class StopTso {
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + commandParms.getServletKey().get();
-        LOG.info("StopTso::stopCommon url {}" + url);
+        LOG.info("StopTso::stopCommon url {}", url);
 
         IZoweRequest request = new JsonRequest(connection, new HttpDelete(url));
         JSONObject result = request.httpDelete();

@@ -14,6 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.reflect.Whitebox;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -35,7 +36,7 @@ public class TextRequestTest {
         Whitebox.setInternalState(getRequest, "client", httpClient);
 
         HttpPut httpPut = Mockito.mock(HttpPut.class);
-        putRequest = new JsonRequest(connection, httpPut, "");
+        putRequest = new JsonRequest(connection, httpPut, Optional.empty());
         Whitebox.setInternalState(putRequest, "client", httpClient);
     }
 
@@ -47,16 +48,6 @@ public class TextRequestTest {
         assertThrows(IOException.class, getRequest::httpGet);
         Mockito.verify(httpClient, Mockito.times(1))
                .execute(any(HttpGet.class), any(ResponseHandler.class));
-    }
-
-    @Test
-    public void tstHttpPutThrowsException() throws IOException {
-        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
-               .thenThrow(new IOException());
-
-        assertThrows(IOException.class, putRequest::httpPut);
-        Mockito.verify(httpClient, Mockito.times(1))
-               .execute(any(HttpPut.class), any(ResponseHandler.class));
     }
 
 }

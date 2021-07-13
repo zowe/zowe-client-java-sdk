@@ -32,8 +32,8 @@ public class IssueTso {
 
         IssueResponse response = new IssueResponse(false, null, false, null,
                 null, null);
-        StartStopResponses StartResponse = StartTso.start(connection, accountNumber, startParams);
-        response.setStartResponse(Optional.ofNullable(StartResponse));
+        StartStopResponses startResponse = StartTso.start(connection, accountNumber, startParams);
+        response.setStartResponse(Optional.ofNullable(startResponse));
 
         if (response.getStartResponse().isPresent() && !response.getStartResponse().get().isSuccess()) {
             throw new Exception("TSO address space failed to start. Error: " +
@@ -41,12 +41,13 @@ public class IssueTso {
                     "Unknown error"));
         }
 
-        response.setZosmfResponse(Optional.ofNullable(StartResponse.getZosmfTsoResponse().get()));
+        response.setZosmfResponse(Optional.ofNullable(startResponse.getZosmfTsoResponse().get()));
 
         SendResponse sendResponse = SendTso.sendDataToTSOCollect(connection,
                 response.getStartResponse().get().getServletKey().get(), command);
         response.setSuccess(sendResponse.getSuccess());
-        response.setZosmfResponse(Optional.of(sendResponse.getZosmfResponse().get().get(0)));  // TODO
+        response.setZosmfResponse(Optional.of(sendResponse.getZosmfResponse().get().get(0)));
+        startResponse.setCollectedResponses(sendResponse.getZosmfResponse().get());
         response.setCommandResponses(sendResponse.getCommandResponse());
         response.setStopResponse(Optional.ofNullable(
                 StopTso.stop(connection, response.getStartResponse().get().getServletKey().get())));

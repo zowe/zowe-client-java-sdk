@@ -12,6 +12,7 @@ package zosconsole;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rest.Response;
 import zosconsole.zosmf.IssueParms;
 import zosconsole.zosmf.ZosmfIssueParms;
 import zosconsole.zosmf.ZosmfIssueResponse;
@@ -21,6 +22,8 @@ import org.json.simple.JSONObject;
 import rest.IZoweRequest;
 import rest.JsonRequest;
 import utility.Util;
+
+import java.util.Optional;
 
 public class IssueCommand {
 
@@ -42,22 +45,22 @@ public class IssueCommand {
         reqBody.put("cmd", commandParms.getCmd().get());
         LOG.debug(reqBody);
 
-        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), reqBody.toString());
-        JSONObject result = request.httpPut();
-
-        if (result == null) {
+        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(reqBody.toString()));
+        Response response = request.httpPut();
+        if (response.getResult() == null || response.getStatusCode() != 200) {
             throw new Exception("No results for console command " + reqBody);
         }
-        LOG.debug(result);
+        LOG.debug("Response result {}", response.getResult());
 
-        ZosmfIssueResponse response = new ZosmfIssueResponse();
-        response.setCmdResponseKey((String) result.get("cmd-response-key"));
-        response.setCmdResponseUrl((String) result.get("cmd-response-url"));
-        response.setCmdResponseUri((String) result.get("cmd-response-uri"));
-        response.setCmdResponse((String) result.get("cmd-response"));
-        response.setSolKeyDetected((String) result.get("sol-key-detected"));
+        ZosmfIssueResponse zosmfIssueResponse = new ZosmfIssueResponse();
+        JSONObject result = (JSONObject) response.getResult();
+        zosmfIssueResponse.setCmdResponseKey((String) result.get("cmd-response-key"));
+        zosmfIssueResponse.setCmdResponseUrl((String) result.get("cmd-response-url"));
+        zosmfIssueResponse.setCmdResponseUri((String) result.get("cmd-response-uri"));
+        zosmfIssueResponse.setCmdResponse((String) result.get("cmd-response"));
+        zosmfIssueResponse.setSolKeyDetected((String) result.get("sol-key-detected"));
 
-        return response;
+        return zosmfIssueResponse;
     }
 
     /**

@@ -24,6 +24,7 @@ import utility.Util;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class TextRequest implements IZoweRequest {
 
@@ -32,7 +33,7 @@ public class TextRequest implements IZoweRequest {
     private HttpPut putRequest;
     private HttpPut postRequest;
     private HttpDelete deleteRequest;
-    private String body;
+    private Optional<String> body;
     private Map<String, String> headers = new HashMap<>();
     private HttpClient client = HttpClientBuilder.create().build();
     private ResponseHandler<String> handler = new BasicResponseHandler();
@@ -43,14 +44,15 @@ public class TextRequest implements IZoweRequest {
         this.setup();
     }
 
-    public TextRequest(ZOSConnection connection, HttpPut putRequest, String body) {
+    public TextRequest(ZOSConnection connection, HttpPut putRequest, Optional<String> body) {
         this.connection = connection;
         this.putRequest = putRequest;
         this.body = body;
         this.setup();
     }
 
-    private TextRequest() {} // this disables end user from calling default constructor
+    // this disables end user from calling default constructor
+    private TextRequest() {}
 
     @Override
     public <T> T httpGet() throws IOException {
@@ -61,7 +63,7 @@ public class TextRequest implements IZoweRequest {
     @Override
     public <T> T httpPut() throws IOException {
         if (!headers.isEmpty()) headers.forEach((key, value) -> putRequest.setHeader(key, value));
-        putRequest.setEntity(new StringEntity(body));
+        putRequest.setEntity(new StringEntity(body.orElse("")));
 
         return (T) client.execute(putRequest, handler);
     }

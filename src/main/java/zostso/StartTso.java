@@ -13,18 +13,13 @@ import core.ZOSConnection;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONObject;
 import rest.IZoweRequest;
 import rest.JsonRequest;
 import rest.Response;
 import utility.Util;
 import utility.UtilTso;
 import zostso.input.StartTsoParams;
-import zostso.zosmf.ZosmfMessages;
 import zostso.zosmf.ZosmfTsoResponse;
-
-import java.util.Arrays;
-import java.util.Optional;
 
 public class StartTso {
 
@@ -58,16 +53,7 @@ public class StartTso {
         IZoweRequest request = new JsonRequest(connection, new HttpPost(url));
         Response response = request.httpPost();
 
-        ZosmfTsoResponse result;
-        if (response.getStatusCode() != 200) {
-            String errorMsg = (String) response.getResult();
-            ZosmfMessages zosmfMsg = new ZosmfMessages(Optional.of(errorMsg), Optional.empty(), Optional.empty());
-            result = new ZosmfTsoResponse.Builder().msgData(Arrays.asList(zosmfMsg)).build();
-        } else {
-            result = UtilTso.parseJsonTsoResponse((JSONObject) response.getResult());
-        }
-
-        return result;
+        return UtilTso.getZosmfTsoResponse(response);
     }
 
     private static StartTsoParams setDefaultAddressSpaceParams(StartTsoParams parms, String accountNumber) {
