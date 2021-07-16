@@ -20,14 +20,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import rest.IZoweRequest;
 import rest.JsonRequest;
+import rest.ZosmfHeaders;
 import utility.Util;
 import utility.UtilDataset;
-import utility.UtilJobs;
 import zosfiles.constants.ZosFilesConstants;
 import zosfiles.doc.ListOptions;
 import zosfiles.response.Dataset;
-import zosjobs.JobsConstants;
-
 
 import java.util.ArrayList;
 
@@ -35,7 +33,7 @@ public class List {
 
     private static final Logger LOG = LogManager.getLogger(List.class);
 
-    public static  void listDsn(ZOSConnection connection, String dataSetName, ListOptions options ) throws IOException {
+    public static java.util.List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListOptions options ) throws IOException {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
@@ -50,40 +48,62 @@ public class List {
             if (options.getStart().isPresent()) {
                 url += "&volser" + options.getStart().get();
             }
+            String key, value;
+            Map<String, String> headers = new HashMap<>();
+            key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
+            value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
+            headers.put(key, value);
+
             if (options.getAttributes().isPresent()) {
-                if (parms.getPrefix().get() != JobsConstants.DEFAULT_PREFIX) {
-                    if (url.contains(JobsConstants.QUERY_ID)) {
-                        url += JobsConstants.COMBO_ID;
-                    }
-                    url += JobsConstants.QUERY_PREFIX + parms.getPrefix().get();
-                }
+                key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(0);
+                value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
+                headers.put(key, value);
             }
             if (options.getMaxLength().isPresent()) {
-                if (parms.getMaxJobs().get() != JobsConstants.DEFAULT_MAX_JOBS) {
-                    if (url.contains(JobsConstants.QUERY_ID)) {
-                        url += JobsConstants.COMBO_ID;
-                    }
-                    url += JobsConstants.QUERY_MAX_JOBS + parms.getMaxJobs().get();
-                }
+                key = "X-IBM-Max-Items";
+                value = options.getMaxLength().get();
+                headers.put(key, value);
+            } else {
+                key = ZosmfHeaders.HEADERS.get("X_IBM_MAX_ITEMS").get(0);
+                value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
+                headers.put(key, value);
             }
             if (options.getResponseTimeout().isPresent()) {
-                if (url.contains(JobsConstants.QUERY_ID)) {
-                    url += JobsConstants.COMBO_ID;
-                }
-                url += JobsConstants.QUERY_JOBID + parms.getJobId().get();
+                key = ZosmfHeaders.HEADERS.get("X_IBM_RESPONSE_TIMEOUT").get(0);
+                value = options.getResponseTimeout().get();
+                headers.put(key, value);
             }
+            if (options.getRecall().isPresent()) {
+                switch (options.getRecall().get().toLowerCase(Locale.ROOT)) {
+                    case "wait":
+                        key = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_WAIT").get(0);
+                        value = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_WAIT").get(1);
+                        headers.put(key, value);
+                        break;
+                    case "nowait":
+                        key = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_NO_WAIT").get(0);
+                        value = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_NO_WAIT").get(1);
+                        headers.put(key, value);
+                        break;
+                    case "error":
+                        key = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_ERROR").get(0);
+                        value = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_ERROR").get(1);
+                        headers.put(key, value);
+                        break;
+                }
+            }
+            LOG.debug(url);
+
+            IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
+            request.setHeaders(headers);
+            JSONArray results = request.httpGet();
+            results.forEach(item -> {
+                JSONObject datasetObj = (JSONObject) item;
+                datasets.add(UtilDataset.createDatasetObjFromJson(datasetObj));
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-
-        LOG.debug(url);
-
-        IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
-        JSONArray results = request.httpGet();
-        results.forEach(item -> {
-            JSONObject datasetObj = (JSONObject) item;
-            datasets.add(UtilDataset.createDatasetObjFromJson(datasetObj));
-        });
-
-        return ;
+        return datasets;
     }
 }
