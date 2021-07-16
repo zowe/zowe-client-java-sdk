@@ -1,7 +1,5 @@
 package zosfiles.response;
 
-
-
 import java.util.Optional;
 
 public class Dataset {
