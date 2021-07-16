@@ -9,9 +9,6 @@
  */
 package zosfiles;
 
-import java.io.IOException;
-import java.util.*;
-
 import core.ZOSConnection;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.logging.log4j.LogManager;
@@ -27,13 +24,17 @@ import zosfiles.constants.ZosFilesConstants;
 import zosfiles.input.ListParams;
 import zosfiles.response.Dataset;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class List {
 
     private static final Logger LOG = LogManager.getLogger(List.class);
 
-    public static java.util.List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListParams options ) throws IOException {
+    public static java.util.List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListParams options) throws IOException {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
