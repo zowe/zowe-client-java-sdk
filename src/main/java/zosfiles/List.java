@@ -24,7 +24,7 @@ import rest.ZosmfHeaders;
 import utility.Util;
 import utility.UtilDataset;
 import zosfiles.constants.ZosFilesConstants;
-import zosfiles.doc.ListOptions;
+import zosfiles.input.ListParams;
 import zosfiles.response.Dataset;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class List {
 
     private static final Logger LOG = LogManager.getLogger(List.class);
 
-    public static java.util.List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListOptions options ) throws IOException {
+    public static java.util.List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListParams options ) throws IOException {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
