@@ -25,47 +25,57 @@ public class UtilTso {
     */
 
     public static ZosmfTsoResponse parseJsonStopResponse(JSONObject obj) {
-        Util.checkNullParameter(obj == null, "No obj to parse.");
+        Util.checkNullParameter(obj == null, "no obj to parse");
         return new ZosmfTsoResponse.Builder().ver((String) obj.get("ver")).servletKey((String) obj.get("servletKey"))
                 .reused((boolean) obj.get("reused")).timeout((boolean) obj.get("timeout")).build();
     }
 
-    public static ZosmfTsoResponse getZosmfTsoResponse(Response response) {
+    public static ZosmfTsoResponse getZosmfTsoResponse(Response response) throws Exception {
         Util.checkNullParameter(response == null, "response is null");
-        Util.checkNullParameter(response.getResult() == null, "response result is null");
         ZosmfTsoResponse result;
-        if (response.getStatusCode() != 200) {
-            String errorMsg = (String) response.getResult();
+        if (response.getStatusCode().isPresent() && response.getStatusCode().get() != 200) {
+            String errorMsg = (String) response.getResult().orElseThrow(() -> new Exception("results not available"));
             ZosmfMessages zosmfMsg = new ZosmfMessages(Optional.of(errorMsg), Optional.empty(), Optional.empty());
             result = new ZosmfTsoResponse.Builder().msgData(Arrays.asList(zosmfMsg)).build();
         } else {
-            result = UtilTso.parseJsonTsoResponse((JSONObject) response.getResult());
+            result = UtilTso.parseJsonTsoResponse((JSONObject) (response.getResult().isPresent() ?
+                    response.getResult().get() : null));
         }
 
         return result;
     }
 
-    private static ZosmfTsoResponse parseJsonTsoResponse(JSONObject result) {
-        Util.checkNullParameter(result == null, "No results to parse.");
+    private static ZosmfTsoResponse parseJsonTsoResponse(JSONObject result) throws Exception {
+        Util.checkNullParameter(result == null, "no results to parse");
 
-        ZosmfTsoResponse response = new ZosmfTsoResponse.Builder().queueId((String) result.get("queueID"))
-                .ver((String) result.get("ver")).servletKey((String) result.get("servletKey"))
-                .reused((boolean) result.get("reused")).timeout((boolean) result.get("timeout")).build();
+        ZosmfTsoResponse response = null;
+        try {
+            response = new ZosmfTsoResponse.Builder().queueId((String) result.get("queueID"))
+                    .ver((String) result.get("ver")).servletKey((String) result.get("servletKey"))
+                    .reused((boolean) result.get("reused")).timeout((boolean) result.get("timeout")).build();
+        } catch (Exception e) {
+            throw new Exception("missing one of the following json field values: queueID, ver, servletKey, " +
+                    "reused and timeout");
+        }
 
         List<TsoMessages> tsoMessagesLst = new ArrayList<>();
-        JSONArray tsoData = (JSONArray) result.get("tsoData");
-        tsoData.forEach(item -> {
-            JSONObject obj = (JSONObject) item;
-            TsoMessages tsoMessages = new TsoMessages();
-            parseJsonTsoMessage(tsoMessagesLst, obj, tsoMessages);
-            parseJsonTsoPrompt(tsoMessagesLst, obj, tsoMessages);
-        });
-        response.setTsoData(tsoMessagesLst);
+        Optional<JSONArray> tsoData = Optional.ofNullable((JSONArray) result.get("tsoData"));
+
+        if (tsoData.isPresent()) {
+            tsoData.get().forEach(item -> {
+                JSONObject obj = (JSONObject) item;
+                TsoMessages tsoMessages = new TsoMessages();
+                parseJsonTsoMessage(tsoMessagesLst, obj, tsoMessages);
+                parseJsonTsoPrompt(tsoMessagesLst, obj, tsoMessages);
+            });
+            response.setTsoData(tsoMessagesLst);
+        }
 
         return response;
     }
 
-    private static boolean parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
+    private static boolean parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
+            tsoMessages) {
         Map tsoMessageMap = ((Map) obj.get(TsoConstants.TSO_MESSAGE));
         if (tsoMessageMap != null) {
             TsoMessage tsoMessage = new TsoMessage();
@@ -82,7 +92,8 @@ public class UtilTso {
         return false;
     }
 
-    private static boolean parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
+    private static boolean parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
+            tsoMessages) {
         Map tsoPromptMap = ((Map) obj.get(TsoConstants.TSO_PROMPT));
         if (tsoPromptMap != null) {
             TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();

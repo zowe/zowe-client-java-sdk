@@ -37,9 +37,6 @@ public class SendTso {
 
         ZosmfTsoResponse putResponse = SendTso.sendDataToTSOCommon(connection, new SendTsoParms(servletKey, data));
 
-        if (!putResponse.getMsgData().isPresent()) {
-            // TODO
-        }
         CollectedResponses responses = SendTso.getAllResponses(connection, putResponse);
         return SendTso.createResponse(responses);
     }
@@ -60,7 +57,7 @@ public class SendTso {
 
         IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(jobObj));
         Response response = request.httpPut();
-        if (response.getResult() == null || response.getStatusCode() != 200)
+        if (response.getResult().isPresent() && response.getStatusCode().get() != 200)
             throw new Exception("No results from executing tso command after getting TSO address space.");
 
         return UtilTso.getZosmfTsoResponse(response);
@@ -89,8 +86,8 @@ public class SendTso {
                         if (messages.length() > 0) {
                             done = true;
                         }
+                        // TSO PROMPT reached without getting any data, retrying
                     }
-                    // TODO
                 }
             }
             if (!done) {
@@ -111,7 +108,7 @@ public class SendTso {
         IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.empty());
         Response response =  request.httpPut();
 
-        if (response.getResult() == null || response.getStatusCode() != 200) {
+        if (response.getResult().isPresent() && response.getStatusCode().get() != 200) {
             throw new Exception("Follow up TSO Messages from TSO command cannot be retrieved.");
         }
 

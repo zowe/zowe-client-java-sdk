@@ -55,10 +55,10 @@ public class SubmitJobs {
         IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(reqBody.toString()));
         Response response = request.httpPut();
 
-        if (response.getResult() == null || response.getStatusCode() != 200)
+        if (response.getResult().isPresent() && response.getStatusCode().get() != 200)
             throw new Exception("No results for submitted job.");
 
-        return UtilJobs.createJobObjFromJson((JSONObject) response.getResult());
+        return UtilJobs.createJobObjFromJson((JSONObject) response.getResult().orElseThrow(Exception::new));
     }
 
     /**
