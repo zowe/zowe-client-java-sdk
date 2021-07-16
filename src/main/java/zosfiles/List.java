@@ -41,10 +41,10 @@ public class List {
 
         java.util.List<Dataset> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + ZosFilesConstants.RES_DS_MEMBERS;
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES  + "?dslevel=" + dataSetName;
         try {
             if (options.getVolume().isPresent()) {
-                url += "&volser" + options.getPattern().get();
+                url += "&volser" + options.getVolume().get();
             }
             if (options.getStart().isPresent()) {
                 url += "&volser" + options.getStart().get();
@@ -93,12 +93,13 @@ public class List {
                         break;
                 }
             }
-            LOG.debug(url);
+            LOG.info(url);
 
             IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
             request.setHeaders(headers);
-            JSONArray results = request.httpGet();
-            results.forEach(item -> {
+            JSONObject results = request.httpGet();
+            JSONArray items = (JSONArray) results.get("items");
+            items.forEach(item -> {
                 JSONObject datasetObj = (JSONObject) item;
                 datasets.add(UtilDataset.createDatasetObjFromJson(datasetObj));
             });

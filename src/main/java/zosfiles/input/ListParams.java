@@ -3,13 +3,13 @@ package zosfiles.input;
 import java.util.Optional;
 
 public class ListParams {
-    private Optional<String> volume;
-    private Optional<String> attributes;
-    private Optional<String> maxLength;
-    private Optional<String> start;
-    private Optional<String> recall;
-    private Optional<String> pattern;
-    private Optional<String> responseTimeout;
+    private Optional<String> volume = Optional.empty();
+    private Optional<String> attributes = Optional.empty();
+    private Optional<String> maxLength = Optional.empty();
+    private Optional<String> start = Optional.empty();
+    private Optional<String> recall = Optional.empty();
+    private Optional<String> pattern = Optional.empty();
+    private Optional<String> responseTimeout = Optional.empty();
 
     public ListParams(ListParams.Builder builder) {
         if (builder.volume != null)
