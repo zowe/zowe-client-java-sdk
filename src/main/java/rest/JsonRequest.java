@@ -113,7 +113,8 @@ public class JsonRequest implements IZoweRequest {
         LOG.info("JsonRequest::httpPost - Response statusCode {}, Response {}", httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
         if (statusCode != 200) {
-            return (T) new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
+            return (T) new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
+                    Optional.ofNullable(statusCode));
         }
 
         HttpEntity entity = httpResponse.getEntity();
@@ -124,7 +125,7 @@ public class JsonRequest implements IZoweRequest {
 
         JSONParser parser = new JSONParser();
         try {
-            return (T) new Response(parser.parse(result), statusCode);
+            return (T) new Response(Optional.ofNullable(parser.parse(result)), Optional.ofNullable(statusCode));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -143,7 +144,8 @@ public class JsonRequest implements IZoweRequest {
                 httpResponse.toString());
 
         if (statusCode != 200) {
-            return (T) new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
+            return (T) new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
+                    Optional.ofNullable(statusCode));
         }
 
         HttpEntity entity = httpResponse.getEntity();
@@ -154,7 +156,7 @@ public class JsonRequest implements IZoweRequest {
 
         JSONParser parser = new JSONParser();
         try {
-            return (T) new Response(parser.parse(result), statusCode);
+            return (T) new Response(Optional.ofNullable(parser.parse(result)), Optional.ofNullable(statusCode));
         } catch (ParseException e) {
             e.printStackTrace();
         }
