@@ -74,7 +74,7 @@ public class UtilTso {
         return response;
     }
 
-    private static boolean parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
+    private static void parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
             tsoMessages) {
         Map tsoMessageMap = ((Map) obj.get(TsoConstants.TSO_MESSAGE));
         if (tsoMessageMap != null) {
@@ -87,12 +87,10 @@ public class UtilTso {
             });
             tsoMessages.setTsoMessage(Optional.of(tsoMessage));
             tsoMessagesLst.add(tsoMessages);
-            return true;
         }
-        return false;
     }
 
-    private static boolean parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
+    private static void parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
             tsoMessages) {
         Map tsoPromptMap = ((Map) obj.get(TsoConstants.TSO_PROMPT));
         if (tsoPromptMap != null) {
@@ -105,9 +103,7 @@ public class UtilTso {
             });
             tsoMessages.setTsoPrompt(Optional.of(tsoPromptMessage));
             tsoMessagesLst.add(tsoMessages);
-            return true;
         }
-        return false;
     }
 
 }
