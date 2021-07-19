@@ -17,37 +17,37 @@ import java.util.Optional;
  */
 public class ZosFilesParams {
 
-        private Optional<String> responseTimeout;
+    private Optional<String> responseTimeout;
 
-        public ZosFilesParams(Builder builder) {
-            if (builder.responseTimeout != null)
-                this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
-            else this.responseTimeout = Optional.empty();
+    public ZosFilesParams(Builder builder) {
+        if (builder.responseTimeout != null)
+            this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
+        else this.responseTimeout = Optional.empty();
 
+    }
+
+    public Optional<String> getResponseTimeout() {
+        return responseTimeout;
+    }
+
+    @Override
+    public String toString() {
+        return "ZosFilesOptions{" +
+                "responseTimeout=" + responseTimeout +
+                '}';
+    }
+
+    public static class Builder {
+
+        private String responseTimeout;
+
+        public ZosFilesParams.Builder responseTimeout(String responseTimeout) {
+            this.responseTimeout = responseTimeout;
+            return this;
         }
 
-        public Optional<String> getResponseTimeout() {
-            return responseTimeout;
+        public ZosFilesParams build() {
+            return new ZosFilesParams(this);
         }
-
-        @Override
-        public String toString() {
-            return "ZosFilesOptions{" +
-                    "responseTimeout=" + responseTimeout +
-                    '}';
-        }
-
-        public static class Builder {
-
-            private String responseTimeout;
-
-            public ZosFilesParams.Builder responseTimeout(String responseTimeout) {
-                this.responseTimeout = responseTimeout;
-                return this;
-            }
-
-            public ZosFilesParams build() {
-                return new ZosFilesParams(this);
-            }
-        }
+    }
 }

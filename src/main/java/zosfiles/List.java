@@ -41,7 +41,7 @@ public class List {
 
         java.util.List<Dataset> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES  + QueryConstants.QUERY_ID;
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
 
         try {
             url += ZosFilesConstants.QUERY_DS_LEVEL + dataSetName;
