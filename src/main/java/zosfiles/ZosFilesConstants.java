@@ -68,11 +68,6 @@ public class ZosFilesConstants {
     public static final String RES_FSNAME = "fsname";
 
     /**
-     * Indicator the query parameters used to qualify the request
-     */
-    public static final String RES_DS_LEVEL = "dslevel";
-
-    /**
      * Json response array field name
      *
      * @static
@@ -129,7 +124,7 @@ public class ZosFilesConstants {
      * @type {string}
      * @memberof ZosFilesConstants
      */
-    public static final String QUERY_VOLUME = "volser";
+    public static final String QUERY_VOLUME = "volser=";
 
     /**
      * An optional search parameter that specifies the first data set name to return in the response document
@@ -138,6 +133,14 @@ public class ZosFilesConstants {
      * @type {string}
      * @memberof ZosFilesConstants
      */
-    public static final String QUERY_START = "start";
+    public static final String QUERY_START = "start=";
+
+    /**
+     * Indicator the query parameters used to qualify the request
+     * @static
+     * @type {string}
+     * @memberof ZosFilesConstants
+     */
+    public static final String QUERY_DS_LEVEL = "dslevel=";
 
 }
