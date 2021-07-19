@@ -21,6 +21,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import rest.IZoweRequest;
 import rest.JsonRequest;
+import rest.QueryConstants;
 import rest.TextRequest;
 import utility.Util;
 import utility.UtilJobs;
@@ -76,7 +77,7 @@ public class GetJobs {
 
         List<Job> jobs = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
-                + JobsConstants.RESOURCE + JobsConstants.QUERY_ID;
+                + JobsConstants.RESOURCE + QueryConstants.QUERY_ID;
 
         if (parms != null) {
             if (parms.getOwner().isPresent()) {
@@ -84,23 +85,23 @@ public class GetJobs {
             }
             if (parms.getPrefix().isPresent()) {
                 if (parms.getPrefix().get() != JobsConstants.DEFAULT_PREFIX) {
-                    if (url.contains(JobsConstants.QUERY_ID)) {
-                        url += JobsConstants.COMBO_ID;
+                    if (url.contains(QueryConstants.QUERY_ID)) {
+                        url += QueryConstants.COMBO_ID;
                     }
                     url += JobsConstants.QUERY_PREFIX + parms.getPrefix().get();
                 }
             }
             if (parms.getMaxJobs().isPresent()) {
                 if (parms.getMaxJobs().get() != JobsConstants.DEFAULT_MAX_JOBS) {
-                    if (url.contains(JobsConstants.QUERY_ID)) {
-                        url += JobsConstants.COMBO_ID;
+                    if (url.contains(QueryConstants.QUERY_ID)) {
+                        url += QueryConstants.COMBO_ID;
                     }
                     url += JobsConstants.QUERY_MAX_JOBS + parms.getMaxJobs().get();
                 }
             }
             if (parms.getJobId().isPresent()) {
-                if (url.contains(JobsConstants.QUERY_ID)) {
-                    url += JobsConstants.COMBO_ID;
+                if (url.contains(QueryConstants.QUERY_ID)) {
+                    url += QueryConstants.COMBO_ID;
                 }
                 url += JobsConstants.QUERY_JOBID + parms.getJobId().get();
             }
