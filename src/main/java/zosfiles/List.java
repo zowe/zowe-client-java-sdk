@@ -9,9 +9,6 @@
  */
 package zosfiles;
 
-import java.io.IOException;
-import java.util.*;
-
 import core.ZOSConnection;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.logging.log4j.LogManager;
@@ -20,33 +17,40 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import rest.IZoweRequest;
 import rest.JsonRequest;
+import rest.QueryConstants;
 import rest.ZosmfHeaders;
 import utility.Util;
 import utility.UtilDataset;
-import zosfiles.constants.ZosFilesConstants;
-import zosfiles.doc.ListOptions;
+import zosfiles.input.ListParams;
 import zosfiles.response.Dataset;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class List {
 
     private static final Logger LOG = LogManager.getLogger(List.class);
 
-    public static java.util.List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListOptions options ) throws IOException {
+    public static java.util.List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListParams options) throws IOException {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
 
         java.util.List<Dataset> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + ZosFilesConstants.RES_DS_MEMBERS;
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES  + QueryConstants.QUERY_ID;
+
         try {
+            url += ZosFilesConstants.RES_DS_LEVEL + dataSetName;
+
             if (options.getVolume().isPresent()) {
-                url += "&volser" + options.getPattern().get();
+                url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME + options.getVolume().get();
             }
             if (options.getStart().isPresent()) {
-                url += "&volser" + options.getStart().get();
+                url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + options.getStart().get();
             }
             String key, value;
             Map<String, String> headers = new HashMap<>();
@@ -92,12 +96,13 @@ public class List {
                         break;
                 }
             }
-            LOG.debug(url);
+            LOG.info(url);
 
             IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
             request.setHeaders(headers);
-            JSONArray results = request.httpGet();
-            results.forEach(item -> {
+            JSONObject results = request.httpGet();
+            JSONArray items = (JSONArray) results.get(ZosFilesConstants.RESPONSE_ITEMS);
+            items.forEach(item -> {
                 JSONObject datasetObj = (JSONObject) item;
                 datasets.add(UtilDataset.createDatasetObjFromJson(datasetObj));
             });

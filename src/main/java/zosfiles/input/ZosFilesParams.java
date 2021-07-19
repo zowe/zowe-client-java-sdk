@@ -8,22 +8,18 @@
  * Copyright Contributors to the Zowe Project.
  *
  */
+package zosfiles.input;
+
+import java.util.Optional;
 
 /**
  * This interface defines the global options that apply to all zosfiles APIs
  */
-package zosfiles.doc;
-
-
-import zosjobs.input.GetJobParms;
-
-import java.util.Optional;
-
-public class ZosFilesOptions {
+public class ZosFilesParams {
 
         private Optional<String> responseTimeout;
 
-        public ZosFilesOptions(Builder builder) {
+        public ZosFilesParams(Builder builder) {
             if (builder.responseTimeout != null)
                 this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
             else this.responseTimeout = Optional.empty();
@@ -33,8 +29,6 @@ public class ZosFilesOptions {
         public Optional<String> getResponseTimeout() {
             return responseTimeout;
         }
-
-
 
         @Override
         public String toString() {
@@ -47,13 +41,13 @@ public class ZosFilesOptions {
 
             private String responseTimeout;
 
-            public ZosFilesOptions.Builder responseTimeout(String responseTimeout) {
+            public ZosFilesParams.Builder responseTimeout(String responseTimeout) {
                 this.responseTimeout = responseTimeout;
                 return this;
             }
 
-            public ZosFilesOptions build() {
-                return new ZosFilesOptions(this);
+            public ZosFilesParams build() {
+                return new ZosFilesParams(this);
             }
         }
 }

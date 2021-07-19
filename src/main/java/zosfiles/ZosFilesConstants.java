@@ -1,4 +1,13 @@
-package zosfiles.constants;
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ */
+package zosfiles;
 
 public class ZosFilesConstants {
     /**
@@ -64,6 +73,15 @@ public class ZosFilesConstants {
     public static final String RES_DS_LEVEL = "dslevel";
 
     /**
+     * Json response array field name
+     *
+     * @static
+     * @type {string}
+     * @memberof ZosFilesConstants
+     */
+    public static final String RESPONSE_ITEMS = "items";
+
+    /**
      * Maximum value for primary and secondary allocation
      * @type {number}
      */
@@ -103,4 +121,23 @@ public class ZosFilesConstants {
      * @type {[string]}
      */
     public static final String[] VSAM_ALCUNIT_CHOICES = new String[] {"CYL", "TRK", "MB", "KB", "REC"};
+
+    /**
+     * A parameter that identifies the volume serials to be searched for data sets
+     *
+     * @static
+     * @type {string}
+     * @memberof ZosFilesConstants
+     */
+    public static final String QUERY_VOLUME = "volser";
+
+    /**
+     * An optional search parameter that specifies the first data set name to return in the response document
+     *
+     * @static
+     * @type {string}
+     * @memberof ZosFilesConstants
+     */
+    public static final String QUERY_START = "start";
+
 }
