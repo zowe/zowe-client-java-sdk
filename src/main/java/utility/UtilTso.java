@@ -48,7 +48,7 @@ public class UtilTso {
     private static ZosmfTsoResponse parseJsonTsoResponse(JSONObject result) throws Exception {
         Util.checkNullParameter(result == null, "no results to parse");
 
-        ZosmfTsoResponse response = null;
+        ZosmfTsoResponse response;
         try {
             response = new ZosmfTsoResponse.Builder().queueId((String) result.get("queueID"))
                     .ver((String) result.get("ver")).servletKey((String) result.get("servletKey"))

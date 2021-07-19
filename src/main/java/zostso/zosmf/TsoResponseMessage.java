@@ -13,8 +13,8 @@ import java.util.Optional;
 
 public class TsoResponseMessage {
 
-    public Optional<String> version;
-    public Optional<String> data;
+    private Optional<String> version;
+    private Optional<String> data;
 
     public TsoResponseMessage() {
     }
