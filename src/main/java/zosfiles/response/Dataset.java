@@ -124,7 +124,9 @@ public class Dataset {
         return catnm;
     }
 
-    public Optional<String> getCdate() { return cdate; }
+    public Optional<String> getCdate() {
+        return cdate;
+    }
 
     public Optional<String> getDev() {
         return dev;
@@ -138,13 +140,17 @@ public class Dataset {
         return dsorg;
     }
 
-    public Optional<String> getEdate() { return edate; }
+    public Optional<String> getEdate() {
+        return edate;
+    }
 
     public Optional<String> getExtx() {
         return extx;
     }
 
-    public Optional<String> getLrectl() { return lrectl; }
+    public Optional<String> getLrectl() {
+        return lrectl;
+    }
 
     public Optional<String> getMigr() {
         return migr;
@@ -166,9 +172,13 @@ public class Dataset {
         return recfm;
     }
 
-    public Optional<String> getSizex() { return sizex; }
+    public Optional<String> getSizex() {
+        return sizex;
+    }
 
-    public Optional<String> getSpacu() { return spacu; }
+    public Optional<String> getSpacu() {
+        return spacu;
+    }
 
     public Optional<String> getUsed() {
         return used;
