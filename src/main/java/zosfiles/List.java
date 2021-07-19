@@ -44,7 +44,7 @@ public class List {
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES  + QueryConstants.QUERY_ID;
 
         try {
-            url += ZosFilesConstants.RES_DS_LEVEL + dataSetName;
+            url += ZosFilesConstants.QUERY_DS_LEVEL + dataSetName;
 
             if (options.getVolume().isPresent()) {
                 url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME + options.getVolume().get();
