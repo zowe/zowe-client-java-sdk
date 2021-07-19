@@ -2,14 +2,21 @@
 
 Work In Progress implementation of a Zowe SDK for Java.
 
-Run GetJobsTest.java, IssueCommandTest.java and SubmitJobsTest.java to see current functionality available.  
-You need to replace all instances of "xxxxxxxx" accordingly.   
-  
 Functionality provided so far:  
   
-    GetJobs (all things about jobs) 
-    IssueCommand (mvs commands)
-    SubmitJobs (partial)
+    GetJobs   
+    IssueCommand (mvs commands)  
+    IssuesTsoCommand  
+    SubmitJobs  
+
+Seeing the following sample programs:
+    
+    GetJobsTest.java  
+    IssueCommandTest.java  
+    IssueTsoCommandTest.java  
+    SubmitJobsTest.java  
+  
+You need to replace all instances of "XXX" accordingly.   
     
 ## Build
   
