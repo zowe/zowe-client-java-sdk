@@ -33,8 +33,8 @@ public class ListDatasetsTest {
     }
 
     private static void tstListMembers(ZOSConnection connection, String dataSetName) throws IOException {
-        ListParams parms = new ListParams.Builder().build();
-        List<Dataset> datasets = zosfiles.List.listMembers(connection, dataSetName, parms);
+        ListParams params = new ListParams.Builder().build();
+        List<Dataset> datasets = zosfiles.List.listMembers(connection, dataSetName, params);
         datasets.forEach(LOG::info);
     }
     private static void tstListDsn(ZOSConnection connection, String dataSetName) throws IOException {
