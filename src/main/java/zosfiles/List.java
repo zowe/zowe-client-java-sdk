@@ -17,10 +17,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import rest.IZoweRequest;
 import rest.JsonRequest;
+import rest.QueryConstants;
 import rest.ZosmfHeaders;
 import utility.Util;
 import utility.UtilDataset;
-import zosfiles.constants.ZosFilesConstants;
 import zosfiles.input.ListParams;
 import zosfiles.response.Dataset;
 
@@ -41,13 +41,16 @@ public class List {
 
         java.util.List<Dataset> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES  + "?dslevel=" + dataSetName;
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
+
         try {
+            url += ZosFilesConstants.QUERY_DS_LEVEL + dataSetName;
+
             if (options.getVolume().isPresent()) {
-                url += "&volser" + options.getVolume().get();
+                url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME + options.getVolume().get();
             }
             if (options.getStart().isPresent()) {
-                url += "&volser" + options.getStart().get();
+                url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + options.getStart().get();
             }
             String key, value;
             Map<String, String> headers = new HashMap<>();
@@ -98,7 +101,7 @@ public class List {
             IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
             request.setHeaders(headers);
             JSONObject results = request.httpGet();
-            JSONArray items = (JSONArray) results.get("items");
+            JSONArray items = (JSONArray) results.get(ZosFilesConstants.RESPONSE_ITEMS);
             items.forEach(item -> {
                 JSONObject datasetObj = (JSONObject) item;
                 datasets.add(UtilDataset.createDatasetObjFromJson(datasetObj));

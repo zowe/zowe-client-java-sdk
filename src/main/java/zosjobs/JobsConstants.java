@@ -27,24 +27,6 @@ public class JobsConstants {
     public static final String STEP_DATA = "step-data=Y";
 
     /**
-     * Query identifier
-     *
-     * @static
-     * @type {string}
-     * @memberof JobsConstants
-     */
-    public static final String QUERY_ID = "?";
-
-    /**
-     * Query parm delimiter
-     *
-     * @static
-     * @type {string}
-     * @memberof JobsConstants
-     */
-    public static final String COMBO_ID = "&";
-
-    /**
      * Query id for getting job by an owner
      *
      * @static

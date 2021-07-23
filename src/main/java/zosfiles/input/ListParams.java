@@ -1,15 +1,25 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ *
+ */
 package zosfiles.input;
 
 import java.util.Optional;
 
 public class ListParams {
-    private Optional<String> volume = Optional.empty();
-    private Optional<String> attributes = Optional.empty();
-    private Optional<String> maxLength = Optional.empty();
-    private Optional<String> start = Optional.empty();
-    private Optional<String> recall = Optional.empty();
-    private Optional<String> pattern = Optional.empty();
-    private Optional<String> responseTimeout = Optional.empty();
+    private Optional<String> volume;
+    private Optional<String> attributes;
+    private Optional<String> maxLength;
+    private Optional<String> start;
+    private Optional<String> recall;
+    private Optional<String> pattern;
+    private Optional<String> responseTimeout;
 
     public ListParams(ListParams.Builder builder) {
         if (builder.volume != null)
@@ -36,6 +46,9 @@ public class ListParams {
             this.pattern = Optional.ofNullable(builder.pattern);
         else this.pattern = Optional.empty();
 
+        if (builder.responseTimeout != null)
+            this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
+        else this.responseTimeout = Optional.empty();
     }
 
     public Optional<String> getVolume() {
@@ -93,30 +106,37 @@ public class ListParams {
             this.volume = volume;
             return this;
         }
+
         public ListParams.Builder attributes(String attributes) {
             this.attributes = attributes;
             return this;
         }
+
         public ListParams.Builder maxLength(String maxLength) {
             this.maxLength = maxLength;
             return this;
         }
+
         public ListParams.Builder start(String start) {
             this.start = start;
             return this;
         }
+
         public ListParams.Builder recall(String recall) {
             this.recall = recall;
             return this;
         }
+
         public ListParams.Builder pattern(String pattern) {
             this.pattern = pattern;
             return this;
         }
+
         public ListParams.Builder responseTimeout(String responseTimeout) {
             this.responseTimeout = responseTimeout;
             return this;
         }
+
         public ListParams build() {
             return new ListParams(this);
         }

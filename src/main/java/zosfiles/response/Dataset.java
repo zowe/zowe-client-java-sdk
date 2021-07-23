@@ -1,3 +1,12 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ */
 package zosfiles.response;
 
 import java.util.Optional;
@@ -115,7 +124,9 @@ public class Dataset {
         return catnm;
     }
 
-    public Optional<String> getCdate() { return cdate; }
+    public Optional<String> getCdate() {
+        return cdate;
+    }
 
     public Optional<String> getDev() {
         return dev;
@@ -129,13 +140,17 @@ public class Dataset {
         return dsorg;
     }
 
-    public Optional<String> getEdate() { return edate; }
+    public Optional<String> getEdate() {
+        return edate;
+    }
 
     public Optional<String> getExtx() {
         return extx;
     }
 
-    public Optional<String> getLrectl() { return lrectl; }
+    public Optional<String> getLrectl() {
+        return lrectl;
+    }
 
     public Optional<String> getMigr() {
         return migr;
@@ -157,9 +172,13 @@ public class Dataset {
         return recfm;
     }
 
-    public Optional<String> getSizex() { return sizex; }
+    public Optional<String> getSizex() {
+        return sizex;
+    }
 
-    public Optional<String> getSpacu() { return spacu; }
+    public Optional<String> getSpacu() {
+        return spacu;
+    }
 
     public Optional<String> getUsed() {
         return used;

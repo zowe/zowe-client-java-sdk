@@ -13,8 +13,8 @@ import java.util.Optional;
 
 public class TsoPromptMessage {
 
-    public Optional<String> version;
-    public Optional<String> hidden;
+    private Optional<String> version;
+    private Optional<String> hidden;
 
     public TsoPromptMessage() {
     }
