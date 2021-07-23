@@ -41,10 +41,10 @@ public class ZosDsnList {
 
         java.util.List<Dataset> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES  + dataSetName + ZosFilesConstants.RES_DS_MEMBERS;
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES  + "/" + dataSetName + ZosFilesConstants.RES_DS_MEMBERS;
         try {
             if (options.getPattern().isPresent()) {
-                url += QueryConstants.COMBO_ID+ ZosFilesConstants.QUERY_VOLUME  + options.getPattern().get();
+                url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME + options.getPattern().get();
             }
             String key, value;
             Map<String, String> headers = new HashMap<>();
