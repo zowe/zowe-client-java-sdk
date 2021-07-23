@@ -45,7 +45,7 @@ public class List {
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES  + dataSetName + ZosFilesConstants.RES_DS_MEMBERS;
         try {
             if (options.getPattern().isPresent()) {
-                url += "&volser" + options.getPattern().get();
+                url += QueryConstants.COMBO_ID+ ZosFilesConstants.QUERY_VOLUME  + options.getPattern().get();
             }
             String key, value;
             Map<String, String> headers = new HashMap<>();
