@@ -143,6 +143,15 @@ public class ZosFilesConstants {
     public static final String QUERY_VOLUME = "volser=";
 
     /**
+     * An optional parameter that specifies a pattern for the dataset members
+     *
+     * @static
+     * @type {string}
+     * @memberof ZosFilesConstants
+     */
+    public static final String QUERY_PATTERN = "pattern=";
+
+    /**
      * An optional search parameter that specifies the first data set name to return in the response document
      *
      * @static

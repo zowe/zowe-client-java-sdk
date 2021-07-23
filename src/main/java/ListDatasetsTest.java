@@ -13,13 +13,12 @@ import org.apache.logging.log4j.Logger;
 import zosfiles.input.ListParams;
 import zosfiles.response.Dataset;
 
-import java.io.IOException;
 import java.util.List;
 
 public class ListDatasetsTest {
     private static final Logger LOG = LogManager.getLogger(ListDatasetsTest.class);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         String hostName = "XXX";
         String port = "XXX";
         String userName = "XXX";
@@ -32,12 +31,12 @@ public class ListDatasetsTest {
         ListDatasetsTest.tstListDsn(connection, dataSetName);
     }
 
-    private static void tstListMembers(ZOSConnection connection, String dataSetName) throws IOException {
+    private static void tstListMembers(ZOSConnection connection, String dataSetName) {
         ListParams params = new ListParams.Builder().build();
         List<Dataset> datasets = zosfiles.List.listMembers(connection, dataSetName, params);
         datasets.forEach(LOG::info);
     }
-    private static void tstListDsn(ZOSConnection connection, String dataSetName) throws IOException {
+    private static void tstListDsn(ZOSConnection connection, String dataSetName) {
         ListParams parms = new ListParams.Builder().build();
         List<Dataset> datasets = zosfiles.List.listDsn(connection, dataSetName, parms);
         datasets.forEach(LOG::info);
