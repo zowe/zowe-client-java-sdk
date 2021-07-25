@@ -24,74 +24,19 @@ import utility.UtilDataset;
 import zosfiles.input.ListParams;
 import zosfiles.response.Dataset;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
-public class ZosList {
+public class ZosDsnList {
 
-    private static final Logger LOG = LogManager.getLogger(ZosList.class);
+    private static final Logger LOG = LogManager.getLogger(ZosDsnList.class);
 
-    public static java.util.List<Dataset> listMembers(ZOSConnection connection, String dataSetName, ListParams options) {
+    public static List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListParams options) throws IOException {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
 
-        java.util.List<Dataset> datasets = new ArrayList<>();
-        String url = "https://" + connection.getHost() + ":" + connection.getPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES  + "/" + dataSetName + ZosFilesConstants.RES_DS_MEMBERS;
-        try {
-            if (options.getPattern().isPresent()) {
-                url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN + options.getPattern().get();
-            }
-            String key, value;
-            Map<String, String> headers = new HashMap<>();
-            key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
-            value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
-            headers.put(key, value);
-
-            if (options.getAttributes().isPresent()) {
-                key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(0);
-                value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
-                headers.put(key, value);
-            }
-            if (options.getMaxLength().isPresent()) {
-                key = "X-IBM-Max-Items";
-                value = options.getMaxLength().get();
-                headers.put(key, value);
-            } else {
-                key = ZosmfHeaders.HEADERS.get("X_IBM_MAX_ITEMS").get(0);
-                value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
-                headers.put(key, value);
-            }
-            if (options.getResponseTimeout().isPresent()) {
-                key = ZosmfHeaders.HEADERS.get("X_IBM_RESPONSE_TIMEOUT").get(0);
-                value = options.getResponseTimeout().get();
-                headers.put(key, value);
-            }
-            LOG.info(url);
-
-            IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
-            request.setHeaders(headers);
-            JSONObject results = request.httpGet();
-            JSONArray items = (JSONArray) results.get("items");
-            items.forEach(item -> {
-                JSONObject datasetObj = (JSONObject) item;
-                datasets.add(UtilDataset.createDatasetObjFromJson(datasetObj));
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return datasets;
-    }
-
-    public static java.util.List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListParams options) {
-        Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
-        Util.checkConnection(connection);
-
-        java.util.List<Dataset> datasets = new ArrayList<>();
+        List<Dataset> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
 
