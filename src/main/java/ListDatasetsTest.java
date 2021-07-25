@@ -10,7 +10,7 @@
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import zosfiles.ZosList;
+import zosfiles.ZosDsnList;
 import zosfiles.input.ListParams;
 import zosfiles.response.Dataset;
 
@@ -39,7 +39,7 @@ public class ListDatasetsTest {
     }
     private static void tstListDsn(ZOSConnection connection, String dataSetName) {
         ListParams parms = new ListParams.Builder().build();
-        List<Dataset> datasets = ZosList.listDsn(connection, dataSetName, parms);
+        List<Dataset> datasets = ZosDsnList.listDsn(connection, dataSetName, parms);
         datasets.forEach(LOG::info);
     }
 }
