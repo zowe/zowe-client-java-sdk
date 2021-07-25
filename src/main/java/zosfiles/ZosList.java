@@ -29,9 +29,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class List {
+public class ZosList {
 
-    private static final Logger LOG = LogManager.getLogger(List.class);
+    private static final Logger LOG = LogManager.getLogger(ZosList.class);
 
     public static java.util.List<Dataset> listMembers(ZOSConnection connection, String dataSetName, ListParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
