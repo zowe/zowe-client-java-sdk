@@ -14,8 +14,6 @@ import org.apache.logging.log4j.Logger;
 import zosjobs.SubmitJobs;
 import zosjobs.response.Job;
 
-import java.io.IOException;
-
 public class SubmitJobsTest {
 
     private static final Logger LOG = LogManager.getLogger(SubmitJobsTest.class);
@@ -32,7 +30,7 @@ public class SubmitJobsTest {
         LOG.info(SubmitJobsTest.tstSubmitJclJob(connection, jclString));
     }
 
-    private static Job tstSubmitJclJob(ZOSConnection connection, String jclString) throws IOException {
+    private static Job tstSubmitJclJob(ZOSConnection connection, String jclString) throws Exception {
         return SubmitJobs.submitJcl(connection, jclString, null, null);
     }
 

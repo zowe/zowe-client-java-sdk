@@ -65,7 +65,7 @@ public class JsonRequestTest {
     }
 
     @Test
-    public void tstHttpGetReturnsNullForInvalidJson() throws IOException {
+    public void tstHttpGetReturnsNullForInvalidJson() throws Exception {
         String invalidJson = UUID.randomUUID().toString();
 
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicResponseHandler.class)))
@@ -77,7 +77,7 @@ public class JsonRequestTest {
     }
 
     @Test
-    public void tstHttpGetReturnsJson() throws IOException {
+    public void tstHttpGetReturnsJson() throws Exception {
         String json = "{\"data\":{}}";
 
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicResponseHandler.class)))

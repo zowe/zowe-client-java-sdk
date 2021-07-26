@@ -17,14 +17,14 @@ import zosjobs.GetJobs;
 import zosjobs.input.JobFile;
 import zosjobs.response.Job;
 
-import java.io.IOException;
 import java.util.List;
 
 public class GetJobsTest {
 
     private static final Logger LOG = LogManager.getLogger(GetJobsTest.class);
+    private static GetJobs getJobs;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         String hostName = "XXX";
         String port = "XXX";
         String userName = "XXX";
@@ -34,129 +34,130 @@ public class GetJobsTest {
         String jobId = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
+        getJobs = new GetJobs(connection);
 
-        GetJobsTest.tstGetJobsCommon(connection, prefix);
-        GetJobsTest.tstGetSpoolFiles(connection, prefix);
-        GetJobsTest.tstGetSpoolFilesForJob(connection, prefix);
-        GetJobsTest.tstGetJobsByOwner(connection, owner);
-        GetJobsTest.tstGetSpoolContent(connection, prefix);
-        GetJobsTest.tstGetJobs(connection);
-        GetJobsTest.tstGetJobsByPrefix(connection, prefix);
-        GetJobsTest.tstGetJobsByOwnerAndPrefix(connection, "*", prefix);
-        GetJobsTest.tstGetJob(connection, prefix);
-        GetJobsTest.tstNonExistentGetJob(connection, jobId);
-        GetJobsTest.tstGetStatus(connection, prefix);
-        GetJobsTest.tstGetStatusForJob(connection, prefix);
-        GetJobsTest.tstGetJcl(connection, prefix);
-        GetJobsTest.tstGetJclForJob(connection, prefix);
-        GetJobsTest.tstGetJclCommon(connection, prefix);
+        GetJobsTest.tstGetJobsCommon(prefix);
+        GetJobsTest.tstGetSpoolFiles(prefix);
+        GetJobsTest.tstGetSpoolFilesForJob(prefix);
+        GetJobsTest.tstGetJobsByOwner(owner);
+        GetJobsTest.tstGetSpoolContent(prefix);
+        GetJobsTest.tstGetJobs();
+        GetJobsTest.tstGetJobsByPrefix(prefix);
+        GetJobsTest.tstGetJobsByOwnerAndPrefix("*", prefix);
+        GetJobsTest.tstGetJob(prefix);
+        GetJobsTest.tstNonExistentGetJob(jobId);
+        GetJobsTest.tstGetStatus(prefix);
+        GetJobsTest.tstGetStatusForJob(prefix);
+        GetJobsTest.tstGetJcl(prefix);
+        GetJobsTest.tstGetJclForJob(prefix);
+        GetJobsTest.tstGetJclCommon(prefix);
     }
 
-    private static void tstGetJclCommon(ZOSConnection connection, String prefix) throws IOException {
-        List<Job> jobs = GetJobs.getJobsByPrefix(connection, prefix);
-        LOG.info(GetJobs.getJclCommon(connection,
+    private static void tstGetJclCommon(String prefix) throws Exception {
+        List<Job> jobs = getJobs.getJobsByPrefix(prefix);
+        LOG.info(getJobs.getJclCommon(
                 new CommonJobParms(jobs.get(0).getJobId().get(), jobs.get(0).getJobName().get())));
     }
 
-    private static void tstGetJclForJob(ZOSConnection connection, String prefix) throws IOException {
-        List<Job> jobs = GetJobs.getJobsByPrefix(connection, prefix);
-        LOG.info(GetJobs.getJclForJob(connection, jobs.get(0)));
+    private static void tstGetJclForJob(String prefix) throws Exception {
+        List<Job> jobs = getJobs.getJobsByPrefix(prefix);
+        LOG.info(getJobs.getJclForJob(jobs.get(0)));
     }
 
-    private static void tstGetJcl(ZOSConnection connection, String prefix) throws IOException {
-        List<Job> jobs = GetJobs.getJobsByPrefix(connection, prefix);
-        LOG.info(GetJobs.getJcl(connection, jobs.get(0).getJobName().get(), jobs.get(0).getJobId().get()));
+    private static void tstGetJcl(String prefix) throws Exception {
+        List<Job> jobs = getJobs.getJobsByPrefix(prefix);
+        LOG.info(getJobs.getJcl(jobs.get(0).getJobName().get(), jobs.get(0).getJobId().get()));
     }
 
-    private static void tstGetStatusForJob(ZOSConnection connection, String prefix) throws IOException {
-        List<Job> jobs = GetJobs.getJobsByPrefix(connection, prefix);
+    private static void tstGetStatusForJob(String prefix) throws Exception {
+        List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         try {
-            Job job = GetJobs.getStatusForJob(connection, jobs.get(0));
+            Job job = getJobs.getStatusForJob(jobs.get(0));
             LOG.info(job);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void tstGetStatus(ZOSConnection connection, String prefix) throws IOException {
-        List<Job> jobs = GetJobs.getJobsByPrefix(connection, prefix);
+    private static void tstGetStatus(String prefix) throws Exception {
+        List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         try {
-            Job job = GetJobs.getStatus(connection, jobs.get(0).getJobName().get(), jobs.get(0).getJobId().get());
+            Job job = getJobs.getStatus(jobs.get(0).getJobName().get(), jobs.get(0).getJobId().get());
             LOG.info(job);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void tstNonExistentGetJob(ZOSConnection connection, String jobId) {
+    private static void tstNonExistentGetJob(String jobId) {
         try {
-            GetJobs.getJob(connection, jobId);
+            getJobs.getJob(jobId);
         } catch (Exception e) {
             LOG.info(e.getMessage());
         }
     }
 
-    private static void tstGetJob(ZOSConnection connection, String prefix) throws IOException {
-        List<Job> jobs = GetJobs.getJobsByPrefix(connection, prefix);
+    private static void tstGetJob(String prefix) throws Exception {
+        List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         String jobId = jobs.get(0).getJobId().get();
         try {
-            Job job = GetJobs.getJob(connection, jobId);
+            Job job = getJobs.getJob(jobId);
             LOG.info(job);
         } catch (Exception e) {
             LOG.info(e.getMessage());
         }
     }
 
-    private static void tstGetJobsByOwnerAndPrefix(ZOSConnection connection, String owner, String prefix)
-            throws IOException {
-        List<Job> jobs = GetJobs.getJobsByOwnerAndPrefix(connection, owner, prefix);
+    private static void tstGetJobsByOwnerAndPrefix(String owner, String prefix)
+            throws Exception {
+        List<Job> jobs = getJobs.getJobsByOwnerAndPrefix(owner, prefix);
         jobs.forEach(LOG::info);
     }
 
-    private static void tstGetJobsByPrefix(ZOSConnection connection, String prefix) throws IOException {
-        List<Job> jobs = GetJobs.getJobsByPrefix(connection, prefix);
+    private static void tstGetJobsByPrefix(String prefix) throws Exception {
+        List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         jobs.forEach(LOG::info);
     }
 
-    private static void tstGetJobs(ZOSConnection connection) throws IOException {
+    private static void tstGetJobs() throws Exception {
         // get any jobs out there for the logged in user..
-        List<Job> jobs = GetJobs.getJobs(connection);
+        List<Job> jobs = getJobs.getJobs();
         jobs.forEach(LOG::info);
     }
 
-    private static void tstGetSpoolContent(ZOSConnection connection, String prefix) throws IOException {
+    private static void tstGetSpoolContent(String prefix) throws Exception {
         GetJobParms parms = new GetJobParms.Builder().owner("*").prefix(prefix).build();
-        List<Job> jobs = GetJobs.getJobsCommon(connection, parms);
-        List<JobFile> files = GetJobs.getSpoolFilesForJob(connection, jobs.get(0));
-        String[] output = GetJobs.getSpoolContent(connection, files.get(0)).split("\n");
+        List<Job> jobs = getJobs.getJobsCommon(parms);
+        List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
+        String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
         // get last 10 lines of output
         for (int i = output.length - 10; i < output.length; i++)
             LOG.info(output[i]);
     }
 
-    private static void tstGetJobsByOwner(ZOSConnection connection, String owner) throws IOException {
-        List<Job> jobs = GetJobs.getJobsByOwner(connection, owner);
+    private static void tstGetJobsByOwner(String owner) throws Exception {
+        List<Job> jobs = getJobs.getJobsByOwner(owner);
         jobs.forEach(LOG::info);
     }
 
-    private static void tstGetSpoolFilesForJob(ZOSConnection connection, String prefix) throws IOException {
+    private static void tstGetSpoolFilesForJob(String prefix) throws Exception {
         GetJobParms parms = new GetJobParms.Builder().owner("*").prefix(prefix).build();
-        List<Job> jobs = GetJobs.getJobsCommon(connection, parms);
-        List<JobFile> files = GetJobs.getSpoolFilesForJob(connection, jobs.get(0));
+        List<Job> jobs = getJobs.getJobsCommon(parms);
+        List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
         files.forEach(LOG::info);
     }
 
-    private static void tstGetSpoolFiles(ZOSConnection connection, String prefix) throws IOException {
+    private static void tstGetSpoolFiles(String prefix) throws Exception {
         GetJobParms parms = new GetJobParms.Builder().owner("*").prefix(prefix).build();
-        List<Job> jobs = GetJobs.getJobsCommon(connection, parms);
-        List<JobFile> files = GetJobs.getSpoolFiles(connection, jobs.get(0).getJobName().get(),
+        List<Job> jobs = getJobs.getJobsCommon(parms);
+        List<JobFile> files = getJobs.getSpoolFiles(jobs.get(0).getJobName().get(),
                 jobs.get(0).getJobId().get());
         files.forEach(LOG::info);
     }
 
-    public static void tstGetJobsCommon(ZOSConnection connection, String prefix) throws IOException {
+    public static void tstGetJobsCommon(String prefix) throws Exception {
         GetJobParms parms = new GetJobParms.Builder().owner("*").prefix(prefix).build();
-        List<Job> jobs = GetJobs.getJobsCommon(connection, parms);
+        List<Job> jobs = getJobs.getJobsCommon(parms);
         jobs.forEach(LOG::info);
     }
 

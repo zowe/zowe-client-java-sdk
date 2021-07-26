@@ -9,19 +9,32 @@
  */
 package rest;
 
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+
 import java.io.IOException;
 import java.util.Map;
 
 public interface IZoweRequest {
 
-    public <T> T httpGet() throws IOException;
+    public <T> T httpGet() throws Exception;
 
-    public <T> T httpPut() throws IOException;
+    public <T> T httpPut() throws Exception;
 
     public <T> T httpPost() throws Exception;
 
-    public <T> T httpDelete() throws IOException;
+    public <T> T httpDelete() throws IOException, Exception;
 
     public void setHeaders(Map<String, String> headers);
+
+    public void setGetRequest(HttpGet getRequest);
+
+    public void setPutRequest(HttpPut putRequest);
+
+    public void setPostRequest(HttpPost postRequest);
+
+    public void setDeleteRequest(HttpDelete deleteRequest);
 
 }
