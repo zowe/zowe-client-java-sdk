@@ -11,7 +11,6 @@ package zosjobs;
 
 import core.ZOSConnection;
 
-import java.io.*;
 import java.util.*;
 
 import org.apache.http.client.methods.HttpGet;
