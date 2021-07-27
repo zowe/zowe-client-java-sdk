@@ -118,7 +118,7 @@ public class GetJobs {
 
         LOG.debug(url);
 
-        if (request == null) {
+        if (request == null || request instanceof TextRequest) {
             request = new JsonRequest(connection, new HttpGet(url));
         } else {
             request.setGetRequest(new HttpGet(url));
@@ -157,7 +157,7 @@ public class GetJobs {
 
         LOG.debug(url);
 
-        if (request == null) {
+        if (request == null || request instanceof TextRequest) {
             request = new JsonRequest(connection, new HttpGet(url));
         } else {
             request.setGetRequest(new HttpGet(url));
@@ -194,7 +194,7 @@ public class GetJobs {
 
         LOG.debug(url);
 
-        if (request == null) {
+        if (request == null || request instanceof TextRequest) {
             request = new JsonRequest(connection, new HttpGet(url));
         } else {
             request.setGetRequest(new HttpGet(url));
@@ -243,7 +243,11 @@ public class GetJobs {
 
         LOG.debug(url);
 
-        IZoweRequest request = new TextRequest(connection, new HttpGet(url));
+        if (request == null || request instanceof JsonRequest) {
+            request = new TextRequest(connection, new HttpGet(url));
+        } else {
+            request.setGetRequest(new HttpGet(url));
+        }
         return request.httpGet();
     }
 
@@ -264,7 +268,7 @@ public class GetJobs {
 
         LOG.debug(url);
 
-        if (request == null) {
+        if (request == null || request instanceof JsonRequest) {
             request = new TextRequest(connection, new HttpGet(url));
         } else {
             request.setGetRequest(new HttpGet(url));
@@ -285,7 +289,7 @@ public class GetJobs {
 
         LOG.debug(url);
 
-        if (request == null) {
+        if (request == null || request instanceof JsonRequest) {
             request = new TextRequest(connection, new HttpGet(url));
         } else {
             request.setGetRequest(new HttpGet(url));
