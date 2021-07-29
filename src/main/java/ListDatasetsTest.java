@@ -35,12 +35,12 @@ public class ListDatasetsTest {
 
     private static void tstListMembers(ZOSConnection connection, String dataSetName) throws IOException {
         ListParams parms = new ListParams.Builder().build();
-        List<Dataset> datasets = zosfiles.ZosDsnList.listMembers(connection, dataSetName, parms);
+        List<Dataset> datasets = ZosDsnList.listMembers(connection, dataSetName, parms);
         datasets.forEach(LOG::info);
     }
     private static void tstListDsn(ZOSConnection connection, String dataSetName) throws IOException {
         ListParams parms = new ListParams.Builder().build();
-        List<Dataset> datasets = zosfiles.ZosDsnList.listDsn(connection, dataSetName, parms);
+        List<Dataset> datasets = ZosDsnList.listDsn(connection, dataSetName, parms);
         datasets.forEach(LOG::info);
     }
 }

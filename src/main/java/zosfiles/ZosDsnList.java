@@ -29,16 +29,19 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import java.io.IOException;
+import java.util.*;
+
 public class ZosDsnList {
 
     private static final Logger LOG = LogManager.getLogger(ZosDsnList.class);
 
-    public static java.util.List<Dataset> listMembers(ZOSConnection connection, String dataSetName, ListParams options) {
+    public static List<Dataset> listMembers(ZOSConnection connection, String dataSetName, ListParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
 
-        java.util.List<Dataset> datasets = new ArrayList<>();
+        List<Dataset> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES  + "/" + dataSetName + ZosFilesConstants.RES_DS_MEMBERS;
         try {
@@ -86,12 +89,12 @@ public class ZosDsnList {
         return datasets;
     }
 
-    public static java.util.List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListParams options) {
+    public static List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListParams options) throws IOException {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
 
-        java.util.List<Dataset> datasets = new ArrayList<>();
+        List<Dataset> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
 
