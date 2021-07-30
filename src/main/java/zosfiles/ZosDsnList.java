@@ -31,7 +31,6 @@ public class ZosDsnList {
 
     private static final Logger LOG = LogManager.getLogger(ZosDsnList.class);
 
-
     public static List<Dataset> listMembers(ZOSConnection connection, String dataSetName, ListParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
@@ -39,7 +38,7 @@ public class ZosDsnList {
 
         List<Dataset> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES  + "/" + dataSetName + ZosFilesConstants.RES_DS_MEMBERS;
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" + dataSetName + ZosFilesConstants.RES_DS_MEMBERS;
         try {
             if (options.getPattern().isPresent()) {
                 url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN + options.getPattern().get();
@@ -82,6 +81,7 @@ public class ZosDsnList {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return datasets;
     }
 
@@ -160,6 +160,8 @@ public class ZosDsnList {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return datasets;
     }
+
 }

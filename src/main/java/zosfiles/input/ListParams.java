@@ -13,6 +13,7 @@ package zosfiles.input;
 import java.util.Optional;
 
 public class ListParams {
+
     private Optional<String> volume;
     private Optional<String> attributes;
     private Optional<String> maxLength;
@@ -141,4 +142,5 @@ public class ListParams {
             return new ListParams(this);
         }
     }
+
 }
