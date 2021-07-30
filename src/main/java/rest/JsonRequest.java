@@ -33,16 +33,14 @@ import org.apache.logging.log4j.Logger;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import utility.Util;
-import zostso.StartTso;
 
-import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class JsonRequest implements IZoweRequest {
 
-    private static final Logger LOG = LogManager.getLogger(StartTso.class);
+    private static final Logger LOG = LogManager.getLogger(JsonRequest.class);
 
     private ZOSConnection connection;
     private HttpGet getRequest;
@@ -55,10 +53,6 @@ public class JsonRequest implements IZoweRequest {
     private final ResponseHandler<String> handler = new BasicResponseHandler();
     private HttpContext localContext = new BasicHttpContext();
     private HttpResponse httpResponse;
-
-    // disable end user from calling default constructor
-    private JsonRequest() {
-    }
 
     public JsonRequest(ZOSConnection connection, HttpGet getRequest) {
         this.connection = connection;
@@ -86,7 +80,7 @@ public class JsonRequest implements IZoweRequest {
     }
 
     @Override
-    public <T> T httpGet() throws IOException {
+    public <T> T httpGet() throws Exception {
         if (!headers.isEmpty()) headers.forEach((key, value) -> getRequest.setHeader(key, value));
         String result = client.execute(getRequest, handler);
         LOG.info("JsonRequest::httpGet - result = {}", result);
@@ -101,7 +95,7 @@ public class JsonRequest implements IZoweRequest {
     }
 
     @Override
-    public <T> T httpPut() throws IOException {
+    public <T> T httpPut() throws Exception {
         String result = null;
 
         if (!headers.isEmpty()) headers.forEach((key, value) -> putRequest.setHeader(key, value));
@@ -165,7 +159,7 @@ public class JsonRequest implements IZoweRequest {
     }
 
     @Override
-    public <T> T httpDelete() throws IOException {
+    public <T> T httpDelete() throws Exception {
         if (!headers.isEmpty()) headers.forEach((key, value) -> deleteRequest.setHeader(key, value));
         String result = client.execute(deleteRequest, handler);
         LOG.info("JsonRequest::httpDelete - result = {}", result);
@@ -195,6 +189,30 @@ public class JsonRequest implements IZoweRequest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void setGetRequest(HttpGet getRequest) {
+        this.getRequest = getRequest;
+        this.setup();
+    }
+
+    @Override
+    public void setPutRequest(HttpPut putRequest) {
+        this.putRequest = putRequest;
+        this.setup();
+    }
+
+    @Override
+    public void setPostRequest(HttpPost postRequest) {
+        this.postRequest = postRequest;
+        this.setup();
+    }
+
+    @Override
+    public void setDeleteRequest(HttpDelete deleteRequest) {
+        this.deleteRequest = deleteRequest;
+        this.setup();
     }
 
     private void setStandardHeaders() {

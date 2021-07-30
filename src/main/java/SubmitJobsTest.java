@@ -7,14 +7,11 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zosjobs.SubmitJobs;
 import zosjobs.response.Job;
-
-import java.io.IOException;
 
 public class SubmitJobsTest {
 
@@ -32,7 +29,7 @@ public class SubmitJobsTest {
         LOG.info(SubmitJobsTest.tstSubmitJclJob(connection, jclString));
     }
 
-    private static Job tstSubmitJclJob(ZOSConnection connection, String jclString) throws IOException {
+    private static Job tstSubmitJclJob(ZOSConnection connection, String jclString) throws Exception {
         return SubmitJobs.submitJcl(connection, jclString, null, null);
     }
 

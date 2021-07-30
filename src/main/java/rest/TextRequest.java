@@ -15,6 +15,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.TrustAllStrategy;
@@ -34,7 +35,7 @@ public class TextRequest implements IZoweRequest {
     private ZOSConnection connection;
     private HttpGet getRequest;
     private HttpPut putRequest;
-    private HttpPut postRequest;
+    private HttpPost postRequest;
     private HttpDelete deleteRequest;
     private Optional<String> body;
     private Map<String, String> headers = new HashMap<>();
@@ -86,6 +87,30 @@ public class TextRequest implements IZoweRequest {
     @Override
     public void setHeaders(Map<String, String> headers) {
         this.headers = headers;
+    }
+
+    @Override
+    public void setGetRequest(HttpGet getRequest) {
+        this.getRequest = getRequest;
+        this.setup();
+    }
+
+    @Override
+    public void setPutRequest(HttpPut putRequest) {
+        this.putRequest = putRequest;
+        this.setup();
+    }
+
+    @Override
+    public void setPostRequest(HttpPost postRequest) {
+        this.postRequest = postRequest;
+        this.setup();
+    }
+
+    @Override
+    public void setDeleteRequest(HttpDelete deleteRequest) {
+        this.deleteRequest = deleteRequest;
+        this.setup();
     }
 
     private void setup() {

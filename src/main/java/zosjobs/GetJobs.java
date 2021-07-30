@@ -11,7 +11,6 @@ package zosjobs;
 
 import core.ZOSConnection;
 
-import java.io.*;
 import java.util.*;
 
 import org.apache.http.client.methods.HttpGet;
@@ -34,49 +33,57 @@ public class GetJobs {
 
     private static final Logger LOG = LogManager.getLogger(GetJobs.class);
 
-    public static List<Job> getJobs(ZOSConnection connection) throws IOException {
-        return GetJobs.getJobsCommon(connection, null);
+    private ZOSConnection connection;
+    private IZoweRequest request;
+    private String url;
+
+    public GetJobs(ZOSConnection connection) {
+        this.connection = connection;
     }
 
-    public static List<Job> getJobsByPrefix(ZOSConnection connection, String prefix) throws IOException {
+    public List<Job> getJobs() throws Exception {
+        return getJobsCommon( null);
+    }
+
+    public List<Job> getJobsByPrefix(String prefix) throws Exception {
         Util.checkNullParameter(prefix == null, "prefix is null");
         Util.checkStateParameter(prefix.isEmpty(), "prefix not specified");
 
-        return GetJobs.getJobsCommon(connection, new GetJobParms.Builder().owner("*").prefix(prefix).build());
+        return getJobsCommon(new GetJobParms.Builder().owner("*").prefix(prefix).build());
     }
 
-    public static List<Job> getJobsByOwner(ZOSConnection connection, String owner) throws IOException {
+    public List<Job> getJobsByOwner(String owner) throws Exception {
         Util.checkNullParameter(owner == null, "owner is null");
         Util.checkStateParameter(owner.isEmpty(), "owner not specified");
 
-        return GetJobs.getJobsCommon(connection, new GetJobParms.Builder().owner(owner).build());
+        return getJobsCommon(new GetJobParms.Builder().owner(owner).build());
     }
 
-    public static List<Job> getJobsByOwnerAndPrefix(ZOSConnection connection, String owner, String prefix) throws IOException {
+    public List<Job> getJobsByOwnerAndPrefix(String owner, String prefix) throws Exception {
         Util.checkNullParameter(owner == null, "owner is null");
         Util.checkStateParameter(owner.isEmpty(), "owner not specified");
         Util.checkNullParameter(prefix == null, "prefix is null");
         Util.checkStateParameter(prefix.isEmpty(), "prefix not specified");
 
-        return GetJobs.getJobsCommon(connection, new GetJobParms.Builder().owner(owner).prefix(prefix).build());
+        return getJobsCommon(new GetJobParms.Builder().owner(owner).prefix(prefix).build());
     }
 
-    public static Job getJob(ZOSConnection connection, String jobId) throws Exception {
+    public Job getJob(String jobId) throws Exception {
         Util.checkNullParameter(jobId == null, "jobId is null");
         Util.checkStateParameter(jobId.isEmpty(), "jobId not specified");
 
-        List<Job> jobs = getJobsCommon(connection, new GetJobParms.Builder().owner("*").jobId(jobId).build());
+        List<Job> jobs = getJobsCommon(new GetJobParms.Builder().owner("*").jobId(jobId).build());
         if (jobs.isEmpty()) throw new Exception("Job not found");
         if (jobs.size() > 1) throw new Exception("Expected 1 job returned but received " + jobs.size() + " jobs.");
 
         return jobs.get(0);
     }
 
-    public static List<Job> getJobsCommon(ZOSConnection connection, GetJobParms parms) throws IOException {
+    public List<Job> getJobsCommon(GetJobParms parms) throws Exception {
         Util.checkConnection(connection);
 
         List<Job> jobs = new ArrayList<>();
-        String url = "https://" + connection.getHost() + ":" + connection.getPort()
+        url = "https://" + connection.getHost() + ":" + connection.getPort()
                 + JobsConstants.RESOURCE + QueryConstants.QUERY_ID;
 
         if (parms != null) {
@@ -111,7 +118,11 @@ public class GetJobs {
 
         LOG.debug(url);
 
-        IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
+        if (request == null || request instanceof TextRequest) {
+            request = new JsonRequest(connection, new HttpGet(url));
+        } else {
+            request.setGetRequest(new HttpGet(url));
+        }
         JSONArray results = request.httpGet();
         results.forEach(item -> {
             JSONObject jobObj = (JSONObject) item;
@@ -121,32 +132,36 @@ public class GetJobs {
         return jobs;
     }
 
-    public static Job getStatus(ZOSConnection connection, String jobName, String jobId) throws Exception {
+    public Job getStatus(String jobName, String jobId) throws Exception {
         Util.checkNullParameter(jobName == null, "jobName is null");
         Util.checkNullParameter(jobId == null, "jobId is null");
 
-        return GetJobs.getStatusCommon(connection, new CommonJobParms(jobId, jobName));
+        return getStatusCommon(new CommonJobParms(jobId, jobName));
     }
 
-    public static Job getStatusForJob(ZOSConnection connection, Job job) throws Exception {
+    public Job getStatusForJob(Job job) throws Exception {
         Util.checkNullParameter(job == null, "job is null");
 
-        return GetJobs.getStatusCommon(connection, new CommonJobParms(job.getJobId().isPresent() ?
+        return getStatusCommon(new CommonJobParms(job.getJobId().isPresent() ?
                 job.getJobId().get() : null, job.getJobName().isPresent() ? job.getJobName().get() : null));
     }
 
-    public static Job getStatusCommon(ZOSConnection connection, CommonJobParms parms) throws Exception {
+    public Job getStatusCommon(CommonJobParms parms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(parms == null, "parms is null");
         Util.checkStateParameter(!parms.getJobId().isPresent(), "jobId not specified");
         Util.checkStateParameter(!parms.getJobName().isPresent(), "jobName not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort()
+        url = "https://" + connection.getHost() + ":" + connection.getPort()
                 + JobsConstants.RESOURCE + "/" + parms.getJobName().get() + "/" + parms.getJobId().get();
 
         LOG.debug(url);
 
-        IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
+        if (request == null || request instanceof TextRequest) {
+            request = new JsonRequest(connection, new HttpGet(url));
+        } else {
+            request.setGetRequest(new HttpGet(url));
+        }
         JSONObject result = request.httpGet();
 
         if (result == null) {
@@ -156,18 +171,17 @@ public class GetJobs {
         return UtilJobs.createJobObjFromJson(result);
     }
 
-    public static List<JobFile> getSpoolFiles(ZOSConnection connection, String jobName, String jobId)
-            throws IOException {
-        return GetJobs.getSpoolFilesCommon(connection, new CommonJobParms(jobId, jobName));
+    public List<JobFile> getSpoolFiles(String jobName, String jobId)
+            throws Exception {
+        return getSpoolFilesCommon(new CommonJobParms(jobId, jobName));
     }
 
-    public static List<JobFile> getSpoolFilesForJob(ZOSConnection connection, Job job) throws IOException {
-        return GetJobs.getSpoolFilesCommon(connection,
-                new CommonJobParms(job.getJobId().get(), job.getJobName().get()));
+    public List<JobFile> getSpoolFilesForJob(Job job) throws Exception {
+        return getSpoolFilesCommon( new CommonJobParms(job.getJobId().get(), job.getJobName().get()));
     }
 
-    public static List<JobFile> getSpoolFilesCommon(ZOSConnection connection, CommonJobParms parms)
-            throws IOException {
+    public List<JobFile> getSpoolFilesCommon(CommonJobParms parms)
+            throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(parms == null, "prams is null");
         Util.checkStateParameter(!parms.getJobId().isPresent(), "jobId not defined");
@@ -175,12 +189,16 @@ public class GetJobs {
 
         List<JobFile> files = new ArrayList<>();
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE
+        url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE
                 + "/" + parms.getJobName().get() + "/" + parms.getJobId().get() + "/files";
 
         LOG.debug(url);
 
-        IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
+        if (request == null || request instanceof TextRequest) {
+            request = new JsonRequest(connection, new HttpGet(url));
+        } else {
+            request.setGetRequest(new HttpGet(url));
+        }
         JSONArray results = request.httpGet();
         results.forEach(item -> {
             JSONObject fileObj = (JSONObject) item;
@@ -204,68 +222,83 @@ public class GetJobs {
         return files;
     }
 
-    public static String getJcl(ZOSConnection connection, String jobName, String jobId) throws IOException {
-        return GetJobs.getJclCommon(connection, new CommonJobParms(jobId, jobName));
+    public String getJcl(String jobName, String jobId) throws Exception {
+        return getJclCommon(new CommonJobParms(jobId, jobName));
     }
 
-    public static String getJclForJob(ZOSConnection connection, Job job) throws IOException {
-        return GetJobs.getJclCommon(connection, new CommonJobParms(
-                job.getJobId().isPresent() ? job.getJobId().get() : null,
+    public String getJclForJob(Job job) throws Exception {
+        return getJclCommon(new CommonJobParms(job.getJobId().isPresent() ? job.getJobId().get() : null,
                 job.getJobName().isPresent() ? job.getJobName().get() : null));
     }
 
-    public static String getJclCommon(ZOSConnection connection, CommonJobParms parms) throws IOException {
+    public String getJclCommon(CommonJobParms parms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(parms == null, "parms is null");
         Util.checkStateParameter(!parms.getJobName().isPresent(), "jobName not specified");
         Util.checkStateParameter(!parms.getJobId().isPresent(), "jobId not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + "/" +
+        url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + "/" +
                 parms.getJobName().get() + "/" + parms.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES +
                 JobsConstants.RESOURCE_JCL_CONTENT + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         LOG.debug(url);
 
-        IZoweRequest request = new TextRequest(connection, new HttpGet(url));
+        if (request == null || request instanceof JsonRequest) {
+            request = new TextRequest(connection, new HttpGet(url));
+        } else {
+            request.setGetRequest(new HttpGet(url));
+        }
         return request.httpGet();
     }
 
-    public static String getSpoolContent(ZOSConnection connection, JobFile jobFile) throws IOException {
-        return GetJobs.getSpoolContentCommon(connection, jobFile);
+    public String getSpoolContent(JobFile jobFile) throws Exception {
+        return getSpoolContentCommon(jobFile);
     }
 
-    public static String getSpoolContentById(ZOSConnection connection, String jobName, String jobId, int spoolId)
-            throws IOException {
+    public String getSpoolContentById(String jobName, String jobId, int spoolId)
+            throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(jobName == null, "jobName is null");
         Util.checkNullParameter(jobId == null, "jobId is null");
         Util.checkStateParameter(!Optional.ofNullable(spoolId).isPresent(), "spoolId not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + "/" +
+        url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + "/" +
                 jobName + "/" + jobId + JobsConstants.RESOURCE_SPOOL_FILES + "/" +
                 spoolId + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         LOG.debug(url);
 
-        IZoweRequest request = new TextRequest(connection, new HttpGet(url));
+        if (request == null || request instanceof JsonRequest) {
+            request = new TextRequest(connection, new HttpGet(url));
+        } else {
+            request.setGetRequest(new HttpGet(url));
+        }
         return request.httpGet();
     }
 
-    public static String getSpoolContentCommon(ZOSConnection connection, JobFile jobFile) throws IOException {
+    public String getSpoolContentCommon(JobFile jobFile) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(jobFile == null, "jobFile is null");
         Util.checkStateParameter(!jobFile.getJobName().isPresent(), "jobName not specified");
         Util.checkStateParameter(!jobFile.getJobId().isPresent(), "jobId not specified");
         Util.checkStateParameter(!jobFile.getId().isPresent(), "id not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + "/" +
+        url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + "/" +
                 jobFile.getJobName().get() + "/" + jobFile.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES + "/" +
                 jobFile.getId().get() + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         LOG.debug(url);
 
-        IZoweRequest request = new TextRequest(connection, new HttpGet(url));
+        if (request == null || request instanceof JsonRequest) {
+            request = new TextRequest(connection, new HttpGet(url));
+        } else {
+            request.setGetRequest(new HttpGet(url));
+        }
         return request.httpGet();
+    }
+
+    public String getUrl() {
+        return url;
     }
 
 }

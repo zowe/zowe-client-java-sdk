@@ -23,7 +23,6 @@ import zosjobs.input.SubmitJclParms;
 import zosjobs.input.SubmitJobParms;
 import zosjobs.response.Job;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -72,11 +71,11 @@ public class SubmitJobs {
      * @memberof SubmitJobs
      */
     public static Job submitJcl(ZOSConnection connection, String jcl, String internalReaderRecfm,
-                                String internalReaderLrecl) throws IOException {
+                                String internalReaderLrecl) throws Exception {
         return SubmitJobs.submitJclCommon(connection, new SubmitJclParms(jcl, internalReaderRecfm, internalReaderLrecl));
     }
 
-    private static Job submitJclCommon(ZOSConnection connection, SubmitJclParms parms) throws IOException {
+    private static Job submitJclCommon(ZOSConnection connection, SubmitJclParms parms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(parms == null, "parms is null");
         Util.checkStateParameter(!parms.getJcl().isPresent(), "jcl not specified");
