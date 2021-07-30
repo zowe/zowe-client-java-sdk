@@ -15,8 +15,10 @@ import utility.UtilDataset;
 import utility.UtilIO;
 import utility.UtilZosFiles;
 import zosfiles.input.DownloadParams;
+import zosfiles.input.ListParams;
 import zosfiles.response.Dataset;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.*;
@@ -30,53 +32,87 @@ public class ZosDsnDownload {
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
 
-        List<Dataset> datasets = new ArrayList<>();
-        String url = "https://" + connection.getHost() + ":" + connection.getPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES  + "/" + dataSetName + ZosFilesConstants.RES_DS_MEMBERS;
+        List<Dataset> memberList = null;
+
+
         try {
-            if (options.getPattern().isPresent()) {
-                url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN + options.getPattern().get();
-            }
-            String key, value;
-            Map<String, String> headers = new HashMap<>();
-            key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
-            value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
-            headers.put(key, value);
+            ListParams parms =  new ListParams.Builder()
+                                .volume(options.getVolume().get())
+                                .responseTimeout(options.getResponseTimeout().get())
+                                .build();
+            List<Dataset> response =  ZosDsnList.listMembers(connection, dataSetName, parms);
+            memberList = response;
 
-            if (options.getAttributes().isPresent()) {
-                key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(0);
-                value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
-                headers.put(key, value);
-            }
-            if (options.getMaxLength().isPresent()) {
-                key = "X-IBM-Max-Items";
-                value = options.getMaxLength().get();
-                headers.put(key, value);
-            } else {
-                key = ZosmfHeaders.HEADERS.get("X_IBM_MAX_ITEMS").get(0);
-                value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
-                headers.put(key, value);
-            }
-            if (options.getResponseTimeout().isPresent()) {
-                key = ZosmfHeaders.HEADERS.get("X_IBM_RESPONSE_TIMEOUT").get(0);
-                value = options.getResponseTimeout().get();
-                headers.put(key, value);
-            }
-            LOG.info(url);
+            List<Exception> downloadErrors = null;
+            List<String> failedMembers = null ;
+            Integer downloadsInitiated = 0;
 
-            IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
-            request.setHeaders(headers);
-            JSONObject results = request.httpGet();
-            JSONArray items = (JSONArray) results.get("items");
-            items.forEach(item -> {
-                JSONObject datasetObj = (JSONObject) item;
-                datasets.add(UtilDataset.createDatasetObjFromJson(datasetObj));
-            });
+            String extension = UtilZosFiles.DEFAULT_FILE_EXTENSION;
+
+            if(options.getExtension().get() != null) {
+                extension = options.getExtension().get();
+            }
+
+
+//           TODO
+//            /**
+//             * Function that takes a member and turns it into a promise to download said member
+//             * @param mem - an object with a "member" field containing the name of the data set member
+//             */
+//            const createDownloadPromise = (mem: { member: string }) => {
+//                // update the progress bar if any
+//                if (options.task != null) {
+//                    options.task.statusMessage = "Downloading " + mem.member;
+//                    options.task.percentComplete = Math.floor(TaskProgress.ONE_HUNDRED_PERCENT *
+//                            (downloadsInitiated / memberList.length));
+//                    downloadsInitiated++;
+//                }
+//                const fileName = options.preserveOriginalLetterCase ? mem.member : mem.member.toLowerCase();
+//                return this.dataSet(session, `${dataSetName}(${mem.member})`, {
+//                    volume: options.volume,
+//                            file: baseDir + IO.FILE_DELIM + fileName + IO.normalizeExtension(extension),
+//                            binary: options.binary,
+//                            encoding: options.encoding,
+//                            responseTimeout: options.responseTimeout
+//                }).catch((err) => {
+//                // If we should fail fast, rethrow error
+//                if (options.failFast || options.failFast === undefined) {
+//                    throw err;
+//                }
+//                downloadErrors.push(err);
+//                failedMembers.push(fileName);
+//                // Delete the file that could not be downloaded
+//                IO.deleteFile(baseDir + IO.FILE_DELIM + fileName + IO.normalizeExtension(extension));
+//                });
+//            };
+
+
+            Integer maxConcurrentRequests = options.getNaxConcurrentRequests().get() == null ? 1 : options.getNaxConcurrentRequests().get();
+
+
+//           TODO
+//            if (maxConcurrentRequests === 0) {
+//                await Promise.all(memberList.map(createDownloadPromise));
+//            } else {
+//                await asyncPool(maxConcurrentRequests, memberList, createDownloadPromise);
+//            }
+            // Handle failed downloads if no errors were thrown yet
+            if (downloadErrors.size() > 0) {
+                throw new Exception(
+                        "Failed to download the following members: \n" + failedMembers + "\n\n"
+//                       TODO
+//                        downloadErrors.map((err: Error) => err.message).join("\n"),
+//                        causeErrors: downloadErrors,
+//                        additionalDetails: failedMembers.join("\n")
+                );
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return datasets;
+        return memberList;
     }
+
+
     public static List<Dataset> downloadDsn(ZOSConnection connection, String dataSetName, DownloadParams options) throws IOException {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
@@ -93,6 +129,7 @@ public class ZosDsnDownload {
             url += dataSetName;
             LOG.info(url);
 
+            String key, value;
             Map<String, String> headers = UtilZosFiles.generateHeadersBasedOnOptions(options);
             String extension = UtilZosFiles.DEFAULT_FILE_EXTENSION;
 
@@ -102,45 +139,25 @@ public class ZosDsnDownload {
 
             UtilIO.createDirsSyncFromFilePath(destination(dataSetName, options, extension));
 
-            if (options.getAttributes().isPresent()) {
-                key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(0);
-                value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
+            FileOutputStream writeStream =  UtilIO.createWriteStream(destination(dataSetName, options, extension));
+
+//      TODO
+//            Object requestOptions = {
+//                    resource: endpoint,
+//                    reqHeaders,
+//                    responseStream: writeStream,
+//                    normalizeResponseNewLines: !options.binary,
+//                    task: options.task
+//            };
+
+            if (options.getReturnEtag().isPresent()) {
+                key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
+                value = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(1);
                 headers.put(key, value);
+//              TODO
+//                requestOptions.dataToReturn = [CLIENT_PROPERTY.response];
             }
-            if (options.getMaxLength().isPresent()) {
-                key = "X-IBM-Max-Items";
-                value = options.getMaxLength().get();
-                headers.put(key, value);
-            } else {
-                key = ZosmfHeaders.HEADERS.get("X_IBM_MAX_ITEMS").get(0);
-                value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
-                headers.put(key, value);
-            }
-            if (options.getResponseTimeout().isPresent()) {
-                key = ZosmfHeaders.HEADERS.get("X_IBM_RESPONSE_TIMEOUT").get(0);
-                value = options.getResponseTimeout().get();
-                headers.put(key, value);
-            }
-            if (options.getRecall().isPresent()) {
-                switch (options.getRecall().get().toLowerCase(Locale.ROOT)) {
-                    case "wait":
-                        key = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_WAIT").get(0);
-                        value = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_WAIT").get(1);
-                        headers.put(key, value);
-                        break;
-                    case "nowait":
-                        key = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_NO_WAIT").get(0);
-                        value = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_NO_WAIT").get(1);
-                        headers.put(key, value);
-                        break;
-                    case "error":
-                        key = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_ERROR").get(0);
-                        value = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_ERROR").get(1);
-                        headers.put(key, value);
-                        break;
-                }
-            }
-            LOG.info(url);
+
 
             IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
             request.setHeaders(headers);

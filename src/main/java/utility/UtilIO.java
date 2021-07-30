@@ -225,15 +225,29 @@ public class UtilIO {
 
             if (binary) {
                 return Files.newBufferedReader(Paths.get(file));
-            } else {
-                InputStreamReader isr = new InputStreamReader((InputStream) Paths.get(file), StandardCharsets.UTF_8);
-                BufferedReader content = new BufferedReader(isr);
-//                if (normalizeNewLines) {
-//                    content = content.toString().replace(/\r\n/g, "\n");
-//                }
-                return content;
             }
+
         }
+    public static String readFileSync(String file, Boolean normalizeNewLines , Boolean binary ) throws IOException {
+        Util.checkNullParameter(file == null,"dirOrFile is null");
+        Util.checkStateParameter(file.isBlank() || file.isEmpty() ,"dirOrFile is empty");
+
+        if (normalizeNewLines == null) {
+            normalizeNewLines = false;
+        }
+        if (binary == null) {
+            binary = false;
+        }
+
+        if (!binary) {
+            InputStreamReader isr = new InputStreamReader((InputStream) Paths.get(file), StandardCharsets.UTF_8);
+            BufferedReader content = new BufferedReader(isr);
+            if (normalizeNewLines) {
+                return content.toString().replace("\r\n", "\n");
+            }
+            return content.toString();
+        }
+    }
 
         /**
          * Create a Readable stream from a file
@@ -247,7 +261,9 @@ public class UtilIO {
         StringBuilder sb = new StringBuilder();
         BufferedReader r = new BufferedReader(new InputStreamReader((InputStream) Paths.get(file)),
                 1024);
-        for (String line = r.readLine(); line != null; line = r.readLine()) {
+        for (String line = r.readLine();
+             line != null;
+             line = r.readLine()) {
             sb.append(line);
         }
         return sb.toString();
@@ -280,10 +296,10 @@ public class UtilIO {
             Util.checkNullParameter(original == null,"dirOrFile is null");
             Util.checkStateParameter(original.isBlank() || original.isEmpty() ,"dirOrFile is empty");
             String OS = System.getProperty("os.name").toLowerCase();
-            if (OS.indexOf("win") >= 0) {
-                return original.replace(/([^\r])\n/g, "$1\r\n");
-
-            }
+//       TODO
+//            if (OS.indexOf("win") >= 0) {
+//                return original.replace(/([^\r])\n/g, "$1\r\n");
+//            }
             return original;
         }
 
