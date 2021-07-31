@@ -2,15 +2,19 @@
 
 Work In Progress implementation of a Zowe SDK for Java.
 
-Functionality provided so far:  
-  
+The SDK lets you leverage the underlying z/OSMF APIs on a z/OS system to build applications that interface with the mainframe.
+
+The goal is to provide Java developers an SDK to easily interface with a backend mainframe from your Windows, Linux, or Mac instance through Rest APIs.  Let the SDK do the hard work while you can focus on your business logic, test, automation code building on a client system without ever needing to build an application directly on the mainframe.
+
+Functionality provided so far:
+
     GetJobs   
     IssueCommand (mvs commands)  
     IssuesTsoCommand  
     SubmitJobs  
 
-Seeing the following sample programs:
-    
+See the following sample programs:
+
     GetJobsTest.java  
     IssueCommandTest.java  
     IssueTsoCommandTest.java  
