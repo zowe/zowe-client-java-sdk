@@ -4,7 +4,7 @@ Work In Progress implementation of a Zowe SDK for Java.
 
 The SDK lets you leverage the underlying z/OSMF APIs on a z/OS system to build applications that interface with the mainframe.
 
-The goal is to provide Java developers an SDK to easily interface with a backend mainframe from your Windows, Linux, or Mac instance through Rest APIs. Let the SDK do the leg work while you focus on coding your client side application. Many types of applications can be used with the SDK be it for busissness logic, testing or automation applications without the need to build and execute such an applications directly on the mainframe itself. 
+The goal is to provide Java developers an SDK to easily interface with a backend mainframe from your Windows, Linux, or Mac instance through Rest APIs. Let the SDK do the leg work while you focus on coding your client side application. Many types of applications can be used with the SDK be it for busissness logic, testing or automation applications without the need to build and execute such applications directly on the mainframe itself. 
 
 Functionality provided so far:
 
