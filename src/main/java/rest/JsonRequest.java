@@ -34,6 +34,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import utility.Util;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -83,7 +84,12 @@ public class JsonRequest implements IZoweRequest {
     public <T> T httpGet() throws Exception {
         if (!headers.isEmpty()) headers.forEach((key, value) -> getRequest.setHeader(key, value));
 
-        this.httpResponse = client.execute(getRequest, localContext);
+        try {
+            this.httpResponse = client.execute(getRequest, localContext);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
         int statusCode = httpResponse.getStatusLine().getStatusCode();
 
         boolean isHttpError = !(statusCode >= 200 && statusCode <= 299);
@@ -113,7 +119,12 @@ public class JsonRequest implements IZoweRequest {
         if (!headers.isEmpty()) headers.forEach((key, value) -> putRequest.setHeader(key, value));
         putRequest.setEntity(new StringEntity(body.orElse("")));
 
-        this.httpResponse = client.execute(putRequest, localContext);
+        try {
+            this.httpResponse = client.execute(putRequest, localContext);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
         int statusCode = httpResponse.getStatusLine().getStatusCode();
 
         LOG.info("JsonRequest::httpPost - Response statusCode {}, Response {}", httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
