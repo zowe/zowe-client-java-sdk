@@ -13,24 +13,24 @@ import java.util.Optional;
 
 public class Response {
 
-    private Optional<Object> result;
+    private Optional<Object> responsePhrase;
     private Optional<Integer> statusCode;
 
-    public Response(Optional<Object> result, Optional<Integer> statusCode) {
-        if (result == null)
-            this.result = Optional.empty();
-        else this.result = result;
+    public Response(Optional<Object> responsePhrase, Optional<Integer> statusCode) {
+        if (responsePhrase == null)
+            this.responsePhrase = Optional.empty();
+        else this.responsePhrase = responsePhrase;
         if (statusCode == null)
             this.statusCode = Optional.empty();
         this.statusCode = statusCode;
     }
 
-    public Optional<Object> getResult() {
-        return result;
+    public Optional<Object> getResponsePhrase() {
+        return responsePhrase;
     }
 
-    public void setResult(Optional<Object> result) {
-        this.result = result;
+    public void setResponsePhrase(Optional<Object> result) {
+        this.responsePhrase = responsePhrase;
     }
 
     public Optional<Integer> getStatusCode() {

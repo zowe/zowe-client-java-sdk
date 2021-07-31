@@ -47,13 +47,17 @@ public class IssueCommand {
 
         IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(reqBody.toString()));
         Response response = request.httpPut();
-        if (response.getResult().isPresent() && response.getStatusCode().get() != 200) {
-            throw new Exception("No results for console command " + reqBody);
+        int httpCode = response.getStatusCode().get();
+        boolean isHttpError = !(httpCode >= 200 && httpCode <= 299);
+        if (response.getResponsePhrase().isPresent() && isHttpError) {
+            String responsePhrase = (String) response.getResponsePhrase().get();
+            String errorMsg = httpCode + " " + responsePhrase + ".";
+            throw new Exception("No results for console command. " + errorMsg);
         }
-        LOG.debug("Response result {}", response.getResult());
+        LOG.debug("Response result {}", response.getResponsePhrase());
 
         ZosmfIssueResponse zosmfIssueResponse = new ZosmfIssueResponse();
-        JSONObject result = (JSONObject) response.getResult().orElseThrow(Exception::new);
+        JSONObject result = (JSONObject) response.getResponsePhrase().orElseThrow(Exception::new);
         zosmfIssueResponse.setCmdResponseKey((String) result.get("cmd-response-key"));
         zosmfIssueResponse.setCmdResponseUrl((String) result.get("cmd-response-url"));
         zosmfIssueResponse.setCmdResponseUri((String) result.get("cmd-response-uri"));

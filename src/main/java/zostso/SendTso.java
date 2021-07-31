@@ -57,8 +57,13 @@ public class SendTso {
 
         IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(jobObj));
         Response response = request.httpPut();
-        if (response.getResult().isPresent() && response.getStatusCode().get() != 200)
-            throw new Exception("No results from executing tso command after getting TSO address space.");
+        int httpCode = response.getStatusCode().get();
+        boolean isHttpError = !(httpCode >= 200 && httpCode <= 299);
+        if (response.getResponsePhrase().isPresent() && isHttpError) {
+            String responsePhrase = (String) response.getResponsePhrase().get();
+            String errorMsg = httpCode + " " + responsePhrase + ".";
+            throw new Exception("No results from executing tso command after getting TSO address space. " + errorMsg);
+        }
 
         return UtilTso.getZosmfTsoResponse(response);
     }
@@ -106,10 +111,13 @@ public class SendTso {
         LOG.info("SendTso::getDataFromTSO - url {}", url);
 
         IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.empty());
-        Response response =  request.httpPut();
-
-        if (response.getResult().isPresent() && response.getStatusCode().get() != 200) {
-            throw new Exception("Follow up TSO Messages from TSO command cannot be retrieved.");
+        Response response = request.httpPut();
+        int httpCode = response.getStatusCode().get();
+        boolean isHttpError = !(httpCode >= 200 && httpCode <= 299);
+        if (response.getResponsePhrase().isPresent() && isHttpError) {
+            String responsePhrase = (String) response.getResponsePhrase().get();
+            String errorMsg = httpCode + " " + responsePhrase + ".";
+            throw new Exception("Follow up TSO Messages from TSO command cannot be retrieved. " + errorMsg);
         }
 
         return UtilTso.getZosmfTsoResponse(response);

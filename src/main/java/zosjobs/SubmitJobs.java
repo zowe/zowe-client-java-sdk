@@ -53,20 +53,27 @@ public class SubmitJobs {
 
         IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(reqBody.toString()));
         Response response = request.httpPut();
+        int httpCode = response.getStatusCode().get();
+        boolean isHttpError = !(httpCode >= 200 && httpCode <= 299);
+        if (response.getResponsePhrase().isPresent() && isHttpError) {
+            String responsePhrase = (String) response.getResponsePhrase().get();
+            String errorMsg = httpCode + " " + responsePhrase + ".";
+            if (httpCode == 400)
+                throw new Exception("No results for submitted job. Body sent may be invalid. " + errorMsg);
+            throw new Exception("No results for submitted job. " + errorMsg);
+        }
 
-        if (response.getResult().isPresent() && response.getStatusCode().get() != 200)
-            throw new Exception("No results for submitted job.");
-
-        return UtilJobs.createJobObjFromJson((JSONObject) response.getResult().orElseThrow(Exception::new));
+        return UtilJobs.createJobObjFromJson((JSONObject) response.getResponsePhrase().orElseThrow(Exception::new));
     }
 
     /**
      * Submit a string of JCL to run
-     * @static
+     *
      * @param {AbstractSession} session - z/OSMF connection info
-     * @param {string} jcl - string of JCL that you want to be submit
-     * @param {string} internalReaderRecfm - record format of the jcl you want to submit. "F" (fixed) or "V" (variable)
-     * @param {string} internalReaderLrecl - logical record length of the jcl you want to submit
+     * @param {string}          jcl - string of JCL that you want to be submit
+     * @param {string}          internalReaderRecfm - record format of the jcl you want to submit. "F" (fixed) or "V" (variable)
+     * @param {string}          internalReaderLrecl - logical record length of the jcl you want to submit
+     * @static
      * @returns {Job} - Job document with details about the submitted job
      * @memberof SubmitJobs
      */

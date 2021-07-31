@@ -18,10 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import rest.IZoweRequest;
-import rest.JsonRequest;
-import rest.QueryConstants;
-import rest.TextRequest;
+import rest.*;
 import utility.Util;
 import utility.UtilJobs;
 import zosjobs.input.CommonJobParms;
@@ -42,7 +39,7 @@ public class GetJobs {
     }
 
     public List<Job> getJobs() throws Exception {
-        return getJobsCommon( null);
+        return getJobsCommon(null);
     }
 
     public List<Job> getJobsByPrefix(String prefix) throws Exception {
@@ -123,7 +120,12 @@ public class GetJobs {
         } else {
             request.setGetRequest(new HttpGet(url));
         }
-        JSONArray results = request.httpGet();
+
+        Response response = request.httpGet();
+        JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
+        if (results == null)
+            return jobs;
+
         results.forEach(item -> {
             JSONObject jobObj = (JSONObject) item;
             jobs.add(UtilJobs.createJobObjFromJson(jobObj));
@@ -162,11 +164,10 @@ public class GetJobs {
         } else {
             request.setGetRequest(new HttpGet(url));
         }
-        JSONObject result = request.httpGet();
-
-        if (result == null) {
-            throw new Exception("Job not found");
-        }
+        Response response = request.httpGet();
+        JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
+        if (result == null)
+            return new Job.Builder().build();
 
         return UtilJobs.createJobObjFromJson(result);
     }
@@ -177,7 +178,7 @@ public class GetJobs {
     }
 
     public List<JobFile> getSpoolFilesForJob(Job job) throws Exception {
-        return getSpoolFilesCommon( new CommonJobParms(job.getJobId().get(), job.getJobName().get()));
+        return getSpoolFilesCommon(new CommonJobParms(job.getJobId().get(), job.getJobName().get()));
     }
 
     public List<JobFile> getSpoolFilesCommon(CommonJobParms parms)
@@ -199,7 +200,12 @@ public class GetJobs {
         } else {
             request.setGetRequest(new HttpGet(url));
         }
-        JSONArray results = request.httpGet();
+
+        Response response = request.httpGet();
+        JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
+        if (results == null)
+            return files;
+
         results.forEach(item -> {
             JSONObject fileObj = (JSONObject) item;
             files.add(new JobFile.Builder().jobId((String) fileObj.get("jobid"))
