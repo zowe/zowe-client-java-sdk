@@ -100,7 +100,7 @@ public class ZosDsnList {
 
     private static Response getResponse(ZOSConnection connection, ListParams options, Map<String, String> headers,
                                         String url) throws Exception {
-        LOG.info(url);
+        LOG.debug(url);
         setHeaders(options, headers);
         IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
         request.setHeaders(headers);

@@ -48,7 +48,7 @@ public class StartTso {
         Util.checkNullParameter(commandParms == null, "commandParms is null");
 
         String url = getResourcesQuery(connection, commandParms);
-        LOG.info("StartTso::startCommon - url {}", url);
+        LOG.debug("StartTso::startCommon - url {}", url);
 
         IZoweRequest request = new JsonRequest(connection, new HttpPost(url));
         Response response = request.httpPost();
