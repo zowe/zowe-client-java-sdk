@@ -7,6 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
+
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ListDatasetsTest {
-    
+
     private static final Logger LOG = LogManager.getLogger(ListDatasetsTest.class);
 
     public static void main(String[] args) throws IOException {
