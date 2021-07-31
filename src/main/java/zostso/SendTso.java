@@ -49,7 +49,7 @@ public class SendTso {
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + commandParms.getSevletKey() + TsoConstants.RES_DONT_READ_REPLY;
-        LOG.info("SendTso::sendDataToTSOCommon - url {}", url);
+        LOG.debug("SendTso::sendDataToTSOCommon - url {}", url);
 
         TsoResponseMessage tsoResponseMessage = new TsoResponseMessage(Optional.of("0100"),
                 Optional.ofNullable(commandParms.getData()));
@@ -71,7 +71,7 @@ public class SendTso {
     private static String getTsoResponseSendMessage(TsoResponseMessage tsoResponseMessage) throws Exception {
         String message = "{\"TSO RESPONSE\":{\"VERSION\":\"" + tsoResponseMessage.getVersion().orElseThrow(Exception::new)
                 + "\",\"DATA\":\"" + tsoResponseMessage.getData().orElseThrow(Exception::new) + "\"}}";
-        LOG.info("SendTo::getTsoResponseSendMessage - message {}", message);
+        LOG.debug("SendTo::getTsoResponseSendMessage - message {}", message);
         return message;
     }
 
@@ -108,7 +108,7 @@ public class SendTso {
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
-        LOG.info("SendTso::getDataFromTSO - url {}", url);
+        LOG.debug("SendTso::getDataFromTSO - url {}", url);
 
         IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.empty());
         Response response = request.httpPut();
