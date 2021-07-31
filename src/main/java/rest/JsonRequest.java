@@ -82,22 +82,34 @@ public class JsonRequest implements IZoweRequest {
     @Override
     public <T> T httpGet() throws Exception {
         if (!headers.isEmpty()) headers.forEach((key, value) -> getRequest.setHeader(key, value));
-        String result = client.execute(getRequest, handler);
-        LOG.info("JsonRequest::httpGet - result = {}", result);
 
-        JSONParser parser = new JSONParser();
-        try {
-            return (T) parser.parse(result);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        this.httpResponse = client.execute(getRequest, localContext);
+        int statusCode = httpResponse.getStatusLine().getStatusCode();
+
+        boolean isHttpError = !(statusCode >= 200 && statusCode <= 299);
+        if (isHttpError) {
+            return (T) new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
+                    Optional.ofNullable(statusCode));
         }
+
+        HttpEntity entity = httpResponse.getEntity();
+        if (entity != null) {
+            String result = EntityUtils.toString(entity);
+            LOG.info("JsonRequest::httpGet - result = {}", result);
+
+            JSONParser parser = new JSONParser();
+            try {
+                return (T) new Response(Optional.ofNullable(parser.parse(result)), Optional.ofNullable(statusCode));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
         return null;
     }
 
     @Override
     public <T> T httpPut() throws Exception {
-        String result = null;
-
         if (!headers.isEmpty()) headers.forEach((key, value) -> putRequest.setHeader(key, value));
         putRequest.setEntity(new StringEntity(body.orElse("")));
 
@@ -106,23 +118,25 @@ public class JsonRequest implements IZoweRequest {
 
         LOG.info("JsonRequest::httpPost - Response statusCode {}, Response {}", httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
-        if (statusCode != 200) {
+        boolean isHttpError = !(statusCode >= 200 && statusCode <= 299);
+        if (isHttpError) {
             return (T) new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
                     Optional.ofNullable(statusCode));
         }
 
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
-            result = EntityUtils.toString(entity);
+            String result = EntityUtils.toString(entity);
             LOG.info("JsonRequest::httpPut - result = {}", result);
+
+            JSONParser parser = new JSONParser();
+            try {
+                return (T) new Response(Optional.ofNullable(parser.parse(result)), Optional.ofNullable(statusCode));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
-        JSONParser parser = new JSONParser();
-        try {
-            return (T) new Response(Optional.ofNullable(parser.parse(result)), Optional.ofNullable(statusCode));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         return null;
     }
 
@@ -137,7 +151,8 @@ public class JsonRequest implements IZoweRequest {
         LOG.info("Response statusCode {}, Response {}", httpResponse.getStatusLine().getStatusCode(),
                 httpResponse.toString());
 
-        if (statusCode != 200) {
+        boolean isHttpError = !(statusCode >= 200 && statusCode <= 299);
+        if (isHttpError) {
             return (T) new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
                     Optional.ofNullable(statusCode));
         }
@@ -178,19 +193,6 @@ public class JsonRequest implements IZoweRequest {
         this.headers = headers;
     }
 
-    private void setup() {
-        this.setStandardHeaders();
-        try {
-            client = HttpClients
-                .custom()
-                .setSSLContext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build())
-                .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
-                .build();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public void setGetRequest(HttpGet getRequest) {
         this.getRequest = getRequest;
@@ -213,6 +215,19 @@ public class JsonRequest implements IZoweRequest {
     public void setDeleteRequest(HttpDelete deleteRequest) {
         this.deleteRequest = deleteRequest;
         this.setup();
+    }
+
+    private void setup() {
+        this.setStandardHeaders();
+        try {
+            client = HttpClients
+                    .custom()
+                    .setSSLContext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build())
+                    .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
+                    .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setStandardHeaders() {

@@ -33,13 +33,15 @@ public class UtilTso {
     public static ZosmfTsoResponse getZosmfTsoResponse(Response response) throws Exception {
         Util.checkNullParameter(response == null, "response is null");
         ZosmfTsoResponse result;
-        if (response.getStatusCode().isPresent() && response.getStatusCode().get() != 200) {
-            String errorMsg = (String) response.getResult().orElseThrow(() -> new Exception("results not available"));
+        int statusCode = response.getStatusCode().get();
+        boolean isHttpError = !(statusCode >= 200 && statusCode <= 299);
+        if (response.getStatusCode().isPresent() && isHttpError) {
+            String errorMsg = (String) response.getResponsePhrase().orElseThrow(() -> new Exception("results not available"));
             ZosmfMessages zosmfMsg = new ZosmfMessages(Optional.of(errorMsg), Optional.empty(), Optional.empty());
             result = new ZosmfTsoResponse.Builder().msgData(Arrays.asList(zosmfMsg)).build();
         } else {
-            result = UtilTso.parseJsonTsoResponse((JSONObject) (response.getResult().isPresent() ?
-                    response.getResult().get() : null));
+            result = UtilTso.parseJsonTsoResponse((JSONObject) (response.getResponsePhrase().isPresent() ?
+                    response.getResponsePhrase().get() : null));
         }
 
         return result;
