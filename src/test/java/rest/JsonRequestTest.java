@@ -68,7 +68,6 @@ public class JsonRequestTest {
     @Test
     public void tstHttpGetReturnsNullForInvalidJsonFailure() throws Exception {
         HttpResponseInvalidJsonMock httpResponseInvalidJsonMock = new HttpResponseInvalidJsonMock();
-        Mockito.when(httpResponse.getEntity()).thenReturn(httpResponseInvalidJsonMock.getHttpResponse().getEntity());
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
                .thenReturn(httpResponseInvalidJsonMock.getHttpResponse());
 
@@ -82,7 +81,6 @@ public class JsonRequestTest {
         String json = "{\"data\":{}}";
 
         HttpResponseMock httpResponseMock = new HttpResponseMock();
-        Mockito.when(httpResponse.getEntity()).thenReturn(httpResponseMock.getHttpResponse().getEntity());
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
                .thenReturn(httpResponseMock.getHttpResponse());
 
@@ -106,7 +104,6 @@ public class JsonRequestTest {
     @Test
     public void tstHttpPutReturnsNullForInvalidJsonFailure() throws Exception {
         HttpResponseInvalidJsonMock httpResponseInvalidJsonMock = new HttpResponseInvalidJsonMock();
-        Mockito.when(httpResponse.getEntity()).thenReturn(httpResponseInvalidJsonMock.getHttpResponse().getEntity());
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
                 .thenReturn(httpResponseInvalidJsonMock.getHttpResponse());
 
@@ -120,7 +117,6 @@ public class JsonRequestTest {
         String json = "{\"data\":{}}";
 
         HttpResponseMock httpResponseMock = new HttpResponseMock();
-        Mockito.when(httpResponse.getEntity()).thenReturn(httpResponseMock.getHttpResponse().getEntity());
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
                 .thenReturn(httpResponseMock.getHttpResponse());
 

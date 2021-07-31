@@ -32,8 +32,8 @@ import static org.mockito.ArgumentMatchers.any;
 public class TextRequestTest {
 
     private HttpClient httpClient;
-    private JsonRequest getRequest;
-    private JsonRequest putRequest;
+    private TextRequest getRequest;
+    private TextRequest putRequest;
 
     @Before
     public void init() {
@@ -41,11 +41,11 @@ public class TextRequestTest {
         httpClient = Mockito.mock(HttpClient.class);
         ZOSConnection connection = new ZOSConnection("", "", "", "");
 
-        getRequest = new JsonRequest(connection, httpGet);
+        getRequest = new TextRequest(connection, httpGet);
         Whitebox.setInternalState(getRequest, "client", httpClient);
 
         HttpPut httpPut = Mockito.mock(HttpPut.class);
-        putRequest = new JsonRequest(connection, httpPut, Optional.empty());
+        putRequest = new TextRequest(connection, httpPut, Optional.empty());
         Whitebox.setInternalState(putRequest, "client", httpClient);
     }
 
@@ -57,6 +57,16 @@ public class TextRequestTest {
         assertThrows(IOException.class, getRequest::httpGet);
         Mockito.verify(httpClient, Mockito.times(1))
                .execute(any(HttpGet.class), any(ResponseHandler.class));
+    }
+
+    @Test
+    public void tstHttpPutThrowsException() throws IOException {
+        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
+                .thenThrow(new IOException());
+
+        assertThrows(IOException.class, putRequest::httpPut);
+        Mockito.verify(httpClient, Mockito.times(1))
+                .execute(any(HttpPut.class), any(ResponseHandler.class));
     }
 
 }
