@@ -56,7 +56,7 @@ public class JsonRequestTest {
     }
 
     @Test
-    public void tstHttpGetNullIOException() throws Exception {
+    public void tstHttpGetNullIOExceptionFailure() throws Exception {
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
                .thenThrow(new IOException());
 
@@ -66,7 +66,7 @@ public class JsonRequestTest {
     }
 
     @Test
-    public void tstHttpGetReturnsNullForInvalidJson() throws Exception {
+    public void tstHttpGetReturnsNullForInvalidJsonFailure() throws Exception {
         HttpResponseInvalidJsonMock httpResponseInvalidJsonMock = new HttpResponseInvalidJsonMock();
         Mockito.when(httpResponse.getEntity()).thenReturn(httpResponseInvalidJsonMock.getHttpResponse().getEntity());
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
@@ -78,7 +78,7 @@ public class JsonRequestTest {
     }
 
     @Test
-    public void tstHttpGetReturnsJson() throws Exception {
+    public void tstHttpGetReturnsJsonSuccess() throws Exception {
         String json = "{\"data\":{}}";
 
         HttpResponseMock httpResponseMock = new HttpResponseMock();
@@ -94,7 +94,7 @@ public class JsonRequestTest {
     }
 
     @Test
-    public void tstHttpPutNullIOException() throws Exception {
+    public void tstHttpPutNullIOExceptionFailure() throws Exception {
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
                 .thenThrow(new IOException());
 
@@ -104,7 +104,7 @@ public class JsonRequestTest {
     }
 
     @Test
-    public void tstHttpPutReturnsNullForInvalidJson() throws Exception {
+    public void tstHttpPutReturnsNullForInvalidJsonFailure() throws Exception {
         HttpResponseInvalidJsonMock httpResponseInvalidJsonMock = new HttpResponseInvalidJsonMock();
         Mockito.when(httpResponse.getEntity()).thenReturn(httpResponseInvalidJsonMock.getHttpResponse().getEntity());
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
@@ -116,7 +116,7 @@ public class JsonRequestTest {
     }
 
     @Test
-    public void tstHttpPutReturnsJson() throws Exception {
+    public void tstHttpPutReturnsJsonSuccess() throws Exception {
         String json = "{\"data\":{}}";
 
         HttpResponseMock httpResponseMock = new HttpResponseMock();
