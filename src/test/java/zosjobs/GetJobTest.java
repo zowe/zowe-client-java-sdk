@@ -19,7 +19,11 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.reflect.Whitebox;
 import rest.IZoweRequest;
+import rest.Response;
 import zosjobs.response.Job;
+
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
 
@@ -66,7 +70,8 @@ public class GetJobTest {
         job2.put("jobid", "job2");
         jsonArray.add(job2);
 
-        Mockito.when(request.httpGet()).thenReturn(jsonArray);
+        Response response = new Response(Optional.of(jsonArray), Optional.of(200));
+        Mockito.when(request.httpGet()).thenReturn(response);
 
         String msgResult = null;
         try {
@@ -85,7 +90,8 @@ public class GetJobTest {
         jobJson.put("jobid", "job");
         jsonArray.add(jobJson);
 
-        Mockito.when(request.httpGet()).thenReturn(jsonArray);
+        Response response = new Response(Optional.of(jsonArray), Optional.of(200));
+        Mockito.when(request.httpGet()).thenReturn(response);
 
         Job job = getJobs.getJob("1");
         assertTrue("job".equals(job.getJobId().get()));
@@ -96,7 +102,8 @@ public class GetJobTest {
         JSONArray jsonArray = new JSONArray();
         jsonArray.add(jobJson);
 
-        Mockito.when(request.httpGet()).thenReturn(jsonArray);
+        Response response = new Response(Optional.of(jsonArray), Optional.of(200));
+        Mockito.when(request.httpGet()).thenReturn(response);
 
         Job job = getJobs.getJob("1");
         assertTrue("jobid".equals(job.getJobId().get()));
@@ -142,7 +149,8 @@ public class GetJobTest {
 
     @Test
     public void tstGetStatusForJobSuccess() throws Exception {
-        Mockito.when(request.httpGet()).thenReturn(jobJson);
+        Response response = new Response(Optional.of(jobJson), Optional.of(200));
+        Mockito.when(request.httpGet()).thenReturn(response);
 
         Job job = getJobs.getStatusForJob(new Job.Builder().jobId("1").jobName("jobName").build());
         assertTrue("jobid".equals(job.getJobId().get()));
