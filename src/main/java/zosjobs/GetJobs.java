@@ -266,7 +266,7 @@ public class GetJobs {
         Util.checkConnection(connection);
         Util.checkNullParameter(jobName == null, "jobName is null");
         Util.checkNullParameter(jobId == null, "jobId is null");
-        Util.checkStateParameter(!Optional.ofNullable(spoolId).isPresent(), "spoolId not specified");
+        Util.checkStateParameter(spoolId <= 0, "spoolId not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + "/" +
                 jobName + "/" + jobId + JobsConstants.RESOURCE_SPOOL_FILES + "/" +

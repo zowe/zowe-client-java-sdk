@@ -22,7 +22,6 @@ import rest.IZoweRequest;
 import rest.Response;
 import zosjobs.response.Job;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
@@ -78,7 +77,9 @@ public class GetJobTest {
             getJobs.getJob("1");
         } catch (Exception e) {
             msgResult = e.getMessage();
+
         }
+        assertTrue("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1".equals(getJobs.getUrl()));
         assertTrue(msg.equals(msgResult));
     }
 
@@ -94,6 +95,7 @@ public class GetJobTest {
         Mockito.when(request.httpGet()).thenReturn(response);
 
         Job job = getJobs.getJob("1");
+        assertTrue("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1".equals(getJobs.getUrl()));
         assertTrue("job".equals(job.getJobId().get()));
     }
 
@@ -106,6 +108,7 @@ public class GetJobTest {
         Mockito.when(request.httpGet()).thenReturn(response);
 
         Job job = getJobs.getJob("1");
+        assertTrue("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1".equals(getJobs.getUrl()));
         assertTrue("jobid".equals(job.getJobId().get()));
         assertTrue("jobname".equals(job.getJobName().get()));
         assertTrue("subsystem".equals(job.getSubSystem().get()));
@@ -122,29 +125,35 @@ public class GetJobTest {
 
     @Test
     public void tstGetStatusForJobWithJobIdOnlyExceptionFailure() {
+        String errorMsg = "";
         try {
             getJobs.getStatusForJob(new Job.Builder().jobId("1").build());
         } catch (Exception e) {
-            assertTrue("jobName not specified".equals(e.getMessage()));
+            errorMsg = e.getMessage();
         }
+        assertTrue("jobName not specified".equals(errorMsg));
     }
 
     @Test
     public void tstGetStatusForJobWithJobNameOnlyExceptionFailure() {
+        String errorMsg = "";
         try {
             getJobs.getStatusForJob(new Job.Builder().jobName("jobName").build());
         } catch (Exception e) {
-            assertTrue("jobId not specified".equals(e.getMessage()));
+            errorMsg = e.getMessage();
         }
+        assertTrue("jobId not specified".equals(errorMsg));
     }
 
     @Test
     public void tstGetStatusForJobNoParmsExceptionFailure() {
+        String errorMsg = "";
         try {
             getJobs.getStatusForJob(new Job.Builder().build());
         } catch (Exception e) {
-            assertTrue("jobId not specified".equals(e.getMessage()));
+            errorMsg = e.getMessage();
         }
+        assertTrue("jobId not specified".equals(errorMsg));
     }
 
     @Test
@@ -153,6 +162,7 @@ public class GetJobTest {
         Mockito.when(request.httpGet()).thenReturn(response);
 
         Job job = getJobs.getStatusForJob(new Job.Builder().jobId("1").jobName("jobName").build());
+        assertTrue("https://1:1/zosmf/restjobs/jobs/jobName/1".equals(getJobs.getUrl()));
         assertTrue("jobid".equals(job.getJobId().get()));
         assertTrue("jobname".equals(job.getJobName().get()));
         assertTrue("subsystem".equals(job.getSubSystem().get()));
@@ -165,6 +175,59 @@ public class GetJobTest {
         assertTrue("files-url".equals(job.getFilesUrl().get()));
         assertTrue("job-correlator".equals(job.getJobCorrelator().get()));
         assertTrue("phase-name".equals(job.getPhaseName().get()));
+    }
+
+    @Test
+    public void tstGetSpoolContentByIdJobNameNullExceptionFailure() {
+        String errorMsg = "";
+        try {
+            getJobs.getSpoolContentById(null, "1", 1);
+        } catch (Exception e) {
+            errorMsg = e.getMessage();
+        }
+        assertTrue("jobName is null".equals(errorMsg));
+    }
+
+    @Test
+    public void tstGetSpoolContentByIdJobIdNullExceptionFailure() {
+        String errorMsg = "";
+        try {
+            getJobs.getSpoolContentById("jobName", null, 1);
+        } catch (Exception e) {
+            errorMsg = e.getMessage();
+        }
+        assertTrue("jobId is null".equals(errorMsg));
+    }
+
+    @Test
+    public void tstGetSpoolContentByIdSpoolIdZeroExceptionFailure() {
+        String errorMsg = "";
+        try {
+            getJobs.getSpoolContentById("jobName", "1", 0);
+        } catch (Exception e) {
+            errorMsg = e.getMessage();
+        }
+        assertTrue("spoolId not specified".equals(errorMsg));
+    }
+
+    @Test
+    public void tstGetSpoolContentByIdSpoolIdNegativeNumberExceptionFailure() {
+        String errorMsg = "";
+        try {
+            getJobs.getSpoolContentById("jobName", "1", -11);
+        } catch (Exception e) {
+            errorMsg = e.getMessage();
+        }
+        assertTrue("spoolId not specified".equals(errorMsg));
+    }
+
+    @Test
+    public void tstGetSpoolContentByIdSuccess() throws Exception {
+        Mockito.when(request.httpGet()).thenReturn("1\n2\n3\n");
+
+        String results = getJobs.getSpoolContentById("jobName", "jobId", 1);
+        assertTrue("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records".equals(getJobs.getUrl()));
+        assertTrue("1\n2\n3\n".equals(results));
     }
 
 }
