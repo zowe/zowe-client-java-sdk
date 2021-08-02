@@ -29,6 +29,7 @@ public class JsonPutRequest extends ZoweRequest {
         super(connection, ZoweRequestType.RequestType.PUT_JSON);
         this.body = body;
         this.request = new HttpPut(url.orElseThrow(() -> new Exception("url not specified")));
+        this.setup();
     }
 
     @Override
