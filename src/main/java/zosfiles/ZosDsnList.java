@@ -102,15 +102,15 @@ public class ZosDsnList {
                                         String url) throws Exception {
         LOG.debug(url);
         setHeaders(options, headers);
-        IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
+                ZoweRequestType.RequestType.GET_JSON);
         request.setHeaders(headers);
-        return request.httpGet();
+        return request.executeHttpRequest();
     }
 
     private static void checkHttpCode(Response response, String dataSetName) throws Exception {
         int httpCode = response.getStatusCode().get();
-        boolean isHttpError = !(httpCode >= 200 && httpCode <= 299);
-        if (response.getResponsePhrase().isPresent() && isHttpError) {
+        if (response.getResponsePhrase().isPresent() && Util.isHttpError(httpCode)) {
             String responsePhrase = (String) response.getResponsePhrase().get();
             String errorMsg = httpCode + " " + responsePhrase + ".";
             if (httpCode == 404) {

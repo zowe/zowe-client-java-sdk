@@ -10,12 +10,13 @@
 package zostso;
 
 import core.ZOSConnection;
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
-import rest.IZoweRequest;
-import rest.JsonRequest;
+import rest.Response;
+import rest.ZoweRequest;
+import rest.ZoweRequestFactory;
+import rest.ZoweRequestType;
 import utility.Util;
 import utility.UtilTso;
 import zostso.input.StopTsoParms;
@@ -34,9 +35,10 @@ public class StopTso {
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + commandParms.getServletKey().get();
         LOG.debug("StopTso::stopCommon url {}", url);
 
-        IZoweRequest request = new JsonRequest(connection, new HttpDelete(url));
-        JSONObject result = request.httpDelete();
-
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
+                ZoweRequestType.RequestType.DELETE_JSON);
+        Response response = request.executeHttpRequest();
+        JSONObject result = (JSONObject) response.getResponsePhrase().get();
         return UtilTso.parseJsonStopResponse(result);
     }
 

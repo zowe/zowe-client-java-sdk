@@ -10,8 +10,6 @@
 package utility;
 
 import core.ZOSConnection;
-import org.json.simple.JSONObject;
-import zosjobs.response.Job;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -52,8 +50,7 @@ public class Util {
      */
     public static String encodeURIComponent(String str)
     {
-        String result = null;
-
+        String result;
         try
         {
             result = URLEncoder.encode(str, "UTF-8")
@@ -66,8 +63,11 @@ public class Util {
         } catch (UnsupportedEncodingException e) {
             result = str;
         }
-
         return result;
+    }
+
+    public static boolean isHttpError(int statusCode) {
+        return !(statusCode >= 200 && statusCode <= 299);
     }
 
 }
