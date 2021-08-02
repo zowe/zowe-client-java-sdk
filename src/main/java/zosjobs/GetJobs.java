@@ -114,13 +114,14 @@ public class GetJobs {
 
         LOG.debug(url);
 
-        if (request == null) {
+        if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_JSON);
         } else {
             request.setRequest(Optional.ofNullable(url));
         }
 
         Response response = request.executeHttpRequest();
+        UtilJobs.checkHttpErrors(response);
         JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
         if (results == null)
             return jobs;
@@ -158,12 +159,13 @@ public class GetJobs {
 
         LOG.debug(url);
 
-        if (request == null) {
+        if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_JSON);
         } else {
             request.setRequest(Optional.ofNullable(url));
         }
         Response response = request.executeHttpRequest();
+        UtilJobs.checkHttpErrors(response);
         JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
         if (result == null)
             return new Job.Builder().build();
@@ -194,13 +196,14 @@ public class GetJobs {
 
         LOG.debug(url);
 
-        if (request == null) {
+        if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_JSON);
         } else {
             request.setRequest(Optional.ofNullable(url));
         }
 
         Response response = request.executeHttpRequest();
+        UtilJobs.checkHttpErrors(response);
         JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
         if (results == null)
             return files;
@@ -248,13 +251,14 @@ public class GetJobs {
 
         LOG.debug(url);
 
-        if (request == null) {
+        if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_TEXT);
         } else {
             request.setRequest(Optional.ofNullable(url));
         }
 
         Response response = request.executeHttpRequest();
+        UtilJobs.checkHttpErrors(response);
         return (String) response.getResponsePhrase().orElse("");
     }
 
@@ -275,12 +279,13 @@ public class GetJobs {
 
         LOG.debug(url);
 
-        if (request == null) {
+        if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_TEXT);
         } else {
             request.setRequest(Optional.ofNullable(url));
         }
         Response response = request.executeHttpRequest();
+        UtilJobs.checkHttpErrors(response);
         return (String) response.getResponsePhrase().orElse("");
     }
 
@@ -297,12 +302,13 @@ public class GetJobs {
 
         LOG.debug(url);
 
-        if (request == null) {
+        if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_TEXT);
         } else {
             request.setRequest(Optional.ofNullable(url));
         }
         Response response = request.executeHttpRequest();
+        UtilJobs.checkHttpErrors(response);
         return (String) response.getResponsePhrase().orElse("");
     }
 

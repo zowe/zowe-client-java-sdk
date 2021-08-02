@@ -83,6 +83,7 @@ public class JsonDeleteRequest extends ZoweRequest {
     @Override
     public void setRequest(Optional<String> url) throws Exception {
         this.request = new HttpDelete(url.orElseThrow(() -> new Exception("url not specified")));
+        this.setup();
     }
 
 }
