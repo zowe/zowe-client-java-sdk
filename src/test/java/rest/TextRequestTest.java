@@ -11,12 +11,13 @@ package rest;
 
 import core.ZOSConnection;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.protocol.BasicHttpContext;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -25,48 +26,45 @@ import org.powermock.reflect.Whitebox;
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TextRequestTest {
 
     private HttpClient httpClient;
-    private TextRequest getRequest;
-    private TextRequest putRequest;
+    private TextGetRequest getRequest;
+    private TextPutRequest putRequest;
 
     @Before
-    public void init() {
-        HttpGet httpGet = Mockito.mock(HttpGet.class);
+    public void init() throws Exception {
         httpClient = Mockito.mock(HttpClient.class);
         ZOSConnection connection = new ZOSConnection("", "", "", "");
 
-        getRequest = new TextRequest(connection, httpGet);
+        getRequest = new TextGetRequest(connection, Optional.of("url"));
         Whitebox.setInternalState(getRequest, "client", httpClient);
 
-        HttpPut httpPut = Mockito.mock(HttpPut.class);
-        putRequest = new TextRequest(connection, httpPut, Optional.empty());
+        putRequest = new TextPutRequest(connection, Optional.of("url"), Optional.of("body"));
         Whitebox.setInternalState(putRequest, "client", httpClient);
     }
 
     @Test
     public void tstHttpGetThrowsException() throws IOException {
-        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
-               .thenThrow(new IOException());
+        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
+                .thenThrow(new IOException());
 
-        assertThrows(IOException.class, getRequest::httpGet);
+        Assertions.assertEquals(getRequest.executeHttpRequest(), null);
         Mockito.verify(httpClient, Mockito.times(1))
-               .execute(any(HttpGet.class), any(ResponseHandler.class));
+                .execute(any(HttpGet.class), any(BasicHttpContext.class));
     }
 
     @Test
-    public void tstHttpPutThrowsException() throws IOException {
-        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(ResponseHandler.class)))
+    public void tstHttpPutThrowsException() throws Exception {
+        Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
                 .thenThrow(new IOException());
 
-        assertThrows(IOException.class, putRequest::httpPut);
+        Assertions.assertEquals(putRequest.executeHttpRequest(), null);
         Mockito.verify(httpClient, Mockito.times(1))
-                .execute(any(HttpPut.class), any(ResponseHandler.class));
+                .execute(any(HttpPut.class), any(BasicHttpContext.class));
     }
 
 }

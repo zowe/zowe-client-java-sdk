@@ -1,6 +1,7 @@
 package utility;
 
 import org.json.simple.JSONObject;
+import rest.Response;
 import zosjobs.response.Job;
 
 public class UtilJobs {
@@ -19,6 +20,15 @@ public class UtilJobs {
                                 .jobCorrelator((String) json.get("job-correlator"))
                                 .phaseName((String) json.get("phase-name"))
                                 .build();
+    }
+
+    public static void checkHttpErrors(Response response) throws Exception {
+        int httpCode = response.getStatusCode().get();
+        if (response.getResponsePhrase().isPresent() && Util.isHttpError(httpCode)) {
+            String responsePhrase = (String) response.getResponsePhrase().get();
+            String errorMsg = httpCode + " " + responsePhrase + ".";
+            throw new Exception(errorMsg);
+        }
     }
 
 }

@@ -58,11 +58,11 @@ public class IssueCommandTest {
     }
 
     public static void tstConsoleCmdByIssueDefConsoleCommon(ZOSConnection connection, String cmd) {
-        ZosmfIssueParms zparms = new ZosmfIssueParms();
-        zparms.setCmd(cmd);
+        ZosmfIssueParms parms = new ZosmfIssueParms();
+        parms.setCmd(cmd);
         ZosmfIssueResponse zResponse;
         try {
-            zResponse = IssueCommand.issueDefConsoleCommon(connection, zparms);
+            zResponse = IssueCommand.issueDefConsoleCommon(connection, parms);
             LOG.info(zResponse.getCmdResponse().get());
         } catch (Exception e) {
             LOG.info(e.getMessage());

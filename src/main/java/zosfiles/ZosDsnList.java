@@ -10,7 +10,6 @@
 package zosfiles;
 
 import core.ZOSConnection;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
@@ -43,7 +42,7 @@ public class ZosDsnList {
             }
 
             Response response = getResponse(connection, options, headers, url);
-            checkHttpCode(response, dataSetName);
+            UtilDataset.checkHttpErrors(response, dataSetName);
 
             JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
             if (results.isEmpty())
@@ -81,7 +80,7 @@ public class ZosDsnList {
             }
 
             Response response = getResponse(connection, options, headers, url);
-            checkHttpCode(response, dataSetName);
+            UtilDataset.checkHttpErrors(response, dataSetName);
 
             JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
             if (results.isEmpty())
@@ -102,25 +101,10 @@ public class ZosDsnList {
                                         String url) throws Exception {
         LOG.debug(url);
         setHeaders(options, headers);
-        IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
+                ZoweRequestType.RequestType.GET_JSON);
         request.setHeaders(headers);
-        return request.httpGet();
-    }
-
-    private static void checkHttpCode(Response response, String dataSetName) throws Exception {
-        int httpCode = response.getStatusCode().get();
-        boolean isHttpError = !(httpCode >= 200 && httpCode <= 299);
-        if (response.getResponsePhrase().isPresent() && isHttpError) {
-            String responsePhrase = (String) response.getResponsePhrase().get();
-            String errorMsg = httpCode + " " + responsePhrase + ".";
-            if (httpCode == 404) {
-                throw new Exception(errorMsg + " You may have specified an invalid or non-existent data set.");
-            }
-            if (httpCode == 500) {
-                throw new Exception(errorMsg + " You may not have permission to view " + dataSetName + ".");
-            }
-            throw new Exception(errorMsg);
-        }
+        return request.executeHttpRequest();
     }
 
     private static void setHeaders(ListParams options, Map<String, String> headers) {

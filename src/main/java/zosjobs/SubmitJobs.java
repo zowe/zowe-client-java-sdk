@@ -10,7 +10,6 @@
 package zosjobs;
 
 import core.ZOSConnection;
-import org.apache.http.client.methods.HttpPut;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
@@ -25,7 +24,6 @@ import zosjobs.response.Job;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class SubmitJobs {
 
@@ -51,8 +49,10 @@ public class SubmitJobs {
             // TODO..
         }
 
-        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(reqBody.toString()));
-        Response response = request.httpPut();
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, reqBody.toString(),
+                ZoweRequestType.RequestType.PUT_JSON);
+
+        Response response = request.executeHttpRequest();
         int httpCode = response.getStatusCode().get();
         boolean isHttpError = !(httpCode >= 200 && httpCode <= 299);
         if (response.getResponsePhrase().isPresent() && isHttpError) {
@@ -122,14 +122,15 @@ public class SubmitJobs {
         String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE;
         LOG.debug(url);
 
-        IZoweRequest request = new TextRequest(connection, new HttpPut(url), Optional.of(parms.getJcl().get()));
+        String body = parms.getJcl().get();
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body, ZoweRequestType.RequestType.PUT_TEXT);
         request.setHeaders(headers);
 
-        String result = request.httpPut();
+        Response response = request.executeHttpRequest();
         JSONParser parser = new JSONParser();
         JSONObject json = null;
         try {
-            json = (JSONObject) parser.parse(result);
+            json = (JSONObject) parser.parse((String) response.getResponsePhrase().get());
         } catch (ParseException e) {
             e.printStackTrace();
         }

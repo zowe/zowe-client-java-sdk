@@ -10,12 +10,12 @@
 package zostso;
 
 import core.ZOSConnection;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import rest.IZoweRequest;
-import rest.JsonRequest;
 import rest.Response;
+import rest.ZoweRequest;
+import rest.ZoweRequestFactory;
+import rest.ZoweRequestType;
 import utility.Util;
 import utility.UtilTso;
 import zostso.input.StartTsoParams;
@@ -50,9 +50,9 @@ public class StartTso {
         String url = getResourcesQuery(connection, commandParms);
         LOG.debug("StartTso::startCommon - url {}", url);
 
-        IZoweRequest request = new JsonRequest(connection, new HttpPost(url));
-        Response response = request.httpPost();
-
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
+                ZoweRequestType.RequestType.POST_JSON);
+        Response response = request.executeHttpRequest();
         return UtilTso.getZosmfTsoResponse(response);
     }
 

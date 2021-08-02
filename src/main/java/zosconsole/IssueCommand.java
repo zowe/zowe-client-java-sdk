@@ -13,17 +13,15 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.Response;
+import rest.ZoweRequest;
+import rest.ZoweRequestFactory;
+import rest.ZoweRequestType;
 import zosconsole.zosmf.IssueParms;
 import zosconsole.zosmf.ZosmfIssueParms;
 import zosconsole.zosmf.ZosmfIssueResponse;
 import core.ZOSConnection;
-import org.apache.http.client.methods.HttpPut;
 import org.json.simple.JSONObject;
-import rest.IZoweRequest;
-import rest.JsonRequest;
 import utility.Util;
-
-import java.util.Optional;
 
 public class IssueCommand {
 
@@ -45,11 +43,11 @@ public class IssueCommand {
         reqBody.put("cmd", commandParms.getCmd().get());
         LOG.debug(reqBody);
 
-        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(reqBody.toString()));
-        Response response = request.httpPut();
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, reqBody.toString(),
+                ZoweRequestType.RequestType.PUT_JSON);
+        Response response = request.executeHttpRequest();
         int httpCode = response.getStatusCode().get();
-        boolean isHttpError = !(httpCode >= 200 && httpCode <= 299);
-        if (response.getResponsePhrase().isPresent() && isHttpError) {
+        if (response.getResponsePhrase().isPresent() && Util.isHttpError(httpCode)) {
             String responsePhrase = (String) response.getResponsePhrase().get();
             String errorMsg = httpCode + " " + responsePhrase + ".";
             throw new Exception("No results for console command. " + errorMsg);

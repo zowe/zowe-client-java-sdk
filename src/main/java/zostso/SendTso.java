@@ -10,12 +10,12 @@
 package zostso;
 
 import core.ZOSConnection;
-import org.apache.http.client.methods.HttpPut;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import rest.IZoweRequest;
-import rest.JsonRequest;
 import rest.Response;
+import rest.ZoweRequest;
+import rest.ZoweRequestFactory;
+import rest.ZoweRequestType;
 import utility.Util;
 import utility.UtilTso;
 import zostso.input.SendTsoParms;
@@ -53,13 +53,13 @@ public class SendTso {
 
         TsoResponseMessage tsoResponseMessage = new TsoResponseMessage(Optional.of("0100"),
                 Optional.ofNullable(commandParms.getData()));
-        String jobObj = getTsoResponseSendMessage(tsoResponseMessage);
+        String jobObjBody = getTsoResponseSendMessage(tsoResponseMessage);
 
-        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.of(jobObj));
-        Response response = request.httpPut();
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jobObjBody,
+                ZoweRequestType.RequestType.PUT_JSON);
+        Response response = request.executeHttpRequest();
         int httpCode = response.getStatusCode().get();
-        boolean isHttpError = !(httpCode >= 200 && httpCode <= 299);
-        if (response.getResponsePhrase().isPresent() && isHttpError) {
+        if (response.getResponsePhrase().isPresent() && Util.isHttpError(httpCode)) {
             String responsePhrase = (String) response.getResponsePhrase().get();
             String errorMsg = httpCode + " " + responsePhrase + ".";
             throw new Exception("No results from executing tso command after getting TSO address space. " + errorMsg);
@@ -110,11 +110,11 @@ public class SendTso {
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
         LOG.debug("SendTso::getDataFromTSO - url {}", url);
 
-        IZoweRequest request = new JsonRequest(connection, new HttpPut(url), Optional.empty());
-        Response response = request.httpPut();
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, "",
+                ZoweRequestType.RequestType.PUT_JSON);
+        Response response = request.executeHttpRequest();
         int httpCode = response.getStatusCode().get();
-        boolean isHttpError = !(httpCode >= 200 && httpCode <= 299);
-        if (response.getResponsePhrase().isPresent() && isHttpError) {
+        if (response.getResponsePhrase().isPresent() && Util.isHttpError(httpCode)) {
             String responsePhrase = (String) response.getResponsePhrase().get();
             String errorMsg = httpCode + " " + responsePhrase + ".";
             throw new Exception("Follow up TSO Messages from TSO command cannot be retrieved. " + errorMsg);

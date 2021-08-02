@@ -18,8 +18,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.reflect.Whitebox;
-import rest.IZoweRequest;
 import rest.Response;
+import rest.ZoweRequest;
 import zosjobs.response.Job;
 
 import java.util.Optional;
@@ -29,14 +29,14 @@ import static org.junit.Assert.assertTrue;
 @RunWith(MockitoJUnitRunner.class)
 public class GetJobTest {
 
-    private IZoweRequest request;
+    private ZoweRequest request;
     private ZOSConnection connection;
     private GetJobs getJobs;
     private JSONObject jobJson;
 
     @Before
     public void init() {
-        request = Mockito.mock(IZoweRequest.class);
+        request = Mockito.mock(ZoweRequest.class);
         connection = new ZOSConnection("1", "1", "1", "1");
         getJobs = new GetJobs(connection);
         Whitebox.setInternalState(getJobs, "request", request);
@@ -70,7 +70,7 @@ public class GetJobTest {
         jsonArray.add(job2);
 
         Response response = new Response(Optional.of(jsonArray), Optional.of(200));
-        Mockito.when(request.httpGet()).thenReturn(response);
+        Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         String msgResult = null;
         try {
@@ -92,7 +92,7 @@ public class GetJobTest {
         jsonArray.add(jobJson);
 
         Response response = new Response(Optional.of(jsonArray), Optional.of(200));
-        Mockito.when(request.httpGet()).thenReturn(response);
+        Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         Job job = getJobs.getJob("1");
         assertTrue("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1".equals(getJobs.getUrl()));
@@ -105,7 +105,7 @@ public class GetJobTest {
         jsonArray.add(jobJson);
 
         Response response = new Response(Optional.of(jsonArray), Optional.of(200));
-        Mockito.when(request.httpGet()).thenReturn(response);
+        Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         Job job = getJobs.getJob("1");
         assertTrue("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1".equals(getJobs.getUrl()));
@@ -159,7 +159,7 @@ public class GetJobTest {
     @Test
     public void tstGetStatusForJobSuccess() throws Exception {
         Response response = new Response(Optional.of(jobJson), Optional.of(200));
-        Mockito.when(request.httpGet()).thenReturn(response);
+        Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         Job job = getJobs.getStatusForJob(new Job.Builder().jobId("1").jobName("jobName").build());
         assertTrue("https://1:1/zosmf/restjobs/jobs/jobName/1".equals(getJobs.getUrl()));
@@ -223,7 +223,8 @@ public class GetJobTest {
 
     @Test
     public void tstGetSpoolContentByIdSuccess() throws Exception {
-        Mockito.when(request.httpGet()).thenReturn("1\n2\n3\n");
+        Response response = new Response(Optional.of("1\n2\n3\n"), Optional.of(200));
+        Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         String results = getJobs.getSpoolContentById("jobName", "jobId", 1);
         assertTrue("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records".equals(getJobs.getUrl()));
