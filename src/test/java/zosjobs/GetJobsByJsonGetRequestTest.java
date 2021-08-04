@@ -18,8 +18,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.reflect.Whitebox;
+import rest.JsonGetRequest;
 import rest.Response;
-import rest.ZoweRequest;
 import zosjobs.response.Job;
 
 import java.util.Optional;
@@ -27,16 +27,16 @@ import java.util.Optional;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GetJobTest {
+public class GetJobsByJsonGetRequestTest {
 
-    private ZoweRequest request;
+    private JsonGetRequest request;
     private ZOSConnection connection;
     private GetJobs getJobs;
     private JSONObject jobJson;
 
     @Before
     public void init() {
-        request = Mockito.mock(ZoweRequest.class);
+        request = Mockito.mock(JsonGetRequest.class);
         connection = new ZOSConnection("1", "1", "1", "1");
         getJobs = new GetJobs(connection);
         Whitebox.setInternalState(getJobs, "request", request);
@@ -219,16 +219,6 @@ public class GetJobTest {
             errorMsg = e.getMessage();
         }
         assertTrue("spoolId not specified".equals(errorMsg));
-    }
-
-    @Test
-    public void tstGetSpoolContentByIdSuccess() throws Exception {
-        Response response = new Response(Optional.of("1\n2\n3\n"), Optional.of(200));
-        Mockito.when(request.executeHttpRequest()).thenReturn(response);
-
-        String results = getJobs.getSpoolContentById("jobName", "jobId", 1);
-        assertTrue("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records".equals(getJobs.getUrl()));
-        assertTrue("1\n2\n3\n".equals(results));
     }
 
 }
