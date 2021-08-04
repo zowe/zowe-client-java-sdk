@@ -11,9 +11,11 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContextBuilder;
 
 import java.util.Map;
-import java.util.Optional;
 
 public abstract class ZoweRequest {
+
+    public static final String X_CSRF_ZOSMF_HEADER_KEY = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
+    public static final String X_CSRF_ZOSMF_HEADER_VALUE = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
 
     private ZoweRequestType.RequestType requestType;
     protected ZOSConnection connection;
@@ -32,13 +34,13 @@ public abstract class ZoweRequest {
 
     public abstract void setHeaders(Map<String, String> headers);
 
-    public abstract void setRequest(Optional<String> url) throws Exception;
+    public abstract void setRequest(String url) throws Exception;
 
     protected void setup() {
         setStandardHeaders();
         try {
-            client = HttpClients.custom().setSSLContext(
-                            new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build())
+            client = HttpClients.custom()
+                    .setSSLContext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build())
                     .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE).build();
         } catch (Exception e) {
             throw new RuntimeException(e);

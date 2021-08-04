@@ -117,7 +117,7 @@ public class GetJobs {
         if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_JSON);
         } else {
-            request.setRequest(Optional.ofNullable(url));
+            request.setRequest(url);
         }
 
         Response response = request.executeHttpRequest();
@@ -162,7 +162,7 @@ public class GetJobs {
         if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_JSON);
         } else {
-            request.setRequest(Optional.ofNullable(url));
+            request.setRequest(url);
         }
         Response response = request.executeHttpRequest();
         UtilJobs.checkHttpErrors(response);
@@ -199,7 +199,7 @@ public class GetJobs {
         if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_JSON);
         } else {
-            request.setRequest(Optional.ofNullable(url));
+            request.setRequest(url);
         }
 
         Response response = request.executeHttpRequest();
@@ -254,7 +254,7 @@ public class GetJobs {
         if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_TEXT);
         } else {
-            request.setRequest(Optional.ofNullable(url));
+            request.setRequest(url);
         }
 
         Response response = request.executeHttpRequest();
@@ -282,7 +282,7 @@ public class GetJobs {
         if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_TEXT);
         } else {
-            request.setRequest(Optional.ofNullable(url));
+            request.setRequest(url);
         }
         Response response = request.executeHttpRequest();
         UtilJobs.checkHttpErrors(response);
@@ -305,7 +305,7 @@ public class GetJobs {
         if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_TEXT);
         } else {
-            request.setRequest(Optional.ofNullable(url));
+            request.setRequest(url);
         }
         Response response = request.executeHttpRequest();
         UtilJobs.checkHttpErrors(response);

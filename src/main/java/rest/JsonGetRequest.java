@@ -68,12 +68,9 @@ public class JsonGetRequest extends ZoweRequest {
 
     @Override
     public void setStandardHeaders() {
-        String key = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
-        String value = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
-
         request.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
         request.setHeader("Content-Type", "application/json");
-        request.setHeader(key, value);
+        request.setHeader(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
 
     @Override
@@ -82,8 +79,9 @@ public class JsonGetRequest extends ZoweRequest {
     }
 
     @Override
-    public void setRequest(Optional<String> url) throws Exception {
-        this.request = new HttpGet(url.orElseThrow(() -> new Exception("url not specified")));
+    public void setRequest(String url) throws Exception {
+        Optional<String> str = Optional.ofNullable(url);
+        this.request = new HttpGet(str.orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 
