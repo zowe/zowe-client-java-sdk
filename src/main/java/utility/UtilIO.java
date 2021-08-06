@@ -202,52 +202,43 @@ public class UtilIO {
         }
 
         /**
-         * Wraps Files.readAllLines so that we dont have to import fs unnecessarily
+         * Read file as a stream
          * or specify encoding.
          * @static
          * @param  {string} file - file to read
-         * @param normalizeNewLines - remove Windows line endings (\r\n)  in favor of \n
-         * @param binary - should the file be read in binary mode? If so, normalizeNewLines is ignored. If false,
-         *                 the file will be read in UTF-8 encoding
          * @return Buffer - the content of the file
          * @memberof IO
          */
-        public static BufferedReader readFileSync(String file, Boolean normalizeNewLines , Boolean binary ) throws IOException {
+        public static BufferedReader readFileSyncBinary(String file) throws IOException {
+            Util.checkNullParameter(file == null,"dirOrFile is null");
+            Util.checkStateParameter(file.isBlank() || file.isEmpty() ,"dirOrFile is empty");
+
+            return Files.newBufferedReader(Paths.get(file));
+        }
+
+        /**
+         * Read file as a string with line normalization
+         * or specify encoding.
+         * @static
+         * @param {string} file - file to read
+         * @param normalizeNewLines - remove Windows line endings (\r\n)  in favor of \n
+         * @return Buffer - the content of the file
+         * @memberof IO
+         */
+        public static String readFileSyncAsString(String file, Boolean normalizeNewLines) {
             Util.checkNullParameter(file == null,"dirOrFile is null");
             Util.checkStateParameter(file.isBlank() || file.isEmpty() ,"dirOrFile is empty");
 
             if (normalizeNewLines == null) {
                 normalizeNewLines = false;
             }
-            if (binary == null) {
-                binary = false;
-            }
-
-            if (binary) {
-                return Files.newBufferedReader(Paths.get(file));
-            }
-
+          InputStreamReader isr = new InputStreamReader((InputStream) Paths.get(file), StandardCharsets.UTF_8);
+          BufferedReader content = new BufferedReader(isr);
+          if (normalizeNewLines) {
+            return content.toString().replace("\r\n", "\n");
+          }
+          return content.toString();
         }
-    public static String readFileSync(String file, Boolean normalizeNewLines , Boolean binary ) throws IOException {
-        Util.checkNullParameter(file == null,"dirOrFile is null");
-        Util.checkStateParameter(file.isBlank() || file.isEmpty() ,"dirOrFile is empty");
-
-        if (normalizeNewLines == null) {
-            normalizeNewLines = false;
-        }
-        if (binary == null) {
-            binary = false;
-        }
-
-        if (!binary) {
-            InputStreamReader isr = new InputStreamReader((InputStream) Paths.get(file), StandardCharsets.UTF_8);
-            BufferedReader content = new BufferedReader(isr);
-            if (normalizeNewLines) {
-                return content.toString().replace("\r\n", "\n");
-            }
-            return content.toString();
-        }
-    }
 
         /**
          * Create a Readable stream from a file
@@ -275,11 +266,11 @@ public class UtilIO {
          * @return Buffer - the content of the file
          * @memberof IO
          */
-        public static FileOutputStream createWriteStream(String file) {
+        public static FileOutputStream createWriteStream(String file) throws FileNotFoundException {
             Util.checkNullParameter(file == null,"dirOrFile is null");
             Util.checkStateParameter(file.isBlank() || file.isEmpty() ,"dirOrFile is empty");
             // Creates an OutputStream
-            FileOutputStream output = new FileOutputStream(String file);
+            FileOutputStream output = new FileOutputStream(file);
             return output;
         }
 
