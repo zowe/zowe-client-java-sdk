@@ -6,10 +6,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import rest.IZoweRequest;
-import rest.JsonRequest;
-import rest.QueryConstants;
+import rest.JsonGetRequest;
+import rest.Response;
 import rest.ZosmfHeaders;
+import rest.ZoweRequest;
 import utility.Util;
 import utility.UtilDataset;
 import utility.UtilIO;
@@ -20,7 +20,6 @@ import zosfiles.response.Dataset;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class ZosDsnDownload {
@@ -159,9 +158,10 @@ public class ZosDsnDownload {
             }
 
 
-            IZoweRequest request = new JsonRequest(connection, new HttpGet(url));
+            ZoweRequest request = new JsonGetRequest(connection, Optional.ofNullable(url));
             request.setHeaders(headers);
-            JSONObject results = request.httpGet();
+            Response response = request.executeHttpRequest();
+            JSONObject results = (JSONObject) response.getResponsePhrase().orElseThrow(Exception::new);
             JSONArray items = (JSONArray) results.get(ZosFilesConstants.RESPONSE_ITEMS);
             items.forEach(item -> {
                 JSONObject datasetObj = (JSONObject) item;
