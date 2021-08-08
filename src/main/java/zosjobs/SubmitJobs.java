@@ -54,8 +54,7 @@ public class SubmitJobs {
 
         Response response = request.executeHttpRequest();
         int httpCode = response.getStatusCode().get();
-        boolean isHttpError = !(httpCode >= 200 && httpCode <= 299);
-        if (response.getResponsePhrase().isPresent() && isHttpError) {
+        if (response.getResponsePhrase().isPresent() && Util.isHttpError(httpCode)) {
             String responsePhrase = (String) response.getResponsePhrase().get();
             String errorMsg = httpCode + " " + responsePhrase + ".";
             if (httpCode == 400)

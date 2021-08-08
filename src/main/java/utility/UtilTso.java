@@ -34,8 +34,7 @@ public class UtilTso {
         Util.checkNullParameter(response == null, "response is null");
         ZosmfTsoResponse result;
         int statusCode = response.getStatusCode().get();
-        boolean isHttpError = !(statusCode >= 200 && statusCode <= 299);
-        if (response.getStatusCode().isPresent() && isHttpError) {
+        if (response.getStatusCode().isPresent() && Util.isHttpError(statusCode)) {
             String errorMsg = (String) response.getResponsePhrase().orElseThrow(() -> new Exception("results not available"));
             ZosmfMessages zosmfMsg = new ZosmfMessages(Optional.of(errorMsg), Optional.empty(), Optional.empty());
             result = new ZosmfTsoResponse.Builder().msgData(Arrays.asList(zosmfMsg)).build();
