@@ -26,13 +26,13 @@ public class ZosDsnList {
 
     private static final Logger LOG = LogManager.getLogger(ZosDsnList.class);
 
-    public static List<Dataset> listMembers(ZOSConnection connection, String dataSetName, ListParams options) {
+    public static List<String> listMembers(ZOSConnection connection, String dataSetName, ListParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
 
         Map<String, String> headers = new HashMap<>();
-        List<Dataset> datasets = new ArrayList<>();
+        List<String> members = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/"
                 + dataSetName + ZosFilesConstants.RES_DS_MEMBERS;
@@ -46,17 +46,17 @@ public class ZosDsnList {
 
             JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
             if (results.isEmpty())
-                return datasets;
+                return members;
             JSONArray items = (JSONArray) results.get("items");
             items.forEach(item -> {
                 JSONObject datasetObj = (JSONObject) item;
-                datasets.add(UtilDataset.createDatasetObjFromJson(datasetObj));
+                members.add(datasetObj.get("member").toString());
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return datasets;
+        return members;
     }
 
     public static List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListParams options) {
@@ -97,7 +97,7 @@ public class ZosDsnList {
         return datasets;
     }
 
-    private static Response getResponse(ZOSConnection connection, ListParams options, Map<String, String> headers,
+    public static Response getResponse(ZOSConnection connection, ListParams options, Map<String, String> headers,
                                         String url) throws Exception {
         LOG.debug(url);
         setHeaders(options, headers);
