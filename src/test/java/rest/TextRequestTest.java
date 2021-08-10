@@ -43,7 +43,7 @@ public class TextRequestTest {
         getRequest = new TextGetRequest(connection, Optional.of("url"));
         Whitebox.setInternalState(getRequest, "client", httpClient);
 
-        putRequest = new TextPutRequest(connection, Optional.of("url"), Optional.of("body"));
+        putRequest = new TextPutRequest(connection, "url", "body");
         Whitebox.setInternalState(putRequest, "client", httpClient);
     }
 
