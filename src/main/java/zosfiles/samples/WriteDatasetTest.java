@@ -7,6 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
+package zosfiles.samples;
 
 import core.ZOSConnection;
 import zosfiles.ZosDsn;

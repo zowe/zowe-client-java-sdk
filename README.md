@@ -1,4 +1,10 @@
-# zowe-client-java-sdk
+This program and the accompanying materials are made available under the terms of the Eclipse Public License v2.0 which accompanies this distribution, and is available at https://www.eclipse.org/legal/epl-v20.html
+
+SPDX-License-Identifier: EPL-2.0
+
+Copyright Contributors to the Zowe Project.  
+
+# Zowe SDK for Java
 
 Work In Progress implementation of a Zowe SDK for Java.
 
@@ -12,15 +18,28 @@ Functionality provided so far:
     IssueCommand (mvs commands)  
     IssuesTsoCommand  
     SubmitJobs  
+    DownloadDataset  
+    WriteDataset  
+    ListDataset  
 
-See the following sample programs:
+See the following sample programs within each sample's package:
 
-    GetJobsTest.java  
-    IssueCommandTest.java  
-    IssueTsoCommandTest.java  
-    SubmitJobsTest.java  
+    src/main/java/zosconsole/samples  
+        IssueCommandTest.java  
   
-You need to replace all instances of "XXX" accordingly.   
+    src/main/java/zosfiles/samples  
+        DownloadDatasetTest.java
+        ListDatasetsTest.java
+        WriteDatasetTest.java  
+  
+    src/main/java/zosjobs/samples  
+        GetJobsTest.java
+        SubmitJobsTest.java  
+  
+    src/main/java/zostos/samples  
+        IssueTsoCommandTest.java
+  
+You need to replace all instances of "XXX" accordingly to meet your target's credentials and host information.   
     
 ## Build
   
