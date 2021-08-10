@@ -54,7 +54,7 @@ public class UtilZosFiles {
      * @returns {IHeaderContent[]}
      * @memberof ZosFilesUtils
      */
-    public static Map generateHeadersBasedOnOptions(DownloadParams options){
+    public static Map<String, String> generateHeadersBasedOnOptions(DownloadParams options){
         String key, value;
         Map<String, String> headers = new HashMap<>();
 
@@ -63,17 +63,16 @@ public class UtilZosFiles {
             value = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(1);
             headers.put(key, value);
         } else if (options.getEncoding().isPresent()) {
-
              key = ZosmfHeaders.X_IBM_TEXT;
              value = ZosmfHeaders.X_IBM_TEXT + ZosmfHeaders.X_IBM_TEXT_ENCODING + options.getEncoding();
-            headers.put(key, value);
-
+             headers.put(key, value);
         }
 
         key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
         value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
         headers.put(key, value);
-        if (options.getResponseTimeout() != null) {
+
+        if (options.getResponseTimeout().isPresent()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_RESPONSE_TIMEOUT").get(0);
             value = ZosmfHeaders.HEADERS.get(options.getResponseTimeout().toString()).get(1);
             headers.put(key, value);
