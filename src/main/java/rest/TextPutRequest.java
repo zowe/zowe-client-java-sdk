@@ -66,10 +66,10 @@ public class TextPutRequest extends ZoweRequest {
         if (entity != null) {
             String result = EntityUtils.toString(entity);
             LOG.debug("TextGetRequest::httpPut - result = {}", result);
-            return new Response(Optional.ofNullable(result), Optional.ofNullable(statusCode));
+            return new Response(Optional.ofNullable(result), Optional.of(statusCode));
         }
 
-        return null;
+        return new Response(Optional.empty(), Optional.of(statusCode));
     }
 
     @Override

@@ -22,7 +22,7 @@ public class WriteDatasetTest {
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
 
-        WriteDatasetTest.writeToDsnMember(connection, datasetMember, "NEW CONTENT\r\nTHE SECOND LINE");
+        WriteDatasetTest.writeToDsnMember(connection, datasetMember, "NEW CONTENT\nTHE SECOND LINE UPDATED");
     }
 
     private static void writeToDsnMember(ZOSConnection connection, String datasetMember, String content) {
