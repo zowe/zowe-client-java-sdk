@@ -12,12 +12,9 @@ package rest;
 import core.ZOSConnection;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.util.EntityUtils;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import utility.Util;
 
 import java.io.IOException;
@@ -25,21 +22,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class JsonPostRequest extends ZoweRequest {
+public class StreamGetRequest extends ZoweRequest {
+    private static final Logger LOG = LogManager.getLogger(JsonGetRequest.class);
 
-    private static final Logger LOG = LogManager.getLogger(JsonPostRequest.class);
-
-    private HttpPost request;
+    private HttpGet request;
     private Map<String, String> headers = new HashMap<>();
 
-    public JsonPostRequest(ZOSConnection connection, Optional<String> url) throws Exception {
-        super(connection, ZoweRequestType.RequestType.POST_JSON);
-        this.request = new HttpPost(url.orElseThrow(() -> new Exception("url not specified")));
+    public StreamGetRequest(ZOSConnection connection, String url) throws Exception {
+        super(connection, ZoweRequestType.RequestType.GET_STREAM);
+        this.request = new HttpGet(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 
     @Override
-    public Response executeHttpRequest() throws Exception {
+    public Response executeHttpRequest() throws IOException {
         // add any additional headers...
         headers.forEach((key, value) -> request.setHeader(key, value));
 
@@ -51,26 +47,17 @@ public class JsonPostRequest extends ZoweRequest {
         }
         int statusCode = httpResponse.getStatusLine().getStatusCode();
 
-        LOG.debug("JsonPostRequest::httpPost - Response statusCode {}, Response {}",
+        LOG.debug("StreamGetRequest::httpGet - Response statusCode {}, Response {}",
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
         if (Util.isHttpError(statusCode)) {
             return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
-                    Optional.ofNullable(statusCode));
+                    Optional.of(statusCode));
         }
 
-        String result = null;
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
-            result = EntityUtils.toString(entity);
-            LOG.debug("JsonPostRequest::httpPost - result = {}", result);
-        }
-
-        JSONParser parser = new JSONParser();
-        try {
-            return new Response(Optional.ofNullable(parser.parse(result)), Optional.ofNullable(statusCode));
-        } catch (ParseException e) {
-            e.printStackTrace();
+            return new Response(Optional.ofNullable(entity.getContent()), Optional.of(statusCode));
         }
 
         return null;
@@ -91,8 +78,7 @@ public class JsonPostRequest extends ZoweRequest {
     @Override
     public void setRequest(String url) throws Exception {
         Optional<String> str = Optional.ofNullable(url);
-        this.request = new HttpPost(str.orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpGet(str.orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
-
 }
