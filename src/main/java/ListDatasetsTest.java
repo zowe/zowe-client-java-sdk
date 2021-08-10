@@ -15,14 +15,13 @@ import zosfiles.ZosDsnList;
 import zosfiles.input.ListParams;
 import zosfiles.response.Dataset;
 
-import java.io.IOException;
 import java.util.List;
 
 public class ListDatasetsTest {
 
     private static final Logger LOG = LogManager.getLogger(ListDatasetsTest.class);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         String hostName = "XXX";
         String port = "XXX";
         String userName = "XXX";
@@ -37,11 +36,11 @@ public class ListDatasetsTest {
 
     private static void tstListMembers(ZOSConnection connection, String dataSetName) {
         ListParams parms = new ListParams.Builder().build();
-        List<Dataset> datasets = ZosDsnList.listMembers(connection, dataSetName, parms);
+        List<String> datasets = ZosDsnList.listMembers(connection, dataSetName, parms);
         datasets.forEach(LOG::info);
     }
 
-    private static void tstListDsn(ZOSConnection connection, String dataSetName) throws IOException {
+    private static void tstListDsn(ZOSConnection connection, String dataSetName) {
         ListParams parms = new ListParams.Builder().build();
         List<Dataset> datasets = ZosDsnList.listDsn(connection, dataSetName, parms);
         datasets.forEach(LOG::info);
