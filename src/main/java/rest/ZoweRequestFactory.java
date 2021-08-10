@@ -35,7 +35,7 @@ public class ZoweRequestFactory {
                 request = new TextGetRequest(connection, Optional.ofNullable(url));
                 break;
             case PUT_TEXT:
-                request = new TextPutRequest(connection, Optional.ofNullable(url), Optional.ofNullable(body));
+                request = new TextPutRequest(connection, url, body);
                 break;
             default:
                 throw new Exception("no valid type specified");

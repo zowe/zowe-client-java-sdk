@@ -5,13 +5,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.*;
 import utility.Util;
+import utility.UtilDataset;
 import utility.UtilZosFiles;
 import zosfiles.input.DownloadParams;
 import java.io.InputStream;
 import java.util.*;
 
 public class ZosDsnDownload {
-    private static final Logger LOG = LogManager.getLogger(ZosDsnList.class);
+    private static final Logger LOG = LogManager.getLogger(ZosDsnDownload.class);
 
     public static InputStream downloadDsn(ZOSConnection connection, String dataSetName, DownloadParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
@@ -43,6 +44,8 @@ public class ZosDsnDownload {
             request.setHeaders(headers);
 
             Response response = request.executeHttpRequest();
+            UtilDataset.checkHttpErrors(response, dataSetName);
+
             if (response.getResponsePhrase().isPresent()) {
                 return (InputStream)response.getResponsePhrase().get();
             }

@@ -29,13 +29,13 @@ public class TextPutRequest extends ZoweRequest {
     private static final Logger LOG = LogManager.getLogger(TextPutRequest.class);
 
     private HttpPut request;
-    private Optional<String> body;
+    private final String body;
     private Map<String, String> headers = new HashMap<>();
 
-    public TextPutRequest(ZOSConnection connection, Optional<String> url, Optional<String> body) throws Exception {
+    public TextPutRequest(ZOSConnection connection, String url, String body) throws Exception {
         super(connection, ZoweRequestType.RequestType.PUT_JSON);
         this.body = body;
-        this.request = new HttpPut(url.orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpPut(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 
@@ -44,7 +44,7 @@ public class TextPutRequest extends ZoweRequest {
         // add any additional headers...
         headers.forEach((key, value) -> request.setHeader(key, value));
 
-        request.setEntity(new StringEntity(body.orElse("")));
+        request.setEntity(new StringEntity(Optional.ofNullable(body).orElse("")));
 
         try {
             this.httpResponse = client.execute(request, localContext);
@@ -59,7 +59,7 @@ public class TextPutRequest extends ZoweRequest {
 
         if (Util.isHttpError(statusCode)) {
             return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
-                    Optional.ofNullable(statusCode));
+                    Optional.of(statusCode));
         }
 
         HttpEntity entity = httpResponse.getEntity();
