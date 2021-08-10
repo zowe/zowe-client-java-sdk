@@ -86,7 +86,7 @@ public class UtilIO {
          */
         public static String normalizeExtension(String extension) {
         Util.checkNullParameter(extension == null,"dirOrFile is null");
-        Util.checkStateParameter(extension.isBlank() || extension.isEmpty() ,"dirOrFile is empty");
+        Util.checkStateParameter(extension.isEmpty() || extension.isEmpty() ,"dirOrFile is empty");
         extension = extension.trim();
             if (extension != null && extension.length() > 0 && extension.substring(0,1) != ".") {
                 // add a '.' character to the extension if omitted
@@ -105,7 +105,7 @@ public class UtilIO {
          */
         public static Boolean existsSync(String file ) {
             Util.checkNullParameter(file == null,"dirOrFile is null");
-            Util.checkStateParameter(file.isBlank() || file.isEmpty() ,"dirOrFile is empty");
+            Util.checkStateParameter(file.isEmpty() || file.isEmpty() ,"dirOrFile is empty");
             return Files.exists(Paths.get(file));
         }
 
@@ -118,7 +118,7 @@ public class UtilIO {
          */
         public static void createDirSync(String dir) throws IOException {
             Util.checkNullParameter(dir == null,"dirOrFile is null");
-            Util.checkStateParameter(dir.isBlank() || dir.isEmpty() ,"dirOrFile is empty");
+            Util.checkStateParameter(dir.isEmpty() || dir.isEmpty() ,"dirOrFile is empty");
             if (!existsSync(dir)) {
                 Path dirs = Paths.get( System.getProperty("user.dir") + dir );
                 Files.createDirectory(dirs);
@@ -135,7 +135,7 @@ public class UtilIO {
          */
         public static void createDirsSync(String dir) throws IOException {
             Util.checkNullParameter(dir == null,"dirOrFile is null");
-            Util.checkStateParameter(dir.isBlank() || dir.isEmpty() ,"dirOrFile is empty");
+            Util.checkStateParameter(dir.isEmpty() || dir.isEmpty() ,"dirOrFile is empty");
             // we're splitting on a specific separator character, so replace \ with /
             // before splitting
             Path dirs = Paths.get(dir);
@@ -153,7 +153,7 @@ public class UtilIO {
          */
         public static void createDirsSyncFromFilePath(String filePath) throws IOException {
             Util.checkNullParameter(filePath == null,"dirOrFile is null");
-            Util.checkStateParameter(filePath.isBlank() || filePath.isEmpty() ,"dirOrFile is empty");
+            Util.checkStateParameter(filePath.isEmpty() || filePath.isEmpty() ,"dirOrFile is empty");
             createDirsSync(filePath);
         }
 
@@ -197,7 +197,7 @@ public class UtilIO {
          */
         public static void mkdirp(String dir) throws IOException {
             Util.checkNullParameter(dir == null,"dirOrFile is null");
-            Util.checkStateParameter(dir.isBlank() || dir.isEmpty() ,"dirOrFile is empty");
+            Util.checkStateParameter(dir.isEmpty() || dir.isEmpty() ,"dirOrFile is empty");
             Files.createDirectories(Paths.get(dir));
         }
 
@@ -211,7 +211,7 @@ public class UtilIO {
          */
         public static BufferedReader readFileSyncBinary(String file) throws IOException {
             Util.checkNullParameter(file == null,"dirOrFile is null");
-            Util.checkStateParameter(file.isBlank() || file.isEmpty() ,"dirOrFile is empty");
+            Util.checkStateParameter(file.isEmpty() || file.isEmpty() ,"dirOrFile is empty");
 
             return Files.newBufferedReader(Paths.get(file));
         }
@@ -227,7 +227,7 @@ public class UtilIO {
          */
         public static String readFileSyncAsString(String file, Boolean normalizeNewLines) {
             Util.checkNullParameter(file == null,"dirOrFile is null");
-            Util.checkStateParameter(file.isBlank() || file.isEmpty() ,"dirOrFile is empty");
+            Util.checkStateParameter(file.isEmpty() || file.isEmpty() ,"dirOrFile is empty");
 
             if (normalizeNewLines == null) {
                 normalizeNewLines = false;
@@ -248,7 +248,7 @@ public class UtilIO {
          */
         public static String createReadStream(String file) throws IOException {
         Util.checkNullParameter(file == null,"dirOrFile is null");
-        Util.checkStateParameter(file.isBlank() || file.isEmpty() ,"dirOrFile is empty");
+        Util.checkStateParameter(file.isEmpty() || file.isEmpty() ,"dirOrFile is empty");
         StringBuilder sb = new StringBuilder();
         BufferedReader r = new BufferedReader(new InputStreamReader((InputStream) Paths.get(file)),
                 1024);
@@ -268,7 +268,7 @@ public class UtilIO {
          */
         public static FileOutputStream createWriteStream(String file) throws FileNotFoundException {
             Util.checkNullParameter(file == null,"dirOrFile is null");
-            Util.checkStateParameter(file.isBlank() || file.isEmpty() ,"dirOrFile is empty");
+            Util.checkStateParameter(file.isEmpty() || file.isEmpty() ,"dirOrFile is empty");
             // Creates an OutputStream
             FileOutputStream output = new FileOutputStream(file);
             return output;
@@ -285,7 +285,7 @@ public class UtilIO {
          */
         public static String  processNewlines(String original) {
             Util.checkNullParameter(original == null,"dirOrFile is null");
-            Util.checkStateParameter(original.isBlank() || original.isEmpty() ,"dirOrFile is empty");
+            Util.checkStateParameter(original.isEmpty() || original.isEmpty() ,"dirOrFile is empty");
             String OS = System.getProperty("os.name").toLowerCase();
 //       TODO
 //            if (OS.indexOf("win") >= 0) {
