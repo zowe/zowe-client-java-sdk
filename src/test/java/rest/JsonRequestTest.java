@@ -48,7 +48,7 @@ public class JsonRequestTest {
         Whitebox.setInternalState(getRequest, "client", httpClient);
         Whitebox.setInternalState(getRequest, "httpResponse", httpResponse);
 
-        putRequest = new JsonPutRequest(connection, Optional.of("url"), Optional.of("url"));
+        putRequest = new JsonPutRequest(connection, "url", "body");
         Whitebox.setInternalState(putRequest, "client", httpClient);
         Whitebox.setInternalState(putRequest, "httpResponse", httpResponse);
     }

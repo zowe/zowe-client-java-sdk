@@ -40,7 +40,7 @@ public class TextRequestTest {
         httpClient = Mockito.mock(HttpClient.class);
         ZOSConnection connection = new ZOSConnection("", "", "", "");
 
-        getRequest = new TextGetRequest(connection, Optional.of("url"));
+        getRequest = new TextGetRequest(connection, "url");
         Whitebox.setInternalState(getRequest, "client", httpClient);
 
         putRequest = new TextPutRequest(connection, "url", "body");

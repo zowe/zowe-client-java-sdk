@@ -86,8 +86,7 @@ public class TextPutRequest extends ZoweRequest {
 
     @Override
     public void setRequest(String url) throws Exception {
-        Optional<String> str = Optional.ofNullable(url);
-        this.request = new HttpPut(str.orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpPut(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 

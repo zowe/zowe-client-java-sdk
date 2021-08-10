@@ -32,9 +32,9 @@ public class JsonDeleteRequest extends ZoweRequest {
     private HttpDelete request;
     private Map<String, String> headers = new HashMap<>();
 
-    public JsonDeleteRequest(ZOSConnection connection, Optional<String> url) throws Exception {
+    public JsonDeleteRequest(ZOSConnection connection, String url) throws Exception {
         super(connection, ZoweRequestType.RequestType.DELETE_JSON);
-        this.request = new HttpDelete(url.orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpDelete(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 
@@ -88,8 +88,7 @@ public class JsonDeleteRequest extends ZoweRequest {
 
     @Override
     public void setRequest(String url) throws Exception {
-        Optional<String> str = Optional.ofNullable(url);
-        this.request = new HttpDelete(str.orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpDelete(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 

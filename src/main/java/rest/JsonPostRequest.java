@@ -32,9 +32,9 @@ public class JsonPostRequest extends ZoweRequest {
     private HttpPost request;
     private Map<String, String> headers = new HashMap<>();
 
-    public JsonPostRequest(ZOSConnection connection, Optional<String> url) throws Exception {
+    public JsonPostRequest(ZOSConnection connection, String url) throws Exception {
         super(connection, ZoweRequestType.RequestType.POST_JSON);
-        this.request = new HttpPost(url.orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpPost(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 
@@ -90,8 +90,7 @@ public class JsonPostRequest extends ZoweRequest {
 
     @Override
     public void setRequest(String url) throws Exception {
-        Optional<String> str = Optional.ofNullable(url);
-        this.request = new HttpPost(str.orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpPost(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 
