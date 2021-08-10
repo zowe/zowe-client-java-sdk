@@ -20,19 +20,19 @@ public class ZoweRequestFactory {
         ZoweRequest request;
         switch (type) {
             case GET_JSON:
-                request = new JsonGetRequest(connection, Optional.ofNullable(url));
+                request = new JsonGetRequest(connection, url);
                 break;
             case PUT_JSON:
-                request = new JsonPutRequest(connection, Optional.ofNullable(url), Optional.ofNullable(body));
+                request = new JsonPutRequest(connection, url, body);
                 break;
             case POST_JSON:
-                request = new JsonPostRequest(connection, Optional.ofNullable(url));
+                request = new JsonPostRequest(connection, url);
                 break;
             case DELETE_JSON:
-                request = new JsonDeleteRequest(connection, Optional.ofNullable(url));
+                request = new JsonDeleteRequest(connection, url);
                 break;
             case GET_TEXT:
-                request = new TextGetRequest(connection, Optional.ofNullable(url));
+                request = new TextGetRequest(connection, url);
                 break;
             case PUT_TEXT:
                 request = new TextPutRequest(connection, url, body);

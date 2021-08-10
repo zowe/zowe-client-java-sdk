@@ -31,13 +31,13 @@ public class JsonPutRequest extends ZoweRequest {
     private static final Logger LOG = LogManager.getLogger(JsonPutRequest.class);
 
     private HttpPut request;
-    private Optional<String> body;
+    private final String body;
     private Map<String, String> headers = new HashMap<>();
 
-    public JsonPutRequest(ZOSConnection connection, Optional<String> url, Optional<String> body) throws Exception {
+    public JsonPutRequest(ZOSConnection connection, String url, String body) throws Exception {
         super(connection, ZoweRequestType.RequestType.PUT_JSON);
         this.body = body;
-        this.request = new HttpPut(url.orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpPut(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 
@@ -45,7 +45,7 @@ public class JsonPutRequest extends ZoweRequest {
     public Response executeHttpRequest() throws Exception {
         // add any additional headers...
         headers.forEach((key, value) -> request.setHeader(key, value));
-        request.setEntity(new StringEntity(body.orElse("")));
+        request.setEntity(new StringEntity(Optional.ofNullable(body).orElse("")));
 
         try {
             this.httpResponse = client.execute(request, localContext);
@@ -93,8 +93,7 @@ public class JsonPutRequest extends ZoweRequest {
 
     @Override
     public void setRequest(String url) throws Exception {
-        Optional<String> str = Optional.ofNullable(url);
-        this.request = new HttpPut(str.orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpPut(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 

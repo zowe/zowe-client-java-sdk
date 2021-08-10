@@ -32,9 +32,9 @@ public class JsonGetRequest extends ZoweRequest {
     private HttpGet request;
     private Map<String, String> headers = new HashMap<>();
 
-    public JsonGetRequest(ZOSConnection connection, Optional<String> url) throws Exception {
+    public JsonGetRequest(ZOSConnection connection, String url) throws Exception {
         super(connection, ZoweRequestType.RequestType.GET_JSON);
-        this.request = new HttpGet(url.orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpGet(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 
@@ -89,8 +89,7 @@ public class JsonGetRequest extends ZoweRequest {
 
     @Override
     public void setRequest(String url) throws Exception {
-        Optional<String> str = Optional.ofNullable(url);
-        this.request = new HttpGet(str.orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpGet(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 
