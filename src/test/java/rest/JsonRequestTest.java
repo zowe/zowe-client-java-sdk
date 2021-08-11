@@ -64,12 +64,13 @@ public class JsonRequestTest {
     }
 
     @Test
-    public void tstHttpGetReturnsNullForInvalidJsonFailure() throws Exception {
+    public void tstHttpGetReturnsEmptyResponsePhraseForInvalidJsonFailure() throws Exception {
         HttpResponseInvalidJsonMock httpResponseInvalidJsonMock = new HttpResponseInvalidJsonMock();
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
                 .thenReturn(httpResponseInvalidJsonMock.getHttpResponse());
 
-        Assertions.assertNull(getRequest.executeHttpRequest());
+        Response response = getRequest.executeHttpRequest();
+        Assertions.assertTrue(!response.getResponsePhrase().isPresent());
         Mockito.verify(httpClient, Mockito.times(1))
                 .execute(any(HttpGet.class), any(BasicHttpContext.class));
     }
@@ -100,12 +101,13 @@ public class JsonRequestTest {
     }
 
     @Test
-    public void tstHttpPutReturnsNullForInvalidJsonFailure() throws Exception {
+    public void tstHttpPutReturnsEmptyResponsePhraseForInvalidJsonFailure() throws Exception {
         HttpResponseInvalidJsonMock httpResponseInvalidJsonMock = new HttpResponseInvalidJsonMock();
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
                 .thenReturn(httpResponseInvalidJsonMock.getHttpResponse());
 
-        Assertions.assertNull(putRequest.executeHttpRequest());
+        Response response = putRequest.executeHttpRequest();
+        Assertions.assertTrue(!response.getResponsePhrase().isPresent());
         Mockito.verify(httpClient, Mockito.times(1))
                 .execute(any(HttpPut.class), any(BasicHttpContext.class));
     }

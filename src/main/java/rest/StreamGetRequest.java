@@ -23,10 +23,11 @@ import java.util.Map;
 import java.util.Optional;
 
 public class StreamGetRequest extends ZoweRequest {
-    private static final Logger LOG = LogManager.getLogger(JsonGetRequest.class);
+
+    private static final Logger LOG = LogManager.getLogger(StreamGetRequest.class);
 
     private HttpGet request;
-    private Map<String, String> headers = new HashMap<>();
+    private Map<String, String> additionalHeaders = new HashMap<>();
 
     public StreamGetRequest(ZOSConnection connection, String url) throws Exception {
         super(connection, ZoweRequestType.RequestType.GET_STREAM);
@@ -37,7 +38,7 @@ public class StreamGetRequest extends ZoweRequest {
     @Override
     public Response executeHttpRequest() throws IOException {
         // add any additional headers...
-        headers.forEach((key, value) -> request.setHeader(key, value));
+        additionalHeaders.forEach((key, value) -> request.setHeader(key, value));
 
         try {
             this.httpResponse = client.execute(request, localContext);
@@ -60,7 +61,7 @@ public class StreamGetRequest extends ZoweRequest {
             return new Response(Optional.ofNullable(entity.getContent()), Optional.of(statusCode));
         }
 
-        return null;
+        return new Response(Optional.empty(), Optional.of(statusCode));
     }
 
     @Override
@@ -71,8 +72,8 @@ public class StreamGetRequest extends ZoweRequest {
     }
 
     @Override
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
+    public void setAdditionalHeaders(Map<String, String> additionalHeaders) {
+        this.additionalHeaders = additionalHeaders;
     }
 
     @Override
@@ -81,4 +82,5 @@ public class StreamGetRequest extends ZoweRequest {
         this.request = new HttpGet(str.orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
+
 }

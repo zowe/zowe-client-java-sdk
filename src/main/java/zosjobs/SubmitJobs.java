@@ -123,7 +123,7 @@ public class SubmitJobs {
 
         String body = parms.getJcl().get();
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body, ZoweRequestType.RequestType.PUT_TEXT);
-        request.setHeaders(headers);
+        request.setAdditionalHeaders(headers);
 
         Response response = request.executeHttpRequest();
         JSONParser parser = new JSONParser();
