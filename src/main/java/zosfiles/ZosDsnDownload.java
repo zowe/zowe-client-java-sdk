@@ -41,7 +41,7 @@ public class ZosDsnDownload {
             }
 
             ZoweRequest request = new StreamGetRequest(connection, url);
-            request.setHeaders(headers);
+            request.setAdditionalHeaders(headers);
 
             Response response = request.executeHttpRequest();
             UtilDataset.checkHttpErrors(response, dataSetName);
@@ -54,4 +54,5 @@ public class ZosDsnDownload {
         }
         return null;
     }
+    
 }

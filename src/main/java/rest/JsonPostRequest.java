@@ -30,7 +30,7 @@ public class JsonPostRequest extends ZoweRequest {
     private static final Logger LOG = LogManager.getLogger(JsonPostRequest.class);
 
     private HttpPost request;
-    private Map<String, String> headers = new HashMap<>();
+    private Map<String, String> additionalHeaders = new HashMap<>();
 
     public JsonPostRequest(ZOSConnection connection, String url) throws Exception {
         super(connection, ZoweRequestType.RequestType.POST_JSON);
@@ -41,7 +41,7 @@ public class JsonPostRequest extends ZoweRequest {
     @Override
     public Response executeHttpRequest() throws Exception {
         // add any additional headers...
-        headers.forEach((key, value) -> request.setHeader(key, value));
+        additionalHeaders.forEach((key, value) -> request.setHeader(key, value));
 
         try {
             this.httpResponse = client.execute(request, localContext);
@@ -59,21 +59,21 @@ public class JsonPostRequest extends ZoweRequest {
                     Optional.ofNullable(statusCode));
         }
 
-        String result = null;
+        String result;
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
             result = EntityUtils.toString(entity);
             LOG.debug("JsonPostRequest::httpPost - result = {}", result);
+
+            JSONParser parser = new JSONParser();
+            try {
+                return new Response(Optional.ofNullable(parser.parse(result)), Optional.ofNullable(statusCode));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
-        JSONParser parser = new JSONParser();
-        try {
-            return new Response(Optional.ofNullable(parser.parse(result)), Optional.ofNullable(statusCode));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return new Response(Optional.empty(), Optional.of(statusCode));
     }
 
     @Override
@@ -84,8 +84,8 @@ public class JsonPostRequest extends ZoweRequest {
     }
 
     @Override
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
+    public void setAdditionalHeaders(Map<String, String> additionalHeaders) {
+        this.additionalHeaders = additionalHeaders;
     }
 
     @Override

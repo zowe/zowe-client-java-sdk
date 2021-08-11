@@ -41,7 +41,7 @@ public abstract class ZoweRequest {
 
     public abstract void setStandardHeaders();
 
-    public abstract void setHeaders(Map<String, String> headers);
+    public abstract void setAdditionalHeaders(Map<String, String> additionalHeaders);
 
     public abstract void setRequest(String url) throws Exception;
 

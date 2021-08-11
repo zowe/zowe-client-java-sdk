@@ -32,7 +32,7 @@ public class JsonPutRequest extends ZoweRequest {
 
     private HttpPut request;
     private final String body;
-    private Map<String, String> headers = new HashMap<>();
+    private Map<String, String> additionalHeaders = new HashMap<>();
 
     public JsonPutRequest(ZOSConnection connection, String url, String body) throws Exception {
         super(connection, ZoweRequestType.RequestType.PUT_JSON);
@@ -44,7 +44,7 @@ public class JsonPutRequest extends ZoweRequest {
     @Override
     public Response executeHttpRequest() throws Exception {
         // add any additional headers...
-        headers.forEach((key, value) -> request.setHeader(key, value));
+        additionalHeaders.forEach((key, value) -> request.setHeader(key, value));
         request.setEntity(new StringEntity(Optional.ofNullable(body).orElse("")));
 
         try {
@@ -76,7 +76,7 @@ public class JsonPutRequest extends ZoweRequest {
             }
         }
 
-        return null;
+        return new Response(Optional.empty(), Optional.of(statusCode));
     }
 
     @Override
@@ -87,8 +87,8 @@ public class JsonPutRequest extends ZoweRequest {
     }
 
     @Override
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
+    public void setAdditionalHeaders(Map<String, String> additionalHeaders) {
+        this.additionalHeaders = additionalHeaders;
     }
 
     @Override
