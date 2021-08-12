@@ -11,8 +11,6 @@ package rest;
 
 import core.ZOSConnection;
 
-import java.util.Optional;
-
 public class ZoweRequestFactory {
 
     public static ZoweRequest buildRequest(ZOSConnection connection, String url, String body,

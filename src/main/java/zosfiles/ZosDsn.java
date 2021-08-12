@@ -8,6 +8,7 @@ import utility.Util;
 import utility.UtilDataset;
 
 public class ZosDsn {
+
     private static final Logger LOG = LogManager.getLogger(ZosDsn.class);
 
     public static void writeDsn(ZOSConnection connection, String dataSetName, String content) {
@@ -29,4 +30,5 @@ public class ZosDsn {
             e.printStackTrace();
         }
     }
+
 }

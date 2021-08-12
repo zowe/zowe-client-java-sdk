@@ -98,7 +98,7 @@ public class ZosDsnList {
     }
 
     public static Response getResponse(ZOSConnection connection, ListParams options, Map<String, String> headers,
-                                        String url) throws Exception {
+                                       String url) throws Exception {
         LOG.debug(url);
         setHeaders(options, headers);
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,

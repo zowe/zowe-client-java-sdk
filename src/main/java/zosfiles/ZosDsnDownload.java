@@ -8,10 +8,12 @@ import utility.Util;
 import utility.UtilDataset;
 import utility.UtilZosFiles;
 import zosfiles.input.DownloadParams;
+
 import java.io.InputStream;
 import java.util.*;
 
 public class ZosDsnDownload {
+
     private static final Logger LOG = LogManager.getLogger(ZosDsnDownload.class);
 
     public static InputStream downloadDsn(ZOSConnection connection, String dataSetName, DownloadParams options) {
@@ -47,12 +49,12 @@ public class ZosDsnDownload {
             UtilDataset.checkHttpErrors(response, dataSetName);
 
             if (response.getResponsePhrase().isPresent()) {
-                return (InputStream)response.getResponsePhrase().get();
+                return (InputStream) response.getResponsePhrase().get();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-    
+
 }

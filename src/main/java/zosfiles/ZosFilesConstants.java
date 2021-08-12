@@ -10,6 +10,7 @@
 package zosfiles;
 
 public class ZosFilesConstants {
+
     /**
      * Specifies the z/OS data set and file REST interface
      *

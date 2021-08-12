@@ -10,6 +10,7 @@
 package rest;
 
 public class QueryConstants {
+
   /**
    * Query identifier
    *
@@ -27,4 +28,5 @@ public class QueryConstants {
    * @memberof QueryConstants
    */
   public static final String COMBO_ID = "&";
+
 }
