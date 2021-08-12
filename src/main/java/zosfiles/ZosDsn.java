@@ -29,7 +29,8 @@ public class ZosDsn {
         try {
             LOG.info(url);
 
-            ZoweRequest request = new TextPutRequest(connection, url, content);
+            ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, content,
+                    ZoweRequestType.RequestType.PUT_TEXT);
             Response response = request.executeHttpRequest();
             UtilDataset.checkHttpErrors(response, dataSetName);
 
@@ -54,7 +55,8 @@ public class ZosDsn {
         try {
             LOG.info(url);
 
-            ZoweRequest request = new JsonDeleteRequest(connection, url);
+            ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
+                    ZoweRequestType.RequestType.DELETE_JSON);
             Response response = request.executeHttpRequest();
             UtilDataset.checkHttpErrors(response, dataSetName);
 
