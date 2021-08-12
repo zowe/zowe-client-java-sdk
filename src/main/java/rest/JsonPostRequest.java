@@ -13,6 +13,7 @@ import core.ZOSConnection;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,10 +31,12 @@ public class JsonPostRequest extends ZoweRequest {
     private static final Logger LOG = LogManager.getLogger(JsonPostRequest.class);
 
     private HttpPost request;
+    private final String body;
     private Map<String, String> additionalHeaders = new HashMap<>();
 
-    public JsonPostRequest(ZOSConnection connection, String url) throws Exception {
+    public JsonPostRequest(ZOSConnection connection, String url, String body) throws Exception {
         super(connection, ZoweRequestType.RequestType.POST_JSON);
+        this.body = body;
         this.request = new HttpPost(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
@@ -42,6 +45,8 @@ public class JsonPostRequest extends ZoweRequest {
     public Response executeHttpRequest() throws Exception {
         // add any additional headers...
         additionalHeaders.forEach((key, value) -> request.setHeader(key, value));
+
+        request.setEntity(new StringEntity(Optional.ofNullable(body).orElse("")));
 
         try {
             this.httpResponse = client.execute(request, localContext);

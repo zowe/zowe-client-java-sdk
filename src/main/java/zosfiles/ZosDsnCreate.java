@@ -7,10 +7,9 @@ import utility.UtilDataset;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zosfiles.input.CreateParams;
-import zosfiles.input.ListParams;
+import static java.util.Map.entry;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class ZosDsnCreate {
@@ -29,7 +28,9 @@ public class ZosDsnCreate {
             LOG.info(url);
 
             setHeaders(options, headers);
-            ZoweRequest request =  ZoweRequestFactory.buildRequest(connection, url, null,
+            String body = "{'dsorg': 'PO'',   'alcunit': 'CYL',   'primary': 10,   'secondary': 10,   'dirblk': 25,   'recfm': 'U'',   'blksize': 27998,   'lrecl': 27998}";
+
+            ZoweRequest request =  ZoweRequestFactory.buildRequest(connection, url, body,
                     ZoweRequestType.RequestType.POST_JSON);
             request.setAdditionalHeaders(headers);
             Response response = request.executeHttpRequest();

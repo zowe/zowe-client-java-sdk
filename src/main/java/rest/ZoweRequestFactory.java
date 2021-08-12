@@ -24,7 +24,7 @@ public class ZoweRequestFactory {
                 request = new JsonPutRequest(connection, url, body);
                 break;
             case POST_JSON:
-                request = new JsonPostRequest(connection, url);
+                request = new JsonPostRequest(connection, url, body);
                 break;
             case DELETE_JSON:
                 request = new JsonDeleteRequest(connection, url);
