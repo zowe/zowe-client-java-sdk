@@ -10,7 +10,7 @@
 package zosfiles.samples;
 
 import core.ZOSConnection;
-import zosfiles.ZosDsnCreate;
+import zosfiles.ZosDsn;
 import zosfiles.input.CreateParams;
 
 public class CreateDatasetTest {
@@ -24,7 +24,7 @@ public class CreateDatasetTest {
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
 
-        ZosDsnCreate.createDsn(connection, dataSetName, CreateParams.partitioned());
+        ZosDsn.createDsn(connection, dataSetName, CreateParams.partitioned());
     }
 
 }
