@@ -1,3 +1,12 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ */
 package zosfiles.input;
 
 import java.util.Optional;
@@ -274,6 +283,70 @@ public class CreateParams {
             return new zosfiles.input.CreateParams(this);
         }
 
+    }
+
+    public static CreateParams binary() {
+        return new Builder()
+                .dsorg("PO")
+                .alcunit("CYL")
+                .primary(10)
+                .secondary(10)
+                .dirblk(25)
+                .recfm("U")
+                .blksize(27998)
+                .lrecl(27998)
+                .build();
+    }
+
+    public static CreateParams c() {
+        return new Builder()
+                .dsorg("PO")
+                .alcunit("CYL")
+                .primary(1)
+                .secondary(1)
+                .dirblk(25)
+                .recfm("VB")
+                .blksize(32760)
+                .lrecl(260)
+                .build();
+    }
+
+    public static CreateParams classic() {
+        return new Builder()
+                .dsorg("PO")
+                .alcunit("CYL")
+                .primary(1)
+                .secondary(1)
+                .dirblk(25)
+                .recfm("FB")
+                .blksize(6160)
+                .lrecl(80)
+                .build();
+    }
+
+    public static CreateParams partitioned() {
+        return new Builder()
+                .dsorg("PO")
+                .alcunit("CYL")
+                .primary(1)
+                .secondary(1)
+                .dirblk(5)
+                .recfm("FB")
+                .blksize(6160)
+                .lrecl(80)
+                .build();
+    }
+
+    public static CreateParams sequential() {
+        return new Builder()
+                .dsorg("PS")
+                .alcunit("CYL")
+                .primary(1)
+                .secondary(1)
+                .recfm("FB")
+                .blksize(6160)
+                .lrecl(80)
+                .build();
     }
 
 }
