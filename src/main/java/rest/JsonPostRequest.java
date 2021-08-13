@@ -72,7 +72,11 @@ public class JsonPostRequest extends ZoweRequest {
 
             JSONParser parser = new JSONParser();
             try {
-                return new Response(Optional.ofNullable(parser.parse(result)), Optional.ofNullable(statusCode));
+                if (result.isEmpty()) {
+                    return new Response(Optional.empty(), Optional.ofNullable(statusCode));
+                } else {
+                    return new Response(Optional.ofNullable(parser.parse(result)), Optional.ofNullable(statusCode));
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
