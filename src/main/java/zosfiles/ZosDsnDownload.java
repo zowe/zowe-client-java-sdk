@@ -24,8 +24,19 @@ import java.util.*;
 public class ZosDsnDownload {
 
     private static final Logger LOG = LogManager.getLogger(ZosDsnDownload.class);
+    private final ZOSConnection connection;
 
-    public static InputStream downloadDsn(ZOSConnection connection, String dataSetName, DownloadParams options) {
+    public ZosDsnDownload(ZOSConnection connection) {
+        this.connection = connection;
+    }
+
+    /**
+     * Downloads dataset or dataset member content
+     * @param dataSetName is the name of a dataset or a dataset member (f.e. DATASET.LIB(MEMBER))
+     * @param options is download options
+     * @return a content stream
+     */
+    public InputStream downloadDsn(String dataSetName, DownloadParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);

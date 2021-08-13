@@ -21,15 +21,23 @@ import zosfiles.input.CreateParams;
 public class ZosDsn {
 
     private static final Logger LOG = LogManager.getLogger(ZosDsn.class);
+    private final ZOSConnection connection;
+
+    /**
+     * Constructor
+     * @param connection is a connection object
+     */
+    public ZosDsn(ZOSConnection connection) {
+        this.connection = connection;
+    }
 
     /**
      * Replaces a content of a dataset or a dataset member with a new content
      * The new dataset member will be created if a dataset member is not exists
-     * @param connection is a connection object
      * @param dataSetName is the name of a dataset or a dataset member (f.e. DATASET.LIB(MEMBER))
      * @param content is a new content of the dataset or a dataset member
      */
-    public static void writeDsn(ZOSConnection connection, String dataSetName, String content) {
+    public void writeDsn(String dataSetName, String content) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
@@ -52,10 +60,9 @@ public class ZosDsn {
 
     /**
      * Delete dataset or a dataset member
-     * @param connection is a connection object
      * @param dataSetName is the name of a dataset or a dataset member (f.e. 'DATASET.LIB(MEMBER)')
      */
-    public static void deleteDsn(ZOSConnection connection, String dataSetName) {
+    public void deleteDsn(String dataSetName) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
@@ -78,11 +85,10 @@ public class ZosDsn {
 
     /**
      * Creates a new dataset with specified parameters
-     * @param connection is a connection object
      * @param dataSetName is the name of a dataset to create (f.e. 'DATASET.LIB')
      * @param params is a dataset parameters
      */
-    public static void createDsn(ZOSConnection connection, String dataSetName, CreateParams params) {
+    public void createDsn(String dataSetName, CreateParams params) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);

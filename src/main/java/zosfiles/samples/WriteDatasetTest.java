@@ -27,7 +27,7 @@ public class WriteDatasetTest {
     }
 
     private static void writeToDsnMember(ZOSConnection connection, String datasetMember, String content) {
-        ZosDsn.writeDsn(connection, datasetMember, content);
+        new ZosDsn(connection).writeDsn(datasetMember, content);
     }
 
 }

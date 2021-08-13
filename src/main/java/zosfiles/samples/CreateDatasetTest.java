@@ -24,7 +24,7 @@ public class CreateDatasetTest {
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
 
-        ZosDsn.createDsn(connection, dataSetName, CreateParams.partitioned());
+        new ZosDsn(connection).createDsn(dataSetName, CreateParams.partitioned());
     }
 
 }
