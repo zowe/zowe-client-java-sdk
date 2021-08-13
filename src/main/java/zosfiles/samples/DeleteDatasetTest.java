@@ -23,7 +23,7 @@ public class DeleteDatasetTest {
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
 
-        ZosDsn.deleteDsn(connection, datasetMember);
+        new ZosDsn(connection).deleteDsn(datasetMember);
     }
 
 }

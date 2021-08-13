@@ -11,23 +11,20 @@ package zosfiles.samples;
 
 import core.ZOSConnection;
 import zosfiles.ZosDsn;
+import zosfiles.input.CreateParams;
 
-public class WriteDatasetTest {
+public class CreateDatasetTest {
 
     public static void main(String[] args) throws Exception {
         String hostName = "XXX";
         String port = "XXX";
         String userName = "XXX";
         String password = "XXX";
-        String datasetMember = "XXX";
+        String dataSetName = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
 
-        WriteDatasetTest.writeToDsnMember(connection, datasetMember, "NEW CONTENT\nTHE SECOND LINE UPDATED");
-    }
-
-    private static void writeToDsnMember(ZOSConnection connection, String datasetMember, String content) {
-        new ZosDsn(connection).writeDsn(datasetMember, content);
+        new ZosDsn(connection).createDsn(dataSetName, CreateParams.partitioned());
     }
 
 }

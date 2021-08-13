@@ -38,7 +38,7 @@ public class DownloadDatasetTest {
     }
 
     private static void downloadDsnMember(ZOSConnection connection, String name, DownloadParams params) throws IOException {
-        try (InputStream inputStream = ZosDsnDownload.downloadDsn(connection, name, params)) {
+        try (InputStream inputStream = new ZosDsnDownload(connection).downloadDsn(name, params)) {
             if (inputStream != null) {
                 StringWriter writer = new StringWriter();
                 IOUtils.copy(inputStream, writer, "UTF8");

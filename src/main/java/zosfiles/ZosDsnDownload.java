@@ -1,3 +1,12 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ */
 package zosfiles;
 
 import core.ZOSConnection;
@@ -15,8 +24,19 @@ import java.util.*;
 public class ZosDsnDownload {
 
     private static final Logger LOG = LogManager.getLogger(ZosDsnDownload.class);
+    private final ZOSConnection connection;
 
-    public static InputStream downloadDsn(ZOSConnection connection, String dataSetName, DownloadParams options) {
+    public ZosDsnDownload(ZOSConnection connection) {
+        this.connection = connection;
+    }
+
+    /**
+     * Downloads dataset or dataset member content
+     * @param dataSetName is the name of a dataset or a dataset member (f.e. DATASET.LIB(MEMBER))
+     * @param options is download options
+     * @return a content stream
+     */
+    public InputStream downloadDsn(String dataSetName, DownloadParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
