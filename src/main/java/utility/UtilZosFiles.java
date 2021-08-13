@@ -19,6 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UtilZosFiles {
+
     /**
      * Data set name qualifier separator
      *
@@ -90,4 +91,5 @@ public class UtilZosFiles {
 
         return headers;
     }
+
 }
