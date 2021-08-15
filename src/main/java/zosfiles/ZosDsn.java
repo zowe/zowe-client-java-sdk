@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 import rest.*;
 import utility.Util;
 import utility.UtilDataset;
+import utility.UtilRest;
 import zosfiles.input.CreateParams;
 
 public class ZosDsn {
@@ -25,6 +26,7 @@ public class ZosDsn {
 
     /**
      * Constructor
+     *
      * @param connection is a connection object
      */
     public ZosDsn(ZOSConnection connection) {
@@ -34,8 +36,9 @@ public class ZosDsn {
     /**
      * Replaces a content of a dataset or a dataset member with a new content
      * The new dataset member will be created if a dataset member is not exists
+     *
      * @param dataSetName is the name of a dataset or a dataset member (f.e. DATASET.LIB(MEMBER))
-     * @param content is a new content of the dataset or a dataset member
+     * @param content     is a new content of the dataset or a dataset member
      */
     public void writeDsn(String dataSetName, String content) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
@@ -46,13 +49,19 @@ public class ZosDsn {
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" + dataSetName;
 
         try {
-            LOG.info(url);
+            LOG.debug(url);
 
             ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, content,
                     ZoweRequestType.RequestType.PUT_TEXT);
             Response response = request.executeHttpRequest();
-            UtilDataset.checkHttpErrors(response, dataSetName);
+            if (response.isEmpty())
+                return;
 
+            try {
+                UtilRest.checkHttpErrors(response);
+            } catch (Exception e) {
+                UtilDataset.checkHttpErrors(e.getMessage(), dataSetName);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,6 +69,7 @@ public class ZosDsn {
 
     /**
      * Delete dataset or a dataset member
+     *
      * @param dataSetName is the name of a dataset or a dataset member (f.e. 'DATASET.LIB(MEMBER)')
      */
     public void deleteDsn(String dataSetName) {
@@ -71,13 +81,19 @@ public class ZosDsn {
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" + dataSetName;
 
         try {
-            LOG.info(url);
+            LOG.debug(url);
 
             ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
                     ZoweRequestType.RequestType.DELETE_JSON);
             Response response = request.executeHttpRequest();
-            UtilDataset.checkHttpErrors(response, dataSetName);
+            if (response.isEmpty())
+                return;
 
+            try {
+                UtilRest.checkHttpErrors(response);
+            } catch (Exception e) {
+                UtilDataset.checkHttpErrors(e.getMessage(), dataSetName);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -85,8 +101,9 @@ public class ZosDsn {
 
     /**
      * Creates a new dataset with specified parameters
+     *
      * @param dataSetName is the name of a dataset to create (f.e. 'DATASET.LIB')
-     * @param params is a dataset parameters
+     * @param params      is a dataset parameters
      */
     public void createDsn(String dataSetName, CreateParams params) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
@@ -97,16 +114,22 @@ public class ZosDsn {
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" + dataSetName;
 
         try {
-            LOG.info(url);
+            LOG.debug(url);
 
             String body = buildBody(params);
 
-            ZoweRequest request =  ZoweRequestFactory.buildRequest(connection, url, body,
+            ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body,
                     ZoweRequestType.RequestType.POST_JSON);
 
             Response response = request.executeHttpRequest();
-            UtilDataset.checkHttpErrors(response, dataSetName);
+            if (response.isEmpty())
+                return;
 
+            try {
+                UtilRest.checkHttpErrors(response);
+            } catch (Exception e) {
+                UtilDataset.checkHttpErrors(e.getMessage(), dataSetName);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

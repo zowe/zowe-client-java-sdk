@@ -10,13 +10,12 @@
 package rest;
 
 import core.ZOSConnection;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.Util;
+import utility.UtilRest;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -45,7 +44,7 @@ public class TextGetRequest extends ZoweRequest {
             this.httpResponse = client.execute(request, localContext);
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return new Response(Optional.empty(), Optional.empty());
         }
         int statusCode = httpResponse.getStatusLine().getStatusCode();
 
@@ -57,14 +56,7 @@ public class TextGetRequest extends ZoweRequest {
                     Optional.ofNullable(statusCode));
         }
 
-        HttpEntity entity = httpResponse.getEntity();
-        if (entity != null) {
-            String result = EntityUtils.toString(entity);
-            LOG.debug("TextGetRequest::httpGet - result = {}", result);
-            return new Response(Optional.ofNullable(result), Optional.ofNullable(statusCode));
-        }
-
-        return new Response(Optional.empty(), Optional.of(statusCode));
+        return new Response(UtilRest.getTextResponseEntity(httpResponse), Optional.of(statusCode));
     }
 
     @Override

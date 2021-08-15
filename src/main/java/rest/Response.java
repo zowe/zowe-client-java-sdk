@@ -41,4 +41,8 @@ public class Response {
         this.statusCode = statusCode;
     }
 
+    public boolean isEmpty() {
+        return (responsePhrase.isEmpty() && statusCode.isEmpty());
+    }
+
 }

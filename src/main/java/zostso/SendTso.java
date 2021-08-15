@@ -17,6 +17,7 @@ import rest.ZoweRequest;
 import rest.ZoweRequestFactory;
 import rest.ZoweRequestType;
 import utility.Util;
+import utility.UtilRest;
 import utility.UtilTso;
 import zostso.input.SendTsoParms;
 import zostso.zosmf.*;
@@ -58,10 +59,13 @@ public class SendTso {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jobObjBody,
                 ZoweRequestType.RequestType.PUT_JSON);
         Response response = request.executeHttpRequest();
-        int httpCode = response.getStatusCode().get();
-        if (response.getResponsePhrase().isPresent() && Util.isHttpError(httpCode)) {
-            String responsePhrase = (String) response.getResponsePhrase().get();
-            String errorMsg = httpCode + " " + responsePhrase + ".";
+        if (response.isEmpty())
+            return null;
+
+        try {
+            UtilRest.checkHttpErrors(response);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
             throw new Exception("No results from executing tso command after getting TSO address space. " + errorMsg);
         }
 
@@ -113,10 +117,13 @@ public class SendTso {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, "",
                 ZoweRequestType.RequestType.PUT_JSON);
         Response response = request.executeHttpRequest();
-        int httpCode = response.getStatusCode().get();
-        if (response.getResponsePhrase().isPresent() && Util.isHttpError(httpCode)) {
-            String responsePhrase = (String) response.getResponsePhrase().get();
-            String errorMsg = httpCode + " " + responsePhrase + ".";
+        if (response.isEmpty())
+            return null;
+
+        try {
+            UtilRest.checkHttpErrors(response);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
             throw new Exception("Follow up TSO Messages from TSO command cannot be retrieved. " + errorMsg);
         }
 
