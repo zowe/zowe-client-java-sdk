@@ -20,6 +20,7 @@ import org.json.simple.JSONObject;
 import rest.*;
 import utility.Util;
 import utility.UtilJobs;
+import utility.UtilRest;
 import zosjobs.input.CommonJobParms;
 import zosjobs.input.GetJobParms;
 import zosjobs.input.JobFile;
@@ -121,7 +122,9 @@ public class GetJobs {
         }
 
         Response response = request.executeHttpRequest();
-        UtilJobs.checkHttpErrors(response);
+        if (response.isEmpty())
+            return null;
+        UtilRest.checkHttpErrors(response);
         JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
         if (results == null)
             return jobs;
@@ -165,7 +168,9 @@ public class GetJobs {
             request.setRequest(url);
         }
         Response response = request.executeHttpRequest();
-        UtilJobs.checkHttpErrors(response);
+        if (response.isEmpty())
+            return null;
+        UtilRest.checkHttpErrors(response);
         JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
         if (result == null)
             return new Job.Builder().build();
@@ -203,7 +208,9 @@ public class GetJobs {
         }
 
         Response response = request.executeHttpRequest();
-        UtilJobs.checkHttpErrors(response);
+        if (response.isEmpty())
+            return null;
+        UtilRest.checkHttpErrors(response);
         JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
         if (results == null)
             return files;
@@ -258,7 +265,9 @@ public class GetJobs {
         }
 
         Response response = request.executeHttpRequest();
-        UtilJobs.checkHttpErrors(response);
+        if (response.isEmpty())
+            return null;
+        UtilRest.checkHttpErrors(response);
         return (String) response.getResponsePhrase().orElse("");
     }
 
@@ -285,7 +294,9 @@ public class GetJobs {
             request.setRequest(url);
         }
         Response response = request.executeHttpRequest();
-        UtilJobs.checkHttpErrors(response);
+        if (response.isEmpty())
+            return null;
+        UtilRest.checkHttpErrors(response);
         return (String) response.getResponsePhrase().orElse("");
     }
 
@@ -308,7 +319,9 @@ public class GetJobs {
             request.setRequest(url);
         }
         Response response = request.executeHttpRequest();
-        UtilJobs.checkHttpErrors(response);
+        if (response.isEmpty())
+            return null;
+        UtilRest.checkHttpErrors(response);
         return (String) response.getResponsePhrase().orElse("");
     }
 

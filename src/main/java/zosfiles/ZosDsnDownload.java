@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import rest.*;
 import utility.Util;
 import utility.UtilDataset;
+import utility.UtilRest;
 import utility.UtilZosFiles;
 import zosfiles.input.DownloadParams;
 
@@ -32,8 +33,9 @@ public class ZosDsnDownload {
 
     /**
      * Downloads dataset or dataset member content
+     *
      * @param dataSetName is the name of a dataset or a dataset member (f.e. DATASET.LIB(MEMBER))
-     * @param options is download options
+     * @param options     is download options
      * @return a content stream
      */
     public InputStream downloadDsn(String dataSetName, DownloadParams options) {
@@ -49,7 +51,7 @@ public class ZosDsnDownload {
                 url += options.getVolume().get();
             }
             url += dataSetName;
-            LOG.info(url);
+            LOG.debug(url);
 
             String key, value;
             Map<String, String> headers = UtilZosFiles.generateHeadersBasedOnOptions(options);
@@ -67,14 +69,21 @@ public class ZosDsnDownload {
             request.setAdditionalHeaders(headers);
 
             Response response = request.executeHttpRequest();
-            UtilDataset.checkHttpErrors(response, dataSetName);
+            if (response.isEmpty())
+                return null;
 
+            try {
+                UtilRest.checkHttpErrors(response);
+            } catch (Exception e) {
+                UtilDataset.checkHttpErrors(e.getMessage(), dataSetName);
+            }
             if (response.getResponsePhrase().isPresent()) {
                 return (InputStream) response.getResponsePhrase().get();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
     }
 

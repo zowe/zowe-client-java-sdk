@@ -10,14 +10,13 @@
 package rest;
 
 import core.ZOSConnection;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.Util;
+import utility.UtilRest;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,7 +49,7 @@ public class TextPutRequest extends ZoweRequest {
             this.httpResponse = client.execute(request, localContext);
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return new Response(Optional.empty(), Optional.empty());
         }
         int statusCode = httpResponse.getStatusLine().getStatusCode();
 
@@ -62,14 +61,7 @@ public class TextPutRequest extends ZoweRequest {
                     Optional.of(statusCode));
         }
 
-        HttpEntity entity = httpResponse.getEntity();
-        if (entity != null) {
-            String result = EntityUtils.toString(entity);
-            LOG.debug("TextGetRequest::httpPut - result = {}", result);
-            return new Response(Optional.ofNullable(result), Optional.of(statusCode));
-        }
-
-        return new Response(Optional.empty(), Optional.of(statusCode));
+        return new Response(UtilRest.getTextResponseEntity(httpResponse), Optional.of(statusCode));
     }
 
     @Override

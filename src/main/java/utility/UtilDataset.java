@@ -10,7 +10,6 @@
 package utility;
 
 import org.json.simple.JSONObject;
-import rest.Response;
 import zosfiles.response.Dataset;
 
 public class UtilDataset {
@@ -38,20 +37,14 @@ public class UtilDataset {
                 .build();
     }
 
-    public static void checkHttpErrors(Response response, String dataSetName) throws Exception {
-        int httpCode = response.getStatusCode().get();
-        if (response.getResponsePhrase().isPresent() && Util.isHttpError(httpCode)) {
-            String responsePhrase = (String) response.getResponsePhrase().get();
-            String errorMsg = httpCode + " " + responsePhrase + ".";
-            if (httpCode == 404) {
-                throw new Exception(errorMsg + " You may have specified an invalid or non-existent data set.");
-            }
-            if (httpCode == 500) {
-                throw new Exception(errorMsg + " You may not have permission to view " + dataSetName + ".");
-            }
-            throw new Exception(errorMsg);
+    public static void checkHttpErrors(String errorMsg, String dataSetName) throws Exception {
+        if (errorMsg.contains("404")) {
+            throw new Exception(errorMsg + " You may have specified an invalid or non-existent data set.");
         }
+        if (errorMsg.contains("500")) {
+            throw new Exception(errorMsg + " You may not have permission to view " + dataSetName + ".");
+        }
+        throw new Exception(errorMsg);
     }
-
 
 }
