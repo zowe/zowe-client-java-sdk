@@ -17,6 +17,7 @@ import org.json.simple.JSONObject;
 import rest.*;
 import utility.Util;
 import utility.UtilDataset;
+import utility.UtilRest;
 import zosfiles.input.ListParams;
 import zosfiles.response.Dataset;
 
@@ -42,7 +43,14 @@ public class ZosDsnList {
             }
 
             Response response = getResponse(connection, options, headers, url);
-            UtilDataset.checkHttpErrors(response, dataSetName);
+            if (response.isEmpty())
+                return members;
+
+            try {
+                UtilRest.checkHttpErrors(response);
+            } catch (Exception e) {
+                UtilDataset.checkHttpErrors(e.getMessage(), dataSetName);
+            }
 
             JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
             if (results.isEmpty())
@@ -80,7 +88,14 @@ public class ZosDsnList {
             }
 
             Response response = getResponse(connection, options, headers, url);
-            UtilDataset.checkHttpErrors(response, dataSetName);
+            if (response.isEmpty())
+                return datasets;
+
+            try {
+                UtilRest.checkHttpErrors(response);
+            } catch (Exception e) {
+                UtilDataset.checkHttpErrors(e.getMessage(), dataSetName);
+            }
 
             JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
             if (results.isEmpty())

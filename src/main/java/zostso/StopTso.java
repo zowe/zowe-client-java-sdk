@@ -18,6 +18,7 @@ import rest.ZoweRequest;
 import rest.ZoweRequestFactory;
 import rest.ZoweRequestType;
 import utility.Util;
+import utility.UtilRest;
 import utility.UtilTso;
 import zostso.input.StopTsoParms;
 import zostso.zosmf.ZosmfTsoResponse;
@@ -38,6 +39,15 @@ public class StopTso {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
                 ZoweRequestType.RequestType.DELETE_JSON);
         Response response = request.executeHttpRequest();
+        if (response.isEmpty())
+            return new ZosmfTsoResponse.Builder().build();
+
+        try {
+            UtilRest.checkHttpErrors(response);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
+            throw new Exception("Failed to stop active TSO address space. " + errorMsg);
+        }
         JSONObject result = (JSONObject) response.getResponsePhrase().get();
         return UtilTso.parseJsonStopResponse(result);
     }

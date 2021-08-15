@@ -18,6 +18,7 @@ import org.json.simple.parser.ParseException;
 import rest.*;
 import utility.Util;
 import utility.UtilJobs;
+import utility.UtilRest;
 import zosjobs.input.SubmitJclParms;
 import zosjobs.input.SubmitJobParms;
 import zosjobs.response.Job;
@@ -53,12 +54,16 @@ public class SubmitJobs {
                 ZoweRequestType.RequestType.PUT_JSON);
 
         Response response = request.executeHttpRequest();
-        int httpCode = response.getStatusCode().get();
-        if (response.getResponsePhrase().isPresent() && Util.isHttpError(httpCode)) {
-            String responsePhrase = (String) response.getResponsePhrase().get();
-            String errorMsg = httpCode + " " + responsePhrase + ".";
-            if (httpCode == 400)
-                throw new Exception("No results for submitted job. Body sent may be invalid. " + errorMsg);
+        if (response.isEmpty())
+            return new Job.Builder().build();
+
+        try {
+            UtilRest.checkHttpErrors(response);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
+            if (errorMsg.contains("400")) {
+                throw new Exception("Body sent may be invalid. " + errorMsg);
+            }
             throw new Exception("No results for submitted job. " + errorMsg);
         }
 
@@ -126,6 +131,17 @@ public class SubmitJobs {
         request.setAdditionalHeaders(headers);
 
         Response response = request.executeHttpRequest();
+        if (response.isEmpty())
+            return new Job.Builder().build();
+        try {
+            UtilRest.checkHttpErrors(response);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
+            if (errorMsg.contains("400")) {
+                throw new Exception("Body sent may be invalid. " + errorMsg);
+            }
+        }
+
         JSONParser parser = new JSONParser();
         JSONObject json = null;
         try {

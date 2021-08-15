@@ -37,6 +37,7 @@ public class ZoweRequestFactory {
                 break;
             case GET_STREAM:
                 request = new StreamGetRequest(connection, url);
+                break;
             default:
                 throw new Exception("no valid type specified");
         }

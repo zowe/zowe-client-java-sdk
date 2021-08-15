@@ -17,6 +17,7 @@ import rest.ZoweRequest;
 import rest.ZoweRequestFactory;
 import rest.ZoweRequestType;
 import utility.Util;
+import utility.UtilRest;
 import utility.UtilTso;
 import zostso.input.StartTsoParams;
 import zostso.zosmf.ZosmfTsoResponse;
@@ -53,6 +54,15 @@ public class StartTso {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
                 ZoweRequestType.RequestType.POST_JSON);
         Response response = request.executeHttpRequest();
+        if (response.isEmpty())
+            return new ZosmfTsoResponse.Builder().build();
+
+        try {
+            UtilRest.checkHttpErrors(response);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
+            throw new Exception("No results from executing tso command while setting up TSO address space. " + errorMsg);
+        }
         return UtilTso.getZosmfTsoResponse(response);
     }
 

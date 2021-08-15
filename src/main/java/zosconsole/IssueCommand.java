@@ -16,6 +16,7 @@ import rest.Response;
 import rest.ZoweRequest;
 import rest.ZoweRequestFactory;
 import rest.ZoweRequestType;
+import utility.UtilRest;
 import zosconsole.zosmf.IssueParms;
 import zosconsole.zosmf.ZosmfIssueParms;
 import zosconsole.zosmf.ZosmfIssueResponse;
@@ -46,12 +47,10 @@ public class IssueCommand {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, reqBody.toString(),
                 ZoweRequestType.RequestType.PUT_JSON);
         Response response = request.executeHttpRequest();
-        int httpCode = response.getStatusCode().get();
-        if (response.getResponsePhrase().isPresent() && Util.isHttpError(httpCode)) {
-            String responsePhrase = (String) response.getResponsePhrase().get();
-            String errorMsg = httpCode + " " + responsePhrase + ".";
-            throw new Exception("No results for console command. " + errorMsg);
-        }
+        if (response.isEmpty())
+            return new ZosmfIssueResponse();
+
+        UtilRest.checkHttpErrors(response);
         LOG.debug("Response result {}", response.getResponsePhrase());
 
         ZosmfIssueResponse zosmfIssueResponse = new ZosmfIssueResponse();
