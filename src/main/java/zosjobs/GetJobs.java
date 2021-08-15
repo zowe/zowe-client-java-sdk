@@ -34,14 +34,36 @@ public class GetJobs {
     private ZoweRequest request;
     private String url;
 
+    /**
+     * Get jobs Constructor.
+     *
+     * @param connection ZOSConnection object
+     * @author Frank Giordano
+     * @memberof GetJobs
+     */
     public GetJobs(ZOSConnection connection) {
         this.connection = connection;
     }
 
+    /**
+     * Get jobs (defaults to the user ID of the session as owner).
+     *
+     * @author Frank Giordano
+     * @returns A list of job objects (matching jobs)
+     * @memberof GetJobs
+     */
     public List<Job> getJobs() throws Exception {
         return getJobsCommon(null);
     }
 
+    /**
+     * Get jobs that match a job name by prefix. Defaults to jobs owned by the user ID in the session.
+     *
+     * @param prefix Job name prefix for which to list jobs. Supports wildcard e.g. JOBNM*
+     * @author Frank Giordano
+     * @returns A list of job objects (matching jobs)
+     * @memberof GetJobs
+     */
     public List<Job> getJobsByPrefix(String prefix) throws Exception {
         Util.checkNullParameter(prefix == null, "prefix is null");
         Util.checkStateParameter(prefix.isEmpty(), "prefix not specified");
@@ -49,6 +71,14 @@ public class GetJobs {
         return getJobsCommon(new GetJobParms.Builder().owner("*").prefix(prefix).build());
     }
 
+    /**
+     * Get jobs that are owned by a certain user or pattern of users.
+     *
+     * @param owner Owner for which to get jobs. Supports wildcard e.g. IBMU* returns jobs owned by all users whose ID beings with "IBMU"
+     * @author Frank Giordano
+     * @returns A list of job objects (matching jobs)
+     * @memberof GetJobs
+     */
     public List<Job> getJobsByOwner(String owner) throws Exception {
         Util.checkNullParameter(owner == null, "owner is null");
         Util.checkStateParameter(owner.isEmpty(), "owner not specified");
@@ -56,6 +86,15 @@ public class GetJobs {
         return getJobsCommon(new GetJobParms.Builder().owner(owner).build());
     }
 
+    /**
+     * Get a list of jobs that match an owner and prefix.
+     *
+     * @param owner  Owner for which to get jobs. Supports wildcard e.g. IBMU* returns jobs owned by all users whose ID beings with "IBMU"
+     * @param prefix Prefix for which to get jobs. Supports wildcard e.g. JOBNM* returns jobs with names starting with "JOBNM"
+     * @author Frank Giordano
+     * @returns A list of job objects (matching jobs)
+     * @memberof GetJobs
+     */
     public List<Job> getJobsByOwnerAndPrefix(String owner, String prefix) throws Exception {
         Util.checkNullParameter(owner == null, "owner is null");
         Util.checkStateParameter(owner.isEmpty(), "owner not specified");
@@ -65,6 +104,14 @@ public class GetJobs {
         return getJobsCommon(new GetJobParms.Builder().owner(owner).prefix(prefix).build());
     }
 
+    /**
+     * Get a single job object from an input job id.
+     *
+     * @param jobId The job ID for the job for which you want to get status
+     * @author Frank Giordano
+     * @returns A list of job objects (matching jobs)
+     * @memberof GetJobs
+     */
     public Job getJob(String jobId) throws Exception {
         Util.checkNullParameter(jobId == null, "jobId is null");
         Util.checkStateParameter(jobId.isEmpty(), "jobId not specified");
@@ -76,6 +123,14 @@ public class GetJobs {
         return jobs.get(0);
     }
 
+    /**
+     * Get jobs filtered by owner and prefix.
+     *
+     * @param parms GetJobParms object
+     * @author Frank Giordano
+     * @returns A list of job objects (matching jobs)
+     * @memberof GetJobs
+     */
     public List<Job> getJobsCommon(GetJobParms parms) throws Exception {
         Util.checkConnection(connection);
 
@@ -137,6 +192,15 @@ public class GetJobs {
         return jobs;
     }
 
+    /**
+     * Get the status and other details (e.g. owner, return code) for a job.
+     *
+     * @param jobName The job name for the job for which you want to get status
+     * @param jobId   The job ID for the job for which you want to get status
+     * @author Frank Giordano
+     * @returns Job object (matching job)
+     * @memberof GetJobs
+     */
     public Job getStatus(String jobName, String jobId) throws Exception {
         Util.checkNullParameter(jobName == null, "jobName is null");
         Util.checkNullParameter(jobId == null, "jobId is null");
@@ -144,6 +208,18 @@ public class GetJobs {
         return getStatusCommon(new CommonJobParms(jobId, jobName));
     }
 
+    /**
+     * Get the status and other details (e.g. owner, return code) for a job
+     * Alternate version of the API that accepts an Job object returned by
+     * other APIs such as SubmitJobs. Even though the parameter and return
+     * value are of the same type, the Job object returned will have the
+     * current status of the job.
+     *
+     * @param job Job object
+     * @author Frank Giordano
+     * @returns Job object (matching job)
+     * @memberof GetJobs
+     */
     public Job getStatusForJob(Job job) throws Exception {
         Util.checkNullParameter(job == null, "job is null");
 
@@ -151,6 +227,14 @@ public class GetJobs {
                 job.getJobId().get() : null, job.getJobName().isPresent() ? job.getJobName().get() : null));
     }
 
+    /**
+     * Get the status and other details (e.g. owner, return code) for a job.
+     *
+     * @param parms CommonJobParms object
+     * @author Frank Giordano
+     * @returns Job object (matching job)
+     * @memberof GetJobs
+     */
     public Job getStatusCommon(CommonJobParms parms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(parms == null, "parms is null");
@@ -178,15 +262,42 @@ public class GetJobs {
         return UtilJobs.createJobObjFromJson(result);
     }
 
+    /**
+     * Get a list of all spool files for a job.
+     *
+     * @param jobName The job name for the job for which you want to get a list of spool files
+     * @param jobId   The job ID for the job for which you want to get a list of spool files
+     * @author Frank Giordano
+     * @returns A list JobFile objects
+     * @memberof GetJobs
+     */
     public List<JobFile> getSpoolFiles(String jobName, String jobId)
             throws Exception {
         return getSpoolFilesCommon(new CommonJobParms(jobId, jobName));
     }
 
+    /**
+     * Get a list of all job spool files for a job.
+     * Alternate version of the API that accepts an Job object returned by
+     * other APIs such as SubmitJobs.
+     *
+     * @param job The job for which you would like to get a list of job spool files
+     * @author Frank Giordano
+     * @returns A list JobFile objects
+     * @memberof GetJobs
+     */
     public List<JobFile> getSpoolFilesForJob(Job job) throws Exception {
         return getSpoolFilesCommon(new CommonJobParms(job.getJobId().get(), job.getJobName().get()));
     }
 
+    /**
+     * Get a list of all job spool files for a job.
+     *
+     * @param parms CommonJobParms object
+     * @author Frank Giordano
+     * @returns A list JobFile objectsl
+     * @memberof GetJobs
+     */
     public List<JobFile> getSpoolFilesCommon(CommonJobParms parms)
             throws Exception {
         Util.checkConnection(connection);
@@ -237,15 +348,42 @@ public class GetJobs {
         return files;
     }
 
+    /**
+     * Get JCL from a job.
+     *
+     * @param jobName The job name for the job for which you want to retrieve JCL
+     * @param jobId   The job ID for the job for which you want to retrieve JCL
+     * @author Frank Giordano
+     * @returns A string representing job document on resolve
+     * @memberof GetJobs
+     */
     public String getJcl(String jobName, String jobId) throws Exception {
         return getJclCommon(new CommonJobParms(jobId, jobName));
     }
 
+    /**
+     * Get JCL from a job.
+     * Alternate version of the API that accepts an Job object returned by
+     * other APIs such as SubmitJobs.
+     *
+     * @param job The job for which you would like to retrieve JCL
+     * @author Frank Giordano
+     * @returns A string representing the JCL content
+     * @memberof GetJobs
+     */
     public String getJclForJob(Job job) throws Exception {
         return getJclCommon(new CommonJobParms(job.getJobId().isPresent() ? job.getJobId().get() : null,
                 job.getJobName().isPresent() ? job.getJobName().get() : null));
     }
 
+    /**
+     * Get the JCL that was used to submit a job.
+     *
+     * @param parms CommonJobParms object
+     * @author Frank Giordano
+     * @returns A string representing the JCL content
+     * @memberof GetJobs
+     */
     public String getJclCommon(CommonJobParms parms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(parms == null, "parms is null");
@@ -271,10 +409,28 @@ public class GetJobs {
         return (String) response.getResponsePhrase().orElse("");
     }
 
+    /**
+     * Get spool content from a job (keeping naming convention patter with this duplication function).
+     *
+     * @param jobFile The spool file for which you want to retrieve the content
+     * @author Frank Giordano
+     * @returns A string representing the spool content
+     * @memberof GetJobs
+     */
     public String getSpoolContent(JobFile jobFile) throws Exception {
         return getSpoolContentCommon(jobFile);
     }
 
+    /**
+     * Get spool content from a job using the job name, job ID, and spool ID number from z/OSMF.
+     *
+     * @param jobName The job name for the job containing the spool content
+     * @param jobId   The job id for the job containing the spool content
+     * @param spoolId The Id number assigned by zosmf that identifies the particular job spool file (DD)
+     * @author Frank Giordano
+     * @returns A string representing the spool content
+     * @memberof GetJobs
+     */
     public String getSpoolContentById(String jobName, String jobId, int spoolId)
             throws Exception {
         Util.checkConnection(connection);
@@ -300,6 +456,14 @@ public class GetJobs {
         return (String) response.getResponsePhrase().orElse("");
     }
 
+    /**
+     * Get spool content from a job.
+     *
+     * @param jobFile The spool file for which you want to retrieve the content
+     * @author Frank Giordano
+     * @returns A string representing the spool content
+     * @memberof GetJobs
+     */
     public String getSpoolContentCommon(JobFile jobFile) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(jobFile == null, "jobFile is null");
@@ -325,6 +489,13 @@ public class GetJobs {
         return (String) response.getResponsePhrase().orElse("");
     }
 
+    /**
+     * Get url specified for rest processing.
+     *
+     * @author Frank Giordano
+     * @returns A string representing a url
+     * @memberof GetJobs
+     */
     public String getUrl() {
         return url;
     }
