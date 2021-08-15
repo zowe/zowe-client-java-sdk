@@ -10,7 +10,6 @@
 package utility;
 
 import org.json.simple.JSONObject;
-import rest.Response;
 import zosjobs.response.Job;
 
 public class UtilJobs {
