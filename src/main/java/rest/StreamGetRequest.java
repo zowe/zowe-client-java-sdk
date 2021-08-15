@@ -44,7 +44,7 @@ public class StreamGetRequest extends ZoweRequest {
             this.httpResponse = client.execute(request, localContext);
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return new Response(Optional.empty(), Optional.empty());
         }
         int statusCode = httpResponse.getStatusLine().getStatusCode();
 
