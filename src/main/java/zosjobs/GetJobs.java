@@ -123,7 +123,7 @@ public class GetJobs {
 
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
-            return null;
+            return jobs;
         UtilRest.checkHttpErrors(response);
         JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
         if (results == null)
@@ -169,7 +169,7 @@ public class GetJobs {
         }
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
-            return null;
+            return new Job.Builder().build();
         UtilRest.checkHttpErrors(response);
         JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
         if (result == null)
@@ -209,7 +209,7 @@ public class GetJobs {
 
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
-            return null;
+            return files;
         UtilRest.checkHttpErrors(response);
         JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
         if (results == null)
@@ -266,7 +266,7 @@ public class GetJobs {
 
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
-            return null;
+            return "";
         UtilRest.checkHttpErrors(response);
         return (String) response.getResponsePhrase().orElse("");
     }
@@ -295,7 +295,7 @@ public class GetJobs {
         }
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
-            return null;
+            return "";
         UtilRest.checkHttpErrors(response);
         return (String) response.getResponsePhrase().orElse("");
     }
@@ -320,7 +320,7 @@ public class GetJobs {
         }
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
-            return null;
+            return "";
         UtilRest.checkHttpErrors(response);
         return (String) response.getResponsePhrase().orElse("");
     }

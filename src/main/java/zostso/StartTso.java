@@ -55,7 +55,7 @@ public class StartTso {
                 ZoweRequestType.RequestType.POST_JSON);
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
-            return null;
+            return new ZosmfTsoResponse.Builder().build();
 
         try {
             UtilRest.checkHttpErrors(response);

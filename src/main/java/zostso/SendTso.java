@@ -60,7 +60,7 @@ public class SendTso {
                 ZoweRequestType.RequestType.PUT_JSON);
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
-            return null;
+            return new ZosmfTsoResponse.Builder().build();
 
         try {
             UtilRest.checkHttpErrors(response);
@@ -118,7 +118,7 @@ public class SendTso {
                 ZoweRequestType.RequestType.PUT_JSON);
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
-            return null;
+            return new ZosmfTsoResponse.Builder().build();
 
         try {
             UtilRest.checkHttpErrors(response);

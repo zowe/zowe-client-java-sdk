@@ -44,7 +44,7 @@ public class ZosDsnList {
 
             Response response = getResponse(connection, options, headers, url);
             if (response.isEmpty())
-                return null;
+                return members;
 
             try {
                 UtilRest.checkHttpErrors(response);
@@ -89,7 +89,7 @@ public class ZosDsnList {
 
             Response response = getResponse(connection, options, headers, url);
             if (response.isEmpty())
-                return null;
+                return datasets;
 
             try {
                 UtilRest.checkHttpErrors(response);

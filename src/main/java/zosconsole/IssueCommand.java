@@ -48,7 +48,7 @@ public class IssueCommand {
                 ZoweRequestType.RequestType.PUT_JSON);
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
-            return null;
+            return new ZosmfIssueResponse();
 
         UtilRest.checkHttpErrors(response);
         LOG.debug("Response result {}", response.getResponsePhrase());

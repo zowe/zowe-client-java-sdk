@@ -55,7 +55,7 @@ public class SubmitJobs {
 
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
-            return null;
+            return new Job.Builder().build();
 
         try {
             UtilRest.checkHttpErrors(response);
@@ -132,7 +132,7 @@ public class SubmitJobs {
 
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
-            return null;
+            return new Job.Builder().build();
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
