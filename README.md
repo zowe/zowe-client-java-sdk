@@ -19,6 +19,8 @@ Functionality provided so far:
     IssuesTsoCommand  
     SubmitJobs  
     DownloadDataset  
+    CreateDataset  
+    DeleteDataset  
     WriteDataset  
     ListDataset  
 
@@ -28,6 +30,8 @@ See the following sample programs within each sample's package:
         IssueCommandTest.java  
   
     src/main/java/zosfiles/samples  
+        CreateDatasetTest.java  
+        DeleteDatasetTest.java  
         DownloadDatasetTest.java
         ListDatasetsTest.java
         WriteDatasetTest.java  
