@@ -30,7 +30,7 @@ public class TextGetRequest extends ZoweRequest {
     private Map<String, String> additionalHeaders = new HashMap<>();
 
     public TextGetRequest(ZOSConnection connection, String url) throws Exception {
-        super(connection, ZoweRequestType.RequestType.GET_TEXT);
+        super(connection, ZoweRequestType.VerbType.GET_TEXT);
         this.request = new HttpGet(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }

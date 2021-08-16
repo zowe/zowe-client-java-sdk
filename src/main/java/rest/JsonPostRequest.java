@@ -32,7 +32,7 @@ public class JsonPostRequest extends ZoweRequest {
     private Map<String, String> additionalHeaders = new HashMap<>();
 
     public JsonPostRequest(ZOSConnection connection, String url, String body) throws Exception {
-        super(connection, ZoweRequestType.RequestType.POST_JSON);
+        super(connection, ZoweRequestType.VerbType.POST_JSON);
         this.body = body;
         this.request = new HttpPost(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();

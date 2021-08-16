@@ -52,7 +52,7 @@ public class StartTso {
         LOG.debug("StartTso::startCommon - url {}", url);
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
-                ZoweRequestType.RequestType.POST_JSON);
+                ZoweRequestType.VerbType.POST_JSON);
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
             return new ZosmfTsoResponse.Builder().build();

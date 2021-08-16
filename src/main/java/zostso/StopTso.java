@@ -37,7 +37,7 @@ public class StopTso {
         LOG.debug("StopTso::stopCommon url {}", url);
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
-                ZoweRequestType.RequestType.DELETE_JSON);
+                ZoweRequestType.VerbType.DELETE_JSON);
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
             return new ZosmfTsoResponse.Builder().build();

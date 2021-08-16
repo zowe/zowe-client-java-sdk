@@ -57,7 +57,7 @@ public class SendTso {
         String jobObjBody = getTsoResponseSendMessage(tsoResponseMessage);
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jobObjBody,
-                ZoweRequestType.RequestType.PUT_JSON);
+                ZoweRequestType.VerbType.PUT_JSON);
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
             return new ZosmfTsoResponse.Builder().build();
@@ -115,7 +115,7 @@ public class SendTso {
         LOG.debug("SendTso::getDataFromTSO - url {}", url);
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, "",
-                ZoweRequestType.RequestType.PUT_JSON);
+                ZoweRequestType.VerbType.PUT_JSON);
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
             return new ZosmfTsoResponse.Builder().build();
