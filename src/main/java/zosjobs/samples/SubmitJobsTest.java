@@ -32,11 +32,13 @@ public class SubmitJobsTest {
     }
 
     private static Job tstSubmitJclJob(ZOSConnection connection, String jclString) throws Exception {
-        return SubmitJobs.submitJcl(connection, jclString, null, null);
+        SubmitJobs submitJobs = new SubmitJobs(connection);
+        return submitJobs.submitJcl(jclString, null, null);
     }
 
     private static Job tstSubmitJob(ZOSConnection connection, String dsMember) throws Exception {
-        return SubmitJobs.submitJob(connection, dsMember);
+        SubmitJobs submitJobs = new SubmitJobs(connection);
+        return submitJobs.submitJob(dsMember);
     }
 
 }
