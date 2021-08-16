@@ -12,8 +12,7 @@ package zosjobs;
 /**
  * Constants for various job related info
  *
- * @export
- * @class JobsConstants
+ * @version 1.0
  */
 public class JobsConstants {
 
