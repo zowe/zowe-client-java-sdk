@@ -30,7 +30,7 @@ public class JsonGetRequest extends ZoweRequest {
     private Map<String, String> additionalHeaders = new HashMap<>();
 
     public JsonGetRequest(ZOSConnection connection, String url) throws Exception {
-        super(connection, ZoweRequestType.RequestType.GET_JSON);
+        super(connection, ZoweRequestType.VerbType.GET_JSON);
         this.request = new HttpGet(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }

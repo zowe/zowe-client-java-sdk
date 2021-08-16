@@ -30,7 +30,7 @@ public class JsonDeleteRequest extends ZoweRequest {
     private Map<String, String> additionalHeaders = new HashMap<>();
 
     public JsonDeleteRequest(ZOSConnection connection, String url) throws Exception {
-        super(connection, ZoweRequestType.RequestType.DELETE_JSON);
+        super(connection, ZoweRequestType.VerbType.DELETE_JSON);
         this.request = new HttpDelete(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }

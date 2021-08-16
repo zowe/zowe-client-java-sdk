@@ -14,7 +14,7 @@ import core.ZOSConnection;
 public class ZoweRequestFactory {
 
     public static ZoweRequest buildRequest(ZOSConnection connection, String url, String body,
-                                           ZoweRequestType.RequestType type) throws Exception {
+                                           ZoweRequestType.VerbType type) throws Exception {
         ZoweRequest request;
         switch (type) {
             case GET_JSON:

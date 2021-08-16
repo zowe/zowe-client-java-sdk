@@ -30,7 +30,7 @@ public class StreamGetRequest extends ZoweRequest {
     private Map<String, String> additionalHeaders = new HashMap<>();
 
     public StreamGetRequest(ZOSConnection connection, String url) throws Exception {
-        super(connection, ZoweRequestType.RequestType.GET_STREAM);
+        super(connection, ZoweRequestType.VerbType.GET_STREAM);
         this.request = new HttpGet(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }

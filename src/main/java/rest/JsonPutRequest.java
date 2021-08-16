@@ -32,7 +32,7 @@ public class JsonPutRequest extends ZoweRequest {
     private Map<String, String> additionalHeaders = new HashMap<>();
 
     public JsonPutRequest(ZOSConnection connection, String url, String body) throws Exception {
-        super(connection, ZoweRequestType.RequestType.PUT_JSON);
+        super(connection, ZoweRequestType.VerbType.PUT_JSON);
         this.body = body;
         this.request = new HttpPut(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();

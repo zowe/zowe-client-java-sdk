@@ -51,7 +51,7 @@ public class SubmitJobs {
         }
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, reqBody.toString(),
-                ZoweRequestType.RequestType.PUT_JSON);
+                ZoweRequestType.VerbType.PUT_JSON);
 
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
@@ -127,7 +127,7 @@ public class SubmitJobs {
         LOG.debug(url);
 
         String body = parms.getJcl().get();
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body, ZoweRequestType.RequestType.PUT_TEXT);
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body, ZoweRequestType.VerbType.PUT_TEXT);
         request.setAdditionalHeaders(headers);
 
         Response response = request.executeHttpRequest();

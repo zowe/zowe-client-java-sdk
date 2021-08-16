@@ -65,7 +65,7 @@ public class ZosDsnDownload {
             }
 
             ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
-                    ZoweRequestType.RequestType.GET_STREAM);
+                    ZoweRequestType.VerbType.GET_STREAM);
             request.setAdditionalHeaders(headers);
 
             Response response = request.executeHttpRequest();

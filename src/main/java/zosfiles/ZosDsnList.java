@@ -117,7 +117,7 @@ public class ZosDsnList {
         LOG.debug(url);
         setHeaders(options, headers);
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
-                ZoweRequestType.RequestType.GET_JSON);
+                ZoweRequestType.VerbType.GET_JSON);
         request.setAdditionalHeaders(headers);
         return request.executeHttpRequest();
     }

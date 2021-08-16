@@ -171,7 +171,7 @@ public class GetJobs {
         LOG.debug(url);
 
         if (request == null || !(request instanceof JsonGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_JSON);
+            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.VerbType.GET_JSON);
         } else {
             request.setRequest(url);
         }
@@ -247,7 +247,7 @@ public class GetJobs {
         LOG.debug(url);
 
         if (request == null || !(request instanceof JsonGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_JSON);
+            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.VerbType.GET_JSON);
         } else {
             request.setRequest(url);
         }
@@ -313,7 +313,7 @@ public class GetJobs {
         LOG.debug(url);
 
         if (request == null || !(request instanceof JsonGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_JSON);
+            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.VerbType.GET_JSON);
         } else {
             request.setRequest(url);
         }
@@ -397,7 +397,7 @@ public class GetJobs {
         LOG.debug(url);
 
         if (request == null || !(request instanceof TextGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_TEXT);
+            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.VerbType.GET_TEXT);
         } else {
             request.setRequest(url);
         }
@@ -445,7 +445,7 @@ public class GetJobs {
         LOG.debug(url);
 
         if (request == null || !(request instanceof TextGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_TEXT);
+            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.VerbType.GET_TEXT);
         } else {
             request.setRequest(url);
         }
@@ -478,7 +478,7 @@ public class GetJobs {
         LOG.debug(url);
 
         if (request == null || !(request instanceof TextGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.RequestType.GET_TEXT);
+            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.VerbType.GET_TEXT);
         } else {
             request.setRequest(url);
         }

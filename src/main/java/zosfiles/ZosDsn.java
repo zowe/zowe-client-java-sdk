@@ -52,7 +52,7 @@ public class ZosDsn {
             LOG.debug(url);
 
             ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, content,
-                    ZoweRequestType.RequestType.PUT_TEXT);
+                    ZoweRequestType.VerbType.PUT_TEXT);
             Response response = request.executeHttpRequest();
             if (response.isEmpty())
                 return;
@@ -84,7 +84,7 @@ public class ZosDsn {
             LOG.debug(url);
 
             ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
-                    ZoweRequestType.RequestType.DELETE_JSON);
+                    ZoweRequestType.VerbType.DELETE_JSON);
             Response response = request.executeHttpRequest();
             if (response.isEmpty())
                 return;
@@ -119,7 +119,7 @@ public class ZosDsn {
             String body = buildBody(params);
 
             ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body,
-                    ZoweRequestType.RequestType.POST_JSON);
+                    ZoweRequestType.VerbType.POST_JSON);
 
             Response response = request.executeHttpRequest();
             if (response.isEmpty())
