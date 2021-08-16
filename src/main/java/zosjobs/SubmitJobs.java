@@ -26,6 +26,12 @@ import zosjobs.response.Job;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class to handle submitting of z/OS batch jobs via z/OSMF
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class SubmitJobs {
 
     private static final Logger LOG = LogManager.getLogger(SubmitJobs.class);
@@ -37,7 +43,6 @@ public class SubmitJobs {
      *
      * @param connection ZOSConnection object
      * @author Frank Giordano
-     * @memberof SubmitJobs
      */
     public SubmitJobs(ZOSConnection connection) {
         this.connection = connection;
@@ -47,9 +52,9 @@ public class SubmitJobs {
      * Submit a job that resides in a z/OS data set.
      *
      * @param jobDataSet job data set to be translated into parms object
+     * @return A Job document with details about the submitted job
+     * @throws Exception error on submitting
      * @author Frank Giordano
-     * @returns A Job document with details about the submitted job
-     * @memberof SubmitJobs
      */
     public Job submitJob(String jobDataSet) throws Exception {
         return this.submitJobCommon(new SubmitJobParms(jobDataSet));
@@ -59,9 +64,9 @@ public class SubmitJobs {
      * Submit a job that resides in a z/OS data set.
      *
      * @param parms SubmitJobParms object
+     * @return A Job document with details about the submitted job
+     * @throws Exception error on submitting
      * @author Frank Giordano
-     * @returns A Job document with details about the submitted job
-     * @memberof SubmitJobs
      */
     public Job submitJobCommon(SubmitJobParms parms) throws Exception {
         Util.checkNullParameter(parms == null, "parms is null");
@@ -105,9 +110,9 @@ public class SubmitJobs {
      * @param jcl                 string of JCL that you want to be submit
      * @param internalReaderRecfm record format of the jcl you want to submit. "F" (fixed) or "V" (variable)
      * @param internalReaderLrecl logical record length of the jcl you want to submit
+     * @return A Job document with details about the submitted job
+     * @throws Exception error on submitting
      * @author Frank Giordano
-     * @returns A Job document with details about the submitted job
-     * @memberof SubmitJobs
      */
     public Job submitJcl(String jcl, String internalReaderRecfm, String internalReaderLrecl) throws Exception {
         return this.submitJclCommon(new SubmitJclParms(jcl, internalReaderRecfm, internalReaderLrecl));
@@ -117,9 +122,9 @@ public class SubmitJobs {
      * Submit a JCL string to run
      *
      * @param parms SubmitJclParms object (see for details)c
+     * @return A Job document with details about the submitted job
+     * @throws Exception error on submitting
      * @author Frank Giordano
-     * @returns A Job document with details about the submitted job
-     * @memberof SubmitJobs
      */
     public Job submitJclCommon(SubmitJclParms parms) throws Exception {
         Util.checkConnection(connection);
