@@ -30,11 +30,40 @@ public class SubmitJobs {
 
     private static final Logger LOG = LogManager.getLogger(SubmitJobs.class);
 
-    public static Job submitJob(ZOSConnection connection, String jobDataSet) throws Exception {
-        return SubmitJobs.submitJobCommon(connection, new SubmitJobParms(jobDataSet));
+    private ZOSConnection connection;
+
+    /**
+     * SubmitJobs Constructor
+     *
+     * @param connection ZOSConnection object
+     * @author Frank Giordano
+     * @memberof SubmitJobs
+     */
+    public SubmitJobs(ZOSConnection connection) {
+        this.connection = connection;
     }
 
-    public static Job submitJobCommon(ZOSConnection connection, SubmitJobParms parms) throws Exception {
+    /**
+     * Submit a job that resides in a z/OS data set.
+     *
+     * @param jobDataSet job data set to be translated into parms object
+     * @author Frank Giordano
+     * @returns A Job document with details about the submitted job
+     * @memberof SubmitJobs
+     */
+    public Job submitJob(String jobDataSet) throws Exception {
+        return this.submitJobCommon(new SubmitJobParms(jobDataSet));
+    }
+
+    /**
+     * Submit a job that resides in a z/OS data set.
+     *
+     * @param parms SubmitJobParms object
+     * @author Frank Giordano
+     * @returns A Job document with details about the submitted job
+     * @memberof SubmitJobs
+     */
+    public Job submitJobCommon(SubmitJobParms parms) throws Exception {
         Util.checkNullParameter(parms == null, "parms is null");
         Util.checkStateParameter(!parms.getJobDataSet().isPresent(), "jobDataSet not specified");
 
@@ -73,20 +102,26 @@ public class SubmitJobs {
     /**
      * Submit a string of JCL to run
      *
-     * @param {AbstractSession} session - z/OSMF connection info
-     * @param {string}          jcl - string of JCL that you want to be submit
-     * @param {string}          internalReaderRecfm - record format of the jcl you want to submit. "F" (fixed) or "V" (variable)
-     * @param {string}          internalReaderLrecl - logical record length of the jcl you want to submit
-     * @static
-     * @returns {Job} - Job document with details about the submitted job
+     * @param jcl                 string of JCL that you want to be submit
+     * @param internalReaderRecfm record format of the jcl you want to submit. "F" (fixed) or "V" (variable)
+     * @param internalReaderLrecl logical record length of the jcl you want to submit
+     * @author Frank Giordano
+     * @returns A Job document with details about the submitted job
      * @memberof SubmitJobs
      */
-    public static Job submitJcl(ZOSConnection connection, String jcl, String internalReaderRecfm,
-                                String internalReaderLrecl) throws Exception {
-        return SubmitJobs.submitJclCommon(connection, new SubmitJclParms(jcl, internalReaderRecfm, internalReaderLrecl));
+    public Job submitJcl(String jcl, String internalReaderRecfm, String internalReaderLrecl) throws Exception {
+        return this.submitJclCommon(new SubmitJclParms(jcl, internalReaderRecfm, internalReaderLrecl));
     }
 
-    private static Job submitJclCommon(ZOSConnection connection, SubmitJclParms parms) throws Exception {
+    /**
+     * Submit a JCL string to run
+     *
+     * @param parms SubmitJclParms object (see for details)c
+     * @author Frank Giordano
+     * @returns A Job document with details about the submitted job
+     * @memberof SubmitJobs
+     */
+    public Job submitJclCommon(SubmitJclParms parms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(parms == null, "parms is null");
         Util.checkStateParameter(!parms.getJcl().isPresent(), "jcl not specified");
