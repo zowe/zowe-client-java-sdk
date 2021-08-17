@@ -12,8 +12,21 @@ package utility;
 import org.json.simple.JSONObject;
 import zosjobs.response.Job;
 
+/**
+ * Utility Class for Rest related static helper methods.
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class UtilJobs {
 
+    /**
+     * Formulate and return a Job object based on incoming Json object.
+     *
+     * @param json JSONObject object
+     * @return A Job document
+     * @author Frank Giordano
+     */
     public static Job createJobObjFromJson(JSONObject json) {
         return new Job.Builder().jobId((String) json.get("jobid"))
                 .jobName((String) json.get("jobname"))

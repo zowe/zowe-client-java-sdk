@@ -16,6 +16,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.Util;
+import utility.UtilRest;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -51,7 +52,7 @@ public class StreamGetRequest extends ZoweRequest {
         LOG.debug("StreamGetRequest::httpGet - Response statusCode {}, Response {}",
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
-        if (Util.isHttpError(statusCode)) {
+        if (UtilRest.isHttpError(statusCode)) {
             return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
                     Optional.of(statusCode));
         }

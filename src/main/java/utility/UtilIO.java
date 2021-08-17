@@ -16,62 +16,43 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * This class will handle common sequences of node I/O and issue messages /
- * throw errors as neccessary.
+ * Utility class will handle common sequences of I/O, issue messages, and throw errors as necessary.
  *
- * @export
- * @class IO
+ * @version 1.0
  */
 public class UtilIO {
 
     /**
      * File delimiter
-     *
-     * @static
-     * @type {string}
-     * @memberof IO
      */
     public static String FILE_DELIM = "/";
 
     /**
      * UTF8 identifier
-     *
-     * @static
-     * @memberof IO
      */
     public static String UTF8 = "utf8";
 
     /**
      * Windows OS identifier
-     *
-     * @static
-     * @memberof IO
      */
     public static String OS_WIN32 = "win32";
 
     /**
      * Mac OS identifier
-     *
-     * @static
-     * @memberof IO
      */
     public static String OS_MAC = "darwin";
 
     /**
      * Linux OS identifier
-     *
-     * @static
-     * @memberof IO
      */
     public static String OS_LINUX = "linux";
 
     /**
      * Return whether input file is a directory or file
      *
-     * @param {string} dirOrFile - file path
-     * @static
-     * @returns {boolean} - true if file path is a directory, false otherwise
-     * @memberof IO
+     * @param dirOrFile File path
+     * @return true if file path is a directory, false otherwise
+     * @throws Exception Error on submitting
      */
     public static Boolean isDir(String dirOrFile) {
         Util.checkNullParameter(dirOrFile == null, "dirOrFile is null");
@@ -85,10 +66,8 @@ public class UtilIO {
     /**
      * Take an extension and prefix with a '.' identifier
      *
-     * @param {string} extension - extension to normalize
-     * @static
-     * @returns {string} - '.bin' for input 'bin' for example
-     * @memberof IO
+     * @param extension Extension to normalize
+     * @return A string '.bin' for input 'bin' for example
      */
     public static String normalizeExtension(String extension) {
         Util.checkNullParameter(extension == null, "dirOrFile is null");
@@ -103,12 +82,10 @@ public class UtilIO {
     }
 
     /**
-     * Wraps Files.exists so that we dont have to import fs unnecessarily
+     * Wraps Files. Exists so that we don't have to import fs unnecessarily
      *
-     * @param {string} file - file to validate existence against
-     * @static
-     * @returns true if file exists
-     * @memberof IO
+     * @param file File to validate existence against
+     * @return true Ff file exists
      */
     public static Boolean existsSync(String file) {
         Util.checkNullParameter(file == null, "dirOrFile is null");
@@ -119,10 +96,7 @@ public class UtilIO {
     /**
      * Create a directory if it does not yet exist synchronously.
      *
-     * @param {string} dir - directory to create
-     * @return {undefined}
-     * @static
-     * @memberof IO
+     * @param dir Directory to create
      */
     public static void createDirSync(String dir) throws IOException {
         Util.checkNullParameter(dir == null, "dirOrFile is null");
@@ -138,15 +112,12 @@ public class UtilIO {
      * first/second/third where first will contain director second and second
      * will contain directory third
      *
-     * @param {string} dir - directory to create all sub directories for
-     * @static
-     * @memberof IO
+     * @param dir Directory to create all subdirectories for
      */
     public static void createDirsSync(String dir) throws IOException {
         Util.checkNullParameter(dir == null, "dirOrFile is null");
         Util.checkStateParameter(dir.isEmpty() || dir.isEmpty(), "dirOrFile is empty");
-        // we're splitting on a specific separator character, so replace \ with /
-        // before splitting
+        // we're splitting on a specific separator character, so replace \ with / before splitting
         Path dirs = Paths.get(dir);
         Files.createDirectories(dirs);
     }
@@ -156,10 +127,7 @@ public class UtilIO {
      * for example, if filePath = oneDir/twoDir/threeDir/file.txt,
      * oneDir, twoDir, and threeDir will be created.
      *
-     * @param {string} filePath [description]
-     * @return {[type]}          [description]
-     * @static
-     * @memberof IO
+     * @param filePath File path
      */
     public static void createDirsSyncFromFilePath(String filePath) throws IOException {
         Util.checkNullParameter(filePath == null, "dirOrFile is null");
@@ -171,8 +139,8 @@ public class UtilIO {
      * Create a symbolic link to a directory. If the symbolic link already exists,
      * re-create it with the specified target directory.
      *
-     * @param {string} newSymLinkPath - the path new symbolic link to be created
-     * @param {string} existingDirPath - the path the existing directory that we will link to
+     * @param newSymLinkPath  The path new symbolic link to be created
+     * @param existingDirPath The path the existing directory that we will link to
      */
     public static void createSymlinkToDir(String newSymLinkPath, String existingDirPath) throws Exception {
         try {
@@ -202,9 +170,7 @@ public class UtilIO {
     /**
      * Uses the fs-extra package to create a directory (and all subdirectories)
      *
-     * @param {string} dir - the directory (do not include a file name)
-     * @static
-     * @memberof IO
+     * @param dir The directory (do not include a file name)
      */
     public static void mkdirp(String dir) throws IOException {
         Util.checkNullParameter(dir == null, "dirOrFile is null");
@@ -213,13 +179,10 @@ public class UtilIO {
     }
 
     /**
-     * Read file as a stream
-     * or specify encoding.
+     * Read file as a stream or specify encoding.
      *
-     * @param {string} file - file to read
-     * @return Buffer - the content of the file
-     * @static
-     * @memberof IO
+     * @param file File to read
+     * @return Buffer the content of the file
      */
     public static BufferedReader readFileSyncBinary(String file) throws IOException {
         Util.checkNullParameter(file == null, "dirOrFile is null");
@@ -229,14 +192,11 @@ public class UtilIO {
     }
 
     /**
-     * Read file as a string with line normalization
-     * or specify encoding.
+     * Read file as a string with line normalization or specify encoding.
      *
-     * @param {string}          file - file to read
-     * @param normalizeNewLines - remove Windows line endings (\r\n)  in favor of \n
-     * @return Buffer - the content of the file
-     * @static
-     * @memberof IO
+     * @param file File to read
+     * @param normalizeNewLines True  to toggle Remove Windows line endings (\r\n) in favor of \n
+     * @return A string with the content of the file
      */
     public static String readFileSyncAsString(String file, Boolean normalizeNewLines) {
         Util.checkNullParameter(file == null, "dirOrFile is null");
@@ -256,9 +216,8 @@ public class UtilIO {
     /**
      * Create a Readable stream from a file
      *
-     * @param file - the file from which to create a read stream
-     * @return String - the content of the file
-     * @memberof IO
+     * @param file The file from which to create a read stream
+     * @return A string with the content of the file
      */
     public static String createReadStream(String file) throws IOException {
         Util.checkNullParameter(file == null, "dirOrFile is null");
@@ -277,9 +236,8 @@ public class UtilIO {
     /**
      * Create a Node.js Readable stream from a file
      *
-     * @param file - the file from which to create a read stream
-     * @return Buffer - the content of the file
-     * @memberof IO
+     * @param file The file from which to create a read stream
+     * @return A string with the content of the file
      */
     public static FileOutputStream createWriteStream(String file) throws FileNotFoundException {
         Util.checkNullParameter(file == null, "dirOrFile is null");
@@ -294,10 +252,8 @@ public class UtilIO {
      * appropriate before you save it to disk
      * (basically, if the user is on Windows, change  \n to \r\n)
      *
-     * @param {string} original - original input
-     * @static
-     * @returns {string} - input with removed newlines
-     * @memberof IO
+     * @param original Original input
+     * @return A string with input with removed newlines
      */
     public static String processNewlines(String original) {
         Util.checkNullParameter(original == null, "dirOrFile is null");
@@ -313,9 +269,7 @@ public class UtilIO {
     /**
      * Get default text editor for a given operating system
      *
-     * @static
-     * @returns {string} - text editor launch string
-     * @memberof IO
+     * @return A string with text editor
      */
     public static String getDefaultTextEditor() {
         String OS = System.getProperty("os.name").toLowerCase();
