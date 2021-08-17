@@ -87,8 +87,9 @@ public class IssueTso {
         response.setZosmfResponse(Optional.of(sendResponse.getZosmfResponse().get().get(0)));
         startResponse.setCollectedResponses(sendResponse.getZosmfResponse().get());
         response.setCommandResponses(sendResponse.getCommandResponse());
+        StopTso stopTso = new StopTso(connection);
         response.setStopResponse(Optional.ofNullable(
-                StopTso.stop(connection, response.getStartResponse().get().getServletKey().get())));
+                stopTso.stop(response.getStartResponse().get().getServletKey().get())));
 
         return response;
     }
