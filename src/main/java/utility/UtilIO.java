@@ -52,7 +52,6 @@ public class UtilIO {
      *
      * @param dirOrFile File path
      * @return true if file path is a directory, false otherwise
-     * @throws Exception Error on submitting
      */
     public static Boolean isDir(String dirOrFile) {
         Util.checkNullParameter(dirOrFile == null, "dirOrFile is null");
@@ -97,6 +96,7 @@ public class UtilIO {
      * Create a directory if it does not yet exist synchronously.
      *
      * @param dir Directory to create
+     * @throws IOException I/O error processing
      */
     public static void createDirSync(String dir) throws IOException {
         Util.checkNullParameter(dir == null, "dirOrFile is null");
@@ -113,6 +113,7 @@ public class UtilIO {
      * will contain directory third
      *
      * @param dir Directory to create all subdirectories for
+     * @throws IOException I/O error processing
      */
     public static void createDirsSync(String dir) throws IOException {
         Util.checkNullParameter(dir == null, "dirOrFile is null");
@@ -128,6 +129,7 @@ public class UtilIO {
      * oneDir, twoDir, and threeDir will be created.
      *
      * @param filePath File path
+     * @throws IOException I/O error processing
      */
     public static void createDirsSyncFromFilePath(String filePath) throws IOException {
         Util.checkNullParameter(filePath == null, "dirOrFile is null");
@@ -141,6 +143,7 @@ public class UtilIO {
      *
      * @param newSymLinkPath  The path new symbolic link to be created
      * @param existingDirPath The path the existing directory that we will link to
+     * @throws Exception error processing
      */
     public static void createSymlinkToDir(String newSymLinkPath, String existingDirPath) throws Exception {
         try {
@@ -171,6 +174,7 @@ public class UtilIO {
      * Uses the fs-extra package to create a directory (and all subdirectories)
      *
      * @param dir The directory (do not include a file name)
+     * @throws IOException I/O error processing
      */
     public static void mkdirp(String dir) throws IOException {
         Util.checkNullParameter(dir == null, "dirOrFile is null");
@@ -183,6 +187,7 @@ public class UtilIO {
      *
      * @param file File to read
      * @return Buffer the content of the file
+     * @throws IOException I/O error processing
      */
     public static BufferedReader readFileSyncBinary(String file) throws IOException {
         Util.checkNullParameter(file == null, "dirOrFile is null");
@@ -218,6 +223,7 @@ public class UtilIO {
      *
      * @param file The file from which to create a read stream
      * @return A string with the content of the file
+     * @throws IOException I/O error processing
      */
     public static String createReadStream(String file) throws IOException {
         Util.checkNullParameter(file == null, "dirOrFile is null");
@@ -238,6 +244,7 @@ public class UtilIO {
      *
      * @param file The file from which to create a read stream
      * @return A string with the content of the file
+     * @throws FileNotFoundException file not found error
      */
     public static FileOutputStream createWriteStream(String file) throws FileNotFoundException {
         Util.checkNullParameter(file == null, "dirOrFile is null");

@@ -48,6 +48,7 @@ public class UtilTso {
      *
      * @param response Response object
      * @return ZosmfTsoResponse ZosmfTsoResponse object
+     * @throws Exception error processing response
      * @author Frank Giordano
      */
     public static ZosmfTsoResponse getZosmfTsoResponse(Response response) throws Exception {
