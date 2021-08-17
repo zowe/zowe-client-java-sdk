@@ -27,13 +27,11 @@ public class UtilZosFiles {
 
     /**
      * Data set name qualifier separator
-
      */
     public static final String DSN_SEP = ".";
 
     /**
      * Default file extension
-
      */
     public static final String DEFAULT_FILE_EXTENSION = "txt";
 

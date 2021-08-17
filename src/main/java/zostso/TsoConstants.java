@@ -17,6 +17,9 @@ package zostso;
  */
 public class TsoConstants {
 
+    /**
+     * z/OSMF unknown error
+     */
     public static final String ZOSMF_UNKNOWN_ERROR = "zOSMF unknown error response";
 
     /**
@@ -103,10 +106,12 @@ public class TsoConstants {
      * URI for TSO Ping API
      */
     public static final String RES_PING = TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/ping";
+
     /**
      * Tso response message type - prompt
      */
     public static final String TSO_PROMPT = "TSO PROMPT";
+
     /**
      * Tso response message type - message
      */
