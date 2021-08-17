@@ -40,8 +40,9 @@ public class IssueCommandTest {
         IssueParms parms = new IssueParms();
         parms.setCommand(cmd);
         ConsoleResponse response;
+        IssueCommand issueCommand = new IssueCommand(connection);
         try {
-            response = IssueCommand.issue(connection, parms);
+            response = issueCommand.issue(parms);
             LOG.info(response.getCommandResponse().get());
         } catch (Exception e) {
             LOG.info(e.getMessage());
@@ -50,8 +51,9 @@ public class IssueCommandTest {
 
     public static void tstConsoleCmdByIssueSimple(ZOSConnection connection, String cmd) {
         ConsoleResponse response;
+        IssueCommand issueCommand = new IssueCommand(connection);
         try {
-            response = IssueCommand.issueSimple(connection, cmd);
+            response = issueCommand.issueSimple(cmd);
             LOG.info(response.getCommandResponse().get());
         } catch (Exception e) {
             LOG.info(e.getMessage());
@@ -62,8 +64,9 @@ public class IssueCommandTest {
         ZosmfIssueParms parms = new ZosmfIssueParms();
         parms.setCmd(cmd);
         ZosmfIssueResponse zResponse;
+        IssueCommand issueCommand = new IssueCommand(connection);
         try {
-            zResponse = IssueCommand.issueDefConsoleCommon(connection, parms);
+            zResponse = issueCommand.issueDefConsoleCommon(parms);
             LOG.info(zResponse.getCmdResponse().get());
         } catch (Exception e) {
             LOG.info(e.getMessage());

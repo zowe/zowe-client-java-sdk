@@ -24,12 +24,38 @@ import core.ZOSConnection;
 import org.json.simple.JSONObject;
 import utility.Util;
 
+/**
+ * Issue MVS Console commands by using a system console
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class IssueCommand {
 
     private static final Logger LOG = LogManager.getLogger(IssueCommand.class);
 
-    public static ZosmfIssueResponse issueCommon(ZOSConnection connection, String consoleName,
-                                                 ZosmfIssueParms commandParms) throws Exception {
+    private ZOSConnection connection;
+
+    /**
+     * IssueCommand constructor
+     *
+     * @param connection ZOSConnection object
+     * @author Frank Giordano
+     */
+    public IssueCommand(ZOSConnection connection) {
+        this.connection = connection;
+    }
+
+    /**
+     * Issue an MVS console command, returns "raw" z/OSMF response
+     *
+     * @param consoleName name of the EMCS console that is used to issue the command
+     * @param commandParms synchronous console issue parameters, see ZosmfIssueParms
+     * @return ZosmfIssueResponse command response on resolve, see ZosmfIssueResponse
+     * @author Frank Giordano
+     * @throws Exception processing error
+     */
+    public ZosmfIssueResponse issueCommon(String consoleName, ZosmfIssueParms commandParms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(consoleName == null, "consoleName is null");
         Util.checkNullParameter(commandParms == null, "commandParms is null");
@@ -66,36 +92,66 @@ public class IssueCommand {
 
     /**
      * Issue an MVS console command in default console, returns "raw" z/OSMF response
+     *
+     * @param commandParms synchronous console issue parameters, @see ZosmfIssueParms
+     * @return ZosmfIssueResponse command response on resolve, @see ZosmfIssueResponse
+     * @author Frank Giordano
+     * @throws Exception processing error
      */
-    public static ZosmfIssueResponse issueDefConsoleCommon(ZOSConnection connection, ZosmfIssueParms commandParms)
-            throws Exception {
-        ZosmfIssueResponse resp = IssueCommand.issueCommon(connection, ConsoleConstants.RES_DEF_CN, commandParms);
+    public ZosmfIssueResponse issueDefConsoleCommon(ZosmfIssueParms commandParms) throws Exception {
+        ZosmfIssueResponse resp = issueCommon(ConsoleConstants.RES_DEF_CN, commandParms);
         resp.setCmdResponse(StringEscapeUtils.escapeJava(resp.getCmdResponse().get()));
         return resp;
     }
 
-    public static ConsoleResponse issue(ZOSConnection connection, IssueParms parms) throws Exception {
+    /**
+     * Issue an MVS console command done synchronously - meaning solicited (direct command responses) are gathered
+     * immediately after the command is issued. However, after (according to the z/OSMF REST API documentation)
+     * approximately 3 seconds the response will be returned.
+     *
+     * @param parms console issue parameters, @see IssueParms
+     * @return ConsoleResponse command response on resolve, @see ConsoleResponse
+     * @author Frank Giordano
+     * @throws Exception processing error
+     */
+    public ConsoleResponse issue(IssueParms parms) throws Exception {
         Util.checkNullParameter(parms == null, "parms is null");
 
         String consoleName = parms.getConsoleName().isPresent() ?
                 parms.getConsoleName().get() : ConsoleConstants.RES_DEF_CN;
-        ZosmfIssueParms commandParms = IssueCommand.buildZosmfConsoleApiParameters(parms);
+        ZosmfIssueParms commandParms = buildZosmfConsoleApiParameters(parms);
         ConsoleResponse response = new ConsoleResponse();
 
-        ZosmfIssueResponse resp = IssueCommand.issueCommon(connection, consoleName, commandParms);
+        ZosmfIssueResponse resp = issueCommon(consoleName, commandParms);
         response = ConsoleResponseService.populate(resp, response, parms.getProcessResponses().isPresent() ?
                 parms.getProcessResponses().get() : true);
 
         return response;
     }
 
-    public static ConsoleResponse issueSimple(ZOSConnection connection, String theCommand) throws Exception {
+    /**
+     * Simple issue console command method. Does not accept parameters, so all defaults on the z/OSMF API are taken.
+     *
+     * @param theCommand string command to issue
+     * @return ConsoleResponse command response on resolve, @see ConsoleResponse
+     * @author Frank Giordano
+     * @throws Exception processing error
+     */
+    public ConsoleResponse issueSimple(String theCommand) throws Exception {
         IssueParms parms = new IssueParms();
         parms.setCommand(theCommand);
-        return IssueCommand.issue(connection, parms);
+        return issue(parms);
     }
 
-    public static ZosmfIssueParms buildZosmfConsoleApiParameters(IssueParms parms) throws Exception {
+    /**
+     * Build IZosmfIssueParms object from provided parameters
+     * 
+     * @param parms IssueParms parameters for issue command
+     * @return ZosmfIssueParms request body, @see ZosmfIssueParms
+     * @author Frank Giordano
+     * @throws Exception processing error
+     */
+    public ZosmfIssueParms buildZosmfConsoleApiParameters(IssueParms parms) throws Exception {
         Util.checkNullParameter(parms == null, "parms is null");
 
         ZosmfIssueParms zosmfParms = new ZosmfIssueParms();
