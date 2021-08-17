@@ -16,6 +16,7 @@ import rest.Response;
 import rest.ZoweRequest;
 import rest.ZoweRequestFactory;
 import rest.ZoweRequestType;
+import utility.UtilConsole;
 import utility.UtilRest;
 import zosconsole.zosmf.IssueParms;
 import zosconsole.zosmf.ZosmfIssueParms;
@@ -123,7 +124,7 @@ public class IssueCommand {
         ConsoleResponse response = new ConsoleResponse();
 
         ZosmfIssueResponse resp = issueCommon(consoleName, commandParms);
-        response = ConsoleResponseService.populate(resp, response, parms.getProcessResponses().isPresent() ?
+        response = UtilConsole.populate(resp, response, parms.getProcessResponses().isPresent() ?
                 parms.getProcessResponses().get() : true);
 
         return response;
