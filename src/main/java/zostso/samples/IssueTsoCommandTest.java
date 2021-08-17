@@ -60,8 +60,9 @@ public class IssueTsoCommandTest {
     public static IssueResponse tstTsoConsoleCmdByIssue(ZOSConnection connection, String accountNumber, String cmd)
             throws Exception {
         IssueResponse response;
+        IssueTso issueTso = new IssueTso(connection);
         try {
-            response = IssueTso.issueTsoCommand(connection, accountNumber, cmd);
+            response = issueTso.issueTsoCommand(accountNumber, cmd);
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception(e.getMessage());

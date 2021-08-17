@@ -15,15 +15,53 @@ import zostso.input.StartTsoParams;
 
 import java.util.Optional;
 
+/**
+ * Class to handle issue command to TSO
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class IssueTso {
 
-    public static IssueResponse issueTsoCommand(ZOSConnection connection, String accountNumber,
-                                                String command) throws Exception {
-        return issueTsoCommand(connection, accountNumber, command, null);
+    private ZOSConnection connection;
+
+    /**
+     * IssueTso constructor
+     *
+     * @param connection ZOSConnection object
+     * @author Frank Giordano
+     */
+    public IssueTso(ZOSConnection connection) {
+        this.connection = connection;
     }
 
-    public static IssueResponse issueTsoCommand(ZOSConnection connection, String accountNumber,
-                                                String command, StartTsoParams startParams) throws Exception {
+    /**
+     * API method to start a TSO address space, issue a command, collect responses until prompt is reached, and
+     * terminate the address space.
+     *
+     * @param accountNumber - A string containing accounting info for Jobs
+     * @param command       - A string containing a command text to issue to the TSO address space.
+     * @return IssueResponse IssueTso response object, @see IssueResponse
+     * @throws Exception error executing command
+     * @author Frank Giordano
+     */
+    public IssueResponse issueTsoCommand(String accountNumber, String command) throws Exception {
+        return issueTsoCommand(accountNumber, command, null);
+    }
+
+    /**
+     * API method to start a TSO address space with provided parameters, issue a command,
+     * collect responses until prompt is reached, and terminate the address space.
+     *
+     * @param accountNumber - A string containing accounting info for Jobs
+     * @param command       - A string containing a command text to issue to the TSO address space.
+     * @param startParams   - object with required parameters, @see startParams
+     * @return IssueResponse IssueTso response object, @see IssueResponse
+     * @throws Exception error executing command
+     * @author Frank Giordano
+     */
+    public IssueResponse issueTsoCommand(String accountNumber, String command, StartTsoParams startParams)
+            throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(accountNumber == null, "accountNumber is null");
         Util.checkNullParameter(command == null, "command is null");
@@ -38,7 +76,7 @@ public class IssueTso {
         if (response.getStartResponse().isPresent() && !response.getStartResponse().get().isSuccess()) {
             throw new Exception("TSO address space failed to start. Error: " +
                     (response.getStartResponse().isPresent() ? response.getStartResponse().get().getFailureResponse() :
-                    "Unknown error"));
+                            "Unknown error"));
         }
 
         response.setZosmfResponse(Optional.ofNullable(startResponse.getZosmfTsoResponse().get()));
