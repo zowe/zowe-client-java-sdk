@@ -17,6 +17,12 @@ import zostso.zosmf.*;
 
 import java.util.*;
 
+/**
+ * Utility Class for Tso command related static helper methods.
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class UtilTso {
 
     /*
@@ -24,12 +30,26 @@ public class UtilTso {
     https://www.ibm.com/docs/en/zos/2.1.0?topic=services-tsoe-address-space
     */
 
+    /**
+     * Retrieve parsed Json Tso Stop Response
+     *
+     * @param obj JSONObject object
+     * @return ZosmfTsoResponse populated console response, @see ZosmfTsoResponse
+     * @author Frank Giordano
+     */
     public static ZosmfTsoResponse parseJsonStopResponse(JSONObject obj) {
         Util.checkNullParameter(obj == null, "no obj to parse");
         return new ZosmfTsoResponse.Builder().ver((String) obj.get("ver")).servletKey((String) obj.get("servletKey"))
                 .reused((boolean) obj.get("reused")).timeout((boolean) obj.get("timeout")).build();
     }
 
+    /**
+     * Retrieve Tso response
+     *
+     * @param response Response object
+     * @return ZosmfTsoResponse ZosmfTsoResponse object
+     * @author Frank Giordano
+     */
     public static ZosmfTsoResponse getZosmfTsoResponse(Response response) throws Exception {
         Util.checkNullParameter(response == null, "response is null");
         ZosmfTsoResponse result;
