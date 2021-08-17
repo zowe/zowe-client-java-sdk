@@ -36,7 +36,7 @@ public class JsonGetRequest extends ZoweRequest {
     }
 
     @Override
-    public Response executeHttpRequest() throws IOException {
+    public Response executeHttpRequest() throws Exception {
         // add any additional headers...
         additionalHeaders.forEach((key, value) -> request.setHeader(key, value));
 
@@ -51,7 +51,7 @@ public class JsonGetRequest extends ZoweRequest {
         LOG.debug("JsonGetRequest::httpGet - Response statusCode {}, Response {}",
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
-        if (Util.isHttpError(statusCode)) {
+        if (UtilRest.isHttpError(statusCode)) {
             return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
                     Optional.ofNullable(statusCode));
         }

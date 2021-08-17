@@ -50,7 +50,7 @@ public class JsonDeleteRequest extends ZoweRequest {
         LOG.debug("JsonDeleteRequest::httpDelete - Response statusCode {}, Response {}",
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
-        if (Util.isHttpError(statusCode)) {
+        if (UtilRest.isHttpError(statusCode)) {
             return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
                     Optional.ofNullable(statusCode));
         }

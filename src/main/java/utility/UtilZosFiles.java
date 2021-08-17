@@ -18,38 +18,41 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Utility Class for zosFiles related static helper methods.
+ *
+ * @version 1.0
+ */
 public class UtilZosFiles {
 
     /**
      * Data set name qualifier separator
-     *
-     * @type {string}
+
      */
     public static final String DSN_SEP = ".";
 
     /**
      * Default file extension
-     *
-     * @type {string}
+
      */
     public static final String DEFAULT_FILE_EXTENSION = "txt";
 
     public static final Integer MAX_MEMBER_LENGTH = 8;
 
     /**
-     * Break up a dataset name of either:
-     *  USER.WORK.JCL(TEMPLATE) to user/work/jcl/template
-     * Or:
-     *  USER.WORK.PS to user/work/ps
-     * @param  {string} dataSet - data set to break up into folders
+     * Break up a dataset name of either: USER.WORK.JCL(TEMPLATE) to user/work/jcl/template
+     * Or USER.WORK.PS to user/work/ps
+     *
+     * @param dataSet Data set to break up into folders
+     * @return directory string
      */
-    public static String getDirsFromDataSet(String dataset) {
+    public static String getDirsFromDataSet(String dataSet) {
         final String regex = "\\\\$\\{this.DSN_SEP\\}";
         final String string = "";
 
         final Pattern pattern = Pattern.compile(regex);
         final Matcher matcher = pattern.matcher(string);
-        String localDirectory = dataset.replace(matcher.group(0), UtilIO.FILE_DELIM).toLowerCase(Locale.ROOT);
+        String localDirectory = dataSet.replace(matcher.group(0), UtilIO.FILE_DELIM).toLowerCase(Locale.ROOT);
         if (localDirectory.indexOf("(") >= 0 && localDirectory.indexOf(")") >= 0) {
             localDirectory = localDirectory.replace("(", UtilIO.FILE_DELIM);
             localDirectory = localDirectory.substring(0, -1);
@@ -59,11 +62,9 @@ public class UtilZosFiles {
 
     /**
      * Common method to build headers given input options object
-     * @private
-     * @static
-     * @param {IOptions} options - various options
-     * @returns {IHeaderContent[]}
-     * @memberof ZosFilesUtils
+     *
+     * @param options Various options
+     * @return HeaderContent
      */
     public static Map<String, String> generateHeadersBasedOnOptions(DownloadParams options){
         String key, value;

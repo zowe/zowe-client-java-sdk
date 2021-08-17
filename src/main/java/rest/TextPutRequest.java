@@ -56,7 +56,7 @@ public class TextPutRequest extends ZoweRequest {
         LOG.debug("TextGetRequest::httpPut - Response statusCode {}, Response {}",
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
-        if (Util.isHttpError(statusCode)) {
+        if (UtilRest.isHttpError(statusCode)) {
             return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
                     Optional.of(statusCode));
         }

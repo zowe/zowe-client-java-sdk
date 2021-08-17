@@ -47,7 +47,7 @@ public class TextRequestTest {
     }
 
     @Test
-    public void tstHttpGetEmptyResponseThrowsException() throws IOException {
+    public void tstHttpGetEmptyResponseThrowsException() throws Exception {
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
                 .thenThrow(new IOException());
 

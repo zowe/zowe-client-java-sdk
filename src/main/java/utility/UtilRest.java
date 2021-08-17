@@ -18,14 +18,27 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import rest.Response;
 
-import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Utility Class for Rest related static helper methods.
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class UtilRest {
 
     private static final Logger LOG = LogManager.getLogger(UtilRest.class);
 
-    public static Optional<Object> getJsonResponseEntity(HttpResponse httpResponse) throws IOException {
+    /**
+     * Retrieve response JSON entity content from httpResponse object
+     *
+     * @param httpResponse HttpResponse object
+     * @return The response Json entity content
+     * @throws Exception due to extracting entity or parsing entity problem
+     * @author Frank Giordano
+     */
+    public static Optional<Object> getJsonResponseEntity(HttpResponse httpResponse) throws Exception {
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
             String result = EntityUtils.toString(entity);
@@ -44,7 +57,15 @@ public class UtilRest {
         return Optional.empty();
     }
 
-    public static Optional<Object> getTextResponseEntity(HttpResponse httpResponse) throws IOException {
+    /**
+     * Retrieve response text entity content from httpResponse object
+     *
+     * @param httpResponse HttpResponse object
+     * @return The response text entity content
+     * @throws Exception due to extracting entity or parsing entity problem
+     * @author Frank Giordano
+     */
+    public static Optional<Object> getTextResponseEntity(HttpResponse httpResponse) throws Exception {
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
             String result = EntityUtils.toString(entity);
@@ -54,12 +75,19 @@ public class UtilRest {
         return Optional.empty();
     }
 
+    /**
+     * Return specialized http error message if any
+     *
+     * @param response Response object
+     * @throws Exception containing specialized http error message
+     * @author Frank Giordano
+     */
     public static void checkHttpErrors(Response response) throws Exception {
         int httpCode;
         if (response.getStatusCode().isPresent())
             httpCode = response.getStatusCode().get();
         else throw new Exception("no http code value returned");
-        if (Util.isHttpError(httpCode)) {
+        if (isHttpError(httpCode)) {
             String responsePhrase = "";
             if (response.getResponsePhrase().isPresent())
                 responsePhrase = (String) response.getResponsePhrase().get();
@@ -69,6 +97,17 @@ public class UtilRest {
             else errorMsg += httpCode + ".";
             throw new Exception(errorMsg);
         }
+    }
+
+    /**
+     * Checks if statusCode is a valid http code or not
+     *
+     * @param statusCode The http code value
+     * @return A boolean value
+     * @author Frank Giordano
+     */
+    public static boolean isHttpError(int statusCode) {
+        return !((statusCode >= 200 && statusCode <= 299) || (statusCode >= 100 && statusCode <= 199));
     }
 
 }
