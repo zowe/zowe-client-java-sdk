@@ -47,7 +47,7 @@ You need to replace all instances of "XXX" accordingly to meet your target's cre
     
 ## Build
   
-The following maven command at the root prompt of the project will produce ZoweJavaSDK.jar in the target directory:
+The following maven command at the root prompt of the project will produce zowe-client-java-sdk.jar in the target directory:
   
     mvn clean package  
   
