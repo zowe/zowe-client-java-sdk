@@ -62,10 +62,6 @@ public class GetJobs {
     }
 
     /**
-     *
-     */
-
-    /**
      * Get jobs that match a job name by prefix. Defaults to jobs owned by the user ID in the session.
      *
      * @param prefix Job name prefix for which to list jobs. Supports wildcard e.g. JOBNM*
