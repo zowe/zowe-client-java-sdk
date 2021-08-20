@@ -35,6 +35,9 @@ public class UtilZosFiles {
      */
     public static final String DEFAULT_FILE_EXTENSION = "txt";
 
+    /**
+     * Default Max Member Length
+     */
     public static final Integer MAX_MEMBER_LENGTH = 8;
 
     /**

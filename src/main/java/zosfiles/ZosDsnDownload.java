@@ -22,11 +22,22 @@ import zosfiles.input.DownloadParams;
 import java.io.InputStream;
 import java.util.*;
 
+/**
+ * ZosDsnDownload class that provides download DataSet function
+ *
+ * @version 1.0
+ */
 public class ZosDsnDownload {
 
     private static final Logger LOG = LogManager.getLogger(ZosDsnDownload.class);
+
     private final ZOSConnection connection;
 
+    /**
+     * ZosDsnDownload Constructor
+     *
+     * @param connection is a connection object, see ZOSConnection object
+     */
     public ZosDsnDownload(ZOSConnection connection) {
         this.connection = connection;
     }
@@ -60,8 +71,7 @@ public class ZosDsnDownload {
                 key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
                 value = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(1);
                 headers.put(key, value);
-//              TODO
-//                requestOptions.dataToReturn = [CLIENT_PROPERTY.response];
+                // TODO
             }
 
             ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,

@@ -12,8 +12,19 @@ package utility;
 import org.json.simple.JSONObject;
 import zosfiles.response.Dataset;
 
+/**
+ * Utility Class for Dataset related static helper methods.
+ *
+ * @version 1.0
+ */
 public class UtilDataset {
 
+    /**
+     * Formulate and return a Dataset object based on incoming Json object.
+     *
+     * @param json JSONObject object
+     * @return A Dataset document
+     */
     public static Dataset createDatasetObjFromJson(JSONObject json) {
         return new Dataset.Builder().dsname((String) json.get("dsname"))
                 .blksz((String) json.get("blksz"))
@@ -37,6 +48,12 @@ public class UtilDataset {
                 .build();
     }
 
+    /**
+     * Formulate and return a Dataset object based on incoming Json object.
+     *
+     * @param errorMsg    A String representing an error message
+     * @param dataSetName A string representing a Dataset
+     */
     public static void checkHttpErrors(String errorMsg, String dataSetName) throws Exception {
         if (errorMsg.contains("404")) {
             throw new Exception(errorMsg + " You may have specified an invalid or non-existent data set.");

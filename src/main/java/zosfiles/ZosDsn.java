@@ -19,15 +19,20 @@ import utility.UtilDataset;
 import utility.UtilRest;
 import zosfiles.input.CreateParams;
 
+/**
+ * ZosDsn class that provides CRUD operations on Datasets
+ *
+ * @version 1.0
+ */
 public class ZosDsn {
 
     private static final Logger LOG = LogManager.getLogger(ZosDsn.class);
     private final ZOSConnection connection;
 
     /**
-     * Constructor
+     * ZosDsn Constructor
      *
-     * @param connection is a connection object
+     * @param connection is a connection object, see ZOSConnection object
      */
     public ZosDsn(ZOSConnection connection) {
         this.connection = connection;

@@ -23,10 +23,23 @@ import zosfiles.response.Dataset;
 
 import java.util.*;
 
+/**
+ * ZosDsnList class that provides Dataset member list function
+ *
+ * @version 1.0
+ */
 public class ZosDsnList {
 
     private static final Logger LOG = LogManager.getLogger(ZosDsnList.class);
 
+    /**
+     * Get a list of members from a Dataset
+     *
+     * @param connection  connection ZOSConnection object
+     * @param dataSetName is the name of a dataset (i.e. 'DATASET.LIB')
+     * @param options     ListParams object
+     * @return A String list of member names
+     */
     public static List<String> listMembers(ZOSConnection connection, String dataSetName, ListParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
@@ -67,6 +80,14 @@ public class ZosDsnList {
         return members;
     }
 
+    /**
+     * Get a list of Dataset names
+     *
+     * @param connection  connection ZOSConnection object
+     * @param dataSetName is the name of a dataset (i.e. 'DATASET.LIB')
+     * @param options     ListParams object
+     * @return A String list of Dataset names
+     */
     public static List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
@@ -112,8 +133,8 @@ public class ZosDsnList {
         return datasets;
     }
 
-    public static Response getResponse(ZOSConnection connection, ListParams options, Map<String, String> headers,
-                                       String url) throws Exception {
+    private static Response getResponse(ZOSConnection connection, ListParams options, Map<String, String> headers,
+                                        String url) throws Exception {
         LOG.debug(url);
         setHeaders(options, headers);
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,

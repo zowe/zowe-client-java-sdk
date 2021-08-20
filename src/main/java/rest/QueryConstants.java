@@ -12,18 +12,19 @@ package rest;
 /**
  * Constants for various Rest query info
  *
+ * @author Frank Giordano
  * @version 1.0
  */
 public class QueryConstants {
 
-  /**
-   * Query identifier
-   */
-  public static final String QUERY_ID = "?";
+    /**
+     * Query identifier
+     */
+    public static final String QUERY_ID = "?";
 
-  /**
-   * Query parm delimiter
-   */
-  public static final String COMBO_ID = "&";
+    /**
+     * Query parm delimiter
+     */
+    public static final String COMBO_ID = "&";
 
 }
