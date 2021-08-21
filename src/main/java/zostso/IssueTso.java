@@ -23,7 +23,7 @@ import java.util.Optional;
  */
 public class IssueTso {
 
-    private ZOSConnection connection;
+    private final ZOSConnection connection;
 
     /**
      * IssueTso constructor

@@ -32,7 +32,7 @@ public class ZosDsnList {
 
     private static final Logger LOG = LogManager.getLogger(ZosDsnList.class);
 
-    private ZOSConnection connection;
+    private final ZOSConnection connection;
 
     /**
      * ZosDsnList constructor

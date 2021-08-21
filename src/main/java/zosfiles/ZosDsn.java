@@ -30,6 +30,7 @@ import java.util.Map;
 public class ZosDsn {
 
     private static final Logger LOG = LogManager.getLogger(ZosDsn.class);
+
     private final ZOSConnection connection;
 
     /**

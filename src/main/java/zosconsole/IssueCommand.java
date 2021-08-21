@@ -38,7 +38,7 @@ public class IssueCommand {
 
     private static final Logger LOG = LogManager.getLogger(IssueCommand.class);
 
-    private ZOSConnection connection;
+    private final ZOSConnection connection;
 
     /**
      * IssueCommand constructor

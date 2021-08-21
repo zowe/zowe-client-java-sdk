@@ -36,7 +36,7 @@ public class SubmitJobs {
 
     private static final Logger LOG = LogManager.getLogger(SubmitJobs.class);
 
-    private ZOSConnection connection;
+    private final ZOSConnection connection;
 
     /**
      * SubmitJobs Constructor

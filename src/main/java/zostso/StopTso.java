@@ -33,7 +33,7 @@ public class StopTso {
 
     private static final Logger LOG = LogManager.getLogger(StopTso.class);
 
-    private ZOSConnection connection;
+    private final ZOSConnection connection;
 
     /**
      * StopTso constructor
