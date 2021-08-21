@@ -26,7 +26,13 @@ public class StartTso {
 
     private static final Logger LOG = LogManager.getLogger(StartTso.class);
 
-    public static StartStopResponses start(ZOSConnection connection, String accountNumber, StartTsoParams parms)
+    private final ZOSConnection connection;
+
+    public StartTso(ZOSConnection connection) {
+        this.connection = connection;
+    }
+
+    public StartStopResponses start(String accountNumber, StartTsoParams parms)
             throws Exception {
         Util.checkNullParameter(accountNumber == null, "accountNumber is null");
         Util.checkStateParameter(accountNumber.isEmpty(), "accountNumber not specified");
@@ -38,17 +44,17 @@ public class StartTso {
             customParms = setDefaultAddressSpaceParams(parms, Util.encodeURIComponent(accountNumber));
         }
 
-        ZosmfTsoResponse zosmfResponse = startCommon(connection, customParms);
+        ZosmfTsoResponse zosmfResponse = startCommon(customParms);
 
         // TODO
         return new StartStopResponses(zosmfResponse);
     }
 
-    public static ZosmfTsoResponse startCommon(ZOSConnection connection, StartTsoParams commandParms) throws Exception {
+    public ZosmfTsoResponse startCommon(StartTsoParams commandParms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(commandParms == null, "commandParms is null");
 
-        String url = getResourcesQuery(connection, commandParms);
+        String url = getResourcesQuery(commandParms);
         LOG.debug("StartTso::startCommon - url {}", url);
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
@@ -66,7 +72,7 @@ public class StartTso {
         return UtilTso.getZosmfTsoResponse(response);
     }
 
-    private static StartTsoParams setDefaultAddressSpaceParams(StartTsoParams parms, String accountNumber) {
+    private StartTsoParams setDefaultAddressSpaceParams(StartTsoParams parms, String accountNumber) {
         String proc = (parms == null || !parms.logonProcedure.isPresent())
                 ? TsoConstants.DEFAULT_PROC : parms.getLogonProcedure().get();
         String chset = (parms == null || !parms.characterSet.isPresent())
@@ -83,7 +89,7 @@ public class StartTso {
         return new StartTsoParams(proc, chset, cpage, rowNum, cols, accountNumber, rSize);
     }
 
-    private static String getResourcesQuery(ZOSConnection connection, StartTsoParams parms) {
+    private String getResourcesQuery(StartTsoParams parms) {
         String query = "https://" + connection.getHost() + ":" + connection.getPort();
         query += TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "?";
         query += TsoConstants.PARM_ACCT + "=" + parms.account.get() + "&";
