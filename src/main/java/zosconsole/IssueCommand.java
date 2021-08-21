@@ -25,6 +25,9 @@ import core.ZOSConnection;
 import org.json.simple.JSONObject;
 import utility.Util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Issue MVS Console commands by using a system console
  *
@@ -67,9 +70,10 @@ public class IssueCommand {
 
         LOG.debug(url);
 
-        JSONObject reqBody = new JSONObject();
+        Map<String, String> reqBody = new HashMap<>();
         reqBody.put("cmd", commandParms.getCmd().get());
-        LOG.debug(reqBody);
+        JSONObject req = new JSONObject(reqBody);
+        LOG.debug(req);
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, reqBody.toString(),
                 ZoweRequestType.VerbType.PUT_JSON);

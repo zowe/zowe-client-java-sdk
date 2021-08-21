@@ -40,6 +40,7 @@ public class ZosDsnList {
      * @param options     ListParams object
      * @return A String list of member names
      */
+    @SuppressWarnings("unchecked")
     public static List<String> listMembers(ZOSConnection connection, String dataSetName, ListParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
@@ -88,6 +89,7 @@ public class ZosDsnList {
      * @param options     ListParams object
      * @return A String list of Dataset names
      */
+    @SuppressWarnings("unchecked")
     public static List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");

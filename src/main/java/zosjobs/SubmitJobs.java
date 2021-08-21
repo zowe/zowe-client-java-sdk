@@ -76,9 +76,10 @@ public class SubmitJobs {
         LOG.debug(url);
 
         String fullyQualifiedDataset = "//'" + parms.getJobDataSet().get() + "'";
-        JSONObject reqBody = new JSONObject();
+        Map<String, String> reqBody = new HashMap<>();
         reqBody.put("file", fullyQualifiedDataset);
-        LOG.debug(reqBody);
+        JSONObject req = new JSONObject(reqBody);
+        LOG.debug(req);
 
         if (parms.getJclSymbols().isPresent()) {
             // TODO..
