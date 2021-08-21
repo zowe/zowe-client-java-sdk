@@ -36,7 +36,7 @@ public class GetJobs {
 
     private static final Logger LOG = LogManager.getLogger(GetJobs.class);
 
-    private ZOSConnection connection;
+    private final ZOSConnection connection;
     private ZoweRequest request;
     private String url;
 
