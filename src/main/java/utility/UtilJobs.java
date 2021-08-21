@@ -24,7 +24,7 @@ public class UtilJobs {
      * Formulate and return a Job object based on incoming Json object.
      *
      * @param json JSONObject object
-     * @return A Job document
+     * @return job document
      * @author Frank Giordano
      */
     public static Job createJobObjFromJson(JSONObject json) {

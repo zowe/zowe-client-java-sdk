@@ -50,7 +50,7 @@ public class UtilIO {
     /**
      * Return whether input file is a directory or file
      *
-     * @param dirOrFile File path
+     * @param dirOrFile file path
      * @return true if file path is a directory, false otherwise
      */
     public static Boolean isDir(String dirOrFile) {
@@ -65,8 +65,8 @@ public class UtilIO {
     /**
      * Take an extension and prefix with a '.' identifier
      *
-     * @param extension Extension to normalize
-     * @return A string '.bin' for input 'bin' for example
+     * @param extension extension to normalize
+     * @return string '.bin' for input 'bin' for example
      */
     public static String normalizeExtension(String extension) {
         Util.checkNullParameter(extension == null, "dirOrFile is null");
@@ -83,7 +83,7 @@ public class UtilIO {
     /**
      * Wraps Files. Exists so that we don't have to import fs unnecessarily
      *
-     * @param file File to validate existence against
+     * @param file file to validate existence against
      * @return true Ff file exists
      */
     public static Boolean existsSync(String file) {
@@ -95,8 +95,8 @@ public class UtilIO {
     /**
      * Create a directory if it does not yet exist synchronously.
      *
-     * @param dir Directory to create
-     * @throws IOException I/O error processing
+     * @param dir directory to create
+     * @throws IOException i/o error processing
      */
     public static void createDirSync(String dir) throws IOException {
         Util.checkNullParameter(dir == null, "dirOrFile is null");
@@ -112,8 +112,8 @@ public class UtilIO {
      * first/second/third where first will contain director second and second
      * will contain directory third
      *
-     * @param dir Directory to create all subdirectories for
-     * @throws IOException I/O error processing
+     * @param dir directory to create all subdirectories for
+     * @throws IOException i/o error processing
      */
     public static void createDirsSync(String dir) throws IOException {
         Util.checkNullParameter(dir == null, "dirOrFile is null");
@@ -128,8 +128,8 @@ public class UtilIO {
      * for example, if filePath = oneDir/twoDir/threeDir/file.txt,
      * oneDir, twoDir, and threeDir will be created.
      *
-     * @param filePath File path
-     * @throws IOException I/O error processing
+     * @param filePath file path
+     * @throws IOException i/o error processing
      */
     public static void createDirsSyncFromFilePath(String filePath) throws IOException {
         Util.checkNullParameter(filePath == null, "dirOrFile is null");
@@ -141,8 +141,8 @@ public class UtilIO {
      * Create a symbolic link to a directory. If the symbolic link already exists,
      * re-create it with the specified target directory.
      *
-     * @param newSymLinkPath  The path new symbolic link to be created
-     * @param existingDirPath The path the existing directory that we will link to
+     * @param newSymLinkPath  path new symbolic link to be created
+     * @param existingDirPath path the existing directory that we will link to
      * @throws Exception error processing
      */
     public static void createSymlinkToDir(String newSymLinkPath, String existingDirPath) throws Exception {
@@ -173,8 +173,8 @@ public class UtilIO {
     /**
      * Uses the fs-extra package to create a directory (and all subdirectories)
      *
-     * @param dir The directory (do not include a file name)
-     * @throws IOException I/O error processing
+     * @param dir directory (do not include a file name)
+     * @throws IOException i/o error processing
      */
     public static void mkdirp(String dir) throws IOException {
         Util.checkNullParameter(dir == null, "dirOrFile is null");
@@ -185,9 +185,9 @@ public class UtilIO {
     /**
      * Read file as a stream or specify encoding.
      *
-     * @param file File to read
-     * @return Buffer the content of the file
-     * @throws IOException I/O error processing
+     * @param file file to read
+     * @return buffer the content of the file
+     * @throws IOException i/o error processing
      */
     public static BufferedReader readFileSyncBinary(String file) throws IOException {
         Util.checkNullParameter(file == null, "dirOrFile is null");
@@ -199,9 +199,9 @@ public class UtilIO {
     /**
      * Read file as a string with line normalization or specify encoding.
      *
-     * @param file File to read
-     * @param normalizeNewLines True  to toggle Remove Windows line endings (\r\n) in favor of \n
-     * @return A string with the content of the file
+     * @param file              file to read
+     * @param normalizeNewLines true to toggle Remove Windows line endings (\r\n) in favor of \n
+     * @return string with the content of the file
      */
     public static String readFileSyncAsString(String file, Boolean normalizeNewLines) {
         Util.checkNullParameter(file == null, "dirOrFile is null");
@@ -221,9 +221,9 @@ public class UtilIO {
     /**
      * Create a Readable stream from a file
      *
-     * @param file The file from which to create a read stream
-     * @return A string with the content of the file
-     * @throws IOException I/O error processing
+     * @param file file from which to create a read stream
+     * @return string with the content of the file
+     * @throws IOException i/o error processing
      */
     public static String createReadStream(String file) throws IOException {
         Util.checkNullParameter(file == null, "dirOrFile is null");
@@ -242,8 +242,8 @@ public class UtilIO {
     /**
      * Create a Node.js Readable stream from a file
      *
-     * @param file The file from which to create a read stream
-     * @return A string with the content of the file
+     * @param file file from which to create a read stream
+     * @return string with the content of the file
      * @throws FileNotFoundException file not found error
      */
     public static FileOutputStream createWriteStream(String file) throws FileNotFoundException {
@@ -259,8 +259,8 @@ public class UtilIO {
      * appropriate before you save it to disk
      * (basically, if the user is on Windows, change  \n to \r\n)
      *
-     * @param original Original input
-     * @return A string with input with removed newlines
+     * @param original original input
+     * @return string with input with removed newlines
      */
     public static String processNewlines(String original) {
         Util.checkNullParameter(original == null, "dirOrFile is null");
@@ -276,7 +276,7 @@ public class UtilIO {
     /**
      * Get default text editor for a given operating system
      *
-     * @return A string with text editor
+     * @return string with text editor
      */
     public static String getDefaultTextEditor() {
         String OS = System.getProperty("os.name").toLowerCase();

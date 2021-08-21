@@ -34,7 +34,7 @@ public class UtilRest {
      * Retrieve response JSON entity content from httpResponse object
      *
      * @param httpResponse HttpResponse object
-     * @return The response Json entity content
+     * @return response Json entity content
      * @throws Exception due to extracting entity or parsing entity problem
      * @author Frank Giordano
      */
@@ -61,7 +61,7 @@ public class UtilRest {
      * Retrieve response text entity content from httpResponse object
      *
      * @param httpResponse HttpResponse object
-     * @return The response text entity content
+     * @return response text entity content
      * @throws Exception due to extracting entity or parsing entity problem
      * @author Frank Giordano
      */
@@ -102,8 +102,8 @@ public class UtilRest {
     /**
      * Checks if statusCode is a valid http code or not
      *
-     * @param statusCode The http code value
-     * @return A boolean value
+     * @param statusCode http code value
+     * @return boolean value
      * @author Frank Giordano
      */
     public static boolean isHttpError(int statusCode) {

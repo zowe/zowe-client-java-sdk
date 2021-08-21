@@ -38,7 +38,7 @@ public class StopTso {
     /**
      * StopTso constructor
      *
-     * @param connection ZOSConnection object
+     * @param connection connection object, see ZOSConnection object
      * @author Frank Giordano
      */
     public StopTso(ZOSConnection connection) {
@@ -48,8 +48,8 @@ public class StopTso {
     /**
      * Sends REST call to z/OSMF for stoping active TSO address space
      *
-     * @param commandParms Object with required parameters, @see StopTsoParms
-     * @return ZosmfTsoResponse z/OSMF response object, @see ZosmfTsoResponse
+     * @param commandParms command parameters, see StopTsoParms object
+     * @return z/OSMF response object, see ZosmfTsoResponse object
      * @throws Exception error on TSO sto command
      * @author Frank Giordano
      */
@@ -81,8 +81,8 @@ public class StopTso {
     /**
      * Stop TSO address space and populates response with StartStopResponse, @see StartStopResponse
      *
-     * @param servletKey A string containing a unique servlet entry identifier
-     * @return StartStopResponse A StartStopResponse object, @see StartStopResponse
+     * @param servletKey unique servlet entry identifier
+     * @return start stop response, see StartStopResponse object
      * @throws Exception error on TSO sto command
      * @author Frank Giordano
      */

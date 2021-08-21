@@ -28,7 +28,7 @@ public class IssueTso {
     /**
      * IssueTso constructor
      *
-     * @param connection ZOSConnection object
+     * @param connection connection object, see ZOSConnection object
      * @author Frank Giordano
      */
     public IssueTso(ZOSConnection connection) {
@@ -39,9 +39,9 @@ public class IssueTso {
      * API method to start a TSO address space, issue a command, collect responses until prompt is reached, and
      * terminate the address space.
      *
-     * @param accountNumber - A string containing accounting info for Jobs
-     * @param command       - A string containing a command text to issue to the TSO address space.
-     * @return IssueResponse IssueTso response object, @see IssueResponse
+     * @param accountNumber accounting info for Jobs
+     * @param command       command text to issue to the TSO address space.
+     * @return issue tso response, see IssueResponse object
      * @throws Exception error executing command
      * @author Frank Giordano
      */
@@ -53,10 +53,10 @@ public class IssueTso {
      * API method to start a TSO address space with provided parameters, issue a command,
      * collect responses until prompt is reached, and terminate the address space.
      *
-     * @param accountNumber - A string containing accounting info for Jobs
-     * @param command       - A string containing a command text to issue to the TSO address space.
-     * @param startParams   - object with required parameters, @see startParams
-     * @return IssueResponse IssueTso response object, @see IssueResponse
+     * @param accountNumber accounting info for Jobs
+     * @param command       command text to issue to the TSO address space.
+     * @param startParams   start tso parameters, see startParams object
+     * @return issue tso response, see IssueResponse object
      * @throws Exception error executing command
      * @author Frank Giordano
      */

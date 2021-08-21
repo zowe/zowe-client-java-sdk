@@ -35,7 +35,7 @@ public class ZosDsn {
     /**
      * ZosDsn Constructor
      *
-     * @param connection is a connection object, see ZOSConnection object
+     * @param connection connection object, see ZOSConnection object
      */
     public ZosDsn(ZOSConnection connection) {
         this.connection = connection;
@@ -45,8 +45,8 @@ public class ZosDsn {
      * Replaces a content of a dataset or a dataset member with a new content
      * The new dataset member will be created if a dataset member is not exists
      *
-     * @param dataSetName is the name of a dataset or a dataset member (f.e. DATASET.LIB(MEMBER))
-     * @param content     is a new content of the dataset or a dataset member
+     * @param dataSetName dataset or a dataset member (f.e. DATASET.LIB(MEMBER))
+     * @param content     new content of the dataset or a dataset member
      */
     public void writeDsn(String dataSetName, String content) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
@@ -78,7 +78,7 @@ public class ZosDsn {
     /**
      * Delete dataset or a dataset member
      *
-     * @param dataSetName is the name of a dataset or a dataset member (f.e. 'DATASET.LIB(MEMBER)')
+     * @param dataSetName name of a dataset or a dataset member (f.e. 'DATASET.LIB(MEMBER)')
      */
     public void deleteDsn(String dataSetName) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
@@ -110,8 +110,8 @@ public class ZosDsn {
     /**
      * Creates a new dataset with specified parameters
      *
-     * @param dataSetName is the name of a dataset to create (f.e. 'DATASET.LIB')
-     * @param params      is a dataset parameters
+     * @param dataSetName name of a dataset to create (f.e. 'DATASET.LIB')
+     * @param params      create dataset parameters, see CreateParams object
      */
     public void createDsn(String dataSetName, CreateParams params) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");

@@ -43,7 +43,7 @@ public class IssueCommand {
     /**
      * IssueCommand constructor
      *
-     * @param connection ZOSConnection object
+     * @param connection connection object, see ZOSConnection object
      * @author Frank Giordano
      */
     public IssueCommand(ZOSConnection connection) {
@@ -53,11 +53,11 @@ public class IssueCommand {
     /**
      * Issue an MVS console command, returns "raw" z/OSMF response
      *
-     * @param consoleName string name of the EMCS console that is used to issue the command
-     * @param commandParms synchronous console issue parameters, see ZosmfIssueParms
-     * @return ZosmfIssueResponse command response on resolve, see ZosmfIssueResponse
-     * @author Frank Giordano
+     * @param consoleName  string name of the EMCS console that is used to issue the command
+     * @param commandParms synchronous console issue parameters, see ZosmfIssueParms object
+     * @return command response on resolve, see ZosmfIssueResponse object
      * @throws Exception processing error
+     * @author Frank Giordano
      */
     public ZosmfIssueResponse issueCommon(String consoleName, ZosmfIssueParms commandParms) throws Exception {
         Util.checkConnection(connection);
@@ -98,10 +98,10 @@ public class IssueCommand {
     /**
      * Issue an MVS console command in default console, returns "raw" z/OSMF response
      *
-     * @param commandParms synchronous console issue parameters, @see ZosmfIssueParms
-     * @return ZosmfIssueResponse command response on resolve, @see ZosmfIssueResponse
-     * @author Frank Giordano
+     * @param commandParms synchronous console issue parameters, see ZosmfIssueParms object
+     * @return command response on resolve, see ZosmfIssueResponse object
      * @throws Exception processing error
+     * @author Frank Giordano
      */
     public ZosmfIssueResponse issueDefConsoleCommon(ZosmfIssueParms commandParms) throws Exception {
         ZosmfIssueResponse resp = issueCommon(ConsoleConstants.RES_DEF_CN, commandParms);
@@ -114,10 +114,10 @@ public class IssueCommand {
      * immediately after the command is issued. However, after (according to the z/OSMF REST API documentation)
      * approximately 3 seconds the response will be returned.
      *
-     * @param parms console issue parameters, @see IssueParms
-     * @return ConsoleResponse command response on resolve, @see ConsoleResponse
-     * @author Frank Giordano
+     * @param parms console issue parameters, see IssueParms object
+     * @return command response on resolve, see ConsoleResponse object
      * @throws Exception processing error
+     * @author Frank Giordano
      */
     public ConsoleResponse issue(IssueParms parms) throws Exception {
         Util.checkNullParameter(parms == null, "parms is null");
@@ -138,9 +138,9 @@ public class IssueCommand {
      * Simple issue console command method. Does not accept parameters, so all defaults on the z/OSMF API are taken.
      *
      * @param theCommand string command to issue
-     * @return ConsoleResponse command response on resolve, @see ConsoleResponse
-     * @author Frank Giordano
+     * @return command response on resolve, see ConsoleResponse object
      * @throws Exception processing error
+     * @author Frank Giordano
      */
     public ConsoleResponse issueSimple(String theCommand) throws Exception {
         IssueParms parms = new IssueParms();
@@ -151,10 +151,10 @@ public class IssueCommand {
     /**
      * Build IZosmfIssueParms object from provided parameters
      *
-     * @param parms IssueParms parameters for issue command
-     * @return ZosmfIssueParms request body, @see ZosmfIssueParms
-     * @author Frank Giordano
+     * @param parms parameters for issue command, see IssueParms object
+     * @return request body parameters, see ZosmfIssueParms object
      * @throws Exception processing error
+     * @author Frank Giordano
      */
     public ZosmfIssueParms buildZosmfConsoleApiParameters(IssueParms parms) throws Exception {
         Util.checkNullParameter(parms == null, "parms is null");

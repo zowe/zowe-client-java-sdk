@@ -35,9 +35,9 @@ public class ZosDsnList {
     /**
      * Get a list of members from a Dataset
      *
-     * @param connection  connection ZOSConnection object
-     * @param dataSetName is the name of a dataset (i.e. 'DATASET.LIB')
-     * @param options     ListParams object
+     * @param connection  connection object, see ZOSConnection object
+     * @param dataSetName name of a dataset (i.e. 'DATASET.LIB')
+     * @param options     list options, see ListParams object
      * @return A String list of member names
      */
     @SuppressWarnings("unchecked")
@@ -84,9 +84,9 @@ public class ZosDsnList {
     /**
      * Get a list of Dataset names
      *
-     * @param connection  connection ZOSConnection object
-     * @param dataSetName is the name of a dataset (i.e. 'DATASET.LIB')
-     * @param options     ListParams object
+     * @param connection  connection object, see ZOSConnection object
+     * @param dataSetName name of a dataset (i.e. 'DATASET.LIB')
+     * @param options     list options parameters, see ListParams object
      * @return A String list of Dataset names
      */
     @SuppressWarnings("unchecked")

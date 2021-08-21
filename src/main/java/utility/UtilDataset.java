@@ -23,7 +23,7 @@ public class UtilDataset {
      * Formulate and return a Dataset object based on incoming Json object.
      *
      * @param json JSONObject object
-     * @return A Dataset document
+     * @return dataset document
      */
     public static Dataset createDatasetObjFromJson(JSONObject json) {
         return new Dataset.Builder().dsname((String) json.get("dsname"))
@@ -51,8 +51,8 @@ public class UtilDataset {
     /**
      * Formulate and return a Dataset object based on incoming Json object.
      *
-     * @param errorMsg    A String representing an error message
-     * @param dataSetName A string representing a Dataset
+     * @param errorMsg    error message
+     * @param dataSetName dataset representation
      */
     public static void checkHttpErrors(String errorMsg, String dataSetName) throws Exception {
         if (errorMsg.contains("404")) {

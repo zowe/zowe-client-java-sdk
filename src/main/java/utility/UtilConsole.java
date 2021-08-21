@@ -13,7 +13,7 @@ import zosconsole.ConsoleResponse;
 import zosconsole.zosmf.ZosmfIssueResponse;
 
 /**
- * Utility Class contains helper methods for console response commands response processing
+ * Utility Class contains helper methods for console response commands and response processing
  *
  * @author Frank Giordano
  * @version 1.0
@@ -26,10 +26,10 @@ public class UtilConsole {
      * Method adds response to a collection of z/OSMF responses, mark response as "succeeded"
      * (response.success = true) and populate other fields of response with values from z/OSMF response.
      *
-     * @param zosmfResponse zosmf console response, @see ZosmfIssueResponse
-     * @param response console response to be populated, @see ConsoleResponse
+     * @param zosmfResponse    zosmf console response, see ZosmfIssueResponse object
+     * @param response         console response to be populated, see ConsoleResponse object
      * @param processResponses boolean if set to true, append command response string to the console API response
-     * @return ConsoleResponse populated console response, @see ConsoleResponse
+     * @return ConsoleResponse populated console response, see ConsoleResponse object
      * @author Frank Giordano
      */
     public static ConsoleResponse populate(ZosmfIssueResponse zosmfResponse, ConsoleResponse response,

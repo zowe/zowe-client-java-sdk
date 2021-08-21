@@ -41,7 +41,7 @@ public class SubmitJobs {
     /**
      * SubmitJobs Constructor
      *
-     * @param connection ZOSConnection object
+     * @param connection connection object, see ZOSConnection object
      * @author Frank Giordano
      */
     public SubmitJobs(ZOSConnection connection) {
@@ -52,7 +52,7 @@ public class SubmitJobs {
      * Submit a job that resides in a z/OS data set.
      *
      * @param jobDataSet job data set to be translated into parms object
-     * @return A Job document with details about the submitted job
+     * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
@@ -63,8 +63,8 @@ public class SubmitJobs {
     /**
      * Submit a job that resides in a z/OS data set.
      *
-     * @param parms SubmitJobParms object
-     * @return A Job document with details about the submitted job
+     * @param parms submit job parameters, see SubmitJobParms object
+     * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
@@ -108,10 +108,10 @@ public class SubmitJobs {
     /**
      * Submit a string of JCL to run
      *
-     * @param jcl                 string of JCL that you want to be submit
+     * @param jcl                 JCL content that you want to be submit
      * @param internalReaderRecfm record format of the jcl you want to submit. "F" (fixed) or "V" (variable)
      * @param internalReaderLrecl logical record length of the jcl you want to submit
-     * @return A Job document with details about the submitted job
+     * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
@@ -122,8 +122,8 @@ public class SubmitJobs {
     /**
      * Submit a JCL string to run
      *
-     * @param parms SubmitJclParms object (see for details)c
-     * @return A Job document with details about the submitted job
+     * @param parms submit jcl parameters, see SubmitJclParms object
+     * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Frank Giordano
      */

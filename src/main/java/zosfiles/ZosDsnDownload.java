@@ -36,7 +36,7 @@ public class ZosDsnDownload {
     /**
      * ZosDsnDownload Constructor
      *
-     * @param connection is a connection object, see ZOSConnection object
+     * @param connection connection object, see ZOSConnection object
      */
     public ZosDsnDownload(ZOSConnection connection) {
         this.connection = connection;
@@ -45,8 +45,8 @@ public class ZosDsnDownload {
     /**
      * Downloads dataset or dataset member content
      *
-     * @param dataSetName is the name of a dataset or a dataset member (f.e. DATASET.LIB(MEMBER))
-     * @param options     is download options
+     * @param dataSetName name of a dataset or a dataset member (f.e. DATASET.LIB(MEMBER))
+     * @param options     download options parameters, see DownloadParams object
      * @return a content stream
      */
     public InputStream downloadDsn(String dataSetName, DownloadParams options) {

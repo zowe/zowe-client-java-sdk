@@ -43,7 +43,7 @@ public class GetJobs {
     /**
      * Get jobs Constructor.
      *
-     * @param connection ZOSConnection object
+     * @param connection connection object, see ZOSConnection object
      * @author Frank Giordano
      */
     public GetJobs(ZOSConnection connection) {
@@ -53,7 +53,7 @@ public class GetJobs {
     /**
      * Get jobs (defaults to the user ID of the session as owner).
      *
-     * @return A list of job objects (matching jobs)
+     * @return list of job objects (matching jobs)
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
@@ -64,8 +64,8 @@ public class GetJobs {
     /**
      * Get jobs that match a job name by prefix. Defaults to jobs owned by the user ID in the session.
      *
-     * @param prefix Job name prefix for which to list jobs. Supports wildcard e.g. JOBNM*
-     * @return A list of job objects (matching jobs)
+     * @param prefix job name prefix for which to list jobs. Supports wildcard e.g. JOBNM*
+     * @return list of job objects (matching jobs)
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
@@ -79,8 +79,9 @@ public class GetJobs {
     /**
      * Get jobs that are owned by a certain user or pattern of users.
      *
-     * @param owner Owner for which to get jobs. Supports wildcard e.g. IBMU* returns jobs owned by all users whose ID beings with "IBMU"
-     * @return A list of job objects (matching jobs)
+     * @param owner owner for which to get jobs. Supports wildcard e.g.
+     *              IBMU* returns jobs owned by all users whose ID beings with "IBMU"
+     * @return list of job objects (matching jobs)
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
@@ -94,9 +95,11 @@ public class GetJobs {
     /**
      * Get a list of jobs that match an owner and prefix.
      *
-     * @param owner  Owner for which to get jobs. Supports wildcard e.g. IBMU* returns jobs owned by all users whose ID beings with "IBMU"
-     * @param prefix Prefix for which to get jobs. Supports wildcard e.g. JOBNM* returns jobs with names starting with "JOBNM"
-     * @return A list of job objects (matching jobs)
+     * @param owner  owner for which to get jobs. Supports wildcard e.g.
+     *               IBMU* returns jobs owned by all users whose ID beings with "IBMU"
+     * @param prefix prefix for which to get jobs. Supports wildcard e.g.
+     *               JOBNM* returns jobs with names starting with "JOBNM"
+     * @return list of job objects (matching jobs)
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
@@ -112,8 +115,8 @@ public class GetJobs {
     /**
      * Get a single job object from an input job id.
      *
-     * @param jobId The job ID for the job for which you want to get status
-     * @return A list of job objects (matching jobs)
+     * @param jobId job ID for the job for which you want to get status
+     * @return list of job objects (matching jobs)
      * @throws Exception error on getting job
      * @author Frank Giordano
      */
@@ -131,8 +134,8 @@ public class GetJobs {
     /**
      * Get jobs filtered by owner and prefix.
      *
-     * @param parms GetJobParms object
-     * @return A list of job objects (matching jobs)
+     * @param parms get job parameters, see GetJobParms object
+     * @return list of job objects (matching jobs)
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
@@ -201,9 +204,9 @@ public class GetJobs {
     /**
      * Get the status and other details (e.g. owner, return code) for a job.
      *
-     * @param jobName The job name for the job for which you want to get status
-     * @param jobId   The job ID for the job for which you want to get status
-     * @return A Job object (matching job)
+     * @param jobName job name for the job for which you want to get status
+     * @param jobId   job ID for the job for which you want to get status
+     * @return job document (matching job)
      * @throws Exception error on getting job
      * @author Frank Giordano
      */
@@ -221,8 +224,8 @@ public class GetJobs {
      * value are of the same type, the Job object returned will have the
      * current status of the job.
      *
-     * @param job Job object
-     * @return A Job object (matching job)
+     * @param job job document
+     * @return job document (matching job)
      * @throws Exception error on getting job
      * @author Frank Giordano
      */
@@ -236,8 +239,8 @@ public class GetJobs {
     /**
      * Get the status and other details (e.g. owner, return code) for a job.
      *
-     * @param parms CommonJobParms object
-     * @return A Job object (matching job)
+     * @param parms common job parameters, see CommonJobParms object
+     * @return job document (matching job)
      * @throws Exception error on getting job
      * @author Frank Giordano
      */
@@ -271,9 +274,9 @@ public class GetJobs {
     /**
      * Get a list of all spool files for a job.
      *
-     * @param jobName The job name for the job for which you want to get a list of spool files
-     * @param jobId   The job ID for the job for which you want to get a list of spool files
-     * @return A list of JobFile objects
+     * @param jobName job name for the job for which you want to get a list of spool files
+     * @param jobId   job ID for the job for which you want to get a list of spool files
+     * @return list of JobFile objects
      * @throws Exception error on getting spool files info
      * @author Frank Giordano
      */
@@ -287,8 +290,8 @@ public class GetJobs {
      * Alternate version of the API that accepts an Job object returned by
      * other APIs such as SubmitJobs.
      *
-     * @param job The job for which you would like to get a list of job spool files
-     * @return A list of JobFile objects
+     * @param job job for which you would like to get a list of job spool files
+     * @return list of JobFile objects
      * @throws Exception error on getting spool files info
      * @author Frank Giordano
      */
@@ -299,8 +302,8 @@ public class GetJobs {
     /**
      * Get a list of all job spool files for a job.
      *
-     * @param parms CommonJobParms object
-     * @return A list of JobFile objects
+     * @param parms common job parameters, see CommonJobParms object
+     * @return list of JobFile objects
      * @throws Exception error on getting spool files info
      * @author Frank Giordano
      */
@@ -357,9 +360,9 @@ public class GetJobs {
     /**
      * Get JCL from a job.
      *
-     * @param jobName The job name for the job for which you want to retrieve JCL
-     * @param jobId   The job ID for the job for which you want to retrieve JCL
-     * @return A string representing job document on resolve
+     * @param jobName job name for the job for which you want to retrieve JCL
+     * @param jobId   job ID for the job for which you want to retrieve JCL
+     * @return job document on resolve
      * @throws Exception error on getting jcl content
      * @author Frank Giordano
      */
@@ -372,8 +375,8 @@ public class GetJobs {
      * Alternate version of the API that accepts an Job object returned by
      * other APIs such as SubmitJobs.
      *
-     * @param job The job for which you would like to retrieve JCL
-     * @return A string representing the JCL content
+     * @param job job for which you would like to retrieve JCL
+     * @return JCL content
      * @throws Exception error on getting jcl content
      * @author Frank Giordano
      */
@@ -385,8 +388,8 @@ public class GetJobs {
     /**
      * Get the JCL that was used to submit a job.
      *
-     * @param parms CommonJobParms object
-     * @return A string representing the JCL content
+     * @param parms common job parameters, see CommonJobParms object
+     * @return JCL content
      * @throws Exception error on getting jcl content
      * @author Frank Giordano
      */
@@ -418,8 +421,8 @@ public class GetJobs {
     /**
      * Get spool content from a job (keeping naming convention patter with this duplication function).
      *
-     * @param jobFile The spool file for which you want to retrieve the content
-     * @return A string representing the spool content
+     * @param jobFile spool file for which you want to retrieve the content
+     * @return spool content
      * @throws Exception error on getting spool content
      * @author Frank Giordano
      */
@@ -430,10 +433,10 @@ public class GetJobs {
     /**
      * Get spool content from a job using the job name, job ID, and spool ID number from z/OSMF.
      *
-     * @param jobName The job name for the job containing the spool content
-     * @param jobId   The job id for the job containing the spool content
-     * @param spoolId The Id number assigned by zosmf that identifies the particular job spool file (DD)
-     * @return A string representing the spool content
+     * @param jobName job name for the job containing the spool content
+     * @param jobId   job id for the job containing the spool content
+     * @param spoolId id number assigned by zosmf that identifies the particular job spool file (DD)
+     * @return spool content
      * @throws Exception error on getting spool content
      * @author Frank Giordano
      */
@@ -464,8 +467,8 @@ public class GetJobs {
     /**
      * Get spool content from a job.
      *
-     * @param jobFile The spool file for which you want to retrieve the content
-     * @return A string representing the spool content
+     * @param jobFile spool file for which you want to retrieve the content
+     * @return spool content
      * @throws Exception error on getting spool content
      * @author Frank Giordano
      */
@@ -497,7 +500,7 @@ public class GetJobs {
     /**
      * Get url specified for rest processing.
      *
-     * @return A string representing a url
+     * @return url
      * @author Frank Giordano
      */
     public String getUrl() {

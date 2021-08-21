@@ -34,7 +34,7 @@ public class UtilTso {
      * Retrieve parsed Json Tso Stop Response
      *
      * @param obj JSONObject object
-     * @return ZosmfTsoResponse populated console response, @see ZosmfTsoResponse
+     * @return populated console response, see ZosmfTsoResponse object
      * @author Frank Giordano
      */
     public static ZosmfTsoResponse parseJsonStopResponse(JSONObject obj) {
@@ -47,7 +47,7 @@ public class UtilTso {
      * Retrieve Tso response
      *
      * @param response Response object
-     * @return ZosmfTsoResponse ZosmfTsoResponse object
+     * @return ZosmfTsoResponse object
      * @throws Exception error processing response
      * @author Frank Giordano
      */

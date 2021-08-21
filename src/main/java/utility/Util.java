@@ -27,8 +27,8 @@ public class Util {
     /**
      * Encodes the passed connection String as UTF-8 for usage of the AUTHORIZATION http header.
      *
-     * @param connection ZOSConnection object
-     * @return The encoded String
+     * @param connection connection object, see ZOSConnection object
+     * @return encoded String
      * @author Frank Giordano
      */
     public static String getAuthEncoding(ZOSConnection connection) {
@@ -39,8 +39,8 @@ public class Util {
     /**
      * Check connection for validity.
      *
-     * @param connection ZOSConnection object
-     * @throws IllegalStateException with message Connection data not setup properly
+     * @param connection connection object, see ZOSConnection object
+     * @throws IllegalStateException with message "Connection data not setup properly"
      * @author Frank Giordano
      */
     public static void checkConnection(ZOSConnection connection) {
@@ -53,9 +53,9 @@ public class Util {
     /**
      * Check for null parameter
      *
-     * @param check Check for true or false value
-     * @param msg   A String message to display if check is true
-     * @throws IllegalArgumentException with msg
+     * @param check check for true or false value
+     * @param msg   message to display if check is true
+     * @throws IllegalArgumentException with message
      * @author Frank Giordano
      */
     public static void checkNullParameter(boolean check, String msg) {
@@ -67,8 +67,8 @@ public class Util {
      * Check for state of parameter
      *
      * @param check Check for true or false value
-     * @param msg   A String message to display if check is true
-     * @throws IllegalStateException with msg
+     * @param msg   message to display if check is true
+     * @throws IllegalStateException with message
      * @author Frank Giordano
      */
     public static void checkStateParameter(boolean check, String msg) {
@@ -80,8 +80,8 @@ public class Util {
      * Encodes the passed String as UTF-8 using an algorithm that's compatible
      * with JavaScript's encodeURIComponent function. Returns incoming string un-encoded if exception occurs.
      *
-     * @param str The String to be encoded
-     * @return The encoded String or original string
+     * @param str string to be encoded
+     * @return encoded String or original string
      * @author Frank Giordano
      */
     public static String encodeURIComponent(String str) {
