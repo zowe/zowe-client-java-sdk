@@ -15,6 +15,8 @@ import org.junit.Test;
 import rest.Response;
 import zostso.zosmf.ZosmfTsoResponse;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
@@ -26,11 +28,12 @@ public class UtilTsoTest {
 
     @Test
     public void tstParseJsonStopResponseSuccess() {
-        JSONObject json = new JSONObject();
-        json.put("ver", "ver");
-        json.put("servletKey", "servletKey");
-        json.put("reused", true);
-        json.put("timeout", true);
+        Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("ver", "ver");
+        jsonMap.put("servletKey", "servletKey");
+        jsonMap.put("reused", true);
+        jsonMap.put("timeout", true);
+        JSONObject json = new JSONObject(jsonMap);
 
         ZosmfTsoResponse response = UtilTso.parseJsonStopResponse(json);
         assertTrue("ver".equals(response.getVer().get()));

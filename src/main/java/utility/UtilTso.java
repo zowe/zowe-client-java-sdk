@@ -97,9 +97,10 @@ public class UtilTso {
         return response;
     }
 
+    @SuppressWarnings("unchecked")
     private static void parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
             tsoMessages) {
-        Map<String, String> tsoMessageMap = ((Map) obj.get(TsoConstants.TSO_MESSAGE));
+        Map<String, String> tsoMessageMap = ((Map<String, String>) obj.get(TsoConstants.TSO_MESSAGE));
         if (tsoMessageMap != null) {
             TsoMessage tsoMessage = new TsoMessage();
             tsoMessageMap.forEach((key, value) -> {
@@ -113,10 +114,10 @@ public class UtilTso {
         }
     }
 
-
+    @SuppressWarnings("unchecked")
     private static void parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
             tsoMessages) {
-        Map<String, String> tsoPromptMap = ((Map) obj.get(TsoConstants.TSO_PROMPT));
+        Map<String, String> tsoPromptMap = ((Map<String, String>) obj.get(TsoConstants.TSO_PROMPT));
         if (tsoPromptMap != null) {
             TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();
             tsoPromptMap.forEach((key, value) -> {

@@ -22,6 +22,8 @@ import rest.JsonGetRequest;
 import rest.Response;
 import zosjobs.response.Job;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
@@ -41,32 +43,36 @@ public class GetJobsByJsonGetRequestTest {
         getJobs = new GetJobs(connection);
         Whitebox.setInternalState(getJobs, "request", request);
 
-        jobJson = new JSONObject();
-        jobJson.put("jobid", "jobid");
-        jobJson.put("jobname", "jobname");
-        jobJson.put("subsystem", "subsystem");
-        jobJson.put("owner", "owner");
-        jobJson.put("status", "status");
-        jobJson.put("type", "type");
-        jobJson.put("class", "class");
-        jobJson.put("retCode", "retCode");
-        jobJson.put("url", "url");
-        jobJson.put("files-url", "files-url");
-        jobJson.put("job-correlator", "job-correlator");
-        jobJson.put("phase-name", "phase-name");
+        Map<String, String> jobMap = new HashMap<>();
+        jobMap.put("jobid", "jobid");
+        jobMap.put("jobname", "jobname");
+        jobMap.put("subsystem", "subsystem");
+        jobMap.put("owner", "owner");
+        jobMap.put("status", "status");
+        jobMap.put("type", "type");
+        jobMap.put("class", "class");
+        jobMap.put("retCode", "retCode");
+        jobMap.put("url", "url");
+        jobMap.put("files-url", "files-url");
+        jobMap.put("job-correlator", "job-correlator");
+        jobMap.put("phase-name", "phase-name");
+        jobJson = new JSONObject(jobMap);
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void tstGetJobFromMultipleJobsResultsExceptionFailure() throws Exception {
         String msg = "Expected 1 job returned but received 2 jobs.";
         JSONArray jsonArray = new JSONArray();
 
-        JSONObject job1 = new JSONObject();
-        job1.put("jobid", "job1");
+        Map<String, String> jobMap1 = new HashMap<>();
+        jobMap1.put("jobid", "job1");
+        JSONObject job1 = new JSONObject(jobMap1);
         jsonArray.add(job1);
 
-        JSONObject job2 = new JSONObject();
-        job2.put("jobid", "job2");
+        Map<String, String> jobMap2 = new HashMap<>();
+        jobMap2.put("jobid", "job2");
+        JSONObject job2 = new JSONObject(jobMap2);
         jsonArray.add(job2);
 
         Response response = new Response(Optional.of(jsonArray), Optional.of(200));
@@ -84,11 +90,13 @@ public class GetJobsByJsonGetRequestTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void tstGetJobWithJobIdOnlySuccess() throws Exception {
         JSONArray jsonArray = new JSONArray();
 
-        JSONObject jobJson = new JSONObject();
-        jobJson.put("jobid", "job");
+        Map<String, String> jobMap = new HashMap<>();
+        jobMap.put("jobid", "job");
+        JSONObject jobJson = new JSONObject(jobMap);
         jsonArray.add(jobJson);
 
         Response response = new Response(Optional.of(jsonArray), Optional.of(200));
@@ -100,6 +108,7 @@ public class GetJobsByJsonGetRequestTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void tstGetJobWithAllJobMembersSuccess() throws Exception {
         JSONArray jsonArray = new JSONArray();
         jsonArray.add(jobJson);
