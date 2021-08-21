@@ -30,19 +30,25 @@ public class SendTso {
 
     private static final Logger LOG = LogManager.getLogger(SendTso.class);
 
-    public static SendResponse sendDataToTSOCollect(ZOSConnection connection, String servletKey, String data) throws Exception {
+    private final ZOSConnection connection;
+
+    public SendTso(ZOSConnection connection) {
+        this.connection = connection;
+    }
+
+    public SendResponse sendDataToTSOCollect(String servletKey, String data) throws Exception {
         Util.checkNullParameter(servletKey == null, "servletKey is null");
         Util.checkNullParameter(data == null, "data is null");
         Util.checkStateParameter(servletKey.isEmpty(), "servletKey not specified");
         Util.checkStateParameter(data.isEmpty(), "data not specified");
 
-        ZosmfTsoResponse putResponse = SendTso.sendDataToTSOCommon(connection, new SendTsoParms(servletKey, data));
+        ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParms(servletKey, data));
 
-        CollectedResponses responses = SendTso.getAllResponses(connection, putResponse);
+        CollectedResponses responses = getAllResponses(putResponse);
         return SendTso.createResponse(responses);
     }
 
-    public static ZosmfTsoResponse sendDataToTSOCommon(ZOSConnection connection, SendTsoParms commandParms) throws Exception {
+    public ZosmfTsoResponse sendDataToTSOCommon(SendTsoParms commandParms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(commandParms == null, "sendTsoParms is null");
         Util.checkStateParameter(commandParms.getData().isEmpty(), "sendTsoParms data not specified");
@@ -72,14 +78,14 @@ public class SendTso {
         return UtilTso.getZosmfTsoResponse(response);
     }
 
-    private static String getTsoResponseSendMessage(TsoResponseMessage tsoResponseMessage) throws Exception {
+    private String getTsoResponseSendMessage(TsoResponseMessage tsoResponseMessage) throws Exception {
         String message = "{\"TSO RESPONSE\":{\"VERSION\":\"" + tsoResponseMessage.getVersion().orElseThrow(Exception::new)
                 + "\",\"DATA\":\"" + tsoResponseMessage.getData().orElseThrow(Exception::new) + "\"}}";
         LOG.debug("SendTo::getTsoResponseSendMessage - message {}", message);
         return message;
     }
 
-    private static CollectedResponses getAllResponses(ZOSConnection connection, ZosmfTsoResponse tso) throws Exception {
+    private CollectedResponses getAllResponses(ZosmfTsoResponse tso) throws Exception {
         boolean done = false;
         StringBuilder messages = new StringBuilder();
         List<ZosmfTsoResponse> tsos = new ArrayList<>();
@@ -100,14 +106,14 @@ public class SendTso {
                 }
             }
             if (!done) {
-                tso = SendTso.getDataFromTSO(connection, tso.getServletKey().orElseThrow(Exception::new));
+                tso = getDataFromTSO(tso.getServletKey().orElseThrow(Exception::new));
                 tsos.add(tso);
             }
         }
         return new CollectedResponses(tsos, messages.toString());
     }
 
-    private static ZosmfTsoResponse getDataFromTSO(ZOSConnection connection, String servletKey) throws Exception {
+    private ZosmfTsoResponse getDataFromTSO(String servletKey) throws Exception {
         Util.checkConnection(connection);
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() +

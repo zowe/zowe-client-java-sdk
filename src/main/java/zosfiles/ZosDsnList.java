@@ -32,16 +32,27 @@ public class ZosDsnList {
 
     private static final Logger LOG = LogManager.getLogger(ZosDsnList.class);
 
+    private ZOSConnection connection;
+
+    /**
+     * ZosDsnList constructor
+     *
+     * @param connection connection object, see ZOSConnection object
+     * @author Frank Giordano
+     */
+    public ZosDsnList(ZOSConnection connection) {
+        this.connection = connection;
+    }
+
     /**
      * Get a list of members from a Dataset
      *
-     * @param connection  connection object, see ZOSConnection object
      * @param dataSetName name of a dataset (i.e. 'DATASET.LIB')
      * @param options     list options, see ListParams object
      * @return A String list of member names
      */
     @SuppressWarnings("unchecked")
-    public static List<String> listMembers(ZOSConnection connection, String dataSetName, ListParams options) {
+    public List<String> listMembers(String dataSetName, ListParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
@@ -56,7 +67,7 @@ public class ZosDsnList {
                 url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN + options.getPattern().get();
             }
 
-            Response response = getResponse(connection, options, headers, url);
+            Response response = getResponse(options, headers, url);
             if (response.isEmpty())
                 return members;
 
@@ -84,13 +95,12 @@ public class ZosDsnList {
     /**
      * Get a list of Dataset names
      *
-     * @param connection  connection object, see ZOSConnection object
      * @param dataSetName name of a dataset (i.e. 'DATASET.LIB')
      * @param options     list options parameters, see ListParams object
      * @return A String list of Dataset names
      */
     @SuppressWarnings("unchecked")
-    public static List<Dataset> listDsn(ZOSConnection connection, String dataSetName, ListParams options) {
+    public List<Dataset> listDsn(String dataSetName, ListParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
         Util.checkConnection(connection);
@@ -110,7 +120,7 @@ public class ZosDsnList {
                 url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + options.getStart().get();
             }
 
-            Response response = getResponse(connection, options, headers, url);
+            Response response = getResponse(options, headers, url);
             if (response.isEmpty())
                 return datasets;
 
@@ -135,8 +145,7 @@ public class ZosDsnList {
         return datasets;
     }
 
-    private static Response getResponse(ZOSConnection connection, ListParams options, Map<String, String> headers,
-                                        String url) throws Exception {
+    private Response getResponse(ListParams options, Map<String, String> headers, String url) throws Exception {
         LOG.debug(url);
         setHeaders(options, headers);
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
@@ -145,7 +154,7 @@ public class ZosDsnList {
         return request.executeHttpRequest();
     }
 
-    private static void setHeaders(ListParams options, Map<String, String> headers) {
+    private void setHeaders(ListParams options, Map<String, String> headers) {
         String key, value;
         key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
         value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);

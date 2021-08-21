@@ -32,7 +32,6 @@ public class ConsoleConstants {
      */
     public static final String RES_DEF_CN = "defcn";
 
-
     /**
      * Solmsgs url query part
      */

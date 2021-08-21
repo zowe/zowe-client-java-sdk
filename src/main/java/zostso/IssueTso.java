@@ -70,7 +70,8 @@ public class IssueTso {
 
         IssueResponse response = new IssueResponse(false, null, false, null,
                 null, null);
-        StartStopResponses startResponse = StartTso.start(connection, accountNumber, startParams);
+        StartTso startTso = new StartTso(connection);
+        StartStopResponses startResponse = startTso.start(accountNumber, startParams);
         response.setStartResponse(Optional.ofNullable(startResponse));
 
         if (response.getStartResponse().isPresent() && !response.getStartResponse().get().isSuccess()) {
@@ -81,7 +82,8 @@ public class IssueTso {
 
         response.setZosmfResponse(Optional.ofNullable(startResponse.getZosmfTsoResponse().get()));
 
-        SendResponse sendResponse = SendTso.sendDataToTSOCollect(connection,
+        SendTso sendTso = new SendTso(connection);
+        SendResponse sendResponse = sendTso.sendDataToTSOCollect(
                 response.getStartResponse().get().getServletKey().get(), command);
         response.setSuccess(sendResponse.getSuccess());
         response.setZosmfResponse(Optional.of(sendResponse.getZosmfResponse().get().get(0)));
