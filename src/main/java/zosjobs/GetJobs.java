@@ -136,6 +136,7 @@ public class GetJobs {
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
+    @SuppressWarnings("unchecked")
     public List<Job> getJobsCommon(GetJobParms parms) throws Exception {
         Util.checkConnection(connection);
 
@@ -303,6 +304,7 @@ public class GetJobs {
      * @throws Exception error on getting spool files info
      * @author Frank Giordano
      */
+    @SuppressWarnings("unchecked")
     public List<JobFile> getSpoolFilesCommon(CommonJobParms parms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(parms == null, "prams is null");

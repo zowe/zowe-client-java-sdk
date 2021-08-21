@@ -67,6 +67,7 @@ public class UtilTso {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     private static ZosmfTsoResponse parseJsonTsoResponse(JSONObject result) throws Exception {
         Util.checkNullParameter(result == null, "no results to parse");
 
@@ -96,32 +97,34 @@ public class UtilTso {
         return response;
     }
 
+    @SuppressWarnings("unchecked")
     private static void parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
             tsoMessages) {
-        Map tsoMessageMap = ((Map) obj.get(TsoConstants.TSO_MESSAGE));
+        Map<String, String> tsoMessageMap = ((Map<String, String>) obj.get(TsoConstants.TSO_MESSAGE));
         if (tsoMessageMap != null) {
             TsoMessage tsoMessage = new TsoMessage();
             tsoMessageMap.forEach((key, value) -> {
                 if ("DATA".equals(key))
-                    tsoMessage.setData(Optional.of((String) value));
+                    tsoMessage.setData(Optional.of(value));
                 if ("VERSION".equals(key))
-                    tsoMessage.setVersion(Optional.of((String) value));
+                    tsoMessage.setVersion(Optional.of(value));
             });
             tsoMessages.setTsoMessage(Optional.of(tsoMessage));
             tsoMessagesLst.add(tsoMessages);
         }
     }
 
+    @SuppressWarnings("unchecked")
     private static void parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
             tsoMessages) {
-        Map tsoPromptMap = ((Map) obj.get(TsoConstants.TSO_PROMPT));
+        Map<String, String> tsoPromptMap = ((Map<String, String>) obj.get(TsoConstants.TSO_PROMPT));
         if (tsoPromptMap != null) {
             TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();
             tsoPromptMap.forEach((key, value) -> {
                 if ("VERSION".equals(key))
-                    tsoPromptMessage.setVersion(Optional.of((String) value));
+                    tsoPromptMessage.setVersion(Optional.of(value));
                 if ("HIDDEN".equals(key))
-                    tsoPromptMessage.setHidden(Optional.of((String) value));
+                    tsoPromptMessage.setHidden(Optional.of(value));
             });
             tsoMessages.setTsoPrompt(Optional.of(tsoPromptMessage));
             tsoMessagesLst.add(tsoMessages);

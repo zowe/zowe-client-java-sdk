@@ -19,6 +19,9 @@ import utility.UtilDataset;
 import utility.UtilRest;
 import zosfiles.input.CreateParams;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * ZosDsn class that provides CRUD operations on Datasets
  *
@@ -141,7 +144,7 @@ public class ZosDsn {
     }
 
     private static String buildBody(CreateParams params) {
-        JSONObject reqBody = new JSONObject();
+        Map<String, Object> reqBody = new HashMap<>();
 
         params.getVolser().ifPresent(v -> reqBody.put("volser", v));
         params.getUnit().ifPresent(v -> reqBody.put("unit", v));
@@ -160,8 +163,9 @@ public class ZosDsn {
         params.getDataclass().ifPresent(v -> reqBody.put("dataclass", v));
         params.getDsntype().ifPresent(v -> reqBody.put("dsntype", v));
 
-        LOG.debug(reqBody);
-        return reqBody.toString();
+        JSONObject req = new JSONObject(reqBody);
+        LOG.debug(req);
+        return req.toString();
     }
 
 }
