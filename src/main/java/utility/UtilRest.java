@@ -14,8 +14,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONObject;
 import rest.Response;
 
 import java.util.Optional;
@@ -43,14 +42,13 @@ public class UtilRest {
         if (entity != null) {
             String result = EntityUtils.toString(entity);
             LOG.debug("UtilRest::getJsonResponseEntity - result = {}", result);
-            JSONParser parser = new JSONParser();
             try {
                 if (result.isEmpty()) {
                     return Optional.empty();
                 } else {
-                    return Optional.ofNullable(parser.parse(result));
+                    return Optional.ofNullable(new JSONObject(result));
                 }
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

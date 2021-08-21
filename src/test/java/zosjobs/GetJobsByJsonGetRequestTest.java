@@ -10,8 +10,8 @@
 package zosjobs;
 
 import core.ZOSConnection;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,11 +63,11 @@ public class GetJobsByJsonGetRequestTest {
 
         JSONObject job1 = new JSONObject();
         job1.put("jobid", "job1");
-        jsonArray.add(job1);
+        jsonArray.put(job1);
 
         JSONObject job2 = new JSONObject();
         job2.put("jobid", "job2");
-        jsonArray.add(job2);
+        jsonArray.put(job2);
 
         Response response = new Response(Optional.of(jsonArray), Optional.of(200));
         Mockito.when(request.executeHttpRequest()).thenReturn(response);
@@ -89,7 +89,7 @@ public class GetJobsByJsonGetRequestTest {
 
         JSONObject jobJson = new JSONObject();
         jobJson.put("jobid", "job");
-        jsonArray.add(jobJson);
+        jsonArray.put(jobJson);
 
         Response response = new Response(Optional.of(jsonArray), Optional.of(200));
         Mockito.when(request.executeHttpRequest()).thenReturn(response);
@@ -101,8 +101,8 @@ public class GetJobsByJsonGetRequestTest {
 
     @Test
     public void tstGetJobWithAllJobMembersSuccess() throws Exception {
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.add(jobJson);
+        org.json.JSONArray jsonArray = new JSONArray();
+        jsonArray.put(jobJson);
 
         Response response = new Response(Optional.of(jsonArray), Optional.of(200));
         Mockito.when(request.executeHttpRequest()).thenReturn(response);

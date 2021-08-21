@@ -10,11 +10,15 @@
 package utility;
 
 import core.ZOSConnection;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Global Utility Class with static helper methods.
@@ -100,6 +104,16 @@ public class Util {
         return result;
     }
 
-
+    /**
+     * Returns stream of key strings parsed from json object to better handle org.json objects.
+     *
+     * @param obj JSONObject object
+     * @return Supplier of String stream
+     * @author Frank Giordano
+     */
+    public static Supplier<Stream<String>> getStreamSupplier(JSONObject obj) {
+        String[] keys = JSONObject.getNames(obj);
+        return () -> Arrays.stream(keys);
+    }
 
 }

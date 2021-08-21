@@ -9,8 +9,7 @@
  */
 package utility;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
 import org.junit.Test;
 import rest.Response;
 import zostso.zosmf.ZosmfTsoResponse;
@@ -99,7 +98,7 @@ public class UtilTsoTest {
     public void tstGetZosmfTsoResponseMissingQueueIDJsonFieldFail() throws Exception {
         String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"tsoData\":" +
                 "[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":\"--> LOGON proc version = 04/28/2011\"}}]}";
-        Response response = new Response(Optional.of(new JSONParser().parse(json)), Optional.of(200));
+        Response response = new Response(Optional.of(new JSONObject(json)), Optional.of(200));
         String msg = null;
         try {
             UtilTso.getZosmfTsoResponse(response);
@@ -113,7 +112,7 @@ public class UtilTsoTest {
     public void tstGetZosmfTsoResponseMissingVerJsonFieldFail() throws Exception {
         String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"queueID\":\"0100\",\"tsoData\":" +
                 "[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":\"--> LOGON proc version = 04/28/2011\"}}]}";
-        Response response = new Response(Optional.of(new JSONParser().parse(json)), Optional.of(200));
+        Response response = new Response(Optional.of(new JSONObject(json)), Optional.of(200));
         String msg = null;
         try {
             UtilTso.getZosmfTsoResponse(response);
@@ -127,7 +126,7 @@ public class UtilTsoTest {
     public void tstGetZosmfTsoResponseMissingServletKeyJsonFieldFail() throws Exception {
         String json = "{\"ver\":\"0100\",\"queueID\":\"0100\",\"tsoData\":\n" +
                 "[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":\"--> LOGON proc version = 04/28/2011\"}}]}";
-        Response response = new Response(Optional.of(new JSONParser().parse(json)), Optional.of(200));
+        Response response = new Response(Optional.of(new JSONObject(json)), Optional.of(200));
         String msg = null;
         try {
             UtilTso.getZosmfTsoResponse(response);
@@ -141,7 +140,7 @@ public class UtilTsoTest {
     public void tstGetZosmfTsoResponseMissingTsoDataJsonFieldFailWithEmptyResults() throws Exception {
         String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"queueID\":\"0100\"," +
                 "\"reused\":true,\"timeout\":true}";
-        Response response = new Response(Optional.of(new JSONParser().parse(json)), Optional.of(200));
+        Response response = new Response(Optional.of(new JSONObject(json)), Optional.of(200));
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
         assertTrue(zosmfTsoResponse.getTsoData().isEmpty() == true);
     }
@@ -151,7 +150,7 @@ public class UtilTsoTest {
         String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"queueID\":\"0100\"," +
                 "\"reused\":true,\"timeout\":true,\"tsoData\":[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":" +
                 "\"--> LOGON proc version = 04/28/2011\"}}]}";
-        Response response = new Response(Optional.of(new JSONParser().parse(json)), Optional.of(200));
+        Response response = new Response(Optional.of(new JSONObject(json)), Optional.of(200));
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
         assertTrue(zosmfTsoResponse.getTsoData().isEmpty() != true);
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty() == true);
@@ -172,7 +171,7 @@ public class UtilTsoTest {
         String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"queueID\":\"0100\"," +
                 "\"reused\":true,\"timeout\":true,\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":" +
                 "\"--> LOGON proc version = 04/28/2011\"}}]}";
-        Response response = new Response(Optional.of(new JSONParser().parse(json)), Optional.of(200));
+        Response response = new Response(Optional.of(new JSONObject(json)), Optional.of(200));
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
         assertTrue(zosmfTsoResponse.getTsoData().isEmpty() != true);
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty() == true);
@@ -194,7 +193,7 @@ public class UtilTsoTest {
                 "\"reused\":true,\"timeout\":true,\"tsoData\":[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":" +
                 "\"--> LOGON proc version = 04/28/2011\"}},{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":" +
                 "\"hidden\"}}]}";
-        Response response = new Response(Optional.of(new JSONParser().parse(json)), Optional.of(200));
+        Response response = new Response(Optional.of(new JSONObject(json)), Optional.of(200));
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
         assertTrue(zosmfTsoResponse.getTsoData().isEmpty() != true);
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty() == true);

@@ -9,8 +9,11 @@
  */
 package utility;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import zosfiles.response.Dataset;
+
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Utility Class for Dataset related static helper methods.
@@ -26,25 +29,27 @@ public class UtilDataset {
      * @return A Dataset document
      */
     public static Dataset createDatasetObjFromJson(JSONObject json) {
-        return new Dataset.Builder().dsname((String) json.get("dsname"))
-                .blksz((String) json.get("blksz"))
-                .catnm((String) json.get("catnm"))
-                .cdate((String) json.get("cdate"))
-                .dev((String) json.get("dev"))
-                .dsntp((String) json.get("dsntp"))
-                .dsorg((String) json.get("dsorg"))
-                .edate((String) json.get("edate"))
-                .extx((String) json.get("extx"))
-                .lrectl((String) json.get("lrectl"))
-                .migr((String) json.get("migr"))
-                .mvol((String) json.get("mvol"))
-                .ovf((String) json.get("ovf"))
-                .rdate((String) json.get("rdate"))
-                .recfm((String) json.get("recfm"))
-                .sizex((String) json.get("sizex"))
-                .spacu((String) json.get("spacu"))
-                .used((String) json.get("used"))
-                .vol((String) json.get("vol"))
+        Supplier<Stream<String>> keys = Util.getStreamSupplier(json);
+        return new Dataset.Builder()
+                .dsname(keys.get().filter("dsname"::equals).findFirst().isPresent() ? (String) json.get("dsname") : null)
+                .blksz(keys.get().filter("blksz"::equals).findFirst().isPresent() ? (String) json.get("blksz") : null)
+                .catnm(keys.get().filter("catnm"::equals).findFirst().isPresent() ? (String) json.get("catnm") : null)
+                .cdate(keys.get().filter("cdate"::equals).findFirst().isPresent() ? (String) json.get("cdate") : null)
+                .dev(keys.get().filter("dev"::equals).findFirst().isPresent() ? (String) json.get("dev") : null)
+                .dsntp(keys.get().filter("dsntp"::equals).findFirst().isPresent() ? (String) json.get("dsntp") : null)
+                .dsorg(keys.get().filter("dsorg"::equals).findFirst().isPresent() ? (String) json.get("dsorg") : null)
+                .edate(keys.get().filter("edate"::equals).findFirst().isPresent() ? (String) json.get("edate") : null)
+                .extx(keys.get().filter("extx"::equals).findFirst().isPresent() ? (String) json.get("extx") : null)
+                .lrectl(keys.get().filter("lrectl"::equals).findFirst().isPresent() ? (String) json.get("lrectl") : null)
+                .migr(keys.get().filter("migr"::equals).findFirst().isPresent() ? (String) json.get("migr") : null)
+                .mvol(keys.get().filter("mvol"::equals).findFirst().isPresent() ? (String) json.get("mvol") : null)
+                .ovf(keys.get().filter("ovf"::equals).findFirst().isPresent() ? (String) json.get("ovf") : null)
+                .rdate(keys.get().filter("rdate"::equals).findFirst().isPresent() ? (String) json.get("rdate") : null)
+                .recfm(keys.get().filter("recfm"::equals).findFirst().isPresent() ? (String) json.get("recfm") : null)
+                .sizex(keys.get().filter("sizex"::equals).findFirst().isPresent() ? (String) json.get("sizex") : null)
+                .spacu(keys.get().filter("spacu"::equals).findFirst().isPresent() ? (String) json.get("spacu") : null)
+                .used(keys.get().filter("used"::equals).findFirst().isPresent() ? (String) json.get("used") : null)
+                .vol(keys.get().filter("vol"::equals).findFirst().isPresent() ? (String) json.get("vol") : null)
                 .build();
     }
 

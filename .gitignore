@@ -2,3 +2,7 @@
 *.iml
 /target/
 application-*.log
+.classpath
+.factorypath
+.project
+.settings/

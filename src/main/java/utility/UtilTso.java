@@ -9,13 +9,15 @@
  */
 package utility;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import rest.Response;
 import zostso.TsoConstants;
 import zostso.zosmf.*;
 
 import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Utility Class for Tso command related static helper methods.
@@ -39,8 +41,13 @@ public class UtilTso {
      */
     public static ZosmfTsoResponse parseJsonStopResponse(JSONObject obj) {
         Util.checkNullParameter(obj == null, "no obj to parse");
-        return new ZosmfTsoResponse.Builder().ver((String) obj.get("ver")).servletKey((String) obj.get("servletKey"))
-                .reused((boolean) obj.get("reused")).timeout((boolean) obj.get("timeout")).build();
+        Supplier<Stream<String>> keys = Util.getStreamSupplier(obj);
+        return new ZosmfTsoResponse.Builder()
+                .ver(keys.get().filter("ver"::equals).findFirst().isPresent() ? (String) obj.get("ver") : null)
+                .servletKey(keys.get().filter("servletKey"::equals).findFirst().isPresent() ? (String) obj.get("servletKey") : null)
+                .reused(keys.get().filter("reused"::equals).findFirst().isPresent() ? (boolean) obj.get("reused") : null)
+                .timeout(keys.get().filter("timeout"::equals).findFirst().isPresent() ? (boolean) obj.get("timeout") : null)
+                .build();
     }
 
     /**
@@ -70,18 +77,25 @@ public class UtilTso {
     private static ZosmfTsoResponse parseJsonTsoResponse(JSONObject result) throws Exception {
         Util.checkNullParameter(result == null, "no results to parse");
 
+        Supplier<Stream<String>> keys = Util.getStreamSupplier(result);
+
         ZosmfTsoResponse response;
         try {
-            response = new ZosmfTsoResponse.Builder().queueId((String) result.get("queueID"))
-                    .ver((String) result.get("ver")).servletKey((String) result.get("servletKey"))
-                    .reused((boolean) result.get("reused")).timeout((boolean) result.get("timeout")).build();
+            response = new ZosmfTsoResponse.Builder()
+                    .queueId(keys.get().filter("queueID"::equals).findFirst().isPresent() ? (String) result.get("queueID") : null)
+                    .ver(keys.get().filter("ver"::equals).findFirst().isPresent() ? (String) result.get("ver") : null)
+                    .servletKey(keys.get().filter("servletKey"::equals).findFirst().isPresent() ? (String) result.get("servletKey") : null)
+                    .reused(keys.get().filter("reused"::equals).findFirst().isPresent() ? (boolean) result.get("reused") : null)
+                    .timeout(keys.get().filter("timeout"::equals).findFirst().isPresent() ? (boolean) result.get("timeout") : null)
+                    .build();
         } catch (Exception e) {
             throw new Exception("missing one of the following json field values: queueID, ver, servletKey, " +
                     "reused and timeout");
         }
 
         List<TsoMessages> tsoMessagesLst = new ArrayList<>();
-        Optional<JSONArray> tsoData = Optional.ofNullable((JSONArray) result.get("tsoData"));
+        Optional<JSONArray> tsoData = Optional.ofNullable(
+                keys.get().filter("tsoData"::equals).findFirst().isPresent() ? (JSONArray) result.get("tsoData") : null);
 
         if (tsoData.isPresent()) {
             tsoData.get().forEach(item -> {
@@ -98,7 +112,10 @@ public class UtilTso {
 
     private static void parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
             tsoMessages) {
-        Map tsoMessageMap = ((Map) obj.get(TsoConstants.TSO_MESSAGE));
+        Supplier<Stream<String>> keys = Util.getStreamSupplier(obj);
+        Map tsoMessageMap = (keys.get().filter(
+                TsoConstants.TSO_MESSAGE::equals).findFirst().isPresent()
+                ? (Map) obj.getJSONObject(TsoConstants.TSO_MESSAGE).toMap() : null);
         if (tsoMessageMap != null) {
             TsoMessage tsoMessage = new TsoMessage();
             tsoMessageMap.forEach((key, value) -> {
@@ -114,7 +131,10 @@ public class UtilTso {
 
     private static void parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
             tsoMessages) {
-        Map tsoPromptMap = ((Map) obj.get(TsoConstants.TSO_PROMPT));
+        Supplier<Stream<String>> keys = Util.getStreamSupplier(obj);
+        Map tsoPromptMap = (keys.get().filter(
+                TsoConstants.TSO_PROMPT::equals).findFirst().isPresent()
+                ? (Map) obj.getJSONObject(TsoConstants.TSO_PROMPT).toMap() : null);
         if (tsoPromptMap != null) {
             TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();
             tsoPromptMap.forEach((key, value) -> {

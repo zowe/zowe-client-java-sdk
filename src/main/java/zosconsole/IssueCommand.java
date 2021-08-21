@@ -12,6 +12,7 @@ package zosconsole;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
 import rest.Response;
 import rest.ZoweRequest;
 import rest.ZoweRequestFactory;
@@ -22,8 +23,10 @@ import zosconsole.zosmf.IssueParms;
 import zosconsole.zosmf.ZosmfIssueParms;
 import zosconsole.zosmf.ZosmfIssueResponse;
 import core.ZOSConnection;
-import org.json.simple.JSONObject;
 import utility.Util;
+
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Issue MVS Console commands by using a system console
@@ -50,11 +53,11 @@ public class IssueCommand {
     /**
      * Issue an MVS console command, returns "raw" z/OSMF response
      *
-     * @param consoleName string name of the EMCS console that is used to issue the command
+     * @param consoleName  string name of the EMCS console that is used to issue the command
      * @param commandParms synchronous console issue parameters, see ZosmfIssueParms
      * @return ZosmfIssueResponse command response on resolve, see ZosmfIssueResponse
-     * @author Frank Giordano
      * @throws Exception processing error
+     * @author Frank Giordano
      */
     public ZosmfIssueResponse issueCommon(String consoleName, ZosmfIssueParms commandParms) throws Exception {
         Util.checkConnection(connection);
@@ -82,12 +85,18 @@ public class IssueCommand {
 
         ZosmfIssueResponse zosmfIssueResponse = new ZosmfIssueResponse();
         JSONObject result = (JSONObject) response.getResponsePhrase().orElseThrow(Exception::new);
-        zosmfIssueResponse.setCmdResponseKey((String) result.get("cmd-response-key"));
-        zosmfIssueResponse.setCmdResponseUrl((String) result.get("cmd-response-url"));
-        zosmfIssueResponse.setCmdResponseUri((String) result.get("cmd-response-uri"));
-        zosmfIssueResponse.setCmdResponse((String) result.get("cmd-response"));
-        zosmfIssueResponse.setSolKeyDetected((String) result.get("sol-key-detected"));
 
+        Supplier<Stream<String>> keys = Util.getStreamSupplier(result);
+        zosmfIssueResponse.setCmdResponseKey(keys.get()
+                .filter("cmd-response-key"::equals).findFirst().isPresent() ? (String) result.get("cmd-response-key") : null);
+        zosmfIssueResponse.setCmdResponseUrl(keys.get()
+                .filter("cmd-response-url"::equals).findFirst().isPresent() ? (String) result.get("cmd-response-url") : null);
+        zosmfIssueResponse.setCmdResponseUri(keys.get()
+                .filter("cmd-response-uri"::equals).findFirst().isPresent() ? (String) result.get("cmd-response-uri") : null);
+        zosmfIssueResponse.setCmdResponse(keys.get()
+                .filter("cmd-response"::equals).findFirst().isPresent() ? (String) result.get("cmd-response") : null);
+        zosmfIssueResponse.setCmdResponse(keys.get()
+                .filter("sol-key-detected"::equals).findFirst().isPresent() ? (String) result.get("sol-key-detected") : null);
         return zosmfIssueResponse;
     }
 
@@ -96,8 +105,8 @@ public class IssueCommand {
      *
      * @param commandParms synchronous console issue parameters, @see ZosmfIssueParms
      * @return ZosmfIssueResponse command response on resolve, @see ZosmfIssueResponse
-     * @author Frank Giordano
      * @throws Exception processing error
+     * @author Frank Giordano
      */
     public ZosmfIssueResponse issueDefConsoleCommon(ZosmfIssueParms commandParms) throws Exception {
         ZosmfIssueResponse resp = issueCommon(ConsoleConstants.RES_DEF_CN, commandParms);
@@ -112,8 +121,8 @@ public class IssueCommand {
      *
      * @param parms console issue parameters, @see IssueParms
      * @return ConsoleResponse command response on resolve, @see ConsoleResponse
-     * @author Frank Giordano
      * @throws Exception processing error
+     * @author Frank Giordano
      */
     public ConsoleResponse issue(IssueParms parms) throws Exception {
         Util.checkNullParameter(parms == null, "parms is null");
@@ -135,8 +144,8 @@ public class IssueCommand {
      *
      * @param theCommand string command to issue
      * @return ConsoleResponse command response on resolve, @see ConsoleResponse
-     * @author Frank Giordano
      * @throws Exception processing error
+     * @author Frank Giordano
      */
     public ConsoleResponse issueSimple(String theCommand) throws Exception {
         IssueParms parms = new IssueParms();
@@ -149,8 +158,8 @@ public class IssueCommand {
      *
      * @param parms IssueParms parameters for issue command
      * @return ZosmfIssueParms request body, @see ZosmfIssueParms
-     * @author Frank Giordano
      * @throws Exception processing error
+     * @author Frank Giordano
      */
     public ZosmfIssueParms buildZosmfConsoleApiParameters(IssueParms parms) throws Exception {
         Util.checkNullParameter(parms == null, "parms is null");

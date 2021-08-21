@@ -9,8 +9,11 @@
  */
 package utility;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import zosjobs.response.Job;
+
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Utility Class for Rest related static helper methods.
@@ -28,18 +31,20 @@ public class UtilJobs {
      * @author Frank Giordano
      */
     public static Job createJobObjFromJson(JSONObject json) {
-        return new Job.Builder().jobId((String) json.get("jobid"))
-                .jobName((String) json.get("jobname"))
-                .subSystem((String) json.get("subsystem"))
-                .owner((String) json.get("owner"))
-                .type((String) json.get("type"))
-                .status((String) json.get("status"))
-                .url((String) json.get("url"))
-                .classs((String) json.get("class"))
-                .filesUrl((String) json.get("files-url"))
-                .retCode((String) json.get("retCode"))
-                .jobCorrelator((String) json.get("job-correlator"))
-                .phaseName((String) json.get("phase-name"))
+        Supplier<Stream<String>> keys = Util.getStreamSupplier(json);
+        return new Job.Builder()
+                .jobId(keys.get().filter("jobid"::equals).findFirst().isPresent() ? (String) json.get("jobid") : null)
+                .jobName(keys.get().filter("jobname"::equals).findFirst().isPresent() ? (String) json.get("jobname") : null)
+                .subSystem(keys.get().filter("subsystem"::equals).findFirst().isPresent() ? (String) json.get("subsystem") : null)
+                .owner(keys.get().filter("owner"::equals).findFirst().isPresent() ? (String) json.get("owner") : null)
+                .type(keys.get().filter("type"::equals).findFirst().isPresent() ? (String) json.get("type") : null)
+                .status(keys.get().filter("status"::equals).findFirst().isPresent() ? (String) json.get("status") : null)
+                .url(keys.get().filter("url"::equals).findFirst().isPresent() ? (String) json.get("url") : null)
+                .classs(keys.get().filter("class"::equals).findFirst().isPresent() ? (String) json.get("class") : null)
+                .filesUrl(keys.get().filter("files-url"::equals).findFirst().isPresent() ? (String) json.get("files-url") : null)
+                .retCode(keys.get().filter("retCode"::equals).findFirst().isPresent() ? (String) json.get("retCode") : null)
+                .jobCorrelator(keys.get().filter("job-correlator"::equals).findFirst().isPresent() ? (String) json.get("job-correlator") : null)
+                .phaseName(keys.get().filter("phase-name"::equals).findFirst().isPresent() ? (String) json.get("phase-name") : null)
                 .build();
     }
 

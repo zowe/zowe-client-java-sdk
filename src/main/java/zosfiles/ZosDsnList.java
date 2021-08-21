@@ -12,8 +12,8 @@ package zosfiles;
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import rest.*;
 import utility.Util;
 import utility.UtilDataset;
@@ -22,6 +22,8 @@ import zosfiles.input.ListParams;
 import zosfiles.response.Dataset;
 
 import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * ZosDsnList class that provides Dataset member list function
@@ -68,10 +70,13 @@ public class ZosDsnList {
             JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
             if (results.isEmpty())
                 return members;
-            JSONArray items = (JSONArray) results.get("items");
+
+            Supplier<Stream<String>> keys = Util.getStreamSupplier(results);
+            JSONArray items = keys.get().filter("items"::equals).findFirst().isPresent() ? (JSONArray) results.get("items") : null;
             items.forEach(item -> {
                 JSONObject datasetObj = (JSONObject) item;
-                members.add(datasetObj.get("member").toString());
+                Supplier<Stream<String>> eachKeys = Util.getStreamSupplier(datasetObj);
+                members.add(eachKeys.get().filter("member"::equals).findFirst().isPresent() ? (String) results.get("member") : null);
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,7 +126,10 @@ public class ZosDsnList {
             JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
             if (results.isEmpty())
                 return datasets;
-            JSONArray items = (JSONArray) results.get(ZosFilesConstants.RESPONSE_ITEMS);
+
+            Supplier<Stream<String>> keys = Util.getStreamSupplier(results);
+            JSONArray items = keys.get().filter(
+                    ZosFilesConstants.RESPONSE_ITEMS::equals).findFirst().isPresent() ? (JSONArray) results.get("items") : null;
             items.forEach(item -> {
                 JSONObject datasetObj = (JSONObject) item;
                 datasets.add(UtilDataset.createDatasetObjFromJson(datasetObj));
