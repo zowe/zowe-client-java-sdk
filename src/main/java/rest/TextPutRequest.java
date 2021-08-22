@@ -23,6 +23,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Http put operation with text content type
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class TextPutRequest extends ZoweRequest {
 
     private static final Logger LOG = LogManager.getLogger(TextPutRequest.class);

@@ -22,6 +22,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Http get operation with Json content type
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class JsonGetRequest extends ZoweRequest {
 
     private static final Logger LOG = LogManager.getLogger(JsonGetRequest.class);

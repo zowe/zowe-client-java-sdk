@@ -23,6 +23,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Http put operation with Json content type
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class JsonPutRequest extends ZoweRequest {
 
     private static final Logger LOG = LogManager.getLogger(JsonPutRequest.class);

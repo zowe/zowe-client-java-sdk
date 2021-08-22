@@ -23,6 +23,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Http get stream operation with Json content type
+ *
+ * @version 1.0
+ */
 public class StreamGetRequest extends ZoweRequest {
 
     private static final Logger LOG = LogManager.getLogger(StreamGetRequest.class);

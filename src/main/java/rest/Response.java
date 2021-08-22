@@ -11,6 +11,12 @@ package rest;
 
 import java.util.Optional;
 
+/**
+ * Holds Http response information
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class Response {
 
     private Optional<Object> responsePhrase;

@@ -12,6 +12,7 @@ package utility;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import rest.Response;
+import zostso.StartStopResponse;
 import zostso.TsoConstants;
 import zostso.zosmf.*;
 
@@ -29,6 +30,27 @@ public class UtilTso {
     following json parsing is being constructed to conform to the following format:
     https://www.ibm.com/docs/en/zos/2.1.0?topic=services-tsoe-address-space
     */
+
+    /**
+     * Populate either a Tso start or stop command phase
+     *
+     * @param zosmfResponse zosmf repsonse info, see zosmfResponse
+     * @return StartStopResponse object
+     * @author Frank Giordano
+     */
+    public static StartStopResponse populateStartAndStop(ZosmfTsoResponse zosmfResponse) {
+        StartStopResponse startStopResponse = new StartStopResponse(false, zosmfResponse,
+                zosmfResponse.getServletKey().orElse(""));
+
+        startStopResponse.setSuccess(zosmfResponse.getServletKey().isPresent() ? true : false);
+        if (zosmfResponse.getMsgData().isPresent()) {
+            ZosmfMessages zosmfMsg = zosmfResponse.getMsgData().get().get(0);
+            String msgText = zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR);
+            startStopResponse.setFailureResponse(msgText);
+        }
+
+        return startStopResponse;
+    }
 
     /**
      * Retrieve parsed Json Tso Stop Response

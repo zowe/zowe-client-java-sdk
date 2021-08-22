@@ -21,6 +21,12 @@ import org.apache.http.ssl.SSLContextBuilder;
 
 import java.util.Map;
 
+/**
+ * Base abstract class that conforms to Http CRUD operations
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public abstract class ZoweRequest {
 
     public static final String X_CSRF_ZOSMF_HEADER_KEY = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);

@@ -11,6 +11,12 @@ package rest;
 
 import core.ZOSConnection;
 
+/**
+ * Request factory that generates the desire CRUD operation
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class ZoweRequestFactory {
 
     public static ZoweRequest buildRequest(ZOSConnection connection, String url, String body,

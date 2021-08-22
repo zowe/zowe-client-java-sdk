@@ -94,7 +94,7 @@ public class StopTso {
         ZosmfTsoResponse zosmfResponse = stopCommon(commandParms);
 
         // TODO
-        return TsoResponseService.populateStartAndStop(zosmfResponse);
+        return UtilTso.populateStartAndStop(zosmfResponse);
     }
 
 }

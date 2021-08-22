@@ -9,6 +9,12 @@
  */
 package rest;
 
+/**
+ * CRUD types
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class ZoweRequestType {
 
     public enum VerbType {
