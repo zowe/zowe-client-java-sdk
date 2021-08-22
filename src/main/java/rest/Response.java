@@ -35,16 +35,8 @@ public class Response {
         return responsePhrase;
     }
 
-    public void setResponsePhrase(Optional<Object> result) {
-        this.responsePhrase = responsePhrase;
-    }
-
     public Optional<Integer> getStatusCode() {
         return statusCode;
-    }
-
-    public void setStatusCode(Optional<Integer> statusCode) {
-        this.statusCode = statusCode;
     }
 
     public boolean isEmpty() {
