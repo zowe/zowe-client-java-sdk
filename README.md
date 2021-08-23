@@ -24,7 +24,8 @@ Functionality provided so far:
     WriteDataset  
     ListDataset  
     MonitorJobsTest  
-  
+    CopyDataset
+
 See the following sample programs within each sample's package:
 
     src/main/java/zosconsole/samples  
@@ -35,7 +36,8 @@ See the following sample programs within each sample's package:
         DeleteDatasetTest.java  
         DownloadDatasetTest.java
         ListDatasetsTest.java
-        WriteDatasetTest.java  
+        WriteDatasetTest.java
+        CopyDatasetTest.java
   
     src/main/java/zosjobs/samples  
         GetJobsTest.java
