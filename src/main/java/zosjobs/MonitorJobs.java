@@ -100,8 +100,7 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public Job waitForJobOutputStatus(Job job) throws Exception {
-        return waitForStatusCommon(
-                new MonitorJobWaitForParms(job.getJobName(), job.getJobId(), JobStatus.Type.OUTPUT,
+        return waitForStatusCommon(new MonitorJobWaitForParms(job.getJobName(), job.getJobId(), JobStatus.Type.OUTPUT,
                         Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
     }
 
@@ -147,9 +146,7 @@ public class MonitorJobs {
         if (parms.getAttempts().isEmpty())
             parms.setAttempts(Optional.of(attempts));
 
-        Job job = pollForStatus(parms);
-
-        return job;
+        return pollForStatus(parms);
     }
 
     /**
