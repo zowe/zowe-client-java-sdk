@@ -23,7 +23,8 @@ Functionality provided so far:
     DeleteDataset  
     WriteDataset  
     ListDataset  
-
+    MonitorJobsTest  
+  
 See the following sample programs within each sample's package:
 
     src/main/java/zosconsole/samples  
@@ -39,7 +40,8 @@ See the following sample programs within each sample's package:
     src/main/java/zosjobs/samples  
         GetJobsTest.java
         SubmitJobsTest.java  
-  
+        MonitorJobsTest.java  
+        
     src/main/java/zostos/samples  
         IssueTsoCommandTest.java
   

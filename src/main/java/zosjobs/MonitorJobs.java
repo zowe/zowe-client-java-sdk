@@ -29,6 +29,16 @@ import java.util.Optional;
  */
 public class MonitorJobs {
 
+    class CheckJobStatus {
+        public boolean statusFound;
+        public Job job;
+
+        public CheckJobStatus(boolean statusFound, Job job) {
+            this.statusFound = statusFound;
+            this.job = job;
+        }
+    }
+
     private static final Logger LOG = LogManager.getLogger(MonitorJobs.class);
 
     private final ZOSConnection connection;
@@ -115,7 +125,7 @@ public class MonitorJobs {
      * @returns job document
      * @author Frank Giordano
      */
-    public Job waitForOutputStatus(String jobName, String jobId) throws Exception {
+    public Job waitForJobOutputStatus(String jobName, String jobId) throws Exception {
         return waitForStatusCommon(new MonitorJobWaitForParms(Optional.ofNullable(jobName), Optional.ofNullable(jobId),
                 JobStatus.Type.OUTPUT, Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
     }
@@ -162,17 +172,20 @@ public class MonitorJobs {
         int numOfAttempts = 0;
         int maxAttempts = parms.getAttempts().get();
 
+        CheckJobStatus checkJobStatus;
         do {
             numOfAttempts++;
 
-            expectedStatus = checkStatus(parms);
+            checkJobStatus = checkStatus(parms);
+            expectedStatus = checkJobStatus.statusFound;
+
             shouldContinue = !expectedStatus && (maxAttempts > 0 && numOfAttempts < maxAttempts);
 
             if (shouldContinue)
                 Thread.sleep(timeoutVal);
         } while (shouldContinue);
 
-        return null;
+        return checkJobStatus.job;
     }
 
     /**
@@ -182,21 +195,21 @@ public class MonitorJobs {
      * @returns boolean true when the job status is obtained (or imperative error)
      * @author Frank Giordano
      */
-    private boolean checkStatus(MonitorJobWaitForParms parms) throws Exception {
+    private CheckJobStatus checkStatus(MonitorJobWaitForParms parms) throws Exception {
         GetJobs getJobs = new GetJobs(connection);
         String statusNameCheck = parms.getJobStatus().get().toString();
 
         Job job = getJobs.getStatus(parms.getJobName().get(), parms.getJobId().get());
         if (statusNameCheck.equals(job.getStatus().get()))
-            return true;
+            return new CheckJobStatus(true, job);
 
         // return exception if any return -1
         int orderNumOfStatusCheck = getOrderIndexOfStatus(statusNameCheck);
         int orderNumOfCurrRunningJob = getOrderIndexOfStatus(job.getStatus().get());
         if (orderNumOfCurrRunningJob > orderNumOfStatusCheck)
-            return true;
+            return new CheckJobStatus(true, job);
 
-        return false;
+        return new CheckJobStatus(false, job);
     }
 
     private int getOrderIndexOfStatus(String statusName) {
