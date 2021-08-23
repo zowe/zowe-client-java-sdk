@@ -96,7 +96,7 @@ public class MonitorJobs {
      *
      * @param job document of the z/OS job to wait for (see z/OSMF Jobs APIs for details)
      * @throws Exception error processing wait check request
-     * @returns job document
+     * @return job document
      * @author Frank Giordano
      */
     public Job waitForJobOutputStatus(Job job) throws Exception {
@@ -114,7 +114,7 @@ public class MonitorJobs {
      * @param jobName the z/OS jobname of the job to wait for output status (see z/OSMF Jobs APIs for details)
      * @param jobId   the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
      * @throws Exception error processing wait check request
-     * @returns job document
+     * @return job document
      * @author Frank Giordano
      */
     public Job waitForJobOutputStatus(String jobName, String jobId) throws Exception {
@@ -132,7 +132,7 @@ public class MonitorJobs {
      *
      * @param parms monitor jobs parameters, see MonitorJobWaitForParms object
      * @throws Exception error processing wait check request
-     * @returns job document
+     * @return job document
      * @author Frank Giordano
      */
     public Job waitForStatusCommon(MonitorJobWaitForParms parms) throws Exception {
@@ -154,7 +154,7 @@ public class MonitorJobs {
      *
      * @param parms monitor jobs parms, see MonitorJobWaitForParms
      * @throws Exception error processing poll check request
-     * @returns job document
+     * @return job document
      * @author Frank Giordano
      */
     private Job pollForStatus(MonitorJobWaitForParms parms) throws Exception {
@@ -188,7 +188,7 @@ public class MonitorJobs {
      *
      * @param parms monitor jobs parms, see MonitorJobWaitForParms
      * @throws Exception error processing check request
-     * @returns boolean true when the job status is obtained (or imperative error)
+     * @return boolean true when the job status is obtained (or imperative error)
      * @author Frank Giordano
      */
     private CheckJobStatus checkStatus(MonitorJobWaitForParms parms) throws Exception {

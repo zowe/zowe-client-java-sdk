@@ -37,7 +37,6 @@ public class ZosDsnCopy {
      * ZosDsnCopy constructor
      *
      * @param connection is a connection, see ZOSConnection object
-     * @version 1.0.0
      */
     public ZosDsnCopy(ZOSConnection connection) {
         this.connection = connection;
@@ -47,7 +46,6 @@ public class ZosDsnCopy {
      * Copy dataset or dataset member
      *
      * @param params contains copy dataset parameters
-     * @version 1.0.0
      */
     public void copy(CopyParams params) {
         Util.checkNullParameter(params.getFromDataSet().isEmpty(), "fromDataSetName is null");
@@ -93,7 +91,6 @@ public class ZosDsnCopy {
      * @param toDataSetName   is a name of target dataset (i.e. TARGET.DATASET(MEMBER))
      * @param replace         if true, members in the target dataset are replaced. if false,
      *                        like named members are not copied and an error is returned.
-     * @version 1.0.0
      */
     public void copy(String fromDataSetName, String toDataSetName, boolean replace) {
         copy(new CopyParams.Builder()
