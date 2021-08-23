@@ -41,7 +41,7 @@ public class GetJobs {
     private String url;
 
     /**
-     * Get jobs Constructor.
+     * GetJobs Constructor.
      *
      * @param connection connection object, see ZOSConnection object
      * @author Frank Giordano
