@@ -20,6 +20,7 @@ import zosjobs.response.Job;
 import zosjobs.types.JobStatus;
 
 import java.util.Optional;
+import java.util.Timer;
 
 /**
  * APIs for monitoring the status of a job. Use these APIs to wait for a job to enter the specified status. All APIs
@@ -95,13 +96,13 @@ public class MonitorJobs {
      * See JSDoc for "waitForStatusCommon" for full details on polling and other logic.
      *
      * @param job document of the z/OS job to wait for (see z/OSMF Jobs APIs for details)
-     * @throws Exception error processing wait check request
      * @return job document
+     * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
     public Job waitForJobOutputStatus(Job job) throws Exception {
         return waitForStatusCommon(new MonitorJobWaitForParms(job.getJobName(), job.getJobId(), JobStatus.Type.OUTPUT,
-                        Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
+                Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
     }
 
     /**
@@ -113,8 +114,8 @@ public class MonitorJobs {
      *
      * @param jobName the z/OS jobname of the job to wait for output status (see z/OSMF Jobs APIs for details)
      * @param jobId   the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
-     * @throws Exception error processing wait check request
      * @return job document
+     * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
     public Job waitForJobOutputStatus(String jobName, String jobId) throws Exception {
@@ -131,8 +132,8 @@ public class MonitorJobs {
      * requested status) with the current status of the job.
      *
      * @param parms monitor jobs parameters, see MonitorJobWaitForParms object
-     * @throws Exception error processing wait check request
      * @return job document
+     * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
     public Job waitForStatusCommon(MonitorJobWaitForParms parms) throws Exception {
@@ -153,8 +154,8 @@ public class MonitorJobs {
      * "Polls" (sets timeouts and continuously checks) for the status of the job to match the desired status.
      *
      * @param parms monitor jobs parms, see MonitorJobWaitForParms
-     * @throws Exception error processing poll check request
      * @return job document
+     * @throws Exception error processing poll check request
      * @author Frank Giordano
      */
     private Job pollForStatus(MonitorJobWaitForParms parms) throws Exception {
@@ -173,8 +174,9 @@ public class MonitorJobs {
 
             shouldContinue = !expectedStatus && (maxAttempts > 0 && numOfAttempts < maxAttempts);
 
-            if (shouldContinue)
-                Thread.sleep(timeoutVal);
+            if (shouldContinue) {
+                Util.wait(timeoutVal);
+            }
         } while (shouldContinue);
 
         if (numOfAttempts == maxAttempts)
@@ -187,8 +189,8 @@ public class MonitorJobs {
      * Checks the status of the job for the expected status (OR that the job has progressed passed the expected status).
      *
      * @param parms monitor jobs parms, see MonitorJobWaitForParms
-     * @throws Exception error processing check request
      * @return boolean true when the job status is obtained (or imperative error)
+     * @throws Exception error processing check request
      * @author Frank Giordano
      */
     private CheckJobStatus checkStatus(MonitorJobWaitForParms parms) throws Exception {
