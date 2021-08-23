@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 import utility.Util;
 import zosjobs.input.MonitorJobWaitForParms;
 import zosjobs.response.Job;
-import zosjobs.types.JobTypes;
+import zosjobs.types.JobStatus;
 
 import java.util.Optional;
 
@@ -43,7 +43,7 @@ public class MonitorJobs {
     /**
      * Default expected job status ("OUTPUT")
      */
-    public static JobTypes.StatusType DEFAULT_STATUS = JobTypes.StatusType.OUTPUT;
+    public static JobStatus.Type DEFAULT_STATUS = JobStatus.Type.OUTPUT;
 
     /**
      * Default number of poll attempts to check for the specified job status.
@@ -84,7 +84,7 @@ public class MonitorJobs {
      */
     public Job waitForJobOutputStatus(Job job) throws Exception {
         return waitForStatusCommon(
-                new MonitorJobWaitForParms(job.getJobName(), job.getJobId(), JobTypes.StatusType.OUTPUT,
+                new MonitorJobWaitForParms(job.getJobName(), job.getJobId(), JobStatus.Type.OUTPUT,
                         Optional.ofNullable(attempts), Optional.ofNullable(wakeDelay)));
     }
 
@@ -102,7 +102,7 @@ public class MonitorJobs {
      */
     public Job waitForOutputStatus(String jobName, String jobId) throws Exception {
         return waitForStatusCommon(new MonitorJobWaitForParms(Optional.ofNullable(jobName), Optional.ofNullable(jobId),
-                JobTypes.StatusType.OUTPUT, Optional.ofNullable(attempts), Optional.ofNullable(wakeDelay)));
+                JobStatus.Type.OUTPUT, Optional.ofNullable(attempts), Optional.ofNullable(wakeDelay)));
     }
 
     /**
@@ -185,8 +185,8 @@ public class MonitorJobs {
     }
 
     private int getOrderIndexOfStatus(String statusName) {
-        for (int i = 0; i < JobTypes.JobStatusOrder.length; i++)
-            if (statusName.equals(JobTypes.JobStatusOrder[i])) {
+        for (int i = 0; i < JobStatus.Order.length; i++)
+            if (statusName.equals(JobStatus.Order[i])) {
                 return i;
             }
         return -1;

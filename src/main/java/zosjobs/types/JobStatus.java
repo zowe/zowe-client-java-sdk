@@ -17,12 +17,12 @@ package zosjobs.types;
  * @author Frank Giordano
  * @verion 1.0.0
  */
-public class JobTypes {
+public class JobStatus {
 
     /**
      * Job statuses
      */
-    public enum StatusType {
+    public enum Type {
         INPUT, ACTIVE, OUTPUT
     }
 
@@ -30,6 +30,6 @@ public class JobTypes {
      * The "order" indicates the logical order of job progression within the system. Used to determine if the job will
      * NEVER enter the status that is requested on the API (e.g. if the status is OUTPUT, the job will never be ACTIVE)
      */
-    public static String[] JobStatusOrder = {"INPUT", "ACTIVE", "OUTPUT"};
+    public static String[] Order = {"INPUT", "ACTIVE", "OUTPUT"};
 
 }

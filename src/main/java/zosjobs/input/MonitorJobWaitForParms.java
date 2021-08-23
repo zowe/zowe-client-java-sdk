@@ -10,7 +10,7 @@
  */
 package zosjobs.input;
 
-import zosjobs.types.JobTypes;
+import zosjobs.types.JobStatus;
 
 import java.util.Optional;
 
@@ -50,7 +50,7 @@ public class MonitorJobWaitForParms {
      * documentation for full details) the "waitFor..." API methods will return immediately with the current status.
      * Default: MonitorJobs.DEFAULT_STATUS.
      */
-    private Optional<JobTypes.StatusType> jobStatus;
+    private Optional<JobStatus.Type> jobStatus;
 
     /**
      * Maximum number of poll attempts. Use in conjunction with "watchDelay" to specify your maximum wait
@@ -59,7 +59,7 @@ public class MonitorJobWaitForParms {
      */
     private Optional<Integer> attempts;
 
-    public MonitorJobWaitForParms(Optional<String> jobName, Optional<String> jobId, JobTypes.StatusType jobStatus,
+    public MonitorJobWaitForParms(Optional<String> jobName, Optional<String> jobId, JobStatus.Type jobStatus,
                                   Optional<Integer> attempts, Optional<Integer> watchDelay) {
         this.jobName = jobName;
         this.jobId = jobId;
@@ -80,7 +80,7 @@ public class MonitorJobWaitForParms {
         return watchDelay;
     }
 
-    public Optional<JobTypes.StatusType> getJobStatus() {
+    public Optional<JobStatus.Type> getJobStatus() {
         return jobStatus;
     }
 
@@ -88,7 +88,7 @@ public class MonitorJobWaitForParms {
         return attempts;
     }
 
-    public void setJobStatus(Optional<JobTypes.StatusType> jobStatus) {
+    public void setJobStatus(Optional<JobStatus.Type> jobStatus) {
         this.jobStatus = jobStatus;
     }
 
