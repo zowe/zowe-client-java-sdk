@@ -13,97 +13,44 @@ import java.util.Optional;
 
 public class CreateParams {
 
-    private Optional<String> volser;
-    private Optional<String> unit;
-    private Optional<String> dsorg;
-    private Optional<String> alcunit;
-    private Optional<Integer> primary;
-    private Optional<Integer> secondary;
-    private Optional<Integer> dirblk;
-    private Optional<Integer> avgblk;
-    private Optional<String> recfm;
-    private Optional<Integer> blksize;
-    private Optional<Integer> lrecl;
-    private Optional<String> storclass;
-    private Optional<String> mgntclass;
-    private Optional<String> dataclass;
-    private Optional<String> dsntype;
-    private Optional<Boolean> showAttributes;
-    private Optional<String> size;
-    private Optional<String> responseTimeout;
+    private final Optional<String> volser;
+    private final Optional<String> unit;
+    private final Optional<String> dsorg;
+    private final Optional<String> alcunit;
+    private final Optional<Integer> primary;
+    private final Optional<Integer> secondary;
+    private final Optional<Integer> dirblk;
+    private final Optional<Integer> avgblk;
+    private final Optional<String> recfm;
+    private final Optional<Integer> blksize;
+    private final Optional<Integer> lrecl;
+    private final Optional<String> storclass;
+    private final Optional<String> mgntclass;
+    private final Optional<String> dataclass;
+    private final Optional<String> dsntype;
+    private final Optional<Boolean> showAttributes;
+    private final Optional<String> size;
+    private final Optional<String> responseTimeout;
 
     public CreateParams(CreateParams.Builder builder) {
-        if (builder.volser != null)
-            this.volser = Optional.ofNullable(builder.volser);
-        else this.volser = Optional.empty();
-
-        if (builder.unit != null)
-            this.unit = Optional.ofNullable(builder.unit);
-        else this.unit = Optional.empty();
-
-        if (builder.dsorg != null)
-            this.dsorg = Optional.ofNullable(builder.dsorg);
-        else this.dsorg = Optional.empty();
-
-        if (builder.alcunit != null)
-            this.alcunit = Optional.ofNullable(builder.alcunit);
-        else this.alcunit = Optional.empty();
-
-        if (builder.primary != null)
-            this.primary = Optional.ofNullable(builder.primary);
-        else this.primary = Optional.empty();
-
-        if (builder.secondary != null)
-            this.secondary = Optional.ofNullable(builder.secondary);
-        else this.secondary = Optional.empty();
-
-        if (builder.dirblk != null)
-            this.dirblk = Optional.ofNullable(builder.dirblk);
-        else this.dirblk = Optional.empty();
-
-        if (builder.avgblk != null)
-            this.avgblk = Optional.ofNullable(builder.avgblk);
-        else this.avgblk = Optional.empty();
-
-        if (builder.recfm != null)
-            this.recfm = Optional.ofNullable(builder.recfm);
-        else this.recfm = Optional.empty();
-
-        if (builder.blksize != null)
-            this.blksize = Optional.ofNullable(builder.blksize);
-        else this.blksize = Optional.empty();
-
-        if (builder.lrecl != null)
-            this.lrecl = Optional.ofNullable(builder.lrecl);
-        else this.lrecl = Optional.empty();
-
-        if (builder.storclass != null)
-            this.storclass = Optional.ofNullable(builder.storclass);
-        else this.storclass = Optional.empty();
-
-        if (builder.mgntclass != null)
-            this.mgntclass = Optional.ofNullable(builder.mgntclass);
-        else this.mgntclass = Optional.empty();
-
-        if (builder.dataclass != null)
-            this.dataclass = Optional.ofNullable(builder.dataclass);
-        else this.dataclass = Optional.empty();
-
-        if (builder.dsntype != null)
-            this.dsntype = Optional.ofNullable(builder.dsntype);
-        else this.dsntype = Optional.empty();
-
-        if (builder.showAttributes != null)
-            this.showAttributes = Optional.ofNullable(builder.showAttributes);
-        else this.showAttributes = Optional.empty();
-
-        if (builder.size != null)
-            this.size = Optional.ofNullable(builder.size);
-        else this.size = Optional.empty();
-
-        if (builder.responseTimeout != null)
-            this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
-        else this.responseTimeout = Optional.empty();
+        this.volser = Optional.ofNullable(builder.volser);
+        this.unit = Optional.ofNullable(builder.unit);
+        this.dsorg = Optional.ofNullable(builder.dsorg);
+        this.alcunit = Optional.ofNullable(builder.alcunit);
+        this.primary = Optional.ofNullable(builder.primary);
+        this.secondary = Optional.ofNullable(builder.secondary);
+        this.dirblk = Optional.ofNullable(builder.dirblk);
+        this.avgblk = Optional.ofNullable(builder.avgblk);
+        this.recfm = Optional.ofNullable(builder.recfm);
+        this.blksize = Optional.ofNullable(builder.blksize);
+        this.lrecl = Optional.ofNullable(builder.lrecl);
+        this.storclass = Optional.ofNullable(builder.storclass);
+        this.mgntclass = Optional.ofNullable(builder.mgntclass);
+        this.dataclass = Optional.ofNullable(builder.dataclass);
+        this.dsntype = Optional.ofNullable(builder.dsntype);
+        this.showAttributes = Optional.ofNullable(builder.showAttributes);
+        this.size = Optional.ofNullable(builder.size);
+        this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
     }
 
     public Optional<String> getVolser() { return volser;}
