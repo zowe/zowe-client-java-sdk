@@ -12,6 +12,7 @@ package zosfiles.input;
 import java.util.Optional;
 
 public class CopyParams {
+
     private final Optional<String> fromVolser;
     private final Optional<String> fromDataSet;
     private final Optional<String> toVolser;

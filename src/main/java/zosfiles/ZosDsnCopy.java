@@ -24,15 +24,20 @@ import zosfiles.input.CopyParams;
 
 /**
  * Provides copy dataset and dataset member functionality
+ *
+ * @version 1.0.0
  */
 public class ZosDsnCopy {
 
     private static final Logger LOG = LogManager.getLogger(ZosDsnCopy.class);
+
     private final ZOSConnection connection;
 
     /**
-     * Constructor
-     * @param connection is a connection object
+     * ZosDsnCopy constructor
+     *
+     * @param connection is a connection, see ZOSConnection object
+     * @version 1.0.0
      */
     public ZosDsnCopy(ZOSConnection connection) {
         this.connection = connection;
@@ -40,7 +45,9 @@ public class ZosDsnCopy {
 
     /**
      * Copy dataset or dataset member
+     *
      * @param params contains copy dataset parameters
+     * @version 1.0.0
      */
     public void copy(CopyParams params) {
         Util.checkNullParameter(params.getFromDataSet().isEmpty(), "fromDataSetName is null");
@@ -52,7 +59,7 @@ public class ZosDsnCopy {
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
 
         if (params.getToVolser().isPresent()) {
-            url += "-("+ params.getToVolser().get() +")/";
+            url += "-(" + params.getToVolser().get() + ")/";
         }
 
         url += params.getToDataSet().get();
@@ -62,11 +69,11 @@ public class ZosDsnCopy {
 
             String body = buildBody(params);
 
-            ZoweRequest request =  ZoweRequestFactory.buildRequest(connection, url, body,
+            ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body,
                     ZoweRequestType.VerbType.PUT_JSON);
 
             Response response = request.executeHttpRequest();
-            
+
             try {
                 UtilRest.checkHttpErrors(response);
             } catch (Exception e) {
@@ -81,10 +88,12 @@ public class ZosDsnCopy {
 
     /**
      * Copy dataset or dataset member
-     * @param fromDataSetName is a name of source dataset (f.e. SOURCE.DATASET(MEMBER))
-     * @param toDataSetName is a name of target dataset (f.e. TARGET.DATASET(MEMBER))
-     * @param replace if true, members in the target dataset are replaced. if false,
-     *                like named members are not copied and an error is returned.
+     *
+     * @param fromDataSetName is a name of source dataset (i.e. SOURCE.DATASET(MEMBER))
+     * @param toDataSetName   is a name of target dataset (i.e. TARGET.DATASET(MEMBER))
+     * @param replace         if true, members in the target dataset are replaced. if false,
+     *                        like named members are not copied and an error is returned.
+     * @version 1.0.0
      */
     public void copy(String fromDataSetName, String toDataSetName, boolean replace) {
         copy(new CopyParams.Builder()
