@@ -59,6 +59,16 @@ public class MonitorJobWaitForParms {
      */
     private Optional<Integer> attempts;
 
+    /**
+     * MonitorJobWaitForParms constructor.
+     *
+     * @param jobName    job name
+     * @param jobId      job id
+     * @param jobStatus  job status type, see JobStatus.Type object
+     * @param attempts   number of attempts to get status
+     * @param watchDelay delay time in milliseconds to wait each time requesting status
+     * @author Frank Giordano
+     */
     public MonitorJobWaitForParms(Optional<String> jobName, Optional<String> jobId, JobStatus.Type jobStatus,
                                   Optional<Integer> attempts, Optional<Integer> watchDelay) {
         this.jobName = jobName;
@@ -68,30 +78,67 @@ public class MonitorJobWaitForParms {
         this.watchDelay = watchDelay;
     }
 
+    /**
+     * Retrieve job id
+     *
+     * @author Frank Giordano
+     */
     public Optional<String> getJobId() {
         return jobId;
     }
 
+    /**
+     * Retrieve job name
+     *
+     * @author Frank Giordano
+     */
     public Optional<String> getJobName() {
         return jobName;
     }
 
+    /**
+     * Retrieve watch delay
+     *
+     * @author Frank Giordano
+     */
     public Optional<Integer> getWatchDelay() {
         return watchDelay;
     }
 
+    /**
+     * Retrieve job status
+     *
+     * @author Frank Giordano
+     */
     public Optional<JobStatus.Type> getJobStatus() {
         return jobStatus;
     }
 
+    /**
+     * Retrieve attempts
+     *
+     * @author Frank Giordano
+     */
     public Optional<Integer> getAttempts() {
         return attempts;
     }
 
+    /**
+     * Assign job status
+     *
+     * @param jobStatus job status type, see JobStatus.Type object
+     * @author Frank Giordano
+     */
     public void setJobStatus(Optional<JobStatus.Type> jobStatus) {
         this.jobStatus = jobStatus;
     }
 
+    /**
+     * Assign attempts
+     *
+     * @param attempts number of attempts to get status
+     * @author Frank Giordano
+     */
     public void setAttempts(Optional<Integer> attempts) {
         this.attempts = attempts;
     }

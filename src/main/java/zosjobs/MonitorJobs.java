@@ -33,7 +33,7 @@ public class MonitorJobs {
 
     private final ZOSConnection connection;
     private int attempts = DEFAULT_ATTEMPTS;
-    private int wakeDelay = DEFAULT_WATCH_DELAY;
+    private int watchDelay = DEFAULT_WATCH_DELAY;
 
     /**
      * The default amount of time (in 3000 milliseconds is 3 seconds) to wait until the next job status poll.
@@ -51,7 +51,7 @@ public class MonitorJobs {
     public static int DEFAULT_ATTEMPTS = 100000;
 
     /**
-     * MonitorJobs Constructor.
+     * MonitorJobs constructor.
      *
      * @param connection connection object, see ZOSConnection object
      * @author Frank Giordano
@@ -60,15 +60,30 @@ public class MonitorJobs {
         this.connection = connection;
     }
 
+    /**
+     * MonitorJobs constructor.
+     *
+     * @param connection connection object, see ZOSConnection object
+     * @param attempts   number of attempts to get status
+     * @author Frank Giordano
+     */
     public MonitorJobs(ZOSConnection connection, int attempts) {
         this.connection = connection;
         this.attempts = attempts;
     }
 
-    public MonitorJobs(ZOSConnection connection, int attempts, int wakeDelay) {
+    /**
+     * MonitorJobs constructor.
+     *
+     * @param connection connection object, see ZOSConnection object
+     * @param attempts   number of attempts to get status
+     * @param watchDelay delay time in milliseconds to wait each time requesting status
+     * @author Frank Giordano
+     */
+    public MonitorJobs(ZOSConnection connection, int attempts, int watchDelay) {
         this.connection = connection;
         this.attempts = attempts;
-        this.wakeDelay = wakeDelay;
+        this.watchDelay = watchDelay;
     }
 
     /**
@@ -85,7 +100,7 @@ public class MonitorJobs {
     public Job waitForJobOutputStatus(Job job) throws Exception {
         return waitForStatusCommon(
                 new MonitorJobWaitForParms(job.getJobName(), job.getJobId(), JobStatus.Type.OUTPUT,
-                        Optional.ofNullable(attempts), Optional.ofNullable(wakeDelay)));
+                        Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
     }
 
     /**
@@ -102,7 +117,7 @@ public class MonitorJobs {
      */
     public Job waitForOutputStatus(String jobName, String jobId) throws Exception {
         return waitForStatusCommon(new MonitorJobWaitForParms(Optional.ofNullable(jobName), Optional.ofNullable(jobId),
-                JobStatus.Type.OUTPUT, Optional.ofNullable(attempts), Optional.ofNullable(wakeDelay)));
+                JobStatus.Type.OUTPUT, Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
     }
 
     /**
