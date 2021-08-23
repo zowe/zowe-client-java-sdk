@@ -25,6 +25,18 @@ import java.util.Base64;
 public class Util {
 
     /**
+     * Wait by time specified.
+     *
+     * @param time in milliseconds
+     * @author Frank Giordano
+     */
+    public static void wait(int time) {
+        Timer timer = new Timer(time).initialize();
+        while (!timer.isEnded()) {
+        }
+    }
+
+    /**
      * Encodes the passed connection String as UTF-8 for usage of the AUTHORIZATION http header.
      *
      * @param connection connection object, see ZOSConnection object
