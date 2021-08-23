@@ -49,7 +49,7 @@ public class MonitorJobs {
     /**
      * Default number of poll attempts to check for the specified job status.
      */
-    public static int DEFAULT_ATTEMPTS = 100000;
+    public static int DEFAULT_ATTEMPTS = 1000;
 
     /**
      * MonitorJobs constructor.
@@ -95,6 +95,7 @@ public class MonitorJobs {
      * See JSDoc for "waitForStatusCommon" for full details on polling and other logic.
      *
      * @param job document of the z/OS job to wait for (see z/OSMF Jobs APIs for details)
+     * @throws Exception error processing wait check request
      * @returns job document
      * @author Frank Giordano
      */
@@ -113,6 +114,7 @@ public class MonitorJobs {
      *
      * @param jobName the z/OS jobname of the job to wait for output status (see z/OSMF Jobs APIs for details)
      * @param jobId   the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
+     * @throws Exception error processing wait check request
      * @returns job document
      * @author Frank Giordano
      */
@@ -130,6 +132,7 @@ public class MonitorJobs {
      * requested status) with the current status of the job.
      *
      * @param parms monitor jobs parameters, see MonitorJobWaitForParms object
+     * @throws Exception error processing wait check request
      * @returns job document
      * @author Frank Giordano
      */
@@ -153,13 +156,14 @@ public class MonitorJobs {
      * "Polls" (sets timeouts and continuously checks) for the status of the job to match the desired status.
      *
      * @param parms monitor jobs parms, see MonitorJobWaitForParms
+     * @throws Exception error processing poll check request
      * @returns job document
      * @author Frank Giordano
      */
     private Job pollForStatus(MonitorJobWaitForParms parms) throws Exception {
         int timeoutVal = parms.getWatchDelay().get();
         boolean expectedStatus;  // default is false;
-        boolean shouldContinue;
+        boolean shouldContinue; // default is false;
         int numOfAttempts = 0;
         int maxAttempts = parms.getAttempts().get();
 
@@ -176,6 +180,9 @@ public class MonitorJobs {
                 Thread.sleep(timeoutVal);
         } while (shouldContinue);
 
+        if (numOfAttempts == maxAttempts)
+            throw new Exception("Desired status not seen. The number of maximum attempts reached.");
+
         return checkJobStatus.getJob();
     }
 
@@ -183,6 +190,7 @@ public class MonitorJobs {
      * Checks the status of the job for the expected status (OR that the job has progressed passed the expected status).
      *
      * @param parms monitor jobs parms, see MonitorJobWaitForParms
+     * @throws Exception error processing check request
      * @returns boolean true when the job status is obtained (or imperative error)
      * @author Frank Giordano
      */
@@ -194,10 +202,16 @@ public class MonitorJobs {
         if (statusNameCheck.equals(job.getStatus().get()))
             return new CheckJobStatus(true, job);
 
-        // return exception if any return -1
-        int orderNumOfStatusCheck = getOrderIndexOfStatus(statusNameCheck);
-        int orderNumOfCurrRunningJob = getOrderIndexOfStatus(job.getStatus().get());
-        if (orderNumOfCurrRunningJob > orderNumOfStatusCheck)
+        String invalidStatusMsg = "Invalid status when check for status ordering.";
+        int orderIndexOfDesiredJobStatus = getOrderIndexOfStatus(statusNameCheck);
+        if (orderIndexOfDesiredJobStatus == -1) // this should never happen but lets check for it.
+            throw new Exception(invalidStatusMsg);
+
+        int orderIndexOfCurrRunningJobStatus = getOrderIndexOfStatus(job.getStatus().get());
+        if (orderIndexOfCurrRunningJobStatus == -1) // this should never happen but lets check for it.
+            throw new Exception(invalidStatusMsg);
+
+        if (orderIndexOfCurrRunningJobStatus > orderIndexOfDesiredJobStatus)
             return new CheckJobStatus(true, job);
 
         return new CheckJobStatus(false, job);
