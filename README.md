@@ -23,7 +23,7 @@ Functionality provided so far:
     DeleteDataset  
     WriteDataset  
     ListDataset  
-    MonitorJobsTest  
+    MonitorJobs  
     CopyDataset
 
 See the following sample programs within each sample's package:
