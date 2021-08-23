@@ -10,6 +10,12 @@
  */
 package zosjobs.response;
 
+/**
+ * Class used internally to help determine current job status
+ *
+ * @author Frank Giordano
+ * @verion 1.0.0
+ */
 public class CheckJobStatus {
 
     private boolean statusFound;
