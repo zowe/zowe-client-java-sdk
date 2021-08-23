@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.Util;
 import zosjobs.input.MonitorJobWaitForParms;
+import zosjobs.response.CheckJobStatus;
 import zosjobs.response.Job;
 import zosjobs.types.JobStatus;
 
@@ -28,16 +29,6 @@ import java.util.Optional;
  * @verion 1.0.0
  */
 public class MonitorJobs {
-
-    class CheckJobStatus {
-        public boolean statusFound;
-        public Job job;
-
-        public CheckJobStatus(boolean statusFound, Job job) {
-            this.statusFound = statusFound;
-            this.job = job;
-        }
-    }
 
     private static final Logger LOG = LogManager.getLogger(MonitorJobs.class);
 
@@ -177,7 +168,7 @@ public class MonitorJobs {
             numOfAttempts++;
 
             checkJobStatus = checkStatus(parms);
-            expectedStatus = checkJobStatus.statusFound;
+            expectedStatus = checkJobStatus.isStatusFound();
 
             shouldContinue = !expectedStatus && (maxAttempts > 0 && numOfAttempts < maxAttempts);
 
@@ -185,7 +176,7 @@ public class MonitorJobs {
                 Thread.sleep(timeoutVal);
         } while (shouldContinue);
 
-        return checkJobStatus.job;
+        return checkJobStatus.getJob();
     }
 
     /**

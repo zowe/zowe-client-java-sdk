@@ -1,3 +1,13 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ *
+ */
 package zosjobs.samples;
 
 import core.ZOSConnection;
@@ -32,7 +42,7 @@ public class MonitorJobsTest {
         Job job = submitJobs.submitJcl(jclString, null, null);
         MonitorJobs monitorJobs = new MonitorJobs(connection);
         job = monitorJobs.waitForJobOutputStatus(job);
-        LOG.info("Job status for Job " + job.getJobName().get() +":" + job.getJobId().get() + " is " + job.getStatus().get());
+        LOG.info("Job status for Job " + job.getJobName().get() + ":" + job.getJobId().get() + " is " + job.getStatus().get());
     }
 
     private static void tstMonitorJobsForOutputStatusByJobNameAndId() throws Exception {
@@ -40,7 +50,7 @@ public class MonitorJobsTest {
         Job job = submitJobs.submitJcl(jclString, null, null);
         MonitorJobs monitorJobs = new MonitorJobs(connection);
         job = monitorJobs.waitForJobOutputStatus(job.getJobName().get(), job.getJobId().get());
-        LOG.info("Job status for Job " + job.getJobName().get() +":" + job.getJobId().get() + " is " + job.getStatus().get());
+        LOG.info("Job status for Job " + job.getJobName().get() + ":" + job.getJobId().get() + " is " + job.getStatus().get());
     }
 
 }
