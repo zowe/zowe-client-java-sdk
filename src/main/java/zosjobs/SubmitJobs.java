@@ -181,6 +181,11 @@ public class SubmitJobs {
             if (errorMsg.contains("400")) {
                 throw new Exception("Body sent may be invalid. " + errorMsg);
             }
+            if (errorMsg.contains("401")) {
+                throw new Exception("Unauthorized user specified. " + errorMsg);
+            }
+            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
 
         JSONParser parser = new JSONParser();

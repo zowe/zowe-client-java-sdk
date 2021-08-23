@@ -25,10 +25,10 @@ public class MonitorJobsTest {
     private static ZOSConnection connection;
 
     public static void main(String[] args) throws Exception {
-        String hostName = "usilCA31.lvn.broadcom.net";
-        String port = "1443";
-        String userName = "FG892105";
-        String password = "dell101D";
+        String hostName = "XXX";
+        String port = "XXX";
+        String userName = "XXX";
+        String password = "XXX";
 
         connection = new ZOSConnection(hostName, port, userName, password);
         submitJobs = new SubmitJobs(connection);
