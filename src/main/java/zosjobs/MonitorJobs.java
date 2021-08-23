@@ -26,7 +26,7 @@ import java.util.Optional;
  * in monitor jobs invoke z/OSMF jobs REST endpoints to obtain job status information.
  *
  * @author Frank Giordano
- * @verion 1.0.0
+ * @version 1.0
  */
 public class MonitorJobs {
 
