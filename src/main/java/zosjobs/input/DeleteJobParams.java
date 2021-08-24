@@ -12,12 +12,11 @@ package zosjobs.input;
 import java.util.Optional;
 
 /**
- * DeleteJobs "waitFor..." APIs parameters interface
+ * DeleteJobParams APIs parameters interface for delete job operation
  *
  * @author Nikunj Goyal
  * @@version 1.0
  */
-
 public class DeleteJobParams {
 
     private Optional<String> jobname;
@@ -45,7 +44,9 @@ public class DeleteJobParams {
         return jobId;
     }
 
-    public Optional<String> getModifyVersion() { return modifyVersion; }
+    public Optional<String> getModifyVersion() {
+        return modifyVersion;
+    }
 
     @Override
     public String toString() {
