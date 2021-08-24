@@ -36,6 +36,7 @@ public class MonitorJobs {
     private static final Logger LOG = LogManager.getLogger(MonitorJobs.class);
 
     private final ZOSConnection connection;
+    // double settings from DEFAULTS variables to allow constructor to control them also
     private int attempts = DEFAULT_ATTEMPTS;
     private int watchDelay = DEFAULT_WATCH_DELAY;
     private int lineLimit = DEFAULT_LINE_LIMIT;
@@ -97,6 +98,22 @@ public class MonitorJobs {
     }
 
     /**
+     * MonitorJobs constructor.
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param attempts   number of attempts to get status
+     * @param watchDelay delay time in milliseconds to wait each time requesting status
+     * @param lineLimit  number of line to inspect job output
+     * @author Frank Giordano
+     */
+    public MonitorJobs(ZOSConnection connection, int attempts, int watchDelay, int lineLimit) {
+        this.connection = connection;
+        this.attempts = attempts;
+        this.watchDelay = watchDelay;
+        this.lineLimit = lineLimit;
+    }
+
+    /**
      * Given an Job document (has jobname/jobid), waits for the given message from the job. This API will poll for
      * the given message once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
      * sufficient, use "waitForMessageCommon" method to adjust.
@@ -110,8 +127,9 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public boolean waitForJobMessage(Job job, String message) throws Exception {
-        return waitForMessageCommon(new MonitorJobWaitForParms(job.getJobName(), job.getJobId(), JobStatus.Type.OUTPUT,
-                Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)), message);
+        return waitForMessageCommon(new MonitorJobWaitForParms.Builder().jobName(job.getJobName().get())
+                .jobId(job.getJobId().get()).jobStatus(JobStatus.Type.OUTPUT)
+                .attempts(attempts).watchDelay(watchDelay).build(), message);
     }
 
     /**
@@ -129,8 +147,8 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public boolean waitForJobMessage(String jobName, String jobId, String message) throws Exception {
-        return waitForMessageCommon(new MonitorJobWaitForParms(Optional.ofNullable(jobName), Optional.ofNullable(jobId),
-                JobStatus.Type.OUTPUT, Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)), message);
+        return waitForMessageCommon(new MonitorJobWaitForParms.Builder().jobName(jobName).jobId(jobId)
+                .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build(), message);
     }
 
     /**
@@ -155,8 +173,11 @@ public class MonitorJobs {
         if (parms.getAttempts().isEmpty())
             parms.setAttempts(Optional.of(attempts));
 
+        if (parms.getWatchDelay().isEmpty())
+            parms.setWatchDelay(Optional.of(watchDelay));
+
         if (parms.getLineLimit().isEmpty())
-            parms.setLineLimit(Optional.of(DEFAULT_LINE_LIMIT));
+            parms.setLineLimit(Optional.of(lineLimit));
 
         return pollForMessage(parms, message);
     }
@@ -234,8 +255,9 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public Job waitForJobStatus(Job job, JobStatus.Type statusType) throws Exception {
-        return waitForStatusCommon(new MonitorJobWaitForParms(job.getJobName(), job.getJobId(), statusType,
-                Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
+        return waitForStatusCommon(new MonitorJobWaitForParms.Builder().jobName(job.getJobName().get())
+                .jobId(job.getJobId().get()).jobStatus(statusType).attempts(attempts)
+                .watchDelay(watchDelay).build());
     }
 
     /**
@@ -253,8 +275,8 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public Job waitForJobStatus(String jobName, String jobId, JobStatus.Type statusType) throws Exception {
-        return waitForStatusCommon(new MonitorJobWaitForParms(Optional.ofNullable(jobName), Optional.ofNullable(jobId),
-                statusType, Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
+        return waitForStatusCommon(new MonitorJobWaitForParms.Builder().jobName(jobName).jobId(jobId)
+                .jobStatus(statusType).attempts(attempts).watchDelay(watchDelay).build());
     }
 
     /**
@@ -270,8 +292,9 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public Job waitForJobOutputStatus(Job job) throws Exception {
-        return waitForStatusCommon(new MonitorJobWaitForParms(job.getJobName(), job.getJobId(), JobStatus.Type.OUTPUT,
-                Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
+        return waitForStatusCommon(new MonitorJobWaitForParms.Builder().jobName(job.getJobName().get())
+                .jobId(job.getJobId().get()).jobStatus(JobStatus.Type.OUTPUT).attempts(attempts)
+                .watchDelay(watchDelay).build());
     }
 
     /**
@@ -288,8 +311,8 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public Job waitForJobOutputStatus(String jobName, String jobId) throws Exception {
-        return waitForStatusCommon(new MonitorJobWaitForParms(Optional.ofNullable(jobName), Optional.ofNullable(jobId),
-                JobStatus.Type.OUTPUT, Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
+        return waitForStatusCommon(new MonitorJobWaitForParms.Builder().jobName(jobName).jobId(jobId)
+                        .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build());
     }
 
     /**
@@ -317,6 +340,9 @@ public class MonitorJobs {
 
         if (parms.getAttempts().isEmpty())
             parms.setAttempts(Optional.of(attempts));
+
+        if (parms.getWatchDelay().isEmpty())
+            parms.setWatchDelay(Optional.of(watchDelay));
 
         return pollForStatus(parms);
     }
