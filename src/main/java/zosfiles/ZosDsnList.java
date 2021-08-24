@@ -54,7 +54,7 @@ public class ZosDsnList {
     @SuppressWarnings("unchecked")
     public List<String> listMembers(String dataSetName, ListParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
+        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
 
         Map<String, String> headers = new HashMap<>();
@@ -102,7 +102,7 @@ public class ZosDsnList {
     @SuppressWarnings("unchecked")
     public List<Dataset> listDsn(String dataSetName, ListParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
+        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
 
         Map<String, String> headers = new HashMap<>();

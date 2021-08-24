@@ -6,7 +6,7 @@ Copyright Contributors to the Zowe Project.
 
 # Zowe SDK for Java
 
-Work In Progress implementation of a Zowe SDK for Java.
+Version 1.0.x provides functionality documented in MVP issues #5. Project requires Java 11 and above. 
 
 The SDK lets you leverage the underlying z/OSMF APIs on a z/OS system to build applications that interface with the mainframe.
 
