@@ -84,7 +84,44 @@ public class MonitorJobs {
     }
 
     /**
-     * Given an IJob (has jobname/jobid), waits for the status of the job to be "OUTPUT". This API will poll for
+     * Given an Job document (has jobname/jobid), waits for the given status of the job. This API will poll for
+     * the given status once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
+     * sufficient, use "waitForStatusCommon" method to adjust.
+     * <p>
+     * See JavaDoc for "waitForStatusCommon" for full details on polling and other logic.
+     *
+     * @param job        document of the z/OS job to wait for (see z/OSMF Jobs APIs for details)
+     * @param statusType status type, see JobStatus.Type object
+     * @return job document
+     * @throws Exception error processing wait check request
+     * @author Frank Giordano
+     */
+    public Job waitForJobStatus(Job job, JobStatus.Type statusType) throws Exception {
+        return waitForStatusCommon(new MonitorJobWaitForParms(job.getJobName(), job.getJobId(), statusType,
+                Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
+    }
+
+    /**
+     * Given the jobname/jobid, waits for the given status of the job. This API will poll for the given status once
+     * every 3 seconds for at least 1000 times. If the polling interval/duration is NOT sufficient, use
+     * "waitForStatusCommon" method to adjust.
+     * <p>
+     * See JavaDoc for "waitForStatusCommon" for full details on polling and other logic.
+     *
+     * @param jobName    the z/OS jobname of the job to wait for output status (see z/OSMF Jobs APIs for details)
+     * @param jobId      the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
+     * @param statusType status type, see JobStatus.Type object
+     * @return job document
+     * @throws Exception error processing wait check request
+     * @author Frank Giordano
+     */
+    public Job waitForJobStatus(String jobName, String jobId, JobStatus.Type statusType) throws Exception {
+        return waitForStatusCommon(new MonitorJobWaitForParms(Optional.ofNullable(jobName), Optional.ofNullable(jobId),
+                statusType, Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
+    }
+
+    /**
+     * Given an Job document (has jobname/jobid), waits for the status of the job to be "OUTPUT". This API will poll for
      * the OUTPUT status once every 3 seconds indefinitely. If the polling interval/duration is NOT sufficient, use
      * "waitForStatusCommon" to adjust.
      * <p>
@@ -105,7 +142,7 @@ public class MonitorJobs {
      * once every 3 seconds indefinitely. If the polling interval/duration is NOT sufficient, use
      * "waitForStatusCommon" to adjust.
      * <p>
-     * See JSDoc for "waitForStatusCommon" for full details on polling and other logic.
+     * See JavaDoc for "waitForStatusCommon" for full details on polling and other logic.
      *
      * @param jobName the z/OS jobname of the job to wait for output status (see z/OSMF Jobs APIs for details)
      * @param jobId   the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
