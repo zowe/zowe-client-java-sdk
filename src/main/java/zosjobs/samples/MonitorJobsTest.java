@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import zosjobs.MonitorJobs;
 import zosjobs.SubmitJobs;
 import zosjobs.response.Job;
+import zosjobs.types.JobStatus;
 
 public class MonitorJobsTest {
 
@@ -35,6 +36,9 @@ public class MonitorJobsTest {
 
         MonitorJobsTest.tstMonitorJobsForOutputStatusByJobObject();
         MonitorJobsTest.tstMonitorJobsForOutputStatusByJobNameAndId();
+        MonitorJobsTest.tstMonitorJobsForStatusByJobObject(JobStatus.Type.INPUT);
+        MonitorJobsTest.tstMonitorJobsForStatusByJobNameAndId(JobStatus.Type.ACTIVE);
+        MonitorJobsTest.tstMonitorwaitForJobMessage("XXX");
     }
 
     private static void tstMonitorJobsForOutputStatusByJobObject() throws Exception {
@@ -42,7 +46,8 @@ public class MonitorJobsTest {
         Job job = submitJobs.submitJcl(jclString, null, null);
         MonitorJobs monitorJobs = new MonitorJobs(connection);
         job = monitorJobs.waitForJobOutputStatus(job);
-        LOG.info("Job status for Job " + job.getJobName().get() + ":" + job.getJobId().get() + " is " + job.getStatus().get());
+        LOG.info("Job status for Job " + job.getJobName().get() + ":" +
+                job.getJobId().get() + " is " + job.getStatus().get());
     }
 
     private static void tstMonitorJobsForOutputStatusByJobNameAndId() throws Exception {
@@ -50,7 +55,33 @@ public class MonitorJobsTest {
         Job job = submitJobs.submitJcl(jclString, null, null);
         MonitorJobs monitorJobs = new MonitorJobs(connection);
         job = monitorJobs.waitForJobOutputStatus(job.getJobName().get(), job.getJobId().get());
-        LOG.info("Job status for Job " + job.getJobName().get() + ":" + job.getJobId().get() + " is " + job.getStatus().get());
+        LOG.info("Job status for Job " + job.getJobName().get() + ":" +
+                job.getJobId().get() + " is " + job.getStatus().get());
+    }
+
+    private static void tstMonitorJobsForStatusByJobObject(JobStatus.Type statusType) throws Exception {
+        // determine an existing job in your system that is in execute queue and make a Job for it
+        Job job = new Job.Builder().jobName("XXX").jobId("XXX").build();
+        MonitorJobs monitorJobs = new MonitorJobs(connection);
+        job = monitorJobs.waitForJobStatus(job, statusType);
+        LOG.info("Job status for Job " + job.getJobName().get() + ":" +
+                job.getJobId().get() + " is " + job.getStatus().get());
+    }
+
+    private static void tstMonitorJobsForStatusByJobNameAndId(JobStatus.Type statusType) throws Exception {
+        // determine an existing job in your system that is in execute queue and make a Job for it
+        Job job = new Job.Builder().jobName("XXX").jobId("XXX").build();
+        MonitorJobs monitorJobs = new MonitorJobs(connection);
+        job = monitorJobs.waitForJobStatus(job.getJobName().get(), job.getJobId().get(), statusType);
+        LOG.info("Job status for Job " + job.getJobName().get() + ":" +
+                job.getJobId().get() + " is " + job.getStatus().get());
+    }
+
+    private static void tstMonitorwaitForJobMessage(String message) throws Exception {
+        // determine an existing job in your system that is in execute queue and make a Job for it
+        Job job = new Job.Builder().jobName("XXX").jobId("XXX").build();
+        MonitorJobs monitorJobs = new MonitorJobs(connection);
+        LOG.info("Found message = " + monitorJobs.waitForJobMessage(job, message));
     }
 
 }

@@ -70,7 +70,7 @@ public class JsonRequestTest {
                 .thenReturn(httpResponseInvalidJsonMock.getHttpResponse());
 
         Response response = getRequest.executeHttpRequest();
-        Assertions.assertTrue(!response.getResponsePhrase().isPresent());
+        Assertions.assertTrue(response.getResponsePhrase().isEmpty());
         Mockito.verify(httpClient, Mockito.times(1))
                 .execute(any(HttpGet.class), any(BasicHttpContext.class));
     }
@@ -108,7 +108,7 @@ public class JsonRequestTest {
                 .thenReturn(httpResponseInvalidJsonMock.getHttpResponse());
 
         Response response = putRequest.executeHttpRequest();
-        Assertions.assertTrue(!response.getResponsePhrase().isPresent());
+        Assertions.assertTrue(response.getResponsePhrase().isEmpty());
         Mockito.verify(httpClient, Mockito.times(1))
                 .execute(any(HttpPut.class), any(BasicHttpContext.class));
     }

@@ -11,12 +11,17 @@
 package zosjobs;
 
 import core.ZOSConnection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import utility.Util;
+import zosjobs.input.GetJobParms;
+import zosjobs.input.JobFile;
 import zosjobs.input.MonitorJobWaitForParms;
 import zosjobs.response.CheckJobStatus;
 import zosjobs.response.Job;
 import zosjobs.types.JobStatus;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -28,9 +33,17 @@ import java.util.Optional;
  */
 public class MonitorJobs {
 
+    private static final Logger LOG = LogManager.getLogger(MonitorJobs.class);
+
     private final ZOSConnection connection;
     private int attempts = DEFAULT_ATTEMPTS;
     private int watchDelay = DEFAULT_WATCH_DELAY;
+    private int lineLimit = DEFAULT_LINE_LIMIT;
+
+    /**
+     * The default amount of lines to check from job output.
+     */
+    public static int DEFAULT_LINE_LIMIT = 1000;
 
     /**
      * The default amount of time (in 3000 milliseconds is 3 seconds) to wait until the next job status poll.
@@ -84,7 +97,168 @@ public class MonitorJobs {
     }
 
     /**
-     * Given an IJob (has jobname/jobid), waits for the status of the job to be "OUTPUT". This API will poll for
+     * Given an Job document (has jobname/jobid), waits for the given message from the job. This API will poll for
+     * the given message once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
+     * sufficient, use "waitForMessageCommon" method to adjust.
+     * <p>
+     * See JavaDoc for "waitForMessageCommon" for full details on polling and other logic.
+     *
+     * @param job     document of the z/OS job to wait for (see z/OSMF Jobs APIs for details)
+     * @param message message string
+     * @return job document
+     * @throws Exception error processing wait check request
+     * @author Frank Giordano
+     */
+    public boolean waitForJobMessage(Job job, String message) throws Exception {
+        return waitForMessageCommon(new MonitorJobWaitForParms(job.getJobName(), job.getJobId(), JobStatus.Type.OUTPUT,
+                Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)), message);
+    }
+
+    /**
+     * Given the jobname/jobid, waits for the given message from the job. This API will poll for
+     * the given message once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
+     * sufficient, use "waitForMessageCommon" method to adjust.
+     * <p>
+     * See JavaDoc for "waitForMessageCommon" for full details on polling and other logic.
+     *
+     * @param jobName the z/OS jobname of the job to wait for output status (see z/OSMF Jobs APIs for details)
+     * @param jobId   the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
+     * @param message message string
+     * @return job document
+     * @throws Exception error processing wait check request
+     * @author Frank Giordano
+     */
+    public boolean waitForJobMessage(String jobName, String jobId, String message) throws Exception {
+        return waitForMessageCommon(new MonitorJobWaitForParms(Optional.ofNullable(jobName), Optional.ofNullable(jobId),
+                JobStatus.Type.OUTPUT, Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)), message);
+    }
+
+    /**
+     * Given jobname/jobid, checks for the desired message continuously (based on the interval and attempts specified).
+     *
+     * @param parms   monitor jobs parameters, see MonitorJobWaitForParms object
+     * @param message message string
+     * @return job document
+     * @throws Exception error processing wait check request
+     * @author Frank Giordano
+     */
+    private boolean waitForMessageCommon(MonitorJobWaitForParms parms, String message) throws Exception {
+        Util.checkStateParameter(parms.getJobName().isEmpty(), "job name not specified");
+        Util.checkStateParameter(parms.getJobName().get().isEmpty(), "job name not specified");
+        Util.checkStateParameter(parms.getJobId().isEmpty(), "job id not specified");
+        Util.checkStateParameter(parms.getJobId().get().isEmpty(), "job id not specified");
+        Util.checkNullParameter(parms == null, "parms is null");
+
+        if (parms.getJobStatus().isEmpty())
+            parms.setJobStatus(Optional.of(DEFAULT_STATUS));
+
+        if (parms.getAttempts().isEmpty())
+            parms.setAttempts(Optional.of(attempts));
+
+        if (parms.getLineLimit().isEmpty())
+            parms.setLineLimit(Optional.of(DEFAULT_LINE_LIMIT));
+
+        return pollForMessage(parms, message);
+    }
+
+    /**
+     * "Polls" (sets timeouts and continuously checks) for the given message within the job output.
+     *
+     * @param parms   monitor jobs parms, see MonitorJobWaitForParms
+     * @param message message string
+     * @return boolean message found status
+     * @throws Exception error processing poll check request
+     * @author Frank Giordano
+     */
+    private boolean pollForMessage(MonitorJobWaitForParms parms, String message) throws Exception {
+        int timeoutVal = parms.getWatchDelay().get();
+        boolean messageFound;  // no assigment means by default it is false
+        boolean shouldContinue; // no assigment means by default it is false
+        int numOfAttempts = 0;
+        int maxAttempts = parms.getAttempts().get();
+
+        do {
+            numOfAttempts++;
+
+            messageFound = checkMessage(parms, message);
+
+            shouldContinue = !messageFound && (maxAttempts > 0 && numOfAttempts < maxAttempts);
+
+            if (shouldContinue) {
+                Util.wait(timeoutVal);
+            }
+        } while (shouldContinue);
+
+        if (numOfAttempts == maxAttempts)
+            return false;
+
+        return true;
+    }
+
+    /**
+     * Checks if the given message is within the job output within line limit.
+     *
+     * @param parms   monitor jobs parms, see MonitorJobWaitForParms
+     * @param message message string
+     * @return boolean message found status
+     * @throws Exception error processing check request
+     * @author Frank Giordano
+     */
+    private boolean checkMessage(MonitorJobWaitForParms parms, String message) throws Exception {
+        GetJobs getJobs = new GetJobs(connection);
+        GetJobParms filter = new GetJobParms.Builder().owner("*").jobId(parms.getJobId().get())
+                .prefix(parms.getJobName().get()).build();
+        List<Job> jobs = getJobs.getJobsCommon(filter);
+        List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
+        String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
+        // start from bottom
+        for (int i = output.length - parms.getLineLimit().get(); i < output.length; i++) {
+            LOG.debug(output[i]);
+            if (output[i].contains(message))
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Given an Job document (has jobname/jobid), waits for the given status of the job. This API will poll for
+     * the given status once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
+     * sufficient, use "waitForStatusCommon" method to adjust.
+     * <p>
+     * See JavaDoc for "waitForStatusCommon" for full details on polling and other logic.
+     *
+     * @param job        document of the z/OS job to wait for (see z/OSMF Jobs APIs for details)
+     * @param statusType status type, see JobStatus.Type object
+     * @return job document
+     * @throws Exception error processing wait check request
+     * @author Frank Giordano
+     */
+    public Job waitForJobStatus(Job job, JobStatus.Type statusType) throws Exception {
+        return waitForStatusCommon(new MonitorJobWaitForParms(job.getJobName(), job.getJobId(), statusType,
+                Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
+    }
+
+    /**
+     * Given the jobname/jobid, waits for the given status of the job. This API will poll for the given status once
+     * every 3 seconds for at least 1000 times. If the polling interval/duration is NOT sufficient, use
+     * "waitForStatusCommon" method to adjust.
+     * <p>
+     * See JavaDoc for "waitForStatusCommon" for full details on polling and other logic.
+     *
+     * @param jobName    the z/OS jobname of the job to wait for output status (see z/OSMF Jobs APIs for details)
+     * @param jobId      the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
+     * @param statusType status type, see JobStatus.Type object
+     * @return job document
+     * @throws Exception error processing wait check request
+     * @author Frank Giordano
+     */
+    public Job waitForJobStatus(String jobName, String jobId, JobStatus.Type statusType) throws Exception {
+        return waitForStatusCommon(new MonitorJobWaitForParms(Optional.ofNullable(jobName), Optional.ofNullable(jobId),
+                statusType, Optional.ofNullable(attempts), Optional.ofNullable(watchDelay)));
+    }
+
+    /**
+     * Given an Job document (has jobname/jobid), waits for the status of the job to be "OUTPUT". This API will poll for
      * the OUTPUT status once every 3 seconds indefinitely. If the polling interval/duration is NOT sufficient, use
      * "waitForStatusCommon" to adjust.
      * <p>
@@ -105,7 +279,7 @@ public class MonitorJobs {
      * once every 3 seconds indefinitely. If the polling interval/duration is NOT sufficient, use
      * "waitForStatusCommon" to adjust.
      * <p>
-     * See JSDoc for "waitForStatusCommon" for full details on polling and other logic.
+     * See JavaDoc for "waitForStatusCommon" for full details on polling and other logic.
      *
      * @param jobName the z/OS jobname of the job to wait for output status (see z/OSMF Jobs APIs for details)
      * @param jobId   the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
@@ -133,7 +307,9 @@ public class MonitorJobs {
      */
     public Job waitForStatusCommon(MonitorJobWaitForParms parms) throws Exception {
         Util.checkStateParameter(parms.getJobName().isEmpty(), "job name not specified");
+        Util.checkStateParameter(parms.getJobName().get().isEmpty(), "job name not specified");
         Util.checkStateParameter(parms.getJobId().isEmpty(), "job id not specified");
+        Util.checkStateParameter(parms.getJobId().get().isEmpty(), "job id not specified");
         Util.checkNullParameter(parms == null, "parms is null");
 
         if (parms.getJobStatus().isEmpty())
@@ -211,6 +387,14 @@ public class MonitorJobs {
         return new CheckJobStatus(false, job);
     }
 
+    /**
+     * Checks the status order of the given status name
+     *
+     * @param statusName status name
+     * @return int index of status order
+     * @throws Exception error processing check request
+     * @author Frank Giordano
+     */
     private int getOrderIndexOfStatus(String statusName) {
         for (int i = 0; i < JobStatus.Order.length; i++)
             if (statusName.equals(JobStatus.Order[i])) {

@@ -51,7 +51,7 @@ public class ZosDsn {
      */
     public void writeDsn(String dataSetName, String content) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
+        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
@@ -83,7 +83,7 @@ public class ZosDsn {
      */
     public void deleteDsn(String dataSetName) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
+        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
@@ -116,7 +116,7 @@ public class ZosDsn {
      */
     public void createDsn(String dataSetName, CreateParams params) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
+        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
