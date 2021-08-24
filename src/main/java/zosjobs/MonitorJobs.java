@@ -155,8 +155,8 @@ public class MonitorJobs {
      */
     private Job pollForStatus(MonitorJobWaitForParms parms) throws Exception {
         int timeoutVal = parms.getWatchDelay().get();
-        boolean expectedStatus;  // default is false;
-        boolean shouldContinue; // default is false;
+        boolean expectedStatus;  // no assigment means by default it is false
+        boolean shouldContinue; // no assigment means by default it is false
         int numOfAttempts = 0;
         int maxAttempts = parms.getAttempts().get();
 
@@ -198,11 +198,11 @@ public class MonitorJobs {
 
         String invalidStatusMsg = "Invalid status when checking for status ordering.";
         int orderIndexOfDesiredJobStatus = getOrderIndexOfStatus(statusNameCheck);
-        if (orderIndexOfDesiredJobStatus == -1) // this should never happen but lets check for it.
+        if (orderIndexOfDesiredJobStatus == -1) // this should never happen but let's check for it.
             throw new Exception(invalidStatusMsg);
 
         int orderIndexOfCurrRunningJobStatus = getOrderIndexOfStatus(job.getStatus().get());
-        if (orderIndexOfCurrRunningJobStatus == -1) // this should never happen but lets check for it.
+        if (orderIndexOfCurrRunningJobStatus == -1) // this should never happen but let's check for it.
             throw new Exception(invalidStatusMsg);
 
         if (orderIndexOfCurrRunningJobStatus > orderIndexOfDesiredJobStatus)
