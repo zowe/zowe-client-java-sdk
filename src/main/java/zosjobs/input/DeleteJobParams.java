@@ -1,6 +1,22 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ */
 package zosjobs.input;
 
 import java.util.Optional;
+
+/**
+ * DeleteJobs "waitFor..." APIs parameters interface
+ *
+ * @author Nikunj Goyal
+ * @@version 1.0
+ */
 
 public class DeleteJobParams {
 
@@ -10,10 +26,7 @@ public class DeleteJobParams {
 
     public DeleteJobParams(DeleteJobParams.Builder builder) {
 
-
-        if (builder.jobname != null)
-            this.jobname = Optional.ofNullable(builder.jobname);
-        else this.jobname = Optional.empty();
+        this.jobname = Optional.ofNullable(builder.jobname);
 
         if (builder.jobId != null)
             this.jobId = Optional.ofNullable(builder.jobId);
@@ -23,7 +36,6 @@ public class DeleteJobParams {
             this.modifyVersion = Optional.ofNullable(builder.modifyVersion);
         else this.modifyVersion = Optional.empty();
     }
-
 
     public Optional<String> getJobname() {
         return jobname;

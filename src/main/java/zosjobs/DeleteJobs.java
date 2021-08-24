@@ -1,3 +1,12 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ */
 package zosjobs;
 
 import core.ZOSConnection;
@@ -29,18 +38,27 @@ public class DeleteJobs {
     /**
      * Delete a job that resides in a z/OS data set.
      *
-     * @return job document with details about the submitted job
+     * @return Response about the deleted job
      * @throws Exception error on submitting
-     * @author Frank Giordano
+     * @author Nikunj goyal
      */
     public Response deletejob( ) throws Exception {
         return this.deleteJobCommon(null);
     }
 
+    /**
+     * Delete a job that resides in a z/OS data set.
+     *
+     * @param parms Delete job parameters, see SubmitJobParms object
+     * @return job document with details about the submitted job
+     * @throws Exception error on submitting
+     * @author Nikunj goyal
+     */
     public Response deleteJobCommon(DeleteJobParams parms) throws Exception {
         Util.checkNullParameter(parms == null, "parms is null");
-        Util.checkStateParameter(!parms.getJobId().isPresent(), "jobid not specified");
-        Util.checkStateParameter(!parms.getJobname().isPresent(), "jobname not specified");
+        Util.checkStateParameter( parms.getJobId().isEmpty(), "job id not specified");
+        Util.checkStateParameter( parms.getJobname().isEmpty(), "job name not specified");
+        Util.checkStateParameter( parms.getModifyVersion().isEmpty(), "modify version not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE;
         LOG.debug(url);

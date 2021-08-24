@@ -1,3 +1,12 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ */
 package zosjobs;
 
 import core.ZOSConnection;
@@ -31,25 +40,31 @@ public class CancelJobs {
      *
      * @return job document with details about the submitted job
      * @throws Exception error on submitting
-     * @author Frank Giordano
+     * @author Nikunj goyal
      */
     public Response cancelJob() throws Exception {
-        return this.cancelJobsCommon(null);
+        return this.cancelJobsCommon(new CancelJobParams(null));
     }
-
-
+    /**
+     * Cancel a job that resides in a z/OS data set.
+     *
+     * @param parms Cancel job parameters, see SubmitJobParms object
+     * @return job document with details about the submitted job
+     * @throws Exception error on submitting
+     * @author Nikunj goyal
+     */
     public Response cancelJobsCommon(CancelJobParams parms) throws Exception {
         Util.checkNullParameter(parms == null, "parms is null");
-        Util.checkStateParameter(!parms.getJobId().isPresent(), "jobid not specified");
-        Util.checkStateParameter(!parms.getJobname().isPresent(), "jobname not specified");
+        Util.checkStateParameter( parms.getJobId().isEmpty(), "jobid not specified");
+        Util.checkStateParameter( parms.getJobname().isEmpty(), "jobname not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + JobsConstants.REQUEST_CANCEL;
+        String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + UtilIO.FILE_DELIM + JobsConstants.REQUEST_CANCEL;
         LOG.debug(url);
 
         Map<String, String> headers = new HashMap<>();
         String key, value, version;
 
-        if(parms.getVersion().get() == null) {
+        if(parms.getVersion().isEmpty()) {
             version = JobsConstants.DEFAULT_CANCEL_VERSION;
         } else {
             version = parms.getVersion().get();

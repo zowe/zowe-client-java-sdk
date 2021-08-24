@@ -9,10 +9,7 @@ public class CancelJobParams {
 
     public CancelJobParams(CancelJobParams.Builder builder) {
 
-
-        if (builder.jobname != null)
-            this.jobname = Optional.ofNullable(builder.jobname);
-        else this.jobname = Optional.empty();
+        this.jobname = Optional.ofNullable(builder.jobname);
 
         if (builder.jobId != null)
             this.jobId = Optional.ofNullable(builder.jobId);
