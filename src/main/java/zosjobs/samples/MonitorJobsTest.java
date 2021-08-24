@@ -38,6 +38,7 @@ public class MonitorJobsTest {
         MonitorJobsTest.tstMonitorJobsForOutputStatusByJobNameAndId();
         MonitorJobsTest.tstMonitorJobsForStatusByJobObject(JobStatus.Type.INPUT);
         MonitorJobsTest.tstMonitorJobsForStatusByJobNameAndId(JobStatus.Type.ACTIVE);
+        MonitorJobsTest.tstMonitorwaitForJobMessage("XXX");
     }
 
     private static void tstMonitorJobsForOutputStatusByJobObject() throws Exception {
@@ -74,6 +75,13 @@ public class MonitorJobsTest {
         job = monitorJobs.waitForJobStatus(job.getJobName().get(), job.getJobId().get(), statusType);
         LOG.info("Job status for Job " + job.getJobName().get() + ":" +
                 job.getJobId().get() + " is " + job.getStatus().get());
+    }
+
+    private static void tstMonitorwaitForJobMessage(String message) throws Exception {
+        // determine an existing job in your system that is in execute queue and make a Job for it
+        Job job = new Job.Builder().jobName("XXX").jobId("XXX").build();
+        MonitorJobs monitorJobs = new MonitorJobs(connection);
+        LOG.info("Found message = " + monitorJobs.waitForJobMessage(job, message));
     }
 
 }
