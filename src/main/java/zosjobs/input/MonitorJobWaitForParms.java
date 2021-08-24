@@ -60,6 +60,12 @@ public class MonitorJobWaitForParms {
     private Optional<Integer> attempts;
 
     /**
+     * Number of lines to inspect from job output.
+     * Default: MonitorJobs.DEFAULT_LINE_LIMIT.
+     */
+    private Optional<Integer> lineLimit = Optional.empty();
+
+    /**
      * MonitorJobWaitForParms constructor.
      *
      * @param jobName    job name
@@ -76,6 +82,27 @@ public class MonitorJobWaitForParms {
         this.jobStatus = Optional.ofNullable(jobStatus);
         this.attempts = attempts;
         this.watchDelay = watchDelay;
+    }
+
+    /**
+     * MonitorJobWaitForParms constructor.
+     *
+     * @param jobName    job name
+     * @param jobId      job id
+     * @param jobStatus  job status type, see JobStatus.Type object
+     * @param attempts   number of attempts to get status
+     * @param watchDelay delay time in milliseconds to wait each time requesting status
+     * @param lineLimit  number of lines to inspect from job output.
+     * @author Frank Giordano
+     */
+    public MonitorJobWaitForParms(Optional<String> jobName, Optional<String> jobId, JobStatus.Type jobStatus,
+                                  Optional<Integer> attempts, Optional<Integer> watchDelay, Optional<Integer> lineLimit) {
+        this.jobName = jobName;
+        this.jobId = jobId;
+        this.jobStatus = Optional.ofNullable(jobStatus);
+        this.attempts = attempts;
+        this.watchDelay = watchDelay;
+        this.lineLimit = lineLimit;
     }
 
     /**
@@ -143,6 +170,25 @@ public class MonitorJobWaitForParms {
         this.attempts = attempts;
     }
 
+    /**
+     * Retrieve line limit
+     *
+     * @author Frank Giordano
+     */
+    public Optional<Integer> getLineLimit() {
+        return lineLimit;
+    }
+
+    /**
+     * Assign line limit
+     *
+     * @param lineLimit number of lines to inspect
+     * @author Frank Giordano
+     */
+    public void setLineLimit(Optional<Integer> lineLimit) {
+        this.lineLimit = lineLimit;
+    }
+
     @Override
     public String toString() {
         return "MonitorJobWaitForParms{" +
@@ -151,6 +197,7 @@ public class MonitorJobWaitForParms {
                 ", watchDelay=" + watchDelay +
                 ", jobStatus=" + jobStatus +
                 ", attempts=" + attempts +
+                ", lineLimit=" + lineLimit +
                 '}';
     }
 
