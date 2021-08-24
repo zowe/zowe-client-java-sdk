@@ -247,8 +247,10 @@ public class GetJobs {
     public Job getStatusCommon(CommonJobParms parms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(parms == null, "parms is null");
-        Util.checkStateParameter(!parms.getJobId().isPresent(), "jobId not specified");
-        Util.checkStateParameter(!parms.getJobName().isPresent(), "jobName not specified");
+        Util.checkStateParameter(parms.getJobId().isEmpty(), "jobId not specified");
+        Util.checkStateParameter(parms.getJobId().get().isEmpty(), "jobId not specified");
+        Util.checkStateParameter(parms.getJobName().isEmpty(), "jobName not specified");
+        Util.checkStateParameter(parms.getJobName().get().isEmpty(), "jobName not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getPort()
                 + JobsConstants.RESOURCE + "/" + parms.getJobName().get() + "/" + parms.getJobId().get();
@@ -311,8 +313,10 @@ public class GetJobs {
     public List<JobFile> getSpoolFilesCommon(CommonJobParms parms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(parms == null, "prams is null");
-        Util.checkStateParameter(!parms.getJobId().isPresent(), "jobId not defined");
-        Util.checkStateParameter(!parms.getJobName().isPresent(), "jobName not defined");
+        Util.checkStateParameter(parms.getJobId().isEmpty(), "jobId not specified");
+        Util.checkStateParameter(parms.getJobId().get().isEmpty(), "jobId not specified");
+        Util.checkStateParameter(parms.getJobName().isEmpty(), "jobName not specified");
+        Util.checkStateParameter(parms.getJobName().get().isEmpty(), "jobName not specified");
 
         List<JobFile> files = new ArrayList<>();
 
@@ -396,8 +400,10 @@ public class GetJobs {
     public String getJclCommon(CommonJobParms parms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(parms == null, "parms is null");
-        Util.checkStateParameter(!parms.getJobName().isPresent(), "jobName not specified");
-        Util.checkStateParameter(!parms.getJobId().isPresent(), "jobId not specified");
+        Util.checkStateParameter(parms.getJobName().isEmpty(), "jobName not specified");
+        Util.checkStateParameter(parms.getJobName().get().isEmpty(), "jobName not specified");
+        Util.checkStateParameter(parms.getJobId().isEmpty(), "jobId not specified");
+        Util.checkStateParameter(parms.getJobId().get().isEmpty(), "jobId not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + "/" +
                 parms.getJobName().get() + "/" + parms.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES +
@@ -475,9 +481,9 @@ public class GetJobs {
     public String getSpoolContentCommon(JobFile jobFile) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(jobFile == null, "jobFile is null");
-        Util.checkStateParameter(!jobFile.getJobName().isPresent(), "jobName not specified");
-        Util.checkStateParameter(!jobFile.getJobId().isPresent(), "jobId not specified");
-        Util.checkStateParameter(!jobFile.getId().isPresent(), "id not specified");
+        Util.checkStateParameter(jobFile.getJobName().isEmpty(), "jobName not specified");
+        Util.checkStateParameter(jobFile.getJobId().isEmpty(), "jobId not specified");
+        Util.checkStateParameter(jobFile.getId().isEmpty(), "id not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + "/" +
                 jobFile.getJobName().get() + "/" + jobFile.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES + "/" +

@@ -133,7 +133,9 @@ public class MonitorJobs {
      */
     public Job waitForStatusCommon(MonitorJobWaitForParms parms) throws Exception {
         Util.checkStateParameter(parms.getJobName().isEmpty(), "job name not specified");
+        Util.checkStateParameter(parms.getJobName().get().isEmpty(), "job name not specified");
         Util.checkStateParameter(parms.getJobId().isEmpty(), "job id not specified");
+        Util.checkStateParameter(parms.getJobId().get().isEmpty(), "job id not specified");
         Util.checkNullParameter(parms == null, "parms is null");
 
         if (parms.getJobStatus().isEmpty())

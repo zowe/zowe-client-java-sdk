@@ -51,7 +51,7 @@ public class ZosDsnDownload {
      */
     public InputStream downloadDsn(String dataSetName, DownloadParams options) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName is empty");
+        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort()
