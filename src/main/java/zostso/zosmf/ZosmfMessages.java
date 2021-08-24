@@ -47,4 +47,13 @@ public class ZosmfMessages {
         this.stackTrace = stackTrace;
     }
 
+    @Override
+    public String toString() {
+        return "ZosmfMessages{" +
+                "messageText=" + messageText +
+                ", messageId=" + messageId +
+                ", stackTrace=" + stackTrace +
+                '}';
+    }
+
 }

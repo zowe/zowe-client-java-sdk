@@ -40,4 +40,12 @@ public class TsoPromptMessage {
         this.hidden = hidden;
     }
 
+    @Override
+    public String toString() {
+        return "TsoPromptMessage{" +
+                "version=" + version +
+                ", hidden=" + hidden +
+                '}';
+    }
+
 }

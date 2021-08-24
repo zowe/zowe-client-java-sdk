@@ -40,4 +40,12 @@ public class TsoResponseMessage {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "TsoResponseMessage{" +
+                "version=" + version +
+                ", data=" + data +
+                '}';
+    }
+
 }

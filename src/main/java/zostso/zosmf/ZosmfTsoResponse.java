@@ -102,6 +102,21 @@ public class ZosmfTsoResponse {
         this.tsoData = Optional.ofNullable(tsoData);
     }
 
+    @Override
+    public String toString() {
+        return "ZosmfTsoResponse{" +
+                "servletKey=" + servletKey +
+                ", queueId=" + queueId +
+                ", ver=" + ver +
+                ", reused=" + reused +
+                ", timeout=" + timeout +
+                ", msgData=" + msgData +
+                ", sessionId=" + sessionId +
+                ", tsoData=" + tsoData +
+                ", appData=" + appData +
+                '}';
+    }
+
     public static class Builder {
 
         private String servletKey;

@@ -14,10 +14,7 @@ import java.util.Optional;
 public class StopTsoParms {
 
     /**
-     * servlet key of an active address space
-     *
-     * @type string
-     * @memberOf StopTsoParms
+     * Servlet key of an active address space
      */
     private Optional<String> servletKey;
 
@@ -27,6 +24,13 @@ public class StopTsoParms {
 
     public Optional<String> getServletKey() {
         return servletKey;
+    }
+
+    @Override
+    public String toString() {
+        return "StopTsoParms{" +
+                "servletKey=" + servletKey +
+                '}';
     }
 
 }

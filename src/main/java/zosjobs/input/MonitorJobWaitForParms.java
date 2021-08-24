@@ -143,4 +143,15 @@ public class MonitorJobWaitForParms {
         this.attempts = attempts;
     }
 
+    @Override
+    public String toString() {
+        return "MonitorJobWaitForParms{" +
+                "jobId=" + jobId +
+                ", jobName=" + jobName +
+                ", watchDelay=" + watchDelay +
+                ", jobStatus=" + jobStatus +
+                ", attempts=" + attempts +
+                '}';
+    }
+
 }

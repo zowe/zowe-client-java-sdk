@@ -41,4 +41,13 @@ public class TsoMessages {
         this.tsoResponse = tsoResponse;
     }
 
+    @Override
+    public String toString() {
+        return "TsoMessages{" +
+                "tsoMessage=" + tsoMessage +
+                ", tsoPrompt=" + tsoPrompt +
+                ", tsoResponse=" + tsoResponse +
+                '}';
+    }
+
 }

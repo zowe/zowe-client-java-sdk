@@ -34,4 +34,12 @@ public class CheckJobStatus {
         return job;
     }
 
+    @Override
+    public String toString() {
+        return "CheckJobStatus{" +
+                "statusFound=" + statusFound +
+                ", job=" + job +
+                '}';
+    }
+
 }

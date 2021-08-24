@@ -29,4 +29,12 @@ public class SendTsoParms {
         return data;
     }
 
+    @Override
+    public String toString() {
+        return "SendTsoParms{" +
+                "sevletKey='" + sevletKey + '\'' +
+                ", data='" + data + '\'' +
+                '}';
+    }
+
 }
