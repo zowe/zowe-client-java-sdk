@@ -21,7 +21,6 @@ import zosjobs.response.CheckJobStatus;
 import zosjobs.response.Job;
 import zosjobs.types.JobStatus;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
