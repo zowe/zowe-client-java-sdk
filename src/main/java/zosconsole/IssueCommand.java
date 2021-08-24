@@ -43,7 +43,7 @@ public class IssueCommand {
     /**
      * IssueCommand constructor
      *
-     * @param connection connection object, see ZOSConnection object
+     * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
     public IssueCommand(ZOSConnection connection) {

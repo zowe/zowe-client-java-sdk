@@ -38,19 +38,51 @@ public abstract class ZoweRequest {
     protected HttpContext localContext = new BasicHttpContext();
     protected HttpResponse httpResponse;
 
+    /**
+     * ZoweRequest constructor.
+     *
+     * @param connection  connection information, see ZOSConnection object
+     * @param requestType request type, see ZoweRequestType.VerbType object
+     * @author Frank Giordano
+     */
     public ZoweRequest(ZOSConnection connection, ZoweRequestType.VerbType requestType) {
         this.connection = connection;
         this.requestType = requestType;
     }
 
+    /**
+     * Execute the formulated http request
+     *
+     * @author Frank Giordano
+     */
     public abstract Response executeHttpRequest() throws Exception;
 
+    /**
+     * Set the standard headers for the http request
+     *
+     * @author Frank Giordano
+     */
     public abstract void setStandardHeaders();
 
+    /**
+     * Set additional headers needed for the http request
+     *
+     * @author Frank Giordano
+     */
     public abstract void setAdditionalHeaders(Map<String, String> additionalHeaders);
 
+    /**
+     * Set the following incoming url with a new http request
+     *
+     * @author Frank Giordano
+     */
     public abstract void setRequest(String url) throws Exception;
 
+    /**
+     * Setup to be used first in setting up the http request
+     *
+     * @author Frank Giordano
+     */
     protected void setup() {
         setStandardHeaders();
         try {
@@ -62,6 +94,11 @@ public abstract class ZoweRequest {
         }
     }
 
+    /**
+     * Retrieve current request type for http request
+     *
+     * @author Frank Giordano
+     */
     public ZoweRequestType.VerbType requestType() {
         return requestType;
     }

@@ -17,6 +17,9 @@ package rest;
  */
 public class ZoweRequestType {
 
+    /**
+     * Http request verb value types
+     */
     public enum VerbType {
         GET_JSON, GET_TEXT, PUT_JSON, PUT_TEXT, DELETE_JSON, DELETE_TEXT, POST_JSON, POST_TEXT, GET_STREAM
     }

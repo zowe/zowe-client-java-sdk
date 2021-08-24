@@ -37,6 +37,13 @@ public class JsonPostRequest extends ZoweRequest {
     private final String body;
     private Map<String, String> additionalHeaders = new HashMap<>();
 
+    /**
+     * JsonPostRequest constructor.
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param url        rest url value
+     * @author Frank Giordano
+     */
     public JsonPostRequest(ZOSConnection connection, String url, String body) throws Exception {
         super(connection, ZoweRequestType.VerbType.POST_JSON);
         this.body = body;
@@ -44,6 +51,11 @@ public class JsonPostRequest extends ZoweRequest {
         this.setup();
     }
 
+    /**
+     * Execute the formulated http request
+     *
+     * @author Frank Giordano
+     */
     @Override
     public Response executeHttpRequest() throws Exception {
         // add any additional headers...
@@ -70,6 +82,11 @@ public class JsonPostRequest extends ZoweRequest {
         return new Response(UtilRest.getJsonResponseEntity(httpResponse), Optional.ofNullable(statusCode));
     }
 
+    /**
+     * Set the standard headers for the http request
+     *
+     * @author Frank Giordano
+     */
     @Override
     public void setStandardHeaders() {
         request.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
@@ -77,11 +94,21 @@ public class JsonPostRequest extends ZoweRequest {
         request.setHeader(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
 
+    /**
+     * Set additional headers needed for the http request
+     *
+     * @author Frank Giordano
+     */
     @Override
     public void setAdditionalHeaders(Map<String, String> additionalHeaders) {
         this.additionalHeaders = additionalHeaders;
     }
 
+    /**
+     * Set the following incoming url with a new http request
+     *
+     * @author Frank Giordano
+     */
     @Override
     public void setRequest(String url) throws Exception {
         this.request = new HttpPost(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));

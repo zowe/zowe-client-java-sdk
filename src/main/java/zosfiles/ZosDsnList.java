@@ -37,7 +37,7 @@ public class ZosDsnList {
     /**
      * ZosDsnList constructor
      *
-     * @param connection connection object, see ZOSConnection object
+     * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
     public ZosDsnList(ZOSConnection connection) {

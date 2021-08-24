@@ -28,7 +28,7 @@ public class IssueTso {
     /**
      * IssueTso constructor
      *
-     * @param connection connection object, see ZOSConnection object
+     * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
     public IssueTso(ZOSConnection connection) {

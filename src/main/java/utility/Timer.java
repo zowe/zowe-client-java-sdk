@@ -32,6 +32,7 @@ public class Timer {
      * Timer constructor
      *
      * @param waitTime in milliseconds
+     * @author Frank Giordano
      */
     public Timer(int waitTime) {
         this.waitTime = waitTime;
@@ -40,6 +41,8 @@ public class Timer {
 
     /**
      * Initialize time construct before calling isEnded
+     *
+     * @author Frank Giordano
      */
     public Timer initialize() {
         long currentTime = System.currentTimeMillis();
@@ -48,7 +51,9 @@ public class Timer {
     }
 
     /**
-     * Has the current time range has ended yet.
+     * Has the current time range ended yet.
+     *
+     * @author Frank Giordano
      */
     public boolean isEnded() {
         return System.currentTimeMillis() >= endTime;

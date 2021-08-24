@@ -43,7 +43,7 @@ public class GetJobs {
     /**
      * GetJobs Constructor.
      *
-     * @param connection connection object, see ZOSConnection object
+     * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
     public GetJobs(ZOSConnection connection) {

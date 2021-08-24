@@ -55,7 +55,7 @@ public class MonitorJobs {
     /**
      * MonitorJobs constructor.
      *
-     * @param connection connection object, see ZOSConnection object
+     * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
     public MonitorJobs(ZOSConnection connection) {
@@ -65,7 +65,7 @@ public class MonitorJobs {
     /**
      * MonitorJobs constructor.
      *
-     * @param connection connection object, see ZOSConnection object
+     * @param connection connection information, see ZOSConnection object
      * @param attempts   number of attempts to get status
      * @author Frank Giordano
      */
@@ -77,7 +77,7 @@ public class MonitorJobs {
     /**
      * MonitorJobs constructor.
      *
-     * @param connection connection object, see ZOSConnection object
+     * @param connection connection information, see ZOSConnection object
      * @param attempts   number of attempts to get status
      * @param watchDelay delay time in milliseconds to wait each time requesting status
      * @author Frank Giordano

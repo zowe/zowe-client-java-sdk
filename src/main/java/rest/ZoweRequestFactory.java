@@ -19,6 +19,15 @@ import core.ZOSConnection;
  */
 public class ZoweRequestFactory {
 
+    /**
+     * Assign the request to the Http verb type request object
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param url        rest url value
+     * @param body       content for request body
+     * @param type       request http type, see ZoweRequestType.VerbTyp object
+     * @author Frank Giordano
+     */
     public static ZoweRequest buildRequest(ZOSConnection connection, String url, String body,
                                            ZoweRequestType.VerbType type) throws Exception {
         ZoweRequest request;

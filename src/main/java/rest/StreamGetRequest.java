@@ -35,12 +35,23 @@ public class StreamGetRequest extends ZoweRequest {
     private HttpGet request;
     private Map<String, String> additionalHeaders = new HashMap<>();
 
+    /**
+     * StreamGetRequest constructor.
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param url rest url value
+     */
     public StreamGetRequest(ZOSConnection connection, String url) throws Exception {
         super(connection, ZoweRequestType.VerbType.GET_STREAM);
         this.request = new HttpGet(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 
+    /**
+     *  Execute the formulated http request
+     *
+     * @author Frank Giordano
+     */
     @Override
     public Response executeHttpRequest() throws IOException {
         // add any additional headers...
@@ -70,6 +81,11 @@ public class StreamGetRequest extends ZoweRequest {
         return new Response(Optional.empty(), Optional.of(statusCode));
     }
 
+    /**
+     *  Set the standard headers for the http request
+     *
+     * @author Frank Giordano
+     */
     @Override
     public void setStandardHeaders() {
         request.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
@@ -77,11 +93,21 @@ public class StreamGetRequest extends ZoweRequest {
         request.setHeader(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
 
+    /**
+     *  Set additional headers needed for the http request
+     *
+     * @author Frank Giordano
+     */
     @Override
     public void setAdditionalHeaders(Map<String, String> additionalHeaders) {
         this.additionalHeaders = additionalHeaders;
     }
 
+    /**
+     *  Set the following incoming url with a new http request
+     *
+     * @author Frank Giordano
+     */
     @Override
     public void setRequest(String url) throws Exception {
         Optional<String> str = Optional.ofNullable(url);

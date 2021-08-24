@@ -39,7 +39,7 @@ public class Util {
     /**
      * Encodes the passed connection String as UTF-8 for usage of the AUTHORIZATION http header.
      *
-     * @param connection connection object, see ZOSConnection object
+     * @param connection connection information, see ZOSConnection object
      * @return encoded String
      * @author Frank Giordano
      */
@@ -51,7 +51,7 @@ public class Util {
     /**
      * Check connection for validity.
      *
-     * @param connection connection object, see ZOSConnection object
+     * @param connection connection information, see ZOSConnection object
      * @throws IllegalStateException with message "Connection data not setup properly"
      * @author Frank Giordano
      */

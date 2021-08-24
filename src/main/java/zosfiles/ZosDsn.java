@@ -36,7 +36,7 @@ public class ZosDsn {
     /**
      * ZosDsn Constructor
      *
-     * @param connection connection object, see ZOSConnection object
+     * @param connection connection information, see ZOSConnection object
      */
     public ZosDsn(ZOSConnection connection) {
         this.connection = connection;
