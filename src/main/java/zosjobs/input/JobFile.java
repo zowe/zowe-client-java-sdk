@@ -12,124 +12,80 @@ package zosjobs.input;
 import java.util.Optional;
 
 /**
- * Represents the name and details of an output (spool) DD
- * for a z/OS batch job
+ * Represents the name and details of an output (spool) DD for a z/OS batch job
+ *
+ * @author Frank Giordano
+ * @version 1.0
  */
 public class JobFile {
 
     /**
-     * job id for a job
-     * Uniquely identifies a job on a z/OS system
-     *
-     * @type {string}
-     * @memberof Job
+     * Job id for a job. Uniquely identifies a job on a z/OS system
      */
     private Optional<String> jobId;
 
     /**
-     * job name for a job
-     *
-     * @type {string}
-     * @memberof Job
+     * Job name for a job
      */
     private Optional<String> jobName;
 
     /**
      * Record format of the spool file (DD)
-     *
-     * @type {string}
-     * @memberof JobFile
      */
     private Optional<String> recfm;
 
     /**
      * Total bytes in the spool file
-     *
-     * @type {number}
-     * @memberof JobFile
      */
     private Optional<Long> byteCount;
 
     /**
      * Total records (roughly equivalent to lines) in the spool file
-     *
-     * @type {number}
-     * @memberof JobFile
      */
     private Optional<Long> recordCount;
 
     /**
-     * unique identifier of job (substitute of job name and job id)
-     *
-     * @type {string}
-     * @memberof Job
+     * Unique identifier of job (substitute of job name and job id)
      */
     private Optional<String> jobCorrelator;
 
     /**
      * Job class for which job ran
-     *
-     * @type {string}
-     * @memberof JobFile
      */
     private Optional<String> classs;
 
     /**
-     * Identifier for this spool file.
-     * each IJobFile for a single batch job will have a unique ID
-     *
-     * @type {number}
-     * @memberof JobFileSimple
+     * Identifier for this spool file. Each JobFile for a single batch job will have a unique ID
      */
     private Optional<Long> id;
 
     /**
      * DD name of job spool file
-     *
-     * @type {string}
-     * @memberof JobFileSimple
      */
     private Optional<String> ddName;
 
     /**
      * Direct access to job record content
-     *
-     * @type {string}
-     * @memberof JobFile
      */
     private Optional<String> recordsUrl;
 
     /**
      * Job DD lrecl (logical record length - how many bytes each record is)
-     *
-     * @type {number}
-     * @memberof JobFile
      */
     private Optional<Long> lrecl;
 
     /**
-     * The primary or secondary JES subsystem.
-     * If this value is null, the job was processed by the primary subsystem.
-     *
-     * @type {string}
-     * @memberof JobFile
+     * The primary or secondary JES subsystem. If this value is null, the job was processed by the primary subsystem.
      */
     private Optional<String> subSystem;
 
     /**
      * The name of the job step during which this spool file was produced
-     *
-     * @type {string}
-     * @memberof JobFileSimple
      */
     private Optional<String> stepName;
 
     /**
-     * If this spool file was produced during a job procedure step, the
-     * name of the step will be here.
-     *
-     * @type {string}
-     * @memberof JobStepData
+     * If this spool file was produced during a job procedure step, the name of the step will be here.
      */
     private Optional<String> procStep;
 

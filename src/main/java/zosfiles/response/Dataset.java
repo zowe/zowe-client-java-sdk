@@ -11,6 +11,11 @@ package zosfiles.response;
 
 import java.util.Optional;
 
+/**
+ * Represents a z/OS data set
+ *
+ * @version 1.0
+ */
 public class Dataset {
 
     private Optional<String> dsname;

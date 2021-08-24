@@ -14,6 +14,8 @@ import java.util.Optional;
 
 /**
  * This interface defines the global options that apply to all zosfiles APIs
+ *
+ * @version 1.0
  */
 public class ZosFilesParams {
 

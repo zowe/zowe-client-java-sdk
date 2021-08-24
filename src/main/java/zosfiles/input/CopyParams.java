@@ -47,6 +47,17 @@ public class CopyParams {
         return replace;
     }
 
+    @Override
+    public String toString() {
+        return "CopyParams{" +
+                "fromVolser=" + fromVolser +
+                ", fromDataSet=" + fromDataSet +
+                ", toVolser=" + toVolser +
+                ", toDataSet=" + toDataSet +
+                ", replace=" + replace +
+                '}';
+    }
+
     public static class Builder {
 
         private String fromVolser;

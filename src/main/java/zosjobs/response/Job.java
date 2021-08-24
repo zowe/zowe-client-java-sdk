@@ -12,131 +12,86 @@ package zosjobs.response;
 import java.util.Optional;
 
 /**
- * Standard job response document
- * Represents the attributes and status of a z/OS batch job
+ * Standard job response document that represents the attributes and status of a z/OS batch job
+ *
+ * @author Frank Giordano
+ * @version 1.0
  */
 public class Job {
 
     /**
-     * job id for a job
-     * Uniquely identifies a job on a z/OS system
-     *
-     * @type {string}
-     * @memberof Job
+     * Job id for a job. Uniquely identifies a job on a z/OS system
      */
     private Optional<String> jobId;
 
     /**
-     * job name for a job
-     *
-     * @type {string}
-     * @memberof Job
+     * Job name for a job
      */
     private Optional<String> jobName;
 
     /**
-     * The primary or secondary JES subsystem.
-     * If this value is null, the job was processed by the primary subsystem.
-     *
-     * @type {string}
-     * @memberof Job
+     * The primary or secondary JES subsystem. If this value is null, the job was processed by the primary subsystem.
      */
     private Optional<String> subSystem;
 
     /**
-     * owner of the job
-     *
-     * @type {string}
-     * @memberof Job
+     * Owner of the job
      */
     private Optional<String> owner;
 
     /**
-     * status of the job
-     *
-     * @type {string}
-     * @memberof Job
+     * Status of the job
      */
     private Optional<String> status;
 
     /**
-     * type of job
-     *
-     * @type {string}
-     * @memberof Job
+     * Type of job
      */
     private Optional<String> type;
 
     /**
-     * job class
-     *
-     * @type {string}
-     * @memberof Job
+     * Job class
      */
     private Optional<String> classs;
 
     /**
-     * return code of the job
-     *
-     * @type {string}
-     * @memberof Job
+     * Return code of the job
      */
     private Optional<String> retCode;
 
     /**
-     * detailed job step data
-     *
-     * @type {IJobStepData[]}
-     * @memberof Job
+     * Detailed job step data
      */
     private Optional<JobStepData[]> stepData;
 
     /**
-     * url for direct reference of job info
-     *
-     * @type {string}
-     * @memberof Job
+     * Url for direct reference of job info
      */
     private Optional<String> url;
 
     /**
-     * spool files url for direct reference
-     *
-     * @type {string}
-     * @memberof Job
+     * Spool files url for direct reference
      */
     private Optional<String> filesUrl;
 
     /**
-     * unique identifier of job (substitute of job name and job id)
-     * If this value is null, the job was submitted to JES3.
-     *
-     * @type {string}
-     * @memberof Job
+     * Unique identifier of job (substitute of job name and job id). If this value is null, the job was
+     * submitted to JES3.
      */
     private Optional<String> jobCorrelator;
 
     /**
-     * job phase
-     *
-     * @type {number}
-     * @memberof Job
+     * Job phase
      */
     private Optional<Integer> phase;
 
     /**
-     * job phase name
-     *
-     * @type {string}
-     * @memberof Job
+     * Job phase name
      */
     private Optional<String> phaseName;
 
     /**
-     * explaination of error
-     *
-     * @type {string}
-     * @memberof Job
+     * Explanation of error
      */
     private Optional<String> reasonNotRunning;
 
