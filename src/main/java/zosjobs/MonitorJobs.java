@@ -214,7 +214,7 @@ public class MonitorJobs {
         String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
         // start from bottom
         for (int i = output.length - parms.getLineLimit().get(); i < output.length; i++) {
-            LOG.info(output[i]);
+            LOG.debug(output[i]);
             if (output[i].contains(message))
                 return true;
         }
