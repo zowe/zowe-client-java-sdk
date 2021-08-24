@@ -25,7 +25,7 @@ public class ZoweRequestFactory {
      * @param connection connection information, see ZOSConnection object
      * @param url        rest url value
      * @param body       content for request body
-     * @param type       request http type, see ZoweRequestType.VerbTyp object
+     * @param type       request http type, see ZoweRequestType.VerbType object
      * @author Frank Giordano
      */
     public static ZoweRequest buildRequest(ZOSConnection connection, String url, String body,
