@@ -11,8 +11,6 @@
 package zosjobs;
 
 import core.ZOSConnection;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import utility.Util;
 import zosjobs.input.MonitorJobWaitForParms;
 import zosjobs.response.CheckJobStatus;
@@ -20,7 +18,6 @@ import zosjobs.response.Job;
 import zosjobs.types.JobStatus;
 
 import java.util.Optional;
-import java.util.Timer;
 
 /**
  * APIs for monitoring the status of a job. Use these APIs to wait for a job to enter the specified status. All APIs
@@ -30,8 +27,6 @@ import java.util.Timer;
  * @version 1.0
  */
 public class MonitorJobs {
-
-    private static final Logger LOG = LogManager.getLogger(MonitorJobs.class);
 
     private final ZOSConnection connection;
     private int attempts = DEFAULT_ATTEMPTS;
@@ -201,7 +196,7 @@ public class MonitorJobs {
         if (statusNameCheck.equals(job.getStatus().get()))
             return new CheckJobStatus(true, job);
 
-        String invalidStatusMsg = "Invalid status when check for status ordering.";
+        String invalidStatusMsg = "Invalid status when checking for status ordering.";
         int orderIndexOfDesiredJobStatus = getOrderIndexOfStatus(statusNameCheck);
         if (orderIndexOfDesiredJobStatus == -1) // this should never happen but lets check for it.
             throw new Exception(invalidStatusMsg);
