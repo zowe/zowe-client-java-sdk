@@ -29,12 +29,11 @@ public class DeleteJobs {
     /**
      * Delete a job that resides in a z/OS data set.
      *
-     * @param jobDataSet job data set to be translated into parms object
      * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
-    public Response delete(String jobDataSet) throws Exception {
+    public Response deletejob( ) throws Exception {
         return this.deleteJobCommon(null);
     }
 
