@@ -22,6 +22,9 @@ import utility.UtilDataset;
 import utility.UtilRest;
 import zosfiles.input.CopyParams;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Provides copy dataset and dataset member functionality
  *
@@ -103,8 +106,8 @@ public class ZosDsnCopy {
     private String buildBody(CopyParams params) {
         String fromDataSetName = params.getFromDataSet().get();
 
-        JSONObject reqBody = new JSONObject();
-        reqBody.put("request", "copy");
+        Map<String, Object> req = new HashMap<>();
+        req.put("request", "copy");
 
         String member = "*";
         int startMemberIndex = fromDataSetName.indexOf("(");
@@ -113,17 +116,19 @@ public class ZosDsnCopy {
             fromDataSetName = fromDataSetName.substring(0, startMemberIndex);
         }
 
-        JSONObject fromDataSetObj = new JSONObject();
-        fromDataSetObj.put("dsn", fromDataSetName);
-        fromDataSetObj.put("member", member);
+        Map<String, Object> fromDataSetReq = new HashMap<>();
+        fromDataSetReq.put("dsn", fromDataSetName);
+        fromDataSetReq.put("member", member);
+        JSONObject fromDataSetObj = new JSONObject(fromDataSetReq);
 
-        reqBody.put("from-dataset", fromDataSetObj);
-        reqBody.put("replace", params.isReplace());
+        req.put("from-dataset", fromDataSetObj);
+        req.put("replace", params.isReplace());
 
         if (params.getFromVolser().isPresent()) {
-            reqBody.put("volser", params.getFromVolser());
+            req.put("volser", params.getFromVolser());
         }
 
+        JSONObject reqBody = new JSONObject(req);
         LOG.debug(reqBody);
         return reqBody.toString();
     }
