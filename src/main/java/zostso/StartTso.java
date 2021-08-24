@@ -73,17 +73,17 @@ public class StartTso {
     }
 
     private StartTsoParams setDefaultAddressSpaceParams(StartTsoParams parms, String accountNumber) {
-        String proc = (parms == null || !parms.logonProcedure.isPresent())
+        String proc = (parms == null || parms.logonProcedure.isEmpty())
                 ? TsoConstants.DEFAULT_PROC : parms.getLogonProcedure().get();
-        String chset = (parms == null || !parms.characterSet.isPresent())
+        String chset = (parms == null || parms.characterSet.isEmpty())
                 ? TsoConstants.DEFAULT_CHSET : parms.getCharacterSet().get();
-        String cpage = (parms == null || !parms.codePage.isPresent())
+        String cpage = (parms == null || parms.codePage.isEmpty())
                 ? TsoConstants.DEFAULT_CPAGE : parms.getCodePage().get();
-        String rowNum = (parms == null || !parms.rows.isPresent())
+        String rowNum = (parms == null || parms.rows.isEmpty())
                 ? TsoConstants.DEFAULT_ROWS : parms.getRows().get();
-        String cols = (parms == null || !parms.columns.isPresent())
+        String cols = (parms == null || parms.columns.isEmpty())
                 ? TsoConstants.DEFAULT_COLS : parms.getColumns().get();
-        String rSize = (parms == null || !parms.regionSize.isPresent())
+        String rSize = (parms == null || parms.regionSize.isEmpty())
                 ? TsoConstants.DEFAULT_RSIZE : parms.getRegionSize().get();
 
         return new StartTsoParams(proc, chset, cpage, rowNum, cols, accountNumber, rSize);

@@ -56,7 +56,8 @@ public class StopTso {
     public ZosmfTsoResponse stopCommon(StopTsoParms commandParms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(commandParms == null, "commandParms is null");
-        Util.checkStateParameter(!commandParms.getServletKey().isPresent(), "servletKey not specified");
+        Util.checkStateParameter(commandParms.getServletKey().isEmpty(), "servletKey not specified");
+        Util.checkStateParameter(commandParms.getServletKey().get().isEmpty(), "servletKey not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + commandParms.getServletKey().get();

@@ -70,7 +70,8 @@ public class SubmitJobs {
      */
     public Job submitJobCommon(SubmitJobParms parms) throws Exception {
         Util.checkNullParameter(parms == null, "parms is null");
-        Util.checkStateParameter(!parms.getJobDataSet().isPresent(), "jobDataSet not specified");
+        Util.checkStateParameter(parms.getJobDataSet().isEmpty(), "jobDataSet not specified");
+        Util.checkStateParameter(parms.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE;
         LOG.debug(url);
@@ -131,8 +132,8 @@ public class SubmitJobs {
     public Job submitJclCommon(SubmitJclParms parms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(parms == null, "parms is null");
-        Util.checkStateParameter(!parms.getJcl().isPresent(), "jcl not specified");
-        Util.checkStateParameter(parms.getJcl().get().isEmpty(), "jcl is empty");
+        Util.checkStateParameter(parms.getJcl().isEmpty(), "jcl not specified");
+        Util.checkStateParameter(parms.getJcl().get().isEmpty(), "jcl not specified");
 
         String key, value;
         Map<String, String> headers = new HashMap<>();
