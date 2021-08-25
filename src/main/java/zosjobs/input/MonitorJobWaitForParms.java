@@ -63,46 +63,15 @@ public class MonitorJobWaitForParms {
      * Number of lines to inspect from job output.
      * Default: MonitorJobs.DEFAULT_LINE_LIMIT.
      */
-    private Optional<Integer> lineLimit = Optional.empty();
+    private Optional<Integer> lineLimit;
 
-    /**
-     * MonitorJobWaitForParms constructor.
-     *
-     * @param jobName    job name
-     * @param jobId      job id
-     * @param jobStatus  job status type, see JobStatus.Type object
-     * @param attempts   number of attempts to get status
-     * @param watchDelay delay time in milliseconds to wait each time requesting status
-     * @author Frank Giordano
-     */
-    public MonitorJobWaitForParms(Optional<String> jobName, Optional<String> jobId, JobStatus.Type jobStatus,
-                                  Optional<Integer> attempts, Optional<Integer> watchDelay) {
-        this.jobName = jobName;
-        this.jobId = jobId;
-        this.jobStatus = Optional.ofNullable(jobStatus);
-        this.attempts = attempts;
-        this.watchDelay = watchDelay;
-    }
-
-    /**
-     * MonitorJobWaitForParms constructor.
-     *
-     * @param jobName    job name
-     * @param jobId      job id
-     * @param jobStatus  job status type, see JobStatus.Type object
-     * @param attempts   number of attempts to get status
-     * @param watchDelay delay time in milliseconds to wait each time requesting status
-     * @param lineLimit  number of lines to inspect from job output.
-     * @author Frank Giordano
-     */
-    public MonitorJobWaitForParms(Optional<String> jobName, Optional<String> jobId, JobStatus.Type jobStatus,
-                                  Optional<Integer> attempts, Optional<Integer> watchDelay, Optional<Integer> lineLimit) {
-        this.jobName = jobName;
-        this.jobId = jobId;
-        this.jobStatus = Optional.ofNullable(jobStatus);
-        this.attempts = attempts;
-        this.watchDelay = watchDelay;
-        this.lineLimit = lineLimit;
+    public MonitorJobWaitForParms(MonitorJobWaitForParms.Builder builder) {
+        this.jobId = Optional.ofNullable(builder.jobId);
+        this.jobName = Optional.ofNullable(builder.jobName);
+        this.watchDelay = Optional.ofNullable(builder.watchDelay);
+        this.jobStatus = Optional.ofNullable(builder.jobStatus);
+        this.attempts = Optional.ofNullable(builder.attempts);
+        this.lineLimit = Optional.ofNullable(builder.lineLimit);
     }
 
     /**
@@ -124,15 +93,6 @@ public class MonitorJobWaitForParms {
     }
 
     /**
-     * Retrieve watch delay
-     *
-     * @author Frank Giordano
-     */
-    public Optional<Integer> getWatchDelay() {
-        return watchDelay;
-    }
-
-    /**
      * Retrieve job status
      *
      * @author Frank Giordano
@@ -142,12 +102,40 @@ public class MonitorJobWaitForParms {
     }
 
     /**
+     * Retrieve watch delay
+     *
+     * @author Frank Giordano
+     */
+    public Optional<Integer> getWatchDelay() {
+        return watchDelay;
+    }
+
+    /**
      * Retrieve attempts
      *
      * @author Frank Giordano
      */
     public Optional<Integer> getAttempts() {
         return attempts;
+    }
+
+    /**
+     * Retrieve line limit
+     *
+     * @author Frank Giordano
+     */
+    public Optional<Integer> getLineLimit() {
+        return lineLimit;
+    }
+
+    /**
+     * Assign watch delay
+     *
+     * @param watchDelay delay of polling operation in milliseconds
+     * @author Frank Giordano
+     */
+    public void setWatchDelay(Optional<Integer> watchDelay) {
+        this.watchDelay = watchDelay;
     }
 
     /**
@@ -171,15 +159,6 @@ public class MonitorJobWaitForParms {
     }
 
     /**
-     * Retrieve line limit
-     *
-     * @author Frank Giordano
-     */
-    public Optional<Integer> getLineLimit() {
-        return lineLimit;
-    }
-
-    /**
      * Assign line limit
      *
      * @param lineLimit number of lines to inspect
@@ -199,6 +178,51 @@ public class MonitorJobWaitForParms {
                 ", attempts=" + attempts +
                 ", lineLimit=" + lineLimit +
                 '}';
+    }
+
+    public static class Builder {
+
+        private String jobId;
+        private String jobName;
+        private int watchDelay;
+        private JobStatus.Type jobStatus;
+        private int attempts;
+        private int lineLimit;
+
+        public MonitorJobWaitForParms.Builder jobId(String jobId) {
+            this.jobId = jobId;
+            return this;
+        }
+
+        public MonitorJobWaitForParms.Builder jobName(String jobName) {
+            this.jobName = jobName;
+            return this;
+        }
+
+        public MonitorJobWaitForParms.Builder watchDelay(int watchDelay) {
+            this.watchDelay = watchDelay;
+            return this;
+        }
+
+        public MonitorJobWaitForParms.Builder jobStatus(JobStatus.Type jobStatus) {
+            this.jobStatus = jobStatus;
+            return this;
+        }
+
+        public MonitorJobWaitForParms.Builder attempts(int attempts) {
+            this.attempts = attempts;
+            return this;
+        }
+
+        public MonitorJobWaitForParms.Builder lineLimit(int lineLimit) {
+            this.lineLimit = lineLimit;
+            return this;
+        }
+
+        public MonitorJobWaitForParms build() {
+            return new MonitorJobWaitForParms(this);
+        }
+
     }
 
 }
