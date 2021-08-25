@@ -51,7 +51,7 @@ public class SubmitJobs {
     /**
      * Submit a job that resides in a z/OS data set.
      *
-     * @param jobDataSet job data set to be translated into parms object
+     * @param jobDataSet job Dataset to be translated into parms object
      * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Frank Giordano
