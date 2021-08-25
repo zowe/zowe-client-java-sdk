@@ -316,7 +316,7 @@ public class MonitorJobs {
      * Given jobname/jobid, checks for the desired "status" (default is "OUTPUT") continuously (based on the interval
      * and attempts specified).
      * <p>
-     * The "order" of natural job status is INPUT > ACTIVE > OUTPUT. If the requested status is earlier in the sequence
+     * The "order" of natural job status is INPUT ACTIVE OUTPUT. If the requested status is earlier in the sequence
      * than the current status of the job, then the method returns immediately (since the job will never enter the
      * requested status) with the current status of the job.
      *

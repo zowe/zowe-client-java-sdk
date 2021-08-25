@@ -57,6 +57,7 @@ public class SubmitJobParms {
     /**
      * Retrieve dataset specified
      *
+     * @return jobDataSet value
      * @author Frank Giordano
      */
     public Optional<String> getJobDataSet() {
@@ -76,6 +77,7 @@ public class SubmitJobParms {
     /**
      * Retrieve jclSymbols specified
      *
+     * @return jclSymbols value
      * @author Frank Giordano
      */
     public Optional<String> getJclSymbols() {

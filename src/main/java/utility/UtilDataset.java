@@ -53,6 +53,7 @@ public class UtilDataset {
      *
      * @param errorMsg    error message
      * @param dataSetName dataset representation
+     * @throws Exception execution with error msg
      */
     public static void checkHttpErrors(String errorMsg, String dataSetName) throws Exception {
         if (errorMsg.contains("404")) {

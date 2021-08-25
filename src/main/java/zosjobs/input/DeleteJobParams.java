@@ -15,7 +15,7 @@ import java.util.Optional;
  * DeleteJobParams APIs parameters interface for delete job operation
  *
  * @author Nikunj Goyal
- * @@version 1.0
+ * @version 1.0
  */
 public class DeleteJobParams {
 

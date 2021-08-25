@@ -77,6 +77,7 @@ public class SubmitJclParms {
     /**
      * Retrieve jcl specified
      *
+     * @return jcl value
      * @author Frank Giordano
      */
     public Optional<String> getJcl() {
@@ -90,6 +91,7 @@ public class SubmitJclParms {
     /**
      * Retrieve internalReaderRecfm specified
      *
+     * @return internalReaderRecfm value
      * @author Frank Giordano
      */
     public Optional<String> getInternalReaderRecfm() {
@@ -110,6 +112,7 @@ public class SubmitJclParms {
     /**
      * Retrieve internalReaderLrecl specified
      *
+     * @return internalReaderLrecl value
      * @author Frank Giordano
      */
     public Optional<String> getInternalReaderLrecl() {
@@ -130,6 +133,7 @@ public class SubmitJclParms {
     /**
      * Retrieve jclSymbols specified
      *
+     * @return jclSymbols value
      * @author Frank Giordano
      */
     public Optional<String> getJclSymbols() {

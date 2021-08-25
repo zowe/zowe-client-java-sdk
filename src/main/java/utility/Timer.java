@@ -42,6 +42,7 @@ public class Timer {
     /**
      * Initialize time construct before calling isEnded
      *
+     * @return timer object
      * @author Frank Giordano
      */
     public Timer initialize() {
@@ -53,6 +54,7 @@ public class Timer {
     /**
      * Has the current time range ended yet.
      *
+     * @return boolean true if time range reached
      * @author Frank Giordano
      */
     public boolean isEnded() {

@@ -18,7 +18,7 @@ import java.util.Optional;
  * MonitorJobs "waitFor..." APIs parameters interface
  *
  * @author Frank Giordano
- * @@version 1.0
+ * @version 1.0
  */
 public class MonitorJobWaitForParms {
 
@@ -77,6 +77,7 @@ public class MonitorJobWaitForParms {
     /**
      * Retrieve job id
      *
+     * @return jobId value
      * @author Frank Giordano
      */
     public Optional<String> getJobId() {
@@ -86,6 +87,7 @@ public class MonitorJobWaitForParms {
     /**
      * Retrieve job name
      *
+     * @return jobName value
      * @author Frank Giordano
      */
     public Optional<String> getJobName() {
@@ -95,6 +97,7 @@ public class MonitorJobWaitForParms {
     /**
      * Retrieve job status
      *
+     * @return jobStatus value
      * @author Frank Giordano
      */
     public Optional<JobStatus.Type> getJobStatus() {
@@ -104,6 +107,7 @@ public class MonitorJobWaitForParms {
     /**
      * Retrieve watch delay
      *
+     * @return watchDelay value
      * @author Frank Giordano
      */
     public Optional<Integer> getWatchDelay() {
@@ -113,6 +117,7 @@ public class MonitorJobWaitForParms {
     /**
      * Retrieve attempts
      *
+     * @return attempts value
      * @author Frank Giordano
      */
     public Optional<Integer> getAttempts() {
@@ -122,6 +127,7 @@ public class MonitorJobWaitForParms {
     /**
      * Retrieve line limit
      *
+     * @return lineLimit value
      * @author Frank Giordano
      */
     public Optional<Integer> getLineLimit() {

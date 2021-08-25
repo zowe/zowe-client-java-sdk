@@ -42,6 +42,7 @@ public class JsonPostRequest extends ZoweRequest {
      *
      * @param connection connection information, see ZOSConnection object
      * @param url        rest url value
+     * @param body       data to be attached to the request
      * @author Frank Giordano
      */
     public JsonPostRequest(ZOSConnection connection, String url, String body) throws Exception {

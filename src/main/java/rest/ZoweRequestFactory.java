@@ -26,6 +26,8 @@ public class ZoweRequestFactory {
      * @param url        rest url value
      * @param body       content for request body
      * @param type       request http type, see ZoweRequestType.VerbType object
+     * @return ZoweRequest value
+     * @throws Exception error with type not found
      * @author Frank Giordano
      */
     public static ZoweRequest buildRequest(ZOSConnection connection, String url, String body,

@@ -53,6 +53,7 @@ public abstract class ZoweRequest {
     /**
      * Execute the formulated http request
      *
+     * @return Response value
      * @author Frank Giordano
      */
     public abstract Response executeHttpRequest() throws Exception;
@@ -74,6 +75,7 @@ public abstract class ZoweRequest {
     /**
      * Set the following incoming url with a new http request
      *
+     * @param url rest url end point
      * @author Frank Giordano
      */
     public abstract void setRequest(String url) throws Exception;

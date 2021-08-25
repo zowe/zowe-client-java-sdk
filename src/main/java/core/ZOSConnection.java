@@ -56,6 +56,7 @@ public class ZOSConnection {
     /**
      * Retrieve host specified
      *
+     * @return host value
      * @author Frank Giordano
      */
     public String getHost() {
@@ -65,6 +66,7 @@ public class ZOSConnection {
     /**
      * Retrieve port number specified
      *
+     * @return port value
      * @author Frank Giordano
      */
     public String getPort() {
@@ -74,6 +76,7 @@ public class ZOSConnection {
     /**
      * Retrieve username specified
      *
+     * @return user value
      * @author Frank Giordano
      */
     public String getUser() {
@@ -83,6 +86,7 @@ public class ZOSConnection {
     /**
      * Retrieve password specified
      *
+     * @return password value
      * @author Frank Giordano
      */
     public String getPassword() {
