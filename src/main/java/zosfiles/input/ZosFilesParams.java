@@ -22,9 +22,7 @@ public class ZosFilesParams {
     private Optional<String> responseTimeout;
 
     public ZosFilesParams(Builder builder) {
-        if (builder.responseTimeout != null)
-            this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
-        else this.responseTimeout = Optional.empty();
+        this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
 
     }
 

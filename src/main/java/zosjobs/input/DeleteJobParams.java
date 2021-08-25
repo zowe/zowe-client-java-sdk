@@ -24,16 +24,9 @@ public class DeleteJobParams {
     private Optional<String> modifyVersion;
 
     public DeleteJobParams(DeleteJobParams.Builder builder) {
-
         this.jobname = Optional.ofNullable(builder.jobname);
-
-        if (builder.jobId != null)
-            this.jobId = Optional.ofNullable(builder.jobId);
-        else this.jobId = Optional.empty();
-
-        if (builder.modifyVersion != null)
-            this.modifyVersion = Optional.ofNullable(builder.modifyVersion);
-        else this.modifyVersion = Optional.empty();
+        this.jobId = Optional.ofNullable(builder.jobId);
+        this.modifyVersion = Optional.ofNullable(builder.modifyVersion);
     }
 
     public Optional<String> getJobname() {

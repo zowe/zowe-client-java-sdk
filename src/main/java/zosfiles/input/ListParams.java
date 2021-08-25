@@ -23,33 +23,13 @@ public class ListParams {
     private Optional<String> responseTimeout;
 
     public ListParams(ListParams.Builder builder) {
-        if (builder.volume != null)
-            this.volume = Optional.ofNullable(builder.volume);
-        else this.volume = Optional.empty();
-
-        if (builder.attributes != null)
-            this.attributes = Optional.ofNullable(builder.attributes);
-        else this.attributes = Optional.empty();
-
-        if (builder.maxLength != null)
-            this.maxLength = Optional.ofNullable(builder.maxLength);
-        else this.maxLength = Optional.empty();
-
-        if (builder.start != null)
-            this.start = Optional.ofNullable(builder.start);
-        else this.start = Optional.empty();
-
-        if (builder.recall != null)
-            this.recall = Optional.ofNullable(builder.recall);
-        else this.recall = Optional.empty();
-
-        if (builder.pattern != null)
-            this.pattern = Optional.ofNullable(builder.pattern);
-        else this.pattern = Optional.empty();
-
-        if (builder.responseTimeout != null)
-            this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
-        else this.responseTimeout = Optional.empty();
+        this.volume = Optional.ofNullable(builder.volume);
+        this.attributes = Optional.ofNullable(builder.attributes);
+        this.maxLength = Optional.ofNullable(builder.maxLength);
+        this.start = Optional.ofNullable(builder.start);
+        this.recall = Optional.ofNullable(builder.recall);
+        this.pattern = Optional.ofNullable(builder.pattern);
+        this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
     }
 
     public Optional<String> getVolume() {

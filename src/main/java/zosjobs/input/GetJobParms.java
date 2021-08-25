@@ -19,21 +19,10 @@ public class GetJobParms {
     private Optional<String> jobId;
 
     public GetJobParms(Builder builder) {
-        if (builder.owner != null)
-            this.owner = Optional.ofNullable(builder.owner);
-        else this.owner = Optional.empty();
-
-        if (builder.prefix != null)
-            this.prefix = Optional.ofNullable(builder.prefix);
-        else this.prefix = Optional.empty();
-
-        if (builder.maxJobs != null)
-            this.maxJobs = Optional.ofNullable(builder.maxJobs);
-        else this.maxJobs = Optional.empty();
-
-        if (builder.jobId != null)
-            this.jobId = Optional.ofNullable(builder.jobId);
-        else this.jobId = Optional.empty();
+        this.owner = Optional.ofNullable(builder.owner);
+        this.prefix = Optional.ofNullable(builder.prefix);
+        this.maxJobs = Optional.ofNullable(builder.maxJobs);
+        this.jobId = Optional.ofNullable(builder.jobId);
     }
 
     public Optional<String> getOwner() {
