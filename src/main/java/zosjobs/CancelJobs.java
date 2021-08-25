@@ -50,23 +50,23 @@ public class CancelJobs {
      * @author Nikunj goyal
      */
     public Response cancelJob() throws Exception {
-        return this.cancelJobsCommon(new CancelJobParams(null));
+        return this.cancelJobsCommon(new CancelJobParams(new CancelJobParams.Builder()));
     }
 
     /**
      * Cancel a job that resides in a z/OS data set.
      *
-     * @param parms cancel job parameters, see cancelJobsCommon object
+     * @param params cancel job parameters, see cancelJobsCommon object
      * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Nikunj goyal
      */
-    public Response cancelJobsCommon(CancelJobParams parms) throws Exception {
-        Util.checkNullParameter(parms == null, "parms is null");
-        Util.checkStateParameter(parms.getJobId().isEmpty(), "jobid not specified");
-        Util.checkStateParameter(parms.getJobId().get().isEmpty(), "jobid not specified");
-        Util.checkStateParameter(parms.getJobname().isEmpty(), "jobname not specified");
-        Util.checkStateParameter(parms.getJobname().get().isEmpty(), "jobname not specified");
+    public Response cancelJobsCommon(CancelJobParams params) throws Exception {
+        Util.checkNullParameter(params == null, "params is null");
+        Util.checkStateParameter(params.getJobId().isEmpty(), "job id not specified");
+        Util.checkStateParameter(params.getJobId().get().isEmpty(), "job id not specified");
+        Util.checkStateParameter(params.getJobname().isEmpty(), "job name not specified");
+        Util.checkStateParameter(params.getJobname().get().isEmpty(), "job name not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() +
                 JobsConstants.RESOURCE + UtilIO.FILE_DELIM + JobsConstants.REQUEST_CANCEL;
@@ -75,17 +75,17 @@ public class CancelJobs {
         Map<String, String> headers = new HashMap<>();
         String key, value, version;
 
-        if (parms.getVersion().isEmpty()) {
+        if (params.getVersion().isEmpty()) {
             version = JobsConstants.DEFAULT_CANCEL_VERSION;
         } else {
-            version = parms.getVersion().get();
+            version = params.getVersion().get();
         }
 
         key = ZosmfHeaders.HEADERS.get("APPLICATION_JSON").get(0);
         value = ZosmfHeaders.HEADERS.get("APPLICATION_JSON").get(1);
         headers.put(key, value);
 
-        String parameters = UtilIO.FILE_DELIM + parms.getJobname().get() + UtilIO.FILE_DELIM + parms.getJobId().get();
+        String parameters = UtilIO.FILE_DELIM + params.getJobname().get() + UtilIO.FILE_DELIM + params.getJobId().get();
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url + parameters, null,
                 ZoweRequestType.VerbType.PUT_JSON);
