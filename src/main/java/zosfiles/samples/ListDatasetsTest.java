@@ -27,12 +27,13 @@ public class ListDatasetsTest {
         String port = "XXX";
         String userName = "XXX";
         String password = "XXX";
+        String dataSetMask = "XXX";
         String dataSetName = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
 
+        ListDatasetsTest.tstListDsn(connection, dataSetMask);
         ListDatasetsTest.tstListMembers(connection, dataSetName);
-        ListDatasetsTest.tstListDsn(connection, dataSetName);
     }
 
     private static void tstListMembers(ZOSConnection connection, String dataSetName) {
