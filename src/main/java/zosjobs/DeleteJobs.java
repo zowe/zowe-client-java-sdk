@@ -64,7 +64,7 @@ public class DeleteJobs {
     public Response deleteJobCommon(DeleteJobParams params) throws Exception {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkStateParameter(params.getJobId().isEmpty(), "job id not specified");
-        Util.checkStateParameter(params.getJobname().isEmpty(), "job name not specified");
+        Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
         Util.checkStateParameter(params.getModifyVersion().isEmpty(), "modify version not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE;
@@ -73,17 +73,17 @@ public class DeleteJobs {
         Map<String, String> headers = new HashMap<>();
         String key, value;
 
-        if (params.getModifyVersion().get() == "1.0") {
+        if (params.getModifyVersion().map(v -> v.equals("1.0")).orElse(false)) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(1);
             headers.put(key, value);
-        } else if (params.getModifyVersion().get() == "2.0") {
+        } else if (params.getModifyVersion().map(v -> v.equals("2.0")).orElse(false)) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(1);
             headers.put(key, value);
         }
 
-        String parameters = UtilIO.FILE_DELIM + params.getJobname().get() + UtilIO.FILE_DELIM + params.getJobId().get();
+        String parameters = UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url + parameters, null,
                 ZoweRequestType.VerbType.DELETE_JSON);

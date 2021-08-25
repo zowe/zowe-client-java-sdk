@@ -65,8 +65,8 @@ public class CancelJobs {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkStateParameter(params.getJobId().isEmpty(), "job id not specified");
         Util.checkStateParameter(params.getJobId().get().isEmpty(), "job id not specified");
-        Util.checkStateParameter(params.getJobname().isEmpty(), "job name not specified");
-        Util.checkStateParameter(params.getJobname().get().isEmpty(), "job name not specified");
+        Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
+        Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() +
                 JobsConstants.RESOURCE + UtilIO.FILE_DELIM + JobsConstants.REQUEST_CANCEL;
@@ -85,7 +85,7 @@ public class CancelJobs {
         value = ZosmfHeaders.HEADERS.get("APPLICATION_JSON").get(1);
         headers.put(key, value);
 
-        String parameters = UtilIO.FILE_DELIM + params.getJobname().get() + UtilIO.FILE_DELIM + params.getJobId().get();
+        String parameters = UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url + parameters, null,
                 ZoweRequestType.VerbType.PUT_JSON);
