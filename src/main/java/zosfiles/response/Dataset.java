@@ -39,82 +39,25 @@ public class Dataset {
     private Optional<String> vol;
 
     public Dataset(Dataset.Builder builder) {
-        if (builder.dsname != null)
-            this.dsname = Optional.of(builder.dsname);
-        else this.dsname = Optional.empty();
-
-        if (builder.blksz != null)
-            this.blksz = Optional.of(builder.blksz);
-        else this.blksz = Optional.empty();
-
-        if (builder.catnm != null)
-            this.catnm = Optional.of(builder.catnm);
-        else this.catnm = Optional.empty();
-
-        if (builder.cdate != null)
-            this.cdate = Optional.of(builder.cdate);
-        else this.cdate = Optional.empty();
-
-        if (builder.dev != null)
-            this.dev = Optional.of(builder.dev);
-        else this.dev = Optional.empty();
-
-        if (builder.dsntp != null)
-            this.dsntp = Optional.of(builder.dsntp);
-        else this.dsntp = Optional.empty();
-
-        if (builder.dsorg != null)
-            this.dsorg = Optional.of(builder.dsorg);
-        else this.dsorg = Optional.empty();
-
-        if (builder.edate != null)
-            this.edate = Optional.of(builder.edate);
-        else this.edate = Optional.empty();
-
-        if (builder.extx != null)
-            this.extx = Optional.of(builder.extx);
-        else this.extx = Optional.empty();
-
-        if (builder.lrectl != null)
-            this.lrectl = Optional.of(builder.lrectl);
-        else this.lrectl = Optional.empty();
-
-        if (builder.migr != null)
-            this.migr = Optional.of(builder.migr);
-        else this.migr = Optional.empty();
-
-        if (builder.mvol != null)
-            this.mvol = Optional.of(builder.mvol);
-        else this.mvol = Optional.empty();
-
-        if (builder.ovf != null)
-            this.ovf = Optional.of(builder.ovf);
-        else this.ovf = Optional.empty();
-
-        if (builder.rdate != null)
-            this.rdate = Optional.of(builder.rdate);
-        else this.rdate = Optional.empty();
-
-        if (builder.recfm != null)
-            this.recfm = Optional.of(builder.recfm);
-        else this.recfm = Optional.empty();
-
-        if (builder.sizex != null)
-            this.sizex = Optional.of(builder.sizex);
-        else this.sizex = Optional.empty();
-
-        if (builder.spacu != null)
-            this.spacu = Optional.of(builder.spacu);
-        else this.spacu = Optional.empty();
-
-        if (builder.used != null)
-            this.used = Optional.of(builder.used);
-        else this.used = Optional.empty();
-
-        if (builder.vol != null)
-            this.vol = Optional.of(builder.vol);
-        else this.vol = Optional.empty();
-
+        this.dsname = Optional.ofNullable(builder.dsname);
+        this.blksz = Optional.ofNullable(builder.blksz);
+        this.catnm = Optional.ofNullable(builder.catnm);
+        this.cdate = Optional.ofNullable(builder.cdate);
+        this.dev = Optional.ofNullable(builder.dev);
+        this.dsntp = Optional.ofNullable(builder.dsntp);
+        this.dsorg = Optional.ofNullable(builder.dsorg);
+        this.edate = Optional.ofNullable(builder.edate);
+        this.extx = Optional.ofNullable(builder.extx);
+        this.lrectl = Optional.ofNullable(builder.lrectl);
+        this.migr = Optional.ofNullable(builder.migr);
+        this.mvol = Optional.ofNullable(builder.mvol);
+        this.ovf = Optional.ofNullable(builder.ovf);
+        this.rdate = Optional.ofNullable(builder.rdate);
+        this.recfm = Optional.ofNullable(builder.recfm);
+        this.sizex = Optional.ofNullable(builder.sizex);
+        this.spacu = Optional.ofNullable(builder.spacu);
+        this.used = Optional.ofNullable(builder.used);
+        this.vol = Optional.ofNullable(builder.vol);
     }
 
     public Optional<String> getDsname() {

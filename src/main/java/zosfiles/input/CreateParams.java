@@ -53,41 +53,77 @@ public class CreateParams {
         this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
     }
 
-    public Optional<String> getVolser() { return volser;}
+    public Optional<String> getVolser() {
+        return volser;
+    }
 
-    public Optional<String> getUnit() { return unit;}
+    public Optional<String> getUnit() {
+        return unit;
+    }
 
-    public Optional<String> getDsorg() { return dsorg;}
+    public Optional<String> getDsorg() {
+        return dsorg;
+    }
 
-    public Optional<String> getAlcunit() { return alcunit;}
+    public Optional<String> getAlcunit() {
+        return alcunit;
+    }
 
-    public Optional<Integer> getPrimary() { return primary;}
+    public Optional<Integer> getPrimary() {
+        return primary;
+    }
 
-    public Optional<Integer> getSecondary() { return secondary;}
+    public Optional<Integer> getSecondary() {
+        return secondary;
+    }
 
-    public Optional<Integer> getDirblk() { return dirblk;}
+    public Optional<Integer> getDirblk() {
+        return dirblk;
+    }
 
-    public Optional<Integer> getAvgblk() { return avgblk;}
+    public Optional<Integer> getAvgblk() {
+        return avgblk;
+    }
 
-    public Optional<String> getRecfm() { return recfm;}
+    public Optional<String> getRecfm() {
+        return recfm;
+    }
 
-    public Optional<Integer> getBlksize() { return blksize;}
+    public Optional<Integer> getBlksize() {
+        return blksize;
+    }
 
-    public Optional<Integer> getLrecl() { return lrecl;}
+    public Optional<Integer> getLrecl() {
+        return lrecl;
+    }
 
-    public Optional<String> getStorclass() { return storclass;}
+    public Optional<String> getStorclass() {
+        return storclass;
+    }
 
-    public Optional<String> getMgntclass() { return mgntclass;}
+    public Optional<String> getMgntclass() {
+        return mgntclass;
+    }
 
-    public Optional<String> getDataclass() { return dataclass;}
+    public Optional<String> getDataclass() {
+        return dataclass;
+    }
 
-    public Optional<String> getDsntype() { return dsntype;}
+    public Optional<String> getDsntype() {
+        return dsntype;
+    }
 
-    public Optional<Boolean> getShowAttributes() { return showAttributes;}
+    public Optional<Boolean> getShowAttributes() {
+        return showAttributes;
+    }
 
-    public Optional<String> getSize() { return size;}
+    public Optional<String> getSize() {
+        return size;
+    }
 
-    public Optional<String> getResponseTimeout() { return responseTimeout;}
+    public Optional<String> getResponseTimeout() {
+        return responseTimeout;
+    }
 
     @Override
     public String toString() {

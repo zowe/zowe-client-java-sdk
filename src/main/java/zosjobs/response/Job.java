@@ -96,65 +96,21 @@ public class Job {
     private Optional<String> reasonNotRunning;
 
     public Job(Job.Builder builder) {
-        if (builder.jobId != null)
-            this.jobId = Optional.of(builder.jobId);
-        else this.jobId = Optional.empty();
-
-        if (builder.jobName != null)
-            this.jobName = Optional.of(builder.jobName);
-        else this.jobName = Optional.empty();
-
-        if (builder.subSystem != null)
-            this.subSystem = Optional.of(builder.subSystem);
-        else this.subSystem = Optional.empty();
-
-        if (builder.owner != null)
-            this.owner = Optional.of(builder.owner);
-        else this.owner = Optional.empty();
-
-        if (builder.status != null)
-            this.status = Optional.of(builder.status);
-        else this.status = Optional.empty();
-
-        if (builder.type != null)
-            this.type = Optional.of(builder.type);
-        else this.type = Optional.empty();
-
-        if (builder.classs != null)
-            this.classs = Optional.of(builder.classs);
-        else this.classs = Optional.empty();
-
-        if (builder.retCode != null)
-            this.retCode = Optional.of(builder.retCode);
-        else this.retCode = Optional.empty();
-
-        if (builder.stepData != null)
-            this.stepData = Optional.of(builder.stepData);
-        else this.stepData = Optional.empty();
-
-        if (builder.url != null)
-            this.url = Optional.of(builder.url);
-        else this.url = Optional.empty();
-
-        if (builder.filesUrl != null)
-            this.filesUrl = Optional.of(builder.filesUrl);
-        else this.filesUrl = Optional.empty();
-
-        if (builder.jobCorrelator != null)
-            this.jobCorrelator = Optional.of(builder.jobCorrelator);
-        else this.jobCorrelator = Optional.empty();
-
-        if (builder.phase != null)
-            this.phase = Optional.of(builder.phase);
-        else this.phase = Optional.empty();
-
-        if (builder.phaseName != null)
-            this.phaseName = Optional.of(builder.phaseName);
-        else this.phaseName = Optional.empty();
-
-        if (builder.reasonNotRunning != null)
-            this.reasonNotRunning = Optional.of(builder.reasonNotRunning);
-        else this.reasonNotRunning = Optional.empty();
+        this.jobId = Optional.ofNullable(builder.jobId);
+        this.jobName = Optional.ofNullable(builder.jobName);
+        this.subSystem = Optional.ofNullable(builder.subSystem);
+        this.owner = Optional.ofNullable(builder.owner);
+        this.status = Optional.ofNullable(builder.status);
+        this.type = Optional.ofNullable(builder.type);
+        this.classs = Optional.ofNullable(builder.classs);
+        this.retCode = Optional.ofNullable(builder.retCode);
+        this.stepData = Optional.ofNullable(builder.stepData);
+        this.url = Optional.ofNullable(builder.url);
+        this.filesUrl = Optional.ofNullable(builder.filesUrl);
+        this.jobCorrelator = Optional.ofNullable(builder.jobCorrelator);
+        this.phase = Optional.ofNullable(builder.phase);
+        this.phaseName = Optional.ofNullable(builder.phaseName);
+        this.reasonNotRunning = Optional.ofNullable(builder.reasonNotRunning);
     }
 
     public Optional<String> getJobId() {

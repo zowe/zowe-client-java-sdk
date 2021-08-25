@@ -20,11 +20,11 @@ public class CopyParams {
     private final boolean replace;
 
     public CopyParams(CopyParams.Builder builder) {
-        fromVolser = Optional.ofNullable(builder.fromVolser);
-        fromDataSet = Optional.ofNullable(builder.fromDataSet);
-        toVolser = Optional.ofNullable(builder.toVolser);
-        toDataSet = Optional.ofNullable(builder.toDataSet);
-        replace = builder.replace;
+        this.fromVolser = Optional.ofNullable(builder.fromVolser);
+        this.fromDataSet = Optional.ofNullable(builder.fromDataSet);
+        this.toVolser = Optional.ofNullable(builder.toVolser);
+        this.toDataSet = Optional.ofNullable(builder.toDataSet);
+        this.replace = builder.replace;
     }
 
     public Optional<String> getFromVolser() {
