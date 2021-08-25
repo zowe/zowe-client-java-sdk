@@ -11,32 +11,83 @@ package zosjobs.input;
 
 import java.util.Optional;
 
+/**
+ * Submit job parameters
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class SubmitJobParms {
 
+    /**
+     * z/OS data set which should contain syntactically correct JCL. Example value: IBMUSER.PUBLIC.CNTL(IEFBR14)
+     * where IEFBR14 contains statements like:
+     * //IEFBR14 JOB ()
+     * //RUN     EXEC PGM=IEFBR14
+     */
     private Optional<String> jobDataSet;
+
+    /**
+     * A string for JCL symbolic substitution
+     */
     private Optional<String> jclSymbols = Optional.empty();
 
+    /**
+     * SubmitJobParms constructor
+     *
+     * @param jobDataSet z/OS data set which should contain syntactically correct JCL
+     * @author Frank Giordano
+     */
     public SubmitJobParms(String jobDataSet) {
         this.jobDataSet = Optional.ofNullable(jobDataSet);
     }
 
+    /**
+     * SubmitJobParms constructor
+     *
+     * @param jobDataSet z/OS data set which should contain syntactically correct JCL
+     * @param jclSymbols string for JCL symbolic substitution
+     * @author Frank Giordano
+     */
     public SubmitJobParms(String jobDataSet, String jclSymbols) {
         this.jobDataSet = Optional.ofNullable(jobDataSet);
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
 
+    /**
+     * Retrieve dataset specified
+     *
+     * @author Frank Giordano
+     */
     public Optional<String> getJobDataSet() {
         return jobDataSet;
     }
 
+    /**
+     * Assign dataset value
+     *
+     * @param jobDataSet z/OS data set which should contain syntactically correct JCL
+     * @author Frank Giordano
+     */
     public void setJobDataSet(String jobDataSet) {
         this.jobDataSet = Optional.ofNullable(jobDataSet);
     }
 
+    /**
+     * Retrieve jclSymbols specified
+     *
+     * @author Frank Giordano
+     */
     public Optional<String> getJclSymbols() {
         return jclSymbols;
     }
 
+    /**
+     * Assign jclSymbols value
+     *
+     * @param jclSymbols string for JCL symbolic substitution
+     * @author Frank Giordano
+     */
     public void setJclSymbols(String jclSymbols) {
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }

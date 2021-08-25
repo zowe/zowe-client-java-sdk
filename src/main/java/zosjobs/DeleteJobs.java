@@ -23,8 +23,8 @@ import java.util.Map;
 /**
  * DeleteJobs class to handle Job delete
  *
- * @version 1.0
  * @author Nikunj Goyal
+ * @version 1.0
  */
 public class DeleteJobs {
 
@@ -45,7 +45,7 @@ public class DeleteJobs {
     /**
      * Delete a job that resides in a z/OS data set.
      *
-     * @return Response about the deleted job
+     * @return response about the deleted job
      * @throws Exception error on submitting
      * @author Nikunj goyal
      */
@@ -56,7 +56,7 @@ public class DeleteJobs {
     /**
      * Delete a job that resides in a z/OS data set.
      *
-     * @param parms Delete job parameters, see SubmitJobParms object
+     * @param parms delete job parameters, see DeleteJobParams object
      * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Nikunj goyal

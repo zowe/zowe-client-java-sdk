@@ -23,8 +23,8 @@ import java.util.Map;
 /**
  * CancelJobs class to handle Job cancel
  *
- * @version 1.0
  * @author Nikunj Goyal
+ * @version 1.0
  */
 public class CancelJobs {
 
@@ -56,7 +56,7 @@ public class CancelJobs {
     /**
      * Cancel a job that resides in a z/OS data set.
      *
-     * @param parms Cancel job parameters, see SubmitJobParms object
+     * @param parms cancel job parameters, see cancelJobsCommon object
      * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Nikunj goyal
@@ -93,4 +93,5 @@ public class CancelJobs {
         request.setAdditionalHeaders(headers);
         return request.executeHttpRequest();
     }
+
 }
