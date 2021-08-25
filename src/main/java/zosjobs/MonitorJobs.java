@@ -167,9 +167,6 @@ public class MonitorJobs {
         Util.checkStateParameter(parms.getJobId().get().isEmpty(), "job id not specified");
         Util.checkNullParameter(parms == null, "parms is null");
 
-        if (parms.getJobStatus().isEmpty())
-            parms.setJobStatus(Optional.of(DEFAULT_STATUS));
-
         if (parms.getAttempts().isEmpty())
             parms.setAttempts(Optional.of(attempts));
 
