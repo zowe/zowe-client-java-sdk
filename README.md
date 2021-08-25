@@ -27,6 +27,8 @@ Functionality provided:
     ListDataset  
     MonitorJobs  
     CopyDataset
+    CancelJobs
+    DeleteJobs
 
 See the following sample programs within each sample's package:
 
@@ -44,8 +46,10 @@ See the following sample programs within each sample's package:
     src/main/java/zosjobs/samples  
         GetJobsTest.java
         SubmitJobsTest.java  
-        MonitorJobsTest.java  
-        
+        MonitorJobsTest.java
+        CancelJobsTest.java
+        DeleteJobsTest.java
+
     src/main/java/zostos/samples  
         IssueTsoCommandTest.java
   
