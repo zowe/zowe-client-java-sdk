@@ -26,16 +26,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Class to handle sending data to TSO
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class SendTso {
 
     private static final Logger LOG = LogManager.getLogger(SendTso.class);
 
     private final ZOSConnection connection;
 
+    /**
+     * SendTso constructor
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @author Frank Giordano
+     */
     public SendTso(ZOSConnection connection) {
         this.connection = connection;
     }
 
+    /**
+     * API method to send data to already started TSO address space, but will read TSO data until a PROMPT is reached.
+     *
+     * @param data       to send to the TSO address space.
+     * @param servletKey returned from a successful start
+     * @return response object, see ISendResponse
+     * @throws Exception error executing command
+     * @author Frank Giordano
+     */
     public SendResponse sendDataToTSOCollect(String servletKey, String data) throws Exception {
         Util.checkNullParameter(servletKey == null, "servletKey is null");
         Util.checkNullParameter(data == null, "data is null");
@@ -48,6 +69,14 @@ public class SendTso {
         return SendTso.createResponse(responses);
     }
 
+    /**
+     * API method to send data to already started TSO address space
+     *
+     * @param commandParms object with required parameters, see commandParms
+     * @return response object, see ZosmfTsoResponse
+     * @throws Exception error executing command
+     * @author Frank Giordano
+     */
     public ZosmfTsoResponse sendDataToTSOCommon(SendTsoParms commandParms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(commandParms == null, "sendTsoParms is null");
@@ -78,6 +107,14 @@ public class SendTso {
         return UtilTso.getZosmfTsoResponse(response);
     }
 
+    /**
+     * Generate TSO Response message in json format
+     *
+     * @param tsoResponseMessage tso response message, see tsoResponseMessage
+     * @return json representation of TSO RESPONSE
+     * @throws Exception error executing command
+     * @author Frank Giordano
+     */
     private String getTsoResponseSendMessage(TsoResponseMessage tsoResponseMessage) throws Exception {
         String message = "{\"TSO RESPONSE\":{\"VERSION\":\"" + tsoResponseMessage.getVersion().orElseThrow(Exception::new)
                 + "\",\"DATA\":\"" + tsoResponseMessage.getData().orElseThrow(Exception::new) + "\"}}";
@@ -85,6 +122,14 @@ public class SendTso {
         return message;
     }
 
+    /**
+     * Collects responses from address space until it reaches prompt
+     *
+     * @param tso object from first API call from witch responses are needed, see ZosmfTsoResponse
+     * @return CollectedResponses response object, see CollectedResponses
+     * @throws Exception error executing command
+     * @author Frank Giordano
+     */
     private CollectedResponses getAllResponses(ZosmfTsoResponse tso) throws Exception {
         boolean done = false;
         StringBuilder messages = new StringBuilder();
@@ -113,6 +158,14 @@ public class SendTso {
         return new CollectedResponses(tsos, messages.toString());
     }
 
+    /**
+     * Retrieve tso http request response
+     *
+     * @param servletKey key of tso address space
+     * @return z/OSMF tso response, see ZosmfTsoResponse
+     * @throws Exception error executing command
+     * @author Frank Giordano
+     */
     private ZosmfTsoResponse getDataFromTSO(String servletKey) throws Exception {
         Util.checkConnection(connection);
 
@@ -136,6 +189,13 @@ public class SendTso {
         return UtilTso.getZosmfTsoResponse(response);
     }
 
+    /**
+     * Create Response
+     *
+     * @param responses responses from CollectedResponses object
+     * @return SendResponse, see SendResponse
+     * @author Frank Giordano
+     */
     private static SendResponse createResponse(CollectedResponses responses) {
         return new SendResponse(true, responses.getTsos().get(), responses.getMessages().get());
     }

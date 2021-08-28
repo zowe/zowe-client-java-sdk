@@ -22,16 +22,36 @@ import utility.UtilTso;
 import zostso.input.StartTsoParams;
 import zostso.zosmf.ZosmfTsoResponse;
 
+/**
+ * Start TSO address space and receive servlet key
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class StartTso {
 
     private static final Logger LOG = LogManager.getLogger(StartTso.class);
 
     private final ZOSConnection connection;
 
+    /**
+     * StartTso constructor
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @author Frank Giordano
+     */
     public StartTso(ZOSConnection connection) {
         this.connection = connection;
     }
 
+    /**
+     * Start TSO address space with provided parameters.
+     *
+     * @param accountNumber this key of StartTsoParms required, because it cannot be default.
+     * @param parms         optional object with required parameters, see StartTsoParams
+     * @return command response on resolve, @see IStartStopResponses
+     * @author Frank Giordano
+     */
     public StartStopResponses start(String accountNumber, StartTsoParams parms)
             throws Exception {
         Util.checkNullParameter(accountNumber == null, "accountNumber is null");
@@ -50,6 +70,14 @@ public class StartTso {
         return new StartStopResponses(zosmfResponse);
     }
 
+    /**
+     * Start TSO address space with provided  parameters
+     *
+     * @param commandParms object with required parameters, see StartTsoParms
+     * @return z/OSMF response object, see IZosmfTsoResponse
+     * @throws Exception error executing command
+     * @author Frank Giordano
+     */
     public ZosmfTsoResponse startCommon(StartTsoParams commandParms) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(commandParms == null, "commandParms is null");
@@ -72,6 +100,14 @@ public class StartTso {
         return UtilTso.getZosmfTsoResponse(response);
     }
 
+    /**
+     * Set default TSO address space paramaters
+     *
+     * @param parms         object with required parameters, see StartTsoParams
+     * @param accountNumber user's account number permission
+     * @return response object, see StartTsoParams
+     * @author Frank Giordano
+     */
     private StartTsoParams setDefaultAddressSpaceParams(StartTsoParams parms, String accountNumber) {
         String proc = (parms == null || parms.logonProcedure.isEmpty())
                 ? TsoConstants.DEFAULT_PROC : parms.getLogonProcedure().get();
@@ -89,6 +125,13 @@ public class StartTso {
         return new StartTsoParams(proc, chset, cpage, rowNum, cols, accountNumber, rSize);
     }
 
+    /**
+     * Set default TSO address space paramaters
+     *
+     * @param parms object with required parameters, see StartTsoParams
+     * @return generated url
+     * @author Frank Giordano
+     */
     private String getResourcesQuery(StartTsoParams parms) {
         String query = "https://" + connection.getHost() + ":" + connection.getPort();
         query += TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "?";
