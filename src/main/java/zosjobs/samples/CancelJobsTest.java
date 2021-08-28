@@ -25,11 +25,10 @@ public class CancelJobsTest {
         String userName = "XXX";
         String password = "XXX";
         String jobId = "XXX";
+        String jobName = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
-        CancelJobParams params = new CancelJobParams.Builder()
-                .jobId(jobId)
-                .build();
+        CancelJobParams params = new CancelJobParams.Builder().jobId(jobId).jobName(jobName).build();
 
         LOG.info(new CancelJobs(connection).cancelJobsCommon(params));
     }

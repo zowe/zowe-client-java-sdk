@@ -12,6 +12,7 @@ package zosjobs;
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.simple.JSONObject;
 import rest.*;
 import utility.Util;
 import utility.UtilIO;
@@ -68,29 +69,21 @@ public class CancelJobs {
         Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
         Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() +
-                JobsConstants.RESOURCE + UtilIO.FILE_DELIM + JobsConstants.REQUEST_CANCEL;
-        LOG.debug(url);
+        // generate full url request
+        String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE +
+                UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
+        LOG.info(url);
 
-        Map<String, String> headers = new HashMap<>();
-        String key, value, version;
+        // generate json string body for the request
+        String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
+        var jsonMap = new HashMap<String, String>();
+        jsonMap.put("request", JobsConstants.REQUEST_CANCEL);
+        jsonMap.put("version", version);
+        var jsonBody = new JSONObject(jsonMap);
 
-        if (params.getVersion().isEmpty()) {
-            version = JobsConstants.DEFAULT_CANCEL_VERSION;
-        } else {
-            version = params.getVersion().get();
-        }
-
-        key = ZosmfHeaders.HEADERS.get("APPLICATION_JSON").get(0);
-        value = ZosmfHeaders.HEADERS.get("APPLICATION_JSON").get(1);
-        headers.put(key, value);
-
-        String parameters = UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
-
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url + parameters, null,
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonBody.toString(),
                 ZoweRequestType.VerbType.PUT_JSON);
 
-        request.setAdditionalHeaders(headers);
         return request.executeHttpRequest();
     }
 
