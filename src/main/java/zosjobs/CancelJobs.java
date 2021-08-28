@@ -19,7 +19,6 @@ import utility.UtilIO;
 import zosjobs.input.CancelJobParams;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * CancelJobs class to handle Job cancel
