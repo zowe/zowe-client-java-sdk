@@ -54,6 +54,7 @@ public abstract class ZoweRequest {
      * Execute the formulated http request
      *
      * @return Response value
+     * @throws Exception error executing request
      * @author Frank Giordano
      */
     public abstract Response executeHttpRequest() throws Exception;
@@ -68,6 +69,7 @@ public abstract class ZoweRequest {
     /**
      * Set additional headers needed for the http request
      *
+     * @param additionalHeaders additional headers to add to the request
      * @author Frank Giordano
      */
     public abstract void setAdditionalHeaders(Map<String, String> additionalHeaders);
@@ -76,6 +78,7 @@ public abstract class ZoweRequest {
      * Set the following incoming url with a new http request
      *
      * @param url rest url end point
+     * @throws Exception error setting the http request
      * @author Frank Giordano
      */
     public abstract void setRequest(String url) throws Exception;
@@ -99,6 +102,7 @@ public abstract class ZoweRequest {
     /**
      * Retrieve current request type for http request
      *
+     * @return http request type
      * @author Frank Giordano
      */
     public ZoweRequestType.VerbType requestType() {

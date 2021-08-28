@@ -50,10 +50,10 @@ public class StartTso {
      * @param accountNumber this key of StartTsoParms required, because it cannot be default.
      * @param parms         optional object with required parameters, see StartTsoParams
      * @return command response on resolve, @see IStartStopResponses
+     * @throws Exception error executing command
      * @author Frank Giordano
      */
-    public StartStopResponses start(String accountNumber, StartTsoParams parms)
-            throws Exception {
+    public StartStopResponses start(String accountNumber, StartTsoParams parms) throws Exception {
         Util.checkNullParameter(accountNumber == null, "accountNumber is null");
         Util.checkStateParameter(accountNumber.isEmpty(), "accountNumber not specified");
 
