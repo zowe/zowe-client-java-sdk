@@ -27,9 +27,7 @@ public class DeleteJobsTest {
         String jobId = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
-        DeleteJobParams params = new DeleteJobParams.Builder()
-                .jobId(jobId)
-                .build();
+        DeleteJobParams params = new DeleteJobParams.Builder().jobId(jobId).build();
 
         LOG.info(new DeleteJobs(connection).deleteJobCommon(params));
     }
