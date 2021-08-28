@@ -13,11 +13,32 @@ import zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.Optional;
 
+/**
+ * The TsoStartStop API response
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class StartStopResponse {
 
+    /**
+     * True if the command was issued and the responses were collected.
+     */
     public Optional<Boolean> success;
+
+    /**
+     * Response from z/OSMF to start rest call
+     */
     public Optional<ZosmfTsoResponse> zosmfTsoResponse;
+
+    /**
+     * If an error occurs, returns error which contains cause error.
+     */
     public Optional<String> failureResponse = Optional.empty();
+
+    /**
+     * Servlet key from ZosmfTsoResponse
+     */
     public Optional<String> servletKey;
 
     public StartStopResponse(boolean success, ZosmfTsoResponse zosmfTsoResponse, String servletKey) {
