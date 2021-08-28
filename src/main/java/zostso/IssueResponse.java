@@ -13,13 +13,43 @@ import zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.Optional;
 
+/**
+ * The TsoSend API response
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class IssueResponse {
 
+    /**
+     * True if the command was issued and the responses were collected.
+     */
     private Optional<Boolean> success;
+
+    /**
+     * zOSMF start TSO API response.
+     */
     private Optional<StartStopResponses> startResponse;
+
+    /**
+     * Indicates if started TSO contains "READY " message
+     */
     private Optional<Boolean> startReady;
+
+    /**
+     * zOSMF stop TSO API response.
+     */
     private Optional<StartStopResponse> stopResponse;
+
+    /**
+     * The list of zOSMF send API responses. May issue multiple requests or
+     * to ensure that all messages are collected. Each individual response is placed here.
+     */
     private Optional<ZosmfTsoResponse> zosmfResponse;
+
+    /**
+     * The command response text.
+     */
     private Optional<String> commandResponses;
 
     public IssueResponse(boolean success, StartStopResponses startResponse, boolean startReady,

@@ -18,18 +18,44 @@ package zosjobs.response;
  */
 public class CheckJobStatus {
 
+    /**
+     * Has the desired job status was seen, true or false
+     */
     private boolean statusFound;
+
+    /**
+     * The given Job for checking its status
+     */
     private Job job;
 
+    /**
+     * CheckJobStatus constructor
+     *
+     * @param statusFound holds if job status was found or not
+     * @param job         job used for status checking
+     * @author Frank Giordano
+     */
     public CheckJobStatus(boolean statusFound, Job job) {
         this.statusFound = statusFound;
         this.job = job;
     }
 
+    /**
+     * Retrieve statusFound specified
+     *
+     * @return true or false value
+     * @author Frank Giordano
+     */
     public boolean isStatusFound() {
         return statusFound;
     }
 
+    /**
+     * Retrieve job specified
+     *
+     * @return job value
+     * @author Frank Giordano
+     */
     public Job getJob() {
         return job;
     }

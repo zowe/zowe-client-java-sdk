@@ -42,6 +42,8 @@ public class JsonPutRequest extends ZoweRequest {
      *
      * @param connection connection information, see ZOSConnection object
      * @param url        rest url value
+     * @param body       rest body value
+     * @throws Exception error setting constructor variables
      * @author Frank Giordano
      */
     public JsonPutRequest(ZOSConnection connection, String url, String body) throws Exception {
@@ -96,6 +98,7 @@ public class JsonPutRequest extends ZoweRequest {
     /**
      * Set additional headers needed for the http request
      *
+     * @param additionalHeaders additional headers to add to the request
      * @author Frank Giordano
      */
     @Override
@@ -106,6 +109,8 @@ public class JsonPutRequest extends ZoweRequest {
     /**
      * Set the following incoming url with a new http request
      *
+     * @param url rest url end point
+     * @throws Exception error setting the http request
      * @author Frank Giordano
      */
     @Override

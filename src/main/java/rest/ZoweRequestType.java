@@ -10,7 +10,7 @@
 package rest;
 
 /**
- * CRUD types
+ * Zowe Request CRUD types
  *
  * @author Frank Giordano
  * @version 1.0

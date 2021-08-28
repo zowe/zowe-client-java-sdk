@@ -14,20 +14,52 @@ import zostso.zosmf.ZosmfTsoResponse;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Tso collected Responses
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class CollectedResponses {
 
+    /**
+     * z/OSMF synchronous most tso command response messages.
+     */
     private Optional<List<ZosmfTsoResponse>> tsos;
+
+    /**
+     * Appended collected messages including READY prompt at the end.
+     */
     private Optional<String> messages;
 
+    /**
+     * CollectedResponses constructor
+     *
+     * @param tsos tso list of ZosmfTsoResponse objects
+     * @param messages tso messages
+     * @author Frank Giordano
+     */
     public CollectedResponses(List<ZosmfTsoResponse> tsos, String messages) {
         this.tsos = Optional.ofNullable(tsos);
         this.messages = Optional.ofNullable(messages);
     }
 
+    /**
+     * Retrieve tsos specified
+     *
+     * @return list of ZosmfTsoResponse objects
+     * @author Frank Giordano
+     */
     public Optional<List<ZosmfTsoResponse>> getTsos() {
         return tsos;
     }
 
+    /**
+     * Retrieve messages specified
+     *
+     * @return messages
+     * @author Frank Giordano
+     */
     public Optional<String> getMessages() {
         return messages;
     }

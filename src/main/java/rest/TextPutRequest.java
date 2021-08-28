@@ -43,6 +43,7 @@ public class TextPutRequest extends ZoweRequest {
      * @param connection connection information, see ZOSConnection object
      * @param url        rest url value
      * @param body       data to be attached to the request
+     * @throws Exception error setting constructor variables
      * @author Frank Giordano
      */
     public TextPutRequest(ZOSConnection connection, String url, String body) throws Exception {
@@ -98,6 +99,7 @@ public class TextPutRequest extends ZoweRequest {
     /**
      * Set additional headers needed for the http request
      *
+     * @param additionalHeaders additional headers to add to the request
      * @author Frank Giordano
      */
     @Override
@@ -108,6 +110,8 @@ public class TextPutRequest extends ZoweRequest {
     /**
      * Set the following incoming url with a new http request
      *
+     * @param url fr the request
+     * @throws Exception error setting the http request
      * @author Frank Giordano
      */
     @Override
