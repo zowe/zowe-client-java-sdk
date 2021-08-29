@@ -43,20 +43,20 @@ public class GetJobsByJsonGetRequestTest {
         getJobs = new GetJobs(connection);
         Whitebox.setInternalState(getJobs, "request", request);
 
-        Map<String, String> jobMap = new HashMap<>();
-        jobMap.put("jobid", "jobid");
-        jobMap.put("jobname", "jobname");
-        jobMap.put("subsystem", "subsystem");
-        jobMap.put("owner", "owner");
-        jobMap.put("status", "status");
-        jobMap.put("type", "type");
-        jobMap.put("class", "class");
-        jobMap.put("retCode", "retCode");
-        jobMap.put("url", "url");
-        jobMap.put("files-url", "files-url");
-        jobMap.put("job-correlator", "job-correlator");
-        jobMap.put("phase-name", "phase-name");
-        jobJson = new JSONObject(jobMap);
+        var jsonMap = new HashMap<String, String>();
+        jsonMap.put("jobid", "jobid");
+        jsonMap.put("jobname", "jobname");
+        jsonMap.put("subsystem", "subsystem");
+        jsonMap.put("owner", "owner");
+        jsonMap.put("status", "status");
+        jsonMap.put("type", "type");
+        jsonMap.put("class", "class");
+        jsonMap.put("retCode", "retCode");
+        jsonMap.put("url", "url");
+        jsonMap.put("files-url", "files-url");
+        jsonMap.put("job-correlator", "job-correlator");
+        jsonMap.put("phase-name", "phase-name");
+        jobJson = new JSONObject(jsonMap);
     }
 
     @Test
@@ -65,15 +65,15 @@ public class GetJobsByJsonGetRequestTest {
         String msg = "Expected 1 job returned but received 2 jobs.";
         JSONArray jsonArray = new JSONArray();
 
-        Map<String, String> jobMap1 = new HashMap<>();
-        jobMap1.put("jobid", "job1");
-        JSONObject job1 = new JSONObject(jobMap1);
-        jsonArray.add(job1);
+        var jsonJobMap1 = new HashMap<String, String>();
+        jsonJobMap1.put("jobid", "job1");
+        var jsonJob1 = new JSONObject(jsonJobMap1);
+        jsonArray.add(jsonJob1);
 
-        Map<String, String> jobMap2 = new HashMap<>();
-        jobMap2.put("jobid", "job2");
-        JSONObject job2 = new JSONObject(jobMap2);
-        jsonArray.add(job2);
+        var jsonJobMap2 = new HashMap<String, String>();
+        jsonJobMap2.put("jobid", "job2");
+        var jsonJob2 = new JSONObject(jsonJobMap2);
+        jsonArray.add(jsonJob2);
 
         Response response = new Response(Optional.of(jsonArray), Optional.of(200));
         Mockito.when(request.executeHttpRequest()).thenReturn(response);
@@ -94,10 +94,10 @@ public class GetJobsByJsonGetRequestTest {
     public void tstGetJobWithJobIdOnlySuccess() throws Exception {
         JSONArray jsonArray = new JSONArray();
 
-        Map<String, String> jobMap = new HashMap<>();
-        jobMap.put("jobid", "job");
-        JSONObject jobJson = new JSONObject(jobMap);
-        jsonArray.add(jobJson);
+        var jsonJobMap = new HashMap<String, String>();
+        jsonJobMap.put("jobid", "job");
+        var jsonJob = new JSONObject(jsonJobMap);
+        jsonArray.add(jsonJob);
 
         Response response = new Response(Optional.of(jsonArray), Optional.of(200));
         Mockito.when(request.executeHttpRequest()).thenReturn(response);

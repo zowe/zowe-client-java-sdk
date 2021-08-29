@@ -28,12 +28,12 @@ public class UtilTsoTest {
 
     @Test
     public void tstParseJsonStopResponseSuccess() {
-        Map<String, Object> jsonMap = new HashMap<>();
+        var jsonMap = new HashMap<String, Object>();
         jsonMap.put("ver", "ver");
         jsonMap.put("servletKey", "servletKey");
         jsonMap.put("reused", true);
         jsonMap.put("timeout", true);
-        JSONObject json = new JSONObject(jsonMap);
+        var json = new JSONObject(jsonMap);
 
         ZosmfTsoResponse response = UtilTso.parseJsonStopResponse(json);
         assertTrue("ver".equals(response.getVer().get()));
