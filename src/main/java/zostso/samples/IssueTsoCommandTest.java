@@ -19,10 +19,22 @@ import zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.List;
 
+/**
+ * Template class example to test tso command functionality.
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class IssueTsoCommandTest {
 
     private static final Logger LOG = LogManager.getLogger(IssueTsoCommandTest.class);
 
+    /**
+     * Main method defines host and user connection, and tso command parameters used for the example test.
+     *
+     * @param args for main not used
+     * @author Frank Giordano
+     */
     public static void main(String[] args) {
         String hostName = "XXX";
         String port = "XXX";
@@ -57,6 +69,14 @@ public class IssueTsoCommandTest {
         }
     }
 
+    /**
+     * Issue issueTsoCommand method from IssueTso class which will execute the given tso command
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param accountNumber user's z/OSMF permission account number
+     * @param cmd tso command to execute
+     * @author Frank Giordano
+     */
     public static IssueResponse tstTsoConsoleCmdByIssue(ZOSConnection connection, String accountNumber, String cmd)
             throws Exception {
         IssueResponse response;
