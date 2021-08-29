@@ -50,7 +50,7 @@ public class CancelJobs {
      * @param jobId   job id
      * @param version version number
      * @return job document with details about the submitted job
-     * @throws Exception error on submitting
+     * @throws Exception error canceling
      * @author Nikunj goyal
      */
     public Response cancelJob(String jobName, String jobId, String version) throws Exception {
@@ -64,7 +64,7 @@ public class CancelJobs {
      * @param job     job document wanting to cancel
      * @param version version number
      * @return job document with details about the submitted job
-     * @throws Exception error on submitting
+     * @throws Exception error canceling
      * @author Frank Giordano
      */
     public Response cancelJobForJob(Job job, String version) throws Exception {
@@ -78,7 +78,7 @@ public class CancelJobs {
      *
      * @param params cancel job parameters, see cancelJobsCommon object
      * @return job document with details about the submitted job
-     * @throws Exception error on submitting
+     * @throws Exception error canceling
      * @author Nikunj goyal
      */
     public Response cancelJobsCommon(CancelJobParams params) throws Exception {
