@@ -68,4 +68,13 @@ Logger packaged used for the project is log4j2.
 Under 'resources' directory you will find the logger configuration file log4j2.xml.  
   
 Change <Root level="debug"> assignment accordingly for your needs.  
+  
+## Documentation  
+
+https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk/latest/index.html  
+  
+## Maven Central Publication  
+
+https://mvnrepository.com/artifact/org.zowe.client.java.sdk/zowe-client-java-sdk  
+  
 

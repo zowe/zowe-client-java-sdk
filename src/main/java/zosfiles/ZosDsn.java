@@ -145,28 +145,27 @@ public class ZosDsn {
     }
 
     private static String buildBody(CreateParams params) {
-        Map<String, Object> reqBody = new HashMap<>();
+        var jsonMap = new HashMap<String, Object>();
+        params.getVolser().ifPresent(v -> jsonMap.put("volser", v));
+        params.getUnit().ifPresent(v -> jsonMap.put("unit", v));
+        params.getDsorg().ifPresent(v -> jsonMap.put("dsorg", v));
+        params.getAlcunit().ifPresent(v -> jsonMap.put("alcunit", v));
+        params.getPrimary().ifPresent(v -> jsonMap.put("primary", v));
+        params.getSecondary().ifPresent(v -> jsonMap.put("secondary", v));
+        params.getDirblk().ifPresent(v -> jsonMap.put("dirblk", v));
+        params.getAvgblk().ifPresent(v -> jsonMap.put("avgblk", v));
+        params.getRecfm().ifPresent(v -> jsonMap.put("recfm", v));
+        params.getBlksize().ifPresent(v -> jsonMap.put("blksize", v));
+        params.getLrecl().ifPresent(v -> jsonMap.put("lrecl", v));
+        params.getStorclass().ifPresent(v -> jsonMap.put("storclass", v));
+        params.getStorclass().ifPresent(v -> jsonMap.put("mgntclass", v));
+        params.getMgntclass().ifPresent(v -> jsonMap.put("mgntclass", v));
+        params.getDataclass().ifPresent(v -> jsonMap.put("dataclass", v));
+        params.getDsntype().ifPresent(v -> jsonMap.put("dsntype", v));
 
-        params.getVolser().ifPresent(v -> reqBody.put("volser", v));
-        params.getUnit().ifPresent(v -> reqBody.put("unit", v));
-        params.getDsorg().ifPresent(v -> reqBody.put("dsorg", v));
-        params.getAlcunit().ifPresent(v -> reqBody.put("alcunit", v));
-        params.getPrimary().ifPresent(v -> reqBody.put("primary", v));
-        params.getSecondary().ifPresent(v -> reqBody.put("secondary", v));
-        params.getDirblk().ifPresent(v -> reqBody.put("dirblk", v));
-        params.getAvgblk().ifPresent(v -> reqBody.put("avgblk", v));
-        params.getRecfm().ifPresent(v -> reqBody.put("recfm", v));
-        params.getBlksize().ifPresent(v -> reqBody.put("blksize", v));
-        params.getLrecl().ifPresent(v -> reqBody.put("lrecl", v));
-        params.getStorclass().ifPresent(v -> reqBody.put("storclass", v));
-        params.getStorclass().ifPresent(v -> reqBody.put("mgntclass", v));
-        params.getMgntclass().ifPresent(v -> reqBody.put("mgntclass", v));
-        params.getDataclass().ifPresent(v -> reqBody.put("dataclass", v));
-        params.getDsntype().ifPresent(v -> reqBody.put("dsntype", v));
-
-        JSONObject req = new JSONObject(reqBody);
-        LOG.debug(req);
-        return req.toString();
+        var jsonRequestBody = new JSONObject(jsonMap);
+        LOG.debug(jsonRequestBody);
+        return jsonRequestBody.toString();
     }
 
 }

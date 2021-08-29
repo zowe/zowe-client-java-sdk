@@ -81,10 +81,10 @@ public class SendTso {
         Util.checkConnection(connection);
         Util.checkNullParameter(commandParms == null, "sendTsoParms is null");
         Util.checkStateParameter(commandParms.getData().isEmpty(), "sendTsoParms data not specified");
-        Util.checkStateParameter(commandParms.getSevletKey().isEmpty(), "sendTsoParms sevletKey not specified");
+        Util.checkStateParameter(commandParms.getServletKey().isEmpty(), "sendTsoParms sevletKey not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getPort() + TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" + commandParms.getSevletKey() + TsoConstants.RES_DONT_READ_REPLY;
+                TsoConstants.RES_START_TSO + "/" + commandParms.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;
         LOG.debug("SendTso::sendDataToTSOCommon - url {}", url);
 
         TsoResponseMessage tsoResponseMessage = new TsoResponseMessage(Optional.of("0100"),

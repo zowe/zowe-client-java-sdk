@@ -17,6 +17,7 @@ import rest.*;
 import utility.Util;
 import utility.UtilIO;
 import zosjobs.input.CancelJobParams;
+import zosjobs.response.Job;
 
 import java.util.HashMap;
 
@@ -45,12 +46,31 @@ public class CancelJobs {
     /**
      * Cancel a job that resides in a z/OS data set.
      *
+     * @param jobName name of job to cancel
+     * @param jobId   job id
+     * @param version version number
      * @return job document with details about the submitted job
-     * @throws Exception error on submitting
+     * @throws Exception error canceling
      * @author Nikunj goyal
      */
-    public Response cancelJob() throws Exception {
-        return this.cancelJobsCommon(new CancelJobParams(new CancelJobParams.Builder()));
+    public Response cancelJob(String jobName, String jobId, String version) throws Exception {
+        return this.cancelJobsCommon(new CancelJobParams(
+                new CancelJobParams.Builder().jobName(jobName).jobId(jobId).version(version)));
+    }
+
+    /**
+     * Cancel a job that resides in a z/OS data set.
+     *
+     * @param job     job document wanting to cancel
+     * @param version version number
+     * @return job document with details about the submitted job
+     * @throws Exception error canceling
+     * @author Frank Giordano
+     */
+    public Response cancelJobForJob(Job job, String version) throws Exception {
+        return this.cancelJobsCommon(new CancelJobParams(
+                new CancelJobParams.Builder().jobName(job.getJobName().isPresent() ? job.getJobName().get() : null)
+                        .jobId(job.getJobId().isPresent() ? job.getJobId().get() : null).version(version)));
     }
 
     /**
@@ -58,7 +78,7 @@ public class CancelJobs {
      *
      * @param params cancel job parameters, see cancelJobsCommon object
      * @return job document with details about the submitted job
-     * @throws Exception error on submitting
+     * @throws Exception error canceling
      * @author Nikunj goyal
      */
     public Response cancelJobsCommon(CancelJobParams params) throws Exception {
@@ -78,9 +98,10 @@ public class CancelJobs {
         var jsonMap = new HashMap<String, String>();
         jsonMap.put("request", JobsConstants.REQUEST_CANCEL);
         jsonMap.put("version", version);
-        var jsonBody = new JSONObject(jsonMap);
+        var jsonRequestBody = new JSONObject(jsonMap);
+        LOG.debug(jsonRequestBody);
 
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonBody.toString(),
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonRequestBody.toString(),
                 ZoweRequestType.VerbType.PUT_JSON);
 
         return request.executeHttpRequest();

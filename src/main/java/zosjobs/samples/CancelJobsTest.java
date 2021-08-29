@@ -12,8 +12,10 @@ package zosjobs.samples;
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rest.Response;
 import zosjobs.CancelJobs;
 import zosjobs.input.CancelJobParams;
+import zosjobs.response.Job;
 
 public class CancelJobsTest {
 
@@ -28,9 +30,23 @@ public class CancelJobsTest {
         String jobName = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
-        CancelJobParams params = new CancelJobParams.Builder().jobId(jobId).jobName(jobName).build();
+        LOG.info(tstCancelJobsCommon(connection, jobName, jobId));
+        LOG.info(tstCancelJobForJob(connection, jobName, jobId));
+        LOG.info(tstCancelJob(connection, jobName, jobId));
+    }
 
-        LOG.info(new CancelJobs(connection).cancelJobsCommon(params));
+    public static Response tstCancelJobsCommon(ZOSConnection connection, String jobName, String jobId) throws Exception {
+        CancelJobParams params = new CancelJobParams.Builder().jobId(jobId).jobName(jobName).build();
+        return new CancelJobs(connection).cancelJobsCommon(params);
+    }
+
+    public static Response tstCancelJobForJob(ZOSConnection connection, String jobName, String jobId) throws Exception {
+        return new CancelJobs(connection).cancelJobForJob(
+                new Job.Builder().jobName(jobName).jobId(jobId).build(), null);
+    }
+
+    public static Response tstCancelJob(ZOSConnection connection, String jobName, String jobId) throws Exception {
+        return new CancelJobs(connection).cancelJob(jobName, jobId, null);
     }
 
 }
