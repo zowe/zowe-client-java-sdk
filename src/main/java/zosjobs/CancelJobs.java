@@ -17,6 +17,7 @@ import rest.*;
 import utility.Util;
 import utility.UtilIO;
 import zosjobs.input.CancelJobParams;
+import zosjobs.response.Job;
 
 import java.util.HashMap;
 
@@ -45,12 +46,31 @@ public class CancelJobs {
     /**
      * Cancel a job that resides in a z/OS data set.
      *
+     * @param jobName name of job to cancel
+     * @param jobId   job id
+     * @param version version number
      * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Nikunj goyal
      */
-    public Response cancelJob() throws Exception {
-        return this.cancelJobsCommon(new CancelJobParams(new CancelJobParams.Builder()));
+    public Response cancelJob(String jobName, String jobId, String version) throws Exception {
+        return this.cancelJobsCommon(new CancelJobParams(
+                new CancelJobParams.Builder().jobName(jobName).jobId(jobId).version(version)));
+    }
+
+    /**
+     * Cancel a job that resides in a z/OS data set.
+     *
+     * @param job     job document wanting to cancel
+     * @param version version number
+     * @return job document with details about the submitted job
+     * @throws Exception error on submitting
+     * @author Frank Giordano
+     */
+    public Response cancelJobForJob(Job job, String version) throws Exception {
+        return this.cancelJobsCommon(new CancelJobParams(
+                new CancelJobParams.Builder().jobName(job.getJobName().isPresent() ? job.getJobName().get() : null)
+                        .jobId(job.getJobId().isPresent() ? job.getJobId().get() : null).version(version)));
     }
 
     /**
