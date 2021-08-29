@@ -9,22 +9,52 @@
  */
 package zostso.input;
 
+/**
+ * TSO issue command z/OSMF parameters
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class SendTsoParms {
 
-    // TODO
+    /**
+     * Servlet key of an active address space
+     */
+    private String servletKey;
 
-    private String sevletKey;
+    /**
+     * Data to be sent to the active address space
+     */
     private String data;
 
-    public SendTsoParms(String sevletKey, String data) {
-        this.sevletKey = sevletKey;
+    /**
+     * SendTsoParms constructor
+     *
+     * @param servletKey key of an active address space
+     * @param data      to be sent to the active address space
+     * @author Frank Giordano
+     */
+    public SendTsoParms(String servletKey, String data) {
+        this.servletKey = servletKey;
         this.data = data;
     }
 
-    public String getSevletKey() {
-        return sevletKey;
+    /**
+     * Retrieve servletKey specified
+     *
+     * @return servletKey key value of an active address space
+     * @author Frank Giordano
+     */
+    public String getServletKey() {
+        return servletKey;
     }
 
+    /**
+     * Retrieve data specified
+     *
+     * @return data value being used to sent to active address space
+     * @author Frank Giordano
+     */
     public String getData() {
         return data;
     }
@@ -32,7 +62,7 @@ public class SendTsoParms {
     @Override
     public String toString() {
         return "SendTsoParms{" +
-                "sevletKey='" + sevletKey + '\'' +
+                "sevletKey='" + servletKey + '\'' +
                 ", data='" + data + '\'' +
                 '}';
     }

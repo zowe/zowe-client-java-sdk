@@ -41,32 +41,76 @@ public class StartStopResponse {
      */
     public Optional<String> servletKey;
 
+    /**
+     * StartStopResponse constructor
+     *
+     * @param success true or false if response seen
+     * @param zosmfTsoResponse tso response
+     * @param servletKey key value for tso address space
+     * @author Frank Giordano
+     */
     public StartStopResponse(boolean success, ZosmfTsoResponse zosmfTsoResponse, String servletKey) {
         this.success = Optional.ofNullable(success);
         this.zosmfTsoResponse = Optional.ofNullable(zosmfTsoResponse);
         this.servletKey = Optional.ofNullable(servletKey);
     }
 
+    /**
+     * Retrieve success specified
+     *
+     * @return boolean value
+     * @author Frank Giordano
+     */
     public Optional<Boolean> getSuccess() {
         return success;
     }
 
+    /**
+     * Retrieve zosmfTsoResponse specified
+     *
+     * @return ZosmfTsoResponse value
+     * @author Frank Giordano
+     */
     public Optional<ZosmfTsoResponse> getZosmfTsoResponse() {
         return zosmfTsoResponse;
     }
 
+    /**
+     * Retrieve failureResponse specified
+     *
+     * @return failureResponse value
+     * @author Frank Giordano
+     */
     public Optional<String> getFailureResponse() {
         return failureResponse;
     }
 
+    /**
+     * Retrieve servletKey specified
+     *
+     * @return servletKey value
+     * @author Frank Giordano
+     */
     public Optional<String> getServletKey() {
         return servletKey;
     }
 
+    /**
+     * Assign success value
+     *
+     * @param success true or false is response seen
+     * @author Frank Giordano
+     */
     public void setSuccess(boolean success) {
         this.success = Optional.ofNullable(success);
     }
 
+    /**
+     * Assign failureResponse value
+     *
+     * @param failureResponse failure response string
+     * @author Frank Giordano
+     */
     public void setFailureResponse(String failureResponse) {
         this.failureResponse = Optional.ofNullable(failureResponse);
     }

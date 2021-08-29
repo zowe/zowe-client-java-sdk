@@ -11,6 +11,12 @@ package zostso.input;
 
 import java.util.Optional;
 
+/**
+ * TSO stop command z/OSMF parameters
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class StopTsoParms {
 
     /**
@@ -18,10 +24,22 @@ public class StopTsoParms {
      */
     private Optional<String> servletKey;
 
+    /**
+     * SendTsoParms constructor
+     *
+     * @param servletKey key of an active address space
+     * @author Frank Giordano
+     */
     public StopTsoParms(String servletKey) {
         this.servletKey = Optional.ofNullable(servletKey);
     }
 
+    /**
+     * Retrieve servletKey specified
+     *
+     * @return servletKey key value of an active address space
+     * @author Frank Giordano
+     */
     public Optional<String> getServletKey() {
         return servletKey;
     }
