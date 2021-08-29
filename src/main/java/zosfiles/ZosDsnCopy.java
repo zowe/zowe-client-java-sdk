@@ -106,8 +106,8 @@ public class ZosDsnCopy {
     private String buildBody(CopyParams params) {
         String fromDataSetName = params.getFromDataSet().get();
 
-        Map<String, Object> req = new HashMap<>();
-        req.put("request", "copy");
+        var jsonMap = new HashMap<String, Object>();
+        jsonMap.put("request", "copy");
 
         String member = "*";
         int startMemberIndex = fromDataSetName.indexOf("(");
@@ -116,21 +116,21 @@ public class ZosDsnCopy {
             fromDataSetName = fromDataSetName.substring(0, startMemberIndex);
         }
 
-        Map<String, Object> fromDataSetReq = new HashMap<>();
+        var fromDataSetReq = new HashMap<String, Object>();
         fromDataSetReq.put("dsn", fromDataSetName);
         fromDataSetReq.put("member", member);
         JSONObject fromDataSetObj = new JSONObject(fromDataSetReq);
 
-        req.put("from-dataset", fromDataSetObj);
-        req.put("replace", params.isReplace());
+        jsonMap.put("from-dataset", fromDataSetObj);
+        jsonMap.put("replace", params.isReplace());
 
         if (params.getFromVolser().isPresent()) {
-            req.put("volser", params.getFromVolser());
+            jsonMap.put("volser", params.getFromVolser());
         }
 
-        JSONObject reqBody = new JSONObject(req);
-        LOG.debug(reqBody);
-        return reqBody.toString();
+        var jsonRequestBody = new JSONObject(jsonMap);
+        LOG.debug(jsonRequestBody);
+        return jsonRequestBody.toString();
     }
 
 }

@@ -78,9 +78,10 @@ public class CancelJobs {
         var jsonMap = new HashMap<String, String>();
         jsonMap.put("request", JobsConstants.REQUEST_CANCEL);
         jsonMap.put("version", version);
-        var jsonBody = new JSONObject(jsonMap);
+        var jsonRequestBody = new JSONObject(jsonMap);
+        LOG.debug(jsonRequestBody);
 
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonBody.toString(),
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonRequestBody.toString(),
                 ZoweRequestType.VerbType.PUT_JSON);
 
         return request.executeHttpRequest();

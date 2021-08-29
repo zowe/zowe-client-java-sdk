@@ -70,12 +70,12 @@ public class IssueCommand {
 
         LOG.debug(url);
 
-        Map<String, String> reqBody = new HashMap<>();
-        reqBody.put("cmd", commandParms.getCmd().get());
-        JSONObject req = new JSONObject(reqBody);
-        LOG.debug(req);
+        var jsonMap = new HashMap<String, String>();
+        jsonMap.put("cmd", commandParms.getCmd().get());
+        var jsonRequestBody = new JSONObject(jsonMap);
+        LOG.debug(jsonRequestBody);
 
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, reqBody.toString(),
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonRequestBody.toString(),
                 ZoweRequestType.VerbType.PUT_JSON);
         Response response = request.executeHttpRequest();
         if (response.isEmpty())

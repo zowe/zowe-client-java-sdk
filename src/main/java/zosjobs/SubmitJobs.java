@@ -77,16 +77,16 @@ public class SubmitJobs {
         LOG.debug(url);
 
         String fullyQualifiedDataset = "//'" + parms.getJobDataSet().get() + "'";
-        Map<String, String> reqBody = new HashMap<>();
-        reqBody.put("file", fullyQualifiedDataset);
-        JSONObject req = new JSONObject(reqBody);
-        LOG.debug(req);
+        var jsonMap = new HashMap<String, String>();
+        jsonMap.put("file", fullyQualifiedDataset);
+        var jsonRequestBody = new JSONObject(jsonMap);
+        LOG.debug(jsonRequestBody);
 
         if (parms.getJclSymbols().isPresent()) {
             // TODO..
         }
 
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, reqBody.toString(),
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonRequestBody.toString(),
                 ZoweRequestType.VerbType.PUT_JSON);
 
         Response response = request.executeHttpRequest();
