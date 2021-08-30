@@ -73,15 +73,14 @@ public class DeleteJobs {
         Map<String, String> headers = new HashMap<>();
         String key, value;
 
-        if (params.getModifyVersion().map(v -> v.equals("1.0")).orElse(false)) {
-            key = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(0);
-            value = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(1);
-            headers.put(key, value);
-        } else if (params.getModifyVersion().map(v -> v.equals("2.0")).orElse(false)) {
+        if (params.getModifyVersion().map(v -> v.equals("2.0")).orElse(false)) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(1);
-            headers.put(key, value);
+        } else {
+            key = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(0);
+            value = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(1);
         }
+        headers.put(key, value);
 
         String parameters = UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
 
