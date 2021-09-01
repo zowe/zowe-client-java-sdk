@@ -77,7 +77,7 @@ public class DeleteJobs {
      * Delete a job that resides in a z/OS data set.
      *
      * @param params delete job parameters, see DeleteJobParams object
-     * @return job document with details about the submitted job
+     * @return http response object
      * @throws Exception error on deleting
      * @author Nikunj goyal
      */
