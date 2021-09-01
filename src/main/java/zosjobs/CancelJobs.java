@@ -54,8 +54,8 @@ public class CancelJobs {
      * @author Nikunj goyal
      */
     public Response cancelJob(String jobName, String jobId, String version) throws Exception {
-        return this.cancelJobsCommon(new CancelJobParams(
-                new CancelJobParams.Builder().jobName(jobName).jobId(jobId).version(version)));
+        return this.cancelJobsCommon(
+                new CancelJobParams.Builder().jobName(jobName).jobId(jobId).version(version).build());
     }
 
     /**
@@ -68,9 +68,9 @@ public class CancelJobs {
      * @author Frank Giordano
      */
     public Response cancelJobForJob(Job job, String version) throws Exception {
-        return this.cancelJobsCommon(new CancelJobParams(
+        return this.cancelJobsCommon(
                 new CancelJobParams.Builder().jobName(job.getJobName().isPresent() ? job.getJobName().get() : null)
-                        .jobId(job.getJobId().isPresent() ? job.getJobId().get() : null).version(version)));
+                        .jobId(job.getJobId().isPresent() ? job.getJobId().get() : null).version(version).build());
     }
 
     /**
@@ -91,7 +91,7 @@ public class CancelJobs {
         // generate full url request
         String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE +
                 UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
-        LOG.info(url);
+        LOG.debug(url);
 
         // generate json string body for the request
         String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);

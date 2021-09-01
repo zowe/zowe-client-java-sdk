@@ -15,10 +15,11 @@ import org.apache.logging.log4j.Logger;
 import rest.*;
 import utility.Util;
 import utility.UtilIO;
+import utility.UtilRest;
 import zosjobs.input.DeleteJobParams;
+import zosjobs.response.Job;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * DeleteJobs class to handle Job delete
@@ -43,52 +44,82 @@ public class DeleteJobs {
     }
 
     /**
-     * Delete a job that resides in a z/OS data set.
+     * Cancel and purge job from spool.
      *
-     * @return response about the deleted job
-     * @throws Exception error on submitting
+     * @param jobName name of job to delete
+     * @param jobId   job id
+     * @param version version number
+     * @return http response object
+     * @throws Exception error deleting
      * @author Nikunj goyal
      */
-    public Response deleteJob() throws Exception {
-        return this.deleteJobCommon(new DeleteJobParams(new DeleteJobParams.Builder()));
+    public Response deleteJob(String jobName, String jobId, String version) throws Exception {
+        return deleteJobCommon(
+                new DeleteJobParams.Builder().jobName(jobName).jobId(jobId).modifyVersion(version).build());
+    }
+
+    /**
+     * Cancel and purge job from spool.
+     *
+     * @param job     job document wanting to delete
+     * @param version version number
+     * @return http response object
+     * @throws Exception error deleting
+     * @author Frank Giordano
+     */
+    public Response deleteJobForJob(Job job, String version) throws Exception {
+        return this.deleteJobCommon(
+                new DeleteJobParams.Builder().jobName(job.getJobName().isPresent() ? job.getJobName().get() : null)
+                        .jobId(job.getJobId().isPresent() ? job.getJobId().get() : null).modifyVersion(version).build());
     }
 
     /**
      * Delete a job that resides in a z/OS data set.
      *
      * @param params delete job parameters, see DeleteJobParams object
-     * @return job document with details about the submitted job
-     * @throws Exception error on submitting
+     * @return http response object
+     * @throws Exception error on deleting
      * @author Nikunj goyal
      */
     public Response deleteJobCommon(DeleteJobParams params) throws Exception {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkStateParameter(params.getJobId().isEmpty(), "job id not specified");
         Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
-        Util.checkStateParameter(params.getModifyVersion().isEmpty(), "modify version not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE;
+        if (params.getModifyVersion().isPresent() && "1.0".equals(params.getModifyVersion().get()))
+            throw new Exception("Modify version 1.0 for async processing is currently not supported");
+
+        String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE +
+                UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
         LOG.debug(url);
 
-        Map<String, String> headers = new HashMap<>();
-        String key, value;
+        var headers = new HashMap<String, String>();
 
-        if (params.getModifyVersion().map(v -> v.equals("2.0")).orElse(false)) {
-            key = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(0);
-            value = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(1);
-        } else {
-            key = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(0);
-            value = ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(1);
-        }
-        headers.put(key, value);
+        // Default to modify version 2.0 which will result in synchronous processing.
+        // Synchronous processing is supported for JES2 only. On systems running JES3,
+        // the z/OS jobs REST interface services must run asynchronously with version 1.0.
+        headers.put(ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(0),
+                ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(1));
 
-        String parameters = UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
-
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url + parameters, null,
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
                 ZoweRequestType.VerbType.DELETE_JSON);
 
         request.setAdditionalHeaders(headers);
-        return request.executeHttpRequest();
+
+        Response response = request.executeHttpRequest();
+        try {
+            UtilRest.checkHttpErrors(response);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
+            if (errorMsg.contains("400"))
+                throw new Exception(errorMsg + " JobId " + params.getJobId().get() + " may not exist.");
+            throw new Exception(errorMsg);
+        }
+
+        // Because the request was processed synchronously by the target JES subsystem, the response body
+        // includes the job feedback document with details about the job that was cancelled. Let the caller
+        // handle the json parsing.. as it includes more fields outside our Job object.
+        return response;
     }
 
 }
