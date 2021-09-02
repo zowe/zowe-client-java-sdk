@@ -415,7 +415,6 @@ public class MonitorJobs {
      *
      * @param statusName status name
      * @return int index of status order
-     * @throws Exception error processing check request
      * @author Frank Giordano
      */
     private int getOrderIndexOfStatus(String statusName) {
