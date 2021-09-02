@@ -383,7 +383,7 @@ public class MonitorJobs {
      * Checks the status of the job for the expected status (OR that the job has progressed passed the expected status).
      *
      * @param parms monitor jobs parms, see MonitorJobWaitForParms
-     * @return boolean true when the job status is obtained (or imperative error)
+     * @return boolean true when the job status is obtained
      * @throws Exception error processing check request
      * @author Frank Giordano
      */
