@@ -23,7 +23,6 @@ import rest.Response;
 import zosjobs.response.Job;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
@@ -51,7 +50,7 @@ public class GetJobsByJsonGetRequestTest {
         jsonMap.put("status", "status");
         jsonMap.put("type", "type");
         jsonMap.put("class", "class");
-        jsonMap.put("retCode", "retCode");
+        jsonMap.put("retcode", "retcode");
         jsonMap.put("url", "url");
         jsonMap.put("files-url", "files-url");
         jsonMap.put("job-correlator", "job-correlator");
@@ -125,7 +124,7 @@ public class GetJobsByJsonGetRequestTest {
         assertTrue("status".equals(job.getStatus().get()));
         assertTrue("type".equals(job.getType().get()));
         assertTrue("class".equals(job.getClasss().get()));
-        assertTrue("retCode".equals(job.getRetCode().get()));
+        assertTrue("retcode".equals(job.getRetCode().get()));
         assertTrue("url".equals(job.getUrl().get()));
         assertTrue("files-url".equals(job.getFilesUrl().get()));
         assertTrue("job-correlator".equals(job.getJobCorrelator().get()));
@@ -179,7 +178,7 @@ public class GetJobsByJsonGetRequestTest {
         assertTrue("status".equals(job.getStatus().get()));
         assertTrue("type".equals(job.getType().get()));
         assertTrue("class".equals(job.getClasss().get()));
-        assertTrue("retCode".equals(job.getRetCode().get()));
+        assertTrue("retcode".equals(job.getRetCode().get()));
         assertTrue("url".equals(job.getUrl().get()));
         assertTrue("files-url".equals(job.getFilesUrl().get()));
         assertTrue("job-correlator".equals(job.getJobCorrelator().get()));

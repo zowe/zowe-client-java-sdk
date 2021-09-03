@@ -37,7 +37,7 @@ public class UtilJobs {
                 .url((String) json.get("url"))
                 .classs((String) json.get("class"))
                 .filesUrl((String) json.get("files-url"))
-                .retCode((String) json.get("retCode"))
+                .retcode((String) json.get("retcode"))
                 .jobCorrelator((String) json.get("job-correlator"))
                 .phaseName((String) json.get("phase-name"))
                 .build();

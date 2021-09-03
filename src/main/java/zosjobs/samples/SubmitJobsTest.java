@@ -12,8 +12,10 @@ package zosjobs.samples;
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import zosjobs.MonitorJobs;
 import zosjobs.SubmitJobs;
 import zosjobs.response.Job;
+import zosjobs.types.JobStatus;
 
 /**
  * Class example to showcase SubmitJobs functionality.
@@ -40,9 +42,20 @@ public class SubmitJobsTest {
         String password = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
+
+        // Submit a job already defined as a dataset
         LOG.info(SubmitJobsTest.tstSubmitJob(connection, "xxx.xxx.xxx.xxx(xxx)"));
-        String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
-        LOG.info(SubmitJobsTest.tstSubmitJclJob(connection, jclString));
+
+        // Submit a job from a string
+        String jclString = "//TESTJOBX JOB (),MSGCLASS=H\n// EXEC PGM=IEFBR14";
+        Job submitJobsTest = SubmitJobsTest.tstSubmitJclJob(connection, jclString);
+        // Wait for the job to complete
+        MonitorJobs monitorJobs = new MonitorJobs(connection);
+        submitJobsTest = monitorJobs.waitForJobStatus(submitJobsTest, JobStatus.Type.OUTPUT);
+        System.out.println(submitJobsTest);
+        // Get the return code
+        String retCode = submitJobsTest.getRetCode().get();
+        System.out.println("Expected Return Code = CC 0000 [" + retCode + "]");
     }
 
     /**
