@@ -35,11 +35,11 @@ public class SubmitJobsTest {
      */
     public static void main(String[] args) throws Exception {
         String hostName = "XXX";
-        String port = "XXX";
+        String zosmfPort = "XXX";
         String userName = "XXX";
         String password = "XXX";
 
-        ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
+        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         LOG.info(SubmitJobsTest.tstSubmitJob(connection, "xxx.xxx.xxx.xxx(xxx)"));
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
         LOG.info(SubmitJobsTest.tstSubmitJclJob(connection, jclString));

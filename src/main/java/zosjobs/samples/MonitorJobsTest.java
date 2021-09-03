@@ -41,11 +41,11 @@ public class MonitorJobsTest {
      */
     public static void main(String[] args) throws Exception {
         String hostName = "XXX";
-        String port = "XXX";
+        String zosmfPort = "XXX";
         String userName = "XXX";
         String password = "XXX";
 
-        connection = new ZOSConnection(hostName, port, userName, password);
+        connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         submitJobs = new SubmitJobs(connection);
 
         MonitorJobsTest.tstMonitorJobsForOutputStatusByJobObject();

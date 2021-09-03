@@ -41,11 +41,11 @@ public class DeleteJobsTest {
      */
     public static void main(String[] args) throws Exception {
         String hostName = "XXX";
-        String port = "XXX";
+        String zosmfPort = "XXX";
         String userName = "XXX";
         String password = "XXX";
 
-        connection = new ZOSConnection(hostName, port, userName, password);
+        connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         LOG.info(tstDeleteJobsCommon().getResponsePhrase().get());
         LOG.info(tstDeleteJobForJob().getResponsePhrase().get());
         LOG.info(tstDeleteJob().getResponsePhrase().get());
