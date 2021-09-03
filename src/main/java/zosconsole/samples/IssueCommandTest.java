@@ -24,12 +24,12 @@ public class IssueCommandTest {
 
     public static void main(String[] args) {
         String hostName = "XXX";
-        String port = "XXX";
+        String zosmfPort = "XXX";
         String userName = "XXX";
         String password = "XXX";
         String command = "D IPLINFO";
 
-        ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
+        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
         IssueCommandTest.tstConsoleCmdByIssue(connection, command);
         IssueCommandTest.tstConsoleCmdByIssueSimple(connection, command);

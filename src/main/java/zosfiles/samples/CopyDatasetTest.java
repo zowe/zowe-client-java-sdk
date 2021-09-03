@@ -16,13 +16,13 @@ public class CopyDatasetTest {
 
     public static void main(String[] args) throws Exception {
         String hostName = "XXX";
-        String port = "XXX";
+        String zosmfPort = "XXX";
         String userName = "XXX";
         String password = "XXX";
         String fromDataSetName = "XXX";
         String toDataSetName = "XXX";
 
-        ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
+        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         new ZosDsnCopy(connection).copy(fromDataSetName, toDataSetName, true);
     }
 

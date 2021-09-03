@@ -37,13 +37,13 @@ public class CancelJobsTest {
      */
     public static void main(String[] args) throws Exception {
         String hostName = "XXX";
-        String port = "XXX";
+        String zosmfPort = "XXX";
         String userName = "XXX";
         String password = "XXX";
         String jobId = "XXX";
         String jobName = "XXX";
 
-        ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
+        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         LOG.info(tstCancelJobsCommon(connection, jobName, jobId));
         LOG.info(tstCancelJobForJob(connection, jobName, jobId));
         LOG.info(tstCancelJob(connection, jobName, jobId));

@@ -26,13 +26,13 @@ public class DownloadDatasetTest {
 
     public static void main(String[] args) throws Exception {
         String hostName = "XXX";
-        String port = "XXX";
+        String zosmfPort = "XXX";
         String userName = "XXX";
         String password = "XXX";
         String datasetMember = "XXX";
 
         DownloadParams params = new DownloadParams.Builder().build();
-        ZOSConnection connection = new ZOSConnection(hostName, port, userName, password);
+        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
         DownloadDatasetTest.downloadDsnMember(connection, datasetMember, params);
     }
