@@ -32,7 +32,7 @@ public class DeleteJobsTest {
     private static String jobId;
 
     /**
-     * Main method defines host and user connection and other parameters needed to showcase
+     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
      * DeleteJobs functionality. Calls DeleteJobs example methods.
      *
      * @param args for main not used

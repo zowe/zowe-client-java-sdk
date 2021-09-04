@@ -26,7 +26,7 @@ public class SubmitJobsTest {
     private static final Logger LOG = LogManager.getLogger(SubmitJobsTest.class);
 
     /**
-     * Main method defines host and user connection needed to showcase
+     * Main method defines z/OSMF host and user connection needed to showcase
      * SubmitJobs functionality. Calls SubmitJobs example methods.
      *
      * @param args for main not used

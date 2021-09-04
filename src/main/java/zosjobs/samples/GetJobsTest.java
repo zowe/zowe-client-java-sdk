@@ -33,7 +33,7 @@ public class GetJobsTest {
     private static GetJobs getJobs;
 
     /**
-     * Main method defines host and user connection and other parameters needed to showcase
+     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
      * GetJobs functionality. Calls GetJobs example methods.
      *
      * @param args for main not used

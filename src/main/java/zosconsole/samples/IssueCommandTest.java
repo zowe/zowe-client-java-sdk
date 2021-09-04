@@ -18,10 +18,22 @@ import core.ZOSConnection;
 import zosconsole.zosmf.ZosmfIssueParms;
 import zosconsole.zosmf.ZosmfIssueResponse;
 
+/**
+ * Template class example to test mvs console command functionality.
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class IssueCommandTest {
 
     private static final Logger LOG = LogManager.getLogger(IssueCommandTest.class);
 
+    /**
+     * Main method defines z/OSMF host and user connection, and mvs command used for the example test.
+     *
+     * @param args for main not used
+     * @author Frank Giordano
+     */
     public static void main(String[] args) {
         String hostName = "XXX";
         String zosmfPort = "XXX";
@@ -36,6 +48,13 @@ public class IssueCommandTest {
         IssueCommandTest.tstConsoleCmdByIssueDefConsoleCommon(connection, command);
     }
 
+    /**
+     * Issue IssueCommend issue method which will execute the given mvs console command
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param cmd mvs command to execute
+     * @author Frank Giordano
+     */
     public static void tstConsoleCmdByIssue(ZOSConnection connection, String cmd) {
         IssueParms parms = new IssueParms();
         parms.setCommand(cmd);
@@ -49,6 +68,13 @@ public class IssueCommandTest {
         }
     }
 
+    /**
+     * Issue IssueCommend issueSimple method which will execute the given mvs console command
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param cmd mvs command to execute
+     * @author Frank Giordano
+     */
     public static void tstConsoleCmdByIssueSimple(ZOSConnection connection, String cmd) {
         ConsoleResponse response;
         IssueCommand issueCommand = new IssueCommand(connection);
@@ -60,6 +86,13 @@ public class IssueCommandTest {
         }
     }
 
+    /**
+     * Issue IssueCommend issueDefConsoleCommon method which will execute the given mvs console command
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param cmd mvs command to execute
+     * @author Frank Giordano
+     */
     public static void tstConsoleCmdByIssueDefConsoleCommon(ZOSConnection connection, String cmd) {
         ZosmfIssueParms parms = new ZosmfIssueParms();
         parms.setCmd(cmd);
