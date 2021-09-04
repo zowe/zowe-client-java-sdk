@@ -72,9 +72,11 @@ public class IssueTsoCommandTest {
     /**
      * Issue issueTsoCommand method from IssueTso class which will execute the given tso command
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection    connection information, see ZOSConnection object
      * @param accountNumber user's z/OSMF permission account number
-     * @param cmd tso command to execute
+     * @param cmd           tso command to execute
+     * @return response IssueResponse object
+     * @throws Exception error processing request
      * @author Frank Giordano
      */
     public static IssueResponse tstTsoConsoleCmdByIssue(ZOSConnection connection, String accountNumber, String cmd)
