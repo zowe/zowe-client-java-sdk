@@ -30,7 +30,7 @@ public class IssueTsoCommandTest {
     private static final Logger LOG = LogManager.getLogger(IssueTsoCommandTest.class);
 
     /**
-     * Main method defines host and user connection, and tso command parameters used for the example test.
+     * Main method defines z/OSMF host and user connection, and tso command parameters used for the example test.
      *
      * @param args for main not used
      * @author Frank Giordano
