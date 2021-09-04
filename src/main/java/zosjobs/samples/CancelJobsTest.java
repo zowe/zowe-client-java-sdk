@@ -56,6 +56,7 @@ public class CancelJobsTest {
      * @param connection ZOSConnection
      * @param jobName    job name value
      * @param jobId      job id value
+     * @return response http Response object
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
@@ -71,6 +72,7 @@ public class CancelJobsTest {
      * @param connection ZOSConnection
      * @param jobName    job name value
      * @param jobId      job id value
+     * @return response http Response object
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
@@ -86,6 +88,7 @@ public class CancelJobsTest {
      * @param connection ZOSConnection
      * @param jobName    job name value
      * @param jobId      job id value
+     * @return response http Response object
      * @throws Exception error in processing request
      * @author Frank Giordano
      */

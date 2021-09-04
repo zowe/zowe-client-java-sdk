@@ -29,6 +29,7 @@ public class DownloadParams {
     private Optional<String> responseTimeout;
 
     public DownloadParams(zosfiles.input.DownloadParams.Builder builder) {
+
         this.file = Optional.ofNullable(builder.file);
         this.extension = Optional.ofNullable(builder.extension);
         this.directory = Optional.ofNullable(builder.directory);
