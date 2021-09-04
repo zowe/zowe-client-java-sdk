@@ -55,6 +55,7 @@ public class DeleteJobsTest {
      * Example on how to call DeleteJobs deleteJobCommon method.
      * deleteJobCommon accepts a DeleteJobParams object with parameters filled needed to delete a given job.
      *
+     * @return response http response object
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
@@ -69,6 +70,7 @@ public class DeleteJobsTest {
      * Example on how to call DeleteJobs deleteJobForJob method.
      * deleteJobForJob accepts a jobName and jobId values which will be used to delete its job.
      *
+     * @return response http response object
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
@@ -83,6 +85,7 @@ public class DeleteJobsTest {
      * Example on how to call DeleteJobs deleteJob method.
      * deleteJob accepts a jobName and jobId values which will be used to delete its job.
      *
+     * @return response http response object
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
