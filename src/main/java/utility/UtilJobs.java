@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 import zosjobs.response.Job;
 
 /**
- * Utility Class for Rest related static helper methods.
+ * Utility Class for GetJobs related static helper methods.
  *
  * @author Frank Giordano
  * @version 1.0

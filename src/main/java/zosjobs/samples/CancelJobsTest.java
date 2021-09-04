@@ -28,7 +28,7 @@ public class CancelJobsTest {
     private static final Logger LOG = LogManager.getLogger(CancelJobsTest.class);
 
     /**
-     * Main method defines host and user connection and other parameters needed to showcase
+     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
      * CancelJobs functionality. Calls CancelJobs example methods.
      *
      * @param args for main not used

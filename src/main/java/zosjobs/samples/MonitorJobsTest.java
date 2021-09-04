@@ -32,7 +32,7 @@ public class MonitorJobsTest {
     private static ZOSConnection connection;
 
     /**
-     * Main method defines host and user connection needed to showcase
+     * Main method defines z/OSMF host and user connection needed to showcase
      * MonitorJobs functionality. Calls MonitorJobs example methods.
      *
      * @param args for main not used
