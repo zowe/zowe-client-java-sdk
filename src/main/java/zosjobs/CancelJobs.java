@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 import rest.*;
 import utility.Util;
 import utility.UtilIO;
+import utility.UtilRest;
 import zosjobs.input.CancelJobParams;
 import zosjobs.response.Job;
 
@@ -119,10 +120,20 @@ public class CancelJobs {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonRequestBody.toString(),
                 ZoweRequestType.VerbType.PUT_JSON);
 
+        Response response = request.executeHttpRequest();
+        try {
+            UtilRest.checkHttpErrors(response);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
+            if (errorMsg.contains("400"))
+                throw new Exception(errorMsg + " JobId " + params.getJobId().get() + " may not exist.");
+            throw new Exception(errorMsg);
+        }
+
         // if synchronously response should contain job document that was cancelled and http return code
         // if asynchronously response should only contain http return code
-        // let the caller handle the response json parsing 
-        return request.executeHttpRequest();
+        // let the caller handle the response json parsing
+        return response;
     }
 
 }

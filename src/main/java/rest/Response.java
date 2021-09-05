@@ -43,4 +43,12 @@ public class Response {
         return (responsePhrase.isEmpty() && statusCode.isEmpty());
     }
 
+    @Override
+    public String toString() {
+        return "Response{" +
+                "responsePhrase=" + responsePhrase +
+                ", statusCode=" + statusCode +
+                '}';
+    }
+
 }
