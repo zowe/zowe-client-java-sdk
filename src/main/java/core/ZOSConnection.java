@@ -23,9 +23,9 @@ public class ZOSConnection {
     private String host;
 
     /**
-     * machine host port number pointing to backend z/OS instance
+     * machine host z/OSMF port number pointing to backend z/OS instance
      */
-    private String port;
+    private String zosmfPort;
 
     /**
      * machine host username with access to backend z/OS instance
@@ -40,15 +40,15 @@ public class ZOSConnection {
     /**
      * ZOSConnection constructor
      *
-     * @param host     machine host pointing to backend z/OS instance
-     * @param port     machine host port number pointing to backend z/OS instance
-     * @param user     machine host username with access to backend z/OS instance
-     * @param password machine host username's password with access to backend z/OS instance
+     * @param host      machine host pointing to backend z/OS instance
+     * @param zosmfPort machine host z/OSMF port number pointing to backend z/OS instance
+     * @param user      machine host username with access to backend z/OS instance
+     * @param password  machine host username's password with access to backend z/OS instance
      * @author Frank Giordano
      */
-    public ZOSConnection(String host, String port, String user, String password) {
+    public ZOSConnection(String host, String zosmfPort, String user, String password) {
         this.host = host;
-        this.port = port;
+        this.zosmfPort = zosmfPort;
         this.user = user;
         this.password = password;
     }
@@ -64,13 +64,13 @@ public class ZOSConnection {
     }
 
     /**
-     * Retrieve port number specified
+     * Retrieve z/OSMF port number specified
      *
      * @return port value
      * @author Frank Giordano
      */
-    public String getPort() {
-        return port;
+    public String getZosmfPort() {
+        return zosmfPort;
     }
 
     /**
