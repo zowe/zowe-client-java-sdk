@@ -61,7 +61,7 @@ public class CancelJobsTest {
      * @author Frank Giordano
      */
     public static Response tstCancelJobsCommon(ZOSConnection connection, String jobName, String jobId) throws Exception {
-        CancelJobParams params = new CancelJobParams.Builder().jobId(jobId).jobName(jobName).build();
+        CancelJobParams params = new CancelJobParams.Builder(jobName, jobId).build();
         return new CancelJobs(connection).cancelJobsCommon(params);
     }
 

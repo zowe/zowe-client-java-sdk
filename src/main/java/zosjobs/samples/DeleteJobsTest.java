@@ -62,7 +62,7 @@ public class DeleteJobsTest {
     public static Response tstDeleteJobsCommon() throws Exception {
         jobId = "XXX";
         jobName = "XXX";
-        DeleteJobParams params = new DeleteJobParams.Builder().jobId(jobId).jobName(jobName).build();
+        DeleteJobParams params = new DeleteJobParams.Builder(jobName, jobId).build();
         return new DeleteJobs(connection).deleteJobCommon(params);
     }
 

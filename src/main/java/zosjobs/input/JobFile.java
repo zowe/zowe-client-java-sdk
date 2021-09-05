@@ -22,74 +22,74 @@ public class JobFile {
     /**
      * Job id for a job. Uniquely identifies a job on a z/OS system
      */
-    private Optional<String> jobId;
+    private final Optional<String> jobId;
 
     /**
      * Job name for a job
      */
-    private Optional<String> jobName;
+    private final Optional<String> jobName;
 
     /**
      * Record format of the spool file (DD)
      */
-    private Optional<String> recfm;
+    private final Optional<String> recfm;
 
     /**
      * Total bytes in the spool file
      */
-    private Optional<Long> byteCount;
+    private final Optional<Long> byteCount;
 
     /**
      * Total records (roughly equivalent to lines) in the spool file
      */
-    private Optional<Long> recordCount;
+    private final Optional<Long> recordCount;
 
     /**
      * Unique identifier of job (substitute of job name and job id)
      */
-    private Optional<String> jobCorrelator;
+    private final Optional<String> jobCorrelator;
 
     /**
      * Job class for which job ran
      */
-    private Optional<String> classs;
+    private final Optional<String> classs;
 
     /**
      * Identifier for this spool file. Each JobFile for a single batch job will have a unique ID
      */
-    private Optional<Long> id;
+    private final Optional<Long> id;
 
     /**
      * DD name of job spool file
      */
-    private Optional<String> ddName;
+    private final Optional<String> ddName;
 
     /**
      * Direct access to job record content
      */
-    private Optional<String> recordsUrl;
+    private final Optional<String> recordsUrl;
 
     /**
      * Job DD lrecl (logical record length - how many bytes each record is)
      */
-    private Optional<Long> lrecl;
+    private final Optional<Long> lrecl;
 
     /**
      * The primary or secondary JES subsystem. If this value is null, the job was processed by the primary subsystem.
      */
-    private Optional<String> subSystem;
+    private final Optional<String> subSystem;
 
     /**
      * The name of the job step during which this spool file was produced
      */
-    private Optional<String> stepName;
+    private final Optional<String> stepName;
 
     /**
      * If this spool file was produced during a job procedure step, the name of the step will be here.
      */
-    private Optional<String> procStep;
+    private final Optional<String> procStep;
 
-    public JobFile(Builder builder) {
+    private JobFile(Builder builder) {
         if (builder.jobId != null)
             this.jobId = Optional.ofNullable(builder.jobId);
         else this.jobId = Optional.empty();

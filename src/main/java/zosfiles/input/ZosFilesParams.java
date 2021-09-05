@@ -19,11 +19,10 @@ import java.util.Optional;
  */
 public class ZosFilesParams {
 
-    private Optional<String> responseTimeout;
+    private final Optional<String> responseTimeout;
 
-    public ZosFilesParams(Builder builder) {
-        this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
-
+    public ZosFilesParams(String responseTimeout) {
+        this.responseTimeout = Optional.ofNullable(responseTimeout);
     }
 
     public Optional<String> getResponseTimeout() {
@@ -35,20 +34,6 @@ public class ZosFilesParams {
         return "ZosFilesOptions{" +
                 "responseTimeout=" + responseTimeout +
                 '}';
-    }
-
-    public static class Builder {
-
-        private String responseTimeout;
-
-        public ZosFilesParams.Builder responseTimeout(String responseTimeout) {
-            this.responseTimeout = responseTimeout;
-            return this;
-        }
-
-        public ZosFilesParams build() {
-            return new ZosFilesParams(this);
-        }
     }
 
 }

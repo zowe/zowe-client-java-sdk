@@ -22,80 +22,80 @@ public class Job {
     /**
      * Job id for a job. Uniquely identifies a job on a z/OS system
      */
-    private Optional<String> jobId;
+    private final Optional<String> jobId;
 
     /**
      * Job name for a job
      */
-    private Optional<String> jobName;
+    private final Optional<String> jobName;
 
     /**
      * The primary or secondary JES subsystem. If this value is null, the job was processed by the primary subsystem.
      */
-    private Optional<String> subSystem;
+    private final Optional<String> subSystem;
 
     /**
      * Owner of the job
      */
-    private Optional<String> owner;
+    private final Optional<String> owner;
 
     /**
      * Status of the job
      */
-    private Optional<String> status;
+    private final Optional<String> status;
 
     /**
      * Type of job
      */
-    private Optional<String> type;
+    private final Optional<String> type;
 
     /**
      * Job class
      */
-    private Optional<String> classs;
+    private final Optional<String> classs;
 
     /**
      * Return code of the job
      */
-    private Optional<String> retCode;
+    private final Optional<String> retCode;
 
     /**
      * Detailed job step data
      */
-    private Optional<JobStepData[]> stepData;
+    private final Optional<JobStepData[]> stepData;
 
     /**
      * Url for direct reference of job info
      */
-    private Optional<String> url;
+    private final Optional<String> url;
 
     /**
      * Spool files url for direct reference
      */
-    private Optional<String> filesUrl;
+    private final Optional<String> filesUrl;
 
     /**
      * Unique identifier of job (substitute of job name and job id). If this value is null, the job was
      * submitted to JES3.
      */
-    private Optional<String> jobCorrelator;
+    private final Optional<String> jobCorrelator;
 
     /**
      * Job phase
      */
-    private Optional<Integer> phase;
+    private final Optional<Integer> phase;
 
     /**
      * Job phase name
      */
-    private Optional<String> phaseName;
+    private final Optional<String> phaseName;
 
     /**
      * Explanation of error
      */
-    private Optional<String> reasonNotRunning;
+    private final Optional<String> reasonNotRunning;
 
-    public Job(Job.Builder builder) {
+    private Job(Job.Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);
         this.subSystem = Optional.ofNullable(builder.subSystem);

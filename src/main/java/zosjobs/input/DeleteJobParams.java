@@ -19,11 +19,11 @@ import java.util.Optional;
  */
 public class DeleteJobParams {
 
-    private Optional<String> jobName;
-    private Optional<String> jobId;
-    private Optional<String> modifyVersion;
+    private final Optional<String> jobName;
+    private final Optional<String> jobId;
+    private final Optional<String> modifyVersion;
 
-    public DeleteJobParams(DeleteJobParams.Builder builder) {
+    private DeleteJobParams(DeleteJobParams.Builder builder) {
         this.jobName = Optional.ofNullable(builder.jobName);
         this.jobId = Optional.ofNullable(builder.jobId);
         this.modifyVersion = Optional.ofNullable(builder.modifyVersion);
@@ -56,14 +56,9 @@ public class DeleteJobParams {
         private String jobId;
         private String modifyVersion;
 
-        public DeleteJobParams.Builder jobName(String jobname) {
-            this.jobName = jobname;
-            return this;
-        }
-
-        public DeleteJobParams.Builder jobId(String jobId) {
+        public Builder(String jobName, String jobId) {
+            this.jobName = jobName;
             this.jobId = jobId;
-            return this;
         }
 
         public DeleteJobParams.Builder modifyVersion(String modifyVersion) {
