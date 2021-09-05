@@ -55,7 +55,7 @@ public class DeleteJobs {
      */
     public Response deleteJob(String jobName, String jobId, String version) throws Exception {
         return deleteJobCommon(
-                new DeleteJobParams.Builder().jobName(jobName).jobId(jobId).modifyVersion(version).build());
+                new DeleteJobParams.Builder(jobName, jobId).modifyVersion(version).build());
     }
 
     /**
@@ -69,8 +69,8 @@ public class DeleteJobs {
      */
     public Response deleteJobForJob(Job job, String version) throws Exception {
         return this.deleteJobCommon(
-                new DeleteJobParams.Builder().jobName(job.getJobName().isPresent() ? job.getJobName().get() : null)
-                        .jobId(job.getJobId().isPresent() ? job.getJobId().get() : null).modifyVersion(version).build());
+                new DeleteJobParams.Builder(job.getJobName().isPresent() ? job.getJobName().get() : null,
+                        job.getJobId().isPresent() ? job.getJobId().get() : null).modifyVersion(version).build());
     }
 
     /**
@@ -84,7 +84,9 @@ public class DeleteJobs {
     public Response deleteJobCommon(DeleteJobParams params) throws Exception {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkStateParameter(params.getJobId().isEmpty(), "job id not specified");
+        Util.checkStateParameter(params.getJobId().get().isEmpty(), "job id not specified");
         Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
+        Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
 
         if (params.getModifyVersion().isPresent()) {
             if ("1.0".equals(params.getModifyVersion().get())) {
@@ -101,11 +103,25 @@ public class DeleteJobs {
 
         var headers = new HashMap<String, String>();
 
-        // Default to modify version 2.0 which will result in synchronous processing.
-        // Synchronous processing is supported for JES2 only. On systems running JES3,
-        // the z/OS jobs REST interface services must run asynchronously with version 1.0.
-        headers.put(ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(0),
-                ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(1));
+        String version = params.getModifyVersion().orElse(JobsConstants.DEFAULT_DELETE_VERSION);
+
+        // To request asynchronous processing for this service (the default), set the "version" property to 1.0
+        // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
+        // the system will attempt to process the request synchronously, if such processing is supported on
+        // the target JES2 subsystem.
+        if (!version.isEmpty()) {
+            if ("1.0".equals(version)) {
+                LOG.debug("version 1.0 specified which will result in asynchronous processing for the request");
+                headers.put(ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(0),
+                        ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(1));
+            } else if ("2.0".equals(version)) {
+                LOG.debug("version 2.0 specified which will result in synchronous processing for the request");
+                headers.put(ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(0),
+                        ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(1));
+            } else {
+                throw new Exception("invalid version specified");
+            }
+        }
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
                 ZoweRequestType.VerbType.DELETE_JSON);
@@ -122,9 +138,9 @@ public class DeleteJobs {
             throw new Exception(errorMsg);
         }
 
-        // Because the request was processed synchronously by the target JES subsystem, the response body
-        // includes the job feedback document with details about the job that was cancelled. Let the caller
-        // handle the json parsing.. as it includes more fields outside our Job object.
+        // if synchronously response should contain job document that was cancelled and http return code
+        // if asynchronously response should only contain http return code
+        // let the caller handle the response json parsing
         return response;
     }
 
