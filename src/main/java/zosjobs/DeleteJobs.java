@@ -88,15 +88,6 @@ public class DeleteJobs {
         Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
         Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
 
-        if (params.getModifyVersion().isPresent()) {
-            if ("1.0".equals(params.getModifyVersion().get())) {
-                throw new Exception("Modify version 1.0 for async processing is currently not supported");
-            }
-            if (!"2.0".equals(params.getModifyVersion().get())) {
-                throw new Exception("Modify version specified is not supported");
-            }
-        }
-
         String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE +
                 UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
         LOG.debug(url);
