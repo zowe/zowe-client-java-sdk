@@ -231,7 +231,7 @@ public class GetJobsTest {
      * @author Frank Giordano
      */
     private static void tstGetSpoolContent(String prefix) throws Exception {
-        GetJobParms parms = new GetJobParms.Builder().owner("*").prefix(prefix).build();
+        GetJobParms parms = new GetJobParms.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(parms);
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
         String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
@@ -262,7 +262,7 @@ public class GetJobsTest {
      * @author Frank Giordano
      */
     private static void tstGetSpoolFilesForJob(String prefix) throws Exception {
-        GetJobParms parms = new GetJobParms.Builder().owner("*").prefix(prefix).build();
+        GetJobParms parms = new GetJobParms.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(parms);
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
         files.forEach(LOG::info);
@@ -277,7 +277,7 @@ public class GetJobsTest {
      * @author Frank Giordano
      */
     private static void tstGetSpoolFiles(String prefix) throws Exception {
-        GetJobParms parms = new GetJobParms.Builder().owner("*").prefix(prefix).build();
+        GetJobParms parms = new GetJobParms.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(parms);
         List<JobFile> files = getJobs.getSpoolFiles(jobs.get(0).getJobName().get(),
                 jobs.get(0).getJobId().get());
@@ -293,7 +293,7 @@ public class GetJobsTest {
      * @author Frank Giordano
      */
     public static void tstGetJobsCommon(String prefix) throws Exception {
-        GetJobParms parms = new GetJobParms.Builder().owner("*").prefix(prefix).build();
+        GetJobParms parms = new GetJobParms.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(parms);
         jobs.forEach(LOG::info);
     }

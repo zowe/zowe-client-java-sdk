@@ -14,15 +14,15 @@ import java.util.Optional;
 
 public class ListParams {
 
-    private Optional<String> volume;
-    private Optional<String> attributes;
-    private Optional<String> maxLength;
-    private Optional<String> start;
-    private Optional<String> recall;
-    private Optional<String> pattern;
-    private Optional<String> responseTimeout;
+    private final Optional<String> volume;
+    private final Optional<String> attributes;
+    private final Optional<String> maxLength;
+    private final Optional<String> start;
+    private final Optional<String> recall;
+    private final Optional<String> pattern;
+    private final Optional<String> responseTimeout;
 
-    public ListParams(ListParams.Builder builder) {
+    private ListParams(ListParams.Builder builder) {
         this.volume = Optional.ofNullable(builder.volume);
         this.attributes = Optional.ofNullable(builder.attributes);
         this.maxLength = Optional.ofNullable(builder.maxLength);

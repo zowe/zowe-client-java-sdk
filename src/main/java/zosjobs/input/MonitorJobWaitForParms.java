@@ -27,14 +27,14 @@ public class MonitorJobWaitForParms {
      * Any errors that you receive regarding invalid JOBID/JOBNAME will be surfaced by z/OSMF. Ensure that your
      * JOBID specification adheres to the z/OS standards.
      */
-    private Optional<String> jobId;
+    private final Optional<String> jobId;
 
     /**
      * The z/OS JOBNAME for the job to monitor. No pre-validation of the JOBNAME (other than its presence) is performed.
      * Any errors that you receive regarding invalid JOBID/JOBNAME will be surfaced by z/OSMF. Ensure that your
      * JOBNAME specification adheres to the z/OS standards.
      */
-    private Optional<String> jobName;
+    private final Optional<String> jobName;
 
     /**
      * Watch delay is the polling delay in milliseconds. MonitorJobs will poll every "watchDelay" milliseconds for the
@@ -65,7 +65,7 @@ public class MonitorJobWaitForParms {
      */
     private Optional<Integer> lineLimit;
 
-    public MonitorJobWaitForParms(MonitorJobWaitForParms.Builder builder) {
+    private MonitorJobWaitForParms(MonitorJobWaitForParms.Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);
         this.watchDelay = Optional.ofNullable(builder.watchDelay);
@@ -195,14 +195,9 @@ public class MonitorJobWaitForParms {
         private int attempts;
         private int lineLimit;
 
-        public MonitorJobWaitForParms.Builder jobId(String jobId) {
-            this.jobId = jobId;
-            return this;
-        }
-
-        public MonitorJobWaitForParms.Builder jobName(String jobName) {
+        public Builder(String jobName, String jobId) {
             this.jobName = jobName;
-            return this;
+            this.jobId = jobId;
         }
 
         public MonitorJobWaitForParms.Builder watchDelay(int watchDelay) {

@@ -26,7 +26,6 @@ import org.json.simple.JSONObject;
 import utility.Util;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Issue MVS Console commands by using a system console

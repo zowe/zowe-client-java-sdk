@@ -13,12 +13,12 @@ import java.util.Optional;
 
 public class GetJobParms {
 
-    private Optional<String> owner;
-    private Optional<String> prefix;
-    private Optional<Integer> maxJobs;
-    private Optional<String> jobId;
+    private final Optional<String> owner;
+    private final Optional<String> prefix;
+    private final Optional<Integer> maxJobs;
+    private final Optional<String> jobId;
 
-    public GetJobParms(Builder builder) {
+    private GetJobParms(Builder builder) {
         this.owner = Optional.ofNullable(builder.owner);
         this.prefix = Optional.ofNullable(builder.prefix);
         this.maxJobs = Optional.ofNullable(builder.maxJobs);
@@ -58,9 +58,8 @@ public class GetJobParms {
         private Integer maxJobs;
         private String jobId;
 
-        public Builder owner(String owner) {
+        public Builder(String owner) {
             this.owner = owner;
-            return this;
         }
 
         public Builder prefix(String prefix) {
