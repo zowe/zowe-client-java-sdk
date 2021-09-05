@@ -13,8 +13,8 @@ import java.util.Optional;
 
 public class CommonJobParms {
 
-    private Optional<String> jobId;
-    private Optional<String> jobName;
+    private final Optional<String> jobId;
+    private final Optional<String> jobName;
 
     public CommonJobParms(String jobId, String jobName) {
         this.jobId = Optional.ofNullable(jobId);

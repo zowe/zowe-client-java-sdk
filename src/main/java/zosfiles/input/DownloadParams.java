@@ -13,23 +13,23 @@ import java.util.Optional;
 import java.util.HashMap;
 
 public class DownloadParams {
-    private Optional<String> file;
-    private Optional<String> extension;
-    private Optional<String> directory;
-    private Optional<String[]> excludePatterns;
-    private Optional<HashMap<String, String>> extensionMap;
-    private Optional<Integer> maxConcurrentRequests;
-    private Optional<Boolean> returnEtag;
-    private Optional<Boolean> preserveOriginalLetterCase;
-    private Optional<Boolean> failFast;
-    private Optional<Boolean> binary;
-    private Optional<Integer> encoding;
-    private Optional<String> volume;
-    private Optional<String> task;
-    private Optional<String> responseTimeout;
 
-    public DownloadParams(zosfiles.input.DownloadParams.Builder builder) {
+    private final Optional<String> file;
+    private final Optional<String> extension;
+    private final Optional<String> directory;
+    private final Optional<String[]> excludePatterns;
+    private final Optional<HashMap<String, String>> extensionMap;
+    private final Optional<Integer> maxConcurrentRequests;
+    private final Optional<Boolean> returnEtag;
+    private final Optional<Boolean> preserveOriginalLetterCase;
+    private final Optional<Boolean> failFast;
+    private final Optional<Boolean> binary;
+    private final Optional<Integer> encoding;
+    private final Optional<String> volume;
+    private final Optional<String> task;
+    private final Optional<String> responseTimeout;
 
+    private DownloadParams(zosfiles.input.DownloadParams.Builder builder) {
         this.file = Optional.ofNullable(builder.file);
         this.extension = Optional.ofNullable(builder.extension);
         this.directory = Optional.ofNullable(builder.directory);

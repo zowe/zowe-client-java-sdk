@@ -73,7 +73,7 @@ public class GetJobs {
         Util.checkNullParameter(prefix == null, "prefix is null");
         Util.checkStateParameter(prefix.isEmpty(), "prefix not specified");
 
-        return getJobsCommon(new GetJobParms.Builder().owner("*").prefix(prefix).build());
+        return getJobsCommon(new GetJobParms.Builder("*").prefix(prefix).build());
     }
 
     /**
@@ -89,7 +89,7 @@ public class GetJobs {
         Util.checkNullParameter(owner == null, "owner is null");
         Util.checkStateParameter(owner.isEmpty(), "owner not specified");
 
-        return getJobsCommon(new GetJobParms.Builder().owner(owner).build());
+        return getJobsCommon(new GetJobParms.Builder(owner).build());
     }
 
     /**
@@ -109,7 +109,7 @@ public class GetJobs {
         Util.checkNullParameter(prefix == null, "prefix is null");
         Util.checkStateParameter(prefix.isEmpty(), "prefix not specified");
 
-        return getJobsCommon(new GetJobParms.Builder().owner(owner).prefix(prefix).build());
+        return getJobsCommon(new GetJobParms.Builder(owner).prefix(prefix).build());
     }
 
     /**
@@ -124,7 +124,7 @@ public class GetJobs {
         Util.checkNullParameter(jobId == null, "jobId is null");
         Util.checkStateParameter(jobId.isEmpty(), "jobId not specified");
 
-        List<Job> jobs = getJobsCommon(new GetJobParms.Builder().owner("*").jobId(jobId).build());
+        List<Job> jobs = getJobsCommon(new GetJobParms.Builder("*").jobId(jobId).build());
         if (jobs.isEmpty()) throw new Exception("Job not found");
         if (jobs.size() > 1) throw new Exception("Expected 1 job returned but received " + jobs.size() + " jobs.");
 

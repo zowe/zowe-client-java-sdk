@@ -18,27 +18,27 @@ import java.util.Optional;
  */
 public class Dataset {
 
-    private Optional<String> dsname;
-    private Optional<String> blksz;
-    private Optional<String> catnm;
-    private Optional<String> cdate;
-    private Optional<String> dev;
-    private Optional<String> dsntp;
-    private Optional<String> dsorg;
-    private Optional<String> edate;
-    private Optional<String> extx;
-    private Optional<String> lrectl;
-    private Optional<String> migr;
-    private Optional<String> mvol;
-    private Optional<String> ovf;
-    private Optional<String> rdate;
-    private Optional<String> recfm;
-    private Optional<String> sizex;
-    private Optional<String> spacu;
-    private Optional<String> used;
-    private Optional<String> vol;
+    private final Optional<String> dsname;
+    private final Optional<String> blksz;
+    private final Optional<String> catnm;
+    private final Optional<String> cdate;
+    private final Optional<String> dev;
+    private final Optional<String> dsntp;
+    private final Optional<String> dsorg;
+    private final Optional<String> edate;
+    private final Optional<String> extx;
+    private final Optional<String> lrectl;
+    private final Optional<String> migr;
+    private final Optional<String> mvol;
+    private final Optional<String> ovf;
+    private final Optional<String> rdate;
+    private final Optional<String> recfm;
+    private final Optional<String> sizex;
+    private final Optional<String> spacu;
+    private final Optional<String> used;
+    private final Optional<String> vol;
 
-    public Dataset(Dataset.Builder builder) {
+    private Dataset(Dataset.Builder builder) {
         this.dsname = Optional.ofNullable(builder.dsname);
         this.blksz = Optional.ofNullable(builder.blksz);
         this.catnm = Optional.ofNullable(builder.catnm);

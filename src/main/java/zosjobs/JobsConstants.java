@@ -82,4 +82,9 @@ public class JobsConstants {
      */
     public static final String DEFAULT_CANCEL_VERSION = "1.0";
 
+    /**
+     * Default version of delete
+     */
+    public static final String DEFAULT_DELETE_VERSION = "1.0";
+
 }

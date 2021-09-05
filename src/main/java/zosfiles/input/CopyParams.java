@@ -17,9 +17,9 @@ public class CopyParams {
     private final Optional<String> fromDataSet;
     private final Optional<String> toVolser;
     private final Optional<String> toDataSet;
-    private boolean replace;
+    private final boolean replace;
 
-    public CopyParams(CopyParams.Builder builder) {
+    private CopyParams(CopyParams.Builder builder) {
         this.fromVolser = Optional.ofNullable(builder.fromVolser);
         this.fromDataSet = Optional.ofNullable(builder.fromDataSet);
         this.toVolser = Optional.ofNullable(builder.toVolser);

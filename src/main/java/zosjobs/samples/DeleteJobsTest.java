@@ -46,9 +46,26 @@ public class DeleteJobsTest {
         String password = "XXX";
 
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-        LOG.info(tstDeleteJobsCommon().getResponsePhrase().get());
-        LOG.info(tstDeleteJobForJob().getResponsePhrase().get());
-        LOG.info(tstDeleteJob().getResponsePhrase().get());
+        LOG.info(tstDeleteJobsCommonWithVersion("2.0"));
+        LOG.info(tstDeleteJobsCommon());
+        LOG.info(tstDeleteJobForJob());
+        LOG.info(tstDeleteJob());
+    }
+
+    /**
+     * Example on how to call DeleteJobs deleteJobCommon method.
+     * deleteJobCommon accepts a DeleteJobParams object with parameters filled needed to delete a given job and
+     * the version to indicate 1.0 for async or 2.0 for sync processing of the request
+     *
+     * @return response http response object
+     * @throws Exception error in processing request
+     * @author Frank Giordano
+     */
+    public static Response tstDeleteJobsCommonWithVersion(String version) throws Exception {
+        jobId = "XXX";
+        jobName = "XXX";
+        DeleteJobParams params = new DeleteJobParams.Builder(jobName, jobId).modifyVersion(version).build();
+        return new DeleteJobs(connection).deleteJobCommon(params);
     }
 
     /**
@@ -62,7 +79,7 @@ public class DeleteJobsTest {
     public static Response tstDeleteJobsCommon() throws Exception {
         jobId = "XXX";
         jobName = "XXX";
-        DeleteJobParams params = new DeleteJobParams.Builder().jobId(jobId).jobName(jobName).build();
+        DeleteJobParams params = new DeleteJobParams.Builder(jobName, jobId).build();
         return new DeleteJobs(connection).deleteJobCommon(params);
     }
 

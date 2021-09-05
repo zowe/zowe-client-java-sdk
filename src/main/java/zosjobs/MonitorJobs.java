@@ -127,9 +127,13 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public boolean waitForJobMessage(Job job, String message) throws Exception {
-        return waitForMessageCommon(new MonitorJobWaitForParms.Builder().jobName(job.getJobName().get())
-                .jobId(job.getJobId().get()).jobStatus(JobStatus.Type.OUTPUT)
-                .attempts(attempts).watchDelay(watchDelay).build(), message);
+        Util.checkNullParameter(job == null, "job is null");
+        Util.checkStateParameter(job.getJobName().isEmpty(), "job name not specified");
+        Util.checkStateParameter(job.getJobName().get().isEmpty(), "job name not specified");
+        Util.checkStateParameter(job.getJobId().isEmpty(), "job id not specified");
+        Util.checkStateParameter(job.getJobId().get().isEmpty(), "job id not specified");
+        return waitForMessageCommon(new MonitorJobWaitForParms.Builder(job.getJobName().get(), job.getJobId().get())
+                .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build(), message);
     }
 
     /**
@@ -147,8 +151,8 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public boolean waitForJobMessage(String jobName, String jobId, String message) throws Exception {
-        return waitForMessageCommon(new MonitorJobWaitForParms.Builder().jobName(jobName).jobId(jobId)
-                .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build(), message);
+        return waitForMessageCommon(new MonitorJobWaitForParms.Builder(jobName, jobId).jobStatus(JobStatus.Type.OUTPUT)
+                .attempts(attempts).watchDelay(watchDelay).build(), message);
     }
 
     /**
@@ -161,11 +165,11 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     private boolean waitForMessageCommon(MonitorJobWaitForParms parms, String message) throws Exception {
+        Util.checkNullParameter(parms == null, "parms is null");
         Util.checkStateParameter(parms.getJobName().isEmpty(), "job name not specified");
         Util.checkStateParameter(parms.getJobName().get().isEmpty(), "job name not specified");
         Util.checkStateParameter(parms.getJobId().isEmpty(), "job id not specified");
         Util.checkStateParameter(parms.getJobId().get().isEmpty(), "job id not specified");
-        Util.checkNullParameter(parms == null, "parms is null");
 
         if (parms.getAttempts().isEmpty())
             parms.setAttempts(Optional.of(attempts));
@@ -224,7 +228,7 @@ public class MonitorJobs {
      */
     private boolean checkMessage(MonitorJobWaitForParms parms, String message) throws Exception {
         GetJobs getJobs = new GetJobs(connection);
-        GetJobParms filter = new GetJobParms.Builder().owner("*").jobId(parms.getJobId().get())
+        GetJobParms filter = new GetJobParms.Builder("*").jobId(parms.getJobId().get())
                 .prefix(parms.getJobName().get()).build();
         List<Job> jobs = getJobs.getJobsCommon(filter);
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
@@ -252,9 +256,13 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public Job waitForJobStatus(Job job, JobStatus.Type statusType) throws Exception {
-        return waitForStatusCommon(new MonitorJobWaitForParms.Builder().jobName(job.getJobName().get())
-                .jobId(job.getJobId().get()).jobStatus(statusType).attempts(attempts)
-                .watchDelay(watchDelay).build());
+        Util.checkNullParameter(job == null, "job is null");
+        Util.checkStateParameter(job.getJobName().isEmpty(), "job name not specified");
+        Util.checkStateParameter(job.getJobName().get().isEmpty(), "job name not specified");
+        Util.checkStateParameter(job.getJobId().isEmpty(), "job id not specified");
+        Util.checkStateParameter(job.getJobId().get().isEmpty(), "job id not specified");
+        return waitForStatusCommon(new MonitorJobWaitForParms.Builder(job.getJobName().get(), job.getJobId().get())
+                .jobStatus(statusType).attempts(attempts).watchDelay(watchDelay).build());
     }
 
     /**
@@ -272,8 +280,8 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public Job waitForJobStatus(String jobName, String jobId, JobStatus.Type statusType) throws Exception {
-        return waitForStatusCommon(new MonitorJobWaitForParms.Builder().jobName(jobName).jobId(jobId)
-                .jobStatus(statusType).attempts(attempts).watchDelay(watchDelay).build());
+        return waitForStatusCommon(new MonitorJobWaitForParms.Builder(jobName, jobId).jobStatus(statusType)
+                .attempts(attempts).watchDelay(watchDelay).build());
     }
 
     /**
@@ -289,9 +297,13 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public Job waitForJobOutputStatus(Job job) throws Exception {
-        return waitForStatusCommon(new MonitorJobWaitForParms.Builder().jobName(job.getJobName().get())
-                .jobId(job.getJobId().get()).jobStatus(JobStatus.Type.OUTPUT).attempts(attempts)
-                .watchDelay(watchDelay).build());
+        Util.checkNullParameter(job == null, "job is null");
+        Util.checkStateParameter(job.getJobName().isEmpty(), "job name not specified");
+        Util.checkStateParameter(job.getJobName().get().isEmpty(), "job name not specified");
+        Util.checkStateParameter(job.getJobId().isEmpty(), "job id not specified");
+        Util.checkStateParameter(job.getJobId().get().isEmpty(), "job id not specified");
+        return waitForStatusCommon(new MonitorJobWaitForParms.Builder(job.getJobName().get(), job.getJobId().get())
+                .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build());
     }
 
     /**
@@ -308,8 +320,8 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public Job waitForJobOutputStatus(String jobName, String jobId) throws Exception {
-        return waitForStatusCommon(new MonitorJobWaitForParms.Builder().jobName(jobName).jobId(jobId)
-                        .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build());
+        return waitForStatusCommon(new MonitorJobWaitForParms.Builder(jobName, jobId).jobStatus(JobStatus.Type.OUTPUT).
+                attempts(attempts).watchDelay(watchDelay).build());
     }
 
     /**

@@ -32,7 +32,7 @@ public class CreateParams {
     private final Optional<String> size;
     private final Optional<String> responseTimeout;
 
-    public CreateParams(CreateParams.Builder builder) {
+    private CreateParams(CreateParams.Builder builder) {
         this.volser = Optional.ofNullable(builder.volser);
         this.unit = Optional.ofNullable(builder.unit);
         this.dsorg = Optional.ofNullable(builder.dsorg);
@@ -169,7 +169,6 @@ public class CreateParams {
         private Boolean showAttributes;
         private String size;
         private String responseTimeout;
-
 
         public zosfiles.input.CreateParams.Builder volser(String volser) {
             this.volser = volser;

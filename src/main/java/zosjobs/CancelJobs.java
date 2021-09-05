@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 import rest.*;
 import utility.Util;
 import utility.UtilIO;
+import utility.UtilRest;
 import zosjobs.input.CancelJobParams;
 import zosjobs.response.Job;
 
@@ -55,7 +56,7 @@ public class CancelJobs {
      */
     public Response cancelJob(String jobName, String jobId, String version) throws Exception {
         return this.cancelJobsCommon(
-                new CancelJobParams.Builder().jobName(jobName).jobId(jobId).version(version).build());
+                new CancelJobParams.Builder(jobName, jobId).version(version).build());
     }
 
     /**
@@ -69,8 +70,8 @@ public class CancelJobs {
      */
     public Response cancelJobForJob(Job job, String version) throws Exception {
         return this.cancelJobsCommon(
-                new CancelJobParams.Builder().jobName(job.getJobName().isPresent() ? job.getJobName().get() : null)
-                        .jobId(job.getJobId().isPresent() ? job.getJobId().get() : null).version(version).build());
+                new CancelJobParams.Builder(job.getJobName().isPresent() ? job.getJobName().get() : null,
+                        job.getJobId().isPresent() ? job.getJobId().get() : null).version(version).build());
     }
 
     /**
@@ -95,6 +96,21 @@ public class CancelJobs {
 
         // generate json string body for the request
         String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
+
+        // To request asynchronous processing for this service (the default), set the "version" property to 1.0
+        // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
+        // the system will attempt to process the request synchronously, if such processing is supported on
+        // the target JES2 subsystem.
+        if (!version.isEmpty()) {
+            if ("1.0".equals(version)) {
+                LOG.debug("version 1.0 specified which will result in asynchronous processing for the request");
+            } else if ("2.0".equals(version)) {
+                LOG.debug("version 2.0 specified which will result in synchronous processing for the request");
+            } else {
+                throw new Exception("invalid version specified");
+            }
+        }
+
         var jsonMap = new HashMap<String, String>();
         jsonMap.put("request", JobsConstants.REQUEST_CANCEL);
         jsonMap.put("version", version);
@@ -104,7 +120,20 @@ public class CancelJobs {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonRequestBody.toString(),
                 ZoweRequestType.VerbType.PUT_JSON);
 
-        return request.executeHttpRequest();
+        Response response = request.executeHttpRequest();
+        try {
+            UtilRest.checkHttpErrors(response);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
+            if (errorMsg.contains("400"))
+                throw new Exception(errorMsg + " JobId " + params.getJobId().get() + " may not exist.");
+            throw new Exception(errorMsg);
+        }
+
+        // if synchronously response should contain job document that was cancelled and http return code
+        // if asynchronously response should only contain http return code
+        // let the caller handle the response json parsing
+        return response;
     }
 
 }
