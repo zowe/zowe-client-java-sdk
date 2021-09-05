@@ -69,15 +69,13 @@ public class ZosDsnCopy {
 
         url += params.getToDataSet().get();
 
-        Response response = null;
+        Response response = new Response(null, null);
         try {
-            LOG.info(url);
+            LOG.debug(url);
 
             String body = buildBody(params);
-
             ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body,
                     ZoweRequestType.VerbType.PUT_JSON);
-
             response = request.executeHttpRequest();
 
             try {
