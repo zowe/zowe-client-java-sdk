@@ -44,7 +44,7 @@ public class CopyDatasetTest {
 
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         tstCopyDatasetTest(connection, fromDataSetName, toDataSetName);
-        tstCopyDatasetTestByCopyParams(connection, fromDataSetName, toDataSetName);
+        tstCopyDatasetByCopyParamsTest(connection, fromDataSetName, toDataSetName);
     }
 
     /**
@@ -71,7 +71,7 @@ public class CopyDatasetTest {
      * @param toDataSetName   destination dataset (i.e. TARGET.DATASET(MEMBER))
      * @author Frank Giordano
      */
-    public static void tstCopyDatasetTestByCopyParams(ZOSConnection connection, String fromDataSetName,
+    public static void tstCopyDatasetByCopyParamsTest(ZOSConnection connection, String fromDataSetName,
                                                       String toDataSetName) {
         ZosDsnCopy zosDsnCopy = new ZosDsnCopy(connection);
         // 'replace' here will be true by default if not specified in builder.
