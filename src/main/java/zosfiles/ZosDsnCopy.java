@@ -111,7 +111,7 @@ public class ZosDsnCopy {
     }
 
     /**
-     * Build the Json body for the copty request
+     * Build the Json body for the copy request
      *
      * @param params CopyParams object
      * @return json string

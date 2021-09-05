@@ -74,7 +74,7 @@ public class CopyDatasetTest {
     public static void tstCopyDatasetTestByCopyParams(ZOSConnection connection, String fromDataSetName,
                                                       String toDataSetName) {
         ZosDsnCopy zosDsnCopy = new ZosDsnCopy(connection);
-        // 'replace' here will be true by default is not specified in builder.
+        // 'replace' here will be true by default if not specified in builder.
         CopyParams copyParams = new CopyParams.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).build();
         Response response = zosDsnCopy.copy(copyParams);
         LOG.info("http response code " + response.getStatusCode());
