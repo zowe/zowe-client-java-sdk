@@ -69,7 +69,7 @@ public class TextPutRequest extends ZoweRequest {
             this.httpResponse = client.execute(request, localContext);
         } catch (IOException e) {
             e.printStackTrace();
-            return new Response(Optional.empty(), Optional.empty());
+            return new Response(null, null);
         }
         int statusCode = httpResponse.getStatusLine().getStatusCode();
 
@@ -77,11 +77,10 @@ public class TextPutRequest extends ZoweRequest {
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
         if (UtilRest.isHttpError(statusCode)) {
-            return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
-                    Optional.of(statusCode));
+            return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()), statusCode);
         }
 
-        return new Response(UtilRest.getTextResponseEntity(httpResponse), Optional.of(statusCode));
+        return new Response(UtilRest.getTextResponseEntity(httpResponse), statusCode);
     }
 
     /**

@@ -69,7 +69,7 @@ public class JsonPostRequest extends ZoweRequest {
             this.httpResponse = client.execute(request, localContext);
         } catch (IOException e) {
             e.printStackTrace();
-            return new Response(Optional.empty(), Optional.empty());
+            return new Response(null, null);
         }
         int statusCode = httpResponse.getStatusLine().getStatusCode();
 
@@ -77,11 +77,10 @@ public class JsonPostRequest extends ZoweRequest {
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
         if (UtilRest.isHttpError(statusCode)) {
-            return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
-                    Optional.ofNullable(statusCode));
+            return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()), statusCode);
         }
 
-        return new Response(UtilRest.getJsonResponseEntity(httpResponse), Optional.ofNullable(statusCode));
+        return new Response(UtilRest.getJsonResponseEntity(httpResponse), statusCode);
     }
 
     /**
