@@ -19,26 +19,47 @@ import java.util.Optional;
  */
 public class Response {
 
+    /**
+     * Holds Http response information
+     */
     private Optional<Object> responsePhrase;
+
+    /**
+     * Holds Http response status code
+     */
     private Optional<Integer> statusCode;
 
-    public Response(Optional<Object> responsePhrase, Optional<Integer> statusCode) {
-        if (responsePhrase == null)
-            this.responsePhrase = Optional.empty();
-        else this.responsePhrase = responsePhrase;
-        if (statusCode == null)
-            this.statusCode = Optional.empty();
-        this.statusCode = statusCode;
+    public Response(Object responsePhrase, Integer statusCode) {
+        this.responsePhrase = Optional.ofNullable(responsePhrase);
+        this.statusCode = Optional.ofNullable(statusCode);
     }
 
+    /**
+     * Retrieve responsePhrase value
+     *
+     * @return responsePhrase value
+     * @author Frank Giordano
+     */
     public Optional<Object> getResponsePhrase() {
         return responsePhrase;
     }
 
+    /**
+     * Retrieve statusCode value
+     *
+     * @return status code value
+     * @author Frank Giordano
+     */
     public Optional<Integer> getStatusCode() {
         return statusCode;
     }
 
+    /**
+     * Does object contain all empty values
+     *
+     * @return boolean true if all values in object are empty
+     * @author Frank Giordano
+     */
     public boolean isEmpty() {
         return (responsePhrase.isEmpty() && statusCode.isEmpty());
     }

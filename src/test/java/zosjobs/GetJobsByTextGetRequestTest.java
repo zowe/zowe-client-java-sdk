@@ -37,7 +37,7 @@ public class GetJobsByTextGetRequestTest {
 
     @Test
     public void tstGetSpoolContentByIdSuccess() throws Exception {
-        Response response = new Response(Optional.of("1\n2\n3\n"), Optional.of(200));
+        Response response = new Response("1\n2\n3\n", 200);
         Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         String results = getJobs.getSpoolContentById("jobName", "jobId", 1);

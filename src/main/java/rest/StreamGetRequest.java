@@ -62,7 +62,7 @@ public class StreamGetRequest extends ZoweRequest {
             this.httpResponse = client.execute(request, localContext);
         } catch (IOException e) {
             e.printStackTrace();
-            return new Response(Optional.empty(), Optional.empty());
+            return new Response(null, null);
         }
         int statusCode = httpResponse.getStatusLine().getStatusCode();
 
@@ -70,16 +70,15 @@ public class StreamGetRequest extends ZoweRequest {
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
         if (UtilRest.isHttpError(statusCode)) {
-            return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()),
-                    Optional.of(statusCode));
+            return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()), statusCode);
         }
 
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
-            return new Response(Optional.ofNullable(entity.getContent()), Optional.of(statusCode));
+            return new Response(Optional.ofNullable(entity.getContent()), statusCode);
         }
 
-        return new Response(Optional.empty(), Optional.of(statusCode));
+        return new Response(Optional.empty(), statusCode);
     }
 
     /**

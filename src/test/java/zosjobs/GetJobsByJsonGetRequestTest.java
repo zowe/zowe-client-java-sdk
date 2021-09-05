@@ -74,7 +74,7 @@ public class GetJobsByJsonGetRequestTest {
         var jsonJob2 = new JSONObject(jsonJobMap2);
         jsonArray.add(jsonJob2);
 
-        Response response = new Response(Optional.of(jsonArray), Optional.of(200));
+        Response response = new Response(jsonArray, 200);
         Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         String msgResult = null;
@@ -98,7 +98,7 @@ public class GetJobsByJsonGetRequestTest {
         var jsonJob = new JSONObject(jsonJobMap);
         jsonArray.add(jsonJob);
 
-        Response response = new Response(Optional.of(jsonArray), Optional.of(200));
+        Response response = new Response(jsonArray, 200);
         Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         Job job = getJobs.getJob("1");
@@ -112,7 +112,7 @@ public class GetJobsByJsonGetRequestTest {
         JSONArray jsonArray = new JSONArray();
         jsonArray.add(jobJson);
 
-        Response response = new Response(Optional.of(jsonArray), Optional.of(200));
+        Response response = new Response(jsonArray, 200);
         Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         Job job = getJobs.getJob("1");
@@ -166,7 +166,7 @@ public class GetJobsByJsonGetRequestTest {
 
     @Test
     public void tstGetStatusForJobSuccess() throws Exception {
-        Response response = new Response(Optional.of(jobJson), Optional.of(200));
+        Response response = new Response(jobJson, 200);
         Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         Job job = getJobs.getStatusForJob(new Job.Builder().jobId("1").jobName("jobName").build());
