@@ -23,11 +23,11 @@ import utility.UtilRest;
 import zosfiles.input.CopyParams;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Provides copy dataset and dataset member functionality
  *
+ * @author Leonid Baranov
  * @version 1.0
  */
 public class ZosDsnCopy {
@@ -40,6 +40,7 @@ public class ZosDsnCopy {
      * ZosDsnCopy constructor
      *
      * @param connection is a connection, see ZOSConnection object
+     * @author Leonid Baranov
      */
     public ZosDsnCopy(ZOSConnection connection) {
         this.connection = connection;
@@ -49,10 +50,13 @@ public class ZosDsnCopy {
      * Copy dataset or dataset member
      *
      * @param params contains copy dataset parameters
+     * @return http response object
+     * @author Leonid Baranov
      */
-    public void copy(CopyParams params) {
-        Util.checkNullParameter(params.getFromDataSet().isEmpty(), "fromDataSetName is null");
-        Util.checkNullParameter(params.getToDataSet().isEmpty(), "toDataSetName is null");
+    public Response copy(CopyParams params) {
+        Util.checkNullParameter(params == null, "params is null");
+        Util.checkStateParameter(params.getFromDataSet().isEmpty(), "fromDataSetName not specified");
+        Util.checkStateParameter(params.getToDataSet().isEmpty(), "toDataSetName not specified");
 
         Util.checkConnection(connection);
 
@@ -65,6 +69,7 @@ public class ZosDsnCopy {
 
         url += params.getToDataSet().get();
 
+        Response response = null;
         try {
             LOG.info(url);
 
@@ -73,7 +78,7 @@ public class ZosDsnCopy {
             ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body,
                     ZoweRequestType.VerbType.PUT_JSON);
 
-            Response response = request.executeHttpRequest();
+            response = request.executeHttpRequest();
 
             try {
                 UtilRest.checkHttpErrors(response);
@@ -84,8 +89,9 @@ public class ZosDsnCopy {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
 
+        return response;
+    }
 
     /**
      * Copy dataset or dataset member
@@ -93,16 +99,24 @@ public class ZosDsnCopy {
      * @param fromDataSetName is a name of source dataset (i.e. SOURCE.DATASET(MEMBER))
      * @param toDataSetName   is a name of target dataset (i.e. TARGET.DATASET(MEMBER))
      * @param replace         if true, members in the target dataset are replaced. if false,
-     *                        like named members are not copied and an error is returned.
+     * @return http response object
+     * @author Leonid Baranov
      */
-    public void copy(String fromDataSetName, String toDataSetName, boolean replace) {
-        copy(new CopyParams.Builder()
+    public Response copy(String fromDataSetName, String toDataSetName, boolean replace) {
+        return copy(new CopyParams.Builder()
                 .fromDataSet(fromDataSetName)
                 .toDataSet(toDataSetName)
                 .replace(replace)
                 .build());
     }
 
+    /**
+     * Build the Json body for the copy request
+     *
+     * @param params CopyParams object
+     * @return json string
+     * @author Leonid Baranov
+     */
     private String buildBody(CopyParams params) {
         String fromDataSetName = params.getFromDataSet().get();
 
