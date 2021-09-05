@@ -38,7 +38,7 @@ public class UtilRest {
      * @throws Exception due to extracting entity or parsing entity problem
      * @author Frank Giordano
      */
-    public static Optional<Object> getJsonResponseEntity(HttpResponse httpResponse) throws Exception {
+    public static Object getJsonResponseEntity(HttpResponse httpResponse) throws Exception {
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
             String result = EntityUtils.toString(entity);
@@ -46,15 +46,15 @@ public class UtilRest {
             JSONParser parser = new JSONParser();
             try {
                 if (result.isEmpty()) {
-                    return Optional.empty();
+                    return null;
                 } else {
-                    return Optional.ofNullable(parser.parse(result));
+                    return parser.parse(result);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-        return Optional.empty();
+        return null;
     }
 
     /**
@@ -65,14 +65,14 @@ public class UtilRest {
      * @throws Exception due to extracting entity or parsing entity problem
      * @author Frank Giordano
      */
-    public static Optional<Object> getTextResponseEntity(HttpResponse httpResponse) throws Exception {
+    public static Object getTextResponseEntity(HttpResponse httpResponse) throws Exception {
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
             String result = EntityUtils.toString(entity);
             LOG.debug("UtilRest::getTextResponseEntity - result = {}", result);
-            return Optional.ofNullable(result);
+            return result;
         }
-        return Optional.empty();
+        return null;
     }
 
     /**
