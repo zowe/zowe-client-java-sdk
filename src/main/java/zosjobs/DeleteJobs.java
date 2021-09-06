@@ -13,10 +13,10 @@ import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.*;
-import utility.Util;
 import utility.UtilIO;
+import utility.UtilJobs;
 import utility.UtilRest;
-import zosjobs.input.DeleteJobParams;
+import zosjobs.input.ModifyJobParams;
 import zosjobs.response.Job;
 
 import java.util.HashMap;
@@ -55,7 +55,7 @@ public class DeleteJobs {
      */
     public Response deleteJob(String jobName, String jobId, String version) throws Exception {
         return deleteJobCommon(
-                new DeleteJobParams.Builder(jobName, jobId).modifyVersion(version).build());
+                new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
     /**
@@ -69,8 +69,8 @@ public class DeleteJobs {
      */
     public Response deleteJobForJob(Job job, String version) throws Exception {
         return this.deleteJobCommon(
-                new DeleteJobParams.Builder(job.getJobName().isPresent() ? job.getJobName().get() : null,
-                        job.getJobId().isPresent() ? job.getJobId().get() : null).modifyVersion(version).build());
+                new ModifyJobParams.Builder(job.getJobName().isPresent() ? job.getJobName().get() : null,
+                        job.getJobId().isPresent() ? job.getJobId().get() : null).version(version).build());
     }
 
     /**
@@ -79,14 +79,11 @@ public class DeleteJobs {
      * @param params delete job parameters, see DeleteJobParams object
      * @return http response object
      * @throws Exception error on deleting
-     * @author Nikunj goyal
+     * @author Nikunj Goyal
+     * @author Frank Giordano
      */
-    public Response deleteJobCommon(DeleteJobParams params) throws Exception {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkStateParameter(params.getJobId().isEmpty(), "job id not specified");
-        Util.checkStateParameter(params.getJobId().get().isEmpty(), "job id not specified");
-        Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
-        Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
+    public Response deleteJobCommon(ModifyJobParams params) throws Exception {
+        UtilJobs.checkForModifyJobParamsExceptions(params);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
                 UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
@@ -94,7 +91,7 @@ public class DeleteJobs {
 
         var headers = new HashMap<String, String>();
 
-        String version = params.getModifyVersion().orElse(JobsConstants.DEFAULT_DELETE_VERSION);
+        String version = params.getVersion().orElse(JobsConstants.DEFAULT_DELETE_VERSION);
 
         // To request asynchronous processing for this service (the default), set the "version" property to 1.0
         // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
@@ -123,10 +120,7 @@ public class DeleteJobs {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            String errorMsg = e.getMessage();
-            if (errorMsg.contains("400"))
-                throw new Exception(errorMsg + " JobId " + params.getJobId().get() + " may not exist.");
-            throw new Exception(errorMsg);
+            UtilJobs.throwHttpException(params, e);
         }
 
         // if synchronously response should contain job document that was cancelled and http return code
@@ -134,5 +128,7 @@ public class DeleteJobs {
         // let the caller handle the response json parsing
         return response;
     }
+
+
 
 }

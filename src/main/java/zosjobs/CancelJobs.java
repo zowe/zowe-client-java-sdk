@@ -14,10 +14,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import rest.*;
-import utility.Util;
 import utility.UtilIO;
+import utility.UtilJobs;
 import utility.UtilRest;
-import zosjobs.input.CancelJobParams;
+import zosjobs.input.ModifyJobParams;
 import zosjobs.response.Job;
 
 import java.util.HashMap;
@@ -56,7 +56,7 @@ public class CancelJobs {
      */
     public Response cancelJob(String jobName, String jobId, String version) throws Exception {
         return this.cancelJobsCommon(
-                new CancelJobParams.Builder(jobName, jobId).version(version).build());
+                new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
     /**
@@ -70,7 +70,7 @@ public class CancelJobs {
      */
     public Response cancelJobForJob(Job job, String version) throws Exception {
         return this.cancelJobsCommon(
-                new CancelJobParams.Builder(job.getJobName().isPresent() ? job.getJobName().get() : null,
+                new ModifyJobParams.Builder(job.getJobName().isPresent() ? job.getJobName().get() : null,
                         job.getJobId().isPresent() ? job.getJobId().get() : null).version(version).build());
     }
 
@@ -80,14 +80,11 @@ public class CancelJobs {
      * @param params cancel job parameters, see cancelJobsCommon object
      * @return job document with details about the submitted job
      * @throws Exception error canceling
-     * @author Nikunj goyal
+     * @author Nikunj Goyal
+     * @author Frank Giordano
      */
-    public Response cancelJobsCommon(CancelJobParams params) throws Exception {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkStateParameter(params.getJobId().isEmpty(), "job id not specified");
-        Util.checkStateParameter(params.getJobId().get().isEmpty(), "job id not specified");
-        Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
-        Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
+    public Response cancelJobsCommon(ModifyJobParams params) throws Exception {
+        UtilJobs.checkForModifyJobParamsExceptions(params);
 
         // generate full url request
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
@@ -124,10 +121,7 @@ public class CancelJobs {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            String errorMsg = e.getMessage();
-            if (errorMsg.contains("400"))
-                throw new Exception(errorMsg + " JobId " + params.getJobId().get() + " may not exist.");
-            throw new Exception(errorMsg);
+            UtilJobs.throwHttpException(params, e);
         }
 
         // if synchronously response should contain job document that was cancelled and http return code
