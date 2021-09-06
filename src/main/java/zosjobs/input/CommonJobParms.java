@@ -11,20 +11,52 @@ package zosjobs.input;
 
 import java.util.Optional;
 
+/**
+ * Interface for various common GetJobs APIs
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class CommonJobParms {
 
+    /**
+     * job id for a job
+     */
     private final Optional<String> jobId;
+
+    /**
+     * job name for a job
+     */
     private final Optional<String> jobName;
 
+    /**
+     * CommonJobParms constructor
+     *
+     * @param jobId job id value
+     * @param jobName job name value
+     * @author Frank Giordano
+     */
     public CommonJobParms(String jobId, String jobName) {
         this.jobId = Optional.ofNullable(jobId);
         this.jobName = Optional.ofNullable(jobName);
     }
 
+    /**
+     * Retrieve jobId specified
+     *
+     * @return jobId value
+     * @author Frank Giordano
+     */
     public Optional<String> getJobId() {
         return jobId;
     }
 
+    /**
+     * Retrieve jobName specified
+     *
+     * @return jobName value
+     * @author Frank Giordano
+     */
     public Optional<String> getJobName() {
         return jobName;
     }

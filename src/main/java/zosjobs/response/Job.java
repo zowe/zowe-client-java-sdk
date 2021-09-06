@@ -113,62 +113,151 @@ public class Job {
         this.reasonNotRunning = Optional.ofNullable(builder.reasonNotRunning);
     }
 
+    /**
+     * Retrieve jobId specified
+     *
+     * @return jobId value
+     * @author Frank Giordano
+     */
     public Optional<String> getJobId() {
         return jobId;
     }
 
+    /**
+     * Retrieve jobName specified
+     *
+     * @return jobName value
+     * @author Frank Giordano
+     */
     public Optional<String> getJobName() {
         return jobName;
     }
 
+    /**
+     * Retrieve subSystem specified
+     *
+     * @return subSystem value
+     * @author Frank Giordano
+     */
     public Optional<String> getSubSystem() {
         return subSystem;
     }
 
+    /**
+     * Retrieve owner specified
+     *
+     * @return owner value
+     * @author Frank Giordano
+     */
     public Optional<String> getOwner() {
         return owner;
     }
 
+    /**
+     * Retrieve status specified
+     *
+     * @return status value
+     * @author Frank Giordano
+     */
     public Optional<String> getStatus() {
         return status;
     }
 
+    /**
+     * Retrieve type specified
+     *
+     * @return type value
+     * @author Frank Giordano
+     */
     public Optional<String> getType() {
         return type;
     }
 
+    /**
+     * Retrieve classs specified
+     *
+     * @return classs value
+     * @author Frank Giordano
+     */
     public Optional<String> getClasss() {
         return classs;
     }
 
+    /**
+     * Retrieve retCode specified
+     *
+     * @return retCode value
+     * @author Frank Giordano
+     */
     public Optional<String> getRetCode() {
         return retCode;
     }
 
+    /**
+     * Retrieve stepData specified
+     *
+     * @return stepData value
+     * @author Frank Giordano
+     */
     public Optional<JobStepData[]> getStepData() {
         return stepData;
     }
 
+    /**
+     * Retrieve url specified
+     *
+     * @return url value
+     * @author Frank Giordano
+     */
     public Optional<String> getUrl() {
         return url;
     }
 
+    /**
+     * Retrieve filesUrl specified
+     *
+     * @return filesUrl value
+     * @author Frank Giordano
+     */
     public Optional<String> getFilesUrl() {
         return filesUrl;
     }
 
+    /**
+     * Retrieve jobCorrelator specified
+     *
+     * @return jobCorrelator value
+     * @author Frank Giordano
+     */
     public Optional<String> getJobCorrelator() {
         return jobCorrelator;
     }
 
+    /**
+     * Retrieve phase specified
+     *
+     * @return phase value
+     * @author Frank Giordano
+     */
     public Optional<Integer> getPhase() {
         return phase;
     }
 
+    /**
+     * Retrieve phaseName specified
+     *
+     * @return phaseName value
+     * @author Frank Giordano
+     */
     public Optional<String> getPhaseName() {
         return phaseName;
     }
-
+    /**
+     * Retrieve reasonNotRunning specified
+     *
+     * @return reasonNotRunning value
+     * @author Frank Giordano
+     */
     public Optional<String> getReasonNotRunning() {
         return reasonNotRunning;
     }
