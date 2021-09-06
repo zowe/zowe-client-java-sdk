@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 1.0
  */
-public class StopTsoParms {
+public class StopTsoParams {
 
     /**
      * Servlet key of an active address space
@@ -25,12 +25,12 @@ public class StopTsoParms {
     private Optional<String> servletKey;
 
     /**
-     * SendTsoParms constructor
+     * SendTsoParams constructor
      *
      * @param servletKey key of an active tso address space
      * @author Frank Giordano
      */
-    public StopTsoParms(String servletKey) {
+    public StopTsoParams(String servletKey) {
         this.servletKey = Optional.ofNullable(servletKey);
     }
 
@@ -46,7 +46,7 @@ public class StopTsoParms {
 
     @Override
     public String toString() {
-        return "StopTsoParms{" +
+        return "StopTsoParams{" +
                 "servletKey=" + servletKey +
                 '}';
     }

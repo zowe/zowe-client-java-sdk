@@ -18,8 +18,8 @@ import rest.ZoweRequestFactory;
 import rest.ZoweRequestType;
 import utility.UtilConsole;
 import utility.UtilRest;
-import zosconsole.zosmf.IssueParms;
-import zosconsole.zosmf.ZosmfIssueParms;
+import zosconsole.zosmf.IssueParams;
+import zosconsole.zosmf.ZosmfIssueParams;
 import zosconsole.zosmf.ZosmfIssueResponse;
 import core.ZOSConnection;
 import org.json.simple.JSONObject;
@@ -52,16 +52,16 @@ public class IssueCommand {
     /**
      * Issue an MVS console command, returns "raw" z/OSMF response
      *
-     * @param consoleName  string name of the EMCS console that is used to issue the command
-     * @param commandParms synchronous console issue parameters, see ZosmfIssueParms object
+     * @param consoleName   string name of the EMCS console that is used to issue the command
+     * @param commandParams synchronous console issue parameters, see ZosmfIssueParams object
      * @return command response on resolve, see ZosmfIssueResponse object
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ZosmfIssueResponse issueCommon(String consoleName, ZosmfIssueParms commandParms) throws Exception {
+    public ZosmfIssueResponse issueCommon(String consoleName, ZosmfIssueParams commandParams) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(consoleName == null, "consoleName is null");
-        Util.checkNullParameter(commandParms == null, "commandParms is null");
+        Util.checkNullParameter(commandParams == null, "commandParams is null");
         Util.checkStateParameter(consoleName.isEmpty(), "consoleName not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
@@ -70,7 +70,7 @@ public class IssueCommand {
         LOG.debug(url);
 
         var jsonMap = new HashMap<String, String>();
-        jsonMap.put("cmd", commandParms.getCmd().get());
+        jsonMap.put("cmd", commandParams.getCmd().get());
         var jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(jsonRequestBody);
 
@@ -97,13 +97,13 @@ public class IssueCommand {
     /**
      * Issue an MVS console command in default console, returns "raw" z/OSMF response
      *
-     * @param commandParms synchronous console issue parameters, see ZosmfIssueParms object
+     * @param commandParams synchronous console issue parameters, see ZosmfIssueParams object
      * @return command response on resolve, see ZosmfIssueResponse object
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ZosmfIssueResponse issueDefConsoleCommon(ZosmfIssueParms commandParms) throws Exception {
-        ZosmfIssueResponse resp = issueCommon(ConsoleConstants.RES_DEF_CN, commandParms);
+    public ZosmfIssueResponse issueDefConsoleCommon(ZosmfIssueParams commandParams) throws Exception {
+        ZosmfIssueResponse resp = issueCommon(ConsoleConstants.RES_DEF_CN, commandParams);
         resp.setCmdResponse(StringEscapeUtils.escapeJava(resp.getCmdResponse().get()));
         return resp;
     }
@@ -113,22 +113,22 @@ public class IssueCommand {
      * immediately after the command is issued. However, after (according to the z/OSMF REST API documentation)
      * approximately 3 seconds the response will be returned.
      *
-     * @param parms console issue parameters, see IssueParms object
+     * @param params console issue parameters, see IssueParams object
      * @return command response on resolve, see ConsoleResponse object
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ConsoleResponse issue(IssueParms parms) throws Exception {
-        Util.checkNullParameter(parms == null, "parms is null");
+    public ConsoleResponse issue(IssueParams params) throws Exception {
+        Util.checkNullParameter(params == null, "params is null");
 
-        String consoleName = parms.getConsoleName().isPresent() ?
-                parms.getConsoleName().get() : ConsoleConstants.RES_DEF_CN;
-        ZosmfIssueParms commandParms = buildZosmfConsoleApiParameters(parms);
+        String consoleName = params.getConsoleName().isPresent() ?
+                params.getConsoleName().get() : ConsoleConstants.RES_DEF_CN;
+        ZosmfIssueParams commandParams = buildZosmfConsoleApiParameters(params);
         ConsoleResponse response = new ConsoleResponse();
 
-        ZosmfIssueResponse resp = issueCommon(consoleName, commandParms);
-        response = UtilConsole.populate(resp, response, parms.getProcessResponses().isPresent() ?
-                parms.getProcessResponses().get() : true);
+        ZosmfIssueResponse resp = issueCommon(consoleName, commandParams);
+        response = UtilConsole.populate(resp, response, params.getProcessResponses().isPresent() ?
+                params.getProcessResponses().get() : true);
 
         return response;
     }
@@ -142,38 +142,38 @@ public class IssueCommand {
      * @author Frank Giordano
      */
     public ConsoleResponse issueSimple(String theCommand) throws Exception {
-        IssueParms parms = new IssueParms();
-        parms.setCommand(theCommand);
-        return issue(parms);
+        IssueParams params = new IssueParams();
+        params.setCommand(theCommand);
+        return issue(params);
     }
 
     /**
-     * Build IZosmfIssueParms object from provided parameters
+     * Build ZosmfIssueParams object from provided parameters
      *
-     * @param parms parameters for issue command, see IssueParms object
-     * @return request body parameters, see ZosmfIssueParms object
+     * @param params parameters for issue command, see IssueParams object
+     * @return request body parameters, see ZosmfIssueParams object
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ZosmfIssueParms buildZosmfConsoleApiParameters(IssueParms parms) throws Exception {
-        Util.checkNullParameter(parms == null, "parms is null");
+    public ZosmfIssueParams buildZosmfConsoleApiParameters(IssueParams params) throws Exception {
+        Util.checkNullParameter(params == null, "params is null");
 
-        ZosmfIssueParms zosmfParms = new ZosmfIssueParms();
-        if (parms.getCommand().isPresent()) {
-            zosmfParms.setCmd(parms.getCommand().get());
+        ZosmfIssueParams zosmfParams = new ZosmfIssueParams();
+        if (params.getCommand().isPresent()) {
+            zosmfParams.setCmd(params.getCommand().get());
         } else {
             throw new Exception("command not specified");
         }
 
-        if (parms.getSolicitedKeyword().isPresent()) {
-            zosmfParms.setSolKey(parms.getSolicitedKeyword().get());
+        if (params.getSolicitedKeyword().isPresent()) {
+            zosmfParams.setSolKey(params.getSolicitedKeyword().get());
         }
 
-        if (parms.getSysplexSystem().isPresent()) {
-            zosmfParms.setSystem(parms.getSysplexSystem().get());
+        if (params.getSysplexSystem().isPresent()) {
+            zosmfParams.setSystem(params.getSysplexSystem().get());
         }
 
-        return zosmfParms;
+        return zosmfParams;
     }
 
 }

@@ -13,9 +13,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zosconsole.ConsoleResponse;
 import zosconsole.IssueCommand;
-import zosconsole.zosmf.IssueParms;
+import zosconsole.zosmf.IssueParams;
 import core.ZOSConnection;
-import zosconsole.zosmf.ZosmfIssueParms;
+import zosconsole.zosmf.ZosmfIssueParams;
 import zosconsole.zosmf.ZosmfIssueResponse;
 
 /**
@@ -56,12 +56,12 @@ public class IssueCommandTest {
      * @author Frank Giordano
      */
     public static void tstConsoleCmdByIssue(ZOSConnection connection, String cmd) {
-        IssueParms parms = new IssueParms();
-        parms.setCommand(cmd);
+        IssueParams params = new IssueParams();
+        params.setCommand(cmd);
         ConsoleResponse response;
         IssueCommand issueCommand = new IssueCommand(connection);
         try {
-            response = issueCommand.issue(parms);
+            response = issueCommand.issue(params);
             LOG.info(response.getCommandResponse().get());
         } catch (Exception e) {
             LOG.info(e.getMessage());
@@ -94,12 +94,12 @@ public class IssueCommandTest {
      * @author Frank Giordano
      */
     public static void tstConsoleCmdByIssueDefConsoleCommon(ZOSConnection connection, String cmd) {
-        ZosmfIssueParms parms = new ZosmfIssueParms();
-        parms.setCmd(cmd);
+        ZosmfIssueParams params = new ZosmfIssueParams();
+        params.setCmd(cmd);
         ZosmfIssueResponse zResponse;
         IssueCommand issueCommand = new IssueCommand(connection);
         try {
-            zResponse = issueCommand.issueDefConsoleCommon(parms);
+            zResponse = issueCommand.issueDefConsoleCommon(params);
             LOG.info(zResponse.getCmdResponse().get());
         } catch (Exception e) {
             LOG.info(e.getMessage());

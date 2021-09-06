@@ -155,7 +155,7 @@ public class GetJobsByJsonGetRequestTest {
     }
 
     @Test
-    public void tstGetStatusForJobNoParmsExceptionFailure() {
+    public void tstGetStatusForJobNoParamsExceptionFailure() {
         String errorMsg = "";
         try {
             getJobs.getStatusForJob(new Job.Builder().build());

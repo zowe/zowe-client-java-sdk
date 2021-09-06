@@ -11,7 +11,7 @@ package zosconsole.zosmf;
 
 import java.util.Optional;
 
-public class ZosmfIssueParms {
+public class ZosmfIssueParams {
 
     private Optional<String> cmd = Optional.empty();
     private Optional<String> solKey = Optional.empty();
@@ -52,7 +52,7 @@ public class ZosmfIssueParms {
 
     @Override
     public String toString() {
-        return "ZosmfIssueParms{" +
+        return "ZosmfIssueParams{" +
                 "cmd=" + cmd +
                 ", solKey=" + solKey +
                 ", system=" + system +

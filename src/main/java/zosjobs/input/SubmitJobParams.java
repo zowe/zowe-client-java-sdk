@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 1.0
  */
-public class SubmitJobParms {
+public class SubmitJobParams {
 
     /**
      * z/OS data set which should contain syntactically correct JCL. Example value: IBMUSER.PUBLIC.CNTL(IEFBR14)
@@ -33,23 +33,23 @@ public class SubmitJobParms {
     private Optional<String> jclSymbols = Optional.empty();
 
     /**
-     * SubmitJobParms constructor
+     * SubmitJobParams constructor
      *
      * @param jobDataSet z/OS data set which should contain syntactically correct JCL
      * @author Frank Giordano
      */
-    public SubmitJobParms(String jobDataSet) {
+    public SubmitJobParams(String jobDataSet) {
         this.jobDataSet = Optional.ofNullable(jobDataSet);
     }
 
     /**
-     * SubmitJobParms constructor
+     * SubmitJobParams constructor
      *
      * @param jobDataSet z/OS data set which should contain syntactically correct JCL
      * @param jclSymbols string for JCL symbolic substitution
      * @author Frank Giordano
      */
-    public SubmitJobParms(String jobDataSet, String jclSymbols) {
+    public SubmitJobParams(String jobDataSet, String jclSymbols) {
         this.jobDataSet = Optional.ofNullable(jobDataSet);
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
@@ -96,7 +96,7 @@ public class SubmitJobParms {
 
     @Override
     public String toString() {
-        return "SubmitJobParms{" +
+        return "SubmitJobParams{" +
                 "jobDataSet=" + jobDataSet +
                 ", jclSymbols=" + jclSymbols +
                 '}';

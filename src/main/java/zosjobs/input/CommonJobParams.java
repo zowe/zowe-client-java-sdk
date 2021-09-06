@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 1.0
  */
-public class CommonJobParms {
+public class CommonJobParams {
 
     /**
      * job id for a job
@@ -30,13 +30,13 @@ public class CommonJobParms {
     private final Optional<String> jobName;
 
     /**
-     * CommonJobParms constructor
+     * CommonJobParams constructor
      *
      * @param jobId   job id value
      * @param jobName job name value
      * @author Frank Giordano
      */
-    public CommonJobParms(String jobId, String jobName) {
+    public CommonJobParams(String jobId, String jobName) {
         this.jobId = Optional.ofNullable(jobId);
         this.jobName = Optional.ofNullable(jobName);
     }
@@ -63,7 +63,7 @@ public class CommonJobParms {
 
     @Override
     public String toString() {
-        return "CommonJobParms{" +
+        return "CommonJobParams{" +
                 "jobId=" + jobId +
                 ", jobName=" + jobName +
                 '}';

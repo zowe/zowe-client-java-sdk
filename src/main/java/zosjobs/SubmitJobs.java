@@ -19,8 +19,8 @@ import rest.*;
 import utility.Util;
 import utility.UtilJobs;
 import utility.UtilRest;
-import zosjobs.input.SubmitJclParms;
-import zosjobs.input.SubmitJobParms;
+import zosjobs.input.SubmitJclParams;
+import zosjobs.input.SubmitJobParams;
 import zosjobs.response.Job;
 
 import java.util.HashMap;
@@ -51,38 +51,38 @@ public class SubmitJobs {
     /**
      * Submit a job that resides in a z/OS data set.
      *
-     * @param jobDataSet job Dataset to be translated into parms object
+     * @param jobDataSet job Dataset to be translated into SubmitJobParams object
      * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
     public Job submitJob(String jobDataSet) throws Exception {
-        return this.submitJobCommon(new SubmitJobParms(jobDataSet));
+        return this.submitJobCommon(new SubmitJobParams(jobDataSet));
     }
 
     /**
      * Submit a job that resides in a z/OS data set.
      *
-     * @param parms submit job parameters, see SubmitJobParms object
+     * @param params submit job parameters, see SubmitJobParams object
      * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
-    public Job submitJobCommon(SubmitJobParms parms) throws Exception {
-        Util.checkNullParameter(parms == null, "parms is null");
-        Util.checkStateParameter(parms.getJobDataSet().isEmpty(), "jobDataSet not specified");
-        Util.checkStateParameter(parms.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
+    public Job submitJobCommon(SubmitJobParams params) throws Exception {
+        Util.checkNullParameter(params == null, "params is null");
+        Util.checkStateParameter(params.getJobDataSet().isEmpty(), "jobDataSet not specified");
+        Util.checkStateParameter(params.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
         LOG.debug(url);
 
-        String fullyQualifiedDataset = "//'" + parms.getJobDataSet().get() + "'";
+        String fullyQualifiedDataset = "//'" + params.getJobDataSet().get() + "'";
         var jsonMap = new HashMap<String, String>();
         jsonMap.put("file", fullyQualifiedDataset);
         var jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(jsonRequestBody);
 
-        if (parms.getJclSymbols().isPresent()) {
+        if (params.getJclSymbols().isPresent()) {
             // TODO..
         }
 
@@ -118,22 +118,22 @@ public class SubmitJobs {
      * @author Frank Giordano
      */
     public Job submitJcl(String jcl, String internalReaderRecfm, String internalReaderLrecl) throws Exception {
-        return this.submitJclCommon(new SubmitJclParms(jcl, internalReaderRecfm, internalReaderLrecl));
+        return this.submitJclCommon(new SubmitJclParams(jcl, internalReaderRecfm, internalReaderLrecl));
     }
 
     /**
      * Submit a JCL string to run
      *
-     * @param parms submit jcl parameters, see SubmitJclParms object
+     * @param params submit jcl parameters, see SubmitJclParams object
      * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
-    public Job submitJclCommon(SubmitJclParms parms) throws Exception {
+    public Job submitJclCommon(SubmitJclParams params) throws Exception {
         Util.checkConnection(connection);
-        Util.checkNullParameter(parms == null, "parms is null");
-        Util.checkStateParameter(parms.getJcl().isEmpty(), "jcl not specified");
-        Util.checkStateParameter(parms.getJcl().get().isEmpty(), "jcl not specified");
+        Util.checkNullParameter(params == null, "params is null");
+        Util.checkStateParameter(params.getJcl().isEmpty(), "jcl not specified");
+        Util.checkStateParameter(params.getJcl().get().isEmpty(), "jcl not specified");
 
         String key, value;
         Map<String, String> headers = new HashMap<>();
@@ -142,23 +142,23 @@ public class SubmitJobs {
         value = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_MODE_TEXT").get(1);
         headers.put(key, value);
 
-        if (parms.getInternalReaderLrecl().isPresent()) {
+        if (params.getInternalReaderLrecl().isPresent()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_LRECL").get(0);
-            headers.put(key, parms.getInternalReaderLrecl().get());
+            headers.put(key, params.getInternalReaderLrecl().get());
         } else {
             key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_LRECL_80").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_LRECL_80").get(1);
             headers.put(key, value);
         }
-        if (parms.getInternalReaderRecfm().isPresent()) {
+        if (params.getInternalReaderRecfm().isPresent()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_RECFM").get(0);
-            headers.put(key, parms.getInternalReaderLrecl().get());
+            headers.put(key, params.getInternalReaderLrecl().get());
         } else {
             key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_RECFM_F").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_RECFM_F").get(1);
             headers.put(key, value);
         }
-        if (parms.getJclSymbols().isPresent()) {
+        if (params.getJclSymbols().isPresent()) {
             // TODO..
         }
 
@@ -169,7 +169,7 @@ public class SubmitJobs {
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
         LOG.debug(url);
 
-        String body = parms.getJcl().get();
+        String body = params.getJcl().get();
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body, ZoweRequestType.VerbType.PUT_TEXT);
         request.setAdditionalHeaders(headers);
 

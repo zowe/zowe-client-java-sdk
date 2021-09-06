@@ -12,8 +12,8 @@ package zosjobs.samples;
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import zosjobs.input.CommonJobParms;
-import zosjobs.input.GetJobParms;
+import zosjobs.input.CommonJobParams;
+import zosjobs.input.GetJobParams;
 import zosjobs.GetJobs;
 import zosjobs.input.JobFile;
 import zosjobs.response.Job;
@@ -71,7 +71,7 @@ public class GetJobsTest {
 
     /**
      * Example on how to call GetJobs getJclCommon method.
-     * getJclCommon is given CommonJobParms object filled with information on the given job to
+     * getJclCommon is given CommonJobParams object filled with information on the given job to
      * use for retrieval of its JCL content
      *
      * @param prefix partial or full job name to use for searching
@@ -81,7 +81,7 @@ public class GetJobsTest {
     private static void tstGetJclCommon(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         LOG.info(getJobs.getJclCommon(
-                new CommonJobParms(jobs.get(0).getJobId().get(), jobs.get(0).getJobName().get())));
+                new CommonJobParams(jobs.get(0).getJobId().get(), jobs.get(0).getJobName().get())));
     }
 
     /**
@@ -231,8 +231,8 @@ public class GetJobsTest {
      * @author Frank Giordano
      */
     private static void tstGetSpoolContent(String prefix) throws Exception {
-        GetJobParms parms = new GetJobParms.Builder("*").prefix(prefix).build();
-        List<Job> jobs = getJobs.getJobsCommon(parms);
+        GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
+        List<Job> jobs = getJobs.getJobsCommon(params);
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
         String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
         // get last 10 lines of output
@@ -262,8 +262,8 @@ public class GetJobsTest {
      * @author Frank Giordano
      */
     private static void tstGetSpoolFilesForJob(String prefix) throws Exception {
-        GetJobParms parms = new GetJobParms.Builder("*").prefix(prefix).build();
-        List<Job> jobs = getJobs.getJobsCommon(parms);
+        GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
+        List<Job> jobs = getJobs.getJobsCommon(params);
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
         files.forEach(LOG::info);
     }
@@ -277,7 +277,7 @@ public class GetJobsTest {
      * @author Frank Giordano
      */
     private static void tstGetSpoolFiles(String prefix) throws Exception {
-        GetJobParms parms = new GetJobParms.Builder("*").prefix(prefix).build();
+        GetJobParams parms = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(parms);
         List<JobFile> files = getJobs.getSpoolFiles(jobs.get(0).getJobName().get(),
                 jobs.get(0).getJobId().get());
@@ -286,14 +286,14 @@ public class GetJobsTest {
 
     /**
      * Example on how to call GetJobs getJobsCommon method.
-     * getJobsCommon is given a GetJobParms object filled with search parameters which will retrieve a list of all jobs.
+     * getJobsCommon is given a GetJobParams object filled with search parameters which will retrieve a list of all jobs.
      *
      * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
     public static void tstGetJobsCommon(String prefix) throws Exception {
-        GetJobParms parms = new GetJobParms.Builder("*").prefix(prefix).build();
+        GetJobParams parms = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(parms);
         jobs.forEach(LOG::info);
     }

@@ -20,7 +20,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 1.0
  */
-public class MonitorJobWaitForParms {
+public class MonitorJobWaitForParams {
 
     /**
      * The z/OS JOBID for the job to monitor. No pre-validation of the JOBID (other than its presence) is performed.
@@ -65,7 +65,7 @@ public class MonitorJobWaitForParms {
      */
     private Optional<Integer> lineLimit;
 
-    private MonitorJobWaitForParms(MonitorJobWaitForParms.Builder builder) {
+    private MonitorJobWaitForParams(MonitorJobWaitForParams.Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);
         this.watchDelay = Optional.ofNullable(builder.watchDelay);
@@ -176,7 +176,7 @@ public class MonitorJobWaitForParms {
 
     @Override
     public String toString() {
-        return "MonitorJobWaitForParms{" +
+        return "MonitorJobWaitForParams{" +
                 "jobId=" + jobId +
                 ", jobName=" + jobName +
                 ", watchDelay=" + watchDelay +
@@ -200,28 +200,28 @@ public class MonitorJobWaitForParms {
             this.jobId = jobId;
         }
 
-        public MonitorJobWaitForParms.Builder watchDelay(int watchDelay) {
+        public MonitorJobWaitForParams.Builder watchDelay(int watchDelay) {
             this.watchDelay = watchDelay;
             return this;
         }
 
-        public MonitorJobWaitForParms.Builder jobStatus(JobStatus.Type jobStatus) {
+        public MonitorJobWaitForParams.Builder jobStatus(JobStatus.Type jobStatus) {
             this.jobStatus = jobStatus;
             return this;
         }
 
-        public MonitorJobWaitForParms.Builder attempts(int attempts) {
+        public MonitorJobWaitForParams.Builder attempts(int attempts) {
             this.attempts = attempts;
             return this;
         }
 
-        public MonitorJobWaitForParms.Builder lineLimit(int lineLimit) {
+        public MonitorJobWaitForParams.Builder lineLimit(int lineLimit) {
             this.lineLimit = lineLimit;
             return this;
         }
 
-        public MonitorJobWaitForParms build() {
-            return new MonitorJobWaitForParms(this);
+        public MonitorJobWaitForParams build() {
+            return new MonitorJobWaitForParams(this);
         }
 
     }

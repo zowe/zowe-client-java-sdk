@@ -11,7 +11,7 @@ package zosconsole.zosmf;
 
 import java.util.Optional;
 
-public class IssueParms extends ConsoleParms {
+public class IssueParams extends ConsoleParams {
 
     private Optional<String> command = Optional.empty();
     private Optional<String> sysplexSystem = Optional.empty();
@@ -52,7 +52,7 @@ public class IssueParms extends ConsoleParms {
 
     @Override
     public String toString() {
-        return "IssueParms{" +
+        return "IssueParams{" +
                 "command=" + command +
                 ", sysplexSystem=" + sysplexSystem +
                 ", solicitedKeyword=" + solicitedKeyword +

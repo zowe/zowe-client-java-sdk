@@ -37,16 +37,16 @@ public class ListDatasetsTest {
     }
 
     private static void tstListMembers(ZOSConnection connection, String dataSetName) {
-        ListParams parms = new ListParams.Builder().build();
+        ListParams params = new ListParams.Builder().build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
-        List<String> datasets = zosDsnList.listMembers(dataSetName, parms);
+        List<String> datasets = zosDsnList.listMembers(dataSetName, params);
         datasets.forEach(LOG::info);
     }
 
     private static void tstListDsn(ZOSConnection connection, String dataSetName) {
-        ListParams parms = new ListParams.Builder().build();
+        ListParams params = new ListParams.Builder().build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
-        List<Dataset> datasets = zosDsnList.listDsn(dataSetName, parms);
+        List<Dataset> datasets = zosDsnList.listDsn(dataSetName, params);
         datasets.forEach(LOG::info);
     }
 

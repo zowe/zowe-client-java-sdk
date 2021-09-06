@@ -21,8 +21,8 @@ import rest.*;
 import utility.Util;
 import utility.UtilJobs;
 import utility.UtilRest;
-import zosjobs.input.CommonJobParms;
-import zosjobs.input.GetJobParms;
+import zosjobs.input.CommonJobParams;
+import zosjobs.input.GetJobParams;
 import zosjobs.input.JobFile;
 import zosjobs.response.Job;
 
@@ -73,7 +73,7 @@ public class GetJobs {
         Util.checkNullParameter(prefix == null, "prefix is null");
         Util.checkStateParameter(prefix.isEmpty(), "prefix not specified");
 
-        return getJobsCommon(new GetJobParms.Builder("*").prefix(prefix).build());
+        return getJobsCommon(new GetJobParams.Builder("*").prefix(prefix).build());
     }
 
     /**
@@ -89,7 +89,7 @@ public class GetJobs {
         Util.checkNullParameter(owner == null, "owner is null");
         Util.checkStateParameter(owner.isEmpty(), "owner not specified");
 
-        return getJobsCommon(new GetJobParms.Builder(owner).build());
+        return getJobsCommon(new GetJobParams.Builder(owner).build());
     }
 
     /**
@@ -109,7 +109,7 @@ public class GetJobs {
         Util.checkNullParameter(prefix == null, "prefix is null");
         Util.checkStateParameter(prefix.isEmpty(), "prefix not specified");
 
-        return getJobsCommon(new GetJobParms.Builder(owner).prefix(prefix).build());
+        return getJobsCommon(new GetJobParams.Builder(owner).prefix(prefix).build());
     }
 
     /**
@@ -124,7 +124,7 @@ public class GetJobs {
         Util.checkNullParameter(jobId == null, "jobId is null");
         Util.checkStateParameter(jobId.isEmpty(), "jobId not specified");
 
-        List<Job> jobs = getJobsCommon(new GetJobParms.Builder("*").jobId(jobId).build());
+        List<Job> jobs = getJobsCommon(new GetJobParams.Builder("*").jobId(jobId).build());
         if (jobs.isEmpty()) throw new Exception("Job not found");
         if (jobs.size() > 1) throw new Exception("Expected 1 job returned but received " + jobs.size() + " jobs.");
 
@@ -134,44 +134,44 @@ public class GetJobs {
     /**
      * Get jobs filtered by owner and prefix.
      *
-     * @param parms get job parameters, see GetJobParms object
+     * @param params get job parameters, see GetJobParams object
      * @return list of job objects (matching jobs)
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    public List<Job> getJobsCommon(GetJobParms parms) throws Exception {
+    public List<Job> getJobsCommon(GetJobParams params) throws Exception {
         Util.checkConnection(connection);
 
         List<Job> jobs = new ArrayList<>();
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + JobsConstants.RESOURCE + QueryConstants.QUERY_ID;
 
-        if (parms != null) {
-            if (parms.getOwner().isPresent()) {
-                url += JobsConstants.QUERY_OWNER + parms.getOwner().get();
+        if (params != null) {
+            if (params.getOwner().isPresent()) {
+                url += JobsConstants.QUERY_OWNER + params.getOwner().get();
             }
-            if (parms.getPrefix().isPresent()) {
-                if (parms.getPrefix().get() != JobsConstants.DEFAULT_PREFIX) {
+            if (params.getPrefix().isPresent()) {
+                if (params.getPrefix().get() != JobsConstants.DEFAULT_PREFIX) {
                     if (url.contains(QueryConstants.QUERY_ID)) {
                         url += QueryConstants.COMBO_ID;
                     }
-                    url += JobsConstants.QUERY_PREFIX + parms.getPrefix().get();
+                    url += JobsConstants.QUERY_PREFIX + params.getPrefix().get();
                 }
             }
-            if (parms.getMaxJobs().isPresent()) {
-                if (parms.getMaxJobs().get() != JobsConstants.DEFAULT_MAX_JOBS) {
+            if (params.getMaxJobs().isPresent()) {
+                if (params.getMaxJobs().get() != JobsConstants.DEFAULT_MAX_JOBS) {
                     if (url.contains(QueryConstants.QUERY_ID)) {
                         url += QueryConstants.COMBO_ID;
                     }
-                    url += JobsConstants.QUERY_MAX_JOBS + parms.getMaxJobs().get();
+                    url += JobsConstants.QUERY_MAX_JOBS + params.getMaxJobs().get();
                 }
             }
-            if (parms.getJobId().isPresent()) {
+            if (params.getJobId().isPresent()) {
                 if (url.contains(QueryConstants.QUERY_ID)) {
                     url += QueryConstants.COMBO_ID;
                 }
-                url += JobsConstants.QUERY_JOBID + parms.getJobId().get();
+                url += JobsConstants.QUERY_JOBID + params.getJobId().get();
             }
         } else {
             url += JobsConstants.QUERY_OWNER + connection.getUser();
@@ -214,7 +214,7 @@ public class GetJobs {
         Util.checkNullParameter(jobName == null, "jobName is null");
         Util.checkNullParameter(jobId == null, "jobId is null");
 
-        return getStatusCommon(new CommonJobParms(jobId, jobName));
+        return getStatusCommon(new CommonJobParams(jobId, jobName));
     }
 
     /**
@@ -232,28 +232,28 @@ public class GetJobs {
     public Job getStatusForJob(Job job) throws Exception {
         Util.checkNullParameter(job == null, "job is null");
 
-        return getStatusCommon(new CommonJobParms(job.getJobId().isPresent() ?
+        return getStatusCommon(new CommonJobParams(job.getJobId().isPresent() ?
                 job.getJobId().get() : null, job.getJobName().isPresent() ? job.getJobName().get() : null));
     }
 
     /**
      * Get the status and other details (e.g. owner, return code) for a job.
      *
-     * @param parms common job parameters, see CommonJobParms object
+     * @param params common job parameters, see CommonJobParams object
      * @return job document (matching job)
      * @throws Exception error on getting job
      * @author Frank Giordano
      */
-    public Job getStatusCommon(CommonJobParms parms) throws Exception {
+    public Job getStatusCommon(CommonJobParams params) throws Exception {
         Util.checkConnection(connection);
-        Util.checkNullParameter(parms == null, "parms is null");
-        Util.checkStateParameter(parms.getJobId().isEmpty(), "jobId not specified");
-        Util.checkStateParameter(parms.getJobId().get().isEmpty(), "jobId not specified");
-        Util.checkStateParameter(parms.getJobName().isEmpty(), "jobName not specified");
-        Util.checkStateParameter(parms.getJobName().get().isEmpty(), "jobName not specified");
+        Util.checkNullParameter(params == null, "params is null");
+        Util.checkStateParameter(params.getJobId().isEmpty(), "jobId not specified");
+        Util.checkStateParameter(params.getJobId().get().isEmpty(), "jobId not specified");
+        Util.checkStateParameter(params.getJobName().isEmpty(), "jobName not specified");
+        Util.checkStateParameter(params.getJobName().get().isEmpty(), "jobName not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + JobsConstants.RESOURCE + "/" + parms.getJobName().get() + "/" + parms.getJobId().get();
+                + JobsConstants.RESOURCE + "/" + params.getJobName().get() + "/" + params.getJobId().get();
 
         LOG.debug(url);
 
@@ -284,7 +284,7 @@ public class GetJobs {
      */
     public List<JobFile> getSpoolFiles(String jobName, String jobId)
             throws Exception {
-        return getSpoolFilesCommon(new CommonJobParms(jobId, jobName));
+        return getSpoolFilesCommon(new CommonJobParams(jobId, jobName));
     }
 
     /**
@@ -298,30 +298,30 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public List<JobFile> getSpoolFilesForJob(Job job) throws Exception {
-        return getSpoolFilesCommon(new CommonJobParms(job.getJobId().get(), job.getJobName().get()));
+        return getSpoolFilesCommon(new CommonJobParams(job.getJobId().get(), job.getJobName().get()));
     }
 
     /**
      * Get a list of all job spool files for a job.
      *
-     * @param parms common job parameters, see CommonJobParms object
+     * @param params common job parameters, see CommonJobParams object
      * @return list of JobFile objects
      * @throws Exception error on getting spool files info
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    public List<JobFile> getSpoolFilesCommon(CommonJobParms parms) throws Exception {
+    public List<JobFile> getSpoolFilesCommon(CommonJobParams params) throws Exception {
         Util.checkConnection(connection);
-        Util.checkNullParameter(parms == null, "prams is null");
-        Util.checkStateParameter(parms.getJobId().isEmpty(), "jobId not specified");
-        Util.checkStateParameter(parms.getJobId().get().isEmpty(), "jobId not specified");
-        Util.checkStateParameter(parms.getJobName().isEmpty(), "jobName not specified");
-        Util.checkStateParameter(parms.getJobName().get().isEmpty(), "jobName not specified");
+        Util.checkNullParameter(params == null, "params is null");
+        Util.checkStateParameter(params.getJobId().isEmpty(), "jobId not specified");
+        Util.checkStateParameter(params.getJobId().get().isEmpty(), "jobId not specified");
+        Util.checkStateParameter(params.getJobName().isEmpty(), "jobName not specified");
+        Util.checkStateParameter(params.getJobName().get().isEmpty(), "jobName not specified");
 
         List<JobFile> files = new ArrayList<>();
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE
-                + "/" + parms.getJobName().get() + "/" + parms.getJobId().get() + "/files";
+                + "/" + params.getJobName().get() + "/" + params.getJobId().get() + "/files";
 
         LOG.debug(url);
 
@@ -371,7 +371,7 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public String getJcl(String jobName, String jobId) throws Exception {
-        return getJclCommon(new CommonJobParms(jobId, jobName));
+        return getJclCommon(new CommonJobParams(jobId, jobName));
     }
 
     /**
@@ -385,28 +385,28 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public String getJclForJob(Job job) throws Exception {
-        return getJclCommon(new CommonJobParms(job.getJobId().isPresent() ? job.getJobId().get() : null,
+        return getJclCommon(new CommonJobParams(job.getJobId().isPresent() ? job.getJobId().get() : null,
                 job.getJobName().isPresent() ? job.getJobName().get() : null));
     }
 
     /**
      * Get the JCL that was used to submit a job.
      *
-     * @param parms common job parameters, see CommonJobParms object
+     * @param params common job parameters, see CommonJobParams object
      * @return JCL content
      * @throws Exception error on getting jcl content
      * @author Frank Giordano
      */
-    public String getJclCommon(CommonJobParms parms) throws Exception {
+    public String getJclCommon(CommonJobParams params) throws Exception {
         Util.checkConnection(connection);
-        Util.checkNullParameter(parms == null, "parms is null");
-        Util.checkStateParameter(parms.getJobName().isEmpty(), "jobName not specified");
-        Util.checkStateParameter(parms.getJobName().get().isEmpty(), "jobName not specified");
-        Util.checkStateParameter(parms.getJobId().isEmpty(), "jobId not specified");
-        Util.checkStateParameter(parms.getJobId().get().isEmpty(), "jobId not specified");
+        Util.checkNullParameter(params == null, "params is null");
+        Util.checkStateParameter(params.getJobName().isEmpty(), "jobName not specified");
+        Util.checkStateParameter(params.getJobName().get().isEmpty(), "jobName not specified");
+        Util.checkStateParameter(params.getJobId().isEmpty(), "jobId not specified");
+        Util.checkStateParameter(params.getJobId().get().isEmpty(), "jobId not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                parms.getJobName().get() + "/" + parms.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES +
+                params.getJobName().get() + "/" + params.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES +
                 JobsConstants.RESOURCE_JCL_CONTENT + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         LOG.debug(url);
