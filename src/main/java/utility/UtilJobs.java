@@ -22,7 +22,7 @@ import zosjobs.response.Job;
 public class UtilJobs {
 
     /**
-     * Formulate and return a Job object based on incoming Json object.
+     * Formulate and return a Job document/object based on incoming Json object.
      *
      * @param json JSONObject object
      * @return job document

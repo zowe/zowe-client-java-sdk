@@ -29,7 +29,7 @@ public class ConsoleParms {
     }
 
     public void setProcessResponses(Boolean processResponses) {
-        this.processResponses = Optional.ofNullable(processResponses);;
+        this.processResponses = Optional.ofNullable(processResponses);
     }
 
     @Override

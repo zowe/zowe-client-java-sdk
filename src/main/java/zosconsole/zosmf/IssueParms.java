@@ -31,7 +31,7 @@ public class IssueParms extends ConsoleParms {
     }
 
     public void setSysplexSystem(String sysplexSystem) {
-        this.sysplexSystem = Optional.ofNullable(sysplexSystem);;
+        this.sysplexSystem = Optional.ofNullable(sysplexSystem);
     }
 
     public Optional<String> getSolicitedKeyword() {
@@ -47,7 +47,7 @@ public class IssueParms extends ConsoleParms {
     }
 
     public void setAsync(String async) {
-        this.async = Optional.ofNullable(async);;
+        this.async = Optional.ofNullable(async);
     }
 
     @Override

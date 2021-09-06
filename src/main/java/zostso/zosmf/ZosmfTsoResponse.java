@@ -12,16 +12,57 @@ package zostso.zosmf;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * z/OSMF synchronous most tso command response messages. See the z/OSMF REST API publication for complete details.
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class ZosmfTsoResponse {
 
+    /**
+     * Unique identifier for the servlet entry for tso session
+     */
     private final Optional<String> servletKey;
+
+    /**
+     * Message queue ID
+     */
     private final Optional<String> queueId;
+
+    /**
+     * Structure version
+     */
     private final Optional<String> ver;
+
+    /**
+     * Reconnected indicator
+     */
     private final Optional<Boolean> reused;
+
+    /**
+     * Timeout indicator
+     */
     private final Optional<Boolean> timeout;
+
+    /**
+     * z/OSMF messages
+     */
     private final Optional<List<ZosmfMessages>> msgData;
+
+    /**
+     * Id of the tso session
+     */
     private final Optional<String> sessionId;
+
+    /**
+     * TSO/E messages that were received during the request
+     */
     private Optional<List<TsoMessages>> tsoData;
+
+    /**
+     * Application messages
+     */
     private final Optional<String> appData;
 
     private ZosmfTsoResponse(ZosmfTsoResponse.Builder builder) {
@@ -36,42 +77,102 @@ public class ZosmfTsoResponse {
         this.appData = Optional.ofNullable(builder.appData);
     }
 
+    /**
+     * Retrieve servletKey specified
+     *
+     * @return servletKey value
+     * @author Frank Giordano
+     */
     public Optional<String> getServletKey() {
         return servletKey;
     }
 
+    /**
+     * Retrieve queueId specified
+     *
+     * @return queueId value
+     * @author Frank Giordano
+     */
     public Optional<String> getQueueId() {
         return queueId;
     }
 
+    /**
+     * Retrieve ver specified
+     *
+     * @return ver value
+     * @author Frank Giordano
+     */
     public Optional<String> getVer() {
         return ver;
     }
 
+    /**
+     * Retrieve reused specified
+     *
+     * @return reused value
+     * @author Frank Giordano
+     */
     public Optional<Boolean> getReused() {
         return reused;
     }
 
+    /**
+     * Retrieve timeout specified
+     *
+     * @return timeout value
+     * @author Frank Giordano
+     */
     public Optional<Boolean> getTimeout() {
         return timeout;
     }
 
+    /**
+     * Retrieve msgData specified
+     *
+     * @return msgData value
+     * @author Frank Giordano
+     */
     public Optional<List<ZosmfMessages>> getMsgData() {
         return msgData;
     }
 
+    /**
+     * Retrieve sessionId specified
+     *
+     * @return sessionId value
+     * @author Frank Giordano
+     */
     public Optional<String> getSessionId() {
         return sessionId;
     }
 
+    /**
+     * Retrieve tsoData specified
+     *
+     * @return tsoData value
+     * @author Frank Giordano
+     */
     public Optional<List<TsoMessages>> getTsoData() {
         return tsoData;
     }
 
+    /**
+     * Retrieve appData specified
+     *
+     * @return appData value
+     * @author Frank Giordano
+     */
     public Optional<String> getAppData() {
         return appData;
     }
 
+    /**
+     * Assign tsoData message list
+     *
+     * @param tsoData message list
+     * @author Frank Giordano
+     */
     public void setTsoData(List<TsoMessages> tsoData) {
         this.tsoData = Optional.ofNullable(tsoData);
     }
