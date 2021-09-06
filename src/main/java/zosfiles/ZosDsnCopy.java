@@ -60,7 +60,7 @@ public class ZosDsnCopy {
 
         Util.checkConnection(connection);
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort()
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
 
         if (params.getToVolser().isPresent()) {

@@ -73,7 +73,7 @@ public class SubmitJobs {
         Util.checkStateParameter(parms.getJobDataSet().isEmpty(), "jobDataSet not specified");
         Util.checkStateParameter(parms.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE;
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
         LOG.debug(url);
 
         String fullyQualifiedDataset = "//'" + parms.getJobDataSet().get() + "'";
@@ -166,7 +166,7 @@ public class SubmitJobs {
         value = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_CLASS_A").get(1);
         headers.put(key, value);
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE;
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
         LOG.debug(url);
 
         String body = parms.getJcl().get();

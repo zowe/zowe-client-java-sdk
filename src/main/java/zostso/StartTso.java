@@ -133,7 +133,7 @@ public class StartTso {
      * @author Frank Giordano
      */
     private String getResourcesQuery(StartTsoParams parms) {
-        String query = "https://" + connection.getHost() + ":" + connection.getPort();
+        String query = "https://" + connection.getHost() + ":" + connection.getZosmfPort();
         query += TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "?";
         query += TsoConstants.PARM_ACCT + "=" + parms.account.get() + "&";
         query += TsoConstants.PARM_PROC + "=" + parms.logonProcedure.get() + "&";

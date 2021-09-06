@@ -59,7 +59,7 @@ public class ZosDsnList {
 
         Map<String, String> headers = new HashMap<>();
         List<String> members = new ArrayList<>();
-        String url = "https://" + connection.getHost() + ":" + connection.getPort()
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/"
                 + dataSetName + ZosFilesConstants.RES_DS_MEMBERS;
         try {
@@ -107,7 +107,7 @@ public class ZosDsnList {
 
         Map<String, String> headers = new HashMap<>();
         List<Dataset> datasets = new ArrayList<>();
-        String url = "https://" + connection.getHost() + ":" + connection.getPort()
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
 
         try {

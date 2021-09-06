@@ -83,7 +83,7 @@ public class SendTso {
         Util.checkStateParameter(commandParms.getData().isEmpty(), "sendTsoParms data not specified");
         Util.checkStateParameter(commandParms.getServletKey().isEmpty(), "sendTsoParms sevletKey not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() + TsoConstants.RESOURCE + "/" +
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + commandParms.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;
         LOG.debug("SendTso::sendDataToTSOCommon - url {}", url);
 
@@ -169,7 +169,7 @@ public class SendTso {
     private ZosmfTsoResponse getDataFromTSO(String servletKey) throws Exception {
         Util.checkConnection(connection);
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() +
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
         LOG.debug("SendTso::getDataFromTSO - url {}", url);
 

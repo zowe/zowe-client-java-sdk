@@ -64,7 +64,7 @@ public class IssueCommand {
         Util.checkNullParameter(commandParms == null, "commandParms is null");
         Util.checkStateParameter(consoleName.isEmpty(), "consoleName not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() +
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ConsoleConstants.RESOURCE + "/" + consoleName;
 
         LOG.debug(url);

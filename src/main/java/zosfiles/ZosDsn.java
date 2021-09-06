@@ -54,7 +54,7 @@ public class ZosDsn {
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort()
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" + dataSetName;
 
         try {
@@ -86,7 +86,7 @@ public class ZosDsn {
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort()
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" + dataSetName;
 
         try {
@@ -119,7 +119,7 @@ public class ZosDsn {
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort()
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" + dataSetName;
 
         try {

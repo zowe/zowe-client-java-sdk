@@ -88,7 +88,7 @@ public class DeleteJobs {
         Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
         Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE +
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
                 UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
         LOG.debug(url);
 
