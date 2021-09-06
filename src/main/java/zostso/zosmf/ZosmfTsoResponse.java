@@ -14,52 +14,26 @@ import java.util.Optional;
 
 public class ZosmfTsoResponse {
 
-    private Optional<String> servletKey;
-    private Optional<String> queueId;
-    private Optional<String> ver;
-    private Optional<Boolean> reused;
-    private Optional<Boolean> timeout;
-    private Optional<List<ZosmfMessages>> msgData;
-    private Optional<String> sessionId;
+    private final Optional<String> servletKey;
+    private final Optional<String> queueId;
+    private final Optional<String> ver;
+    private final Optional<Boolean> reused;
+    private final Optional<Boolean> timeout;
+    private final Optional<List<ZosmfMessages>> msgData;
+    private final Optional<String> sessionId;
     private Optional<List<TsoMessages>> tsoData;
-    private Optional<String> appData;
+    private final Optional<String> appData;
 
-    public ZosmfTsoResponse(ZosmfTsoResponse.Builder builder) {
-        if (builder.servletKey != null)
-            this.servletKey = Optional.ofNullable(builder.servletKey);
-        else this.servletKey = Optional.empty();
-
-        if (builder.queueId != null)
-            this.queueId = Optional.ofNullable(builder.queueId);
-        else this.queueId = Optional.empty();
-
-        if (builder.ver != null)
-            this.ver = Optional.ofNullable(builder.ver);
-        else this.ver = Optional.empty();
-
-        if (builder.reused)
-            this.reused = Optional.ofNullable(builder.reused);
-        else this.reused = Optional.empty();
-
-        if (builder.timeout)
-            this.timeout = Optional.ofNullable(builder.timeout);
-        else this.timeout = Optional.empty();
-
-        if (builder.msgData != null)
-            this.msgData = Optional.ofNullable(builder.msgData);
-        else this.msgData = Optional.empty();
-
-        if (builder.sessionId != null)
-            this.sessionId = Optional.ofNullable(builder.sessionId);
-        else this.sessionId = Optional.empty();
-
-        if (builder.tsoData != null)
-            this.tsoData = Optional.ofNullable(builder.tsoData);
-        else this.tsoData = Optional.empty();
-
-        if (builder.appData != null)
-            this.appData = Optional.ofNullable(builder.appData);
-        else this.appData = Optional.empty();
+    private ZosmfTsoResponse(ZosmfTsoResponse.Builder builder) {
+        this.servletKey = Optional.ofNullable(builder.servletKey);
+        this.queueId = Optional.ofNullable(builder.queueId);
+        this.ver = Optional.ofNullable(builder.ver);
+        this.reused = Optional.ofNullable(builder.reused);
+        this.timeout = Optional.ofNullable(builder.timeout);
+        this.msgData = Optional.ofNullable(builder.msgData);
+        this.sessionId = Optional.ofNullable(builder.sessionId);
+        this.tsoData = Optional.ofNullable(builder.tsoData);
+        this.appData = Optional.ofNullable(builder.appData);
     }
 
     public Optional<String> getServletKey() {
