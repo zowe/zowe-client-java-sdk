@@ -14,7 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.Response;
 import zosjobs.CancelJobs;
-import zosjobs.input.CancelJobParams;
+import zosjobs.input.ModifyJobParams;
 import zosjobs.response.Job;
 
 /**
@@ -65,7 +65,7 @@ public class CancelJobsTest {
     public static Response tstCancelJobsCommonWithVersion(String version) throws Exception {
         jobId = "XXX";
         jobName = "XXX";
-        CancelJobParams params = new CancelJobParams.Builder(jobName, jobId).version(version).build();
+        ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).version(version).build();
         return new CancelJobs(connection).cancelJobsCommon(params);
     }
 
@@ -80,7 +80,7 @@ public class CancelJobsTest {
     public static Response tstCancelJobsCommon() throws Exception {
         jobId = "XXX";
         jobName = "XXX";
-        CancelJobParams params = new CancelJobParams.Builder(jobName, jobId).build();
+        ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).build();
         return new CancelJobs(connection).cancelJobsCommon(params);
     }
 

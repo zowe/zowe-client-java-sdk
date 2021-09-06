@@ -14,7 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.Response;
 import zosjobs.DeleteJobs;
-import zosjobs.input.DeleteJobParams;
+import zosjobs.input.ModifyJobParams;
 import zosjobs.response.Job;
 
 /**
@@ -64,7 +64,7 @@ public class DeleteJobsTest {
     public static Response tstDeleteJobsCommonWithVersion(String version) throws Exception {
         jobId = "XXX";
         jobName = "XXX";
-        DeleteJobParams params = new DeleteJobParams.Builder(jobName, jobId).modifyVersion(version).build();
+        ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).version(version).build();
         return new DeleteJobs(connection).deleteJobCommon(params);
     }
 
@@ -79,7 +79,7 @@ public class DeleteJobsTest {
     public static Response tstDeleteJobsCommon() throws Exception {
         jobId = "XXX";
         jobName = "XXX";
-        DeleteJobParams params = new DeleteJobParams.Builder(jobName, jobId).build();
+        ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).build();
         return new DeleteJobs(connection).deleteJobCommon(params);
     }
 
