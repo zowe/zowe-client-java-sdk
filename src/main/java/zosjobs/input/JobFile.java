@@ -147,58 +147,142 @@ public class JobFile {
         else this.procStep = Optional.empty();
     }
 
+    /**
+     * Retrieve jobId specified
+     *
+     * @return jobId value
+     * @author Frank Giordano
+     */
     public Optional<String> getJobId() {
         return jobId;
     }
 
+    /**
+     * Retrieve jobName specified
+     *
+     * @return jobName value
+     * @author Frank Giordano
+     */
     public Optional<String> getJobName() {
         return jobName;
     }
 
+    /**
+     * Retrieve recfm specified
+     *
+     * @return recfm value
+     * @author Frank Giordano
+     */
     public Optional<String> getRecfm() {
         return recfm;
     }
 
+    /**
+     * Retrieve byteCount specified
+     *
+     * @return byteCount value
+     * @author Frank Giordano
+     */
     public Optional<Long> getByteCount() {
         return byteCount;
     }
 
+    /**
+     * Retrieve recordCount specified
+     *
+     * @return recordCount value
+     * @author Frank Giordano
+     */
     public Optional<Long> getRecordCount() {
         return recordCount;
     }
 
+    /**
+     * Retrieve jobCorrelator specified
+     *
+     * @return jobCorrelator value
+     * @author Frank Giordano
+     */
     public Optional<String> getJobCorrelator() {
         return jobCorrelator;
     }
 
+    /**
+     * Retrieve classs specified
+     *
+     * @return classs value
+     * @author Frank Giordano
+     */
     public Optional<String> getClasss() {
         return classs;
     }
 
+    /**
+     * Retrieve id specified
+     *
+     * @return id value
+     * @author Frank Giordano
+     */
     public Optional<Long> getId() {
         return id;
     }
 
+    /**
+     * Retrieve ddName specified
+     *
+     * @return ddName value
+     * @author Frank Giordano
+     */
     public Optional<String> getDdName() {
         return ddName;
     }
 
+    /**
+     * Retrieve recordsUrl specified
+     *
+     * @return recordsUrl value
+     * @author Frank Giordano
+     */
     public Optional<String> getRecordsUrl() {
         return recordsUrl;
     }
 
+    /**
+     * Retrieve lrecl specified
+     *
+     * @return lrecl value
+     * @author Frank Giordano
+     */
     public Optional<Long> getLrecl() {
         return lrecl;
     }
 
+    /**
+     * Retrieve subSystem specified
+     *
+     * @return subSystem value
+     * @author Frank Giordano
+     */
     public Optional<String> getSubSystem() {
         return subSystem;
     }
 
+    /**
+     * Retrieve stepName specified
+     *
+     * @return stepName value
+     * @author Frank Giordano
+     */
     public Optional<String> getStepName() {
         return stepName;
     }
 
+    /**
+     * Retrieve procStep specified
+     *
+     * @return procStep value
+     * @author Frank Giordano
+     */
     public Optional<String> getProcStep() {
         return procStep;
     }

@@ -9,6 +9,44 @@
  */
 package zosjobs.response;
 
+/**
+ * Step info on a job interface
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class JobStepData {
+
+    /**
+     * smfid
+     */
+    private String smfid;
+
+    /**
+     * Active
+     */
+    private String active;
+
+    /**
+     * Job relevant step
+     */
+    private Integer stepNumber;
+
+    /**
+     * Job relevant proc
+     */
+    private String procStepName;
+
+    /**
+     * Step for which job dd exists
+     */
+    private String stepName;
+
+    /**
+     * Program EXEC=
+     */
+    private String programName;
+
     // TODO
+
 }
