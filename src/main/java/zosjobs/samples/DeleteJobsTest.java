@@ -57,6 +57,7 @@ public class DeleteJobsTest {
      * deleteJobCommon accepts a DeleteJobParams object with parameters filled needed to delete a given job and
      * the version to indicate 1.0 for async or 2.0 for sync processing of the request
      *
+     * @param version value to indicate sync or async request processing
      * @return response http response object
      * @throws Exception error in processing request
      * @author Frank Giordano
