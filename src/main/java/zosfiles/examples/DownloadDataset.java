@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zosfiles.samples;
+package zosfiles.examples;
 
 import core.ZOSConnection;
 import org.apache.commons.io.IOUtils;
@@ -20,9 +20,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 
-public class DownloadDatasetTest {
+public class DownloadDataset {
 
-    private static final Logger LOG = LogManager.getLogger(DownloadDatasetTest.class);
+    private static final Logger LOG = LogManager.getLogger(DownloadDataset.class);
 
     public static void main(String[] args) throws Exception {
         String hostName = "XXX";
@@ -34,7 +34,7 @@ public class DownloadDatasetTest {
         DownloadParams params = new DownloadParams.Builder().build();
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
-        DownloadDatasetTest.downloadDsnMember(connection, datasetMember, params);
+        DownloadDataset.downloadDsnMember(connection, datasetMember, params);
     }
 
     private static void downloadDsnMember(ZOSConnection connection, String name, DownloadParams params) throws IOException {

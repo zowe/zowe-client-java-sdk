@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zosfiles.samples;
+package zosfiles.examples;
 
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
@@ -22,9 +22,9 @@ import zosfiles.input.CopyParams;
  * @author Leonid Baranov
  * @version 1.0
  */
-public class CopyDatasetTest {
+public class CopyDataset {
 
-    private static final Logger LOG = LogManager.getLogger(CopyDatasetTest.class);
+    private static final Logger LOG = LogManager.getLogger(CopyDataset.class);
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -43,8 +43,8 @@ public class CopyDatasetTest {
         String toDataSetName = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-        tstCopyDatasetTest(connection, fromDataSetName, toDataSetName);
-        tstCopyDatasetByCopyParamsTest(connection, fromDataSetName, toDataSetName);
+        copyDataset(connection, fromDataSetName, toDataSetName);
+        copyDatasetByCopyParams(connection, fromDataSetName, toDataSetName);
     }
 
     /**
@@ -56,7 +56,7 @@ public class CopyDatasetTest {
      * @param toDataSetName   destination dataset (i.e. TARGET.DATASET(MEMBER))
      * @author Frank Giordano
      */
-    public static void tstCopyDatasetTest(ZOSConnection connection, String fromDataSetName, String toDataSetName) {
+    public static void copyDataset(ZOSConnection connection, String fromDataSetName, String toDataSetName) {
         ZosDsnCopy zosDsnCopy = new ZosDsnCopy(connection);
         Response response = zosDsnCopy.copy(fromDataSetName, toDataSetName, true);
         LOG.info("http response code " + response.getStatusCode());
@@ -71,8 +71,8 @@ public class CopyDatasetTest {
      * @param toDataSetName   destination dataset (i.e. TARGET.DATASET(MEMBER))
      * @author Frank Giordano
      */
-    public static void tstCopyDatasetByCopyParamsTest(ZOSConnection connection, String fromDataSetName,
-                                                      String toDataSetName) {
+    public static void copyDatasetByCopyParams(ZOSConnection connection, String fromDataSetName,
+                                                  String toDataSetName) {
         ZosDsnCopy zosDsnCopy = new ZosDsnCopy(connection);
         // 'replace' here will be true by default if not specified in builder.
         CopyParams copyParams = new CopyParams.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).build();
