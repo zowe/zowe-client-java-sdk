@@ -90,7 +90,7 @@ public class CancelJobs {
         Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
 
         // generate full url request
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE +
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
                 UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
         LOG.debug(url);
 

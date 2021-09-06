@@ -56,8 +56,8 @@ public class Util {
      * @author Frank Giordano
      */
     public static void checkConnection(ZOSConnection connection) {
-        if (connection == null || connection.getPort() == null || connection.getHost() == null ||
-                connection.getPassword() == null || connection.getUser() == null || connection.getPort().isEmpty() ||
+        if (connection == null || connection.getZosmfPort() == null || connection.getHost() == null ||
+                connection.getPassword() == null || connection.getUser() == null || connection.getZosmfPort().isEmpty() ||
                 connection.getHost().isEmpty() || connection.getPassword().isEmpty() || connection.getUser().isEmpty())
             throw new IllegalStateException("Connection data not setup properly");
     }

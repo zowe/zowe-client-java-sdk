@@ -144,7 +144,7 @@ public class GetJobs {
         Util.checkConnection(connection);
 
         List<Job> jobs = new ArrayList<>();
-        url = "https://" + connection.getHost() + ":" + connection.getPort()
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + JobsConstants.RESOURCE + QueryConstants.QUERY_ID;
 
         if (parms != null) {
@@ -252,7 +252,7 @@ public class GetJobs {
         Util.checkStateParameter(parms.getJobName().isEmpty(), "jobName not specified");
         Util.checkStateParameter(parms.getJobName().get().isEmpty(), "jobName not specified");
 
-        url = "https://" + connection.getHost() + ":" + connection.getPort()
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + JobsConstants.RESOURCE + "/" + parms.getJobName().get() + "/" + parms.getJobId().get();
 
         LOG.debug(url);
@@ -320,7 +320,7 @@ public class GetJobs {
 
         List<JobFile> files = new ArrayList<>();
 
-        url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE
                 + "/" + parms.getJobName().get() + "/" + parms.getJobId().get() + "/files";
 
         LOG.debug(url);
@@ -405,7 +405,7 @@ public class GetJobs {
         Util.checkStateParameter(parms.getJobId().isEmpty(), "jobId not specified");
         Util.checkStateParameter(parms.getJobId().get().isEmpty(), "jobId not specified");
 
-        url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + "/" +
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 parms.getJobName().get() + "/" + parms.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES +
                 JobsConstants.RESOURCE_JCL_CONTENT + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
@@ -452,7 +452,7 @@ public class GetJobs {
         Util.checkNullParameter(jobId == null, "jobId is null");
         Util.checkStateParameter(spoolId <= 0, "spoolId not specified");
 
-        url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + "/" +
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 jobName + "/" + jobId + JobsConstants.RESOURCE_SPOOL_FILES + "/" +
                 spoolId + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
@@ -485,7 +485,7 @@ public class GetJobs {
         Util.checkStateParameter(jobFile.getJobId().isEmpty(), "jobId not specified");
         Util.checkStateParameter(jobFile.getId().isEmpty(), "id not specified");
 
-        url = "https://" + connection.getHost() + ":" + connection.getPort() + JobsConstants.RESOURCE + "/" +
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 jobFile.getJobName().get() + "/" + jobFile.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES + "/" +
                 jobFile.getId().get() + JobsConstants.RESOURCE_SPOOL_CONTENT;
 

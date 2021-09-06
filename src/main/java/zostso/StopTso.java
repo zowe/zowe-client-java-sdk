@@ -59,7 +59,7 @@ public class StopTso {
         Util.checkStateParameter(commandParms.getServletKey().isEmpty(), "servletKey not specified");
         Util.checkStateParameter(commandParms.getServletKey().get().isEmpty(), "servletKey not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getPort() +
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + commandParms.getServletKey().get();
         LOG.debug("StopTso::stopCommon url {}", url);
 
