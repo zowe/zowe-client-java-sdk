@@ -11,25 +11,106 @@ package zosfiles.input;
 
 import java.util.Optional;
 
+/**
+ * Interface for create dataset API
+ * zOSMF REST API information:
+ * https://www.ibm.com/support/knowledgecenter/SSLTBW_2.3.0/com.ibm.zos.v2r3.izua700/IZUHPINFO_API_CreateDataSet.htm#CreateDataSet
+ *
+ * @author Leonid Baranov
+ * @version 1.0
+ */
 public class CreateParams {
 
+    /**
+     * The volume serial
+     */
     private final Optional<String> volser;
+
+    /**
+     * The device type
+     */
     private final Optional<String> unit;
+
+    /**
+     * The data set organization
+     */
     private final Optional<String> dsorg;
+
+    /**
+     * The unit of space allocation
+     */
     private final Optional<String> alcunit;
+
+    /**
+     * The primary space allocation
+     */
     private final Optional<Integer> primary;
+
+    /**
+     * The secondary space allocation
+     */
     private final Optional<Integer> secondary;
+
+    /**
+     * The number of directory blocks
+     */
     private final Optional<Integer> dirblk;
+
+    /**
+     * The average block
+     */
     private final Optional<Integer> avgblk;
+
+    /**
+     * The record format
+     */
     private final Optional<String> recfm;
+
+    /**
+     * The block size
+     */
     private final Optional<Integer> blksize;
+
+    /**
+     * The record length
+     */
     private final Optional<Integer> lrecl;
+
+    /**
+     * The storage class
+     */
     private final Optional<String> storclass;
+
+    /**
+     * The management class
+     */
     private final Optional<String> mgntclass;
+
+    /**
+     * The data class
+     */
     private final Optional<String> dataclass;
+
+    /**
+     * The data set type
+     */
     private final Optional<String> dsntype;
+
+    /**
+     * The indicator that we need to show the attributes
+     * DO NOT SEND THIS TO ZOSMF
+     */
     private final Optional<Boolean> showAttributes;
+
+    /**
+     * The abstraction of Allocation unit and Primary Space
+     * DO NOT SEND THIS TO ZOSMF
+     */
     private final Optional<String> size;
+
+    /**
+     * Response time out value
+     */
     private final Optional<String> responseTimeout;
 
     private CreateParams(CreateParams.Builder builder) {
@@ -53,74 +134,182 @@ public class CreateParams {
         this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
     }
 
+    /**
+     * Retrieve volser value
+     *
+     * @return volser value
+     * @author Leonid Baranov
+     */
     public Optional<String> getVolser() {
         return volser;
     }
 
+    /**
+     * Retrieve unit value
+     *
+     * @return unit value
+     * @author Leonid Baranov
+     */
     public Optional<String> getUnit() {
         return unit;
     }
 
+    /**
+     * Retrieve dsorg value
+     *
+     * @return dsorg value
+     * @author Leonid Baranov
+     */
     public Optional<String> getDsorg() {
         return dsorg;
     }
 
+    /**
+     * Retrieve alcunit value
+     *
+     * @return alcunit value
+     * @author Leonid Baranov
+     */
     public Optional<String> getAlcunit() {
         return alcunit;
     }
 
+    /**
+     * Retrieve primary value
+     *
+     * @return primary value
+     * @author Leonid Baranov
+     */
     public Optional<Integer> getPrimary() {
         return primary;
     }
 
+    /**
+     * Retrieve secondary value
+     *
+     * @return secondary value
+     * @author Leonid Baranov
+     */
     public Optional<Integer> getSecondary() {
         return secondary;
     }
 
+    /**
+     * Retrieve dirblk value
+     *
+     * @return dirblk value
+     * @author Leonid Baranov
+     */
     public Optional<Integer> getDirblk() {
         return dirblk;
     }
 
+    /**
+     * Retrieve avgblk value
+     *
+     * @return avgblk value
+     * @author Leonid Baranov
+     */
     public Optional<Integer> getAvgblk() {
         return avgblk;
     }
 
+    /**
+     * Retrieve recfm value
+     *
+     * @return recfm value
+     * @author Leonid Baranov
+     */
     public Optional<String> getRecfm() {
         return recfm;
     }
 
+    /**
+     * Retrieve blksize value
+     *
+     * @return blksize value
+     * @author Leonid Baranov
+     */
     public Optional<Integer> getBlksize() {
         return blksize;
     }
 
+    /**
+     * Retrieve lrecl value
+     *
+     * @return lrecl value
+     * @author Leonid Baranov
+     */
     public Optional<Integer> getLrecl() {
         return lrecl;
     }
 
+    /**
+     * Retrieve storclass value
+     *
+     * @return storclass value
+     * @author Leonid Baranov
+     */
     public Optional<String> getStorclass() {
         return storclass;
     }
 
+    /**
+     * Retrieve mgntclass value
+     *
+     * @return mgntclass value
+     * @author Leonid Baranov
+     */
     public Optional<String> getMgntclass() {
         return mgntclass;
     }
 
+    /**
+     * Retrieve dataclass value
+     *
+     * @return dataclass value
+     * @author Leonid Baranov
+     */
     public Optional<String> getDataclass() {
         return dataclass;
     }
 
+    /**
+     * Retrieve dsntype value
+     *
+     * @return dsntype value
+     * @author Leonid Baranov
+     */
     public Optional<String> getDsntype() {
         return dsntype;
     }
 
+    /**
+     * Retrieve showAttributes value
+     *
+     * @return showAttributes value
+     * @author Leonid Baranov
+     */
     public Optional<Boolean> getShowAttributes() {
         return showAttributes;
     }
 
+    /**
+     * Retrieve size value
+     *
+     * @return size value
+     * @author Leonid Baranov
+     */
     public Optional<String> getSize() {
         return size;
     }
 
+    /**
+     * Retrieve responseTimeout value
+     *
+     * @return responseTimeout value
+     * @author Leonid Baranov
+     */
     public Optional<String> getResponseTimeout() {
         return responseTimeout;
     }
