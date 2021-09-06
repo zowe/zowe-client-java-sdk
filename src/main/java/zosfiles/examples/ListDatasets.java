@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zosfiles.samples;
+package zosfiles.examples;
 
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
@@ -18,9 +18,9 @@ import zosfiles.response.Dataset;
 
 import java.util.List;
 
-public class ListDatasetsTest {
+public class ListDatasets {
 
-    private static final Logger LOG = LogManager.getLogger(ListDatasetsTest.class);
+    private static final Logger LOG = LogManager.getLogger(ListDatasets.class);
 
     public static void main(String[] args) {
         String hostName = "XXX";
@@ -32,18 +32,18 @@ public class ListDatasetsTest {
 
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
-        ListDatasetsTest.tstListDsn(connection, dataSetMask);
-        ListDatasetsTest.tstListMembers(connection, dataSetName);
+        ListDatasets.listDsn(connection, dataSetMask);
+        ListDatasets.listMembers(connection, dataSetName);
     }
 
-    private static void tstListMembers(ZOSConnection connection, String dataSetName) {
+    private static void listMembers(ZOSConnection connection, String dataSetName) {
         ListParams params = new ListParams.Builder().build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
         List<String> datasets = zosDsnList.listMembers(dataSetName, params);
         datasets.forEach(LOG::info);
     }
 
-    private static void tstListDsn(ZOSConnection connection, String dataSetName) {
+    private static void listDsn(ZOSConnection connection, String dataSetName) {
         ListParams params = new ListParams.Builder().build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
         List<Dataset> datasets = zosDsnList.listDsn(dataSetName, params);

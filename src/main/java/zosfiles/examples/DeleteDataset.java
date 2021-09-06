@@ -7,12 +7,12 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zosfiles.samples;
+package zosfiles.examples;
 
 import core.ZOSConnection;
 import zosfiles.ZosDsn;
 
-public class DeleteDatasetTest {
+public class DeleteDataset {
 
     public static void main(String[] args) throws Exception {
         String hostName = "XXX";
