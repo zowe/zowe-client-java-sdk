@@ -90,61 +90,20 @@ public class JobFile {
     private final Optional<String> procStep;
 
     private JobFile(Builder builder) {
-        if (builder.jobId != null)
-            this.jobId = Optional.ofNullable(builder.jobId);
-        else this.jobId = Optional.empty();
-
-        if (builder.jobName != null)
-            this.jobName = Optional.ofNullable(builder.jobName);
-        else this.jobName = Optional.empty();
-
-        if (builder.recfm != null)
-            this.recfm = Optional.ofNullable(builder.recfm);
-        else this.recfm = Optional.empty();
-
-        if (builder.byteCount != null)
-            this.byteCount = Optional.ofNullable(builder.byteCount);
-        else this.byteCount = Optional.empty();
-
-        if (builder.recordCount != null)
-            this.recordCount = Optional.ofNullable(builder.recordCount);
-        else this.recordCount = Optional.empty();
-
-        if (builder.jobCorrelator != null)
-            this.jobCorrelator = Optional.ofNullable(builder.jobCorrelator);
-        else this.jobCorrelator = Optional.empty();
-
-        if (builder.classs != null)
-            this.classs = Optional.ofNullable(builder.classs);
-        else this.classs = Optional.empty();
-
-        if (builder.id != null)
-            this.id = Optional.ofNullable(builder.id);
-        else this.id = Optional.empty();
-
-        if (builder.ddName != null)
-            this.ddName = Optional.ofNullable(builder.ddName);
-        else this.ddName = Optional.empty();
-
-        if (builder.recordsUrl != null)
-            this.recordsUrl = Optional.ofNullable(builder.recordsUrl);
-        else this.recordsUrl = Optional.empty();
-
-        if (builder.lrecl != null)
-            this.lrecl = Optional.ofNullable(builder.lrecl);
-        else this.lrecl = Optional.empty();
-
-        if (builder.subSystem != null)
-            this.subSystem = Optional.ofNullable(builder.subSystem);
-        else this.subSystem = Optional.empty();
-
-        if (builder.stepName != null)
-            this.stepName = Optional.ofNullable(builder.stepName);
-        else this.stepName = Optional.empty();
-
-        if (builder.procStep != null)
-            this.procStep = Optional.ofNullable(builder.procStep);
-        else this.procStep = Optional.empty();
+        this.jobId = Optional.ofNullable(builder.jobId);
+        this.jobName = Optional.ofNullable(builder.jobName);
+        this.recfm = Optional.ofNullable(builder.recfm);
+        this.byteCount = Optional.ofNullable(builder.byteCount);
+        this.recordCount = Optional.ofNullable(builder.recordCount);
+        this.jobCorrelator = Optional.ofNullable(builder.jobCorrelator);
+        this.classs = Optional.ofNullable(builder.classs);
+        this.id = Optional.ofNullable(builder.id);
+        this.ddName = Optional.ofNullable(builder.ddName);
+        this.recordsUrl = Optional.ofNullable(builder.recordsUrl);
+        this.lrecl = Optional.ofNullable(builder.lrecl);
+        this.subSystem = Optional.ofNullable(builder.subSystem);
+        this.stepName = Optional.ofNullable(builder.stepName);
+        this.procStep = Optional.ofNullable(builder.procStep);
     }
 
     /**
