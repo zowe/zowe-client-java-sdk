@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 1.0
  */
-public class SubmitJclParms {
+public class SubmitJclParams {
 
     /**
      * JCL to submit which should contain syntactically correct JCL. Example value: IBMUSER.PUBLIC.CNTL(IEFBR14)
@@ -45,21 +45,21 @@ public class SubmitJclParms {
     private Optional<String> jclSymbols = Optional.empty();
 
     /**
-     * SubmitJclParms constructor
+     * SubmitJclParams constructor
      *
      * @param jcl                 syntactically correct JCL
      * @param internalReaderRecfm internal reader RECFM
      * @param internalReaderLrecl internal reader LRECL
      * @author Frank Giordano
      */
-    public SubmitJclParms(String jcl, String internalReaderRecfm, String internalReaderLrecl) {
+    public SubmitJclParams(String jcl, String internalReaderRecfm, String internalReaderLrecl) {
         this.jcl = Optional.ofNullable(jcl);
         this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
     }
 
     /**
-     * SubmitJclParms constructor
+     * SubmitJclParams constructor
      *
      * @param jcl                 syntactically correct JCL
      * @param internalReaderRecfm internal reader RECFM
@@ -67,7 +67,7 @@ public class SubmitJclParms {
      * @param jclSymbols          JCL symbolic substitution
      * @author Frank Giordano
      */
-    public SubmitJclParms(String jcl, String internalReaderRecfm, String internalReaderLrecl, String jclSymbols) {
+    public SubmitJclParams(String jcl, String internalReaderRecfm, String internalReaderLrecl, String jclSymbols) {
         this.jcl = Optional.ofNullable(jcl);
         this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
@@ -152,7 +152,7 @@ public class SubmitJclParms {
 
     @Override
     public String toString() {
-        return "SubmitJclParms{" +
+        return "SubmitJclParams{" +
                 "jcl=" + jcl +
                 ", internalReaderRecfm=" + internalReaderRecfm +
                 ", internalReaderLrecl=" + internalReaderLrecl +

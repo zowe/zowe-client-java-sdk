@@ -15,7 +15,7 @@ package zostso.input;
  * @author Frank Giordano
  * @version 1.0
  */
-public class SendTsoParms {
+public class SendTsoParams {
 
     /**
      * Servlet key of an active address space
@@ -28,13 +28,13 @@ public class SendTsoParms {
     private String data;
 
     /**
-     * SendTsoParms constructor
+     * SendTsoParams constructor
      *
      * @param servletKey key of an active address space
      * @param data       to be sent to the active address space
      * @author Frank Giordano
      */
-    public SendTsoParms(String servletKey, String data) {
+    public SendTsoParams(String servletKey, String data) {
         this.servletKey = servletKey;
         this.data = data;
     }
@@ -61,7 +61,7 @@ public class SendTsoParms {
 
     @Override
     public String toString() {
-        return "SendTsoParms{" +
+        return "SendTsoParams{" +
                 "sevletKey='" + servletKey + '\'' +
                 ", data='" + data + '\'' +
                 '}';

@@ -11,7 +11,7 @@ package zosconsole.zosmf;
 
 import java.util.Optional;
 
-public class ConsoleParms {
+public class ConsoleParams {
 
     private Optional<String> consoleName = Optional.empty();
     private Optional<Boolean> processResponses = Optional.empty();
@@ -34,7 +34,7 @@ public class ConsoleParms {
 
     @Override
     public String toString() {
-        return "ConsoleParms{" +
+        return "ConsoleParams{" +
                 "consoleName=" + consoleName +
                 ", processResponses=" + processResponses +
                 '}';

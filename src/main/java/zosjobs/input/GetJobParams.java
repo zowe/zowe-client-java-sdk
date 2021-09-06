@@ -19,7 +19,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 1.0
  */
-public class GetJobParms {
+public class GetJobParams {
 
     /**
      * Owner for which to obtain jobs for.
@@ -43,7 +43,7 @@ public class GetJobParms {
      */
     private final Optional<String> jobId;
 
-    private GetJobParms(Builder builder) {
+    private GetJobParams(Builder builder) {
         this.owner = Optional.ofNullable(builder.owner);
         this.prefix = Optional.ofNullable(builder.prefix);
         this.maxJobs = Optional.ofNullable(builder.maxJobs);
@@ -92,7 +92,7 @@ public class GetJobParms {
 
     @Override
     public String toString() {
-        return "GetJobParms{" +
+        return "GetJobParams{" +
                 "owner=" + owner +
                 ", prefix=" + prefix +
                 ", maxJobs=" + maxJobs +
@@ -126,8 +126,8 @@ public class GetJobParms {
             return this;
         }
 
-        public GetJobParms build() {
-            return new GetJobParms(this);
+        public GetJobParams build() {
+            return new GetJobParams(this);
         }
 
     }

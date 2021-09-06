@@ -14,9 +14,10 @@ import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.Util;
-import zosjobs.input.GetJobParms;
+import utility.UtilJobs;
+import zosjobs.input.GetJobParams;
 import zosjobs.input.JobFile;
-import zosjobs.input.MonitorJobWaitForParms;
+import zosjobs.input.MonitorJobWaitForParams;
 import zosjobs.response.CheckJobStatus;
 import zosjobs.response.Job;
 import zosjobs.types.JobStatus;
@@ -132,7 +133,7 @@ public class MonitorJobs {
         Util.checkStateParameter(job.getJobName().get().isEmpty(), "job name not specified");
         Util.checkStateParameter(job.getJobId().isEmpty(), "job id not specified");
         Util.checkStateParameter(job.getJobId().get().isEmpty(), "job id not specified");
-        return waitForMessageCommon(new MonitorJobWaitForParms.Builder(job.getJobName().get(), job.getJobId().get())
+        return waitForMessageCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
                 .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build(), message);
     }
 
@@ -151,58 +152,58 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public boolean waitForJobMessage(String jobName, String jobId, String message) throws Exception {
-        return waitForMessageCommon(new MonitorJobWaitForParms.Builder(jobName, jobId).jobStatus(JobStatus.Type.OUTPUT)
+        return waitForMessageCommon(new MonitorJobWaitForParams.Builder(jobName, jobId).jobStatus(JobStatus.Type.OUTPUT)
                 .attempts(attempts).watchDelay(watchDelay).build(), message);
     }
 
     /**
      * Given jobname/jobid, checks for the desired message continuously (based on the interval and attempts specified).
      *
-     * @param parms   monitor jobs parameters, see MonitorJobWaitForParms object
+     * @param params  monitor jobs parameters, see MonitorJobWaitForParams object
      * @param message message string
      * @return job document
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    private boolean waitForMessageCommon(MonitorJobWaitForParms parms, String message) throws Exception {
-        Util.checkNullParameter(parms == null, "parms is null");
-        Util.checkStateParameter(parms.getJobName().isEmpty(), "job name not specified");
-        Util.checkStateParameter(parms.getJobName().get().isEmpty(), "job name not specified");
-        Util.checkStateParameter(parms.getJobId().isEmpty(), "job id not specified");
-        Util.checkStateParameter(parms.getJobId().get().isEmpty(), "job id not specified");
+    private boolean waitForMessageCommon(MonitorJobWaitForParams params, String message) throws Exception {
+        Util.checkNullParameter(params == null, "params is null");
+        Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
+        Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
+        Util.checkStateParameter(params.getJobId().isEmpty(), "job id not specified");
+        Util.checkStateParameter(params.getJobId().get().isEmpty(), "job id not specified");
 
-        if (parms.getAttempts().isEmpty())
-            parms.setAttempts(Optional.of(attempts));
+        if (params.getAttempts().isEmpty())
+            params.setAttempts(Optional.of(attempts));
 
-        if (parms.getWatchDelay().isEmpty())
-            parms.setWatchDelay(Optional.of(watchDelay));
+        if (params.getWatchDelay().isEmpty())
+            params.setWatchDelay(Optional.of(watchDelay));
 
-        if (parms.getLineLimit().isEmpty())
-            parms.setLineLimit(Optional.of(lineLimit));
+        if (params.getLineLimit().isEmpty())
+            params.setLineLimit(Optional.of(lineLimit));
 
-        return pollForMessage(parms, message);
+        return pollForMessage(params, message);
     }
 
     /**
      * "Polls" (sets timeouts and continuously checks) for the given message within the job output.
      *
-     * @param parms   monitor jobs parms, see MonitorJobWaitForParms
+     * @param params  monitor jobs params, see MonitorJobWaitForParams
      * @param message message string
      * @return boolean message found status
      * @throws Exception error processing poll check request
      * @author Frank Giordano
      */
-    private boolean pollForMessage(MonitorJobWaitForParms parms, String message) throws Exception {
-        int timeoutVal = parms.getWatchDelay().get();
+    private boolean pollForMessage(MonitorJobWaitForParams params, String message) throws Exception {
+        int timeoutVal = params.getWatchDelay().get();
         boolean messageFound;  // no assigment means by default it is false
         boolean shouldContinue; // no assigment means by default it is false
         int numOfAttempts = 0;
-        int maxAttempts = parms.getAttempts().get();
+        int maxAttempts = params.getAttempts().get();
 
         do {
             numOfAttempts++;
 
-            messageFound = checkMessage(parms, message);
+            messageFound = checkMessage(params, message);
 
             shouldContinue = !messageFound && (maxAttempts > 0 && numOfAttempts < maxAttempts);
 
@@ -220,21 +221,21 @@ public class MonitorJobs {
     /**
      * Checks if the given message is within the job output within line limit.
      *
-     * @param parms   monitor jobs parms, see MonitorJobWaitForParms
+     * @param params  monitor jobs params, see MonitorJobWaitForParams
      * @param message message string
      * @return boolean message found status
      * @throws Exception error processing check request
      * @author Frank Giordano
      */
-    private boolean checkMessage(MonitorJobWaitForParms parms, String message) throws Exception {
+    private boolean checkMessage(MonitorJobWaitForParams params, String message) throws Exception {
         GetJobs getJobs = new GetJobs(connection);
-        GetJobParms filter = new GetJobParms.Builder("*").jobId(parms.getJobId().get())
-                .prefix(parms.getJobName().get()).build();
+        GetJobParams filter = new GetJobParams.Builder("*").jobId(params.getJobId().get())
+                .prefix(params.getJobName().get()).build();
         List<Job> jobs = getJobs.getJobsCommon(filter);
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
         String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
         // start from bottom
-        for (int i = output.length - parms.getLineLimit().get(); i < output.length; i++) {
+        for (int i = output.length - params.getLineLimit().get(); i < output.length; i++) {
             LOG.debug(output[i]);
             if (output[i].contains(message))
                 return true;
@@ -261,7 +262,7 @@ public class MonitorJobs {
         Util.checkStateParameter(job.getJobName().get().isEmpty(), "job name not specified");
         Util.checkStateParameter(job.getJobId().isEmpty(), "job id not specified");
         Util.checkStateParameter(job.getJobId().get().isEmpty(), "job id not specified");
-        return waitForStatusCommon(new MonitorJobWaitForParms.Builder(job.getJobName().get(), job.getJobId().get())
+        return waitForStatusCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
                 .jobStatus(statusType).attempts(attempts).watchDelay(watchDelay).build());
     }
 
@@ -280,7 +281,7 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public Job waitForJobStatus(String jobName, String jobId, JobStatus.Type statusType) throws Exception {
-        return waitForStatusCommon(new MonitorJobWaitForParms.Builder(jobName, jobId).jobStatus(statusType)
+        return waitForStatusCommon(new MonitorJobWaitForParams.Builder(jobName, jobId).jobStatus(statusType)
                 .attempts(attempts).watchDelay(watchDelay).build());
     }
 
@@ -302,7 +303,7 @@ public class MonitorJobs {
         Util.checkStateParameter(job.getJobName().get().isEmpty(), "job name not specified");
         Util.checkStateParameter(job.getJobId().isEmpty(), "job id not specified");
         Util.checkStateParameter(job.getJobId().get().isEmpty(), "job id not specified");
-        return waitForStatusCommon(new MonitorJobWaitForParms.Builder(job.getJobName().get(), job.getJobId().get())
+        return waitForStatusCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
                 .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build());
     }
 
@@ -320,7 +321,7 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public Job waitForJobOutputStatus(String jobName, String jobId) throws Exception {
-        return waitForStatusCommon(new MonitorJobWaitForParms.Builder(jobName, jobId).jobStatus(JobStatus.Type.OUTPUT).
+        return waitForStatusCommon(new MonitorJobWaitForParams.Builder(jobName, jobId).jobStatus(JobStatus.Type.OUTPUT).
                 attempts(attempts).watchDelay(watchDelay).build());
     }
 
@@ -332,39 +333,39 @@ public class MonitorJobs {
      * than the current status of the job, then the method returns immediately (since the job will never enter the
      * requested status) with the current status of the job.
      *
-     * @param parms monitor jobs parameters, see MonitorJobWaitForParms object
+     * @param params monitor jobs parameters, see MonitorJobWaitForParams object
      * @return job document
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public Job waitForStatusCommon(MonitorJobWaitForParms parms) throws Exception {
-        Util.checkStateParameter(parms.getJobName().isEmpty(), "job name not specified");
-        Util.checkStateParameter(parms.getJobName().get().isEmpty(), "job name not specified");
-        Util.checkStateParameter(parms.getJobId().isEmpty(), "job id not specified");
-        Util.checkStateParameter(parms.getJobId().get().isEmpty(), "job id not specified");
-        Util.checkNullParameter(parms == null, "parms is null");
+    public Job waitForStatusCommon(MonitorJobWaitForParams params) throws Exception {
+        Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
+        Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
+        Util.checkStateParameter(params.getJobId().isEmpty(), "job id not specified");
+        Util.checkStateParameter(params.getJobId().get().isEmpty(), "job id not specified");
+        Util.checkNullParameter(params == null, "params is null");
 
-        if (parms.getJobStatus().isEmpty())
-            parms.setJobStatus(Optional.of(DEFAULT_STATUS));
+        if (params.getJobStatus().isEmpty())
+            params.setJobStatus(Optional.of(DEFAULT_STATUS));
 
-        if (parms.getAttempts().isEmpty())
-            parms.setAttempts(Optional.of(attempts));
+        if (params.getAttempts().isEmpty())
+            params.setAttempts(Optional.of(attempts));
 
-        if (parms.getWatchDelay().isEmpty())
-            parms.setWatchDelay(Optional.of(watchDelay));
+        if (params.getWatchDelay().isEmpty())
+            params.setWatchDelay(Optional.of(watchDelay));
 
-        return pollForStatus(parms);
+        return pollForStatus(params);
     }
 
     /**
      * "Polls" (sets timeouts and continuously checks) for the status of the job to match the desired status.
      *
-     * @param parms monitor jobs parms, see MonitorJobWaitForParms
+     * @param parms monitor jobs parms, see MonitorJobWaitForParams
      * @return job document
      * @throws Exception error processing poll check request
      * @author Frank Giordano
      */
-    private Job pollForStatus(MonitorJobWaitForParms parms) throws Exception {
+    private Job pollForStatus(MonitorJobWaitForParams parms) throws Exception {
         int timeoutVal = parms.getWatchDelay().get();
         boolean expectedStatus;  // no assigment means by default it is false
         boolean shouldContinue; // no assigment means by default it is false
@@ -394,12 +395,12 @@ public class MonitorJobs {
     /**
      * Checks the status of the job for the expected status (OR that the job has progressed passed the expected status).
      *
-     * @param parms monitor jobs parms, see MonitorJobWaitForParms
+     * @param parms monitor jobs parms, see MonitorJobWaitForParams
      * @return boolean true when the job status is obtained
      * @throws Exception error processing check request
      * @author Frank Giordano
      */
-    private CheckJobStatus checkStatus(MonitorJobWaitForParms parms) throws Exception {
+    private CheckJobStatus checkStatus(MonitorJobWaitForParams parms) throws Exception {
         GetJobs getJobs = new GetJobs(connection);
         String statusNameCheck = parms.getJobStatus().get().toString();
 

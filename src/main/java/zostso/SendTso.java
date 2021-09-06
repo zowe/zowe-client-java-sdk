@@ -19,7 +19,7 @@ import rest.ZoweRequestType;
 import utility.Util;
 import utility.UtilRest;
 import utility.UtilTso;
-import zostso.input.SendTsoParms;
+import zostso.input.SendTsoParams;
 import zostso.zosmf.*;
 
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class SendTso {
         Util.checkStateParameter(servletKey.isEmpty(), "servletKey not specified");
         Util.checkStateParameter(data.isEmpty(), "data not specified");
 
-        ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParms(servletKey, data));
+        ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParams(servletKey, data));
 
         CollectedResponses responses = getAllResponses(putResponse);
         return SendTso.createResponse(responses);
@@ -72,23 +72,23 @@ public class SendTso {
     /**
      * API method to send data to already started TSO address space
      *
-     * @param commandParms object with required parameters, see commandParms
+     * @param commandParams object with required parameters, see SendTsoParams object
      * @return response object, see ZosmfTsoResponse
      * @throws Exception error executing command
      * @author Frank Giordano
      */
-    public ZosmfTsoResponse sendDataToTSOCommon(SendTsoParms commandParms) throws Exception {
+    public ZosmfTsoResponse sendDataToTSOCommon(SendTsoParams commandParams) throws Exception {
         Util.checkConnection(connection);
-        Util.checkNullParameter(commandParms == null, "sendTsoParms is null");
-        Util.checkStateParameter(commandParms.getData().isEmpty(), "sendTsoParms data not specified");
-        Util.checkStateParameter(commandParms.getServletKey().isEmpty(), "sendTsoParms sevletKey not specified");
+        Util.checkNullParameter(commandParams == null, "commandParams is null");
+        Util.checkStateParameter(commandParams.getData().isEmpty(), "commandParams data not specified");
+        Util.checkStateParameter(commandParams.getServletKey().isEmpty(), "commandParams sevletKey not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" + commandParms.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;
+                TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;
         LOG.debug("SendTso::sendDataToTSOCommon - url {}", url);
 
         TsoResponseMessage tsoResponseMessage = new TsoResponseMessage(Optional.of("0100"),
-                Optional.ofNullable(commandParms.getData()));
+                Optional.ofNullable(commandParams.getData()));
         String jobObjBody = getTsoResponseSendMessage(tsoResponseMessage);
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jobObjBody,

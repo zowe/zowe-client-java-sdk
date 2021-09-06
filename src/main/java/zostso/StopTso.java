@@ -20,7 +20,7 @@ import rest.ZoweRequestType;
 import utility.Util;
 import utility.UtilRest;
 import utility.UtilTso;
-import zostso.input.StopTsoParms;
+import zostso.input.StopTsoParams;
 import zostso.zosmf.ZosmfTsoResponse;
 
 /**
@@ -48,19 +48,19 @@ public class StopTso {
     /**
      * Sends REST call to z/OSMF for stoping active TSO address space
      *
-     * @param commandParms command parameters, see StopTsoParms object
+     * @param commandParams command parameters, see commandParams object
      * @return z/OSMF response object, see ZosmfTsoResponse object
      * @throws Exception error on TSO sto command
      * @author Frank Giordano
      */
-    public ZosmfTsoResponse stopCommon(StopTsoParms commandParms) throws Exception {
+    public ZosmfTsoResponse stopCommon(StopTsoParams commandParams) throws Exception {
         Util.checkConnection(connection);
-        Util.checkNullParameter(commandParms == null, "commandParms is null");
-        Util.checkStateParameter(commandParms.getServletKey().isEmpty(), "servletKey not specified");
-        Util.checkStateParameter(commandParms.getServletKey().get().isEmpty(), "servletKey not specified");
+        Util.checkNullParameter(commandParams == null, "commandParams is null");
+        Util.checkStateParameter(commandParams.getServletKey().isEmpty(), "servletKey not specified");
+        Util.checkStateParameter(commandParams.getServletKey().get().isEmpty(), "servletKey not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + commandParms.getServletKey().get();
+                TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey().get();
         LOG.debug("StopTso::stopCommon url {}", url);
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
@@ -91,8 +91,8 @@ public class StopTso {
         Util.checkNullParameter(servletKey == null, "servletKey is null");
         Util.checkStateParameter(servletKey.isEmpty(), "servletKey not specified");
 
-        StopTsoParms commandParms = new StopTsoParms(servletKey);
-        ZosmfTsoResponse zosmfResponse = stopCommon(commandParms);
+        StopTsoParams commandParams = new StopTsoParams(servletKey);
+        ZosmfTsoResponse zosmfResponse = stopCommon(commandParams);
 
         // TODO
         return UtilTso.populateStartAndStop(zosmfResponse);
