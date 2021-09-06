@@ -35,7 +35,7 @@ public class CollectedResponses {
     /**
      * CollectedResponses constructor
      *
-     * @param tsos tso list of ZosmfTsoResponse objects
+     * @param tsos     tso list of ZosmfTsoResponse objects
      * @param messages tso messages
      * @author Frank Giordano
      */

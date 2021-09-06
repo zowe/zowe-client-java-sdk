@@ -44,9 +44,9 @@ public class StartStopResponse {
     /**
      * StartStopResponse constructor
      *
-     * @param success true or false if response seen
+     * @param success          true or false if response seen
      * @param zosmfTsoResponse tso response
-     * @param servletKey key value for tso address space
+     * @param servletKey       key value for tso address space
      * @author Frank Giordano
      */
     public StartStopResponse(boolean success, ZosmfTsoResponse zosmfTsoResponse, String servletKey) {

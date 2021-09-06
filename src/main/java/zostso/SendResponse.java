@@ -41,8 +41,8 @@ public class SendResponse {
     /**
      * SendResponse constructor
      *
-     * @param success boolean value
-     * @param zosmfResponse list of ZosmfTsoResponse objects
+     * @param success         boolean value
+     * @param zosmfResponse   list of ZosmfTsoResponse objects
      * @param commandResponse tso command response
      * @author Frank Giordano
      */

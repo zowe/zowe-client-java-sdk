@@ -32,7 +32,7 @@ public class CommonJobParms {
     /**
      * CommonJobParms constructor
      *
-     * @param jobId job id value
+     * @param jobId   job id value
      * @param jobName job name value
      * @author Frank Giordano
      */
