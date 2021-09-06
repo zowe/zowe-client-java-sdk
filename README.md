@@ -30,7 +30,7 @@ Functionality provided:
     CancelJobs
     DeleteJobs
 
-See the following sample programs within each sample's package:
+See the following example programs within each examples' package:
 
     src/main/java/zosconsole/examples   
         IssueCommand.java  
