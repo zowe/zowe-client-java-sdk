@@ -7,24 +7,27 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zosfiles.samples;
+package zosfiles.examples;
 
 import core.ZOSConnection;
 import zosfiles.ZosDsn;
-import zosfiles.input.CreateParams;
 
-public class CreateDatasetTest {
+public class WriteDataset {
 
     public static void main(String[] args) throws Exception {
         String hostName = "XXX";
         String zosmfPort = "XXX";
         String userName = "XXX";
         String password = "XXX";
-        String dataSetName = "XXX";
+        String datasetMember = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
-        new ZosDsn(connection).createDsn(dataSetName, CreateParams.partitioned());
+        WriteDataset.writeToDsnMember(connection, datasetMember, "NEW CONTENT\nTHE SECOND LINE UPDATED");
+    }
+
+    private static void writeToDsnMember(ZOSConnection connection, String datasetMember, String content) {
+        new ZosDsn(connection).writeDsn(datasetMember, content);
     }
 
 }

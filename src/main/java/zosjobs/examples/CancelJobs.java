@@ -7,13 +7,12 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zosjobs.samples;
+package zosjobs.examples;
 
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.Response;
-import zosjobs.CancelJobs;
 import zosjobs.input.ModifyJobParams;
 import zosjobs.response.Job;
 
@@ -23,9 +22,9 @@ import zosjobs.response.Job;
  * @author Leonid Baranov
  * @version 1.0
  */
-public class CancelJobsTest {
+public class CancelJobs {
 
-    private static final Logger LOG = LogManager.getLogger(CancelJobsTest.class);
+    private static final Logger LOG = LogManager.getLogger(CancelJobs.class);
 
     private static ZOSConnection connection;
     private static String jobName;
@@ -46,10 +45,10 @@ public class CancelJobsTest {
         String password = "XXX";
 
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-        LOG.info(tstCancelJobsCommonWithVersion("2.0"));
-        LOG.info(tstCancelJobsCommon());
-        LOG.info(tstCancelJobForJob());
-        LOG.info(tstCancelJob());
+        LOG.info(cancelJobsCommonWithVersion("2.0"));
+        LOG.info(cancelJobsCommon());
+        LOG.info(cancelJobForJob());
+        LOG.info(cancelJob());
     }
 
     /**
@@ -62,11 +61,11 @@ public class CancelJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Response tstCancelJobsCommonWithVersion(String version) throws Exception {
+    public static Response cancelJobsCommonWithVersion(String version) throws Exception {
         jobId = "XXX";
         jobName = "XXX";
         ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).version(version).build();
-        return new CancelJobs(connection).cancelJobsCommon(params);
+        return new zosjobs.CancelJobs(connection).cancelJobsCommon(params);
     }
 
     /**
@@ -77,11 +76,11 @@ public class CancelJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Response tstCancelJobsCommon() throws Exception {
+    public static Response cancelJobsCommon() throws Exception {
         jobId = "XXX";
         jobName = "XXX";
         ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).build();
-        return new CancelJobs(connection).cancelJobsCommon(params);
+        return new zosjobs.CancelJobs(connection).cancelJobsCommon(params);
     }
 
     /**
@@ -92,10 +91,10 @@ public class CancelJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Response tstCancelJobForJob() throws Exception {
+    public static Response cancelJobForJob() throws Exception {
         jobId = "XXX";
         jobName = "XXX";
-        return new CancelJobs(connection).cancelJobForJob(
+        return new zosjobs.CancelJobs(connection).cancelJobForJob(
                 new Job.Builder().jobName(jobName).jobId(jobId).build(), null);
     }
 
@@ -107,10 +106,10 @@ public class CancelJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Response tstCancelJob() throws Exception {
+    public static Response cancelJob() throws Exception {
         jobId = "XXX";
         jobName = "XXX";
-        return new CancelJobs(connection).cancelJob(jobName, jobId, null);
+        return new zosjobs.CancelJobs(connection).cancelJob(jobName, jobId, null);
     }
 
 }

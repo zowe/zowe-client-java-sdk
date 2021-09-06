@@ -7,14 +7,13 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zosjobs.samples;
+package zosjobs.examples;
 
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zosjobs.input.CommonJobParams;
 import zosjobs.input.GetJobParams;
-import zosjobs.GetJobs;
 import zosjobs.input.JobFile;
 import zosjobs.response.Job;
 
@@ -26,11 +25,11 @@ import java.util.List;
  * @author Frank Giordano
  * @version 1.0
  */
-public class GetJobsTest {
+public class GetJobs {
 
-    private static final Logger LOG = LogManager.getLogger(GetJobsTest.class);
+    private static final Logger LOG = LogManager.getLogger(GetJobs.class);
 
-    private static GetJobs getJobs;
+    private static zosjobs.GetJobs getJobs;
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -50,23 +49,23 @@ public class GetJobsTest {
         String jobId = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-        getJobs = new GetJobs(connection);
+        getJobs = new zosjobs.GetJobs(connection);
 
-        GetJobsTest.tstGetJobsCommon(prefix);
-        GetJobsTest.tstGetSpoolFiles(prefix);
-        GetJobsTest.tstGetSpoolFilesForJob(prefix);
-        GetJobsTest.tstGetJobsByOwner(owner);
-        GetJobsTest.tstGetSpoolContent(prefix);
-        GetJobsTest.tstGetJobs();
-        GetJobsTest.tstGetJobsByPrefix(prefix);
-        GetJobsTest.tstGetJobsByOwnerAndPrefix("*", prefix);
-        GetJobsTest.tstGetJob(prefix);
-        GetJobsTest.tstNonExistentGetJob(jobId);
-        GetJobsTest.tstGetStatus(prefix);
-        GetJobsTest.tstGetStatusForJob(prefix);
-        GetJobsTest.tstGetJcl(prefix);
-        GetJobsTest.tstGetJclForJob(prefix);
-        GetJobsTest.tstGetJclCommon(prefix);
+        GetJobs.getJobsCommon(prefix);
+        GetJobs.getSpoolFiles(prefix);
+        GetJobs.getSpoolFilesForJob(prefix);
+        GetJobs.getJobsByOwner(owner);
+        GetJobs.getSpoolContent(prefix);
+        GetJobs.getJobs();
+        GetJobs.getJobsByPrefix(prefix);
+        GetJobs.getJobsByOwnerAndPrefix("*", prefix);
+        GetJobs.getJob(prefix);
+        GetJobs.nonExistentGetJob(jobId);
+        GetJobs.getStatus(prefix);
+        GetJobs.getStatusForJob(prefix);
+        GetJobs.getJcl(prefix);
+        GetJobs.getJclForJob(prefix);
+        GetJobs.getJclCommon(prefix);
     }
 
     /**
@@ -78,7 +77,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void tstGetJclCommon(String prefix) throws Exception {
+    private static void getJclCommon(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         LOG.info(getJobs.getJclCommon(
                 new CommonJobParams(jobs.get(0).getJobId().get(), jobs.get(0).getJobName().get())));
@@ -92,7 +91,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void tstGetJclForJob(String prefix) throws Exception {
+    private static void getJclForJob(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         LOG.info(getJobs.getJclForJob(jobs.get(0)));
     }
@@ -105,7 +104,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void tstGetJcl(String prefix) throws Exception {
+    private static void getJcl(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         LOG.info(getJobs.getJcl(jobs.get(0).getJobName().get(), jobs.get(0).getJobId().get()));
     }
@@ -118,7 +117,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void tstGetStatusForJob(String prefix) throws Exception {
+    private static void getStatusForJob(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         try {
             Job job = getJobs.getStatusForJob(jobs.get(0));
@@ -136,7 +135,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void tstGetStatus(String prefix) throws Exception {
+    private static void getStatus(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         try {
             Job job = getJobs.getStatus(jobs.get(0).getJobName().get(), jobs.get(0).getJobId().get());
@@ -153,7 +152,7 @@ public class GetJobsTest {
      * @param jobId jobId value
      * @author Frank Giordano
      */
-    private static void tstNonExistentGetJob(String jobId) {
+    private static void nonExistentGetJob(String jobId) {
         try {
             getJobs.getJob(jobId);
         } catch (Exception e) {
@@ -169,7 +168,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void tstGetJob(String prefix) throws Exception {
+    private static void getJob(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         String jobId = jobs.get(0).getJobId().get();
         try {
@@ -190,7 +189,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void tstGetJobsByOwnerAndPrefix(String owner, String prefix) throws Exception {
+    private static void getJobsByOwnerAndPrefix(String owner, String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByOwnerAndPrefix(owner, prefix);
         jobs.forEach(LOG::info);
     }
@@ -204,7 +203,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void tstGetJobsByPrefix(String prefix) throws Exception {
+    private static void getJobsByPrefix(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         jobs.forEach(LOG::info);
     }
@@ -216,7 +215,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void tstGetJobs() throws Exception {
+    private static void getJobs() throws Exception {
         // get any jobs out there for the logged-in user
         List<Job> jobs = getJobs.getJobs();
         jobs.forEach(LOG::info);
@@ -230,7 +229,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void tstGetSpoolContent(String prefix) throws Exception {
+    private static void getSpoolContent(String prefix) throws Exception {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(params);
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
@@ -248,7 +247,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void tstGetJobsByOwner(String owner) throws Exception {
+    private static void getJobsByOwner(String owner) throws Exception {
         List<Job> jobs = getJobs.getJobsByOwner(owner);
         jobs.forEach(LOG::info);
     }
@@ -261,7 +260,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void tstGetSpoolFilesForJob(String prefix) throws Exception {
+    private static void getSpoolFilesForJob(String prefix) throws Exception {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(params);
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
@@ -276,7 +275,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void tstGetSpoolFiles(String prefix) throws Exception {
+    private static void getSpoolFiles(String prefix) throws Exception {
         GetJobParams parms = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(parms);
         List<JobFile> files = getJobs.getSpoolFiles(jobs.get(0).getJobName().get(),
@@ -292,7 +291,7 @@ public class GetJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static void tstGetJobsCommon(String prefix) throws Exception {
+    public static void getJobsCommon(String prefix) throws Exception {
         GetJobParams parms = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(parms);
         jobs.forEach(LOG::info);

@@ -7,13 +7,12 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zosjobs.samples;
+package zosjobs.examples;
 
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.Response;
-import zosjobs.DeleteJobs;
 import zosjobs.input.ModifyJobParams;
 import zosjobs.response.Job;
 
@@ -23,9 +22,9 @@ import zosjobs.response.Job;
  * @author Leonid Baranov
  * @version 1.0
  */
-public class DeleteJobsTest {
+public class DeleteJobs {
 
-    private static final Logger LOG = LogManager.getLogger(DeleteJobsTest.class);
+    private static final Logger LOG = LogManager.getLogger(DeleteJobs.class);
 
     private static ZOSConnection connection;
     private static String jobName;
@@ -46,10 +45,10 @@ public class DeleteJobsTest {
         String password = "XXX";
 
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-        LOG.info(tstDeleteJobsCommonWithVersion("2.0"));
-        LOG.info(tstDeleteJobsCommon());
-        LOG.info(tstDeleteJobForJob());
-        LOG.info(tstDeleteJob());
+        LOG.info(deleteJobsCommonWithVersion("2.0"));
+        LOG.info(deleteJobsCommon());
+        LOG.info(deleteJobForJob());
+        LOG.info(deleteJob());
     }
 
     /**
@@ -62,11 +61,11 @@ public class DeleteJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Response tstDeleteJobsCommonWithVersion(String version) throws Exception {
+    public static Response deleteJobsCommonWithVersion(String version) throws Exception {
         jobId = "XXX";
         jobName = "XXX";
         ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).version(version).build();
-        return new DeleteJobs(connection).deleteJobCommon(params);
+        return new zosjobs.DeleteJobs(connection).deleteJobCommon(params);
     }
 
     /**
@@ -77,11 +76,11 @@ public class DeleteJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Response tstDeleteJobsCommon() throws Exception {
+    public static Response deleteJobsCommon() throws Exception {
         jobId = "XXX";
         jobName = "XXX";
         ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).build();
-        return new DeleteJobs(connection).deleteJobCommon(params);
+        return new zosjobs.DeleteJobs(connection).deleteJobCommon(params);
     }
 
     /**
@@ -92,10 +91,10 @@ public class DeleteJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Response tstDeleteJobForJob() throws Exception {
+    public static Response deleteJobForJob() throws Exception {
         jobId = "XXX";
         jobName = "XXX";
-        return new DeleteJobs(connection).deleteJobForJob(
+        return new zosjobs.DeleteJobs(connection).deleteJobForJob(
                 new Job.Builder().jobName(jobName).jobId(jobId).build(), null);
     }
 
@@ -107,10 +106,10 @@ public class DeleteJobsTest {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Response tstDeleteJob() throws Exception {
+    public static Response deleteJob() throws Exception {
         jobId = "XXX";
         jobName = "XXX";
-        return new DeleteJobs(connection).deleteJob(jobName, jobId, null);
+        return new zosjobs.DeleteJobs(connection).deleteJob(jobName, jobId, null);
     }
 
 }

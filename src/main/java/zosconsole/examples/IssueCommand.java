@@ -7,26 +7,25 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zosconsole.samples;
+package zosconsole.examples;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zosconsole.ConsoleResponse;
-import zosconsole.IssueCommand;
 import zosconsole.zosmf.IssueParams;
 import core.ZOSConnection;
 import zosconsole.zosmf.ZosmfIssueParams;
 import zosconsole.zosmf.ZosmfIssueResponse;
 
 /**
- * Template class example to test mvs console command functionality.
+ * Class example to showcase mvs console command functionality.
  *
  * @author Frank Giordano
  * @version 1.0
  */
-public class IssueCommandTest {
+public class IssueCommand {
 
-    private static final Logger LOG = LogManager.getLogger(IssueCommandTest.class);
+    private static final Logger LOG = LogManager.getLogger(IssueCommand.class);
 
     /**
      * Main method defines z/OSMF host and user connection, and mvs command used for the example test.
@@ -43,9 +42,9 @@ public class IssueCommandTest {
 
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
-        IssueCommandTest.tstConsoleCmdByIssue(connection, command);
-        IssueCommandTest.tstConsoleCmdByIssueSimple(connection, command);
-        IssueCommandTest.tstConsoleCmdByIssueDefConsoleCommon(connection, command);
+        IssueCommand.consoleCmdByIssue(connection, command);
+        IssueCommand.consoleCmdByIssueSimple(connection, command);
+        IssueCommand.consoleCmdByIssueDefConsoleCommon(connection, command);
     }
 
     /**
@@ -55,11 +54,11 @@ public class IssueCommandTest {
      * @param cmd        mvs command to execute
      * @author Frank Giordano
      */
-    public static void tstConsoleCmdByIssue(ZOSConnection connection, String cmd) {
+    public static void consoleCmdByIssue(ZOSConnection connection, String cmd) {
         IssueParams params = new IssueParams();
         params.setCommand(cmd);
         ConsoleResponse response;
-        IssueCommand issueCommand = new IssueCommand(connection);
+        zosconsole.IssueCommand issueCommand = new zosconsole.IssueCommand(connection);
         try {
             response = issueCommand.issue(params);
             LOG.info(response.getCommandResponse().get());
@@ -75,9 +74,9 @@ public class IssueCommandTest {
      * @param cmd        mvs command to execute
      * @author Frank Giordano
      */
-    public static void tstConsoleCmdByIssueSimple(ZOSConnection connection, String cmd) {
+    public static void consoleCmdByIssueSimple(ZOSConnection connection, String cmd) {
         ConsoleResponse response;
-        IssueCommand issueCommand = new IssueCommand(connection);
+        zosconsole.IssueCommand issueCommand = new zosconsole.IssueCommand(connection);
         try {
             response = issueCommand.issueSimple(cmd);
             LOG.info(response.getCommandResponse().get());
@@ -93,11 +92,11 @@ public class IssueCommandTest {
      * @param cmd        mvs command to execute
      * @author Frank Giordano
      */
-    public static void tstConsoleCmdByIssueDefConsoleCommon(ZOSConnection connection, String cmd) {
+    public static void consoleCmdByIssueDefConsoleCommon(ZOSConnection connection, String cmd) {
         ZosmfIssueParams params = new ZosmfIssueParams();
         params.setCmd(cmd);
         ZosmfIssueResponse zResponse;
-        IssueCommand issueCommand = new IssueCommand(connection);
+        zosconsole.IssueCommand issueCommand = new zosconsole.IssueCommand(connection);
         try {
             zResponse = issueCommand.issueDefConsoleCommon(params);
             LOG.info(zResponse.getCmdResponse().get());

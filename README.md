@@ -32,26 +32,26 @@ Functionality provided:
 
 See the following sample programs within each sample's package:
 
-    src/main/java/zosconsole/samples  
-        IssueCommandTest.java  
+    src/main/java/zosconsole/examples   
+        IssueCommand.java  
   
-    src/main/java/zosfiles/samples  
-        CreateDatasetTest.java  
-        DeleteDatasetTest.java  
-        DownloadDatasetTest.java
-        ListDatasetsTest.java
-        WriteDatasetTest.java
-        CopyDatasetTest.java
+    src/main/java/zosfiles/examples    
+        CopyDataset.java
+        CreateDataset.java  
+        DeleteDataset.java  
+        DownloadDataset.java
+        ListDatasets.java
+        WriteDataset.java  
   
-    src/main/java/zosjobs/samples  
-        GetJobsTest.java
-        SubmitJobsTest.java  
-        MonitorJobsTest.java
-        CancelJobsTest.java
-        DeleteJobsTest.java
+    src/main/java/zosjobs/examples    
+        CancelJobs.java
+        DeleteJobs.java
+        GetJobs.java
+        MonitorJobs.java
+        SubmitJobs
 
-    src/main/java/zostos/samples  
-        IssueTsoCommandTest.java
+    src/main/java/zostos/examples  
+        IssueTsoCommand.java
   
 You need to replace all instances of "XXX" accordingly to meet your target's credentials and host information.   
     

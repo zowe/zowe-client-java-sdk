@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zostso.samples;
+package zostso.examples;
 
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
@@ -20,14 +20,14 @@ import zostso.zosmf.ZosmfTsoResponse;
 import java.util.List;
 
 /**
- * Template class example to test tso command functionality.
+ * Class example to test tso command functionality.
  *
  * @author Frank Giordano
  * @version 1.0
  */
-public class IssueTsoCommandTest {
+public class IssueTsoCommand {
 
-    private static final Logger LOG = LogManager.getLogger(IssueTsoCommandTest.class);
+    private static final Logger LOG = LogManager.getLogger(IssueTsoCommand.class);
 
     /**
      * Main method defines z/OSMF host and user connection, and tso command parameters used for the example test.
@@ -47,7 +47,7 @@ public class IssueTsoCommandTest {
 
         IssueResponse response = null;
         try {
-            response = IssueTsoCommandTest.tstTsoConsoleCmdByIssue(connection, accountNumber, command);
+            response = IssueTsoCommand.tsoConsoleCmdByIssue(connection, accountNumber, command);
         } catch (Exception e) {
             LOG.info(e.getMessage());
         }
@@ -79,7 +79,7 @@ public class IssueTsoCommandTest {
      * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public static IssueResponse tstTsoConsoleCmdByIssue(ZOSConnection connection, String accountNumber, String cmd)
+    public static IssueResponse tsoConsoleCmdByIssue(ZOSConnection connection, String accountNumber, String cmd)
             throws Exception {
         IssueResponse response;
         IssueTso issueTso = new IssueTso(connection);
