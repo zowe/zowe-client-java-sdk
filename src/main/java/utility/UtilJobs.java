@@ -48,7 +48,6 @@ public class UtilJobs {
      * Check the validity of a ModifyJobParams object
      *
      * @param params ModifyJobParams object
-     * @throws Exception error if invalid
      * @author Frank Giordano
      */
     public static void checkForModifyJobParamsExceptions(ModifyJobParams params) {
