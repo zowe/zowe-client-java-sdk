@@ -52,7 +52,7 @@ public class IssueCommandTest {
      * Issue IssueCommend issue method which will execute the given mvs console command
      *
      * @param connection connection information, see ZOSConnection object
-     * @param cmd mvs command to execute
+     * @param cmd        mvs command to execute
      * @author Frank Giordano
      */
     public static void tstConsoleCmdByIssue(ZOSConnection connection, String cmd) {
@@ -72,7 +72,7 @@ public class IssueCommandTest {
      * Issue IssueCommend issueSimple method which will execute the given mvs console command
      *
      * @param connection connection information, see ZOSConnection object
-     * @param cmd mvs command to execute
+     * @param cmd        mvs command to execute
      * @author Frank Giordano
      */
     public static void tstConsoleCmdByIssueSimple(ZOSConnection connection, String cmd) {
@@ -90,7 +90,7 @@ public class IssueCommandTest {
      * Issue IssueCommend issueDefConsoleCommon method which will execute the given mvs console command
      *
      * @param connection connection information, see ZOSConnection object
-     * @param cmd mvs command to execute
+     * @param cmd        mvs command to execute
      * @author Frank Giordano
      */
     public static void tstConsoleCmdByIssueDefConsoleCommon(ZOSConnection connection, String cmd) {

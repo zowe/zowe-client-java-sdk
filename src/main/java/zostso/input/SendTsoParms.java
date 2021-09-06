@@ -31,7 +31,7 @@ public class SendTsoParms {
      * SendTsoParms constructor
      *
      * @param servletKey key of an active address space
-     * @param data      to be sent to the active address space
+     * @param data       to be sent to the active address space
      * @author Frank Giordano
      */
     public SendTsoParms(String servletKey, String data) {

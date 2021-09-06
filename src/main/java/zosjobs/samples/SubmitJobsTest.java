@@ -49,9 +49,9 @@ public class SubmitJobsTest {
      * Example on how to call SubmitJobs submitJcl method.
      * submitJcl is given a jcl string to use to submit it as a job.
      *
-     * @return job document
      * @param connection ZOSConnection object
-     * @param jclString jcl formatted string
+     * @param jclString  jcl formatted string
+     * @return job document
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
@@ -65,7 +65,7 @@ public class SubmitJobsTest {
      * submitJcl is given a Dataset member value to use to submit it as a job.
      *
      * @param connection ZOSConnection object
-     * @param dsMember dataset member value
+     * @param dsMember   dataset member value
      * @return job document
      * @throws Exception error in processing request
      * @author Frank Giordano

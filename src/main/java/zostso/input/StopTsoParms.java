@@ -27,7 +27,7 @@ public class StopTsoParms {
     /**
      * SendTsoParms constructor
      *
-     * @param servletKey key of an active address space
+     * @param servletKey key of an active tso address space
      * @author Frank Giordano
      */
     public StopTsoParms(String servletKey) {

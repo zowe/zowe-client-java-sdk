@@ -252,6 +252,7 @@ public class Job {
     public Optional<String> getPhaseName() {
         return phaseName;
     }
+
     /**
      * Retrieve reasonNotRunning specified
      *

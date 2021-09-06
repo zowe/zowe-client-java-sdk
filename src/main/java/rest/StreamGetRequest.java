@@ -39,8 +39,8 @@ public class StreamGetRequest extends ZoweRequest {
      * StreamGetRequest constructor.
      *
      * @param connection connection information, see ZOSConnection object
+     * @param url        rest url value
      * @throws Exception error setting constructor variables
-     * @param url rest url value
      */
     public StreamGetRequest(ZOSConnection connection, String url) throws Exception {
         super(connection, ZoweRequestType.VerbType.GET_STREAM);
@@ -49,7 +49,7 @@ public class StreamGetRequest extends ZoweRequest {
     }
 
     /**
-     *  Execute the formulated http request
+     * Execute the formulated http request
      *
      * @author Frank Giordano
      */
@@ -82,7 +82,7 @@ public class StreamGetRequest extends ZoweRequest {
     }
 
     /**
-     *  Set the standard headers for the http request
+     * Set the standard headers for the http request
      *
      * @author Frank Giordano
      */
@@ -94,7 +94,7 @@ public class StreamGetRequest extends ZoweRequest {
     }
 
     /**
-     *  Set additional headers needed for the http request
+     * Set additional headers needed for the http request
      *
      * @param additionalHeaders additional headers to add to the request
      * @author Frank Giordano
@@ -105,7 +105,7 @@ public class StreamGetRequest extends ZoweRequest {
     }
 
     /**
-     *  Set the following incoming url with a new http request
+     * Set the following incoming url with a new http request
      *
      * @param url rest url end point
      * @throws Exception error setting the http request
