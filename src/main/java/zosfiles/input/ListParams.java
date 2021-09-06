@@ -12,14 +12,47 @@ package zosfiles.input;
 
 import java.util.Optional;
 
+/**
+ * This interface defines the options that can be sent into the list data set function
+ *
+ * @author Leonid Baranov
+ * @version 1.0
+ */
 public class ListParams {
 
+    /**
+     * The volume where the data set resides
+     */
     private final Optional<String> volume;
+
+    /**
+     * The indicator that we want to show more attributes
+     */
     private final Optional<String> attributes;
+
+    /**
+     * The indicator that we want to show less data sets or members
+     */
     private final Optional<String> maxLength;
+
+    /**
+     * An optional search parameter that specifies the first data set name to return to the response document
+     */
     private final Optional<String> start;
+
+    /**
+     * An optional parameter that specifies how to handle migrated data sets
+     */
     private final Optional<String> recall;
+
+    /**
+     * An optional pattern for restricting the response list
+     */
     private final Optional<String> pattern;
+
+    /**
+     * Response time out value
+     */
     private final Optional<String> responseTimeout;
 
     private ListParams(ListParams.Builder builder) {
@@ -32,30 +65,72 @@ public class ListParams {
         this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
     }
 
+    /**
+     * Retrieve volume value
+     *
+     * @return volume value
+     * @author Leonid Baranov
+     */
     public Optional<String> getVolume() {
         return volume;
     }
 
+    /**
+     * Retrieve attributes value
+     *
+     * @return attributes value
+     * @author Leonid Baranov
+     */
     public Optional<String> getAttributes() {
         return attributes;
     }
 
+    /**
+     * Retrieve maxLength value
+     *
+     * @return maxLength value
+     * @author Leonid Baranov
+     */
     public Optional<String> getMaxLength() {
         return maxLength;
     }
 
+    /**
+     * Retrieve start value
+     *
+     * @return start value
+     * @author Leonid Baranov
+     */
     public Optional<String> getStart() {
         return start;
     }
 
+    /**
+     * Retrieve recall value
+     *
+     * @return recall value
+     * @author Leonid Baranov
+     */
     public Optional<String> getRecall() {
         return recall;
     }
 
+    /**
+     * Retrieve pattern value
+     *
+     * @return pattern value
+     * @author Leonid Baranov
+     */
     public Optional<String> getPattern() {
         return pattern;
     }
 
+    /**
+     * Retrieve responseTimeout value
+     *
+     * @return responseTimeout value
+     * @author Leonid Baranov
+     */
     public Optional<String> getResponseTimeout() {
         return responseTimeout;
     }

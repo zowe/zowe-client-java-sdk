@@ -11,12 +11,37 @@ package zosfiles.input;
 
 import java.util.Optional;
 
+/**
+ * This interface defines the options that can be sent into the copy data set function.
+ *
+ * @author Leonid Baranov
+ * @version 1.0
+ */
 public class CopyParams {
 
+    /**
+     * The volume to copy from.
+     */
     private final Optional<String> fromVolser;
+
+    /**
+     * The dataset to copy from.
+     */
     private final Optional<String> fromDataSet;
+
+    /**
+     * The volume to copy too
+     */
     private final Optional<String> toVolser;
+
+    /**
+     * The dataset to copy too
+     */
     private final Optional<String> toDataSet;
+
+    /**
+     * Replace option
+     */
     private final boolean replace;
 
     private CopyParams(CopyParams.Builder builder) {
@@ -27,22 +52,52 @@ public class CopyParams {
         this.replace = builder.replace;
     }
 
+    /**
+     * Retrieve fromVolser value
+     *
+     * @return fromVolser value
+     * @author Leonid Baranov
+     */
     public Optional<String> getFromVolser() {
         return fromVolser;
     }
 
+    /**
+     * Retrieve fromDataSet value
+     *
+     * @return fromDataSet value
+     * @author Leonid Baranov
+     */
     public Optional<String> getFromDataSet() {
         return fromDataSet;
     }
 
+    /**
+     * Retrieve toVolser value
+     *
+     * @return toVolser value
+     * @author Leonid Baranov
+     */
     public Optional<String> getToVolser() {
         return toVolser;
     }
 
+    /**
+     * Retrieve toDataSet value
+     *
+     * @return toDataSet value
+     * @author Leonid Baranov
+     */
     public Optional<String> getToDataSet() {
         return toDataSet;
     }
 
+    /**
+     * Retrieve replace value
+     *
+     * @return replace value
+     * @author Leonid Baranov
+     */
     public boolean isReplace() {
         return replace;
     }

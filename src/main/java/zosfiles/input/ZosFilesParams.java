@@ -13,18 +13,28 @@ package zosfiles.input;
 import java.util.Optional;
 
 /**
- * This interface defines the global options that apply to all zosfiles APIs
+ * This interface defines the options that can be sent into the Zos Files function
  *
+ * @author Leonid Baranov
  * @version 1.0
  */
 public class ZosFilesParams {
 
+    /**
+     * Response time out value
+     */
     private final Optional<String> responseTimeout;
 
     public ZosFilesParams(String responseTimeout) {
         this.responseTimeout = Optional.ofNullable(responseTimeout);
     }
 
+    /**
+     * Retrieve responseTimeout value
+     *
+     * @return responseTimeout value
+     * @author Leonid Baranov
+     */
     public Optional<String> getResponseTimeout() {
         return responseTimeout;
     }
