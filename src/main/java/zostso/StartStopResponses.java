@@ -28,7 +28,7 @@ public class StartStopResponses {
     /**
      * Response from z/OSMF to start rest call
      */
-    private Optional<ZosmfTsoResponse> zosmfTsoResponse;
+    private final Optional<ZosmfTsoResponse> zosmfTsoResponse;
 
     /**
      * Collected responses from z/OSMF
@@ -38,7 +38,7 @@ public class StartStopResponses {
     /**
      * If an error occurs, returns the error which contains cause error.
      */
-    private Optional<String> failureResponse;
+    private final Optional<String> failureResponse;
 
     /**
      * Servlet key from IZosmfTsoResponse
@@ -53,7 +53,7 @@ public class StartStopResponses {
     /**
      * True if the command was issued and the responses were collected.
      */
-    private boolean success;
+    private final boolean success;
 
     /**
      * StartStopResponses constructor

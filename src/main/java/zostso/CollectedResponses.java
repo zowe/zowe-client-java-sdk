@@ -25,12 +25,12 @@ public class CollectedResponses {
     /**
      * z/OSMF synchronous most tso command response messages.
      */
-    private Optional<List<ZosmfTsoResponse>> tsos;
+    private final Optional<List<ZosmfTsoResponse>> tsos;
 
     /**
      * Appended collected messages including READY prompt at the end.
      */
-    private Optional<String> messages;
+    private final Optional<String> messages;
 
     /**
      * CollectedResponses constructor

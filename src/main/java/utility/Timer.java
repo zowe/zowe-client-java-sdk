@@ -21,7 +21,7 @@ public class Timer {
     /**
      * Wait by time specified in milliseconds.
      */
-    private int waitTime;
+    private final int waitTime;
 
     /**
      * End by time specified in milliseconds.

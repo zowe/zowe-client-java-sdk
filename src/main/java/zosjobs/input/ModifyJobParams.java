@@ -86,8 +86,8 @@ public class ModifyJobParams {
 
     public static class Builder {
 
-        private String jobName;
-        private String jobId;
+        private final String jobName;
+        private final String jobId;
         private String version;
 
         public Builder(String jobName, String jobId) {

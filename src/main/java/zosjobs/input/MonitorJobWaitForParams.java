@@ -188,8 +188,8 @@ public class MonitorJobWaitForParams {
 
     public static class Builder {
 
-        private String jobId;
-        private String jobName;
+        private final String jobId;
+        private final String jobName;
         private int watchDelay;
         private JobStatus.Type jobStatus;
         private int attempts;

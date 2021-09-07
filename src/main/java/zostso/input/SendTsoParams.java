@@ -20,12 +20,12 @@ public class SendTsoParams {
     /**
      * Servlet key of an active address space
      */
-    private String servletKey;
+    private final String servletKey;
 
     /**
      * Data to be sent to the active address space
      */
-    private String data;
+    private final String data;
 
     /**
      * SendTsoParams constructor
