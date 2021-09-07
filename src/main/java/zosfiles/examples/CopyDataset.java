@@ -72,7 +72,7 @@ public class CopyDataset {
      * @author Frank Giordano
      */
     public static void copyDatasetByCopyParams(ZOSConnection connection, String fromDataSetName,
-                                                  String toDataSetName) {
+                                               String toDataSetName) {
         ZosDsnCopy zosDsnCopy = new ZosDsnCopy(connection);
         // 'replace' here will be true by default if not specified in builder.
         CopyParams copyParams = new CopyParams.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).build();

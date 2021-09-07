@@ -14,7 +14,6 @@ import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.Util;
-import utility.UtilJobs;
 import zosjobs.input.GetJobParams;
 import zosjobs.input.JobFile;
 import zosjobs.input.MonitorJobWaitForParams;
@@ -339,11 +338,11 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public Job waitForStatusCommon(MonitorJobWaitForParams params) throws Exception {
+        Util.checkNullParameter(params == null, "params is null");
         Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
         Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
         Util.checkStateParameter(params.getJobId().isEmpty(), "job id not specified");
         Util.checkStateParameter(params.getJobId().get().isEmpty(), "job id not specified");
-        Util.checkNullParameter(params == null, "params is null");
 
         if (params.getJobStatus().isEmpty())
             params.setJobStatus(Optional.of(DEFAULT_STATUS));
