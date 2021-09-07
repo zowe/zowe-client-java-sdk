@@ -276,8 +276,8 @@ public class GetJobs {
      * @author Frank Giordano
      */
     private static void getSpoolFiles(String prefix) throws Exception {
-        GetJobParams parms = new GetJobParams.Builder("*").prefix(prefix).build();
-        List<Job> jobs = getJobs.getJobsCommon(parms);
+        GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
+        List<Job> jobs = getJobs.getJobsCommon(params);
         List<JobFile> files = getJobs.getSpoolFiles(jobs.get(0).getJobName().get(),
                 jobs.get(0).getJobId().get());
         files.forEach(LOG::info);
@@ -292,8 +292,8 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public static void getJobsCommon(String prefix) throws Exception {
-        GetJobParams parms = new GetJobParams.Builder("*").prefix(prefix).build();
-        List<Job> jobs = getJobs.getJobsCommon(parms);
+        GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
+        List<Job> jobs = getJobs.getJobsCommon(params);
         jobs.forEach(LOG::info);
     }
 

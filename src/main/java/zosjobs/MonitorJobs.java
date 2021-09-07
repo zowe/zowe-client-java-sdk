@@ -215,32 +215,7 @@ public class MonitorJobs {
     }
 
     /**
-     * Checks if the given message is within the job output within line limit.
-     *
-     * @param params  monitor jobs params, see MonitorJobWaitForParams
-     * @param message message string
-     * @return boolean message found status
-     * @throws Exception error processing check request
-     * @author Frank Giordano
-     */
-    private boolean checkMessage(MonitorJobWaitForParams params, String message) throws Exception {
-        GetJobs getJobs = new GetJobs(connection);
-        GetJobParams filter = new GetJobParams.Builder("*").jobId(params.getJobId().get())
-                .prefix(params.getJobName().get()).build();
-        List<Job> jobs = getJobs.getJobsCommon(filter);
-        List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
-        String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
-        // start from bottom
-        for (int i = output.length - params.getLineLimit().get(); i < output.length; i++) {
-            LOG.debug(output[i]);
-            if (output[i].contains(message))
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * Given an Job document (has jobname/jobid), waits for the given status of the job. This API will poll for
+     * Given a Job document (has jobname/jobid), waits for the given status of the job. This API will poll for
      * the given status once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
      * sufficient, use "waitForStatusCommon" method to adjust.
      * <p>
@@ -354,25 +329,50 @@ public class MonitorJobs {
     }
 
     /**
+     * Checks if the given message is within the job output within line limit.
+     *
+     * @param params  monitor jobs params, see MonitorJobWaitForParams
+     * @param message message string
+     * @return boolean message found status
+     * @throws Exception error processing check request
+     * @author Frank Giordano
+     */
+    private boolean checkMessage(MonitorJobWaitForParams params, String message) throws Exception {
+        GetJobs getJobs = new GetJobs(connection);
+        GetJobParams filter = new GetJobParams.Builder("*").jobId(params.getJobId().get())
+                .prefix(params.getJobName().get()).build();
+        List<Job> jobs = getJobs.getJobsCommon(filter);
+        List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
+        String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
+        // start from bottom
+        for (int i = output.length - params.getLineLimit().get(); i < output.length; i++) {
+            LOG.debug(output[i]);
+            if (output[i].contains(message))
+                return true;
+        }
+        return false;
+    }
+
+    /**
      * "Polls" (sets timeouts and continuously checks) for the status of the job to match the desired status.
      *
-     * @param parms monitor jobs parms, see MonitorJobWaitForParams
+     * @param params monitor jobs params, see MonitorJobWaitForParams
      * @return job document
      * @throws Exception error processing poll check request
      * @author Frank Giordano
      */
-    private Job pollForStatus(MonitorJobWaitForParams parms) throws Exception {
-        int timeoutVal = parms.getWatchDelay().get();
+    private Job pollForStatus(MonitorJobWaitForParams params) throws Exception {
+        int timeoutVal = params.getWatchDelay().get();
         boolean expectedStatus;  // no assigment means by default it is false
         boolean shouldContinue; // no assigment means by default it is false
         int numOfAttempts = 0;
-        int maxAttempts = parms.getAttempts().get();
+        int maxAttempts = params.getAttempts().get();
 
         CheckJobStatus checkJobStatus;
         do {
             numOfAttempts++;
 
-            checkJobStatus = checkStatus(parms);
+            checkJobStatus = checkStatus(params);
             expectedStatus = checkJobStatus.isStatusFound();
 
             shouldContinue = !expectedStatus && (maxAttempts > 0 && numOfAttempts < maxAttempts);
@@ -391,16 +391,16 @@ public class MonitorJobs {
     /**
      * Checks the status of the job for the expected status (OR that the job has progressed passed the expected status).
      *
-     * @param parms monitor jobs parms, see MonitorJobWaitForParams
+     * @param params monitor jobs params, see MonitorJobWaitForParams
      * @return boolean true when the job status is obtained
      * @throws Exception error processing check request
      * @author Frank Giordano
      */
-    private CheckJobStatus checkStatus(MonitorJobWaitForParams parms) throws Exception {
+    private CheckJobStatus checkStatus(MonitorJobWaitForParams params) throws Exception {
         GetJobs getJobs = new GetJobs(connection);
-        String statusNameCheck = parms.getJobStatus().get().toString();
+        String statusNameCheck = params.getJobStatus().get().toString();
 
-        Job job = getJobs.getStatus(parms.getJobName().get(), parms.getJobId().get());
+        Job job = getJobs.getStatus(params.getJobName().get(), params.getJobId().get());
         if (statusNameCheck.equals(job.getStatus().get()))
             return new CheckJobStatus(true, job);
 

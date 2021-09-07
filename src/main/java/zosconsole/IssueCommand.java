@@ -61,9 +61,9 @@ public class IssueCommand {
     public ZosmfIssueResponse issueCommon(String consoleName, ZosmfIssueParams commandParams) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(consoleName == null, "consoleName is null");
+        Util.checkStateParameter(consoleName.isEmpty(), "consoleName not specified");
         Util.checkNullParameter(commandParams == null, "commandParams is null");
         Util.checkStateParameter(commandParams.getCmd().isEmpty(), "command not specified");
-        Util.checkStateParameter(consoleName.isEmpty(), "consoleName not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ConsoleConstants.RESOURCE + "/" + consoleName;
