@@ -12,7 +12,7 @@ package zosconsole.examples;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zosconsole.ConsoleResponse;
-import zosconsole.zosmf.IssueParams;
+import zosconsole.input.IssueParams;
 import core.ZOSConnection;
 import zosconsole.zosmf.ZosmfIssueParams;
 import zosconsole.zosmf.ZosmfIssueResponse;
