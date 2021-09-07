@@ -20,22 +20,22 @@ public class ZOSConnection {
     /**
      * machine host pointing to backend z/OS instance
      */
-    private String host;
+    private final String host;
 
     /**
      * machine host z/OSMF port number pointing to backend z/OS instance
      */
-    private String zosmfPort;
+    private final String zosmfPort;
 
     /**
      * machine host username with access to backend z/OS instance
      */
-    private String user;
+    private final String user;
 
     /**
      * machine host username's password with access to backend z/OS instance
      */
-    private String password;
+    private final String password;
 
     /**
      * ZOSConnection constructor

@@ -22,7 +22,7 @@ public class StopTsoParams {
     /**
      * Servlet key of an active address space
      */
-    private Optional<String> servletKey;
+    private final Optional<String> servletKey;
 
     /**
      * SendTsoParams constructor

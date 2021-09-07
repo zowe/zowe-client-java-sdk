@@ -25,18 +25,18 @@ public class SendResponse {
     /**
      * True if the command was issued and the responses were collected.
      */
-    private Optional<Boolean> success;
+    private final Optional<Boolean> success;
 
     /**
      * The list of zOSMF send API responses. May issue multiple requests or
      * to ensure that all messages are collected. Each individual response is placed here.
      */
-    private Optional<List<ZosmfTsoResponse>> zosmfResponse;
+    private final Optional<List<ZosmfTsoResponse>> zosmfResponse;
 
     /**
      * The command response text.
      */
-    private Optional<String> commandResponse;
+    private final Optional<String> commandResponse;
 
     /**
      * SendResponse constructor

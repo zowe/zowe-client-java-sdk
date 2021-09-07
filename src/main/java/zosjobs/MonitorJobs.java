@@ -211,10 +211,7 @@ public class MonitorJobs {
             }
         } while (shouldContinue);
 
-        if (numOfAttempts == maxAttempts)
-            return false;
-
-        return true;
+        return numOfAttempts != maxAttempts;
     }
 
     /**

@@ -21,12 +21,12 @@ public class CheckJobStatus {
     /**
      * Has the desired job status was seen, true or false
      */
-    private boolean statusFound;
+    private final boolean statusFound;
 
     /**
      * The given Job for checking its status
      */
-    private Job job;
+    private final Job job;
 
     /**
      * CheckJobStatus constructor

@@ -32,7 +32,7 @@ public abstract class ZoweRequest {
     public static final String X_CSRF_ZOSMF_HEADER_KEY = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
     public static final String X_CSRF_ZOSMF_HEADER_VALUE = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
 
-    private ZoweRequestType.VerbType requestType;
+    private final ZoweRequestType.VerbType requestType;
     protected final ZOSConnection connection;
     protected HttpClient client;
     protected HttpContext localContext = new BasicHttpContext();
