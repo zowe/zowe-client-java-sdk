@@ -7,27 +7,65 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zosconsole.zosmf;
+package zosconsole.input;
 
 import java.util.Optional;
 
+/**
+ * Common z/OS Consoles API Parameters.
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class ConsoleParams {
 
+    /**
+     * The z/OS emcs console to direct the commands.
+     */
     private Optional<String> consoleName = Optional.empty();
+
+    /**
+     * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
+     * sequences with '\n', but there may be cases where that is not preferable. Specify false to prevent processing.
+     */
     private Optional<Boolean> processResponses = Optional.empty();
 
+    /**
+     * Retrieve consoleName value
+     *
+     * @return consoleName value
+     * @author Frank Giordano
+     */
     public Optional<String> getConsoleName() {
         return consoleName;
     }
 
+    /**
+     * Assign consoleName value
+     *
+     * @param consoleName value
+     * @author Frank Giordano
+     */
     public void setConsoleName(String consoleName) {
         this.consoleName = Optional.ofNullable(consoleName);
     }
 
+    /**
+     * Retrieve processResponses value
+     *
+     * @return processResponses value
+     * @author Frank Giordano
+     */
     public Optional<Boolean> getProcessResponses() {
         return processResponses;
     }
 
+    /**
+     * Assign processResponses value
+     *
+     * @param processResponses value
+     * @author Frank Giordano
+     */
     public void setProcessResponses(Boolean processResponses) {
         this.processResponses = Optional.ofNullable(processResponses);
     }

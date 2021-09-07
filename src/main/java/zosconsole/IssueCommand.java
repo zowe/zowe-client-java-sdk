@@ -18,7 +18,7 @@ import rest.ZoweRequestFactory;
 import rest.ZoweRequestType;
 import utility.UtilConsole;
 import utility.UtilRest;
-import zosconsole.zosmf.IssueParams;
+import zosconsole.input.IssueParams;
 import zosconsole.zosmf.ZosmfIssueParams;
 import zosconsole.zosmf.ZosmfIssueResponse;
 import core.ZOSConnection;
