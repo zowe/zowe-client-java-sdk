@@ -57,7 +57,7 @@ public class Job {
     /**
      * Return code of the job
      */
-    private Optional<String> retcode;
+    private Optional<String> retCode;
 
     /**
      * Detailed job step data
@@ -103,7 +103,7 @@ public class Job {
         this.status = Optional.ofNullable(builder.status);
         this.type = Optional.ofNullable(builder.type);
         this.classs = Optional.ofNullable(builder.classs);
-        this.retcode = Optional.ofNullable(builder.retcode);
+        this.retCode = Optional.ofNullable(builder.retCode);
         this.stepData = Optional.ofNullable(builder.stepData);
         this.url = Optional.ofNullable(builder.url);
         this.filesUrl = Optional.ofNullable(builder.filesUrl);
@@ -142,7 +142,7 @@ public class Job {
     }
 
     public Optional<String> getRetCode() {
-        return retcode;
+        return retCode;
     }
 
     public Optional<JobStepData[]> getStepData() {
@@ -183,7 +183,7 @@ public class Job {
                 ", status=" + status +
                 ", type=" + type +
                 ", classs=" + classs +
-                ", retcode=" + retcode +
+                ", retcode=" + retCode +
                 ", stepData=" + stepData +
                 ", url=" + url +
                 ", filesUrl=" + filesUrl +
@@ -203,7 +203,7 @@ public class Job {
         private String status;
         private String type;
         private String classs;
-        private String retcode;
+        private String retCode;
         private JobStepData[] stepData;
         private String url;
         private String filesUrl;
@@ -247,8 +247,8 @@ public class Job {
             return this;
         }
 
-        public Builder retcode(String retcode) {
-            this.retcode = retcode;
+        public Builder retCode(String retCode) {
+            this.retCode = retCode;
             return this;
         }
 
