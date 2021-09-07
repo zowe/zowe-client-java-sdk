@@ -39,9 +39,20 @@ public class SubmitJobs {
         String password = "XXX";
 
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-        LOG.info(SubmitJobs.submitJob(connection, "xxx.xxx.xxx.xxx(xxx)"));
-        String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
-        LOG.info(SubmitJobs.submitJclJob(connection, jclString));
+
+        // Submit a job already defined as a dataset
+        LOG.info(SubmitJobs.submitJclJob(connection, "xxx.xxx.xxx.xxx(xxx)"));
+
+        // Submit a job from a string
+        String jclString = "//TESTJOBX JOB (),MSGCLASS=H\n// EXEC PGM=IEFBR14";
+        Job submitJobsTest = SubmitJobs.submitJclJob(connection, jclString);
+        // Wait for the job to complete
+        zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
+        submitJobsTest = monitorJobs.waitForJobStatus(submitJobsTest, zosjobs.types.JobStatus.Type.OUTPUT);
+        System.out.println(submitJobsTest);
+        // Get the return code
+        String retCode = submitJobsTest.getRetCode().get();
+        System.out.println("Expected Return Code = CC 0000 [" + retCode + "]");
     }
 
     /**
