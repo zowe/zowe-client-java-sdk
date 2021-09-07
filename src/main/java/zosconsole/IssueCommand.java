@@ -62,6 +62,7 @@ public class IssueCommand {
         Util.checkConnection(connection);
         Util.checkNullParameter(consoleName == null, "consoleName is null");
         Util.checkNullParameter(commandParams == null, "commandParams is null");
+        Util.checkStateParameter(commandParams.getCmd().isEmpty(), "command not specified");
         Util.checkStateParameter(consoleName.isEmpty(), "consoleName not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
@@ -155,15 +156,12 @@ public class IssueCommand {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ZosmfIssueParams buildZosmfConsoleApiParameters(IssueParams params) throws Exception {
+    public ZosmfIssueParams buildZosmfConsoleApiParameters(IssueParams params) {
         Util.checkNullParameter(params == null, "params is null");
+        Util.checkStateParameter(params.getCommand().isEmpty(), "command not specified");
 
         ZosmfIssueParams zosmfParams = new ZosmfIssueParams();
-        if (params.getCommand().isPresent()) {
-            zosmfParams.setCmd(params.getCommand().get());
-        } else {
-            throw new Exception("command not specified");
-        }
+        zosmfParams.setCmd(params.getCommand().get());
 
         if (params.getSolicitedKeyword().isPresent()) {
             zosmfParams.setSolKey(params.getSolicitedKeyword().get());
