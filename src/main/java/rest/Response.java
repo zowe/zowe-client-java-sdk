@@ -22,12 +22,12 @@ public class Response {
     /**
      * Holds Http response information
      */
-    private Optional<Object> responsePhrase;
+    private final Optional<Object> responsePhrase;
 
     /**
      * Holds Http response status code
      */
-    private Optional<Integer> statusCode;
+    private final Optional<Integer> statusCode;
 
     public Response(Object responsePhrase, Integer statusCode) {
         this.responsePhrase = Optional.ofNullable(responsePhrase);
