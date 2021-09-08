@@ -3,6 +3,7 @@ rest
 utility
 zosconsole
 zosconsole.examples
+zosconsole.input
 zosconsole.zosmf
 zosfiles
 zosfiles.examples
