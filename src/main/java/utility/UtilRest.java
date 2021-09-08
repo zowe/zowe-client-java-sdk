@@ -18,8 +18,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import rest.Response;
 
-import java.util.Optional;
-
 /**
  * Utility Class for Rest related static helper methods.
  *

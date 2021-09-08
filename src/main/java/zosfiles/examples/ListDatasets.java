@@ -45,18 +45,23 @@ public class ListDatasets {
 
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
-        ListDatasets.listDsn(connection, dataSetMask);
-        ListDatasets.listMembers(connection, dataSetName);
+        try {
+            ListDatasets.listDsn(connection, dataSetMask);
+            ListDatasets.listMembers(connection, dataSetName);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private static void listMembers(ZOSConnection connection, String dataSetName) {
+    private static void listMembers(ZOSConnection connection, String dataSetName) throws Exception {
         ListParams params = new ListParams.Builder().build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
         List<String> datasets = zosDsnList.listMembers(dataSetName, params);
         datasets.forEach(LOG::info);
     }
 
-    private static void listDsn(ZOSConnection connection, String dataSetName) {
+    private static void listDsn(ZOSConnection connection, String dataSetName) throws Exception {
         ListParams params = new ListParams.Builder().build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
         List<Dataset> datasets = zosDsnList.listDsn(dataSetName, params);
