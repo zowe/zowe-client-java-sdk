@@ -20,10 +20,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 
+/**
+ * Class example to showcase DownloadDataset functionality.
+ *
+ * @author Leonid Baranov
+ * @version 1.0
+ */
 public class DownloadDataset {
 
     private static final Logger LOG = LogManager.getLogger(DownloadDataset.class);
 
+    /**
+     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * DownloadDataset functionality. Calls DownloadDataset example methods.
+     *
+     * @param args for main not used
+     * @throws Exception error in processing request
+     * @author Leonid Baranov
+     */
     public static void main(String[] args) throws Exception {
         String hostName = "XXX";
         String zosmfPort = "XXX";

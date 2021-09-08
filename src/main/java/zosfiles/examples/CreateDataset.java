@@ -13,8 +13,22 @@ import core.ZOSConnection;
 import zosfiles.ZosDsn;
 import zosfiles.input.CreateParams;
 
+/**
+ * Class example to showcase CreateDataset functionality.
+ *
+ * @author Leonid Baranov
+ * @version 1.0
+ */
 public class CreateDataset {
 
+    /**
+     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * CreateDataset functionality. Calls CreateDataset example methods.
+     *
+     * @param args for main not used
+     * @throws Exception error in processing request
+     * @author Leonid Baranov
+     */
     public static void main(String[] args) throws Exception {
         String hostName = "XXX";
         String zosmfPort = "XXX";

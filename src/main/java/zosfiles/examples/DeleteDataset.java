@@ -12,8 +12,22 @@ package zosfiles.examples;
 import core.ZOSConnection;
 import zosfiles.ZosDsn;
 
+/**
+ * Class example to showcase DeleteDataset functionality.
+ *
+ * @author Leonid Baranov
+ * @version 1.0
+ */
 public class DeleteDataset {
 
+    /**
+     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * DeleteDataset functionality. Calls DeleteDataset example methods.
+     *
+     * @param args for main not used
+     * @throws Exception error in processing request
+     * @author Leonid Baranov
+     */
     public static void main(String[] args) throws Exception {
         String hostName = "XXX";
         String zosmfPort = "XXX";

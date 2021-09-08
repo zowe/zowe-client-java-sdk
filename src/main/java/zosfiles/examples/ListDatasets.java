@@ -18,10 +18,24 @@ import zosfiles.response.Dataset;
 
 import java.util.List;
 
+/**
+ * Class example to showcase ListDatasets functionality.
+ *
+ * @author Leonid Baranov
+ * @version 1.0
+ */
 public class ListDatasets {
 
     private static final Logger LOG = LogManager.getLogger(ListDatasets.class);
 
+    /**
+     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * ListDatasets functionality. Calls ListDatasets example methods.
+     *
+     * @param args for main not used
+     * @throws Exception error in processing request
+     * @author Leonid Baranov
+     */
     public static void main(String[] args) {
         String hostName = "XXX";
         String zosmfPort = "XXX";
