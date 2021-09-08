@@ -29,6 +29,13 @@ public class Response {
      */
     private final Optional<Integer> statusCode;
 
+    /**
+     * Response constructor
+     *
+     * @param responsePhrase http response information
+     * @param statusCode http response status code
+     * @author Frank Giordano
+     */
     public Response(Object responsePhrase, Integer statusCode) {
         this.responsePhrase = Optional.ofNullable(responsePhrase);
         this.statusCode = Optional.ofNullable(statusCode);

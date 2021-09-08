@@ -153,7 +153,6 @@ public class IssueCommand {
      *
      * @param params parameters for issue command, see IssueParams object
      * @return request body parameters, see ZosmfIssueParams object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
     public ZosmfIssueParams buildZosmfConsoleApiParameters(IssueParams params) {
