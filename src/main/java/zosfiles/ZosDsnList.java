@@ -59,6 +59,7 @@ public class ZosDsnList {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
+        UtilDataset.checkDatasetName(dataSetName, true);
 
         Map<String, String> headers = new HashMap<>();
         List<String> members = new ArrayList<>();
@@ -106,6 +107,7 @@ public class ZosDsnList {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
+        UtilDataset.checkDatasetName(dataSetName, false);
 
         Map<String, String> headers = new HashMap<>();
         List<Dataset> datasets = new ArrayList<>();
