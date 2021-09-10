@@ -38,14 +38,10 @@ public class UtilDatasetTest {
         );
 
         for (String validDatasetName : validDatasetNames) {
-            assertDoesNotThrow(() -> {
-                UtilDataset.checkDatasetName(validDatasetName, true);
-            });
+            assertDoesNotThrow(() -> UtilDataset.checkDatasetName(validDatasetName, true));
         }
 
-        assertDoesNotThrow(() -> {
-            UtilDataset.checkDatasetName("DSNAME", false);
-        });
+        assertDoesNotThrow(() -> UtilDataset.checkDatasetName("DSNAME", false));
 
     }
 
@@ -62,13 +58,12 @@ public class UtilDatasetTest {
         );
 
         for (String invalidDatasetName : invalidDatasetNames) {
-            Exception exception = assertThrows(Exception.class, () -> {
-                UtilDataset.checkDatasetName(invalidDatasetName, true);
-            });
+            Exception exception = assertThrows(Exception.class,
+                    () -> UtilDataset.checkDatasetName(invalidDatasetName, true));
 
             assertTrue(invalidDatasetName,
                     exception.getMessage().contains("Invalid data set name '" + invalidDatasetName + "'"));
         }
-
     }
+
 }

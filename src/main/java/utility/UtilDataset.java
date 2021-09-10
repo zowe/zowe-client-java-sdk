@@ -80,16 +80,16 @@ public class UtilDataset {
      * - Each segment in a data set name represents a level of qualification. For example, the first segment
      * represents the high-level qualifier (HLQ), and the last segment represents the lowest-level qualifier (LLQ).
      * - A segment cannot be longer than eight characters.
-     * - The first segment character must be either a letter or one of the following three special characters: #,
-     * @, $.
-     * - The remaining seven characters in a segment can be letters, numbers, special characters (only #, @, or
-     * $), or a hyphen (-).
+     * - The first segment character must be either a letter or one of the following three special
+     * characters: #, *, @, $.
+     * - The remaining seven characters in a segment can be letters, numbers,
+     * special characters (only #, @, or * $), or a hyphen (-).
      * - A data set name cannot contain accented characters (à, é, è, and so on).
      *
-     * @param dataSetName The dataset name to validate as per the above rules
-     * @param additionalTests     Set to true to check that a dataset has more than one segment (for example, when used by
-     *                    listMembers()).  Set to false to ignore this check (for example, when used by listDsn()).
-     * @throws Exception
+     * @param dataSetName     Dataset name to validate as per the above rules
+     * @param additionalTests Set to true to check that a dataset has more than one segment (for example, when used by
+     *                        listMembers()). Set to false to ignore this check (for example, when used by listDsn()).
+     * @throws Exception if given dataset format is invalid
      * @author Corinne DeStefano
      */
     public static void checkDatasetName(String dataSetName, boolean additionalTests) throws Exception {
