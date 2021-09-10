@@ -33,7 +33,7 @@ public class Response {
      * Response constructor
      *
      * @param responsePhrase http response information
-     * @param statusCode http response status code
+     * @param statusCode     http response status code
      * @author Frank Giordano
      */
     public Response(Object responsePhrase, Integer statusCode) {

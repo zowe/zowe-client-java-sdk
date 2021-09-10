@@ -12,6 +12,7 @@ package zosfiles;
 /**
  * Constants for various zos files related info
  *
+ * @author Leonid Baranov
  * @version 1.0
  */
 public class ZosFilesConstants {

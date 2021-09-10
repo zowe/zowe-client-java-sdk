@@ -26,6 +26,7 @@ import java.util.*;
 /**
  * ZosDsnList class that provides Dataset member list function
  *
+ * @author Nikunj Goyal
  * @version 1.0
  */
 public class ZosDsnList {
@@ -48,8 +49,9 @@ public class ZosDsnList {
      * Get a list of members from a Dataset
      *
      * @param dataSetName name of a dataset (i.e. 'DATASET.LIB')
-     * @param params     list parameters, see ListParams object
+     * @param params      list parameters, see ListParams object
      * @return A String list of member names
+     * @author Nikunj Goyal
      */
     @SuppressWarnings("unchecked")
     public List<String> listMembers(String dataSetName, ListParams params) throws Exception {
@@ -94,8 +96,9 @@ public class ZosDsnList {
      * Get a list of Dataset names
      *
      * @param dataSetName name of a dataset (i.e. 'DATASET.LIB')
-     * @param params     list parameters, see ListParams object
+     * @param params      list parameters, see ListParams object
      * @return A String list of Dataset names
+     * @author Nikunj Goyal
      */
     @SuppressWarnings("unchecked")
     public List<Dataset> listDsn(String dataSetName, ListParams params) throws Exception {
@@ -140,6 +143,15 @@ public class ZosDsnList {
         return datasets;
     }
 
+    /**
+     * Perform the http request
+     *
+     * @param params  list parameters
+     * @param headers list of headers for http request
+     * @param url     url for http request
+     * @return repsonse object with http response info
+     * @author Frank Giordano
+     */
     private Response getResponse(ListParams params, Map<String, String> headers, String url) throws Exception {
         LOG.debug(url);
         setHeaders(params, headers);
@@ -149,6 +161,13 @@ public class ZosDsnList {
         return request.executeHttpRequest();
     }
 
+    /**
+     * Generate the http headers for the request
+     *
+     * @param params  list parameters
+     * @param headers list of headers for http request
+     * @author Nikunj Goyal
+     */
     private void setHeaders(ListParams params, Map<String, String> headers) {
         String key, value;
         key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);

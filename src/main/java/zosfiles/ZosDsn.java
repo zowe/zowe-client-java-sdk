@@ -20,11 +20,11 @@ import utility.UtilRest;
 import zosfiles.input.CreateParams;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * ZosDsn class that provides CRUD operations on Datasets
  *
+ * @author Leonid Baranov
  * @version 1.0
  */
 public class ZosDsn {
@@ -37,6 +37,7 @@ public class ZosDsn {
      * ZosDsn Constructor
      *
      * @param connection connection information, see ZOSConnection object
+     * @author Leonid Baranov
      */
     public ZosDsn(ZOSConnection connection) {
         this.connection = connection;
@@ -48,6 +49,7 @@ public class ZosDsn {
      *
      * @param dataSetName dataset or a dataset member (f.e. DATASET.LIB(MEMBER))
      * @param content     new content of the dataset or a dataset member
+     * @author Leonid Baranov
      */
     public void writeDsn(String dataSetName, String content) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
@@ -80,6 +82,7 @@ public class ZosDsn {
      * Delete dataset or a dataset member
      *
      * @param dataSetName name of a dataset or a dataset member (f.e. 'DATASET.LIB(MEMBER)')
+     * @author Leonid Baranov
      */
     public void deleteDsn(String dataSetName) {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
@@ -113,6 +116,7 @@ public class ZosDsn {
      *
      * @param dataSetName name of a dataset to create (f.e. 'DATASET.LIB')
      * @param params      create dataset parameters, see CreateParams object
+     * @author Leonid Baranov
      */
     public void createDsn(String dataSetName, CreateParams params) {
         Util.checkNullParameter(params == null, "params is null");
@@ -145,6 +149,13 @@ public class ZosDsn {
         }
     }
 
+    /**
+     * Create the http body request
+     *
+     * @param params CreateParams parameters
+     * @return body string value for http request
+     * @author Leonid Baranov
+     */
     private static String buildBody(CreateParams params) {
         var jsonMap = new HashMap<String, Object>();
         params.getVolser().ifPresent(v -> jsonMap.put("volser", v));

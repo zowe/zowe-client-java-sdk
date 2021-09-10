@@ -26,7 +26,6 @@ public class ZosmfIssueParams {
 
     /**
      * The solicited keyword to look for.
-
      */
     private Optional<String> solKey = Optional.empty();
 

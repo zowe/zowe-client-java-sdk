@@ -48,8 +48,7 @@ public class ListDatasets {
         try {
             ListDatasets.listDsn(connection, dataSetMask);
             ListDatasets.listMembers(connection, dataSetName);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

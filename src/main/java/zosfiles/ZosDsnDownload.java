@@ -25,6 +25,7 @@ import java.util.*;
 /**
  * ZosDsnDownload class that provides download DataSet function
  *
+ * @author Nikunj Goyal
  * @version 1.0
  */
 public class ZosDsnDownload {
@@ -37,6 +38,7 @@ public class ZosDsnDownload {
      * ZosDsnDownload Constructor
      *
      * @param connection connection information, see ZOSConnection object
+     * @author Nikunj Goyal
      */
     public ZosDsnDownload(ZOSConnection connection) {
         this.connection = connection;
@@ -46,8 +48,9 @@ public class ZosDsnDownload {
      * Downloads dataset or dataset member content
      *
      * @param dataSetName name of a dataset or a dataset member (f.e. DATASET.LIB(MEMBER))
-     * @param params     download params parameters, see DownloadParams object
+     * @param params      download params parameters, see DownloadParams object
      * @return a content stream
+     * @author Nikunj Goyal
      */
     public InputStream downloadDsn(String dataSetName, DownloadParams params) {
         Util.checkNullParameter(params == null, "params is null");
