@@ -152,7 +152,7 @@ public class GetJobs {
                 url += JobsConstants.QUERY_OWNER + params.getOwner().get();
             }
             if (params.getPrefix().isPresent()) {
-                if (params.getPrefix().get() != JobsConstants.DEFAULT_PREFIX) {
+                if (!JobsConstants.DEFAULT_PREFIX.equals(params.getPrefix().get())) {
                     if (url.contains(QueryConstants.QUERY_ID)) {
                         url += QueryConstants.COMBO_ID;
                     }

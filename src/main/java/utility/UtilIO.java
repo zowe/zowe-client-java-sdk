@@ -55,7 +55,7 @@ public class UtilIO {
      */
     public static Boolean isDir(String dirOrFile) {
         Util.checkNullParameter(dirOrFile == null, "dirOrFile is null");
-        Util.checkStateParameter(dirOrFile == "", "dirOrFile not specified");
+        Util.checkStateParameter(dirOrFile.isEmpty(), "dirOrFile not specified");
         Path path = Paths.get(dirOrFile);
 
         Boolean stat = Files.isDirectory(path);
