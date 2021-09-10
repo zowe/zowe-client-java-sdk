@@ -62,7 +62,7 @@ public class SendTsoParams {
     @Override
     public String toString() {
         return "SendTsoParams{" +
-                "sevletKey='" + servletKey + '\'' +
+                "servletKey='" + servletKey + '\'' +
                 ", data='" + data + '\'' +
                 '}';
     }

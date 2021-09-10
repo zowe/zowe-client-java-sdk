@@ -177,7 +177,7 @@ public class UtilIO {
      */
     public static void mkdirp(String dir) throws IOException {
         Util.checkNullParameter(dir == null, "dirOrFile is null");
-        Util.checkStateParameter(dir.isEmpty(), "dirOrFile inot specified");
+        Util.checkStateParameter(dir.isEmpty(), "dirOrFile is not specified");
         Files.createDirectories(Paths.get(dir));
     }
 

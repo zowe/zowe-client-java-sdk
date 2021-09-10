@@ -46,7 +46,7 @@ public class StopTso {
     }
 
     /**
-     * Sends REST call to z/OSMF for stoping active TSO address space
+     * Sends REST call to z/OSMF for stopping active TSO address space
      *
      * @param commandParams command parameters, see commandParams object
      * @return z/OSMF response object, see ZosmfTsoResponse object

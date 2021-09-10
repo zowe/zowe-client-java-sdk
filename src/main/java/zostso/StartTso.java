@@ -101,7 +101,7 @@ public class StartTso {
     }
 
     /**
-     * Set default TSO address space paramaters
+     * Set default TSO address space parameters
      *
      * @param params        object with required parameters, see StartTsoParams
      * @param accountNumber user's account number permission
@@ -126,7 +126,7 @@ public class StartTso {
     }
 
     /**
-     * Set default TSO address space paramaters
+     * Set default TSO address space parameters
      *
      * @param params object with required parameters, see StartTsoParams
      * @return generated url

@@ -84,7 +84,7 @@ public class SendTso {
         Util.checkConnection(connection);
         Util.checkNullParameter(commandParams == null, "commandParams is null");
         Util.checkStateParameter(commandParams.getData().isEmpty(), "commandParams data not specified");
-        Util.checkStateParameter(commandParams.getServletKey().isEmpty(), "commandParams sevletKey not specified");
+        Util.checkStateParameter(commandParams.getServletKey().isEmpty(), "commandParams servletKey not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;

@@ -23,7 +23,7 @@ public class QueryConstants {
     public static final String QUERY_ID = "?";
 
     /**
-     * Query parm delimiter
+     * Query parameter delimiter
      */
     public static final String COMBO_ID = "&";
 

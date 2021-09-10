@@ -34,7 +34,7 @@ public class UtilTso {
     /**
      * Populate either a Tso start or stop command phase
      *
-     * @param zosmfResponse zosmf repsonse info, see zosmfResponse
+     * @param zosmfResponse zosmf response info, see zosmfResponse
      * @return StartStopResponse object
      * @author Frank Giordano
      */
