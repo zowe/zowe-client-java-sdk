@@ -151,7 +151,7 @@ public class ZosDsnList {
      * @param params  list parameters
      * @param headers list of headers for http request
      * @param url     url for http request
-     * @return repsonse object with http response info
+     * @return response object with http response info
      * @author Frank Giordano
      */
     private Response getResponse(ListParams params, Map<String, String> headers, String url) throws Exception {

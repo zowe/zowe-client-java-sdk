@@ -80,7 +80,9 @@ public class UtilTso {
         if (response.getStatusCode().isPresent() && UtilRest.isHttpError(statusCode)) {
             String errorMsg = (String) response.getResponsePhrase().orElseThrow(() -> new Exception("results not available"));
             ZosmfMessages zosmfMsg = new ZosmfMessages(Optional.of(errorMsg), Optional.empty(), Optional.empty());
-            result = new ZosmfTsoResponse.Builder().msgData(Arrays.asList(zosmfMsg)).build();
+            List<ZosmfMessages> zosmfMessages = new ArrayList<>();
+            zosmfMessages.add(zosmfMsg);
+            result = new ZosmfTsoResponse.Builder().msgData(zosmfMessages).build();
         } else {
             result = UtilTso.parseJsonTsoResponse((JSONObject) (response.getResponsePhrase().isPresent() ?
                     response.getResponsePhrase().get() : null));
