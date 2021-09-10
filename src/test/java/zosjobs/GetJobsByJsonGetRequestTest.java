@@ -24,6 +24,7 @@ import zosjobs.response.Job;
 
 import java.util.HashMap;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -83,8 +84,8 @@ public class GetJobsByJsonGetRequestTest {
             msgResult = e.getMessage();
 
         }
-        assertTrue("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1".equals(getJobs.getUrl()));
-        assertTrue(msg.equals(msgResult));
+        assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
+        assertEquals(msg, msgResult);
     }
 
     @Test
@@ -101,8 +102,8 @@ public class GetJobsByJsonGetRequestTest {
         Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         Job job = getJobs.getJob("1");
-        assertTrue("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1".equals(getJobs.getUrl()));
-        assertTrue("job".equals(job.getJobId().get()));
+        assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
+        assertEquals("job", job.getJobId().get());
     }
 
     @Test
@@ -115,19 +116,19 @@ public class GetJobsByJsonGetRequestTest {
         Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         Job job = getJobs.getJob("1");
-        assertTrue("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1".equals(getJobs.getUrl()));
-        assertTrue("jobid".equals(job.getJobId().get()));
-        assertTrue("jobname".equals(job.getJobName().get()));
-        assertTrue("subsystem".equals(job.getSubSystem().get()));
-        assertTrue("owner".equals(job.getOwner().get()));
-        assertTrue("status".equals(job.getStatus().get()));
-        assertTrue("type".equals(job.getType().get()));
-        assertTrue("class".equals(job.getClasss().get()));
-        assertTrue("retcode".equals(job.getRetCode().get()));
-        assertTrue("url".equals(job.getUrl().get()));
-        assertTrue("files-url".equals(job.getFilesUrl().get()));
-        assertTrue("job-correlator".equals(job.getJobCorrelator().get()));
-        assertTrue("phase-name".equals(job.getPhaseName().get()));
+        assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
+        assertEquals("jobid", job.getJobId().get());
+        assertEquals("jobname", job.getJobName().get());
+        assertEquals("subsystem", job.getSubSystem().get());
+        assertEquals("owner", job.getOwner().get());
+        assertEquals("status", job.getStatus().get());
+        assertEquals("type", job.getType().get());
+        assertEquals("class", job.getClasss().get());
+        assertEquals("retcode", job.getRetCode().get());
+        assertEquals("url", job.getUrl().get());
+        assertEquals("files-url", job.getFilesUrl().get());
+        assertEquals("job-correlator", job.getJobCorrelator().get());
+        assertEquals("phase-name", job.getPhaseName().get());
     }
 
     @Test
@@ -138,7 +139,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertTrue("jobName not specified".equals(errorMsg));
+        assertEquals("jobName not specified", errorMsg);
     }
 
     @Test
@@ -149,7 +150,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertTrue("jobId not specified".equals(errorMsg));
+        assertEquals("jobId not specified", errorMsg);
     }
 
     @Test
@@ -160,7 +161,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertTrue("jobId not specified".equals(errorMsg));
+        assertEquals("jobId not specified", errorMsg);
     }
 
     @Test
@@ -169,19 +170,19 @@ public class GetJobsByJsonGetRequestTest {
         Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         Job job = getJobs.getStatusForJob(new Job.Builder().jobId("1").jobName("jobName").build());
-        assertTrue("https://1:1/zosmf/restjobs/jobs/jobName/1".equals(getJobs.getUrl()));
-        assertTrue("jobid".equals(job.getJobId().get()));
-        assertTrue("jobname".equals(job.getJobName().get()));
-        assertTrue("subsystem".equals(job.getSubSystem().get()));
-        assertTrue("owner".equals(job.getOwner().get()));
-        assertTrue("status".equals(job.getStatus().get()));
-        assertTrue("type".equals(job.getType().get()));
-        assertTrue("class".equals(job.getClasss().get()));
-        assertTrue("retcode".equals(job.getRetCode().get()));
-        assertTrue("url".equals(job.getUrl().get()));
-        assertTrue("files-url".equals(job.getFilesUrl().get()));
-        assertTrue("job-correlator".equals(job.getJobCorrelator().get()));
-        assertTrue("phase-name".equals(job.getPhaseName().get()));
+        assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/1", getJobs.getUrl());
+        assertEquals("jobid", job.getJobId().get());
+        assertEquals("jobname", job.getJobName().get());
+        assertEquals("subsystem", job.getSubSystem().get());
+        assertEquals("owner", job.getOwner().get());
+        assertEquals("status", job.getStatus().get());
+        assertEquals("type", job.getType().get());
+        assertEquals("class", job.getClasss().get());
+        assertEquals("retcode", job.getRetCode().get());
+        assertEquals("url", job.getUrl().get());
+        assertEquals("files-url", job.getFilesUrl().get());
+        assertEquals("job-correlator", job.getJobCorrelator().get());
+        assertEquals("phase-name", job.getPhaseName().get());
     }
 
     @Test
@@ -192,7 +193,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertTrue("jobName is null".equals(errorMsg));
+        assertEquals("jobName is null", errorMsg);
     }
 
     @Test
@@ -203,7 +204,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertTrue("jobId is null".equals(errorMsg));
+        assertEquals("jobId is null", errorMsg);
     }
 
     @Test
@@ -214,7 +215,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertTrue("spoolId not specified".equals(errorMsg));
+        assertEquals("spoolId not specified", errorMsg);
     }
 
     @Test
@@ -225,7 +226,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertTrue("spoolId not specified".equals(errorMsg));
+        assertEquals("spoolId not specified", errorMsg);
     }
 
 }

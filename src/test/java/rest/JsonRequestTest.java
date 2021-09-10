@@ -57,7 +57,7 @@ public class JsonRequestTest {
                 .thenThrow(new IOException());
 
         Response response = getRequest.executeHttpRequest();
-        Assertions.assertEquals(response.isEmpty(), true);
+        Assertions.assertTrue(response.isEmpty());
         Mockito.verify(httpClient, Mockito.times(1))
                 .execute(any(HttpGet.class), any(BasicHttpContext.class));
     }
@@ -95,7 +95,7 @@ public class JsonRequestTest {
                 .thenThrow(new IOException());
 
         Response response = putRequest.executeHttpRequest();
-        Assertions.assertEquals(response.isEmpty(), true);
+        Assertions.assertTrue(response.isEmpty());
         Mockito.verify(httpClient, Mockito.times(1))
                 .execute(any(HttpPut.class), any(BasicHttpContext.class));
     }

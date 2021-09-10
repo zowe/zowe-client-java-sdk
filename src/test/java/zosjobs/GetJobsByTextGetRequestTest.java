@@ -17,6 +17,7 @@ import org.powermock.reflect.Whitebox;
 import rest.Response;
 import rest.TextGetRequest;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class GetJobsByTextGetRequestTest {
@@ -39,8 +40,8 @@ public class GetJobsByTextGetRequestTest {
         Mockito.when(request.executeHttpRequest()).thenReturn(response);
 
         String results = getJobs.getSpoolContentById("jobName", "jobId", 1);
-        assertTrue("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records".equals(getJobs.getUrl()));
-        assertTrue("1\n2\n3\n".equals(results));
+        assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
+        assertEquals("1\n2\n3\n", results);
     }
 
 }

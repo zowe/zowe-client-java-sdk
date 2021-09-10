@@ -17,6 +17,7 @@ import zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.HashMap;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class UtilTsoTest {
@@ -34,10 +35,10 @@ public class UtilTsoTest {
         var json = new JSONObject(jsonMap);
 
         ZosmfTsoResponse response = UtilTso.parseJsonStopResponse(json);
-        assertTrue("ver".equals(response.getVer().get()));
-        assertTrue("servletKey".equals(response.getServletKey().get()));
-        assertTrue(response.getReused().get() == true);
-        assertTrue(response.getTimeout().get() == true);
+        assertEquals("ver", response.getVer().get());
+        assertEquals("servletKey", response.getServletKey().get());
+        assertEquals(true, (boolean) response.getReused().get());
+        assertEquals(true, (boolean) response.getTimeout().get());
     }
 
     @Test
@@ -49,7 +50,7 @@ public class UtilTsoTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        assertTrue("no obj to parse".equals(msg));
+        assertEquals("no obj to parse", msg);
     }
 
     @Test
@@ -61,7 +62,7 @@ public class UtilTsoTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        assertTrue("response is null".equals(msg));
+        assertEquals("response is null", msg);
     }
 
     @Test
@@ -73,7 +74,7 @@ public class UtilTsoTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        assertTrue("results not available".equals(msg));
+        assertEquals("results not available", msg);
     }
 
     @Test
@@ -85,7 +86,7 @@ public class UtilTsoTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        assertTrue("no results to parse".equals(msg));
+        assertEquals("no results to parse", msg);
     }
 
     @Test
@@ -93,7 +94,7 @@ public class UtilTsoTest {
         Response response = new Response("error", 10);
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
         String errorValue = zosmfTsoResponse.getMsgData().get().get(0).getMessageText().get();
-        assertTrue("error".equals(errorValue));
+        assertEquals("error", errorValue);
     }
 
     @Test
@@ -107,7 +108,7 @@ public class UtilTsoTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        assertTrue(msg.equals(MISSING_FIELD_ERROR_MSG));
+        assertEquals(MISSING_FIELD_ERROR_MSG, msg);
     }
 
     @Test
@@ -121,7 +122,7 @@ public class UtilTsoTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        assertTrue(msg.equals(MISSING_FIELD_ERROR_MSG));
+        assertEquals(MISSING_FIELD_ERROR_MSG, msg);
     }
 
     @Test
@@ -135,7 +136,7 @@ public class UtilTsoTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        assertTrue(msg.equals(MISSING_FIELD_ERROR_MSG));
+        assertEquals(MISSING_FIELD_ERROR_MSG, msg);
     }
 
     @Test
@@ -144,7 +145,7 @@ public class UtilTsoTest {
                 "\"reused\":true,\"timeout\":true}";
         Response response = new Response(new JSONParser().parse(json), 200);
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
-        assertTrue(zosmfTsoResponse.getTsoData().isEmpty() == true);
+        assertEquals(true, zosmfTsoResponse.getTsoData().isEmpty());
     }
 
     @Test
@@ -155,17 +156,16 @@ public class UtilTsoTest {
         Response response = new Response(new JSONParser().parse(json), 200);
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
         assertTrue(zosmfTsoResponse.getTsoData().isEmpty() != true);
-        assertTrue(zosmfTsoResponse.getMsgData().isEmpty() == true);
-        assertTrue(zosmfTsoResponse.getTimeout().get() == true);
-        assertTrue(zosmfTsoResponse.getReused().get() == true);
-        assertTrue("0100".equals(zosmfTsoResponse.getVer().get()));
-        assertTrue("0100".equals(zosmfTsoResponse.getQueueId().get()));
-        assertTrue("ZOSMFAD-71-aabcaaaf".equals(zosmfTsoResponse.getServletKey().get()));
-        assertTrue(zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().isPresent() == false);
-        assertTrue(zosmfTsoResponse.getTsoData().get().get(0).getTsoResponse().isPresent() == false);
-        assertTrue("0100".equals(zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().get().getVersion().get()));
-        assertTrue("--> LOGON proc version = 04/28/2011".equals(
-                zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().get().getData().get()));
+        assertEquals(true, zosmfTsoResponse.getMsgData().isEmpty());
+        assertEquals(true, (boolean) zosmfTsoResponse.getTimeout().get());
+        assertEquals(true, (boolean) zosmfTsoResponse.getReused().get());
+        assertEquals("0100", zosmfTsoResponse.getVer().get());
+        assertEquals("0100", zosmfTsoResponse.getQueueId().get());
+        assertEquals("ZOSMFAD-71-aabcaaaf", zosmfTsoResponse.getServletKey().get());
+        assertEquals(false, zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().isPresent());
+        assertEquals(false, zosmfTsoResponse.getTsoData().get().get(0).getTsoResponse().isPresent());
+        assertEquals("0100", zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().get().getVersion().get());
+        assertEquals("--> LOGON proc version = 04/28/2011", zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().get().getData().get());
     }
 
     @Test
@@ -176,17 +176,16 @@ public class UtilTsoTest {
         Response response = new Response(new JSONParser().parse(json), 200);
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
         assertTrue(zosmfTsoResponse.getTsoData().isEmpty() != true);
-        assertTrue(zosmfTsoResponse.getMsgData().isEmpty() == true);
-        assertTrue(zosmfTsoResponse.getTimeout().get() == true);
-        assertTrue(zosmfTsoResponse.getReused().get() == true);
-        assertTrue("0100".equals(zosmfTsoResponse.getVer().get()));
-        assertTrue("0100".equals(zosmfTsoResponse.getQueueId().get()));
-        assertTrue("ZOSMFAD-71-aabcaaaf".equals(zosmfTsoResponse.getServletKey().get()));
-        assertTrue(zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().isPresent() == true);
-        assertTrue(zosmfTsoResponse.getTsoData().get().get(0).getTsoResponse().isPresent() == false);
-        assertTrue("0100".equals(zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().get().getVersion().get()));
-        assertTrue("--> LOGON proc version = 04/28/2011".equals(
-                zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().get().getHidden().get()));
+        assertEquals(true, zosmfTsoResponse.getMsgData().isEmpty());
+        assertEquals(true, (boolean) zosmfTsoResponse.getTimeout().get());
+        assertEquals(true, (boolean) zosmfTsoResponse.getReused().get());
+        assertEquals("0100", zosmfTsoResponse.getVer().get());
+        assertEquals("0100", zosmfTsoResponse.getQueueId().get());
+        assertEquals("ZOSMFAD-71-aabcaaaf", zosmfTsoResponse.getServletKey().get());
+        assertEquals(true, zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().isPresent());
+        assertEquals(false, zosmfTsoResponse.getTsoData().get().get(0).getTsoResponse().isPresent());
+        assertEquals("0100", zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().get().getVersion().get());
+        assertEquals("--> LOGON proc version = 04/28/2011", zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().get().getHidden().get());
     }
 
     @Test
@@ -198,24 +197,22 @@ public class UtilTsoTest {
         Response response = new Response(new JSONParser().parse(json), 200);
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
         assertTrue(zosmfTsoResponse.getTsoData().isEmpty() != true);
-        assertTrue(zosmfTsoResponse.getMsgData().isEmpty() == true);
-        assertTrue(zosmfTsoResponse.getTimeout().get() == true);
-        assertTrue(zosmfTsoResponse.getReused().get() == true);
-        assertTrue("0100".equals(zosmfTsoResponse.getVer().get()));
-        assertTrue("0100".equals(zosmfTsoResponse.getQueueId().get()));
-        assertTrue("ZOSMFAD-71-aabcaaaf".equals(zosmfTsoResponse.getServletKey().get()));
-        assertTrue(zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().isPresent() == true);
-        assertTrue(zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().isPresent() == false);
-        assertTrue(zosmfTsoResponse.getTsoData().get().get(0).getTsoResponse().isPresent() == false);
-        assertTrue(zosmfTsoResponse.getTsoData().get().get(1).getTsoMessage().isPresent() == false);
-        assertTrue(zosmfTsoResponse.getTsoData().get().get(1).getTsoPrompt().isPresent() == true);
-        assertTrue(zosmfTsoResponse.getTsoData().get().get(1).getTsoResponse().isPresent() == false);
-        assertTrue("0100".equals(zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().get().getVersion().get()));
-        assertTrue("--> LOGON proc version = 04/28/2011".equals(
-                zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().get().getData().get()));
-        assertTrue("0100".equals(zosmfTsoResponse.getTsoData().get().get(1).getTsoPrompt().get().getVersion().get()));
-        assertTrue("hidden".equals(
-                zosmfTsoResponse.getTsoData().get().get(1).getTsoPrompt().get().getHidden().get()));
+        assertEquals(true, zosmfTsoResponse.getMsgData().isEmpty());
+        assertEquals(true, (boolean) zosmfTsoResponse.getTimeout().get());
+        assertEquals(true, (boolean) zosmfTsoResponse.getReused().get());
+        assertEquals("0100", zosmfTsoResponse.getVer().get());
+        assertEquals("0100", zosmfTsoResponse.getQueueId().get());
+        assertEquals("ZOSMFAD-71-aabcaaaf", zosmfTsoResponse.getServletKey().get());
+        assertEquals(true, zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().isPresent());
+        assertEquals(false, zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().isPresent());
+        assertEquals(false, zosmfTsoResponse.getTsoData().get().get(0).getTsoResponse().isPresent());
+        assertEquals(false, zosmfTsoResponse.getTsoData().get().get(1).getTsoMessage().isPresent());
+        assertEquals(true, zosmfTsoResponse.getTsoData().get().get(1).getTsoPrompt().isPresent());
+        assertEquals(false, zosmfTsoResponse.getTsoData().get().get(1).getTsoResponse().isPresent());
+        assertEquals("0100", zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().get().getVersion().get());
+        assertEquals("--> LOGON proc version = 04/28/2011", zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().get().getData().get());
+        assertEquals("0100", zosmfTsoResponse.getTsoData().get().get(1).getTsoPrompt().get().getVersion().get());
+        assertEquals("hidden", zosmfTsoResponse.getTsoData().get().get(1).getTsoPrompt().get().getHidden().get());
     }
 
 }
