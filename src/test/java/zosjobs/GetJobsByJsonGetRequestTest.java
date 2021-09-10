@@ -25,20 +25,18 @@ import zosjobs.response.Job;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetJobsByJsonGetRequestTest {
 
     private JsonGetRequest request;
-    private ZOSConnection connection;
     private GetJobs getJobs;
     private JSONObject jobJson;
 
     @Before
     public void init() {
         request = Mockito.mock(JsonGetRequest.class);
-        connection = new ZOSConnection("1", "1", "1", "1");
+        ZOSConnection connection = new ZOSConnection("1", "1", "1", "1");
         getJobs = new GetJobs(connection);
         Whitebox.setInternalState(getJobs, "request", request);
 

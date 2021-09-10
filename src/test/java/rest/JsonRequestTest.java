@@ -34,11 +34,10 @@ public class JsonRequestTest {
     private HttpClient httpClient;
     private JsonGetRequest getRequest;
     private JsonPutRequest putRequest;
-    private HttpResponse httpResponse;
 
     @Before
     public void init() throws Exception {
-        httpResponse = Mockito.mock(HttpResponse.class);
+        HttpResponse httpResponse = Mockito.mock(HttpResponse.class);
         httpClient = Mockito.mock(HttpClient.class);
         ZOSConnection connection = new ZOSConnection("", "", "", "");
 

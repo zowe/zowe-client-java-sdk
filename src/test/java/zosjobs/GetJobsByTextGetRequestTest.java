@@ -18,18 +18,16 @@ import rest.Response;
 import rest.TextGetRequest;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class GetJobsByTextGetRequestTest {
 
     private TextGetRequest request;
-    private ZOSConnection connection;
     private GetJobs getJobs;
 
     @Before
     public void init() {
         request = Mockito.mock(TextGetRequest.class);
-        connection = new ZOSConnection("1", "1", "1", "1");
+        ZOSConnection connection = new ZOSConnection("1", "1", "1", "1");
         getJobs = new GetJobs(connection);
         Whitebox.setInternalState(getJobs, "request", request);
     }
