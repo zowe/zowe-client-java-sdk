@@ -77,7 +77,7 @@ public class StartStopResponses {
 
         StringBuilder buildMessage = new StringBuilder();
         List<TsoMessages> tsoMsgLst = zosmfTsoResponse.getTsoData().orElse(new ArrayList<>());
-        tsoMsgLst.forEach(msg -> buildMessage.append(msg));
+        tsoMsgLst.forEach(buildMessage::append);
         this.messages = Optional.of(buildMessage.toString());
     }
 
