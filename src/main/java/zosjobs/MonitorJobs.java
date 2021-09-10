@@ -44,12 +44,12 @@ public class MonitorJobs {
     /**
      * The default amount of lines to check from job output.
      */
-    public static int DEFAULT_LINE_LIMIT = 1000;
+    public static final int DEFAULT_LINE_LIMIT = 1000;
 
     /**
      * The default amount of time (in 3000 milliseconds is 3 seconds) to wait until the next job status poll.
      */
-    public static int DEFAULT_WATCH_DELAY = 3000;
+    public static final int DEFAULT_WATCH_DELAY = 3000;
 
     /**
      * Default expected job status ("OUTPUT")
@@ -59,7 +59,7 @@ public class MonitorJobs {
     /**
      * Default number of poll attempts to check for the specified job status.
      */
-    public static int DEFAULT_ATTEMPTS = 1000;
+    public static final int DEFAULT_ATTEMPTS = 1000;
 
     /**
      * MonitorJobs constructor.
