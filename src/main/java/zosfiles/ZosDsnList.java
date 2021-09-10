@@ -65,7 +65,7 @@ public class ZosDsnList {
         List<String> members = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/"
-                + dataSetName + ZosFilesConstants.RES_DS_MEMBERS;
+                + Util.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
 
         if (params.getPattern().isPresent()) {
             url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN + params.getPattern().get();
@@ -114,7 +114,7 @@ public class ZosDsnList {
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
 
-        url += ZosFilesConstants.QUERY_DS_LEVEL + dataSetName;
+        url += ZosFilesConstants.QUERY_DS_LEVEL + Util.encodeURIComponent(dataSetName);
 
         if (params.getVolume().isPresent()) {
             url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME + params.getVolume().get();
