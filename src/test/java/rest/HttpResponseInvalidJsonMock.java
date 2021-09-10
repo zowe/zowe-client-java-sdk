@@ -99,9 +99,7 @@ public class HttpResponseInvalidJsonMock {
 
                 @Override
                 public InputStream getContent() throws UnsupportedOperationException {
-                    InputStream stubInputStream =
-                            IOUtils.toInputStream(json, "UTF-8");
-                    return stubInputStream;
+                    return IOUtils.toInputStream(json, "UTF-8");
                 }
 
                 @Override

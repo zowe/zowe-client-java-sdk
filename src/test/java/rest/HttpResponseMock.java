@@ -98,9 +98,7 @@ public class HttpResponseMock {
 
                 @Override
                 public InputStream getContent() {
-                    InputStream stubInputStream =
-                            IOUtils.toInputStream(json, "UTF-8");
-                    return stubInputStream;
+                    return IOUtils.toInputStream(json, "UTF-8");
                 }
 
                 @Override
