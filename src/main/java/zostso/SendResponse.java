@@ -47,7 +47,7 @@ public class SendResponse {
      * @author Frank Giordano
      */
     public SendResponse(boolean success, List<ZosmfTsoResponse> zosmfResponse, String commandResponse) {
-        this.success = Optional.ofNullable(success);
+        this.success = Optional.of(success);
         this.zosmfResponse = Optional.ofNullable(zosmfResponse);
         this.commandResponse = Optional.ofNullable(commandResponse);
     }
