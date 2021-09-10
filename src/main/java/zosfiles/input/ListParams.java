@@ -137,7 +137,7 @@ public class ListParams {
 
     @Override
     public String toString() {
-        return "ListOptions{" +
+        return "ListParams{" +
                 "volume=" + volume +
                 ", attributes=" + attributes +
                 ", maxLength=" + maxLength +

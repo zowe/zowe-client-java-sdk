@@ -115,6 +115,7 @@ public class ZosDsn {
      * @param params      create dataset parameters, see CreateParams object
      */
     public void createDsn(String dataSetName, CreateParams params) {
+        Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);

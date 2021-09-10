@@ -48,11 +48,12 @@ public class ZosDsnList {
      * Get a list of members from a Dataset
      *
      * @param dataSetName name of a dataset (i.e. 'DATASET.LIB')
-     * @param options     list options, see ListParams object
+     * @param params     list parameters, see ListParams object
      * @return A String list of member names
      */
     @SuppressWarnings("unchecked")
-    public List<String> listMembers(String dataSetName, ListParams options) throws Exception {
+    public List<String> listMembers(String dataSetName, ListParams params) throws Exception {
+        Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
@@ -63,11 +64,11 @@ public class ZosDsnList {
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/"
                 + dataSetName + ZosFilesConstants.RES_DS_MEMBERS;
 
-        if (options.getPattern().isPresent()) {
-            url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN + options.getPattern().get();
+        if (params.getPattern().isPresent()) {
+            url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN + params.getPattern().get();
         }
 
-        Response response = getResponse(options, headers, url);
+        Response response = getResponse(params, headers, url);
         if (response.isEmpty())
             return members;
 
@@ -93,11 +94,12 @@ public class ZosDsnList {
      * Get a list of Dataset names
      *
      * @param dataSetName name of a dataset (i.e. 'DATASET.LIB')
-     * @param options     list options parameters, see ListParams object
+     * @param params     list parameters, see ListParams object
      * @return A String list of Dataset names
      */
     @SuppressWarnings("unchecked")
-    public List<Dataset> listDsn(String dataSetName, ListParams options) throws Exception {
+    public List<Dataset> listDsn(String dataSetName, ListParams params) throws Exception {
+        Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
@@ -109,14 +111,14 @@ public class ZosDsnList {
 
         url += ZosFilesConstants.QUERY_DS_LEVEL + dataSetName;
 
-        if (options.getVolume().isPresent()) {
-            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME + options.getVolume().get();
+        if (params.getVolume().isPresent()) {
+            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME + params.getVolume().get();
         }
-        if (options.getStart().isPresent()) {
-            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + options.getStart().get();
+        if (params.getStart().isPresent()) {
+            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + params.getStart().get();
         }
 
-        Response response = getResponse(options, headers, url);
+        Response response = getResponse(params, headers, url);
         if (response.isEmpty())
             return datasets;
 
@@ -138,41 +140,41 @@ public class ZosDsnList {
         return datasets;
     }
 
-    private Response getResponse(ListParams options, Map<String, String> headers, String url) throws Exception {
+    private Response getResponse(ListParams params, Map<String, String> headers, String url) throws Exception {
         LOG.debug(url);
-        setHeaders(options, headers);
+        setHeaders(params, headers);
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
                 ZoweRequestType.VerbType.GET_JSON);
         request.setAdditionalHeaders(headers);
         return request.executeHttpRequest();
     }
 
-    private void setHeaders(ListParams options, Map<String, String> headers) {
+    private void setHeaders(ListParams params, Map<String, String> headers) {
         String key, value;
         key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
         value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
         headers.put(key, value);
 
-        if (options.getAttributes().isPresent()) {
+        if (params.getAttributes().isPresent()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
             headers.put(key, value);
         }
-        if (options.getMaxLength().isPresent()) {
+        if (params.getMaxLength().isPresent()) {
             key = "X-IBM-Max-Items";
-            value = options.getMaxLength().get();
+            value = params.getMaxLength().get();
         } else {
             key = ZosmfHeaders.HEADERS.get("X_IBM_MAX_ITEMS").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
         }
         headers.put(key, value);
-        if (options.getResponseTimeout().isPresent()) {
+        if (params.getResponseTimeout().isPresent()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_RESPONSE_TIMEOUT").get(0);
-            value = options.getResponseTimeout().get();
+            value = params.getResponseTimeout().get();
             headers.put(key, value);
         }
-        if (options.getRecall().isPresent()) {
-            switch (options.getRecall().get().toLowerCase(Locale.ROOT)) {
+        if (params.getRecall().isPresent()) {
+            switch (params.getRecall().get().toLowerCase(Locale.ROOT)) {
                 case "wait":
                     key = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_WAIT").get(0);
                     value = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_WAIT").get(1);

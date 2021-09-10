@@ -46,10 +46,11 @@ public class ZosDsnDownload {
      * Downloads dataset or dataset member content
      *
      * @param dataSetName name of a dataset or a dataset member (f.e. DATASET.LIB(MEMBER))
-     * @param options     download options parameters, see DownloadParams object
+     * @param params     download params parameters, see DownloadParams object
      * @return a content stream
      */
-    public InputStream downloadDsn(String dataSetName, DownloadParams options) {
+    public InputStream downloadDsn(String dataSetName, DownloadParams params) {
+        Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
@@ -58,16 +59,16 @@ public class ZosDsnDownload {
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
 
         try {
-            if (options.getVolume().isPresent()) {
-                url += options.getVolume().get();
+            if (params.getVolume().isPresent()) {
+                url += params.getVolume().get();
             }
             url += dataSetName;
             LOG.debug(url);
 
             String key, value;
-            Map<String, String> headers = UtilZosFiles.generateHeadersBasedOnOptions(options);
+            Map<String, String> headers = UtilZosFiles.generateHeadersBasedOnOptions(params);
 
-            if (options.getReturnEtag().isPresent()) {
+            if (params.getReturnEtag().isPresent()) {
                 key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
                 value = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(1);
                 headers.put(key, value);

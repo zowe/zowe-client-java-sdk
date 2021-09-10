@@ -41,7 +41,7 @@ public class ZosFilesParams {
 
     @Override
     public String toString() {
-        return "ZosFilesOptions{" +
+        return "ZosFilesParams{" +
                 "responseTimeout=" + responseTimeout +
                 '}';
     }
