@@ -144,7 +144,8 @@ public class SendTso {
                     if (tsoDatum.getTsoMessage().isPresent()) {
                         TsoMessage tsoMsg = tsoDatum.getTsoMessage().orElseThrow(Exception::new);
                         String data = tsoMsg.getData().orElseThrow(Exception::new);
-                        messages.append(data + "\n");
+                        messages.append(data);
+                        messages.append("\n");
                     } else if (tsoDatum.getTsoPrompt().isPresent()) {
                         if (messages.length() > 0) {
                             done = true;
