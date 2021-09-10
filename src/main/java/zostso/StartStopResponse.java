@@ -29,7 +29,7 @@ public class StartStopResponse {
     /**
      * Response from z/OSMF to start rest call
      */
-    public Optional<ZosmfTsoResponse> zosmfTsoResponse;
+    public final Optional<ZosmfTsoResponse> zosmfTsoResponse;
 
     /**
      * If an error occurs, returns error which contains cause error.
@@ -39,7 +39,7 @@ public class StartStopResponse {
     /**
      * Servlet key from ZosmfTsoResponse
      */
-    public Optional<String> servletKey;
+    public final Optional<String> servletKey;
 
     /**
      * StartStopResponse constructor

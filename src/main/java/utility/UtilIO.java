@@ -25,12 +25,12 @@ public class UtilIO {
     /**
      * File delimiter
      */
-    public static String FILE_DELIM = "/";
+    public static final String FILE_DELIM = "/";
 
     /**
      * UTF8 identifier
      */
-    public static String UTF8 = "UTF8";
+    public static final String UTF8 = "UTF8";
 
     /**
      * Windows OS identifier

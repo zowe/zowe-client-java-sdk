@@ -35,7 +35,7 @@ public abstract class ZoweRequest {
     private final ZoweRequestType.VerbType requestType;
     protected final ZOSConnection connection;
     protected HttpClient client;
-    protected HttpContext localContext = new BasicHttpContext();
+    protected final HttpContext localContext = new BasicHttpContext();
     protected HttpResponse httpResponse;
 
     /**

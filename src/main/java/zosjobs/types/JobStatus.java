@@ -30,6 +30,6 @@ public class JobStatus {
      * The "order" indicates the logical order of job progression within the system. Used to determine if the job will
      * NEVER enter the status that is requested on the API (e.g. if the status is OUTPUT, the job will never be ACTIVE)
      */
-    public static String[] Order = {"INPUT", "ACTIVE", "OUTPUT"};
+    public static final String[] Order = {"INPUT", "ACTIVE", "OUTPUT"};
 
 }
