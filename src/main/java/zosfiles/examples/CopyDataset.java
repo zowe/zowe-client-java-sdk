@@ -34,7 +34,7 @@ public class CopyDataset {
      * @throws Exception error in processing request
      * @author Leonid Baranov
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         String hostName = "XXX";
         String zosmfPort = "XXX";
         String userName = "XXX";
