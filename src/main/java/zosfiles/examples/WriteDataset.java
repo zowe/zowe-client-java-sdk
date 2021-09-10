@@ -40,7 +40,7 @@ public class WriteDataset {
         WriteDataset.writeToDsnMember(connection, datasetMember, "NEW CONTENT\nTHE SECOND LINE UPDATED");
     }
 
-    private static void writeToDsnMember(ZOSConnection connection, String datasetMember, String content) {
+    private static void writeToDsnMember(ZOSConnection connection, String datasetMember, String content) throws Exception {
         new ZosDsn(connection).writeDsn(datasetMember, content);
     }
 
