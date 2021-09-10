@@ -128,7 +128,7 @@ public class IssueCommand {
         ConsoleResponse response = new ConsoleResponse();
 
         ZosmfIssueResponse resp = issueCommon(consoleName, commandParams);
-        response = UtilConsole.populate(resp, response, params.getProcessResponses().isPresent() ?
+        UtilConsole.populate(resp, response, params.getProcessResponses().isPresent() ?
                 params.getProcessResponses().get() : true);
 
         return response;
