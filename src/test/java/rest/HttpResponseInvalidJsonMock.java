@@ -21,7 +21,7 @@ import java.util.UUID;
 
 public class HttpResponseInvalidJsonMock {
 
-    private HttpResponse httpResponse =  new HttpResponse() {
+    private HttpResponse httpResponse = new HttpResponse() {
 
         private String json = UUID.randomUUID().toString();
 

@@ -107,7 +107,7 @@ public class UtilTsoTest {
         try {
             UtilTso.getZosmfTsoResponse(response);
         } catch (Exception e) {
-           msg = e.getMessage();
+            msg = e.getMessage();
         }
         assertTrue(msg.equals(MISSING_FIELD_ERROR_MSG));
     }
@@ -144,7 +144,7 @@ public class UtilTsoTest {
     public void tstGetZosmfTsoResponseMissingTsoDataJsonFieldFailWithEmptyResults() throws Exception {
         String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"queueID\":\"0100\"," +
                 "\"reused\":true,\"timeout\":true}";
-        Response response = new Response(new JSONParser().parse(json),200);
+        Response response = new Response(new JSONParser().parse(json), 200);
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
         assertTrue(zosmfTsoResponse.getTsoData().isEmpty() == true);
     }
