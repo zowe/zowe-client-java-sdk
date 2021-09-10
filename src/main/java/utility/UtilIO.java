@@ -280,9 +280,9 @@ public class UtilIO {
      */
     public static String getDefaultTextEditor() {
         String OS = System.getProperty("os.name").toLowerCase();
-        if (OS.indexOf("win") >= 0) {
+        if (OS.contains("win")) {
             return "notepad";
-        } else if ((OS.indexOf("mac") >= 0)) {
+        } else if ((OS.contains("mac"))) {
             return "open -a TextEdit";
         } else {
             return "gedit";

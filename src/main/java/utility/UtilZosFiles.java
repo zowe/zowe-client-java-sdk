@@ -54,7 +54,7 @@ public class UtilZosFiles {
         final Pattern pattern = Pattern.compile(regex);
         final Matcher matcher = pattern.matcher(string);
         String localDirectory = dataSet.replace(matcher.group(0), UtilIO.FILE_DELIM).toLowerCase(Locale.ROOT);
-        if (localDirectory.indexOf("(") >= 0 && localDirectory.indexOf(")") >= 0) {
+        if (localDirectory.contains("(") && localDirectory.contains(")")) {
             localDirectory = localDirectory.replace("(", UtilIO.FILE_DELIM);
             localDirectory = localDirectory.substring(0, -1);
         }
