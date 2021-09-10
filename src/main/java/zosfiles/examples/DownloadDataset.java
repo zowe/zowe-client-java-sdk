@@ -13,6 +13,7 @@ import core.ZOSConnection;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import utility.UtilIO;
 import zosfiles.ZosDsnDownload;
 import zosfiles.input.DownloadParams;
 
@@ -51,11 +52,12 @@ public class DownloadDataset {
         DownloadDataset.downloadDsnMember(connection, datasetMember, params);
     }
 
-    private static void downloadDsnMember(ZOSConnection connection, String name, DownloadParams params) throws IOException {
+    private static void downloadDsnMember(ZOSConnection connection, String name, DownloadParams params)
+            throws IOException {
         try (InputStream inputStream = new ZosDsnDownload(connection).downloadDsn(name, params)) {
             if (inputStream != null) {
                 StringWriter writer = new StringWriter();
-                IOUtils.copy(inputStream, writer, "UTF8");
+                IOUtils.copy(inputStream, writer, UtilIO.UTF8);
                 String content = writer.toString();
                 LOG.info(content);
             }
