@@ -128,8 +128,7 @@ public class ZosmfHeaders {
      */
     public final static String IF_MATCH = "IF_MATCH";
     /**
-     * Header to set response timeout
-     * Timeout defaults to 30 seconds if not modified
+     * Header to set response timeout defaults to 30 seconds if not modified
      */
     public final static String X_IBM_RESPONSE_TIMEOUT = "X_IBM_RESPONSE_TIMEOUT";
     /**

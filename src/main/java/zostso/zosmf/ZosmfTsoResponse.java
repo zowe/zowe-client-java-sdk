@@ -51,7 +51,7 @@ public class ZosmfTsoResponse {
     private final Optional<List<ZosmfMessages>> msgData;
 
     /**
-     * Id of the tso session
+     * The id of the tso session
      */
     private final Optional<String> sessionId;
 

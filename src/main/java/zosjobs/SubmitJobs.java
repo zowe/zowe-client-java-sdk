@@ -110,7 +110,7 @@ public class SubmitJobs {
     /**
      * Submit a string of JCL to run
      *
-     * @param jcl                 JCL content that you want to be submit
+     * @param jcl                 JCL content that you want to be submitted
      * @param internalReaderRecfm record format of the jcl you want to submit. "F" (fixed) or "V" (variable)
      * @param internalReaderLrecl logical record length of the jcl you want to submit
      * @return job document with details about the submitted job

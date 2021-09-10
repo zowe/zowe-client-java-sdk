@@ -58,14 +58,14 @@ public class DownloadParams {
     /**
      * The indicator to force return of ETag.
      * If set to 'true' it forces the response to include an "ETag" header, regardless of the size of the response data.
-     * If it is not present, the the default is to only send an Etag for data sets smaller than a system determined length,
+     * If it is not present, the default is to only send an Etag for data sets smaller than a system determined length,
      * which is at least 8MB.
      */
     private final Optional<Boolean> returnEtag;
 
     /**
      * Indicates if the created directories and files use the original letter case, which is for data sets always uppercase.
-     * The default value is false for backward compability.
+     * The default value is false for backward compatibility.
      * If the option "directory" or "file" is provided, this option doesn't have any effect.
      * This option has only effect on automatically generated directories and files.
      */

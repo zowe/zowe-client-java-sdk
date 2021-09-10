@@ -20,7 +20,7 @@ import java.util.Optional;
 public class ConsoleParams {
 
     /**
-     * The z/OS emcs console to direct the commands.
+     * The z/OS mvs console to direct the commands.
      */
     private Optional<String> consoleName = Optional.empty();
 

@@ -62,7 +62,7 @@ public class GetJobs {
     }
 
     /**
-     * Get jobs that match a job name by prefix. Defaults to jobs owned by the user ID in the session.
+     * Get jobs that match a job name by prefix. Defaults to job(s) owned by the user ID in the session.
      *
      * @param prefix job name prefix for which to list jobs. Supports wildcard e.g. JOBNM*
      * @return list of job objects (matching jobs)
@@ -219,7 +219,7 @@ public class GetJobs {
 
     /**
      * Get the status and other details (e.g. owner, return code) for a job
-     * Alternate version of the API that accepts an Job object returned by
+     * Alternate version of the API that accepts a Job object returned by
      * other APIs such as SubmitJobs. Even though the parameter and return
      * value are of the same type, the Job object returned will have the
      * current status of the job.
@@ -289,7 +289,7 @@ public class GetJobs {
 
     /**
      * Get a list of all job spool files for a job.
-     * Alternate version of the API that accepts an Job object returned by
+     * Alternate version of the API that accepts a Job object returned by
      * other APIs such as SubmitJobs.
      *
      * @param job job for which you would like to get a list of job spool files
@@ -376,7 +376,7 @@ public class GetJobs {
 
     /**
      * Get JCL from a job.
-     * Alternate version of the API that accepts an Job object returned by
+     * Alternate version of the API that accepts a Job object returned by
      * other APIs such as SubmitJobs.
      *
      * @param job job for which you would like to retrieve JCL

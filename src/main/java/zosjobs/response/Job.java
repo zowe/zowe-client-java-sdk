@@ -25,7 +25,7 @@ public class Job {
     private final Optional<String> jobId;
 
     /**
-     * Job name for a job
+     * Job Name for a job
      */
     private final Optional<String> jobName;
 

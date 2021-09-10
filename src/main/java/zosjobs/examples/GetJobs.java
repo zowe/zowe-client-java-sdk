@@ -209,7 +209,7 @@ public class GetJobs {
     }
 
     /**
-     * Example on how to call GetJobs getJobs method. It returns a list of all
+     * Example on how to call GetJobs' getJobs method. It returns a list of all
      * jobs available for the logged-in user.
      *
      * @throws Exception error in processing request

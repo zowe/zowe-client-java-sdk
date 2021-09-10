@@ -112,7 +112,7 @@ public class ZosFilesConstants {
     public static final String QUERY_PATTERN = "pattern=";
 
     /**
-     * An optional search parameter that specifies the first data set name to return in the response document
+     * An optional search parameter that specifies the first data set name returning to the response document
      */
     public static final String QUERY_START = "start=";
 

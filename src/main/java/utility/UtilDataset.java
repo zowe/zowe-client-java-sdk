@@ -88,7 +88,7 @@ public class UtilDataset {
      *
      * @param dataSetName     Dataset name to validate as per the above rules
      * @param additionalTests Set to true to check that a dataset has more than one segment (for example, when used by
-     *                        listMembers()). Set to false to ignore this check (for example, when used by listDsn()).
+     *                        listMembers()). Set too false to ignore this check (for example, when used by listDsn()).
      * @throws Exception if given dataset format is invalid
      * @author Corinne DeStefano
      */

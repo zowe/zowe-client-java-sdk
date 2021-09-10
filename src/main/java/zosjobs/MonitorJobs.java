@@ -26,7 +26,7 @@ import java.util.Optional;
 
 /**
  * APIs for monitoring the status of a job. Use these APIs to wait for a job to enter the specified status. All APIs
- * in monitor jobs invoke z/OSMF jobs REST endpoints to obtain job status information.
+ * in MonitorJobs invoke z/OSMF jobs REST endpoints to obtain job status information.
  *
  * @author Frank Giordano
  * @version 1.0
@@ -114,7 +114,7 @@ public class MonitorJobs {
     }
 
     /**
-     * Given an Job document (has jobname/jobid), waits for the given message from the job. This API will poll for
+     * Given a Job document (has jobname/jobid), waits for the given message from the job. This API will poll for
      * the given message once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
      * sufficient, use "waitForMessageCommon" method to adjust.
      * <p>
@@ -257,7 +257,7 @@ public class MonitorJobs {
     }
 
     /**
-     * Given an Job document (has jobname/jobid), waits for the status of the job to be "OUTPUT". This API will poll for
+     * Given a Job document (has jobname/jobid), waits for the status of the job to be "OUTPUT". This API will poll for
      * the OUTPUT status once every 3 seconds indefinitely. If the polling interval/duration is NOT sufficient, use
      * "waitForStatusCommon" to adjust.
      * <p>
