@@ -13,7 +13,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.*;
 import org.apache.http.params.HttpParams;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Locale;
