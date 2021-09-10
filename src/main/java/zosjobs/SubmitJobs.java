@@ -193,7 +193,7 @@ public class SubmitJobs {
         JSONParser parser = new JSONParser();
         JSONObject json = null;
         try {
-            json = (JSONObject) parser.parse((String) response.getResponsePhrase().get());
+            json = (JSONObject) parser.parse((String) response.getResponsePhrase().orElse(""));
         } catch (ParseException e) {
             e.printStackTrace();
         }
