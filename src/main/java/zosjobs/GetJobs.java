@@ -10,9 +10,6 @@
 package zosjobs;
 
 import core.ZOSConnection;
-
-import java.util.*;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
@@ -25,6 +22,9 @@ import zosjobs.input.CommonJobParams;
 import zosjobs.input.GetJobParams;
 import zosjobs.input.JobFile;
 import zosjobs.response.Job;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class to handle obtaining of z/OS batch job information

@@ -11,7 +11,6 @@ package utility;
 
 import core.ZOSConnection;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;

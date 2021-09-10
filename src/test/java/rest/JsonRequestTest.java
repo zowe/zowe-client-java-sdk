@@ -10,13 +10,12 @@
 package rest;
 
 import core.ZOSConnection;
-import org.apache.http.*;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.protocol.BasicHttpContext;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;

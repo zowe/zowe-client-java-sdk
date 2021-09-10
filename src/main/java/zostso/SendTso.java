@@ -20,7 +20,10 @@ import utility.Util;
 import utility.UtilRest;
 import utility.UtilTso;
 import zostso.input.SendTsoParams;
-import zostso.zosmf.*;
+import zostso.zosmf.TsoMessage;
+import zostso.zosmf.TsoMessages;
+import zostso.zosmf.TsoResponseMessage;
+import zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.ArrayList;
 import java.util.List;

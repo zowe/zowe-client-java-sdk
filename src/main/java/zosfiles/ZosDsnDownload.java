@@ -20,7 +20,7 @@ import utility.UtilZosFiles;
 import zosfiles.input.DownloadParams;
 
 import java.io.InputStream;
-import java.util.*;
+import java.util.Map;
 
 /**
  * ZosDsnDownload class that provides download DataSet function

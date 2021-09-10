@@ -17,8 +17,6 @@ import org.powermock.reflect.Whitebox;
 import rest.Response;
 import rest.TextGetRequest;
 
-import java.util.Optional;
-
 import static org.junit.Assert.assertTrue;
 
 public class GetJobsByTextGetRequestTest {

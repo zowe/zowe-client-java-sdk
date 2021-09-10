@@ -9,8 +9,8 @@
  */
 package zosfiles.input;
 
-import java.util.Optional;
 import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * This interface defines the options that can be sent into the download data set function

@@ -16,8 +16,6 @@ import rest.Response;
 import zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
 
