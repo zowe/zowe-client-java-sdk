@@ -50,7 +50,7 @@ public class StartStopResponse {
      * @author Frank Giordano
      */
     public StartStopResponse(boolean success, ZosmfTsoResponse zosmfTsoResponse, String servletKey) {
-        this.success = Optional.ofNullable(success);
+        this.success = Optional.of(success);
         this.zosmfTsoResponse = Optional.ofNullable(zosmfTsoResponse);
         this.servletKey = Optional.ofNullable(servletKey);
     }
@@ -102,7 +102,7 @@ public class StartStopResponse {
      * @author Frank Giordano
      */
     public void setSuccess(boolean success) {
-        this.success = Optional.ofNullable(success);
+        this.success = Optional.of(success);
     }
 
     /**

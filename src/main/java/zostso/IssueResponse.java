@@ -65,9 +65,9 @@ public class IssueResponse {
      */
     public IssueResponse(boolean success, StartStopResponses startResponse, boolean startReady,
                          StartStopResponse stopResponses, ZosmfTsoResponse zosmfResponse, String commandResponses) {
-        this.success = Optional.ofNullable(success);
+        this.success = Optional.of(success);
         this.startResponse = Optional.ofNullable(startResponse);
-        this.startReady = Optional.ofNullable(startReady);
+        this.startReady = Optional.of(startReady);
         this.stopResponse = Optional.ofNullable(stopResponses);
         this.zosmfResponse = Optional.ofNullable(zosmfResponse);
         this.commandResponses = Optional.ofNullable(commandResponses);

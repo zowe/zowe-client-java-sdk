@@ -69,8 +69,8 @@ public class ZosmfTsoResponse {
         this.servletKey = Optional.ofNullable(builder.servletKey);
         this.queueId = Optional.ofNullable(builder.queueId);
         this.ver = Optional.ofNullable(builder.ver);
-        this.reused = Optional.ofNullable(builder.reused);
-        this.timeout = Optional.ofNullable(builder.timeout);
+        this.reused = Optional.of(builder.reused);
+        this.timeout = Optional.of(builder.timeout);
         this.msgData = Optional.ofNullable(builder.msgData);
         this.sessionId = Optional.ofNullable(builder.sessionId);
         this.tsoData = Optional.ofNullable(builder.tsoData);

@@ -68,10 +68,10 @@ public class MonitorJobWaitForParams {
     private MonitorJobWaitForParams(MonitorJobWaitForParams.Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);
-        this.watchDelay = Optional.ofNullable(builder.watchDelay);
+        this.watchDelay = Optional.of(builder.watchDelay);
         this.jobStatus = Optional.ofNullable(builder.jobStatus);
-        this.attempts = Optional.ofNullable(builder.attempts);
-        this.lineLimit = Optional.ofNullable(builder.lineLimit);
+        this.attempts = Optional.of(builder.attempts);
+        this.lineLimit = Optional.of(builder.lineLimit);
     }
 
     /**
