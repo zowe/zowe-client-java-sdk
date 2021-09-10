@@ -69,7 +69,7 @@ public class UtilJobs {
     public static void throwHttpException(ModifyJobParams params, Exception exception) throws Exception {
         String errorMsg = exception.getMessage();
         if (errorMsg.contains("400"))
-            throw new Exception(errorMsg + " JobId " + params.getJobId().get() + " may not exist.");
+            throw new Exception(errorMsg + " JobId " + params.getJobId().orElse("n/a") + " may not exist.");
         throw new Exception(errorMsg);
     }
 

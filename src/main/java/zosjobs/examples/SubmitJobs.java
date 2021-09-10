@@ -48,7 +48,7 @@ public class SubmitJobs {
         submitJobsTest = monitorJobs.waitForJobStatus(submitJobsTest, zosjobs.types.JobStatus.Type.OUTPUT);
         System.out.println(submitJobsTest);
         // Get the return code
-        String retCode = submitJobsTest.getRetCode().get();
+        String retCode = submitJobsTest.getRetCode().orElse("empty ret code");
         System.out.println("Expected Return Code = CC 0000 [" + retCode + "]");
     }
 

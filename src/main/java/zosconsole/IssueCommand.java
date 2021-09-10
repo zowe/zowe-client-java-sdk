@@ -105,7 +105,8 @@ public class IssueCommand {
      */
     public ZosmfIssueResponse issueDefConsoleCommon(ZosmfIssueParams commandParams) throws Exception {
         ZosmfIssueResponse resp = issueCommon(ConsoleConstants.RES_DEF_CN, commandParams);
-        resp.setCmdResponse(StringEscapeUtils.escapeJava(resp.getCmdResponse().get()));
+        resp.setCmdResponse(StringEscapeUtils.escapeJava(
+                resp.getCmdResponse().orElseThrow(() -> new Exception(" empty cmd response"))));
         return resp;
     }
 

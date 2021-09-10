@@ -67,8 +67,8 @@ public class MonitorJobs {
         Job job = submitJobs.submitJcl(jclString, null, null);
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
         job = monitorJobs.waitForJobOutputStatus(job);
-        LOG.info("Job status for Job " + job.getJobName().get() + ":" +
-                job.getJobId().get() + " is " + job.getStatus().get());
+        LOG.info("Job status for Job " + job.getJobName().orElse("n/a") + ":" +
+                job.getJobId().orElse("n/a") + " is " + job.getStatus().orElse("n/a"));
     }
 
     /**
@@ -83,7 +83,9 @@ public class MonitorJobs {
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
         Job job = submitJobs.submitJcl(jclString, null, null);
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
-        job = monitorJobs.waitForJobOutputStatus(job.getJobName().get(), job.getJobId().get());
+        job = monitorJobs.waitForJobOutputStatus(
+                job.getJobName().orElseThrow(() -> new Exception("empty job empty")),
+                job.getJobId().orElseThrow(() -> new Exception("empty job id")));
         LOG.info("Job status for Job " + job.getJobName().get() + ":" +
                 job.getJobId().get() + " is " + job.getStatus().get());
     }
@@ -102,8 +104,8 @@ public class MonitorJobs {
         Job job = new Job.Builder().jobName("XXX").jobId("XXX").build();
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
         job = monitorJobs.waitForJobStatus(job, statusType);
-        LOG.info("Job status for Job " + job.getJobName().get() + ":" +
-                job.getJobId().get() + " is " + job.getStatus().get());
+        LOG.info("Job status for Job " + job.getJobName().orElse("n/a") + ":" +
+                job.getJobId().orElse("n/a") + " is " + job.getStatus().orElse("n/a"));
     }
 
     /**
@@ -119,7 +121,9 @@ public class MonitorJobs {
         // determine an existing job in your system that is in execute queue and make a Job for it
         Job job = new Job.Builder().jobName("XXX").jobId("XXX").build();
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
-        job = monitorJobs.waitForJobStatus(job.getJobName().get(), job.getJobId().get(), statusType);
+        job = monitorJobs.waitForJobStatus(
+                job.getJobName().orElseThrow(() -> new Exception("empty job empty")),
+                job.getJobId().orElseThrow(() -> new Exception("empty job id")), statusType);
         LOG.info("Job status for Job " + job.getJobName().get() + ":" +
                 job.getJobId().get() + " is " + job.getStatus().get());
     }

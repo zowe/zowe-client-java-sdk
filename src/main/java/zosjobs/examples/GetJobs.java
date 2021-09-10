@@ -80,7 +80,8 @@ public class GetJobs {
     private static void getJclCommon(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         LOG.info(getJobs.getJclCommon(
-                new CommonJobParams(jobs.get(0).getJobId().get(), jobs.get(0).getJobName().get())));
+                new CommonJobParams(jobs.get(0).getJobId().orElseThrow(() -> new Exception("empty job id"))
+                        , jobs.get(0).getJobName().orElseThrow(() -> new Exception("empty job name")))));
     }
 
     /**
@@ -106,7 +107,8 @@ public class GetJobs {
      */
     private static void getJcl(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
-        LOG.info(getJobs.getJcl(jobs.get(0).getJobName().get(), jobs.get(0).getJobId().get()));
+        LOG.info(getJobs.getJcl(jobs.get(0).getJobName().orElseThrow(() -> new Exception("return empty job id")),
+                jobs.get(0).getJobId().orElseThrow(() -> new Exception("return empty job id"))));
     }
 
     /**
@@ -138,7 +140,8 @@ public class GetJobs {
     private static void getStatus(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         try {
-            Job job = getJobs.getStatus(jobs.get(0).getJobName().get(), jobs.get(0).getJobId().get());
+            Job job = getJobs.getStatus(jobs.get(0).getJobName().orElseThrow(() -> new Exception("return empty job name")),
+                    jobs.get(0).getJobId().orElseThrow(() -> new Exception("return empty job id")));
             LOG.info(job);
         } catch (Exception e) {
             e.printStackTrace();
@@ -170,7 +173,7 @@ public class GetJobs {
      */
     private static void getJob(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
-        String jobId = jobs.get(0).getJobId().get();
+        String jobId = jobs.get(0).getJobId().orElseThrow(() -> new Exception("returned empty job id"));
         try {
             Job job = getJobs.getJob(jobId);
             LOG.info(job);
@@ -278,8 +281,9 @@ public class GetJobs {
     private static void getSpoolFiles(String prefix) throws Exception {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(params);
-        List<JobFile> files = getJobs.getSpoolFiles(jobs.get(0).getJobName().get(),
-                jobs.get(0).getJobId().get());
+        List<JobFile> files = getJobs.getSpoolFiles(
+                jobs.get(0).getJobName().orElseThrow(() -> new Exception("returned empty job name")),
+                jobs.get(0).getJobId().orElseThrow(() -> new Exception("returned empty job id")));
         files.forEach(LOG::info);
     }
 

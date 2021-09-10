@@ -298,7 +298,9 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public List<JobFile> getSpoolFilesForJob(Job job) throws Exception {
-        return getSpoolFilesCommon(new CommonJobParams(job.getJobId().get(), job.getJobName().get()));
+        return getSpoolFilesCommon(
+                new CommonJobParams(job.getJobId().orElseThrow(() -> new Exception("empty job id")),
+                        job.getJobName().orElseThrow(() -> new Exception("empty job name"))));
     }
 
     /**

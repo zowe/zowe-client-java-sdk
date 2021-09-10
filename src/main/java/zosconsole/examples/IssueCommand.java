@@ -61,7 +61,7 @@ public class IssueCommand {
         zosconsole.IssueCommand issueCommand = new zosconsole.IssueCommand(connection);
         try {
             response = issueCommand.issue(params);
-            LOG.info(response.getCommandResponse().get());
+            LOG.info(response.getCommandResponse().orElse("empty cmd response")));
         } catch (Exception e) {
             LOG.info(e.getMessage());
         }
@@ -79,7 +79,7 @@ public class IssueCommand {
         zosconsole.IssueCommand issueCommand = new zosconsole.IssueCommand(connection);
         try {
             response = issueCommand.issueSimple(cmd);
-            LOG.info(response.getCommandResponse().get());
+            LOG.info(response.getCommandResponse().orElseThrow(() -> new Exception("returned empty cmd response")));
         } catch (Exception e) {
             LOG.info(e.getMessage());
         }
@@ -99,7 +99,7 @@ public class IssueCommand {
         zosconsole.IssueCommand issueCommand = new zosconsole.IssueCommand(connection);
         try {
             zResponse = issueCommand.issueDefConsoleCommon(params);
-            LOG.info(zResponse.getCmdResponse().get());
+            LOG.info(zResponse.getCmdResponse().orElseThrow(() -> new Exception("returned empty cmd response")));
         } catch (Exception e) {
             LOG.info(e.getMessage());
         }
