@@ -58,8 +58,7 @@ public class UtilIO {
         Util.checkStateParameter(dirOrFile.isEmpty(), "dirOrFile not specified");
         Path path = Paths.get(dirOrFile);
 
-        Boolean stat = Files.isDirectory(path);
-        return stat;
+        return Files.isDirectory(path);
     }
 
     /**
@@ -250,8 +249,7 @@ public class UtilIO {
         Util.checkNullParameter(file == null, "dirOrFile is null");
         Util.checkStateParameter(file.isEmpty(), "dirOrFile not specified");
         // Creates an OutputStream
-        FileOutputStream output = new FileOutputStream(file);
-        return output;
+        return new FileOutputStream(file);
     }
 
     /**
