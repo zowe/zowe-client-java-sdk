@@ -59,13 +59,11 @@ public class IssueTsoCommand {
             startResponses.getCollectedResponses().get().forEach(LOG::info);
             List<ZosmfTsoResponse> zosmfTsoResponses = startResponses.getCollectedResponses().get();
 
-            zosmfTsoResponses.forEach(tso -> {
-                tso.getTsoData().get().forEach(msg -> {
-                    if (msg.getTsoPrompt().isEmpty()) {
-                        LOG.info(msg.getTsoMessage().get().getVersion() + " " + msg.getTsoMessage().get().getData());
-                    }
-                });
-            });
+            zosmfTsoResponses.forEach(tso -> tso.getTsoData().get().forEach(msg -> {
+                if (msg.getTsoPrompt().isEmpty()) {
+                    LOG.info(msg.getTsoMessage().get().getVersion() + " " + msg.getTsoMessage().get().getData());
+                }
+            }));
         }
     }
 
