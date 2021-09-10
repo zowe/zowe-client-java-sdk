@@ -54,7 +54,7 @@ public class MonitorJobs {
     /**
      * Default expected job status ("OUTPUT")
      */
-    public static JobStatus.Type DEFAULT_STATUS = JobStatus.Type.OUTPUT;
+    public static final JobStatus.Type DEFAULT_STATUS = JobStatus.Type.OUTPUT;
 
     /**
      * Default number of poll attempts to check for the specified job status.

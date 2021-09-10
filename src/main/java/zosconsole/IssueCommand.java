@@ -52,7 +52,7 @@ public class IssueCommand {
     /**
      * Issue an MVS console command, returns "raw" z/OSMF response
      *
-     * @param consoleName   string name of the EMCS console that is used to issue the command
+     * @param consoleName   string name of the mvs console that is used to issue the command
      * @param commandParams synchronous console issue parameters, see ZosmfIssueParams object
      * @return command response on resolve, see ZosmfIssueResponse object
      * @throws Exception processing error
