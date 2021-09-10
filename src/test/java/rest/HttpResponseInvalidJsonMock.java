@@ -26,7 +26,7 @@ public class HttpResponseInvalidJsonMock {
 
         @Override
         public StatusLine getStatusLine() {
-            StatusLine sl = new StatusLine() {
+            return new StatusLine() {
                 @Override
                 public ProtocolVersion getProtocolVersion() {
                     return null;
@@ -42,7 +42,6 @@ public class HttpResponseInvalidJsonMock {
                     return json;
                 }
             };
-            return sl;
         }
 
         @Override
