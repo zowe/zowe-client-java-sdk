@@ -21,9 +21,9 @@ import java.util.UUID;
 
 public class HttpResponseInvalidJsonMock {
 
-    private HttpResponse httpResponse = new HttpResponse() {
+    private final HttpResponse httpResponse = new HttpResponse() {
 
-        private String json = UUID.randomUUID().toString();
+        private final String json = UUID.randomUUID().toString();
 
         @Override
         public StatusLine getStatusLine() {

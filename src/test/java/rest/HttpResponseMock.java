@@ -20,9 +20,9 @@ import java.util.Locale;
 
 public class HttpResponseMock {
 
-    private HttpResponse httpResponse = new HttpResponse() {
+    private final HttpResponse httpResponse = new HttpResponse() {
 
-        private String json = "{\"data\":{}}";
+        private final String json = "{\"data\":{}}";
 
         @Override
         public StatusLine getStatusLine() {
