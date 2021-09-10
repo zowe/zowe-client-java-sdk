@@ -154,7 +154,7 @@ public class UtilTsoTest {
                 "\"--> LOGON proc version = 04/28/2011\"}}]}";
         Response response = new Response(new JSONParser().parse(json), 200);
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
-        assertTrue(zosmfTsoResponse.getTsoData().isEmpty() != true);
+        assertTrue(!zosmfTsoResponse.getTsoData().isEmpty());
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty());
         assertTrue((boolean) zosmfTsoResponse.getTimeout().get());
         assertTrue((boolean) zosmfTsoResponse.getReused().get());
@@ -174,7 +174,7 @@ public class UtilTsoTest {
                 "\"--> LOGON proc version = 04/28/2011\"}}]}";
         Response response = new Response(new JSONParser().parse(json), 200);
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
-        assertTrue(zosmfTsoResponse.getTsoData().isEmpty() != true);
+        assertTrue(!zosmfTsoResponse.getTsoData().isEmpty());
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty());
         assertTrue((boolean) zosmfTsoResponse.getTimeout().get());
         assertTrue((boolean) zosmfTsoResponse.getReused().get());
@@ -195,7 +195,7 @@ public class UtilTsoTest {
                 "\"hidden\"}}]}";
         Response response = new Response(new JSONParser().parse(json), 200);
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
-        assertTrue(zosmfTsoResponse.getTsoData().isEmpty() != true);
+        assertTrue(!zosmfTsoResponse.getTsoData().isEmpty());
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty());
         assertTrue((boolean) zosmfTsoResponse.getTimeout().get());
         assertTrue((boolean) zosmfTsoResponse.getReused().get());
