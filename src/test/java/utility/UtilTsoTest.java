@@ -36,8 +36,8 @@ public class UtilTsoTest {
         ZosmfTsoResponse response = UtilTso.parseJsonStopResponse(json);
         assertEquals("ver", response.getVer().get());
         assertEquals("servletKey", response.getServletKey().get());
-        assertTrue((boolean) response.getReused().get());
-        assertTrue((boolean) response.getTimeout().get());
+        assertTrue(response.getReused().get());
+        assertTrue(response.getTimeout().get());
     }
 
     @Test
@@ -156,8 +156,8 @@ public class UtilTsoTest {
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
         assertFalse(zosmfTsoResponse.getTsoData().isEmpty());
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty());
-        assertTrue((boolean) zosmfTsoResponse.getTimeout().get());
-        assertTrue((boolean) zosmfTsoResponse.getReused().get());
+        assertTrue(zosmfTsoResponse.getTimeout().get());
+        assertTrue(zosmfTsoResponse.getReused().get());
         assertEquals("0100", zosmfTsoResponse.getVer().get());
         assertEquals("0100", zosmfTsoResponse.getQueueId().get());
         assertEquals("ZOSMFAD-71-aabcaaaf", zosmfTsoResponse.getServletKey().get());
@@ -176,8 +176,8 @@ public class UtilTsoTest {
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
         assertFalse(zosmfTsoResponse.getTsoData().isEmpty());
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty());
-        assertTrue((boolean) zosmfTsoResponse.getTimeout().get());
-        assertTrue((boolean) zosmfTsoResponse.getReused().get());
+        assertTrue(zosmfTsoResponse.getTimeout().get());
+        assertTrue(zosmfTsoResponse.getReused().get());
         assertEquals("0100", zosmfTsoResponse.getVer().get());
         assertEquals("0100", zosmfTsoResponse.getQueueId().get());
         assertEquals("ZOSMFAD-71-aabcaaaf", zosmfTsoResponse.getServletKey().get());
@@ -197,8 +197,8 @@ public class UtilTsoTest {
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
         assertFalse(zosmfTsoResponse.getTsoData().isEmpty());
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty());
-        assertTrue((boolean) zosmfTsoResponse.getTimeout().get());
-        assertTrue((boolean) zosmfTsoResponse.getReused().get());
+        assertTrue(zosmfTsoResponse.getTimeout().get());
+        assertTrue(zosmfTsoResponse.getReused().get());
         assertEquals("0100", zosmfTsoResponse.getVer().get());
         assertEquals("0100", zosmfTsoResponse.getQueueId().get());
         assertEquals("ZOSMFAD-71-aabcaaaf", zosmfTsoResponse.getServletKey().get());
