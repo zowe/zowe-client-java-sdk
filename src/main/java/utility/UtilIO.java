@@ -72,7 +72,7 @@ public class UtilIO {
         Util.checkNullParameter(extension == null, "dirOrFile is null");
         Util.checkStateParameter(extension.isEmpty(), "dirOrFile not specified");
         extension = extension.trim();
-        if (extension.length() > 0 && extension.substring(0, 1) != ".") {
+        if (extension.length() > 0 && !".".equals(extension.substring(0, 1))) {
             // add a '.' character to the extension if omitted
             // (if someone specifies just "bin", make the extension ".bin" )
             extension = "." + extension;
