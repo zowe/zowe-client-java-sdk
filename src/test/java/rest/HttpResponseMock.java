@@ -99,14 +99,14 @@ public class HttpResponseMock {
                 }
 
                 @Override
-                public InputStream getContent() throws IOException, UnsupportedOperationException {
+                public InputStream getContent() {
                     InputStream stubInputStream =
                             IOUtils.toInputStream(json, "UTF-8");
                     return stubInputStream;
                 }
 
                 @Override
-                public void writeTo(OutputStream outputStream) throws IOException {
+                public void writeTo(OutputStream outputStream) {
 
                 }
 
@@ -116,7 +116,7 @@ public class HttpResponseMock {
                 }
 
                 @Override
-                public void consumeContent() throws IOException {
+                public void consumeContent() {
 
                 }
             };
