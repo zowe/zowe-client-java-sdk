@@ -53,7 +53,7 @@ public class DownloadDataset {
     }
 
     private static void downloadDsnMember(ZOSConnection connection, String name, DownloadParams params)
-            throws IOException {
+            throws Exception {
         try (InputStream inputStream = new ZosDsnDownload(connection).downloadDsn(name, params)) {
             if (inputStream != null) {
                 StringWriter writer = new StringWriter();

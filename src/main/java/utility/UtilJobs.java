@@ -52,10 +52,10 @@ public class UtilJobs {
      */
     public static void checkForModifyJobParamsExceptions(ModifyJobParams params) {
         Util.checkNullParameter(params == null, "params is null");
-        Util.checkStateParameter(params.getJobId().isEmpty(), "job id not specified");
-        Util.checkStateParameter(params.getJobId().get().isEmpty(), "job id not specified");
-        Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
-        Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
+        Util.checkIllegalParameter(params.getJobId().isEmpty(), "job id not specified");
+        Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "job id not specified");
+        Util.checkIllegalParameter(params.getJobName().isEmpty(), "job name not specified");
+        Util.checkIllegalParameter(params.getJobName().get().isEmpty(), "job name not specified");
     }
 
     /**

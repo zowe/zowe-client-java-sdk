@@ -48,17 +48,17 @@ public class ZosDsnList {
     /**
      * Get a list of members from a Dataset
      *
-     * @param dataSetName name of a dataset (i.e. 'DATASET.LIB')
+     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param params      list parameters, see ListParams object
      * @return A String list of member names
      * @author Nikunj Goyal
      */
     @SuppressWarnings("unchecked")
     public List<String> listMembers(String dataSetName, ListParams params) throws Exception {
+        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
-        Util.checkConnection(connection);
+        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
         UtilDataset.checkDatasetName(dataSetName, true);
 
         Map<String, String> headers = new HashMap<>();
@@ -96,17 +96,17 @@ public class ZosDsnList {
     /**
      * Get a list of Dataset names
      *
-     * @param dataSetName name of a dataset (i.e. 'DATASET.LIB')
+     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param params      list parameters, see ListParams object
      * @return A String list of Dataset names
      * @author Nikunj Goyal
      */
     @SuppressWarnings("unchecked")
     public List<Dataset> listDsn(String dataSetName, ListParams params) throws Exception {
+        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
-        Util.checkConnection(connection);
+        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
         UtilDataset.checkDatasetName(dataSetName, false);
 
         Map<String, String> headers = new HashMap<>();

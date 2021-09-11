@@ -55,9 +55,11 @@ public class ZosDsn {
      * @author Leonid Baranov
      */
     public void writeDsn(String dataSetName, String content) throws Exception {
-        Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
+        Util.checkNullParameter(content == null, "content is null");
+        Util.checkNullParameter(dataSetName == null, "dataSetName is null");
+        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        UtilDataset.checkDatasetName(dataSetName, true);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/"
@@ -86,9 +88,10 @@ public class ZosDsn {
      * @author Leonid Baranov
      */
     public void deleteDsn(String dataSetName) throws Exception {
-        Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkConnection(connection);
+        Util.checkNullParameter(dataSetName == null, "dataSetName is null");
+        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        UtilDataset.checkDatasetName(dataSetName, true);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/"
@@ -117,10 +120,11 @@ public class ZosDsn {
      * @author Leonid Baranov
      */
     public void createDsn(String dataSetName, CreateParams params) throws Exception {
+        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
-        Util.checkConnection(connection);
+        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        UtilDataset.checkDatasetName(dataSetName, true);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/"

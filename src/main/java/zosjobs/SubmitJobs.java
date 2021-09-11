@@ -17,6 +17,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import rest.*;
 import utility.Util;
+import utility.UtilDataset;
 import utility.UtilJobs;
 import utility.UtilRest;
 import zosjobs.input.SubmitJclParams;
@@ -69,14 +70,16 @@ public class SubmitJobs {
      * @author Frank Giordano
      */
     public Job submitJobCommon(SubmitJobParams params) throws Exception {
+        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
-        Util.checkStateParameter(params.getJobDataSet().isEmpty(), "jobDataSet not specified");
-        Util.checkStateParameter(params.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
+        Util.checkIllegalParameter(params.getJobDataSet().isEmpty(), "jobDataSet not specified");
+        Util.checkIllegalParameter(params.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
+        UtilDataset.checkDatasetName(params.getJobDataSet().get(), true);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
         LOG.debug(url);
 
-        String fullyQualifiedDataset = "//'" + params.getJobDataSet().get() + "'";
+        String fullyQualifiedDataset = "//'" + Util.encodeURIComponent(params.getJobDataSet().get()) + "'";
         var jsonMap = new HashMap<String, String>();
         jsonMap.put("file", fullyQualifiedDataset);
         var jsonRequestBody = new JSONObject(jsonMap);
@@ -132,8 +135,8 @@ public class SubmitJobs {
     public Job submitJclCommon(SubmitJclParams params) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
-        Util.checkStateParameter(params.getJcl().isEmpty(), "jcl not specified");
-        Util.checkStateParameter(params.getJcl().get().isEmpty(), "jcl not specified");
+        Util.checkIllegalParameter(params.getJcl().isEmpty(), "jcl not specified");
+        Util.checkIllegalParameter(params.getJcl().get().isEmpty(), "jcl not specified");
 
         String key, value;
         Map<String, String> headers = new HashMap<>();

@@ -21,28 +21,28 @@ import java.util.Optional;
 public class DownloadParams {
 
     /**
-     * The local file to download the data set to, i.e. "./path/to/file.txt"
+     * The local file to download the data set to, e.g. "./path/to/file.txt"
      */
     private final Optional<String> file;
 
     /**
-     * The extension you want to use for the file, i.e. .txt, .c
+     * The extension you want to use for the file, e.g. .txt, .c
      */
     private final Optional<String> extension;
 
     /**
-     * The local directory to download all members from a pds. i.e. "./path/to/dir"
+     * The local directory to download all members from a pds. e.g. "./path/to/dir"
      */
     private final Optional<String> directory;
 
     /**
      * Exclude data sets that match these DSLEVEL patterns. Any data sets that match
-     * this pattern will not be downloaded, i.e. "ibmuser.**.jcl, ibmuser.rexa.*"
+     * this pattern will not be downloaded, e.g. "ibmuser.**.jcl, ibmuser.rexa.*"
      */
     private final Optional<String[]> excludePatterns;
 
     /**
-     * Map data set names that match your pattern to the desired extension. i.e. cpgm=c,asmpgm=asm
+     * Map data set names that match your pattern to the desired extension. e.g. cpgm=c,asmpgm=asm
      */
     private final Optional<HashMap<String, String>> extensionMap;
 

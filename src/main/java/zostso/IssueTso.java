@@ -65,8 +65,8 @@ public class IssueTso {
         Util.checkConnection(connection);
         Util.checkNullParameter(accountNumber == null, "accountNumber is null");
         Util.checkNullParameter(command == null, "command is null");
-        Util.checkStateParameter(accountNumber.isEmpty(), "accountNumber not specified");
-        Util.checkStateParameter(command.isEmpty(), "command not specified");
+        Util.checkIllegalParameter(accountNumber.isEmpty(), "accountNumber not specified");
+        Util.checkIllegalParameter(command.isEmpty(), "command not specified");
 
         IssueResponse response = new IssueResponse(false, null, false, null,
                 null, null);
