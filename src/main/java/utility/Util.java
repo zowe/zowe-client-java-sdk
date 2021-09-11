@@ -70,8 +70,7 @@ public class Util {
      * @author Frank Giordano
      */
     public static void checkNullParameter(boolean check, String msg) {
-        if (check)
-            throw new IllegalArgumentException(msg);
+        if (check) throw new IllegalArgumentException(msg);
     }
 
     /**
@@ -83,8 +82,7 @@ public class Util {
      * @author Frank Giordano
      */
     public static void checkStateParameter(boolean check, String msg) {
-        if (check)
-            throw new IllegalStateException(msg);
+        if (check) throw new IllegalStateException(msg);
     }
 
     /**
