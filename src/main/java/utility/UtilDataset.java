@@ -57,7 +57,7 @@ public class UtilDataset {
      *
      * @param errorMsg    error message
      * @param dataSetName dataset representation
-     * @param crudType crud type value of operation taken place
+     * @param crudType    crud type value of operation taken place
      * @throws Exception execution with error msg
      */
     public static void checkHttpErrors(String errorMsg, String dataSetName, String crudType) throws Exception {
@@ -108,7 +108,6 @@ public class UtilDataset {
      * @param dataSetName     Dataset name to validate as per the above rules
      * @param additionalTests Set to true to check that a dataset has more than one segment (for example, when used by
      *                        listMembers()). Set too false to ignore this check (for example, when used by listDsn()).
-     * @throws Exception if given dataset format is invalid
      * @author Corinne DeStefano
      */
     public static void checkDatasetName(String dataSetName, boolean additionalTests) {

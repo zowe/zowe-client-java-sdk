@@ -25,6 +25,12 @@ public class ZosFilesParams {
      */
     private final Optional<String> responseTimeout;
 
+    /**
+     * ZosFilesParams constructor
+     *
+     * @param responseTimeout response time out value
+     * @author Leonid Baranov
+     */
     public ZosFilesParams(String responseTimeout) {
         this.responseTimeout = Optional.ofNullable(responseTimeout);
     }

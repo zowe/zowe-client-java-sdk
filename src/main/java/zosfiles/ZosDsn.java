@@ -51,6 +51,8 @@ public class ZosDsn {
      *
      * @param dataSetName sequential dataset (e.g. 'DATASET.LIB')
      * @param content     new content
+     * @throws Exception error processing request
+     * @return http response object
      * @author Leonid Baranov
      */
     public Response writeDsn(String dataSetName, String content) throws Exception {
@@ -85,6 +87,8 @@ public class ZosDsn {
      * @param dataSetName dataset name of where the member is located (e.g. 'DATASET.LIB')
      * @param member      name of member to add new content
      * @param content     new content
+     * @throws Exception error processing request
+     * @return http response object
      * @author Frank Giordano
      */
     public Response writeDsnMember(String dataSetName, String member, String content) throws Exception {
@@ -120,6 +124,8 @@ public class ZosDsn {
      * Delete a dataset
      *
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
+     * @throws Exception error processing request
+     * @return http response object
      * @author Leonid Baranov
      */
     public Response deleteDsn(String dataSetName) throws Exception {
@@ -151,6 +157,8 @@ public class ZosDsn {
      *
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param member      name of member to delete
+     * @throws Exception error processing request
+     * @return http response object
      * @author Frank Giordano
      */
     public Response deleteDsnMember(String dataSetName, String member) throws Exception {
@@ -186,6 +194,8 @@ public class ZosDsn {
      *
      * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
      * @param params      create dataset parameters, see CreateParams object
+     * @throws Exception error processing request
+     * @return http response object
      * @author Leonid Baranov
      */
     public Response createDsn(String dataSetName, CreateParams params) throws Exception {

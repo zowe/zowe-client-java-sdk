@@ -59,6 +59,7 @@ public class StartStopResponses {
      * StartStopResponses constructor
      *
      * @param zosmfTsoResponse tso response
+     * @throws Exception error processing request
      * @author Frank Giordano
      */
     public StartStopResponses(ZosmfTsoResponse zosmfTsoResponse) throws Exception {

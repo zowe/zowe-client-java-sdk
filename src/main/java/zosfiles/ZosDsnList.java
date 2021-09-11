@@ -51,6 +51,7 @@ public class ZosDsnList {
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param params      list parameters, see ListParams object
      * @return list of member names
+     * @throws Exception error processing request
      * @author Nikunj Goyal
      */
     @SuppressWarnings("unchecked")
@@ -99,6 +100,7 @@ public class ZosDsnList {
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param params      list parameters, see ListParams object
      * @return A String list of Dataset names
+     * @throws Exception error processing request
      * @author Nikunj Goyal
      */
     @SuppressWarnings("unchecked")
