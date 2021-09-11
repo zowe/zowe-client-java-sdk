@@ -35,7 +35,7 @@ public class ListDatasets {
      * @param args for main not used
      * @author Leonid Baranov
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String hostName = "XXX";
         String zosmfPort = "XXX";
         String userName = "XXX";
@@ -45,22 +45,18 @@ public class ListDatasets {
 
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
-        try {
-            ListDatasets.listDsn(connection, dataSetMask);
-            ListDatasets.listMembers(connection, dataSetName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ListDatasets.listDsn(connection, dataSetMask);
+        ListDatasets.listMembers(connection, dataSetName);
     }
 
-    private static void listMembers(ZOSConnection connection, String dataSetName) throws Exception {
+    public static void listMembers(ZOSConnection connection, String dataSetName) throws Exception {
         ListParams params = new ListParams.Builder().build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
-        List<String> datasets = zosDsnList.listMembers(dataSetName, params);
+        List<String> datasets = zosDsnList.listDsnMembers(dataSetName, params);
         datasets.forEach(LOG::info);
     }
 
-    private static void listDsn(ZOSConnection connection, String dataSetName) throws Exception {
+    public static void listDsn(ZOSConnection connection, String dataSetName) throws Exception {
         ListParams params = new ListParams.Builder().build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
         List<Dataset> datasets = zosDsnList.listDsn(dataSetName, params);

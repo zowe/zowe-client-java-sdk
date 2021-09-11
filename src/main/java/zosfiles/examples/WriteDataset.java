@@ -10,6 +10,9 @@
 package zosfiles.examples;
 
 import core.ZOSConnection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import rest.Response;
 import zosfiles.ZosDsn;
 
 /**
@@ -19,6 +22,10 @@ import zosfiles.ZosDsn;
  * @version 1.0
  */
 public class WriteDataset {
+
+    private static final Logger LOG = LogManager.getLogger(WriteDataset.class);
+
+    private static ZOSConnection connection;
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -33,15 +40,27 @@ public class WriteDataset {
         String zosmfPort = "XXX";
         String userName = "XXX";
         String password = "XXX";
-        String datasetMember = "XXX";
+        String dataSetName = "XXX";
+        String member = "XXX";
 
-        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
-        WriteDataset.writeToDsnMember(connection, datasetMember, "NEW CONTENT\nTHE SECOND LINE UPDATED");
+        var content = "NEW CONTENT\nTHE SECOND LINE UPDATED";
+        WriteDataset.writeToDsnMember(dataSetName, member, content);
     }
 
-    private static void writeToDsnMember(ZOSConnection connection, String datasetMember, String content) throws Exception {
-        new ZosDsn(connection).writeDsn(datasetMember, content);
+    /**
+     * Write to the given member name specified replacing its content. If it does exists, it will be created.
+     *
+     * @param dataSetName name of a dataset where member should be located (e.g. 'DATASET.LIB')
+     * @param member      name of member to write
+     * @throws Exception error processing request
+     * @author Frank Giordano
+     */
+    public static void writeToDsnMember(String dataSetName, String member, String content) throws Exception {
+        ZosDsn zosDsn = new ZosDsn(connection);
+        Response response = zosDsn.writeDsnMember(dataSetName, member, content);
+        LOG.info("http response code " + response.getStatusCode());
     }
 
 }

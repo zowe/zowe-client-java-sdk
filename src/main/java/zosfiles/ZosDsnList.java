@@ -50,11 +50,11 @@ public class ZosDsnList {
      *
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param params      list parameters, see ListParams object
-     * @return A String list of member names
+     * @return list of member names
      * @author Nikunj Goyal
      */
     @SuppressWarnings("unchecked")
-    public List<String> listMembers(String dataSetName, ListParams params) throws Exception {
+    public List<String> listDsnMembers(String dataSetName, ListParams params) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
@@ -63,9 +63,9 @@ public class ZosDsnList {
 
         Map<String, String> headers = new HashMap<>();
         List<String> members = new ArrayList<>();
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/"
-                + Util.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
+                Util.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
 
         if (params.getPattern().isPresent()) {
             url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN + params.getPattern().get();
@@ -78,7 +78,7 @@ public class ZosDsnList {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), dataSetName);
+            UtilDataset.checkHttpErrors(e.getMessage(), dataSetName, "read");
         }
 
         JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
@@ -111,8 +111,8 @@ public class ZosDsnList {
 
         Map<String, String> headers = new HashMap<>();
         List<Dataset> datasets = new ArrayList<>();
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
 
         url += ZosFilesConstants.QUERY_DS_LEVEL + Util.encodeURIComponent(dataSetName);
 
@@ -130,7 +130,7 @@ public class ZosDsnList {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), dataSetName);
+            UtilDataset.checkHttpErrors(e.getMessage(), dataSetName, "read");
         }
 
         JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());

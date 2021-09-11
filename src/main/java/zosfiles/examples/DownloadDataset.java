@@ -17,7 +17,6 @@ import utility.UtilIO;
 import zosfiles.ZosDsnDownload;
 import zosfiles.input.DownloadParams;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 

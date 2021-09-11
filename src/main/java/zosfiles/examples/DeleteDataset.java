@@ -10,6 +10,9 @@
 package zosfiles.examples;
 
 import core.ZOSConnection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import rest.Response;
 import zosfiles.ZosDsn;
 
 /**
@@ -19,6 +22,10 @@ import zosfiles.ZosDsn;
  * @version 1.0
  */
 public class DeleteDataset {
+
+    private static final Logger LOG = LogManager.getLogger(DeleteDataset.class);
+
+    private static ZOSConnection connection;
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -33,11 +40,36 @@ public class DeleteDataset {
         String zosmfPort = "XXX";
         String userName = "XXX";
         String password = "XXX";
-        String datasetMember = "XXX";
+        String dataSetName = "XXX";
+        String member = "XXX";
 
-        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
-        new ZosDsn(connection).deleteDsn(datasetMember);
+        deleteDataSet(dataSetName);
+        deleteMember(dataSetName, member);
+    }
+
+    /**
+     * @param dataSetName name of a dataset to delete (e.g. 'DATASET.LIB')
+     * @throws Exception error processing request
+     * @author Frank Giordano
+     */
+    public static void deleteDataSet(String dataSetName) throws Exception {
+        ZosDsn zosDsn = new ZosDsn(connection);
+        Response response = zosDsn.deleteDsn(dataSetName);
+        LOG.info("http response code " + response.getStatusCode());
+    }
+
+    /**
+     * @param dataSetName name of a dataset where member should be located (e.g. 'DATASET.LIB')
+     * @param member      name of member to delete
+     * @throws Exception error processing request
+     * @author Frank Giordano
+     */
+    public static void deleteMember(String dataSetName, String member) throws Exception {
+        ZosDsn zosDsn = new ZosDsn(connection);
+        Response response = zosDsn.deleteDsnMember(dataSetName, member);
+        LOG.info("http response code " + response.getStatusCode());
     }
 
 }

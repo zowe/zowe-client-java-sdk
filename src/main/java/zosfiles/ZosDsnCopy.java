@@ -84,7 +84,7 @@ public class ZosDsnCopy {
             try {
                 UtilRest.checkHttpErrors(response);
             } catch (Exception e) {
-                UtilDataset.checkHttpErrors(e.getMessage(), toDataSet);
+                UtilDataset.checkHttpErrors(e.getMessage(), toDataSet, "copy");
             }
 
         } catch (Exception e) {
