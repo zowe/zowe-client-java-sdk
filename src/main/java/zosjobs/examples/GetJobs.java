@@ -164,7 +164,7 @@ public class GetJobs {
      * Example on how to call GetJobs getJob method.
      * getJob is given a jobId value which will return a job document/object
      *
-     * @param prefix partial or full job name to use for seaching
+     * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
      * @author Frank Giordano
      */

@@ -82,7 +82,7 @@ public class ZosDsn {
 
     /**
      * Replaces the content of a member of a partitioned data set (PDS or PDSE) with new content.
-     * A new dataset member will be created if the specified dataset member does not exists.
+     * A new dataset member will be created if the specified dataset member does not exist.
      *
      * @param dataSetName dataset name of where the member is located (e.g. 'DATASET.LIB')
      * @param member      name of member to add new content

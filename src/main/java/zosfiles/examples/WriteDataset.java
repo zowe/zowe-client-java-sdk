@@ -50,7 +50,7 @@ public class WriteDataset {
     }
 
     /**
-     * Write to the given member name specified replacing its content. If it does exists, it will be created.
+     * Write to the given member name specified replacing its content. If it does exist, it will be created.
      *
      * @param dataSetName name of a dataset where member should be located (e.g. 'DATASET.LIB')
      * @param member      name of member to write
