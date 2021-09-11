@@ -29,11 +29,10 @@ public class UtilConsole {
      * @param zosmfResponse    zosmf console response, see ZosmfIssueResponse object
      * @param response         console response to be populated, see ConsoleResponse object
      * @param processResponses boolean if set to true, append command response string to the console API response
-     * @return ConsoleResponse populated console response, see ConsoleResponse object
      * @author Frank Giordano
      */
-    public static ConsoleResponse populate(ZosmfIssueResponse zosmfResponse, ConsoleResponse response,
-                                           boolean processResponses) {
+    public static void populate(ZosmfIssueResponse zosmfResponse, ConsoleResponse response,
+                                boolean processResponses) {
         response.setZosmfResponse(zosmfResponse);
         response.setSuccess(true);
 
@@ -63,7 +62,6 @@ public class UtilConsole {
             response.setCmdResponseUrl(zosmfResponse.getCmdResponseUrl().get());
         }
 
-        return response;
     }
 
 }
