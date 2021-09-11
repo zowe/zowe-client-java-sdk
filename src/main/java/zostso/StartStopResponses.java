@@ -28,27 +28,27 @@ public class StartStopResponses {
     /**
      * Response from z/OSMF to start rest call
      */
-    private final Optional<ZosmfTsoResponse> zosmfTsoResponse;
+    private final ZosmfTsoResponse zosmfTsoResponse;
 
     /**
      * Collected responses from z/OSMF
      */
-    private Optional<List<ZosmfTsoResponse>> collectedResponses;
+    private List<ZosmfTsoResponse> collectedResponses;
 
     /**
      * If an error occurs, returns the error which contains cause error.
      */
-    private final Optional<String> failureResponse;
+    private final String failureResponse;
 
     /**
      * Servlet key from IZosmfTsoResponse
      */
-    private Optional<String> servletKey;
+    private String servletKey;
 
     /**
      * Appended collected messages including READY prompt at the end.
      */
-    private Optional<String> messages;
+    private final String messages;
 
     /**
      * True if the command was issued and the responses were collected.
@@ -61,24 +61,28 @@ public class StartStopResponses {
      * @param zosmfTsoResponse tso response
      * @author Frank Giordano
      */
-    public StartStopResponses(ZosmfTsoResponse zosmfTsoResponse) {
-        this.zosmfTsoResponse = Optional.ofNullable(zosmfTsoResponse);
+    public StartStopResponses(ZosmfTsoResponse zosmfTsoResponse) throws Exception {
+        if (zosmfTsoResponse == null) throw new Exception("zosmfTsoResponse is null");
+
+        this.zosmfTsoResponse = zosmfTsoResponse;
         if (zosmfTsoResponse.getMsgData().isPresent()) {
+            // more data means more tso responses to come and as such tso command request has not ended in success yet
             this.success = false;
-            ZosmfMessages zOSMFMsg = zosmfTsoResponse.getMsgData().get().get(0);
-            this.failureResponse = Optional.of(zOSMFMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR));
+            ZosmfMessages zosmfMsg = zosmfTsoResponse.getMsgData().get().get(0);
+            this.failureResponse = zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR);
         } else {
+            // no data means no more tso responses to come and as such tso command request has ended successfully 
             this.success = true;
-            this.failureResponse = Optional.empty();
+            this.failureResponse = null;
         }
         if (zosmfTsoResponse.getServletKey().isPresent()) {
-            this.servletKey = Optional.of(zosmfTsoResponse.getServletKey().get());
+            this.servletKey = zosmfTsoResponse.getServletKey().orElseThrow(() -> new Exception("servletKey is missing"));
         }
 
         StringBuilder buildMessage = new StringBuilder();
         List<TsoMessages> tsoMsgLst = zosmfTsoResponse.getTsoData().orElse(new ArrayList<>());
         tsoMsgLst.forEach(buildMessage::append);
-        this.messages = Optional.of(buildMessage.toString());
+        this.messages = buildMessage.toString();
     }
 
     /**
@@ -88,7 +92,7 @@ public class StartStopResponses {
      * @author Frank Giordano
      */
     public Optional<ZosmfTsoResponse> getZosmfTsoResponse() {
-        return zosmfTsoResponse;
+        return Optional.of(zosmfTsoResponse);
     }
 
     /**
@@ -98,7 +102,7 @@ public class StartStopResponses {
      * @author Frank Giordano
      */
     public Optional<List<ZosmfTsoResponse>> getCollectedResponses() {
-        return collectedResponses;
+        return Optional.ofNullable(collectedResponses);
     }
 
     /**
@@ -108,7 +112,7 @@ public class StartStopResponses {
      * @author Frank Giordano
      */
     public void setCollectedResponses(List<ZosmfTsoResponse> collectedResponses) {
-        this.collectedResponses = Optional.ofNullable(collectedResponses);
+        this.collectedResponses = collectedResponses;
     }
 
     /**
@@ -118,7 +122,7 @@ public class StartStopResponses {
      * @author Frank Giordano
      */
     public Optional<String> getFailureResponse() {
-        return failureResponse;
+        return Optional.of(failureResponse);
     }
 
     /**
@@ -128,7 +132,7 @@ public class StartStopResponses {
      * @author Frank Giordano
      */
     public Optional<String> getServletKey() {
-        return servletKey;
+        return Optional.ofNullable(servletKey);
     }
 
     /**
@@ -138,7 +142,7 @@ public class StartStopResponses {
      * @author Frank Giordano
      */
     public void setServletKey(String servletKey) {
-        this.servletKey = Optional.ofNullable(servletKey);
+        this.servletKey = servletKey;
     }
 
     /**
@@ -148,11 +152,7 @@ public class StartStopResponses {
      * @author Frank Giordano
      */
     public Optional<String> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(String messages) {
-        this.messages = Optional.ofNullable(messages);
+        return Optional.of(messages);
     }
 
     /**
