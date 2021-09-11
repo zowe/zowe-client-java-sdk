@@ -54,11 +54,12 @@ public class ZosDsnCopy {
      * @author Leonid Baranov
      */
     public Response copy(CopyParams params) {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkStateParameter(params.getFromDataSet().isEmpty(), "fromDataSetName not specified");
-        Util.checkStateParameter(params.getToDataSet().isEmpty(), "toDataSetName not specified");
-
         Util.checkConnection(connection);
+        Util.checkNullParameter(params == null, "params is null");
+        Util.checkIllegalParameter(params.getFromDataSet().isEmpty(), "fromDataSetName not specified");
+        Util.checkIllegalParameter(params.getToDataSet().isEmpty(), "toDataSetName not specified");
+        UtilDataset.checkDatasetName(params.getFromDataSet().get(), true);
+        UtilDataset.checkDatasetName(params.getToDataSet().get(), true);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
@@ -67,7 +68,9 @@ public class ZosDsnCopy {
             url += "-(" + params.getToVolser().get() + ")/";
         }
 
-        url += params.getToDataSet().get();
+        String toDataSet = params.getToDataSet().get();
+
+        url += Util.encodeURIComponent(toDataSet);
 
         Response response = new Response(null, null);
         try {
@@ -81,7 +84,7 @@ public class ZosDsnCopy {
             try {
                 UtilRest.checkHttpErrors(response);
             } catch (Exception e) {
-                UtilDataset.checkHttpErrors(e.getMessage(), params.getFromDataSet().get());
+                UtilDataset.checkHttpErrors(e.getMessage(), toDataSet);
             }
 
         } catch (Exception e) {
@@ -94,8 +97,8 @@ public class ZosDsnCopy {
     /**
      * Copy dataset or dataset member
      *
-     * @param fromDataSetName is a name of source dataset (i.e. SOURCE.DATASET(MEMBER))
-     * @param toDataSetName   is a name of target dataset (i.e. TARGET.DATASET(MEMBER))
+     * @param fromDataSetName is a name of source dataset (e.g. SOURCE.DATASET(MEMBER))
+     * @param toDataSetName   is a name of target dataset (e.g. TARGET.DATASET(MEMBER))
      * @param replace         if true, members in the target dataset are replaced. if false,
      * @return http response object
      * @author Leonid Baranov
@@ -116,7 +119,7 @@ public class ZosDsnCopy {
      * @author Leonid Baranov
      */
     private String buildBody(CopyParams params) {
-        String fromDataSetName = params.getFromDataSet().get();
+        String fromDataSetName = Util.encodeURIComponent(params.getFromDataSet().get());
 
         var jsonMap = new HashMap<String, Object>();
         jsonMap.put("request", "copy");

@@ -92,7 +92,7 @@ public class UtilDataset {
      * @throws Exception if given dataset format is invalid
      * @author Corinne DeStefano
      */
-    public static void checkDatasetName(String dataSetName, boolean additionalTests) throws Exception {
+    public static void checkDatasetName(String dataSetName, boolean additionalTests) {
         dataSetName = dataSetName.toUpperCase(Locale.ROOT);
         String invalidDatasetMsg = "Invalid data set name '" + dataSetName + "'.";
 
@@ -101,23 +101,23 @@ public class UtilDataset {
         String[] segments = dataSetName.split("\\.");
         if (additionalTests) {
             if (segments.length < 2) {
-                throw new Exception(invalidDatasetMsg);
+                throw new IllegalArgumentException(invalidDatasetMsg);
             }
         }
 
         // The length cannot be longer than 44
         if (dataSetName.length() > 44) {
-            throw new Exception(invalidDatasetMsg);
+            throw new IllegalArgumentException(invalidDatasetMsg);
         }
 
         // The name cannot contain two successive periods
         if (dataSetName.contains("..")) {
-            throw new Exception(invalidDatasetMsg);
+            throw new IllegalArgumentException(invalidDatasetMsg);
         }
 
         // Cannot end in a period
         if (dataSetName.endsWith(".")) {
-            throw new Exception(invalidDatasetMsg);
+            throw new IllegalArgumentException(invalidDatasetMsg);
         }
 
         // Each segment cannot be more than 8 characters
@@ -125,12 +125,12 @@ public class UtilDataset {
         // The remaining seven characters in a segment can be letters, numbers, and #, @, $, -
         for (String segment : segments) {
             if (segment.length() > 8) {
-                throw new Exception(invalidDatasetMsg);
+                throw new IllegalArgumentException(invalidDatasetMsg);
             }
             Pattern p = Pattern.compile("[A-Z#@\\$]{1}[A-Z0-9#@\\$\\-]{1,7}");
             Matcher m = p.matcher(segment);
             if (!m.matches()) {
-                throw new Exception(invalidDatasetMsg);
+                throw new IllegalArgumentException(invalidDatasetMsg);
             }
         }
     }

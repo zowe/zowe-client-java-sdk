@@ -17,6 +17,7 @@ import rest.Response;
 import rest.ZoweRequest;
 import rest.ZoweRequestFactory;
 import rest.ZoweRequestType;
+import utility.Util;
 import utility.UtilIO;
 import utility.UtilJobs;
 import utility.UtilRest;
@@ -87,6 +88,7 @@ public class CancelJobs {
      * @author Frank Giordano
      */
     public Response cancelJobsCommon(ModifyJobParams params) throws Exception {
+        Util.checkConnection(connection);
         UtilJobs.checkForModifyJobParamsExceptions(params);
 
         // generate full url request

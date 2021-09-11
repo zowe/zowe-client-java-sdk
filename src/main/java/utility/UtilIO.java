@@ -55,7 +55,7 @@ public class UtilIO {
      */
     public static Boolean isDir(String dirOrFile) {
         Util.checkNullParameter(dirOrFile == null, "dirOrFile is null");
-        Util.checkStateParameter(dirOrFile.isEmpty(), "dirOrFile not specified");
+        Util.checkIllegalParameter(dirOrFile.isEmpty(), "dirOrFile not specified");
         Path path = Paths.get(dirOrFile);
 
         return Files.isDirectory(path);
@@ -69,7 +69,7 @@ public class UtilIO {
      */
     public static String normalizeExtension(String extension) {
         Util.checkNullParameter(extension == null, "dirOrFile is null");
-        Util.checkStateParameter(extension.isEmpty(), "dirOrFile not specified");
+        Util.checkIllegalParameter(extension.isEmpty(), "dirOrFile not specified");
         extension = extension.trim();
         if (extension.length() > 0 && !".".equals(extension.substring(0, 1))) {
             // add a '.' character to the extension if omitted
@@ -87,7 +87,7 @@ public class UtilIO {
      */
     public static Boolean existsSync(String file) {
         Util.checkNullParameter(file == null, "dirOrFile is null");
-        Util.checkStateParameter(file.isEmpty(), "dirOrFile not specified");
+        Util.checkIllegalParameter(file.isEmpty(), "dirOrFile not specified");
         return Files.exists(Paths.get(file));
     }
 
@@ -99,7 +99,7 @@ public class UtilIO {
      */
     public static void createDirSync(String dir) throws IOException {
         Util.checkNullParameter(dir == null, "dirOrFile is null");
-        Util.checkStateParameter(dir.isEmpty(), "dirOrFile not specified");
+        Util.checkIllegalParameter(dir.isEmpty(), "dirOrFile not specified");
         if (!existsSync(dir)) {
             Path dirs = Paths.get(System.getProperty("user.dir") + dir);
             Files.createDirectory(dirs);
@@ -116,7 +116,7 @@ public class UtilIO {
      */
     public static void createDirsSync(String dir) throws IOException {
         Util.checkNullParameter(dir == null, "dirOrFile is null");
-        Util.checkStateParameter(dir.isEmpty(), "dirOrFile not specified");
+        Util.checkIllegalParameter(dir.isEmpty(), "dirOrFile not specified");
         // we're splitting on a specific separator character, so replace \ with / before splitting
         Path dirs = Paths.get(dir);
         Files.createDirectories(dirs);
@@ -132,7 +132,7 @@ public class UtilIO {
      */
     public static void createDirsSyncFromFilePath(String filePath) throws IOException {
         Util.checkNullParameter(filePath == null, "dirOrFile is null");
-        Util.checkStateParameter(filePath.isEmpty(), "dirOrFile not specified");
+        Util.checkIllegalParameter(filePath.isEmpty(), "dirOrFile not specified");
         createDirsSync(filePath);
     }
 
@@ -177,7 +177,7 @@ public class UtilIO {
      */
     public static void mkdirp(String dir) throws IOException {
         Util.checkNullParameter(dir == null, "dirOrFile is null");
-        Util.checkStateParameter(dir.isEmpty(), "dirOrFile is not specified");
+        Util.checkIllegalParameter(dir.isEmpty(), "dirOrFile is not specified");
         Files.createDirectories(Paths.get(dir));
     }
 
@@ -190,7 +190,7 @@ public class UtilIO {
      */
     public static BufferedReader readFileSyncBinary(String file) throws IOException {
         Util.checkNullParameter(file == null, "dirOrFile is null");
-        Util.checkStateParameter(file.isEmpty(), "dirOrFile not specified");
+        Util.checkIllegalParameter(file.isEmpty(), "dirOrFile not specified");
 
         return Files.newBufferedReader(Paths.get(file));
     }
@@ -204,7 +204,7 @@ public class UtilIO {
      */
     public static String readFileSyncAsString(String file, Boolean normalizeNewLines) {
         Util.checkNullParameter(file == null, "dirOrFile is null");
-        Util.checkStateParameter(file.isEmpty(), "dirOrFile not specified");
+        Util.checkIllegalParameter(file.isEmpty(), "dirOrFile not specified");
 
         if (normalizeNewLines == null) {
             normalizeNewLines = false;
@@ -226,7 +226,7 @@ public class UtilIO {
      */
     public static String createReadStream(String file) throws IOException {
         Util.checkNullParameter(file == null, "dirOrFile is null");
-        Util.checkStateParameter(file.isEmpty(), "dirOrFile not specified");
+        Util.checkIllegalParameter(file.isEmpty(), "dirOrFile not specified");
         StringBuilder sb = new StringBuilder();
         BufferedReader r = new BufferedReader(new InputStreamReader((InputStream) Paths.get(file)),
                 1024);
@@ -247,7 +247,7 @@ public class UtilIO {
      */
     public static FileOutputStream createWriteStream(String file) throws FileNotFoundException {
         Util.checkNullParameter(file == null, "dirOrFile is null");
-        Util.checkStateParameter(file.isEmpty(), "dirOrFile not specified");
+        Util.checkIllegalParameter(file.isEmpty(), "dirOrFile not specified");
         // Creates an OutputStream
         return new FileOutputStream(file);
     }
@@ -262,7 +262,7 @@ public class UtilIO {
      */
     public static String processNewlines(String original) {
         Util.checkNullParameter(original == null, "dirOrFile is null");
-        Util.checkStateParameter(original.isEmpty(), "dirOrFile not specified");
+        Util.checkIllegalParameter(original.isEmpty(), "dirOrFile not specified");
         String OS = System.getProperty("os.name").toLowerCase();
 //       TODO
 //            if (OS.indexOf("win") >= 0) {

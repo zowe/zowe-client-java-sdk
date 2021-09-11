@@ -13,6 +13,7 @@ import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.*;
+import utility.Util;
 import utility.UtilIO;
 import utility.UtilJobs;
 import utility.UtilRest;
@@ -83,6 +84,7 @@ public class DeleteJobs {
      * @author Frank Giordano
      */
     public Response deleteJobCommon(ModifyJobParams params) throws Exception {
+        Util.checkConnection(connection);
         UtilJobs.checkForModifyJobParamsExceptions(params);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +

@@ -51,8 +51,8 @@ public class CopyDataset {
      * copy accepts a from and to strings for copying
      *
      * @param connection      ZOSConnection
-     * @param fromDataSetName source dataset (i.e. SOURCE.DATASET(MEMBER))
-     * @param toDataSetName   destination dataset (i.e. TARGET.DATASET(MEMBER))
+     * @param fromDataSetName source dataset (e.g. SOURCE.DATASET(MEMBER))
+     * @param toDataSetName   destination dataset (e.g. TARGET.DATASET(MEMBER))
      * @author Frank Giordano
      */
     public static void copyDataset(ZOSConnection connection, String fromDataSetName, String toDataSetName) {
@@ -66,8 +66,8 @@ public class CopyDataset {
      * copy accepts a CopyParams object
      *
      * @param connection      ZOSConnection
-     * @param fromDataSetName source dataset (i.e. SOURCE.DATASET(MEMBER))
-     * @param toDataSetName   destination dataset (i.e. TARGET.DATASET(MEMBER))
+     * @param fromDataSetName source dataset (e.g. SOURCE.DATASET(MEMBER))
+     * @param toDataSetName   destination dataset (e.g. TARGET.DATASET(MEMBER))
      * @author Frank Giordano
      */
     public static void copyDatasetByCopyParams(ZOSConnection connection, String fromDataSetName,

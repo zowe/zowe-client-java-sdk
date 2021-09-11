@@ -52,53 +52,46 @@ public class ZosDsnDownload {
      * @return a content stream
      * @author Nikunj Goyal
      */
-    public InputStream downloadDsn(String dataSetName, DownloadParams params) {
+    public InputStream downloadDsn(String dataSetName, DownloadParams params) throws Exception {
+        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkStateParameter(dataSetName.isEmpty(), "dataSetName not specified");
-        Util.checkConnection(connection);
+        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        UtilDataset.checkDatasetName(dataSetName, true);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
 
-        try {
-            if (params.getVolume().isPresent()) {
-                url += params.getVolume().get();
-            }
-            url += dataSetName;
-            LOG.debug(url);
+        if (params.getVolume().isPresent()) {
+            url += params.getVolume().get();
+        }
+        url += Util.encodeURIComponent(dataSetName);
+        LOG.debug(url);
 
-            String key, value;
-            Map<String, String> headers = UtilZosFiles.generateHeadersBasedOnOptions(params);
+        String key, value;
+        Map<String, String> headers = UtilZosFiles.generateHeadersBasedOnOptions(params);
 
-            if (params.getReturnEtag().isPresent()) {
-                key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
-                value = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(1);
-                headers.put(key, value);
-                // TODO
-            }
-
-            ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
-                    ZoweRequestType.VerbType.GET_STREAM);
-            request.setAdditionalHeaders(headers);
-
-            Response response = request.executeHttpRequest();
-            if (response.isEmpty())
-                return null;
-
-            try {
-                UtilRest.checkHttpErrors(response);
-            } catch (Exception e) {
-                UtilDataset.checkHttpErrors(e.getMessage(), dataSetName);
-            }
-            if (response.getResponsePhrase().isPresent()) {
-                return (InputStream) response.getResponsePhrase().get();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (params.getReturnEtag().isPresent()) {
+            key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
+            value = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(1);
+            headers.put(key, value);
         }
 
-        return null;
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
+                ZoweRequestType.VerbType.GET_STREAM);
+        request.setAdditionalHeaders(headers);
+
+        Response response = request.executeHttpRequest();
+        if (response.isEmpty())
+            return null;
+
+        try {
+            UtilRest.checkHttpErrors(response);
+        } catch (Exception e) {
+            UtilDataset.checkHttpErrors(e.getMessage(), dataSetName);
+        }
+
+        return (InputStream) response.getResponsePhrase().orElse(null);
     }
 
 }

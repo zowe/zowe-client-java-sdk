@@ -63,8 +63,8 @@ public class SendTso {
     public SendResponse sendDataToTSOCollect(String servletKey, String data) throws Exception {
         Util.checkNullParameter(servletKey == null, "servletKey is null");
         Util.checkNullParameter(data == null, "data is null");
-        Util.checkStateParameter(servletKey.isEmpty(), "servletKey not specified");
-        Util.checkStateParameter(data.isEmpty(), "data not specified");
+        Util.checkIllegalParameter(servletKey.isEmpty(), "servletKey not specified");
+        Util.checkIllegalParameter(data.isEmpty(), "data not specified");
 
         ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParams(servletKey, data));
 
@@ -83,8 +83,8 @@ public class SendTso {
     public ZosmfTsoResponse sendDataToTSOCommon(SendTsoParams commandParams) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(commandParams == null, "commandParams is null");
-        Util.checkStateParameter(commandParams.getData().isEmpty(), "commandParams data not specified");
-        Util.checkStateParameter(commandParams.getServletKey().isEmpty(), "commandParams servletKey not specified");
+        Util.checkIllegalParameter(commandParams.getData().isEmpty(), "commandParams data not specified");
+        Util.checkIllegalParameter(commandParams.getServletKey().isEmpty(), "commandParams servletKey not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;

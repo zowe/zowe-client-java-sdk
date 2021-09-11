@@ -71,7 +71,7 @@ public class GetJobs {
      */
     public List<Job> getJobsByPrefix(String prefix) throws Exception {
         Util.checkNullParameter(prefix == null, "prefix is null");
-        Util.checkStateParameter(prefix.isEmpty(), "prefix not specified");
+        Util.checkIllegalParameter(prefix.isEmpty(), "prefix not specified");
 
         return getJobsCommon(new GetJobParams.Builder("*").prefix(prefix).build());
     }
@@ -87,7 +87,7 @@ public class GetJobs {
      */
     public List<Job> getJobsByOwner(String owner) throws Exception {
         Util.checkNullParameter(owner == null, "owner is null");
-        Util.checkStateParameter(owner.isEmpty(), "owner not specified");
+        Util.checkIllegalParameter(owner.isEmpty(), "owner not specified");
 
         return getJobsCommon(new GetJobParams.Builder(owner).build());
     }
@@ -105,9 +105,9 @@ public class GetJobs {
      */
     public List<Job> getJobsByOwnerAndPrefix(String owner, String prefix) throws Exception {
         Util.checkNullParameter(owner == null, "owner is null");
-        Util.checkStateParameter(owner.isEmpty(), "owner not specified");
+        Util.checkIllegalParameter(owner.isEmpty(), "owner not specified");
         Util.checkNullParameter(prefix == null, "prefix is null");
-        Util.checkStateParameter(prefix.isEmpty(), "prefix not specified");
+        Util.checkIllegalParameter(prefix.isEmpty(), "prefix not specified");
 
         return getJobsCommon(new GetJobParams.Builder(owner).prefix(prefix).build());
     }
@@ -122,7 +122,7 @@ public class GetJobs {
      */
     public Job getJob(String jobId) throws Exception {
         Util.checkNullParameter(jobId == null, "jobId is null");
-        Util.checkStateParameter(jobId.isEmpty(), "jobId not specified");
+        Util.checkIllegalParameter(jobId.isEmpty(), "jobId not specified");
 
         List<Job> jobs = getJobsCommon(new GetJobParams.Builder("*").jobId(jobId).build());
         if (jobs.isEmpty()) throw new Exception("Job not found");
@@ -156,7 +156,7 @@ public class GetJobs {
                     if (url.contains(QueryConstants.QUERY_ID)) {
                         url += QueryConstants.COMBO_ID;
                     }
-                    url += JobsConstants.QUERY_PREFIX + params.getPrefix().get();
+                    url += JobsConstants.QUERY_PREFIX + Util.encodeURIComponent(params.getPrefix().get());
                 }
             }
             if (params.getMaxJobs().isPresent()) {
@@ -247,13 +247,13 @@ public class GetJobs {
     public Job getStatusCommon(CommonJobParams params) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
-        Util.checkStateParameter(params.getJobId().isEmpty(), "jobId not specified");
-        Util.checkStateParameter(params.getJobId().get().isEmpty(), "jobId not specified");
-        Util.checkStateParameter(params.getJobName().isEmpty(), "jobName not specified");
-        Util.checkStateParameter(params.getJobName().get().isEmpty(), "jobName not specified");
+        Util.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
+        Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
+        Util.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
+        Util.checkIllegalParameter(params.getJobName().get().isEmpty(), "jobName not specified");
 
-        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + JobsConstants.RESOURCE + "/" + params.getJobName().get() + "/" + params.getJobId().get();
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
+                Util.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get();
 
         LOG.debug(url);
 
@@ -313,15 +313,15 @@ public class GetJobs {
     public List<JobFile> getSpoolFilesCommon(CommonJobParams params) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
-        Util.checkStateParameter(params.getJobId().isEmpty(), "jobId not specified");
-        Util.checkStateParameter(params.getJobId().get().isEmpty(), "jobId not specified");
-        Util.checkStateParameter(params.getJobName().isEmpty(), "jobName not specified");
-        Util.checkStateParameter(params.getJobName().get().isEmpty(), "jobName not specified");
+        Util.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
+        Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
+        Util.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
+        Util.checkIllegalParameter(params.getJobName().get().isEmpty(), "jobName not specified");
 
         List<JobFile> files = new ArrayList<>();
 
-        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE
-                + "/" + params.getJobName().get() + "/" + params.getJobId().get() + "/files";
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
+                Util.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() + "/files";
 
         LOG.debug(url);
 
@@ -400,14 +400,15 @@ public class GetJobs {
     public String getJclCommon(CommonJobParams params) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
-        Util.checkStateParameter(params.getJobName().isEmpty(), "jobName not specified");
-        Util.checkStateParameter(params.getJobName().get().isEmpty(), "jobName not specified");
-        Util.checkStateParameter(params.getJobId().isEmpty(), "jobId not specified");
-        Util.checkStateParameter(params.getJobId().get().isEmpty(), "jobId not specified");
+        Util.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
+        Util.checkIllegalParameter(params.getJobName().get().isEmpty(), "jobName not specified");
+        Util.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
+        Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                params.getJobName().get() + "/" + params.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES +
-                JobsConstants.RESOURCE_JCL_CONTENT + JobsConstants.RESOURCE_SPOOL_CONTENT;
+                Util.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() +
+                JobsConstants.RESOURCE_SPOOL_FILES + JobsConstants.RESOURCE_JCL_CONTENT +
+                JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         LOG.debug(url);
 
@@ -450,10 +451,10 @@ public class GetJobs {
         Util.checkConnection(connection);
         Util.checkNullParameter(jobName == null, "jobName is null");
         Util.checkNullParameter(jobId == null, "jobId is null");
-        Util.checkStateParameter(spoolId <= 0, "spoolId not specified");
+        Util.checkIllegalParameter(spoolId <= 0, "spoolId not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                jobName + "/" + jobId + JobsConstants.RESOURCE_SPOOL_FILES + "/" +
+                Util.encodeURIComponent(jobName) + "/" + jobId + JobsConstants.RESOURCE_SPOOL_FILES + "/" +
                 spoolId + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         LOG.debug(url);
@@ -481,13 +482,13 @@ public class GetJobs {
     public String getSpoolContentCommon(JobFile jobFile) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(jobFile == null, "jobFile is null");
-        Util.checkStateParameter(jobFile.getJobName().isEmpty(), "jobName not specified");
-        Util.checkStateParameter(jobFile.getJobId().isEmpty(), "jobId not specified");
-        Util.checkStateParameter(jobFile.getId().isEmpty(), "id not specified");
+        Util.checkIllegalParameter(jobFile.getJobName().isEmpty(), "jobName not specified");
+        Util.checkIllegalParameter(jobFile.getJobId().isEmpty(), "jobId not specified");
+        Util.checkIllegalParameter(jobFile.getId().isEmpty(), "id not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                jobFile.getJobName().get() + "/" + jobFile.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES + "/" +
-                jobFile.getId().get() + JobsConstants.RESOURCE_SPOOL_CONTENT;
+                Util.encodeURIComponent(jobFile.getJobName().get()) + "/" + jobFile.getJobId().get() +
+                JobsConstants.RESOURCE_SPOOL_FILES + "/" + jobFile.getId().get() + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         LOG.debug(url);
 

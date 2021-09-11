@@ -55,7 +55,7 @@ public class StartTso {
      */
     public StartStopResponses start(String accountNumber, StartTsoParams params) throws Exception {
         Util.checkNullParameter(accountNumber == null, "accountNumber is null");
-        Util.checkStateParameter(accountNumber.isEmpty(), "accountNumber not specified");
+        Util.checkIllegalParameter(accountNumber.isEmpty(), "accountNumber not specified");
 
         StartTsoParams customParams;
         if (params == null) {

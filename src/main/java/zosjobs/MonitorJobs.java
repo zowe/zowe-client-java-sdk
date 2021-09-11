@@ -128,10 +128,10 @@ public class MonitorJobs {
      */
     public boolean waitForJobMessage(Job job, String message) throws Exception {
         Util.checkNullParameter(job == null, "job is null");
-        Util.checkStateParameter(job.getJobName().isEmpty(), "job name not specified");
-        Util.checkStateParameter(job.getJobName().get().isEmpty(), "job name not specified");
-        Util.checkStateParameter(job.getJobId().isEmpty(), "job id not specified");
-        Util.checkStateParameter(job.getJobId().get().isEmpty(), "job id not specified");
+        Util.checkIllegalParameter(job.getJobName().isEmpty(), "job name not specified");
+        Util.checkIllegalParameter(job.getJobName().get().isEmpty(), "job name not specified");
+        Util.checkIllegalParameter(job.getJobId().isEmpty(), "job id not specified");
+        Util.checkIllegalParameter(job.getJobId().get().isEmpty(), "job id not specified");
         return waitForMessageCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
                 .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build(), message);
     }
@@ -166,10 +166,10 @@ public class MonitorJobs {
      */
     private boolean waitForMessageCommon(MonitorJobWaitForParams params, String message) throws Exception {
         Util.checkNullParameter(params == null, "params is null");
-        Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
-        Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
-        Util.checkStateParameter(params.getJobId().isEmpty(), "job id not specified");
-        Util.checkStateParameter(params.getJobId().get().isEmpty(), "job id not specified");
+        Util.checkIllegalParameter(params.getJobName().isEmpty(), "job name not specified");
+        Util.checkIllegalParameter(params.getJobName().get().isEmpty(), "job name not specified");
+        Util.checkIllegalParameter(params.getJobId().isEmpty(), "job id not specified");
+        Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "job id not specified");
 
         if (params.getAttempts().isEmpty())
             params.setAttempts(Optional.of(attempts));
@@ -229,10 +229,10 @@ public class MonitorJobs {
      */
     public Job waitForJobStatus(Job job, JobStatus.Type statusType) throws Exception {
         Util.checkNullParameter(job == null, "job is null");
-        Util.checkStateParameter(job.getJobName().isEmpty(), "job name not specified");
-        Util.checkStateParameter(job.getJobName().get().isEmpty(), "job name not specified");
-        Util.checkStateParameter(job.getJobId().isEmpty(), "job id not specified");
-        Util.checkStateParameter(job.getJobId().get().isEmpty(), "job id not specified");
+        Util.checkIllegalParameter(job.getJobName().isEmpty(), "job name not specified");
+        Util.checkIllegalParameter(job.getJobName().get().isEmpty(), "job name not specified");
+        Util.checkIllegalParameter(job.getJobId().isEmpty(), "job id not specified");
+        Util.checkIllegalParameter(job.getJobId().get().isEmpty(), "job id not specified");
         return waitForStatusCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
                 .jobStatus(statusType).attempts(attempts).watchDelay(watchDelay).build());
     }
@@ -270,10 +270,10 @@ public class MonitorJobs {
      */
     public Job waitForJobOutputStatus(Job job) throws Exception {
         Util.checkNullParameter(job == null, "job is null");
-        Util.checkStateParameter(job.getJobName().isEmpty(), "job name not specified");
-        Util.checkStateParameter(job.getJobName().get().isEmpty(), "job name not specified");
-        Util.checkStateParameter(job.getJobId().isEmpty(), "job id not specified");
-        Util.checkStateParameter(job.getJobId().get().isEmpty(), "job id not specified");
+        Util.checkIllegalParameter(job.getJobName().isEmpty(), "job name not specified");
+        Util.checkIllegalParameter(job.getJobName().get().isEmpty(), "job name not specified");
+        Util.checkIllegalParameter(job.getJobId().isEmpty(), "job id not specified");
+        Util.checkIllegalParameter(job.getJobId().get().isEmpty(), "job id not specified");
         return waitForStatusCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
                 .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build());
     }
@@ -311,10 +311,10 @@ public class MonitorJobs {
      */
     public Job waitForStatusCommon(MonitorJobWaitForParams params) throws Exception {
         Util.checkNullParameter(params == null, "params is null");
-        Util.checkStateParameter(params.getJobName().isEmpty(), "job name not specified");
-        Util.checkStateParameter(params.getJobName().get().isEmpty(), "job name not specified");
-        Util.checkStateParameter(params.getJobId().isEmpty(), "job id not specified");
-        Util.checkStateParameter(params.getJobId().get().isEmpty(), "job id not specified");
+        Util.checkIllegalParameter(params.getJobName().isEmpty(), "job name not specified");
+        Util.checkIllegalParameter(params.getJobName().get().isEmpty(), "job name not specified");
+        Util.checkIllegalParameter(params.getJobId().isEmpty(), "job id not specified");
+        Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "job id not specified");
 
         if (params.getJobStatus().isEmpty())
             params.setJobStatus(Optional.of(DEFAULT_STATUS));
@@ -338,6 +338,7 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     private boolean checkMessage(MonitorJobWaitForParams params, String message) throws Exception {
+        Util.checkConnection(connection);
         GetJobs getJobs = new GetJobs(connection);
         GetJobParams filter = new GetJobParams.Builder("*").jobId(params.getJobId().get())
                 .prefix(params.getJobName().get()).build();
@@ -397,6 +398,7 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     private CheckJobStatus checkStatus(MonitorJobWaitForParams params) throws Exception {
+        Util.checkConnection(connection);
         GetJobs getJobs = new GetJobs(connection);
         String statusNameCheck = params.getJobStatus().get().toString();
 
