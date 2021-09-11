@@ -53,19 +53,37 @@ public class UtilDataset {
     }
 
     /**
-     * Formulate and return a Dataset object based on incoming Json object.
+     * Formulate and return a more redefined error exception message base on crud operation.
      *
      * @param errorMsg    error message
      * @param dataSetName dataset representation
+     * @param crudType crud type value of operation taken place
      * @throws Exception execution with error msg
      */
-    public static void checkHttpErrors(String errorMsg, String dataSetName) throws Exception {
+    public static void checkHttpErrors(String errorMsg, String dataSetName, String crudType) throws Exception {
         if (errorMsg.contains("404")) {
-            throw new Exception(errorMsg + " You may have specified an invalid or non-existent data set.");
+            throw new Exception(errorMsg + " You may have specified an invalid or non-existent data set or member.");
         }
-        if (errorMsg.contains("500")) {
-            throw new Exception(errorMsg + " You may not have permission to view " + dataSetName + ", or if creating" +
-                    " this dataset, it may already exist!");
+
+        var type = crudType.toLowerCase();
+        var permissionDataSetMsg = " You may not have permission to " + type + " the following " + dataSetName;
+        var permissionDataSetMemberMsg = permissionDataSetMsg + " or the dataset or member do not exists.";
+
+        if ("create".equals(type)) {
+            if (errorMsg.contains("500")) {
+                String exceptionMsg = permissionDataSetMsg + " or the dataset already exists.";
+                throw new Exception(errorMsg + exceptionMsg);
+            }
+        }
+        if ("read".equals(type)) {
+            if (errorMsg.contains("500")) {
+                throw new Exception(errorMsg + permissionDataSetMsg + ".");
+            }
+        }
+        if ("delete".equals(type) || "write".equals(type) || "copy".equals(type) || "download".equals(type)) {
+            if (errorMsg.contains("500")) {
+                throw new Exception(errorMsg + permissionDataSetMemberMsg + ".");
+            }
         }
         throw new Exception(errorMsg);
     }

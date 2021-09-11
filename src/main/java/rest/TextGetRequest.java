@@ -71,7 +71,7 @@ public class TextGetRequest extends ZoweRequest {
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
         if (UtilRest.isHttpError(statusCode)) {
-            return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()), statusCode);
+            return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
         }
 
         return new Response(UtilRest.getTextResponseEntity(httpResponse), statusCode);

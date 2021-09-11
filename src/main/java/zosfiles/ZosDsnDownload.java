@@ -88,7 +88,7 @@ public class ZosDsnDownload {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), dataSetName);
+            UtilDataset.checkHttpErrors(e.getMessage(), dataSetName, "download");
         }
 
         return (InputStream) response.getResponsePhrase().orElse(null);
