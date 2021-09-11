@@ -54,6 +54,7 @@ public class WriteDataset {
      *
      * @param dataSetName name of a dataset where member should be located (e.g. 'DATASET.LIB')
      * @param member      name of member to write
+     * @param content     content for write
      * @throws Exception error processing request
      * @author Frank Giordano
      */

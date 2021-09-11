@@ -50,6 +50,7 @@ public class ZosDsnDownload {
      * @param dataSetName name of a dataset or a dataset member (f.e. DATASET.LIB(MEMBER))
      * @param params      download params parameters, see DownloadParams object
      * @return a content stream
+     * @throws Exception error processing request
      * @author Nikunj Goyal
      */
     public InputStream downloadDsn(String dataSetName, DownloadParams params) throws Exception {

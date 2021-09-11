@@ -55,8 +55,9 @@ public class DownloadDataset {
      * Download dataset members
      *
      * @param connection ZOSConnection object
-     * @param name data set name
-     * @param params download parameters object
+     * @param name       data set name
+     * @param params     download parameters object
+     * @throws Exception error processing request
      * @author Leonid Baranov
      */
     public static void downloadDsnMember(ZOSConnection connection, String name, DownloadParams params)

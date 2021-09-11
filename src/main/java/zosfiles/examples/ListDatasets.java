@@ -33,6 +33,7 @@ public class ListDatasets {
      * ListDatasets functionality. Calls ListDatasets example methods.
      *
      * @param args for main not used
+     * @throws Exception error processing request
      * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
@@ -52,7 +53,7 @@ public class ListDatasets {
     /**
      * List out all members of the given data set
      *
-     * @param connection ZOSConnection object
+     * @param connection  ZOSConnection object
      * @param dataSetName data set name
      * @throws Exception error processing request
      * @author Leonid Baranov
@@ -67,7 +68,7 @@ public class ListDatasets {
     /**
      * List out all partition data sets of the given data set
      *
-     * @param connection ZOSConnection object
+     * @param connection  ZOSConnection object
      * @param dataSetName data set name
      * @throws Exception error processing request
      * @author Leonid Baranov
