@@ -64,7 +64,8 @@ public class UtilDataset {
             throw new Exception(errorMsg + " You may have specified an invalid or non-existent data set.");
         }
         if (errorMsg.contains("500")) {
-            throw new Exception(errorMsg + " You may not have permission to view " + dataSetName + ".");
+            throw new Exception(errorMsg + " You may not have permission to view " + dataSetName + ", or if creating" +
+                    " this dataset, it may already exist!");
         }
         throw new Exception(errorMsg);
     }
