@@ -194,11 +194,11 @@ public class SubmitJobs {
         }
 
         JSONParser parser = new JSONParser();
-        JSONObject json = null;
+        JSONObject json;
         try {
             json = (JSONObject) parser.parse((String) response.getResponsePhrase().orElse(""));
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
         return UtilJobs.createJobObjFromJson(json);
     }
