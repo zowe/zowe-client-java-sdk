@@ -20,7 +20,6 @@ import utility.Util;
 import utility.UtilRest;
 import utility.UtilTso;
 import zostso.input.SendTsoParams;
-import zostso.zosmf.TsoMessage;
 import zostso.zosmf.TsoMessages;
 import zostso.zosmf.TsoResponseMessage;
 import zostso.zosmf.ZosmfTsoResponse;
@@ -69,7 +68,7 @@ public class SendTso {
         ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParams(servletKey, data));
 
         CollectedResponses responses = getAllResponses(putResponse);
-        return SendTso.createResponse(responses);
+        return createResponse(responses);
     }
 
     /**
@@ -142,8 +141,8 @@ public class SendTso {
             if (tso.getTsoData().isPresent()) {
                 for (TsoMessages tsoDatum : tso.getTsoData().get()) {
                     if (tsoDatum.getTsoMessage().isPresent()) {
-                        TsoMessage tsoMsg = tsoDatum.getTsoMessage().orElseThrow(Exception::new);
-                        String data = tsoMsg.getData().orElseThrow(Exception::new);
+                        var tsoMsg = tsoDatum.getTsoMessage().orElseThrow(() -> new Exception("missing tso message"));
+                        var data = tsoMsg.getData().orElseThrow(() -> new Exception("missing tso message data"));
                         messages.append(data);
                         messages.append("\n");
                     } else if (tsoDatum.getTsoPrompt().isPresent()) {
@@ -200,8 +199,9 @@ public class SendTso {
      * @return SendResponse, see SendResponse
      * @author Frank Giordano
      */
-    private static SendResponse createResponse(CollectedResponses responses) {
-        return new SendResponse(true, responses.getTsos().get(), responses.getMessages().get());
+    private static SendResponse createResponse(CollectedResponses responses) throws Exception {
+        return new SendResponse(true, responses.getTsos().orElseThrow(() -> new Exception("no responses exist")),
+                responses.getMessages().orElseThrow(() -> new Exception("no responses messages exist")));
     }
 
 }

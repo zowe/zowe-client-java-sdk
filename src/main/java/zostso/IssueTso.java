@@ -12,8 +12,9 @@ package zostso;
 import core.ZOSConnection;
 import utility.Util;
 import zostso.input.StartTsoParams;
+import zostso.zosmf.ZosmfTsoResponse;
 
-import java.util.Optional;
+import java.util.ArrayList;
 
 /**
  * Class to handle issue command to TSO
@@ -68,32 +69,42 @@ public class IssueTso {
         Util.checkIllegalParameter(accountNumber.isEmpty(), "accountNumber not specified");
         Util.checkIllegalParameter(command.isEmpty(), "command not specified");
 
-        IssueResponse response = new IssueResponse(false, null, false, null,
-                null, null);
+        // first stage open tso servlet session to use for our tso command processing
         StartTso startTso = new StartTso(connection);
         StartStopResponses startResponse = startTso.start(accountNumber, startParams);
-        response.setStartResponse(Optional.ofNullable(startResponse));
-
-        if (response.getStartResponse().isPresent() && !response.getStartResponse().get().isSuccess()) {
+        if (startResponse != null && !startResponse.isSuccess()) {
             throw new Exception("TSO address space failed to start. Error: " +
-                    (response.getStartResponse().isPresent() ? response.getStartResponse().get().getFailureResponse() :
-                            "Unknown error"));
+                    (startResponse.getFailureResponse().orElse("Unknown error")));
         }
 
-        response.setZosmfResponse(Optional.ofNullable(startResponse.getZosmfTsoResponse().get()));
+        IssueResponse issueResponse = new IssueResponse();
+        issueResponse.setStartResponse(startResponse);
 
+        var zosmfTsoResponses = new ArrayList<ZosmfTsoResponse>();
+        zosmfTsoResponses.add(startResponse.getZosmfTsoResponse()
+                .orElseThrow(() -> new Exception("no zosmf start tso response")));
+
+        var servletKey = startResponse.getServletKey()
+                .orElseThrow(() -> new Exception("no servletKey key value returned from startTso"));
+
+        // second stage send command to tso servlet session created in first stage and collect all tso responses
         SendTso sendTso = new SendTso(connection);
-        SendResponse sendResponse = sendTso.sendDataToTSOCollect(
-                response.getStartResponse().get().getServletKey().get(), command);
-        response.setSuccess(sendResponse.getSuccess());
-        response.setZosmfResponse(Optional.of(sendResponse.getZosmfResponse().get().get(0)));
-        startResponse.setCollectedResponses(sendResponse.getZosmfResponse().get());
-        response.setCommandResponses(sendResponse.getCommandResponse());
-        StopTso stopTso = new StopTso(connection);
-        response.setStopResponse(Optional.ofNullable(
-                stopTso.stop(response.getStartResponse().get().getServletKey().get())));
+        SendResponse sendResponse = sendTso.sendDataToTSOCollect(servletKey, command);
+        issueResponse.setSuccess(sendResponse.getSuccess());
+        zosmfTsoResponses.addAll(sendResponse.getZosmfResponses()
+                .orElseThrow(() -> new Exception("no zosmf send tso response")));
 
-        return response;
+        issueResponse.setZosmfResponses(zosmfTsoResponses);
+
+        // lastly save the command response to our issueResponse reference
+        issueResponse.setCommandResponses(sendResponse.getCommandResponse());
+
+        // third stage here where the tso session end session operation is performed
+        StopTso stopTso = new StopTso(connection);
+        StartStopResponse stopResponse = stopTso.stop(servletKey);
+        issueResponse.setStopResponse(stopResponse);
+
+        return issueResponse;
     }
 
 }

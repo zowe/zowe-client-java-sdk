@@ -71,10 +71,10 @@ public class StartTso {
     }
 
     /**
-     * Start TSO address space with provided  parameters
+     * Start TSO address space with provided parameters
      *
      * @param commandParams object with required parameters, see StartTsoParams
-     * @return z/OSMF response object, see IZosmfTsoResponse
+     * @return z/OSMF response object, see ZosmfTsoResponse
      * @throws Exception error executing command
      * @author Frank Giordano
      */
@@ -104,7 +104,7 @@ public class StartTso {
      * Set default TSO address space parameters
      *
      * @param params        object with required parameters, see StartTsoParams
-     * @param accountNumber user's account number permission
+     * @param accountNumber user's account number for permission
      * @return response object, see StartTsoParams
      * @author Frank Giordano
      */

@@ -25,13 +25,13 @@ public class SendResponse {
     /**
      * True if the command was issued and the responses were collected.
      */
-    private final Optional<Boolean> success;
+    private final boolean success;
 
     /**
      * The list of zOSMF send API responses. May issue multiple requests or
      * to ensure that all messages are collected. Each individual response is placed here.
      */
-    private final Optional<List<ZosmfTsoResponse>> zosmfResponse;
+    private final Optional<List<ZosmfTsoResponse>> zosmfTsoResponses;
 
     /**
      * The command response text.
@@ -41,14 +41,14 @@ public class SendResponse {
     /**
      * SendResponse constructor
      *
-     * @param success         boolean value
-     * @param zosmfResponse   list of ZosmfTsoResponse objects
-     * @param commandResponse tso command response
+     * @param success           boolean value
+     * @param zosmfTsoResponses list of ZosmfTsoResponse objects
+     * @param commandResponse   tso command response
      * @author Frank Giordano
      */
-    public SendResponse(boolean success, List<ZosmfTsoResponse> zosmfResponse, String commandResponse) {
-        this.success = Optional.of(success);
-        this.zosmfResponse = Optional.ofNullable(zosmfResponse);
+    public SendResponse(boolean success, List<ZosmfTsoResponse> zosmfTsoResponses, String commandResponse) {
+        this.success = success;
+        this.zosmfTsoResponses = Optional.ofNullable(zosmfTsoResponses);
         this.commandResponse = Optional.ofNullable(commandResponse);
     }
 
@@ -58,18 +58,18 @@ public class SendResponse {
      * @return success value
      * @author Frank Giordano
      */
-    public Optional<Boolean> getSuccess() {
+    public boolean getSuccess() {
         return success;
     }
 
     /**
-     * Retrieve zosmfResponse specified
+     * Retrieve zosmfResponses specified
      *
-     * @return zosmfResponse value
+     * @return zosmfTsoResponses value, see ZosmfTsoResponse object
      * @author Frank Giordano
      */
-    public Optional<List<ZosmfTsoResponse>> getZosmfResponse() {
-        return zosmfResponse;
+    public Optional<List<ZosmfTsoResponse>> getZosmfResponses() {
+        return zosmfTsoResponses;
     }
 
     /**
@@ -86,7 +86,7 @@ public class SendResponse {
     public String toString() {
         return "SendResponse{" +
                 "success=" + success +
-                ", zosmfResponse=" + zosmfResponse +
+                ", zosmfTsoResponses=" + zosmfTsoResponses +
                 ", commandResponse=" + commandResponse +
                 '}';
     }
