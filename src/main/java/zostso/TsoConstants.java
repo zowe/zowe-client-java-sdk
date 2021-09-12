@@ -25,37 +25,37 @@ public class TsoConstants {
     /**
      * Query id of logonProcedure passed to z/OSMF URI
      */
-    public static final String PARM_PROC = "proc";
+    public static final String PARAM_PROC = "proc";
 
     /**
      * Query id of character-set passed to z/OSMF URI
      */
-    public static final String PARM_CHSET = "chset";
+    public static final String PARAM_CHSET = "chset";
 
     /**
      * Query id of code page passed to z/OSMF URI
      */
-    public static final String PARM_CPAGE = "cpage";
+    public static final String PARAM_CPAGE = "cpage";
 
     /**
      * Query id of rows passed to z/OSMF URI
      */
-    public static final String PARM_ROWS = "rows";
+    public static final String PARAM_ROWS = "rows";
 
     /**
      * Query id of columns passed to z/OSMF URI
      */
-    public static final String PARM_COLS = "cols";
+    public static final String PARAM_COLS = "cols";
 
     /**
      * Query id of account number passed to z/OSMF URI
      */
-    public static final String PARM_ACCT = "acct";
+    public static final String PARAM_ACCT = "acct";
 
     /**
      * Query id of region size passed to z/OSMF URI
      */
-    public static final String PARM_RSIZE = "rsize";
+    public static final String PARAM_RSIZE = "rsize";
 
     /**
      * Default character-set value

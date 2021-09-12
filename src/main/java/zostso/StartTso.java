@@ -128,14 +128,14 @@ public class StartTso {
     private String getResourcesQuery(StartTsoParams params) throws Exception {
         String query = "https://" + connection.getHost() + ":" + connection.getZosmfPort();
         query += TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "?";
-        query += TsoConstants.PARM_ACCT + "=" +
+        query += TsoConstants.PARAM_ACCT + "=" +
                 params.account.orElseThrow(() -> new Exception("account num not specified")) + "&";
-        query += TsoConstants.PARM_PROC + "=" + params.logonProcedure.orElse(TsoConstants.DEFAULT_PROC) + "&";
-        query += TsoConstants.PARM_CHSET + "=" + params.characterSet.orElse(TsoConstants.DEFAULT_CHSET) + "&";
-        query += TsoConstants.PARM_CPAGE + "=" + params.codePage.orElse(TsoConstants.DEFAULT_CPAGE) + "&";
-        query += TsoConstants.PARM_ROWS + "=" + params.rows.orElse(TsoConstants.DEFAULT_ROWS) + "&";
-        query += TsoConstants.PARM_COLS + "=" + params.columns.orElse(TsoConstants.DEFAULT_COLS) + "&";
-        query += TsoConstants.PARM_RSIZE + "=" + params.regionSize.orElse(TsoConstants.DEFAULT_RSIZE);
+        query += TsoConstants.PARAM_PROC + "=" + params.logonProcedure.orElse(TsoConstants.DEFAULT_PROC) + "&";
+        query += TsoConstants.PARAM_CHSET + "=" + params.characterSet.orElse(TsoConstants.DEFAULT_CHSET) + "&";
+        query += TsoConstants.PARAM_CPAGE + "=" + params.codePage.orElse(TsoConstants.DEFAULT_CPAGE) + "&";
+        query += TsoConstants.PARAM_ROWS + "=" + params.rows.orElse(TsoConstants.DEFAULT_ROWS) + "&";
+        query += TsoConstants.PARAM_COLS + "=" + params.columns.orElse(TsoConstants.DEFAULT_COLS) + "&";
+        query += TsoConstants.PARAM_RSIZE + "=" + params.regionSize.orElse(TsoConstants.DEFAULT_RSIZE);
         return query;
     }
 

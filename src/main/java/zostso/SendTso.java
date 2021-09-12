@@ -127,7 +127,7 @@ public class SendTso {
     /**
      * Collects responses from address space until it reaches prompt
      *
-     * @param tso object from first API call from witch responses are needed, see ZosmfTsoResponse
+     * @param tso object from first Tso response from witch responses are needed, see ZosmfTsoResponse
      * @return CollectedResponses response object, see CollectedResponses
      * @throws Exception error executing command
      * @author Frank Giordano
