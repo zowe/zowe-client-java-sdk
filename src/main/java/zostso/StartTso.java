@@ -12,6 +12,7 @@ package zostso;
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 import rest.Response;
 import rest.ZoweRequest;
 import rest.ZoweRequestFactory;
@@ -125,16 +126,17 @@ public class StartTso {
      * @return generated url
      * @author Frank Giordano
      */
-    private String getResourcesQuery(StartTsoParams params) {
+    private String getResourcesQuery(StartTsoParams params) throws Exception {
         String query = "https://" + connection.getHost() + ":" + connection.getZosmfPort();
         query += TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "?";
-        query += TsoConstants.PARM_ACCT + "=" + params.account.get() + "&";
-        query += TsoConstants.PARM_PROC + "=" + params.logonProcedure.get() + "&";
-        query += TsoConstants.PARM_CHSET + "=" + params.characterSet.get() + "&";
-        query += TsoConstants.PARM_CPAGE + "=" + params.codePage.get() + "&";
-        query += TsoConstants.PARM_ROWS + "=" + params.rows.get() + "&";
-        query += TsoConstants.PARM_COLS + "=" + params.columns.get() + "&";
-        query += TsoConstants.PARM_RSIZE + "=" + params.regionSize.get();
+        query += TsoConstants.PARM_ACCT + "=" +
+                params.account.orElseThrow(() -> new Exception("account num not specified")) + "&";
+        query += TsoConstants.PARM_PROC + "=" + params.logonProcedure.orElse(TsoConstants.DEFAULT_PROC) + "&";
+        query += TsoConstants.PARM_CHSET + "=" + params.characterSet.orElse(TsoConstants.DEFAULT_CHSET) + "&";
+        query += TsoConstants.PARM_CPAGE + "=" + params.codePage.orElse(TsoConstants.DEFAULT_CPAGE) + "&";
+        query += TsoConstants.PARM_ROWS + "=" + params.rows.orElse(TsoConstants.DEFAULT_ROWS) + "&";
+        query += TsoConstants.PARM_COLS + "=" + params.columns.orElse(TsoConstants.DEFAULT_COLS) + "&";
+        query += TsoConstants.PARM_RSIZE + "=" + params.regionSize.orElse(TsoConstants.DEFAULT_RSIZE);
 
         return query;
     }
