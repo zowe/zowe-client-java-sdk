@@ -11,6 +11,7 @@ package zostso;
 
 import zostso.zosmf.ZosmfTsoResponse;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -45,7 +46,7 @@ public class IssueResponse {
      * The list of zOSMF send API responses. May issue multiple requests or
      * to ensure that all messages are collected. Each individual response is placed here.
      */
-    private Optional<ZosmfTsoResponse> zosmfResponse;
+    private Optional<List<ZosmfTsoResponse>> zosmfResponses;
 
     /**
      * The command response text.
@@ -133,23 +134,23 @@ public class IssueResponse {
     }
 
     /**
-     * Retrieve zosmfResponse specified
+     * Retrieve zosmfResponses specified
      *
-     * @return zosmfResponse z/OSMF response
+     * @return zosmfResponses z/OSMF responses
      * @author Frank Giordano
      */
-    public Optional<ZosmfTsoResponse> getZosmfResponse() {
-        return zosmfResponse;
+    public Optional<List<ZosmfTsoResponse>> getZosmfResponse() {
+        return zosmfResponses;
     }
 
     /**
-     * Assign zosmfResponse value
+     * Assign zosmfResponses value
      *
-     * @param zosmfResponse z/OSMF response
+     * @param zosmfResponses z/OSMF tso responses
      * @author Frank Giordano
      */
-    public void setZosmfResponse(ZosmfTsoResponse zosmfResponse) {
-        this.zosmfResponse = Optional.ofNullable(zosmfResponse);
+    public void setZosmfResponses(List<ZosmfTsoResponse> zosmfResponses) {
+        this.zosmfResponses = Optional.ofNullable(zosmfResponses);
     }
 
     /**
@@ -179,7 +180,7 @@ public class IssueResponse {
                 ", startResponse=" + startResponse +
                 ", startReady=" + startReady +
                 ", stopResponse=" + stopResponse +
-                ", zosmfResponse=" + zosmfResponse +
+                ", zosmfResponses=" + zosmfResponses +
                 ", commandResponses=" + commandResponses +
                 '}';
     }

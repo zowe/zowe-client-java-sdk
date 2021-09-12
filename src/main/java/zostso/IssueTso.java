@@ -14,8 +14,7 @@ import utility.Util;
 import zostso.input.StartTsoParams;
 import zostso.zosmf.ZosmfTsoResponse;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.ArrayList;
 
 /**
  * Class to handle issue command to TSO
@@ -80,32 +79,27 @@ public class IssueTso {
 
         IssueResponse issueResponse = new IssueResponse();
         issueResponse.setStartResponse(startResponse);
-        issueResponse.setZosmfResponse(startResponse.getZosmfTsoResponse()
-                .orElseThrow(() -> new Exception("no zosmf tso response")));
 
-        var servletKey = startResponse.getServletKey().orElseThrow(() -> new Exception("no servletKey key"));
+        var zosmfTsoResponses = new ArrayList<ZosmfTsoResponse>();
+        zosmfTsoResponses.add(startResponse.getZosmfTsoResponse()
+                .orElseThrow(() -> new Exception("no zosmf start tso response")));
 
-        // second stage send command to open tso servlet session create in first stage
-        // and collect all the tso responses
+        var servletKey = startResponse.getServletKey()
+                .orElseThrow(() -> new Exception("no servletKey key value returned from startTso"));
+
+        // second stage send command to tso servlet session created in first stage and collect all tso responses
         SendTso sendTso = new SendTso(connection);
         SendResponse sendResponse = sendTso.sendDataToTSOCollect(servletKey, command);
         issueResponse.setSuccess(sendResponse.getSuccess());
+        zosmfTsoResponses.addAll(sendResponse.getZosmfResponses()
+                .orElseThrow(() -> new Exception("no zosmf send tso response")));
 
-        // we have a list of responses here but the response is one item only using a list
-        // might be an overkill but the NodeJS SDK uses a list so let's keep it consistent for now.
-        List<ZosmfTsoResponse> zosmfTsoResponses = sendResponse.getZosmfResponse();
-        if (zosmfTsoResponses.isEmpty())
-            throw new Exception("no zosmf response from sendTso command");
-        ZosmfTsoResponse zosmfSendTsoResponse = zosmfTsoResponses.get(0);
-        issueResponse.setZosmfResponse(zosmfSendTsoResponse);
-
-        // save all the responses just in case we have multiple responses in reply
-        startResponse.setCollectedResponses(zosmfTsoResponses);
+        issueResponse.setZosmfResponses(zosmfTsoResponses);
 
         // lastly save the command response to our issueResponse reference
         issueResponse.setCommandResponses(sendResponse.getCommandResponse());
 
-        // third stage here where is end our tso servlet session
+        // third stage here where the tso session end session operation is performed
         StopTso stopTso = new StopTso(connection);
         StartStopResponse stopResponse = stopTso.stop(servletKey);
         issueResponse.setStopResponse(stopResponse);

@@ -14,10 +14,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zostso.IssueResponse;
 import zostso.IssueTso;
-import zostso.StartStopResponses;
-import zostso.zosmf.ZosmfTsoResponse;
 
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * Class example to test tso command functionality.
@@ -29,65 +27,41 @@ public class IssueTsoCommand {
 
     private static final Logger LOG = LogManager.getLogger(IssueTsoCommand.class);
 
+    private static ZOSConnection connection;
+
     /**
      * Main method defines z/OSMF host and user connection, and tso command parameters used for the example test.
      *
      * @param args for main not used
+     * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public static void main(String[] args) {
-        String hostName = "XXX";
-        String zosmfPort = "XXX";
-        String userName = "XXX";
-        String password = "XXX";
-        String command = "XXX";
-        String accountNumber = "XXX";
+    public static void main(String[] args) throws Exception {
+        String hostName = "usilCA31.lvn.broadcom.net";
+        String zosmfPort = "1443";
+        String userName = "FG892105";
+        String password = "dell101D";
+        String command = "status";
+        String accountNumber = "105200000";
 
-        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-
-        IssueResponse response = null;
-        try {
-            response = IssueTsoCommand.tsoConsoleCmdByIssue(connection, accountNumber, command);
-        } catch (Exception e) {
-            LOG.info(e.getMessage());
-        }
-        if (response != null && response.getStartResponse().isPresent()) {
-            LOG.info(response.getStartResponse().get().isSuccess());
-            LOG.info(response.getStartResponse().get().getZosmfTsoResponse().get().getVer());
-
-            StartStopResponses startResponses = response.getStartResponse().get();
-            startResponses.getCollectedResponses().get().forEach(LOG::info);
-            List<ZosmfTsoResponse> zosmfTsoResponses = startResponses.getCollectedResponses().get();
-
-            zosmfTsoResponses.forEach(tso -> tso.getTsoData().get().forEach(msg -> {
-                if (msg.getTsoPrompt().isEmpty()) {
-                    LOG.info(msg.getTsoMessage().get().getVersion() + " " + msg.getTsoMessage().get().getData());
-                }
-            }));
-        }
+        connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        IssueResponse response = IssueTsoCommand.tsoConsoleCmdByIssue(accountNumber, command);
+        String[] results = response.getCommandResponses().orElse("").split("\n");
+        Arrays.stream(results).sequential().forEach(LOG::info);
     }
 
     /**
      * Issue issueTsoCommand method from IssueTso class which will execute the given tso command
      *
-     * @param connection    connection information, see ZOSConnection object
      * @param accountNumber user's z/OSMF permission account number
      * @param cmd           tso command to execute
-     * @return response IssueResponse object
+     * @return issue response object
      * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public static IssueResponse tsoConsoleCmdByIssue(ZOSConnection connection, String accountNumber, String cmd)
-            throws Exception {
-        IssueResponse response;
+    public static IssueResponse tsoConsoleCmdByIssue(String accountNumber, String cmd) throws Exception {
         IssueTso issueTso = new IssueTso(connection);
-        try {
-            response = issueTso.issueTsoCommand(accountNumber, cmd);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception(e.getMessage());
-        }
-        return response;
+        return issueTso.issueTsoCommand(accountNumber, cmd);
     }
 
 }
