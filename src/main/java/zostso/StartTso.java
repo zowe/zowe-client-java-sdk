@@ -137,7 +137,6 @@ public class StartTso {
         query += TsoConstants.PARM_ROWS + "=" + params.rows.orElse(TsoConstants.DEFAULT_ROWS) + "&";
         query += TsoConstants.PARM_COLS + "=" + params.columns.orElse(TsoConstants.DEFAULT_COLS) + "&";
         query += TsoConstants.PARM_RSIZE + "=" + params.regionSize.orElse(TsoConstants.DEFAULT_RSIZE);
-
         return query;
     }
 
