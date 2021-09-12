@@ -414,7 +414,8 @@ public class MonitorJobs {
         if (orderIndexOfDesiredJobStatus == -1) // this should never happen but let's check for it.
             throw new Exception(invalidStatusMsg);
 
-        int orderIndexOfCurrRunningJobStatus = getOrderIndexOfStatus(job.getStatus().get());
+        int orderIndexOfCurrRunningJobStatus =
+                getOrderIndexOfStatus(job.getStatus().orElseThrow(() -> new Exception("job status not specified")));
         if (orderIndexOfCurrRunningJobStatus == -1) // this should never happen but let's check for it.
             throw new Exception(invalidStatusMsg);
 

@@ -116,10 +116,12 @@ public class ZosDsnCopy {
      *
      * @param params CopyParams object
      * @return json string
+     * @throws Exception error processing request
      * @author Leonid Baranov
      */
-    private String buildBody(CopyParams params) {
-        String fromDataSetName = Util.encodeURIComponent(params.getFromDataSet().get());
+    private String buildBody(CopyParams params) throws Exception {
+        String fromDataSetName = Util.encodeURIComponent(
+                params.getFromDataSet().orElseThrow(() -> new Exception("dataset not specified")));
 
         var jsonMap = new HashMap<String, Object>();
         jsonMap.put("request", "copy");
