@@ -76,6 +76,7 @@ public class StopTso {
             throw new Exception("Failed to stop active TSO address space. " + errorMsg);
         }
         JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
+        //noinspection ConstantConditions
         return UtilTso.parseJsonStopResponse(result);
     }
 

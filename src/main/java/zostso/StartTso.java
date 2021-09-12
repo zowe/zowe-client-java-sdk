@@ -12,7 +12,6 @@ package zostso;
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 import rest.Response;
 import rest.ZoweRequest;
 import rest.ZoweRequestFactory;
