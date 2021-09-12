@@ -109,19 +109,12 @@ public class StartTso {
      * @author Frank Giordano
      */
     private StartTsoParams setDefaultAddressSpaceParams(StartTsoParams params, String accountNumber) {
-        String proc = (params == null || params.logonProcedure.isEmpty())
-                ? TsoConstants.DEFAULT_PROC : params.getLogonProcedure().get();
-        String chset = (params == null || params.characterSet.isEmpty())
-                ? TsoConstants.DEFAULT_CHSET : params.getCharacterSet().get();
-        String cpage = (params == null || params.codePage.isEmpty())
-                ? TsoConstants.DEFAULT_CPAGE : params.getCodePage().get();
-        String rowNum = (params == null || params.rows.isEmpty())
-                ? TsoConstants.DEFAULT_ROWS : params.getRows().get();
-        String cols = (params == null || params.columns.isEmpty())
-                ? TsoConstants.DEFAULT_COLS : params.getColumns().get();
-        String rSize = (params == null || params.regionSize.isEmpty())
-                ? TsoConstants.DEFAULT_RSIZE : params.getRegionSize().get();
-
+        String proc = params.getLogonProcedure().orElse(TsoConstants.DEFAULT_PROC);
+        String chset = params.getCharacterSet().orElse(TsoConstants.DEFAULT_CHSET);
+        String cpage = params.getCodePage().orElse(TsoConstants.DEFAULT_CPAGE);
+        String rowNum = params.getRows().orElse(TsoConstants.DEFAULT_ROWS);
+        String cols = params.getColumns().orElse(TsoConstants.DEFAULT_COLS);
+        String rSize = params.getRegionSize().orElse(TsoConstants.DEFAULT_RSIZE);
         return new StartTsoParams(proc, chset, cpage, rowNum, cols, accountNumber, rSize);
     }
 
