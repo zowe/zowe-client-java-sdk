@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 /**
  * Utility Class for zosFiles related static helper methods.
  *
+ * @author Nikunj Goyal
  * @version 1.0
  */
 public class UtilZosFiles {
@@ -66,6 +67,7 @@ public class UtilZosFiles {
      *
      * @param options various options parameters, see DownloadParams object
      * @return HeaderContent
+     * @author Nikunj Goyal
      */
     public static Map<String, String> generateHeadersBasedOnOptions(DownloadParams options) {
         String key, value;

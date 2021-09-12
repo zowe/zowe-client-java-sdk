@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 /**
  * Utility Class for Dataset related static helper methods.
  *
+ * @author Nikunj Goyal
  * @version 1.0
  */
 public class UtilDataset {
@@ -28,6 +29,7 @@ public class UtilDataset {
      *
      * @param json JSONObject object
      * @return dataset document
+     * @author Nikunj Goyal
      */
     public static Dataset createDatasetObjFromJson(JSONObject json) {
         return new Dataset.Builder().dsname((String) json.get("dsname"))
@@ -59,6 +61,7 @@ public class UtilDataset {
      * @param dataSetName dataset representation
      * @param crudType    crud type value of operation taken place
      * @throws Exception execution with error msg
+     * @author Frank Giordano
      */
     public static void checkHttpErrors(String errorMsg, String dataSetName, String crudType) throws Exception {
         if (errorMsg.contains("404")) {

@@ -19,6 +19,7 @@ import java.nio.file.Paths;
  * Utility class will handle common sequences of I/O, issue messages, and throw errors as necessary.
  *
  * @version 1.0
+ * @author Nikunj Goyal
  */
 public class UtilIO {
 
