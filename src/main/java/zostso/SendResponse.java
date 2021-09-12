@@ -11,6 +11,7 @@ package zostso;
 
 import zostso.zosmf.ZosmfTsoResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,13 +26,13 @@ public class SendResponse {
     /**
      * True if the command was issued and the responses were collected.
      */
-    private final Optional<Boolean> success;
+    private final boolean success;
 
     /**
      * The list of zOSMF send API responses. May issue multiple requests or
      * to ensure that all messages are collected. Each individual response is placed here.
      */
-    private final Optional<List<ZosmfTsoResponse>> zosmfResponse;
+    private final List<ZosmfTsoResponse> zosmfResponse;
 
     /**
      * The command response text.
@@ -47,8 +48,10 @@ public class SendResponse {
      * @author Frank Giordano
      */
     public SendResponse(boolean success, List<ZosmfTsoResponse> zosmfResponse, String commandResponse) {
-        this.success = Optional.of(success);
-        this.zosmfResponse = Optional.ofNullable(zosmfResponse);
+        this.success = success;
+        if (zosmfResponse == null)
+            this.zosmfResponse = new ArrayList<>();
+        else this.zosmfResponse = zosmfResponse;
         this.commandResponse = Optional.ofNullable(commandResponse);
     }
 
@@ -58,7 +61,7 @@ public class SendResponse {
      * @return success value
      * @author Frank Giordano
      */
-    public Optional<Boolean> getSuccess() {
+    public boolean getSuccess() {
         return success;
     }
 
@@ -68,7 +71,7 @@ public class SendResponse {
      * @return zosmfResponse value
      * @author Frank Giordano
      */
-    public Optional<List<ZosmfTsoResponse>> getZosmfResponse() {
+    public List<ZosmfTsoResponse> getZosmfResponse() {
         return zosmfResponse;
     }
 

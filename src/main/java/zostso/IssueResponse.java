@@ -24,7 +24,7 @@ public class IssueResponse {
     /**
      * True if the command was issued and the responses were collected.
      */
-    private Optional<Boolean> success;
+    private boolean success = false;
 
     /**
      * zOSMF start TSO API response.
@@ -34,7 +34,7 @@ public class IssueResponse {
     /**
      * Indicates if started TSO contains "READY " message
      */
-    private Optional<Boolean> startReady;
+    private boolean startReady = false;
 
     /**
      * zOSMF stop TSO API response.
@@ -53,33 +53,12 @@ public class IssueResponse {
     private Optional<String> commandResponses;
 
     /**
-     * IssueResponse constructor
-     *
-     * @param success          true or false if response seen
-     * @param startResponse    tso response
-     * @param startReady       true or false if ready tso starting prompt is seen
-     * @param stopResponses    tso response
-     * @param zosmfResponse    z/OSMF response
-     * @param commandResponses tso command responses
-     * @author Frank Giordano
-     */
-    public IssueResponse(boolean success, StartStopResponses startResponse, boolean startReady,
-                         StartStopResponse stopResponses, ZosmfTsoResponse zosmfResponse, String commandResponses) {
-        this.success = Optional.of(success);
-        this.startResponse = Optional.ofNullable(startResponse);
-        this.startReady = Optional.of(startReady);
-        this.stopResponse = Optional.ofNullable(stopResponses);
-        this.zosmfResponse = Optional.ofNullable(zosmfResponse);
-        this.commandResponses = Optional.ofNullable(commandResponses);
-    }
-
-    /**
      * Retrieve success specified
      *
      * @return boolean value
      * @author Frank Giordano
      */
-    public Optional<Boolean> getSuccess() {
+    public boolean getSuccess() {
         return success;
     }
 
@@ -89,7 +68,7 @@ public class IssueResponse {
      * @param success true or false is response seen
      * @author Frank Giordano
      */
-    public void setSuccess(Optional<Boolean> success) {
+    public void setSuccess(boolean success) {
         this.success = success;
     }
 
@@ -109,8 +88,8 @@ public class IssueResponse {
      * @param startResponse tso response
      * @author Frank Giordano
      */
-    public void setStartResponse(Optional<StartStopResponses> startResponse) {
-        this.startResponse = startResponse;
+    public void setStartResponse(StartStopResponses startResponse) {
+        this.startResponse = Optional.ofNullable(startResponse);
     }
 
     /**
@@ -119,7 +98,7 @@ public class IssueResponse {
      * @return startReady value
      * @author Frank Giordano
      */
-    public Optional<Boolean> getStartReady() {
+    public boolean getStartReady() {
         return startReady;
     }
 
@@ -129,7 +108,7 @@ public class IssueResponse {
      * @param startReady true or false is start ready prompt seen or not
      * @author Frank Giordano
      */
-    public void setStartReady(Optional<Boolean> startReady) {
+    public void setStartReady(boolean startReady) {
         this.startReady = startReady;
     }
 
@@ -149,8 +128,8 @@ public class IssueResponse {
      * @param stopResponse tso response
      * @author Frank Giordano
      */
-    public void setStopResponse(Optional<StartStopResponse> stopResponse) {
-        this.stopResponse = stopResponse;
+    public void setStopResponse(StartStopResponse stopResponse) {
+        this.stopResponse = Optional.ofNullable(stopResponse);
     }
 
     /**
@@ -169,8 +148,8 @@ public class IssueResponse {
      * @param zosmfResponse z/OSMF response
      * @author Frank Giordano
      */
-    public void setZosmfResponse(Optional<ZosmfTsoResponse> zosmfResponse) {
-        this.zosmfResponse = zosmfResponse;
+    public void setZosmfResponse(ZosmfTsoResponse zosmfResponse) {
+        this.zosmfResponse = Optional.ofNullable(zosmfResponse);
     }
 
     /**
