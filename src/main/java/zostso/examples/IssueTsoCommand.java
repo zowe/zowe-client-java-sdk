@@ -37,12 +37,12 @@ public class IssueTsoCommand {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        String hostName = "usilCA31.lvn.broadcom.net";
-        String zosmfPort = "1443";
-        String userName = "FG892105";
-        String password = "dell101D";
-        String command = "status";
-        String accountNumber = "105200000";
+        String hostName = "XXX";
+        String zosmfPort = "XXX";
+        String userName = "XXX";
+        String password = "XXX";
+        String command = "XXX";
+        String accountNumber = "XXX";
 
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         IssueResponse response = IssueTsoCommand.tsoConsoleCmdByIssue(accountNumber, command);
