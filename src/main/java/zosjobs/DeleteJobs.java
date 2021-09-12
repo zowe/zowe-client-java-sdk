@@ -28,6 +28,7 @@ import java.util.HashMap;
  * @author Nikunj Goyal
  * @version 1.0
  */
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class DeleteJobs {
 
     private static final Logger LOG = LogManager.getLogger(DeleteJobs.class);

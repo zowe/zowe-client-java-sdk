@@ -87,6 +87,7 @@ public class CancelJobs {
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Response cancelJobsCommon(ModifyJobParams params) throws Exception {
         Util.checkConnection(connection);
         UtilJobs.checkForModifyJobParamsExceptions(params);

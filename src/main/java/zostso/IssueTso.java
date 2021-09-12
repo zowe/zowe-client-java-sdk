@@ -99,7 +99,7 @@ public class IssueTso {
         // lastly save the command response to our issueResponse reference
         issueResponse.setCommandResponses(sendResponse.getCommandResponse());
 
-        // third stage here where the tso session end session operation is performed
+        // third stage here where the tso end session operation is performed
         StopTso stopTso = new StopTso(connection);
         StartStopResponse stopResponse = stopTso.stop(servletKey);
         issueResponse.setStopResponse(stopResponse);

@@ -298,7 +298,9 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public List<JobFile> getSpoolFilesForJob(Job job) throws Exception {
-        return getSpoolFilesCommon(new CommonJobParams(job.getJobId().get(), job.getJobName().get()));
+        return getSpoolFilesCommon(
+                new CommonJobParams(job.getJobId().orElseThrow(() -> new Exception("job id not specified")),
+                        job.getJobName().orElseThrow(() -> new Exception("job name not specified"))));
     }
 
     /**
