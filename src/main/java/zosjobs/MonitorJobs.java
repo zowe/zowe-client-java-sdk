@@ -193,11 +193,11 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     private boolean pollForMessage(MonitorJobWaitForParams params, String message) throws Exception {
-        int timeoutVal = params.getWatchDelay().get();
+        int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
         boolean messageFound;  // no assigment means by default it is false
         boolean shouldContinue; // no assigment means by default it is false
         int numOfAttempts = 0;
-        int maxAttempts = params.getAttempts().get();
+        int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);
 
         do {
             numOfAttempts++;
@@ -340,13 +340,14 @@ public class MonitorJobs {
     private boolean checkMessage(MonitorJobWaitForParams params, String message) throws Exception {
         Util.checkConnection(connection);
         GetJobs getJobs = new GetJobs(connection);
-        GetJobParams filter = new GetJobParams.Builder("*").jobId(params.getJobId().get())
-                .prefix(params.getJobName().get()).build();
+        GetJobParams filter = new GetJobParams.Builder("*")
+                .jobId(params.getJobId().orElseThrow(() -> new Exception("job id not specified")))
+                .prefix(params.getJobName().orElseThrow(() -> new Exception("job name not specified"))).build();
         List<Job> jobs = getJobs.getJobsCommon(filter);
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
         String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
         // start from bottom
-        for (int i = output.length - params.getLineLimit().get(); i < output.length; i++) {
+        for (int i = output.length - params.getLineLimit().orElse(DEFAULT_LINE_LIMIT); i < output.length; i++) {
             LOG.debug(output[i]);
             if (output[i].contains(message))
                 return true;
@@ -363,11 +364,11 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     private Job pollForStatus(MonitorJobWaitForParams params) throws Exception {
-        int timeoutVal = params.getWatchDelay().get();
+        int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
         boolean expectedStatus;  // no assigment means by default it is false
         boolean shouldContinue; // no assigment means by default it is false
         int numOfAttempts = 0;
-        int maxAttempts = params.getAttempts().get();
+        int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);
 
         CheckJobStatus checkJobStatus;
         do {
@@ -400,10 +401,12 @@ public class MonitorJobs {
     private CheckJobStatus checkStatus(MonitorJobWaitForParams params) throws Exception {
         Util.checkConnection(connection);
         GetJobs getJobs = new GetJobs(connection);
-        String statusNameCheck = params.getJobStatus().get().toString();
+        String statusNameCheck = params.getJobStatus().orElse(DEFAULT_STATUS).toString();
 
-        Job job = getJobs.getStatus(params.getJobName().get(), params.getJobId().get());
-        if (statusNameCheck.equals(job.getStatus().get()))
+        Job job = getJobs.getStatus(
+                params.getJobName().orElseThrow(() -> new Exception("job name not specified")),
+                params.getJobId().orElseThrow(() -> new Exception("job id not specified")));
+        if (statusNameCheck.equals(job.getStatus().orElse(DEFAULT_STATUS.toString())))
             return new CheckJobStatus(true, job);
 
         String invalidStatusMsg = "Invalid status when checking for status ordering.";
