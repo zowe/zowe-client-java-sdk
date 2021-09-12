@@ -45,7 +45,7 @@ public class UtilConsole {
             // the IBM responses sometimes have \r and \r\n, we will process them our here and return them with just \n.
             response.setCommandResponse(zosmfResponse.getCmdResponse().get().replace('\r', '\n'));
             // If there are messages append a line-break to ensure that additional messages collected are displayed properly.
-            if (response.getCommandResponse().get().length() > 0
+            if (response.getCommandResponse().orElse("").length() > 0
                     && (response.getCommandResponse().get().indexOf("\n")
                     != response.getCommandResponse().get().length() - 1)) {
                 response.setCommandResponse(response.getCommandResponse() + "\n");
