@@ -69,8 +69,9 @@ public class UtilDataset {
         }
 
         var type = crudType.toLowerCase();
-        var permissionDataSetMsg = " You may not have permission to " + type + " the following " + dataSetName;
-        var permissionDataSetMemberMsg = permissionDataSetMsg + " or the dataset or member do not exists.";
+        var permissionDataSetMsg = " You may not have permission to " + type + " '" + dataSetName + "'";
+        var permissionDataSetMemberMsg = permissionDataSetMsg + ", the request is invalid, " +
+                "or the dataset or member does not exist.";
 
         if ("create".equals(type)) {
             if (errorMsg.contains("500")) {
@@ -80,7 +81,7 @@ public class UtilDataset {
         }
         if ("read".equals(type)) {
             if (errorMsg.contains("500")) {
-                throw new Exception(errorMsg + permissionDataSetMsg + ".");
+                throw new Exception(errorMsg + permissionDataSetMsg + " or the request is invalid.");
             }
         }
         if ("delete".equals(type) || "write".equals(type) || "copy".equals(type) || "download".equals(type)) {
