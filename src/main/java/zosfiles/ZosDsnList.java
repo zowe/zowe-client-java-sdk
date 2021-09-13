@@ -69,7 +69,8 @@ public class ZosDsnList {
                 Util.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
 
         if (params.getPattern().isPresent()) {
-            url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN + params.getPattern().get();
+            url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN +
+                    Util.encodeURIComponent(params.getPattern().get());
         }
 
         Response response = getResponse(params, headers, url);
@@ -119,7 +120,8 @@ public class ZosDsnList {
         url += ZosFilesConstants.QUERY_DS_LEVEL + Util.encodeURIComponent(dataSetName);
 
         if (params.getVolume().isPresent()) {
-            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME + params.getVolume().get();
+            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
+                    Util.encodeURIComponent(params.getVolume().get());
         }
         if (params.getStart().isPresent()) {
             url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + params.getStart().get();
