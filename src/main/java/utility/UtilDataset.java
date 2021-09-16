@@ -157,4 +157,37 @@ public class UtilDataset {
         }
     }
 
+    /**
+     * Partitioned data set (PDS) member naming rules are similar to segment naming rules.
+     * <p>
+     * PDS member naming rules
+     * A member name cannot be longer than eight characters.
+     * The first member character must be either a letter or one of the following three special characters: #, @, $.
+     * The remaining seven characters can be letters, numbers, or one of the following special characters: #, @, or $.
+     * A PDS member name cannot contain a hyphen (-).
+     * A PDS member name cannot contain accented characters (à, é, è, and so on).
+     *
+     * @param memberName Member name to validate as per the above rules
+     * @author Corinne DeStefano
+     */
+    public static void checkMemberName(String memberName) {
+        memberName = memberName.toUpperCase(Locale.ROOT);
+        String invalidMemberMsg = "Invalid member name '" + memberName + "'.";
+
+        // A member name cannot be longer than eight characters.
+        // The first member character must be either a letter or one of the following three special characters: #, @, $.
+        // The remaining seven characters can be letters, numbers, or one of the following special characters: #, @, or $.
+        // A PDS member name cannot contain a hyphen (-).
+        if (memberName.length() > 8) {
+            throw new IllegalArgumentException(invalidMemberMsg);
+        }
+        Pattern p = Pattern.compile("[A-Z#@\\$]{1}[A-Z0-9#@\\$]{1,7}");
+        Matcher m = p.matcher(memberName);
+        if (!m.matches()) {
+            throw new IllegalArgumentException(invalidMemberMsg);
+        }
+
+
+    }
+
 }

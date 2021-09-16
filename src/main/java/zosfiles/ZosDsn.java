@@ -99,6 +99,7 @@ public class ZosDsn {
         Util.checkNullParameter(member == null, "member is null");
         Util.checkIllegalParameter(member.isEmpty(), "member not specified");
         UtilDataset.checkDatasetName(dataSetName, true);
+        UtilDataset.checkMemberName(member);
 
         var dataSetMember = Util.encodeURIComponent(dataSetName) + "(" + Util.encodeURIComponent(member) + ")";
 
@@ -168,6 +169,7 @@ public class ZosDsn {
         Util.checkNullParameter(member == null, "member is null");
         Util.checkIllegalParameter(member.isEmpty(), "member not specified");
         UtilDataset.checkDatasetName(dataSetName, true);
+        UtilDataset.checkMemberName(member);
 
         var dataSetMember = Util.encodeURIComponent(dataSetName) + "(" + Util.encodeURIComponent(member) + ")";
 
