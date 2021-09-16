@@ -70,12 +70,12 @@ public class StreamGetRequest extends ZoweRequest {
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
         if (UtilRest.isHttpError(statusCode)) {
-            return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()), statusCode);
+            return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
         }
 
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
-            return new Response(Optional.ofNullable(entity.getContent()), statusCode);
+            return new Response(entity.getContent(), statusCode);
         }
 
         return new Response(Optional.empty(), statusCode);
