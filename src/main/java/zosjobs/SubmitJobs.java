@@ -17,7 +17,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import rest.*;
 import utility.Util;
-import utility.UtilDataset;
 import utility.UtilJobs;
 import utility.UtilRest;
 import zosjobs.input.SubmitJclParams;
@@ -74,7 +73,6 @@ public class SubmitJobs {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkIllegalParameter(params.getJobDataSet().isEmpty(), "jobDataSet not specified");
         Util.checkIllegalParameter(params.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
-        UtilDataset.checkDatasetName(params.getJobDataSet().get(), true);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
         LOG.debug(url);

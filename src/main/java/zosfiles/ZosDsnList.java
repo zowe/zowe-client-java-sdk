@@ -60,7 +60,6 @@ public class ZosDsnList {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
-        UtilDataset.checkDatasetName(dataSetName, true);
 
         Map<String, String> headers = new HashMap<>();
         List<String> members = new ArrayList<>();
@@ -110,7 +109,6 @@ public class ZosDsnList {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
-        UtilDataset.checkDatasetName(dataSetName, false);
 
         Map<String, String> headers = new HashMap<>();
         List<Dataset> datasets = new ArrayList<>();

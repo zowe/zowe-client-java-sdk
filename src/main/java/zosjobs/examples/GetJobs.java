@@ -283,7 +283,7 @@ public class GetJobs {
         List<Job> jobs = getJobs.getJobsCommon(params);
         List<JobFile> files =
                 getJobs.getSpoolFiles(jobs.get(0).getJobName().orElseThrow(() -> new Exception("job name not specified")),
-                jobs.get(0).getJobId().orElseThrow(() -> new Exception("job id not specified")));
+                        jobs.get(0).getJobId().orElseThrow(() -> new Exception("job id not specified")));
         files.forEach(LOG::info);
     }
 
