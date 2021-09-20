@@ -82,7 +82,7 @@ public class UtilDataset {
         }
         if ("delete".equals(type) || "write".equals(type) || "copy".equals(type) || "download".equals(type)) {
             if (errorMsg.contains("500")) {
-                throw new Exception(errorMsg + permissionDataSetMemberMsg + ".");
+                throw new Exception(errorMsg + permissionDataSetMemberMsg);
             }
         }
         throw new Exception(errorMsg);
