@@ -22,37 +22,41 @@ public class StartTsoParams {
     /**
      * Name of the logonProcedure for address space
      */
-    public Optional<String> logonProcedure;
+    public Optional<String> logonProcedure = Optional.empty();
 
     /**
      * Character set for address space
      */
-    public Optional<String> characterSet;
+    public Optional<String> characterSet = Optional.empty();
 
     /**
      * Code page for tso address space
      */
-    public Optional<String> codePage;
+    public Optional<String> codePage = Optional.empty();
 
     /**
      * Number of rows
      */
-    public Optional<String> rows;
+    public Optional<String> rows = Optional.empty();
 
     /**
      * Number of columns
      */
-    public Optional<String> columns;
+    public Optional<String> columns = Optional.empty();
 
     /**
      * User's z/OS permission account number
      */
-    public Optional<String> account;
+    public Optional<String> account = Optional.empty();
 
     /**
      * Region size for tso address space
      */
-    public Optional<String> regionSize;
+    public Optional<String> regionSize = Optional.empty();
+
+    public StartTsoParams() {
+
+    }
 
     /**
      * StartTsoParams constructor
