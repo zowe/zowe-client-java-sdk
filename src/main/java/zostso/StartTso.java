@@ -109,7 +109,9 @@ public class StartTso {
      * @author Frank Giordano
      */
     private StartTsoParams setDefaultAddressSpaceParams(StartTsoParams params, String accountNumber) {
-        if (params == null) params = new StartTsoParams();
+        if (params==null) {
+            params=new StartTsoParams(null,null,null,null,null,null,null);
+        }
         String proc = params.getLogonProcedure().orElse(TsoConstants.DEFAULT_PROC);
         String chset = params.getCharacterSet().orElse(TsoConstants.DEFAULT_CHSET);
         String cpage = params.getCodePage().orElse(TsoConstants.DEFAULT_CPAGE);
