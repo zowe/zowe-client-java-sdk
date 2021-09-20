@@ -13,6 +13,7 @@ import core.ZOSConnection;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utility.Util;
@@ -70,7 +71,7 @@ public class StreamGetRequest extends ZoweRequest {
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
         if (UtilRest.isHttpError(statusCode)) {
-            return new Response(Optional.ofNullable(httpResponse.getStatusLine().getReasonPhrase()), statusCode);
+            return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
         }
 
         HttpEntity entity = httpResponse.getEntity();
@@ -113,8 +114,7 @@ public class StreamGetRequest extends ZoweRequest {
      */
     @Override
     public void setRequest(String url) throws Exception {
-        Optional<String> str = Optional.ofNullable(url);
-        this.request = new HttpGet(str.orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpGet(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         this.setup();
     }
 
