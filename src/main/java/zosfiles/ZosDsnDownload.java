@@ -98,7 +98,7 @@ public class ZosDsnDownload {
      * Downloads dataset member content
      *
      * @param dataSetName name of a partitioned dataset
-     * @param member    name of one member in the partitioned dataset
+     * @param member      name of one member in the partitioned dataset
      * @param params      download params parameters, see DownloadParams object
      * @return a content stream
      * @throws Exception error processing request
