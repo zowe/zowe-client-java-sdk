@@ -58,8 +58,6 @@ public class ZosDsnCopy {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkIllegalParameter(params.getFromDataSet().isEmpty(), "fromDataSetName not specified");
         Util.checkIllegalParameter(params.getToDataSet().isEmpty(), "toDataSetName not specified");
-        UtilDataset.checkDatasetName(params.getFromDataSet().get(), true);
-        UtilDataset.checkDatasetName(params.getToDataSet().get(), true);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
