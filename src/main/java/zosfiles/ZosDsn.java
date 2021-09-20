@@ -60,7 +60,6 @@ public class ZosDsn {
         Util.checkNullParameter(content == null, "content is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
-        UtilDataset.checkDatasetName(dataSetName, true);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + Util.encodeURIComponent(dataSetName);
@@ -98,8 +97,6 @@ public class ZosDsn {
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkNullParameter(member == null, "member is null");
         Util.checkIllegalParameter(member.isEmpty(), "member not specified");
-        UtilDataset.checkDatasetName(dataSetName, true);
-        UtilDataset.checkMemberName(member);
 
         var dataSetMember = Util.encodeURIComponent(dataSetName) + "(" + Util.encodeURIComponent(member) + ")";
 
@@ -133,7 +130,6 @@ public class ZosDsn {
         Util.checkConnection(connection);
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
-        UtilDataset.checkDatasetName(dataSetName, true);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + Util.encodeURIComponent(dataSetName);
@@ -168,8 +164,6 @@ public class ZosDsn {
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkNullParameter(member == null, "member is null");
         Util.checkIllegalParameter(member.isEmpty(), "member not specified");
-        UtilDataset.checkDatasetName(dataSetName, true);
-        UtilDataset.checkMemberName(member);
 
         var dataSetMember = Util.encodeURIComponent(dataSetName) + "(" + Util.encodeURIComponent(member) + ")";
 
@@ -205,7 +199,6 @@ public class ZosDsn {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
-        UtilDataset.checkDatasetName(dataSetName, true);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + Util.encodeURIComponent(dataSetName);

@@ -58,7 +58,6 @@ public class ZosDsnDownload {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
-        UtilDataset.checkDatasetName(dataSetName, true);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
@@ -105,13 +104,11 @@ public class ZosDsnDownload {
      * @throws Exception error processing request
      * @author Nikunj Goyal
      */
-    public InputStream downloadDsnMember(String dataSetName, String member, DownloadParams params) throws Exception {
+    public InputStream downloadDsn(String dataSetName, String member, DownloadParams params) throws Exception {
         Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
-        UtilDataset.checkDatasetName(dataSetName, true);
-        UtilDataset.checkMemberName(member);
 
         String downloadPath = String.format("%s(%s)",
                 Util.encodeURIComponent(dataSetName), Util.encodeURIComponent(member));
