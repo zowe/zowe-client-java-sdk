@@ -45,9 +45,9 @@ public class ZosDsnDownload {
     }
 
     /**
-     * Downloads dataset
+     * Downloads dataset or dataset member content
      *
-     * @param dataSetName name of a sequential dataset
+     * @param dataSetName name of a sequential dataset or a dataset member (e.g., DATASET.LIB(MEMBER))
      * @param params      download params parameters, see DownloadParams object
      * @return a content stream
      * @throws Exception error processing request
