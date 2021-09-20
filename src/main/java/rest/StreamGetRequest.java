@@ -76,7 +76,7 @@ public class StreamGetRequest extends ZoweRequest {
 
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
-            return new Response(Optional.ofNullable(entity.getContent()), statusCode);
+            return new Response(entity.getContent(), statusCode);
         }
 
         return new Response(Optional.empty(), statusCode);
