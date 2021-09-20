@@ -60,7 +60,7 @@ public class UtilDataset {
      * @param errorMsg    error message
      * @param dataSetName dataset representation
      * @param crudType    crud type value of operation taken place
-     * @throws Exception execution with a possible customized error msg
+     * @throws Exception with a possible customized error msg
      * @author Frank Giordano
      */
     public static void checkHttpErrors(String errorMsg, String dataSetName, String crudType) throws Exception {
