@@ -47,7 +47,8 @@ public class ZosDsnDownload {
     /**
      * Downloads dataset or dataset member content
      *
-     * @param dataSetName name of a sequential dataset or a dataset member (e.g., DATASET.LIB(MEMBER))
+     * @param dataSetName name of a sequential dataset (e.g., DATASET.LIB)
+     *                    or a dataset member (e.g., DATASET.LIB(MEMBER))
      * @param params      download params parameters, see DownloadParams object
      * @return a content stream
      * @throws Exception error processing request
@@ -97,55 +98,17 @@ public class ZosDsnDownload {
     /**
      * Downloads dataset member content
      *
-     * @param dataSetName name of a partitioned dataset
+     * @param dataSetName name of a partitioned dataset (e.g., DATASET.LIB)
      * @param member      name of one member in the partitioned dataset
      * @param params      download params parameters, see DownloadParams object
      * @return a content stream
      * @throws Exception error processing request
-     * @author Nikunj Goyal
+     * @author Frank Giordano
      */
-    public InputStream downloadDsn(String dataSetName, String member, DownloadParams params) throws Exception {
-        Util.checkConnection(connection);
-        Util.checkNullParameter(params == null, "params is null");
+    public InputStream downloadDsnMember(String dataSetName, String member, DownloadParams params) throws Exception {
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
-
-        String downloadPath = String.format("%s(%s)",
-                Util.encodeURIComponent(dataSetName), Util.encodeURIComponent(member));
-
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
-
-        if (params.getVolume().isPresent()) {
-            url += params.getVolume().get();
-        }
-        url += downloadPath;
-        LOG.debug(url);
-
-        String key, value;
-        Map<String, String> headers = UtilZosFiles.generateHeadersBasedOnOptions(params);
-
-        if (params.getReturnEtag().isPresent()) {
-            key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
-            value = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(1);
-            headers.put(key, value);
-        }
-
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
-                ZoweRequestType.VerbType.GET_STREAM);
-        request.setAdditionalHeaders(headers);
-
-        Response response = request.executeHttpRequest();
-        if (response.isEmpty())
-            return null;
-
-        try {
-            UtilRest.checkHttpErrors(response);
-        } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), downloadPath, "download");
-        }
-
-        return (InputStream) response.getResponsePhrase().orElse(null);
+        Util.checkNullParameter(member == null, "member is null");
+        return downloadDsn(dataSetName + "(" + member + ")", params);
     }
 
 }

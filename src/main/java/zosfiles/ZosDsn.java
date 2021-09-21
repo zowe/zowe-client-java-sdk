@@ -47,9 +47,9 @@ public class ZosDsn {
     }
 
     /**
-     * Replaces the content of an existing sequential data set with new content.
+     * Replaces the content of an existing sequential data set or data set member with new content.
      *
-     * @param dataSetName sequential dataset (e.g. 'DATASET.LIB')
+     * @param dataSetName sequential dataset (e.g. 'DATASET.LIB') or dataset member (e.g. 'DATASET.LIB(MEMBER)')
      * @param content     new content
      * @return http response object
      * @throws Exception error processing request
@@ -84,44 +84,22 @@ public class ZosDsn {
      * A new dataset member will be created if the specified dataset member does not exist.
      *
      * @param dataSetName dataset name of where the member is located (e.g. 'DATASET.LIB')
-     * @param member      name of member to add new content
+     * @param member      name of one member in the partitioned dataset to add new content
      * @param content     new content
      * @return http response object
      * @throws Exception error processing request
      * @author Frank Giordano
      */
     public Response writeDsnMember(String dataSetName, String member, String content) throws Exception {
-        Util.checkConnection(connection);
-        Util.checkNullParameter(content == null, "content is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkNullParameter(member == null, "member is null");
-        Util.checkIllegalParameter(member.isEmpty(), "member not specified");
-
-        var dataSetMember = Util.encodeURIComponent(dataSetName) + "(" + Util.encodeURIComponent(member) + ")";
-
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES + "/" + dataSetMember;
-
-        LOG.debug(url);
-
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, content,
-                ZoweRequestType.VerbType.PUT_TEXT);
-        Response response = request.executeHttpRequest();
-
-        try {
-            UtilRest.checkHttpErrors(response);
-        } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), dataSetName, "write");
-        }
-
-        return response;
+        return writeDsn(dataSetName + "(" + member + ")", content);
     }
 
     /**
-     * Delete a dataset
+     * Delete a dataset or dataset member
      *
-     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
+     * @param dataSetName name of dataset (e.g. 'DATASET.LIB') or dataset member (e.g. 'DATASET.LIB(MEMBER)')
      * @return http response object
      * @throws Exception error processing request
      * @author Leonid Baranov
@@ -153,36 +131,15 @@ public class ZosDsn {
      * Delete a dataset member
      *
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
-     * @param member      name of member to delete
+     * @param member      name of one member in the partitioned dataset to delete
      * @return http response object
      * @throws Exception error processing request
      * @author Frank Giordano
      */
     public Response deleteDsnMember(String dataSetName, String member) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Util.checkNullParameter(member == null, "member is null");
-        Util.checkIllegalParameter(member.isEmpty(), "member not specified");
-
-        var dataSetMember = Util.encodeURIComponent(dataSetName) + "(" + Util.encodeURIComponent(member) + ")";
-
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES + "/" + dataSetMember;
-
-        LOG.debug(url);
-
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
-                ZoweRequestType.VerbType.DELETE_JSON);
-        Response response = request.executeHttpRequest();
-
-        try {
-            UtilRest.checkHttpErrors(response);
-        } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), dataSetMember, "delete");
-        }
-
-        return response;
+        return deleteDsn(dataSetName + "(" + member + ")");
     }
 
     /**
