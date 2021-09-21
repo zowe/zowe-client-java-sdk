@@ -48,8 +48,9 @@ public class TextPutRequest extends ZoweRequest {
      */
     public TextPutRequest(ZOSConnection connection, String url, String body) throws Exception {
         super(connection, ZoweRequestType.VerbType.PUT_JSON);
+        if (!UtilRest.isUrlValid(url)) throw new Exception("url is invalid");
         this.body = body;
-        this.request = new HttpPut(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpPut(url);
         this.setup();
     }
 

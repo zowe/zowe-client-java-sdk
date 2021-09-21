@@ -41,11 +41,11 @@ public class JsonRequestTest {
         httpClient = Mockito.mock(HttpClient.class);
         ZOSConnection connection = new ZOSConnection("", "", "", "");
 
-        getRequest = new JsonGetRequest(connection, "url");
+        getRequest = new JsonGetRequest(connection, "http://url:23");
         Whitebox.setInternalState(getRequest, "client", httpClient);
         Whitebox.setInternalState(getRequest, "httpResponse", httpResponse);
 
-        putRequest = new JsonPutRequest(connection, "url", "body");
+        putRequest = new JsonPutRequest(connection, "http://url:23", "body");
         Whitebox.setInternalState(putRequest, "client", httpClient);
         Whitebox.setInternalState(putRequest, "httpResponse", httpResponse);
     }
