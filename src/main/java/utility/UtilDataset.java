@@ -60,28 +60,29 @@ public class UtilDataset {
      * @author Frank Giordano
      */
     public static void checkHttpErrors(String errorMsg, String dataSetName, String crudType) throws Exception {
+
+        String http404 = "is invalid or non-existent.";
+        String http500pre = "You may not have permission to";
+        String http500 = ", the request is invalid,";
+        String http500create = "or the dataset or member already exists.";
+        String http500post = "or the dataset or member does not exist.";
+
         if (errorMsg.contains("404")) {
-            throw new Exception(errorMsg + " You may have specified an invalid or non-existent data set or member.");
+            throw new Exception(String.format("%s '%s' %s", errorMsg, dataSetName, http404));
         }
 
         var type = crudType.toLowerCase();
-        var permissionDSErr = " You may not have permission to " + type + " '" + dataSetName + "'";
-        var permissionDSMemErr = permissionDSErr + ", the request is invalid, or the dataset or member does not exist.";
 
         if ("create".equals(type)) {
             if (errorMsg.contains("500")) {
-                String exceptionMsg = permissionDSErr + " or the dataset already exists.";
-                throw new Exception(errorMsg + exceptionMsg);
+                String exceptionMsg = String.format("%s %s '%s' %s %s", errorMsg, http500pre, dataSetName, http500create, http500post);
+                throw new Exception(exceptionMsg);
             }
         }
-        if ("read".equals(type)) {
+        if ("read".equals(type) || "delete".equals(type) || "write".equals(type) || "copy".equals(type) || "download".equals(type)) {
             if (errorMsg.contains("500")) {
-                throw new Exception(errorMsg + permissionDSErr + " or the request is invalid.");
-            }
-        }
-        if ("delete".equals(type) || "write".equals(type) || "copy".equals(type) || "download".equals(type)) {
-            if (errorMsg.contains("500")) {
-                throw new Exception(errorMsg + permissionDSMemErr);
+                String exceptionMsg = String.format("%s %s '%s' %s %s", errorMsg, http500pre, dataSetName, http500, http500post);
+                throw new Exception(exceptionMsg);
             }
         }
         throw new Exception(errorMsg);

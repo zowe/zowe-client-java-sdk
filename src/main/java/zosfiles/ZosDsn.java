@@ -47,9 +47,9 @@ public class ZosDsn {
     }
 
     /**
-     * Replaces the content of an existing sequential data set or data set member with new content.
+     * Replaces the content of an existing sequential data set with new content.
      *
-     * @param dataSetName sequential dataset (e.g. 'DATASET.LIB') or dataset member (e.g. 'DATASET.LIB(MEMBER)')
+     * @param dataSetName sequential dataset (e.g. 'DATASET.LIB')
      * @param content     new content
      * @return http response object
      * @throws Exception error processing request
@@ -84,22 +84,27 @@ public class ZosDsn {
      * A new dataset member will be created if the specified dataset member does not exist.
      *
      * @param dataSetName dataset name of where the member is located (e.g. 'DATASET.LIB')
-     * @param member      name of one member in the partitioned dataset to add new content
+     * @param member      name of member to add new content
      * @param content     new content
      * @return http response object
      * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public Response writeDsnMember(String dataSetName, String member, String content) throws Exception {
+    public Response writeDsn(String dataSetName, String member, String content) throws Exception {
+        Util.checkNullParameter(content == null, "content is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkNullParameter(member == null, "member is null");
-        return writeDsn(dataSetName + "(" + member + ")", content);
+        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        Util.checkIllegalParameter(member.isEmpty(), "member not specified");
+
+        return writeDsn(String.format("%s(%s)",
+                dataSetName,member), content);
     }
 
     /**
-     * Delete a dataset or dataset member
+     * Delete a dataset
      *
-     * @param dataSetName name of dataset (e.g. 'DATASET.LIB') or dataset member (e.g. 'DATASET.LIB(MEMBER)')
+     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @return http response object
      * @throws Exception error processing request
      * @author Leonid Baranov
@@ -131,15 +136,20 @@ public class ZosDsn {
      * Delete a dataset member
      *
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
-     * @param member      name of one member in the partitioned dataset to delete
+     * @param member      name of member to delete
      * @return http response object
      * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public Response deleteDsnMember(String dataSetName, String member) throws Exception {
+    public Response deleteDsn(String dataSetName, String member) throws Exception {
+        Util.checkConnection(connection);
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkNullParameter(member == null, "member is null");
-        return deleteDsn(dataSetName + "(" + member + ")");
+        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        Util.checkIllegalParameter(member.isEmpty(), "member not specified");
+
+        return deleteDsn(String.format("%s(%s)", dataSetName,
+                member));
     }
 
     /**
