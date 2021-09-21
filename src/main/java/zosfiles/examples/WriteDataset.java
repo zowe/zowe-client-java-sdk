@@ -60,7 +60,7 @@ public class WriteDataset {
      */
     public static void writeToDsnMember(String dataSetName, String member, String content) throws Exception {
         ZosDsn zosDsn = new ZosDsn(connection);
-        Response response = zosDsn.writeDsnMember(dataSetName, member, content);
+        Response response = zosDsn.writeDsn(dataSetName, member, content);
         LOG.info("http response code " + response.getStatusCode());
     }
 

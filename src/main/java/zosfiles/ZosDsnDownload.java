@@ -47,8 +47,7 @@ public class ZosDsnDownload {
     /**
      * Downloads dataset or dataset member content
      *
-     * @param dataSetName name of a sequential dataset (e.g., DATASET.LIB)
-     *                    or a dataset member (e.g., DATASET.LIB(MEMBER))
+     * @param dataSetName name of a sequential dataset or a dataset member (e.g., DATASET.LIB(MEMBER))
      * @param params      download params parameters, see DownloadParams object
      * @return a content stream
      * @throws Exception error processing request
@@ -98,17 +97,21 @@ public class ZosDsnDownload {
     /**
      * Downloads dataset member content
      *
-     * @param dataSetName name of a partitioned dataset (e.g., DATASET.LIB)
-     * @param member      name of one member in the partitioned dataset
+     * @param dataSetName name of a partitioned dataset
+     * @param member    name of one member in the partitioned dataset
      * @param params      download params parameters, see DownloadParams object
      * @return a content stream
      * @throws Exception error processing request
-     * @author Frank Giordano
+     * @author Nikunj Goyal
      */
-    public InputStream downloadDsnMember(String dataSetName, String member, DownloadParams params) throws Exception {
-        Util.checkNullParameter(dataSetName == null, "dataSetName is null");
+    public InputStream downloadDsn(String dataSetName, String member, DownloadParams params) throws Exception {
+        Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(member == null, "member is null");
-        return downloadDsn(dataSetName + "(" + member + ")", params);
+        Util.checkNullParameter(dataSetName == null, "dataSetName is null");
+        Util.checkIllegalParameter(member.isEmpty(), "member not specified");
+        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+
+        return downloadDsn(String.format("%s(%s)", dataSetName, member), params);
     }
 
 }

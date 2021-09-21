@@ -68,7 +68,7 @@ public class DeleteDataset {
      */
     public static void deleteMember(String dataSetName, String member) throws Exception {
         ZosDsn zosDsn = new ZosDsn(connection);
-        Response response = zosDsn.deleteDsnMember(dataSetName, member);
+        Response response = zosDsn.deleteDsn(dataSetName, member);
         LOG.info("http response code " + response.getStatusCode());
     }
 
