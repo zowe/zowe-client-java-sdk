@@ -114,7 +114,7 @@ public class UtilRest {
 
     /**
      * Checks if url is a valid http or https url.
-     *
+     * <p>
      * The method will create a URL object from the specified string representation.
      * A MalformedURLException will be thrown if no protocol is specified, or an unknown
      * protocol is found, or spec is null which will result in a false value to be returned.
@@ -130,11 +130,7 @@ public class UtilRest {
         try {
             new URL(url).toURI();
             return true;
-        }
-        catch (URISyntaxException exception) {
-            return false;
-        }
-        catch (MalformedURLException exception) {
+        } catch (URISyntaxException | MalformedURLException exception) {
             return false;
         }
     }

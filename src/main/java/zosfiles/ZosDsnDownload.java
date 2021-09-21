@@ -98,18 +98,17 @@ public class ZosDsnDownload {
      * Downloads dataset member content
      *
      * @param dataSetName name of a partitioned dataset
-     * @param member    name of one member in the partitioned dataset
+     * @param member      name of one member in the partitioned dataset
      * @param params      download params parameters, see DownloadParams object
      * @return a content stream
      * @throws Exception error processing request
-     * @author Nikunj Goyal
+     * @author Corinne DeStefano
      */
     public InputStream downloadDsn(String dataSetName, String member, DownloadParams params) throws Exception {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkNullParameter(member == null, "member is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkIllegalParameter(member.isEmpty(), "member not specified");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        Util.checkNullParameter(member == null, "member is null");
+        Util.checkIllegalParameter(member.isEmpty(), "member not specified");
 
         return downloadDsn(String.format("%s(%s)", dataSetName, member), params);
     }

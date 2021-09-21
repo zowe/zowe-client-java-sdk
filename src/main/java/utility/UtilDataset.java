@@ -53,39 +53,39 @@ public class UtilDataset {
     /**
      * Formulate and return a more redefined error exception message based on a CRUD operation.
      *
-     * @param errorMsg    error message
-     * @param dataSetName dataset representation
-     * @param crudType    crud type value of operation taken place
+     * @param errMsg   error message
+     * @param dsName   dataset representation
+     * @param crudType crud type value of operation taken place
      * @throws Exception with a possible customized error msg
      * @author Frank Giordano
      */
-    public static void checkHttpErrors(String errorMsg, String dataSetName, String crudType) throws Exception {
+    public static void checkHttpErrors(String errMsg, String dsName, String crudType) throws Exception {
 
         String http404 = "is invalid or non-existent.";
-        String http500pre = "You may not have permission to";
+        String http500Pre = "You may not have permission to";
         String http500 = ", the request is invalid,";
-        String http500create = "or the dataset or member already exists.";
-        String http500post = "or the dataset or member does not exist.";
+        String http500Create = "or the dataset or member already exists.";
+        String http500Post = "or the dataset or member does not exist.";
 
-        if (errorMsg.contains("404")) {
-            throw new Exception(String.format("%s '%s' %s", errorMsg, dataSetName, http404));
+        if (errMsg.contains("404")) {
+            throw new Exception(String.format("%s '%s' %s", errMsg, dsName, http404));
         }
 
         var type = crudType.toLowerCase();
 
         if ("create".equals(type)) {
-            if (errorMsg.contains("500")) {
-                String exceptionMsg = String.format("%s %s '%s' %s %s", errorMsg, http500pre, dataSetName, http500create, http500post);
-                throw new Exception(exceptionMsg);
+            if (errMsg.contains("500")) {
+                String newErrMsg = String.format("%s %s '%s' %s %s", errMsg, http500Pre, dsName, http500Create, http500Post);
+                throw new Exception(newErrMsg);
             }
         }
         if ("read".equals(type) || "delete".equals(type) || "write".equals(type) || "copy".equals(type) || "download".equals(type)) {
-            if (errorMsg.contains("500")) {
-                String exceptionMsg = String.format("%s %s '%s' %s %s", errorMsg, http500pre, dataSetName, http500, http500post);
-                throw new Exception(exceptionMsg);
+            if (errMsg.contains("500")) {
+                String newErrMsg = String.format("%s %s '%s' %s %s", errMsg, http500Pre, dsName, http500, http500Post);
+                throw new Exception(newErrMsg);
             }
         }
-        throw new Exception(errorMsg);
+        throw new Exception(errMsg);
     }
 
 }

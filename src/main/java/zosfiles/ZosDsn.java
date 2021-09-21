@@ -91,14 +91,12 @@ public class ZosDsn {
      * @author Frank Giordano
      */
     public Response writeDsn(String dataSetName, String member, String content) throws Exception {
-        Util.checkNullParameter(content == null, "content is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkNullParameter(member == null, "member is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        Util.checkNullParameter(member == null, "member is null");
         Util.checkIllegalParameter(member.isEmpty(), "member not specified");
 
-        return writeDsn(String.format("%s(%s)",
-                dataSetName,member), content);
+        return writeDsn(String.format("%s(%s)", dataSetName, member), content);
     }
 
     /**
@@ -142,14 +140,12 @@ public class ZosDsn {
      * @author Frank Giordano
      */
     public Response deleteDsn(String dataSetName, String member) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkNullParameter(member == null, "member is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        Util.checkNullParameter(member == null, "member is null");
         Util.checkIllegalParameter(member.isEmpty(), "member not specified");
 
-        return deleteDsn(String.format("%s(%s)", dataSetName,
-                member));
+        return deleteDsn(String.format("%s(%s)", dataSetName, member));
     }
 
     /**
