@@ -65,24 +65,23 @@ public class UtilDataset {
         }
 
         var type = crudType.toLowerCase();
-        var permissionDataSetMsg = " You may not have permission to " + type + " '" + dataSetName + "'";
-        var permissionDataSetMemberMsg = permissionDataSetMsg +
-                ", the request is invalid, or the dataset or member does not exist.";
+        var permissionDSErr = " You may not have permission to " + type + " '" + dataSetName + "'";
+        var permissionDSMemErr = permissionDSErr + ", the request is invalid, or the dataset or member does not exist.";
 
         if ("create".equals(type)) {
             if (errorMsg.contains("500")) {
-                String exceptionMsg = permissionDataSetMsg + " or the dataset already exists.";
+                String exceptionMsg = permissionDSErr + " or the dataset already exists.";
                 throw new Exception(errorMsg + exceptionMsg);
             }
         }
         if ("read".equals(type)) {
             if (errorMsg.contains("500")) {
-                throw new Exception(errorMsg + permissionDataSetMsg + " or the request is invalid.");
+                throw new Exception(errorMsg + permissionDSErr + " or the request is invalid.");
             }
         }
         if ("delete".equals(type) || "write".equals(type) || "copy".equals(type) || "download".equals(type)) {
             if (errorMsg.contains("500")) {
-                throw new Exception(errorMsg + permissionDataSetMemberMsg);
+                throw new Exception(errorMsg + permissionDSMemErr);
             }
         }
         throw new Exception(errorMsg);
