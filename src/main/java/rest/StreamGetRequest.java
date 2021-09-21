@@ -44,7 +44,8 @@ public class StreamGetRequest extends ZoweRequest {
      */
     public StreamGetRequest(ZOSConnection connection, String url) throws Exception {
         super(connection, ZoweRequestType.VerbType.GET_STREAM);
-        this.request = new HttpGet(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
+        if (!UtilRest.isUrlValid(url)) throw new Exception("url is invalid");
+        this.request = new HttpGet(url);
         this.setup();
     }
 

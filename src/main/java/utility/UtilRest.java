@@ -18,6 +18,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import rest.Response;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 /**
  * Utility Class for Rest related static helper methods.
  *
@@ -106,6 +110,33 @@ public class UtilRest {
      */
     public static boolean isHttpError(int statusCode) {
         return !((statusCode >= 200 && statusCode <= 299) || (statusCode >= 100 && statusCode <= 199));
+    }
+
+    /**
+     * Checks if url is a valid http or https url.
+     *
+     * The method will create a URL object from the specified string representation.
+     * A MalformedURLException will be thrown if no protocol is specified, or an unknown
+     * protocol is found, or spec is null which will result in a false value to be returned.
+     * Then a call the toURI() method is made that throws a URISyntaxException if the URL is not formatted
+     * strictly according to RFC 2396 and cannot be converted to a URI which will result in a false value
+     * to be returned.
+     *
+     * @param url value
+     * @return boolean value
+     * @author Frank Giordano
+     */
+    public static boolean isUrlValid(String url) {
+        try {
+            new URL(url).toURI();
+            return true;
+        }
+        catch (URISyntaxException exception) {
+            return false;
+        }
+        catch (MalformedURLException exception) {
+            return false;
+        }
     }
 
 }

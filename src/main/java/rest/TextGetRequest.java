@@ -45,7 +45,8 @@ public class TextGetRequest extends ZoweRequest {
      */
     public TextGetRequest(ZOSConnection connection, String url) throws Exception {
         super(connection, ZoweRequestType.VerbType.GET_TEXT);
-        this.request = new HttpGet(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
+        if (!UtilRest.isUrlValid(url)) throw new Exception("url is invalid");
+        this.request = new HttpGet(url);
         this.setup();
     }
 

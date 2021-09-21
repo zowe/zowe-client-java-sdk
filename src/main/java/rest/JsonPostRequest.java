@@ -48,8 +48,9 @@ public class JsonPostRequest extends ZoweRequest {
      */
     public JsonPostRequest(ZOSConnection connection, String url, String body) throws Exception {
         super(connection, ZoweRequestType.VerbType.POST_JSON);
+        if (!UtilRest.isUrlValid(url)) throw new Exception("url is invalid");
         this.body = body;
-        this.request = new HttpPost(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
+        this.request = new HttpPost(url);
         this.setup();
     }
 
