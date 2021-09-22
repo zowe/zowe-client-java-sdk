@@ -199,6 +199,8 @@ public class MonitorJobs {
         int numOfAttempts = 0;
         int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);
 
+        LOG.info("Waiting for message \"{}\"", message);
+
         do {
             numOfAttempts++;
 
@@ -208,6 +210,7 @@ public class MonitorJobs {
 
             if (shouldContinue) {
                 Util.wait(timeoutVal);
+                LOG.info("Waiting for message \"{}\"", message);
             }
         } while (shouldContinue);
 
