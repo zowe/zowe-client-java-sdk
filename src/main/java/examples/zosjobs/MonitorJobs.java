@@ -39,18 +39,18 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        String hostName = "mvsxe47.lvn.broadcom.net";
-        String zosmfPort = "449";
-        String userName = "ccsauto";
-        String password = "ccsauto";
+        String hostName = "XXX";
+        String zosmfPort = "XXX";
+        String userName = "XXX";
+        String password = "XXX";
 
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         submitJobs = new SubmitJobs(connection);
 
-//        MonitorJobs.monitorJobsForOutputStatusByJobObject();
-//        MonitorJobs.monitorJobsForOutputStatusByJobNameAndId();
+        MonitorJobs.monitorJobsForOutputStatusByJobObject();
+        MonitorJobs.monitorJobsForOutputStatusByJobNameAndId();
         MonitorJobs.monitorJobsForStatusByJobObject(JobStatus.Type.INPUT);
-//        MonitorJobs.monitorJobsForStatusByJobNameAndId(JobStatus.Type.ACTIVE);
+        MonitorJobs.monitorJobsForStatusByJobNameAndId(JobStatus.Type.ACTIVE);
         MonitorJobs.monitorWaitForJobMessage("XXX");
     }
 
