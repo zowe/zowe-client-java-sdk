@@ -75,7 +75,7 @@ public class Dataset {
     private final Optional<String> migr;
 
     /**
-     * Indicates if the dataset is multivolume
+     * Indicates if the dataset is multi-volume
      */
     private final Optional<String> mvol;
 
