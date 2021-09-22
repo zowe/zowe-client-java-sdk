@@ -282,8 +282,7 @@ public class GetJobs {
      * @throws Exception error on getting spool files info
      * @author Frank Giordano
      */
-    public List<JobFile> getSpoolFiles(String jobName, String jobId)
-            throws Exception {
+    public List<JobFile> getSpoolFiles(String jobName, String jobId) throws Exception {
         return getSpoolFilesCommon(new CommonJobParams(jobId, jobName));
     }
 
