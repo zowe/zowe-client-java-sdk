@@ -344,6 +344,8 @@ public class MonitorJobs {
                 .jobId(params.getJobId().orElseThrow(() -> new Exception("job id not specified")))
                 .prefix(params.getJobName().orElseThrow(() -> new Exception("job name not specified"))).build();
         List<Job> jobs = getJobs.getJobsCommon(filter);
+        if (jobs.isEmpty())
+            throw new Exception("job does not exist");
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
         String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
         // start from bottom
