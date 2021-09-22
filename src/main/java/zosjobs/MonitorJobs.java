@@ -23,6 +23,7 @@ import zosjobs.types.JobStatus;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * APIs for monitoring the status of a job. Use these APIs to wait for a job to enter the specified status. All APIs
@@ -171,14 +172,15 @@ public class MonitorJobs {
         Util.checkIllegalParameter(params.getJobId().isEmpty(), "job id not specified");
         Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "job id not specified");
 
-        if (params.getAttempts().isEmpty())
-            params.setAttempts(Optional.of(attempts));
+        if (params.getAttempts().isEmpty()) {
+           params.setAttempts(OptionalInt.of(attempts));
+        }
 
         if (params.getWatchDelay().isEmpty())
-            params.setWatchDelay(Optional.of(watchDelay));
+            params.setWatchDelay(OptionalInt.of(watchDelay));
 
         if (params.getLineLimit().isEmpty())
-            params.setLineLimit(Optional.of(lineLimit));
+            params.setLineLimit(OptionalInt.of(lineLimit));
 
         return pollForMessage(params, message);
     }
@@ -323,10 +325,10 @@ public class MonitorJobs {
             params.setJobStatus(Optional.of(DEFAULT_STATUS));
 
         if (params.getAttempts().isEmpty())
-            params.setAttempts(Optional.of(attempts));
+            params.setAttempts(OptionalInt.of(attempts));
 
         if (params.getWatchDelay().isEmpty())
-            params.setWatchDelay(Optional.of(watchDelay));
+            params.setWatchDelay(OptionalInt.of(watchDelay));
 
         return pollForStatus(params);
     }
@@ -352,7 +354,8 @@ public class MonitorJobs {
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
         String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
         // start from bottom
-        for (int i = output.length - params.getLineLimit().orElse(DEFAULT_LINE_LIMIT); i < output.length; i++) {
+        var lineLimit = params.getLineLimit().orElse(DEFAULT_LINE_LIMIT);
+        for (int i = output.length - lineLimit; i < output.length; i++) {
             LOG.debug(output[i]);
             if (output[i].contains(message))
                 return true;

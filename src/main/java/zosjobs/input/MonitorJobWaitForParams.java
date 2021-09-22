@@ -13,6 +13,7 @@ package zosjobs.input;
 import zosjobs.types.JobStatus;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * MonitorJobs "waitFor..." APIs parameters interface
@@ -42,7 +43,7 @@ public class MonitorJobWaitForParams {
      * for the expected status.
      * Default: MonitorJobs.DEFAULT_WATCHER_DELAY
      */
-    private Optional<Integer> watchDelay;
+    private OptionalInt watchDelay;
 
     /**
      * The job status (see z/OSMF Jobs REST APIs documentation - and the JOB_STATUS type for possible options) to
@@ -57,21 +58,21 @@ public class MonitorJobWaitForParams {
      * for the expected status.
      * Default: MonitorJobs.DEFAULT_ATTEMPTS.
      */
-    private Optional<Integer> attempts;
+    private OptionalInt attempts;
 
     /**
      * Number of lines to inspect from job output.
      * Default: MonitorJobs.DEFAULT_LINE_LIMIT.
      */
-    private Optional<Integer> lineLimit;
+    private OptionalInt lineLimit;
 
     private MonitorJobWaitForParams(MonitorJobWaitForParams.Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);
-        this.watchDelay = Optional.of(builder.watchDelay);
+        this.watchDelay = builder.watchDelay;
         this.jobStatus = Optional.ofNullable(builder.jobStatus);
-        this.attempts = Optional.of(builder.attempts);
-        this.lineLimit = Optional.of(builder.lineLimit);
+        this.attempts = builder.attempts;
+        this.lineLimit = builder.lineLimit;
     }
 
     /**
@@ -110,7 +111,7 @@ public class MonitorJobWaitForParams {
      * @return watchDelay value
      * @author Frank Giordano
      */
-    public Optional<Integer> getWatchDelay() {
+    public OptionalInt getWatchDelay() {
         return watchDelay;
     }
 
@@ -120,7 +121,7 @@ public class MonitorJobWaitForParams {
      * @return attempts value
      * @author Frank Giordano
      */
-    public Optional<Integer> getAttempts() {
+    public OptionalInt getAttempts() {
         return attempts;
     }
 
@@ -130,7 +131,7 @@ public class MonitorJobWaitForParams {
      * @return lineLimit value
      * @author Frank Giordano
      */
-    public Optional<Integer> getLineLimit() {
+    public OptionalInt getLineLimit() {
         return lineLimit;
     }
 
@@ -140,7 +141,7 @@ public class MonitorJobWaitForParams {
      * @param watchDelay delay of polling operation in milliseconds
      * @author Frank Giordano
      */
-    public void setWatchDelay(Optional<Integer> watchDelay) {
+    public void setWatchDelay(OptionalInt watchDelay) {
         this.watchDelay = watchDelay;
     }
 
@@ -160,7 +161,7 @@ public class MonitorJobWaitForParams {
      * @param attempts number of attempts to get status
      * @author Frank Giordano
      */
-    public void setAttempts(Optional<Integer> attempts) {
+    public void setAttempts(OptionalInt attempts) {
         this.attempts = attempts;
     }
 
@@ -170,7 +171,7 @@ public class MonitorJobWaitForParams {
      * @param lineLimit number of lines to inspect
      * @author Frank Giordano
      */
-    public void setLineLimit(Optional<Integer> lineLimit) {
+    public void setLineLimit(OptionalInt lineLimit) {
         this.lineLimit = lineLimit;
     }
 
@@ -190,10 +191,10 @@ public class MonitorJobWaitForParams {
 
         private final String jobId;
         private final String jobName;
-        private int watchDelay;
+        private OptionalInt watchDelay = OptionalInt.empty();
         private JobStatus.Type jobStatus;
-        private int attempts;
-        private int lineLimit;
+        private OptionalInt attempts = OptionalInt.empty();
+        private OptionalInt lineLimit = OptionalInt.empty();
 
         public Builder(String jobName, String jobId) {
             this.jobName = jobName;
@@ -201,7 +202,7 @@ public class MonitorJobWaitForParams {
         }
 
         public MonitorJobWaitForParams.Builder watchDelay(int watchDelay) {
-            this.watchDelay = watchDelay;
+            this.watchDelay = OptionalInt.of(watchDelay);
             return this;
         }
 
@@ -211,12 +212,12 @@ public class MonitorJobWaitForParams {
         }
 
         public MonitorJobWaitForParams.Builder attempts(int attempts) {
-            this.attempts = attempts;
+            this.attempts = OptionalInt.of(attempts);
             return this;
         }
 
         public MonitorJobWaitForParams.Builder lineLimit(int lineLimit) {
-            this.lineLimit = lineLimit;
+            this.lineLimit = OptionalInt.of(lineLimit);
             return this;
         }
 
