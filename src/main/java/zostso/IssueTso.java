@@ -72,7 +72,11 @@ public class IssueTso {
         // first stage open tso servlet session to use for our tso command processing
         StartTso startTso = new StartTso(connection);
         StartStopResponses startResponse = startTso.start(accountNumber, startParams);
-        if (startResponse != null && !startResponse.isSuccess()) {
+
+        if (startResponse == null)
+            throw new Exception("Severe failure getting started TSO address space.");
+
+        if (!startResponse.isSuccess()) {
             throw new Exception("TSO address space failed to start. Error: " +
                     (startResponse.getFailureResponse().orElse("Unknown error")));
         }
