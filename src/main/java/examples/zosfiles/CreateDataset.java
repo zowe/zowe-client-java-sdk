@@ -61,6 +61,9 @@ public class CreateDataset {
         LOG.info("http response code " + response.getStatusCode());
     }
 
+    /**
+     * Example of a prebuild CreateParams for creating a binary dataset
+     */
     public static CreateParams binary() {
         return new CreateParams.Builder()
                 .dsorg("PO")
@@ -74,6 +77,9 @@ public class CreateDataset {
                 .build();
     }
 
+    /**
+     * Example of a prebuild CreateParams for creating a c dataset
+     */
     public static CreateParams c() {
         return new CreateParams.Builder()
                 .dsorg("PO")
@@ -87,6 +93,9 @@ public class CreateDataset {
                 .build();
     }
 
+    /**
+     * Example of a prebuild CreateParams for creating classic dataset
+     */
     public static CreateParams classic() {
         return new CreateParams.Builder()
                 .dsorg("PO")
@@ -100,6 +109,9 @@ public class CreateDataset {
                 .build();
     }
 
+    /**
+     * Example of a prebuild CreateParams for creating partitioned dataset
+     */
     public static CreateParams partitioned() {
         return new CreateParams.Builder()
                 .dsorg("PO")
@@ -113,6 +125,9 @@ public class CreateDataset {
                 .build();
     }
 
+    /**
+     * Example of a prebuild CreateParams for creating sequential dataset
+     */
     public static CreateParams sequential() {
         return new CreateParams.Builder()
                 .dsorg("PS")
