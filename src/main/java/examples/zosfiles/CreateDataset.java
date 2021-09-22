@@ -62,7 +62,7 @@ public class CreateDataset {
     }
 
     /**
-     * Example of a prebuild CreateParams for creating a binary dataset
+     * Example of a prebuilt CreateParams for creating a binary dataset
      */
     public static CreateParams binary() {
         return new CreateParams.Builder()
@@ -78,7 +78,9 @@ public class CreateDataset {
     }
 
     /**
-     * Example of a prebuild CreateParams for creating a c dataset
+     * Example of a prebuilt CreateParams for creating a c dataset
+     *
+     * @return prebuilt CreateParams
      */
     public static CreateParams c() {
         return new CreateParams.Builder()
@@ -94,7 +96,9 @@ public class CreateDataset {
     }
 
     /**
-     * Example of a prebuild CreateParams for creating classic dataset
+     * Example of a prebuilt CreateParams for creating classic dataset
+     *
+     * @return prebuilt CreateParams
      */
     public static CreateParams classic() {
         return new CreateParams.Builder()
@@ -110,7 +114,9 @@ public class CreateDataset {
     }
 
     /**
-     * Example of a prebuild CreateParams for creating partitioned dataset
+     * Example of a prebuilt CreateParams for creating partitioned dataset
+     *
+     * @return prebuilt CreateParams
      */
     public static CreateParams partitioned() {
         return new CreateParams.Builder()
@@ -126,7 +132,9 @@ public class CreateDataset {
     }
 
     /**
-     * Example of a prebuild CreateParams for creating sequential dataset
+     * Example of a prebuilt CreateParams for creating sequential dataset
+     *
+     * @return prebuilt CreateParams
      */
     public static CreateParams sequential() {
         return new CreateParams.Builder()
