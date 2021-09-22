@@ -173,7 +173,7 @@ public class MonitorJobs {
         Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "job id not specified");
 
         if (params.getAttempts().isEmpty()) {
-           params.setAttempts(OptionalInt.of(attempts));
+            params.setAttempts(OptionalInt.of(attempts));
         }
 
         if (params.getWatchDelay().isEmpty())
