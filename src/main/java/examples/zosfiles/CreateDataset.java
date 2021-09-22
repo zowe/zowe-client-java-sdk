@@ -7,29 +7,30 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zosfiles.examples;
+package examples.zosfiles;
 
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.Response;
 import zosfiles.ZosDsn;
+import zosfiles.input.CreateParams;
 
 /**
- * Class example to showcase WriteDataset functionality.
+ * Class example to showcase CreateDataset functionality.
  *
  * @author Leonid Baranov
  * @version 1.0
  */
-public class WriteDataset {
+public class CreateDataset {
 
-    private static final Logger LOG = LogManager.getLogger(WriteDataset.class);
+    private static final Logger LOG = LogManager.getLogger(CreateDataset.class);
 
     private static ZOSConnection connection;
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * WriteDataset functionality. Calls WriteDataset example methods.
+     * CreateDataset functionality. Calls CreateDataset example methods.
      *
      * @param args for main not used
      * @throws Exception error in processing request
@@ -41,26 +42,22 @@ public class WriteDataset {
         String userName = "XXX";
         String password = "XXX";
         String dataSetName = "XXX";
-        String member = "XXX";
 
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
-        var content = "NEW CONTENT\nTHE SECOND LINE UPDATED";
-        WriteDataset.writeToDsnMember(dataSetName, member, content);
+        createDataSet(dataSetName);
     }
 
     /**
-     * Write to the given member name specified replacing its content. If it does exist, it will be created.
+     * Create a new partition data set
      *
-     * @param dataSetName name of a dataset where member should be located (e.g. 'DATASET.LIB')
-     * @param member      name of member to write
-     * @param content     content for write
+     * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
      * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public static void writeToDsnMember(String dataSetName, String member, String content) throws Exception {
+    public static void createDataSet(String dataSetName) throws Exception {
         ZosDsn zosDsn = new ZosDsn(connection);
-        Response response = zosDsn.writeDsn(dataSetName, member, content);
+        Response response = zosDsn.createDsn(dataSetName, CreateParams.partitioned());
         LOG.info("http response code " + response.getStatusCode());
     }
 

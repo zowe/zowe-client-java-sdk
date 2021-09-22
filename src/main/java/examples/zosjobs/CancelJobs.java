@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zosjobs.examples;
+package examples.zosjobs;
 
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
@@ -17,14 +17,14 @@ import zosjobs.input.ModifyJobParams;
 import zosjobs.response.Job;
 
 /**
- * Class example to showcase DeleteJobs functionality.
+ * Class example to showcase CancelJobs functionality.
  *
  * @author Leonid Baranov
  * @version 1.0
  */
-public class DeleteJobs {
+public class CancelJobs {
 
-    private static final Logger LOG = LogManager.getLogger(DeleteJobs.class);
+    private static final Logger LOG = LogManager.getLogger(CancelJobs.class);
 
     private static ZOSConnection connection;
     private static String jobName;
@@ -32,7 +32,7 @@ public class DeleteJobs {
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * DeleteJobs functionality. Calls DeleteJobs example methods.
+     * CancelJobs functionality. Calls CancelJobs example methods.
      *
      * @param args for main not used
      * @throws Exception error in processing request
@@ -45,71 +45,71 @@ public class DeleteJobs {
         String password = "XXX";
 
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-        LOG.info(deleteJobsCommonWithVersion("2.0"));
-        LOG.info(deleteJobsCommon());
-        LOG.info(deleteJobForJob());
-        LOG.info(deleteJob());
+        LOG.info(cancelJobsCommonWithVersion("2.0"));
+        LOG.info(cancelJobsCommon());
+        LOG.info(cancelJobForJob());
+        LOG.info(cancelJob());
     }
 
     /**
-     * Example on how to call DeleteJobs deleteJobCommon method.
-     * deleteJobCommon accepts a DeleteJobParams object with parameters filled needed to delete a given job and
+     * Example on how to call CancelJobs cancelJobsCommon method.
+     * cancelJobsCommon accepts a CancelJobParams object with parameters filled needed to cancel a given job and
      * the version to indicate 1.0 for async or 2.0 for sync processing of the request
      *
-     * @param version value to indicate sync or async request processing
-     * @return response http response object
+     * @param version version value
+     * @return response http Response object
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Response deleteJobsCommonWithVersion(String version) throws Exception {
+    public static Response cancelJobsCommonWithVersion(String version) throws Exception {
         jobId = "XXX";
         jobName = "XXX";
         ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).version(version).build();
-        return new zosjobs.DeleteJobs(connection).deleteJobCommon(params);
+        return new zosjobs.CancelJobs(connection).cancelJobsCommon(params);
     }
 
     /**
-     * Example on how to call DeleteJobs deleteJobCommon method.
-     * deleteJobCommon accepts a DeleteJobParams object with parameters filled needed to delete a given job.
+     * Example on how to call CancelJobs cancelJobsCommon method.
+     * cancelJobsCommon accepts a CancelJobParams object with parameters filled needed to cancel a given job.
      *
-     * @return response http response object
+     * @return response http Response object
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Response deleteJobsCommon() throws Exception {
+    public static Response cancelJobsCommon() throws Exception {
         jobId = "XXX";
         jobName = "XXX";
         ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).build();
-        return new zosjobs.DeleteJobs(connection).deleteJobCommon(params);
+        return new zosjobs.CancelJobs(connection).cancelJobsCommon(params);
     }
 
     /**
-     * Example on how to call DeleteJobs deleteJobForJob method.
-     * deleteJobForJob accepts a jobName and jobId values which will be used to delete its job.
+     * Example on how to call CancelJobs cancelJobForJob method.
+     * cancelJobForJob accepts a jobName and jobId values which will be used to cancel its job.
      *
-     * @return response http response object
+     * @return response http Response object
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Response deleteJobForJob() throws Exception {
+    public static Response cancelJobForJob() throws Exception {
         jobId = "XXX";
         jobName = "XXX";
-        return new zosjobs.DeleteJobs(connection).deleteJobForJob(
+        return new zosjobs.CancelJobs(connection).cancelJobForJob(
                 new Job.Builder().jobName(jobName).jobId(jobId).build(), null);
     }
 
     /**
-     * Example on how to call DeleteJobs deleteJob method.
-     * deleteJob accepts a jobName and jobId values which will be used to delete its job.
+     * Example on how to call CancelJobs cancelJob method.
+     * cancelJob accepts a jobName and jobId values which will be used to cancel its job.
      *
-     * @return response http response object
+     * @return response http Response object
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Response deleteJob() throws Exception {
+    public static Response cancelJob() throws Exception {
         jobId = "XXX";
         jobName = "XXX";
-        return new zosjobs.DeleteJobs(connection).deleteJob(jobName, jobId, null);
+        return new zosjobs.CancelJobs(connection).cancelJob(jobName, jobId, null);
     }
 
 }

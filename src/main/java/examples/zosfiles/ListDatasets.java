@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zosfiles.examples;
+package examples.zosfiles;
 
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;

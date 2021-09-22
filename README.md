@@ -30,12 +30,12 @@ Functionality provided:
     CancelJobs
     DeleteJobs
 
-See the following example programs within each examples' package:
+See the following example programs:  
 
-    src/main/java/zosconsole/examples   
+    src/main/java/examples/zosconsole   
         IssueCommand.java  
   
-    src/main/java/zosfiles/examples    
+    src/main/java/examples/zosfiles    
         CopyDataset.java
         CreateDataset.java  
         DeleteDataset.java  
@@ -43,14 +43,14 @@ See the following example programs within each examples' package:
         ListDatasets.java
         WriteDataset.java  
   
-    src/main/java/zosjobs/examples    
+    src/main/java/examples/zosjobs    
         CancelJobs.java
         DeleteJobs.java
         GetJobs.java
         MonitorJobs.java
         SubmitJobs
 
-    src/main/java/zostos/examples  
+    src/main/java/examples/zostos  
         IssueTsoCommand.java
   
 You need to replace all instances of "XXX" accordingly to meet your target's credentials and host information.   

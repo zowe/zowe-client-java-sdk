@@ -8,7 +8,7 @@
  * Copyright Contributors to the Zowe Project.
  *
  */
-package zosjobs.examples;
+package examples.zosjobs;
 
 import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
@@ -39,18 +39,18 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        String hostName = "XXX";
-        String zosmfPort = "XXX";
-        String userName = "XXX";
-        String password = "XXX";
+        String hostName = "mvsxe47.lvn.broadcom.net";
+        String zosmfPort = "449";
+        String userName = "ccsauto";
+        String password = "ccsauto";
 
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         submitJobs = new SubmitJobs(connection);
 
-        MonitorJobs.monitorJobsForOutputStatusByJobObject();
-        MonitorJobs.monitorJobsForOutputStatusByJobNameAndId();
+//        MonitorJobs.monitorJobsForOutputStatusByJobObject();
+//        MonitorJobs.monitorJobsForOutputStatusByJobNameAndId();
         MonitorJobs.monitorJobsForStatusByJobObject(JobStatus.Type.INPUT);
-        MonitorJobs.monitorJobsForStatusByJobNameAndId(JobStatus.Type.ACTIVE);
+//        MonitorJobs.monitorJobsForStatusByJobNameAndId(JobStatus.Type.ACTIVE);
         MonitorJobs.monitorWaitForJobMessage("XXX");
     }
 
@@ -101,7 +101,7 @@ public class MonitorJobs {
      */
     private static void monitorJobsForStatusByJobObject(JobStatus.Type statusType) throws Exception {
         // determine an existing job in your system that is in execute queue and make a Job for it
-        Job job = new Job.Builder().jobName("XXX").jobId("XXX").build();
+        Job job = new Job.Builder().jobName("TESTJCL").jobId("JOB61143").build();
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
         job = monitorJobs.waitForJobStatus(job, statusType);
         LOG.info("Job status for Job " + job.getJobName().orElse("n/a") + ":" +
@@ -139,7 +139,7 @@ public class MonitorJobs {
      */
     private static void monitorWaitForJobMessage(String message) throws Exception {
         // determine an existing job in your system that is in execute queue and make a Job for it
-        Job job = new Job.Builder().jobName("XXX").jobId("XXX").build();
+        Job job = new Job.Builder().jobName("TESTJCL").jobId("JOB61143").build();
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
         LOG.info("Found message = " + monitorJobs.waitForJobMessage(job, message));
     }
