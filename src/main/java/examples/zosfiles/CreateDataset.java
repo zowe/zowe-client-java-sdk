@@ -57,8 +57,72 @@ public class CreateDataset {
      */
     public static void createDataSet(String dataSetName) throws Exception {
         ZosDsn zosDsn = new ZosDsn(connection);
-        Response response = zosDsn.createDsn(dataSetName, CreateParams.partitioned());
+        Response response = zosDsn.createDsn(dataSetName, partitioned());
         LOG.info("http response code " + response.getStatusCode());
+    }
+
+    public static CreateParams binary() {
+        return new CreateParams.Builder()
+                .dsorg("PO")
+                .alcunit("CYL")
+                .primary(10)
+                .secondary(10)
+                .dirblk(25)
+                .recfm("U")
+                .blksize(27998)
+                .lrecl(27998)
+                .build();
+    }
+
+    public static CreateParams c() {
+        return new CreateParams.Builder()
+                .dsorg("PO")
+                .alcunit("CYL")
+                .primary(1)
+                .secondary(1)
+                .dirblk(25)
+                .recfm("VB")
+                .blksize(32760)
+                .lrecl(260)
+                .build();
+    }
+
+    public static CreateParams classic() {
+        return new CreateParams.Builder()
+                .dsorg("PO")
+                .alcunit("CYL")
+                .primary(1)
+                .secondary(1)
+                .dirblk(25)
+                .recfm("FB")
+                .blksize(6160)
+                .lrecl(80)
+                .build();
+    }
+
+    public static CreateParams partitioned() {
+        return new CreateParams.Builder()
+                .dsorg("PO")
+                .alcunit("CYL")
+                .primary(1)
+                .secondary(1)
+                .dirblk(5)
+                .recfm("FB")
+                .blksize(6160)
+                .lrecl(80)
+                .build();
+    }
+
+    public static CreateParams sequential() {
+        return new CreateParams.Builder()
+                .dsorg("PS")
+                .alcunit("CYL")
+                .primary(1)
+                .secondary(1)
+                .recfm("FB")
+                .blksize(6160)
+                .lrecl(80)
+                .build();
     }
 
 }
