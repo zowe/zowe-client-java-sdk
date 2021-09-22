@@ -78,7 +78,7 @@ public class UtilRest {
     }
 
     /**
-     * Return specialized http error message if any
+     * Return specialized http error message
      *
      * @param response Response object
      * @throws Exception containing specialized http error message

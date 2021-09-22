@@ -19,24 +19,99 @@ import java.util.Optional;
  */
 public class Dataset {
 
+    /**
+     * The name of the dataset
+     */
     private final Optional<String> dsname;
+
+    /**
+     * The block size of the dataset
+     */
     private final Optional<String> blksz;
+
+    /**
+     * The catalog in which the dataset entry is stored
+     */
     private final Optional<String> catnm;
+
+    /**
+     * The dataset creation date
+     */
     private final Optional<String> cdate;
+
+    /**
+     * The type of the device the dataset is stored on
+     */
     private final Optional<String> dev;
+
+    /**
+     * The type of the dataset
+     */
     private final Optional<String> dsntp;
+
+    /**
+     * The organization of the data set as physical sequential (PS), partitioned (PO), or direct (DA)
+     */
     private final Optional<String> dsorg;
+
+    /**
+     * The dataset expiration date
+     */
     private final Optional<String> edate;
+
+    /**
+     * The number of extensions the dataset has
+     */
     private final Optional<String> extx;
+
+    /**
+     * The length, in bytes, of each record in the data set
+     */
     private final Optional<String> lrectl;
+
+    /**
+     * Indicates if automatic migration to a lower level of storage is active for this dataset
+     */
     private final Optional<String> migr;
+
+    /**
+     * Indicates if the dataset is multivolume
+     */
     private final Optional<String> mvol;
+
+    /**
+     * Open virtualization format
+     */
     private final Optional<String> ovf;
+
+    /**
+     * The date of the last time the dataset was referred to
+     */
     private final Optional<String> rdate;
+
+    /**
+     * The record format of the dataset
+     */
     private final Optional<String> recfm;
+
+    /**
+     * The size of the first extent in tracks
+     */
     private final Optional<String> sizex;
+
+    /**
+     * The type of space units measurement
+     */
     private final Optional<String> spacu;
+
+    /**
+     * The percentage of used space in the dataset
+     */
     private final Optional<String> used;
+
+    /**
+     * The volume name on which the dataset is stored
+     */
     private final Optional<String> vol;
 
     private Dataset(Dataset.Builder builder) {
