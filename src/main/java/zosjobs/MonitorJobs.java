@@ -378,6 +378,9 @@ public class MonitorJobs {
         int numOfAttempts = 0;
         int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);
 
+        var statusName = params.getJobStatus().orElse(DEFAULT_STATUS).toString();
+        LOG.info("Waiting for status \"{}\"", statusName);
+
         CheckJobStatus checkJobStatus;
         do {
             numOfAttempts++;
@@ -389,6 +392,7 @@ public class MonitorJobs {
 
             if (shouldContinue) {
                 Util.wait(timeoutVal);
+                LOG.info("Waiting for status \"{}\"", statusName);
             }
         } while (shouldContinue);
 

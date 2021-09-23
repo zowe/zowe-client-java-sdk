@@ -101,7 +101,7 @@ public class MonitorJobs {
      */
     private static void monitorJobsForStatusByJobObject(JobStatus.Type statusType) throws Exception {
         // determine an existing job in your system that is in execute queue and make a Job for it
-        Job job = new Job.Builder().jobName("TESTJCL").jobId("JOB61143").build();
+        Job job = new Job.Builder().jobName("XXX").jobId("XXX").build();
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
         job = monitorJobs.waitForJobStatus(job, statusType);
         LOG.info("Job status for Job " + job.getJobName().orElse("n/a") + ":" +
