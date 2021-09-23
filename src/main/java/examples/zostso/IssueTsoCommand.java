@@ -10,6 +10,7 @@
 package examples.zostso;
 
 import core.ZOSConnection;
+import examples.ZosConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zostso.IssueResponse;
@@ -23,7 +24,7 @@ import java.util.Arrays;
  * @author Frank Giordano
  * @version 1.0
  */
-public class IssueTsoCommand {
+public class IssueTsoCommand extends ZosConnection {
 
     private static final Logger LOG = LogManager.getLogger(IssueTsoCommand.class);
 
@@ -37,10 +38,6 @@ public class IssueTsoCommand {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        String hostName = "XXX";
-        String zosmfPort = "XXX";
-        String userName = "XXX";
-        String password = "XXX";
         String command = "XXX";
         String accountNumber = "XXX";
 

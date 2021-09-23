@@ -10,6 +10,7 @@
 package examples.zosfiles;
 
 import core.ZOSConnection;
+import examples.ZosConnection;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +27,7 @@ import java.io.StringWriter;
  * @author Leonid Baranov
  * @version 1.0
  */
-public class DownloadDataset {
+public class DownloadDataset extends ZosConnection {
 
     private static final Logger LOG = LogManager.getLogger(DownloadDataset.class);
 
@@ -39,10 +40,6 @@ public class DownloadDataset {
      * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
-        String hostName = "XXX";
-        String zosmfPort = "XXX";
-        String userName = "XXX";
-        String password = "XXX";
         String datasetMember = "XXX";
 
         DownloadParams params = new DownloadParams.Builder().build();

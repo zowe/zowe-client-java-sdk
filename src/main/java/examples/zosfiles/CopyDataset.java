@@ -10,6 +10,7 @@
 package examples.zosfiles;
 
 import core.ZOSConnection;
+import examples.ZosConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.Response;
@@ -22,7 +23,7 @@ import zosfiles.input.CopyParams;
  * @author Leonid Baranov
  * @version 1.0
  */
-public class CopyDataset {
+public class CopyDataset extends ZosConnection {
 
     private static final Logger LOG = LogManager.getLogger(CopyDataset.class);
 
@@ -34,10 +35,6 @@ public class CopyDataset {
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
-        String hostName = "XXX";
-        String zosmfPort = "XXX";
-        String userName = "XXX";
-        String password = "XXX";
         String fromDataSetName = "XXX";
         String toDataSetName = "XXX";
 

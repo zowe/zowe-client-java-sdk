@@ -10,6 +10,7 @@
 package examples.zosconsole;
 
 import core.ZOSConnection;
+import examples.ZosConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zosconsole.ConsoleResponse;
@@ -23,7 +24,7 @@ import zosconsole.zosmf.ZosmfIssueResponse;
  * @author Frank Giordano
  * @version 1.0
  */
-public class IssueCommand {
+public class IssueCommand extends ZosConnection {
 
     private static final Logger LOG = LogManager.getLogger(IssueCommand.class);
 
@@ -34,10 +35,6 @@ public class IssueCommand {
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        String hostName = "XXX";
-        String zosmfPort = "XXX";
-        String userName = "XXX";
-        String password = "XXX";
         String command = "D IPLINFO";
 
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);

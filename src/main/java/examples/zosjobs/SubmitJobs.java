@@ -10,6 +10,7 @@
 package examples.zosjobs;
 
 import core.ZOSConnection;
+import examples.ZosConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zosjobs.response.Job;
@@ -20,7 +21,7 @@ import zosjobs.response.Job;
  * @author Frank Giordano
  * @version 1.0
  */
-public class SubmitJobs {
+public class SubmitJobs extends ZosConnection {
 
     private static final Logger LOG = LogManager.getLogger(SubmitJobs.class);
 
@@ -33,11 +34,6 @@ public class SubmitJobs {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        String hostName = "XXX";
-        String zosmfPort = "XXX";
-        String userName = "XXX";
-        String password = "XXX";
-
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         LOG.info(SubmitJobs.submitJob(connection, "xxx.xxx.xxx.xxx(xxx)"));
 

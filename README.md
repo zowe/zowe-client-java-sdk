@@ -53,6 +53,8 @@ See the following example programs:
     src/main/java/examples/zostos  
         IssueTsoCommand.java
   
+    src/main/java/examples/ZosConnection.java
+  
 You need to replace all instances of "XXX" accordingly to meet your target's credentials and host information.   
     
 ## Build

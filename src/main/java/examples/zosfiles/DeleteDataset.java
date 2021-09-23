@@ -10,6 +10,7 @@
 package examples.zosfiles;
 
 import core.ZOSConnection;
+import examples.ZosConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.Response;
@@ -21,7 +22,7 @@ import zosfiles.ZosDsn;
  * @author Leonid Baranov
  * @version 1.0
  */
-public class DeleteDataset {
+public class DeleteDataset extends ZosConnection {
 
     private static final Logger LOG = LogManager.getLogger(DeleteDataset.class);
 
@@ -36,10 +37,6 @@ public class DeleteDataset {
      * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
-        String hostName = "XXX";
-        String zosmfPort = "XXX";
-        String userName = "XXX";
-        String password = "XXX";
         String dataSetName = "XXX";
         String member = "XXX";
 

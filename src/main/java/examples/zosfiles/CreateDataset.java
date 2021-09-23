@@ -10,6 +10,7 @@
 package examples.zosfiles;
 
 import core.ZOSConnection;
+import examples.ZosConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.Response;
@@ -22,7 +23,7 @@ import zosfiles.input.CreateParams;
  * @author Leonid Baranov
  * @version 1.0
  */
-public class CreateDataset {
+public class CreateDataset extends ZosConnection {
 
     private static final Logger LOG = LogManager.getLogger(CreateDataset.class);
 
@@ -37,10 +38,6 @@ public class CreateDataset {
      * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
-        String hostName = "XXX";
-        String zosmfPort = "XXX";
-        String userName = "XXX";
-        String password = "XXX";
         String dataSetName = "XXX";
 
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
