@@ -140,7 +140,8 @@ public class GetJobs {
     private static void getStatus(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         try {
-            Job job = getJobs.getStatus(jobs.get(0).getJobName().orElseThrow(() -> new Exception("job name not specified")),
+            Job job = getJobs.getStatus(
+                    jobs.get(0).getJobName().orElseThrow(() -> new Exception("job name not specified")),
                     jobs.get(0).getJobId().orElseThrow(() -> new Exception("job id not specified")));
             LOG.info(job);
         } catch (Exception e) {
@@ -282,7 +283,8 @@ public class GetJobs {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(params);
         List<JobFile> files =
-                getJobs.getSpoolFiles(jobs.get(0).getJobName().orElseThrow(() -> new Exception("job name not specified")),
+                getJobs.getSpoolFiles(
+                        jobs.get(0).getJobName().orElseThrow(() -> new Exception("job name not specified")),
                         jobs.get(0).getJobId().orElseThrow(() -> new Exception("job id not specified")));
         files.forEach(LOG::info);
     }

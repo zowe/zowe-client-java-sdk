@@ -60,8 +60,7 @@ public class DownloadDataset {
      * @throws Exception error processing request
      * @author Leonid Baranov
      */
-    public static void downloadDsnMember(ZOSConnection connection, String name, DownloadParams params)
-            throws Exception {
+    public static void downloadDsnMember(ZOSConnection connection, String name, DownloadParams params) throws Exception {
         try (InputStream inputStream = new ZosDsnDownload(connection).downloadDsn(name, params)) {
             if (inputStream != null) {
                 StringWriter writer = new StringWriter();
