@@ -165,7 +165,7 @@ public class MonitorJobs {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    private boolean waitForMessageCommon(MonitorJobWaitForParams params, String message) throws Exception {
+    public boolean waitForMessageCommon(MonitorJobWaitForParams params, String message) throws Exception {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkIllegalParameter(params.getJobName().isEmpty(), "job name not specified");
         Util.checkIllegalParameter(params.getJobName().get().isEmpty(), "job name not specified");
@@ -183,40 +183,6 @@ public class MonitorJobs {
             params.setLineLimit(OptionalInt.of(lineLimit));
 
         return pollForMessage(params, message);
-    }
-
-    /**
-     * "Polls" (sets timeouts and continuously checks) for the given message within the job output.
-     *
-     * @param params  monitor jobs params, see MonitorJobWaitForParams
-     * @param message message string
-     * @return boolean message found status
-     * @throws Exception error processing poll check request
-     * @author Frank Giordano
-     */
-    private boolean pollForMessage(MonitorJobWaitForParams params, String message) throws Exception {
-        int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
-        boolean messageFound;  // no assigment means by default it is false
-        boolean shouldContinue; // no assigment means by default it is false
-        int numOfAttempts = 0;
-        int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);
-
-        LOG.info("Waiting for message \"{}\"", message);
-
-        do {
-            numOfAttempts++;
-
-            messageFound = checkMessage(params, message);
-
-            shouldContinue = !messageFound && (maxAttempts > 0 && numOfAttempts < maxAttempts);
-
-            if (shouldContinue) {
-                Util.wait(timeoutVal);
-                LOG.info("Waiting for message \"{}\"", message);
-            }
-        } while (shouldContinue);
-
-        return numOfAttempts != maxAttempts;
     }
 
     /**
@@ -361,6 +327,40 @@ public class MonitorJobs {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * "Polls" (sets timeouts and continuously checks) for the given message within the job output.
+     *
+     * @param params  monitor jobs params, see MonitorJobWaitForParams
+     * @param message message string
+     * @return boolean message found status
+     * @throws Exception error processing poll check request
+     * @author Frank Giordano
+     */
+    private boolean pollForMessage(MonitorJobWaitForParams params, String message) throws Exception {
+        int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
+        boolean messageFound;  // no assigment means by default it is false
+        boolean shouldContinue; // no assigment means by default it is false
+        int numOfAttempts = 0;
+        int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);
+
+        LOG.info("Waiting for message \"{}\"", message);
+
+        do {
+            numOfAttempts++;
+
+            messageFound = checkMessage(params, message);
+
+            shouldContinue = !messageFound && (maxAttempts > 0 && numOfAttempts < maxAttempts);
+
+            if (shouldContinue) {
+                Util.wait(timeoutVal);
+                LOG.info("Waiting for message \"{}\"", message);
+            }
+        } while (shouldContinue);
+
+        return numOfAttempts != maxAttempts;
     }
 
     /**
