@@ -89,8 +89,7 @@ public class SendTso {
                 TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;
         LOG.debug("SendTso::sendDataToTSOCommon - url {}", url);
 
-        TsoResponseMessage tsoResponseMessage = new TsoResponseMessage(Optional.of("0100"),
-                Optional.ofNullable(commandParams.getData()));
+        TsoResponseMessage tsoResponseMessage = new TsoResponseMessage("0100", commandParams.getData());
         String jobObjBody = getTsoResponseSendMessage(tsoResponseMessage);
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jobObjBody,

@@ -169,8 +169,8 @@ public class IssueResponse {
      * @param commandResponses command string responses
      * @author Frank Giordano
      */
-    public void setCommandResponses(Optional<String> commandResponses) {
-        this.commandResponses = commandResponses;
+    public void setCommandResponses(String commandResponses) {
+        this.commandResponses = Optional.ofNullable(commandResponses);
     }
 
     @Override

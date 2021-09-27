@@ -101,7 +101,8 @@ public class IssueTso {
         issueResponse.setZosmfResponses(zosmfTsoResponses);
 
         // lastly save the command response to our issueResponse reference
-        issueResponse.setCommandResponses(sendResponse.getCommandResponse());
+        issueResponse.setCommandResponses(sendResponse.getCommandResponse()
+                .orElseThrow(() -> new Exception("error getting command response")));
 
         // third stage here where the tso end session operation is performed
         StopTso stopTso = new StopTso(connection);

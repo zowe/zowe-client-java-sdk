@@ -42,10 +42,10 @@ public class ZosmfMessages {
      * @param stackTrace  error message stack trace value
      * @author Frank Giordano
      */
-    public ZosmfMessages(Optional<String> messageText, Optional<String> messageId, Optional<String> stackTrace) {
-        this.messageText = messageText;
-        this.messageId = messageId;
-        this.stackTrace = stackTrace;
+    public ZosmfMessages(String messageText, String messageId, String stackTrace) {
+        this.messageText = Optional.ofNullable(messageText);
+        this.messageId = Optional.ofNullable(messageId);
+        this.stackTrace = Optional.ofNullable(stackTrace);
     }
 
     /**
@@ -64,8 +64,8 @@ public class ZosmfMessages {
      * @param messageText value
      * @author Frank Giordano
      */
-    public void setMessageText(Optional<String> messageText) {
-        this.messageText = messageText;
+    public void setMessageText(String messageText) {
+        this.messageText = Optional.ofNullable(messageText);
     }
 
     /**
@@ -84,8 +84,8 @@ public class ZosmfMessages {
      * @param messageId value
      * @author Frank Giordano
      */
-    public void setMessageId(Optional<String> messageId) {
-        this.messageId = messageId;
+    public void setMessageId(String messageId) {
+        this.messageId = Optional.ofNullable(messageId);
     }
 
     /**
@@ -104,8 +104,8 @@ public class ZosmfMessages {
      * @param stackTrace value
      * @author Frank Giordano
      */
-    public void setStackTrace(Optional<String> stackTrace) {
-        this.stackTrace = stackTrace;
+    public void setStackTrace(String stackTrace) {
+        this.stackTrace = Optional.ofNullable(stackTrace);
     }
 
     @Override

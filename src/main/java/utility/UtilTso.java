@@ -82,7 +82,7 @@ public class UtilTso {
         int statusCode = response.getStatusCode().get();
         if (response.getStatusCode().isPresent() && UtilRest.isHttpError(statusCode)) {
             String errorMsg = (String) response.getResponsePhrase().orElseThrow(() -> new Exception("results not available"));
-            ZosmfMessages zosmfMsg = new ZosmfMessages(Optional.of(errorMsg), Optional.empty(), Optional.empty());
+            ZosmfMessages zosmfMsg = new ZosmfMessages(errorMsg, null, null);
             List<ZosmfMessages> zosmfMessages = new ArrayList<>();
             zosmfMessages.add(zosmfMsg);
             result = new ZosmfTsoResponse.Builder().msgData(zosmfMessages).build();
@@ -132,11 +132,11 @@ public class UtilTso {
             TsoMessage tsoMessage = new TsoMessage();
             tsoMessageMap.forEach((key, value) -> {
                 if ("DATA".equals(key))
-                    tsoMessage.setData(Optional.of(value));
+                    tsoMessage.setData(value);
                 if ("VERSION".equals(key))
-                    tsoMessage.setVersion(Optional.of(value));
+                    tsoMessage.setVersion(value);
             });
-            tsoMessages.setTsoMessage(Optional.of(tsoMessage));
+            tsoMessages.setTsoMessage(tsoMessage);
             tsoMessagesLst.add(tsoMessages);
         }
     }
@@ -149,11 +149,11 @@ public class UtilTso {
             TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();
             tsoPromptMap.forEach((key, value) -> {
                 if ("VERSION".equals(key))
-                    tsoPromptMessage.setVersion(Optional.of(value));
+                    tsoPromptMessage.setVersion(value);
                 if ("HIDDEN".equals(key))
-                    tsoPromptMessage.setHidden(Optional.of(value));
+                    tsoPromptMessage.setHidden(value);
             });
-            tsoMessages.setTsoPrompt(Optional.of(tsoPromptMessage));
+            tsoMessages.setTsoPrompt(tsoPromptMessage);
             tsoMessagesLst.add(tsoMessages);
         }
     }

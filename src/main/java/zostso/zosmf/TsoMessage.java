@@ -44,9 +44,9 @@ public class TsoMessage {
      * @param data    description of the data type
      * @author Frank Giordano
      */
-    public TsoMessage(Optional<String> version, Optional<String> data) {
-        this.version = version;
-        this.data = data;
+    public TsoMessage(String version, String data) {
+        this.version = Optional.ofNullable(version);
+        this.data = Optional.ofNullable(data);
     }
 
     /**
@@ -65,8 +65,8 @@ public class TsoMessage {
      * @param version JSON version for message format
      * @author Frank Giordano
      */
-    public void setVersion(Optional<String> version) {
-        this.version = version;
+    public void setVersion(String version) {
+        this.version = Optional.ofNullable(version);
     }
 
     /**
@@ -85,8 +85,8 @@ public class TsoMessage {
      * @param data description os the data type
      * @author Frank Giordano
      */
-    public void setData(Optional<String> data) {
-        this.data = data;
+    public void setData(String data) {
+        this.data = Optional.ofNullable(data);
     }
 
     @Override

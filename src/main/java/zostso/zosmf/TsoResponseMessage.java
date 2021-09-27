@@ -44,9 +44,9 @@ public class TsoResponseMessage {
      * @param data    description of the data type
      * @author Frank Giordano
      */
-    public TsoResponseMessage(Optional<String> version, Optional<String> data) {
-        this.version = version;
-        this.data = data;
+    public TsoResponseMessage(String version, String data) {
+        this.version = Optional.ofNullable(version);
+        this.data = Optional.ofNullable(data);
     }
 
     /**
@@ -65,8 +65,8 @@ public class TsoResponseMessage {
      * @param version JSON version for message format
      * @author Frank Giordano
      */
-    public void setVersion(Optional<String> version) {
-        this.version = version;
+    public void setVersion(String version) {
+        this.version = Optional.ofNullable(version);
     }
 
     /**
