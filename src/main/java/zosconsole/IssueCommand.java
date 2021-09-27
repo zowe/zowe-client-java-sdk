@@ -46,6 +46,7 @@ public class IssueCommand {
      * @author Frank Giordano
      */
     public IssueCommand(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -59,7 +60,6 @@ public class IssueCommand {
      * @author Frank Giordano
      */
     public ZosmfIssueResponse issueCommon(String consoleName, ZosmfIssueParams commandParams) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(consoleName == null, "consoleName is null");
         Util.checkIllegalParameter(consoleName.isEmpty(), "consoleName not specified");
         Util.checkNullParameter(commandParams == null, "commandParams is null");

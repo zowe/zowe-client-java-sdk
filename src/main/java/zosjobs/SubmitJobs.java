@@ -45,6 +45,7 @@ public class SubmitJobs {
      * @author Frank Giordano
      */
     public SubmitJobs(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -69,7 +70,6 @@ public class SubmitJobs {
      * @author Frank Giordano
      */
     public Job submitJobCommon(SubmitJobParams params) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkIllegalParameter(params.getJobDataSet().isEmpty(), "jobDataSet not specified");
         Util.checkIllegalParameter(params.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
@@ -131,7 +131,6 @@ public class SubmitJobs {
      * @author Frank Giordano
      */
     public Job submitJclCommon(SubmitJclParams params) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkIllegalParameter(params.getJcl().isEmpty(), "jcl not specified");
         Util.checkIllegalParameter(params.getJcl().get().isEmpty(), "jcl not specified");

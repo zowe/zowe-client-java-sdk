@@ -43,6 +43,7 @@ public class ZosDsn {
      * @author Leonid Baranov
      */
     public ZosDsn(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -56,7 +57,6 @@ public class ZosDsn {
      * @author Leonid Baranov
      */
     public Response writeDsn(String dataSetName, String content) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(content == null, "content is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
@@ -108,7 +108,6 @@ public class ZosDsn {
      * @author Leonid Baranov
      */
     public Response deleteDsn(String dataSetName) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
 
@@ -158,7 +157,6 @@ public class ZosDsn {
      * @author Leonid Baranov
      */
     public Response createDsn(String dataSetName, CreateParams params) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");

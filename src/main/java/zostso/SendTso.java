@@ -46,6 +46,7 @@ public class SendTso {
      * @author Frank Giordano
      */
     public SendTso(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -79,7 +80,6 @@ public class SendTso {
      * @author Frank Giordano
      */
     public ZosmfTsoResponse sendDataToTSOCommon(SendTsoParams commandParams) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(commandParams == null, "commandParams is null");
         Util.checkIllegalParameter(commandParams.getData().isEmpty(), "commandParams data not specified");
         Util.checkIllegalParameter(commandParams.getServletKey().isEmpty(), "commandParams servletKey not specified");
@@ -168,8 +168,6 @@ public class SendTso {
      * @author Frank Giordano
      */
     private ZosmfTsoResponse getDataFromTSO(String servletKey) throws Exception {
-        Util.checkConnection(connection);
-
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
         LOG.debug("SendTso::getDataFromTSO - url {}", url);

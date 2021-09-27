@@ -42,6 +42,7 @@ public class StopTso {
      * @author Frank Giordano
      */
     public StopTso(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -54,7 +55,6 @@ public class StopTso {
      * @author Frank Giordano
      */
     public ZosmfTsoResponse stopCommon(StopTsoParams commandParams) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(commandParams == null, "commandParams is null");
         Util.checkIllegalParameter(commandParams.getServletKey().isEmpty(), "servletKey not specified");
         Util.checkIllegalParameter(commandParams.getServletKey().get().isEmpty(), "servletKey not specified");

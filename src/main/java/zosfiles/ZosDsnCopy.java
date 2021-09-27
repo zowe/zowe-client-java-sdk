@@ -43,6 +43,7 @@ public class ZosDsnCopy {
      * @author Leonid Baranov
      */
     public ZosDsnCopy(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -54,7 +55,6 @@ public class ZosDsnCopy {
      * @author Leonid Baranov
      */
     public Response copy(CopyParams params) {
-        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkIllegalParameter(params.getFromDataSet().isEmpty(), "fromDataSetName not specified");
         Util.checkIllegalParameter(params.getToDataSet().isEmpty(), "toDataSetName not specified");

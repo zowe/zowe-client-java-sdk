@@ -47,6 +47,7 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public GetJobs(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -141,7 +142,6 @@ public class GetJobs {
      */
     @SuppressWarnings("unchecked")
     public List<Job> getJobsCommon(GetJobParams params) throws Exception {
-        Util.checkConnection(connection);
 
         List<Job> jobs = new ArrayList<>();
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
@@ -207,7 +207,7 @@ public class GetJobs {
      * @param jobName job name for the job for which you want to get status
      * @param jobId   job ID for the job for which you want to get status
      * @return status value
-     * @throws Exception error gettng job status 
+     * @throws Exception error gettng job status
      * @author Frank Giordano
      */
     public String getStatusValue(String jobName, String jobId) throws Exception {
@@ -223,7 +223,7 @@ public class GetJobs {
      *
      * @param job job document
      * @return status value
-     * @throws Exception error gettng job status 
+     * @throws Exception error gettng job status
      * @author Frank Giordano
      */
     public String getStatusValueForJob(Job job) throws Exception {
@@ -240,7 +240,7 @@ public class GetJobs {
      * @param jobName job name for the job for which you want to get status
      * @param jobId   job ID for the job for which you want to get status
      * @return job document (matching job)
-     * @throws Exception error gettng job status 
+     * @throws Exception error gettng job status
      * @author Frank Giordano
      */
     public Job getStatus(String jobName, String jobId) throws Exception {
@@ -259,7 +259,7 @@ public class GetJobs {
      *
      * @param job job document
      * @return job document (matching job)
-     * @throws Exception error gettng job status 
+     * @throws Exception error gettng job status
      * @author Frank Giordano
      */
     public Job getStatusForJob(Job job) throws Exception {
@@ -274,11 +274,10 @@ public class GetJobs {
      *
      * @param params common job parameters, see CommonJobParams object
      * @return job document (matching job)
-     * @throws Exception error gettng job status 
+     * @throws Exception error gettng job status
      * @author Frank Giordano
      */
     public Job getStatusCommon(CommonJobParams params) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
         Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
@@ -345,7 +344,6 @@ public class GetJobs {
      */
     @SuppressWarnings("unchecked")
     public List<JobFile> getSpoolFilesCommon(CommonJobParams params) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
         Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
@@ -432,7 +430,6 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public String getJclCommon(CommonJobParams params) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
         Util.checkIllegalParameter(params.getJobName().get().isEmpty(), "jobName not specified");
@@ -482,7 +479,6 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public String getSpoolContentById(String jobName, String jobId, int spoolId) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(jobName == null, "jobName is null");
         Util.checkNullParameter(jobId == null, "jobId is null");
         Util.checkIllegalParameter(spoolId <= 0, "spoolId not specified");
@@ -514,7 +510,6 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public String getSpoolContentCommon(JobFile jobFile) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(jobFile == null, "jobFile is null");
         Util.checkIllegalParameter(jobFile.getJobName().isEmpty(), "jobName not specified");
         Util.checkIllegalParameter(jobFile.getJobId().isEmpty(), "jobId not specified");

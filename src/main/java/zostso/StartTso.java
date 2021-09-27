@@ -41,6 +41,7 @@ public class StartTso {
      * @author Frank Giordano
      */
     public StartTso(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -79,7 +80,6 @@ public class StartTso {
      * @author Frank Giordano
      */
     public ZosmfTsoResponse startCommon(StartTsoParams commandParams) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(commandParams == null, "commandParams is null");
 
         String url = getResourcesQuery(commandParams);

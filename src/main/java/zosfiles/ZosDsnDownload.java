@@ -41,6 +41,7 @@ public class ZosDsnDownload {
      * @author Nikunj Goyal
      */
     public ZosDsnDownload(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -54,7 +55,6 @@ public class ZosDsnDownload {
      * @author Nikunj Goyal
      */
     public InputStream downloadDsn(String dataSetName, DownloadParams params) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");

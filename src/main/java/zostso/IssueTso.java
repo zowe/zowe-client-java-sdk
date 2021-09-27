@@ -33,6 +33,7 @@ public class IssueTso {
      * @author Frank Giordano
      */
     public IssueTso(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -63,7 +64,6 @@ public class IssueTso {
      */
     public IssueResponse issueTsoCommand(String accountNumber, String command, StartTsoParams startParams)
             throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(accountNumber == null, "accountNumber is null");
         Util.checkNullParameter(command == null, "command is null");
         Util.checkIllegalParameter(accountNumber.isEmpty(), "accountNumber not specified");

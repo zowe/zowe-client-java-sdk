@@ -42,6 +42,7 @@ public class ZosDsnList {
      * @author Frank Giordano
      */
     public ZosDsnList(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -56,7 +57,6 @@ public class ZosDsnList {
      */
     @SuppressWarnings("unchecked")
     public List<String> listDsnMembers(String dataSetName, ListParams params) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
@@ -105,7 +105,6 @@ public class ZosDsnList {
      */
     @SuppressWarnings("unchecked")
     public List<Dataset> listDsn(String dataSetName, ListParams params) throws Exception {
-        Util.checkConnection(connection);
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");

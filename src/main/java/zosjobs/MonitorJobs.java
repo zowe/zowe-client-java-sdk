@@ -304,7 +304,7 @@ public class MonitorJobs {
     /**
      * Determines if a given job is in an running state or not.
      *
-     * @param params  monitor jobs params, see MonitorJobWaitForParams
+     * @param params monitor jobs params, see MonitorJobWaitForParams
      * @return true if in running state
      * @throws Exception error processing running status check
      * @author Frank Giordano
@@ -332,7 +332,6 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     private boolean checkMessage(MonitorJobWaitForParams params, String message) throws Exception {
-        Util.checkConnection(connection);
         GetJobs getJobs = new GetJobs(connection);
         GetJobParams filter = new GetJobParams.Builder("*")
                 .jobId(params.getJobId().orElseThrow(() -> new Exception("job id not specified")))
@@ -441,7 +440,6 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     private CheckJobStatus checkStatus(MonitorJobWaitForParams params) throws Exception {
-        Util.checkConnection(connection);
         GetJobs getJobs = new GetJobs(connection);
         String statusNameCheck = params.getJobStatus().orElse(DEFAULT_STATUS).toString();
 

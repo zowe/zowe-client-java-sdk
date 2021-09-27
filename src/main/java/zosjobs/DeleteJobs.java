@@ -42,6 +42,7 @@ public class DeleteJobs {
      * @author Nikunj Goyal
      */
     public DeleteJobs(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -85,7 +86,6 @@ public class DeleteJobs {
      * @author Frank Giordano
      */
     public Response deleteJobCommon(ModifyJobParams params) throws Exception {
-        Util.checkConnection(connection);
         UtilJobs.checkForModifyJobParamsExceptions(params);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +

@@ -45,6 +45,7 @@ public class CancelJobs {
      * @author Nikunj Goyal
      */
     public CancelJobs(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -89,7 +90,6 @@ public class CancelJobs {
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Response cancelJobsCommon(ModifyJobParams params) throws Exception {
-        Util.checkConnection(connection);
         UtilJobs.checkForModifyJobParamsExceptions(params);
 
         // generate full url request
