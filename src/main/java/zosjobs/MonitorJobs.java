@@ -22,8 +22,6 @@ import zosjobs.response.Job;
 import zosjobs.types.JobStatus;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
 
 /**
  * APIs for monitoring the status of a job. Use these APIs to wait for a job to enter the specified status. All APIs

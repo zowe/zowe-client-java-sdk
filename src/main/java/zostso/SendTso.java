@@ -26,7 +26,6 @@ import zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Class to handle sending data to TSO
