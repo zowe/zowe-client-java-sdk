@@ -67,6 +67,7 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public MonitorJobs(ZOSConnection connection) {
+        Util.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -78,6 +79,7 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public MonitorJobs(ZOSConnection connection, int attempts) {
+        Util.checkConnection(connection);
         this.connection = connection;
         this.attempts = attempts;
     }
@@ -91,6 +93,7 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public MonitorJobs(ZOSConnection connection, int attempts, int watchDelay) {
+        Util.checkConnection(connection);
         this.connection = connection;
         this.attempts = attempts;
         this.watchDelay = watchDelay;
@@ -106,6 +109,7 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     public MonitorJobs(ZOSConnection connection, int attempts, int watchDelay, int lineLimit) {
+        Util.checkConnection(connection);
         this.connection = connection;
         this.attempts = attempts;
         this.watchDelay = watchDelay;
@@ -298,6 +302,27 @@ public class MonitorJobs {
     }
 
     /**
+     * Determines if a given job is in an running state or not.
+     *
+     * @param params  monitor jobs params, see MonitorJobWaitForParams
+     * @return true if in running state
+     * @throws Exception error processing running status check
+     * @author Frank Giordano
+     */
+    public boolean isJobRunning(MonitorJobWaitForParams params) throws Exception {
+        Util.checkNullParameter(params == null, "params is null");
+
+        GetJobs getJobs = new GetJobs(connection);
+        String jobName = params.getJobName().orElseThrow(() -> new Exception("job name not specified"));
+        String jobId = params.getJobId().orElseThrow(() -> new Exception("job id not specified"));
+        String status = getJobs.getStatusValue(jobName, jobId);
+        if (JobStatus.Type.OUTPUT.toString().equals(status))
+            return false;
+
+        return true;
+    }
+
+    /**
      * Checks if the given message is within the job output within line limit.
      *
      * @param params  monitor jobs params, see MonitorJobWaitForParams
@@ -317,9 +342,15 @@ public class MonitorJobs {
             throw new Exception("job does not exist");
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
         String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
-        // start from bottom
-        var lineLimit = params.getLineLimit().orElse(DEFAULT_LINE_LIMIT);
-        for (int i = output.length - lineLimit; i < output.length; i++) {
+
+        int lineLimit = params.getLineLimit().orElse(DEFAULT_LINE_LIMIT);
+        int size = output.length, start, end = size;
+
+        if (size < lineLimit)
+            start = 0;
+        else start = size - lineLimit;
+
+        for (int i = start; i < end; i++) {
             LOG.debug(output[i]);
             if (output[i].contains(message))
                 return true;
@@ -354,6 +385,7 @@ public class MonitorJobs {
 
             if (shouldContinue) {
                 Util.wait(timeoutVal);
+                if (!isJobRunning(params)) return false;
                 LOG.info("Waiting for message \"{}\"", message);
             }
         } while (shouldContinue);
