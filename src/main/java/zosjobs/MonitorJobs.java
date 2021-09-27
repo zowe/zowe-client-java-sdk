@@ -173,14 +173,14 @@ public class MonitorJobs {
         Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "job id not specified");
 
         if (params.getAttempts().isEmpty()) {
-            params.setAttempts(OptionalInt.of(attempts));
+            params.setAttempts(attempts);
         }
 
         if (params.getWatchDelay().isEmpty())
-            params.setWatchDelay(OptionalInt.of(watchDelay));
+            params.setWatchDelay(watchDelay);
 
         if (params.getLineLimit().isEmpty())
-            params.setLineLimit(OptionalInt.of(lineLimit));
+            params.setLineLimit(lineLimit);
 
         return pollForMessage(params, message);
     }
@@ -288,13 +288,13 @@ public class MonitorJobs {
         Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "job id not specified");
 
         if (params.getJobStatus().isEmpty())
-            params.setJobStatus(Optional.of(DEFAULT_STATUS));
+            params.setJobStatus(DEFAULT_STATUS);
 
         if (params.getAttempts().isEmpty())
-            params.setAttempts(OptionalInt.of(attempts));
+            params.setAttempts(attempts);
 
         if (params.getWatchDelay().isEmpty())
-            params.setWatchDelay(OptionalInt.of(watchDelay));
+            params.setWatchDelay(watchDelay);
 
         return pollForStatus(params);
     }

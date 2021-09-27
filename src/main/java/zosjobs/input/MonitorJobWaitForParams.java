@@ -141,8 +141,8 @@ public class MonitorJobWaitForParams {
      * @param watchDelay delay of polling operation in milliseconds
      * @author Frank Giordano
      */
-    public void setWatchDelay(OptionalInt watchDelay) {
-        this.watchDelay = watchDelay;
+    public void setWatchDelay(int watchDelay) {
+        this.watchDelay = OptionalInt.of(watchDelay);
     }
 
     /**
@@ -151,8 +151,8 @@ public class MonitorJobWaitForParams {
      * @param jobStatus job status type, see JobStatus.Type object
      * @author Frank Giordano
      */
-    public void setJobStatus(Optional<JobStatus.Type> jobStatus) {
-        this.jobStatus = jobStatus;
+    public void setJobStatus(JobStatus.Type jobStatus) {
+        this.jobStatus = Optional.ofNullable(jobStatus);
     }
 
     /**
@@ -161,8 +161,8 @@ public class MonitorJobWaitForParams {
      * @param attempts number of attempts to get status
      * @author Frank Giordano
      */
-    public void setAttempts(OptionalInt attempts) {
-        this.attempts = attempts;
+    public void setAttempts(int attempts) {
+        this.attempts = OptionalInt.of(attempts);
     }
 
     /**
@@ -171,8 +171,8 @@ public class MonitorJobWaitForParams {
      * @param lineLimit number of lines to inspect
      * @author Frank Giordano
      */
-    public void setLineLimit(OptionalInt lineLimit) {
-        this.lineLimit = lineLimit;
+    public void setLineLimit(int lineLimit) {
+        this.lineLimit = OptionalInt.of(lineLimit);
     }
 
     @Override

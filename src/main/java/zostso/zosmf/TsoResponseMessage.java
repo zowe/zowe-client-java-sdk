@@ -85,8 +85,8 @@ public class TsoResponseMessage {
      * @param data description os the data type
      * @author Frank Giordano
      */
-    public void setData(Optional<String> data) {
-        this.data = data;
+    public void setData(String data) {
+        this.data = Optional.ofNullable(data);
     }
 
     @Override
