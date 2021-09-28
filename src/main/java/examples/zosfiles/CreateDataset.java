@@ -60,6 +60,8 @@ public class CreateDataset extends ZosConnection {
 
     /**
      * Example of a prebuilt CreateParams for creating a binary dataset
+     *
+     * @return prebuilt CreateParams
      */
     public static CreateParams binary() {
         return new CreateParams.Builder()
