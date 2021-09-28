@@ -160,11 +160,11 @@ public class GetJobs {
                 }
             }
             if (params.getMaxJobs().isPresent()) {
-                if (params.getMaxJobs().get() != JobsConstants.DEFAULT_MAX_JOBS) {
+                if (params.getMaxJobs().getAsInt() != JobsConstants.DEFAULT_MAX_JOBS) {
                     if (url.contains(QueryConstants.QUERY_ID)) {
                         url += QueryConstants.COMBO_ID;
                     }
-                    url += JobsConstants.QUERY_MAX_JOBS + params.getMaxJobs().get();
+                    url += JobsConstants.QUERY_MAX_JOBS + params.getMaxJobs().getAsInt();
                 }
             }
             if (params.getJobId().isPresent()) {

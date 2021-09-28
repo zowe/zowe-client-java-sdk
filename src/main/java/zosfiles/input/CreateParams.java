@@ -10,6 +10,7 @@
 package zosfiles.input;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Interface for create dataset API
@@ -44,22 +45,22 @@ public class CreateParams {
     /**
      * The primary space allocation
      */
-    private final Optional<Integer> primary;
+    private final OptionalInt primary;
 
     /**
      * The secondary space allocation
      */
-    private final Optional<Integer> secondary;
+    private final OptionalInt secondary;
 
     /**
      * The number of directory blocks
      */
-    private final Optional<Integer> dirblk;
+    private final OptionalInt dirblk;
 
     /**
      * The average block
      */
-    private final Optional<Integer> avgblk;
+    private final OptionalInt avgblk;
 
     /**
      * The record format
@@ -69,12 +70,12 @@ public class CreateParams {
     /**
      * The block size
      */
-    private final Optional<Integer> blksize;
+    private final OptionalInt blksize;
 
     /**
      * The record length
      */
-    private final Optional<Integer> lrecl;
+    private final OptionalInt lrecl;
 
     /**
      * The storage class
@@ -118,13 +119,31 @@ public class CreateParams {
         this.unit = Optional.ofNullable(builder.unit);
         this.dsorg = Optional.ofNullable(builder.dsorg);
         this.alcunit = Optional.ofNullable(builder.alcunit);
-        this.primary = Optional.ofNullable(builder.primary);
-        this.secondary = Optional.ofNullable(builder.secondary);
-        this.dirblk = Optional.ofNullable(builder.dirblk);
-        this.avgblk = Optional.ofNullable(builder.avgblk);
+        if (builder.primary == null)
+            this.primary = OptionalInt.empty();
+        else
+            this.primary = OptionalInt.of(builder.primary);
+        if (builder.secondary == null)
+            this.secondary = OptionalInt.empty();
+        else
+            this.secondary = OptionalInt.of(builder.secondary);
+        if (builder.dirblk == null)
+            this.dirblk = OptionalInt.empty();
+        else
+            this.dirblk = OptionalInt.of(builder.dirblk);
+        if (builder.avgblk == null)
+            this.avgblk = OptionalInt.empty();
+        else
+            this.avgblk = OptionalInt.of(builder.avgblk);
         this.recfm = Optional.ofNullable(builder.recfm);
-        this.blksize = Optional.ofNullable(builder.blksize);
-        this.lrecl = Optional.ofNullable(builder.lrecl);
+        if (builder.blksize == null)
+            this.blksize = OptionalInt.empty();
+        else
+            this.blksize = OptionalInt.of(builder.blksize);
+        if (builder.lrecl == null)
+            this.lrecl = OptionalInt.empty();
+        else
+            this.lrecl = OptionalInt.of(builder.lrecl);
         this.storclass = Optional.ofNullable(builder.storclass);
         this.mgntclass = Optional.ofNullable(builder.mgntclass);
         this.dataclass = Optional.ofNullable(builder.dataclass);
@@ -180,7 +199,7 @@ public class CreateParams {
      * @return primary value
      * @author Leonid Baranov
      */
-    public Optional<Integer> getPrimary() {
+    public OptionalInt getPrimary() {
         return primary;
     }
 
@@ -190,7 +209,7 @@ public class CreateParams {
      * @return secondary value
      * @author Leonid Baranov
      */
-    public Optional<Integer> getSecondary() {
+    public OptionalInt getSecondary() {
         return secondary;
     }
 
@@ -200,7 +219,7 @@ public class CreateParams {
      * @return dirblk value
      * @author Leonid Baranov
      */
-    public Optional<Integer> getDirblk() {
+    public OptionalInt getDirblk() {
         return dirblk;
     }
 
@@ -210,7 +229,7 @@ public class CreateParams {
      * @return avgblk value
      * @author Leonid Baranov
      */
-    public Optional<Integer> getAvgblk() {
+    public OptionalInt getAvgblk() {
         return avgblk;
     }
 
@@ -230,7 +249,7 @@ public class CreateParams {
      * @return blksize value
      * @author Leonid Baranov
      */
-    public Optional<Integer> getBlksize() {
+    public OptionalInt getBlksize() {
         return blksize;
     }
 
@@ -240,7 +259,7 @@ public class CreateParams {
      * @return lrecl value
      * @author Leonid Baranov
      */
-    public Optional<Integer> getLrecl() {
+    public OptionalInt getLrecl() {
         return lrecl;
     }
 
@@ -359,97 +378,97 @@ public class CreateParams {
         private String size;
         private String responseTimeout;
 
-        public zosfiles.input.CreateParams.Builder volser(String volser) {
+        public CreateParams.Builder volser(String volser) {
             this.volser = volser;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder unit(String unit) {
+        public CreateParams.Builder unit(String unit) {
             this.unit = unit;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder dsorg(String dsorg) {
+        public CreateParams.Builder dsorg(String dsorg) {
             this.dsorg = dsorg;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder alcunit(String alcunit) {
+        public CreateParams.Builder alcunit(String alcunit) {
             this.alcunit = alcunit;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder primary(Integer primary) {
+        public CreateParams.Builder primary(Integer primary) {
             this.primary = primary;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder secondary(Integer secondary) {
+        public CreateParams.Builder secondary(Integer secondary) {
             this.secondary = secondary;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder dirblk(Integer dirblk) {
+        public CreateParams.Builder dirblk(Integer dirblk) {
             this.dirblk = dirblk;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder avgblk(Integer avgblk) {
+        public CreateParams.Builder avgblk(Integer avgblk) {
             this.avgblk = avgblk;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder recfm(String recfm) {
+        public CreateParams.Builder recfm(String recfm) {
             this.recfm = recfm;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder blksize(Integer blksize) {
+        public CreateParams.Builder blksize(Integer blksize) {
             this.blksize = blksize;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder lrecl(Integer lrecl) {
+        public CreateParams.Builder lrecl(Integer lrecl) {
             this.lrecl = lrecl;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder storclass(String storclass) {
+        public CreateParams.Builder storclass(String storclass) {
             this.storclass = storclass;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder mgntclass(String mgntclass) {
+        public CreateParams.Builder mgntclass(String mgntclass) {
             this.mgntclass = mgntclass;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder dataclass(String dataclass) {
+        public CreateParams.Builder dataclass(String dataclass) {
             this.dataclass = dataclass;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder dsntype(String dsntype) {
+        public CreateParams.Builder dsntype(String dsntype) {
             this.dsntype = dsntype;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder showAttributes(Boolean showAttributes) {
+        public CreateParams.Builder showAttributes(Boolean showAttributes) {
             this.showAttributes = showAttributes;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder size(String size) {
+        public CreateParams.Builder size(String size) {
             this.size = size;
             return this;
         }
 
-        public zosfiles.input.CreateParams.Builder responseTimeout(String responseTimeout) {
+        public CreateParams.Builder responseTimeout(String responseTimeout) {
             this.responseTimeout = responseTimeout;
             return this;
         }
 
-        public zosfiles.input.CreateParams build() {
+        public CreateParams build() {
             return new zosfiles.input.CreateParams(this);
         }
 

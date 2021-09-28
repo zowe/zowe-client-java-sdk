@@ -10,6 +10,7 @@
 package zosjobs.response;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Standard job response document that represents the attributes and status of a z/OS batch job
@@ -83,7 +84,7 @@ public class Job {
     /**
      * Job phase
      */
-    private final Optional<Integer> phase;
+    private final OptionalInt phase;
 
     /**
      * Job phase name
@@ -108,7 +109,10 @@ public class Job {
         this.url = Optional.ofNullable(builder.url);
         this.filesUrl = Optional.ofNullable(builder.filesUrl);
         this.jobCorrelator = Optional.ofNullable(builder.jobCorrelator);
-        this.phase = Optional.ofNullable(builder.phase);
+        if (builder.phase == null)
+            this.phase = OptionalInt.empty();
+        else
+            this.phase = OptionalInt.of(builder.phase);
         this.phaseName = Optional.ofNullable(builder.phaseName);
         this.reasonNotRunning = Optional.ofNullable(builder.reasonNotRunning);
     }
@@ -239,7 +243,7 @@ public class Job {
      * @return phase value
      * @author Frank Giordano
      */
-    public Optional<Integer> getPhase() {
+    public OptionalInt getPhase() {
         return phase;
     }
 

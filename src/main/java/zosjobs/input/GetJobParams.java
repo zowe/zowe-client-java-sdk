@@ -12,6 +12,7 @@ package zosjobs.input;
 import zosjobs.JobsConstants;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Interface for various GetJobs APIs
@@ -36,7 +37,7 @@ public class GetJobParams {
      * Max jobs to return in a list
      * Default: JobsConstants.DEFAULT_MAX_JOBS
      */
-    private final Optional<Integer> maxJobs;
+    private final OptionalInt maxJobs;
 
     /**
      * job id for a job
@@ -46,7 +47,10 @@ public class GetJobParams {
     private GetJobParams(Builder builder) {
         this.owner = Optional.ofNullable(builder.owner);
         this.prefix = Optional.ofNullable(builder.prefix);
-        this.maxJobs = Optional.ofNullable(builder.maxJobs);
+        if (builder.maxJobs == null)
+            this.maxJobs = OptionalInt.empty();
+        else
+            this.maxJobs = OptionalInt.of(builder.maxJobs);
         this.jobId = Optional.ofNullable(builder.jobId);
     }
 
@@ -76,7 +80,7 @@ public class GetJobParams {
      * @return maxJobs value
      * @author Frank Giordano
      */
-    public Optional<Integer> getMaxJobs() {
+    public OptionalInt getMaxJobs() {
         return maxJobs;
     }
 
