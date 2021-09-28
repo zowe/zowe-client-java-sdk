@@ -11,6 +11,7 @@ package zostso;
 
 import zostso.zosmf.ZosmfTsoResponse;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ public class SendResponse {
      * The list of zOSMF send API responses. May issue multiple requests or
      * to ensure that all messages are collected. Each individual response is placed here.
      */
-    private final Optional<List<ZosmfTsoResponse>> zosmfTsoResponses;
+    private final List<ZosmfTsoResponse> zosmfTsoResponses;
 
     /**
      * The command response text.
@@ -48,7 +49,10 @@ public class SendResponse {
      */
     public SendResponse(boolean success, List<ZosmfTsoResponse> zosmfTsoResponses, String commandResponse) {
         this.success = success;
-        this.zosmfTsoResponses = Optional.ofNullable(zosmfTsoResponses);
+        if (zosmfTsoResponses == null)
+            this.zosmfTsoResponses = Collections.emptyList();
+        else
+            this.zosmfTsoResponses = zosmfTsoResponses;
         this.commandResponse = Optional.ofNullable(commandResponse);
     }
 
@@ -68,7 +72,7 @@ public class SendResponse {
      * @return zosmfTsoResponses value, see ZosmfTsoResponse object
      * @author Frank Giordano
      */
-    public Optional<List<ZosmfTsoResponse>> getZosmfResponses() {
+    public List<ZosmfTsoResponse> getZosmfResponses() {
         return zosmfTsoResponses;
     }
 

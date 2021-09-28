@@ -136,8 +136,8 @@ public class SendTso {
         List<ZosmfTsoResponse> tsos = new ArrayList<>();
         tsos.add(tso);
         while (!done) {
-            if (tso.getTsoData().isPresent()) {
-                for (TsoMessages tsoDatum : tso.getTsoData().get()) {
+            if (!tso.getTsoData().isEmpty()) {
+                for (TsoMessages tsoDatum : tso.getTsoData()) {
                     if (tsoDatum.getTsoMessage().isPresent()) {
                         var tsoMsg = tsoDatum.getTsoMessage().orElseThrow(() -> new Exception("missing tso message"));
                         var data = tsoMsg.getData().orElseThrow(() -> new Exception("missing tso message data"));
@@ -196,7 +196,7 @@ public class SendTso {
      * @author Frank Giordano
      */
     private static SendResponse createResponse(CollectedResponses responses) throws Exception {
-        return new SendResponse(true, responses.getTsos().orElseThrow(() -> new Exception("no responses exist")),
+        return new SendResponse(true, responses.getTsos(),
                 responses.getMessages().orElseThrow(() -> new Exception("no responses messages exist")));
     }
 

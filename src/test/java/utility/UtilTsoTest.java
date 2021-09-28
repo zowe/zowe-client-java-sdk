@@ -92,7 +92,7 @@ public class UtilTsoTest {
     public void tstGetZosmfTsoResponseStatusCodeFail() throws Exception {
         Response response = new Response("error", 10);
         ZosmfTsoResponse zosmfTsoResponse = UtilTso.getZosmfTsoResponse(response);
-        String errorValue = zosmfTsoResponse.getMsgData().get().get(0).getMessageText().get();
+        String errorValue = zosmfTsoResponse.getMsgData().get(0).getMessageText().get();
         assertEquals("error", errorValue);
     }
 
@@ -161,10 +161,10 @@ public class UtilTsoTest {
         assertEquals("0100", zosmfTsoResponse.getVer().get());
         assertEquals("0100", zosmfTsoResponse.getQueueId().get());
         assertEquals("ZOSMFAD-71-aabcaaaf", zosmfTsoResponse.getServletKey().get());
-        assertFalse(zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().isPresent());
-        assertFalse(zosmfTsoResponse.getTsoData().get().get(0).getTsoResponse().isPresent());
-        assertEquals("0100", zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().get().getVersion().get());
-        assertEquals("--> LOGON proc version = 04/28/2011", zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().get().getData().get());
+        assertFalse(zosmfTsoResponse.getTsoData().get(0).getTsoPrompt().isPresent());
+        assertFalse(zosmfTsoResponse.getTsoData().get(0).getTsoResponse().isPresent());
+        assertEquals("0100", zosmfTsoResponse.getTsoData().get(0).getTsoMessage().get().getVersion().get());
+        assertEquals("--> LOGON proc version = 04/28/2011", zosmfTsoResponse.getTsoData().get(0).getTsoMessage().get().getData().get());
     }
 
     @Test
@@ -181,10 +181,10 @@ public class UtilTsoTest {
         assertEquals("0100", zosmfTsoResponse.getVer().get());
         assertEquals("0100", zosmfTsoResponse.getQueueId().get());
         assertEquals("ZOSMFAD-71-aabcaaaf", zosmfTsoResponse.getServletKey().get());
-        assertTrue(zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().isPresent());
-        assertFalse(zosmfTsoResponse.getTsoData().get().get(0).getTsoResponse().isPresent());
-        assertEquals("0100", zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().get().getVersion().get());
-        assertEquals("--> LOGON proc version = 04/28/2011", zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().get().getHidden().get());
+        assertTrue(zosmfTsoResponse.getTsoData().get(0).getTsoPrompt().isPresent());
+        assertFalse(zosmfTsoResponse.getTsoData().get(0).getTsoResponse().isPresent());
+        assertEquals("0100", zosmfTsoResponse.getTsoData().get(0).getTsoPrompt().get().getVersion().get());
+        assertEquals("--> LOGON proc version = 04/28/2011", zosmfTsoResponse.getTsoData().get(0).getTsoPrompt().get().getHidden().get());
     }
 
     @Test
@@ -202,16 +202,16 @@ public class UtilTsoTest {
         assertEquals("0100", zosmfTsoResponse.getVer().get());
         assertEquals("0100", zosmfTsoResponse.getQueueId().get());
         assertEquals("ZOSMFAD-71-aabcaaaf", zosmfTsoResponse.getServletKey().get());
-        assertTrue(zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().isPresent());
-        assertFalse(zosmfTsoResponse.getTsoData().get().get(0).getTsoPrompt().isPresent());
-        assertFalse(zosmfTsoResponse.getTsoData().get().get(0).getTsoResponse().isPresent());
-        assertFalse(zosmfTsoResponse.getTsoData().get().get(1).getTsoMessage().isPresent());
-        assertTrue(zosmfTsoResponse.getTsoData().get().get(1).getTsoPrompt().isPresent());
-        assertFalse(zosmfTsoResponse.getTsoData().get().get(1).getTsoResponse().isPresent());
-        assertEquals("0100", zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().get().getVersion().get());
-        assertEquals("--> LOGON proc version = 04/28/2011", zosmfTsoResponse.getTsoData().get().get(0).getTsoMessage().get().getData().get());
-        assertEquals("0100", zosmfTsoResponse.getTsoData().get().get(1).getTsoPrompt().get().getVersion().get());
-        assertEquals("hidden", zosmfTsoResponse.getTsoData().get().get(1).getTsoPrompt().get().getHidden().get());
+        assertTrue(zosmfTsoResponse.getTsoData().get(0).getTsoMessage().isPresent());
+        assertFalse(zosmfTsoResponse.getTsoData().get(0).getTsoPrompt().isPresent());
+        assertFalse(zosmfTsoResponse.getTsoData().get(0).getTsoResponse().isPresent());
+        assertFalse(zosmfTsoResponse.getTsoData().get(1).getTsoMessage().isPresent());
+        assertTrue(zosmfTsoResponse.getTsoData().get(1).getTsoPrompt().isPresent());
+        assertFalse(zosmfTsoResponse.getTsoData().get(1).getTsoResponse().isPresent());
+        assertEquals("0100", zosmfTsoResponse.getTsoData().get(0).getTsoMessage().get().getVersion().get());
+        assertEquals("--> LOGON proc version = 04/28/2011", zosmfTsoResponse.getTsoData().get(0).getTsoMessage().get().getData().get());
+        assertEquals("0100", zosmfTsoResponse.getTsoData().get(1).getTsoPrompt().get().getVersion().get());
+        assertEquals("hidden", zosmfTsoResponse.getTsoData().get(1).getTsoPrompt().get().getHidden().get());
     }
 
 }
