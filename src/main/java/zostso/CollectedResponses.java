@@ -11,6 +11,7 @@ package zostso;
 
 import zostso.zosmf.ZosmfTsoResponse;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ public class CollectedResponses {
     /**
      * z/OSMF synchronous most tso command response messages.
      */
-    private final Optional<List<ZosmfTsoResponse>> tsos;
+    private final List<ZosmfTsoResponse> tsos;
 
     /**
      * Appended collected messages including READY prompt at the end.
@@ -40,7 +41,10 @@ public class CollectedResponses {
      * @author Frank Giordano
      */
     public CollectedResponses(List<ZosmfTsoResponse> tsos, String messages) {
-        this.tsos = Optional.ofNullable(tsos);
+        if (tsos == null)
+            this.tsos = Collections.emptyList();
+        else
+            this.tsos = tsos;
         this.messages = Optional.ofNullable(messages);
     }
 
@@ -50,7 +54,7 @@ public class CollectedResponses {
      * @return list of ZosmfTsoResponse objects
      * @author Frank Giordano
      */
-    public Optional<List<ZosmfTsoResponse>> getTsos() {
+    public List<ZosmfTsoResponse> getTsos() {
         return tsos;
     }
 

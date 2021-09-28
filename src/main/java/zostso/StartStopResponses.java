@@ -13,7 +13,6 @@ import zostso.zosmf.TsoMessages;
 import zostso.zosmf.ZosmfMessages;
 import zostso.zosmf.ZosmfTsoResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,10 +65,10 @@ public class StartStopResponses {
         if (zosmfTsoResponse == null) throw new Exception("zosmfTsoResponse is null");
 
         this.zosmfTsoResponse = zosmfTsoResponse;
-        if (zosmfTsoResponse.getMsgData().isPresent()) {
+        if (!zosmfTsoResponse.getMsgData().isEmpty()) {
             // more data means more tso responses to come and as such tso command request has not ended in success yet
             this.success = false;
-            ZosmfMessages zosmfMsg = zosmfTsoResponse.getMsgData().get().get(0);
+            ZosmfMessages zosmfMsg = zosmfTsoResponse.getMsgData().get(0);
             this.failureResponse = zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR);
         } else {
             // no data means no more tso responses to come and as such tso command request has ended successfully 
@@ -81,7 +80,7 @@ public class StartStopResponses {
         }
 
         StringBuilder buildMessage = new StringBuilder();
-        List<TsoMessages> tsoMsgLst = zosmfTsoResponse.getTsoData().orElse(new ArrayList<>());
+        List<TsoMessages> tsoMsgLst = zosmfTsoResponse.getTsoData();
         tsoMsgLst.forEach(buildMessage::append);
         this.messages = buildMessage.toString();
     }
@@ -102,8 +101,8 @@ public class StartStopResponses {
      * @return ZosmfTsoResponse value
      * @author Frank Giordano
      */
-    public Optional<List<ZosmfTsoResponse>> getCollectedResponses() {
-        return Optional.ofNullable(collectedResponses);
+    public List<ZosmfTsoResponse> getCollectedResponses() {
+        return collectedResponses;
     }
 
     /**

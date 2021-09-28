@@ -46,8 +46,8 @@ public class UtilTso {
                 zosmfResponse.getServletKey().orElse(""));
 
         startStopResponse.setSuccess(zosmfResponse.getServletKey().isPresent());
-        if (zosmfResponse.getMsgData().isPresent()) {
-            ZosmfMessages zosmfMsg = zosmfResponse.getMsgData().get().get(0);
+        if (!zosmfResponse.getMsgData().isEmpty()) {
+            ZosmfMessages zosmfMsg = zosmfResponse.getMsgData().get(0);
             String msgText = zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR);
             startStopResponse.setFailureResponse(msgText);
         }

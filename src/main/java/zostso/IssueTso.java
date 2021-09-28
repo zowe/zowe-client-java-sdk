@@ -95,8 +95,7 @@ public class IssueTso {
         SendTso sendTso = new SendTso(connection);
         SendResponse sendResponse = sendTso.sendDataToTSOCollect(servletKey, command);
         issueResponse.setSuccess(sendResponse.getSuccess());
-        zosmfTsoResponses.addAll(sendResponse.getZosmfResponses()
-                .orElseThrow(() -> new Exception("no zosmf send tso response")));
+        zosmfTsoResponses.addAll(sendResponse.getZosmfResponses());
 
         issueResponse.setZosmfResponses(zosmfTsoResponses);
 

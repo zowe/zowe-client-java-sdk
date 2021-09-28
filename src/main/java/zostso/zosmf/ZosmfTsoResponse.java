@@ -9,6 +9,7 @@
  */
 package zostso.zosmf;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +49,7 @@ public class ZosmfTsoResponse {
     /**
      * z/OSMF messages
      */
-    private final Optional<List<ZosmfMessages>> msgData;
+    private final List<ZosmfMessages> msgData;
 
     /**
      * The id of the tso session
@@ -58,7 +59,7 @@ public class ZosmfTsoResponse {
     /**
      * TSO/E messages that were received during the request
      */
-    private Optional<List<TsoMessages>> tsoData;
+    private List<TsoMessages> tsoData;
 
     /**
      * Application messages
@@ -71,9 +72,15 @@ public class ZosmfTsoResponse {
         this.ver = Optional.ofNullable(builder.ver);
         this.reused = Optional.of(builder.reused);
         this.timeout = Optional.of(builder.timeout);
-        this.msgData = Optional.ofNullable(builder.msgData);
+        if (builder.msgData == null)
+            this.msgData = Collections.emptyList();
+        else
+            this.msgData = builder.msgData;
         this.sessionId = Optional.ofNullable(builder.sessionId);
-        this.tsoData = Optional.ofNullable(builder.tsoData);
+        if (builder.tsoData == null)
+            this.tsoData = Collections.emptyList();
+        else
+            this.tsoData = builder.tsoData;
         this.appData = Optional.ofNullable(builder.appData);
     }
 
@@ -133,7 +140,7 @@ public class ZosmfTsoResponse {
      * @return msgData value
      * @author Frank Giordano
      */
-    public Optional<List<ZosmfMessages>> getMsgData() {
+    public List<ZosmfMessages> getMsgData() {
         return msgData;
     }
 
@@ -153,7 +160,7 @@ public class ZosmfTsoResponse {
      * @return tsoData value
      * @author Frank Giordano
      */
-    public Optional<List<TsoMessages>> getTsoData() {
+    public List<TsoMessages> getTsoData() {
         return tsoData;
     }
 
@@ -174,7 +181,10 @@ public class ZosmfTsoResponse {
      * @author Frank Giordano
      */
     public void setTsoData(List<TsoMessages> tsoData) {
-        this.tsoData = Optional.ofNullable(tsoData);
+        if (tsoData == null)
+            this.tsoData = Collections.emptyList();
+        else
+            this.tsoData = tsoData;
     }
 
     @Override
