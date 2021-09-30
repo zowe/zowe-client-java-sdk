@@ -70,21 +70,18 @@ public class ZosDsnCopy {
 
         url += Util.encodeURIComponent(toDataSet);
 
-        Response response = new Response(null, null);
-
         LOG.debug(url);
 
         String body = buildBody(params);
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body,
                 ZoweRequestType.VerbType.PUT_JSON);
-        response = request.executeHttpRequest();
+        Response response = request.executeHttpRequest();
 
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
             UtilDataset.checkHttpErrors(e.getMessage(), toDataSet, "copy");
         }
-
 
         return response;
     }
