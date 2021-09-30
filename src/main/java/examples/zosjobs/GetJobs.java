@@ -31,6 +31,7 @@ public class GetJobs extends ZosConnection {
     private static final Logger LOG = LogManager.getLogger(GetJobs.class);
 
     private static zosjobs.GetJobs getJobs;
+    private static ZOSConnection connection;
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -45,10 +46,11 @@ public class GetJobs extends ZosConnection {
         String owner = "XXX";
         String jobId = "XXX";
 
-        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         getJobs = new zosjobs.GetJobs(connection);
 
         GetJobs.getJobsCommon(prefix);
+        GetJobs.getJobsCommonBySysAff(prefix);
         GetJobs.getSpoolFiles(prefix);
         GetJobs.getSpoolFilesForJob(prefix);
         GetJobs.getJobsByOwner(owner);
@@ -296,6 +298,13 @@ public class GetJobs extends ZosConnection {
      */
     public static void getJobsCommon(String prefix) throws Exception {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
+        List<Job> jobs = getJobs.getJobsCommon(params);
+        jobs.forEach(LOG::info);
+    }
+
+    public static void getJobsCommonBySysAff(String prefix) throws Exception {
+        GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
+        zosjobs.GetJobs getJobs = new zosjobs.GetJobs(connection, "CA11");
         List<Job> jobs = getJobs.getJobsCommon(params);
         jobs.forEach(LOG::info);
     }

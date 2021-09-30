@@ -24,7 +24,9 @@ import zosjobs.input.JobFile;
 import zosjobs.response.Job;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Class to handle obtaining of z/OS batch job information
@@ -39,6 +41,7 @@ public class GetJobs {
     private final ZOSConnection connection;
     private ZoweRequest request;
     private String url;
+    private Optional<String> sysAff = Optional.empty();
 
     /**
      * GetJobs Constructor.
@@ -49,6 +52,12 @@ public class GetJobs {
     public GetJobs(ZOSConnection connection) {
         Util.checkConnection(connection);
         this.connection = connection;
+    }
+
+    public GetJobs(ZOSConnection connection, String sysAff) {
+        Util.checkConnection(connection);
+        this.connection = connection;
+        this.sysAff = Optional.ofNullable(sysAff);
     }
 
     /**
@@ -185,6 +194,8 @@ public class GetJobs {
             request.setRequest(url);
         }
 
+        sysAff.ifPresent(this::addSysAffUsage);
+
         Response response = request.executeHttpRequest();
         if (response.isEmpty())
             return jobs;
@@ -199,6 +210,14 @@ public class GetJobs {
         });
 
         return jobs;
+    }
+
+    private void addSysAffUsage(String system) {
+        var headers = new HashMap<String, String>();
+        headers.put("X-IBM-Target-System", "CA32");
+        headers.put("X-IBM-Target-System-User", connection.getUser());
+        headers.put("X-IBM-Target-System-Password", connection.getPassword());
+        request.setAdditionalHeaders(headers);
     }
 
     /**
