@@ -139,10 +139,11 @@ public class SendTso {
             if (!tso.getTsoData().isEmpty()) {
                 for (TsoMessages tsoDatum : tso.getTsoData()) {
                     if (tsoDatum.getTsoMessage().isPresent()) {
-                        var tsoMsg = tsoDatum.getTsoMessage().orElseThrow(() -> new Exception("missing tso message"));
-                        var data = tsoMsg.getData().orElseThrow(() -> new Exception("missing tso message data"));
-                        messages.append(data);
-                        messages.append("\n");
+                        var tsoMsg = tsoDatum.getTsoMessage().get();
+                        tsoMsg.getData().ifPresent(data -> {
+                            messages.append(data);
+                            messages.append("\n");
+                        });
                     } else if (tsoDatum.getTsoPrompt().isPresent()) {
                         if (messages.length() > 0) {
                             done = true;
