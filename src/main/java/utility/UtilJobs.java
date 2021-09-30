@@ -29,6 +29,7 @@ public class UtilJobs {
      * @author Frank Giordano
      */
     public static Job createJobObjFromJson(JSONObject json) {
+        Util.checkNullParameter(json == null, "json is null");
         return new Job.Builder().jobId((String) json.get("jobid"))
                 .jobName((String) json.get("jobname"))
                 .subSystem((String) json.get("subsystem"))
@@ -50,7 +51,7 @@ public class UtilJobs {
      * @param params ModifyJobParams object
      * @author Frank Giordano
      */
-    public static void checkForModifyJobParamsExceptions(ModifyJobParams params) {
+    public static void checkModifyJobParameters(ModifyJobParams params) {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkIllegalParameter(params.getJobId().isEmpty(), "job id not specified");
         Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "job id not specified");
@@ -67,6 +68,7 @@ public class UtilJobs {
      * @author Frank Giordano
      */
     public static void throwHttpException(ModifyJobParams params, Exception exception) throws Exception {
+        UtilJobs.checkModifyJobParameters(params);
         String errorMsg = exception.getMessage();
         if (errorMsg.contains("400"))
             throw new Exception(errorMsg + " JobId " + params.getJobId().orElse("n/a") + " may not exist.");

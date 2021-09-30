@@ -42,6 +42,7 @@ public class UtilTso {
      * @author Frank Giordano
      */
     public static StartStopResponse populateStartAndStop(ZosmfTsoResponse zosmfResponse) {
+        Util.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
         StartStopResponse startStopResponse = new StartStopResponse(false, zosmfResponse,
                 zosmfResponse.getServletKey().orElse(""));
 
@@ -124,8 +125,7 @@ public class UtilTso {
     }
 
     @SuppressWarnings("unchecked")
-    private static void parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
-            tsoMessages) {
+    private static void parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
         Map<String, String> tsoMessageMap = ((Map<String, String>) obj.get(TsoConstants.TSO_MESSAGE));
         if (tsoMessageMap != null) {
             TsoMessage tsoMessage = new TsoMessage();
@@ -141,8 +141,7 @@ public class UtilTso {
     }
 
     @SuppressWarnings("unchecked")
-    private static void parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages
-            tsoMessages) {
+    private static void parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
         Map<String, String> tsoPromptMap = ((Map<String, String>) obj.get(TsoConstants.TSO_PROMPT));
         if (tsoPromptMap != null) {
             TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();

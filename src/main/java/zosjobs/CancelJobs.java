@@ -90,7 +90,7 @@ public class CancelJobs {
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Response cancelJobsCommon(ModifyJobParams params) throws Exception {
-        UtilJobs.checkForModifyJobParamsExceptions(params);
+        UtilJobs.checkModifyJobParameters(params);
 
         // generate full url request
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +

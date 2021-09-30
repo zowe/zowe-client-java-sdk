@@ -28,6 +28,7 @@ public class UtilDataset {
      * @author Nikunj Goyal
      */
     public static Dataset createDatasetObjFromJson(JSONObject json) {
+        Util.checkNullParameter(json == null, "json is null");
         return new Dataset.Builder().dsname((String) json.get("dsname"))
                 .blksz((String) json.get("blksz"))
                 .catnm((String) json.get("catnm"))
@@ -60,6 +61,12 @@ public class UtilDataset {
      * @author Frank Giordano
      */
     public static void checkHttpErrors(String errMsg, String dsName, String crudType) throws Exception {
+        Util.checkNullParameter(errMsg == null, "errMsg is null");
+        Util.checkIllegalParameter(errMsg.isEmpty(), "errMsg not specified");
+        Util.checkNullParameter(dsName == null, "dsName is null");
+        Util.checkIllegalParameter(dsName.isEmpty(), "dsName not specified");
+        Util.checkNullParameter(crudType == null, "crudType is null");
+        Util.checkIllegalParameter(crudType.isEmpty(), "crudType not specified");
 
         String http404 = "is invalid or non-existent.";
         String http500Pre = "You may not have permission to";

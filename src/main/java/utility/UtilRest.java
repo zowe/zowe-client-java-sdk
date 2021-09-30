@@ -41,6 +41,7 @@ public class UtilRest {
      * @author Frank Giordano
      */
     public static Object getJsonResponseEntity(HttpResponse httpResponse) throws Exception {
+        Util.checkNullParameter(httpResponse == null, "httpResponse is null");
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
             String result = EntityUtils.toString(entity);
@@ -68,6 +69,7 @@ public class UtilRest {
      * @author Frank Giordano
      */
     public static Object getTextResponseEntity(HttpResponse httpResponse) throws Exception {
+        Util.checkNullParameter(httpResponse == null, "httpResponse is null");
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
             String result = EntityUtils.toString(entity);
@@ -85,6 +87,7 @@ public class UtilRest {
      * @author Frank Giordano
      */
     public static void checkHttpErrors(Response response) throws Exception {
+        Util.checkNullParameter(response == null, "response is null");
         int httpCode;
         if (response.getStatusCode().isPresent())
             httpCode = response.getStatusCode().get();
@@ -127,6 +130,7 @@ public class UtilRest {
      * @author Frank Giordano
      */
     public static boolean isUrlValid(String url) {
+        Util.checkNullParameter(url == null, "url is null");
         try {
             new URL(url).toURI();
             return true;
