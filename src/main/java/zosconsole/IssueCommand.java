@@ -161,8 +161,8 @@ public class IssueCommand {
         ZosmfIssueParams zosmfParams = new ZosmfIssueParams();
         zosmfParams.setCmd(params.getCommand().get());
 
-        params.getSolicitedKeyword().ifPresent(keyWord -> zosmfParams.setSolKey(keyWord));
-        params.getSysplexSystem().ifPresent(sys -> zosmfParams.setSystem(sys));
+        params.getSolicitedKeyword().ifPresent(zosmfParams::setSolKey);
+        params.getSysplexSystem().ifPresent(zosmfParams::setSystem);
 
         return zosmfParams;
     }
