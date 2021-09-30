@@ -105,7 +105,8 @@ public class SubmitJobs {
             throw new Exception("No results for submitted job. " + errorMsg);
         }
 
-        return UtilJobs.createJobObjFromJson((JSONObject) response.getResponsePhrase().orElseThrow(Exception::new));
+        return UtilJobs.createJobObjFromJson((JSONObject) response.getResponsePhrase()
+                .orElseThrow(() -> new Exception("response phrase missing")));
     }
 
     /**

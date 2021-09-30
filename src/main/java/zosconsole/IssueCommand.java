@@ -85,7 +85,8 @@ public class IssueCommand {
         LOG.debug("Response result {}", response.getResponsePhrase());
 
         ZosmfIssueResponse zosmfIssueResponse = new ZosmfIssueResponse();
-        JSONObject result = (JSONObject) response.getResponsePhrase().orElseThrow(Exception::new);
+        JSONObject result = (JSONObject) response.getResponsePhrase()
+                .orElseThrow(() -> new Exception("response phrase missing"));
         zosmfIssueResponse.setCmdResponseKey((String) result.get("cmd-response-key"));
         zosmfIssueResponse.setCmdResponseUrl((String) result.get("cmd-response-url"));
         zosmfIssueResponse.setCmdResponseUri((String) result.get("cmd-response-uri"));

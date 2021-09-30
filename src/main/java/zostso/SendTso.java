@@ -116,8 +116,10 @@ public class SendTso {
      * @author Frank Giordano
      */
     private String getTsoResponseSendMessage(TsoResponseMessage tsoResponseMessage) throws Exception {
-        String message = "{\"TSO RESPONSE\":{\"VERSION\":\"" + tsoResponseMessage.getVersion().orElseThrow(Exception::new)
-                + "\",\"DATA\":\"" + tsoResponseMessage.getData().orElseThrow(Exception::new) + "\"}}";
+        String message = "{\"TSO RESPONSE\":{\"VERSION\":\"" +
+                tsoResponseMessage.getVersion().orElseThrow((() -> new Exception("response version missing")))
+                + "\",\"DATA\":\"" +
+                tsoResponseMessage.getData().orElseThrow((() -> new Exception("response data missing"))) + "\"}}";
         LOG.debug("SendTo::getTsoResponseSendMessage - message {}", message);
         return message;
     }
@@ -153,7 +155,7 @@ public class SendTso {
                 }
             }
             if (!done) {
-                tso = getDataFromTSO(tso.getServletKey().orElseThrow(Exception::new));
+                tso = getDataFromTSO(tso.getServletKey().orElseThrow((() -> new Exception("servlet key missing"))));
                 tsos.add(tso);
             }
         }
