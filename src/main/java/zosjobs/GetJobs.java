@@ -214,7 +214,7 @@ public class GetJobs {
 
     private void addSysAffUsage(String system) {
         var headers = new HashMap<String, String>();
-        headers.put("X-IBM-Target-System", "CA32");
+        headers.put("X-IBM-Target-System", system);
         headers.put("X-IBM-Target-System-User", connection.getUser());
         headers.put("X-IBM-Target-System-Password", connection.getPassword());
         request.setAdditionalHeaders(headers);
