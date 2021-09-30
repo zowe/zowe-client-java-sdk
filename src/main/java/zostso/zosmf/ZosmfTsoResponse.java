@@ -11,6 +11,7 @@ package zostso.zosmf;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -72,15 +73,9 @@ public class ZosmfTsoResponse {
         this.ver = Optional.ofNullable(builder.ver);
         this.reused = Optional.of(builder.reused);
         this.timeout = Optional.of(builder.timeout);
-        if (builder.msgData == null)
-            this.msgData = Collections.emptyList();
-        else
-            this.msgData = builder.msgData;
+        this.msgData = Objects.requireNonNullElse(builder.msgData, Collections.emptyList());
         this.sessionId = Optional.ofNullable(builder.sessionId);
-        if (builder.tsoData == null)
-            this.tsoData = Collections.emptyList();
-        else
-            this.tsoData = builder.tsoData;
+        this.tsoData = Objects.requireNonNullElse(builder.tsoData, Collections.emptyList());
         this.appData = Optional.ofNullable(builder.appData);
     }
 
@@ -181,10 +176,7 @@ public class ZosmfTsoResponse {
      * @author Frank Giordano
      */
     public void setTsoData(List<TsoMessages> tsoData) {
-        if (tsoData == null)
-            this.tsoData = Collections.emptyList();
-        else
-            this.tsoData = tsoData;
+        this.tsoData = Objects.requireNonNullElse(tsoData, Collections.emptyList());
     }
 
     @Override

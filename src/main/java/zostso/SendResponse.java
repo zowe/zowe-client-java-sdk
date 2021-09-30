@@ -13,6 +13,7 @@ import zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -49,10 +50,7 @@ public class SendResponse {
      */
     public SendResponse(boolean success, List<ZosmfTsoResponse> zosmfTsoResponses, String commandResponse) {
         this.success = success;
-        if (zosmfTsoResponses == null)
-            this.zosmfTsoResponses = Collections.emptyList();
-        else
-            this.zosmfTsoResponses = zosmfTsoResponses;
+        this.zosmfTsoResponses = Objects.requireNonNullElse(zosmfTsoResponses, Collections.emptyList());
         this.commandResponse = Optional.ofNullable(commandResponse);
     }
 

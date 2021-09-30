@@ -13,6 +13,7 @@ import zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -41,10 +42,7 @@ public class CollectedResponses {
      * @author Frank Giordano
      */
     public CollectedResponses(List<ZosmfTsoResponse> tsos, String messages) {
-        if (tsos == null)
-            this.tsos = Collections.emptyList();
-        else
-            this.tsos = tsos;
+        this.tsos = Objects.requireNonNullElse(tsos, Collections.emptyList());
         this.messages = Optional.ofNullable(messages);
     }
 
