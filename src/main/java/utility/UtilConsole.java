@@ -53,15 +53,10 @@ public class UtilConsole {
         }
 
         // If the response key is present, set the last response key value in the response.
-        if (zosmfResponse.getCmdResponseKey().isPresent()) {
-            response.setLastResponseKey(zosmfResponse.getCmdResponseKey().get());
-        }
+        zosmfResponse.getCmdResponseKey().ifPresent(key -> response.setLastResponseKey(key));
 
         // Collect the response url.
-        if (zosmfResponse.getCmdResponseUrl().isPresent()) {
-            response.setCmdResponseUrl(zosmfResponse.getCmdResponseUrl().get());
-        }
-
+        zosmfResponse.getCmdResponseUrl().ifPresent(url -> response.setCmdResponseUrl(url));
     }
 
 }

@@ -265,8 +265,8 @@ public class GetJobs {
     public Job getStatusForJob(Job job) throws Exception {
         Util.checkNullParameter(job == null, "job is null");
 
-        return getStatusCommon(new CommonJobParams(job.getJobId().isPresent() ?
-                job.getJobId().get() : null, job.getJobName().isPresent() ? job.getJobName().get() : null));
+        return getStatusCommon(new CommonJobParams(job.getJobId().orElse(null),
+                job.getJobName().orElse(null)));
     }
 
     /**
@@ -417,8 +417,7 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public String getJclForJob(Job job) throws Exception {
-        return getJclCommon(new CommonJobParams(job.getJobId().isPresent() ? job.getJobId().get() : null,
-                job.getJobName().isPresent() ? job.getJobName().get() : null));
+        return getJclCommon(new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
     }
 
     /**
