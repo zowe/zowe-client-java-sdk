@@ -73,8 +73,7 @@ public class ZosDsnCopy {
         LOG.debug(url);
 
         String body = buildBody(params);
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body,
-                ZoweRequestType.VerbType.PUT_JSON);
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body, ZoweRequestType.VerbType.PUT_JSON);
         Response response = request.executeHttpRequest();
 
         try {
@@ -96,11 +95,7 @@ public class ZosDsnCopy {
      * @author Leonid Baranov
      */
     public Response copy(String fromDataSetName, String toDataSetName, boolean replace) throws Exception {
-        return copy(new CopyParams.Builder()
-                .fromDataSet(fromDataSetName)
-                .toDataSet(toDataSetName)
-                .replace(replace)
-                .build());
+        return copy(new CopyParams.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).replace(replace).build());
     }
 
     /**
