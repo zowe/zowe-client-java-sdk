@@ -58,7 +58,7 @@ public class SubmitJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static Job submitJclJob(ZOSConnection connection, String jclString) throws Exception {
+    public static Job submitJclJob(ZOSConnection connection, String jclString) throws Exception {
         zosjobs.SubmitJobs submitJobs = new zosjobs.SubmitJobs(connection);
         return submitJobs.submitJcl(jclString, null, null);
     }
@@ -73,7 +73,7 @@ public class SubmitJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static Job submitJob(ZOSConnection connection, String dsMember) throws Exception {
+    public static Job submitJob(ZOSConnection connection, String dsMember) throws Exception {
         zosjobs.SubmitJobs submitJobs = new zosjobs.SubmitJobs(connection);
         return submitJobs.submitJob(dsMember);
     }

@@ -74,7 +74,7 @@ public class GetJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void getJclCommon(String prefix) throws Exception {
+    public static void getJclCommon(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         LOG.info(getJobs.getJclCommon(
                 new CommonJobParams(jobs.get(0).getJobId().orElseThrow(() -> new Exception("job id not specified")),
@@ -89,7 +89,7 @@ public class GetJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void getJclForJob(String prefix) throws Exception {
+    public static void getJclForJob(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         LOG.info(getJobs.getJclForJob(jobs.get(0)));
     }
@@ -102,7 +102,7 @@ public class GetJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void getJcl(String prefix) throws Exception {
+    public static void getJcl(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         LOG.info(getJobs.getJcl(jobs.get(0).getJobName().orElseThrow(() -> new Exception("job name not specified")),
                 jobs.get(0).getJobId().orElseThrow(() -> new Exception("job id not specified"))));
@@ -116,7 +116,7 @@ public class GetJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void getStatusForJob(String prefix) throws Exception {
+    public static void getStatusForJob(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         try {
             Job job = getJobs.getStatusForJob(jobs.get(0));
@@ -134,7 +134,7 @@ public class GetJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void getStatus(String prefix) throws Exception {
+    public static void getStatus(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         try {
             Job job = getJobs.getStatus(
@@ -153,7 +153,7 @@ public class GetJobs extends ZosConnection {
      * @param jobId jobId value
      * @author Frank Giordano
      */
-    private static void nonExistentGetJob(String jobId) {
+    public static void nonExistentGetJob(String jobId) {
         try {
             getJobs.getJob(jobId);
         } catch (Exception e) {
@@ -169,7 +169,7 @@ public class GetJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void getJob(String prefix) throws Exception {
+    public static void getJob(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         String jobId = jobs.get(0).getJobId().orElseThrow(() -> new Exception("job id not specified"));
         try {
@@ -190,7 +190,7 @@ public class GetJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void getJobsByOwnerAndPrefix(String owner, String prefix) throws Exception {
+    public static void getJobsByOwnerAndPrefix(String owner, String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByOwnerAndPrefix(owner, prefix);
         jobs.forEach(LOG::info);
     }
@@ -204,7 +204,7 @@ public class GetJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void getJobsByPrefix(String prefix) throws Exception {
+    public static void getJobsByPrefix(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
         jobs.forEach(LOG::info);
     }
@@ -216,7 +216,7 @@ public class GetJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void getJobs() throws Exception {
+    public static void getJobs() throws Exception {
         // get any jobs out there for the logged-in user
         List<Job> jobs = getJobs.getJobs();
         jobs.forEach(LOG::info);
@@ -230,7 +230,7 @@ public class GetJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void getSpoolContent(String prefix) throws Exception {
+    public static void getSpoolContent(String prefix) throws Exception {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(params);
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
@@ -248,7 +248,7 @@ public class GetJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void getJobsByOwner(String owner) throws Exception {
+    public static void getJobsByOwner(String owner) throws Exception {
         List<Job> jobs = getJobs.getJobsByOwner(owner);
         jobs.forEach(LOG::info);
     }
@@ -261,7 +261,7 @@ public class GetJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void getSpoolFilesForJob(String prefix) throws Exception {
+    public static void getSpoolFilesForJob(String prefix) throws Exception {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(params);
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
@@ -276,7 +276,7 @@ public class GetJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void getSpoolFiles(String prefix) throws Exception {
+    public static void getSpoolFiles(String prefix) throws Exception {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJobs.getJobsCommon(params);
         List<JobFile> files =

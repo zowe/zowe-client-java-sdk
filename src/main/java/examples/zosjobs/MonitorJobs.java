@@ -58,7 +58,7 @@ public class MonitorJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void monitorJobsForOutputStatusByJobObject() throws Exception {
+    public static void monitorJobsForOutputStatusByJobObject() throws Exception {
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
         Job job = submitJobs.submitJcl(jclString, null, null);
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
@@ -75,7 +75,7 @@ public class MonitorJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void monitorJobsForOutputStatusByJobNameAndId() throws Exception {
+    public static void monitorJobsForOutputStatusByJobNameAndId() throws Exception {
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
         Job job = submitJobs.submitJcl(jclString, null, null);
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
@@ -95,7 +95,7 @@ public class MonitorJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void monitorJobsForStatusByJobObject(JobStatus.Type statusType) throws Exception {
+    public static void monitorJobsForStatusByJobObject(JobStatus.Type statusType) throws Exception {
         // determine an existing job in your system that is in execute queue and make a Job for it
         Job job = new Job.Builder().jobName("XXX").jobId("XXX").build();
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
@@ -113,7 +113,7 @@ public class MonitorJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void monitorJobsForStatusByJobNameAndId(JobStatus.Type statusType) throws Exception {
+    public static void monitorJobsForStatusByJobNameAndId(JobStatus.Type statusType) throws Exception {
         // determine an existing job in your system that is in execute queue and make a Job for it
         Job job = new Job.Builder().jobName("XXX").jobId("XXX").build();
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
@@ -133,7 +133,7 @@ public class MonitorJobs extends ZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    private static void monitorWaitForJobMessage(String message) throws Exception {
+    public static void monitorWaitForJobMessage(String message) throws Exception {
         // determine an existing job in your system that is in execute queue and make a Job for it
         Job job = new Job.Builder().jobName("XXX").jobId("XXX").build();
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
