@@ -87,8 +87,7 @@ public class UtilTso {
             zosmfMessages.add(zosmfMsg);
             result = new ZosmfTsoResponse.Builder().msgData(zosmfMessages).build();
         } else {
-            result = UtilTso.parseJsonTsoResponse((JSONObject) (response.getResponsePhrase().isPresent() ?
-                    response.getResponsePhrase().get() : null));
+            result = UtilTso.parseJsonTsoResponse((JSONObject) (response.getResponsePhrase().orElse(null)));
         }
 
         return result;
@@ -111,15 +110,15 @@ public class UtilTso {
         List<TsoMessages> tsoMessagesLst = new ArrayList<>();
         Optional<JSONArray> tsoData = Optional.ofNullable((JSONArray) result.get("tsoData"));
 
-        if (tsoData.isPresent()) {
-            tsoData.get().forEach(item -> {
+        tsoData.ifPresent(data -> {
+            data.forEach(item -> {
                 JSONObject obj = (JSONObject) item;
                 TsoMessages tsoMessages = new TsoMessages();
                 parseJsonTsoMessage(tsoMessagesLst, obj, tsoMessages);
                 parseJsonTsoPrompt(tsoMessagesLst, obj, tsoMessages);
             });
             response.setTsoData(tsoMessagesLst);
-        }
+        });
 
         return response;
     }

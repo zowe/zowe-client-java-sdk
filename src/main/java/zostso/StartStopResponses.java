@@ -75,9 +75,8 @@ public class StartStopResponses {
             this.success = true;
             this.failureResponse = null;
         }
-        if (zosmfTsoResponse.getServletKey().isPresent()) {
-            this.servletKey = zosmfTsoResponse.getServletKey().orElseThrow(() -> new Exception("servletKey is missing"));
-        }
+
+        this.servletKey = zosmfTsoResponse.getServletKey().orElseThrow(() -> new Exception("servletKey is missing"));
 
         StringBuilder buildMessage = new StringBuilder();
         List<TsoMessages> tsoMsgLst = zosmfTsoResponse.getTsoData();

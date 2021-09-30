@@ -122,14 +122,12 @@ public class IssueCommand {
     public ConsoleResponse issue(IssueParams params) throws Exception {
         Util.checkNullParameter(params == null, "params is null");
 
-        String consoleName = params.getConsoleName().isPresent() ?
-                params.getConsoleName().get() : ConsoleConstants.RES_DEF_CN;
+        String consoleName = params.getConsoleName().orElse(ConsoleConstants.RES_DEF_CN);
         ZosmfIssueParams commandParams = buildZosmfConsoleApiParameters(params);
         ConsoleResponse response = new ConsoleResponse();
 
         ZosmfIssueResponse resp = issueCommon(consoleName, commandParams);
-        UtilConsole.populate(resp, response, params.getProcessResponses().isPresent() ?
-                params.getProcessResponses().get() : true);
+        UtilConsole.populate(resp, response, params.getProcessResponses().orElse(true));
 
         return response;
     }
@@ -162,13 +160,8 @@ public class IssueCommand {
         ZosmfIssueParams zosmfParams = new ZosmfIssueParams();
         zosmfParams.setCmd(params.getCommand().get());
 
-        if (params.getSolicitedKeyword().isPresent()) {
-            zosmfParams.setSolKey(params.getSolicitedKeyword().get());
-        }
-
-        if (params.getSysplexSystem().isPresent()) {
-            zosmfParams.setSystem(params.getSysplexSystem().get());
-        }
+        params.getSolicitedKeyword().ifPresent(keyWord -> zosmfParams.setSolKey(keyWord));
+        params.getSysplexSystem().ifPresent(sys -> zosmfParams.setSystem(sys));
 
         return zosmfParams;
     }
