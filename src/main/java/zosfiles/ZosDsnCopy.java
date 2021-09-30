@@ -54,7 +54,7 @@ public class ZosDsnCopy {
      * @return http response object
      * @author Leonid Baranov
      */
-    public Response copy(CopyParams params) {
+    public Response copy(CopyParams params) throws Exception {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkIllegalParameter(params.getFromDataSet().isEmpty(), "fromDataSetName not specified");
         Util.checkIllegalParameter(params.getToDataSet().isEmpty(), "toDataSetName not specified");
@@ -71,23 +71,20 @@ public class ZosDsnCopy {
         url += Util.encodeURIComponent(toDataSet);
 
         Response response = new Response(null, null);
+
+        LOG.debug(url);
+
+        String body = buildBody(params);
+        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body,
+                ZoweRequestType.VerbType.PUT_JSON);
+        response = request.executeHttpRequest();
+
         try {
-            LOG.debug(url);
-
-            String body = buildBody(params);
-            ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body,
-                    ZoweRequestType.VerbType.PUT_JSON);
-            response = request.executeHttpRequest();
-
-            try {
-                UtilRest.checkHttpErrors(response);
-            } catch (Exception e) {
-                UtilDataset.checkHttpErrors(e.getMessage(), toDataSet, "copy");
-            }
-
+            UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            e.printStackTrace();
+            UtilDataset.checkHttpErrors(e.getMessage(), toDataSet, "copy");
         }
+
 
         return response;
     }
@@ -101,7 +98,7 @@ public class ZosDsnCopy {
      * @return http response object
      * @author Leonid Baranov
      */
-    public Response copy(String fromDataSetName, String toDataSetName, boolean replace) {
+    public Response copy(String fromDataSetName, String toDataSetName, boolean replace) throws Exception {
         return copy(new CopyParams.Builder()
                 .fromDataSet(fromDataSetName)
                 .toDataSet(toDataSetName)

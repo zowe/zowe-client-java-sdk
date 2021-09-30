@@ -34,7 +34,7 @@ public class CopyDataset extends ZosConnection {
      * @param args for main not used
      * @author Leonid Baranov
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String fromDataSetName = "XXX";
         String toDataSetName = "XXX";
 
@@ -52,7 +52,7 @@ public class CopyDataset extends ZosConnection {
      * @param toDataSetName   destination dataset (e.g. TARGET.DATASET(MEMBER))
      * @author Frank Giordano
      */
-    public static void copyDataset(ZOSConnection connection, String fromDataSetName, String toDataSetName) {
+    public static void copyDataset(ZOSConnection connection, String fromDataSetName, String toDataSetName) throws Exception {
         ZosDsnCopy zosDsnCopy = new ZosDsnCopy(connection);
         Response response = zosDsnCopy.copy(fromDataSetName, toDataSetName, true);
         LOG.info("http response code " + response.getStatusCode());
@@ -67,7 +67,8 @@ public class CopyDataset extends ZosConnection {
      * @param toDataSetName   destination dataset (e.g. TARGET.DATASET(MEMBER))
      * @author Frank Giordano
      */
-    public static void copyDatasetByCopyParams(ZOSConnection connection, String fromDataSetName, String toDataSetName) {
+    public static void copyDatasetByCopyParams(ZOSConnection connection, String fromDataSetName,
+                                               String toDataSetName) throws Exception {
         ZosDsnCopy zosDsnCopy = new ZosDsnCopy(connection);
         // 'replace' here will be true by default if not specified in builder.
         CopyParams copyParams = new CopyParams.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).build();

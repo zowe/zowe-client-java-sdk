@@ -75,13 +75,14 @@ public class UtilDataset {
 
         if ("create".equals(type)) {
             if (errMsg.contains("500")) {
-                String newErrMsg = String.format("%s %s '%s' %s %s", errMsg, http500Pre, dsName, http500Create, http500Post);
+                String newErrMsg = String.format("%s %s '%s' %s %s", errMsg, http500Pre, dsName, http500Create,
+                        http500Post);
                 throw new Exception(newErrMsg);
             }
         }
         if ("read".equals(type) || "delete".equals(type) || "write".equals(type) || "copy".equals(type) || "download".equals(type)) {
             if (errMsg.contains("500")) {
-                String newErrMsg = String.format("%s %s '%s' %s %s", errMsg, http500Pre, dsName, http500, http500Post);
+                String newErrMsg = String.format("%s %s '%s'%s %s", errMsg, http500Pre, dsName, http500, http500Post);
                 throw new Exception(newErrMsg);
             }
         }
