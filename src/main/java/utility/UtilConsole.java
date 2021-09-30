@@ -31,8 +31,9 @@ public class UtilConsole {
      * @param processResponses boolean if set to true, append command response string to the console API response
      * @author Frank Giordano
      */
-    public static void populate(ZosmfIssueResponse zosmfResponse, ConsoleResponse response,
-                                boolean processResponses) {
+    public static void populate(ZosmfIssueResponse zosmfResponse, ConsoleResponse response, boolean processResponses) {
+        Util.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
+        Util.checkNullParameter(response == null, "response is null");
         response.setZosmfResponse(zosmfResponse);
         response.setSuccess(true);
 

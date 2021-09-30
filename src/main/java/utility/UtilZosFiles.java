@@ -13,10 +13,7 @@ import rest.ZosmfHeaders;
 import zosfiles.input.DownloadParams;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Utility Class for zosFiles related static helper methods.
@@ -25,42 +22,6 @@ import java.util.regex.Pattern;
  * @version 1.0
  */
 public class UtilZosFiles {
-
-    /**
-     * Data set name qualifier separator
-     */
-    public static final String DSN_SEP = ".";
-
-    /**
-     * Default file extension
-     */
-    public static final String DEFAULT_FILE_EXTENSION = "txt";
-
-    /**
-     * Default Max Member Length
-     */
-    public static final Integer MAX_MEMBER_LENGTH = 8;
-
-    /**
-     * Break up a dataset name of either: USER.WORK.JCL(TEMPLATE) to user/work/jcl/template
-     * Or USER.WORK.PS to user/work/ps
-     *
-     * @param dataSet dataset to break up into folders
-     * @return directory string
-     */
-    public static String getDirsFromDataSet(String dataSet) {
-        final String regex = "\\\\$\\{this.DSN_SEP\\}";
-        final String string = "";
-
-        final Pattern pattern = Pattern.compile(regex);
-        final Matcher matcher = pattern.matcher(string);
-        String localDirectory = dataSet.replace(matcher.group(0), UtilIO.FILE_DELIM).toLowerCase(Locale.ROOT);
-        if (localDirectory.contains("(") && localDirectory.contains(")")) {
-            localDirectory = localDirectory.replace("(", UtilIO.FILE_DELIM);
-            localDirectory = localDirectory.substring(0, -1);
-        }
-        return localDirectory;
-    }
 
     /**
      * Common method to build headers given input options object

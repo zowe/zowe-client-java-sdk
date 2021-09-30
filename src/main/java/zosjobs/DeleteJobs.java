@@ -86,7 +86,7 @@ public class DeleteJobs {
      * @author Frank Giordano
      */
     public Response deleteJobCommon(ModifyJobParams params) throws Exception {
-        UtilJobs.checkForModifyJobParamsExceptions(params);
+        UtilJobs.checkModifyJobParameters(params);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
                 UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();

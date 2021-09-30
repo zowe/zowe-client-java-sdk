@@ -14,6 +14,7 @@ import core.ZOSConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.Optional;
 
 /**
  * Global Utility Class with static helper methods.
@@ -43,6 +44,7 @@ public class Util {
      * @author Frank Giordano
      */
     public static String getAuthEncoding(ZOSConnection connection) {
+        Util.checkConnection(connection);
         return Base64.getEncoder().encodeToString((connection.getUser() + ":" + connection.getPassword())
                 .getBytes(StandardCharsets.UTF_8));
     }
@@ -70,7 +72,8 @@ public class Util {
      * @author Frank Giordano
      */
     public static void checkNullParameter(boolean check, String msg) {
-        if (check) throw new NullPointerException(msg);
+        Optional<String> message = Optional.ofNullable(msg);
+        if (check) throw new NullPointerException(message.orElse("empty message specified"));
     }
 
     /**
@@ -82,7 +85,8 @@ public class Util {
      * @author Frank Giordano
      */
     public static void checkIllegalParameter(boolean check, String msg) {
-        if (check) throw new IllegalArgumentException(msg);
+        Optional<String> message = Optional.ofNullable(msg);
+        if (check) throw new IllegalArgumentException(message.orElse("empty message specified"));
     }
 
     /**
@@ -93,7 +97,9 @@ public class Util {
      * @return encoded String or original string
      * @author Frank Giordano
      */
-    public static String encodeURIComponent(String str) {
+    public static String encodeURIComponent(String str) throws Exception {
+        Util.checkNullParameter(str == null, "str is null");
+        Util.checkIllegalParameter(str.isEmpty(), "str not specified");
         String result;
         result = URLEncoder.encode(str, StandardCharsets.UTF_8)
                 .replaceAll("\\+", "%20")
