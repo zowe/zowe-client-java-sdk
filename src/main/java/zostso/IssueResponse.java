@@ -13,6 +13,7 @@ import zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -151,10 +152,7 @@ public class IssueResponse {
      * @author Frank Giordano
      */
     public void setZosmfResponses(List<ZosmfTsoResponse> zosmfResponses) {
-        if (zosmfResponses == null)
-            this.zosmfResponses = Collections.emptyList();
-        else
-            this.zosmfResponses = zosmfResponses;
+        this.zosmfResponses = Objects.requireNonNullElse(zosmfResponses, Collections.emptyList());
     }
 
     /**
