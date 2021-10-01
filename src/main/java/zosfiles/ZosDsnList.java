@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import rest.*;
+import utility.Crud;
 import utility.Util;
 import utility.UtilDataset;
 import utility.UtilRest;
@@ -79,7 +80,7 @@ public class ZosDsnList {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), dataSetName, "read");
+            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), Crud.type.read);
         }
 
         JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
@@ -131,7 +132,7 @@ public class ZosDsnList {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), dataSetName, "read");
+            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), Crud.type.read);
         }
 
         JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());

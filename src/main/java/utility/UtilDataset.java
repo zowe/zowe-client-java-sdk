@@ -12,6 +12,8 @@ package utility;
 import org.json.simple.JSONObject;
 import zosfiles.response.Dataset;
 
+import java.util.List;
+
 /**
  * Utility Class for Dataset related static helper methods.
  *
@@ -54,46 +56,111 @@ public class UtilDataset {
     /**
      * Formulate and return a more redefined error exception message based on a CRUD operation.
      *
-     * @param errMsg   error message
-     * @param dsName   dataset representation
-     * @param crudType crud type value of operation taken place
+     * @param errMsg  error message
+     * @param dsNames dataset representations
+     * @param type    crud type value of operation taken place
      * @throws Exception with a possible customized error msg
      * @author Frank Giordano
      */
-    public static void checkHttpErrors(String errMsg, String dsName, String crudType) throws Exception {
+    public static void checkHttpErrors(String errMsg, List<String> dsNames, Crud.type type) throws Exception {
         Util.checkNullParameter(errMsg == null, "errMsg is null");
         Util.checkIllegalParameter(errMsg.isEmpty(), "errMsg not specified");
-        Util.checkNullParameter(dsName == null, "dsName is null");
-        Util.checkIllegalParameter(dsName.isEmpty(), "dsName not specified");
-        Util.checkNullParameter(crudType == null, "crudType is null");
-        Util.checkIllegalParameter(crudType.isEmpty(), "crudType not specified");
+        Util.checkNullParameter(dsNames == null, "dsName is null");
+        Util.checkIllegalParameter(dsNames.isEmpty(), "dsName not specified");
+        Util.checkNullParameter(type == null, "crudType is null");
 
         String http404 = "is invalid or non-existent.";
         String http500Pre = "You may not have permission to";
         String http500 = ", the request is invalid,";
-        String http500Create = "or the dataset or member already exists.";
-        String http500Post = "or the dataset or member does not exist.";
+        String http500Create = "or the dataset(s) or member already exists.";
+        String http500Post = "or the dataset(s) or member does not exist.";
 
+        // remove "." period at the end of the string
+        errMsg = errMsg.substring(0, errMsg.length() - 1);
+        // append further info about the type of request that occurred
+        errMsg += " for " + type.toString().toUpperCase() + " request.";
+
+        StringBuilder datasets = new StringBuilder();
+
+        // if 404 is seen handle it generically for all types
         if (errMsg.contains("404")) {
-            throw new Exception(String.format("%s '%s' %s", errMsg, dsName, http404));
+            if (dsNames.size() == 1) {
+                throw new Exception(String.format("%s '%s' %s", errMsg, dsNames.get(0), http404));
+            } else {
+                datasets.append(errMsg);
+                appendAllDS(dsNames, datasets);
+                datasets.append(" ");
+                datasets.append(http404);
+                throw new Exception(datasets.toString());
+            }
         }
 
-        var type = crudType.toLowerCase();
-
-        if ("create".equals(type)) {
+        // if we see create request handle it
+        if ("create".equals(type.toString())) {
             if (errMsg.contains("500")) {
-                String newErrMsg = String.format("%s %s '%s' %s %s", errMsg, http500Pre, dsName, http500Create,
+                String newErrMsg = String.format("%s %s '%s' %s %s", errMsg, http500Pre, dsNames.get(0), http500Create,
                         http500Post);
                 throw new Exception(newErrMsg);
             }
+            throw new Exception(errMsg);
         }
-        if ("read".equals(type) || "delete".equals(type) || "write".equals(type) || "copy".equals(type) || "download".equals(type)) {
+
+        // if we see a copy request handle it
+        if ("copy".equals(type.toString())) {
             if (errMsg.contains("500")) {
-                String newErrMsg = String.format("%s %s '%s'%s %s", errMsg, http500Pre, dsName, http500, http500Post);
-                throw new Exception(newErrMsg);
+                if (dsNames.size() == 1) {
+                    String newErrMsg = formatPrePostMsg(errMsg, dsNames, http500Pre, http500, http500Post);
+                    throw new Exception(newErrMsg);
+                } else {
+                    datasets.append(errMsg);
+                    datasets.append(" ");
+                    datasets.append(http500Pre);
+                    appendAllDS(dsNames, datasets);
+                    datasets.append(http500);
+                    datasets.append(" ");
+                    datasets.append(http500Post);
+                    throw new Exception(datasets.toString());
+                }
             }
+            throw new Exception(errMsg);
+        }
+
+        // at this point lets handle all other types: read, delete, write, download
+        if (errMsg.contains("500")) {
+            String newErrMsg = formatPrePostMsg(errMsg, dsNames, http500Pre, http500, http500Post);
+            throw new Exception(newErrMsg);
         }
         throw new Exception(errMsg);
+    }
+
+    /**
+     * Formulate and return a more specialized error message string
+     *
+     * @param errMsg      main error message
+     * @param dsNames     dataset representations
+     * @param http500Pre  http500Pre message
+     * @param http500     http500 message
+     * @param http500Post http500Post message
+     * @author Frank Giordano
+     */
+    private static String formatPrePostMsg(String errMsg, List<String> dsNames, String http500Pre, String http500,
+                                           String http500Post) {
+        return String.format("%s %s '%s' %s %s", errMsg, http500Pre, dsNames.get(0), http500, http500Post);
+    }
+
+    /**
+     * Generate string with all datasets
+     *
+     * @param dsNames  dataset representations
+     * @param datasets string holder
+     * @author Frank Giordano
+     */
+    private static void appendAllDS(List<String> dsNames, StringBuilder datasets) {
+        dsNames.forEach(ds -> {
+            datasets.append(" '");
+            datasets.append(ds);
+            datasets.append("'");
+        });
     }
 
 }

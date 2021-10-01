@@ -17,11 +17,13 @@ import rest.Response;
 import rest.ZoweRequest;
 import rest.ZoweRequestFactory;
 import rest.ZoweRequestType;
+import utility.Crud;
 import utility.Util;
 import utility.UtilDataset;
 import utility.UtilRest;
 import zosfiles.input.CopyParams;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -68,6 +70,7 @@ public class ZosDsnCopy {
         }
 
         String toDataSet = params.getToDataSet().get();
+        String fromDataSet = params.getFromDataSet().get();
 
         url += Util.encodeURIComponent(toDataSet);
 
@@ -80,7 +83,7 @@ public class ZosDsnCopy {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), toDataSet, "copy");
+            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(toDataSet, fromDataSet), Crud.type.copy);
         }
 
         return response;

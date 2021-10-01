@@ -17,11 +17,13 @@ import rest.Response;
 import rest.ZoweRequest;
 import rest.ZoweRequestFactory;
 import rest.ZoweRequestType;
+import utility.Crud;
 import utility.Util;
 import utility.UtilDataset;
 import utility.UtilRest;
 import zosfiles.input.CreateParams;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -73,7 +75,7 @@ public class ZosDsn {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), dataSetName, "write");
+            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), Crud.type.write);
         }
 
         return response;
@@ -123,7 +125,7 @@ public class ZosDsn {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), dataSetName, "delete");
+            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), Crud.type.delete);
         }
 
         return response;
@@ -176,7 +178,7 @@ public class ZosDsn {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), dataSetName, "create");
+            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), Crud.type.create);
         }
 
         return response;
