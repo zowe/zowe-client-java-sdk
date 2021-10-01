@@ -32,6 +32,7 @@ public class CopyDataset extends ZosConnection {
      * CopyDataset functionality. Calls CopyDataset example methods.
      *
      * @param args for main not used
+     * @throws Exception error processing examples
      * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
@@ -50,6 +51,7 @@ public class CopyDataset extends ZosConnection {
      * @param connection      ZOSConnection
      * @param fromDataSetName source dataset (e.g. SOURCE.DATASET(MEMBER))
      * @param toDataSetName   destination dataset (e.g. TARGET.DATASET(MEMBER))
+     * @throws Exception error processing copy request
      * @author Frank Giordano
      */
     public static void copyDataset(ZOSConnection connection, String fromDataSetName, String toDataSetName) throws Exception {
@@ -65,6 +67,7 @@ public class CopyDataset extends ZosConnection {
      * @param connection      ZOSConnection
      * @param fromDataSetName source dataset (e.g. SOURCE.DATASET(MEMBER))
      * @param toDataSetName   destination dataset (e.g. TARGET.DATASET(MEMBER))
+     * @throws Exception error processing copy request
      * @author Frank Giordano
      */
     public static void copyDatasetByCopyParams(ZOSConnection connection, String fromDataSetName,

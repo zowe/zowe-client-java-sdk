@@ -52,6 +52,7 @@ public class ZosDsnCopy {
      *
      * @param params contains copy dataset parameters
      * @return http response object
+     * @throws Exception error processing copy request
      * @author Leonid Baranov
      */
     public Response copy(CopyParams params) throws Exception {
@@ -92,6 +93,7 @@ public class ZosDsnCopy {
      * @param toDataSetName   is a name of target dataset (e.g. TARGET.DATASET(MEMBER))
      * @param replace         if true, members in the target dataset are replaced. if false,
      * @return http response object
+     * @throws Exception error processing copy request
      * @author Leonid Baranov
      */
     public Response copy(String fromDataSetName, String toDataSetName, boolean replace) throws Exception {
