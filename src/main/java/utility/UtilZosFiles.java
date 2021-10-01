@@ -31,6 +31,7 @@ public class UtilZosFiles {
      * @author Nikunj Goyal
      */
     public static Map<String, String> generateHeadersBasedOnOptions(DownloadParams options) {
+        Util.checkNullParameter(options == null, "options is null");
         String key, value;
         Map<String, String> headers = new HashMap<>();
 
