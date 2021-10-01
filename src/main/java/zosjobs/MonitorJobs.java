@@ -343,13 +343,13 @@ public class MonitorJobs {
         String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
 
         int lineLimit = params.getLineLimit().orElse(DEFAULT_LINE_LIMIT);
-        int size = output.length, start, end = size;
+        int size = output.length, start;
 
         if (size < lineLimit)
             start = 0;
         else start = size - lineLimit;
 
-        for (int i = start; i < end; i++) {
+        for (int i = start; i < size; i++) {
             LOG.debug(output[i]);
             if (output[i].contains(message))
                 return true;
