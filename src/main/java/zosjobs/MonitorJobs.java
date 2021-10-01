@@ -302,7 +302,7 @@ public class MonitorJobs {
     }
 
     /**
-     * Determines if a given job is in an running state or not.
+     * Determines if a given job is in a running state or not.
      *
      * @param params monitor jobs params, see MonitorJobWaitForParams
      * @return true if in running state

@@ -207,7 +207,7 @@ public class GetJobs {
      * @param jobName job name for the job for which you want to get status
      * @param jobId   job ID for the job for which you want to get status
      * @return status value
-     * @throws Exception error gettng job status
+     * @throws Exception error getting job status
      * @author Frank Giordano
      */
     public String getStatusValue(String jobName, String jobId) throws Exception {
@@ -223,7 +223,7 @@ public class GetJobs {
      *
      * @param job job document
      * @return status value
-     * @throws Exception error gettng job status
+     * @throws Exception error getting job status
      * @author Frank Giordano
      */
     public String getStatusValueForJob(Job job) throws Exception {
@@ -240,7 +240,7 @@ public class GetJobs {
      * @param jobName job name for the job for which you want to get status
      * @param jobId   job ID for the job for which you want to get status
      * @return job document (matching job)
-     * @throws Exception error gettng job status
+     * @throws Exception error getting job status
      * @author Frank Giordano
      */
     public Job getStatus(String jobName, String jobId) throws Exception {
@@ -259,7 +259,7 @@ public class GetJobs {
      *
      * @param job job document
      * @return job document (matching job)
-     * @throws Exception error gettng job status
+     * @throws Exception error getting job status
      * @author Frank Giordano
      */
     public Job getStatusForJob(Job job) throws Exception {
@@ -274,7 +274,7 @@ public class GetJobs {
      *
      * @param params common job parameters, see CommonJobParams object
      * @return job document (matching job)
-     * @throws Exception error gettng job status
+     * @throws Exception error getting job status
      * @author Frank Giordano
      */
     public Job getStatusCommon(CommonJobParams params) throws Exception {
