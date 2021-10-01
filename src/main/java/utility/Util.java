@@ -97,7 +97,7 @@ public class Util {
      * @return encoded String or original string
      * @author Frank Giordano
      */
-    public static String encodeURIComponent(String str) throws Exception {
+    public static String encodeURIComponent(String str) {
         Util.checkNullParameter(str == null, "str is null");
         Util.checkIllegalParameter(str.isEmpty(), "str not specified");
         String result;
