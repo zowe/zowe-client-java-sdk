@@ -53,10 +53,10 @@ public class CopyDataset extends ZosConnection {
      * <p>
      * This copy method allows the following copy operations:
      * <p>
-     * sequential dataset to sequential dataset
-     * sequential dataset to partition dataset member
-     * partition dataset member to partition dataset member
-     * partition dataset member to partition dataset non-existing member
+     * - sequential dataset to sequential dataset
+     * - sequential dataset to partition dataset member
+     * - partition dataset member to partition dataset member
+     * - partition dataset member to partition dataset non-existing member
      * <p>
      * This example sends false value for copyAllMembers parameter in copy method to indicate we
      * are not copying all members in a partition dataset to another.
@@ -80,10 +80,10 @@ public class CopyDataset extends ZosConnection {
      * <p>
      * This copy method allows the following copy operations:
      * <p>
-     * sequential dataset to sequential dataset
-     * sequential dataset to partition dataset member
-     * partition dataset member to partition dataset member
-     * partition dataset member to partition dataset non-existing member
+     * - sequential dataset to sequential dataset
+     * - sequential dataset to partition dataset member
+     * - partition dataset member to partition dataset member
+     * - partition dataset member to partition dataset non-existing member
      *
      * @param connection      ZOSConnection
      * @param fromDataSetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
