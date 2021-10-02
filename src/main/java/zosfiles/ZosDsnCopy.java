@@ -103,6 +103,7 @@ public class ZosDsnCopy {
      * @param fromDataSetName is a name of source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
      * @param toDataSetName   is a name of target dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
      * @param replace         if true members in the target dataset are replaced
+     * @param copyAllMembers  if true copy all members in source partition dataset specified
      * @return http response object
      * @throws Exception error processing copy request
      * @author Leonid Baranov
