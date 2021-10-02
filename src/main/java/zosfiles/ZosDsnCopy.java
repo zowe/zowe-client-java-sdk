@@ -90,17 +90,31 @@ public class ZosDsnCopy {
     }
 
     /**
-     * Copy dataset or dataset member
+     * This copy method allows the following copy operations:
+     * <p>
+     * sequential dataset to sequential dataset
+     * sequential dataset to partition dataset member
+     * partition dataset member to partition dataset member
+     * partition dataset member to partition dataset non-existing member
      *
-     * @param fromDataSetName is a name of source dataset (e.g. SOURCE.DATASET(MEMBER))
-     * @param toDataSetName   is a name of target dataset (e.g. TARGET.DATASET(MEMBER))
-     * @param replace         if true, members in the target dataset are replaced. if false,
+     * If copyAllMembers parameter value sent as true it will perform a copy of all
+     * members in source partition dataset to another partition dataset.
+     *
+     * @param fromDataSetName is a name of source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
+     * @param toDataSetName   is a name of target dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
+     * @param replace         if true members in the target dataset are replaced
      * @return http response object
      * @throws Exception error processing copy request
      * @author Leonid Baranov
      */
-    public Response copy(String fromDataSetName, String toDataSetName, boolean replace) throws Exception {
-        return copy(new CopyParams.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).replace(replace).build());
+    public Response copy(String fromDataSetName, String toDataSetName, boolean replace, boolean copyAllMembers)
+            throws Exception {
+        return copy(new CopyParams.Builder()
+                .fromDataSet(fromDataSetName)
+                .toDataSet(toDataSetName)
+                .replace(replace)
+                .copyAllMembers(copyAllMembers)
+                .build());
     }
 
     /**
@@ -113,11 +127,13 @@ public class ZosDsnCopy {
      */
     private String buildBody(CopyParams params) throws Exception {
         String fromDataSetName = params.getFromDataSet().orElseThrow(() -> new Exception("dataset not specified"));
+        boolean isFullPartitionCopy = params.isCopyAllMembers();
 
         var jsonMap = new HashMap<String, Object>();
         jsonMap.put("request", "copy");
 
-        String member = "*";
+        String member = "";
+        // does fromDataSetName contain a member if so extract it and include member field and value in the json body
         int startMemberIndex = fromDataSetName.indexOf("(");
         if (startMemberIndex > 0) {
             member = fromDataSetName.substring(startMemberIndex + 1, fromDataSetName.length() - 1);
@@ -126,7 +142,11 @@ public class ZosDsnCopy {
 
         var fromDataSetReq = new HashMap<String, Object>();
         fromDataSetReq.put("dsn", fromDataSetName);
-        fromDataSetReq.put("member", member);
+        if (member.length() > 0) // include a member if it was specified in fromDataSetName
+            fromDataSetReq.put("member", member);
+        else if (isFullPartitionCopy) // if true indicates a copy of all members in partition dataset to another
+            fromDataSetReq.put("member", "*");
+
         JSONObject fromDataSetObj = new JSONObject(fromDataSetReq);
 
         jsonMap.put("from-dataset", fromDataSetObj);
