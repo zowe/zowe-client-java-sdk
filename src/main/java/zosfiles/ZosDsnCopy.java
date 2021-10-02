@@ -107,7 +107,8 @@ public class ZosDsnCopy {
      * @throws Exception error processing copy request
      * @author Leonid Baranov
      */
-    public Response copy(String fromDataSetName, String toDataSetName, boolean replace, boolean copyAllMembers) throws Exception {
+    public Response copy(String fromDataSetName, String toDataSetName, boolean replace, boolean copyAllMembers)
+            throws Exception {
         return copy(new CopyParams.Builder()
                 .fromDataSet(fromDataSetName)
                 .toDataSet(toDataSetName)
@@ -143,7 +144,7 @@ public class ZosDsnCopy {
         fromDataSetReq.put("dsn", fromDataSetName);
         if (member.length() > 0) // include a member if it was specified in fromDataSetName
             fromDataSetReq.put("member", member);
-        else if (isFullPartitionCopy) // if true indicates a copy of all members in partition dataset to other
+        else if (isFullPartitionCopy) // if true indicates a copy of all members in partition dataset to another
             fromDataSetReq.put("member", "*");
 
         JSONObject fromDataSetObj = new JSONObject(fromDataSetReq);
