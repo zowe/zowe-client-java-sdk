@@ -44,12 +44,18 @@ public class CopyParams {
      */
     private final boolean replace;
 
+    /**
+     * Specified as true to indicate a copying of all members in partial dataset to another partial dataset request
+     */
+    private final boolean copyAllMembers;
+
     private CopyParams(CopyParams.Builder builder) {
         this.fromVolser = Optional.ofNullable(builder.fromVolser);
         this.fromDataSet = Optional.ofNullable(builder.fromDataSet);
         this.toVolser = Optional.ofNullable(builder.toVolser);
         this.toDataSet = Optional.ofNullable(builder.toDataSet);
         this.replace = builder.replace;
+        this.copyAllMembers = builder.copyAllMembers;
     }
 
     /**
@@ -102,6 +108,16 @@ public class CopyParams {
         return replace;
     }
 
+    /**
+     * Retrieve copyAllMembers value
+     *
+     * @return copyAllMembers value
+     * @author Frank Giordano
+     */
+    public boolean isCopyAllMembers() {
+        return copyAllMembers;
+    }
+
     @Override
     public String toString() {
         return "CopyParams{" +
@@ -120,6 +136,7 @@ public class CopyParams {
         private String toVolser;
         private String toDataSet;
         private boolean replace = true;
+        private boolean copyAllMembers = false;
 
         public CopyParams.Builder fromVolser(String volser) {
             this.fromVolser = volser;
@@ -143,6 +160,11 @@ public class CopyParams {
 
         public CopyParams.Builder replace(boolean replace) {
             this.replace = replace;
+            return this;
+        }
+
+        public CopyParams.Builder copyAllMembers(boolean value) {
+            this.copyAllMembers = value;
             return this;
         }
 
