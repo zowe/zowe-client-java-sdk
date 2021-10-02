@@ -119,6 +119,7 @@ public class UtilDataset {
                     datasets.append(http500);
                     datasets.append(" ");
                     datasets.append(http500Post);
+                    datasets.append(" Check CopyParams parameters you may have incorrectly set copyAllMembers.");
                     throw new Exception(datasets.toString());
                 }
             }
