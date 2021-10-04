@@ -96,7 +96,7 @@ public class ZosDsnCopy {
      * - sequential dataset to partition dataset member
      * - partition dataset member to partition dataset member
      * - partition dataset member to partition dataset non-existing member
-     *
+     * <p>
      * If copyAllMembers parameter value sent as true it will perform a copy of all
      * members in source partition dataset to another partition dataset.
      *
