@@ -18,7 +18,6 @@ import utility.Util;
 import utility.UtilRest;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,7 +32,6 @@ public class JsonGetRequest extends ZoweRequest {
     private static final Logger LOG = LogManager.getLogger(JsonGetRequest.class);
 
     private HttpGet request;
-    private Map<String, String> additionalHeaders = new HashMap<>();
 
     /**
      * JsonGetRequest constructor.
@@ -56,19 +54,16 @@ public class JsonGetRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     @Override
-    public Response executeHttpRequest() throws Exception {
-        // add any additional headers...
-        additionalHeaders.forEach((key, value) -> request.setHeader(key, value));
-
+    public Response executeRequest() throws Exception {
         try {
-            this.httpResponse = client.execute(request, localContext);
+            httpResponse = client.execute(request, localContext);
         } catch (IOException e) {
             e.printStackTrace();
             return new Response(null, null);
         }
         int statusCode = httpResponse.getStatusLine().getStatusCode();
 
-        LOG.debug("JsonGetRequest::httpGet - Response statusCode {}, Response {}",
+        LOG.debug("JsonGetRequest::executeRequest - Response statusCode {}, Response {}",
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
         if (UtilRest.isHttpError(statusCode)) {
@@ -91,14 +86,14 @@ public class JsonGetRequest extends ZoweRequest {
     }
 
     /**
-     * Set additional headers needed for the http request
+     * Set any headers needed for the http request
      *
-     * @param additionalHeaders additional headers to add to the request
+     * @param headers headers to add to the request
      * @author Frank Giordano
      */
     @Override
-    public void setAdditionalHeaders(Map<String, String> additionalHeaders) {
-        this.additionalHeaders = additionalHeaders;
+    public void setHeaders(Map<String, String> headers) {
+        headers.forEach((key, value) -> request.setHeader(key, value));
     }
 
     /**

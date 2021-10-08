@@ -161,8 +161,8 @@ public class ZosDsnList {
         setHeaders(params, headers);
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
                 ZoweRequestType.VerbType.GET_JSON);
-        request.setAdditionalHeaders(headers);
-        return request.executeHttpRequest();
+        request.setHeaders(headers);
+        return request.executeRequest();
     }
 
     /**

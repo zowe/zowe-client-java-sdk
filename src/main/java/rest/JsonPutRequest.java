@@ -19,7 +19,6 @@ import utility.Util;
 import utility.UtilRest;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -34,8 +33,6 @@ public class JsonPutRequest extends ZoweRequest {
     private static final Logger LOG = LogManager.getLogger(JsonPutRequest.class);
 
     private HttpPut request;
-    private final String body;
-    private Map<String, String> additionalHeaders = new HashMap<>();
 
     /**
      * JsonPutRequest constructor.
@@ -49,9 +46,9 @@ public class JsonPutRequest extends ZoweRequest {
     public JsonPutRequest(ZOSConnection connection, String url, String body) throws Exception {
         super(connection, ZoweRequestType.VerbType.PUT_JSON);
         if (!UtilRest.isUrlValid(url)) throw new Exception("url is invalid");
-        this.body = body;
-        this.request = new HttpPut(url);
-        this.setup();
+        request = new HttpPut(url);
+        request.setEntity(new StringEntity(Optional.ofNullable(body).orElse("")));
+        setup();
     }
 
     /**
@@ -60,20 +57,16 @@ public class JsonPutRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     @Override
-    public Response executeHttpRequest() throws Exception {
-        // add any additional headers...
-        additionalHeaders.forEach((key, value) -> request.setHeader(key, value));
-        request.setEntity(new StringEntity(Optional.ofNullable(body).orElse("")));
-
+    public Response executeRequest() throws Exception {
         try {
-            this.httpResponse = client.execute(request, localContext);
+            httpResponse = client.execute(request, localContext);
         } catch (IOException e) {
             e.printStackTrace();
             return new Response(null, null);
         }
         int statusCode = httpResponse.getStatusLine().getStatusCode();
 
-        LOG.debug("JsonPutRequest::httpPut - Response statusCode {}, Response {}",
+        LOG.debug("JsonPutRequest::executeRequest - Response statusCode {}, Response {}",
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
         if (UtilRest.isHttpError(statusCode)) {
@@ -96,14 +89,14 @@ public class JsonPutRequest extends ZoweRequest {
     }
 
     /**
-     * Set additional headers needed for the http request
+     * Set any headers needed for the http request
      *
-     * @param additionalHeaders additional headers to add to the request
+     * @param headers headers to add to the request
      * @author Frank Giordano
      */
     @Override
-    public void setAdditionalHeaders(Map<String, String> additionalHeaders) {
-        this.additionalHeaders = additionalHeaders;
+    public void setHeaders(Map<String, String> headers) {
+        headers.forEach((key, value) -> request.setHeader(key, value));
     }
 
     /**
@@ -115,8 +108,8 @@ public class JsonPutRequest extends ZoweRequest {
      */
     @Override
     public void setRequest(String url) throws Exception {
-        this.request = new HttpPut(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
-        this.setup();
+        request = new HttpPut(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
+        setup();
     }
 
 }

@@ -73,7 +73,7 @@ public class GetJobsByJsonGetRequestTest {
         jsonArray.add(jsonJob2);
 
         Response response = new Response(jsonArray, 200);
-        Mockito.when(request.executeHttpRequest()).thenReturn(response);
+        Mockito.when(request.executeRequest()).thenReturn(response);
 
         String msgResult = null;
         try {
@@ -97,7 +97,7 @@ public class GetJobsByJsonGetRequestTest {
         jsonArray.add(jsonJob);
 
         Response response = new Response(jsonArray, 200);
-        Mockito.when(request.executeHttpRequest()).thenReturn(response);
+        Mockito.when(request.executeRequest()).thenReturn(response);
 
         Job job = getJobs.getJob("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
@@ -111,7 +111,7 @@ public class GetJobsByJsonGetRequestTest {
         jsonArray.add(jobJson);
 
         Response response = new Response(jsonArray, 200);
-        Mockito.when(request.executeHttpRequest()).thenReturn(response);
+        Mockito.when(request.executeRequest()).thenReturn(response);
 
         Job job = getJobs.getJob("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
@@ -165,7 +165,7 @@ public class GetJobsByJsonGetRequestTest {
     @Test
     public void tstGetStatusForJobSuccess() throws Exception {
         Response response = new Response(jobJson, 200);
-        Mockito.when(request.executeHttpRequest()).thenReturn(response);
+        Mockito.when(request.executeRequest()).thenReturn(response);
 
         Job job = getJobs.getStatusForJob(new Job.Builder().jobId("1").jobName("jobName").build());
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/1", getJobs.getUrl());

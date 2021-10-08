@@ -90,7 +90,7 @@ public class SubmitJobs {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonRequestBody.toString(),
                 ZoweRequestType.VerbType.PUT_JSON);
 
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
         if (response.isEmpty())
             return new Job.Builder().build();
 
@@ -172,9 +172,9 @@ public class SubmitJobs {
 
         String body = params.getJcl().get();
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body, ZoweRequestType.VerbType.PUT_TEXT);
-        request.setAdditionalHeaders(headers);
+        request.setHeaders(headers);
 
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
         if (response.isEmpty())
             return new Job.Builder().build();
         try {

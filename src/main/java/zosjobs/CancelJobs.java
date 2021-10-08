@@ -123,7 +123,7 @@ public class CancelJobs {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonRequestBody.toString(),
                 ZoweRequestType.VerbType.PUT_JSON);
 
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {

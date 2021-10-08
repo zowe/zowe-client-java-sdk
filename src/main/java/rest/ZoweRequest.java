@@ -57,22 +57,22 @@ public abstract class ZoweRequest {
      * @throws Exception error executing request
      * @author Frank Giordano
      */
-    public abstract Response executeHttpRequest() throws Exception;
+    public abstract Response executeRequest() throws Exception;
 
     /**
-     * Set the standard headers for the http request
+     * Set standard headers for the http request
      *
      * @author Frank Giordano
      */
     public abstract void setStandardHeaders();
 
     /**
-     * Set additional headers needed for the http request
+     * Set any headers needed for the http request
      *
-     * @param additionalHeaders additional headers to add to the request
+     * @param headers headers to add to the request
      * @author Frank Giordano
      */
-    public abstract void setAdditionalHeaders(Map<String, String> additionalHeaders);
+    public abstract void setHeaders(Map<String, String> headers);
 
     /**
      * Set the following incoming url with a new http request

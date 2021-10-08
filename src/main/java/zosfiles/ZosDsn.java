@@ -70,7 +70,7 @@ public class ZosDsn {
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, content,
                 ZoweRequestType.VerbType.PUT_TEXT);
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
 
         try {
             UtilRest.checkHttpErrors(response);
@@ -120,7 +120,7 @@ public class ZosDsn {
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
                 ZoweRequestType.VerbType.DELETE_JSON);
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
 
         try {
             UtilRest.checkHttpErrors(response);
@@ -173,7 +173,7 @@ public class ZosDsn {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body,
                 ZoweRequestType.VerbType.POST_JSON);
 
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
 
         try {
             UtilRest.checkHttpErrors(response);

@@ -87,7 +87,7 @@ public class StartTso {
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
                 ZoweRequestType.VerbType.POST_JSON);
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
         if (response.isEmpty())
             return new ZosmfTsoResponse.Builder().build();
 
