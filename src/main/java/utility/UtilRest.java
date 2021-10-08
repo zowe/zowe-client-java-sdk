@@ -96,7 +96,7 @@ public class UtilRest {
             String responsePhrase = "";
             if (response.getResponsePhrase().isPresent())
                 responsePhrase = (String) response.getResponsePhrase().get();
-            String errorMsg = "http error code ";
+            String errorMsg = "Http error code ";
             if (!responsePhrase.isEmpty())
                 errorMsg += httpCode + " " + responsePhrase + ".";
             else errorMsg += httpCode + ".";

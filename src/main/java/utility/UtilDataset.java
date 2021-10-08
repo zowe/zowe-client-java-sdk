@@ -65,8 +65,8 @@ public class UtilDataset {
     public static void checkHttpErrors(String errMsg, List<String> dsNames, Crud.type type) throws Exception {
         Util.checkNullParameter(errMsg == null, "errMsg is null");
         Util.checkIllegalParameter(errMsg.isEmpty(), "errMsg not specified");
-        Util.checkNullParameter(dsNames == null, "dsName is null");
-        Util.checkIllegalParameter(dsNames.isEmpty(), "dsName not specified");
+        Util.checkNullParameter(dsNames == null, "dsNames is null");
+        Util.checkIllegalParameter(dsNames.isEmpty(), "dsNames not specified");
         Util.checkNullParameter(type == null, "crudType is null");
 
         String http404 = "is invalid or non-existent.";
