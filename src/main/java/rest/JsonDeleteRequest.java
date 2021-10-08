@@ -18,7 +18,6 @@ import utility.Util;
 import utility.UtilRest;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,7 +32,6 @@ public class JsonDeleteRequest extends ZoweRequest {
     private static final Logger LOG = LogManager.getLogger(JsonDeleteRequest.class);
 
     private HttpDelete request;
-    private Map<String, String> additionalHeaders = new HashMap<>();
 
     /**
      * JsonDeleteRequest constructor.
@@ -46,8 +44,8 @@ public class JsonDeleteRequest extends ZoweRequest {
     public JsonDeleteRequest(ZOSConnection connection, String url) throws Exception {
         super(connection, ZoweRequestType.VerbType.DELETE_JSON);
         if (!UtilRest.isUrlValid(url)) throw new Exception("url is invalid");
-        this.request = new HttpDelete(url);
-        this.setup();
+        request = new HttpDelete(url);
+        setup();
     }
 
     /**
@@ -56,18 +54,16 @@ public class JsonDeleteRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     @Override
-    public Response executeHttpRequest() throws Exception {
-        // add any additional headers...
-        additionalHeaders.forEach((key, value) -> request.setHeader(key, value));
+    public Response executeRequest() throws Exception {
         try {
-            this.httpResponse = client.execute(request, localContext);
+            httpResponse = client.execute(request, localContext);
         } catch (IOException e) {
             e.printStackTrace();
             return new Response(null, null);
         }
         int statusCode = httpResponse.getStatusLine().getStatusCode();
 
-        LOG.debug("JsonDeleteRequest::httpDelete - Response statusCode {}, Response {}",
+        LOG.debug("JsonDeleteRequest::executeRequest - Response statusCode {}, Response {}",
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
 
         if (UtilRest.isHttpError(statusCode)) {
@@ -90,14 +86,14 @@ public class JsonDeleteRequest extends ZoweRequest {
     }
 
     /**
-     * Set additional headers needed for the http request
+     * Set any headers needed for the http request
      *
-     * @param additionalHeaders additional headers to add to the request
+     * @param headers headers to add to the request
      * @author Frank Giordano
      */
     @Override
-    public void setAdditionalHeaders(Map<String, String> additionalHeaders) {
-        this.additionalHeaders = additionalHeaders;
+    public void setHeaders(Map<String, String> headers) {
+        headers.forEach((key, value) -> request.setHeader(key, value));
     }
 
     /**
@@ -109,8 +105,8 @@ public class JsonDeleteRequest extends ZoweRequest {
      */
     @Override
     public void setRequest(String url) throws Exception {
-        this.request = new HttpDelete(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
-        this.setup();
+        request = new HttpDelete(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
+        setup();
     }
 
 }

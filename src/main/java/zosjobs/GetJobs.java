@@ -185,7 +185,7 @@ public class GetJobs {
             request.setRequest(url);
         }
 
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
         if (response.isEmpty())
             return jobs;
         UtilRest.checkHttpErrors(response);
@@ -294,7 +294,7 @@ public class GetJobs {
         } else {
             request.setRequest(url);
         }
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
         if (response.isEmpty())
             return new Job.Builder().build();
         UtilRest.checkHttpErrors(response);
@@ -363,7 +363,7 @@ public class GetJobs {
             request.setRequest(url);
         }
 
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
         if (response.isEmpty())
             return files;
         UtilRest.checkHttpErrors(response);
@@ -448,7 +448,7 @@ public class GetJobs {
             request.setRequest(url);
         }
 
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
         if (response.isEmpty())
             return "";
         UtilRest.checkHttpErrors(response);
@@ -493,7 +493,7 @@ public class GetJobs {
         } else {
             request.setRequest(url);
         }
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
         if (response.isEmpty())
             return "";
         UtilRest.checkHttpErrors(response);
@@ -525,7 +525,7 @@ public class GetJobs {
         } else {
             request.setRequest(url);
         }
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
         if (response.isEmpty())
             return "";
         UtilRest.checkHttpErrors(response);

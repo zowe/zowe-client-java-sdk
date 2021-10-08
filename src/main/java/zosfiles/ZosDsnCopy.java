@@ -78,7 +78,7 @@ public class ZosDsnCopy {
 
         String body = buildBody(params);
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body, ZoweRequestType.VerbType.PUT_JSON);
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
 
         try {
             UtilRest.checkHttpErrors(response);

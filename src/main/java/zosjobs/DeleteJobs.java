@@ -117,9 +117,9 @@ public class DeleteJobs {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
                 ZoweRequestType.VerbType.DELETE_JSON);
 
-        request.setAdditionalHeaders(headers);
+        request.setHeaders(headers);
 
-        Response response = request.executeHttpRequest();
+        Response response = request.executeRequest();
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {

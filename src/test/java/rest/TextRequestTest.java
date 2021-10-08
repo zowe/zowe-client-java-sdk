@@ -51,7 +51,7 @@ public class TextRequestTest {
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
                 .thenThrow(new IOException());
 
-        Response response = getRequest.executeHttpRequest();
+        Response response = getRequest.executeRequest();
         Assertions.assertTrue(response.isEmpty());
         Mockito.verify(httpClient, Mockito.times(1))
                 .execute(any(HttpGet.class), any(BasicHttpContext.class));
@@ -62,7 +62,7 @@ public class TextRequestTest {
         Mockito.when(httpClient.execute(any(HttpUriRequest.class), any(BasicHttpContext.class)))
                 .thenThrow(new IOException());
 
-        Response response = putRequest.executeHttpRequest();
+        Response response = putRequest.executeRequest();
         Assertions.assertTrue(response.isEmpty());
         Mockito.verify(httpClient, Mockito.times(1))
                 .execute(any(HttpPut.class), any(BasicHttpContext.class));
