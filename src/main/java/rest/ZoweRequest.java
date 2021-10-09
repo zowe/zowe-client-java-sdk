@@ -101,7 +101,8 @@ public abstract class ZoweRequest {
         setStandardHeaders();
         try {
             client = HttpClients.custom()
-                    .setSSLContext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build())
+                    .setSSLContext(
+                            new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build())
                     .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE).build();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -163,7 +164,7 @@ public abstract class ZoweRequest {
             return new Response(entity.getContent(), statusCode);
         }
 
-        return new Response(Optional.empty(), statusCode);
+        return new Response(null, statusCode);
     }
 
     /**
