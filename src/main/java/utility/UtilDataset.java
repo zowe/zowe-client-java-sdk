@@ -119,7 +119,8 @@ public class UtilDataset {
                     datasets.append(http500);
                     datasets.append(" ");
                     datasets.append(http500Post);
-                    datasets.append(" Check CopyParams parameters you may have incorrectly set copyAllMembers.");
+                    datasets.append(" Check CopyParams copyAllMembers setting.");
+                    datasets.append(" You may have specified a partition data set but expected a sequential data set.");
                     throw new Exception(datasets.toString());
                 }
             }
