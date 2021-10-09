@@ -10,7 +10,6 @@
 package rest;
 
 import core.ZOSConnection;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.logging.log4j.LogManager;
@@ -18,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 import utility.Util;
 import utility.UtilRest;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -53,28 +51,9 @@ public class StreamGetRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     @Override
-    public Response executeRequest() throws IOException {
-        try {
-            httpResponse = client.execute(request, localContext);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new Response(null, null);
-        }
-        int statusCode = httpResponse.getStatusLine().getStatusCode();
-
-        LOG.debug("StreamGetRequest::executeRequest - Response statusCode {}, Response {}",
-                httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
-
-        if (UtilRest.isHttpError(statusCode)) {
-            return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
-        }
-
-        HttpEntity entity = httpResponse.getEntity();
-        if (entity != null) {
-            return new Response(entity.getContent(), statusCode);
-        }
-
-        return new Response(Optional.empty(), statusCode);
+    public Response executeRequest() throws Exception {
+        LOG.debug("StreamGetRequest::executeRequest");
+        return executeStreamRequest(request);
     }
 
     /**

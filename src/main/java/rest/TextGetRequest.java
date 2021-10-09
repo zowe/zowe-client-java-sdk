@@ -17,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 import utility.Util;
 import utility.UtilRest;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -55,22 +54,8 @@ public class TextGetRequest extends ZoweRequest {
      */
     @Override
     public Response executeRequest() throws Exception {
-        try {
-            httpResponse = client.execute(request, localContext);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new Response(null, null);
-        }
-        int statusCode = httpResponse.getStatusLine().getStatusCode();
-
-        LOG.debug("TextGetRequest::executeRequest - Response statusCode {}, Response {}",
-                httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
-
-        if (UtilRest.isHttpError(statusCode)) {
-            return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
-        }
-
-        return new Response(UtilRest.getTextResponseEntity(httpResponse), statusCode);
+        LOG.debug("TextGetRequest::executeRequest");
+        return executeTextRequest(request);
     }
 
     /**

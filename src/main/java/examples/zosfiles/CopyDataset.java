@@ -105,7 +105,7 @@ public class CopyDataset extends ZosConnection {
      * Example on how to call ZosDsnCopy copy method.
      * Copy method accepts a CopyParams object.
      * <p>
-     * This copy method is different than the other two examples above as it
+     * This copy method is different from the other two examples above as it
      * sets the copyAllMember variable true to indicate that the copy operation will be performed
      * on a partition dataset to another partition dataset copying all its members to the target.
      *
