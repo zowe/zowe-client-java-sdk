@@ -22,6 +22,7 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import utility.Util;
 import utility.UtilRest;
 
 import java.util.Map;
@@ -174,6 +175,9 @@ public abstract class ZoweRequest {
      * @author Frank Giordano
      */
     private <T> int execute(T request) throws Exception {
+        Util.checkNullParameter(request == null, "request is null");
+        Util.checkNullParameter(client == null, "client is null");
+
         httpResponse = client.execute((HttpUriRequest) request, localContext);
 
         int statusCode = httpResponse.getStatusLine().getStatusCode();
