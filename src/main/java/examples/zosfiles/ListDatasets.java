@@ -73,7 +73,7 @@ public class ListDatasets extends ZosConnection {
     public static void listDsn(ZOSConnection connection, String dataSetName) throws Exception {
         ListParams params = new ListParams.Builder().build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
-        List<Dataset> datasets = zosDsnList.listDsn(dataSetName, params);
+        List<String> datasets = zosDsnList.listDsn(dataSetName, params);
         datasets.forEach(LOG::info);
     }
 
