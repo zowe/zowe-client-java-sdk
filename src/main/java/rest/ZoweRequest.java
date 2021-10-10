@@ -190,7 +190,7 @@ public abstract class ZoweRequest {
     }
 
     /**
-     * Retrieve current request type for http request
+     * Retrieve current request http type
      *
      * @return http request type
      * @author Frank Giordano
