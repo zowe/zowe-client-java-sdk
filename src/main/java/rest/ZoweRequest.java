@@ -10,16 +10,23 @@
 package rest;
 
 import core.ZOSConnection;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.TrustAllStrategy;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import utility.Util;
+import utility.UtilRest;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Base abstract class that conforms to Http CRUD operations
@@ -28,6 +35,8 @@ import java.util.Map;
  * @version 1.0
  */
 public abstract class ZoweRequest {
+
+    private static final Logger LOG = LogManager.getLogger(ZoweRequest.class);
 
     public static final String X_CSRF_ZOSMF_HEADER_KEY = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
     public static final String X_CSRF_ZOSMF_HEADER_VALUE = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
@@ -92,7 +101,8 @@ public abstract class ZoweRequest {
         setStandardHeaders();
         try {
             client = HttpClients.custom()
-                    .setSSLContext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build())
+                    .setSSLContext(
+                            new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build())
                     .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE).build();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -100,7 +110,87 @@ public abstract class ZoweRequest {
     }
 
     /**
-     * Retrieve current request type for http request
+     * Execute a Zowe rest call request and return a Json object
+     *
+     * @param request http verb request
+     * @throws Exception error processing request
+     * @author Frank Giordano
+     */
+    protected <T> Response executeJsonRequest(T request) throws Exception {
+        int statusCode = execute(request);
+
+        if (UtilRest.isHttpError(statusCode)) {
+            return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
+        }
+
+        return new Response(UtilRest.getJsonResponseEntity(httpResponse), statusCode);
+    }
+
+    /**
+     * Execute a Zowe rest call request and return a text object
+     *
+     * @param request http verb request
+     * @return response object
+     * @throws Exception error processing request
+     * @author Frank Giordano
+     */
+    protected <T> Response executeTextRequest(T request) throws Exception {
+        int statusCode = execute(request);
+
+        if (UtilRest.isHttpError(statusCode)) {
+            return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
+        }
+
+        return new Response(UtilRest.getTextResponseEntity(httpResponse), statusCode);
+    }
+
+    /**
+     * Execute a Zowe rest call request and return a stream object
+     *
+     * @param request http verb request
+     * @return response object
+     * @throws Exception error processing request
+     * @author Frank Giordano
+     */
+    protected <T> Response executeStreamRequest(T request) throws Exception {
+        int statusCode = execute(request);
+
+        if (UtilRest.isHttpError(statusCode)) {
+            return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
+        }
+
+        HttpEntity entity = httpResponse.getEntity();
+        if (entity != null) {
+            return new Response(entity.getContent(), statusCode);
+        }
+
+        return new Response(null, statusCode);
+    }
+
+    /**
+     * Execute a Zowe rest call request
+     *
+     * @param request http verb request
+     * @return status code of the http request
+     * @throws Exception error processing request
+     * @author Frank Giordano
+     */
+    private <T> int execute(T request) throws Exception {
+        Util.checkNullParameter(request == null, "request is null");
+        Util.checkNullParameter(client == null, "client is null");
+
+        httpResponse = client.execute((HttpUriRequest) request, localContext);
+
+        int statusCode = httpResponse.getStatusLine().getStatusCode();
+
+        LOG.debug("ZoweRequest::execute - Response statusCode {}, Response {}",
+                httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());
+
+        return statusCode;
+    }
+
+    /**
+     * Retrieve current request http type
      *
      * @return http request type
      * @author Frank Giordano
