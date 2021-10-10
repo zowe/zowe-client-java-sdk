@@ -20,7 +20,6 @@ import utility.Util;
 import utility.UtilDataset;
 import utility.UtilRest;
 import zosfiles.input.ListParams;
-import zosfiles.response.Dataset;
 
 import java.util.*;
 
@@ -105,13 +104,13 @@ public class ZosDsnList {
      * @author Nikunj Goyal
      */
     @SuppressWarnings("unchecked")
-    public List<Dataset> listDsn(String dataSetName, ListParams params) throws Exception {
+    public List<String> listDsn(String dataSetName, ListParams params) throws Exception {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
 
         Map<String, String> headers = new HashMap<>();
-        List<Dataset> datasets = new ArrayList<>();
+        List<String> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
 
@@ -141,7 +140,7 @@ public class ZosDsnList {
         JSONArray items = (JSONArray) results.get(ZosFilesConstants.RESPONSE_ITEMS);
         items.forEach(item -> {
             JSONObject datasetObj = (JSONObject) item;
-            datasets.add(UtilDataset.createDatasetObjFromJson(datasetObj));
+            datasets.add((String) datasetObj.get("dsname"));
         });
 
         return datasets;
