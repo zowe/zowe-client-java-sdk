@@ -15,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zosfiles.ZosDsnList;
 import zosfiles.input.ListParams;
-import zosfiles.response.Dataset;
 
 import java.util.List;
 
