@@ -112,6 +112,8 @@ public abstract class ZoweRequest {
      * Execute a Zowe rest call request and return a Json object
      *
      * @param request http verb request
+     * @param <T>     http verb type
+     * @return response object
      * @throws Exception error processing request
      * @author Frank Giordano
      */
@@ -129,6 +131,7 @@ public abstract class ZoweRequest {
      * Execute a Zowe rest call request and return a text object
      *
      * @param request http verb request
+     * @param <T>     http verb type
      * @return response object
      * @throws Exception error processing request
      * @author Frank Giordano
@@ -147,6 +150,7 @@ public abstract class ZoweRequest {
      * Execute a Zowe rest call request and return a stream object
      *
      * @param request http verb request
+     * @param <T>     http verb type
      * @return response object
      * @throws Exception error processing request
      * @author Frank Giordano
