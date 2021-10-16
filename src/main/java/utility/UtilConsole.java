@@ -43,13 +43,12 @@ public class UtilConsole {
         // Append the command response string to the console response.
         if (zosmfResponse.getCmdResponse().isPresent() && zosmfResponse.getCmdResponse().get().length() > 0
                 && processResponses) {
-            // the IBM responses sometimes have \r and \r\n, we will process them our here and return them with just \n.
-            response.setCommandResponse(zosmfResponse.getCmdResponse().get().replace('\r', '\n'));
+            // the IBM responses sometimes have \r and \r\n, we will process them here and return them with just \n.
+            String responseValue = zosmfResponse.getCmdResponse().get().replace('\r', '\n');
+            response.setCommandResponse(responseValue);
             // If there are messages append a line-break to ensure that additional messages collected are displayed properly.
-            if (response.getCommandResponse().orElse("").length() > 0
-                    && (response.getCommandResponse().get().indexOf("\n")
-                    != response.getCommandResponse().get().length() - 1)) {
-                response.setCommandResponse(response.getCommandResponse() + "\n");
+            if (responseValue.length() > 0 && (responseValue.indexOf("\n") != responseValue.length() - 1)) {
+                response.setCommandResponse(responseValue + "\n");
             }
         }
 
