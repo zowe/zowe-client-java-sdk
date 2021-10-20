@@ -62,7 +62,7 @@ public class ZosDsnDownload {
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
 
         if (params.getVolume().isPresent()) {
-            url += params.getVolume().get();
+            url += "-(" + params.getVolume().get() + ")/";
         }
         url += Util.encodeURIComponent(dataSetName);
         LOG.debug(url);
