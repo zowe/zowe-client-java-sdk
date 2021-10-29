@@ -154,7 +154,7 @@ public class IssueCommand {
      * @return request body parameters, see ZosmfIssueParams object
      * @author Frank Giordano
      */
-    public ZosmfIssueParams buildZosmfConsoleApiParameters(IssueParams params) {
+    private ZosmfIssueParams buildZosmfConsoleApiParameters(IssueParams params) {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkIllegalParameter(params.getCommand().isEmpty(), "command not specified");
 
