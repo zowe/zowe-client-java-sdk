@@ -20,6 +20,7 @@ import utility.Util;
 import utility.UtilDataset;
 import utility.UtilRest;
 import zosfiles.input.ListParams;
+import zosfiles.response.Dataset;
 
 import java.util.*;
 
@@ -104,13 +105,13 @@ public class ZosDsnList {
      * @author Nikunj Goyal
      */
     @SuppressWarnings("unchecked")
-    public List<String> listDsn(String dataSetName, ListParams params) throws Exception {
+    public List<Dataset> listDsn(String dataSetName, ListParams params) throws Exception {
         Util.checkNullParameter(params == null, "params is null");
         Util.checkNullParameter(dataSetName == null, "dataSetName is null");
         Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
 
         Map<String, String> headers = new HashMap<>();
-        List<String> datasets = new ArrayList<>();
+        List<Dataset> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
 
@@ -140,7 +141,7 @@ public class ZosDsnList {
         JSONArray items = (JSONArray) results.get(ZosFilesConstants.RESPONSE_ITEMS);
         items.forEach(item -> {
             JSONObject datasetObj = (JSONObject) item;
-            datasets.add((String) datasetObj.get("dsname"));
+            datasets.add(UtilDataset.createDatasetObjFromJson(datasetObj));
         });
 
         return datasets;
@@ -177,9 +178,15 @@ public class ZosDsnList {
         value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
         headers.put(key, value);
 
-        if (params.getAttributes().isPresent()) {
-            key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(0);
-            value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
+        if (params.getAttribute().isPresent()) {
+            UtilDataset.Attribute attribute = params.getAttribute().get();
+            if (attribute == UtilDataset.Attribute.BASE) {
+                key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(0);
+                value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
+            } else if (attribute == UtilDataset.Attribute.VOL) {
+                key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_VOL").get(0);
+                value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_VOL").get(1);
+            } 
             headers.put(key, value);
         }
         if (params.getMaxLength().isPresent()) {

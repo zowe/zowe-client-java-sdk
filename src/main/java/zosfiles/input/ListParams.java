@@ -10,6 +10,8 @@
  */
 package zosfiles.input;
 
+import utility.UtilDataset;
+
 import java.util.Optional;
 
 /**
@@ -28,7 +30,7 @@ public class ListParams {
     /**
      * The indicator that we want to show more attributes
      */
-    private final Optional<String> attributes;
+    private final Optional<UtilDataset.Attribute> attribute;
 
     /**
      * The indicator that we want to show less data sets or members
@@ -57,7 +59,7 @@ public class ListParams {
 
     private ListParams(ListParams.Builder builder) {
         this.volume = Optional.ofNullable(builder.volume);
-        this.attributes = Optional.ofNullable(builder.attributes);
+        this.attribute = Optional.ofNullable(builder.attribute);
         this.maxLength = Optional.ofNullable(builder.maxLength);
         this.start = Optional.ofNullable(builder.start);
         this.recall = Optional.ofNullable(builder.recall);
@@ -81,8 +83,8 @@ public class ListParams {
      * @return attributes value
      * @author Leonid Baranov
      */
-    public Optional<String> getAttributes() {
-        return attributes;
+    public Optional<UtilDataset.Attribute> getAttribute() {
+        return attribute;
     }
 
     /**
@@ -139,7 +141,7 @@ public class ListParams {
     public String toString() {
         return "ListParams{" +
                 "volume=" + volume +
-                ", attributes=" + attributes +
+                ", attribute=" + attribute +
                 ", maxLength=" + maxLength +
                 ", start=" + start +
                 ", recall=" + recall +
@@ -151,7 +153,7 @@ public class ListParams {
     public static class Builder {
 
         private String volume;
-        private String attributes;
+        private UtilDataset.Attribute attribute;
         private String maxLength;
         private String start;
         private String recall;
@@ -163,8 +165,8 @@ public class ListParams {
             return this;
         }
 
-        public ListParams.Builder attributes(String attributes) {
-            this.attributes = attributes;
+        public ListParams.Builder attribute(UtilDataset.Attribute attribute) {
+            this.attribute = attribute;
             return this;
         }
 

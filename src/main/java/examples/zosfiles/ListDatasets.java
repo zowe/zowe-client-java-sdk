@@ -13,8 +13,10 @@ import core.ZOSConnection;
 import examples.ZosConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import utility.UtilDataset;
 import zosfiles.ZosDsnList;
 import zosfiles.input.ListParams;
+import zosfiles.response.Dataset;
 
 import java.util.List;
 
@@ -43,6 +45,7 @@ public class ListDatasets extends ZosConnection {
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
         ListDatasets.listDsn(connection, dataSetMask);
+        ListDatasets.listDsnVol(connection, dataSetMask);
         ListDatasets.listMembers(connection, dataSetName);
     }
 
@@ -62,7 +65,7 @@ public class ListDatasets extends ZosConnection {
     }
 
     /**
-     * List out all partition data sets of the given data set
+     * List out all data sets of the given data set. Each dataset returned will contain all of its properties.
      *
      * @param connection  ZOSConnection object
      * @param dataSetName data set name
@@ -70,9 +73,24 @@ public class ListDatasets extends ZosConnection {
      * @author Leonid Baranov
      */
     public static void listDsn(ZOSConnection connection, String dataSetName) throws Exception {
-        ListParams params = new ListParams.Builder().build();
+        ListParams params = new ListParams.Builder().attribute(UtilDataset.Attribute.BASE).build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
-        List<String> datasets = zosDsnList.listDsn(dataSetName, params);
+        List<Dataset> datasets = zosDsnList.listDsn(dataSetName, params);
+        datasets.forEach(LOG::info);
+    }
+
+    /**
+     * List out all data sets of the given data set. Each dataset returned will contain its volume property.
+     *
+     * @param connection  ZOSConnection object
+     * @param dataSetName data set name
+     * @throws Exception error processing request
+     * @author Frank Giordano
+     */
+    public static void listDsnVol(ZOSConnection connection, String dataSetName) throws Exception {
+        ListParams params = new ListParams.Builder().attribute(UtilDataset.Attribute.VOL).build();
+        ZosDsnList zosDsnList = new ZosDsnList(connection);
+        List<Dataset> datasets = zosDsnList.listDsn(dataSetName, params);
         datasets.forEach(LOG::info);
     }
 

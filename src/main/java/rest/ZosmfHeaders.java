@@ -157,6 +157,7 @@ public class ZosmfHeaders {
                     .putAll("X_IBM_INTRDR_MODE_TEXT", "X-IBM-Intrdr-Mode", "TEXT")
                     .putAll("X_IBM_NOTIFICATION_URL", "X-IBM-Notification-URL", "")
                     .putAll("X_IBM_ATTRIBUTES_BASE", "X-IBM-Attributes", "base")
+                    .putAll("X_IBM_ATTRIBUTES_VOL", "X-IBM-Attributes", "vol")
                     .putAll("X_IBM_JOB_MODIFY_VERSION_1", "X-IBM-Job-Modify-Version", "1.0")
                     .putAll("X_IBM_JOB_MODIFY_VERSION_2", "X-IBM-Job-Modify-Version", "2.0")
                     // the value does not matter
