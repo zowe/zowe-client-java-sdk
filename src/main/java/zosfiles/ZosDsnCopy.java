@@ -17,7 +17,6 @@ import rest.Response;
 import rest.ZoweRequest;
 import rest.ZoweRequestFactory;
 import rest.ZoweRequestType;
-import utility.Crud;
 import utility.Util;
 import utility.UtilDataset;
 import utility.UtilRest;
@@ -83,7 +82,7 @@ public class ZosDsnCopy {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(toDataSet, fromDataSet), Crud.type.copy);
+            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(toDataSet, fromDataSet), UtilDataset.Operation.copy);
         }
 
         return response;

@@ -13,7 +13,10 @@ import core.ZOSConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.*;
-import utility.*;
+import utility.Util;
+import utility.UtilDataset;
+import utility.UtilFiles;
+import utility.UtilRest;
 import zosfiles.input.DownloadParams;
 
 import java.io.InputStream;
@@ -87,7 +90,7 @@ public class ZosDsnDownload {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), Crud.type.download);
+            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), UtilDataset.Operation.download);
         }
 
         return (InputStream) response.getResponsePhrase().orElse(null);

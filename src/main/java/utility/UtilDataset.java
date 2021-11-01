@@ -23,6 +23,15 @@ import java.util.List;
 public class UtilDataset {
 
     /**
+     * Operation enum for setting the type of dataset request that will be performed.
+     *
+     * @author Frank Giordano
+     */
+    public enum Operation {
+        create, read, copy, delete, write, download
+    }
+
+    /**
      * Attribute enum for querying a dataset and how its returned data will be retrieved with what properties.
      * <p>
      * BASE return all properties of a dataset and its values.
@@ -73,7 +82,7 @@ public class UtilDataset {
      * @throws Exception with a possible customized error msg
      * @author Frank Giordano
      */
-    public static void checkHttpErrors(String errMsg, List<String> dsNames, Crud.type type) throws Exception {
+    public static void checkHttpErrors(String errMsg, List<String> dsNames, Operation type) throws Exception {
         Util.checkNullParameter(errMsg == null, "errMsg is null");
         Util.checkIllegalParameter(errMsg.isEmpty(), "errMsg not specified");
         Util.checkNullParameter(dsNames == null, "dsNames is null");

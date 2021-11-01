@@ -17,7 +17,6 @@ import rest.Response;
 import rest.ZoweRequest;
 import rest.ZoweRequestFactory;
 import rest.ZoweRequestType;
-import utility.Crud;
 import utility.Util;
 import utility.UtilDataset;
 import utility.UtilRest;
@@ -75,7 +74,7 @@ public class ZosDsn {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), Crud.type.write);
+            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), UtilDataset.Operation.write);
         }
 
         return response;
@@ -125,7 +124,7 @@ public class ZosDsn {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), Crud.type.delete);
+            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), UtilDataset.Operation.delete);
         }
 
         return response;
@@ -178,7 +177,7 @@ public class ZosDsn {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), Crud.type.create);
+            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), UtilDataset.Operation.create);
         }
 
         return response;

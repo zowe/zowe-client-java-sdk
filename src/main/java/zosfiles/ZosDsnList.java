@@ -15,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import rest.*;
-import utility.Crud;
 import utility.Util;
 import utility.UtilDataset;
 import utility.UtilRest;
@@ -80,7 +79,7 @@ public class ZosDsnList {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), Crud.type.read);
+            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName),  UtilDataset.Operation.read);
         }
 
         JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
@@ -132,7 +131,7 @@ public class ZosDsnList {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), Crud.type.read);
+            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName),  UtilDataset.Operation.read);
         }
 
         JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
@@ -186,7 +185,7 @@ public class ZosDsnList {
             } else if (attribute == UtilDataset.Attribute.VOL) {
                 key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_VOL").get(0);
                 value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_VOL").get(1);
-            } 
+            }
             headers.put(key, value);
         }
         if (params.getMaxLength().isPresent()) {
