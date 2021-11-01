@@ -21,7 +21,7 @@ import java.util.Map;
  * @author Nikunj Goyal
  * @version 1.0
  */
-public class UtilZosFiles {
+public class UtilFiles {
 
     /**
      * Common method to build headers given input options object
