@@ -61,7 +61,7 @@ public class StartStopResponses {
      * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public StartStopResponses(ZosmfTsoResponse zosmfTsoResponse) throws Exception {
+    public StartStopResponses(ZosmfTsoResponse zosmfTsoResponse, CollectedResponses collectedResponses) throws Exception {
         if (zosmfTsoResponse == null) throw new Exception("zosmfTsoResponse is null");
 
         this.zosmfTsoResponse = zosmfTsoResponse;
@@ -82,6 +82,7 @@ public class StartStopResponses {
         List<TsoMessages> tsoMsgLst = zosmfTsoResponse.getTsoData();
         tsoMsgLst.forEach(buildMessage::append);
         this.messages = buildMessage.toString();
+        this.collectedResponses = collectedResponses.getTsos();
     }
 
     /**

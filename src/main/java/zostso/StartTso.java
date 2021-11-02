@@ -67,8 +67,13 @@ public class StartTso {
 
         ZosmfTsoResponse zosmfResponse = startCommon(customParams);
 
-        // TODO
-        return new StartStopResponses(zosmfResponse);
+        CollectedResponses collectedResponses = null;
+        if (zosmfResponse.getServletKey().isPresent()) {
+            SendTso sendTso = new SendTso(connection);
+            collectedResponses = sendTso.getAllResponses(zosmfResponse);
+        }
+
+        return new StartStopResponses(zosmfResponse, collectedResponses);
     }
 
     /**

@@ -53,19 +53,19 @@ public class SendTso {
     /**
      * API method to send data to already started TSO address space, but will read TSO data until a PROMPT is reached.
      *
-     * @param data       to send to the TSO address space.
+     * @param command    to send to the TSO address space.
      * @param servletKey returned from a successful start
      * @return response object, see ISendResponse
      * @throws Exception error executing command
      * @author Frank Giordano
      */
-    public SendResponse sendDataToTSOCollect(String servletKey, String data) throws Exception {
+    public SendResponse sendDataToTSOCollect(String servletKey, String command) throws Exception {
         Util.checkNullParameter(servletKey == null, "servletKey is null");
-        Util.checkNullParameter(data == null, "data is null");
+        Util.checkNullParameter(command == null, "command is null");
         Util.checkIllegalParameter(servletKey.isEmpty(), "servletKey not specified");
-        Util.checkIllegalParameter(data.isEmpty(), "data not specified");
+        Util.checkIllegalParameter(command.isEmpty(), "command not specified");
 
-        ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParams(servletKey, data));
+        ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParams(servletKey, command));
 
         CollectedResponses responses = getAllResponses(putResponse);
         return createResponse(responses);
@@ -132,7 +132,7 @@ public class SendTso {
      * @throws Exception error executing command
      * @author Frank Giordano
      */
-    private CollectedResponses getAllResponses(ZosmfTsoResponse tso) throws Exception {
+    public CollectedResponses getAllResponses(ZosmfTsoResponse tso) throws Exception {
         boolean done = false;
         StringBuilder messages = new StringBuilder();
         List<ZosmfTsoResponse> tsos = new ArrayList<>();
@@ -147,7 +147,12 @@ public class SendTso {
                             messages.append("\n");
                         });
                     } else if (tsoDatum.getTsoPrompt().isPresent()) {
-                        if (messages.length() > 0) {
+                        if (messages.toString().contains("IKJ56602I COMMAND SYSTEM RESTARTING DUE TO ERROR")) {
+                            String IKJ56602I = "IKJ56602I COMMAND SYSTEM RESTARTING DUE TO ERROR";
+                            String msg = messages.toString();
+                            int startIndex = msg.indexOf("IKJ56602I");
+                            messages.delete(startIndex, startIndex + IKJ56602I.length() + "\nREADY".length());
+                        } else if (messages.length() > 0 && messages.toString().contains("READY")) {
                             done = true;
                         }
                         // TSO PROMPT reached without getting any data, retrying
