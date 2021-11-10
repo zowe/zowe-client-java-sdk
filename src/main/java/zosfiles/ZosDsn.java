@@ -21,9 +21,10 @@ import utility.Util;
 import utility.UtilDataset;
 import utility.UtilRest;
 import zosfiles.input.CreateParams;
+import zosfiles.input.ListParams;
+import zosfiles.response.Dataset;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * ZosDsn class that provides CRUD operations on Datasets
@@ -46,6 +47,40 @@ public class ZosDsn {
     public ZosDsn(ZOSConnection connection) {
         Util.checkConnection(connection);
         this.connection = connection;
+    }
+
+    /**
+     * Retrueves the information about a Dataset.
+     *
+     * @param dataSetName sequential or partition dataset (e.g. 'DATASET.LIB')
+     * @return dataset object
+     * @throws Exception error processing request
+     * @author Frank Giordano
+     */
+    public Dataset getDataSetInfo(String dataSetName) throws Exception {
+        Util.checkNullParameter(dataSetName == null, "dataSetName is null");
+        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        Dataset emptyDataSet = new Dataset.Builder().dsname(dataSetName).build();
+
+        String[] tokens = dataSetName.split("\\.");
+        int length = tokens.length - 1;
+        if (1 >= length) return emptyDataSet;
+
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            str.append(tokens[i]);
+            str.append(".");
+        }
+
+        String dataSetSearchStr = str.toString();
+        dataSetSearchStr = dataSetSearchStr.substring(0, str.length() - 1);
+        ZosDsnList zosDsnList = new ZosDsnList(connection);
+        ListParams params = new ListParams.Builder().attribute(UtilDataset.Attribute.BASE).build();
+        List<Dataset> dsLst = new ArrayList<>();
+        dsLst = zosDsnList.listDsn(dataSetSearchStr, params);
+
+        Optional<Dataset> dataSet = dsLst.stream().filter(d -> d.getDsname().get().contains(dataSetName)).findFirst();
+        return dataSet.orElse(emptyDataSet);
     }
 
     /**
