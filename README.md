@@ -41,6 +41,7 @@ See the following example programs:
     src/main/java/examples/zosfiles    
         CopyDataset.java
         CreateDataset.java  
+        DataSetInfo.java  
         DeleteDataset.java  
         DownloadDataset.java
         ListDatasets.java

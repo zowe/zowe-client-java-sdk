@@ -93,4 +93,14 @@ public class ZOSConnection {
         return password;
     }
 
+    @Override
+    public String toString() {
+        return "ZOSConnection{" +
+                "host='" + host + '\'' +
+                ", zosmfPort='" + zosmfPort + '\'' +
+                ", user='" + user + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
 }
