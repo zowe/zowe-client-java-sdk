@@ -62,8 +62,8 @@ See the following example programs:
 You need to replace all instances of "XXX" accordingly to meet your target's credentials and host information.  
   
 ## Demo App  
-  
-  https://github.com/frankgiordano/ZosShell
+
+[ZosShell](https://github.com/frankgiordano/ZosShell)
     
 ## Build
   
