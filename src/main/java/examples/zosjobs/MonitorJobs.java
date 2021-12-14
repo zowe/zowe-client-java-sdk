@@ -52,6 +52,13 @@ public class MonitorJobs extends ZosConnection {
         monitorIsJobRunning();
     }
 
+    /**
+     * Example on how to call MonitorJobs isJobRunning method.
+     * isJobRunning accepts a MonitorJobWaitForParams object
+     *
+     * @throws Exception error in processing request
+     * @author Frank Giordano
+     */
     public static void monitorIsJobRunning() throws Exception {
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
         MonitorJobWaitForParams mparams = new MonitorJobWaitForParams.Builder("XXX", "XXX").build();
