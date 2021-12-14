@@ -15,6 +15,7 @@ import examples.ZosConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import zosjobs.SubmitJobs;
+import zosjobs.input.MonitorJobWaitForParams;
 import zosjobs.response.Job;
 import zosjobs.types.JobStatus;
 
@@ -48,6 +49,13 @@ public class MonitorJobs extends ZosConnection {
         MonitorJobs.monitorJobsForStatusByJobObject(JobStatus.Type.INPUT);
         MonitorJobs.monitorJobsForStatusByJobNameAndId(JobStatus.Type.ACTIVE);
         MonitorJobs.monitorWaitForJobMessage("XXX");
+        monitorIsJobRunning();
+    }
+
+    public static void monitorIsJobRunning() throws Exception {
+        zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
+        MonitorJobWaitForParams mparams = new MonitorJobWaitForParams.Builder("XXX", "XXX").build();
+        LOG.info(monitorJobs.isJobRunning(mparams));
     }
 
     /**
