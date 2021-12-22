@@ -316,9 +316,7 @@ public class MonitorJobs {
         String jobName = params.getJobName().orElseThrow(() -> new Exception("job name not specified"));
         String jobId = params.getJobId().orElseThrow(() -> new Exception("job id not specified"));
         String status = getJobs.getStatusValue(jobName, jobId);
-        if (JobStatus.Type.INPUT.toString().equals(status) || JobStatus.Type.OUTPUT.toString().equals(status))
-            return false;
-        return true;
+        return !JobStatus.Type.INPUT.toString().equals(status) && !JobStatus.Type.OUTPUT.toString().equals(status);
     }
 
     /**
