@@ -54,7 +54,7 @@ public class TextRequestTest {
         Response response = null;
         try {
             response = getRequest.executeRequest();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         Assertions.assertTrue(response == null);
         Mockito.verify(httpClient, Mockito.times(1))
@@ -69,7 +69,7 @@ public class TextRequestTest {
         Response response = null;
         try {
             response = putRequest.executeRequest();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         Assertions.assertTrue(response == null);
         Mockito.verify(httpClient, Mockito.times(1))
