@@ -52,7 +52,7 @@ public class ZosDsn {
     }
 
     /**
-     * Retrueves the information about a Dataset.
+     * Retrieves the information about a Dataset.
      *
      * @param dataSetName sequential or partition dataset (e.g. 'DATASET.LIB')
      * @return dataset object
