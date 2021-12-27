@@ -4,7 +4,7 @@ SPDX-License-Identifier: EPL-2.0
 
 Copyright Contributors to the Zowe Project.
 
-# Zowe SDK for Java
+# Zowe Client SDK for Java
 
 [![Maven Central](https://img.shields.io/maven-central/v/org.zowe.client.java.sdk/zowe-client-java-sdk.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22org.zowe.client.java.sdk%22%20AND%20a:%22zowe-client-java-sdk%22)
 [![javadoc](https://javadoc.io/badge2/org.zowe.client.java.sdk/zowe-client-java-sdk/javadoc.svg)](https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk)
@@ -32,35 +32,11 @@ Functionality provided:
     CopyDataset
     CancelJobs
     DeleteJobs
+  
+## Code Samples  
 
-See the following example programs:  
-
-    src/main/java/examples/zosconsole   
-        IssueCommand.java  
-  
-    src/main/java/examples/zosfiles    
-        CopyDataset.java
-        CreateDataset.java  
-        DataSetInfo.java  
-        DeleteDataset.java  
-        DownloadDataset.java
-        ListDatasets.java
-        WriteDataset.java  
-  
-    src/main/java/examples/zosjobs    
-        CancelJobs.java
-        DeleteJobs.java
-        GetJobs.java
-        MonitorJobs.java
-        SubmitJobs
-
-    src/main/java/examples/zostos  
-        IssueTsoCommand.java
-  
-    src/main/java/examples/ZosConnection.java
-  
-You need to replace all instances of "XXX" accordingly to meet your target's credentials and host information.  
-  
+[Samples](https://github.com/frankgiordano/zowe-client-java-sdk-examples)    
+   
 ## Demo App  
 
 [ZosShell](https://github.com/frankgiordano/ZosShell)
