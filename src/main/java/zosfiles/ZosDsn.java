@@ -111,7 +111,7 @@ public class ZosDsn {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), UtilDataset.Operation.write);
+            UtilDataset.checkHttpErrors(e.getMessage(), List.of(dataSetName), UtilDataset.Operation.write);
         }
 
         return response;
@@ -161,7 +161,7 @@ public class ZosDsn {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), UtilDataset.Operation.delete);
+            UtilDataset.checkHttpErrors(e.getMessage(), List.of(dataSetName), UtilDataset.Operation.delete);
         }
 
         return response;
@@ -214,7 +214,7 @@ public class ZosDsn {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), UtilDataset.Operation.create);
+            UtilDataset.checkHttpErrors(e.getMessage(), List.of(dataSetName), UtilDataset.Operation.create);
         }
 
         return response;

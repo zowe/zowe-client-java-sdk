@@ -79,7 +79,7 @@ public class ZosDsnList {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), UtilDataset.Operation.read);
+            UtilDataset.checkHttpErrors(e.getMessage(), List.of(dataSetName), UtilDataset.Operation.read);
         }
 
         JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
@@ -131,7 +131,7 @@ public class ZosDsnList {
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(dataSetName), UtilDataset.Operation.read);
+            UtilDataset.checkHttpErrors(e.getMessage(), List.of(dataSetName), UtilDataset.Operation.read);
         }
 
         JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
