@@ -87,7 +87,7 @@ public class TextPutRequest extends ZoweRequest {
     /**
      * Set the following incoming url with a new http request
      *
-     * @param url fr the request
+     * @param url for the request
      * @throws Exception error setting the http request
      * @author Frank Giordano
      */

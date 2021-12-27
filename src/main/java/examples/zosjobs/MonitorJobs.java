@@ -61,8 +61,8 @@ public class MonitorJobs extends ZosConnection {
      */
     public static void monitorIsJobRunning() throws Exception {
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
-        MonitorJobWaitForParams mparams = new MonitorJobWaitForParams.Builder("XXX", "XXX").build();
-        LOG.info(monitorJobs.isJobRunning(mparams));
+        MonitorJobWaitForParams monitorParams = new MonitorJobWaitForParams.Builder("XXX", "XXX").build();
+        LOG.info(monitorJobs.isJobRunning(monitorParams));
     }
 
     /**
