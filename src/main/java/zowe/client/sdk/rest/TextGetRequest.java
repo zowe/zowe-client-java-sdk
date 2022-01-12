@@ -42,7 +42,9 @@ public class TextGetRequest extends ZoweRequest {
      */
     public TextGetRequest(ZOSConnection connection, String url) throws Exception {
         super(connection, ZoweRequestType.VerbType.GET_TEXT);
-        if (!UtilRest.isUrlValid(url)) throw new Exception("url is invalid");
+        if (!UtilRest.isUrlValid(url)) {
+            throw new Exception("url is invalid");
+        }
         request = new HttpGet(url);
         setup();
     }

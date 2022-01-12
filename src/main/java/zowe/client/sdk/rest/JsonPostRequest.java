@@ -44,7 +44,9 @@ public class JsonPostRequest extends ZoweRequest {
      */
     public JsonPostRequest(ZOSConnection connection, String url, String body) throws Exception {
         super(connection, ZoweRequestType.VerbType.POST_JSON);
-        if (!UtilRest.isUrlValid(url)) throw new Exception("url is invalid");
+        if (!UtilRest.isUrlValid(url)) {
+            throw new Exception("url is invalid");
+        }
         request = new HttpPost(url);
         request.setEntity(new StringEntity(Optional.ofNullable(body).orElse("")));
         setup();

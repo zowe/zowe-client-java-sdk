@@ -59,8 +59,9 @@ public class Util {
     public static void checkConnection(ZOSConnection connection) {
         if (connection == null || connection.getZosmfPort() == null || connection.getHost() == null ||
                 connection.getPassword() == null || connection.getUser() == null || connection.getZosmfPort().isEmpty() ||
-                connection.getHost().isEmpty() || connection.getPassword().isEmpty() || connection.getUser().isEmpty())
+                connection.getHost().isEmpty() || connection.getPassword().isEmpty() || connection.getUser().isEmpty()) {
             throw new IllegalStateException("Connection data not setup properly");
+        }
     }
 
     /**
@@ -73,7 +74,9 @@ public class Util {
      */
     public static void checkNullParameter(boolean check, String msg) {
         Optional<String> message = Optional.ofNullable(msg);
-        if (check) throw new NullPointerException(message.orElse("empty message specified"));
+        if (check) {
+            throw new NullPointerException(message.orElse("empty message specified"));
+        }
     }
 
     /**
@@ -86,7 +89,9 @@ public class Util {
      */
     public static void checkIllegalParameter(boolean check, String msg) {
         Optional<String> message = Optional.ofNullable(msg);
-        if (check) throw new IllegalArgumentException(message.orElse("empty message specified"));
+        if (check) {
+            throw new IllegalArgumentException(message.orElse("empty message specified"));
+        }
     }
 
     /**

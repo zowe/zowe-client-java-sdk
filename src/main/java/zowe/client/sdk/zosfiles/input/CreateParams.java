@@ -119,31 +119,37 @@ public class CreateParams {
         this.unit = Optional.ofNullable(builder.unit);
         this.dsorg = Optional.ofNullable(builder.dsorg);
         this.alcunit = Optional.ofNullable(builder.alcunit);
-        if (builder.primary == null)
+        if (builder.primary == null) {
             this.primary = OptionalInt.empty();
-        else
+        } else {
             this.primary = OptionalInt.of(builder.primary);
-        if (builder.secondary == null)
+        }
+        if (builder.secondary == null) {
             this.secondary = OptionalInt.empty();
-        else
+        } else {
             this.secondary = OptionalInt.of(builder.secondary);
-        if (builder.dirblk == null)
+        }
+        if (builder.dirblk == null) {
             this.dirblk = OptionalInt.empty();
-        else
+        } else {
             this.dirblk = OptionalInt.of(builder.dirblk);
-        if (builder.avgblk == null)
+        }
+        if (builder.avgblk == null) {
             this.avgblk = OptionalInt.empty();
-        else
+        } else {
             this.avgblk = OptionalInt.of(builder.avgblk);
+        }
         this.recfm = Optional.ofNullable(builder.recfm);
-        if (builder.blksize == null)
+        if (builder.blksize == null) {
             this.blksize = OptionalInt.empty();
-        else
+        } else {
             this.blksize = OptionalInt.of(builder.blksize);
-        if (builder.lrecl == null)
+        }
+        if (builder.lrecl == null) {
             this.lrecl = OptionalInt.empty();
-        else
+        } else {
             this.lrecl = OptionalInt.of(builder.lrecl);
+        }
         this.storclass = Optional.ofNullable(builder.storclass);
         this.mgntclass = Optional.ofNullable(builder.mgntclass);
         this.dataclass = Optional.ofNullable(builder.dataclass);

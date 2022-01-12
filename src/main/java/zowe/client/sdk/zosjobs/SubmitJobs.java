@@ -91,8 +91,9 @@ public class SubmitJobs {
                 ZoweRequestType.VerbType.PUT_JSON);
 
         Response response = request.executeRequest();
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return new Job.Builder().build();
+        }
 
         try {
             UtilRest.checkHttpErrors(response);
@@ -175,8 +176,9 @@ public class SubmitJobs {
         request.setHeaders(headers);
 
         Response response = request.executeRequest();
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return new Job.Builder().build();
+        }
         try {
             UtilRest.checkHttpErrors(response);
         } catch (Exception e) {

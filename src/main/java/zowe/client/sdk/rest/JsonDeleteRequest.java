@@ -42,7 +42,9 @@ public class JsonDeleteRequest extends ZoweRequest {
      */
     public JsonDeleteRequest(ZOSConnection connection, String url) throws Exception {
         super(connection, ZoweRequestType.VerbType.DELETE_JSON);
-        if (!UtilRest.isUrlValid(url)) throw new Exception("url is invalid");
+        if (!UtilRest.isUrlValid(url)) {
+            throw new Exception("url is invalid");
+        }
         request = new HttpDelete(url);
         setup();
     }

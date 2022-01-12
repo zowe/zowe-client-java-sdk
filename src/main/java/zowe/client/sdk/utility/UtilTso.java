@@ -130,10 +130,12 @@ public class UtilTso {
         if (tsoMessageMap != null) {
             TsoMessage tsoMessage = new TsoMessage();
             tsoMessageMap.forEach((key, value) -> {
-                if ("DATA".equals(key))
+                if ("DATA".equals(key)) {
                     tsoMessage.setData(value);
-                if ("VERSION".equals(key))
+                }
+                if ("VERSION".equals(key)) {
                     tsoMessage.setVersion(value);
+                }
             });
             tsoMessages.setTsoMessage(tsoMessage);
             tsoMessagesLst.add(tsoMessages);
@@ -146,10 +148,12 @@ public class UtilTso {
         if (tsoPromptMap != null) {
             TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();
             tsoPromptMap.forEach((key, value) -> {
-                if ("VERSION".equals(key))
+                if ("VERSION".equals(key)) {
                     tsoPromptMessage.setVersion(value);
-                if ("HIDDEN".equals(key))
+                }
+                if ("HIDDEN".equals(key)) {
                     tsoPromptMessage.setHidden(value);
+                }
             });
             tsoMessages.setTsoPrompt(tsoPromptMessage);
             tsoMessagesLst.add(tsoMessages);

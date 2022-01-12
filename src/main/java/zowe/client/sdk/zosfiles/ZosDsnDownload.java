@@ -84,8 +84,9 @@ public class ZosDsnDownload {
         request.setHeaders(headers);
 
         Response response = request.executeRequest();
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return null;
+        }
 
         try {
             UtilRest.checkHttpErrors(response);

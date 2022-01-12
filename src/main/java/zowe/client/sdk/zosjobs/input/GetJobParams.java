@@ -47,10 +47,11 @@ public class GetJobParams {
     private GetJobParams(Builder builder) {
         this.owner = Optional.ofNullable(builder.owner);
         this.prefix = Optional.ofNullable(builder.prefix);
-        if (builder.maxJobs == null)
+        if (builder.maxJobs == null) {
             this.maxJobs = OptionalInt.empty();
-        else
+        } else {
             this.maxJobs = OptionalInt.of(builder.maxJobs);
+        }
         this.jobId = Optional.ofNullable(builder.jobId);
     }
 

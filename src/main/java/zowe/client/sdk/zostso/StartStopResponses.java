@@ -63,7 +63,9 @@ public class StartStopResponses {
      * @author Frank Giordano
      */
     public StartStopResponses(ZosmfTsoResponse zosmfTsoResponse, CollectedResponses collectedResponses) throws Exception {
-        if (zosmfTsoResponse == null) throw new Exception("zosmfTsoResponse is null");
+        if (zosmfTsoResponse == null) {
+            throw new Exception("zosmfTsoResponse is null");
+        }
 
         this.zosmfTsoResponse = zosmfTsoResponse;
         if (!zosmfTsoResponse.getMsgData().isEmpty()) {

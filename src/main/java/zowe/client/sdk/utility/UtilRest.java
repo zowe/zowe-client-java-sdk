@@ -89,17 +89,22 @@ public class UtilRest {
     public static void checkHttpErrors(Response response) throws Exception {
         Util.checkNullParameter(response == null, "response is null");
         int httpCode;
-        if (response.getStatusCode().isPresent())
+        if (response.getStatusCode().isPresent()) {
             httpCode = response.getStatusCode().get();
-        else throw new Exception("no http code value returned");
+        } else {
+            throw new Exception("no http code value returned");
+        }
         if (isHttpError(httpCode)) {
             String responsePhrase = "";
-            if (response.getResponsePhrase().isPresent())
+            if (response.getResponsePhrase().isPresent()) {
                 responsePhrase = (String) response.getResponsePhrase().get();
+            }
             String errorMsg = "Http error code ";
-            if (!responsePhrase.isEmpty())
+            if (!responsePhrase.isEmpty()) {
                 errorMsg += httpCode + " " + responsePhrase + ".";
-            else errorMsg += httpCode + ".";
+            } else {
+                errorMsg += httpCode + ".";
+            }
             throw new Exception(errorMsg);
         }
     }

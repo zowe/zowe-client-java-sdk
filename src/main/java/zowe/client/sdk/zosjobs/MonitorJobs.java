@@ -178,11 +178,13 @@ public class MonitorJobs {
             params.setAttempts(attempts);
         }
 
-        if (params.getWatchDelay().isEmpty())
+        if (params.getWatchDelay().isEmpty()) {
             params.setWatchDelay(watchDelay);
+        }
 
-        if (params.getLineLimit().isEmpty())
+        if (params.getLineLimit().isEmpty()) {
             params.setLineLimit(lineLimit);
+        }
 
         return pollForMessage(params, message);
     }
@@ -289,14 +291,17 @@ public class MonitorJobs {
         Util.checkIllegalParameter(params.getJobId().isEmpty(), "job id not specified");
         Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "job id not specified");
 
-        if (params.getJobStatus().isEmpty())
+        if (params.getJobStatus().isEmpty()) {
             params.setJobStatus(DEFAULT_STATUS);
+        }
 
-        if (params.getAttempts().isEmpty())
+        if (params.getAttempts().isEmpty()) {
             params.setAttempts(attempts);
+        }
 
-        if (params.getWatchDelay().isEmpty())
+        if (params.getWatchDelay().isEmpty()) {
             params.setWatchDelay(watchDelay);
+        }
 
         return pollForStatus(params);
     }
@@ -334,22 +339,26 @@ public class MonitorJobs {
                 .jobId(params.getJobId().orElseThrow(() -> new Exception("job id not specified")))
                 .prefix(params.getJobName().orElseThrow(() -> new Exception("job name not specified"))).build();
         List<Job> jobs = getJobs.getJobsCommon(filter);
-        if (jobs.isEmpty())
+        if (jobs.isEmpty()) {
             throw new Exception("job does not exist");
+        }
         List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
         String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
 
         int lineLimit = params.getLineLimit().orElse(DEFAULT_LINE_LIMIT);
         int size = output.length, start;
 
-        if (size < lineLimit)
+        if (size < lineLimit) {
             start = 0;
-        else start = size - lineLimit;
+        } else {
+            start = size - lineLimit;
+        }
 
         for (int i = start; i < size; i++) {
             LOG.debug(output[i]);
-            if (output[i].contains(message))
+            if (output[i].contains(message)) {
                 return true;
+            }
         }
         return false;
     }
@@ -381,7 +390,9 @@ public class MonitorJobs {
 
             if (shouldContinue) {
                 Util.wait(timeoutVal);
-                if (!isJobRunning(params)) return false;
+                if (!isJobRunning(params)) {
+                    return false;
+                }
                 LOG.info("Waiting for message \"{}\"", message);
             }
         } while (shouldContinue);
@@ -422,8 +433,9 @@ public class MonitorJobs {
             }
         } while (shouldContinue);
 
-        if (numOfAttempts == maxAttempts)
+        if (numOfAttempts == maxAttempts) {
             throw new Exception("Desired status not seen. The number of maximum attempts reached.");
+        }
 
         return checkJobStatus.getJob();
     }
@@ -443,21 +455,26 @@ public class MonitorJobs {
         Job job = getJobs.getStatus(
                 params.getJobName().orElseThrow(() -> new Exception("job name not specified")),
                 params.getJobId().orElseThrow(() -> new Exception("job id not specified")));
-        if (statusNameCheck.equals(job.getStatus().orElse(DEFAULT_STATUS.toString())))
+        if (statusNameCheck.equals(job.getStatus().orElse(DEFAULT_STATUS.toString()))) {
             return new CheckJobStatus(true, job);
+        }
 
         String invalidStatusMsg = "Invalid status when checking for status ordering.";
         int orderIndexOfDesiredJobStatus = getOrderIndexOfStatus(statusNameCheck);
         if (orderIndexOfDesiredJobStatus == -1) // this should never happen but let's check for it.
+        {
             throw new Exception(invalidStatusMsg);
+        }
 
         int orderIndexOfCurrRunningJobStatus =
                 getOrderIndexOfStatus(job.getStatus().orElseThrow(() -> new Exception("job status not specified")));
-        if (orderIndexOfCurrRunningJobStatus == -1) // this should never happen but let's check for it.
+        if (orderIndexOfCurrRunningJobStatus == -1) {  // this should never happen but let's check for it.
             throw new Exception(invalidStatusMsg);
+        }
 
-        if (orderIndexOfCurrRunningJobStatus > orderIndexOfDesiredJobStatus)
+        if (orderIndexOfCurrRunningJobStatus > orderIndexOfDesiredJobStatus) {
             return new CheckJobStatus(true, job);
+        }
 
         return new CheckJobStatus(false, job);
     }

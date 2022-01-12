@@ -44,7 +44,9 @@ public class TextPutRequest extends ZoweRequest {
      */
     public TextPutRequest(ZOSConnection connection, String url, String body) throws Exception {
         super(connection, ZoweRequestType.VerbType.PUT_JSON);
-        if (!UtilRest.isUrlValid(url)) throw new Exception("url is invalid");
+        if (!UtilRest.isUrlValid(url)) {
+            throw new Exception("url is invalid");
+        }
         request = new HttpPut(url);
         request.setEntity(new StringEntity(Optional.ofNullable(body).orElse("")));
         setup();

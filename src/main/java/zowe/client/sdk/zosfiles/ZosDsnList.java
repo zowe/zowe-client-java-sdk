@@ -73,8 +73,9 @@ public class ZosDsnList {
         }
 
         Response response = getResponse(params, headers, url);
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return members;
+        }
 
         try {
             UtilRest.checkHttpErrors(response);
@@ -83,8 +84,9 @@ public class ZosDsnList {
         }
 
         JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
-        if (results.isEmpty())
+        if (results.isEmpty()) {
             return members;
+        }
         JSONArray items = (JSONArray) results.get("items");
         items.forEach(item -> {
             JSONObject datasetObj = (JSONObject) item;
@@ -125,8 +127,9 @@ public class ZosDsnList {
         }
 
         Response response = getResponse(params, headers, url);
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return datasets;
+        }
 
         try {
             UtilRest.checkHttpErrors(response);
@@ -135,8 +138,9 @@ public class ZosDsnList {
         }
 
         JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
-        if (results.isEmpty())
+        if (results.isEmpty()) {
             return datasets;
+        }
         JSONArray items = (JSONArray) results.get(ZosFilesConstants.RESPONSE_ITEMS);
         items.forEach(item -> {
             JSONObject datasetObj = (JSONObject) item;

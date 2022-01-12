@@ -73,8 +73,9 @@ public class IssueTso {
         StartTso startTso = new StartTso(connection);
         StartStopResponses startResponse = startTso.start(accountNumber, startParams);
 
-        if (startResponse == null)
+        if (startResponse == null) {
             throw new Exception("Severe failure getting started TSO address space.");
+        }
 
         if (!startResponse.isSuccess()) {
             throw new Exception("TSO address space failed to start. Error: " +

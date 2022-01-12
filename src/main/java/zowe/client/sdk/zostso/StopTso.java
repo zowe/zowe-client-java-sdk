@@ -66,8 +66,9 @@ public class StopTso {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
                 ZoweRequestType.VerbType.DELETE_JSON);
         Response response = request.executeRequest();
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return new ZosmfTsoResponse.Builder().build();
+        }
 
         try {
             UtilRest.checkHttpErrors(response);

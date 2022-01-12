@@ -126,8 +126,12 @@ public class GetJobs {
         Util.checkIllegalParameter(jobId.isEmpty(), "jobId not specified");
 
         List<Job> jobs = getJobsCommon(new GetJobParams.Builder("*").jobId(jobId).build());
-        if (jobs.isEmpty()) throw new Exception("Job not found");
-        if (jobs.size() > 1) throw new Exception("Expected 1 job returned but received " + jobs.size() + " jobs.");
+        if (jobs.isEmpty()) {
+            throw new Exception("Job not found");
+        }
+        if (jobs.size() > 1) {
+            throw new Exception("Expected 1 job returned but received " + jobs.size() + " jobs.");
+        }
 
         return jobs.get(0);
     }
@@ -186,12 +190,14 @@ public class GetJobs {
         }
 
         Response response = request.executeRequest();
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return jobs;
+        }
         UtilRest.checkHttpErrors(response);
         JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
-        if (results == null)
+        if (results == null) {
             return jobs;
+        }
 
         results.forEach(item -> {
             JSONObject jobObj = (JSONObject) item;
@@ -295,12 +301,14 @@ public class GetJobs {
             request.setRequest(url);
         }
         Response response = request.executeRequest();
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return new Job.Builder().build();
+        }
         UtilRest.checkHttpErrors(response);
         JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
-        if (result == null)
+        if (result == null) {
             return new Job.Builder().build();
+        }
 
         return UtilJobs.createJobObjFromJson(result);
     }
@@ -364,12 +372,14 @@ public class GetJobs {
         }
 
         Response response = request.executeRequest();
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return files;
+        }
         UtilRest.checkHttpErrors(response);
         JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
-        if (results == null)
+        if (results == null) {
             return files;
+        }
 
         results.forEach(item -> {
             JSONObject fileObj = (JSONObject) item;
@@ -449,8 +459,9 @@ public class GetJobs {
         }
 
         Response response = request.executeRequest();
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return "";
+        }
         UtilRest.checkHttpErrors(response);
         return (String) response.getResponsePhrase().orElse("");
     }
@@ -494,8 +505,9 @@ public class GetJobs {
             request.setRequest(url);
         }
         Response response = request.executeRequest();
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return "";
+        }
         UtilRest.checkHttpErrors(response);
         return (String) response.getResponsePhrase().orElse("");
     }
@@ -526,8 +538,9 @@ public class GetJobs {
             request.setRequest(url);
         }
         Response response = request.executeRequest();
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return "";
+        }
         UtilRest.checkHttpErrors(response);
         return (String) response.getResponsePhrase().orElse("");
     }

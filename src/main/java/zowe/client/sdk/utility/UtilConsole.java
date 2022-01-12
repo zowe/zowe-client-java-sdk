@@ -37,8 +37,9 @@ public class UtilConsole {
         response.setZosmfResponse(zosmfResponse);
         response.setSuccess(true);
 
-        if (zosmfResponse.getSolKeyDetected().isPresent())
+        if (zosmfResponse.getSolKeyDetected().isPresent()) {
             response.setKeywordDetected(true);
+        }
 
         // Append the command response string to the console response.
         if (zosmfResponse.getCmdResponse().isPresent() && zosmfResponse.getCmdResponse().get().length() > 0

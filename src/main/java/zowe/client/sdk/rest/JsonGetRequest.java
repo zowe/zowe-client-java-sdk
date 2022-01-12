@@ -42,7 +42,9 @@ public class JsonGetRequest extends ZoweRequest {
      */
     public JsonGetRequest(ZOSConnection connection, String url) throws Exception {
         super(connection, ZoweRequestType.VerbType.GET_JSON);
-        if (!UtilRest.isUrlValid(url)) throw new Exception("url is invalid");
+        if (!UtilRest.isUrlValid(url)) {
+            throw new Exception("url is invalid");
+        }
         this.request = new HttpGet(url);
         this.setup();
     }

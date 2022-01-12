@@ -109,10 +109,11 @@ public class Job {
         this.url = Optional.ofNullable(builder.url);
         this.filesUrl = Optional.ofNullable(builder.filesUrl);
         this.jobCorrelator = Optional.ofNullable(builder.jobCorrelator);
-        if (builder.phase == null)
+        if (builder.phase == null) {
             this.phase = OptionalInt.empty();
-        else
+        } else {
             this.phase = OptionalInt.of(builder.phase);
+        }
         this.phaseName = Optional.ofNullable(builder.phaseName);
         this.reasonNotRunning = Optional.ofNullable(builder.reasonNotRunning);
     }

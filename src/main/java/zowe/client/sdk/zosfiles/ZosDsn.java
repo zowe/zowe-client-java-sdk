@@ -66,7 +66,9 @@ public class ZosDsn {
 
         String[] tokens = dataSetName.split("\\.");
         int length = tokens.length - 1;
-        if (1 >= length) return emptyDataSet;
+        if (1 >= length) {
+            return emptyDataSet;
+        }
 
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < length; i++) {

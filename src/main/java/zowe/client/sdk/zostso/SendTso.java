@@ -94,8 +94,9 @@ public class SendTso {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jobObjBody,
                 ZoweRequestType.VerbType.PUT_JSON);
         Response response = request.executeRequest();
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return new ZosmfTsoResponse.Builder().build();
+        }
 
         try {
             UtilRest.checkHttpErrors(response);
@@ -183,8 +184,9 @@ public class SendTso {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, "",
                 ZoweRequestType.VerbType.PUT_JSON);
         Response response = request.executeRequest();
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return new ZosmfTsoResponse.Builder().build();
+        }
 
         try {
             UtilRest.checkHttpErrors(response);

@@ -93,8 +93,9 @@ public class StartTso {
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
                 ZoweRequestType.VerbType.POST_JSON);
         Response response = request.executeRequest();
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             return new ZosmfTsoResponse.Builder().build();
+        }
 
         try {
             UtilRest.checkHttpErrors(response);
@@ -114,7 +115,9 @@ public class StartTso {
      * @author Frank Giordano
      */
     private StartTsoParams setDefaultAddressSpaceParams(StartTsoParams params, String accountNumber) {
-        if (params == null) params = new StartTsoParams();
+        if (params == null) {
+            params = new StartTsoParams();
+        }
         String proc = params.getLogonProcedure().orElse(TsoConstants.DEFAULT_PROC);
         String chset = params.getCharacterSet().orElse(TsoConstants.DEFAULT_CHSET);
         String cpage = params.getCodePage().orElse(TsoConstants.DEFAULT_CPAGE);
