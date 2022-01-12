@@ -141,6 +141,7 @@ public class UtilDataset {
                     datasets.append(http500Post);
                     datasets.append(" Check CopyParams copyAllMembers setting.");
                     datasets.append(" You may have specified a partition data set but expected a sequential data set.");
+                    datasets.append(" Check for data set space capacity.");
                     throw new Exception(datasets.toString());
                 }
             }
