@@ -34,7 +34,8 @@ Functionality provided:
     DeleteJobs
       
 ## Requirements  
-  
+    
+    Maven  
     Java 11  
     z/OSMF installed on your backend z/OS instance.  
   
