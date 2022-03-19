@@ -73,7 +73,7 @@ public class ZosDsnDownload {
         String key, value;
         Map<String, String> headers = UtilFiles.generateHeadersBasedOnOptions(params);
 
-        if (params.getReturnEtag().isPresent()) {
+        if (params.getReturnEtag().orElse(false)) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(1);
             headers.put(key, value);
