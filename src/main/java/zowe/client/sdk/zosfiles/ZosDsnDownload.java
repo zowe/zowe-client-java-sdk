@@ -79,6 +79,12 @@ public class ZosDsnDownload {
             headers.put(key, value);
         }
 
+        if (params.getBinary().orElse(false)) {
+            key = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(0);
+            value = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(1);
+            headers.put(key, value);
+        }
+
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
                 ZoweRequestType.VerbType.GET_STREAM);
         request.setHeaders(headers);
