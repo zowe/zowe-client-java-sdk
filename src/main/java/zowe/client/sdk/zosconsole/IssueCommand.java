@@ -10,9 +10,9 @@
 package zowe.client.sdk.zosconsole;
 
 import org.apache.commons.text.StringEscapeUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -35,7 +35,7 @@ import java.util.HashMap;
  */
 public class IssueCommand {
 
-    private static final Logger LOG = LogManager.getLogger(IssueCommand.class);
+    private static final Logger LOG = LoggerFactory.getLogger(IssueCommand.class);
 
     private final ZOSConnection connection;
 
@@ -73,7 +73,7 @@ public class IssueCommand {
         var jsonMap = new HashMap<String, String>();
         jsonMap.put("cmd", commandParams.getCmd().get());
         var jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(jsonRequestBody);
+        LOG.debug(String.valueOf(jsonRequestBody));
 
         ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonRequestBody.toString(),
                 ZoweRequestType.VerbType.PUT_JSON);

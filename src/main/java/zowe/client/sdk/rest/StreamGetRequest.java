@@ -11,8 +11,8 @@ package zowe.client.sdk.rest;
 
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.utility.Util;
 import zowe.client.sdk.utility.UtilRest;
@@ -27,7 +27,7 @@ import java.util.Optional;
  */
 public class StreamGetRequest extends ZoweRequest {
 
-    private static final Logger LOG = LogManager.getLogger(StreamGetRequest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StreamGetRequest.class);
 
     private HttpGet request;
 

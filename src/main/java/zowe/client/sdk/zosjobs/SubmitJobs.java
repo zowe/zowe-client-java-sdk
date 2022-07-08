@@ -9,11 +9,11 @@
  */
 package zowe.client.sdk.zosjobs;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.utility.Util;
@@ -34,7 +34,7 @@ import java.util.Map;
  */
 public class SubmitJobs {
 
-    private static final Logger LOG = LogManager.getLogger(SubmitJobs.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SubmitJobs.class);
 
     private final ZOSConnection connection;
 
@@ -81,7 +81,7 @@ public class SubmitJobs {
         var jsonMap = new HashMap<String, String>();
         jsonMap.put("file", fullyQualifiedDataset);
         var jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(jsonRequestBody);
+        LOG.debug(String.valueOf(jsonRequestBody));
 
         if (params.getJclSymbols().isPresent()) {
             // TODO..

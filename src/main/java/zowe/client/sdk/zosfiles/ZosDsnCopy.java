@@ -9,9 +9,9 @@
  */
 package zowe.client.sdk.zosfiles;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -33,7 +33,7 @@ import java.util.HashMap;
  */
 public class ZosDsnCopy {
 
-    private static final Logger LOG = LogManager.getLogger(ZosDsnCopy.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ZosDsnCopy.class);
 
     private final ZOSConnection connection;
 
@@ -160,7 +160,7 @@ public class ZosDsnCopy {
         }
 
         var jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(jsonRequestBody);
+        LOG.debug(String.valueOf(jsonRequestBody));
         return jsonRequestBody.toString();
     }
 

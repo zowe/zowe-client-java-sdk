@@ -19,8 +19,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContextBuilder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.utility.Util;
 import zowe.client.sdk.utility.UtilRest;
@@ -35,7 +35,7 @@ import java.util.Map;
  */
 public abstract class ZoweRequest {
 
-    private static final Logger LOG = LogManager.getLogger(ZoweRequest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ZoweRequest.class);
 
     public static final String X_CSRF_ZOSMF_HEADER_KEY = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
     public static final String X_CSRF_ZOSMF_HEADER_VALUE = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
