@@ -10,8 +10,8 @@
  */
 package zowe.client.sdk.zosjobs;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.utility.Util;
 import zowe.client.sdk.zosjobs.input.GetJobParams;
@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class MonitorJobs {
 
-    private static final Logger LOG = LogManager.getLogger(MonitorJobs.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MonitorJobs.class);
 
     private final ZOSConnection connection;
     // double settings from DEFAULTS variables to allow constructor to control them also

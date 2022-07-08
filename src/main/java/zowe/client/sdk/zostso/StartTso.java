@@ -9,8 +9,8 @@
  */
 package zowe.client.sdk.zostso;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -30,7 +30,7 @@ import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
  */
 public class StartTso {
 
-    private static final Logger LOG = LogManager.getLogger(StartTso.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StartTso.class);
 
     private final ZOSConnection connection;
 

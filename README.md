@@ -54,13 +54,14 @@ The following maven command at the root prompt of the project will produce zowe-
     mvn clean package  
   
 ## Logger  
+
+SLF4J is used for logging within this SDK.   
   
-Logger packaged used for the project is log4j2.  
+SLF4J stands for Simple Logging Facade for Java. It provides a simple abstraction of all the logging frameworks.   
   
-Under 'resources' directory you will find the logger configuration file log4j2.xml.  
-  
-Change <Root level="debug"> assignment accordingly for your needs.  
-  
+As such, in our parent project that is consuming this SDK you can use any Logger framework that wraps around SLF4j, for instance logging frameworks such as Log4j2, Logback, JUL (java. util. logging), etc.
+
+    
 ## Documentation  
 
 https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk/latest/index.html  

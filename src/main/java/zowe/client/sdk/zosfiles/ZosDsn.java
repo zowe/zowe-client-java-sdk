@@ -9,9 +9,9 @@
  */
 package zowe.client.sdk.zosfiles;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 public class ZosDsn {
 
-    private static final Logger LOG = LogManager.getLogger(ZosDsn.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ZosDsn.class);
 
     private final ZOSConnection connection;
 
@@ -248,7 +248,7 @@ public class ZosDsn {
         params.getDsntype().ifPresent(v -> jsonMap.put("dsntype", v));
 
         var jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(jsonRequestBody);
+        LOG.debug(String.valueOf(jsonRequestBody));
         return jsonRequestBody.toString();
     }
 

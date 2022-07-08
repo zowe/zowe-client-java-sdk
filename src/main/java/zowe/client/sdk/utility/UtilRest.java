@@ -12,10 +12,10 @@ package zowe.client.sdk.utility;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.Response;
 
 import java.net.MalformedURLException;
@@ -30,7 +30,7 @@ import java.net.URL;
  */
 public class UtilRest {
 
-    private static final Logger LOG = LogManager.getLogger(UtilRest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UtilRest.class);
 
     /**
      * Retrieve response JSON entity content from httpResponse object
