@@ -38,7 +38,20 @@ public class CommonJobParams {
     private final Boolean stepData;
 
     /**
-     * CommonJobParams constructor
+     * CommonJobParams constructor, no step data information included.
+     *
+     * @param jobId    job id value
+     * @param jobName  job name value
+     * @author Frank Giordano
+     */
+    public CommonJobParams(String jobId, String jobName) {
+        this.jobId = Optional.ofNullable(jobId);
+        this.jobName = Optional.ofNullable(jobName);
+        this.stepData = false;
+    }
+
+    /**
+     * CommonJobParams constructor with step data flag
      *
      * @param jobId    job id value
      * @param jobName  job name value
