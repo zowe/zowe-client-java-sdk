@@ -220,7 +220,7 @@ public class GetJobs {
         Util.checkNullParameter(jobName == null, "jobName is null");
         Util.checkNullParameter(jobId == null, "jobId is null");
 
-        Job job = getStatusCommon(new CommonJobParams(jobId, jobName));
+        Job job = getStatusCommon(new CommonJobParams(jobId, jobName, false));
         return job.getStatus().orElseThrow(() -> new Exception("job status is missing"));
     }
 
@@ -236,7 +236,7 @@ public class GetJobs {
         Util.checkNullParameter(job == null, "job is null");
 
         Job result = getStatusCommon(
-                new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
+                new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null), false));
         return result.getStatus().orElseThrow(() -> new Exception("job status is missing"));
     }
 
@@ -253,7 +253,7 @@ public class GetJobs {
         Util.checkNullParameter(jobName == null, "jobName is null");
         Util.checkNullParameter(jobId == null, "jobId is null");
 
-        return getStatusCommon(new CommonJobParams(jobId, jobName));
+        return getStatusCommon(new CommonJobParams(jobId, jobName, false));
     }
 
     /**
@@ -272,7 +272,7 @@ public class GetJobs {
         Util.checkNullParameter(job == null, "job is null");
 
         return getStatusCommon(new CommonJobParams(job.getJobId().orElse(null),
-                job.getJobName().orElse(null)));
+                job.getJobName().orElse(null), false));
     }
 
     /**
@@ -292,6 +292,10 @@ public class GetJobs {
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 Util.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get();
+
+        if (params.isStepData()) {
+            url += JobsConstants.QUERY_ID + JobsConstants.STEP_DATA;
+        }
 
         LOG.debug(url);
 
@@ -323,7 +327,7 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public List<JobFile> getSpoolFiles(String jobName, String jobId) throws Exception {
-        return getSpoolFilesCommon(new CommonJobParams(jobId, jobName));
+        return getSpoolFilesCommon(new CommonJobParams(jobId, jobName, false));
     }
 
     /**
@@ -339,7 +343,7 @@ public class GetJobs {
     public List<JobFile> getSpoolFilesForJob(Job job) throws Exception {
         return getSpoolFilesCommon(
                 new CommonJobParams(job.getJobId().orElseThrow(() -> new Exception("job id not specified")),
-                        job.getJobName().orElseThrow(() -> new Exception("job name not specified"))));
+                        job.getJobName().orElseThrow(() -> new Exception("job name not specified")), false));
     }
 
     /**
@@ -413,7 +417,7 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public String getJcl(String jobName, String jobId) throws Exception {
-        return getJclCommon(new CommonJobParams(jobId, jobName));
+        return getJclCommon(new CommonJobParams(jobId, jobName, false));
     }
 
     /**
@@ -427,7 +431,7 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public String getJclForJob(Job job) throws Exception {
-        return getJclCommon(new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
+        return getJclCommon(new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null), false));
     }
 
     /**

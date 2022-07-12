@@ -9,9 +9,11 @@
  */
 package zowe.client.sdk.utility;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosjobs.input.ModifyJobParams;
 import zowe.client.sdk.zosjobs.response.Job;
+import zowe.client.sdk.zosjobs.response.JobStepData;
 
 /**
  * Utility Class for GetJobs related static helper methods.
@@ -30,7 +32,9 @@ public class UtilJobs {
      */
     public static Job createJobObjFromJson(JSONObject json) {
         Util.checkNullParameter(json == null, "json is null");
-        return new Job.Builder().jobId((String) json.get("jobid"))
+
+        Job.Builder job = new Job.Builder();
+        job.jobId((String) json.get("jobid"))
                 .jobName((String) json.get("jobname"))
                 .subSystem((String) json.get("subsystem"))
                 .owner((String) json.get("owner"))
@@ -41,8 +45,30 @@ public class UtilJobs {
                 .filesUrl((String) json.get("files-url"))
                 .retCode((String) json.get("retcode"))
                 .jobCorrelator((String) json.get("job-correlator"))
-                .phaseName((String) json.get("phase-name"))
-                .build();
+                .phaseName((String) json.get("phase-name"));
+
+        // check for "step-data" used by getStatusCommon if flag is set to true
+        JSONArray stepData = (JSONArray) json.get("step-data");
+        if (stepData != null) {
+            int size = stepData.size();
+            JobStepData[] jobStepDataArray = new JobStepData[size];
+            for (int i = 0; i < size; i++) {
+                JobStepData jobStepData = new JobStepData();
+                JSONObject obj = (JSONObject) stepData.get(i);
+                jobStepData.setSmfid((String) obj.get("smfid"));
+                jobStepData.setCompletion((String) obj.get("completion"));
+                jobStepData.setStepNumber((Long) obj.get("step-number"));
+                jobStepData.setProgramName((String) obj.get("program-name"));
+                jobStepData.setActive((boolean) obj.get("active"));
+                jobStepData.setStepName((String) obj.get("step-name"));
+                jobStepData.setProcStepName((String) obj.get("proc-step-name"));
+                jobStepDataArray[i] = jobStepData;
+            }
+
+            return job.stepData(jobStepDataArray).build();
+        }
+
+        return job.build();
     }
 
     /**

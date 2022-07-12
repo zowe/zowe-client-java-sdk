@@ -23,6 +23,11 @@ public class JobsConstants {
     public static final String STEP_DATA = "step-data=Y";
 
     /**
+     * Query identifier
+     */
+    public static final String QUERY_ID = "?";
+
+    /**
      * Query id for getting job by an owner
      */
     public static final String QUERY_OWNER = "owner=";
