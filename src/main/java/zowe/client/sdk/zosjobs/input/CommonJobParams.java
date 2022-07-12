@@ -30,15 +30,25 @@ public class CommonJobParams {
     private final Optional<String> jobName;
 
     /**
+     * Flag to indicate whether to include step data
+     * <p>
+     * Step data is an optional parameter that indicates whether the service returns information about each step in
+     * the job that completed, such as the step name, step number, and completion code.
+     */
+    private final Boolean stepData;
+
+    /**
      * CommonJobParams constructor
      *
-     * @param jobId   job id value
-     * @param jobName job name value
+     * @param jobId    job id value
+     * @param jobName  job name value
+     * @param stepData determines whether step data is included in rest call
      * @author Frank Giordano
      */
-    public CommonJobParams(String jobId, String jobName) {
+    public CommonJobParams(String jobId, String jobName, Boolean stepData) {
         this.jobId = Optional.ofNullable(jobId);
         this.jobName = Optional.ofNullable(jobName);
+        this.stepData = stepData;
     }
 
     /**
@@ -59,6 +69,16 @@ public class CommonJobParams {
      */
     public Optional<String> getJobName() {
         return jobName;
+    }
+
+    /**
+     * Determines whether step data is included in rest call
+     *
+     * @return true or false
+     * @author Frank Giordano
+     */
+    public Boolean isStepData() {
+        return stepData;
     }
 
     @Override

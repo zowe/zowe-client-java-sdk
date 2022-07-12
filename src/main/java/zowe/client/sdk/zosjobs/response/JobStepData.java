@@ -18,19 +18,24 @@ package zowe.client.sdk.zosjobs.response;
 public class JobStepData {
 
     /**
-     * smfid
+     * SMFID
      */
     private String smfid;
 
     /**
+     * Completion
+     */
+    private String completion;
+
+    /**
      * Active
      */
-    private String active;
+    private boolean active;
 
     /**
      * Job relevant step
      */
-    private Integer stepNumber;
+    private Long stepNumber;
 
     /**
      * Job relevant proc
@@ -48,5 +53,46 @@ public class JobStepData {
     private String programName;
 
     // TODO
+
+    public void setSmfid(String smfid) {
+        this.smfid = smfid;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setProcStepName(String procStepName) {
+        this.procStepName = procStepName;
+    }
+
+    public void setStepName(String stepName) {
+        this.stepName = stepName;
+    }
+
+    public void setProgramName(String programName) {
+        this.programName = programName;
+    }
+
+    public void setCompletion(String completion) {
+        this.completion = completion;
+    }
+
+    public void setStepNumber(Long stepNumber) {
+        this.stepNumber = stepNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "JobStepData{" +
+                "smfid='" + smfid + '\'' +
+                ", completion='" + completion + '\'' +
+                ", active=" + active +
+                ", stepNumber=" + stepNumber +
+                ", procStepName='" + procStepName + '\'' +
+                ", stepName='" + stepName + '\'' +
+                ", programName='" + programName + '\'' +
+                '}';
+    }
 
 }
