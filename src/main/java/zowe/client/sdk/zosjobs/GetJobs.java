@@ -220,7 +220,7 @@ public class GetJobs {
         Util.checkNullParameter(jobName == null, "jobName is null");
         Util.checkNullParameter(jobId == null, "jobId is null");
 
-        Job job = getStatusCommon(new CommonJobParams(jobId, jobName, false));
+        Job job = getStatusCommon(new CommonJobParams(jobId, jobName));
         return job.getStatus().orElseThrow(() -> new Exception("job status is missing"));
     }
 
@@ -236,7 +236,7 @@ public class GetJobs {
         Util.checkNullParameter(job == null, "job is null");
 
         Job result = getStatusCommon(
-                new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null), false));
+                new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
         return result.getStatus().orElseThrow(() -> new Exception("job status is missing"));
     }
 
@@ -253,7 +253,7 @@ public class GetJobs {
         Util.checkNullParameter(jobName == null, "jobName is null");
         Util.checkNullParameter(jobId == null, "jobId is null");
 
-        return getStatusCommon(new CommonJobParams(jobId, jobName, false));
+        return getStatusCommon(new CommonJobParams(jobId, jobName));
     }
 
     /**
@@ -272,7 +272,7 @@ public class GetJobs {
         Util.checkNullParameter(job == null, "job is null");
 
         return getStatusCommon(new CommonJobParams(job.getJobId().orElse(null),
-                job.getJobName().orElse(null), false));
+                job.getJobName().orElse(null)));
     }
 
     /**
@@ -327,7 +327,7 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public List<JobFile> getSpoolFiles(String jobName, String jobId) throws Exception {
-        return getSpoolFilesCommon(new CommonJobParams(jobId, jobName, false));
+        return getSpoolFilesCommon(new CommonJobParams(jobId, jobName));
     }
 
     /**
@@ -343,7 +343,7 @@ public class GetJobs {
     public List<JobFile> getSpoolFilesForJob(Job job) throws Exception {
         return getSpoolFilesCommon(
                 new CommonJobParams(job.getJobId().orElseThrow(() -> new Exception("job id not specified")),
-                        job.getJobName().orElseThrow(() -> new Exception("job name not specified")), false));
+                        job.getJobName().orElseThrow(() -> new Exception("job name not specified"))));
     }
 
     /**
@@ -417,7 +417,7 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public String getJcl(String jobName, String jobId) throws Exception {
-        return getJclCommon(new CommonJobParams(jobId, jobName, false));
+        return getJclCommon(new CommonJobParams(jobId, jobName));
     }
 
     /**
@@ -431,7 +431,7 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public String getJclForJob(Job job) throws Exception {
-        return getJclCommon(new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null), false));
+        return getJclCommon(new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
     }
 
     /**
