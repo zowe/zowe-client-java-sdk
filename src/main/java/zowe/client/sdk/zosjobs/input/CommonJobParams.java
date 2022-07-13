@@ -40,8 +40,8 @@ public class CommonJobParams {
     /**
      * CommonJobParams constructor, no step data information included.
      *
-     * @param jobId    job id value
-     * @param jobName  job name value
+     * @param jobId   job id value
+     * @param jobName job name value
      * @author Frank Giordano
      */
     public CommonJobParams(String jobId, String jobName) {
