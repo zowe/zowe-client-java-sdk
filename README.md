@@ -33,7 +33,7 @@ Functionality provided:
     CancelJobs
     DeleteJobs
     CheckStatus
-    listDefinedSystems
+    ListDefinedSystems
       
 ## Requirements  
     
