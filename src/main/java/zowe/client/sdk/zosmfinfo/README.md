@@ -1,4 +1,4 @@
-# z/OS Jobs Package
+# z/OSMF INFO Package
 
 Contains APIs to interact with retrieving information about your z/OSMF instance on z/OS (using z/OSMF jobs REST endpoints).
 

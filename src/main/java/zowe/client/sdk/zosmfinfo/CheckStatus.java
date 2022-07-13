@@ -48,7 +48,7 @@ public class CheckStatus {
      * Get z/OSMF information
      *
      * @return ZosmfInfoResponse object
-     * @throws Exception
+     * @throws Exception problem with response
      */
     public ZosmfInfoResponse getZosmfInfo() throws Exception {
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
