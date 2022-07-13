@@ -32,6 +32,8 @@ Functionality provided:
     CopyDataset
     CancelJobs
     DeleteJobs
+    CheckStatus
+    listDefinedSystems
       
 ## Requirements  
     
