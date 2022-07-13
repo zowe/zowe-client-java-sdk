@@ -12,6 +12,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
                 <configuration>
                     <source>11</source>
                     <target>11</target>
@@ -19,6 +20,39 @@
                         <arg>-Xlint:unchecked </arg>
                     </compilerArgs>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -91,7 +125,6 @@
         </dependency>
 
         <!-- Test -->
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -115,17 +148,14 @@
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version>
         </dependency>
-
     </dependencies>
 
     <profiles>
         <profile>
             <id>ci-cd</id>
-
             <build>
                 <finalName>zowe-client-java-sdk</finalName>
                 <plugins>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
@@ -139,7 +169,6 @@
                             </execution>
                         </executions>
                     </plugin>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
@@ -153,7 +182,6 @@
                             </execution>
                         </executions>
                     </plugin>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
@@ -175,21 +203,17 @@
                             </execution>
                         </executions>
                     </plugin>
-
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
                         <version>1.6.8</version>
                         <extensions>true</extensions>
-
                         <configuration>
                             <serverId>ossrh</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>false</autoReleaseAfterClose>
                         </configuration>
-
                     </plugin>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
@@ -199,19 +223,16 @@
                             <target>11</target>
                         </configuration>
                     </plugin>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
                         <version>3.1.1</version>
-
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
                         </configuration>
-
                         <executions>
                             <execution>
                                 <id>make-assembly</id>
@@ -221,7 +242,6 @@
                                 </goals>
                             </execution>
                         </executions>
-
                     </plugin>
                 </plugins>
 
