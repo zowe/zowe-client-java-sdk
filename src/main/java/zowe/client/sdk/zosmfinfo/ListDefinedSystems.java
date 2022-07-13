@@ -48,7 +48,7 @@ public class ListDefinedSystems {
      * List systems defined to z/OSMF
      *
      * @return ZosmfListDefinedSystemsResponse object
-     * @throws Exception
+     * @throws Exception problem with response
      */
     public ZosmfListDefinedSystemsResponse listDefinedSystems() throws Exception {
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
