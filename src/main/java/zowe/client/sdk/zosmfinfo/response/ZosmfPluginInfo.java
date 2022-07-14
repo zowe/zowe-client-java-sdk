@@ -22,18 +22,17 @@ public class ZosmfPluginInfo {
     /**
      * Plugin version
      */
-    public final Optional<String> pluginVersion;
+    private final Optional<String> pluginVersion;
 
     /**
      * Plugin default name
      */
-    public final Optional<String> pluginDefaultName;
+    private final Optional<String> pluginDefaultName;
 
     /**
      * Plugin status.
      */
-    public final Optional<String> pluginStatus;
-
+    private final Optional<String> pluginStatus;
 
     /**
      * ZosmfPluginInfo Constructor.
@@ -45,6 +44,36 @@ public class ZosmfPluginInfo {
         this.pluginVersion = Optional.ofNullable(builder.pluginVersion);
         this.pluginDefaultName = Optional.ofNullable(builder.pluginDefaultName);
         this.pluginStatus = Optional.ofNullable(builder.pluginStatus);
+    }
+
+    /**
+     * Retrieve pluginVersion specified
+     *
+     * @return pluginVersion value
+     * @author Frank Giordano
+     */
+    public Optional<String> getPluginVersion() {
+        return pluginVersion;
+    }
+
+    /**
+     * Retrieve pluginDefaultName specified
+     *
+     * @return pluginDefaultName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getPluginDefaultName() {
+        return pluginDefaultName;
+    }
+
+    /**
+     * Retrieve pluginStatus specified
+     *
+     * @return pluginStatus value
+     * @author Frank Giordano
+     */
+    public Optional<String> getPluginStatus() {
+        return pluginStatus;
     }
 
     @Override

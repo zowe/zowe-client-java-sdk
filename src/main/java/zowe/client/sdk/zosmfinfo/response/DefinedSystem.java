@@ -22,65 +22,65 @@ public class DefinedSystem {
     /**
      * Unique name assigned to the system definition.
      */
-    public final Optional<String> systemNickName;
+    private final Optional<String> systemNickName;
 
     /**
      * Comma-separated list of the groups to which the system is assigned.
      */
-    public final Optional<String> groupNames;
+    private final Optional<String> groupNames;
 
     /**
      * Serial number of the CPC.
      */
-    public final Optional<String> cpcSerial;
+    private final Optional<String> cpcSerial;
 
     /**
      * Version of z/OS
      */
-    public final Optional<String> zosVR;
+    private final Optional<String> zosVR;
 
     /**
      * Name specified for the system on the SYSNAME parameter in the IEASYSxx parmlib member.
      */
-    public final Optional<String> systemName;
+    private final Optional<String> systemName;
 
     /**
      * Type for the primary job entry subsystem running on the system. The type is either JES2 or JES3.
      */
-    public final Optional<String> jesType;
+    private final Optional<String> jesType;
 
     /**
      * Name of the sysplex where the z/OS system is a member.
      */
-    public final Optional<String> sysplexName;
+    private final Optional<String> sysplexName;
 
     /**
      * JES2 multi-access spool (MAS) member name or JES3 complex member name
      */
-    public final Optional<String> jesMemberName;
+    private final Optional<String> jesMemberName;
 
     /**
      * Name of the HTTP proxy definition that specifies the settings required to access the system through
      * an HTTP or SOCKS proxy server.
      */
-    public final Optional<String> httpProxyName;
+    private final Optional<String> httpProxyName;
 
     /**
      * Name of the server definition that specifies the settings required to access the FTP or SFTP server
      * that is running on the system.
      */
-    public final Optional<String> ftpDestinationName;
+    private final Optional<String> ftpDestinationName;
 
     /**
      * URL used to access the z/OSMF instance that resides in the same sysplex as the system identified by
      * the systemName attribute.
      */
-    public final Optional<String> url;
+    private final Optional<String> url;
 
     /**
      * Name specified for the central processor complex (CPC) at the support element (SE) of that processor complex.
      */
-    public final Optional<String> cpcName;
+    private final Optional<String> cpcName;
 
     /**
      * DefinedSystem Constructor.
@@ -101,6 +101,126 @@ public class DefinedSystem {
         this.ftpDestinationName = Optional.ofNullable(builder.ftpDestinationName);
         this.url = Optional.ofNullable(builder.url);
         this.cpcName = Optional.ofNullable(builder.cpcName);
+    }
+
+    /**
+     * Retrieve systemNickName specified
+     *
+     * @return systemNickName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getSystemNickName() {
+        return systemNickName;
+    }
+
+    /**
+     * Retrieve groupNames specified
+     *
+     * @return groupNames value
+     * @author Frank Giordano
+     */
+    public Optional<String> getGroupNames() {
+        return groupNames;
+    }
+
+    /**
+     * Retrieve cpcSerial specified
+     *
+     * @return cpcSerial value
+     * @author Frank Giordano
+     */
+    public Optional<String> getCpcSerial() {
+        return cpcSerial;
+    }
+
+    /**
+     * Retrieve zosVR specified
+     *
+     * @return zosVR value
+     * @author Frank Giordano
+     */
+    public Optional<String> getZosVR() {
+        return zosVR;
+    }
+
+    /**
+     * Retrieve systemName specified
+     *
+     * @return systemName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getSystemName() {
+        return systemName;
+    }
+
+    /**
+     * Retrieve jesType specified
+     *
+     * @return jesType value
+     * @author Frank Giordano
+     */
+    public Optional<String> getJesType() {
+        return jesType;
+    }
+
+    /**
+     * Retrieve sysplexName specified
+     *
+     * @return sysplexName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getSysplexName() {
+        return sysplexName;
+    }
+
+    /**
+     * Retrieve jesMemberName specified
+     *
+     * @return jesMemberName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getJesMemberName() {
+        return jesMemberName;
+    }
+
+    /**
+     * Retrieve httpProxyName specified
+     *
+     * @return httpProxyName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getHttpProxyName() {
+        return httpProxyName;
+    }
+
+    /**
+     * Retrieve ftpDestinationName specified
+     *
+     * @return ftpDestinationName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getFtpDestinationName() {
+        return ftpDestinationName;
+    }
+
+    /**
+     * Retrieve url specified
+     *
+     * @return url value
+     * @author Frank Giordano
+     */
+    public Optional<String> getUrl() {
+        return url;
+    }
+
+    /**
+     * Retrieve cpcName specified
+     *
+     * @return cpcName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getCpcName() {
+        return cpcName;
     }
 
     @Override

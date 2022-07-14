@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosjobs.response;
 
+import java.util.Optional;
+
 /**
  * Step info on a job interface
  *
@@ -20,79 +22,139 @@ public class JobStepData {
     /**
      * SMFID
      */
-    private String smfid;
+    private final Optional<String> smfid;
 
     /**
      * Completion
      */
-    private String completion;
+    private final Optional<String> completion;
 
     /**
      * Active
      */
-    private boolean active;
+    private final Optional<Boolean> active;
 
     /**
      * Job relevant step
      */
-    private Long stepNumber;
+    private final Optional<Long> stepNumber;
 
     /**
      * Job relevant proc
      */
-    private String procStepName;
+    private final Optional<String> procStepName;
 
     /**
      * Step for which job dd exists
      */
-    private String stepName;
+    private final Optional<String> stepName;
 
     /**
      * Program EXEC=
      */
-    private String programName;
+    private final Optional<String> programName;
 
-    // TODO
-
-    public void setSmfid(String smfid) {
-        this.smfid = smfid;
+    private JobStepData(JobStepData.Builder builder) {
+        this.smfid = Optional.ofNullable(builder.smfid);
+        this.completion = Optional.ofNullable(builder.completion);
+        this.active = Optional.ofNullable(builder.active);
+        this.stepNumber = Optional.ofNullable(builder.stepNumber);
+        this.procStepName = Optional.ofNullable(builder.procStepName);
+        this.stepName = Optional.ofNullable(builder.stepName);
+        this.programName = Optional.ofNullable(builder.programName);
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public Optional<String> getSmfid() {
+        return smfid;
     }
 
-    public void setProcStepName(String procStepName) {
-        this.procStepName = procStepName;
+    public Optional<String> getCompletion() {
+        return completion;
     }
 
-    public void setStepName(String stepName) {
-        this.stepName = stepName;
+    public Optional<Boolean> getActive() {
+        return active;
     }
 
-    public void setProgramName(String programName) {
-        this.programName = programName;
+    public Optional<Long> getStepNumber() {
+        return stepNumber;
     }
 
-    public void setCompletion(String completion) {
-        this.completion = completion;
+    public Optional<String> getProcStepName() {
+        return procStepName;
     }
 
-    public void setStepNumber(Long stepNumber) {
-        this.stepNumber = stepNumber;
+    public Optional<String> getStepName() {
+        return stepName;
+    }
+
+    public Optional<String> getProgramName() {
+        return programName;
     }
 
     @Override
     public String toString() {
         return "JobStepData{" +
-                "smfid='" + smfid + '\'' +
-                ", completion='" + completion + '\'' +
+                "smfid=" + smfid +
+                ", completion=" + completion +
                 ", active=" + active +
                 ", stepNumber=" + stepNumber +
-                ", procStepName='" + procStepName + '\'' +
-                ", stepName='" + stepName + '\'' +
-                ", programName='" + programName + '\'' +
+                ", procStepName=" + procStepName +
+                ", stepName=" + stepName +
+                ", programName=" + programName +
                 '}';
     }
+
+    public static class Builder {
+
+        private String smfid;
+        private String completion;
+        private boolean active;
+        private long stepNumber;
+        private String procStepName;
+        private String stepName;
+        private String programName;
+
+        public JobStepData.Builder smfid(String smfid) {
+            this.smfid = smfid;
+            return this;
+        }
+
+        public JobStepData.Builder completion(String active) {
+            this.completion = completion;
+            return this;
+        }
+
+        public JobStepData.Builder active(boolean active) {
+            this.active = active;
+            return this;
+        }
+
+        public JobStepData.Builder stepNumber(long stepNumber) {
+            this.stepNumber = stepNumber;
+            return this;
+        }
+
+        public JobStepData.Builder procStepName(String procStepName) {
+            this.procStepName = procStepName;
+            return this;
+        }
+
+        public JobStepData.Builder stepName(String stepName) {
+            this.stepName = stepName;
+            return this;
+        }
+
+        public JobStepData.Builder programName(String programName) {
+            this.programName = programName;
+            return this;
+        }
+
+        public JobStepData build() {
+            return new JobStepData(this);
+        }
+
+    }
+
 
 }

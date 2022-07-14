@@ -53,15 +53,15 @@ public class UtilJobs {
             int size = stepData.size();
             JobStepData[] jobStepDataArray = new JobStepData[size];
             for (int i = 0; i < size; i++) {
-                JobStepData jobStepData = new JobStepData();
                 JSONObject obj = (JSONObject) stepData.get(i);
-                jobStepData.setSmfid((String) obj.get("smfid"));
-                jobStepData.setCompletion((String) obj.get("completion"));
-                jobStepData.setStepNumber((Long) obj.get("step-number"));
-                jobStepData.setProgramName((String) obj.get("program-name"));
-                jobStepData.setActive((boolean) obj.get("active"));
-                jobStepData.setStepName((String) obj.get("step-name"));
-                jobStepData.setProcStepName((String) obj.get("proc-step-name"));
+                JobStepData jobStepData = new JobStepData.Builder()
+                        .smfid((String) obj.get("smfid"))
+                        .completion((String) obj.get("completion"))
+                        .stepNumber((Long) obj.get("step-number"))
+                        .programName((String) obj.get("program-name"))
+                        .active((boolean) obj.get("active"))
+                        .stepName((String) obj.get("step-name"))
+                        .procStepName((String) obj.get("proc-step-name")).build();
                 jobStepDataArray[i] = jobStepData;
             }
 

@@ -22,12 +22,12 @@ public class ZosmfListDefinedSystemsResponse {
     /**
      * Total items returned.
      */
-    public final Optional<Long> numRows;
+    private final Optional<Long> numRows;
 
     /**
      * Properties of each defined system.
      */
-    public final Optional<DefinedSystem[]> definedSystems;
+    private final Optional<DefinedSystem[]> definedSystems;
 
     /**
      * ZosmfListDefinedSystemsResponse Constructor.
@@ -38,6 +38,26 @@ public class ZosmfListDefinedSystemsResponse {
     private ZosmfListDefinedSystemsResponse(ZosmfListDefinedSystemsResponse.Builder builder) {
         this.numRows = Optional.ofNullable(builder.numRows);
         this.definedSystems = Optional.ofNullable(builder.definedSystems);
+    }
+
+    /**
+     * Retrieve numRows specified
+     *
+     * @return numRows value
+     * @author Frank Giordano
+     */
+    public Optional<Long> getNumRows() {
+        return numRows;
+    }
+
+    /**
+     * Retrieve definedSystems specified
+     *
+     * @return definedSystems value
+     * @author Frank Giordano
+     */
+    public Optional<DefinedSystem[]> getDefinedSystems() {
+        return definedSystems;
     }
 
     @Override

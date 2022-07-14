@@ -22,42 +22,42 @@ public class ZosmfInfoResponse {
     /**
      * z/OS version
      */
-    public final Optional<String> zosVersion;
+    private final Optional<String> zosVersion;
 
     /**
      * Zosmf port number
      */
-    public final Optional<String> zosmfPort;
+    private final Optional<String> zosmfPort;
 
     /**
      * Zosmf version
      */
-    public final Optional<String> zosmfVersion;
+    private final Optional<String> zosmfVersion;
 
     /**
      * Zosmf host name
      */
-    public final Optional<String> zosmfHostName;
+    private final Optional<String> zosmfHostName;
 
     /**
      * Zosmf saf realm
      */
-    public final Optional<String> zosmfSafRealm;
+    private final Optional<String> zosmfSafRealm;
 
     /**
      * Zosmf full version
      */
-    public final Optional<String> zosmfFullVersion;
+    private final Optional<String> zosmfFullVersion;
 
     /**
      * Zosmf api version
      */
-    public final Optional<String> apiVersion;
+    private final Optional<String> apiVersion;
 
     /**
      * Zosmf plugin information
      */
-    public final Optional<ZosmfPluginInfo[]> zosmfPluginsInfo;
+    private final Optional<ZosmfPluginInfo[]> zosmfPluginsInfo;
 
     /**
      * ZosmfInfoResponse Constructor.
@@ -74,6 +74,86 @@ public class ZosmfInfoResponse {
         this.zosmfFullVersion = Optional.ofNullable(builder.zosmfFullVersion);
         this.apiVersion = Optional.ofNullable(builder.apiVersion);
         this.zosmfPluginsInfo = Optional.ofNullable(builder.zosmfPluginsInfo);
+    }
+
+    /**
+     * Retrieve zosVersion specified
+     *
+     * @return zosVersion value
+     * @author Frank Giordano
+     */
+    public Optional<String> getZosVersion() {
+        return zosVersion;
+    }
+
+    /**
+     * Retrieve zosmfPort specified
+     *
+     * @return zosmfPort value
+     * @author Frank Giordano
+     */
+    public Optional<String> getZosmfPort() {
+        return zosmfPort;
+    }
+
+    /**
+     * Retrieve zosmfVersion specified
+     *
+     * @return zosmfVersion value
+     * @author Frank Giordano
+     */
+    public Optional<String> getZosmfVersion() {
+        return zosmfVersion;
+    }
+
+    /**
+     * Retrieve zosmfHostName specified
+     *
+     * @return zosmfHostName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getZosmfHostName() {
+        return zosmfHostName;
+    }
+
+    /**
+     * Retrieve zosmfSafRealm specified
+     *
+     * @return zosmfSafRealm value
+     * @author Frank Giordano
+     */
+    public Optional<String> getZosmfSafRealm() {
+        return zosmfSafRealm;
+    }
+
+    /**
+     * Retrieve zosmfFullVersion specified
+     *
+     * @return zosmfFullVersion value
+     * @author Frank Giordano
+     */
+    public Optional<String> getZosmfFullVersion() {
+        return zosmfFullVersion;
+    }
+
+    /**
+     * Retrieve apiVersion specified
+     *
+     * @return apiVersion value
+     * @author Frank Giordano
+     */
+    public Optional<String> getApiVersion() {
+        return apiVersion;
+    }
+
+    /**
+     * Retrieve zosmfPluginsInfo specified
+     *
+     * @return zosmfPluginsInfo value
+     * @author Frank Giordano
+     */
+    public Optional<ZosmfPluginInfo[]> getZosmfPluginsInfo() {
+        return zosmfPluginsInfo;
     }
 
     @Override

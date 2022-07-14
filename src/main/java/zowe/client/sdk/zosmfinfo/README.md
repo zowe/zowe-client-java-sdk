@@ -1,6 +1,7 @@
 # z/OSMF INFO Package
 
-Contains APIs to interact with retrieving information about your z/OSMF instance on z/OS (using z/OSMF jobs REST endpoints).
+Contains APIs to interact with retrieving information about your z/OSMF instance on z/OS (using z/OSMF jobs REST
+endpoints).
 
 ## API Examples
 
@@ -35,9 +36,9 @@ public class CheckStatus extends ZosConnection {
         checkStatus = new zowe.client.sdk.zosmfinfo.CheckStatus(connection);
         ZosmfInfoResponse zosmfInfoResponse = checkStatus.getZosmfInfo();
         LOG.info(zosmfInfoResponse.toString());
-        Arrays.stream(zosmfInfoResponse.zosmfPluginsInfo.get()).forEach(i -> LOG.info(i.toString()));
+        Arrays.stream(zosmfInfoResponse.getZosmfPluginsInfo.get()).forEach(i -> LOG.info(i.toString()));
     }
-    
+
 }
 `````
 
@@ -73,7 +74,7 @@ public class ZosmfDefinedSystems extends ZosConnection {
         listDefinedSystems = new ListDefinedSystems(connection);
         ZosmfListDefinedSystemsResponse zosmfInfoResponse = listDefinedSystems.listDefinedSystems();
         LOG.info(zosmfInfoResponse.toString());
-        Arrays.stream(zosmfInfoResponse.definedSystems.get()).forEach(i -> LOG.info(i.toString()));
+        Arrays.stream(zosmfInfoResponse.getDefinedSystems.get()).forEach(i -> LOG.info(i.toString()));
 
     }
 
