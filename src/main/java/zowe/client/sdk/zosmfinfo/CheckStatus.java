@@ -78,6 +78,7 @@ public class CheckStatus {
                 .zosmfVersion((String) json.get("zosmf_version"))
                 .zosmfHostName((String) json.get("zosmf_hostname"))
                 .zosmfSafRealm((String) json.get("zosmf_saf_realm"))
+                .apiVersion((String) json.get("api_version"))
                 .zosmfFullVersion((String) json.get("zosmf_full_version"));
 
         JSONArray plugins = (JSONArray) json.get("plugins");
