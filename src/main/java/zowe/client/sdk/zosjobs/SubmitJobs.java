@@ -102,6 +102,9 @@ public class SubmitJobs {
             if (errorMsg.contains("400")) {
                 throw new Exception("Body sent may be invalid. " + errorMsg);
             }
+            if (errorMsg.contains("500")) {
+                throw new Exception("File does not exist. " + errorMsg);
+            }
             e.printStackTrace();
             throw new Exception("No results for submitted job. " + errorMsg);
         }
