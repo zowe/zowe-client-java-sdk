@@ -1,7 +1,6 @@
 # z/OSMF INFO Package
 
-Contains APIs to interact with retrieving information about your z/OSMF instance on z/OS (using z/OSMF jobs REST
-endpoints).
+Contains APIs to interact with retrieving z/OSMF information on z/OS (using z/OSMF jobs REST endpoints).
 
 ## API Examples
 
@@ -75,7 +74,6 @@ public class ZosmfDefinedSystems extends ZosConnection {
         ZosmfListDefinedSystemsResponse zosmfInfoResponse = listDefinedSystems.listDefinedSystems();
         LOG.info(zosmfInfoResponse.toString());
         Arrays.stream(zosmfInfoResponse.getDefinedSystems.get()).forEach(i -> LOG.info(i.toString()));
-
     }
 
 }
