@@ -19,8 +19,6 @@ public class CheckStatus extends ZosConnection {
 
     private static final Logger LOG = LoggerFactory.getLogger(CheckStatus.class);
 
-    private static zowe.client.sdk.zosmfinfo.CheckStatus checkStatus;
-
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
      * CheckStatus functionality. Calls
@@ -32,7 +30,7 @@ public class CheckStatus extends ZosConnection {
     public static void main(String[] args) throws Exception {
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
-        checkStatus = new zowe.client.sdk.zosmfinfo.CheckStatus(connection);
+        zowe.client.sdk.zosmfinfo.CheckStatus checkStatus = new zowe.client.sdk.zosmfinfo.CheckStatus(connection);
         ZosmfInfoResponse zosmfInfoResponse = checkStatus.getZosmfInfo();
         LOG.info(zosmfInfoResponse.toString());
         Arrays.stream(zosmfInfoResponse.getZosmfPluginsInfo.get()).forEach(i -> LOG.info(i.toString()));
@@ -57,8 +55,6 @@ public class ZosmfDefinedSystems extends ZosConnection {
 
     private static final Logger LOG = LoggerFactory.getLogger(CheckStatus.class);
 
-    private static ListDefinedSystems listDefinedSystems;
-
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
      * ListDefinedSystems functionality.
@@ -70,7 +66,7 @@ public class ZosmfDefinedSystems extends ZosConnection {
     public static void main(String[] args) throws Exception {
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
-        listDefinedSystems = new ListDefinedSystems(connection);
+        ListDefinedSystems listDefinedSystems = new ListDefinedSystems(connection);
         ZosmfListDefinedSystemsResponse zosmfInfoResponse = listDefinedSystems.listDefinedSystems();
         LOG.info(zosmfInfoResponse.toString());
         Arrays.stream(zosmfInfoResponse.getDefinedSystems.get()).forEach(i -> LOG.info(i.toString()));
