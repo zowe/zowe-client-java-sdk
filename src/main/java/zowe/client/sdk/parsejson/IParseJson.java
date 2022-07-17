@@ -1,9 +1,9 @@
-package zowe.client.sdk.json;
+package zowe.client.sdk.parsejson;
 
 import org.json.simple.JSONObject;
 
-public interface IJson<T> {
+public interface IParseJson<T> {
 
-    T parseJsonObject(JSONObject jsonObject);
+    T parse(JSONObject jsonObject);
 
 }

@@ -1,12 +1,12 @@
-package zowe.client.sdk.json;
+package zowe.client.sdk.parsejson;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosfiles.response.Dataset;
 
-public class DataSetJson implements IJson<Dataset> {
+public class ParseDataSetJson implements IParseJson<Dataset> {
 
     @Override
-    public Dataset parseJsonObject(JSONObject json) {
+    public Dataset parse(JSONObject json) {
         return new Dataset.Builder().dsname((String) json.get("dsname"))
                 .blksz((String) json.get("blksz"))
                 .catnm((String) json.get("catnm"))

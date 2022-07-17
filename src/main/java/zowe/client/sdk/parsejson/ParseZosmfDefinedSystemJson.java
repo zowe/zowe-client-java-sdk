@@ -1,12 +1,12 @@
-package zowe.client.sdk.json;
+package zowe.client.sdk.parsejson;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosmfinfo.response.DefinedSystem;
 
-public class ZosmfDefinedSystemJson implements IJson<DefinedSystem> {
+public class ParseZosmfDefinedSystemJson implements IParseJson<DefinedSystem> {
 
     @Override
-    public DefinedSystem parseJsonObject(JSONObject jsonObject) {
+    public DefinedSystem parse(JSONObject jsonObject) {
         return new DefinedSystem.Builder()
                 .systemNickName((String) jsonObject.get("systemNickName"))
                 .groupNames((String) jsonObject.get("groupNames"))

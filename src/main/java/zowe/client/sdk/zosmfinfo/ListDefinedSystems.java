@@ -9,15 +9,15 @@
  */
 package zowe.client.sdk.zosmfinfo;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.parsejson.IParseJson;
+import zowe.client.sdk.parsejson.ParseZosmfListDefinedSystemsJson;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.utility.Util;
 import zowe.client.sdk.utility.UtilRest;
-import zowe.client.sdk.zosmfinfo.response.DefinedSystem;
 import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
 
 /**
@@ -32,6 +32,7 @@ public class ListDefinedSystems {
 
     private final ZOSConnection connection;
     private ZoweRequest request;
+    private IParseJson<ZosmfListDefinedSystemsResponse> listDefinedSystemsParseJson = new ParseZosmfListDefinedSystemsJson();
 
     /**
      * ListDefinedSystems Constructor.
@@ -68,37 +69,7 @@ public class ListDefinedSystems {
         }
 
         UtilRest.checkHttpErrors(response);
-        return parseJSONResponse((JSONObject) response.getResponsePhrase().get());
-    }
-
-    private ZosmfListDefinedSystemsResponse parseJSONResponse(JSONObject json) {
-        ZosmfListDefinedSystemsResponse.Builder systemsResponse = new ZosmfListDefinedSystemsResponse.Builder()
-                .numRows((Long) json.get("numRows"));
-
-        JSONArray items = (JSONArray) json.get("items");
-        if (items != null) {
-            int size = items.size();
-            DefinedSystem[] definedSystems = new DefinedSystem[size];
-            for (int i = 0; i < size; i++) {
-                JSONObject obj = (JSONObject) items.get(i);
-                definedSystems[i] = new DefinedSystem.Builder()
-                        .systemNickName((String) obj.get("systemNickName"))
-                        .groupNames((String) obj.get("groupNames"))
-                        .cpcSerial((String) obj.get("cpcSerial"))
-                        .zosVR((String) obj.get("zosVR"))
-                        .systemName((String) obj.get("systemName"))
-                        .jesType((String) obj.get("jesType"))
-                        .sysplexName((String) obj.get("sysplexName"))
-                        .jesMemberName((String) obj.get("jesMemberName"))
-                        .httpProxyName((String) obj.get("httpProxyName"))
-                        .ftpDestinationName((String) obj.get("ftpDestinationName"))
-                        .url((String) obj.get("url"))
-                        .cpcName((String) obj.get("cpcName")).build();
-            }
-            return systemsResponse.definedSystems(definedSystems).build();
-        }
-
-        return systemsResponse.build();
+        return listDefinedSystemsParseJson.parse((JSONObject) response.getResponsePhrase().get());
     }
 
 }

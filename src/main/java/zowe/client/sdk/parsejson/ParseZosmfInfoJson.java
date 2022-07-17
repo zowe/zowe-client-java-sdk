@@ -1,14 +1,14 @@
-package zowe.client.sdk.json;
+package zowe.client.sdk.parsejson;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
 import zowe.client.sdk.zosmfinfo.response.ZosmfPluginInfo;
 
-public class ZosmfInfoJson implements IJson<ZosmfInfoResponse> {
+public class ParseZosmfInfoJson implements IParseJson<ZosmfInfoResponse> {
 
     @Override
-    public ZosmfInfoResponse parseJsonObject(JSONObject jsonObject) {
+    public ZosmfInfoResponse parse(JSONObject jsonObject) {
         ZosmfInfoResponse.Builder zosmfInfoResponse = new ZosmfInfoResponse.Builder()
                 .zosVersion((String) jsonObject.get("zos_version"))
                 .zosmfPort((String) jsonObject.get("zosmf_port"))
@@ -23,8 +23,8 @@ public class ZosmfInfoJson implements IJson<ZosmfInfoResponse> {
             int size = plugins.size();
             ZosmfPluginInfo[] zosmfPluginsInfo = new ZosmfPluginInfo[size];
             for (int i = 0; i < size; i++) {
-                IJson<ZosmfPluginInfo> zosmfPluginInfoIJson = new ZosmfPluginInfoJson();
-                zosmfPluginsInfo[i] = zosmfPluginInfoIJson.parseJsonObject((JSONObject) plugins.get(i));
+                IParseJson<ZosmfPluginInfo> zosmfPluginInfoIJson = new ParseZosmfPluginInfoJson();
+                zosmfPluginsInfo[i] = zosmfPluginInfoIJson.parse((JSONObject) plugins.get(i));
             }
             return zosmfInfoResponse.zosmfPluginsInfo(zosmfPluginsInfo).build();
         }

@@ -1,4 +1,4 @@
-package zowe.client.sdk.json;
+package zowe.client.sdk.parsejson;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -6,10 +6,10 @@ import zowe.client.sdk.utility.Util;
 import zowe.client.sdk.zosjobs.response.Job;
 import zowe.client.sdk.zosjobs.response.JobStepData;
 
-public class JobJson implements IJson<Job> {
+public class ParseJobJson implements IParseJson<Job> {
 
     @Override
-    public Job parseJsonObject(JSONObject jsonObject) {
+    public Job parse(JSONObject jsonObject) {
         Util.checkNullParameter(jsonObject == null, "json is null");
 
         Job.Builder job = new Job.Builder();
@@ -32,8 +32,8 @@ public class JobJson implements IJson<Job> {
             int size = stepData.size();
             JobStepData[] jobStepDataArray = new JobStepData[size];
             for (int i = 0; i < size; i++) {
-                IJson<JobStepData> jobStepDataJson = new JobStepDataJson();
-                jobStepDataArray[i] = jobStepDataJson.parseJsonObject((JSONObject) stepData.get(i));
+                IParseJson<JobStepData> jobStepDataJson = new ParseJobStepDataJson();
+                jobStepDataArray[i] = jobStepDataJson.parse((JSONObject) stepData.get(i));
             }
             return job.stepData(jobStepDataArray).build();
         }

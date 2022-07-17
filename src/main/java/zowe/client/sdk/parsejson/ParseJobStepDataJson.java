@@ -1,12 +1,12 @@
-package zowe.client.sdk.json;
+package zowe.client.sdk.parsejson;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosjobs.response.JobStepData;
 
-public class JobStepDataJson implements IJson<JobStepData> {
+public class ParseJobStepDataJson implements IParseJson<JobStepData> {
 
     @Override
-    public JobStepData parseJsonObject(JSONObject jsonObject) {
+    public JobStepData parse(JSONObject jsonObject) {
         return new JobStepData.Builder()
                 .smfid((String) jsonObject.get("smfid"))
                 .completion((String) jsonObject.get("completion"))

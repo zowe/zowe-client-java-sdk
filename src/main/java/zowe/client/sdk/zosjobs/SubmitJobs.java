@@ -15,9 +15,10 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.parsejson.IParseJson;
+import zowe.client.sdk.parsejson.ParseJobJson;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilJobs;
 import zowe.client.sdk.utility.UtilRest;
 import zowe.client.sdk.zosjobs.input.SubmitJclParams;
 import zowe.client.sdk.zosjobs.input.SubmitJobParams;
@@ -37,6 +38,7 @@ public class SubmitJobs {
     private static final Logger LOG = LoggerFactory.getLogger(SubmitJobs.class);
 
     private final ZOSConnection connection;
+    private IParseJson<Job> parseJobJson = new ParseJobJson();
 
     /**
      * SubmitJobs Constructor
@@ -109,7 +111,7 @@ public class SubmitJobs {
             throw new Exception("No results for submitted job. " + errorMsg);
         }
 
-        return UtilJobs.createJobObjFromJson((JSONObject) response.getResponsePhrase()
+        return parseJobJson.parse((JSONObject) response.getResponsePhrase()
                 .orElseThrow(() -> new Exception("response phrase missing")));
     }
 
@@ -203,7 +205,7 @@ public class SubmitJobs {
         } catch (ParseException e) {
             throw new Exception(e.getMessage());
         }
-        return UtilJobs.createJobObjFromJson(json);
+        return parseJobJson.parse(json);
     }
 
 }

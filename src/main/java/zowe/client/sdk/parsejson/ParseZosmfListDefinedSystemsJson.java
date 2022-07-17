@@ -1,14 +1,14 @@
-package zowe.client.sdk.json;
+package zowe.client.sdk.parsejson;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosmfinfo.response.DefinedSystem;
 import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
 
-public class ZosmfListDefinedSystemsJson implements IJson<ZosmfListDefinedSystemsResponse> {
+public class ParseZosmfListDefinedSystemsJson implements IParseJson<ZosmfListDefinedSystemsResponse> {
 
     @Override
-    public ZosmfListDefinedSystemsResponse parseJsonObject(JSONObject jsonObject) {
+    public ZosmfListDefinedSystemsResponse parse(JSONObject jsonObject) {
         ZosmfListDefinedSystemsResponse.Builder systemsResponse = new ZosmfListDefinedSystemsResponse.Builder()
                 .numRows((Long) jsonObject.get("numRows"));
 
@@ -18,8 +18,8 @@ public class ZosmfListDefinedSystemsJson implements IJson<ZosmfListDefinedSystem
             DefinedSystem[] definedSystems = new DefinedSystem[size];
             for (int i = 0; i < size; i++) {
                 JSONObject obj = (JSONObject) items.get(i);
-                IJson<DefinedSystem> definedSystemIJson = new ZosmfDefinedSystemJson();
-                definedSystems[i] = definedSystemIJson.parseJsonObject((JSONObject) items.get(i));
+                IParseJson<DefinedSystem> definedSystemIJson = new ParseZosmfDefinedSystemJson();
+                definedSystems[i] = definedSystemIJson.parse((JSONObject) items.get(i));
             }
             return systemsResponse.definedSystems(definedSystems).build();
         }
