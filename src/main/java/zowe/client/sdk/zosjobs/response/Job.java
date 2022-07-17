@@ -91,11 +91,6 @@ public class Job {
      */
     private final Optional<String> phaseName;
 
-    /**
-     * Explanation of error
-     */
-    private final Optional<String> reasonNotRunning;
-
     private Job(Job.Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);
@@ -115,7 +110,6 @@ public class Job {
             this.phase = OptionalInt.of(builder.phase);
         }
         this.phaseName = Optional.ofNullable(builder.phaseName);
-        this.reasonNotRunning = Optional.ofNullable(builder.reasonNotRunning);
     }
 
     /**
@@ -258,16 +252,6 @@ public class Job {
         return phaseName;
     }
 
-    /**
-     * Retrieve reasonNotRunning specified
-     *
-     * @return reasonNotRunning value
-     * @author Frank Giordano
-     */
-    public Optional<String> getReasonNotRunning() {
-        return reasonNotRunning;
-    }
-
     @Override
     public String toString() {
         return "Job{" +
@@ -285,7 +269,6 @@ public class Job {
                 ", jobCorrelator=" + jobCorrelator +
                 ", phase=" + phase +
                 ", phaseName=" + phaseName +
-                ", reasonNotRunning=" + reasonNotRunning +
                 '}';
     }
 
@@ -305,7 +288,6 @@ public class Job {
         private String jobCorrelator;
         private Integer phase;
         private String phaseName;
-        private String reasonNotRunning;
 
         public Builder jobId(String jobId) {
             this.jobId = jobId;
@@ -374,11 +356,6 @@ public class Job {
 
         public Builder phaseName(String phaseName) {
             this.phaseName = phaseName;
-            return this;
-        }
-
-        public Builder reasonNotRunning(String reasonNotRunning) {
-            this.reasonNotRunning = reasonNotRunning;
             return this;
         }
 
