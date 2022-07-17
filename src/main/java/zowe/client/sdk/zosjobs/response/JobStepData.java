@@ -57,8 +57,8 @@ public class JobStepData {
     private JobStepData(JobStepData.Builder builder) {
         this.smfid = Optional.ofNullable(builder.smfid);
         this.completion = Optional.ofNullable(builder.completion);
-        this.active = Optional.of(builder.active);
-        this.stepNumber = Optional.of(builder.stepNumber);
+        this.active = Optional.ofNullable(builder.active);
+        this.stepNumber = Optional.ofNullable(builder.stepNumber);
         this.procStepName = Optional.ofNullable(builder.procStepName);
         this.stepName = Optional.ofNullable(builder.stepName);
         this.programName = Optional.ofNullable(builder.programName);
@@ -125,12 +125,12 @@ public class JobStepData {
             return this;
         }
 
-        public JobStepData.Builder active(boolean active) {
+        public JobStepData.Builder active(Boolean active) {
             this.active = active;
             return this;
         }
 
-        public JobStepData.Builder stepNumber(long stepNumber) {
+        public JobStepData.Builder stepNumber(Long stepNumber) {
             this.stepNumber = stepNumber;
             return this;
         }
