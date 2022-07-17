@@ -56,7 +56,7 @@ public class TextRequestTest {
             response = getRequest.executeRequest();
         } catch (Exception ignored) {
         }
-        Assertions.assertTrue(response == null);
+        Assertions.assertNull(response);
         Mockito.verify(httpClient, Mockito.times(1))
                 .execute(any(HttpGet.class), any(BasicHttpContext.class));
     }
@@ -71,7 +71,7 @@ public class TextRequestTest {
             response = putRequest.executeRequest();
         } catch (Exception ignored) {
         }
-        Assertions.assertTrue(response == null);
+        Assertions.assertNull(response);
         Mockito.verify(httpClient, Mockito.times(1))
                 .execute(any(HttpPut.class), any(BasicHttpContext.class));
     }
