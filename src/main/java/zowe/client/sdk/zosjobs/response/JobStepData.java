@@ -120,7 +120,7 @@ public class JobStepData {
             return this;
         }
 
-        public JobStepData.Builder completion(String active) {
+        public JobStepData.Builder completion(String completion) {
             this.completion = completion;
             return this;
         }
