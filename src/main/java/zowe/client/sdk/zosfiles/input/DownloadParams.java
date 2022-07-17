@@ -28,7 +28,6 @@ public class DownloadParams {
     /**
      * The extension you want to use for the file, e.g. .txt, .c
      */
-    @SuppressWarnings("GrazieInspection")
     private final Optional<String> extension;
 
     /**
