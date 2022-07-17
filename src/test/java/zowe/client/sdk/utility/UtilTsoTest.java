@@ -45,6 +45,7 @@ public class UtilTsoTest {
         JSONObject json = null;
         String msg = null;
         try {
+            //noinspection ConstantConditions
             UtilTso.parseJsonStopResponse(json);
         } catch (Exception e) {
             msg = e.getMessage();
@@ -57,6 +58,7 @@ public class UtilTsoTest {
         Response response = null;
         String msg = null;
         try {
+            //noinspection ConstantConditions
             UtilTso.getZosmfTsoResponse(response);
         } catch (Exception e) {
             msg = e.getMessage();
