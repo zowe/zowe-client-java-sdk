@@ -10,6 +10,7 @@
 package zowe.client.sdk.zosjobs.response;
 
 import java.util.Optional;
+import java.util.OptionalLong;
 
 /**
  * Step info on a job interface
@@ -37,7 +38,7 @@ public class JobStepData {
     /**
      * Job relevant step
      */
-    private final Optional<Long> stepNumber;
+    private final OptionalLong stepNumber;
 
     /**
      * Job relevant proc
@@ -58,7 +59,11 @@ public class JobStepData {
         this.smfid = Optional.ofNullable(builder.smfid);
         this.completion = Optional.ofNullable(builder.completion);
         this.active = Optional.ofNullable(builder.active);
-        this.stepNumber = Optional.ofNullable(builder.stepNumber);
+        if (builder.stepNumber == null) {
+            this.stepNumber = OptionalLong.empty();
+        } else {
+            this.stepNumber = OptionalLong.of(builder.stepNumber);
+        }
         this.procStepName = Optional.ofNullable(builder.procStepName);
         this.stepName = Optional.ofNullable(builder.stepName);
         this.programName = Optional.ofNullable(builder.programName);
@@ -76,7 +81,7 @@ public class JobStepData {
         return active;
     }
 
-    public Optional<Long> getStepNumber() {
+    public OptionalLong getStepNumber() {
         return stepNumber;
     }
 
@@ -110,7 +115,7 @@ public class JobStepData {
         private String smfid;
         private String completion;
         private boolean active;
-        private long stepNumber;
+        private Long stepNumber;
         private String procStepName;
         private String stepName;
         private String programName;
