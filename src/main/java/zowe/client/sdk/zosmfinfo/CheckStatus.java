@@ -29,10 +29,9 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
 public class CheckStatus {
 
     private static final Logger LOG = LoggerFactory.getLogger(CheckStatus.class);
-
+    private final IParseJson<ZosmfInfoResponse> zosmfInfoParseJson = new ParseZosmfInfoJson();
     private final ZOSConnection connection;
     private ZoweRequest request;
-    private IParseJson<ZosmfInfoResponse> zosmfInfoParseJson = new ParseZosmfInfoJson();
 
     /**
      * CheckStatus Constructor.

@@ -36,10 +36,9 @@ public class JsonGetRequest extends ZoweRequest {
      * JsonGetRequest constructor.
      *
      * @param connection connection information, see ZOSConnection object
-     * @throws Exception error setting constructor variables
      * @author Frank Giordano
      */
-    public JsonGetRequest(ZOSConnection connection) throws Exception {
+    public JsonGetRequest(ZOSConnection connection) {
         super(connection, ZoweRequestType.VerbType.GET_JSON);
     }
 

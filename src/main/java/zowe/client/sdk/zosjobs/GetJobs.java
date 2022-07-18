@@ -36,8 +36,7 @@ import java.util.List;
 public class GetJobs {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetJobs.class);
-
-    private IParseJson<Job> parseJobJson = new ParseJobJson();
+    private final IParseJson<Job> parseJobJson = new ParseJobJson();
     private final ZOSConnection connection;
     private ZoweRequest request;
     private String url;

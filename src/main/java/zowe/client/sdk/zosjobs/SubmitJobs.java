@@ -36,9 +36,8 @@ import java.util.Map;
 public class SubmitJobs {
 
     private static final Logger LOG = LoggerFactory.getLogger(SubmitJobs.class);
-
+    private final IParseJson<Job> parseJobJson = new ParseJobJson();
     private final ZOSConnection connection;
-    private IParseJson<Job> parseJobJson = new ParseJobJson();
     private ZoweRequest request;
 
     /**

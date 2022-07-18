@@ -34,9 +34,8 @@ import java.util.*;
 public class ZosDsnList {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZosDsnList.class);
-
+    private final IParseJson<Dataset> parseDataSetJson = new ParseDataSetJson();
     private final ZOSConnection connection;
-    private IParseJson<Dataset> parseDataSetJson = new ParseDataSetJson();
     private ZoweRequest request;
 
     /**

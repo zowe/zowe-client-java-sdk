@@ -16,10 +16,7 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.parsejson.IParseJson;
 import zowe.client.sdk.parsejson.ParseIssueCommandJson;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
-import zowe.client.sdk.rest.ZoweRequestType;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.utility.Util;
 import zowe.client.sdk.utility.UtilConsole;
 import zowe.client.sdk.utility.UtilRest;
@@ -38,9 +35,8 @@ import java.util.HashMap;
 public class IssueCommand {
 
     private static final Logger LOG = LoggerFactory.getLogger(IssueCommand.class);
-
+    private final IParseJson<ZosmfIssueResponse> zosmfIssueResponseIParseJson = new ParseIssueCommandJson();
     private final ZOSConnection connection;
-    private IParseJson<ZosmfIssueResponse> zosmfIssueResponseIParseJson = new ParseIssueCommandJson();
     private ZoweRequest request;
 
     /**

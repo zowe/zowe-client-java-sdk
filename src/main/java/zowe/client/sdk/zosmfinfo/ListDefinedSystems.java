@@ -29,10 +29,10 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
 public class ListDefinedSystems {
 
     private static final Logger LOG = LoggerFactory.getLogger(ListDefinedSystems.class);
-
+    private final IParseJson<ZosmfListDefinedSystemsResponse> listDefinedSystemsParseJson = new ParseZosmfListDefinedSystemsJson();
     private final ZOSConnection connection;
     private ZoweRequest request;
-    private IParseJson<ZosmfListDefinedSystemsResponse> listDefinedSystemsParseJson = new ParseZosmfListDefinedSystemsJson();
+
 
     /**
      * ListDefinedSystems Constructor.
