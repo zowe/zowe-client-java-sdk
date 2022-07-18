@@ -36,10 +36,9 @@ public class TextGetRequest extends ZoweRequest {
      * TextGetRequest constructor.
      *
      * @param connection connection information, see ZOSConnection object
-     * @throws Exception error setting constructor variables
      * @author Frank Giordano
      */
-    public TextGetRequest(ZOSConnection connection) throws Exception {
+    public TextGetRequest(ZOSConnection connection) {
         super(connection, ZoweRequestType.VerbType.GET_TEXT);
     }
 

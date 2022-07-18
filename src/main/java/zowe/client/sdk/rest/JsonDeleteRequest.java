@@ -36,10 +36,9 @@ public class JsonDeleteRequest extends ZoweRequest {
      * JsonDeleteRequest constructor.
      *
      * @param connection connection information, see ZOSConnection object
-     * @throws Exception error setting constructor variables
      * @author Frank Giordano
      */
-    public JsonDeleteRequest(ZOSConnection connection) throws Exception {
+    public JsonDeleteRequest(ZOSConnection connection) {
         super(connection, ZoweRequestType.VerbType.DELETE_JSON);
     }
 

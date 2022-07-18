@@ -9,11 +9,7 @@
  */
 package zowe.client.sdk.utility;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import zowe.client.sdk.zosjobs.input.ModifyJobParams;
-import zowe.client.sdk.zosjobs.response.Job;
-import zowe.client.sdk.zosjobs.response.JobStepData;
 
 /**
  * Utility Class for GetJobs related static helper methods.
@@ -22,54 +18,6 @@ import zowe.client.sdk.zosjobs.response.JobStepData;
  * @version 1.0
  */
 public class UtilJobs {
-
-    /**
-     * Formulate and return a Job document/object based on incoming Json object.
-     *
-     * @param json JSONObject object
-     * @return job document
-     * @author Frank Giordano
-     */
-    public static Job createJobObjFromJson(JSONObject json) {
-        Util.checkNullParameter(json == null, "json is null");
-
-        Job.Builder job = new Job.Builder();
-        job.jobId((String) json.get("jobid"))
-                .jobName((String) json.get("jobname"))
-                .subSystem((String) json.get("subsystem"))
-                .owner((String) json.get("owner"))
-                .type((String) json.get("type"))
-                .status((String) json.get("status"))
-                .url((String) json.get("url"))
-                .classs((String) json.get("class"))
-                .filesUrl((String) json.get("files-url"))
-                .retCode((String) json.get("retcode"))
-                .jobCorrelator((String) json.get("job-correlator"))
-                .phaseName((String) json.get("phase-name"));
-
-        // check for "step-data" used by getStatusCommon if flag is set to true
-        JSONArray stepData = (JSONArray) json.get("step-data");
-        if (stepData != null) {
-            int size = stepData.size();
-            JobStepData[] jobStepDataArray = new JobStepData[size];
-            for (int i = 0; i < size; i++) {
-                JSONObject obj = (JSONObject) stepData.get(i);
-                JobStepData jobStepData = new JobStepData.Builder()
-                        .smfid((String) obj.get("smfid"))
-                        .completion((String) obj.get("completion"))
-                        .stepNumber((Long) obj.get("step-number"))
-                        .programName((String) obj.get("program-name"))
-                        .active((boolean) obj.get("active"))
-                        .stepName((String) obj.get("step-name"))
-                        .procStepName((String) obj.get("proc-step-name")).build();
-                jobStepDataArray[i] = jobStepData;
-            }
-
-            return job.stepData(jobStepDataArray).build();
-        }
-
-        return job.build();
-    }
 
     /**
      * Check the validity of a ModifyJobParams object

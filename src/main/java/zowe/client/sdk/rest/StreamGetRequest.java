@@ -35,9 +35,8 @@ public class StreamGetRequest extends ZoweRequest {
      * StreamGetRequest constructor.
      *
      * @param connection connection information, see ZOSConnection object
-     * @throws Exception error setting constructor variables
      */
-    public StreamGetRequest(ZOSConnection connection) throws Exception {
+    public StreamGetRequest(ZOSConnection connection) {
         super(connection, ZoweRequestType.VerbType.GET_STREAM);
     }
 

@@ -14,6 +14,8 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.parsejson.IParseJson;
+import zowe.client.sdk.parsejson.ParseIssueCommandJson;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.utility.Util;
 import zowe.client.sdk.utility.UtilConsole;
@@ -33,7 +35,7 @@ import java.util.HashMap;
 public class IssueCommand {
 
     private static final Logger LOG = LoggerFactory.getLogger(IssueCommand.class);
-
+    private final IParseJson<ZosmfIssueResponse> zosmfIssueResponseIParseJson = new ParseIssueCommandJson();
     private final ZOSConnection connection;
     private ZoweRequest request;
 
@@ -103,16 +105,8 @@ public class IssueCommand {
         UtilRest.checkHttpErrors(response);
         LOG.debug("Response result {}", response.getResponsePhrase());
 
-        ZosmfIssueResponse zosmfIssueResponse = new ZosmfIssueResponse();
-        JSONObject result = (JSONObject) response.getResponsePhrase()
-                .orElseThrow(() -> new Exception("response phrase missing"));
-        zosmfIssueResponse.setCmdResponseKey((String) result.get("cmd-response-key"));
-        zosmfIssueResponse.setCmdResponseUrl((String) result.get("cmd-response-url"));
-        zosmfIssueResponse.setCmdResponseUri((String) result.get("cmd-response-uri"));
-        zosmfIssueResponse.setCmdResponse((String) result.get("cmd-response"));
-        zosmfIssueResponse.setSolKeyDetected((String) result.get("sol-key-detected"));
-
-        return zosmfIssueResponse;
+        return zosmfIssueResponseIParseJson.parse((JSONObject) response.getResponsePhrase()
+                .orElseThrow(() -> new Exception("response phrase missing")));
     }
 
     /**

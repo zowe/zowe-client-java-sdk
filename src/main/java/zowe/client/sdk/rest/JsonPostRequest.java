@@ -37,10 +37,9 @@ public class JsonPostRequest extends ZoweRequest {
      * JsonPostRequest constructor.
      *
      * @param connection connection information, see ZOSConnection object
-     * @throws Exception error setting constructor variables
      * @author Frank Giordano
      */
-    public JsonPostRequest(ZOSConnection connection) throws Exception {
+    public JsonPostRequest(ZOSConnection connection) {
         super(connection, ZoweRequestType.VerbType.POST_JSON);
     }
 
@@ -85,11 +84,10 @@ public class JsonPostRequest extends ZoweRequest {
      * Initialize the http request object with an url value
      *
      * @param url rest url end point
-     * @throws Exception error setting the http request
      * @author Frank Giordano
      */
     @Override
-    public void setRequest(String url) throws Exception {
+    public void setRequest(String url) {
         // throw new Exception("request requires url and body values");
     }
 

@@ -14,6 +14,8 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.parsejson.IParseJson;
+import zowe.client.sdk.parsejson.ParseDataSetJson;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.utility.Util;
 import zowe.client.sdk.utility.UtilDataset;
@@ -32,7 +34,7 @@ import java.util.*;
 public class ZosDsnList {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZosDsnList.class);
-
+    private final IParseJson<Dataset> parseDataSetJson = new ParseDataSetJson();
     private final ZOSConnection connection;
     private ZoweRequest request;
 
@@ -162,7 +164,7 @@ public class ZosDsnList {
         JSONArray items = (JSONArray) results.get(ZosFilesConstants.RESPONSE_ITEMS);
         items.forEach(item -> {
             JSONObject datasetObj = (JSONObject) item;
-            datasets.add(UtilDataset.createDatasetObjFromJson(datasetObj));
+            datasets.add(parseDataSetJson.parse(datasetObj));
         });
 
         return datasets;

@@ -14,9 +14,10 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.parsejson.IParseJson;
+import zowe.client.sdk.parsejson.ParseJobJson;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilJobs;
 import zowe.client.sdk.utility.UtilRest;
 import zowe.client.sdk.zosjobs.input.CommonJobParams;
 import zowe.client.sdk.zosjobs.input.GetJobParams;
@@ -35,7 +36,7 @@ import java.util.List;
 public class GetJobs {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetJobs.class);
-
+    private final IParseJson<Job> parseJobJson = new ParseJobJson();
     private final ZOSConnection connection;
     private ZoweRequest request;
     private String url;
@@ -214,7 +215,7 @@ public class GetJobs {
 
         results.forEach(item -> {
             JSONObject jobObj = (JSONObject) item;
-            jobs.add(UtilJobs.createJobObjFromJson(jobObj));
+            jobs.add(parseJobJson.parse(jobObj));
         });
 
         return jobs;
@@ -326,7 +327,7 @@ public class GetJobs {
             return new Job.Builder().build();
         }
 
-        return UtilJobs.createJobObjFromJson(result);
+        return parseJobJson.parse(result);
     }
 
     /**
