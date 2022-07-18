@@ -12,10 +12,7 @@ package zowe.client.sdk.zostso;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
-import zowe.client.sdk.rest.ZoweRequestType;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.utility.Util;
 import zowe.client.sdk.utility.UtilRest;
 import zowe.client.sdk.utility.UtilTso;
@@ -38,6 +35,7 @@ public class SendTso {
     private static final Logger LOG = LoggerFactory.getLogger(SendTso.class);
 
     private final ZOSConnection connection;
+    private ZoweRequest request;
 
     /**
      * SendTso constructor
@@ -48,6 +46,23 @@ public class SendTso {
     public SendTso(ZOSConnection connection) {
         Util.checkConnection(connection);
         this.connection = connection;
+    }
+
+    /**
+     * Alternative SendTso constructor with ZoweRequest object. This is mainly used for internal code unit testing
+     * with mockito, and it is not recommended to be used by the larger community.
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param request    any compatible ZoweRequest Interface type object
+     * @author Frank Giordano
+     */
+    public SendTso(ZOSConnection connection, ZoweRequest request) throws Exception {
+        Util.checkConnection(connection);
+        this.connection = connection;
+        if (!(request instanceof JsonPutRequest)) {
+            throw new Exception("PUT_JSON request type required");
+        }
+        this.request = request;
     }
 
     /**
@@ -91,8 +106,10 @@ public class SendTso {
         TsoResponseMessage tsoResponseMessage = new TsoResponseMessage("0100", commandParams.getData());
         String jobObjBody = getTsoResponseSendMessage(tsoResponseMessage);
 
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jobObjBody,
-                ZoweRequestType.VerbType.PUT_JSON);
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_JSON);
+        }
+        request.setRequest(url, jobObjBody);
         Response response = request.executeRequest();
         if (response.isEmpty()) {
             return new ZosmfTsoResponse.Builder().build();
@@ -181,8 +198,10 @@ public class SendTso {
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
         LOG.debug("SendTso::getDataFromTSO - url {}", url);
 
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, "",
-                ZoweRequestType.VerbType.PUT_JSON);
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_JSON);
+        }
+        request.setRequest(url, "");
         Response response = request.executeRequest();
         if (response.isEmpty()) {
             return new ZosmfTsoResponse.Builder().build();

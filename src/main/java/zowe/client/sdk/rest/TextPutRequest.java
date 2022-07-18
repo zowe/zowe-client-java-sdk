@@ -37,19 +37,11 @@ public class TextPutRequest extends ZoweRequest {
      * TextPutRequest constructor.
      *
      * @param connection connection information, see ZOSConnection object
-     * @param url        rest url value
-     * @param body       data to be attached to the request
      * @throws Exception error setting constructor variables
      * @author Frank Giordano
      */
-    public TextPutRequest(ZOSConnection connection, String url, String body) throws Exception {
+    public TextPutRequest(ZOSConnection connection) throws Exception {
         super(connection, ZoweRequestType.VerbType.PUT_JSON);
-        if (!UtilRest.isUrlValid(url)) {
-            throw new Exception("url is invalid");
-        }
-        request = new HttpPut(url);
-        request.setEntity(new StringEntity(Optional.ofNullable(body).orElse("")));
-        setup();
     }
 
     /**
@@ -87,15 +79,32 @@ public class TextPutRequest extends ZoweRequest {
     }
 
     /**
-     * Set the following incoming url with a new http request
+     * Initialize the http request object with an url value
      *
-     * @param url for the request
+     * @param url rest url end point
      * @throws Exception error setting the http request
      * @author Frank Giordano
      */
     @Override
     public void setRequest(String url) throws Exception {
+        throw new Exception("request requires url and body values");
+    }
+
+    /**
+     * Initialize the http request object with an url and body values
+     *
+     * @param url  rest url end point
+     * @param body data to be sent with request
+     * @throws Exception error setting the http request
+     * @author Frank Giordano
+     */
+    @Override
+    public void setRequest(String url, String body) throws Exception {
+        if (UtilRest.isUrlNotValid(url)) {
+            throw new Exception("url is invalid");
+        }
         request = new HttpPut(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
+        request.setEntity(new StringEntity(Optional.ofNullable(body).orElse("")));
         setup();
     }
 

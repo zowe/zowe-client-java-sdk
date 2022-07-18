@@ -59,7 +59,7 @@ public abstract class ZoweRequest {
     }
 
     /**
-     * Execute the formulated http request
+     * Abstraction method. Execute the formulated http request
      *
      * @return Response value
      * @throws Exception error executing request
@@ -68,14 +68,14 @@ public abstract class ZoweRequest {
     public abstract Response executeRequest() throws Exception;
 
     /**
-     * Set standard headers for the http request
+     * Abstraction method. Set standard headers for the http request
      *
      * @author Frank Giordano
      */
     public abstract void setStandardHeaders();
 
     /**
-     * Set any headers needed for the http request
+     * Abstraction method. Set any headers needed for the http request
      *
      * @param headers headers to add to the request
      * @author Frank Giordano
@@ -83,13 +83,23 @@ public abstract class ZoweRequest {
     public abstract void setHeaders(Map<String, String> headers);
 
     /**
-     * Set the following incoming url with a new http request
+     * Abstraction method. Initialize the http request object with an url value
      *
      * @param url rest url end point
      * @throws Exception error setting the http request
      * @author Frank Giordano
      */
     public abstract void setRequest(String url) throws Exception;
+
+    /**
+     * Abstraction method. Initialize the http request object with an url and body values
+     *
+     * @param url  rest url end point
+     * @param body data to be sent with request
+     * @throws Exception error setting the http request
+     * @author Frank Giordano
+     */
+    public abstract void setRequest(String url, String body) throws Exception;
 
     /**
      * Setup to be used first in setting up the http request
