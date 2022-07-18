@@ -12,10 +12,7 @@ package zowe.client.sdk.zostso;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
-import zowe.client.sdk.rest.ZoweRequestType;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.utility.Util;
 import zowe.client.sdk.utility.UtilRest;
 import zowe.client.sdk.utility.UtilTso;
@@ -33,6 +30,7 @@ public class StartTso {
     private static final Logger LOG = LoggerFactory.getLogger(StartTso.class);
 
     private final ZOSConnection connection;
+    private ZoweRequest request;
 
     /**
      * StartTso constructor
@@ -43,6 +41,23 @@ public class StartTso {
     public StartTso(ZOSConnection connection) {
         Util.checkConnection(connection);
         this.connection = connection;
+    }
+
+    /**
+     * Alternative StartTso constructor with ZoweRequest object. This is mainly used for internal code unit testing
+     * with mockito, and it is not recommended to be used by the larger community.
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param request    any compatible ZoweRequest Interface type object
+     * @author Frank Giordano
+     */
+    public StartTso(ZOSConnection connection, ZoweRequest request) throws Exception {
+        Util.checkConnection(connection);
+        this.connection = connection;
+        if (!(request instanceof JsonPostRequest)) {
+            throw new Exception("POST_JSON request type required");
+        }
+        this.request = request;
     }
 
     /**
@@ -90,8 +105,10 @@ public class StartTso {
         String url = getResourcesQuery(commandParams);
         LOG.debug("StartTso::startCommon - url {}", url);
 
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
-                ZoweRequestType.VerbType.POST_JSON);
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.POST_JSON);
+        }
+        request.setRequest(url, null);
         Response response = request.executeRequest();
         if (response.isEmpty()) {
             return new ZosmfTsoResponse.Builder().build();

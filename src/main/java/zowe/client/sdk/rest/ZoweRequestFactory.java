@@ -12,7 +12,7 @@ package zowe.client.sdk.rest;
 import zowe.client.sdk.core.ZOSConnection;
 
 /**
- * Request factory that generates the desire CRUD operation
+ * Zowe request factory that generates the desire CRUD operation
  *
  * @author Frank Giordano
  * @version 1.0
@@ -23,37 +23,34 @@ public class ZoweRequestFactory {
      * Assign the request to the Http verb type request object
      *
      * @param connection connection information, see ZOSConnection object
-     * @param url        rest url value
-     * @param body       content for request body
      * @param type       request http type, see ZoweRequestType.VerbType object
      * @return ZoweRequest value
      * @throws Exception error with type not found
      * @author Frank Giordano
      */
-    public static ZoweRequest buildRequest(ZOSConnection connection, String url, String body,
-                                           ZoweRequestType.VerbType type) throws Exception {
+    public static ZoweRequest buildRequest(ZOSConnection connection, ZoweRequestType.VerbType type) throws Exception {
         ZoweRequest request;
         switch (type) {
             case GET_JSON:
-                request = new JsonGetRequest(connection, url);
+                request = new JsonGetRequest(connection);
                 break;
             case PUT_JSON:
-                request = new JsonPutRequest(connection, url, body);
+                request = new JsonPutRequest(connection);
                 break;
             case POST_JSON:
-                request = new JsonPostRequest(connection, url, body);
+                request = new JsonPostRequest(connection);
                 break;
             case DELETE_JSON:
-                request = new JsonDeleteRequest(connection, url);
+                request = new JsonDeleteRequest(connection);
                 break;
             case GET_TEXT:
-                request = new TextGetRequest(connection, url);
+                request = new TextGetRequest(connection);
                 break;
             case PUT_TEXT:
-                request = new TextPutRequest(connection, url, body);
+                request = new TextPutRequest(connection);
                 break;
             case GET_STREAM:
-                request = new StreamGetRequest(connection, url);
+                request = new StreamGetRequest(connection);
                 break;
             default:
                 throw new Exception("no valid type specified");

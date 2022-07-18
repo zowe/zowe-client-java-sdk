@@ -36,17 +36,11 @@ public class JsonDeleteRequest extends ZoweRequest {
      * JsonDeleteRequest constructor.
      *
      * @param connection connection information, see ZOSConnection object
-     * @param url        rest url value
      * @throws Exception error setting constructor variables
      * @author Frank Giordano
      */
-    public JsonDeleteRequest(ZOSConnection connection, String url) throws Exception {
+    public JsonDeleteRequest(ZOSConnection connection) throws Exception {
         super(connection, ZoweRequestType.VerbType.DELETE_JSON);
-        if (!UtilRest.isUrlValid(url)) {
-            throw new Exception("url is invalid");
-        }
-        request = new HttpDelete(url);
-        setup();
     }
 
     /**
@@ -56,6 +50,9 @@ public class JsonDeleteRequest extends ZoweRequest {
      */
     @Override
     public Response executeRequest() throws Exception {
+        if (request == null) {
+            throw new Exception("request not defined");
+        }
         LOG.debug("JsonDeleteRequest::executeRequest");
         return executeJsonRequest(request);
     }
@@ -84,7 +81,7 @@ public class JsonDeleteRequest extends ZoweRequest {
     }
 
     /**
-     * Set the following incoming url with a new http request
+     * Initialize the http request object with an url value
      *
      * @param url rest url end point
      * @throws Exception error setting the http request
@@ -92,8 +89,24 @@ public class JsonDeleteRequest extends ZoweRequest {
      */
     @Override
     public void setRequest(String url) throws Exception {
+        if (UtilRest.isUrlNotValid(url)) {
+            throw new Exception("url is invalid");
+        }
         request = new HttpDelete(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
         setup();
+    }
+
+    /**
+     * Initialize the http request object with an url and body values
+     *
+     * @param url  rest url end point
+     * @param body data to be sent with request
+     * @throws Exception error setting the http request
+     * @author Frank Giordano
+     */
+    @Override
+    public void setRequest(String url, String body) throws Exception {
+        throw new Exception("request requires url only");
     }
 
 }

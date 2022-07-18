@@ -37,6 +37,7 @@ public class SubmitJobs {
     private static final Logger LOG = LoggerFactory.getLogger(SubmitJobs.class);
 
     private final ZOSConnection connection;
+    private ZoweRequest request;
 
     /**
      * SubmitJobs Constructor
@@ -47,6 +48,20 @@ public class SubmitJobs {
     public SubmitJobs(ZOSConnection connection) {
         Util.checkConnection(connection);
         this.connection = connection;
+    }
+
+    /**
+     * Alternative SubmitJobs constructor with ZoweRequest object. This is mainly used for internal code unit testing
+     * with mockito, and it is not recommended to be used by the larger community.
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param request    any compatible ZoweRequest Interface type object
+     * @author Frank Giordano
+     */
+    public SubmitJobs(ZOSConnection connection, ZoweRequest request) {
+        Util.checkConnection(connection);
+        this.connection = connection;
+        this.request = request;
     }
 
     /**
@@ -87,8 +102,10 @@ public class SubmitJobs {
             // TODO..
         }
 
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonRequestBody.toString(),
-                ZoweRequestType.VerbType.PUT_JSON);
+        if (request == null || !(request instanceof JsonPutRequest)) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_JSON);
+        }
+        request.setRequest(url, jsonRequestBody.toString());
 
         Response response = request.executeRequest();
         if (response.isEmpty()) {
@@ -175,7 +192,10 @@ public class SubmitJobs {
         LOG.debug(url);
 
         String body = params.getJcl().get();
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, body, ZoweRequestType.VerbType.PUT_TEXT);
+        if (request == null || !(request instanceof TextPutRequest)) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_TEXT);
+        }
+        request.setRequest(url, body);
         request.setHeaders(headers);
 
         Response response = request.executeRequest();
