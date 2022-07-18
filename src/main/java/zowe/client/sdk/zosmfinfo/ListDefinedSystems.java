@@ -85,7 +85,8 @@ public class ListDefinedSystems {
         }
 
         UtilRest.checkHttpErrors(response);
-        return listDefinedSystemsParseJson.parse((JSONObject) response.getResponsePhrase().get());
+        return listDefinedSystemsParseJson
+                .parse((JSONObject) response.getResponsePhrase().orElseThrow(() -> new Exception("response phase missing")));
     }
 
 }

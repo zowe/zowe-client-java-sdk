@@ -94,7 +94,7 @@ public class ZosDsn {
         ListParams params = new ListParams.Builder().attribute(UtilDataset.Attribute.BASE).build();
         List<Dataset> dsLst = zosDsnList.listDsn(dataSetSearchStr, params);
 
-        Optional<Dataset> dataSet = dsLst.stream().filter(d -> d.getDsname().get().contains(dataSetName)).findFirst();
+        Optional<Dataset> dataSet = dsLst.stream().filter(d -> d.getDsname().orElse("n/a").contains(dataSetName)).findFirst();
         return dataSet.orElse(emptyDataSet);
     }
 

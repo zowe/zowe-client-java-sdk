@@ -84,7 +84,8 @@ public class CheckStatus {
         }
 
         UtilRest.checkHttpErrors(response);
-        return zosmfInfoParseJson.parse((JSONObject) response.getResponsePhrase().get());
+        return zosmfInfoParseJson
+                .parse((JSONObject) response.getResponsePhrase().orElseThrow(() -> new Exception("response phase missing")));
     }
 
 }
