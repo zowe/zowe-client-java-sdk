@@ -12,8 +12,21 @@ package zowe.client.sdk.parsejson;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosconsole.zosmf.ZosmfIssueResponse;
 
+/**
+ * Class to transform JSON into ZosmfIssueResponse object
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class ParseIssueCommandJson implements IParseJson<ZosmfIssueResponse> {
 
+    /**
+     * Transform JSON into ZosmfIssueResponse object
+     *
+     * @param jsonObject
+     * @return ZosmfIssueResponse object
+     * @author Frank Giordano
+     */
     @Override
     public ZosmfIssueResponse parse(JSONObject jsonObject) {
         ZosmfIssueResponse zosmfIssueResponse = new ZosmfIssueResponse();

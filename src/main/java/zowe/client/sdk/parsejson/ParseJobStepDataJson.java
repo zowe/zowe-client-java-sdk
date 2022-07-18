@@ -12,8 +12,21 @@ package zowe.client.sdk.parsejson;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosjobs.response.JobStepData;
 
+/**
+ * Class to transform JSON into JobStepData object
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class ParseJobStepDataJson implements IParseJson<JobStepData> {
 
+    /**
+     * Transform JSON into JobStepData object
+     *
+     * @param jsonObject
+     * @return JobStepData object
+     * @author Frank Giordano
+     */
     @Override
     public JobStepData parse(JSONObject jsonObject) {
         return new JobStepData.Builder()

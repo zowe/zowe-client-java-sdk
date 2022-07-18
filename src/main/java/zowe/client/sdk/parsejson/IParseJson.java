@@ -11,8 +11,20 @@ package zowe.client.sdk.parsejson;
 
 import org.json.simple.JSONObject;
 
+/**
+ * Interface class for object json parsing.
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public interface IParseJson<T> {
 
+    /**
+     * Transform JSON into T object
+     *
+     * @param jsonObject
+     * @return T object
+     */
     T parse(JSONObject jsonObject);
 
 }

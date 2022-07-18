@@ -14,8 +14,21 @@ import org.json.simple.JSONObject;
 import zowe.client.sdk.zosmfinfo.response.DefinedSystem;
 import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
 
+/**
+ * Class to transform JSON into ZosmfListDefinedSystemsResponse object
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class ParseZosmfListDefinedSystemsJson implements IParseJson<ZosmfListDefinedSystemsResponse> {
 
+    /**
+     * Transform JSON into ZosmfListDefinedSystemsResponse object
+     *
+     * @param jsonObject
+     * @return ZosmfListDefinedSystemsResponse object
+     * @author Frank Giordano
+     */
     @Override
     public ZosmfListDefinedSystemsResponse parse(JSONObject jsonObject) {
         ZosmfListDefinedSystemsResponse.Builder systemsResponse = new ZosmfListDefinedSystemsResponse.Builder()

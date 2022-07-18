@@ -12,8 +12,21 @@ package zowe.client.sdk.parsejson;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosmfinfo.response.DefinedSystem;
 
+/**
+ * Class to transform JSON into DefinedSystem object
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class ParseZosmfDefinedSystemJson implements IParseJson<DefinedSystem> {
 
+    /**
+     * Transform JSON into DefinedSystem object
+     *
+     * @param jsonObject
+     * @return DefinedSystem object
+     * @author Frank Giordano
+     */
     @Override
     public DefinedSystem parse(JSONObject jsonObject) {
         return new DefinedSystem.Builder()

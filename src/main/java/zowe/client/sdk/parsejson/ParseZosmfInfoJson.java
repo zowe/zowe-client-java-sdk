@@ -14,8 +14,21 @@ import org.json.simple.JSONObject;
 import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
 import zowe.client.sdk.zosmfinfo.response.ZosmfPluginInfo;
 
+/**
+ * Class to transform JSON into ZosmfInfoResponse object
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class ParseZosmfInfoJson implements IParseJson<ZosmfInfoResponse> {
 
+    /**
+     * Transform JSON into ZosmfInfoResponse object
+     *
+     * @param jsonObject
+     * @return ZosmfInfoResponse object
+     * @author Frank Giordano
+     */
     @Override
     public ZosmfInfoResponse parse(JSONObject jsonObject) {
         ZosmfInfoResponse.Builder zosmfInfoResponse = new ZosmfInfoResponse.Builder()

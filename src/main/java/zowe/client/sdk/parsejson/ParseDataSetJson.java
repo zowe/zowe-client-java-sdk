@@ -12,29 +12,42 @@ package zowe.client.sdk.parsejson;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosfiles.response.Dataset;
 
+/**
+ * Class to transform JSON into Dataset object
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class ParseDataSetJson implements IParseJson<Dataset> {
 
+    /**
+     * Transform JSON into Dataset object
+     *
+     * @param jsonObject
+     * @return Dataset object
+     * @author Frank Giordano
+     */
     @Override
-    public Dataset parse(JSONObject json) {
-        return new Dataset.Builder().dsname((String) json.get("dsname"))
-                .blksz((String) json.get("blksz"))
-                .catnm((String) json.get("catnm"))
-                .cdate((String) json.get("cdate"))
-                .dev((String) json.get("dev"))
-                .dsntp((String) json.get("dsntp"))
-                .dsorg((String) json.get("dsorg"))
-                .edate((String) json.get("edate"))
-                .extx((String) json.get("extx"))
-                .lrectl((String) json.get("lrectl"))
-                .migr((String) json.get("migr"))
-                .mvol((String) json.get("mvol"))
-                .ovf((String) json.get("ovf"))
-                .rdate((String) json.get("rdate"))
-                .recfm((String) json.get("recfm"))
-                .sizex((String) json.get("sizex"))
-                .spacu((String) json.get("spacu"))
-                .used((String) json.get("used"))
-                .vol((String) json.get("vol"))
+    public Dataset parse(JSONObject jsonObject) {
+        return new Dataset.Builder().dsname((String) jsonObject.get("dsname"))
+                .blksz((String) jsonObject.get("blksz"))
+                .catnm((String) jsonObject.get("catnm"))
+                .cdate((String) jsonObject.get("cdate"))
+                .dev((String) jsonObject.get("dev"))
+                .dsntp((String) jsonObject.get("dsntp"))
+                .dsorg((String) jsonObject.get("dsorg"))
+                .edate((String) jsonObject.get("edate"))
+                .extx((String) jsonObject.get("extx"))
+                .lrectl((String) jsonObject.get("lrectl"))
+                .migr((String) jsonObject.get("migr"))
+                .mvol((String) jsonObject.get("mvol"))
+                .ovf((String) jsonObject.get("ovf"))
+                .rdate((String) jsonObject.get("rdate"))
+                .recfm((String) jsonObject.get("recfm"))
+                .sizex((String) jsonObject.get("sizex"))
+                .spacu((String) jsonObject.get("spacu"))
+                .used((String) jsonObject.get("used"))
+                .vol((String) jsonObject.get("vol"))
                 .build();
     }
 

@@ -15,8 +15,21 @@ import zowe.client.sdk.utility.Util;
 import zowe.client.sdk.zosjobs.response.Job;
 import zowe.client.sdk.zosjobs.response.JobStepData;
 
+/**
+ * Class to transform JSON into Job object
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class ParseJobJson implements IParseJson<Job> {
 
+    /**
+     * Transform JSON into Job object
+     *
+     * @param jsonObject
+     * @return Job object
+     * @author Frank Giordano
+     */
     @Override
     public Job parse(JSONObject jsonObject) {
         Util.checkNullParameter(jsonObject == null, "json is null");
