@@ -50,6 +50,7 @@ public class StopTso {
      *
      * @param connection connection information, see ZOSConnection object
      * @param request    any compatible ZoweRequest Interface type object
+     * @throws Exception processing error
      * @author Frank Giordano
      */
     public StopTso(ZOSConnection connection, ZoweRequest request) throws Exception {

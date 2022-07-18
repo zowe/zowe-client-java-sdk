@@ -52,6 +52,7 @@ public class ZosDsnCopy {
      *
      * @param connection connection information, see ZOSConnection object
      * @param request    any compatible ZoweRequest Interface type object
+     * @throws Exception processing error
      * @author Frank Giordano
      */
     public ZosDsnCopy(ZOSConnection connection, ZoweRequest request) throws Exception {

@@ -49,6 +49,7 @@ public class StartTso {
      *
      * @param connection connection information, see ZOSConnection object
      * @param request    any compatible ZoweRequest Interface type object
+     * @throws Exception processing error
      * @author Frank Giordano
      */
     public StartTso(ZOSConnection connection, ZoweRequest request) throws Exception {

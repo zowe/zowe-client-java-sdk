@@ -56,6 +56,7 @@ public class IssueCommand {
      *
      * @param connection connection information, see ZOSConnection object
      * @param request    any compatible ZoweRequest Interface type object
+     * @throws Exception processing error
      * @author Frank Giordano
      */
     public IssueCommand(ZOSConnection connection, ZoweRequest request) throws Exception {

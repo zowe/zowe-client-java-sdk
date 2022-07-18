@@ -1,4 +1,5 @@
 zowe.client.sdk.core
+zowe.client.sdk.parsejson
 zowe.client.sdk.rest
 zowe.client.sdk.utility
 zowe.client.sdk.zosconsole
