@@ -122,13 +122,6 @@ public class UtilRest {
 
     /**
      * Checks if url is a valid http or https url.
-     * <p>
-     * The method will create a URL object from the specified string representation.
-     * A MalformedURLException will be thrown if no protocol is specified, or an unknown
-     * protocol is found, or spec is null which will result in a false value to be returned.
-     * Then a call the toURI() method is made that throws a URISyntaxException if the URL is not formatted
-     * strictly according to RFC 2396 and cannot be converted to a URI which will result in a false value
-     * to be returned.
      *
      * @param url value
      * @return boolean value
