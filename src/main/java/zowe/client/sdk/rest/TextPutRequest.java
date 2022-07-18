@@ -37,10 +37,9 @@ public class TextPutRequest extends ZoweRequest {
      * TextPutRequest constructor.
      *
      * @param connection connection information, see ZOSConnection object
-     * @throws Exception error setting constructor variables
      * @author Frank Giordano
      */
-    public TextPutRequest(ZOSConnection connection) throws Exception {
+    public TextPutRequest(ZOSConnection connection) {
         super(connection, ZoweRequestType.VerbType.PUT_JSON);
     }
 
