@@ -34,8 +34,8 @@ public class ParseJobJson implements IParseJson<Job> {
     public Job parse(JSONObject jsonObject) {
         Util.checkNullParameter(jsonObject == null, "json is null");
 
-        Job.Builder job = new Job.Builder();
-        job.jobId((String) jsonObject.get("jobid"))
+        Job.Builder job = new Job.Builder()
+                .jobId((String) jsonObject.get("jobid"))
                 .jobName((String) jsonObject.get("jobname"))
                 .subSystem((String) jsonObject.get("subsystem"))
                 .owner((String) jsonObject.get("owner"))
@@ -46,6 +46,7 @@ public class ParseJobJson implements IParseJson<Job> {
                 .filesUrl((String) jsonObject.get("files-url"))
                 .retCode((String) jsonObject.get("retcode"))
                 .jobCorrelator((String) jsonObject.get("job-correlator"))
+                .phase((Integer) jsonObject.get("phase"))
                 .phaseName((String) jsonObject.get("phase-name"));
 
         // check for "step-data" used by getStatusCommon if flag is set to true
