@@ -25,7 +25,7 @@ public class ParseZosmfInfoJson implements IParseJson<ZosmfInfoResponse> {
     /**
      * Transform JSON into ZosmfInfoResponse object
      *
-     * @param jsonObject
+     * @param jsonObject JSON object
      * @return ZosmfInfoResponse object
      * @author Frank Giordano
      */

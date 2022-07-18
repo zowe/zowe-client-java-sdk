@@ -22,7 +22,7 @@ public interface IParseJson<T> {
     /**
      * Transform JSON into T object
      *
-     * @param jsonObject
+     * @param jsonObject JSON object
      * @return T object
      */
     T parse(JSONObject jsonObject);

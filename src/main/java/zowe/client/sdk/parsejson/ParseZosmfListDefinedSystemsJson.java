@@ -25,7 +25,7 @@ public class ParseZosmfListDefinedSystemsJson implements IParseJson<ZosmfListDef
     /**
      * Transform JSON into ZosmfListDefinedSystemsResponse object
      *
-     * @param jsonObject
+     * @param jsonObject JSON object
      * @return ZosmfListDefinedSystemsResponse object
      * @author Frank Giordano
      */

@@ -23,7 +23,7 @@ public class ParseJobStepDataJson implements IParseJson<JobStepData> {
     /**
      * Transform JSON into JobStepData object
      *
-     * @param jsonObject
+     * @param jsonObject JSON object
      * @return JobStepData object
      * @author Frank Giordano
      */

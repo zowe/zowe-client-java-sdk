@@ -23,7 +23,7 @@ public class ParseZosmfDefinedSystemJson implements IParseJson<DefinedSystem> {
     /**
      * Transform JSON into DefinedSystem object
      *
-     * @param jsonObject
+     * @param jsonObject JSON object
      * @return DefinedSystem object
      * @author Frank Giordano
      */

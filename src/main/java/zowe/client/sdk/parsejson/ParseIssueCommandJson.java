@@ -23,7 +23,7 @@ public class ParseIssueCommandJson implements IParseJson<ZosmfIssueResponse> {
     /**
      * Transform JSON into ZosmfIssueResponse object
      *
-     * @param jsonObject
+     * @param jsonObject JSON object
      * @return ZosmfIssueResponse object
      * @author Frank Giordano
      */

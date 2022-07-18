@@ -26,7 +26,7 @@ public class ParseJobJson implements IParseJson<Job> {
     /**
      * Transform JSON into Job object
      *
-     * @param jsonObject
+     * @param jsonObject JSON object
      * @return Job object
      * @author Frank Giordano
      */

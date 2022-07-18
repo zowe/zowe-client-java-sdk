@@ -23,7 +23,7 @@ public class ParseZosmfPluginInfoJson implements IParseJson<ZosmfPluginInfo> {
     /**
      * Transform JSON into ZosmfPluginInfo object
      *
-     * @param jsonObject
+     * @param jsonObject JSON object
      * @return ZosmfPluginInfo object
      * @author Frank Giordano
      */
