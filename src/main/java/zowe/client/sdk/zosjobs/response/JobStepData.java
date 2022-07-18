@@ -58,7 +58,7 @@ public class JobStepData {
     private JobStepData(JobStepData.Builder builder) {
         this.smfid = Optional.ofNullable(builder.smfid);
         this.completion = Optional.ofNullable(builder.completion);
-        this.active = Optional.ofNullable(builder.active);
+        this.active = Optional.of(builder.active);
         if (builder.stepNumber == null) {
             this.stepNumber = OptionalLong.empty();
         } else {
