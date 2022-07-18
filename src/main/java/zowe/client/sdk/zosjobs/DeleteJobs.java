@@ -34,6 +34,7 @@ public class DeleteJobs {
     private static final Logger LOG = LoggerFactory.getLogger(DeleteJobs.class);
 
     private final ZOSConnection connection;
+    private ZoweRequest request;
 
     /**
      * DeleteJobs constructor
@@ -44,6 +45,23 @@ public class DeleteJobs {
     public DeleteJobs(ZOSConnection connection) {
         Util.checkConnection(connection);
         this.connection = connection;
+    }
+
+    /**
+     * Alternative DeleteJobs constructor with ZoweRequest object. This is mainly used for internal code unit testing
+     * with mockito, and it is not recommended to be used by the larger community.
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param request    any compatible ZoweRequest Interface type object
+     * @author Frank Giordano
+     */
+    public DeleteJobs(ZOSConnection connection, ZoweRequest request) throws Exception {
+        Util.checkConnection(connection);
+        this.connection = connection;
+        if (!(request instanceof JsonDeleteRequest)) {
+            throw new Exception("DELETE_JSON request type required");
+        }
+        this.request = request;
     }
 
     /**
@@ -114,8 +132,10 @@ public class DeleteJobs {
             }
         }
 
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
-                ZoweRequestType.VerbType.DELETE_JSON);
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.DELETE_JSON);
+        }
+        request.setRequest(url);
 
         request.setHeaders(headers);
 

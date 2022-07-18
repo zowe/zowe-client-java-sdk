@@ -37,19 +37,11 @@ public class JsonPostRequest extends ZoweRequest {
      * JsonPostRequest constructor.
      *
      * @param connection connection information, see ZOSConnection object
-     * @param url        rest url value
-     * @param body       data to be attached to the request
      * @throws Exception error setting constructor variables
      * @author Frank Giordano
      */
-    public JsonPostRequest(ZOSConnection connection, String url, String body) throws Exception {
+    public JsonPostRequest(ZOSConnection connection) throws Exception {
         super(connection, ZoweRequestType.VerbType.POST_JSON);
-        if (!UtilRest.isUrlValid(url)) {
-            throw new Exception("url is invalid");
-        }
-        request = new HttpPost(url);
-        request.setEntity(new StringEntity(Optional.ofNullable(body).orElse("")));
-        setup();
     }
 
     /**
@@ -60,6 +52,9 @@ public class JsonPostRequest extends ZoweRequest {
     @Override
     public Response executeRequest() throws Exception {
         LOG.debug("JsonPostRequest::executeRequest");
+        if (request == null) {
+            throw new Exception("request not defined");
+        }
         return executeJsonRequest(request);
     }
 
@@ -87,7 +82,7 @@ public class JsonPostRequest extends ZoweRequest {
     }
 
     /**
-     * Set the following incoming url with a new http request
+     * Initialize the http request object with an url value
      *
      * @param url rest url end point
      * @throws Exception error setting the http request
@@ -95,7 +90,24 @@ public class JsonPostRequest extends ZoweRequest {
      */
     @Override
     public void setRequest(String url) throws Exception {
+        // throw new Exception("request requires url and body values");
+    }
+
+    /**
+     * Initialize the http request object with an url and body values
+     *
+     * @param url  rest url end point
+     * @param body data to be sent with request
+     * @throws Exception error setting the http request
+     * @author Frank Giordano
+     */
+    @Override
+    public void setRequest(String url, String body) throws Exception {
+        if (UtilRest.isUrlNotValid(url)) {
+            throw new Exception("url is invalid");
+        }
         request = new HttpPost(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
+        request.setEntity(new StringEntity(Optional.ofNullable(body).orElse("")));
         setup();
     }
 

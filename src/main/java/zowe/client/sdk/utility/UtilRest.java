@@ -134,13 +134,13 @@ public class UtilRest {
      * @return boolean value
      * @author Frank Giordano
      */
-    public static boolean isUrlValid(String url) {
+    public static boolean isUrlNotValid(String url) {
         Util.checkNullParameter(url == null, "url is null");
         try {
             new URL(url).toURI();
-            return true;
-        } catch (URISyntaxException | MalformedURLException exception) {
             return false;
+        } catch (URISyntaxException | MalformedURLException exception) {
+            return true;
         }
     }
 

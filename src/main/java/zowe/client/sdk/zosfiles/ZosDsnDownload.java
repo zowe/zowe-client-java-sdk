@@ -34,6 +34,7 @@ public class ZosDsnDownload {
     private static final Logger LOG = LoggerFactory.getLogger(ZosDsnDownload.class);
 
     private final ZOSConnection connection;
+    private ZoweRequest request;
 
     /**
      * ZosDsnDownload Constructor
@@ -44,6 +45,23 @@ public class ZosDsnDownload {
     public ZosDsnDownload(ZOSConnection connection) {
         Util.checkConnection(connection);
         this.connection = connection;
+    }
+
+    /**
+     * Alternative ZosDsnDownload constructor with ZoweRequest object. This is mainly used for internal code unit testing
+     * with mockito, and it is not recommended to be used by the larger community.
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param request    any compatible ZoweRequest Interface type object
+     * @author Frank Giordano
+     */
+    public ZosDsnDownload(ZOSConnection connection, ZoweRequest request) throws Exception {
+        Util.checkConnection(connection);
+        this.connection = connection;
+        if (!(request instanceof StreamGetRequest)) {
+            throw new Exception("GET_STREAM request type required");
+        }
+        this.request = request;
     }
 
     /**
@@ -85,8 +103,10 @@ public class ZosDsnDownload {
             headers.put(key, value);
         }
 
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, null,
-                ZoweRequestType.VerbType.GET_STREAM);
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_STREAM);
+        }
+        request.setRequest(url);
         request.setHeaders(headers);
 
         Response response = request.executeRequest();

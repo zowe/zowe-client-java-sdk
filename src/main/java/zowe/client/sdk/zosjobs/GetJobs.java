@@ -54,6 +54,20 @@ public class GetJobs {
     }
 
     /**
+     * Alternative GetJobs constructor with ZoweRequest object. This is mainly used for internal code unit testing
+     * with mockito, and it is not recommended to be used by the larger community.
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param request    any compatible ZoweRequest Interface type object
+     * @author Frank Giordano
+     */
+    public GetJobs(ZOSConnection connection, ZoweRequest request) {
+        Util.checkConnection(connection);
+        this.connection = connection;
+        this.request = request;
+    }
+
+    /**
      * Get jobs (defaults to the user ID of the session as owner).
      *
      * @return list of job objects (matching jobs)
@@ -186,10 +200,9 @@ public class GetJobs {
         LOG.debug(url);
 
         if (request == null || !(request instanceof JsonGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.VerbType.GET_JSON);
-        } else {
-            request.setRequest(url);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_JSON);
         }
+        request.setRequest(url);
 
         Response response = request.executeRequest();
         if (response.isEmpty()) {
@@ -302,10 +315,9 @@ public class GetJobs {
         LOG.debug(url);
 
         if (request == null || !(request instanceof JsonGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.VerbType.GET_JSON);
-        } else {
-            request.setRequest(url);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_JSON);
         }
+        request.setRequest(url);
         Response response = request.executeRequest();
         if (response.isEmpty()) {
             return new Job.Builder().build();
@@ -372,10 +384,9 @@ public class GetJobs {
         LOG.debug(url);
 
         if (request == null || !(request instanceof JsonGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.VerbType.GET_JSON);
-        } else {
-            request.setRequest(url);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_JSON);
         }
+        request.setRequest(url);
 
         Response response = request.executeRequest();
         if (response.isEmpty()) {
@@ -459,10 +470,9 @@ public class GetJobs {
         LOG.debug(url);
 
         if (request == null || !(request instanceof TextGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.VerbType.GET_TEXT);
-        } else {
-            request.setRequest(url);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_TEXT);
         }
+        request.setRequest(url);
 
         Response response = request.executeRequest();
         if (response.isEmpty()) {
@@ -506,10 +516,9 @@ public class GetJobs {
         LOG.debug(url);
 
         if (request == null || !(request instanceof TextGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.VerbType.GET_TEXT);
-        } else {
-            request.setRequest(url);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_TEXT);
         }
+        request.setRequest(url);
         Response response = request.executeRequest();
         if (response.isEmpty()) {
             return "";
@@ -539,10 +548,9 @@ public class GetJobs {
         LOG.debug(url);
 
         if (request == null || !(request instanceof TextGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, url, null, ZoweRequestType.VerbType.GET_TEXT);
-        } else {
-            request.setRequest(url);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_TEXT);
         }
+        request.setRequest(url);
         Response response = request.executeRequest();
         if (response.isEmpty()) {
             return "";

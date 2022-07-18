@@ -41,6 +41,7 @@ public class IssueCommand {
 
     private final ZOSConnection connection;
     private IParseJson<ZosmfIssueResponse> zosmfIssueResponseIParseJson = new ParseIssueCommandJson();
+    private ZoweRequest request;
 
     /**
      * IssueCommand constructor
@@ -51,6 +52,23 @@ public class IssueCommand {
     public IssueCommand(ZOSConnection connection) {
         Util.checkConnection(connection);
         this.connection = connection;
+    }
+
+    /**
+     * Alternative IssueCommand constructor with ZoweRequest object. This is mainly used for internal code unit testing
+     * with mockito, and it is not recommended to be used by the larger community.
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param request    any compatible ZoweRequest Interface type object
+     * @author Frank Giordano
+     */
+    public IssueCommand(ZOSConnection connection, ZoweRequest request) throws Exception {
+        Util.checkConnection(connection);
+        this.connection = connection;
+        if (!(request instanceof JsonPutRequest)) {
+            throw new Exception("PUT_JSON request type required");
+        }
+        this.request = request;
     }
 
     /**
@@ -78,8 +96,11 @@ public class IssueCommand {
         var jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
 
-        ZoweRequest request = ZoweRequestFactory.buildRequest(connection, url, jsonRequestBody.toString(),
-                ZoweRequestType.VerbType.PUT_JSON);
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_JSON);
+        }
+        request.setRequest(url, jsonRequestBody.toString());
+
         Response response = request.executeRequest();
         if (response.isEmpty()) {
             return new ZosmfIssueResponse();
