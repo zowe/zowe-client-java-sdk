@@ -25,7 +25,6 @@ public class CheckStatus extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
@@ -61,7 +60,6 @@ public class ZosmfDefinedSystems extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);

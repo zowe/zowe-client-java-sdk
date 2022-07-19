@@ -17,9 +17,6 @@ import zosjobs.response.Job;
 
 /**
  * Class example to showcase CancelJobs functionality.
- *
- * @author Leonid Baranov
- * @version 1.0
  */
 public class CancelJobs extends ZosConnection {
 
@@ -35,7 +32,6 @@ public class CancelJobs extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
-     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
@@ -54,7 +50,6 @@ public class CancelJobs extends ZosConnection {
      * @param version version value
      * @return response http Response object
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static Response cancelJobsCommonWithVersion(String version) throws Exception {
         jobId = "XXX";
@@ -69,7 +64,6 @@ public class CancelJobs extends ZosConnection {
      *
      * @return response http Response object
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static Response cancelJobsCommon() throws Exception {
         jobId = "XXX";
@@ -84,7 +78,6 @@ public class CancelJobs extends ZosConnection {
      *
      * @return response http Response object
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static Response cancelJobForJob() throws Exception {
         jobId = "XXX";
@@ -99,7 +92,6 @@ public class CancelJobs extends ZosConnection {
      *
      * @return response http Response object
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static Response cancelJob() throws Exception {
         jobId = "XXX";
@@ -123,9 +115,6 @@ import zosjobs.response.Job;
 
 /**
  * Class example to showcase DeleteJobs functionality.
- *
- * @author Leonid Baranov
- * @version 1.0
  */
 public class DeleteJobs extends ZosConnection {
 
@@ -141,7 +130,6 @@ public class DeleteJobs extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
-     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
@@ -160,7 +148,6 @@ public class DeleteJobs extends ZosConnection {
      * @param version value to indicate sync or async request processing
      * @return response http response object
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static Response deleteJobsCommonWithVersion(String version) throws Exception {
         jobId = "XXX";
@@ -175,7 +162,6 @@ public class DeleteJobs extends ZosConnection {
      *
      * @return response http response object
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static Response deleteJobsCommon() throws Exception {
         jobId = "XXX";
@@ -190,7 +176,6 @@ public class DeleteJobs extends ZosConnection {
      *
      * @return response http response object
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static Response deleteJobForJob() throws Exception {
         jobId = "XXX";
@@ -205,7 +190,6 @@ public class DeleteJobs extends ZosConnection {
      *
      * @return response http response object
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static Response deleteJob() throws Exception {
         jobId = "XXX";
@@ -232,9 +216,6 @@ import java.util.List;
 
 /**
  * Class example to showcase GetJobs functionality.
- *
- * @author Frank Giordano
- * @version 1.0
  */
 public class GetJobs extends ZosConnection {
 
@@ -248,7 +229,6 @@ public class GetJobs extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
         String prefix = "XXX";
@@ -282,7 +262,6 @@ public class GetJobs extends ZosConnection {
      *
      * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getJclCommon(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
@@ -297,7 +276,6 @@ public class GetJobs extends ZosConnection {
      *
      * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getJclForJob(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
@@ -310,7 +288,6 @@ public class GetJobs extends ZosConnection {
      *
      * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getJcl(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
@@ -324,7 +301,6 @@ public class GetJobs extends ZosConnection {
      *
      * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getStatusForJob(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
@@ -342,7 +318,6 @@ public class GetJobs extends ZosConnection {
      *
      * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getStatus(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
@@ -361,7 +336,6 @@ public class GetJobs extends ZosConnection {
      * getJob is given a jobId value for a non-existing job which will return an exception
      *
      * @param jobId jobId value
-     * @author Frank Giordano
      */
     public static void nonExistentGetJob(String jobId) {
         try {
@@ -377,7 +351,6 @@ public class GetJobs extends ZosConnection {
      *
      * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getJob(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
@@ -398,7 +371,6 @@ public class GetJobs extends ZosConnection {
      * @param owner  owner value
      * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getJobsByOwnerAndPrefix(String owner, String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByOwnerAndPrefix(owner, prefix);
@@ -412,7 +384,6 @@ public class GetJobs extends ZosConnection {
      *
      * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getJobsByPrefix(String prefix) throws Exception {
         List<Job> jobs = getJobs.getJobsByPrefix(prefix);
@@ -424,7 +395,6 @@ public class GetJobs extends ZosConnection {
      * jobs available for the logged-in user.
      *
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getJobs() throws Exception {
         // get any jobs out there for the logged-in user
@@ -438,7 +408,6 @@ public class GetJobs extends ZosConnection {
      *
      * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getSpoolContent(String prefix) throws Exception {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
@@ -456,7 +425,6 @@ public class GetJobs extends ZosConnection {
      *
      * @param owner owner value
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getJobsByOwner(String owner) throws Exception {
         List<Job> jobs = getJobs.getJobsByOwner(owner);
@@ -469,7 +437,6 @@ public class GetJobs extends ZosConnection {
      *
      * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getSpoolFilesForJob(String prefix) throws Exception {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
@@ -484,7 +451,6 @@ public class GetJobs extends ZosConnection {
      *
      * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getSpoolFiles(String prefix) throws Exception {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
@@ -502,7 +468,6 @@ public class GetJobs extends ZosConnection {
      *
      * @param prefix partial or full job name to use for searching
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void getJobsCommon(String prefix) throws Exception {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
@@ -527,9 +492,6 @@ import zosjobs.types.JobStatus;
 
 /**
  * Class example to showcase MonitorJobs functionality.
- *
- * @author Frank Giordano
- * @version 1.0
  */
 public class MonitorJobs extends ZosConnection {
 
@@ -544,7 +506,6 @@ public class MonitorJobs extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
@@ -563,7 +524,6 @@ public class MonitorJobs extends ZosConnection {
      * isJobRunning accepts a MonitorJobWaitForParams object
      *
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void monitorIsJobRunning() throws Exception {
         zosjobs.MonitorJobs monitorJobs = new zosjobs.MonitorJobs(connection);
@@ -577,7 +537,6 @@ public class MonitorJobs extends ZosConnection {
      * until it reaches OUTPUT status or times out if not reached.
      *
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void monitorJobsForOutputStatusByJobObject() throws Exception {
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
@@ -594,7 +553,6 @@ public class MonitorJobs extends ZosConnection {
      * monitor the job status until it reaches OUTPUT status or times out if not reached.
      *
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void monitorJobsForOutputStatusByJobNameAndId() throws Exception {
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
@@ -614,7 +572,6 @@ public class MonitorJobs extends ZosConnection {
      *
      * @param statusType given status type to use for monitoring
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void monitorJobsForStatusByJobObject(JobStatus.Type statusType) throws Exception {
         // determine an existing job in your system that is in execute queue and make a Job for it
@@ -632,7 +589,6 @@ public class MonitorJobs extends ZosConnection {
      *
      * @param statusType given status type to use for monitoring
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void monitorJobsForStatusByJobNameAndId(JobStatus.Type statusType) throws Exception {
         // determine an existing job in your system that is in execute queue and make a Job for it
@@ -652,7 +608,6 @@ public class MonitorJobs extends ZosConnection {
      *
      * @param message given message text to monitor job output
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void monitorWaitForJobMessage(String message) throws Exception {
         // determine an existing job in your system that is in execute queue and make a Job for it
@@ -675,9 +630,6 @@ import zosjobs.response.Job;
 
 /**
  * Class example to showcase SubmitJobs functionality.
- *
- * @author Frank Giordano
- * @version 1.0
  */
 public class SubmitJobs extends ZosConnection {
 
@@ -689,7 +641,6 @@ public class SubmitJobs extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
@@ -714,7 +665,6 @@ public class SubmitJobs extends ZosConnection {
      * @param jclString  jcl formatted string
      * @return job document
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static Job submitJclJob(ZOSConnection connection, String jclString) throws Exception {
         zosjobs.SubmitJobs submitJobs = new zosjobs.SubmitJobs(connection);
@@ -729,7 +679,6 @@ public class SubmitJobs extends ZosConnection {
      * @param dsMember   dataset member value
      * @return job document
      * @throws Exception error in processing request
-     * @author Frank Giordano
      */
     public static Job submitJob(ZOSConnection connection, String dsMember) throws Exception {
         zosjobs.SubmitJobs submitJobs = new zosjobs.SubmitJobs(connection);
@@ -745,9 +694,6 @@ package examples;
 /**
 * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
 * duplicating connection details in each example.
-*
-* @author Frank Giordano
-* @version 1.0
 */
 public class ZosConnection {
 

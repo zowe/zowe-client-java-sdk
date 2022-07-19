@@ -18,9 +18,6 @@ import zosconsole.zosmf.ZosmfIssueResponse;
 
 /**
  * Class example to showcase mvs console command functionality.
- *
- * @author Frank Giordano
- * @version 1.0
  */
 public class IssueCommand extends ZosConnection {
 
@@ -30,7 +27,6 @@ public class IssueCommand extends ZosConnection {
      * Main method defines z/OSMF host and user connection, and mvs command used for the example test.
      *
      * @param args for main not used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         String command = "D IPLINFO";
@@ -47,7 +43,6 @@ public class IssueCommand extends ZosConnection {
      *
      * @param connection connection information, see ZOSConnection object
      * @param cmd        mvs command to execute
-     * @author Frank Giordano
      */
     public static void consoleCmdByIssue(ZOSConnection connection, String cmd) {
         IssueParams params = new IssueParams();
@@ -67,7 +62,6 @@ public class IssueCommand extends ZosConnection {
      *
      * @param connection connection information, see ZOSConnection object
      * @param cmd        mvs command to execute
-     * @author Frank Giordano
      */
     public static void consoleCmdByIssueSimple(ZOSConnection connection, String cmd) {
         ConsoleResponse response;
@@ -85,7 +79,6 @@ public class IssueCommand extends ZosConnection {
      *
      * @param connection connection information, see ZOSConnection object
      * @param cmd        mvs command to execute
-     * @author Frank Giordano
      */
     public static void consoleCmdByIssueDefConsoleCommon(ZOSConnection connection, String cmd) {
         ZosmfIssueParams params = new ZosmfIssueParams();
@@ -110,8 +103,6 @@ package examples;
 * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
 * duplicating connection details in each example.
 *
-* @author Frank Giordano
-* @version 1.0
 */
 public class ZosConnection {
 

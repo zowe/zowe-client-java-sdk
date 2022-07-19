@@ -17,9 +17,6 @@ import zosfiles.input.CreateParams;
 
 /**
  * Class example to showcase CreateDataset functionality.
- *
- * @author Leonid Baranov
- * @version 1.0
  */
 public class CreateDataset extends ZosConnection {
 
@@ -33,13 +30,10 @@ public class CreateDataset extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
-     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
         String dataSetName = "XXX";
-
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-
         createDataSet(dataSetName);
     }
 
@@ -48,7 +42,6 @@ public class CreateDataset extends ZosConnection {
      *
      * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
      * @throws Exception error processing request
-     * @author Frank Giordano
      */
     public static void createDataSet(String dataSetName) throws Exception {
         ZosDsn zosDsn = new ZosDsn(connection);
@@ -161,9 +154,6 @@ import zosfiles.input.CopyParams;
 
 /**
  * Class example to showcase CopyDataset functionality.
- *
- * @author Leonid Baranov
- * @version 1.0
  */
 public class CopyDataset extends ZosConnection {
 
@@ -175,7 +165,6 @@ public class CopyDataset extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error processing examples
-     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
         String fromDataSetName = "XXX";
@@ -208,7 +197,6 @@ public class CopyDataset extends ZosConnection {
      * @param fromDataSetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
      * @param toDataSetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
      * @throws Exception error processing copy request
-     * @author Frank Giordano
      */
     public static void copyDataset(ZOSConnection connection, String fromDataSetName, String toDataSetName)
             throws Exception {
@@ -233,7 +221,6 @@ public class CopyDataset extends ZosConnection {
      * @param fromDataSetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
      * @param toDataSetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
      * @throws Exception error processing copy request
-     * @author Frank Giordano
      */
     public static void copyDatasetByCopyParams(ZOSConnection connection, String fromDataSetName, String toDataSetName)
             throws Exception {
@@ -257,7 +244,6 @@ public class CopyDataset extends ZosConnection {
      * @param fromDataSetName source dataset (e.g. 'SOURCE.PARTITION.DATASET')
      * @param toDataSetName   destination dataset (e.g. 'TARGET.PARTITION.DATASET')
      * @throws Exception error processing copy request
-     * @author Frank Giordano
      */
     public static void copyFullPartitionDatasetByCopyParams(ZOSConnection connection, String fromDataSetName,
                                                             String toDataSetName) throws Exception {
@@ -284,9 +270,6 @@ import zosfiles.ZosDsn;
 
 /**
  * Class example to showcase DeleteDataset functionality.
- *
- * @author Leonid Baranov
- * @version 1.0
  */
 public class DeleteDataset extends ZosConnection {
 
@@ -300,14 +283,12 @@ public class DeleteDataset extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
-     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
         String dataSetName = "XXX";
         String member = "XXX";
 
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-
         deleteDataSet(dataSetName);
         deleteMember(dataSetName, member);
     }
@@ -315,7 +296,6 @@ public class DeleteDataset extends ZosConnection {
     /**
      * @param dataSetName name of a dataset to delete (e.g. 'DATASET.LIB')
      * @throws Exception error processing request
-     * @author Frank Giordano
      */
     public static void deleteDataSet(String dataSetName) throws Exception {
         ZosDsn zosDsn = new ZosDsn(connection);
@@ -327,7 +307,6 @@ public class DeleteDataset extends ZosConnection {
      * @param dataSetName name of a dataset where member should be located (e.g. 'DATASET.LIB')
      * @param member      name of member to delete
      * @throws Exception error processing request
-     * @author Frank Giordano
      */
     public static void deleteMember(String dataSetName, String member) throws Exception {
         ZosDsn zosDsn = new ZosDsn(connection);
@@ -355,9 +334,6 @@ import java.io.StringWriter;
 
 /**
  * Class example to showcase DownloadDataset functionality.
- *
- * @author Leonid Baranov
- * @version 1.0
  */
 public class DownloadDataset extends ZosConnection {
 
@@ -369,14 +345,12 @@ public class DownloadDataset extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
-     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
         String datasetMember = "XXX";
 
         DownloadParams params = new DownloadParams.Builder().build();
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-
         DownloadDataset.downloadDsnMember(connection, datasetMember, params);
     }
 
@@ -387,7 +361,6 @@ public class DownloadDataset extends ZosConnection {
      * @param name       data set name
      * @param params     download parameters object
      * @throws Exception error processing request
-     * @author Leonid Baranov
      */
     public static void downloadDsnMember(ZOSConnection connection, String name, DownloadParams params) throws Exception {
         try (InputStream inputStream = new ZosDsnDownload(connection).downloadDsn(name, params)) {
@@ -419,9 +392,6 @@ import java.util.List;
 
 /**
  * Class example to showcase ListDatasets functionality.
- *
- * @author Leonid Baranov
- * @version 1.0
  */
 public class ListDatasets extends ZosConnection {
 
@@ -433,7 +403,6 @@ public class ListDatasets extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error processing request
-     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
         String dataSetMask = "XXX";
@@ -452,7 +421,6 @@ public class ListDatasets extends ZosConnection {
      * @param connection  ZOSConnection object
      * @param dataSetName data set name
      * @throws Exception error processing request
-     * @author Leonid Baranov
      */
     public static void listMembers(ZOSConnection connection, String dataSetName) throws Exception {
         ListParams params = new ListParams.Builder().build();
@@ -467,7 +435,6 @@ public class ListDatasets extends ZosConnection {
      * @param connection  ZOSConnection object
      * @param dataSetName data set name
      * @throws Exception error processing request
-     * @author Leonid Baranov
      */
     public static void listDsn(ZOSConnection connection, String dataSetName) throws Exception {
         ListParams params = new ListParams.Builder().attribute(UtilDataset.Attribute.BASE).build();
@@ -482,7 +449,6 @@ public class ListDatasets extends ZosConnection {
      * @param connection  ZOSConnection object
      * @param dataSetName data set name
      * @throws Exception error processing request
-     * @author Frank Giordano
      */
     public static void listDsnVol(ZOSConnection connection, String dataSetName) throws Exception {
         ListParams params = new ListParams.Builder().attribute(UtilDataset.Attribute.VOL).build();
@@ -506,9 +472,6 @@ import zosfiles.ZosDsn;
 
 /**
  * Class example to showcase WriteDataset functionality.
- *
- * @author Leonid Baranov
- * @version 1.0
  */
 public class WriteDataset extends ZosConnection {
 
@@ -522,14 +485,12 @@ public class WriteDataset extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
-     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
         String dataSetName = "XXX";
         String member = "XXX";
 
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-
         var content = "NEW CONTENT\nTHE SECOND LINE UPDATED";
         WriteDataset.writeToDsnMember(dataSetName, member, content);
     }
@@ -541,7 +502,6 @@ public class WriteDataset extends ZosConnection {
      * @param member      name of member to write
      * @param content     content for write
      * @throws Exception error processing request
-     * @author Frank Giordano
      */
     public static void writeToDsnMember(String dataSetName, String member, String content) throws Exception {
         ZosDsn zosDsn = new ZosDsn(connection);
@@ -564,9 +524,6 @@ import zosfiles.response.Dataset;
 
 /**
  * Class example to showcase ZosDsn getDataSetInfo functionality.
- *
- * @author Frank Giordano
- * @version 1.0
  */
 public class DataSetInfo extends ZosConnection {
 
@@ -578,7 +535,6 @@ public class DataSetInfo extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error processing request
-     * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
         String dataSetName = "XXX";
@@ -601,9 +557,6 @@ package examples;
 /**
 * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
 * duplicating connection details in each example.
-*
-* @author Frank Giordano
-* @version 1.0
 */
 public class ZosConnection {
 
