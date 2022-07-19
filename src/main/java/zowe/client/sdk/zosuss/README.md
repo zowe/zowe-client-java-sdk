@@ -8,6 +8,9 @@ Contains Shell class to execute USS (Unix System Serves) commands via SSH connec
 import zowe.client.sdk.core.SSHConnection;
 import zowe.client.sdk.core.Shell;
 
+/**
+ * Class example to showcase USS command(s) execution.
+ */
 public class USSCommand {
 
     /**

@@ -15,6 +15,9 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
 
 import java.util.Arrays;
 
+/**
+ * Class example to showcase z/OSMF informational retrieval functionality.
+ */
 public class CheckStatus extends ZosConnection {
 
     private static final Logger LOG = LoggerFactory.getLogger(CheckStatus.class);
@@ -50,6 +53,9 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
 
 import java.util.Arrays;
 
+/**
+ * Class example to showcase z/OSMF informational retrieval functionality.
+ */
 public class ZosmfDefinedSystems extends ZosConnection {
 
     private static final Logger LOG = LoggerFactory.getLogger(CheckStatus.class);
@@ -69,6 +75,23 @@ public class ZosmfDefinedSystems extends ZosConnection {
         LOG.info(zosmfInfoResponse.toString());
         Arrays.stream(zosmfInfoResponse.getDefinedSystems.get()).forEach(i -> LOG.info(i.toString()));
     }
+
+}
+`````
+
+````java
+package examples;
+
+/**
+* Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
+* duplicating connection details in each example.
+*/
+public class ZosConnection {
+
+    public static final String hostName = "XXX";
+    public static final String zosmfPort = "XXX";
+    public static final String userName = "XXX";
+    public static final String password = "XXX";
 
 }
 `````
