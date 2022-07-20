@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.utility.Util;
+import zowe.client.sdk.zosjobs.input.CommonJobParams;
 import zowe.client.sdk.zosjobs.input.GetJobParams;
 import zowe.client.sdk.zosjobs.input.JobFile;
 import zowe.client.sdk.zosjobs.input.MonitorJobWaitForParams;
@@ -431,6 +432,15 @@ public class MonitorJobs {
                 Util.wait(timeoutVal);
                 LOG.info("Waiting for status \"{}\"", statusName);
             }
+            else {
+                // Get the stepData
+                try {
+                    checkJobStatus = checkStatus(params, true);
+                }
+                catch (Exception e) {
+                    // JCL error, return without stepData
+                }
+            }
         } while (shouldContinue);
 
         if (numOfAttempts == maxAttempts) {
@@ -449,12 +459,26 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     private CheckJobStatus checkStatus(MonitorJobWaitForParams params) throws Exception {
+        return checkStatus(params, false);
+    }
+
+    /**
+     * Checks the status of the job for the expected status (OR that the job has progressed passed the expected status).
+     *
+     * @param params monitor jobs params, see MonitorJobWaitForParams
+     * @return boolean true when the job status is obtained
+     * @throws Exception error processing check request
+     * @author Frank Giordano
+     */
+    private CheckJobStatus checkStatus(MonitorJobWaitForParams params, boolean getStepData) throws Exception {
         GetJobs getJobs = new GetJobs(connection);
         String statusNameCheck = params.getJobStatus().orElse(DEFAULT_STATUS).toString();
 
-        Job job = getJobs.getStatus(
+        Job job = getJobs.getStatusCommon(new CommonJobParams(params.getJobId().orElseThrow(() -> new Exception("job id not " +
+                        "specified")),
                 params.getJobName().orElseThrow(() -> new Exception("job name not specified")),
-                params.getJobId().orElseThrow(() -> new Exception("job id not specified")));
+                getStepData));
+
         if (statusNameCheck.equals(job.getStatus().orElse(DEFAULT_STATUS.toString()))) {
             return new CheckJobStatus(true, job);
         }
