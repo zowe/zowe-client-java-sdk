@@ -46,7 +46,7 @@ public class ParseJobJson implements IParseJson<Job> {
                 .filesUrl((String) jsonObject.get("files-url"))
                 .retCode((String) jsonObject.get("retcode"))
                 .jobCorrelator((String) jsonObject.get("job-correlator"))
-                .phase((Integer) jsonObject.get("phase"))
+                .phase((Long) jsonObject.get("phase"))
                 .phaseName((String) jsonObject.get("phase-name"));
 
         // check for "step-data" used by getStatusCommon if flag is set to true

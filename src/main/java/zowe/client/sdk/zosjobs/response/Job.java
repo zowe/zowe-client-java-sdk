@@ -11,6 +11,7 @@ package zowe.client.sdk.zosjobs.response;
 
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.OptionalLong;
 
 /**
  * Standard job response document that represents the attributes and status of a z/OS batch job
@@ -84,7 +85,7 @@ public class Job {
     /**
      * Job phase
      */
-    private final OptionalInt phase;
+    private final OptionalLong phase;
 
     /**
      * Job phase name
@@ -105,9 +106,9 @@ public class Job {
         this.filesUrl = Optional.ofNullable(builder.filesUrl);
         this.jobCorrelator = Optional.ofNullable(builder.jobCorrelator);
         if (builder.phase == null) {
-            this.phase = OptionalInt.empty();
+            this.phase = OptionalLong.empty();
         } else {
-            this.phase = OptionalInt.of(builder.phase);
+            this.phase = OptionalLong.of(builder.phase);
         }
         this.phaseName = Optional.ofNullable(builder.phaseName);
     }
@@ -238,7 +239,7 @@ public class Job {
      * @return phase value
      * @author Frank Giordano
      */
-    public OptionalInt getPhase() {
+    public OptionalLong getPhase() {
         return phase;
     }
 
@@ -286,7 +287,7 @@ public class Job {
         private String url;
         private String filesUrl;
         private String jobCorrelator;
-        private Integer phase;
+        private Long phase;
         private String phaseName;
 
         public Builder jobId(String jobId) {
@@ -349,7 +350,7 @@ public class Job {
             return this;
         }
 
-        public Builder phase(Integer phase) {
+        public Builder phase(Long phase) {
             this.phase = phase;
             return this;
         }
