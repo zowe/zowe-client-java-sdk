@@ -18,6 +18,8 @@ import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosconsole.input.IssueParams;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 
@@ -34,8 +36,9 @@ public class IssueCommandTest {
 
     @Test
     public void tstIssueCommandCmdResponseAttributeSuccess() throws Exception {
-        JSONObject json = new JSONObject();
-        json.put("cmd-response", "student");
+        var jsonMap = new HashMap<String, Object>();
+        jsonMap.put("cmd-response", "student");
+        JSONObject json = new JSONObject(jsonMap);
         Mockito.when(jsonGetRequest.executeRequest()).thenReturn(new Response(json, 200));
         Mockito.doNothing().when(jsonGetRequest).setRequest(anyString());
         IssueCommand issueCommand = new IssueCommand(connection, jsonGetRequest);
@@ -51,8 +54,9 @@ public class IssueCommandTest {
 
     @Test
     public void tstIssueCommandCmdResponseUrlAttributeSuccess() throws Exception {
-        JSONObject json = new JSONObject();
-        json.put("cmd-response-url", "student");
+        var jsonMap = new HashMap<String, Object>();
+        jsonMap.put("cmd-response-url", "student");
+        JSONObject json = new JSONObject(jsonMap);
         Mockito.when(jsonGetRequest.executeRequest()).thenReturn(new Response(json, 200));
         Mockito.doNothing().when(jsonGetRequest).setRequest(anyString());
         IssueCommand issueCommand = new IssueCommand(connection, jsonGetRequest);
