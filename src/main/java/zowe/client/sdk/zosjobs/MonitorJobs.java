@@ -437,7 +437,7 @@ public class MonitorJobs {
                 try {
                     checkJobStatus = checkStatus(params, true);
                 }
-                catch (Exception e) {
+                catch (Exception ignore) {
                     // JCL error, return without stepData
                 }
             }
