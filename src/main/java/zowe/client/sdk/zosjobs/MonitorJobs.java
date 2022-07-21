@@ -472,10 +472,10 @@ public class MonitorJobs {
         GetJobs getJobs = new GetJobs(connection);
         String statusNameCheck = params.getJobStatus().orElse(DEFAULT_STATUS).toString();
 
-        Job job = getJobs.getStatusCommon(new CommonJobParams(params.getJobId().orElseThrow(() -> new Exception("job id not " +
-                "specified")),
-                params.getJobName().orElseThrow(() -> new Exception("job name not specified")),
-                getStepData));
+        Job job = getJobs.getStatusCommon(
+                new CommonJobParams(params.getJobId().orElseThrow(() -> new Exception("job id not specified")),
+                        params.getJobName().orElseThrow(() -> new Exception("job name not specified")),
+                        getStepData));
 
         if (statusNameCheck.equals(job.getStatus().orElse(DEFAULT_STATUS.toString()))) {
             return new CheckJobStatus(true, job);
@@ -483,8 +483,7 @@ public class MonitorJobs {
 
         String invalidStatusMsg = "Invalid status when checking for status ordering.";
         int orderIndexOfDesiredJobStatus = getOrderIndexOfStatus(statusNameCheck);
-        if (orderIndexOfDesiredJobStatus == -1) // this should never happen but let's check for it.
-        {
+        if (orderIndexOfDesiredJobStatus == -1) { // this should never happen but let's check for it.
             throw new Exception(invalidStatusMsg);
         }
 
