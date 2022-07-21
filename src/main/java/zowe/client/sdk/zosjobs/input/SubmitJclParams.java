@@ -20,8 +20,8 @@ import java.util.Optional;
 public class SubmitJclParams {
 
     /**
-     * JCL to submit which should contain syntactically correct JCL. Example value: IBMUSER.PUBLIC.CNTL(IEFBR14)
-     * where IEFBR14 contains statements like:
+     * JCL string to submit which should contain syntactically correct JCL.
+     * Example:
      * "//IEFBR14 JOB ()" +
      * "//RUN     EXEC PGM=IEFBR14"
      */
@@ -29,13 +29,15 @@ public class SubmitJclParams {
 
     /**
      * Specify internal reader RECFM and corresponding http(s) headers will be appended to the request accordingly
-     * "F" (fixed) or "V" (variable)
+     * A single character that specifies the internal reader record format: F or V.
+     * If you omit this header or specify a value other than F or V, the default of F is used.
      */
     private Optional<String> internalReaderRecfm;
 
     /**
      * Specify internal reader LRECL and corresponding http(s) headers will be appended to the request accordingly
-     * "F" (fixed) or "V" (variable)
+     * An integer value that specifies the internal reader logical record length (LRECL).
+     * If you omit this header or specify a non-integer value, the default of 80 is used.
      */
     private Optional<String> internalReaderLrecl;
 
@@ -102,7 +104,8 @@ public class SubmitJclParams {
      * Assign internalReaderRecfm value
      *
      * @param internalReaderRecfm specify internal reader RECFM and corresponding http(s) headers will
-     *                            be appended to the request accordingly "F" (fixed) or "V" (variable)
+     *                            be appended to the request accordingly
+     *                            A single character that specifies the internal reader record format: F or V.
      * @author Frank Giordano
      */
     public void setInternalReaderRecfm(String internalReaderRecfm) {
@@ -120,10 +123,11 @@ public class SubmitJclParams {
     }
 
     /**
-     * Assign internalReaderRecfm value
+     * Assign internalReaderLrecl value
      *
      * @param internalReaderLrecl specify internal reader LRECL and corresponding http(s) headers will
-     *                            be appended to the request accordingly "F" (fixed) or "V" (variable)
+     *                            be appended to the request accordingly
+     *                            An integer value that specifies the internal reader logical record length (LRECL).
      * @author Frank Giordano
      */
     public void setInternalReaderLrecl(String internalReaderLrecl) {
