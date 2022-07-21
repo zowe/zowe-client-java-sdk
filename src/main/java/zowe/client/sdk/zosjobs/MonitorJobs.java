@@ -431,13 +431,11 @@ public class MonitorJobs {
             if (shouldContinue) {
                 Util.wait(timeoutVal);
                 LOG.info("Waiting for status \"{}\"", statusName);
-            }
-            else {
+            } else {
                 // Get the stepData
                 try {
                     checkJobStatus = checkStatus(params, true);
-                }
-                catch (Exception ignore) {
+                } catch (Exception ignore) {
                     // JCL error, return without stepData
                 }
             }
@@ -475,7 +473,7 @@ public class MonitorJobs {
         String statusNameCheck = params.getJobStatus().orElse(DEFAULT_STATUS).toString();
 
         Job job = getJobs.getStatusCommon(new CommonJobParams(params.getJobId().orElseThrow(() -> new Exception("job id not " +
-                        "specified")),
+                "specified")),
                 params.getJobName().orElseThrow(() -> new Exception("job name not specified")),
                 getStepData));
 
@@ -511,10 +509,11 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     private int getOrderIndexOfStatus(String statusName) {
-        for (int i = 0; i < JobStatus.Order.length; i++)
+        for (int i = 0; i < JobStatus.Order.length; i++) {
             if (statusName.equals(JobStatus.Order[i])) {
                 return i;
             }
+        }
         return -1;
     }
 
