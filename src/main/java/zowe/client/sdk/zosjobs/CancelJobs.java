@@ -70,7 +70,11 @@ public class CancelJobs {
      *
      * @param jobName name of job to cancel
      * @param jobId   job id
-     * @param version version number
+     * @param version version number - 1.0 or 2.0
+     *                To request asynchronous processing for this service (the default), set the "version" property to 1.0
+     *                or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
+     *                the system will attempt to process the request synchronously, if such processing is supported on
+     *                the target JES2 subsystem.
      * @return job document with details about the submitted job
      * @throws Exception error canceling
      * @author Nikunj goyal
@@ -84,7 +88,11 @@ public class CancelJobs {
      * Cancel a job that resides in a z/OS data set.
      *
      * @param job     job document wanting to cancel
-     * @param version version number
+     * @param version version number - 1.0 or 2.0
+     *                To request asynchronous processing for this service (the default), set the "version" property to 1.0
+     *                or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
+     *                the system will attempt to process the request synchronously, if such processing is supported on
+     *                the target JES2 subsystem.
      * @return job document with details about the submitted job
      * @throws Exception error canceling
      * @author Frank Giordano
@@ -120,15 +128,14 @@ public class CancelJobs {
         // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
         // the system will attempt to process the request synchronously, if such processing is supported on
         // the target JES2 subsystem.
-        if (!version.isEmpty()) {
-            if ("1.0".equals(version)) {
-                LOG.debug("version 1.0 specified which will result in asynchronous processing for the request");
-            } else if ("2.0".equals(version)) {
-                LOG.debug("version 2.0 specified which will result in synchronous processing for the request");
-            } else {
-                throw new Exception("invalid version specified");
-            }
+        if ("1.0".equals(version)) {
+            LOG.debug("version 1.0 specified which will result in asynchronous processing for the request");
+        } else if ("2.0".equals(version)) {
+            LOG.debug("version 2.0 specified which will result in synchronous processing for the request");
+        } else {
+            throw new IllegalArgumentException("invalid version specified");
         }
+
 
         var jsonMap = new HashMap<String, String>();
         jsonMap.put("request", JobsConstants.REQUEST_CANCEL);
