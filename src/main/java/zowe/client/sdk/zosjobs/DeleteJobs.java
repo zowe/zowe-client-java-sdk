@@ -119,19 +119,18 @@ public class DeleteJobs {
         // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
         // the system will attempt to process the request synchronously, if such processing is supported on
         // the target JES2 subsystem.
-        if (!version.isEmpty()) {
-            if ("1.0".equals(version)) {
-                LOG.debug("version 1.0 specified which will result in asynchronous processing for the request");
-                headers.put(ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(0),
-                        ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(1));
-            } else if ("2.0".equals(version)) {
-                LOG.debug("version 2.0 specified which will result in synchronous processing for the request");
-                headers.put(ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(0),
-                        ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(1));
-            } else {
-                throw new Exception("invalid version specified");
-            }
+        if ("1.0".equals(version)) {
+            LOG.debug("version 1.0 specified which will result in asynchronous processing for the request");
+            headers.put(ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(0),
+                    ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_1").get(1));
+        } else if ("2.0".equals(version)) {
+            LOG.debug("version 2.0 specified which will result in synchronous processing for the request");
+            headers.put(ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(0),
+                    ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(1));
+        } else {
+            throw new IllegalArgumentException("invalid version specified");
         }
+
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.DELETE_JSON);
