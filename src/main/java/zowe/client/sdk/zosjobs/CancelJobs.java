@@ -136,7 +136,6 @@ public class CancelJobs {
             throw new IllegalArgumentException("invalid version specified");
         }
 
-
         var jsonMap = new HashMap<String, String>();
         jsonMap.put("request", JobsConstants.REQUEST_CANCEL);
         jsonMap.put("version", version);

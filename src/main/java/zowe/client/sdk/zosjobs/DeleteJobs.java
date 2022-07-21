@@ -131,7 +131,6 @@ public class DeleteJobs {
             throw new IllegalArgumentException("invalid version specified");
         }
 
-
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.DELETE_JSON);
         }
