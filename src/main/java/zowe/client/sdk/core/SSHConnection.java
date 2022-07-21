@@ -40,10 +40,10 @@ public class SSHConnection {
     /**
      * ZOSConnection constructor
      *
-     * @param host      machine host pointing to backend z/OS instance
-     * @param port      machine host port number pointing to backend z/OS instance
-     * @param user      machine host username with access to backend z/OS instance
-     * @param password  machine host username's password with access to backend z/OS instance
+     * @param host     machine host pointing to backend z/OS instance
+     * @param port     machine host port number pointing to backend z/OS instance
+     * @param user     machine host username with access to backend z/OS instance
+     * @param password machine host username's password with access to backend z/OS instance
      * @author Frank Giordano
      */
     public SSHConnection(String host, int port, String user, String password) {

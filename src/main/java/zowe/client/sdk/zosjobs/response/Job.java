@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosjobs.response;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.OptionalLong;
 
 /**

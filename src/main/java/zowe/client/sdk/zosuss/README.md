@@ -1,6 +1,6 @@
 # z/OS USS Package
 
-Contains Shell class to execute USS (Unix System Serves) commands via SSH connection.  
+Contains Shell class to execute USS (Unix System Serves) commands via SSH connection.
 
 ## Example
 

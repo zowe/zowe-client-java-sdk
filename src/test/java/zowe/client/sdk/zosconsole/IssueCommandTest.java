@@ -71,8 +71,7 @@ public class IssueCommandTest {
         } catch (Exception e) {
             errorMsg = e + "";
         }
-        assertEquals("java.lang.Exception: Http error code 401 Unauthorized.",
-                errorMsg);
+        assertEquals("java.lang.Exception: Http error code 401 Unauthorized.", errorMsg);
     }
 
 }
