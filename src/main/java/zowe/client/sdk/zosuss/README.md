@@ -20,9 +20,10 @@ public class USSCommand {
      * @throws Exception error in processing request
      */
     public static void main(String[] args) throws Exception {
-        SSHConnection conn = new SSHConnection("XXX", XXX, "XXX", XXX);
+        SSHConnection conn = new SSHConnection("XXX", XXX, "XXX", "XXX");
         Shell shell = new Shell(conn);
-        System.out.println(shell.executeSshCwd("mkdir test;cd test;ls"));
+        // 10000 is the timeout value in milliseconds 
+        System.out.println(shell.executeSshCwd("mkdir test;cd test;ls", 10000));
     }
 
 }

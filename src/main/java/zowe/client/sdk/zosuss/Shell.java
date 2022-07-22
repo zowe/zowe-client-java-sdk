@@ -39,18 +39,22 @@ public class Shell {
      * Executes USS command(s)
      *
      * @param command string value contain one or more USS commands
+     * @param timeout int value in milliseconds for timeout duration on session connection
      * @return string output value
      * @throws Exception processing error
      */
-    public String executeSshCwd(String command) throws Exception {
+    public String executeSshCwd(String command, int timeout) throws Exception {
         Session session = null;
         ChannelExec channel = null;
 
         try {
             session = new JSch().getSession(connection.getUser(), connection.getHost(), connection.getPort());
             session.setPassword(connection.getPassword());
-            session.setConfig("StrictHostKeyChecking", "no");
-            session.connect();
+            java.util.Properties config = new java.util.Properties();
+            config.put("StrictHostKeyChecking", "no");
+            config.put("PreferredAuthentications", "password");
+            session.setConfig(config);
+            session.connect(timeout);
 
             channel = (ChannelExec) session.openChannel("exec");
             channel.setCommand(command);
