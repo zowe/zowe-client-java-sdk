@@ -13,11 +13,15 @@ This Java SDK is a sub-project of Zowe, focusing on modernizing mainframe experi
 
 Version 1.0 provides functionality documented in [MVP issue](https://github.com/zowe/zowe-client-java-sdk/issues/5). Project requires Java 11 and above. 
 
-The SDK lets you leverage the underlying z/OSMF REST APIs on a z/OS system to build applications that interface with your z/OS instance.
+This SDK lets you leverage the underlying z/OSMF REST APIs on a z/OS system to build applications that interface with your z/OS instance.
 
-The goal is to provide Java developers an SDK to easily interface with a backend mainframe from any computer that has a JVM. The SDK will do the leg work to allow you to interface with z/OS services. These services provides access to the mainframe in ways where you can build automation, testing, and devOps applications without the need to build those directly on the mainframe itself, and as such, opens these applications to modern tools.  
+The goal is to help Java developers to leverage the Java Zowe Client Software Development Kit (SDK) to build client applications and scripts that interface with the mainframe easily. 
 
-Functionality provided:
+For example, one API package provides the ability to upload and download z/OS data sets. You can leverage that package to rapidly build a client application that interacts with data sets.
+  
+The SDK is built to perform the tedious leg work to interface with z/OSMF and provide services that access the mainframe in ways where you can build automation, testing, and devOps applications without the need to build those directly on the mainframe itself, and as such, opens these applications to modern tools.  
+  
+Class names providing services:
 
     GetJobs   
     IssueCommand (mvs commands)  
@@ -32,8 +36,9 @@ Functionality provided:
     CopyDataset
     CancelJobs
     DeleteJobs
-    CheckStatus
-    ListDefinedSystems
+    CheckStatus (zosmf info)
+    ListDefinedSystems (zosmf info)
+    Shell (uss commands)
       
 ## Requirements  
     
@@ -65,7 +70,6 @@ SLF4J stands for Simple Logging Facade for Java. It provides a simple abstractio
   
 As such, as needed in your parent project implement a logging framework which wraps around SLF4j, for instance logging frameworks such as Log4j2, Logback, JUL (java. util. logging), etc.
 
-    
 ## Documentation  
 
 https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk/latest/index.html  
