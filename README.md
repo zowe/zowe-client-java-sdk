@@ -15,7 +15,7 @@ Version 1.0 provides functionality documented in [MVP issue](https://github.com/
 
 This SDK lets you leverage the underlying z/OSMF REST APIs on a z/OS system to build applications that interface with your z/OS instance.
 
-The goal is to help Java developers to leverage the Java Zowe Client Software Development Kit (SDK) to build client applications and scripts that interface with the mainframe easily. 
+The goal is to help Java developers leverage the Java Zowe Client Software Development Kit (SDK) to build client applications and scripts that interface with the mainframe easily. 
 
 For example, one API package provides the ability to upload and download z/OS data sets. You can leverage that package to rapidly build a client application that interacts with data sets.
   
