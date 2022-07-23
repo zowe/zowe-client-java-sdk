@@ -19,7 +19,7 @@ The goal is to help Java developers to leverage the Java Zowe Client Software De
 
 For example, one API package provides the ability to upload and download z/OS data sets. You can leverage that package to rapidly build a client application that interacts with data sets.
   
-The SDK is built to perform the tedious leg work to interface with z/OSMF and provide services that access the mainframe in ways where you can build automation, testing, and devOps applications without the need to build those directly on the mainframe itself, and as such, opens these applications to modern tools.  
+The SDK is built to perform the tedious leg work to interface with z/OSMF and provide services that access the mainframe in ways where you can build automation, testing, and DevOps applications without the need to build those directly on the mainframe itself, and as such, opens these applications to modern tools.  
   
 Class names providing services:
 
