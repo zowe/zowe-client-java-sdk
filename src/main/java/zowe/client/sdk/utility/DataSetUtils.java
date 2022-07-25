@@ -9,6 +9,9 @@
  */
 package zowe.client.sdk.utility;
 
+import org.json.simple.JSONObject;
+import zowe.client.sdk.zosfiles.response.Dataset;
+
 import java.util.List;
 
 /**
@@ -17,27 +20,23 @@ import java.util.List;
  * @author Nikunj Goyal
  * @version 1.0
  */
-public class UtilDataset {
+public final class DataSetUtils {
+
+    private DataSetUtils() {}
 
     /**
-     * Operation enum for setting the type of dataset request that will be performed.
+     * Generate string with all datasets
      *
+     * @param dsNames  dataset representations
+     * @param datasets string holder
      * @author Frank Giordano
      */
-    public enum Operation {
-        create, read, copy, delete, write, download
-    }
-
-    /**
-     * Attribute enum for querying a dataset and how its returned data will be retrieved with what properties.
-     * <p>
-     * BASE return all properties of a dataset and its values.
-     * VOL return volume and dataset name properties and its values only.
-     *
-     * @author Frank Giordano
-     */
-    public enum Attribute {
-        BASE, VOL
+    private static void appendAllDS(List<String> dsNames, StringBuilder datasets) {
+        dsNames.forEach(ds -> {
+            datasets.append(" '");
+            datasets.append(ds);
+            datasets.append("'");
+        });
     }
 
     /**
@@ -50,11 +49,11 @@ public class UtilDataset {
      * @author Frank Giordano
      */
     public static void checkHttpErrors(String errMsg, List<String> dsNames, Operation type) throws Exception {
-        Util.checkNullParameter(errMsg == null, "errMsg is null");
-        Util.checkIllegalParameter(errMsg.isEmpty(), "errMsg not specified");
-        Util.checkNullParameter(dsNames == null, "dsNames is null");
-        Util.checkIllegalParameter(dsNames.isEmpty(), "dsNames not specified");
-        Util.checkNullParameter(type == null, "crudType is null");
+        ValidateUtils.checkNullParameter(errMsg == null, "errMsg is null");
+        ValidateUtils.checkIllegalParameter(errMsg.isEmpty(), "errMsg not specified");
+        ValidateUtils.checkNullParameter(dsNames == null, "dsNames is null");
+        ValidateUtils.checkIllegalParameter(dsNames.isEmpty(), "dsNames not specified");
+        ValidateUtils.checkNullParameter(type == null, "crudType is null");
 
         String http404 = "is invalid or non-existent.";
         String http500Pre = "You may not have permission to";
@@ -139,18 +138,54 @@ public class UtilDataset {
     }
 
     /**
-     * Generate string with all datasets
+     * Transform JSON into Dataset object
      *
-     * @param dsNames  dataset representations
-     * @param datasets string holder
+     * @param jsonObject JSON object
+     * @return Dataset object
      * @author Frank Giordano
      */
-    private static void appendAllDS(List<String> dsNames, StringBuilder datasets) {
-        dsNames.forEach(ds -> {
-            datasets.append(" '");
-            datasets.append(ds);
-            datasets.append("'");
-        });
+    public static Dataset parseJsonDSResponse(JSONObject jsonObject) {
+        return new Dataset.Builder().dsname((String) jsonObject.get("dsname"))
+                .blksz((String) jsonObject.get("blksz"))
+                .catnm((String) jsonObject.get("catnm"))
+                .cdate((String) jsonObject.get("cdate"))
+                .dev((String) jsonObject.get("dev"))
+                .dsntp((String) jsonObject.get("dsntp"))
+                .dsorg((String) jsonObject.get("dsorg"))
+                .edate((String) jsonObject.get("edate"))
+                .extx((String) jsonObject.get("extx"))
+                .lrectl((String) jsonObject.get("lrectl"))
+                .migr((String) jsonObject.get("migr"))
+                .mvol((String) jsonObject.get("mvol"))
+                .ovf((String) jsonObject.get("ovf"))
+                .rdate((String) jsonObject.get("rdate"))
+                .recfm((String) jsonObject.get("recfm"))
+                .sizex((String) jsonObject.get("sizex"))
+                .spacu((String) jsonObject.get("spacu"))
+                .used((String) jsonObject.get("used"))
+                .vol((String) jsonObject.get("vol"))
+                .build();
+    }
+
+    /**
+     * Attribute enum for querying a dataset and how its returned data will be retrieved with what properties.
+     * <p>
+     * BASE return all properties of a dataset and its values.
+     * VOL return volume and dataset name properties and its values only.
+     *
+     * @author Frank Giordano
+     */
+    public enum Attribute {
+        BASE, VOL
+    }
+
+    /**
+     * Operation enum for setting the type of dataset request that will be performed.
+     *
+     * @author Frank Giordano
+     */
+    public enum Operation {
+        create, read, copy, delete, write, download
     }
 
 }

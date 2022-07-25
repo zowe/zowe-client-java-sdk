@@ -10,7 +10,7 @@
 package zowe.client.sdk.zostso;
 
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.utility.Util;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.input.StartTsoParams;
 import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
 
@@ -33,7 +33,7 @@ public class IssueTso {
      * @author Frank Giordano
      */
     public IssueTso(ZOSConnection connection) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -64,10 +64,10 @@ public class IssueTso {
      */
     public IssueResponse issueTsoCommand(String accountNumber, String command, StartTsoParams startParams)
             throws Exception {
-        Util.checkNullParameter(accountNumber == null, "accountNumber is null");
-        Util.checkNullParameter(command == null, "command is null");
-        Util.checkIllegalParameter(accountNumber.isEmpty(), "accountNumber not specified");
-        Util.checkIllegalParameter(command.isEmpty(), "command not specified");
+        ValidateUtils.checkNullParameter(accountNumber == null, "accountNumber is null");
+        ValidateUtils.checkNullParameter(command == null, "command is null");
+        ValidateUtils.checkIllegalParameter(accountNumber.isEmpty(), "accountNumber not specified");
+        ValidateUtils.checkIllegalParameter(command.isEmpty(), "command not specified");
 
         // first stage open tso servlet session to use for our tso command processing
         StartTso startTso = new StartTso(connection);

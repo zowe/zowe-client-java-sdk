@@ -13,9 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilRest;
-import zowe.client.sdk.utility.UtilTso;
+import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.TsoUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.input.SendTsoParams;
 import zowe.client.sdk.zostso.zosmf.TsoMessages;
 import zowe.client.sdk.zostso.zosmf.TsoResponseMessage;
@@ -33,7 +33,6 @@ import java.util.List;
 public class SendTso {
 
     private static final Logger LOG = LoggerFactory.getLogger(SendTso.class);
-
     private final ZOSConnection connection;
     private ZoweRequest request;
 
@@ -44,7 +43,7 @@ public class SendTso {
      * @author Frank Giordano
      */
     public SendTso(ZOSConnection connection) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -58,7 +57,7 @@ public class SendTso {
      * @author Frank Giordano
      */
     public SendTso(ZOSConnection connection, ZoweRequest request) throws Exception {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
             throw new Exception("PUT_JSON request type required");
@@ -67,80 +66,15 @@ public class SendTso {
     }
 
     /**
-     * API method to send data to already started TSO address space, but will read TSO data until a PROMPT is reached.
+     * Create Response
      *
-     * @param command    to send to the TSO address space.
-     * @param servletKey returned from a successful start
-     * @return response object, see ISendResponse
-     * @throws Exception error executing command
+     * @param responses responses from CollectedResponses object
+     * @return SendResponse, see SendResponse
      * @author Frank Giordano
      */
-    public SendResponse sendDataToTSOCollect(String servletKey, String command) throws Exception {
-        Util.checkNullParameter(servletKey == null, "servletKey is null");
-        Util.checkNullParameter(command == null, "command is null");
-        Util.checkIllegalParameter(servletKey.isEmpty(), "servletKey not specified");
-        Util.checkIllegalParameter(command.isEmpty(), "command not specified");
-
-        ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParams(servletKey, command));
-
-        CollectedResponses responses = getAllResponses(putResponse);
-        return createResponse(responses);
-    }
-
-    /**
-     * API method to send data to already started TSO address space
-     *
-     * @param commandParams object with required parameters, see SendTsoParams object
-     * @return response object, see ZosmfTsoResponse
-     * @throws Exception error executing command
-     * @author Frank Giordano
-     */
-    public ZosmfTsoResponse sendDataToTSOCommon(SendTsoParams commandParams) throws Exception {
-        Util.checkNullParameter(commandParams == null, "commandParams is null");
-        Util.checkIllegalParameter(commandParams.getData().isEmpty(), "commandParams data not specified");
-        Util.checkIllegalParameter(commandParams.getServletKey().isEmpty(), "commandParams servletKey not specified");
-
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;
-        LOG.debug("SendTso::sendDataToTSOCommon - url {}", url);
-
-        TsoResponseMessage tsoResponseMessage = new TsoResponseMessage("0100", commandParams.getData());
-        String jobObjBody = getTsoResponseSendMessage(tsoResponseMessage);
-
-        if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_JSON);
-        }
-        request.setRequest(url, jobObjBody);
-        Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return new ZosmfTsoResponse.Builder().build();
-        }
-
-        try {
-            UtilRest.checkHttpErrors(response);
-        } catch (Exception e) {
-            String errorMsg = e.getMessage();
-            throw new Exception("No results from executing tso command after getting TSO address space. " + errorMsg);
-        }
-
-        return UtilTso.getZosmfTsoResponse(response);
-    }
-
-    /**
-     * Generate TSO Response message in json format
-     *
-     * @param tsoResponseMessage tso response message, see tsoResponseMessage
-     * @return json representation of TSO RESPONSE
-     * @throws Exception error executing command
-     * @author Frank Giordano
-     */
-    private String getTsoResponseSendMessage(TsoResponseMessage tsoResponseMessage) throws Exception {
-        String message = "{\"TSO RESPONSE\":{\"VERSION\":\"" +
-                tsoResponseMessage.getVersion().orElseThrow((() -> new Exception("response version missing")))
-                + "\",\"DATA\":\"" +
-                tsoResponseMessage.getData().orElseThrow((() -> new Exception("response data missing"))) + "\"}}";
-        LOG.debug("SendTo::getTsoResponseSendMessage - message {}", message);
-        return message;
+    private static SendResponse createResponse(CollectedResponses responses) throws Exception {
+        return new SendResponse(true, responses.getTsos(),
+                responses.getMessages().orElseThrow(() -> new Exception("no responses messages exist")));
     }
 
     /**
@@ -209,25 +143,90 @@ public class SendTso {
         }
 
         try {
-            UtilRest.checkHttpErrors(response);
+            RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
             String errorMsg = e.getMessage();
             throw new Exception("Follow up TSO Messages from TSO command cannot be retrieved. " + errorMsg);
         }
 
-        return UtilTso.getZosmfTsoResponse(response);
+        return TsoUtils.getZosmfTsoResponse(response);
     }
 
     /**
-     * Create Response
+     * Generate TSO Response message in json format
      *
-     * @param responses responses from CollectedResponses object
-     * @return SendResponse, see SendResponse
+     * @param tsoResponseMessage tso response message, see tsoResponseMessage
+     * @return json representation of TSO RESPONSE
+     * @throws Exception error executing command
      * @author Frank Giordano
      */
-    private static SendResponse createResponse(CollectedResponses responses) throws Exception {
-        return new SendResponse(true, responses.getTsos(),
-                responses.getMessages().orElseThrow(() -> new Exception("no responses messages exist")));
+    private String getTsoResponseSendMessage(TsoResponseMessage tsoResponseMessage) throws Exception {
+        String message = "{\"TSO RESPONSE\":{\"VERSION\":\"" +
+                tsoResponseMessage.getVersion().orElseThrow((() -> new Exception("response version missing")))
+                + "\",\"DATA\":\"" +
+                tsoResponseMessage.getData().orElseThrow((() -> new Exception("response data missing"))) + "\"}}";
+        LOG.debug("SendTo::getTsoResponseSendMessage - message {}", message);
+        return message;
+    }
+
+    /**
+     * API method to send data to already started TSO address space, but will read TSO data until a PROMPT is reached.
+     *
+     * @param command    to send to the TSO address space.
+     * @param servletKey returned from a successful start
+     * @return response object, see ISendResponse
+     * @throws Exception error executing command
+     * @author Frank Giordano
+     */
+    public SendResponse sendDataToTSOCollect(String servletKey, String command) throws Exception {
+        ValidateUtils.checkNullParameter(servletKey == null, "servletKey is null");
+        ValidateUtils.checkNullParameter(command == null, "command is null");
+        ValidateUtils.checkIllegalParameter(servletKey.isEmpty(), "servletKey not specified");
+        ValidateUtils.checkIllegalParameter(command.isEmpty(), "command not specified");
+
+        ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParams(servletKey, command));
+
+        CollectedResponses responses = getAllResponses(putResponse);
+        return createResponse(responses);
+    }
+
+    /**
+     * API method to send data to already started TSO address space
+     *
+     * @param commandParams object with required parameters, see SendTsoParams object
+     * @return response object, see ZosmfTsoResponse
+     * @throws Exception error executing command
+     * @author Frank Giordano
+     */
+    public ZosmfTsoResponse sendDataToTSOCommon(SendTsoParams commandParams) throws Exception {
+        ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
+        ValidateUtils.checkIllegalParameter(commandParams.getData().isEmpty(), "commandParams data not specified");
+        ValidateUtils.checkIllegalParameter(commandParams.getServletKey().isEmpty(), "commandParams servletKey not specified");
+
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
+                TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;
+        LOG.debug("SendTso::sendDataToTSOCommon - url {}", url);
+
+        TsoResponseMessage tsoResponseMessage = new TsoResponseMessage("0100", commandParams.getData());
+        String jobObjBody = getTsoResponseSendMessage(tsoResponseMessage);
+
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_JSON);
+        }
+        request.setRequest(url, jobObjBody);
+        Response response = request.executeRequest();
+        if (response.isEmpty()) {
+            return new ZosmfTsoResponse.Builder().build();
+        }
+
+        try {
+            RestUtils.checkHttpErrors(response);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
+            throw new Exception("No results from executing tso command after getting TSO address space. " + errorMsg);
+        }
+
+        return TsoUtils.getZosmfTsoResponse(response);
     }
 
 }

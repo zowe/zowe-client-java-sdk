@@ -14,12 +14,10 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.parsejson.IParseJson;
-import zowe.client.sdk.parsejson.ParseIssueCommandJson;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilConsole;
-import zowe.client.sdk.utility.UtilRest;
+import zowe.client.sdk.utility.ConsoleUtils;
+import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosconsole.input.IssueParams;
 import zowe.client.sdk.zosconsole.zosmf.ZosmfIssueParams;
 import zowe.client.sdk.zosconsole.zosmf.ZosmfIssueResponse;
@@ -35,7 +33,6 @@ import java.util.HashMap;
 public class IssueCommand {
 
     private static final Logger LOG = LoggerFactory.getLogger(IssueCommand.class);
-    private final IParseJson<ZosmfIssueResponse> zosmfIssueResponseIParseJson = new ParseIssueCommandJson();
     private final ZOSConnection connection;
     private ZoweRequest request;
 
@@ -46,7 +43,7 @@ public class IssueCommand {
      * @author Frank Giordano
      */
     public IssueCommand(ZOSConnection connection) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -60,7 +57,7 @@ public class IssueCommand {
      * @author Frank Giordano
      */
     public IssueCommand(ZOSConnection connection, ZoweRequest request) throws Exception {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
             throw new Exception("PUT_JSON request type required");
@@ -78,10 +75,10 @@ public class IssueCommand {
      * @author Frank Giordano
      */
     public ZosmfIssueResponse issueCommon(String consoleName, ZosmfIssueParams commandParams) throws Exception {
-        Util.checkNullParameter(consoleName == null, "consoleName is null");
-        Util.checkIllegalParameter(consoleName.isEmpty(), "consoleName not specified");
-        Util.checkNullParameter(commandParams == null, "commandParams is null");
-        Util.checkIllegalParameter(commandParams.getCmd().isEmpty(), "command not specified");
+        ValidateUtils.checkNullParameter(consoleName == null, "consoleName is null");
+        ValidateUtils.checkIllegalParameter(consoleName.isEmpty(), "consoleName not specified");
+        ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
+        ValidateUtils.checkIllegalParameter(commandParams.getCmd().isEmpty(), "command not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ConsoleConstants.RESOURCE + "/" + consoleName;
@@ -103,10 +100,10 @@ public class IssueCommand {
             return new ZosmfIssueResponse();
         }
 
-        UtilRest.checkHttpErrors(response);
+        RestUtils.checkHttpErrors(response);
         LOG.debug("Response result {}", response.getResponsePhrase());
 
-        return zosmfIssueResponseIParseJson.parse((JSONObject) response.getResponsePhrase()
+        return ConsoleUtils.parseJsonIssueCmdResponse((JSONObject) response.getResponsePhrase()
                 .orElseThrow(() -> new Exception("response phrase missing")));
     }
 
@@ -135,14 +132,14 @@ public class IssueCommand {
      * @author Frank Giordano
      */
     public ConsoleResponse issue(IssueParams params) throws Exception {
-        Util.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(params == null, "params is null");
 
         String consoleName = params.getConsoleName().orElse(ConsoleConstants.RES_DEF_CN);
         ZosmfIssueParams commandParams = buildZosmfConsoleApiParameters(params);
         ConsoleResponse response = new ConsoleResponse();
 
         ZosmfIssueResponse resp = issueCommon(consoleName, commandParams);
-        UtilConsole.populate(resp, response, params.getProcessResponses().orElse(true));
+        ConsoleUtils.populate(resp, response, params.getProcessResponses().orElse(true));
 
         return response;
     }
@@ -169,8 +166,8 @@ public class IssueCommand {
      * @author Frank Giordano
      */
     private ZosmfIssueParams buildZosmfConsoleApiParameters(IssueParams params) {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkIllegalParameter(params.getCommand().isEmpty(), "command not specified");
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkIllegalParameter(params.getCommand().isEmpty(), "command not specified");
 
         ZosmfIssueParams zosmfParams = new ZosmfIssueParams();
         zosmfParams.setCmd(params.getCommand().get());

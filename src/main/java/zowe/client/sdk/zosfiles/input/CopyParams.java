@@ -59,16 +59,6 @@ public class CopyParams {
     }
 
     /**
-     * Retrieve fromVolser value
-     *
-     * @return fromVolser value
-     * @author Leonid Baranov
-     */
-    public Optional<String> getFromVolser() {
-        return fromVolser;
-    }
-
-    /**
      * Retrieve fromDataSet value
      *
      * @return fromDataSet value
@@ -79,13 +69,13 @@ public class CopyParams {
     }
 
     /**
-     * Retrieve toVolser value
+     * Retrieve fromVolser value
      *
-     * @return toVolser value
+     * @return fromVolser value
      * @author Leonid Baranov
      */
-    public Optional<String> getToVolser() {
-        return toVolser;
+    public Optional<String> getFromVolser() {
+        return fromVolser;
     }
 
     /**
@@ -99,13 +89,13 @@ public class CopyParams {
     }
 
     /**
-     * Retrieve replace value
+     * Retrieve toVolser value
      *
-     * @return replace value
+     * @return toVolser value
      * @author Leonid Baranov
      */
-    public boolean isReplace() {
-        return replace;
+    public Optional<String> getToVolser() {
+        return toVolser;
     }
 
     /**
@@ -116,6 +106,16 @@ public class CopyParams {
      */
     public boolean isCopyAllMembers() {
         return copyAllMembers;
+    }
+
+    /**
+     * Retrieve replace value
+     *
+     * @return replace value
+     * @author Leonid Baranov
+     */
+    public boolean isReplace() {
+        return replace;
     }
 
     @Override
@@ -138,8 +138,12 @@ public class CopyParams {
         private boolean replace = true;
         private boolean copyAllMembers = false;
 
-        public CopyParams.Builder fromVolser(String volser) {
-            this.fromVolser = volser;
+        public CopyParams build() {
+            return new CopyParams(this);
+        }
+
+        public CopyParams.Builder copyAllMembers(boolean value) {
+            this.copyAllMembers = value;
             return this;
         }
 
@@ -148,13 +152,8 @@ public class CopyParams {
             return this;
         }
 
-        public CopyParams.Builder toVolser(String volser) {
-            this.toVolser = volser;
-            return this;
-        }
-
-        public CopyParams.Builder toDataSet(String dataSet) {
-            this.toDataSet = dataSet;
+        public CopyParams.Builder fromVolser(String volser) {
+            this.fromVolser = volser;
             return this;
         }
 
@@ -163,13 +162,14 @@ public class CopyParams {
             return this;
         }
 
-        public CopyParams.Builder copyAllMembers(boolean value) {
-            this.copyAllMembers = value;
+        public CopyParams.Builder toDataSet(String dataSet) {
+            this.toDataSet = dataSet;
             return this;
         }
 
-        public CopyParams build() {
-            return new CopyParams(this);
+        public CopyParams.Builder toVolser(String volser) {
+            this.toVolser = volser;
+            return this;
         }
     }
 

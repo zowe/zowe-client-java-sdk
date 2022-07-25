@@ -77,6 +77,16 @@ public class ZosmfInfoResponse {
     }
 
     /**
+     * Retrieve apiVersion specified
+     *
+     * @return apiVersion value
+     * @author Frank Giordano
+     */
+    public Optional<String> getApiVersion() {
+        return apiVersion;
+    }
+
+    /**
      * Retrieve zosVersion specified
      *
      * @return zosVersion value
@@ -84,46 +94,6 @@ public class ZosmfInfoResponse {
      */
     public Optional<String> getZosVersion() {
         return zosVersion;
-    }
-
-    /**
-     * Retrieve zosmfPort specified
-     *
-     * @return zosmfPort value
-     * @author Frank Giordano
-     */
-    public Optional<String> getZosmfPort() {
-        return zosmfPort;
-    }
-
-    /**
-     * Retrieve zosmfVersion specified
-     *
-     * @return zosmfVersion value
-     * @author Frank Giordano
-     */
-    public Optional<String> getZosmfVersion() {
-        return zosmfVersion;
-    }
-
-    /**
-     * Retrieve zosmfHostName specified
-     *
-     * @return zosmfHostName value
-     * @author Frank Giordano
-     */
-    public Optional<String> getZosmfHostName() {
-        return zosmfHostName;
-    }
-
-    /**
-     * Retrieve zosmfSafRealm specified
-     *
-     * @return zosmfSafRealm value
-     * @author Frank Giordano
-     */
-    public Optional<String> getZosmfSafRealm() {
-        return zosmfSafRealm;
     }
 
     /**
@@ -137,13 +107,13 @@ public class ZosmfInfoResponse {
     }
 
     /**
-     * Retrieve apiVersion specified
+     * Retrieve zosmfHostName specified
      *
-     * @return apiVersion value
+     * @return zosmfHostName value
      * @author Frank Giordano
      */
-    public Optional<String> getApiVersion() {
-        return apiVersion;
+    public Optional<String> getZosmfHostName() {
+        return zosmfHostName;
     }
 
     /**
@@ -154,6 +124,36 @@ public class ZosmfInfoResponse {
      */
     public Optional<ZosmfPluginInfo[]> getZosmfPluginsInfo() {
         return zosmfPluginsInfo;
+    }
+
+    /**
+     * Retrieve zosmfPort specified
+     *
+     * @return zosmfPort value
+     * @author Frank Giordano
+     */
+    public Optional<String> getZosmfPort() {
+        return zosmfPort;
+    }
+
+    /**
+     * Retrieve zosmfSafRealm specified
+     *
+     * @return zosmfSafRealm value
+     * @author Frank Giordano
+     */
+    public Optional<String> getZosmfSafRealm() {
+        return zosmfSafRealm;
+    }
+
+    /**
+     * Retrieve zosmfVersion specified
+     *
+     * @return zosmfVersion value
+     * @author Frank Giordano
+     */
+    public Optional<String> getZosmfVersion() {
+        return zosmfVersion;
     }
 
     @Override
@@ -181,8 +181,32 @@ public class ZosmfInfoResponse {
         private String apiVersion;
         private ZosmfPluginInfo[] zosmfPluginsInfo;
 
+        public ZosmfInfoResponse.Builder apiVersion(String apiVersion) {
+            this.apiVersion = apiVersion;
+            return this;
+        }
+
+        public ZosmfInfoResponse build() {
+            return new ZosmfInfoResponse(this);
+        }
+
         public ZosmfInfoResponse.Builder zosVersion(String zosVersion) {
             this.zosVersion = zosVersion;
+            return this;
+        }
+
+        public ZosmfInfoResponse.Builder zosmfFullVersion(String zosmfFullVersion) {
+            this.zosmfFullVersion = zosmfFullVersion;
+            return this;
+        }
+
+        public ZosmfInfoResponse.Builder zosmfHostName(String zosmfHostName) {
+            this.zosmfHostName = zosmfHostName;
+            return this;
+        }
+
+        public ZosmfInfoResponse.Builder zosmfPluginsInfo(ZosmfPluginInfo[] zosmfPluginsInfo) {
+            this.zosmfPluginsInfo = zosmfPluginsInfo;
             return this;
         }
 
@@ -199,30 +223,6 @@ public class ZosmfInfoResponse {
         public ZosmfInfoResponse.Builder zosmfVersion(String zosmfVersion) {
             this.zosmfVersion = zosmfVersion;
             return this;
-        }
-
-        public ZosmfInfoResponse.Builder zosmfHostName(String zosmfHostName) {
-            this.zosmfHostName = zosmfHostName;
-            return this;
-        }
-
-        public ZosmfInfoResponse.Builder zosmfFullVersion(String zosmfFullVersion) {
-            this.zosmfFullVersion = zosmfFullVersion;
-            return this;
-        }
-
-        public ZosmfInfoResponse.Builder apiVersion(String apiVersion) {
-            this.apiVersion = apiVersion;
-            return this;
-        }
-
-        public ZosmfInfoResponse.Builder zosmfPluginsInfo(ZosmfPluginInfo[] zosmfPluginsInfo) {
-            this.zosmfPluginsInfo = zosmfPluginsInfo;
-            return this;
-        }
-
-        public ZosmfInfoResponse build() {
-            return new ZosmfInfoResponse(this);
         }
 
     }

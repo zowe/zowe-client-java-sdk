@@ -40,6 +40,26 @@ public class ZosmfIssueParams {
     private Optional<String> async = Optional.empty();
 
     /**
+     * Retrieve async value
+     *
+     * @return async value
+     * @author Frank Giordano
+     */
+    public Optional<String> getAsync() {
+        return async;
+    }
+
+    /**
+     * Assign async value
+     *
+     * @param async value
+     * @author Frank Giordano
+     */
+    public void setAsync(String async) {
+        this.async = Optional.ofNullable(async);
+    }
+
+    /**
      * Retrieve cmd value
      *
      * @return cmd value
@@ -97,26 +117,6 @@ public class ZosmfIssueParams {
      */
     public void setSystem(String system) {
         this.system = Optional.ofNullable(system);
-    }
-
-    /**
-     * Retrieve async value
-     *
-     * @return async value
-     * @author Frank Giordano
-     */
-    public Optional<String> getAsync() {
-        return async;
-    }
-
-    /**
-     * Assign async value
-     *
-     * @param async value
-     * @author Frank Giordano
-     */
-    public void setAsync(String async) {
-        this.async = Optional.ofNullable(async);
     }
 
     @Override

@@ -113,66 +113,6 @@ public class Job {
     }
 
     /**
-     * Retrieve jobId specified
-     *
-     * @return jobId value
-     * @author Frank Giordano
-     */
-    public Optional<String> getJobId() {
-        return jobId;
-    }
-
-    /**
-     * Retrieve jobName specified
-     *
-     * @return jobName value
-     * @author Frank Giordano
-     */
-    public Optional<String> getJobName() {
-        return jobName;
-    }
-
-    /**
-     * Retrieve subSystem specified
-     *
-     * @return subSystem value
-     * @author Frank Giordano
-     */
-    public Optional<String> getSubSystem() {
-        return subSystem;
-    }
-
-    /**
-     * Retrieve owner specified
-     *
-     * @return owner value
-     * @author Frank Giordano
-     */
-    public Optional<String> getOwner() {
-        return owner;
-    }
-
-    /**
-     * Retrieve status specified
-     *
-     * @return status value
-     * @author Frank Giordano
-     */
-    public Optional<String> getStatus() {
-        return status;
-    }
-
-    /**
-     * Retrieve type specified
-     *
-     * @return type value
-     * @author Frank Giordano
-     */
-    public Optional<String> getType() {
-        return type;
-    }
-
-    /**
      * Retrieve classs specified
      *
      * @return classs value
@@ -180,36 +120,6 @@ public class Job {
      */
     public Optional<String> getClasss() {
         return classs;
-    }
-
-    /**
-     * Retrieve retCode specified
-     *
-     * @return retCode value
-     * @author Frank Giordano
-     */
-    public Optional<String> getRetCode() {
-        return retCode;
-    }
-
-    /**
-     * Retrieve stepData specified
-     *
-     * @return stepData value
-     * @author Frank Giordano
-     */
-    public Optional<JobStepData[]> getStepData() {
-        return stepData;
-    }
-
-    /**
-     * Retrieve url specified
-     *
-     * @return url value
-     * @author Frank Giordano
-     */
-    public Optional<String> getUrl() {
-        return url;
     }
 
     /**
@@ -233,6 +143,36 @@ public class Job {
     }
 
     /**
+     * Retrieve jobId specified
+     *
+     * @return jobId value
+     * @author Frank Giordano
+     */
+    public Optional<String> getJobId() {
+        return jobId;
+    }
+
+    /**
+     * Retrieve jobName specified
+     *
+     * @return jobName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getJobName() {
+        return jobName;
+    }
+
+    /**
+     * Retrieve owner specified
+     *
+     * @return owner value
+     * @author Frank Giordano
+     */
+    public Optional<String> getOwner() {
+        return owner;
+    }
+
+    /**
      * Retrieve phase specified
      *
      * @return phase value
@@ -250,6 +190,66 @@ public class Job {
      */
     public Optional<String> getPhaseName() {
         return phaseName;
+    }
+
+    /**
+     * Retrieve retCode specified
+     *
+     * @return retCode value
+     * @author Frank Giordano
+     */
+    public Optional<String> getRetCode() {
+        return retCode;
+    }
+
+    /**
+     * Retrieve status specified
+     *
+     * @return status value
+     * @author Frank Giordano
+     */
+    public Optional<String> getStatus() {
+        return status;
+    }
+
+    /**
+     * Retrieve stepData specified
+     *
+     * @return stepData value
+     * @author Frank Giordano
+     */
+    public Optional<JobStepData[]> getStepData() {
+        return stepData;
+    }
+
+    /**
+     * Retrieve subSystem specified
+     *
+     * @return subSystem value
+     * @author Frank Giordano
+     */
+    public Optional<String> getSubSystem() {
+        return subSystem;
+    }
+
+    /**
+     * Retrieve type specified
+     *
+     * @return type value
+     * @author Frank Giordano
+     */
+    public Optional<String> getType() {
+        return type;
+    }
+
+    /**
+     * Retrieve url specified
+     *
+     * @return url value
+     * @author Frank Giordano
+     */
+    public Optional<String> getUrl() {
+        return url;
     }
 
     @Override
@@ -289,53 +289,12 @@ public class Job {
         private Long phase;
         private String phaseName;
 
-        public Builder jobId(String jobId) {
-            this.jobId = jobId;
-            return this;
-        }
-
-        public Builder jobName(String jobName) {
-            this.jobName = jobName;
-            return this;
-        }
-
-        public Builder subSystem(String subSystem) {
-            this.subSystem = subSystem;
-            return this;
-        }
-
-        public Builder owner(String owner) {
-            this.owner = owner;
-            return this;
-        }
-
-        public Builder status(String status) {
-            this.status = status;
-            return this;
-        }
-
-        public Builder type(String type) {
-            this.type = type;
-            return this;
+        public Job build() {
+            return new Job(this);
         }
 
         public Builder classs(String classs) {
             this.classs = classs;
-            return this;
-        }
-
-        public Builder retCode(String retCode) {
-            this.retCode = retCode;
-            return this;
-        }
-
-        public Builder stepData(JobStepData[] stepData) {
-            this.stepData = stepData;
-            return this;
-        }
-
-        public Builder url(String url) {
-            this.url = url;
             return this;
         }
 
@@ -349,6 +308,21 @@ public class Job {
             return this;
         }
 
+        public Builder jobId(String jobId) {
+            this.jobId = jobId;
+            return this;
+        }
+
+        public Builder jobName(String jobName) {
+            this.jobName = jobName;
+            return this;
+        }
+
+        public Builder owner(String owner) {
+            this.owner = owner;
+            return this;
+        }
+
         public Builder phase(Long phase) {
             this.phase = phase;
             return this;
@@ -359,8 +333,34 @@ public class Job {
             return this;
         }
 
-        public Job build() {
-            return new Job(this);
+        public Builder retCode(String retCode) {
+            this.retCode = retCode;
+            return this;
+        }
+
+        public Builder status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder stepData(JobStepData[] stepData) {
+            this.stepData = stepData;
+            return this;
+        }
+
+        public Builder subSystem(String subSystem) {
+            this.subSystem = subSystem;
+            return this;
+        }
+
+        public Builder type(String type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder url(String url) {
+            this.url = url;
+            return this;
         }
 
     }

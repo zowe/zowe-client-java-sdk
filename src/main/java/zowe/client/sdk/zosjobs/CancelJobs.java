@@ -14,10 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilIO;
-import zowe.client.sdk.utility.UtilJobs;
-import zowe.client.sdk.utility.UtilRest;
+import zowe.client.sdk.utility.JobUtils;
+import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.input.ModifyJobParams;
 import zowe.client.sdk.zosjobs.response.Job;
 
@@ -32,7 +31,6 @@ import java.util.HashMap;
 public class CancelJobs {
 
     private static final Logger LOG = LoggerFactory.getLogger(CancelJobs.class);
-
     private final ZOSConnection connection;
     private ZoweRequest request;
 
@@ -43,7 +41,7 @@ public class CancelJobs {
      * @author Nikunj Goyal
      */
     public CancelJobs(ZOSConnection connection) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -57,7 +55,7 @@ public class CancelJobs {
      * @author Frank Giordano
      */
     public CancelJobs(ZOSConnection connection, ZoweRequest request) throws Exception {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
             throw new Exception("PUT_JSON request type required");
@@ -114,11 +112,11 @@ public class CancelJobs {
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Response cancelJobsCommon(ModifyJobParams params) throws Exception {
-        UtilJobs.checkModifyJobParameters(params);
+        JobUtils.checkModifyJobParameters(params);
 
         // generate full url request
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
-                UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
+                JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
         LOG.debug(url);
 
         // generate json string body for the request
@@ -149,9 +147,9 @@ public class CancelJobs {
 
         Response response = request.executeRequest();
         try {
-            UtilRest.checkHttpErrors(response);
+            RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilJobs.throwHttpException(params, e);
+            JobUtils.throwHttpException(params, e);
         }
 
         // if synchronously response should contain job document that was cancelled and http return code

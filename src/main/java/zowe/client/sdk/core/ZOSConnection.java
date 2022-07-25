@@ -10,7 +10,7 @@
 package zowe.client.sdk.core;
 
 /**
- * z/OS Connection information placeholder
+ * Z/OSMF Connection information placeholder
  *
  * @author Frank Giordano
  * @version 1.0

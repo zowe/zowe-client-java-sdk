@@ -13,10 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilDataset;
-import zowe.client.sdk.utility.UtilFiles;
-import zowe.client.sdk.utility.UtilRest;
+import zowe.client.sdk.utility.*;
 import zowe.client.sdk.zosfiles.input.DownloadParams;
 
 import java.io.InputStream;
@@ -32,7 +29,6 @@ import java.util.Map;
 public class ZosDsnDownload {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZosDsnDownload.class);
-
     private final ZOSConnection connection;
     private ZoweRequest request;
 
@@ -43,7 +39,7 @@ public class ZosDsnDownload {
      * @author Nikunj Goyal
      */
     public ZosDsnDownload(ZOSConnection connection) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -57,7 +53,7 @@ public class ZosDsnDownload {
      * @author Frank Giordano
      */
     public ZosDsnDownload(ZOSConnection connection, ZoweRequest request) throws Exception {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof StreamGetRequest)) {
             throw new Exception("GET_STREAM request type required");
@@ -76,9 +72,9 @@ public class ZosDsnDownload {
      * @author Nikunj Goyal
      */
     public InputStream downloadDsn(String dataSetName, DownloadParams params) throws Exception {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
+        ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
@@ -86,11 +82,11 @@ public class ZosDsnDownload {
         if (params.getVolume().isPresent()) {
             url += "-(" + params.getVolume().get() + ")/";
         }
-        url += Util.encodeURIComponent(dataSetName);
+        url += EncodeUtils.encodeURIComponent(dataSetName);
         LOG.debug(url);
 
         String key, value;
-        Map<String, String> headers = UtilFiles.generateHeadersBasedOnOptions(params);
+        Map<String, String> headers = FileUtils.generateHeadersBasedOnOptions(params);
 
         if (params.getReturnEtag().orElse(false)) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
@@ -116,9 +112,9 @@ public class ZosDsnDownload {
         }
 
         try {
-            UtilRest.checkHttpErrors(response);
+            RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), List.of(dataSetName), UtilDataset.Operation.download);
+            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), DataSetUtils.Operation.download);
         }
 
         return (InputStream) response.getResponsePhrase().orElse(null);

@@ -14,9 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilDataset;
-import zowe.client.sdk.utility.UtilRest;
+import zowe.client.sdk.utility.DataSetUtils;
+import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.input.CopyParams;
 
 import java.util.Arrays;
@@ -31,7 +32,6 @@ import java.util.HashMap;
 public class ZosDsnCopy {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZosDsnCopy.class);
-
     private final ZOSConnection connection;
     private ZoweRequest request;
 
@@ -42,7 +42,7 @@ public class ZosDsnCopy {
      * @author Leonid Baranov
      */
     public ZosDsnCopy(ZOSConnection connection) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -56,85 +56,12 @@ public class ZosDsnCopy {
      * @author Frank Giordano
      */
     public ZosDsnCopy(ZOSConnection connection, ZoweRequest request) throws Exception {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
             throw new Exception("PUT_JSON request type required");
         }
         this.request = request;
-    }
-
-    /**
-     * Copy dataset or dataset member
-     *
-     * @param params contains copy dataset parameters
-     * @return http response object
-     * @throws Exception error processing copy request
-     * @author Leonid Baranov
-     */
-    public Response copy(CopyParams params) throws Exception {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkIllegalParameter(params.getFromDataSet().isEmpty(), "fromDataSetName not specified");
-        Util.checkIllegalParameter(params.getToDataSet().isEmpty(), "toDataSetName not specified");
-
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
-
-        if (params.getToVolser().isPresent()) {
-            url += "-(" + params.getToVolser().get() + ")/";
-        }
-
-        String toDataSet = params.getToDataSet().get();
-        String fromDataSet = params.getFromDataSet().get();
-
-        url += Util.encodeURIComponent(toDataSet);
-
-        LOG.debug(url);
-
-        String body = buildBody(params);
-        if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_JSON);
-        }
-        request.setRequest(url, body);
-        Response response = request.executeRequest();
-
-        try {
-            UtilRest.checkHttpErrors(response);
-        } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), Arrays.asList(toDataSet, fromDataSet), UtilDataset.Operation.copy);
-        }
-
-        return response;
-    }
-
-    /**
-     * This copy method allows the following copy operations:
-     * <p>
-     * - sequential dataset to sequential dataset
-     * - sequential dataset to partition dataset member
-     * - partition dataset member to partition dataset member
-     * - partition dataset member to partition dataset non-existing member
-     * - partition dataset member to sequential dataset
-     * <p>
-     * If copyAllMembers parameter value sent as true it will perform a copy of all
-     * members in source partition dataset to another partition dataset.
-     *
-     * @param fromDataSetName is a name of source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
-     * @param toDataSetName   is a name of target dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
-     * @param replace         if true members in the target dataset are replaced
-     * @param copyAllMembers  if true copy all members in source partition dataset specified
-     * @return http response object
-     * @throws Exception error processing copy request
-     * @author Leonid Baranov
-     */
-    public Response copy(String fromDataSetName, String toDataSetName, boolean replace, boolean copyAllMembers)
-            throws Exception {
-        return copy(new CopyParams.Builder()
-                .fromDataSet(fromDataSetName)
-                .toDataSet(toDataSetName)
-                .replace(replace)
-                .copyAllMembers(copyAllMembers)
-                .build());
     }
 
     /**
@@ -181,6 +108,79 @@ public class ZosDsnCopy {
         var jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
         return jsonRequestBody.toString();
+    }
+
+    /**
+     * This copy method allows the following copy operations:
+     * <p>
+     * - sequential dataset to sequential dataset
+     * - sequential dataset to partition dataset member
+     * - partition dataset member to partition dataset member
+     * - partition dataset member to partition dataset non-existing member
+     * - partition dataset member to sequential dataset
+     * <p>
+     * If copyAllMembers parameter value sent as true it will perform a copy of all
+     * members in source partition dataset to another partition dataset.
+     *
+     * @param fromDataSetName is a name of source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
+     * @param toDataSetName   is a name of target dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
+     * @param replace         if true members in the target dataset are replaced
+     * @param copyAllMembers  if true copy all members in source partition dataset specified
+     * @return http response object
+     * @throws Exception error processing copy request
+     * @author Leonid Baranov
+     */
+    public Response copy(String fromDataSetName, String toDataSetName, boolean replace, boolean copyAllMembers)
+            throws Exception {
+        return copy(new CopyParams.Builder()
+                .fromDataSet(fromDataSetName)
+                .toDataSet(toDataSetName)
+                .replace(replace)
+                .copyAllMembers(copyAllMembers)
+                .build());
+    }
+
+    /**
+     * Copy dataset or dataset member
+     *
+     * @param params contains copy dataset parameters
+     * @return http response object
+     * @throws Exception error processing copy request
+     * @author Leonid Baranov
+     */
+    public Response copy(CopyParams params) throws Exception {
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkIllegalParameter(params.getFromDataSet().isEmpty(), "fromDataSetName not specified");
+        ValidateUtils.checkIllegalParameter(params.getToDataSet().isEmpty(), "toDataSetName not specified");
+
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
+
+        if (params.getToVolser().isPresent()) {
+            url += "-(" + params.getToVolser().get() + ")/";
+        }
+
+        String toDataSet = params.getToDataSet().get();
+        String fromDataSet = params.getFromDataSet().get();
+
+        url += EncodeUtils.encodeURIComponent(toDataSet);
+
+        LOG.debug(url);
+
+        String body = buildBody(params);
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_JSON);
+        }
+        request.setRequest(url, body);
+        Response response = request.executeRequest();
+
+        try {
+            RestUtils.checkHttpErrors(response);
+        } catch (Exception e) {
+            DataSetUtils.checkHttpErrors(e.getMessage(), Arrays.asList(toDataSet, fromDataSet), DataSetUtils.Operation.copy);
+        }
+
+        return response;
     }
 
 }

@@ -18,78 +18,68 @@ package zowe.client.sdk.zosjobs;
 public class JobsConstants {
 
     /**
-     * Step data query string
-     */
-    public static final String STEP_DATA = "step-data=Y";
-
-    /**
-     * Query identifier
-     */
-    public static final String QUERY_ID = "?";
-
-    /**
-     * Query id for getting job by an owner
-     */
-    public static final String QUERY_OWNER = "owner=";
-
-    /**
-     * Query id for getting a job by prefix
-     */
-    public static final String QUERY_PREFIX = "prefix=";
-
-    /**
-     * Query id for getting a specific job id
-     */
-    public static final String QUERY_JOBID = "jobid=";
-
-    /**
-     * Query id for getting max jobs
-     */
-    public static final String QUERY_MAX_JOBS = "max-jobs=";
-
-    /**
-     * Wildcard prefix
-     */
-    public static final String DEFAULT_PREFIX = "*";
-
-    /**
-     * Maximum number of jobs to obtain
-     */
-    public static final int DEFAULT_MAX_JOBS = 1000;
-
-    /**
-     * URI base jobs API
-     */
-    public static final String RESOURCE = "/zosmf/restjobs/jobs";
-
-    /**
-     * URI endpoint for getting spool file content
-     */
-    public static final String RESOURCE_SPOOL_FILES = "/files";
-
-    /**
-     * URI endpoint for getting JCL
-     */
-    public static final String RESOURCE_JCL_CONTENT = "/JCL";
-
-    /**
-     * URI endpoint for getting spool files
-     */
-    public static final String RESOURCE_SPOOL_CONTENT = "/records";
-
-    /**
-     * Cancel request constant
-     */
-    public static final String REQUEST_CANCEL = "cancel";
-
-    /**
      * Default version of cancel
      */
     public static final String DEFAULT_CANCEL_VERSION = "1.0";
-
     /**
      * Default version of delete
      */
     public static final String DEFAULT_DELETE_VERSION = "1.0";
+    /**
+     * Maximum number of jobs to obtain
+     */
+    public static final int DEFAULT_MAX_JOBS = 1000;
+    /**
+     * Wildcard prefix
+     */
+    public static final String DEFAULT_PREFIX = "*";
+    /**
+     * File delimiter
+     */
+    public static final String FILE_DELIM = "/";
+    /**
+     * Query identifier
+     */
+    public static final String QUERY_ID = "?";
+    /**
+     * Query id for getting a specific job id
+     */
+    public static final String QUERY_JOBID = "jobid=";
+    /**
+     * Query id for getting max jobs
+     */
+    public static final String QUERY_MAX_JOBS = "max-jobs=";
+    /**
+     * Query id for getting job by an owner
+     */
+    public static final String QUERY_OWNER = "owner=";
+    /**
+     * Query id for getting a job by prefix
+     */
+    public static final String QUERY_PREFIX = "prefix=";
+    /**
+     * Cancel request constant
+     */
+    public static final String REQUEST_CANCEL = "cancel";
+    /**
+     * URI base jobs API
+     */
+    public static final String RESOURCE = "/zosmf/restjobs/jobs";
+    /**
+     * URI endpoint for getting JCL
+     */
+    public static final String RESOURCE_JCL_CONTENT = "/JCL";
+    /**
+     * URI endpoint for getting spool files
+     */
+    public static final String RESOURCE_SPOOL_CONTENT = "/records";
+    /**
+     * URI endpoint for getting spool file content
+     */
+    public static final String RESOURCE_SPOOL_FILES = "/files";
+    /**
+     * Step data query string
+     */
+    public static final String STEP_DATA = "step-data=Y";
 
 }

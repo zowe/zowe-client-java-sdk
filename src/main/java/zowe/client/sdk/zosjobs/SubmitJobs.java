@@ -15,11 +15,11 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.parsejson.IParseJson;
-import zowe.client.sdk.parsejson.ParseJobJson;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilRest;
+import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.JobUtils;
+import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.input.SubmitJclParams;
 import zowe.client.sdk.zosjobs.input.SubmitJobParams;
 import zowe.client.sdk.zosjobs.response.Job;
@@ -36,7 +36,6 @@ import java.util.Map;
 public class SubmitJobs {
 
     private static final Logger LOG = LoggerFactory.getLogger(SubmitJobs.class);
-    private final IParseJson<Job> parseJobJson = new ParseJobJson();
     private final ZOSConnection connection;
     private ZoweRequest request;
 
@@ -47,7 +46,7 @@ public class SubmitJobs {
      * @author Frank Giordano
      */
     public SubmitJobs(ZOSConnection connection) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -60,75 +59,9 @@ public class SubmitJobs {
      * @author Frank Giordano
      */
     public SubmitJobs(ZOSConnection connection, ZoweRequest request) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
-    }
-
-    /**
-     * Submit a job that resides in a z/OS data set.
-     *
-     * @param jobDataSet job Dataset to be translated into SubmitJobParams object
-     * @return job document with details about the submitted job
-     * @throws Exception error on submitting
-     * @author Frank Giordano
-     */
-    public Job submitJob(String jobDataSet) throws Exception {
-        return this.submitJobCommon(new SubmitJobParams(jobDataSet));
-    }
-
-    /**
-     * Submit a job that resides in a z/OS data set.
-     *
-     * @param params submit job parameters, see SubmitJobParams object
-     * @return job document with details about the submitted job
-     * @throws Exception error on submitting
-     * @author Frank Giordano
-     */
-    public Job submitJobCommon(SubmitJobParams params) throws Exception {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkIllegalParameter(params.getJobDataSet().isEmpty(), "jobDataSet not specified");
-        Util.checkIllegalParameter(params.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
-
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
-        LOG.debug(url);
-
-        String fullyQualifiedDataset = "//'" + Util.encodeURIComponent(params.getJobDataSet().get()) + "'";
-        var jsonMap = new HashMap<String, String>();
-        jsonMap.put("file", fullyQualifiedDataset);
-        var jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
-
-        if (params.getJclSymbols().isPresent()) {
-            // TODO..
-        }
-
-        if (request == null || !(request instanceof JsonPutRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_JSON);
-        }
-        request.setRequest(url, jsonRequestBody.toString());
-
-        Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return new Job.Builder().build();
-        }
-
-        try {
-            UtilRest.checkHttpErrors(response);
-        } catch (Exception e) {
-            String errorMsg = e.getMessage();
-            if (errorMsg.contains("400")) {
-                throw new Exception("Body sent may be invalid. " + errorMsg);
-            }
-            if (errorMsg.contains("500")) {
-                throw new Exception("File does not exist. " + errorMsg);
-            }
-            e.printStackTrace();
-            throw new Exception("No results for submitted job. " + errorMsg);
-        }
-
-        return parseJobJson.parse((JSONObject) response.getResponsePhrase()
-                .orElseThrow(() -> new Exception("response phrase missing")));
     }
 
     /**
@@ -154,9 +87,9 @@ public class SubmitJobs {
      * @author Frank Giordano
      */
     public Job submitJclCommon(SubmitJclParams params) throws Exception {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkIllegalParameter(params.getJcl().isEmpty(), "jcl not specified");
-        Util.checkIllegalParameter(params.getJcl().get().isEmpty(), "jcl not specified");
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkIllegalParameter(params.getJcl().isEmpty(), "jcl not specified");
+        ValidateUtils.checkIllegalParameter(params.getJcl().get().isEmpty(), "jcl not specified");
 
         String key, value;
         Map<String, String> headers = new HashMap<>();
@@ -204,7 +137,7 @@ public class SubmitJobs {
             return new Job.Builder().build();
         }
         try {
-            UtilRest.checkHttpErrors(response);
+            RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
             String errorMsg = e.getMessage();
             if (errorMsg.contains("400")) {
@@ -224,7 +157,73 @@ public class SubmitJobs {
         } catch (ParseException e) {
             throw new Exception(e.getMessage());
         }
-        return parseJobJson.parse(json);
+        return JobUtils.parseJsonJobResponse(json);
+    }
+
+    /**
+     * Submit a job that resides in a z/OS data set.
+     *
+     * @param jobDataSet job Dataset to be translated into SubmitJobParams object
+     * @return job document with details about the submitted job
+     * @throws Exception error on submitting
+     * @author Frank Giordano
+     */
+    public Job submitJob(String jobDataSet) throws Exception {
+        return this.submitJobCommon(new SubmitJobParams(jobDataSet));
+    }
+
+    /**
+     * Submit a job that resides in a z/OS data set.
+     *
+     * @param params submit job parameters, see SubmitJobParams object
+     * @return job document with details about the submitted job
+     * @throws Exception error on submitting
+     * @author Frank Giordano
+     */
+    public Job submitJobCommon(SubmitJobParams params) throws Exception {
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkIllegalParameter(params.getJobDataSet().isEmpty(), "jobDataSet not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
+
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
+        LOG.debug(url);
+
+        String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(params.getJobDataSet().get()) + "'";
+        var jsonMap = new HashMap<String, String>();
+        jsonMap.put("file", fullyQualifiedDataset);
+        var jsonRequestBody = new JSONObject(jsonMap);
+        LOG.debug(String.valueOf(jsonRequestBody));
+
+        if (params.getJclSymbols().isPresent()) {
+            // TODO..
+        }
+
+        if (request == null || !(request instanceof JsonPutRequest)) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_JSON);
+        }
+        request.setRequest(url, jsonRequestBody.toString());
+
+        Response response = request.executeRequest();
+        if (response.isEmpty()) {
+            return new Job.Builder().build();
+        }
+
+        try {
+            RestUtils.checkHttpErrors(response);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
+            if (errorMsg.contains("400")) {
+                throw new Exception("Body sent may be invalid. " + errorMsg);
+            }
+            if (errorMsg.contains("500")) {
+                throw new Exception("File does not exist. " + errorMsg);
+            }
+            e.printStackTrace();
+            throw new Exception("No results for submitted job. " + errorMsg);
+        }
+
+        return JobUtils.parseJsonJobResponse(((JSONObject) response.getResponsePhrase()
+                .orElseThrow(() -> new Exception("response phrase missing"))));
     }
 
 }

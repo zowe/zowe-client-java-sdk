@@ -45,26 +45,6 @@ public class ZosmfIssueResponse {
     private Optional<String> solKeyDetected = Optional.empty();
 
     /**
-     * Retrieve cmdResponseUrl value
-     *
-     * @return cmdResponseUrl value
-     * @author Frank Giordano
-     */
-    public Optional<String> getCmdResponseUrl() {
-        return cmdResponseUrl;
-    }
-
-    /**
-     * Assign cmdResponseUrl value
-     *
-     * @param cmdResponseUrl value
-     * @author Frank Giordano
-     */
-    public void setCmdResponseUrl(String cmdResponseUrl) {
-        this.cmdResponseUrl = Optional.ofNullable(cmdResponseUrl);
-    }
-
-    /**
      * Retrieve cmdResponse value
      *
      * @return cmdResponse value
@@ -82,6 +62,26 @@ public class ZosmfIssueResponse {
      */
     public void setCmdResponse(String cmdResponse) {
         this.cmdResponse = Optional.ofNullable(cmdResponse);
+    }
+
+    /**
+     * Retrieve cmdResponseKey value
+     *
+     * @return cmdResponseKey value
+     * @author Frank Giordano
+     */
+    public Optional<String> getCmdResponseKey() {
+        return cmdResponseKey;
+    }
+
+    /**
+     * Assign cmdResponseKey value
+     *
+     * @param cmdResponseKey value
+     * @author Frank Giordano
+     */
+    public void setCmdResponseKey(String cmdResponseKey) {
+        this.cmdResponseKey = Optional.ofNullable(cmdResponseKey);
     }
 
     /**
@@ -105,23 +105,23 @@ public class ZosmfIssueResponse {
     }
 
     /**
-     * Retrieve cmdResponseKey value
+     * Retrieve cmdResponseUrl value
      *
-     * @return cmdResponseKey value
+     * @return cmdResponseUrl value
      * @author Frank Giordano
      */
-    public Optional<String> getCmdResponseKey() {
-        return cmdResponseKey;
+    public Optional<String> getCmdResponseUrl() {
+        return cmdResponseUrl;
     }
 
     /**
-     * Assign cmdResponseKey value
+     * Assign cmdResponseUrl value
      *
-     * @param cmdResponseKey value
+     * @param cmdResponseUrl value
      * @author Frank Giordano
      */
-    public void setCmdResponseKey(String cmdResponseKey) {
-        this.cmdResponseKey = Optional.ofNullable(cmdResponseKey);
+    public void setCmdResponseUrl(String cmdResponseUrl) {
+        this.cmdResponseUrl = Optional.ofNullable(cmdResponseUrl);
     }
 
     /**

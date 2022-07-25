@@ -7,24 +7,26 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.parsejson;
-
-import org.json.simple.JSONObject;
+package zowe.client.sdk.zosjobs.timer;
 
 /**
- * Interface class for object json parsing.
+ * Global Utility Class with static helper methods.
  *
  * @author Frank Giordano
  * @version 1.0
  */
-public interface IParseJson<T> {
+public class WaitUtil {
 
     /**
-     * Transform JSON into T object
+     * Wait by time specified.
      *
-     * @param jsonObject JSON object
-     * @return T object
+     * @param time in milliseconds
+     * @author Frank Giordano
      */
-    T parse(JSONObject jsonObject);
+    public static void wait(int time) {
+        Timer timer = new Timer(time).initialize();
+        while (!timer.isEnded()) {
+        }
+    }
 
 }

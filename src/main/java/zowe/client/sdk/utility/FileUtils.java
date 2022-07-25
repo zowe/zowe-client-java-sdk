@@ -21,7 +21,9 @@ import java.util.Map;
  * @author Nikunj Goyal
  * @version 1.0
  */
-public class UtilFiles {
+public final class FileUtils {
+
+    private FileUtils() {}
 
     /**
      * Common method to build headers given input options object
@@ -31,7 +33,7 @@ public class UtilFiles {
      * @author Nikunj Goyal
      */
     public static Map<String, String> generateHeadersBasedOnOptions(DownloadParams options) {
-        Util.checkNullParameter(options == null, "options is null");
+        ValidateUtils.checkNullParameter(options == null, "options is null");
         String key, value;
         Map<String, String> headers = new HashMap<>();
 

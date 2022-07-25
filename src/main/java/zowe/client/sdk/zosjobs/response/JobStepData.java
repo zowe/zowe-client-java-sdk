@@ -69,32 +69,32 @@ public class JobStepData {
         this.programName = Optional.ofNullable(builder.programName);
     }
 
-    public Optional<String> getSmfid() {
-        return smfid;
+    public Optional<Boolean> getActive() {
+        return active;
     }
 
     public Optional<String> getCompletion() {
         return completion;
     }
 
-    public Optional<Boolean> getActive() {
-        return active;
-    }
-
-    public OptionalLong getStepNumber() {
-        return stepNumber;
-    }
-
     public Optional<String> getProcStepName() {
         return procStepName;
+    }
+
+    public Optional<String> getProgramName() {
+        return programName;
+    }
+
+    public Optional<String> getSmfid() {
+        return smfid;
     }
 
     public Optional<String> getStepName() {
         return stepName;
     }
 
-    public Optional<String> getProgramName() {
-        return programName;
+    public OptionalLong getStepNumber() {
+        return stepNumber;
     }
 
     @Override
@@ -120,23 +120,17 @@ public class JobStepData {
         private String stepName;
         private String programName;
 
-        public JobStepData.Builder smfid(String smfid) {
-            this.smfid = smfid;
-            return this;
-        }
-
-        public JobStepData.Builder completion(String completion) {
-            this.completion = completion;
-            return this;
-        }
-
         public JobStepData.Builder active(Boolean active) {
             this.active = active;
             return this;
         }
 
-        public JobStepData.Builder stepNumber(Long stepNumber) {
-            this.stepNumber = stepNumber;
+        public JobStepData build() {
+            return new JobStepData(this);
+        }
+
+        public JobStepData.Builder completion(String completion) {
+            this.completion = completion;
             return this;
         }
 
@@ -145,18 +139,24 @@ public class JobStepData {
             return this;
         }
 
-        public JobStepData.Builder stepName(String stepName) {
-            this.stepName = stepName;
-            return this;
-        }
-
         public JobStepData.Builder programName(String programName) {
             this.programName = programName;
             return this;
         }
 
-        public JobStepData build() {
-            return new JobStepData(this);
+        public JobStepData.Builder smfid(String smfid) {
+            this.smfid = smfid;
+            return this;
+        }
+
+        public JobStepData.Builder stepName(String stepName) {
+            this.stepName = stepName;
+            return this;
+        }
+
+        public JobStepData.Builder stepNumber(Long stepNumber) {
+            this.stepNumber = stepNumber;
+            return this;
         }
 
     }

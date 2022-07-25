@@ -14,9 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilRest;
-import zowe.client.sdk.utility.UtilTso;
+import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.TsoUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.input.StopTsoParams;
 import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
 
@@ -29,7 +29,6 @@ import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
 public class StopTso {
 
     private static final Logger LOG = LoggerFactory.getLogger(StopTso.class);
-
     private final ZOSConnection connection;
     private ZoweRequest request;
 
@@ -40,7 +39,7 @@ public class StopTso {
      * @author Frank Giordano
      */
     public StopTso(ZOSConnection connection) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -54,12 +53,31 @@ public class StopTso {
      * @author Frank Giordano
      */
     public StopTso(ZOSConnection connection, ZoweRequest request) throws Exception {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonDeleteRequest)) {
             throw new Exception("DELETE_JSON request type required");
         }
         this.request = request;
+    }
+
+    /**
+     * Stop TSO address space and populates response with StartStopResponse, @see StartStopResponse
+     *
+     * @param servletKey unique servlet entry identifier
+     * @return start stop response, see StartStopResponse object
+     * @throws Exception error on TSO sto command
+     * @author Frank Giordano
+     */
+    public StartStopResponse stop(String servletKey) throws Exception {
+        ValidateUtils.checkNullParameter(servletKey == null, "servletKey is null");
+        ValidateUtils.checkIllegalParameter(servletKey.isEmpty(), "servletKey not specified");
+
+        StopTsoParams commandParams = new StopTsoParams(servletKey);
+        ZosmfTsoResponse zosmfResponse = stopCommon(commandParams);
+
+        // TODO
+        return TsoUtils.populateStartAndStop(zosmfResponse);
     }
 
     /**
@@ -71,9 +89,9 @@ public class StopTso {
      * @author Frank Giordano
      */
     public ZosmfTsoResponse stopCommon(StopTsoParams commandParams) throws Exception {
-        Util.checkNullParameter(commandParams == null, "commandParams is null");
-        Util.checkIllegalParameter(commandParams.getServletKey().isEmpty(), "servletKey not specified");
-        Util.checkIllegalParameter(commandParams.getServletKey().get().isEmpty(), "servletKey not specified");
+        ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
+        ValidateUtils.checkIllegalParameter(commandParams.getServletKey().isEmpty(), "servletKey not specified");
+        ValidateUtils.checkIllegalParameter(commandParams.getServletKey().get().isEmpty(), "servletKey not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey().get();
@@ -89,33 +107,14 @@ public class StopTso {
         }
 
         try {
-            UtilRest.checkHttpErrors(response);
+            RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
             String errorMsg = e.getMessage();
             throw new Exception("Failed to stop active TSO address space. " + errorMsg);
         }
         JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
         //noinspection ConstantConditions
-        return UtilTso.parseJsonStopResponse(result);
-    }
-
-    /**
-     * Stop TSO address space and populates response with StartStopResponse, @see StartStopResponse
-     *
-     * @param servletKey unique servlet entry identifier
-     * @return start stop response, see StartStopResponse object
-     * @throws Exception error on TSO sto command
-     * @author Frank Giordano
-     */
-    public StartStopResponse stop(String servletKey) throws Exception {
-        Util.checkNullParameter(servletKey == null, "servletKey is null");
-        Util.checkIllegalParameter(servletKey.isEmpty(), "servletKey not specified");
-
-        StopTsoParams commandParams = new StopTsoParams(servletKey);
-        ZosmfTsoResponse zosmfResponse = stopCommon(commandParams);
-
-        // TODO
-        return UtilTso.populateStartAndStop(zosmfResponse);
+        return TsoUtils.parseJsonStopResponse(result);
     }
 
 }

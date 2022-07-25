@@ -13,11 +13,10 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.parsejson.IParseJson;
-import zowe.client.sdk.parsejson.ParseZosmfInfoJson;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilRest;
+import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.ZosmfUtils;
 import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
 
 /**
@@ -29,7 +28,6 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
 public class CheckStatus {
 
     private static final Logger LOG = LoggerFactory.getLogger(CheckStatus.class);
-    private final IParseJson<ZosmfInfoResponse> zosmfInfoParseJson = new ParseZosmfInfoJson();
     private final ZOSConnection connection;
     private ZoweRequest request;
 
@@ -40,7 +38,7 @@ public class CheckStatus {
      * @author Frank Giordano
      */
     public CheckStatus(ZOSConnection connection) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -54,7 +52,7 @@ public class CheckStatus {
      * @author Frank Giordano
      */
     public CheckStatus(ZOSConnection connection, ZoweRequest request) throws Exception {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {
             throw new Exception("GET_JSON request type required");
@@ -84,9 +82,9 @@ public class CheckStatus {
             throw new Exception("response is empty");
         }
 
-        UtilRest.checkHttpErrors(response);
-        return zosmfInfoParseJson
-                .parse((JSONObject) response.getResponsePhrase().orElseThrow(() -> new Exception("response phase missing")));
+        RestUtils.checkHttpErrors(response);
+        return ZosmfUtils.parseZosmfInfo((JSONObject) response.getResponsePhrase()
+                .orElseThrow(() -> new Exception("response phase missing")));
     }
 
 }

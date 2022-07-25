@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.utility;
 
+import org.json.simple.JSONObject;
 import zowe.client.sdk.zosconsole.ConsoleResponse;
 import zowe.client.sdk.zosconsole.zosmf.ZosmfIssueResponse;
 
@@ -18,7 +19,26 @@ import zowe.client.sdk.zosconsole.zosmf.ZosmfIssueResponse;
  * @author Frank Giordano
  * @version 1.0
  */
-public class UtilConsole {
+public final class ConsoleUtils {
+
+    private ConsoleUtils() {}
+
+    /**
+     * Transform JSON into ZosmfIssueResponse object
+     *
+     * @param jsonObject JSON object
+     * @return ZosmfIssueResponse object
+     * @author Frank Giordano
+     */
+    public static ZosmfIssueResponse parseJsonIssueCmdResponse(JSONObject jsonObject) {
+        ZosmfIssueResponse zosmfIssueResponse = new ZosmfIssueResponse();
+        zosmfIssueResponse.setCmdResponseKey((String) jsonObject.get("cmd-response-key"));
+        zosmfIssueResponse.setCmdResponseUrl((String) jsonObject.get("cmd-response-url"));
+        zosmfIssueResponse.setCmdResponseUri((String) jsonObject.get("cmd-response-uri"));
+        zosmfIssueResponse.setCmdResponse((String) jsonObject.get("cmd-response"));
+        zosmfIssueResponse.setSolKeyDetected((String) jsonObject.get("sol-key-detected"));
+        return zosmfIssueResponse;
+    }
 
     /**
      * Populate the console response with the details returned from the z/OSMF console API.
@@ -32,8 +52,8 @@ public class UtilConsole {
      * @author Frank Giordano
      */
     public static void populate(ZosmfIssueResponse zosmfResponse, ConsoleResponse response, boolean processResponses) {
-        Util.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
-        Util.checkNullParameter(response == null, "response is null");
+        ValidateUtils.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
+        ValidateUtils.checkNullParameter(response == null, "response is null");
         response.setZosmfResponse(zosmfResponse);
         response.setSuccess(true);
 

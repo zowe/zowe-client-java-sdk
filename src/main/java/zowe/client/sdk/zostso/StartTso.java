@@ -13,9 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilRest;
-import zowe.client.sdk.utility.UtilTso;
+import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.TsoUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.input.StartTsoParams;
 import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
 
@@ -28,7 +29,6 @@ import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
 public class StartTso {
 
     private static final Logger LOG = LoggerFactory.getLogger(StartTso.class);
-
     private final ZOSConnection connection;
     private ZoweRequest request;
 
@@ -39,7 +39,7 @@ public class StartTso {
      * @author Frank Giordano
      */
     public StartTso(ZOSConnection connection) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -53,7 +53,7 @@ public class StartTso {
      * @author Frank Giordano
      */
     public StartTso(ZOSConnection connection, ZoweRequest request) throws Exception {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonPostRequest)) {
             throw new Exception("POST_JSON request type required");
@@ -62,66 +62,24 @@ public class StartTso {
     }
 
     /**
-     * Start TSO address space with provided parameters.
+     * Set default TSO address space parameters
      *
-     * @param accountNumber this key of StartTsoParams required, because it cannot be default.
-     * @param params        optional object with required parameters, see StartTsoParams
-     * @return command response on resolve, @see IStartStopResponses
-     * @throws Exception error executing command
+     * @param params object with required parameters, see StartTsoParams
+     * @return generated url
      * @author Frank Giordano
      */
-    public StartStopResponses start(String accountNumber, StartTsoParams params) throws Exception {
-        Util.checkNullParameter(accountNumber == null, "accountNumber is null");
-        Util.checkIllegalParameter(accountNumber.isEmpty(), "accountNumber not specified");
-
-        StartTsoParams customParams;
-        if (params == null) {
-            customParams = setDefaultAddressSpaceParams(null, Util.encodeURIComponent(accountNumber));
-        } else {
-            customParams = setDefaultAddressSpaceParams(params, Util.encodeURIComponent(accountNumber));
-        }
-
-        ZosmfTsoResponse zosmfResponse = startCommon(customParams);
-
-        CollectedResponses collectedResponses = null;
-        if (zosmfResponse.getServletKey().isPresent()) {
-            SendTso sendTso = new SendTso(connection);
-            collectedResponses = sendTso.getAllResponses(zosmfResponse);
-        }
-
-        return new StartStopResponses(zosmfResponse, collectedResponses);
-    }
-
-    /**
-     * Start TSO address space with provided parameters
-     *
-     * @param commandParams object with required parameters, see StartTsoParams
-     * @return z/OSMF response object, see ZosmfTsoResponse
-     * @throws Exception error executing command
-     * @author Frank Giordano
-     */
-    public ZosmfTsoResponse startCommon(StartTsoParams commandParams) throws Exception {
-        Util.checkNullParameter(commandParams == null, "commandParams is null");
-
-        String url = getResourcesQuery(commandParams);
-        LOG.debug("StartTso::startCommon - url {}", url);
-
-        if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.POST_JSON);
-        }
-        request.setRequest(url, null);
-        Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return new ZosmfTsoResponse.Builder().build();
-        }
-
-        try {
-            UtilRest.checkHttpErrors(response);
-        } catch (Exception e) {
-            String errorMsg = e.getMessage();
-            throw new Exception("No results from executing tso command while setting up TSO address space. " + errorMsg);
-        }
-        return UtilTso.getZosmfTsoResponse(response);
+    private String getResourcesQuery(StartTsoParams params) throws Exception {
+        String query = "https://" + connection.getHost() + ":" + connection.getZosmfPort();
+        query += TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "?";
+        query += TsoConstants.PARAM_ACCT + "=" +
+                params.account.orElseThrow(() -> new Exception("account num not specified")) + "&";
+        query += TsoConstants.PARAM_PROC + "=" + params.logonProcedure.orElse(TsoConstants.DEFAULT_PROC) + "&";
+        query += TsoConstants.PARAM_CHSET + "=" + params.characterSet.orElse(TsoConstants.DEFAULT_CHSET) + "&";
+        query += TsoConstants.PARAM_CPAGE + "=" + params.codePage.orElse(TsoConstants.DEFAULT_CPAGE) + "&";
+        query += TsoConstants.PARAM_ROWS + "=" + params.rows.orElse(TsoConstants.DEFAULT_ROWS) + "&";
+        query += TsoConstants.PARAM_COLS + "=" + params.columns.orElse(TsoConstants.DEFAULT_COLS) + "&";
+        query += TsoConstants.PARAM_RSIZE + "=" + params.regionSize.orElse(TsoConstants.DEFAULT_RSIZE);
+        return query;
     }
 
     /**
@@ -146,24 +104,66 @@ public class StartTso {
     }
 
     /**
-     * Set default TSO address space parameters
+     * Start TSO address space with provided parameters.
      *
-     * @param params object with required parameters, see StartTsoParams
-     * @return generated url
+     * @param accountNumber this key of StartTsoParams required, because it cannot be default.
+     * @param params        optional object with required parameters, see StartTsoParams
+     * @return command response on resolve, @see IStartStopResponses
+     * @throws Exception error executing command
      * @author Frank Giordano
      */
-    private String getResourcesQuery(StartTsoParams params) throws Exception {
-        String query = "https://" + connection.getHost() + ":" + connection.getZosmfPort();
-        query += TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "?";
-        query += TsoConstants.PARAM_ACCT + "=" +
-                params.account.orElseThrow(() -> new Exception("account num not specified")) + "&";
-        query += TsoConstants.PARAM_PROC + "=" + params.logonProcedure.orElse(TsoConstants.DEFAULT_PROC) + "&";
-        query += TsoConstants.PARAM_CHSET + "=" + params.characterSet.orElse(TsoConstants.DEFAULT_CHSET) + "&";
-        query += TsoConstants.PARAM_CPAGE + "=" + params.codePage.orElse(TsoConstants.DEFAULT_CPAGE) + "&";
-        query += TsoConstants.PARAM_ROWS + "=" + params.rows.orElse(TsoConstants.DEFAULT_ROWS) + "&";
-        query += TsoConstants.PARAM_COLS + "=" + params.columns.orElse(TsoConstants.DEFAULT_COLS) + "&";
-        query += TsoConstants.PARAM_RSIZE + "=" + params.regionSize.orElse(TsoConstants.DEFAULT_RSIZE);
-        return query;
+    public StartStopResponses start(String accountNumber, StartTsoParams params) throws Exception {
+        ValidateUtils.checkNullParameter(accountNumber == null, "accountNumber is null");
+        ValidateUtils.checkIllegalParameter(accountNumber.isEmpty(), "accountNumber not specified");
+
+        StartTsoParams customParams;
+        if (params == null) {
+            customParams = setDefaultAddressSpaceParams(null, EncodeUtils.encodeURIComponent(accountNumber));
+        } else {
+            customParams = setDefaultAddressSpaceParams(params, EncodeUtils.encodeURIComponent(accountNumber));
+        }
+
+        ZosmfTsoResponse zosmfResponse = startCommon(customParams);
+
+        CollectedResponses collectedResponses = null;
+        if (zosmfResponse.getServletKey().isPresent()) {
+            SendTso sendTso = new SendTso(connection);
+            collectedResponses = sendTso.getAllResponses(zosmfResponse);
+        }
+
+        return new StartStopResponses(zosmfResponse, collectedResponses);
+    }
+
+    /**
+     * Start TSO address space with provided parameters
+     *
+     * @param commandParams object with required parameters, see StartTsoParams
+     * @return z/OSMF response object, see ZosmfTsoResponse
+     * @throws Exception error executing command
+     * @author Frank Giordano
+     */
+    public ZosmfTsoResponse startCommon(StartTsoParams commandParams) throws Exception {
+        ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
+
+        String url = getResourcesQuery(commandParams);
+        LOG.debug("StartTso::startCommon - url {}", url);
+
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.POST_JSON);
+        }
+        request.setRequest(url, null);
+        Response response = request.executeRequest();
+        if (response.isEmpty()) {
+            return new ZosmfTsoResponse.Builder().build();
+        }
+
+        try {
+            RestUtils.checkHttpErrors(response);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage();
+            throw new Exception("No results from executing tso command while setting up TSO address space. " + errorMsg);
+        }
+        return TsoUtils.getZosmfTsoResponse(response);
     }
 
 }

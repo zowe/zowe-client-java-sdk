@@ -88,24 +88,6 @@ public class GetJobsByJsonGetRequestTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void tstGetJobWithJobIdOnlySuccess() throws Exception {
-        JSONArray jsonArray = new JSONArray();
-
-        var jsonJobMap = new HashMap<String, String>();
-        jsonJobMap.put("jobid", "job");
-        var jsonJob = new JSONObject(jsonJobMap);
-        jsonArray.add(jsonJob);
-
-        Response response = new Response(jsonArray, 200);
-        Mockito.when(request.executeRequest()).thenReturn(response);
-
-        Job job = getJobs.getJob("1");
-        assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
-        assertEquals("job", job.getJobId().get());
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
     public void tstGetJobWithAllJobMembersSuccess() throws Exception {
         JSONArray jsonArray = new JSONArray();
         jsonArray.add(jobJson);
@@ -130,25 +112,65 @@ public class GetJobsByJsonGetRequestTest {
     }
 
     @Test
-    public void tstGetStatusForJobWithJobIdOnlyExceptionFailure() {
-        String errorMsg = "";
-        try {
-            getJobs.getStatusForJob(new Job.Builder().jobId("1").build());
-        } catch (Exception e) {
-            errorMsg = e.getMessage();
-        }
-        assertEquals("jobName not specified", errorMsg);
+    @SuppressWarnings("unchecked")
+    public void tstGetJobWithJobIdOnlySuccess() throws Exception {
+        JSONArray jsonArray = new JSONArray();
+
+        var jsonJobMap = new HashMap<String, String>();
+        jsonJobMap.put("jobid", "job");
+        var jsonJob = new JSONObject(jsonJobMap);
+        jsonArray.add(jsonJob);
+
+        Response response = new Response(jsonArray, 200);
+        Mockito.when(request.executeRequest()).thenReturn(response);
+
+        Job job = getJobs.getJob("1");
+        assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
+        assertEquals("job", job.getJobId().get());
     }
 
     @Test
-    public void tstGetStatusForJobWithJobNameOnlyExceptionFailure() {
+    public void tstGetSpoolContentByIdJobIdNullExceptionFailure() {
         String errorMsg = "";
         try {
-            getJobs.getStatusForJob(new Job.Builder().jobName("jobName").build());
+            getJobs.getSpoolContentById("jobName", null, 1);
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("jobId not specified", errorMsg);
+        assertEquals("jobId is null", errorMsg);
+    }
+
+    @Test
+    public void tstGetSpoolContentByIdJobNameNullExceptionFailure() {
+        String errorMsg = "";
+        try {
+            getJobs.getSpoolContentById(null, "1", 1);
+        } catch (Exception e) {
+            errorMsg = e.getMessage();
+        }
+        assertEquals("jobName is null", errorMsg);
+    }
+
+    @Test
+    public void tstGetSpoolContentByIdSpoolIdNegativeNumberExceptionFailure() {
+        String errorMsg = "";
+        try {
+            getJobs.getSpoolContentById("jobName", "1", -11);
+        } catch (Exception e) {
+            errorMsg = e.getMessage();
+        }
+        assertEquals("spoolId not specified", errorMsg);
+    }
+
+    @Test
+    public void tstGetSpoolContentByIdSpoolIdZeroExceptionFailure() {
+        String errorMsg = "";
+        try {
+            getJobs.getSpoolContentById("jobName", "1", 0);
+        } catch (Exception e) {
+            errorMsg = e.getMessage();
+        }
+        assertEquals("spoolId not specified", errorMsg);
     }
 
     @Test
@@ -184,47 +206,25 @@ public class GetJobsByJsonGetRequestTest {
     }
 
     @Test
-    public void tstGetSpoolContentByIdJobNameNullExceptionFailure() {
+    public void tstGetStatusForJobWithJobIdOnlyExceptionFailure() {
         String errorMsg = "";
         try {
-            getJobs.getSpoolContentById(null, "1", 1);
+            getJobs.getStatusForJob(new Job.Builder().jobId("1").build());
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("jobName is null", errorMsg);
+        assertEquals("jobName not specified", errorMsg);
     }
 
     @Test
-    public void tstGetSpoolContentByIdJobIdNullExceptionFailure() {
+    public void tstGetStatusForJobWithJobNameOnlyExceptionFailure() {
         String errorMsg = "";
         try {
-            getJobs.getSpoolContentById("jobName", null, 1);
+            getJobs.getStatusForJob(new Job.Builder().jobName("jobName").build());
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("jobId is null", errorMsg);
-    }
-
-    @Test
-    public void tstGetSpoolContentByIdSpoolIdZeroExceptionFailure() {
-        String errorMsg = "";
-        try {
-            getJobs.getSpoolContentById("jobName", "1", 0);
-        } catch (Exception e) {
-            errorMsg = e.getMessage();
-        }
-        assertEquals("spoolId not specified", errorMsg);
-    }
-
-    @Test
-    public void tstGetSpoolContentByIdSpoolIdNegativeNumberExceptionFailure() {
-        String errorMsg = "";
-        try {
-            getJobs.getSpoolContentById("jobName", "1", -11);
-        } catch (Exception e) {
-            errorMsg = e.getMessage();
-        }
-        assertEquals("spoolId not specified", errorMsg);
+        assertEquals("jobId not specified", errorMsg);
     }
 
 }

@@ -122,23 +122,13 @@ public class DownloadParams {
     }
 
     /**
-     * Retrieve file value
+     * Retrieve binary value
      *
-     * @return file value
+     * @return binary value
      * @author Nikunj Goyal
      */
-    public Optional<String> getFile() {
-        return file;
-    }
-
-    /**
-     * Retrieve extension value
-     *
-     * @return extension value
-     * @author Nikunj Goyal
-     */
-    public Optional<String> getExtension() {
-        return extension;
+    public Optional<Boolean> getBinary() {
+        return binary;
     }
 
     /**
@@ -152,6 +142,16 @@ public class DownloadParams {
     }
 
     /**
+     * Retrieve encoding value
+     *
+     * @return encoding value
+     * @author Nikunj Goyal
+     */
+    public Optional<Integer> getEncoding() {
+        return encoding;
+    }
+
+    /**
      * Retrieve excludePatterns value
      *
      * @return excludePatterns value
@@ -159,6 +159,16 @@ public class DownloadParams {
      */
     public Optional<String[]> getExcludePatterns() {
         return excludePatterns;
+    }
+
+    /**
+     * Retrieve extension value
+     *
+     * @return extension value
+     * @author Nikunj Goyal
+     */
+    public Optional<String> getExtension() {
+        return extension;
     }
 
     /**
@@ -172,6 +182,26 @@ public class DownloadParams {
     }
 
     /**
+     * Retrieve failFast value
+     *
+     * @return failFast value
+     * @author Nikunj Goyal
+     */
+    public Optional<Boolean> getFailFast() {
+        return failFast;
+    }
+
+    /**
+     * Retrieve file value
+     *
+     * @return file value
+     * @author Nikunj Goyal
+     */
+    public Optional<String> getFile() {
+        return file;
+    }
+
+    /**
      * Retrieve maxConcurrentRequests value
      *
      * @return maxConcurrentRequests value
@@ -179,16 +209,6 @@ public class DownloadParams {
      */
     public Optional<Integer> getNaxConcurrentRequests() {
         return maxConcurrentRequests;
-    }
-
-    /**
-     * Retrieve returnEtag value
-     *
-     * @return returnEtag value
-     * @author Nikunj Goyal
-     */
-    public Optional<Boolean> getReturnEtag() {
-        return returnEtag;
     }
 
     /**
@@ -202,43 +222,23 @@ public class DownloadParams {
     }
 
     /**
-     * Retrieve failFast value
+     * Retrieve responseTimeout value
      *
-     * @return failFast value
+     * @return responseTimeout value
      * @author Nikunj Goyal
      */
-    public Optional<Boolean> getFailFast() {
-        return failFast;
+    public Optional<String> getResponseTimeout() {
+        return responseTimeout;
     }
 
     /**
-     * Retrieve binary value
+     * Retrieve returnEtag value
      *
-     * @return binary value
+     * @return returnEtag value
      * @author Nikunj Goyal
      */
-    public Optional<Boolean> getBinary() {
-        return binary;
-    }
-
-    /**
-     * Retrieve encoding value
-     *
-     * @return encoding value
-     * @author Nikunj Goyal
-     */
-    public Optional<Integer> getEncoding() {
-        return encoding;
-    }
-
-    /**
-     * Retrieve volume value
-     *
-     * @return volume value
-     * @author Nikunj Goyal
-     */
-    public Optional<String> getVolume() {
-        return volume;
+    public Optional<Boolean> getReturnEtag() {
+        return returnEtag;
     }
 
     /**
@@ -252,13 +252,13 @@ public class DownloadParams {
     }
 
     /**
-     * Retrieve responseTimeout value
+     * Retrieve volume value
      *
-     * @return responseTimeout value
+     * @return volume value
      * @author Nikunj Goyal
      */
-    public Optional<String> getResponseTimeout() {
-        return responseTimeout;
+    public Optional<String> getVolume() {
+        return volume;
     }
 
     @Override
@@ -298,53 +298,17 @@ public class DownloadParams {
         private String task;
         private String responseTimeout;
 
-        public DownloadParams.Builder file(String file) {
-            this.file = file;
+        public DownloadParams.Builder binary(Boolean binary) {
+            this.binary = binary;
             return this;
         }
 
-        public DownloadParams.Builder extension(String extension) {
-            this.extension = extension;
-            return this;
+        public DownloadParams build() {
+            return new DownloadParams(this);
         }
 
         public DownloadParams.Builder directory(String directory) {
             this.directory = directory;
-            return this;
-        }
-
-        public DownloadParams.Builder excludePatterns(String[] excludePatterns) {
-            this.excludePatterns = excludePatterns;
-            return this;
-        }
-
-        public DownloadParams.Builder extensionMap(HashMap<String, String> extensionMap) {
-            this.extensionMap = extensionMap;
-            return this;
-        }
-
-        public DownloadParams.Builder maxConcurrentRequests(Integer maxConcurrentRequests) {
-            this.maxConcurrentRequests = maxConcurrentRequests;
-            return this;
-        }
-
-        public DownloadParams.Builder returnEtag(Boolean returnEtag) {
-            this.returnEtag = returnEtag;
-            return this;
-        }
-
-        public DownloadParams.Builder preserveOriginalLetterCase(Boolean preserveOriginalLetterCase) {
-            this.preserveOriginalLetterCase = preserveOriginalLetterCase;
-            return this;
-        }
-
-        public DownloadParams.Builder failFast(Boolean failFast) {
-            this.failFast = failFast;
-            return this;
-        }
-
-        public DownloadParams.Builder binary(Boolean binary) {
-            this.binary = binary;
             return this;
         }
 
@@ -353,13 +317,38 @@ public class DownloadParams {
             return this;
         }
 
-        public DownloadParams.Builder volume(String volume) {
-            this.volume = volume;
+        public DownloadParams.Builder excludePatterns(String[] excludePatterns) {
+            this.excludePatterns = excludePatterns;
             return this;
         }
 
-        public DownloadParams.Builder task(String task) {
-            this.task = task;
+        public DownloadParams.Builder extension(String extension) {
+            this.extension = extension;
+            return this;
+        }
+
+        public DownloadParams.Builder extensionMap(HashMap<String, String> extensionMap) {
+            this.extensionMap = extensionMap;
+            return this;
+        }
+
+        public DownloadParams.Builder failFast(Boolean failFast) {
+            this.failFast = failFast;
+            return this;
+        }
+
+        public DownloadParams.Builder file(String file) {
+            this.file = file;
+            return this;
+        }
+
+        public DownloadParams.Builder maxConcurrentRequests(Integer maxConcurrentRequests) {
+            this.maxConcurrentRequests = maxConcurrentRequests;
+            return this;
+        }
+
+        public DownloadParams.Builder preserveOriginalLetterCase(Boolean preserveOriginalLetterCase) {
+            this.preserveOriginalLetterCase = preserveOriginalLetterCase;
             return this;
         }
 
@@ -368,8 +357,19 @@ public class DownloadParams {
             return this;
         }
 
-        public DownloadParams build() {
-            return new DownloadParams(this);
+        public DownloadParams.Builder returnEtag(Boolean returnEtag) {
+            this.returnEtag = returnEtag;
+            return this;
+        }
+
+        public DownloadParams.Builder task(String task) {
+            this.task = task;
+            return this;
+        }
+
+        public DownloadParams.Builder volume(String volume) {
+            this.volume = volume;
+            return this;
         }
     }
 

@@ -41,16 +41,6 @@ public class ZosmfListDefinedSystemsResponse {
     }
 
     /**
-     * Retrieve numRows specified
-     *
-     * @return numRows value
-     * @author Frank Giordano
-     */
-    public Optional<Long> getNumRows() {
-        return numRows;
-    }
-
-    /**
      * Retrieve definedSystems specified
      *
      * @return definedSystems value
@@ -58,6 +48,16 @@ public class ZosmfListDefinedSystemsResponse {
      */
     public Optional<DefinedSystem[]> getDefinedSystems() {
         return definedSystems;
+    }
+
+    /**
+     * Retrieve numRows specified
+     *
+     * @return numRows value
+     * @author Frank Giordano
+     */
+    public Optional<Long> getNumRows() {
+        return numRows;
     }
 
     @Override
@@ -73,9 +73,8 @@ public class ZosmfListDefinedSystemsResponse {
         private Long numRows;
         private DefinedSystem[] definedSystems;
 
-        public ZosmfListDefinedSystemsResponse.Builder numRows(Long numRows) {
-            this.numRows = numRows;
-            return this;
+        public ZosmfListDefinedSystemsResponse build() {
+            return new ZosmfListDefinedSystemsResponse(this);
         }
 
         public ZosmfListDefinedSystemsResponse.Builder definedSystems(DefinedSystem[] definedSystems) {
@@ -83,8 +82,9 @@ public class ZosmfListDefinedSystemsResponse {
             return this;
         }
 
-        public ZosmfListDefinedSystemsResponse build() {
-            return new ZosmfListDefinedSystemsResponse(this);
+        public ZosmfListDefinedSystemsResponse.Builder numRows(Long numRows) {
+            this.numRows = numRows;
+            return this;
         }
 
     }

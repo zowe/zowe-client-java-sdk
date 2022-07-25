@@ -160,36 +160,6 @@ public class CreateParams {
     }
 
     /**
-     * Retrieve volser value
-     *
-     * @return volser value
-     * @author Leonid Baranov
-     */
-    public Optional<String> getVolser() {
-        return volser;
-    }
-
-    /**
-     * Retrieve unit value
-     *
-     * @return unit value
-     * @author Leonid Baranov
-     */
-    public Optional<String> getUnit() {
-        return unit;
-    }
-
-    /**
-     * Retrieve dsorg value
-     *
-     * @return dsorg value
-     * @author Leonid Baranov
-     */
-    public Optional<String> getDsorg() {
-        return dsorg;
-    }
-
-    /**
      * Retrieve alcunit value
      *
      * @return alcunit value
@@ -197,36 +167,6 @@ public class CreateParams {
      */
     public Optional<String> getAlcunit() {
         return alcunit;
-    }
-
-    /**
-     * Retrieve primary value
-     *
-     * @return primary value
-     * @author Leonid Baranov
-     */
-    public OptionalInt getPrimary() {
-        return primary;
-    }
-
-    /**
-     * Retrieve secondary value
-     *
-     * @return secondary value
-     * @author Leonid Baranov
-     */
-    public OptionalInt getSecondary() {
-        return secondary;
-    }
-
-    /**
-     * Retrieve dirblk value
-     *
-     * @return dirblk value
-     * @author Leonid Baranov
-     */
-    public OptionalInt getDirblk() {
-        return dirblk;
     }
 
     /**
@@ -240,16 +180,6 @@ public class CreateParams {
     }
 
     /**
-     * Retrieve recfm value
-     *
-     * @return recfm value
-     * @author Leonid Baranov
-     */
-    public Optional<String> getRecfm() {
-        return recfm;
-    }
-
-    /**
      * Retrieve blksize value
      *
      * @return blksize value
@@ -257,36 +187,6 @@ public class CreateParams {
      */
     public OptionalInt getBlksize() {
         return blksize;
-    }
-
-    /**
-     * Retrieve lrecl value
-     *
-     * @return lrecl value
-     * @author Leonid Baranov
-     */
-    public OptionalInt getLrecl() {
-        return lrecl;
-    }
-
-    /**
-     * Retrieve storclass value
-     *
-     * @return storclass value
-     * @author Leonid Baranov
-     */
-    public Optional<String> getStorclass() {
-        return storclass;
-    }
-
-    /**
-     * Retrieve mgntclass value
-     *
-     * @return mgntclass value
-     * @author Leonid Baranov
-     */
-    public Optional<String> getMgntclass() {
-        return mgntclass;
     }
 
     /**
@@ -300,6 +200,16 @@ public class CreateParams {
     }
 
     /**
+     * Retrieve dirblk value
+     *
+     * @return dirblk value
+     * @author Leonid Baranov
+     */
+    public OptionalInt getDirblk() {
+        return dirblk;
+    }
+
+    /**
      * Retrieve dsntype value
      *
      * @return dsntype value
@@ -307,6 +217,76 @@ public class CreateParams {
      */
     public Optional<String> getDsntype() {
         return dsntype;
+    }
+
+    /**
+     * Retrieve dsorg value
+     *
+     * @return dsorg value
+     * @author Leonid Baranov
+     */
+    public Optional<String> getDsorg() {
+        return dsorg;
+    }
+
+    /**
+     * Retrieve lrecl value
+     *
+     * @return lrecl value
+     * @author Leonid Baranov
+     */
+    public OptionalInt getLrecl() {
+        return lrecl;
+    }
+
+    /**
+     * Retrieve mgntclass value
+     *
+     * @return mgntclass value
+     * @author Leonid Baranov
+     */
+    public Optional<String> getMgntclass() {
+        return mgntclass;
+    }
+
+    /**
+     * Retrieve primary value
+     *
+     * @return primary value
+     * @author Leonid Baranov
+     */
+    public OptionalInt getPrimary() {
+        return primary;
+    }
+
+    /**
+     * Retrieve recfm value
+     *
+     * @return recfm value
+     * @author Leonid Baranov
+     */
+    public Optional<String> getRecfm() {
+        return recfm;
+    }
+
+    /**
+     * Retrieve responseTimeout value
+     *
+     * @return responseTimeout value
+     * @author Leonid Baranov
+     */
+    public Optional<String> getResponseTimeout() {
+        return responseTimeout;
+    }
+
+    /**
+     * Retrieve secondary value
+     *
+     * @return secondary value
+     * @author Leonid Baranov
+     */
+    public OptionalInt getSecondary() {
+        return secondary;
     }
 
     /**
@@ -330,13 +310,33 @@ public class CreateParams {
     }
 
     /**
-     * Retrieve responseTimeout value
+     * Retrieve storclass value
      *
-     * @return responseTimeout value
+     * @return storclass value
      * @author Leonid Baranov
      */
-    public Optional<String> getResponseTimeout() {
-        return responseTimeout;
+    public Optional<String> getStorclass() {
+        return storclass;
+    }
+
+    /**
+     * Retrieve unit value
+     *
+     * @return unit value
+     * @author Leonid Baranov
+     */
+    public Optional<String> getUnit() {
+        return unit;
+    }
+
+    /**
+     * Retrieve volser value
+     *
+     * @return volser value
+     * @author Leonid Baranov
+     */
+    public Optional<String> getVolser() {
+        return volser;
     }
 
     @Override
@@ -384,38 +384,8 @@ public class CreateParams {
         private String size;
         private String responseTimeout;
 
-        public CreateParams.Builder volser(String volser) {
-            this.volser = volser;
-            return this;
-        }
-
-        public CreateParams.Builder unit(String unit) {
-            this.unit = unit;
-            return this;
-        }
-
-        public CreateParams.Builder dsorg(String dsorg) {
-            this.dsorg = dsorg;
-            return this;
-        }
-
         public CreateParams.Builder alcunit(String alcunit) {
             this.alcunit = alcunit;
-            return this;
-        }
-
-        public CreateParams.Builder primary(Integer primary) {
-            this.primary = primary;
-            return this;
-        }
-
-        public CreateParams.Builder secondary(Integer secondary) {
-            this.secondary = secondary;
-            return this;
-        }
-
-        public CreateParams.Builder dirblk(Integer dirblk) {
-            this.dirblk = dirblk;
             return this;
         }
 
@@ -424,13 +394,32 @@ public class CreateParams {
             return this;
         }
 
-        public CreateParams.Builder recfm(String recfm) {
-            this.recfm = recfm;
+        public CreateParams.Builder blksize(Integer blksize) {
+            this.blksize = blksize;
             return this;
         }
 
-        public CreateParams.Builder blksize(Integer blksize) {
-            this.blksize = blksize;
+        public CreateParams build() {
+            return new CreateParams(this);
+        }
+
+        public CreateParams.Builder dataclass(String dataclass) {
+            this.dataclass = dataclass;
+            return this;
+        }
+
+        public CreateParams.Builder dirblk(Integer dirblk) {
+            this.dirblk = dirblk;
+            return this;
+        }
+
+        public CreateParams.Builder dsntype(String dsntype) {
+            this.dsntype = dsntype;
+            return this;
+        }
+
+        public CreateParams.Builder dsorg(String dsorg) {
+            this.dsorg = dsorg;
             return this;
         }
 
@@ -439,23 +428,28 @@ public class CreateParams {
             return this;
         }
 
-        public CreateParams.Builder storclass(String storclass) {
-            this.storclass = storclass;
-            return this;
-        }
-
         public CreateParams.Builder mgntclass(String mgntclass) {
             this.mgntclass = mgntclass;
             return this;
         }
 
-        public CreateParams.Builder dataclass(String dataclass) {
-            this.dataclass = dataclass;
+        public CreateParams.Builder primary(Integer primary) {
+            this.primary = primary;
             return this;
         }
 
-        public CreateParams.Builder dsntype(String dsntype) {
-            this.dsntype = dsntype;
+        public CreateParams.Builder recfm(String recfm) {
+            this.recfm = recfm;
+            return this;
+        }
+
+        public CreateParams.Builder responseTimeout(String responseTimeout) {
+            this.responseTimeout = responseTimeout;
+            return this;
+        }
+
+        public CreateParams.Builder secondary(Integer secondary) {
+            this.secondary = secondary;
             return this;
         }
 
@@ -469,13 +463,19 @@ public class CreateParams {
             return this;
         }
 
-        public CreateParams.Builder responseTimeout(String responseTimeout) {
-            this.responseTimeout = responseTimeout;
+        public CreateParams.Builder storclass(String storclass) {
+            this.storclass = storclass;
             return this;
         }
 
-        public CreateParams build() {
-            return new CreateParams(this);
+        public CreateParams.Builder unit(String unit) {
+            this.unit = unit;
+            return this;
+        }
+
+        public CreateParams.Builder volser(String volser) {
+            this.volser = volser;
+            return this;
         }
 
     }

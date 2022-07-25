@@ -41,16 +41,6 @@ public class CheckJobStatus {
     }
 
     /**
-     * Retrieve statusFound specified
-     *
-     * @return true or false value
-     * @author Frank Giordano
-     */
-    public boolean isStatusFound() {
-        return statusFound;
-    }
-
-    /**
      * Retrieve job specified
      *
      * @return job value
@@ -58,6 +48,16 @@ public class CheckJobStatus {
      */
     public Job getJob() {
         return job;
+    }
+
+    /**
+     * Retrieve statusFound specified
+     *
+     * @return true or false value
+     * @author Frank Giordano
+     */
+    public boolean isStatusFound() {
+        return statusFound;
     }
 
     @Override

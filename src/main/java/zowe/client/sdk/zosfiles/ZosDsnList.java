@@ -14,12 +14,11 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.parsejson.IParseJson;
-import zowe.client.sdk.parsejson.ParseDataSetJson;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilDataset;
-import zowe.client.sdk.utility.UtilRest;
+import zowe.client.sdk.utility.DataSetUtils;
+import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.input.ListParams;
 import zowe.client.sdk.zosfiles.response.Dataset;
 
@@ -34,7 +33,6 @@ import java.util.*;
 public class ZosDsnList {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZosDsnList.class);
-    private final IParseJson<Dataset> parseDataSetJson = new ParseDataSetJson();
     private final ZOSConnection connection;
     private ZoweRequest request;
 
@@ -45,7 +43,7 @@ public class ZosDsnList {
      * @author Frank Giordano
      */
     public ZosDsnList(ZOSConnection connection) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -59,116 +57,12 @@ public class ZosDsnList {
      * @author Frank Giordano
      */
     public ZosDsnList(ZOSConnection connection, ZoweRequest request) throws Exception {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {
             throw new Exception("GET_JSON request type required");
         }
         this.request = request;
-    }
-
-    /**
-     * Get a list of members from a Dataset
-     *
-     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
-     * @param params      list parameters, see ListParams object
-     * @return list of member names
-     * @throws Exception error processing request
-     * @author Nikunj Goyal
-     */
-    @SuppressWarnings("unchecked")
-    public List<String> listDsnMembers(String dataSetName, ListParams params) throws Exception {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
-
-        Map<String, String> headers = new HashMap<>();
-        List<String> members = new ArrayList<>();
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
-                Util.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
-
-        if (params.getPattern().isPresent()) {
-            url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN +
-                    Util.encodeURIComponent(params.getPattern().get());
-        }
-
-        Response response = getResponse(params, headers, url);
-        if (response.isEmpty()) {
-            return members;
-        }
-
-        try {
-            UtilRest.checkHttpErrors(response);
-        } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), List.of(dataSetName), UtilDataset.Operation.read);
-        }
-
-        JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
-        if (results.isEmpty()) {
-            return members;
-        }
-        JSONArray items = (JSONArray) results.get("items");
-        items.forEach(item -> {
-            JSONObject datasetObj = (JSONObject) item;
-            members.add(datasetObj.get("member").toString());
-        });
-
-        return members;
-    }
-
-    /**
-     * Get a list of Dataset names
-     *
-     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
-     * @param params      list parameters, see ListParams object
-     * @return A String list of Dataset names
-     * @throws Exception error processing request
-     * @author Nikunj Goyal
-     */
-    @SuppressWarnings("unchecked")
-    public List<Dataset> listDsn(String dataSetName, ListParams params) throws Exception {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkNullParameter(dataSetName == null, "dataSetName is null");
-        Util.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
-
-        Map<String, String> headers = new HashMap<>();
-        List<Dataset> datasets = new ArrayList<>();
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
-
-        url += ZosFilesConstants.QUERY_DS_LEVEL + Util.encodeURIComponent(dataSetName);
-
-        if (params.getVolume().isPresent()) {
-            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
-                    Util.encodeURIComponent(params.getVolume().get());
-        }
-        if (params.getStart().isPresent()) {
-            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + params.getStart().get();
-        }
-
-        Response response = getResponse(params, headers, url);
-        if (response.isEmpty()) {
-            return datasets;
-        }
-
-        try {
-            UtilRest.checkHttpErrors(response);
-        } catch (Exception e) {
-            UtilDataset.checkHttpErrors(e.getMessage(), List.of(dataSetName), UtilDataset.Operation.read);
-        }
-
-        JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
-        if (results.isEmpty()) {
-            return datasets;
-        }
-        JSONArray items = (JSONArray) results.get(ZosFilesConstants.RESPONSE_ITEMS);
-        items.forEach(item -> {
-            JSONObject datasetObj = (JSONObject) item;
-            datasets.add(parseDataSetJson.parse(datasetObj));
-        });
-
-        return datasets;
     }
 
     /**
@@ -192,6 +86,110 @@ public class ZosDsnList {
     }
 
     /**
+     * Get a list of Dataset names
+     *
+     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
+     * @param params      list parameters, see ListParams object
+     * @return A String list of Dataset names
+     * @throws Exception error processing request
+     * @author Nikunj Goyal
+     */
+    @SuppressWarnings("unchecked")
+    public List<Dataset> listDsn(String dataSetName, ListParams params) throws Exception {
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
+        ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+
+        Map<String, String> headers = new HashMap<>();
+        List<Dataset> datasets = new ArrayList<>();
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
+
+        url += ZosFilesConstants.QUERY_DS_LEVEL + EncodeUtils.encodeURIComponent(dataSetName);
+
+        if (params.getVolume().isPresent()) {
+            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
+                    EncodeUtils.encodeURIComponent(params.getVolume().get());
+        }
+        if (params.getStart().isPresent()) {
+            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + params.getStart().get();
+        }
+
+        Response response = getResponse(params, headers, url);
+        if (response.isEmpty()) {
+            return datasets;
+        }
+
+        try {
+            RestUtils.checkHttpErrors(response);
+        } catch (Exception e) {
+            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), DataSetUtils.Operation.read);
+        }
+
+        JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
+        if (results.isEmpty()) {
+            return datasets;
+        }
+        JSONArray items = (JSONArray) results.get(ZosFilesConstants.RESPONSE_ITEMS);
+        items.forEach(item -> {
+            JSONObject datasetObj = (JSONObject) item;
+            datasets.add(DataSetUtils.parseJsonDSResponse(datasetObj));
+        });
+
+        return datasets;
+    }
+
+    /**
+     * Get a list of members from a Dataset
+     *
+     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
+     * @param params      list parameters, see ListParams object
+     * @return list of member names
+     * @throws Exception error processing request
+     * @author Nikunj Goyal
+     */
+    @SuppressWarnings("unchecked")
+    public List<String> listDsnMembers(String dataSetName, ListParams params) throws Exception {
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
+        ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+
+        Map<String, String> headers = new HashMap<>();
+        List<String> members = new ArrayList<>();
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
+                EncodeUtils.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
+
+        if (params.getPattern().isPresent()) {
+            url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN +
+                    EncodeUtils.encodeURIComponent(params.getPattern().get());
+        }
+
+        Response response = getResponse(params, headers, url);
+        if (response.isEmpty()) {
+            return members;
+        }
+
+        try {
+            RestUtils.checkHttpErrors(response);
+        } catch (Exception e) {
+            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), DataSetUtils.Operation.read);
+        }
+
+        JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
+        if (results.isEmpty()) {
+            return members;
+        }
+        JSONArray items = (JSONArray) results.get("items");
+        items.forEach(item -> {
+            JSONObject datasetObj = (JSONObject) item;
+            members.add(datasetObj.get("member").toString());
+        });
+
+        return members;
+    }
+
+    /**
      * Generate the http headers for the request
      *
      * @param params  list parameters
@@ -205,11 +203,11 @@ public class ZosDsnList {
         headers.put(key, value);
 
         if (params.getAttribute().isPresent()) {
-            UtilDataset.Attribute attribute = params.getAttribute().get();
-            if (attribute == UtilDataset.Attribute.BASE) {
+            DataSetUtils.Attribute attribute = params.getAttribute().get();
+            if (attribute == DataSetUtils.Attribute.BASE) {
                 key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(0);
                 value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
-            } else if (attribute == UtilDataset.Attribute.VOL) {
+            } else if (attribute == DataSetUtils.Attribute.VOL) {
                 key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_VOL").get(0);
                 value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_VOL").get(1);
             }
