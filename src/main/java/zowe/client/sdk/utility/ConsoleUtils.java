@@ -21,7 +21,8 @@ import zowe.client.sdk.zosconsole.zosmf.ZosmfIssueResponse;
  */
 public final class ConsoleUtils {
 
-    private ConsoleUtils() {}
+    private ConsoleUtils() {
+    }
 
     /**
      * Transform JSON into ZosmfIssueResponse object

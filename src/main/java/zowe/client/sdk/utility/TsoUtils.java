@@ -29,7 +29,8 @@ import java.util.Optional;
  */
 public final class TsoUtils {
 
-    private TsoUtils() {}
+    private TsoUtils() {
+    }
 
     /**
      * Retrieve Tso response

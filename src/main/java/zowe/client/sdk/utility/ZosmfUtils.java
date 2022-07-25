@@ -18,7 +18,8 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfPluginInfo;
 
 public final class ZosmfUtils {
 
-    private ZosmfUtils() {}
+    private ZosmfUtils() {
+    }
 
     /**
      * Transform JSON into DefinedSystem object

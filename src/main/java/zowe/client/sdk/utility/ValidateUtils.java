@@ -15,7 +15,8 @@ import java.util.Optional;
 
 public final class ValidateUtils {
 
-    private ValidateUtils() {}
+    private ValidateUtils() {
+    }
 
     /**
      * Check connection for validity.

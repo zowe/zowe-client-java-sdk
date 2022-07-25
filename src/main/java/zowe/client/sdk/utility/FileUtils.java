@@ -23,7 +23,8 @@ import java.util.Map;
  */
 public final class FileUtils {
 
-    private FileUtils() {}
+    private FileUtils() {
+    }
 
     /**
      * Common method to build headers given input options object

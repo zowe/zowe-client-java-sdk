@@ -22,7 +22,8 @@ import java.util.List;
  */
 public final class DataSetUtils {
 
-    private DataSetUtils() {}
+    private DataSetUtils() {
+    }
 
     /**
      * Generate string with all datasets

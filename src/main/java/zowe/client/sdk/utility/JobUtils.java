@@ -23,7 +23,8 @@ import zowe.client.sdk.zosjobs.response.JobStepData;
  */
 public final class JobUtils {
 
-    private JobUtils() {}
+    private JobUtils() {
+    }
 
     /**
      * Check the validity of a ModifyJobParams object

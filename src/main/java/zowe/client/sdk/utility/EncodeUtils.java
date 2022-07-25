@@ -17,7 +17,8 @@ import java.util.Base64;
 
 public final class EncodeUtils {
 
-    private EncodeUtils() {}
+    private EncodeUtils() {
+    }
 
     /**
      * Encodes the passed String as UTF-8 using an algorithm that's compatible

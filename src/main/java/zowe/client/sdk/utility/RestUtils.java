@@ -30,7 +30,8 @@ import java.net.URL;
  */
 public final class RestUtils {
 
-    private RestUtils() {}
+    private RestUtils() {
+    }
 
     private static final Logger LOG = LoggerFactory.getLogger(RestUtils.class);
 
