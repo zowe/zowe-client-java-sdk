@@ -76,6 +76,26 @@ public class MonitorJobWaitForParams {
     }
 
     /**
+     * Retrieve attempts
+     *
+     * @return attempts value
+     * @author Frank Giordano
+     */
+    public OptionalInt getAttempts() {
+        return attempts;
+    }
+
+    /**
+     * Assign attempts
+     *
+     * @param attempts number of attempts to get status
+     * @author Frank Giordano
+     */
+    public void setAttempts(int attempts) {
+        this.attempts = OptionalInt.of(attempts);
+    }
+
+    /**
      * Retrieve job id
      *
      * @return jobId value
@@ -106,23 +126,13 @@ public class MonitorJobWaitForParams {
     }
 
     /**
-     * Retrieve watch delay
+     * Assign job status
      *
-     * @return watchDelay value
+     * @param jobStatus job status type, see JobStatus.Type object
      * @author Frank Giordano
      */
-    public OptionalInt getWatchDelay() {
-        return watchDelay;
-    }
-
-    /**
-     * Retrieve attempts
-     *
-     * @return attempts value
-     * @author Frank Giordano
-     */
-    public OptionalInt getAttempts() {
-        return attempts;
+    public void setJobStatus(JobStatus.Type jobStatus) {
+        this.jobStatus = Optional.ofNullable(jobStatus);
     }
 
     /**
@@ -136,36 +146,6 @@ public class MonitorJobWaitForParams {
     }
 
     /**
-     * Assign watch delay
-     *
-     * @param watchDelay delay of polling operation in milliseconds
-     * @author Frank Giordano
-     */
-    public void setWatchDelay(int watchDelay) {
-        this.watchDelay = OptionalInt.of(watchDelay);
-    }
-
-    /**
-     * Assign job status
-     *
-     * @param jobStatus job status type, see JobStatus.Type object
-     * @author Frank Giordano
-     */
-    public void setJobStatus(JobStatus.Type jobStatus) {
-        this.jobStatus = Optional.ofNullable(jobStatus);
-    }
-
-    /**
-     * Assign attempts
-     *
-     * @param attempts number of attempts to get status
-     * @author Frank Giordano
-     */
-    public void setAttempts(int attempts) {
-        this.attempts = OptionalInt.of(attempts);
-    }
-
-    /**
      * Assign line limit
      *
      * @param lineLimit number of lines to inspect
@@ -173,6 +153,26 @@ public class MonitorJobWaitForParams {
      */
     public void setLineLimit(int lineLimit) {
         this.lineLimit = OptionalInt.of(lineLimit);
+    }
+
+    /**
+     * Retrieve watch delay
+     *
+     * @return watchDelay value
+     * @author Frank Giordano
+     */
+    public OptionalInt getWatchDelay() {
+        return watchDelay;
+    }
+
+    /**
+     * Assign watch delay
+     *
+     * @param watchDelay delay of polling operation in milliseconds
+     * @author Frank Giordano
+     */
+    public void setWatchDelay(int watchDelay) {
+        this.watchDelay = OptionalInt.of(watchDelay);
     }
 
     @Override
@@ -201,18 +201,17 @@ public class MonitorJobWaitForParams {
             this.jobId = jobId;
         }
 
-        public MonitorJobWaitForParams.Builder watchDelay(int watchDelay) {
-            this.watchDelay = OptionalInt.of(watchDelay);
+        public MonitorJobWaitForParams.Builder attempts(int attempts) {
+            this.attempts = OptionalInt.of(attempts);
             return this;
+        }
+
+        public MonitorJobWaitForParams build() {
+            return new MonitorJobWaitForParams(this);
         }
 
         public MonitorJobWaitForParams.Builder jobStatus(JobStatus.Type jobStatus) {
             this.jobStatus = jobStatus;
-            return this;
-        }
-
-        public MonitorJobWaitForParams.Builder attempts(int attempts) {
-            this.attempts = OptionalInt.of(attempts);
             return this;
         }
 
@@ -221,8 +220,9 @@ public class MonitorJobWaitForParams {
             return this;
         }
 
-        public MonitorJobWaitForParams build() {
-            return new MonitorJobWaitForParams(this);
+        public MonitorJobWaitForParams.Builder watchDelay(int watchDelay) {
+            this.watchDelay = OptionalInt.of(watchDelay);
+            return this;
         }
 
     }

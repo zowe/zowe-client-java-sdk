@@ -55,6 +55,16 @@ public class SendResponse {
     }
 
     /**
+     * Retrieve commandResponse specified
+     *
+     * @return commandResponse value
+     * @author Frank Giordano
+     */
+    public Optional<String> getCommandResponse() {
+        return commandResponse;
+    }
+
+    /**
      * Retrieve success specified
      *
      * @return success value
@@ -72,16 +82,6 @@ public class SendResponse {
      */
     public List<ZosmfTsoResponse> getZosmfResponses() {
         return zosmfTsoResponses;
-    }
-
-    /**
-     * Retrieve commandResponse specified
-     *
-     * @return commandResponse value
-     * @author Frank Giordano
-     */
-    public Optional<String> getCommandResponse() {
-        return commandResponse;
     }
 
     @Override

@@ -28,9 +28,41 @@ import java.net.URL;
  * @author Frank Giordano
  * @version 1.0
  */
-public class UtilRest {
+public final class RestUtils {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UtilRest.class);
+    private RestUtils() {}
+
+    private static final Logger LOG = LoggerFactory.getLogger(RestUtils.class);
+
+    /**
+     * Return specialized http error message
+     *
+     * @param response Response object
+     * @throws Exception containing specialized http error message
+     * @author Frank Giordano
+     */
+    public static void checkHttpErrors(Response response) throws Exception {
+        ValidateUtils.checkNullParameter(response == null, "response is null");
+        int httpCode;
+        if (response.getStatusCode().isPresent()) {
+            httpCode = response.getStatusCode().get();
+        } else {
+            throw new Exception("no http code value returned");
+        }
+        if (isHttpError(httpCode)) {
+            String responsePhrase = "";
+            if (response.getResponsePhrase().isPresent()) {
+                responsePhrase = (String) response.getResponsePhrase().get();
+            }
+            String errorMsg = "Http error code ";
+            if (!responsePhrase.isEmpty()) {
+                errorMsg += httpCode + " " + responsePhrase + ".";
+            } else {
+                errorMsg += httpCode + ".";
+            }
+            throw new Exception(errorMsg);
+        }
+    }
 
     /**
      * Retrieve response JSON entity content from httpResponse object
@@ -41,7 +73,7 @@ public class UtilRest {
      * @author Frank Giordano
      */
     public static Object getJsonResponseEntity(HttpResponse httpResponse) throws Exception {
-        Util.checkNullParameter(httpResponse == null, "httpResponse is null");
+        ValidateUtils.checkNullParameter(httpResponse == null, "httpResponse is null");
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
             String result = EntityUtils.toString(entity);
@@ -69,7 +101,7 @@ public class UtilRest {
      * @author Frank Giordano
      */
     public static Object getTextResponseEntity(HttpResponse httpResponse) throws Exception {
-        Util.checkNullParameter(httpResponse == null, "httpResponse is null");
+        ValidateUtils.checkNullParameter(httpResponse == null, "httpResponse is null");
         HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
             String result = EntityUtils.toString(entity);
@@ -77,36 +109,6 @@ public class UtilRest {
             return result;
         }
         return null;
-    }
-
-    /**
-     * Return specialized http error message
-     *
-     * @param response Response object
-     * @throws Exception containing specialized http error message
-     * @author Frank Giordano
-     */
-    public static void checkHttpErrors(Response response) throws Exception {
-        Util.checkNullParameter(response == null, "response is null");
-        int httpCode;
-        if (response.getStatusCode().isPresent()) {
-            httpCode = response.getStatusCode().get();
-        } else {
-            throw new Exception("no http code value returned");
-        }
-        if (isHttpError(httpCode)) {
-            String responsePhrase = "";
-            if (response.getResponsePhrase().isPresent()) {
-                responsePhrase = (String) response.getResponsePhrase().get();
-            }
-            String errorMsg = "Http error code ";
-            if (!responsePhrase.isEmpty()) {
-                errorMsg += httpCode + " " + responsePhrase + ".";
-            } else {
-                errorMsg += httpCode + ".";
-            }
-            throw new Exception(errorMsg);
-        }
     }
 
     /**
@@ -128,7 +130,7 @@ public class UtilRest {
      * @author Frank Giordano
      */
     public static boolean isUrlNotValid(String url) {
-        Util.checkNullParameter(url == null, "url is null");
+        ValidateUtils.checkNullParameter(url == null, "url is null");
         try {
             new URL(url).toURI();
             return false;

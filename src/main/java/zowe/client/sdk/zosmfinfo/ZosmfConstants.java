@@ -18,23 +18,20 @@ package zowe.client.sdk.zosmfinfo;
 public class ZosmfConstants {
 
     /**
-     * Specifies the z/OS data set and file REST interface
-     */
-    public final static String RESOURCE = "/zosmf";
-
-    /**
      * Indicator for get info request
      */
     public final static String INFO = "/info";
-
     /**
-     * Indicator for get topology services
+     * Specifies the z/OS data set and file REST interface
      */
-    public final static String TOPOLOGY = "/resttopology";
-
+    public final static String RESOURCE = "/zosmf";
     /**
      * Indicator for get defined systems in zosmf
      */
     public final static String SYSTEMS = "/systems";
+    /**
+     * Indicator for get topology services
+     */
+    public final static String TOPOLOGY = "/resttopology";
 
 }

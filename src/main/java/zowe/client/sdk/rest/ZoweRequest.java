@@ -22,8 +22,8 @@ import org.apache.http.ssl.SSLContextBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilRest;
+import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 
 import java.util.Map;
 
@@ -36,10 +36,8 @@ import java.util.Map;
 public abstract class ZoweRequest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZoweRequest.class);
-
     public static final String X_CSRF_ZOSMF_HEADER_KEY = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
     public static final String X_CSRF_ZOSMF_HEADER_VALUE = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
-
     private final ZoweRequestType.VerbType requestType;
     protected final ZOSConnection connection;
     protected HttpClient client;
@@ -130,11 +128,11 @@ public abstract class ZoweRequest {
     protected <T> Response executeJsonRequest(T request) throws Exception {
         int statusCode = execute(request);
 
-        if (UtilRest.isHttpError(statusCode)) {
+        if (RestUtils.isHttpError(statusCode)) {
             return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
         }
 
-        return new Response(UtilRest.getJsonResponseEntity(httpResponse), statusCode);
+        return new Response(RestUtils.getJsonResponseEntity(httpResponse), statusCode);
     }
 
     /**
@@ -149,11 +147,11 @@ public abstract class ZoweRequest {
     protected <T> Response executeTextRequest(T request) throws Exception {
         int statusCode = execute(request);
 
-        if (UtilRest.isHttpError(statusCode)) {
+        if (RestUtils.isHttpError(statusCode)) {
             return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
         }
 
-        return new Response(UtilRest.getTextResponseEntity(httpResponse), statusCode);
+        return new Response(RestUtils.getTextResponseEntity(httpResponse), statusCode);
     }
 
     /**
@@ -168,7 +166,7 @@ public abstract class ZoweRequest {
     protected <T> Response executeStreamRequest(T request) throws Exception {
         int statusCode = execute(request);
 
-        if (UtilRest.isHttpError(statusCode)) {
+        if (RestUtils.isHttpError(statusCode)) {
             return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
         }
 
@@ -189,8 +187,8 @@ public abstract class ZoweRequest {
      * @author Frank Giordano
      */
     private <T> int execute(T request) throws Exception {
-        Util.checkNullParameter(request == null, "request is null");
-        Util.checkNullParameter(client == null, "client is null");
+        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(client == null, "client is null");
 
         httpResponse = client.execute((HttpUriRequest) request, localContext);
 

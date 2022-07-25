@@ -15,8 +15,8 @@ import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilRest;
+import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.RestUtils;
 
 import java.util.Map;
 import java.util.Optional;
@@ -30,7 +30,6 @@ import java.util.Optional;
 public class TextPutRequest extends ZoweRequest {
 
     private static final Logger LOG = LoggerFactory.getLogger(TextPutRequest.class);
-
     private HttpPut request;
 
     /**
@@ -61,7 +60,7 @@ public class TextPutRequest extends ZoweRequest {
      */
     @Override
     public void setStandardHeaders() {
-        request.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
+        request.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + EncodeUtils.getAuthEncoding(connection));
         request.setHeader("Content-Type", "text/plain; charset=UTF-8");
         request.setHeader(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
@@ -99,7 +98,7 @@ public class TextPutRequest extends ZoweRequest {
      */
     @Override
     public void setRequest(String url, String body) throws Exception {
-        if (UtilRest.isUrlNotValid(url)) {
+        if (RestUtils.isUrlNotValid(url)) {
             throw new Exception("url is invalid");
         }
         request = new HttpPut(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));

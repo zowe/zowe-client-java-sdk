@@ -18,13 +18,12 @@ package zowe.client.sdk.rest;
 public class QueryConstants {
 
     /**
-     * Query identifier
-     */
-    public static final String QUERY_ID = "?";
-
-    /**
      * Query parameter delimiter
      */
     public static final String COMBO_ID = "&";
+    /**
+     * Query identifier
+     */
+    public static final String QUERY_ID = "?";
 
 }

@@ -14,11 +14,11 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.parsejson.IParseJson;
-import zowe.client.sdk.parsejson.ParseJobJson;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilRest;
+import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.JobUtils;
+import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.input.CommonJobParams;
 import zowe.client.sdk.zosjobs.input.GetJobParams;
 import zowe.client.sdk.zosjobs.input.JobFile;
@@ -36,7 +36,6 @@ import java.util.List;
 public class GetJobs {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetJobs.class);
-    private final IParseJson<Job> parseJobJson = new ParseJobJson();
     private final ZOSConnection connection;
     private ZoweRequest request;
     private String url;
@@ -48,7 +47,7 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public GetJobs(ZOSConnection connection) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -61,9 +60,94 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public GetJobs(ZOSConnection connection, ZoweRequest request) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
+    }
+
+    /**
+     * Get JCL from a job.
+     *
+     * @param jobName job name for the job for which you want to retrieve JCL
+     * @param jobId   job ID for the job for which you want to retrieve JCL
+     * @return job document on resolve
+     * @throws Exception error on getting jcl content
+     * @author Frank Giordano
+     */
+    public String getJcl(String jobName, String jobId) throws Exception {
+        return getJclCommon(new CommonJobParams(jobId, jobName));
+    }
+
+    /**
+     * Get the JCL that was used to submit a job.
+     *
+     * @param params common job parameters, see CommonJobParams object
+     * @return JCL content
+     * @throws Exception error on getting jcl content
+     * @author Frank Giordano
+     */
+    public String getJclCommon(CommonJobParams params) throws Exception {
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobName().get().isEmpty(), "jobName not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
+
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
+                EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() +
+                JobsConstants.RESOURCE_SPOOL_FILES + JobsConstants.RESOURCE_JCL_CONTENT +
+                JobsConstants.RESOURCE_SPOOL_CONTENT;
+
+        LOG.debug(url);
+
+        if (request == null || !(request instanceof TextGetRequest)) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_TEXT);
+        }
+        request.setRequest(url);
+
+        Response response = request.executeRequest();
+        if (response.isEmpty()) {
+            return "";
+        }
+        RestUtils.checkHttpErrors(response);
+        return (String) response.getResponsePhrase().orElse("");
+    }
+
+    /**
+     * Get JCL from a job.
+     * Alternate version of the API that accepts a Job object returned by
+     * other APIs such as SubmitJobs.
+     *
+     * @param job job for which you would like to retrieve JCL
+     * @return JCL content
+     * @throws Exception error on getting jcl content
+     * @author Frank Giordano
+     */
+    public String getJclForJob(Job job) throws Exception {
+        return getJclCommon(new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
+    }
+
+    /**
+     * Get a single job object from an input job id.
+     *
+     * @param jobId job ID for the job for which you want to get status
+     * @return list of job objects (matching jobs)
+     * @throws Exception error on getting job
+     * @author Frank Giordano
+     */
+    public Job getJob(String jobId) throws Exception {
+        ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
+        ValidateUtils.checkIllegalParameter(jobId.isEmpty(), "jobId not specified");
+
+        List<Job> jobs = getJobsCommon(new GetJobParams.Builder("*").jobId(jobId).build());
+        if (jobs.isEmpty()) {
+            throw new Exception("Job not found");
+        }
+        if (jobs.size() > 1) {
+            throw new Exception("Expected 1 job returned but received " + jobs.size() + " jobs.");
+        }
+
+        return jobs.get(0);
     }
 
     /**
@@ -78,21 +162,6 @@ public class GetJobs {
     }
 
     /**
-     * Get jobs that match a job name by prefix. Defaults to job(s) owned by the user ID in the session.
-     *
-     * @param prefix job name prefix for which to list jobs. Supports wildcard e.g. JOBNM*
-     * @return list of job objects (matching jobs)
-     * @throws Exception error on getting a list of jobs
-     * @author Frank Giordano
-     */
-    public List<Job> getJobsByPrefix(String prefix) throws Exception {
-        Util.checkNullParameter(prefix == null, "prefix is null");
-        Util.checkIllegalParameter(prefix.isEmpty(), "prefix not specified");
-
-        return getJobsCommon(new GetJobParams.Builder("*").prefix(prefix).build());
-    }
-
-    /**
      * Get jobs that are owned by a certain user or pattern of users.
      *
      * @param owner owner for which to get jobs. Supports wildcard e.g.
@@ -102,8 +171,8 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public List<Job> getJobsByOwner(String owner) throws Exception {
-        Util.checkNullParameter(owner == null, "owner is null");
-        Util.checkIllegalParameter(owner.isEmpty(), "owner not specified");
+        ValidateUtils.checkNullParameter(owner == null, "owner is null");
+        ValidateUtils.checkIllegalParameter(owner.isEmpty(), "owner not specified");
 
         return getJobsCommon(new GetJobParams.Builder(owner).build());
     }
@@ -120,35 +189,27 @@ public class GetJobs {
      * @author Frank Giordano
      */
     public List<Job> getJobsByOwnerAndPrefix(String owner, String prefix) throws Exception {
-        Util.checkNullParameter(owner == null, "owner is null");
-        Util.checkIllegalParameter(owner.isEmpty(), "owner not specified");
-        Util.checkNullParameter(prefix == null, "prefix is null");
-        Util.checkIllegalParameter(prefix.isEmpty(), "prefix not specified");
+        ValidateUtils.checkNullParameter(owner == null, "owner is null");
+        ValidateUtils.checkIllegalParameter(owner.isEmpty(), "owner not specified");
+        ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
+        ValidateUtils.checkIllegalParameter(prefix.isEmpty(), "prefix not specified");
 
         return getJobsCommon(new GetJobParams.Builder(owner).prefix(prefix).build());
     }
 
     /**
-     * Get a single job object from an input job id.
+     * Get jobs that match a job name by prefix. Defaults to job(s) owned by the user ID in the session.
      *
-     * @param jobId job ID for the job for which you want to get status
+     * @param prefix job name prefix for which to list jobs. Supports wildcard e.g. JOBNM*
      * @return list of job objects (matching jobs)
-     * @throws Exception error on getting job
+     * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
-    public Job getJob(String jobId) throws Exception {
-        Util.checkNullParameter(jobId == null, "jobId is null");
-        Util.checkIllegalParameter(jobId.isEmpty(), "jobId not specified");
+    public List<Job> getJobsByPrefix(String prefix) throws Exception {
+        ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
+        ValidateUtils.checkIllegalParameter(prefix.isEmpty(), "prefix not specified");
 
-        List<Job> jobs = getJobsCommon(new GetJobParams.Builder("*").jobId(jobId).build());
-        if (jobs.isEmpty()) {
-            throw new Exception("Job not found");
-        }
-        if (jobs.size() > 1) {
-            throw new Exception("Expected 1 job returned but received " + jobs.size() + " jobs.");
-        }
-
-        return jobs.get(0);
+        return getJobsCommon(new GetJobParams.Builder("*").prefix(prefix).build());
     }
 
     /**
@@ -175,7 +236,7 @@ public class GetJobs {
                     if (url.contains(QueryConstants.QUERY_ID)) {
                         url += QueryConstants.COMBO_ID;
                     }
-                    url += JobsConstants.QUERY_PREFIX + Util.encodeURIComponent(params.getPrefix().get());
+                    url += JobsConstants.QUERY_PREFIX + EncodeUtils.encodeURIComponent(params.getPrefix().get());
                 }
             }
             if (params.getMaxJobs().isPresent()) {
@@ -207,7 +268,7 @@ public class GetJobs {
         if (response.isEmpty()) {
             return jobs;
         }
-        UtilRest.checkHttpErrors(response);
+        RestUtils.checkHttpErrors(response);
         JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
         if (results == null) {
             return jobs;
@@ -215,119 +276,87 @@ public class GetJobs {
 
         results.forEach(item -> {
             JSONObject jobObj = (JSONObject) item;
-            jobs.add(parseJobJson.parse(jobObj));
+            jobs.add(JobUtils.parseJsonJobResponse(jobObj));
         });
 
         return jobs;
     }
 
     /**
-     * Get the status value only for a given job name and id.
+     * Get spool content from a job (keeping naming convention patter with this duplication function).
      *
-     * @param jobName job name for the job for which you want to get status
-     * @param jobId   job ID for the job for which you want to get status
-     * @return status value
-     * @throws Exception error getting job status
+     * @param jobFile spool file for which you want to retrieve the content
+     * @return spool content
+     * @throws Exception error on getting spool content
      * @author Frank Giordano
      */
-    public String getStatusValue(String jobName, String jobId) throws Exception {
-        Util.checkNullParameter(jobName == null, "jobName is null");
-        Util.checkNullParameter(jobId == null, "jobId is null");
-
-        Job job = getStatusCommon(new CommonJobParams(jobId, jobName));
-        return job.getStatus().orElseThrow(() -> new Exception("job status is missing"));
+    public String getSpoolContent(JobFile jobFile) throws Exception {
+        return getSpoolContentCommon(jobFile);
     }
 
     /**
-     * Get the status value for a given job object.
+     * Get spool content from a job using the job name, job ID, and spool ID number from z/OSMF.
      *
-     * @param job job document
-     * @return status value
-     * @throws Exception error getting job status
+     * @param jobName job name for the job containing the spool content
+     * @param jobId   job id for the job containing the spool content
+     * @param spoolId id number assigned by zosmf that identifies the particular job spool file (DD)
+     * @return spool content
+     * @throws Exception error on getting spool content
      * @author Frank Giordano
      */
-    public String getStatusValueForJob(Job job) throws Exception {
-        Util.checkNullParameter(job == null, "job is null");
-
-        Job result = getStatusCommon(
-                new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
-        return result.getStatus().orElseThrow(() -> new Exception("job status is missing"));
-    }
-
-    /**
-     * Get the status and other details (e.g. owner, return code) for a job.
-     *
-     * @param jobName job name for the job for which you want to get status
-     * @param jobId   job ID for the job for which you want to get status
-     * @return job document (matching job)
-     * @throws Exception error getting job status
-     * @author Frank Giordano
-     */
-    public Job getStatus(String jobName, String jobId) throws Exception {
-        Util.checkNullParameter(jobName == null, "jobName is null");
-        Util.checkNullParameter(jobId == null, "jobId is null");
-
-        return getStatusCommon(new CommonJobParams(jobId, jobName));
-    }
-
-    /**
-     * Get the status and other details (e.g. owner, return code) for a job
-     * Alternate version of the API that accepts a Job object returned by
-     * other APIs such as SubmitJobs. Even though the parameter and return
-     * value are of the same type, the Job object returned will have the
-     * current status of the job.
-     *
-     * @param job job document
-     * @return job document (matching job)
-     * @throws Exception error getting job status
-     * @author Frank Giordano
-     */
-    public Job getStatusForJob(Job job) throws Exception {
-        Util.checkNullParameter(job == null, "job is null");
-
-        return getStatusCommon(new CommonJobParams(job.getJobId().orElse(null),
-                job.getJobName().orElse(null)));
-    }
-
-    /**
-     * Get the status and other details (e.g. owner, return code) for a job.
-     *
-     * @param params common job parameters, see CommonJobParams object
-     * @return job document (matching job)
-     * @throws Exception error getting job status
-     * @author Frank Giordano
-     */
-    public Job getStatusCommon(CommonJobParams params) throws Exception {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
-        Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
-        Util.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
-        Util.checkIllegalParameter(params.getJobName().get().isEmpty(), "jobName not specified");
+    public String getSpoolContentById(String jobName, String jobId, int spoolId) throws Exception {
+        ValidateUtils.checkNullParameter(jobName == null, "jobName is null");
+        ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
+        ValidateUtils.checkIllegalParameter(spoolId <= 0, "spoolId not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                Util.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get();
-
-        if (params.isStepData()) {
-            url += JobsConstants.QUERY_ID + JobsConstants.STEP_DATA;
-        }
+                EncodeUtils.encodeURIComponent(jobName) + "/" + jobId + JobsConstants.RESOURCE_SPOOL_FILES + "/" +
+                spoolId + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         LOG.debug(url);
 
-        if (request == null || !(request instanceof JsonGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_JSON);
+        if (request == null || !(request instanceof TextGetRequest)) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_TEXT);
         }
         request.setRequest(url);
         Response response = request.executeRequest();
         if (response.isEmpty()) {
-            return new Job.Builder().build();
+            return "";
         }
-        UtilRest.checkHttpErrors(response);
-        JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
-        if (result == null) {
-            return new Job.Builder().build();
-        }
+        RestUtils.checkHttpErrors(response);
+        return (String) response.getResponsePhrase().orElse("");
+    }
 
-        return parseJobJson.parse(result);
+    /**
+     * Get spool content from a job.
+     *
+     * @param jobFile spool file for which you want to retrieve the content
+     * @return spool content
+     * @throws Exception error on getting spool content
+     * @author Frank Giordano
+     */
+    public String getSpoolContentCommon(JobFile jobFile) throws Exception {
+        ValidateUtils.checkNullParameter(jobFile == null, "jobFile is null");
+        ValidateUtils.checkIllegalParameter(jobFile.getJobName().isEmpty(), "jobName not specified");
+        ValidateUtils.checkIllegalParameter(jobFile.getJobId().isEmpty(), "jobId not specified");
+        ValidateUtils.checkIllegalParameter(jobFile.getId().isEmpty(), "id not specified");
+
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
+                EncodeUtils.encodeURIComponent(jobFile.getJobName().get()) + "/" + jobFile.getJobId().get() +
+                JobsConstants.RESOURCE_SPOOL_FILES + "/" + jobFile.getId().get() + JobsConstants.RESOURCE_SPOOL_CONTENT;
+
+        LOG.debug(url);
+
+        if (request == null || !(request instanceof TextGetRequest)) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_TEXT);
+        }
+        request.setRequest(url);
+        Response response = request.executeRequest();
+        if (response.isEmpty()) {
+            return "";
+        }
+        RestUtils.checkHttpErrors(response);
+        return (String) response.getResponsePhrase().orElse("");
     }
 
     /**
@@ -345,22 +374,6 @@ public class GetJobs {
 
     /**
      * Get a list of all job spool files for a job.
-     * Alternate version of the API that accepts a Job object returned by
-     * other APIs such as SubmitJobs.
-     *
-     * @param job job for which you would like to get a list of job spool files
-     * @return list of JobFile objects
-     * @throws Exception error on getting spool files info
-     * @author Frank Giordano
-     */
-    public List<JobFile> getSpoolFilesForJob(Job job) throws Exception {
-        return getSpoolFilesCommon(
-                new CommonJobParams(job.getJobId().orElseThrow(() -> new Exception("job id not specified")),
-                        job.getJobName().orElseThrow(() -> new Exception("job name not specified"))));
-    }
-
-    /**
-     * Get a list of all job spool files for a job.
      *
      * @param params common job parameters, see CommonJobParams object
      * @return list of JobFile objects
@@ -369,16 +382,16 @@ public class GetJobs {
      */
     @SuppressWarnings("unchecked")
     public List<JobFile> getSpoolFilesCommon(CommonJobParams params) throws Exception {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
-        Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
-        Util.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
-        Util.checkIllegalParameter(params.getJobName().get().isEmpty(), "jobName not specified");
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobName().get().isEmpty(), "jobName not specified");
 
         List<JobFile> files = new ArrayList<>();
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                Util.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() + "/files";
+                EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() + "/files";
 
         LOG.debug(url);
 
@@ -391,7 +404,7 @@ public class GetJobs {
         if (response.isEmpty()) {
             return files;
         }
-        UtilRest.checkHttpErrors(response);
+        RestUtils.checkHttpErrors(response);
         JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
         if (results == null) {
             return files;
@@ -420,142 +433,128 @@ public class GetJobs {
     }
 
     /**
-     * Get JCL from a job.
-     *
-     * @param jobName job name for the job for which you want to retrieve JCL
-     * @param jobId   job ID for the job for which you want to retrieve JCL
-     * @return job document on resolve
-     * @throws Exception error on getting jcl content
-     * @author Frank Giordano
-     */
-    public String getJcl(String jobName, String jobId) throws Exception {
-        return getJclCommon(new CommonJobParams(jobId, jobName));
-    }
-
-    /**
-     * Get JCL from a job.
+     * Get a list of all job spool files for a job.
      * Alternate version of the API that accepts a Job object returned by
      * other APIs such as SubmitJobs.
      *
-     * @param job job for which you would like to retrieve JCL
-     * @return JCL content
-     * @throws Exception error on getting jcl content
+     * @param job job for which you would like to get a list of job spool files
+     * @return list of JobFile objects
+     * @throws Exception error on getting spool files info
      * @author Frank Giordano
      */
-    public String getJclForJob(Job job) throws Exception {
-        return getJclCommon(new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
+    public List<JobFile> getSpoolFilesForJob(Job job) throws Exception {
+        return getSpoolFilesCommon(
+                new CommonJobParams(job.getJobId().orElseThrow(() -> new Exception("job id not specified")),
+                        job.getJobName().orElseThrow(() -> new Exception("job name not specified"))));
     }
 
     /**
-     * Get the JCL that was used to submit a job.
+     * Get the status and other details (e.g. owner, return code) for a job.
+     *
+     * @param jobName job name for the job for which you want to get status
+     * @param jobId   job ID for the job for which you want to get status
+     * @return job document (matching job)
+     * @throws Exception error getting job status
+     * @author Frank Giordano
+     */
+    public Job getStatus(String jobName, String jobId) throws Exception {
+        ValidateUtils.checkNullParameter(jobName == null, "jobName is null");
+        ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
+
+        return getStatusCommon(new CommonJobParams(jobId, jobName));
+    }
+
+    /**
+     * Get the status and other details (e.g. owner, return code) for a job.
      *
      * @param params common job parameters, see CommonJobParams object
-     * @return JCL content
-     * @throws Exception error on getting jcl content
+     * @return job document (matching job)
+     * @throws Exception error getting job status
      * @author Frank Giordano
      */
-    public String getJclCommon(CommonJobParams params) throws Exception {
-        Util.checkNullParameter(params == null, "params is null");
-        Util.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
-        Util.checkIllegalParameter(params.getJobName().get().isEmpty(), "jobName not specified");
-        Util.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
-        Util.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
+    public Job getStatusCommon(CommonJobParams params) throws Exception {
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobName().get().isEmpty(), "jobName not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                Util.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() +
-                JobsConstants.RESOURCE_SPOOL_FILES + JobsConstants.RESOURCE_JCL_CONTENT +
-                JobsConstants.RESOURCE_SPOOL_CONTENT;
+                EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get();
+
+        if (params.isStepData()) {
+            url += JobsConstants.QUERY_ID + JobsConstants.STEP_DATA;
+        }
 
         LOG.debug(url);
 
-        if (request == null || !(request instanceof TextGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_TEXT);
-        }
-        request.setRequest(url);
-
-        Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return "";
-        }
-        UtilRest.checkHttpErrors(response);
-        return (String) response.getResponsePhrase().orElse("");
-    }
-
-    /**
-     * Get spool content from a job (keeping naming convention patter with this duplication function).
-     *
-     * @param jobFile spool file for which you want to retrieve the content
-     * @return spool content
-     * @throws Exception error on getting spool content
-     * @author Frank Giordano
-     */
-    public String getSpoolContent(JobFile jobFile) throws Exception {
-        return getSpoolContentCommon(jobFile);
-    }
-
-    /**
-     * Get spool content from a job using the job name, job ID, and spool ID number from z/OSMF.
-     *
-     * @param jobName job name for the job containing the spool content
-     * @param jobId   job id for the job containing the spool content
-     * @param spoolId id number assigned by zosmf that identifies the particular job spool file (DD)
-     * @return spool content
-     * @throws Exception error on getting spool content
-     * @author Frank Giordano
-     */
-    public String getSpoolContentById(String jobName, String jobId, int spoolId) throws Exception {
-        Util.checkNullParameter(jobName == null, "jobName is null");
-        Util.checkNullParameter(jobId == null, "jobId is null");
-        Util.checkIllegalParameter(spoolId <= 0, "spoolId not specified");
-
-        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                Util.encodeURIComponent(jobName) + "/" + jobId + JobsConstants.RESOURCE_SPOOL_FILES + "/" +
-                spoolId + JobsConstants.RESOURCE_SPOOL_CONTENT;
-
-        LOG.debug(url);
-
-        if (request == null || !(request instanceof TextGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_TEXT);
+        if (request == null || !(request instanceof JsonGetRequest)) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_JSON);
         }
         request.setRequest(url);
         Response response = request.executeRequest();
         if (response.isEmpty()) {
-            return "";
+            return new Job.Builder().build();
         }
-        UtilRest.checkHttpErrors(response);
-        return (String) response.getResponsePhrase().orElse("");
+        RestUtils.checkHttpErrors(response);
+        JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
+        if (result == null) {
+            return new Job.Builder().build();
+        }
+
+        return JobUtils.parseJsonJobResponse(result);
     }
 
     /**
-     * Get spool content from a job.
+     * Get the status and other details (e.g. owner, return code) for a job
+     * Alternate version of the API that accepts a Job object returned by
+     * other APIs such as SubmitJobs. Even though the parameter and return
+     * value are of the same type, the Job object returned will have the
+     * current status of the job.
      *
-     * @param jobFile spool file for which you want to retrieve the content
-     * @return spool content
-     * @throws Exception error on getting spool content
+     * @param job job document
+     * @return job document (matching job)
+     * @throws Exception error getting job status
      * @author Frank Giordano
      */
-    public String getSpoolContentCommon(JobFile jobFile) throws Exception {
-        Util.checkNullParameter(jobFile == null, "jobFile is null");
-        Util.checkIllegalParameter(jobFile.getJobName().isEmpty(), "jobName not specified");
-        Util.checkIllegalParameter(jobFile.getJobId().isEmpty(), "jobId not specified");
-        Util.checkIllegalParameter(jobFile.getId().isEmpty(), "id not specified");
+    public Job getStatusForJob(Job job) throws Exception {
+        ValidateUtils.checkNullParameter(job == null, "job is null");
 
-        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                Util.encodeURIComponent(jobFile.getJobName().get()) + "/" + jobFile.getJobId().get() +
-                JobsConstants.RESOURCE_SPOOL_FILES + "/" + jobFile.getId().get() + JobsConstants.RESOURCE_SPOOL_CONTENT;
+        return getStatusCommon(new CommonJobParams(job.getJobId().orElse(null),
+                job.getJobName().orElse(null)));
+    }
 
-        LOG.debug(url);
+    /**
+     * Get the status value only for a given job name and id.
+     *
+     * @param jobName job name for the job for which you want to get status
+     * @param jobId   job ID for the job for which you want to get status
+     * @return status value
+     * @throws Exception error getting job status
+     * @author Frank Giordano
+     */
+    public String getStatusValue(String jobName, String jobId) throws Exception {
+        ValidateUtils.checkNullParameter(jobName == null, "jobName is null");
+        ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
 
-        if (request == null || !(request instanceof TextGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_TEXT);
-        }
-        request.setRequest(url);
-        Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return "";
-        }
-        UtilRest.checkHttpErrors(response);
-        return (String) response.getResponsePhrase().orElse("");
+        Job job = getStatusCommon(new CommonJobParams(jobId, jobName));
+        return job.getStatus().orElseThrow(() -> new Exception("job status is missing"));
+    }
+
+    /**
+     * Get the status value for a given job object.
+     *
+     * @param job job document
+     * @return status value
+     * @throws Exception error getting job status
+     * @author Frank Giordano
+     */
+    public String getStatusValueForJob(Job job) throws Exception {
+        ValidateUtils.checkNullParameter(job == null, "job is null");
+
+        Job result = getStatusCommon(
+                new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
+        return result.getStatus().orElseThrow(() -> new Exception("job status is missing"));
     }
 
     /**

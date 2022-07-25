@@ -100,10 +100,10 @@ public class IssueCommand extends ZosConnection {
 package examples;
 
 /**
-* Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
-* duplicating connection details in each example.
-*
-*/
+ * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
+ * duplicating connection details in each example.
+ *
+ */
 public class ZosConnection {
 
     public static final String hostName = "XXX";

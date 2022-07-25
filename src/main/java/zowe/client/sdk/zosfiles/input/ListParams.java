@@ -10,7 +10,7 @@
  */
 package zowe.client.sdk.zosfiles.input;
 
-import zowe.client.sdk.utility.UtilDataset;
+import zowe.client.sdk.utility.DataSetUtils;
 
 import java.util.Optional;
 
@@ -30,7 +30,7 @@ public class ListParams {
     /**
      * The indicator that we want to show more attributes
      */
-    private final Optional<UtilDataset.Attribute> attribute;
+    private final Optional<DataSetUtils.Attribute> attribute;
 
     /**
      * The indicator that we want to show less data sets or members
@@ -68,22 +68,12 @@ public class ListParams {
     }
 
     /**
-     * Retrieve volume value
-     *
-     * @return volume value
-     * @author Leonid Baranov
-     */
-    public Optional<String> getVolume() {
-        return volume;
-    }
-
-    /**
      * Retrieve attributes value
      *
      * @return attributes value
      * @author Leonid Baranov
      */
-    public Optional<UtilDataset.Attribute> getAttribute() {
+    public Optional<DataSetUtils.Attribute> getAttribute() {
         return attribute;
     }
 
@@ -98,13 +88,13 @@ public class ListParams {
     }
 
     /**
-     * Retrieve start value
+     * Retrieve pattern value
      *
-     * @return start value
+     * @return pattern value
      * @author Leonid Baranov
      */
-    public Optional<String> getStart() {
-        return start;
+    public Optional<String> getPattern() {
+        return pattern;
     }
 
     /**
@@ -118,16 +108,6 @@ public class ListParams {
     }
 
     /**
-     * Retrieve pattern value
-     *
-     * @return pattern value
-     * @author Leonid Baranov
-     */
-    public Optional<String> getPattern() {
-        return pattern;
-    }
-
-    /**
      * Retrieve responseTimeout value
      *
      * @return responseTimeout value
@@ -135,6 +115,26 @@ public class ListParams {
      */
     public Optional<String> getResponseTimeout() {
         return responseTimeout;
+    }
+
+    /**
+     * Retrieve start value
+     *
+     * @return start value
+     * @author Leonid Baranov
+     */
+    public Optional<String> getStart() {
+        return start;
+    }
+
+    /**
+     * Retrieve volume value
+     *
+     * @return volume value
+     * @author Leonid Baranov
+     */
+    public Optional<String> getVolume() {
+        return volume;
     }
 
     @Override
@@ -153,35 +153,24 @@ public class ListParams {
     public static class Builder {
 
         private String volume;
-        private UtilDataset.Attribute attribute;
+        private DataSetUtils.Attribute attribute;
         private String maxLength;
         private String start;
         private String recall;
         private String pattern;
         private String responseTimeout;
 
-        public ListParams.Builder volume(String volume) {
-            this.volume = volume;
-            return this;
-        }
-
-        public ListParams.Builder attribute(UtilDataset.Attribute attribute) {
+        public ListParams.Builder attribute(DataSetUtils.Attribute attribute) {
             this.attribute = attribute;
             return this;
         }
 
+        public ListParams build() {
+            return new ListParams(this);
+        }
+
         public ListParams.Builder maxLength(String maxLength) {
             this.maxLength = maxLength;
-            return this;
-        }
-
-        public ListParams.Builder start(String start) {
-            this.start = start;
-            return this;
-        }
-
-        public ListParams.Builder recall(String recall) {
-            this.recall = recall;
             return this;
         }
 
@@ -190,13 +179,24 @@ public class ListParams {
             return this;
         }
 
+        public ListParams.Builder recall(String recall) {
+            this.recall = recall;
+            return this;
+        }
+
         public ListParams.Builder responseTimeout(String responseTimeout) {
             this.responseTimeout = responseTimeout;
             return this;
         }
 
-        public ListParams build() {
-            return new ListParams(this);
+        public ListParams.Builder start(String start) {
+            this.start = start;
+            return this;
+        }
+
+        public ListParams.Builder volume(String volume) {
+            this.volume = volume;
+            return this;
         }
     }
 

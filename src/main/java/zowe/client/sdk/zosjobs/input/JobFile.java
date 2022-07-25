@@ -107,6 +107,56 @@ public class JobFile {
     }
 
     /**
+     * Retrieve byteCount specified
+     *
+     * @return byteCount value
+     * @author Frank Giordano
+     */
+    public Optional<Long> getByteCount() {
+        return byteCount;
+    }
+
+    /**
+     * Retrieve classs specified
+     *
+     * @return classs value
+     * @author Frank Giordano
+     */
+    public Optional<String> getClasss() {
+        return classs;
+    }
+
+    /**
+     * Retrieve ddName specified
+     *
+     * @return ddName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getDdName() {
+        return ddName;
+    }
+
+    /**
+     * Retrieve id specified
+     *
+     * @return id value
+     * @author Frank Giordano
+     */
+    public Optional<Long> getId() {
+        return id;
+    }
+
+    /**
+     * Retrieve jobCorrelator specified
+     *
+     * @return jobCorrelator value
+     * @author Frank Giordano
+     */
+    public Optional<String> getJobCorrelator() {
+        return jobCorrelator;
+    }
+
+    /**
      * Retrieve jobId specified
      *
      * @return jobId value
@@ -127,6 +177,26 @@ public class JobFile {
     }
 
     /**
+     * Retrieve lrecl specified
+     *
+     * @return lrecl value
+     * @author Frank Giordano
+     */
+    public Optional<Long> getLrecl() {
+        return lrecl;
+    }
+
+    /**
+     * Retrieve procStep specified
+     *
+     * @return procStep value
+     * @author Frank Giordano
+     */
+    public Optional<String> getProcStep() {
+        return procStep;
+    }
+
+    /**
      * Retrieve recfm specified
      *
      * @return recfm value
@@ -134,16 +204,6 @@ public class JobFile {
      */
     public Optional<String> getRecfm() {
         return recfm;
-    }
-
-    /**
-     * Retrieve byteCount specified
-     *
-     * @return byteCount value
-     * @author Frank Giordano
-     */
-    public Optional<Long> getByteCount() {
-        return byteCount;
     }
 
     /**
@@ -157,46 +217,6 @@ public class JobFile {
     }
 
     /**
-     * Retrieve jobCorrelator specified
-     *
-     * @return jobCorrelator value
-     * @author Frank Giordano
-     */
-    public Optional<String> getJobCorrelator() {
-        return jobCorrelator;
-    }
-
-    /**
-     * Retrieve classs specified
-     *
-     * @return classs value
-     * @author Frank Giordano
-     */
-    public Optional<String> getClasss() {
-        return classs;
-    }
-
-    /**
-     * Retrieve id specified
-     *
-     * @return id value
-     * @author Frank Giordano
-     */
-    public Optional<Long> getId() {
-        return id;
-    }
-
-    /**
-     * Retrieve ddName specified
-     *
-     * @return ddName value
-     * @author Frank Giordano
-     */
-    public Optional<String> getDdName() {
-        return ddName;
-    }
-
-    /**
      * Retrieve recordsUrl specified
      *
      * @return recordsUrl value
@@ -204,26 +224,6 @@ public class JobFile {
      */
     public Optional<String> getRecordsUrl() {
         return recordsUrl;
-    }
-
-    /**
-     * Retrieve lrecl specified
-     *
-     * @return lrecl value
-     * @author Frank Giordano
-     */
-    public Optional<Long> getLrecl() {
-        return lrecl;
-    }
-
-    /**
-     * Retrieve subSystem specified
-     *
-     * @return subSystem value
-     * @author Frank Giordano
-     */
-    public Optional<String> getSubSystem() {
-        return subSystem;
     }
 
     /**
@@ -237,13 +237,13 @@ public class JobFile {
     }
 
     /**
-     * Retrieve procStep specified
+     * Retrieve subSystem specified
      *
-     * @return procStep value
+     * @return subSystem value
      * @author Frank Giordano
      */
-    public Optional<String> getProcStep() {
-        return procStep;
+    public Optional<String> getSubSystem() {
+        return subSystem;
     }
 
     @Override
@@ -283,6 +283,35 @@ public class JobFile {
         private String stepName;
         private String procStep;
 
+        public JobFile build() {
+            return new JobFile(this);
+        }
+
+        public Builder byteCount(Long byteCount) {
+            this.byteCount = byteCount;
+            return this;
+        }
+
+        public Builder classs(String classs) {
+            this.classs = classs;
+            return this;
+        }
+
+        public Builder ddName(String ddName) {
+            this.ddName = ddName;
+            return this;
+        }
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder jobCorrelator(String jobCorrelator) {
+            this.jobCorrelator = jobCorrelator;
+            return this;
+        }
+
         public Builder jobId(String jobId) {
             this.jobId = jobId;
             return this;
@@ -293,58 +322,8 @@ public class JobFile {
             return this;
         }
 
-        public Builder recfm(String recfm) {
-            this.recfm = recfm;
-            return this;
-        }
-
-        public Builder byteCount(Long byteCount) {
-            this.byteCount = byteCount;
-            return this;
-        }
-
-        public Builder recordCount(Long recordCount) {
-            this.recordCount = recordCount;
-            return this;
-        }
-
-        public Builder jobCorrelator(String jobCorrelator) {
-            this.jobCorrelator = jobCorrelator;
-            return this;
-        }
-
-        public Builder classs(String classs) {
-            this.classs = classs;
-            return this;
-        }
-
-        public Builder id(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder ddName(String ddName) {
-            this.ddName = ddName;
-            return this;
-        }
-
-        public Builder recordsUrl(String recordsUrl) {
-            this.recordsUrl = recordsUrl;
-            return this;
-        }
-
         public Builder lrecl(Long lrecl) {
             this.lrecl = lrecl;
-            return this;
-        }
-
-        public Builder subSystem(String subSystem) {
-            this.subSystem = subSystem;
-            return this;
-        }
-
-        public Builder stepName(String stepName) {
-            this.stepName = stepName;
             return this;
         }
 
@@ -353,8 +332,29 @@ public class JobFile {
             return this;
         }
 
-        public JobFile build() {
-            return new JobFile(this);
+        public Builder recfm(String recfm) {
+            this.recfm = recfm;
+            return this;
+        }
+
+        public Builder recordCount(Long recordCount) {
+            this.recordCount = recordCount;
+            return this;
+        }
+
+        public Builder recordsUrl(String recordsUrl) {
+            this.recordsUrl = recordsUrl;
+            return this;
+        }
+
+        public Builder stepName(String stepName) {
+            this.stepName = stepName;
+            return this;
+        }
+
+        public Builder subSystem(String subSystem) {
+            this.subSystem = subSystem;
+            return this;
         }
 
     }

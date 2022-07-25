@@ -56,6 +56,26 @@ public class GetJobParams {
     }
 
     /**
+     * Retrieve jobId specified
+     *
+     * @return jobId value
+     * @author Frank Giordano
+     */
+    public Optional<String> getJobId() {
+        return jobId;
+    }
+
+    /**
+     * Retrieve maxJobs specified
+     *
+     * @return maxJobs value
+     * @author Frank Giordano
+     */
+    public OptionalInt getMaxJobs() {
+        return maxJobs;
+    }
+
+    /**
      * Retrieve owner specified
      *
      * @return owner value
@@ -73,26 +93,6 @@ public class GetJobParams {
      */
     public Optional<String> getPrefix() {
         return prefix;
-    }
-
-    /**
-     * Retrieve maxJobs specified
-     *
-     * @return maxJobs value
-     * @author Frank Giordano
-     */
-    public OptionalInt getMaxJobs() {
-        return maxJobs;
-    }
-
-    /**
-     * Retrieve jobId specified
-     *
-     * @return jobId value
-     * @author Frank Giordano
-     */
-    public Optional<String> getJobId() {
-        return jobId;
     }
 
     @Override
@@ -116,8 +116,12 @@ public class GetJobParams {
             this.owner = owner;
         }
 
-        public Builder prefix(String prefix) {
-            this.prefix = prefix;
+        public GetJobParams build() {
+            return new GetJobParams(this);
+        }
+
+        public Builder jobId(String jobId) {
+            this.jobId = jobId;
             return this;
         }
 
@@ -126,13 +130,9 @@ public class GetJobParams {
             return this;
         }
 
-        public Builder jobId(String jobId) {
-            this.jobId = jobId;
+        public Builder prefix(String prefix) {
+            this.prefix = prefix;
             return this;
-        }
-
-        public GetJobParams build() {
-            return new GetJobParams(this);
         }
 
     }

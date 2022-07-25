@@ -13,10 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilIO;
-import zowe.client.sdk.utility.UtilJobs;
-import zowe.client.sdk.utility.UtilRest;
+import zowe.client.sdk.utility.JobUtils;
+import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.input.ModifyJobParams;
 import zowe.client.sdk.zosjobs.response.Job;
 
@@ -32,7 +31,6 @@ import java.util.HashMap;
 public class DeleteJobs {
 
     private static final Logger LOG = LoggerFactory.getLogger(DeleteJobs.class);
-
     private final ZOSConnection connection;
     private ZoweRequest request;
 
@@ -43,7 +41,7 @@ public class DeleteJobs {
      * @author Nikunj Goyal
      */
     public DeleteJobs(ZOSConnection connection) {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -57,7 +55,7 @@ public class DeleteJobs {
      * @author Frank Giordano
      */
     public DeleteJobs(ZOSConnection connection, ZoweRequest request) throws Exception {
-        Util.checkConnection(connection);
+        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonDeleteRequest)) {
             throw new Exception("DELETE_JSON request type required");
@@ -81,21 +79,6 @@ public class DeleteJobs {
     }
 
     /**
-     * Cancel and purge job from spool.
-     *
-     * @param job     job document wanting to delete
-     * @param version version number
-     * @return http response object
-     * @throws Exception error deleting
-     * @author Frank Giordano
-     */
-    public Response deleteJobForJob(Job job, String version) throws Exception {
-        return this.deleteJobCommon(
-                new ModifyJobParams.Builder(job.getJobName().orElse(null), job.getJobId().orElse(null))
-                        .version(version).build());
-    }
-
-    /**
      * Delete a job that resides in a z/OS data set.
      *
      * @param params delete job parameters, see DeleteJobParams object
@@ -105,10 +88,10 @@ public class DeleteJobs {
      * @author Frank Giordano
      */
     public Response deleteJobCommon(ModifyJobParams params) throws Exception {
-        UtilJobs.checkModifyJobParameters(params);
+        JobUtils.checkModifyJobParameters(params);
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
-                UtilIO.FILE_DELIM + params.getJobName().get() + UtilIO.FILE_DELIM + params.getJobId().get();
+                JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
         LOG.debug(url);
 
         var headers = new HashMap<String, String>();
@@ -140,15 +123,30 @@ public class DeleteJobs {
 
         Response response = request.executeRequest();
         try {
-            UtilRest.checkHttpErrors(response);
+            RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            UtilJobs.throwHttpException(params, e);
+            JobUtils.throwHttpException(params, e);
         }
 
         // if synchronously response should contain job document that was cancelled and http return code
         // if asynchronously response should only contain http return code
         // let the caller handle the response json parsing
         return response;
+    }
+
+    /**
+     * Cancel and purge job from spool.
+     *
+     * @param job     job document wanting to delete
+     * @param version version number
+     * @return http response object
+     * @throws Exception error deleting
+     * @author Frank Giordano
+     */
+    public Response deleteJobForJob(Job job, String version) throws Exception {
+        return this.deleteJobCommon(
+                new ModifyJobParams.Builder(job.getJobName().orElse(null), job.getJobId().orElse(null))
+                        .version(version).build());
     }
 
 }

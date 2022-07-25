@@ -46,16 +46,6 @@ public class ModifyJobParams {
     }
 
     /**
-     * Retrieve jobName value
-     *
-     * @return jobName value
-     * @author Frank Giordano
-     */
-    public Optional<String> getJobName() {
-        return jobName;
-    }
-
-    /**
      * Retrieve jobId value
      *
      * @return jobId value
@@ -63,6 +53,16 @@ public class ModifyJobParams {
      */
     public Optional<String> getJobId() {
         return jobId;
+    }
+
+    /**
+     * Retrieve jobName value
+     *
+     * @return jobName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getJobName() {
+        return jobName;
     }
 
     /**
@@ -95,13 +95,13 @@ public class ModifyJobParams {
             this.jobId = jobId;
         }
 
+        public ModifyJobParams build() {
+            return new ModifyJobParams(this);
+        }
+
         public ModifyJobParams.Builder version(String version) {
             this.version = version;
             return this;
-        }
-
-        public ModifyJobParams build() {
-            return new ModifyJobParams(this);
         }
 
     }

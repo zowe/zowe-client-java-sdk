@@ -8,7 +8,7 @@
  * Copyright Contributors to the Zowe Project.
  *
  */
-package zowe.client.sdk.utility;
+package zowe.client.sdk.zosjobs.timer;
 
 /**
  * Timer class to help support wait time operations.

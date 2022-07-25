@@ -20,10 +20,9 @@ import java.util.Optional;
 public class StartTsoParams {
 
     /**
-     * Name of the logonProcedure for address space
+     * User's z/OS permission account number
      */
-    public Optional<String> logonProcedure = Optional.empty();
-
+    public Optional<String> account = Optional.empty();
     /**
      * Character set for address space
      */
@@ -33,26 +32,22 @@ public class StartTsoParams {
      * Code page for tso address space
      */
     public Optional<String> codePage = Optional.empty();
-
-    /**
-     * Number of rows
-     */
-    public Optional<String> rows = Optional.empty();
-
     /**
      * Number of columns
      */
     public Optional<String> columns = Optional.empty();
-
     /**
-     * User's z/OS permission account number
+     * Name of the logonProcedure for address space
      */
-    public Optional<String> account = Optional.empty();
-
+    public Optional<String> logonProcedure = Optional.empty();
     /**
      * Region size for tso address space
      */
     public Optional<String> regionSize = Optional.empty();
+    /**
+     * Number of rows
+     */
+    public Optional<String> rows = Optional.empty();
 
     public StartTsoParams() {
 
@@ -82,23 +77,23 @@ public class StartTsoParams {
     }
 
     /**
-     * Retrieve logonProcedure specified
+     * Retrieve account specified
      *
-     * @return logonProcedure name value of the logonProcedure for address space
+     * @return account user account value
      * @author Frank Giordano
      */
-    public Optional<String> getLogonProcedure() {
-        return logonProcedure;
+    public Optional<String> getAccount() {
+        return account;
     }
 
     /**
-     * Assign logonProcedure value
+     * Assign account value
      *
-     * @param logonProcedure name of the logonProcedure for address space
+     * @param account user's z/OS permission account number
      * @author Frank Giordano
      */
-    public void setLogonProcedure(String logonProcedure) {
-        this.logonProcedure = Optional.of(logonProcedure);
+    public void setAccount(String account) {
+        this.account = Optional.ofNullable(account);
     }
 
     /**
@@ -142,26 +137,6 @@ public class StartTsoParams {
     }
 
     /**
-     * Retrieve rows specified
-     *
-     * @return rows number value of rows
-     * @author Frank Giordano
-     */
-    public Optional<String> getRows() {
-        return rows;
-    }
-
-    /**
-     * Assign rows value
-     *
-     * @param rows number of rows
-     * @author Frank Giordano
-     */
-    public void setRows(String rows) {
-        this.rows = Optional.ofNullable(rows);
-    }
-
-    /**
      * Retrieve columns specified
      *
      * @return columns number value of columns
@@ -182,23 +157,23 @@ public class StartTsoParams {
     }
 
     /**
-     * Retrieve account specified
+     * Retrieve logonProcedure specified
      *
-     * @return account user account value
+     * @return logonProcedure name value of the logonProcedure for address space
      * @author Frank Giordano
      */
-    public Optional<String> getAccount() {
-        return account;
+    public Optional<String> getLogonProcedure() {
+        return logonProcedure;
     }
 
     /**
-     * Assign account value
+     * Assign logonProcedure value
      *
-     * @param account user's z/OS permission account number
+     * @param logonProcedure name of the logonProcedure for address space
      * @author Frank Giordano
      */
-    public void setAccount(String account) {
-        this.account = Optional.ofNullable(account);
+    public void setLogonProcedure(String logonProcedure) {
+        this.logonProcedure = Optional.of(logonProcedure);
     }
 
     /**
@@ -219,6 +194,26 @@ public class StartTsoParams {
      */
     public void setRegionSize(String regionSize) {
         this.regionSize = Optional.of(regionSize);
+    }
+
+    /**
+     * Retrieve rows specified
+     *
+     * @return rows number value of rows
+     * @author Frank Giordano
+     */
+    public Optional<String> getRows() {
+        return rows;
+    }
+
+    /**
+     * Assign rows value
+     *
+     * @param rows number of rows
+     * @author Frank Giordano
+     */
+    public void setRows(String rows) {
+        this.rows = Optional.ofNullable(rows);
     }
 
     @Override

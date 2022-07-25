@@ -59,6 +59,106 @@ public class ConsoleResponse {
     private Optional<String> cmdResponseUrl = Optional.empty();
 
     /**
+     * Retrieve cmdResponseUrl specified
+     *
+     * @return cmdResponseUrl value
+     * @author Frank Giordano
+     */
+    public Optional<String> getCmdResponseUrl() {
+        return cmdResponseUrl;
+    }
+
+    /**
+     * Assign cmdResponseUrl value
+     *
+     * @param cmdResponseUrl value
+     * @author Frank Giordano
+     */
+    public void setCmdResponseUrl(String cmdResponseUrl) {
+        this.cmdResponseUrl = Optional.ofNullable(cmdResponseUrl);
+    }
+
+    /**
+     * Retrieve commandResponse specified
+     *
+     * @return commandResponse value
+     * @author Frank Giordano
+     */
+    public Optional<String> getCommandResponse() {
+        return commandResponse;
+    }
+
+    /**
+     * Assign commandResponse value
+     *
+     * @param commandResponse value
+     * @author Frank Giordano
+     */
+    public void setCommandResponse(String commandResponse) {
+        this.commandResponse = Optional.ofNullable(commandResponse);
+    }
+
+    /**
+     * Retrieve failureResponse specified
+     *
+     * @return failureResponse value
+     * @author Frank Giordano
+     */
+    public Optional<String> getFailureResponse() {
+        return failureResponse;
+    }
+
+    /**
+     * Assign failureResponse value
+     *
+     * @param failureResponse value
+     * @author Frank Giordano
+     */
+    public void setFailureResponse(String failureResponse) {
+        this.failureResponse = Optional.ofNullable(failureResponse);
+    }
+
+    /**
+     * Retrieve keywordDetected specified
+     *
+     * @return keywordDetected true or false is keywordDetected seen
+     * @author Frank Giordano
+     */
+    public Optional<Boolean> getKeywordDetected() {
+        return keywordDetected;
+    }
+
+    /**
+     * Assign keywordDetected value
+     *
+     * @param keywordDetected value
+     * @author Frank Giordano
+     */
+    public void setKeywordDetected(Boolean keywordDetected) {
+        this.keywordDetected = Optional.ofNullable(keywordDetected);
+    }
+
+    /**
+     * Retrieve lastResponseKey specified
+     *
+     * @return lastResponseKey value
+     * @author Frank Giordano
+     */
+    public Optional<String> getLastResponseKey() {
+        return lastResponseKey;
+    }
+
+    /**
+     * Assign lastResponseKey value
+     *
+     * @param lastResponseKey value
+     * @author Frank Giordano
+     */
+    public void setLastResponseKey(String lastResponseKey) {
+        this.lastResponseKey = Optional.ofNullable(lastResponseKey);
+    }
+
+    /**
      * Retrieve success specified
      *
      * @return boolean value
@@ -96,106 +196,6 @@ public class ConsoleResponse {
      */
     public void setZosmfResponse(ZosmfIssueResponse zosmfResponse) {
         this.zosmfResponse = Optional.ofNullable(zosmfResponse);
-    }
-
-    /**
-     * Retrieve failureResponse specified
-     *
-     * @return failureResponse value
-     * @author Frank Giordano
-     */
-    public Optional<String> getFailureResponse() {
-        return failureResponse;
-    }
-
-    /**
-     * Assign failureResponse value
-     *
-     * @param failureResponse value
-     * @author Frank Giordano
-     */
-    public void setFailureResponse(String failureResponse) {
-        this.failureResponse = Optional.ofNullable(failureResponse);
-    }
-
-    /**
-     * Retrieve commandResponse specified
-     *
-     * @return commandResponse value
-     * @author Frank Giordano
-     */
-    public Optional<String> getCommandResponse() {
-        return commandResponse;
-    }
-
-    /**
-     * Assign commandResponse value
-     *
-     * @param commandResponse value
-     * @author Frank Giordano
-     */
-    public void setCommandResponse(String commandResponse) {
-        this.commandResponse = Optional.ofNullable(commandResponse);
-    }
-
-    /**
-     * Retrieve lastResponseKey specified
-     *
-     * @return lastResponseKey value
-     * @author Frank Giordano
-     */
-    public Optional<String> getLastResponseKey() {
-        return lastResponseKey;
-    }
-
-    /**
-     * Assign lastResponseKey value
-     *
-     * @param lastResponseKey value
-     * @author Frank Giordano
-     */
-    public void setLastResponseKey(String lastResponseKey) {
-        this.lastResponseKey = Optional.ofNullable(lastResponseKey);
-    }
-
-    /**
-     * Retrieve keywordDetected specified
-     *
-     * @return keywordDetected true or false is keywordDetected seen
-     * @author Frank Giordano
-     */
-    public Optional<Boolean> getKeywordDetected() {
-        return keywordDetected;
-    }
-
-    /**
-     * Assign keywordDetected value
-     *
-     * @param keywordDetected value
-     * @author Frank Giordano
-     */
-    public void setKeywordDetected(Boolean keywordDetected) {
-        this.keywordDetected = Optional.ofNullable(keywordDetected);
-    }
-
-    /**
-     * Retrieve cmdResponseUrl specified
-     *
-     * @return cmdResponseUrl value
-     * @author Frank Giordano
-     */
-    public Optional<String> getCmdResponseUrl() {
-        return cmdResponseUrl;
-    }
-
-    /**
-     * Assign cmdResponseUrl value
-     *
-     * @param cmdResponseUrl value
-     * @author Frank Giordano
-     */
-    public void setCmdResponseUrl(String cmdResponseUrl) {
-        this.cmdResponseUrl = Optional.ofNullable(cmdResponseUrl);
     }
 
     @Override

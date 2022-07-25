@@ -47,16 +47,6 @@ public class ZosmfPluginInfo {
     }
 
     /**
-     * Retrieve pluginVersion specified
-     *
-     * @return pluginVersion value
-     * @author Frank Giordano
-     */
-    public Optional<String> getPluginVersion() {
-        return pluginVersion;
-    }
-
-    /**
      * Retrieve pluginDefaultName specified
      *
      * @return pluginDefaultName value
@@ -76,6 +66,16 @@ public class ZosmfPluginInfo {
         return pluginStatus;
     }
 
+    /**
+     * Retrieve pluginVersion specified
+     *
+     * @return pluginVersion value
+     * @author Frank Giordano
+     */
+    public Optional<String> getPluginVersion() {
+        return pluginVersion;
+    }
+
     @Override
     public String toString() {
         return "ZosmfPluginInfo{" +
@@ -91,9 +91,8 @@ public class ZosmfPluginInfo {
         private String pluginDefaultName;
         private String pluginStatus;
 
-        public ZosmfPluginInfo.Builder pluginVersion(String pluginVersion) {
-            this.pluginVersion = pluginVersion;
-            return this;
+        public ZosmfPluginInfo build() {
+            return new ZosmfPluginInfo(this);
         }
 
         public ZosmfPluginInfo.Builder pluginDefaultName(String pluginDefaultName) {
@@ -106,8 +105,9 @@ public class ZosmfPluginInfo {
             return this;
         }
 
-        public ZosmfPluginInfo build() {
-            return new ZosmfPluginInfo(this);
+        public ZosmfPluginInfo.Builder pluginVersion(String pluginVersion) {
+            this.pluginVersion = pluginVersion;
+            return this;
         }
 
     }

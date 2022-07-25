@@ -104,23 +104,13 @@ public class DefinedSystem {
     }
 
     /**
-     * Retrieve systemNickName specified
+     * Retrieve cpcName specified
      *
-     * @return systemNickName value
+     * @return cpcName value
      * @author Frank Giordano
      */
-    public Optional<String> getSystemNickName() {
-        return systemNickName;
-    }
-
-    /**
-     * Retrieve groupNames specified
-     *
-     * @return groupNames value
-     * @author Frank Giordano
-     */
-    public Optional<String> getGroupNames() {
-        return groupNames;
+    public Optional<String> getCpcName() {
+        return cpcName;
     }
 
     /**
@@ -134,23 +124,43 @@ public class DefinedSystem {
     }
 
     /**
-     * Retrieve zosVR specified
+     * Retrieve ftpDestinationName specified
      *
-     * @return zosVR value
+     * @return ftpDestinationName value
      * @author Frank Giordano
      */
-    public Optional<String> getZosVR() {
-        return zosVR;
+    public Optional<String> getFtpDestinationName() {
+        return ftpDestinationName;
     }
 
     /**
-     * Retrieve systemName specified
+     * Retrieve groupNames specified
      *
-     * @return systemName value
+     * @return groupNames value
      * @author Frank Giordano
      */
-    public Optional<String> getSystemName() {
-        return systemName;
+    public Optional<String> getGroupNames() {
+        return groupNames;
+    }
+
+    /**
+     * Retrieve httpProxyName specified
+     *
+     * @return httpProxyName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getHttpProxyName() {
+        return httpProxyName;
+    }
+
+    /**
+     * Retrieve jesMemberName specified
+     *
+     * @return jesMemberName value
+     * @author Frank Giordano
+     */
+    public Optional<String> getJesMemberName() {
+        return jesMemberName;
     }
 
     /**
@@ -174,33 +184,23 @@ public class DefinedSystem {
     }
 
     /**
-     * Retrieve jesMemberName specified
+     * Retrieve systemName specified
      *
-     * @return jesMemberName value
+     * @return systemName value
      * @author Frank Giordano
      */
-    public Optional<String> getJesMemberName() {
-        return jesMemberName;
+    public Optional<String> getSystemName() {
+        return systemName;
     }
 
     /**
-     * Retrieve httpProxyName specified
+     * Retrieve systemNickName specified
      *
-     * @return httpProxyName value
+     * @return systemNickName value
      * @author Frank Giordano
      */
-    public Optional<String> getHttpProxyName() {
-        return httpProxyName;
-    }
-
-    /**
-     * Retrieve ftpDestinationName specified
-     *
-     * @return ftpDestinationName value
-     * @author Frank Giordano
-     */
-    public Optional<String> getFtpDestinationName() {
-        return ftpDestinationName;
+    public Optional<String> getSystemNickName() {
+        return systemNickName;
     }
 
     /**
@@ -214,13 +214,13 @@ public class DefinedSystem {
     }
 
     /**
-     * Retrieve cpcName specified
+     * Retrieve zosVR specified
      *
-     * @return cpcName value
+     * @return zosVR value
      * @author Frank Giordano
      */
-    public Optional<String> getCpcName() {
-        return cpcName;
+    public Optional<String> getZosVR() {
+        return zosVR;
     }
 
     @Override
@@ -256,13 +256,12 @@ public class DefinedSystem {
         private String url;
         private String cpcName;
 
-        public DefinedSystem.Builder systemNickName(String systemNickName) {
-            this.systemNickName = systemNickName;
-            return this;
+        public DefinedSystem build() {
+            return new DefinedSystem(this);
         }
 
-        public DefinedSystem.Builder groupNames(String groupNames) {
-            this.groupNames = groupNames;
+        public DefinedSystem.Builder cpcName(String cpcName) {
+            this.cpcName = cpcName;
             return this;
         }
 
@@ -271,13 +270,23 @@ public class DefinedSystem {
             return this;
         }
 
-        public DefinedSystem.Builder zosVR(String zosVR) {
-            this.zosVR = zosVR;
+        public DefinedSystem.Builder ftpDestinationName(String ftpDestinationName) {
+            this.ftpDestinationName = ftpDestinationName;
             return this;
         }
 
-        public DefinedSystem.Builder systemName(String systemName) {
-            this.systemName = systemName;
+        public DefinedSystem.Builder groupNames(String groupNames) {
+            this.groupNames = groupNames;
+            return this;
+        }
+
+        public DefinedSystem.Builder httpProxyName(String httpProxyName) {
+            this.httpProxyName = httpProxyName;
+            return this;
+        }
+
+        public DefinedSystem.Builder jesMemberName(String jesMemberName) {
+            this.jesMemberName = jesMemberName;
             return this;
         }
 
@@ -291,18 +300,13 @@ public class DefinedSystem {
             return this;
         }
 
-        public DefinedSystem.Builder jesMemberName(String jesMemberName) {
-            this.jesMemberName = jesMemberName;
+        public DefinedSystem.Builder systemName(String systemName) {
+            this.systemName = systemName;
             return this;
         }
 
-        public DefinedSystem.Builder httpProxyName(String httpProxyName) {
-            this.httpProxyName = httpProxyName;
-            return this;
-        }
-
-        public DefinedSystem.Builder ftpDestinationName(String ftpDestinationName) {
-            this.ftpDestinationName = ftpDestinationName;
+        public DefinedSystem.Builder systemNickName(String systemNickName) {
+            this.systemNickName = systemNickName;
             return this;
         }
 
@@ -311,13 +315,9 @@ public class DefinedSystem {
             return this;
         }
 
-        public DefinedSystem.Builder cpcName(String cpcName) {
-            this.cpcName = cpcName;
+        public DefinedSystem.Builder zosVR(String zosVR) {
+            this.zosVR = zosVR;
             return this;
-        }
-
-        public DefinedSystem build() {
-            return new DefinedSystem(this);
         }
 
     }

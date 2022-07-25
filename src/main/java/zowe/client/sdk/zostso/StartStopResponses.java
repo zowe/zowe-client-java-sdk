@@ -28,31 +28,26 @@ public class StartStopResponses {
      * Response from z/OSMF to start rest call
      */
     private final ZosmfTsoResponse zosmfTsoResponse;
-
-    /**
-     * Collected responses from z/OSMF
-     */
-    private List<ZosmfTsoResponse> collectedResponses;
-
     /**
      * If an error occurs, returns the error which contains cause error.
      */
     private final String failureResponse;
-
-    /**
-     * Servlet key from IZosmfTsoResponse
-     */
-    private String servletKey;
-
     /**
      * Appended collected messages including READY prompt at the end.
      */
     private final String messages;
-
     /**
      * True if the command was issued and the responses were collected.
      */
     private final boolean success;
+    /**
+     * Collected responses from z/OSMF
+     */
+    private List<ZosmfTsoResponse> collectedResponses;
+    /**
+     * Servlet key from IZosmfTsoResponse
+     */
+    private String servletKey;
 
     /**
      * StartStopResponses constructor
@@ -89,16 +84,6 @@ public class StartStopResponses {
     }
 
     /**
-     * Retrieve zosmfTsoResponse specified
-     *
-     * @return ZosmfTsoResponse value
-     * @author Frank Giordano
-     */
-    public Optional<ZosmfTsoResponse> getZosmfTsoResponse() {
-        return Optional.of(zosmfTsoResponse);
-    }
-
-    /**
      * Retrieve collectedResponses specified
      *
      * @return ZosmfTsoResponse value
@@ -129,6 +114,16 @@ public class StartStopResponses {
     }
 
     /**
+     * Retrieve messages specified
+     *
+     * @return messages value
+     * @author Frank Giordano
+     */
+    public Optional<String> getMessages() {
+        return Optional.of(messages);
+    }
+
+    /**
      * Retrieve servletKey specified
      *
      * @return servletKey value
@@ -149,13 +144,13 @@ public class StartStopResponses {
     }
 
     /**
-     * Retrieve messages specified
+     * Retrieve zosmfTsoResponse specified
      *
-     * @return messages value
+     * @return ZosmfTsoResponse value
      * @author Frank Giordano
      */
-    public Optional<String> getMessages() {
-        return Optional.of(messages);
+    public Optional<ZosmfTsoResponse> getZosmfTsoResponse() {
+        return Optional.of(zosmfTsoResponse);
     }
 
     /**

@@ -55,26 +55,6 @@ public class SubmitJobParams {
     }
 
     /**
-     * Retrieve dataset specified
-     *
-     * @return jobDataSet value
-     * @author Frank Giordano
-     */
-    public Optional<String> getJobDataSet() {
-        return jobDataSet;
-    }
-
-    /**
-     * Assign dataset value
-     *
-     * @param jobDataSet z/OS data set which should contain syntactically correct JCL
-     * @author Frank Giordano
-     */
-    public void setJobDataSet(String jobDataSet) {
-        this.jobDataSet = Optional.ofNullable(jobDataSet);
-    }
-
-    /**
      * Retrieve jclSymbols specified
      *
      * @return jclSymbols value
@@ -92,6 +72,26 @@ public class SubmitJobParams {
      */
     public void setJclSymbols(String jclSymbols) {
         this.jclSymbols = Optional.ofNullable(jclSymbols);
+    }
+
+    /**
+     * Retrieve dataset specified
+     *
+     * @return jobDataSet value
+     * @author Frank Giordano
+     */
+    public Optional<String> getJobDataSet() {
+        return jobDataSet;
+    }
+
+    /**
+     * Assign dataset value
+     *
+     * @param jobDataSet z/OS data set which should contain syntactically correct JCL
+     * @author Frank Giordano
+     */
+    public void setJobDataSet(String jobDataSet) {
+        this.jobDataSet = Optional.ofNullable(jobDataSet);
     }
 
     @Override

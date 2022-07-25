@@ -42,6 +42,26 @@ public class IssueParams extends ConsoleParams {
     private Optional<String> async = Optional.empty();
 
     /**
+     * Retrieve async value
+     *
+     * @return async value
+     * @author Frank Giordano
+     */
+    public Optional<String> getAsync() {
+        return async;
+    }
+
+    /**
+     * Assign async value
+     *
+     * @param async value
+     * @author Frank Giordano
+     */
+    public void setAsync(String async) {
+        this.async = Optional.ofNullable(async);
+    }
+
+    /**
      * Retrieve command value
      *
      * @return command value
@@ -59,26 +79,6 @@ public class IssueParams extends ConsoleParams {
      */
     public void setCommand(String command) {
         this.command = Optional.ofNullable(command);
-    }
-
-    /**
-     * Retrieve sysplexSystem value
-     *
-     * @return sysplexSystem value
-     * @author Frank Giordano
-     */
-    public Optional<String> getSysplexSystem() {
-        return sysplexSystem;
-    }
-
-    /**
-     * Assign sysplexSystem value
-     *
-     * @param sysplexSystem value
-     * @author Frank Giordano
-     */
-    public void setSysplexSystem(String sysplexSystem) {
-        this.sysplexSystem = Optional.ofNullable(sysplexSystem);
     }
 
     /**
@@ -102,23 +102,23 @@ public class IssueParams extends ConsoleParams {
     }
 
     /**
-     * Retrieve async value
+     * Retrieve sysplexSystem value
      *
-     * @return async value
+     * @return sysplexSystem value
      * @author Frank Giordano
      */
-    public Optional<String> getAsync() {
-        return async;
+    public Optional<String> getSysplexSystem() {
+        return sysplexSystem;
     }
 
     /**
-     * Assign async value
+     * Assign sysplexSystem value
      *
-     * @param async value
+     * @param sysplexSystem value
      * @author Frank Giordano
      */
-    public void setAsync(String async) {
-        this.async = Optional.ofNullable(async);
+    public void setSysplexSystem(String sysplexSystem) {
+        this.sysplexSystem = Optional.ofNullable(sysplexSystem);
     }
 
     @Override

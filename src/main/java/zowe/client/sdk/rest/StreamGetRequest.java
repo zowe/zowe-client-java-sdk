@@ -14,8 +14,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.utility.Util;
-import zowe.client.sdk.utility.UtilRest;
+import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.RestUtils;
 
 import java.util.Map;
 import java.util.Optional;
@@ -28,7 +28,6 @@ import java.util.Optional;
 public class StreamGetRequest extends ZoweRequest {
 
     private static final Logger LOG = LoggerFactory.getLogger(StreamGetRequest.class);
-
     private HttpGet request;
 
     /**
@@ -61,7 +60,7 @@ public class StreamGetRequest extends ZoweRequest {
      */
     @Override
     public void setStandardHeaders() {
-        request.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + Util.getAuthEncoding(connection));
+        request.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + EncodeUtils.getAuthEncoding(connection));
         request.setHeader("Content-Type", "application/json");
         request.setHeader(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
@@ -86,7 +85,7 @@ public class StreamGetRequest extends ZoweRequest {
      */
     @Override
     public void setRequest(String url) throws Exception {
-        if (UtilRest.isUrlNotValid(url)) {
+        if (RestUtils.isUrlNotValid(url)) {
             throw new Exception("url is invalid");
         }
         request = new HttpGet(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));

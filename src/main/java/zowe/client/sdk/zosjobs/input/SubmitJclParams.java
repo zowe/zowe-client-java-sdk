@@ -77,17 +77,25 @@ public class SubmitJclParams {
     }
 
     /**
-     * Retrieve jcl specified
+     * Retrieve internalReaderLrecl specified
      *
-     * @return jcl value
+     * @return internalReaderLrecl value
      * @author Frank Giordano
      */
-    public Optional<String> getJcl() {
-        return jcl;
+    public Optional<String> getInternalReaderLrecl() {
+        return internalReaderLrecl;
     }
 
-    public void setJcl(String jcl) {
-        this.jcl = Optional.ofNullable(jcl);
+    /**
+     * Assign internalReaderLrecl value
+     *
+     * @param internalReaderLrecl specify internal reader LRECL and corresponding http(s) headers will
+     *                            be appended to the request accordingly
+     *                            An integer value that specifies the internal reader logical record length (LRECL).
+     * @author Frank Giordano
+     */
+    public void setInternalReaderLrecl(String internalReaderLrecl) {
+        this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
     }
 
     /**
@@ -113,25 +121,17 @@ public class SubmitJclParams {
     }
 
     /**
-     * Retrieve internalReaderLrecl specified
+     * Retrieve jcl specified
      *
-     * @return internalReaderLrecl value
+     * @return jcl value
      * @author Frank Giordano
      */
-    public Optional<String> getInternalReaderLrecl() {
-        return internalReaderLrecl;
+    public Optional<String> getJcl() {
+        return jcl;
     }
 
-    /**
-     * Assign internalReaderLrecl value
-     *
-     * @param internalReaderLrecl specify internal reader LRECL and corresponding http(s) headers will
-     *                            be appended to the request accordingly
-     *                            An integer value that specifies the internal reader logical record length (LRECL).
-     * @author Frank Giordano
-     */
-    public void setInternalReaderLrecl(String internalReaderLrecl) {
-        this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
+    public void setJcl(String jcl) {
+        this.jcl = Optional.ofNullable(jcl);
     }
 
     /**

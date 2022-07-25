@@ -22,24 +22,21 @@ import java.util.Optional;
 public class StartStopResponse {
 
     /**
-     * True if the command was issued and the responses were collected.
-     */
-    public Optional<Boolean> success;
-
-    /**
      * Response from z/OSMF to start rest call
      */
     public final Optional<ZosmfTsoResponse> zosmfTsoResponse;
-
-    /**
-     * If an error occurs, returns error which contains cause error.
-     */
-    public Optional<String> failureResponse = Optional.empty();
-
     /**
      * Servlet key from ZosmfTsoResponse
      */
     public final Optional<String> servletKey;
+    /**
+     * If an error occurs, returns error which contains cause error.
+     */
+    public Optional<String> failureResponse = Optional.empty();
+    /**
+     * True if the command was issued and the responses were collected.
+     */
+    public Optional<Boolean> success;
 
     /**
      * StartStopResponse constructor
@@ -56,26 +53,6 @@ public class StartStopResponse {
     }
 
     /**
-     * Retrieve success specified
-     *
-     * @return boolean value
-     * @author Frank Giordano
-     */
-    public Optional<Boolean> getSuccess() {
-        return success;
-    }
-
-    /**
-     * Retrieve zosmfTsoResponse specified
-     *
-     * @return ZosmfTsoResponse value
-     * @author Frank Giordano
-     */
-    public Optional<ZosmfTsoResponse> getZosmfTsoResponse() {
-        return zosmfTsoResponse;
-    }
-
-    /**
      * Retrieve failureResponse specified
      *
      * @return failureResponse value
@@ -83,6 +60,16 @@ public class StartStopResponse {
      */
     public Optional<String> getFailureResponse() {
         return failureResponse;
+    }
+
+    /**
+     * Assign failureResponse value
+     *
+     * @param failureResponse failure response string
+     * @author Frank Giordano
+     */
+    public void setFailureResponse(String failureResponse) {
+        this.failureResponse = Optional.ofNullable(failureResponse);
     }
 
     /**
@@ -96,6 +83,16 @@ public class StartStopResponse {
     }
 
     /**
+     * Retrieve success specified
+     *
+     * @return boolean value
+     * @author Frank Giordano
+     */
+    public Optional<Boolean> getSuccess() {
+        return success;
+    }
+
+    /**
      * Assign success value
      *
      * @param success true or false is response seen
@@ -106,13 +103,13 @@ public class StartStopResponse {
     }
 
     /**
-     * Assign failureResponse value
+     * Retrieve zosmfTsoResponse specified
      *
-     * @param failureResponse failure response string
+     * @return ZosmfTsoResponse value
      * @author Frank Giordano
      */
-    public void setFailureResponse(String failureResponse) {
-        this.failureResponse = Optional.ofNullable(failureResponse);
+    public Optional<ZosmfTsoResponse> getZosmfTsoResponse() {
+        return zosmfTsoResponse;
     }
 
     @Override

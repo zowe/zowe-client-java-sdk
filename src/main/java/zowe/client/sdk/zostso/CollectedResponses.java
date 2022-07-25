@@ -47,16 +47,6 @@ public class CollectedResponses {
     }
 
     /**
-     * Retrieve tsos specified
-     *
-     * @return list of ZosmfTsoResponse objects
-     * @author Frank Giordano
-     */
-    public List<ZosmfTsoResponse> getTsos() {
-        return tsos;
-    }
-
-    /**
      * Retrieve messages specified
      *
      * @return messages
@@ -64,6 +54,16 @@ public class CollectedResponses {
      */
     public Optional<String> getMessages() {
         return messages;
+    }
+
+    /**
+     * Retrieve tsos specified
+     *
+     * @return list of ZosmfTsoResponse objects
+     * @author Frank Giordano
+     */
+    public List<ZosmfTsoResponse> getTsos() {
+        return tsos;
     }
 
     @Override
