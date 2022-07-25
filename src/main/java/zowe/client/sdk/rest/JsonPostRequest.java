@@ -86,8 +86,8 @@ public class JsonPostRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     @Override
-    public void setRequest(String url) {
-        // throw new Exception("request requires url and body values");
+    public void setRequest(String url) throws Exception {
+         throw new Exception("request requires url and body values");
     }
 
     /**
