@@ -1,5 +1,4 @@
 zowe.client.sdk.core
-zowe.client.sdk.parsejson
 zowe.client.sdk.rest
 zowe.client.sdk.utility
 zowe.client.sdk.zosconsole
@@ -11,6 +10,7 @@ zowe.client.sdk.zosfiles.response
 zowe.client.sdk.zosjobs
 zowe.client.sdk.zosjobs.input
 zowe.client.sdk.zosjobs.response
+zowe.client.sdk.zosjobs.timer
 zowe.client.sdk.zosjobs.types
 zowe.client.sdk.zosmfinfo
 zowe.client.sdk.zosmfinfo.response
