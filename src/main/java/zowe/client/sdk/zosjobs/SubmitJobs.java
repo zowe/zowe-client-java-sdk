@@ -26,6 +26,8 @@ import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class to handle submitting of z/OS batch jobs via z/OSMF
@@ -115,7 +117,10 @@ public class SubmitJobs {
             headers.put(key, value);
         }
         if (params.getJclSymbols().isPresent()) {
-            // TODO..
+            Map<String, String> extraHeaders = getSubstitutionHeaders(params.getJclSymbols().get());
+            for (Map.Entry<String, String> entry : extraHeaders.entrySet()) {
+                headers.put(entry.getKey(), entry.getValue());
+            }
         }
 
         key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_CLASS_A").get(0);
@@ -194,14 +199,16 @@ public class SubmitJobs {
         var jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
 
-        if (params.getJclSymbols().isPresent()) {
-            // TODO..
-        }
-
         if (request == null || !(request instanceof JsonPutRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_JSON);
         }
+
         request.setRequest(url, jsonRequestBody.toString());
+
+        if (params.getJclSymbols().isPresent()) {
+            Map<String, String> extraHeaders = getSubstitutionHeaders(params.getJclSymbols().get());
+            request.setHeaders(extraHeaders);
+        }
 
         Response response = request.executeRequest();
         if (response.isEmpty()) {
@@ -226,4 +233,55 @@ public class SubmitJobs {
                 .orElseThrow(() -> new Exception("response phrase missing"))));
     }
 
+    /**
+     * Parse input string for JCL substitution
+     *
+     * @param symbols JCL substitution symbols e.g.: "TEST=TESTSYMBOL1 TSET=TESTSYMBOL2"
+     * @return Map(String,String) containing all keys and values
+     * @throws Exception error on submitting
+     * @author Corinne DeStefano
+     */
+    private Map<String, String> getSubstitutionHeaders(String symbols) throws Exception {
+
+        Map<String, String> symbolMap = new HashMap<>();
+
+        // Input range:
+        // KEY="abc cde fg" KEY2="none" KEY3=none KEY4="nospace"
+        // REGEX: (\w*)=("(.*?)"|\S*)
+
+        // Check overall structure of input string
+        if (symbols.split("=").length % 2 !=0) {
+            throw new Exception("Invalid key/value pair.  Use the format KEY=VALUE KEY2=VALUE2 KEY3=\"VAL THREE\"");
+        }
+
+        // Check for matching quotes
+        if (symbols.chars().filter(ch -> ch == '"').count() % 2 !=0) {
+            throw new Exception("Invalid key/value pair.  Mismatched quotes.");
+        }
+
+        // Now get the groups
+        Pattern pattern = Pattern.compile("(\\w*)=(\"(.*?)\"|\\S*)");
+        Matcher matcher = pattern.matcher(symbols);
+
+        while (matcher.find()) {
+            String key = matcher.group(1);
+            String value = matcher.group(2);
+
+            if (key.length() == 0 || value.length()==0) {
+                throw new Exception("Invalid key/value pair.  Must define a value for key/value pairs.");
+            }
+
+            if (key.length() > 8) {
+                throw new Exception("Invalid key/value pair.  Keys must be 8 characters or less.");
+            }
+
+            key = ZosmfHeaders.HEADERS.get("X_IBM_JCL_SYMBOL_PARTIAL").get(0) + key;
+
+            LOG.debug("JCL Symbol Header: " + key + ":" + value);
+            symbolMap.put(key, value);
+
+        }
+
+        return symbolMap;
+    }
 }
