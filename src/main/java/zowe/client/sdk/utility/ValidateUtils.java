@@ -13,6 +13,12 @@ import zowe.client.sdk.core.ZOSConnection;
 
 import java.util.Optional;
 
+/**
+ * Utility Class contains helper methods for validation type processing
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public final class ValidateUtils {
 
     private ValidateUtils() {

@@ -15,6 +15,12 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
+/**
+ * Utility Class contains helper methods for encoding processing
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public final class EncodeUtils {
 
     private EncodeUtils() {

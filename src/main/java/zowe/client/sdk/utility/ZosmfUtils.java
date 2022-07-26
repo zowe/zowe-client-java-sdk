@@ -16,6 +16,12 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
 import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
 import zowe.client.sdk.zosmfinfo.response.ZosmfPluginInfo;
 
+/**
+ * Utility Class contains helper methods for z/OSMF related processing
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public final class ZosmfUtils {
 
     private ZosmfUtils() {
