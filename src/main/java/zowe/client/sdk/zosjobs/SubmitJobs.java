@@ -81,7 +81,7 @@ public class SubmitJobs {
     }
 
     /**
-     * Submit a JCL string to run
+     * Submit a JCL string to run which can contain JCL symbolic substitutions
      *
      * @param params submit jcl parameters, see SubmitJclParams object
      * @return job document with details about the submitted job
@@ -234,7 +234,7 @@ public class SubmitJobs {
      * Parse input string for JCL substitution
      *
      * @param symbols JCL substitution symbols e.g.: "TEST=TESTSYMBOL1 TSET=TESTSYMBOL2"
-     * @return Map(String,String) containing all keys and values
+     * @return Map(String, String) containing all keys and values
      * @throws Exception error on submitting
      * @author Corinne DeStefano
      */
@@ -247,12 +247,12 @@ public class SubmitJobs {
         // REGEX: (\w*)=("(.*?)"|\S*)
 
         // Check overall structure of input string
-        if (symbols.split("=").length % 2 !=0) {
+        if (symbols.split("=").length % 2 != 0) {
             throw new Exception("Invalid key/value pair.  Use the format KEY=VALUE KEY2=VALUE2 KEY3=\"VAL THREE\"");
         }
 
         // Check for matching quotes
-        if (symbols.chars().filter(ch -> ch == '"').count() % 2 !=0) {
+        if (symbols.chars().filter(ch -> ch == '"').count() % 2 != 0) {
             throw new Exception("Invalid key/value pair.  Mismatched quotes.");
         }
 
@@ -264,7 +264,7 @@ public class SubmitJobs {
             String key = matcher.group(1);
             String value = matcher.group(2);
 
-            if (key.length() == 0 || value.length()==0) {
+            if (key.length() == 0 || value.length() == 0) {
                 throw new Exception("Invalid key/value pair.  Must define a value for key/value pairs.");
             }
 
