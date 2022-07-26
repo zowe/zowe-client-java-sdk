@@ -18,7 +18,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.Properties;
 
 /**
- * Shell Class provides a way to execute USS commands vis SSH connection
+ * Shell Class provides a way to execute USS commands via SSH connection
  *
  * @author Frank Giordano
  * @version 1.0
