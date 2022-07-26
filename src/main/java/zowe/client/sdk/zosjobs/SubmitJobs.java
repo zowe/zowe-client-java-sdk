@@ -116,11 +116,9 @@ public class SubmitJobs {
             value = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_RECFM_F").get(1);
             headers.put(key, value);
         }
+
         if (params.getJclSymbols().isPresent()) {
-            Map<String, String> extraHeaders = getSubstitutionHeaders(params.getJclSymbols().get());
-            for (Map.Entry<String, String> entry : extraHeaders.entrySet()) {
-                headers.put(entry.getKey(), entry.getValue());
-            }
+            headers.putAll(getSubstitutionHeaders(params.getJclSymbols().get()));
         }
 
         key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_CLASS_A").get(0);
@@ -206,8 +204,7 @@ public class SubmitJobs {
         request.setRequest(url, jsonRequestBody.toString());
 
         if (params.getJclSymbols().isPresent()) {
-            Map<String, String> extraHeaders = getSubstitutionHeaders(params.getJclSymbols().get());
-            request.setHeaders(extraHeaders);
+            request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));
         }
 
         Response response = request.executeRequest();
