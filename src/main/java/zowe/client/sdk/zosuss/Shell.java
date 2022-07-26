@@ -15,6 +15,7 @@ import com.jcraft.jsch.Session;
 import zowe.client.sdk.core.SSHConnection;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Properties;
 
 /**
  * Shell Class provides a way to execute USS commands vis SSH connection
@@ -51,7 +52,7 @@ public class Shell {
         try {
             session = new JSch().getSession(connection.getUser(), connection.getHost(), connection.getPort());
             session.setPassword(connection.getPassword());
-            java.util.Properties config = new java.util.Properties();
+            var config = new Properties();
             config.put("StrictHostKeyChecking", "no");
             config.put("PreferredAuthentications", "password");
             session.setConfig(config);
@@ -59,7 +60,7 @@ public class Shell {
 
             channel = (ChannelExec) session.openChannel("exec");
             channel.setCommand(command);
-            ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
+            var responseStream = new ByteArrayOutputStream();
             channel.setOutputStream(responseStream);
             channel.connect();
 
