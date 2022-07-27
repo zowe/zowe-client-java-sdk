@@ -131,7 +131,7 @@ public class GetJobs {
      * Get a single job object from an input job id.
      *
      * @param jobId job ID for the job for which you want to get status
-     * @return list of job objects (matching jobs)
+     * @return one job object, matching the given job ID, without step-data
      * @throws Exception error on getting job
      * @author Frank Giordano
      */
@@ -153,7 +153,7 @@ public class GetJobs {
     /**
      * Get jobs (defaults to the user ID of the session as owner).
      *
-     * @return list of job objects (matching jobs)
+     * @return list of job objects (matching jobs), without step-data
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
@@ -166,7 +166,7 @@ public class GetJobs {
      *
      * @param owner owner for which to get jobs. Supports wildcard e.g.
      *              IBMU* returns jobs owned by all users whose ID beings with "IBMU"
-     * @return list of job objects (matching jobs)
+     * @return list of job objects (matching jobs), without step-data
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
@@ -184,7 +184,7 @@ public class GetJobs {
      *               IBMU* returns jobs owned by all users whose ID beings with "IBMU"
      * @param prefix prefix for which to get jobs. Supports wildcard e.g.
      *               JOBNM* returns jobs with names starting with "JOBNM"
-     * @return list of job objects (matching jobs)
+     * @return list of job objects (matching jobs), without step-data
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
@@ -201,7 +201,7 @@ public class GetJobs {
      * Get jobs that match a job name by prefix. Defaults to job(s) owned by the user ID in the session.
      *
      * @param prefix job name prefix for which to list jobs. Supports wildcard e.g. JOBNM*
-     * @return list of job objects (matching jobs)
+     * @return list of job objects (matching jobs), without step-data
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
@@ -216,7 +216,7 @@ public class GetJobs {
      * Get jobs filtered by owner and prefix.
      *
      * @param params get job parameters, see GetJobParams object
-     * @return list of job objects (matching jobs)
+     * @return list of job objects (matching jobs), without step-data
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
@@ -449,7 +449,7 @@ public class GetJobs {
     }
 
     /**
-     * Get the status and other details (e.g. owner, return code) for a job.
+     * Get the status and other details (e.g. owner, return code) for a job, including step-data.
      *
      * @param jobName job name for the job for which you want to get status
      * @param jobId   job ID for the job for which you want to get status
@@ -461,11 +461,11 @@ public class GetJobs {
         ValidateUtils.checkNullParameter(jobName == null, "jobName is null");
         ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
 
-        return getStatusCommon(new CommonJobParams(jobId, jobName));
+        return getStatusCommon(new CommonJobParams(jobId, jobName, true));
     }
 
     /**
-     * Get the status and other details (e.g. owner, return code) for a job.
+     * Get the status and other details (e.g. owner, return code) for a job, including step-data.
      *
      * @param params common job parameters, see CommonJobParams object
      * @return job document (matching job)
@@ -506,11 +506,11 @@ public class GetJobs {
     }
 
     /**
-     * Get the status and other details (e.g. owner, return code) for a job
+     * Get the status and other details (e.g. owner, return code) for a job, including step-data.
      * Alternate version of the API that accepts a Job object returned by
      * other APIs such as SubmitJobs. Even though the parameter and return
      * value are of the same type, the Job object returned will have the
-     * current status of the job.
+     * current status of the job and will contain step-data.
      *
      * @param job job document
      * @return job document (matching job)
@@ -521,7 +521,7 @@ public class GetJobs {
         ValidateUtils.checkNullParameter(job == null, "job is null");
 
         return getStatusCommon(new CommonJobParams(job.getJobId().orElse(null),
-                job.getJobName().orElse(null)));
+                job.getJobName().orElse(null), true));
     }
 
     /**

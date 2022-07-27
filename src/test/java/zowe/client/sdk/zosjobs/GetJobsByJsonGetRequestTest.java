@@ -190,7 +190,7 @@ public class GetJobsByJsonGetRequestTest {
         Mockito.when(request.executeRequest()).thenReturn(response);
 
         Job job = getJobs.getStatusForJob(new Job.Builder().jobId("1").jobName("jobName").build());
-        assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/1", getJobs.getUrl());
+        assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/1?step-data=Y", getJobs.getUrl());
         assertEquals("jobid", job.getJobId().get());
         assertEquals("jobname", job.getJobName().get());
         assertEquals("subsystem", job.getSubSystem().get());
