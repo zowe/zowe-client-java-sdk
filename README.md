@@ -14,8 +14,8 @@ This project is a sub-project of Zowe, focusing on modernizing mainframe experie
 This SDK lets you leverage the underlying z/OSMF REST APIs on a z/OS system to build client applications and scripts that interface with your z/OS instance seamlessly. 
 
 For instance, one API package provides the ability to upload and download z/OS data sets. You can leverage that package to rapidly build a client application that interacts with data sets.  
-    
-This Java SDK joins an existing community of language specific SDKs: Python, NodeJS, Swift, and Kotin; project provides the Java community compatible capabilities and may differentiate (see MonitorJobs) to rapidly build client applications to interface with your z/OS instance. You can introduce such client applications to modern CI/CD pipelines on any modern OS with a JVM instance. 
+   
+This Java SDK joins an existing community of language specific SDKs: Python, NodeJS, Swift, and Kotlin. This project provides the Java community compatible capabilities and may differentiate (see MonitorJobs) to rapidly build client applications to interface with your z/OS instance. You can introduce such client applications to modern CI/CD pipelines on any modern OS with a JVM instance. 
 
 Issues worked on documenting main feature set provided can be view within MVP issues [#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) and [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219).
   
