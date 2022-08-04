@@ -248,12 +248,12 @@ public class SubmitJobs {
 
         // Check overall structure of input string
         if (symbols.split("=").length % 2 != 0) {
-            throw new Exception("Invalid key/value pair.  Use the format KEY=VALUE KEY2=VALUE2 KEY3=\"VAL THREE\"");
+            throw new Exception("Invalid key/value pair. Use the format KEY=VALUE KEY2=VALUE2 KEY3=\"VAL THREE\"");
         }
 
         // Check for matching quotes
         if (symbols.chars().filter(ch -> ch == '"').count() % 2 != 0) {
-            throw new Exception("Invalid key/value pair.  Mismatched quotes.");
+            throw new Exception("Invalid key/value pair. Mismatched quotes.");
         }
 
         // Now get the groups
@@ -265,11 +265,11 @@ public class SubmitJobs {
             String value = matcher.group(2);
 
             if (key.length() == 0 || value.length() == 0) {
-                throw new Exception("Invalid key/value pair.  Must define a value for key/value pairs.");
+                throw new Exception("Invalid key/value pair. Must define a value for key/value pairs.");
             }
 
             if (key.length() > 8) {
-                throw new Exception("Invalid key/value pair.  Keys must be 8 characters or less.");
+                throw new Exception("Invalid key/value pair. Keys must be 8 characters or less.");
             }
 
             key = ZosmfHeaders.HEADERS.get("X_IBM_JCL_SYMBOL_PARTIAL").get(0) + key;
