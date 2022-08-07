@@ -69,7 +69,7 @@ public class Shell {
                 WaitUtil.wait(1000);
             }
 
-            return new String(responseStream.toByteArray());
+            return responseStream.toString();
         } finally {
             if (session != null) {
                 session.disconnect();
