@@ -13,7 +13,11 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.JsonDeleteRequest;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZoweRequest;
+import zowe.client.sdk.rest.ZoweRequestFactory;
+import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -98,7 +102,7 @@ public class StopTso {
         LOG.debug("StopTso::stopCommon url {}", url);
 
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.DELETE_JSON);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
         request.setRequest(url);
         Response response = request.executeRequest();

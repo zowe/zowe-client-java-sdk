@@ -14,6 +14,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 
@@ -38,7 +39,7 @@ public class JsonDeleteRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     public JsonDeleteRequest(ZOSConnection connection) {
-        super(connection, ZoweRequestType.VerbType.DELETE_JSON);
+        super(connection, ZoweRequestType.DELETE_JSON);
     }
 
     /**

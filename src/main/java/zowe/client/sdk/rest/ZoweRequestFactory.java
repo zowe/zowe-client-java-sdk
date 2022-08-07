@@ -10,6 +10,7 @@
 package zowe.client.sdk.rest;
 
 import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.rest.type.ZoweRequestType;
 
 /**
  * Zowe request factory that generates the desire CRUD operation
@@ -28,7 +29,7 @@ public class ZoweRequestFactory {
      * @throws Exception error with type not found
      * @author Frank Giordano
      */
-    public static ZoweRequest buildRequest(ZOSConnection connection, ZoweRequestType.VerbType type) throws Exception {
+    public static ZoweRequest buildRequest(ZOSConnection connection, ZoweRequestType type) throws Exception {
         ZoweRequest request;
         switch (type) {
             case GET_JSON:

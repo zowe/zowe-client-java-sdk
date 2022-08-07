@@ -7,21 +7,16 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.rest;
+package zowe.client.sdk.zosfiles.types;
 
 /**
- * Zowe Request CRUD types
+ * Attribute enum for querying a dataset and how its returned data will be retrieved with what properties.
+ * <p>
+ * BASE return all properties of a dataset and its values.
+ * VOL return volume and dataset name properties and its values only.
  *
  * @author Frank Giordano
- * @version 1.0
  */
-public class ZoweRequestType {
-
-    /**
-     * Http request verb value types
-     */
-    public enum VerbType {
-        GET_JSON, GET_TEXT, PUT_JSON, PUT_TEXT, DELETE_JSON, DELETE_TEXT, POST_JSON, POST_TEXT, GET_STREAM
-    }
-
+public enum AttributeType {
+    BASE, VOL
 }

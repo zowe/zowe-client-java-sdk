@@ -15,12 +15,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.DataSetUtils;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.input.ListParams;
 import zowe.client.sdk.zosfiles.response.Dataset;
+import zowe.client.sdk.zosfiles.types.AttributeType;
+import zowe.client.sdk.zosfiles.types.OperationType;
 
 import java.util.*;
 
@@ -78,7 +81,7 @@ public class ZosDsnList {
         LOG.debug(url);
         setHeaders(params, headers);
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_JSON);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
         request.setRequest(url);
         request.setHeaders(headers);
@@ -123,7 +126,7 @@ public class ZosDsnList {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), DataSetUtils.Operation.read);
+            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.read);
         }
 
         JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
@@ -173,7 +176,7 @@ public class ZosDsnList {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), DataSetUtils.Operation.read);
+            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.read);
         }
 
         JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
@@ -203,11 +206,11 @@ public class ZosDsnList {
         headers.put(key, value);
 
         if (params.getAttribute().isPresent()) {
-            DataSetUtils.Attribute attribute = params.getAttribute().get();
-            if (attribute == DataSetUtils.Attribute.BASE) {
+            AttributeType attribute = params.getAttribute().get();
+            if (attribute == AttributeType.BASE) {
                 key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(0);
                 value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
-            } else if (attribute == DataSetUtils.Attribute.VOL) {
+            } else if (attribute == AttributeType.VOL) {
                 key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_VOL").get(0);
                 value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_VOL").get(1);
             }

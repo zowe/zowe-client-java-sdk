@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
@@ -130,7 +131,7 @@ public class SubmitJobs {
 
         String body = params.getJcl().get();
         if (request == null || !(request instanceof TextPutRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_TEXT);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
         }
         request.setRequest(url, body);
         request.setHeaders(headers);
@@ -198,7 +199,7 @@ public class SubmitJobs {
         LOG.debug(String.valueOf(jsonRequestBody));
 
         if (request == null || !(request instanceof JsonPutRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_JSON);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
 
         request.setRequest(url, jsonRequestBody.toString());

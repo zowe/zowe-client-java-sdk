@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.DataSetUtils;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
@@ -21,6 +22,8 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.input.CreateParams;
 import zowe.client.sdk.zosfiles.input.ListParams;
 import zowe.client.sdk.zosfiles.response.Dataset;
+import zowe.client.sdk.zosfiles.types.AttributeType;
+import zowe.client.sdk.zosfiles.types.OperationType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -116,7 +119,7 @@ public class ZosDsn {
         String body = buildBody(params);
 
         if (request == null || !(request instanceof JsonPostRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.POST_JSON);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
         }
         request.setRequest(url, body);
         Response response = request.executeRequest();
@@ -124,7 +127,7 @@ public class ZosDsn {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), DataSetUtils.Operation.create);
+            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.create);
         }
 
         return response;
@@ -167,7 +170,7 @@ public class ZosDsn {
 
 
         if (request == null || !(request instanceof JsonDeleteRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.DELETE_JSON);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
         request.setRequest(url);
         Response response = request.executeRequest();
@@ -175,7 +178,7 @@ public class ZosDsn {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), DataSetUtils.Operation.delete);
+            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.delete);
         }
 
         return response;
@@ -209,7 +212,7 @@ public class ZosDsn {
         String dataSetSearchStr = str.toString();
         dataSetSearchStr = dataSetSearchStr.substring(0, str.length() - 1);
         ZosDsnList zosDsnList = new ZosDsnList(connection);
-        ListParams params = new ListParams.Builder().attribute(DataSetUtils.Attribute.BASE).build();
+        ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
         List<Dataset> dsLst = zosDsnList.listDsn(dataSetSearchStr, params);
 
         Optional<Dataset> dataSet = dsLst.stream().filter(d -> d.getDsname().orElse("n/a").contains(dataSetName)).findFirst();
@@ -256,7 +259,7 @@ public class ZosDsn {
         LOG.debug(url);
 
         if (request == null || !(request instanceof TextPutRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_TEXT);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
         }
         request.setRequest(url, content);
         Response response = request.executeRequest();
@@ -264,7 +267,7 @@ public class ZosDsn {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), DataSetUtils.Operation.write);
+            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.write);
         }
 
         return response;

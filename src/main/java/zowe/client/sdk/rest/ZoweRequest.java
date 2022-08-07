@@ -22,6 +22,7 @@ import org.apache.http.ssl.SSLContextBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
@@ -38,7 +39,7 @@ public abstract class ZoweRequest {
     private static final Logger LOG = LoggerFactory.getLogger(ZoweRequest.class);
     public static final String X_CSRF_ZOSMF_HEADER_KEY = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
     public static final String X_CSRF_ZOSMF_HEADER_VALUE = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
-    private final ZoweRequestType.VerbType requestType;
+    private final ZoweRequestType requestType;
     protected final ZOSConnection connection;
     protected HttpClient client;
     protected final HttpContext localContext = new BasicHttpContext();
@@ -51,7 +52,7 @@ public abstract class ZoweRequest {
      * @param requestType request type, see ZoweRequestType.VerbType object
      * @author Frank Giordano
      */
-    public ZoweRequest(ZOSConnection connection, ZoweRequestType.VerbType requestType) {
+    public ZoweRequest(ZOSConnection connection, ZoweRequestType requestType) {
         this.connection = connection;
         this.requestType = requestType;
     }
@@ -206,7 +207,7 @@ public abstract class ZoweRequest {
      * @return http request type
      * @author Frank Giordano
      */
-    public ZoweRequestType.VerbType requestType() {
+    public ZoweRequestType requestType() {
         return requestType;
     }
 
