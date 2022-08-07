@@ -28,6 +28,7 @@ import java.io.IOException;
 
 import static org.mockito.ArgumentMatchers.any;
 
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 @RunWith(MockitoJUnitRunner.class)
 public class JsonRequestTest {
 

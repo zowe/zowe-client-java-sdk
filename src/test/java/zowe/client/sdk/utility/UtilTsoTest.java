@@ -19,6 +19,7 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class UtilTsoTest {
 
     private static final String MISSING_FIELD_ERROR_MSG = "missing one of the following json field values: queueID," +
