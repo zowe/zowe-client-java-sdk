@@ -13,6 +13,7 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import zowe.client.sdk.core.SSHConnection;
+import zowe.client.sdk.utility.timer.WaitUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Properties;
@@ -65,7 +66,7 @@ public class Shell {
             channel.connect();
 
             while (channel.isConnected()) {
-                Thread.sleep(100);
+                WaitUtil.wait(1000);
             }
 
             return new String(responseStream.toByteArray());

@@ -14,13 +14,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.timer.WaitUtil;
 import zowe.client.sdk.zosjobs.input.CommonJobParams;
 import zowe.client.sdk.zosjobs.input.GetJobParams;
 import zowe.client.sdk.zosjobs.input.JobFile;
 import zowe.client.sdk.zosjobs.input.MonitorJobWaitForParams;
 import zowe.client.sdk.zosjobs.response.CheckJobStatus;
 import zowe.client.sdk.zosjobs.response.Job;
-import zowe.client.sdk.zosjobs.timer.WaitUtil;
 import zowe.client.sdk.zosjobs.types.JobStatus;
 
 import java.util.List;
