@@ -10,7 +10,7 @@
  */
 package zowe.client.sdk.zosfiles.input;
 
-import zowe.client.sdk.utility.DataSetUtils;
+import zowe.client.sdk.zosfiles.types.AttributeType;
 
 import java.util.Optional;
 
@@ -30,7 +30,7 @@ public class ListParams {
     /**
      * The indicator that we want to show more attributes
      */
-    private final Optional<DataSetUtils.Attribute> attribute;
+    private final Optional<AttributeType> attribute;
 
     /**
      * The indicator that we want to show less data sets or members
@@ -73,7 +73,7 @@ public class ListParams {
      * @return attributes value
      * @author Leonid Baranov
      */
-    public Optional<DataSetUtils.Attribute> getAttribute() {
+    public Optional<AttributeType> getAttribute() {
         return attribute;
     }
 
@@ -153,14 +153,14 @@ public class ListParams {
     public static class Builder {
 
         private String volume;
-        private DataSetUtils.Attribute attribute;
+        private AttributeType attribute;
         private String maxLength;
         private String start;
         private String recall;
         private String pattern;
         private String responseTimeout;
 
-        public ListParams.Builder attribute(DataSetUtils.Attribute attribute) {
+        public ListParams.Builder attribute(AttributeType attribute) {
             this.attribute = attribute;
             return this;
         }

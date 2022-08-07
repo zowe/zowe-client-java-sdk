@@ -11,6 +11,7 @@ package zowe.client.sdk.utility;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosfiles.response.Dataset;
+import zowe.client.sdk.zosfiles.types.OperationType;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public final class DataSetUtils {
      * @throws Exception with a possible customized error msg
      * @author Frank Giordano
      */
-    public static void checkHttpErrors(String errMsg, List<String> dsNames, Operation type) throws Exception {
+    public static void checkHttpErrors(String errMsg, List<String> dsNames, OperationType type) throws Exception {
         ValidateUtils.checkNullParameter(errMsg == null, "errMsg is null");
         ValidateUtils.checkIllegalParameter(errMsg.isEmpty(), "errMsg not specified");
         ValidateUtils.checkNullParameter(dsNames == null, "dsNames is null");
@@ -166,27 +167,6 @@ public final class DataSetUtils {
                 .used((String) jsonObject.get("used"))
                 .vol((String) jsonObject.get("vol"))
                 .build();
-    }
-
-    /**
-     * Attribute enum for querying a dataset and how its returned data will be retrieved with what properties.
-     * <p>
-     * BASE return all properties of a dataset and its values.
-     * VOL return volume and dataset name properties and its values only.
-     *
-     * @author Frank Giordano
-     */
-    public enum Attribute {
-        BASE, VOL
-    }
-
-    /**
-     * Operation enum for setting the type of dataset request that will be performed.
-     *
-     * @author Frank Giordano
-     */
-    public enum Operation {
-        create, read, copy, delete, write, download
     }
 
 }

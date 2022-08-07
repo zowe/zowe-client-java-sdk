@@ -13,8 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.*;
 import zowe.client.sdk.zosfiles.input.DownloadParams;
+import zowe.client.sdk.zosfiles.types.OperationType;
 
 import java.io.InputStream;
 import java.util.List;
@@ -101,7 +103,7 @@ public class ZosDsnDownload {
         }
 
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.GET_STREAM);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_STREAM);
         }
         request.setRequest(url);
         request.setHeaders(headers);
@@ -114,7 +116,7 @@ public class ZosDsnDownload {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), DataSetUtils.Operation.download);
+            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.download);
         }
 
         return (InputStream) response.getResponsePhrase().orElse(null);

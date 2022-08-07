@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -115,7 +116,7 @@ public class DeleteJobs {
         }
 
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.DELETE_JSON);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
         request.setRequest(url);
 

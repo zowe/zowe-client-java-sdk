@@ -13,12 +13,17 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.JsonPutRequest;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZoweRequest;
+import zowe.client.sdk.rest.ZoweRequestFactory;
+import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.DataSetUtils;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.input.CopyParams;
+import zowe.client.sdk.zosfiles.types.OperationType;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -169,7 +174,7 @@ public class ZosDsnCopy {
 
         String body = buildBody(params);
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.VerbType.PUT_JSON);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setRequest(url, body);
         Response response = request.executeRequest();
@@ -177,7 +182,7 @@ public class ZosDsnCopy {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), Arrays.asList(toDataSet, fromDataSet), DataSetUtils.Operation.copy);
+            DataSetUtils.checkHttpErrors(e.getMessage(), Arrays.asList(toDataSet, fromDataSet), OperationType.copy);
         }
 
         return response;
