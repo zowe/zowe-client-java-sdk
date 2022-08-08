@@ -127,7 +127,7 @@ public class ZosDsn {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.create);
+            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.CREATE);
         }
 
         return response;
@@ -178,7 +178,7 @@ public class ZosDsn {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.delete);
+            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.DELETE);
         }
 
         return response;
@@ -267,7 +267,7 @@ public class ZosDsn {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.write);
+            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.WRITE);
         }
 
         return response;

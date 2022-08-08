@@ -182,7 +182,7 @@ public class ZosDsnCopy {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), Arrays.asList(toDataSet, fromDataSet), OperationType.copy);
+            DataSetUtils.checkHttpErrors(e.getMessage(), Arrays.asList(toDataSet, fromDataSet), OperationType.COPY);
         }
 
         return response;
