@@ -15,5 +15,5 @@ package zowe.client.sdk.zosfiles.types;
  * @author Frank Giordano
  */
 public enum OperationType {
-    create, read, copy, delete, write, download
+    CREATE, READ, COPY, DELETE, WRITE, DOWNLOAD
 }

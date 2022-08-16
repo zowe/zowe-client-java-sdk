@@ -116,7 +116,7 @@ public class ZosDsnDownload {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.download);
+            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.DOWNLOAD);
         }
 
         return (InputStream) response.getResponsePhrase().orElse(null);
