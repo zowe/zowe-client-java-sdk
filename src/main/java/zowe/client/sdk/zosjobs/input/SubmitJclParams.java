@@ -43,6 +43,8 @@ public class SubmitJclParams {
 
     /**
      * A string for JCL symbolic substitution
+     * <p>
+     * For example, this accepts a string of key/value pairs separated by spaces: SYM=SYM SYM2=SYM2, etc..
      */
     private Optional<String> jclSymbols = Optional.empty();
 

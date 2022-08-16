@@ -26,6 +26,7 @@ import zowe.client.sdk.zosjobs.input.SubmitJobParams;
 import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -167,7 +168,7 @@ public class SubmitJobs {
     /**
      * Submit a job that resides in a z/OS data set.
      *
-     * @param jobDataSet job Dataset to be translated into SubmitJobParams object
+     * @param jobDataSet job dataset to be translated into SubmitJobParams object
      * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Frank Giordano
@@ -234,52 +235,51 @@ public class SubmitJobs {
     /**
      * Parse input string for JCL substitution
      *
-     * @param symbols JCL substitution symbols e.g.: "TEST=TESTSYMBOL1 TSET=TESTSYMBOL2"
-     * @return Map(String, String) containing all keys and values
+     * @param symbols JCL substitution symbols e.g.: "SYMBOL=SYM SYMBOL2=SYM2"
+     * @return String Map containing all keys and values
      * @throws Exception error on submitting
      * @author Corinne DeStefano
      */
     private Map<String, String> getSubstitutionHeaders(String symbols) throws Exception {
+        var symbolMap = new HashMap<String, String>();
 
-        Map<String, String> symbolMap = new HashMap<>();
-
-        // Input range:
-        // KEY="abc cde fg" KEY2="none" KEY3=none KEY4="nospace"
+        // Input range: KEY="abc cde fg" KEY2="none" KEY3=none KEY4="nospace" etc
         // REGEX: (\w*)=("(.*?)"|\S*)
 
         // Check overall structure of input string
-        if (symbols.split("=").length % 2 != 0) {
-            throw new Exception("Invalid key/value pair. Use the format KEY=VALUE KEY2=VALUE2 KEY3=\"VAL THREE\"");
+        List<String> pairs = List.of(symbols.split(" "));
+        for (String pair : pairs) {
+            if (pair.split("=").length % 2 != 0) {
+                throw new Exception("Encountered invalid key/value pair. " +
+                        "Use the format KEY=VALUE separated by space for each pair in string");
+            }
         }
 
         // Check for matching quotes
         if (symbols.chars().filter(ch -> ch == '"').count() % 2 != 0) {
-            throw new Exception("Invalid key/value pair. Mismatched quotes.");
+            throw new Exception("Encountered invalid key/value pair. Mismatched quotes.");
         }
 
         // Now get the groups
         Pattern pattern = Pattern.compile("(\\w*)=(\"(.*?)\"|\\S*)");
         Matcher matcher = pattern.matcher(symbols);
-
         while (matcher.find()) {
             String key = matcher.group(1);
             String value = matcher.group(2);
 
             if (key.length() == 0 || value.length() == 0) {
-                throw new Exception("Invalid key/value pair. Must define a value for key/value pairs.");
+                throw new Exception("Encountered invalid key/value pair. Must define a value for key/value pairs.");
             }
-
             if (key.length() > 8) {
-                throw new Exception("Invalid key/value pair. Keys must be 8 characters or less.");
+                throw new Exception("Encountered invalid key/value pair. Key(s) must be 8 characters or less.");
             }
 
             key = ZosmfHeaders.HEADERS.get("X_IBM_JCL_SYMBOL_PARTIAL").get(0) + key;
-
             LOG.debug("JCL Symbol Header: " + key + ":" + value);
             symbolMap.put(key, value);
-
         }
 
         return symbolMap;
     }
+
 }
