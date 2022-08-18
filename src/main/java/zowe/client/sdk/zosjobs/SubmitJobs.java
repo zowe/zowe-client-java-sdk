@@ -248,7 +248,7 @@ public class SubmitJobs {
             }
 
             if (value.length() == 0) {
-                throw new Exception("Encountered invalid key/value pair. Must define a value for key/value pairs.");
+                throw new Exception("Encountered invalid key/value pair. Must define a value for key/value pair.");
             }
         }
 
@@ -256,10 +256,10 @@ public class SubmitJobs {
             String value = keyValues.get(key);
 
             if (key.length() == 0) {
-                throw new Exception("Encountered invalid key/value pair. Must define a value for key/value pairs.");
+                throw new Exception("Encountered invalid key/value pair. Must define a key for key/value pair.");
             }
             if (key.length() > 8) {
-                throw new Exception("Encountered invalid key/value pair. Key(s) must be 8 characters or less.");
+                throw new Exception("Encountered invalid key/value pair. Key must be 8 characters or less.");
             }
 
             key = ZosmfHeaders.HEADERS.get("X_IBM_JCL_SYMBOL_PARTIAL").get(0) + key;
