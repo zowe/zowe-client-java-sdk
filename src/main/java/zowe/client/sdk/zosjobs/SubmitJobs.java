@@ -26,10 +26,7 @@ import zowe.client.sdk.zosjobs.input.SubmitJobParams;
 import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Class to handle submitting of z/OS batch jobs via z/OSMF
@@ -235,39 +232,30 @@ public class SubmitJobs {
     /**
      * Parse input string for JCL substitution
      *
-     * @param symbols JCL substitution symbols e.g.: "SYMBOL=SYM SYMBOL2=SYM2"
+     * @param keyValues Map containing JCL substitution symbols e.g.: "{"SYMBOL","SYM"},{"SYMBOL2","SYM2"}
      * @return String Map containing all keys and values
      * @throws Exception error on submitting
      * @author Corinne DeStefano
      */
-    private Map<String, String> getSubstitutionHeaders(String symbols) throws Exception {
-        var symbolMap = new HashMap<String, String>();
+    public Map<String, String> getSubstitutionHeaders(Map<String, String> keyValues) throws Exception {
 
-        // Input range: KEY="abc cde fg" KEY2="none" KEY3=none KEY4="nospace" etc
-        // REGEX: (\w*)=("(.*?)"|\S*)
+        Map<String,String> symbolMap = new HashMap<>();
 
-        // Check overall structure of input string
-        List<String> pairs = List.of(symbols.split(" "));
-        for (String pair : pairs) {
-            if (pair.split("=").length % 2 != 0) {
-                throw new Exception("Encountered invalid key/value pair. " +
-                        "Use the format KEY=VALUE separated by space for each pair in string");
+        // Check for matching quotes
+        for (String value : keyValues.values()) {
+            if (value.chars().filter(ch -> ch == '"').count() % 2 != 0) {
+                throw new Exception("Encountered invalid key/value pair. Mismatched quotes.");
+            }
+
+            if (value.length() == 0) {
+                throw new Exception("Encountered invalid key/value pair. Must define a value for key/value pairs.");
             }
         }
 
-        // Check for matching quotes
-        if (symbols.chars().filter(ch -> ch == '"').count() % 2 != 0) {
-            throw new Exception("Encountered invalid key/value pair. Mismatched quotes.");
-        }
+        for (String key: keyValues.keySet()) {
+            String value = keyValues.get(key);
 
-        // Now get the groups
-        Pattern pattern = Pattern.compile("(\\w*)=(\"(.*?)\"|\\S*)");
-        Matcher matcher = pattern.matcher(symbols);
-        while (matcher.find()) {
-            String key = matcher.group(1);
-            String value = matcher.group(2);
-
-            if (key.length() == 0 || value.length() == 0) {
+            if (key.length() == 0) {
                 throw new Exception("Encountered invalid key/value pair. Must define a value for key/value pairs.");
             }
             if (key.length() > 8) {
