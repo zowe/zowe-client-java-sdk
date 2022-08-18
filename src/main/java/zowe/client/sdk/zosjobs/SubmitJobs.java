@@ -239,7 +239,7 @@ public class SubmitJobs {
      */
     public Map<String, String> getSubstitutionHeaders(Map<String, String> keyValues) throws Exception {
 
-        Map<String,String> symbolMap = new HashMap<>();
+        Map<String, String> symbolMap = new HashMap<>();
 
         // Check for matching quotes
         for (String value : keyValues.values()) {
@@ -252,7 +252,7 @@ public class SubmitJobs {
             }
         }
 
-        for (String key: keyValues.keySet()) {
+        for (String key : keyValues.keySet()) {
             String value = keyValues.get(key);
 
             if (key.length() == 0) {

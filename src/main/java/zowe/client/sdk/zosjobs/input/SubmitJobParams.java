@@ -31,7 +31,7 @@ public class SubmitJobParams {
     /**
      * A Map for JCL symbolic substitution, specify key,value for symbol substitution
      */
-    private Optional<Map<String,String>> jclSymbols = Optional.empty();
+    private Optional<Map<String, String>> jclSymbols = Optional.empty();
 
     /**
      * SubmitJobParams constructor
@@ -50,7 +50,7 @@ public class SubmitJobParams {
      * @param jclSymbols Map for JCL symbolic substitution
      * @author Frank Giordano
      */
-    public SubmitJobParams(String jobDataSet, Map<String,String> jclSymbols) {
+    public SubmitJobParams(String jobDataSet, Map<String, String> jclSymbols) {
         this.jobDataSet = Optional.ofNullable(jobDataSet);
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
@@ -61,7 +61,7 @@ public class SubmitJobParams {
      * @return jclSymbols value
      * @author Frank Giordano
      */
-    public Optional<Map<String,String>> getJclSymbols() {
+    public Optional<Map<String, String>> getJclSymbols() {
         return jclSymbols;
     }
 
@@ -71,7 +71,7 @@ public class SubmitJobParams {
      * @param jclSymbols Map for JCL symbolic substitution
      * @author Frank Giordano
      */
-    public void setJclSymbols(Map<String,String> jclSymbols) {
+    public void setJclSymbols(Map<String, String> jclSymbols) {
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
 

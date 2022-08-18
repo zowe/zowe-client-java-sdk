@@ -48,7 +48,7 @@ public class SubmitJclParams {
      * For example, this accepts a Map of key/value pairs: {"SYM","SYM"}, {"SYM2","\"SYM 2\""}, etc..
      * Values with spaces should be enclosed in double quotes.
      */
-    private Optional<Map<String,String>> jclSymbols = Optional.empty();
+    private Optional<Map<String, String>> jclSymbols = Optional.empty();
 
     /**
      * SubmitJclParams constructor
@@ -74,7 +74,7 @@ public class SubmitJclParams {
      * @author Frank Giordano
      */
     public SubmitJclParams(String jcl, String internalReaderRecfm, String internalReaderLrecl,
-                           Map<String,String> jclSymbols) {
+                           Map<String, String> jclSymbols) {
         this.jcl = Optional.ofNullable(jcl);
         this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
@@ -145,7 +145,7 @@ public class SubmitJclParams {
      * @return jclSymbols value
      * @author Frank Giordano
      */
-    public Optional<Map<String,String>> getJclSymbols() {
+    public Optional<Map<String, String>> getJclSymbols() {
         return jclSymbols;
     }
 
@@ -155,7 +155,7 @@ public class SubmitJclParams {
      * @param jclSymbols Map of JCL symbolic substitution
      * @author Frank Giordano
      */
-    public void setJclSymbols(Map<String,String> jclSymbols) {
+    public void setJclSymbols(Map<String, String> jclSymbols) {
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
 
