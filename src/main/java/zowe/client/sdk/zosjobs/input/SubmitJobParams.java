@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosjobs.input;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -28,9 +29,9 @@ public class SubmitJobParams {
     private Optional<String> jobDataSet;
 
     /**
-     * A string for JCL symbolic substitution
+     * A Map for JCL symbolic substitution, specify key,value for symbol substitution
      */
-    private Optional<String> jclSymbols = Optional.empty();
+    private Optional<Map<String,String>> jclSymbols = Optional.empty();
 
     /**
      * SubmitJobParams constructor
@@ -46,10 +47,10 @@ public class SubmitJobParams {
      * SubmitJobParams constructor
      *
      * @param jobDataSet z/OS data set which should contain syntactically correct JCL
-     * @param jclSymbols string for JCL symbolic substitution
+     * @param jclSymbols Map for JCL symbolic substitution
      * @author Frank Giordano
      */
-    public SubmitJobParams(String jobDataSet, String jclSymbols) {
+    public SubmitJobParams(String jobDataSet, Map<String,String> jclSymbols) {
         this.jobDataSet = Optional.ofNullable(jobDataSet);
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
@@ -60,17 +61,17 @@ public class SubmitJobParams {
      * @return jclSymbols value
      * @author Frank Giordano
      */
-    public Optional<String> getJclSymbols() {
+    public Optional<Map<String,String>> getJclSymbols() {
         return jclSymbols;
     }
 
     /**
      * Assign jclSymbols value
      *
-     * @param jclSymbols string for JCL symbolic substitution
+     * @param jclSymbols Map for JCL symbolic substitution
      * @author Frank Giordano
      */
-    public void setJclSymbols(String jclSymbols) {
+    public void setJclSymbols(Map<String,String> jclSymbols) {
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
 

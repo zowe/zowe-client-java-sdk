@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosjobs.input;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -42,11 +43,12 @@ public class SubmitJclParams {
     private Optional<String> internalReaderLrecl;
 
     /**
-     * A string for JCL symbolic substitution
+     * A Map for JCL symbolic substitution
      * <p>
-     * For example, this accepts a string of key/value pairs separated by spaces: SYM=SYM SYM2=SYM2, etc..
+     * For example, this accepts a Map of key/value pairs: {"SYM","SYM"}, {"SYM2","\"SYM 2\""}, etc..
+     * Values with spaces should be enclosed in double quotes.
      */
-    private Optional<String> jclSymbols = Optional.empty();
+    private Optional<Map<String,String>> jclSymbols = Optional.empty();
 
     /**
      * SubmitJclParams constructor
@@ -68,10 +70,11 @@ public class SubmitJclParams {
      * @param jcl                 syntactically correct JCL
      * @param internalReaderRecfm internal reader RECFM
      * @param internalReaderLrecl internal reader LRECL
-     * @param jclSymbols          JCL symbolic substitution
+     * @param jclSymbols          Map of JCL symbolic substitution
      * @author Frank Giordano
      */
-    public SubmitJclParams(String jcl, String internalReaderRecfm, String internalReaderLrecl, String jclSymbols) {
+    public SubmitJclParams(String jcl, String internalReaderRecfm, String internalReaderLrecl,
+                           Map<String,String> jclSymbols) {
         this.jcl = Optional.ofNullable(jcl);
         this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
@@ -142,17 +145,17 @@ public class SubmitJclParams {
      * @return jclSymbols value
      * @author Frank Giordano
      */
-    public Optional<String> getJclSymbols() {
+    public Optional<Map<String,String>> getJclSymbols() {
         return jclSymbols;
     }
 
     /**
      * Assign JCL symbolic substitution value
      *
-     * @param jclSymbols JCL symbolic substitution
+     * @param jclSymbols Map of JCL symbolic substitution
      * @author Frank Giordano
      */
-    public void setJclSymbols(String jclSymbols) {
+    public void setJclSymbols(Map<String,String> jclSymbols) {
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
 
