@@ -107,10 +107,13 @@ public class GetJobParams {
 
     public static class Builder {
 
-        private final String owner;
+        private String owner = "*";
         private String prefix = "*";
         private Integer maxJobs = JobsConstants.DEFAULT_MAX_JOBS;
         private String jobId;
+
+        public Builder() {
+        }
 
         public Builder(String owner) {
             this.owner = owner;
