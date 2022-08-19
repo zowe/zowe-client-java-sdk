@@ -112,6 +112,10 @@ public class GetJobParams {
         private Integer maxJobs = JobsConstants.DEFAULT_MAX_JOBS;
         private String jobId;
 
+        public Builder() {
+            this.owner = "*";
+        }
+
         public Builder(String owner) {
             this.owner = owner;
         }
