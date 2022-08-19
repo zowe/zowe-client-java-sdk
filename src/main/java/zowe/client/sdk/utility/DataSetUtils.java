@@ -84,7 +84,7 @@ public final class DataSetUtils {
         }
 
         // if we see create request handle it
-        if ("create".equals(type.toString())) {
+        if ("create".equalsIgnoreCase(type.toString())) {
             if (errMsg.contains("500")) {
                 String newErrMsg = String.format("%s %s '%s' %s %s", errMsg, http500Pre, dsNames.get(0), http500Create,
                         http500Post);
@@ -94,7 +94,7 @@ public final class DataSetUtils {
         }
 
         // if we see a copy request handle it
-        if ("copy".equals(type.toString())) {
+        if ("copy".equalsIgnoreCase(type.toString())) {
             if (errMsg.contains("500")) {
                 if (dsNames.size() == 1) {
                     String newErrMsg = formatPrePostMsg(errMsg, dsNames, http500Pre, http500, http500Post);
