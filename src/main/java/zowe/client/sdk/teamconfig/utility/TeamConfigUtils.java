@@ -9,17 +9,17 @@
  */
 package zowe.client.sdk.teamconfig.utility;
 
+import org.json.simple.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * TeamConfigUtils static class provides helper method(s).
  *
  * @author Frank Giordano
  * @version 1.0
  */
-import org.json.simple.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class TeamConfigUtils {
 
     public static Map<String, String> parseJsonPropsObj(JSONObject obj) {
