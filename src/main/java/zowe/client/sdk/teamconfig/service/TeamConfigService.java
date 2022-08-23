@@ -26,6 +26,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * TeamConfigService class that provides a service layer to perform Zowe Global Team Configuration processing.
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class TeamConfigService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TeamConfigService.class);

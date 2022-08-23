@@ -13,6 +13,12 @@ import com.starxg.keytar.KeytarException;
 
 import java.util.List;
 
+/**
+ * Interface that describes the contract for KeyTar processing
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public interface IKeyTar {
 
     public void processKey() throws KeytarException;

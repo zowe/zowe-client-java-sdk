@@ -23,6 +23,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+/**
+ * TeamConfig class provides API method(s) to retrieve prudent profile sections from Zowe Global Team Configuration with
+ * keytar information to help perform ZOSConnection processing without hard coding username and password. This class only
+ * supports Zowe Global Team Configuration provided by Zowe V2.
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class TeamConfig {
 
     private static final Logger LOG = LoggerFactory.getLogger(TeamConfig.class);

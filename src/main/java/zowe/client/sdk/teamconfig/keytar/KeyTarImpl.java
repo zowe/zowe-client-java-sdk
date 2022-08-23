@@ -23,6 +23,12 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Implementation class for IkeyTar interface that contains the logic for KeyTar processing
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class KeyTarImpl implements IKeyTar {
 
     private static final Logger LOG = LoggerFactory.getLogger(KeyTarImpl.class);

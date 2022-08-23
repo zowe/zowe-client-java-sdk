@@ -12,6 +12,12 @@ package zowe.client.sdk.teamconfig.model;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * ConfigContainer POJO to act as a container for a parsed Zowe Global Team Configuration file representation
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class ConfigContainer {
 
     private final List<Partition> partitions;

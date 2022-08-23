@@ -17,6 +17,13 @@ import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * KeyTarService class that provides a service layer to perform KeyTar processing and retrieval of credentials and
+ * Zowe Global Team Configuration location information.
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class KeyTarService {
 
     private static final Logger LOG = LoggerFactory.getLogger(KeyTarService.class);

@@ -12,6 +12,13 @@ package zowe.client.sdk.teamconfig.model;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Partition POJO to act as a container for a parsed Zowe Global Team Configuration file representing a partition section.
+ * A partition can contain a separate complete Global Team Configuration based on an individual LPAR instance.
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 public class Partition {
 
     private final String name;

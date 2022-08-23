@@ -9,6 +9,12 @@
  */
 package zowe.client.sdk.teamconfig.utility;
 
+/**
+ * TeamConfigUtils static class provides helper method(s).
+ *
+ * @author Frank Giordano
+ * @version 1.0
+ */
 import org.json.simple.JSONObject;
 
 import java.util.HashMap;
