@@ -1,4 +1,4 @@
 /**
- * container objects of zosmf request response for zos tso processing
+ * Zosmf request response objects for zos tso processing
  */
 package zowe.client.sdk.zostso.zosmf;

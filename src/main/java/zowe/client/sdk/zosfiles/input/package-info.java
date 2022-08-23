@@ -1,4 +1,4 @@
 /**
- * container objects of parameters used for request inputs for zos files processing
+ * Request input objects for zos files processing
  */
 package zowe.client.sdk.zosfiles.input;

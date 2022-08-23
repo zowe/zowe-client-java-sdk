@@ -1,4 +1,4 @@
 /**
- * container objects of request responses for zos jobs processing
+ * Request responses objects for zos jobs processing
  */
 package zowe.client.sdk.zosjobs.response;

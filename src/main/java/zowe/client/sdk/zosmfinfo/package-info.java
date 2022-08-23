@@ -1,4 +1,4 @@
 /**
- * zos all things Zosmf informational processing provided by the SDK
+ * Zosmf informational processing provided by the SDK
  */
 package zowe.client.sdk.zosmfinfo;

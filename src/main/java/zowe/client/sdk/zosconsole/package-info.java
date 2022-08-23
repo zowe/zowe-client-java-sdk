@@ -1,4 +1,4 @@
 /**
- * zos mvs console functionality provided by the SDK
+ * Zos mvs console functionality provided by the SDK
  */
 package zowe.client.sdk.zosconsole;
