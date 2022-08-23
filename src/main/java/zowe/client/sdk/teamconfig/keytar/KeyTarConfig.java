@@ -17,8 +17,17 @@ package zowe.client.sdk.teamconfig.keytar;
  */
 public class KeyTarConfig {
 
+    /**
+     * represents a string value of Zowe Global Team Configuration file name and path location
+     */
     private final String location;
+    /**
+     * represents a string value of a username contained with the OS credential store
+     */
     private final String userName;
+    /**
+     * represents a string value of a password contained with the OS credential store
+     */
     private final String password;
 
     public KeyTarConfig(String location, String userName, String password) {

@@ -33,13 +33,37 @@ import java.util.function.Predicate;
  */
 public class TeamConfig {
 
+    /**
+     * logger
+     */
     private static final Logger LOG = LoggerFactory.getLogger(TeamConfig.class);
+    /**
+     * TeamConfigService dependency
+     */
     private final TeamConfigService teamConfigService;
+    /**
+     * KeyTarService dependency
+     */
     private final KeyTarService keyTarService;
+    /**
+     * Base profile constant
+     */
     private final String BASE_PROFILE_NAME = "base";
+    /**
+     * Is Base profile predicate
+     */
     private final Predicate<Profile> isBaseProfile = i -> i.getName().equals(BASE_PROFILE_NAME);
+    /**
+     * Properties object for merging properties between profile types
+     */
     private final MergeProperties mergeProperties = new MergeProperties();
+    /**
+     * KeyTarConfig dependency
+     */
     private KeyTarConfig keyTarConfig;
+    /**
+     * ConfigContainer dependency
+     */
     private ConfigContainer teamConfig;
 
     public TeamConfig(KeyTarService keyTarService, TeamConfigService teamConfigService) throws Exception {

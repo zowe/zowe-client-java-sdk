@@ -30,9 +30,21 @@ import java.util.Set;
  */
 public class KeyTarImpl implements IKeyTar {
 
+    /**
+     * logger
+     */
     private static final Logger LOG = LoggerFactory.getLogger(KeyTarImpl.class);
+    /**
+     * represents a string value used for KeyTar querying for OS credential store value
+     */
     private final String serviceName;
+    /**
+     * represents a string value used for KeyTar querying for OS credential store value
+     */
     private final String accountName;
+    /**
+     * represents a string value of the retrieved OS credential store
+     */
     private String keyString;
     private final List<KeyTarConfig> keyTarConfigs = new ArrayList<>();
 

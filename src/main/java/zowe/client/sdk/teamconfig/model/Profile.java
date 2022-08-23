@@ -23,8 +23,17 @@ import java.util.Map;
  */
 public class Profile {
 
+    /**
+     * profile name
+     */
     private final String name;
+    /**
+     * profile secure json object
+     */
     private final JSONArray secure;
+    /**
+     * profile properties
+     */
     private Map<String, String> properties;
 
     public Profile(String name, JSONObject obj, JSONArray secure) {

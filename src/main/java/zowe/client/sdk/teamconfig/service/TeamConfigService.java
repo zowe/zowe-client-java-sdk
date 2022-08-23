@@ -34,6 +34,9 @@ import java.util.*;
  */
 public class TeamConfigService {
 
+    /**
+     * logger
+     */
     private static final Logger LOG = LoggerFactory.getLogger(TeamConfigService.class);
 
     public ConfigContainer getTeamConfig(KeyTarConfig config) throws Exception {

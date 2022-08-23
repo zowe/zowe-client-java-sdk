@@ -21,8 +21,17 @@ import java.util.Map;
  */
 public class Partition {
 
+    /**
+     * partition name
+     */
     private final String name;
+    /**
+     * partition properties
+     */
     private final Map<String, String> properties;
+    /**
+     * partition profiles
+     */
     private final List<Profile> profiles;
 
     public Partition(String name, Map<String, String> properties, List<Profile> profiles) {

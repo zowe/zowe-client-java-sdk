@@ -21,10 +21,19 @@ import java.util.List;
  */
 public interface IKeyTar {
 
+    /**
+     * processKey() describes the method that will extract KeyTar key information
+     */
     public void processKey() throws KeytarException;
 
+    /**
+     * getKeyConfigs() describes the method that will retrieve KeyTar key information
+     */
     public List<KeyTarConfig> getKeyConfigs() throws Exception;
 
+    /**
+     * getKeyTarValue() describes the method that will return KeyTar value from KeyTar processing done
+     */
     public String getKeyTarValue() throws Exception;
 
 }

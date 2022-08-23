@@ -20,10 +20,26 @@ import java.util.Map;
  */
 public class ConfigContainer {
 
+    /**
+     * list of partitions - partition can contain a separate embedded complete Global Team Configuration based on an
+     * individual LPAR instance.
+     */
     private final List<Partition> partitions;
+    /**
+     * schema section
+     */
     private final String schema;
+    /**
+     * list of profiles - profile section
+     */
     private final List<Profile> profiles;
+    /**
+     * defaults section
+     */
     private final Map<String, String> defaults;
+    /**
+     * autoStore section
+     */
     private final Boolean autoStore;
 
     public ConfigContainer(List<Partition> partitions, String schema, List<Profile> profiles,

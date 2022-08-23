@@ -26,8 +26,17 @@ import java.util.List;
  */
 public class KeyTarService {
 
+    /**
+     * logger
+     */
     private static final Logger LOG = LoggerFactory.getLogger(KeyTarService.class);
+    /**
+     * list of service names used for KeyTar querying of OS credential store
+     */
     private final List<String> serviceNames = List.of("Zowe", "Zowe-Plugin");
+    /**
+     * account name used for KeyTar querying of OS credential store
+     */
     private final String ACCOUNT_NAME = "secure_config_props";
 
     public KeyTarConfig getKeyTarConfig() throws Exception {

@@ -18,10 +18,25 @@ package zowe.client.sdk.teamconfig.model;
  */
 public class ProfileDao {
 
+    /**
+     * profile object
+     */
     private final Profile profile;
+    /**
+     * username from OS credential store
+     */
     private final String user;
+    /**
+     * password from OS credential store
+     */
     private final String password;
+    /**
+     * host value from properties section
+     */
     private final String host;
+    /**
+     * port value from properties section
+     */
     private final String port;
 
     public ProfileDao(Profile profile, String user, String password, String host, String port) {
