@@ -25,8 +25,7 @@ public class ListDatasets extends ZosConnection {
 
         TeamConfig teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
         ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
-        ZOSConnection connection = new ZOSConnection(profile.getHost(), profile.getPort(), profile.getUser(),
-                profile.getPassword());
+        ZOSConnection connection = new ZOSConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword());
         ListDatasets.listMembers(connection, dataSetName);
     }
 
