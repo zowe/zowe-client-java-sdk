@@ -60,6 +60,7 @@ public class ProfileDao {
     /**
      * Return host name
      *
+     * @return profile host string value
      * @author Frank Giordano
      */
     public String getHost() {
@@ -69,6 +70,7 @@ public class ProfileDao {
     /**
      * Return password
      *
+     * @return profile password string value
      * @author Frank Giordano
      */
     public String getPassword() {
@@ -78,6 +80,7 @@ public class ProfileDao {
     /**
      * Return port number
      *
+     * @return profile port string value
      * @author Frank Giordano
      */
     public String getPort() {
@@ -87,6 +90,7 @@ public class ProfileDao {
     /**
      * Return profile object
      *
+     * @return profile object
      * @author Frank Giordano
      */
     public Profile getProfile() {
@@ -96,6 +100,7 @@ public class ProfileDao {
     /**
      * Return username
      *
+     * @return profile username string value
      * @author Frank Giordano
      */
     public String getUser() {

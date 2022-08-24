@@ -64,6 +64,7 @@ public class ConfigContainer {
     /**
      * Return autoStore
      *
+     * @return autoStore string value from reading and parsing Zowe Global Team Configuration
      * @author Frank Giordano
      */
     public Boolean getAutoStore() {
@@ -73,6 +74,7 @@ public class ConfigContainer {
     /**
      * Return hashmap of default values
      *
+     * @return default property key/value pairs gathered from reading and parsing Zowe Global Team Configuration
      * @author Frank Giordano
      */
     public Map<String, String> getDefaults() {
@@ -82,6 +84,7 @@ public class ConfigContainer {
     /**
      * Return list of partitions
      *
+     * @return list of partitions gathered from reading and parsing Zowe Global Team Configuration
      * @author Frank Giordano
      */
     public List<Partition> getPartitions() {
@@ -91,6 +94,7 @@ public class ConfigContainer {
     /**
      * Return list of profiles
      *
+     * @return list of profiles gathered from reading and parsing Zowe Global Team Configuration
      * @author Frank Giordano
      */
     public List<Profile> getProfiles() {
@@ -100,6 +104,7 @@ public class ConfigContainer {
     /**
      * Return schema
      *
+     * @return schema string value from reading and parsing Zowe Global Team Configuration
      * @author Frank Giordano
      */
     public String getSchema() {

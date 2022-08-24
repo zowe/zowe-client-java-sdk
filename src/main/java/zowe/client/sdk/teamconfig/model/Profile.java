@@ -53,6 +53,7 @@ public class Profile {
     /**
      * Return profile name
      *
+     * @return profile name string value
      * @author Frank Giordano
      */
     public String getName() {
@@ -62,6 +63,7 @@ public class Profile {
     /**
      * Return hashmap of property values
      *
+     * @return profile property key/value pairs
      * @author Frank Giordano
      */
     public Map<String, String> getProperties() {
@@ -71,6 +73,7 @@ public class Profile {
     /**
      * Return secure value
      *
+     * @return secure Json object
      * @author Frank Giordano
      */
     public JSONArray getSecure() {

@@ -104,7 +104,7 @@ public class KeyTarImpl implements IKeyTar {
     /**
      * Retrieve the OS credential store by querying the OS with service and account name. Assign the value to keyString.
      *
-     * @throws Exception error processing
+     * @throws KeytarException error processing
      * @author Frank Giordano
      */
     @Override

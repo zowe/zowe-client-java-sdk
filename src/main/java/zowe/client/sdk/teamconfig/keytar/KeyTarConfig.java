@@ -47,6 +47,7 @@ public class KeyTarConfig {
     /**
      * Return location
      *
+     * @return location string value of zowe configuration filename and path
      * @author Frank Giordano
      */
     public String getLocation() {
@@ -56,6 +57,7 @@ public class KeyTarConfig {
     /**
      * Return password
      *
+     * @return password string value from OS credential store
      * @author Frank Giordano
      */
     public String getPassword() {
@@ -65,6 +67,7 @@ public class KeyTarConfig {
     /**
      * Return userName
      *
+     * @return userName string value from OS credential store
      * @author Frank Giordano
      */
     public String getUserName() {
