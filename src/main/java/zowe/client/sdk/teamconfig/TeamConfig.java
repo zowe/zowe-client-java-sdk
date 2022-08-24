@@ -18,6 +18,7 @@ import zowe.client.sdk.teamconfig.model.Profile;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
 import zowe.client.sdk.teamconfig.service.KeyTarService;
 import zowe.client.sdk.teamconfig.service.TeamConfigService;
+import zowe.client.sdk.utility.ValidateUtils;
 
 import java.util.Map;
 import java.util.Optional;
@@ -71,6 +72,7 @@ public class TeamConfig {
      *
      * @param keyTarService     required KeyTarService dependency
      * @param teamConfigService required TeamConfigService dependency
+     * @throws Exception error processing
      * @author Frank Giordano
      */
     public TeamConfig(KeyTarService keyTarService, TeamConfigService teamConfigService) throws Exception {
@@ -82,6 +84,7 @@ public class TeamConfig {
     /**
      * initialize dependency objects
      *
+     * @throws Exception error processing
      * @author Frank Giordano
      */
     private void config() throws Exception {
@@ -98,9 +101,12 @@ public class TeamConfig {
      *
      * @param name profile name
      * @return ProfileDao object
+     * @throws Exception error processing
      * @author Frank Giordano
      */
     public ProfileDao getDefaultProfileByName(String name) throws Exception {
+        ValidateUtils.checkNullParameter(name == null, "name is null");
+        ValidateUtils.checkIllegalParameter(name.isEmpty(), "name not specified");
         Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(name));
         Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(name));
         Optional<Profile> base = teamConfig.getProfiles().stream().filter(isBaseProfile).findFirst();
@@ -123,9 +129,14 @@ public class TeamConfig {
      * @param profileName   profile name
      * @param partitionName partition name
      * @return ProfileDao object
+     * @throws Exception error processing
      * @author Frank Giordano
      */
     public ProfileDao getDefaultProfileFromPartitionByName(String profileName, String partitionName) throws Exception {
+        ValidateUtils.checkNullParameter(profileName == null, "profileName is null");
+        ValidateUtils.checkIllegalParameter(profileName.isEmpty(), "profileName not specified");
+        ValidateUtils.checkNullParameter(partitionName == null, "partitionName is null");
+        ValidateUtils.checkIllegalParameter(partitionName.isEmpty(), "partitionName not specified");
         Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(profileName));
         Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(profileName));
         Predicate<Partition> isPartitionName = i -> i.getName().equals(partitionName);

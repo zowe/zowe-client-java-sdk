@@ -21,6 +21,7 @@ import zowe.client.sdk.teamconfig.model.Partition;
 import zowe.client.sdk.teamconfig.model.Profile;
 import zowe.client.sdk.teamconfig.types.SectionType;
 import zowe.client.sdk.teamconfig.utility.TeamConfigUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class TeamConfigService {
     private static final Logger LOG = LoggerFactory.getLogger(TeamConfigService.class);
 
     public ConfigContainer getTeamConfig(KeyTarConfig config) throws Exception {
+        ValidateUtils.checkNullParameter(config == null, "config is null");
         JSONParser parser = new JSONParser();
         Object obj;
         try {
