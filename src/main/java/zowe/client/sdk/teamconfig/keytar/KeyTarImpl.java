@@ -36,51 +36,21 @@ public class KeyTarImpl implements IKeyTar {
      */
     private static final Logger LOG = LoggerFactory.getLogger(KeyTarImpl.class);
     /**
-     * Represents a string value used for KeyTar querying for OS credential store value
+     * List of KeyTarConfig objects - OS might contain multiple OS stores
      */
-    private final String serviceName;
+    private final List<KeyTarConfig> keyTarConfigs = new ArrayList<>();
     /**
      * Represents a string value used for KeyTar querying for OS credential store value
      */
-    private final String accountName;
+    private String serviceName;
+    /**
+     * Represents a string value used for KeyTar querying for OS credential store value
+     */
+    private String accountName;
     /**
      * Represents a string value of the retrieved OS credential store
      */
     private String keyString;
-    /**
-     * List of KeyTarConfig objects - OS might contain multiple OS stores
-     */
-    private final List<KeyTarConfig> keyTarConfigs = new ArrayList<>();
-
-    /**
-     * KeyTarImpl constructor.
-     *
-     * @param serviceName service name use to query OS credential store
-     * @param accountName account name use to query OS credential store
-     * @author Frank Giordano
-     */
-    public KeyTarImpl(String serviceName, String accountName) {
-        this.serviceName = serviceName;
-        this.accountName = accountName;
-    }
-
-    /**
-     * Retrieve the OS credential store by querying the OS with service and account name. Assign the value to keyString.
-     *
-     * @throws Exception error processing
-     * @author Frank Giordano
-     */
-    @Override
-    public void processKey() throws KeytarException {
-        Keytar instance = Keytar.getInstance();
-        String encodedString = instance.getPassword(serviceName, accountName);
-        LOG.debug("KeyTar encodedString retrieved {}", encodedString);
-        if (encodedString == null) {
-            throw new NullPointerException("Unknown service name or account name");
-        }
-        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
-        this.keyString = new String(decodedBytes);
-    }
 
     /**
      * Return keyString json value parsed into a KeyTarConfig object.
@@ -97,6 +67,19 @@ public class KeyTarImpl implements IKeyTar {
             return keyTarConfigs;
         }
         return parseJson();
+    }
+
+    /**
+     * Return keyString value after KeyTar has been fully processed.
+     *
+     * @return list of KeyTarConfig objects
+     * @author Frank Giordano
+     */
+    @Override
+    public String getKeyTarValue() {
+        ValidateUtils.checkNullParameter(keyString == null, "keyString is null, perform processKey first");
+        ValidateUtils.checkIllegalParameter(keyString.isEmpty(), "keyString is empty");
+        return keyString;
     }
 
     /**
@@ -119,17 +102,35 @@ public class KeyTarImpl implements IKeyTar {
     }
 
     /**
-     * Return keyString value after KeyTar has been fully processed.
+     * Retrieve the OS credential store by querying the OS with service and account name. Assign the value to keyString.
      *
-     * @return list of KeyTarConfig objects
      * @throws Exception error processing
      * @author Frank Giordano
      */
     @Override
-    public String getKeyTarValue() throws Exception {
-        ValidateUtils.checkNullParameter(keyString == null, "keyString is null, perform processKey first");
-        ValidateUtils.checkIllegalParameter(keyString.isEmpty(), "keyString is empty");
-        return keyString;
+    public void processKey() throws KeytarException {
+        ValidateUtils.checkNullParameter(serviceName == null, "serviceName is null");
+        ValidateUtils.checkIllegalParameter(serviceName.isEmpty(), "serviceName is empty");
+        ValidateUtils.checkNullParameter(accountName == null, "accountName is null");
+        ValidateUtils.checkIllegalParameter(accountName.isEmpty(), "accountName is empty");
+        Keytar instance = Keytar.getInstance();
+        String encodedString = instance.getPassword(serviceName, accountName);
+        LOG.debug("KeyTar encodedString retrieved {}", encodedString);
+        if (encodedString == null) {
+            throw new NullPointerException("Unknown service name or account name");
+        }
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
+        this.keyString = new String(decodedBytes);
+    }
+
+    @Override
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    @Override
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
 }

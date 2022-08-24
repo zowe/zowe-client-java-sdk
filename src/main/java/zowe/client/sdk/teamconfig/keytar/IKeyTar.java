@@ -22,18 +22,24 @@ import java.util.List;
 public interface IKeyTar {
 
     /**
-     * Describes the method that will extract KeyTar key information
-     */
-    public void processKey() throws KeytarException;
-
-    /**
      * Describes the method that will retrieve KeyTar key information
      */
     public List<KeyTarConfig> getKeyConfigs() throws Exception;
-
     /**
      * Describes the method that will return KeyTar value from KeyTar processing done
      */
     public String getKeyTarValue() throws Exception;
+    /**
+     * Describes the method that will extract KeyTar key information
+     */
+    public void processKey() throws KeytarException;
+    /**
+     * set required service name used for QA credential store querying
+     */
+    public void setAccountName(String accountName);
+    /**
+     * set required account name used for QA credential store querying
+     */
+    public void setServiceName(String serviceName);
 
 }

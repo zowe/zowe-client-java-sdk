@@ -11,8 +11,8 @@ package zowe.client.sdk.teamconfig.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zowe.client.sdk.teamconfig.keytar.IKeyTar;
 import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
-import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,20 @@ public class KeyTarService {
      * Account name used for KeyTar querying of OS credential store
      */
     private final String ACCOUNT_NAME = "secure_config_props";
+    /**
+     * IKeyTar implementation holder
+     */
+    private IKeyTar keyTar;
+
+    /**
+     * KeyTarService constructor
+     *
+     * @param keyTar IKeyTar implementation Object
+     * @author Frank Giordano
+     */
+    public KeyTarService(IKeyTar keyTar) {
+        this.keyTar = keyTar;
+    }
 
     /**
      * Return KeyTarConfig containing team config location and OS credential information.
@@ -48,19 +62,24 @@ public class KeyTarService {
      */
     public KeyTarConfig getKeyTarConfig() throws Exception {
         List<KeyTarConfig> keyTarConfigs = new ArrayList<>();
+        keyTar.setAccountName(ACCOUNT_NAME);
         for (String serviceName : serviceNames) {
-            KeyTarImpl keyTarImpl = new KeyTarImpl(serviceName, ACCOUNT_NAME);
+            keyTar.setServiceName(serviceName);
             try {
-                keyTarImpl.processKey();
+                keyTar.processKey();
             } catch (Exception e) {
+                LOG.debug(e.getMessage());
                 continue;
             }
-            LOG.debug("KeyTar Value {}", keyTarImpl.getKeyTarValue());
-            keyTarConfigs = keyTarImpl.getKeyConfigs();
+            LOG.debug("KeyTar Value {}", keyTar.getKeyTarValue());
+            keyTarConfigs = keyTar.getKeyConfigs();
             break;
         }
         if (keyTarConfigs.isEmpty()) {
-            throw new Exception("No zowe configuration information available");
+            throw new Exception("No zowe configuration information available.");
+        }
+        if (keyTarConfigs.size() > 1) {
+            LOG.debug("Multiple configuration files retrieved. Returning the first one on list.");
         }
         return keyTarConfigs.get(0);
     }

@@ -1,10 +1,12 @@
 # TeamConfig Package
 
-Contains APIs to read Zowe Global Team Configuration and return profile information with prudent information needed especially for secure authentication.   
+Contains APIs to read Zowe Global Team Configuration and return profile information with prudent information needed
+especially for secure authentication.
 
 ## API Examples
 
-**Retrieve zosmf profile team from team config and use it to create ZOSConnection object without hard coding username and password and retrieve a list of members from the dataset input string**
+**Retrieve zosmf profile team from team config and use it to create ZOSConnection object without hard coding username
+and password and retrieve a list of members from the dataset input string**
 
 ````java
 public class ListDatasets extends ZosConnection {
@@ -21,9 +23,9 @@ public class ListDatasets extends ZosConnection {
     public static void main(String[] args) throws Exception {
         String dataSetName = "CCSQA.ASM.JCL";
 
-        TeamConfig teamConfig = new TeamConfig(new KeyTarService(), new TeamConfigService());
+        TeamConfig teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
         ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
-        ZOSConnection connection = new ZOSConnection(profile.getHost(), profile.getPort(), profile.getUser(), 
+        ZOSConnection connection = new ZOSConnection(profile.getHost(), profile.getPort(), profile.getUser(),
                 profile.getPassword());
         ListDatasets.listMembers(connection, dataSetName);
     }
@@ -41,7 +43,7 @@ public class ListDatasets extends ZosConnection {
         List<String> datasets = zosDsnList.listDsnMembers(dataSetName, params);
         datasets.forEach(LOG::info);
     }
-    
+
 }
 `````  
 
