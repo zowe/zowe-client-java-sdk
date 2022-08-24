@@ -58,6 +58,33 @@ public class ProfileDao {
     }
 
     /**
+     * Return host name
+     *
+     * @author Frank Giordano
+     */
+    public String getHost() {
+        return host;
+    }
+
+    /**
+     * Return password
+     *
+     * @author Frank Giordano
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * Return port number
+     *
+     * @author Frank Giordano
+     */
+    public String getPort() {
+        return port;
+    }
+
+    /**
      * Return profile object
      *
      * @author Frank Giordano
@@ -73,33 +100,6 @@ public class ProfileDao {
      */
     public String getUser() {
         return user;
-    }
-
-    /**
-     * Return password
-     *
-     * @author Frank Giordano
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Return host name
-     *
-     * @author Frank Giordano
-     */
-    public String getHost() {
-        return host;
-    }
-
-    /**
-     * Return port number
-     *
-     * @author Frank Giordano
-     */
-    public String getPort() {
-        return port;
     }
 
     @Override

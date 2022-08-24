@@ -58,21 +58,21 @@ public class Partition {
     }
 
     /**
-     * Return hashmap of property values
-     *
-     * @author Frank Giordano
-     */
-    public Map<String, String> getProperties() {
-        return properties;
-    }
-
-    /**
      * Return list of Profiles
      *
      * @author Frank Giordano
      */
     public List<Profile> getProfiles() {
         return profiles;
+    }
+
+    /**
+     * Return hashmap of property values
+     *
+     * @author Frank Giordano
+     */
+    public Map<String, String> getProperties() {
+        return properties;
     }
 
     @Override

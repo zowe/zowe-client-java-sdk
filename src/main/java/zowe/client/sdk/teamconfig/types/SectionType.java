@@ -22,11 +22,11 @@ public enum SectionType {
     DEFAULTS("defaults"),
     AUTOSTORE("autoStore");
 
+    private final String value;
+
     SectionType(String value) {
         this.value = value;
     }
-
-    private final String value;
 
     public String getValue() {
         return value;

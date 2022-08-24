@@ -54,21 +54,21 @@ public class KeyTarConfig {
     }
 
     /**
-     * Return userName
-     *
-     * @author Frank Giordano
-     */
-    public String getUserName() {
-        return userName;
-    }
-
-    /**
      * Return password
      *
      * @author Frank Giordano
      */
     public String getPassword() {
         return password;
+    }
+
+    /**
+     * Return userName
+     *
+     * @author Frank Giordano
+     */
+    public String getUserName() {
+        return userName;
     }
 
     @Override

@@ -62,30 +62,12 @@ public class ConfigContainer {
     }
 
     /**
-     * Return list of partitions
+     * Return autoStore
      *
      * @author Frank Giordano
      */
-    public List<Partition> getPartitions() {
-        return partitions;
-    }
-
-    /**
-     * Return schema
-     *
-     * @author Frank Giordano
-     */
-    public String getSchema() {
-        return schema;
-    }
-
-    /**
-     * Return list of profiles
-     *
-     * @author Frank Giordano
-     */
-    public List<Profile> getProfiles() {
-        return profiles;
+    public Boolean getAutoStore() {
+        return autoStore;
     }
 
     /**
@@ -98,12 +80,30 @@ public class ConfigContainer {
     }
 
     /**
-     * Return autoStore
+     * Return list of partitions
      *
      * @author Frank Giordano
      */
-    public Boolean getAutoStore() {
-        return autoStore;
+    public List<Partition> getPartitions() {
+        return partitions;
+    }
+
+    /**
+     * Return list of profiles
+     *
+     * @author Frank Giordano
+     */
+    public List<Profile> getProfiles() {
+        return profiles;
+    }
+
+    /**
+     * Return schema
+     *
+     * @author Frank Giordano
+     */
+    public String getSchema() {
+        return schema;
     }
 
     @Override

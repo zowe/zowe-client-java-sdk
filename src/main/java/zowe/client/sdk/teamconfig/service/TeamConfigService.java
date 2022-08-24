@@ -41,6 +41,37 @@ public class TeamConfigService {
     private static final Logger LOG = LoggerFactory.getLogger(TeamConfigService.class);
 
     /**
+     * Parse a JSON representation of a Zowe Global Team Configuration partition section.
+     *
+     * @param name       Partition name
+     * @param jsonObject JSONObject object
+     * @return Partition object
+     * @author Frank Giordano
+     */
+    private Partition getPartition(String name, JSONObject jsonObject) {
+        Set<String> keyObjs = jsonObject.keySet();
+        List<Profile> profiles = new ArrayList<>();
+        Map<String, String> properties = new HashMap<>();
+        LOG.debug("Partition found name {} containing {}:", name, jsonObject);
+        for (Object keyObj : keyObjs) {
+            String keyVal = (String) keyObj;
+            if (SectionType.PROFILES.getValue().equals(keyVal)) {
+                JSONObject jsonProfileObj = (JSONObject) jsonObject.get(SectionType.PROFILES.getValue());
+                Set<String> jsonProfileKeys = jsonProfileObj.keySet();
+                for (String profileKeyVal : jsonProfileKeys) {
+                    JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
+                    profiles.add(new Profile((String) profileTypeJsonObj.get("type"),
+                            (JSONObject) profileTypeJsonObj.get("properties"),
+                            (JSONArray) profileTypeJsonObj.get("secure")));
+                }
+            } else if ("properties".equalsIgnoreCase(keyVal)) {
+                properties = TeamConfigUtils.parseJsonPropsObj((JSONObject) jsonObject.get(keyVal));
+            }
+        }
+        return new Partition(name, properties, profiles);
+    }
+
+    /**
      * Return ConfigContainer object container of a parsed Zowe Global Team Configuration file representation.
      *
      * @param config KeyTarConfig object
@@ -58,6 +89,24 @@ public class TeamConfigService {
             throw new Exception("Error reading zowe global team configuration file");
         }
         return parseJson((JSONObject) obj);
+    }
+
+    /**
+     * Determine if JSON contains a partition section next.
+     *
+     * @param profileKeyObj Partition name
+     * @return boolean true or false
+     * @throws Exception error processing
+     * @author Frank Giordano
+     */
+    private boolean isPartition(Set<String> profileKeyObj) throws Exception {
+        Iterator<String> itr = profileKeyObj.iterator();
+        if (itr.hasNext()) {
+            String keyVal = itr.next();
+            return SectionType.PROFILES.getValue().equals(keyVal);
+        } else {
+            throw new Exception("Profile type detail missing in profile section.");
+        }
     }
 
     /**
@@ -106,55 +155,6 @@ public class TeamConfigService {
         }
 
         return new ConfigContainer(partitions, schema, profiles, defaults, autoStore);
-    }
-
-    /**
-     * Parse a JSON representation of a Zowe Global Team Configuration partition section.
-     *
-     * @param name       Partition name
-     * @param jsonObject JSONObject object
-     * @return Partition object
-     * @author Frank Giordano
-     */
-    private Partition getPartition(String name, JSONObject jsonObject) {
-        Set<String> keyObjs = jsonObject.keySet();
-        List<Profile> profiles = new ArrayList<>();
-        Map<String, String> properties = new HashMap<>();
-        LOG.debug("Partition found name {} containing {}:", name, jsonObject);
-        for (Object keyObj : keyObjs) {
-            String keyVal = (String) keyObj;
-            if (SectionType.PROFILES.getValue().equals(keyVal)) {
-                JSONObject jsonProfileObj = (JSONObject) jsonObject.get(SectionType.PROFILES.getValue());
-                Set<String> jsonProfileKeys = jsonProfileObj.keySet();
-                for (String profileKeyVal : jsonProfileKeys) {
-                    JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
-                    profiles.add(new Profile((String) profileTypeJsonObj.get("type"),
-                            (JSONObject) profileTypeJsonObj.get("properties"),
-                            (JSONArray) profileTypeJsonObj.get("secure")));
-                }
-            } else if ("properties".equalsIgnoreCase(keyVal)) {
-                properties = TeamConfigUtils.parseJsonPropsObj((JSONObject) jsonObject.get(keyVal));
-            }
-        }
-        return new Partition(name, properties, profiles);
-    }
-
-    /**
-     * Determine if JSON contains a partition section next.
-     *
-     * @param profileKeyObj Partition name
-     * @return boolean true or false
-     * @throws Exception error processing
-     * @author Frank Giordano
-     */
-    private boolean isPartition(Set<String> profileKeyObj) throws Exception {
-        Iterator<String> itr = profileKeyObj.iterator();
-        if (itr.hasNext()) {
-            String keyVal = itr.next();
-            return SectionType.PROFILES.getValue().equals(keyVal);
-        } else {
-            throw new Exception("Profile type detail missing in profile section.");
-        }
     }
 
 }
