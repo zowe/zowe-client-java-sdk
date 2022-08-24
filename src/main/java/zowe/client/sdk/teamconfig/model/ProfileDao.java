@@ -57,6 +57,51 @@ public class ProfileDao {
         this.port = port;
     }
 
+    /**
+     * Return profile object
+     *
+     * @author Frank Giordano
+     */
+    public Profile getProfile() {
+        return profile;
+    }
+
+    /**
+     * Return username
+     *
+     * @author Frank Giordano
+     */
+    public String getUser() {
+        return user;
+    }
+
+    /**
+     * Return password
+     *
+     * @author Frank Giordano
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * Return host name
+     *
+     * @author Frank Giordano
+     */
+    public String getHost() {
+        return host;
+    }
+
+    /**
+     * Return port number
+     *
+     * @author Frank Giordano
+     */
+    public String getPort() {
+        return port;
+    }
+
     @Override
     public String toString() {
         return "ProfileDao{" +
