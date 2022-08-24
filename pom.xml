@@ -6,7 +6,7 @@
 
     <groupId>org.zowe.client.java.sdk</groupId>
     <artifactId>zowe-client-java-sdk</artifactId>
-    <version>1.0.26</version>
+    <version>1.1.0</version>
     <build>
         <plugins>
             <plugin>
@@ -129,6 +129,12 @@
             <groupId>com.jcraft</groupId>
             <artifactId>jsch</artifactId>
             <version>0.1.55</version>
+        </dependency>
+        <dependency>
+            <groupId>com.starxg</groupId>
+            <artifactId>java-keytar</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Test -->
