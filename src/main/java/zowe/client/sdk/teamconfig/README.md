@@ -1,11 +1,11 @@
 # TeamConfig Package
 
 Contains APIs to read Zowe Global Team Configuration and return profile information with prudent information needed
-especially for secure authentication.
+especially for secure authentication processing.
 
 ## API Examples
 
-**Retrieve zosmf profile team from team config and use it to create ZOSConnection object without hard coding username
+**Retrieve the default "zosmf" profile from team config. Use it to create a ZOSConnection object without hard coding username
 and password and retrieve a list of members from the dataset input string**
 
 ````java
