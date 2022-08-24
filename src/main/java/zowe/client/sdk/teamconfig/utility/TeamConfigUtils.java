@@ -22,6 +22,13 @@ import java.util.Map;
  */
 public class TeamConfigUtils {
 
+    /**
+     * Parse Json representation of properties section.
+     *
+     * @param obj JSONObject object
+     * @return hashmap of property values
+     * @author Frank Giordano
+     */
     public static Map<String, String> parseJsonPropsObj(JSONObject obj) {
         // example of props json value to parse properties='{"rejectUnauthorized":false,"host":"mvsxe47.lvn.company.net"}'
         Map<String, String> props = new HashMap<>();

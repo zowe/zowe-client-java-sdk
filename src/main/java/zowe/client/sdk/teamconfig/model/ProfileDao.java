@@ -19,26 +19,36 @@ package zowe.client.sdk.teamconfig.model;
 public class ProfileDao {
 
     /**
-     * profile object
+     * Profile object from Zowe Global Team Configuration
      */
     private final Profile profile;
     /**
-     * username from OS credential store
+     * Username from OS credential store
      */
     private final String user;
     /**
-     * password from OS credential store
+     * Password from OS credential store
      */
     private final String password;
     /**
-     * host value from properties section
+     * Host value from properties section from Zowe Global Team Configuration
      */
     private final String host;
     /**
-     * port value from properties section
+     * Port value from properties section from Zowe Global Team Configuration
      */
     private final String port;
 
+    /**
+     * Partition constructor.
+     *
+     * @param profile  profile object from Zowe Global Team Configuration
+     * @param user     username from Keytar keyValue
+     * @param password password from Keytar keyValue
+     * @param host     host value from Zowe Global Team Configuration
+     * @param port     port value from Zowe Global Team Configuration
+     * @author Frank Giordano
+     */
     public ProfileDao(Profile profile, String user, String password, String host, String port) {
         this.profile = profile;
         this.user = user;

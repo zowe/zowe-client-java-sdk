@@ -16,6 +16,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zowe.client.sdk.utility.ValidateUtils;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -31,34 +32,44 @@ import java.util.Set;
 public class KeyTarImpl implements IKeyTar {
 
     /**
-     * logger
+     * Logger
      */
     private static final Logger LOG = LoggerFactory.getLogger(KeyTarImpl.class);
     /**
-     * represents a string value used for KeyTar querying for OS credential store value
+     * Represents a string value used for KeyTar querying for OS credential store value
      */
     private final String serviceName;
     /**
-     * represents a string value used for KeyTar querying for OS credential store value
+     * Represents a string value used for KeyTar querying for OS credential store value
      */
     private final String accountName;
     /**
-     * represents a string value of the retrieved OS credential store
+     * Represents a string value of the retrieved OS credential store
      */
     private String keyString;
+    /**
+     * List of KeyTarConfig objects - OS might contain multiple OS stores
+     */
     private final List<KeyTarConfig> keyTarConfigs = new ArrayList<>();
 
+    /**
+     * KeyTarImpl constructor.
+     *
+     * @param serviceName service name use to query OS credential store
+     * @param accountName account name use to query OS credential store
+     * @author Frank Giordano
+     */
     public KeyTarImpl(String serviceName, String accountName) {
         this.serviceName = serviceName;
         this.accountName = accountName;
     }
 
-    public KeyTarImpl(String serviceName, String accountName, String keyString) {
-        this.serviceName = serviceName;
-        this.accountName = accountName;
-        this.keyString = keyString;
-    }
-
+    /**
+     * Retrieve the OS credential store by querying the OS with service and account name. Assign the value to keyString.
+     *
+     * @throws Exception error processing
+     * @author Frank Giordano
+     */
     @Override
     public void processKey() throws KeytarException {
         Keytar instance = Keytar.getInstance();
@@ -71,20 +82,30 @@ public class KeyTarImpl implements IKeyTar {
         this.keyString = new String(decodedBytes);
     }
 
+    /**
+     * Return keyString json value parsed into a KeyTarConfig object.
+     *
+     * @return list of KeyTarConfig objects
+     * @throws Exception error processing
+     * @author Frank Giordano
+     */
     @Override
     public List<KeyTarConfig> getKeyConfigs() throws Exception {
+        ValidateUtils.checkNullParameter(keyString == null, "keyString is null, perform processKey first");
+        ValidateUtils.checkIllegalParameter(keyString.isEmpty(), "keyString is empty");
         if (!keyTarConfigs.isEmpty()) {
             return keyTarConfigs;
-        }
-        if (keyString == null) {
-            throw new Exception("keyString is null, perform processKey first");
-        }
-        if (keyString.isEmpty()) {
-            throw new Exception("keyString is empty");
         }
         return parseJson();
     }
 
+    /**
+     * Parse KeyTar json string returned when querying the OS credential store.
+     *
+     * @return list of KeyTarConfig objects
+     * @throws ParseException error processing
+     * @author Frank Giordano
+     */
     private List<KeyTarConfig> parseJson() throws ParseException {
         JSONObject jsonKeyTar = (JSONObject) new JSONParser().parse(keyString);
         Set<String> keyTarKeys = jsonKeyTar.keySet();
@@ -94,18 +115,20 @@ public class KeyTarImpl implements IKeyTar {
                     (String) jsonVal.get("profiles.base.properties.user"),
                     (String) jsonVal.get("profiles.base.properties.password")));
         }
-
         return keyTarConfigs;
     }
 
+    /**
+     * Return keyString value after KeyTar has been fully processed.
+     *
+     * @return list of KeyTarConfig objects
+     * @throws Exception error processing
+     * @author Frank Giordano
+     */
     @Override
     public String getKeyTarValue() throws Exception {
-        if (keyString == null) {
-            throw new Exception("keyString is null, perform processKey first");
-        }
-        if (keyString.isEmpty()) {
-            throw new Exception("keyString is empty");
-        }
+        ValidateUtils.checkNullParameter(keyString == null, "keyString is null, perform processKey first");
+        ValidateUtils.checkIllegalParameter(keyString.isEmpty(), "keyString is empty");
         return keyString;
     }
 

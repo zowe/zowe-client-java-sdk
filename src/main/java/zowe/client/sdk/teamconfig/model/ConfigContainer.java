@@ -21,27 +21,37 @@ import java.util.Map;
 public class ConfigContainer {
 
     /**
-     * list of partitions - partition can contain a separate embedded complete Global Team Configuration based on an
+     * List of partitions - partition can contain a separate embedded complete Global Team Configuration based on an
      * individual LPAR instance.
      */
     private final List<Partition> partitions;
     /**
-     * schema section
+     * Schema section value from Zowe Global Team Configuration
      */
     private final String schema;
     /**
-     * list of profiles - profile section
+     * List of profiles - profile section from Zowe Global Team Configuration
      */
     private final List<Profile> profiles;
     /**
-     * defaults section
+     * Defaults section property values from Zowe Global Team Configuration
      */
     private final Map<String, String> defaults;
     /**
-     * autoStore section
+     * AutoStore section value from Zowe Global Team Configuration
      */
     private final Boolean autoStore;
 
+    /**
+     * ConfigContainer constructor.
+     *
+     * @param partitions list of parsed partitions from Zowe Global Team Configuration
+     * @param schema     schema value from Zowe Global Team Configuration
+     * @param profiles   list of parsed profiles from Zowe Global Team Configuration
+     * @param defaults   hashmap of defaults values parsed from Zowe Global Team Configuration
+     * @param autoStore  autoStore value from Zowe Global Team Configuration
+     * @author Frank Giordano
+     */
     public ConfigContainer(List<Partition> partitions, String schema, List<Profile> profiles,
                            Map<String, String> defaults, Boolean autoStore) {
         this.partitions = partitions;
@@ -51,22 +61,47 @@ public class ConfigContainer {
         this.autoStore = autoStore;
     }
 
+    /**
+     * Return list of partitions
+     *
+     * @author Frank Giordano
+     */
     public List<Partition> getPartitions() {
         return partitions;
     }
 
+    /**
+     * Return schema
+     *
+     * @author Frank Giordano
+     */
     public String getSchema() {
         return schema;
     }
 
+    /**
+     * Return list of profiles
+     *
+     * @author Frank Giordano
+     */
     public List<Profile> getProfiles() {
         return profiles;
     }
 
+    /**
+     * Return hashmap of default values
+     *
+     * @author Frank Giordano
+     */
     public Map<String, String> getDefaults() {
         return defaults;
     }
 
+    /**
+     * Return autoStore
+     *
+     * @author Frank Giordano
+     */
     public Boolean getAutoStore() {
         return autoStore;
     }

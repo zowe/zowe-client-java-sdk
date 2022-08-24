@@ -18,32 +18,55 @@ package zowe.client.sdk.teamconfig.keytar;
 public class KeyTarConfig {
 
     /**
-     * represents a string value of Zowe Global Team Configuration file name and path location
+     * Represents a string value of Zowe Global Team Configuration file name and path location
      */
     private final String location;
     /**
-     * represents a string value of a username contained with the OS credential store
+     * Represents a string value of a username contained within the OS credential store
      */
     private final String userName;
     /**
-     * represents a string value of a password contained with the OS credential store
+     * Represents a string value of a password contained within the OS credential store
      */
     private final String password;
 
+    /**
+     * KeyTarConfig constructor.
+     *
+     * @param location location of the Zowe Global Team Configuration filename and path
+     * @param userName userName specified from parsed KeyTar keyValue
+     * @param password password specified from parsed KeyTar keyValue
+     * @author Frank Giordano
+     */
     public KeyTarConfig(String location, String userName, String password) {
         this.location = location;
         this.userName = userName;
         this.password = password;
     }
 
+    /**
+     * Return location
+     *
+     * @author Frank Giordano
+     */
     public String getLocation() {
         return location;
     }
 
+    /**
+     * Return userName
+     *
+     * @author Frank Giordano
+     */
     public String getUserName() {
         return userName;
     }
 
+    /**
+     * Return password
+     *
+     * @author Frank Giordano
+     */
     public String getPassword() {
         return password;
     }

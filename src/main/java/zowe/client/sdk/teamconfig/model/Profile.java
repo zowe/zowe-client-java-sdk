@@ -24,32 +24,55 @@ import java.util.Map;
 public class Profile {
 
     /**
-     * profile name
+     * Profile name
      */
     private final String name;
     /**
-     * profile secure json object
+     * Profile secure json object
      */
     private final JSONArray secure;
     /**
-     * profile properties
+     * Profile property values
      */
     private Map<String, String> properties;
 
+    /**
+     * Partition constructor.
+     *
+     * @param name   profile name
+     * @param obj    json object of property values within profile section from Zowe Global Team Configuration
+     * @param secure jsonarray value of secure section
+     * @author Frank Giordano
+     */
     public Profile(String name, JSONObject obj, JSONArray secure) {
         this.name = name;
         this.secure = secure;
         properties = TeamConfigUtils.parseJsonPropsObj(obj);
     }
 
+    /**
+     * Return profile name
+     *
+     * @author Frank Giordano
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Return hashmap of property values
+     *
+     * @author Frank Giordano
+     */
     public Map<String, String> getProperties() {
         return properties;
     }
 
+    /**
+     * Return secure value
+     *
+     * @author Frank Giordano
+     */
     public JSONArray getSecure() {
         return secure;
     }

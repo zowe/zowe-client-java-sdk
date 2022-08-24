@@ -22,32 +22,55 @@ import java.util.Map;
 public class Partition {
 
     /**
-     * partition name
+     * Partition name
      */
     private final String name;
     /**
-     * partition properties
+     * Partition property values
      */
     private final Map<String, String> properties;
     /**
-     * partition profiles
+     * Partition profiles
      */
     private final List<Profile> profiles;
 
+    /**
+     * Partition constructor.
+     *
+     * @param name       partition name
+     * @param properties hashmap of property values
+     * @param profiles   list oof Profiles
+     * @author Frank Giordano
+     */
     public Partition(String name, Map<String, String> properties, List<Profile> profiles) {
         this.name = name;
         this.properties = properties;
         this.profiles = profiles;
     }
 
+    /**
+     * Return name
+     *
+     * @author Frank Giordano
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Return hashmap of property values
+     *
+     * @author Frank Giordano
+     */
     public Map<String, String> getProperties() {
         return properties;
     }
 
+    /**
+     * Return list of Profiles
+     *
+     * @author Frank Giordano
+     */
     public List<Profile> getProfiles() {
         return profiles;
     }

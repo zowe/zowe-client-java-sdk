@@ -35,7 +35,7 @@ import java.util.function.Predicate;
 public class TeamConfig {
 
     /**
-     * logger
+     * Logger
      */
     private static final Logger LOG = LoggerFactory.getLogger(TeamConfig.class);
     /**
@@ -82,7 +82,7 @@ public class TeamConfig {
     }
 
     /**
-     * initialize dependency objects
+     * Initialize dependency objects
      *
      * @throws Exception error processing
      * @author Frank Giordano
@@ -161,6 +161,13 @@ public class TeamConfig {
                 mergeProperties.getHost().orElse(null), mergeProperties.getPort().orElse(null));
     }
 
+    /**
+     * Take two profile objects and determine if they have host and port values to be merged.
+     *
+     * @param target profile object
+     * @param base   profile object
+     * @author Frank Giordano
+     */
     private void merge(Optional<Profile> target, Optional<Profile> base) {
         Optional<Map<String, String>> targetProps = Optional.ofNullable(target.get().getProperties());
         Optional<Map<String, String>> baseProps = Optional.ofNullable(base.get().getProperties());

@@ -36,10 +36,18 @@ import java.util.*;
 public class TeamConfigService {
 
     /**
-     * logger
+     * Logger
      */
     private static final Logger LOG = LoggerFactory.getLogger(TeamConfigService.class);
 
+    /**
+     * Return ConfigContainer object container of a parsed Zowe Global Team Configuration file representation.
+     *
+     * @param config KeyTarConfig object
+     * @return ConfigContainer object
+     * @throws Exception error processing
+     * @author Frank Giordano
+     */
     public ConfigContainer getTeamConfig(KeyTarConfig config) throws Exception {
         ValidateUtils.checkNullParameter(config == null, "config is null");
         JSONParser parser = new JSONParser();
@@ -52,6 +60,14 @@ public class TeamConfigService {
         return parseJson((JSONObject) obj);
     }
 
+    /**
+     * Parse a JSON representation of a Zowe Global Team Configuration file.
+     *
+     * @param jsonObj JSONObject object
+     * @return ConfigContainer object
+     * @throws Exception error processing
+     * @author Frank Giordano
+     */
     private ConfigContainer parseJson(JSONObject jsonObj) throws Exception {
         String schema = null;
         Boolean autoStore = null;
@@ -92,6 +108,14 @@ public class TeamConfigService {
         return new ConfigContainer(partitions, schema, profiles, defaults, autoStore);
     }
 
+    /**
+     * Parse a JSON representation of a Zowe Global Team Configuration partition section.
+     *
+     * @param name       Partition name
+     * @param jsonObject JSONObject object
+     * @return Partition object
+     * @author Frank Giordano
+     */
     private Partition getPartition(String name, JSONObject jsonObject) {
         Set<String> keyObjs = jsonObject.keySet();
         List<Profile> profiles = new ArrayList<>();
@@ -115,6 +139,14 @@ public class TeamConfigService {
         return new Partition(name, properties, profiles);
     }
 
+    /**
+     * Determine if JSON contains a partition section next.
+     *
+     * @param profileKeyObj Partition name
+     * @return boolean true or false
+     * @throws Exception error processing
+     * @author Frank Giordano
+     */
     private boolean isPartition(Set<String> profileKeyObj) throws Exception {
         Iterator<String> itr = profileKeyObj.iterator();
         if (itr.hasNext()) {
