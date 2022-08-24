@@ -1,6 +1,12 @@
 zowe.client.sdk.core
 zowe.client.sdk.rest
 zowe.client.sdk.rest.type
+zowe.client.sdk.teamconfig
+zowe.client.sdk.teamconfig.keytar
+zowe.client.sdk.teamconfig.model
+zowe.client.sdk.teamconfig.service
+zowe.client.sdk.teamconfig.types
+zowe.client.sdk.teamconfig.utility
 zowe.client.sdk.utility
 zowe.client.sdk.utility.timer
 zowe.client.sdk.zosconsole
