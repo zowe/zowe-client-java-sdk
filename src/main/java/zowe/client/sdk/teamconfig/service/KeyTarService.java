@@ -76,10 +76,10 @@ public class KeyTarService {
             break;
         }
         if (keyTarConfigs.isEmpty()) {
-            throw new Exception("No zowe configuration information available.");
+            throw new Exception("No OS credential store related to Zowe found.");
         }
         if (keyTarConfigs.size() > 1) {
-            LOG.debug("Multiple configuration files retrieved. Returning the first one on list.");
+            LOG.debug("Multiple OS credential stores found related to Zowe. Returning the first one on list.");
         }
         return keyTarConfigs.get(0);
     }
