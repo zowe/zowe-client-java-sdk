@@ -1,4 +1,4 @@
 /**
- * set of utilities for each main SDK package
+ * Set of utilities for SDK packages
  */
 package zowe.client.sdk.utility;
