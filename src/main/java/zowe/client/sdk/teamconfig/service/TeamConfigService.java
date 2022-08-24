@@ -49,6 +49,7 @@ public class TeamConfigService {
      * @author Frank Giordano
      */
     private Partition getPartition(String name, JSONObject jsonObject) {
+        @SuppressWarnings("unchecked")
         Set<String> keyObjs = jsonObject.keySet();
         List<Profile> profiles = new ArrayList<>();
         Map<String, String> properties = new HashMap<>();
@@ -57,6 +58,7 @@ public class TeamConfigService {
             String keyVal = (String) keyObj;
             if (SectionType.PROFILES.getValue().equals(keyVal)) {
                 JSONObject jsonProfileObj = (JSONObject) jsonObject.get(SectionType.PROFILES.getValue());
+                @SuppressWarnings("unchecked")
                 Set<String> jsonProfileKeys = jsonProfileObj.keySet();
                 for (String profileKeyVal : jsonProfileKeys) {
                     JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
@@ -124,15 +126,18 @@ public class TeamConfigService {
         Map<String, String> defaults = new HashMap<>();
         List<Partition> partitions = new ArrayList<>();
 
+        @SuppressWarnings("unchecked")
         Set<String> jsonSectionKeys = jsonObj.keySet();
         for (String keySectionVal : jsonSectionKeys) {
             if (SectionType.$SCHEMA.getValue().equals(keySectionVal)) {
                 schema = (String) jsonObj.get(SectionType.$SCHEMA.getValue());
             } else if (SectionType.PROFILES.getValue().equals(keySectionVal)) {
                 JSONObject jsonProfileObj = (JSONObject) jsonObj.get(SectionType.PROFILES.getValue());
+                @SuppressWarnings("unchecked")
                 Set<String> jsonProfileKeys = jsonProfileObj.keySet();
                 for (String profileKeyVal : jsonProfileKeys) {
                     JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
+                    @SuppressWarnings("unchecked")
                     Set<String> isEmbeddedKeyProfile = profileTypeJsonObj.keySet();
                     if (isPartition(isEmbeddedKeyProfile)) {
                         partitions.add(getPartition(profileKeyVal, profileTypeJsonObj));
