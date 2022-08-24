@@ -89,7 +89,7 @@ public class KeyTarImpl implements IKeyTar {
         JSONObject jsonKeyTar = (JSONObject) new JSONParser().parse(keyString);
         Set<String> keyTarKeys = jsonKeyTar.keySet();
         for (String keyVal : keyTarKeys) {
-            final JSONObject jsonVal = (JSONObject) jsonKeyTar.get(keyVal);
+            JSONObject jsonVal = (JSONObject) jsonKeyTar.get(keyVal);
             keyTarConfigs.add(new KeyTarConfig(keyVal,
                     (String) jsonVal.get("profiles.base.properties.user"),
                     (String) jsonVal.get("profiles.base.properties.password")));

@@ -28,7 +28,7 @@ public class TeamConfigUtils {
         if (obj == null) {
             return props;
         }
-        for (final Object keyValObj : obj.keySet()) {
+        for (Object keyValObj : obj.keySet()) {
             String key = (String) keyValObj;
             String value = null;
             try {

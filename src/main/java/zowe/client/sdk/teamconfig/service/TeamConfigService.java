@@ -60,14 +60,14 @@ public class TeamConfigService {
         List<Partition> partitions = new ArrayList<>();
 
         Set<String> jsonSectionKeys = jsonObj.keySet();
-        for (final String keySectionVal : jsonSectionKeys) {
+        for (String keySectionVal : jsonSectionKeys) {
             if (SectionType.$SCHEMA.getValue().equals(keySectionVal)) {
                 schema = (String) jsonObj.get(SectionType.$SCHEMA.getValue());
             } else if (SectionType.PROFILES.getValue().equals(keySectionVal)) {
                 JSONObject jsonProfileObj = (JSONObject) jsonObj.get(SectionType.PROFILES.getValue());
                 Set<String> jsonProfileKeys = jsonProfileObj.keySet();
                 for (String profileKeyVal : jsonProfileKeys) {
-                    final JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
+                    JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
                     Set<String> isEmbeddedKeyProfile = profileTypeJsonObj.keySet();
                     if (isPartition(isEmbeddedKeyProfile)) {
                         partitions.add(getPartition(profileKeyVal, profileTypeJsonObj));
@@ -79,7 +79,7 @@ public class TeamConfigService {
                 }
             } else if (SectionType.DEFAULTS.getValue().equals(keySectionVal)) {
                 JSONObject keyValues = (JSONObject) jsonObj.get(SectionType.DEFAULTS.getValue());
-                for (final Object defaultKeyVal : keyValues.keySet()) {
+                for (Object defaultKeyVal : keyValues.keySet()) {
                     String key = (String) defaultKeyVal;
                     String value = (String) keyValues.get(key);
                     defaults.put(key, value);
@@ -98,12 +98,12 @@ public class TeamConfigService {
         Map<String, String> properties = new HashMap<>();
         LOG.debug("Partition found name {} containing {}:", name, jsonObject);
         for (Object keyObj : keyObjs) {
-            final var keyVal = (String) keyObj;
+            String keyVal = (String) keyObj;
             if (SectionType.PROFILES.getValue().equals(keyVal)) {
-                final JSONObject jsonProfileObj = (JSONObject) jsonObject.get(SectionType.PROFILES.getValue());
+                JSONObject jsonProfileObj = (JSONObject) jsonObject.get(SectionType.PROFILES.getValue());
                 Set<String> jsonProfileKeys = jsonProfileObj.keySet();
                 for (String profileKeyVal : jsonProfileKeys) {
-                    final JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
+                    JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
                     profiles.add(new Profile((String) profileTypeJsonObj.get("type"),
                             (JSONObject) profileTypeJsonObj.get("properties"),
                             (JSONArray) profileTypeJsonObj.get("secure")));

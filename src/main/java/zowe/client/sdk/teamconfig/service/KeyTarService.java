@@ -41,7 +41,7 @@ public class KeyTarService {
 
     public KeyTarConfig getKeyTarConfig() throws Exception {
         List<KeyTarConfig> keyTarConfigs = new ArrayList<>();
-        for (final String serviceName : serviceNames) {
+        for (String serviceName : serviceNames) {
             KeyTarImpl keyTarImpl = new KeyTarImpl(serviceName, ACCOUNT_NAME);
             try {
                 keyTarImpl.processKey();
