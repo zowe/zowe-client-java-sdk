@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
- * TeamConfig class provides API method(s) to retrieve prudent profile sections from Zowe Global Team Configuration with
+ * TeamConfig class provides API method(s) to retrieve a profile section from Zowe Global Team Configuration with
  * keytar information to help perform ZOSConnection processing without hard coding username and password. This class only
  * supports Zowe Global Team Configuration provided by Zowe V2.
  *
@@ -66,12 +66,24 @@ public class TeamConfig {
      */
     private ConfigContainer teamConfig;
 
+    /**
+     * TeamConfig constructor
+     *
+     * @param keyTarService     required KeyTarService dependency
+     * @param teamConfigService required TeamConfigService dependency
+     * @author Frank Giordano
+     */
     public TeamConfig(KeyTarService keyTarService, TeamConfigService teamConfigService) throws Exception {
         this.keyTarService = keyTarService;
         this.teamConfigService = teamConfigService;
         config();
     }
 
+    /**
+     * initialize dependency objects
+     *
+     * @author Frank Giordano
+     */
     private void config() throws Exception {
         keyTarConfig = keyTarService.getKeyTarConfig();
         teamConfig = teamConfigService.getTeamConfig(keyTarConfig);
@@ -79,6 +91,15 @@ public class TeamConfig {
         LOG.debug("teamConfig {}", teamConfig);
     }
 
+    /**
+     * Retrieve default profile by profile name given from Zowe Global Team Configuration.
+     * Merge properties accordingly if needed due to absence of important properties from default profile with
+     * base profile. Credential store information is also retrieved and piggybacked on returned ProfileDao object.
+     *
+     * @param name profile name
+     * @return ProfileDao object
+     * @author Frank Giordano
+     */
     public ProfileDao getDefaultProfileByName(String name) throws Exception {
         Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(name));
         Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(name));
@@ -94,6 +115,16 @@ public class TeamConfig {
                 mergeProperties.getHost().orElse(null), mergeProperties.getPort().orElse(null));
     }
 
+    /**
+     * Retrieve default profile from partition by profile and partition names given from Zowe Global Team Configuration.
+     * Merge properties accordingly if needed due to absence of important properties from default profile with
+     * base profile. Credential store information is also retrieved and piggybacked on returned ProfileDao object.
+     *
+     * @param profileName   profile name
+     * @param partitionName partition name
+     * @return ProfileDao object
+     * @author Frank Giordano
+     */
     public ProfileDao getDefaultProfileFromPartitionByName(String profileName, String partitionName) throws Exception {
         Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(profileName));
         Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(profileName));
