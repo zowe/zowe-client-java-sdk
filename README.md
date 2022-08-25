@@ -37,13 +37,17 @@ Class names providing prebuilt API services:
     CheckStatus (zosmf info)
     ListDefinedSystems (zosmf info)
     Shell (uss commands)
-    TeamConfig (Zowe Global Team Configuration info)  
+    TeamConfig (OS Credential store and Zowe Global Team Configuration info)  
   
 ## TeamConfig Package  
   
-The TeamConfig package provides API method(s) to retrieve a profile section from Zowe Global Team Configuration with keytar information to help perform ZOSConnection processing without hard coding username and password. This class only supports Zowe Global Team Configuration provided by Zowe V2.
-If you have Zowe CLI on your system with Global Team Configuration initialized, you can use TeamConfig API method(s) to retrieve a profile type which will include the secure username and password information stored in our OS credential store manager.  
-You can use this information to create a dynamic ZOSConnection object to perform zosmf authentication for the all the other packages. This avoids the need to hard code values.  
+The TeamConfig package provides API method(s) to retrieve a profile section from Zowe Global Team Configuration with keytar information to help perform ZOSConnection processing without hard coding username and password.  
+  
+TeamConfig class only supports Zowe Global Team Configuration provided by Zowe V2.  
+  
+If you have Zowe CLI on your system with Global Team Configuration initialized, you can use TeamConfig API method(s) to retrieve a profile type which will include the secure username and password information stored in our OS credential store manager.   
+  
+You can use this information to create a dynamic ZOSConnection object to perform zosmf authentication for the all the other packages. This avoids the need to hard code values.    
   
 ## Requirements  
     
