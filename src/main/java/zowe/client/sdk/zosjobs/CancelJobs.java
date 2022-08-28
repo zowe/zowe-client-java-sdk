@@ -82,8 +82,7 @@ public class CancelJobs {
      * @author Nikunj goyal
      */
     public Response cancelJob(String jobName, String jobId, String version) throws Exception {
-        return this.cancelJobsCommon(
-                new ModifyJobParams.Builder(jobName, jobId).version(version).build());
+        return this.cancelJobsCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
     /**

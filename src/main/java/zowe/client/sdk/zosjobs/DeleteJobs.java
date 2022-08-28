@@ -75,8 +75,7 @@ public class DeleteJobs {
      * @author Nikunj goyal
      */
     public Response deleteJob(String jobName, String jobId, String version) throws Exception {
-        return deleteJobCommon(
-                new ModifyJobParams.Builder(jobName, jobId).version(version).build());
+        return deleteJobCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
     /**

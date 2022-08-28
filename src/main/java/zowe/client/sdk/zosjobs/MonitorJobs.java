@@ -208,7 +208,7 @@ public class MonitorJobs {
      * Checks the status order of the given status name
      *
      * @param statusName status name
-     * @return int index of status order
+     * @return int index of status order or -1 if none found
      * @author Frank Giordano
      */
     private int getOrderIndexOfStatus(String statusName) {
@@ -249,8 +249,8 @@ public class MonitorJobs {
      */
     private boolean pollForMessage(MonitorJobWaitForParams params, String message) throws Exception {
         int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
-        boolean messageFound;  // no assigment means by default it is false
-        boolean shouldContinue; // no assigment means by default it is false
+        boolean messageFound;  // no assigment boolean means by default it is false
+        boolean shouldContinue;
         int numOfAttempts = 0;
         int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);
 
@@ -285,8 +285,8 @@ public class MonitorJobs {
      */
     private Job pollForStatus(MonitorJobWaitForParams params) throws Exception {
         int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
-        boolean expectedStatus;  // no assigment means by default it is false
-        boolean shouldContinue; // no assigment means by default it is false
+        boolean expectedStatus;  // no assigment boolean means by default it is false
+        boolean shouldContinue;
         int numOfAttempts = 0;
         int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);
 

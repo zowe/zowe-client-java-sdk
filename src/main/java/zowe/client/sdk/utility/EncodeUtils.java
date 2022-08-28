@@ -37,15 +37,13 @@ public final class EncodeUtils {
     public static String encodeURIComponent(String str) {
         ValidateUtils.checkNullParameter(str == null, "str is null");
         ValidateUtils.checkIllegalParameter(str.isEmpty(), "str not specified");
-        String result;
-        result = URLEncoder.encode(str, StandardCharsets.UTF_8)
+        return URLEncoder.encode(str, StandardCharsets.UTF_8)
                 .replaceAll("\\+", "%20")
                 .replaceAll("\\%21", "!")
                 .replaceAll("\\%27", "'")
                 .replaceAll("\\%28", "(")
                 .replaceAll("\\%29", ")")
                 .replaceAll("\\%7E", "~");
-        return result;
     }
 
     /**

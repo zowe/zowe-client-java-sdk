@@ -238,7 +238,6 @@ public class SubmitJobs {
      * @author Corinne DeStefano
      */
     public Map<String, String> getSubstitutionHeaders(Map<String, String> keyValues) throws Exception {
-
         Map<String, String> symbolMap = new HashMap<>();
 
         // Check for matching quotes
@@ -246,7 +245,6 @@ public class SubmitJobs {
             if (value.chars().filter(ch -> ch == '"').count() % 2 != 0) {
                 throw new Exception("Encountered invalid key/value pair. Mismatched quotes.");
             }
-
             if (value.length() == 0) {
                 throw new Exception("Encountered invalid key/value pair. Must define a value for key/value pair.");
             }
@@ -254,14 +252,12 @@ public class SubmitJobs {
 
         for (String key : keyValues.keySet()) {
             String value = keyValues.get(key);
-
             if (key.length() == 0) {
                 throw new Exception("Encountered invalid key/value pair. Must define a key for key/value pair.");
             }
             if (key.length() > 8) {
                 throw new Exception("Encountered invalid key/value pair. Key must be 8 characters or less.");
             }
-
             key = ZosmfHeaders.HEADERS.get("X_IBM_JCL_SYMBOL_PARTIAL").get(0) + key;
             LOG.debug("JCL Symbol Header: " + key + ":" + value);
             symbolMap.put(key, value);

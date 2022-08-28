@@ -223,8 +223,8 @@ public class GetJobs {
      */
     @SuppressWarnings("unchecked")
     public List<Job> getJobsCommon(GetJobParams params) throws Exception {
-
         List<Job> jobs = new ArrayList<>();
+
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + JobsConstants.RESOURCE + QueryConstants.QUERY_ID;
 
