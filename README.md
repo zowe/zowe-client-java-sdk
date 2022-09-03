@@ -15,7 +15,7 @@ This SDK lets you leverage the underlying z/OSMF REST APIs on a z/OS system to b
 
 For instance, one API package provides the ability to upload and download z/OS data sets. You can leverage that package to rapidly build a client application that interacts with data sets.  
    
-This Java SDK joins an existing community of language specific SDKs: Python, NodeJS, Swift, and Kotlin. This project provides the Java community compatible capabilities and may differentiate (see MonitorJobs) to rapidly build client applications to interface with your z/OS instance. You can introduce such client applications to modern CI/CD pipelines on any modern OS with a JVM instance. 
+This Java SDK joins an existing community of language specific SDKs: Python, NodeJS, Swift, and Kotlin. This project provides the Java community compatible capabilities to rapidly build client applications to interface with your z/OS instance. You can introduce such client applications to modern CI/CD pipelines on any modern OS with a JVM instance. 
 
 Issues worked on documenting main feature set provided can be view within MVP issues [#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) and [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219).
   
@@ -41,7 +41,7 @@ Class names providing prebuilt API services:
   
 ## TeamConfig Package  
   
-The TeamConfig package provides API method(s) to retrieve a profile section from Zowe Global Team Configuration with keytar information to help perform ZOSConnection processing without hard coding username and password.  
+The TeamConfig package provides API method(s) to retrieve a profile section from Zowe Global Team Configuration with keytar information to help perform connection processing without hard coding username and password. Keytar represents credentials stored securely on your computer when performing the Zowe global initialize [command](https://docs.zowe.org/stable/user-guide/cli-using-initializing-team-configuration/) which prompts you for username and password.   
   
 TeamConfig class only supports Zowe Global Team Configuration provided by Zowe V2.  
   
