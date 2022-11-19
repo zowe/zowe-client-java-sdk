@@ -69,7 +69,7 @@ public class DeleteJobs {
      *
      * @param jobName name of job to delete
      * @param jobId   job id
-     * @param version version number
+     * @param version version number, see ModifyJobParams object for version options
      * @return http response object
      * @throws Exception error deleting
      * @author Nikunj goyal
@@ -138,7 +138,7 @@ public class DeleteJobs {
      * Cancel and purge job from spool.
      *
      * @param job     job document wanting to delete
-     * @param version version number
+     * @param version version number, see ModifyJobParams object for version options
      * @return http response object
      * @throws Exception error deleting
      * @author Frank Giordano
