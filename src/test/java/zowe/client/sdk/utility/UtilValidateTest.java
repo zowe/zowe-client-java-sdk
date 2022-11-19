@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class UtilValidateTests {
+public class UtilValidateTest {
 
     /**
      * Test validate utility method checkIllegalParameter validate false value correctly.
