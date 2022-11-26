@@ -1,11 +1,14 @@
 # TeamConfig Package
-  
-The TeamConfig package provides API method(s) to retrieve a profile section from Zowe Global Team Configuration with keytar information to help perform connection processing without hard coding username and password. Keytar represents credentials stored securely on your computer when performing the Zowe global initialize command which prompts you for username and password.
-  
+
+The TeamConfig package provides API method(s) to retrieve a profile section from Zowe Global Team Configuration with
+keytar information to help perform connection processing without hard coding username and password. Keytar represents
+credentials stored securely on your computer when performing the Zowe global initialize command which prompts you for
+username and password.
+
 ## API Example
 
-**Retrieve the default "zosmf" profile from team config. Use it to create a ZOSConnection object without hard coding username
-and password and retrieve a list of members from the dataset input string.**
+**Retrieve the default "zosmf" profile from team config. Use it to create a ZOSConnection object without hard coding
+username and password and retrieve a list of members from the dataset input string.**
 
 ````java
 import org.slf4j.Logger;

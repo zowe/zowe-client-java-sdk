@@ -181,15 +181,15 @@ public class CopyDataset extends ZosConnection {
     /**
      * Example on how to call ZosDsnCopy copy method.
      * Copy method accepts a from and too strings for copying.
-     * 
+     *
      * This copy method allows the following copy operations:
-     * 
+     *
      * - sequential dataset to sequential dataset
      * - sequential dataset to partition dataset member
      * - partition dataset member to partition dataset member
      * - partition dataset member to partition dataset non-existing member
      * - partition dataset member to sequential dataset
-     * 
+     *
      * This example sends false value for copyAllMembers parameter in copy method to indicate we
      * are not copying all members in a partition dataset to another.
      *
@@ -208,9 +208,9 @@ public class CopyDataset extends ZosConnection {
     /**
      * Example on how to call ZosDsnCopy copy method.
      * Copy method accepts a CopyParams object.
-     * 
+     *
      * This copy method allows the following copy operations:
-     * 
+     *
      * - sequential dataset to sequential dataset
      * - sequential dataset to partition dataset member
      * - partition dataset member to partition dataset member
@@ -235,7 +235,7 @@ public class CopyDataset extends ZosConnection {
     /**
      * Example on how to call ZosDsnCopy copy method.
      * Copy method accepts a CopyParams object.
-     * 
+     *
      * This copy method is different from the other two examples above as it
      * sets the copyAllMember variable true to indicate that the copy operation will be performed
      * on a partition dataset to another partition dataset copying all its members to the target.
@@ -555,9 +555,9 @@ public class DataSetInfo extends ZosConnection {
 package examples;
 
 /**
-* Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
-* duplicating connection details in each example.
-*/
+ * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
+ * duplicating connection details in each example.
+ */
 public class ZosConnection {
 
     public static final String hostName = "XXX";
