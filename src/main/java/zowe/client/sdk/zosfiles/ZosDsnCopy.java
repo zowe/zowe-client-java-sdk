@@ -27,6 +27,7 @@ import zowe.client.sdk.zosfiles.types.OperationType;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Provides copy dataset and dataset member functionality
@@ -81,7 +82,7 @@ public class ZosDsnCopy {
         String fromDataSetName = params.getFromDataSet().orElseThrow(() -> new Exception("dataset not specified"));
         boolean isFullPartitionCopy = params.isCopyAllMembers();
 
-        var jsonMap = new HashMap<String, Object>();
+        Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "copy");
 
         String member = "";
@@ -92,7 +93,7 @@ public class ZosDsnCopy {
             fromDataSetName = fromDataSetName.substring(0, startMemberIndex);
         }
 
-        var fromDataSetReq = new HashMap<String, Object>();
+        Map<String, Object> fromDataSetReq = new HashMap<>();
         fromDataSetReq.put("dsn", fromDataSetName);
         if (member.length() > 0) // include a member if it was specified in fromDataSetName
         {
@@ -110,7 +111,7 @@ public class ZosDsnCopy {
             jsonMap.put("volser", params.getFromVolser());
         }
 
-        var jsonRequestBody = new JSONObject(jsonMap);
+        JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
         return jsonRequestBody.toString();
     }

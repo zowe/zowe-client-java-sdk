@@ -15,6 +15,7 @@ import zowe.client.sdk.zostso.input.StartTsoParams;
 import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class to handle issue command to TSO
@@ -85,11 +86,11 @@ public class IssueTso {
         IssueResponse issueResponse = new IssueResponse();
         issueResponse.setStartResponse(startResponse);
 
-        var zosmfTsoResponses = new ArrayList<ZosmfTsoResponse>();
+        List<ZosmfTsoResponse> zosmfTsoResponses = new ArrayList<>();
         zosmfTsoResponses.add(startResponse.getZosmfTsoResponse()
                 .orElseThrow(() -> new Exception("no zosmf start tso response")));
 
-        var servletKey = startResponse.getServletKey()
+        String servletKey = startResponse.getServletKey()
                 .orElseThrow(() -> new Exception("no servletKey key value returned from startTso"));
 
         // second stage send command to tso servlet session created in first stage and collect all tso responses

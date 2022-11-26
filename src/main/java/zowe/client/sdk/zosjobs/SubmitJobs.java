@@ -191,9 +191,9 @@ public class SubmitJobs {
         LOG.debug(url);
 
         String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(params.getJobDataSet().get()) + "'";
-        var jsonMap = new HashMap<String, String>();
+        Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("file", fullyQualifiedDataset);
-        var jsonRequestBody = new JSONObject(jsonMap);
+        JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
 
         if (request == null || !(request instanceof JsonPutRequest)) {

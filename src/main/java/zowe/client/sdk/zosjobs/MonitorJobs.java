@@ -290,7 +290,7 @@ public class MonitorJobs {
         int numOfAttempts = 0;
         int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);
 
-        var statusName = params.getJobStatus().orElse(DEFAULT_STATUS).toString();
+        String statusName = params.getJobStatus().orElse(DEFAULT_STATUS).toString();
         LOG.info("Waiting for status \"{}\"", statusName);
 
         CheckJobStatus checkJobStatus;

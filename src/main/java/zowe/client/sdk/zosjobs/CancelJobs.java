@@ -25,6 +25,7 @@ import zowe.client.sdk.zosjobs.input.ModifyJobParams;
 import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * CancelJobs class to handle Job cancel
@@ -137,10 +138,10 @@ public class CancelJobs {
             throw new IllegalArgumentException("invalid version specified");
         }
 
-        var jsonMap = new HashMap<String, String>();
+        Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("request", JobsConstants.REQUEST_CANCEL);
         jsonMap.put("version", version);
-        var jsonRequestBody = new JSONObject(jsonMap);
+        JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
 
         if (request == null) {

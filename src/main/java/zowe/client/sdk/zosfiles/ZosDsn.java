@@ -27,6 +27,7 @@ import zowe.client.sdk.zosfiles.types.OperationType;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -74,7 +75,7 @@ public class ZosDsn {
      * @author Leonid Baranov
      */
     private static String buildBody(CreateParams params) {
-        var jsonMap = new HashMap<String, Object>();
+        Map<String, Object> jsonMap = new HashMap<>();
         params.getVolser().ifPresent(v -> jsonMap.put("volser", v));
         params.getUnit().ifPresent(v -> jsonMap.put("unit", v));
         params.getDsorg().ifPresent(v -> jsonMap.put("dsorg", v));
@@ -92,7 +93,7 @@ public class ZosDsn {
         params.getDataclass().ifPresent(v -> jsonMap.put("dataclass", v));
         params.getDsntype().ifPresent(v -> jsonMap.put("dsntype", v));
 
-        var jsonRequestBody = new JSONObject(jsonMap);
+        JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
         return jsonRequestBody.toString();
     }

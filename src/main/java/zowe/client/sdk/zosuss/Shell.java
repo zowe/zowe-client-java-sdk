@@ -53,7 +53,7 @@ public class Shell {
         try {
             session = new JSch().getSession(connection.getUser(), connection.getHost(), connection.getPort());
             session.setPassword(connection.getPassword());
-            var config = new Properties();
+            Properties config = new Properties();
             config.put("StrictHostKeyChecking", "no");
             config.put("PreferredAuthentications", "password");
             session.setConfig(config);
@@ -61,7 +61,7 @@ public class Shell {
 
             channel = (ChannelExec) session.openChannel("exec");
             channel.setCommand(command);
-            var responseStream = new ByteArrayOutputStream();
+            ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
             channel.setOutputStream(responseStream);
             channel.connect();
 

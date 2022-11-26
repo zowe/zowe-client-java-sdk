@@ -27,6 +27,7 @@ import zowe.client.sdk.zosconsole.zosmf.ZosmfIssueParams;
 import zowe.client.sdk.zosconsole.zosmf.ZosmfIssueResponse;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Issue MVS Console commands by using a system console
@@ -89,9 +90,9 @@ public class IssueCommand {
 
         LOG.debug(url);
 
-        var jsonMap = new HashMap<String, String>();
+        Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd", commandParams.getCmd().get());
-        var jsonRequestBody = new JSONObject(jsonMap);
+        JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
 
         if (request == null) {

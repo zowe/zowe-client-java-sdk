@@ -21,6 +21,7 @@ import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.input.SendTsoParams;
+import zowe.client.sdk.zostso.zosmf.TsoMessage;
 import zowe.client.sdk.zostso.zosmf.TsoMessages;
 import zowe.client.sdk.zostso.zosmf.TsoResponseMessage;
 import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
@@ -98,7 +99,7 @@ public class SendTso {
             if (!tso.getTsoData().isEmpty()) {
                 for (TsoMessages tsoDatum : tso.getTsoData()) {
                     if (tsoDatum.getTsoMessage().isPresent()) {
-                        var tsoMsg = tsoDatum.getTsoMessage().get();
+                        TsoMessage tsoMsg = tsoDatum.getTsoMessage().get();
                         tsoMsg.getData().ifPresent(data -> {
                             messages.append(data);
                             messages.append("\n");

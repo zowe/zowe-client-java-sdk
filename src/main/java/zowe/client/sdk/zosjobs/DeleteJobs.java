@@ -21,6 +21,7 @@ import zowe.client.sdk.zosjobs.input.ModifyJobParams;
 import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * DeleteJobs class to handle Job delete
@@ -94,7 +95,7 @@ public class DeleteJobs {
                 JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
         LOG.debug(url);
 
-        var headers = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap<>();
 
         String version = params.getVersion().orElse(JobsConstants.DEFAULT_DELETE_VERSION);
 
