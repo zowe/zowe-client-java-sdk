@@ -91,9 +91,8 @@ public class SubmitJobs {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJcl().isEmpty(), "jcl not specified");
         ValidateUtils.checkIllegalParameter(params.getJcl().get().isEmpty(), "jcl not specified");
-
         String key, value;
-        Map<String, String> headers = new HashMap<>();
+        final Map<String, String> headers = new HashMap<>();
 
         key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_MODE_TEXT").get(0);
         value = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_MODE_TEXT").get(1);
@@ -124,24 +123,24 @@ public class SubmitJobs {
         value = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_CLASS_A").get(1);
         headers.put(key, value);
 
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
         LOG.debug(url);
 
-        String body = params.getJcl().get();
+        final String body = params.getJcl().get();
         if (request == null || !(request instanceof TextPutRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
         }
         request.setRequest(url, body);
         request.setHeaders(headers);
 
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return new Job.Builder().build();
         }
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            String errorMsg = e.getMessage();
+            final String errorMsg = e.getMessage();
             if (errorMsg.contains("400")) {
                 throw new Exception("Body sent may be invalid. " + errorMsg);
             }
@@ -152,7 +151,7 @@ public class SubmitJobs {
             throw new Exception(e.getMessage());
         }
 
-        JSONParser parser = new JSONParser();
+        final JSONParser parser = new JSONParser();
         JSONObject json;
         try {
             json = (JSONObject) parser.parse((String) response.getResponsePhrase().orElse(""));
@@ -187,13 +186,13 @@ public class SubmitJobs {
         ValidateUtils.checkIllegalParameter(params.getJobDataSet().isEmpty(), "jobDataSet not specified");
         ValidateUtils.checkIllegalParameter(params.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
         LOG.debug(url);
 
-        String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(params.getJobDataSet().get()) + "'";
-        Map<String, String> jsonMap = new HashMap<>();
+        final String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(params.getJobDataSet().get()) + "'";
+        final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("file", fullyQualifiedDataset);
-        JSONObject jsonRequestBody = new JSONObject(jsonMap);
+        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
 
         if (request == null || !(request instanceof JsonPutRequest)) {
@@ -206,7 +205,7 @@ public class SubmitJobs {
             request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));
         }
 
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return new Job.Builder().build();
         }
@@ -214,7 +213,7 @@ public class SubmitJobs {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            String errorMsg = e.getMessage();
+            final String errorMsg = e.getMessage();
             if (errorMsg.contains("400")) {
                 throw new Exception("Body sent may be invalid. " + errorMsg);
             }
@@ -238,7 +237,7 @@ public class SubmitJobs {
      * @author Corinne DeStefano
      */
     public Map<String, String> getSubstitutionHeaders(Map<String, String> keyValues) throws Exception {
-        Map<String, String> symbolMap = new HashMap<>();
+        final Map<String, String> symbolMap = new HashMap<>();
 
         // Check for matching quotes
         for (String value : keyValues.values()) {
@@ -251,7 +250,7 @@ public class SubmitJobs {
         }
 
         for (String key : keyValues.keySet()) {
-            String value = keyValues.get(key);
+            final String value = keyValues.get(key);
             if (key.length() == 0) {
                 throw new Exception("Encountered invalid key/value pair. Must define a key for key/value pair.");
             }

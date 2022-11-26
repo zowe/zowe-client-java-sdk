@@ -85,14 +85,14 @@ public class IssueCommand {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
         ValidateUtils.checkIllegalParameter(commandParams.getCmd().isEmpty(), "command not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ConsoleConstants.RESOURCE + "/" + consoleName;
 
         LOG.debug(url);
 
-        Map<String, String> jsonMap = new HashMap<>();
+        final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd", commandParams.getCmd().get());
-        JSONObject jsonRequestBody = new JSONObject(jsonMap);
+        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
 
         if (request == null) {
@@ -100,7 +100,7 @@ public class IssueCommand {
         }
         request.setRequest(url, jsonRequestBody.toString());
 
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return new ZosmfIssueResponse();
         }
@@ -121,7 +121,7 @@ public class IssueCommand {
      * @author Frank Giordano
      */
     public ZosmfIssueResponse issueDefConsoleCommon(ZosmfIssueParams commandParams) throws Exception {
-        ZosmfIssueResponse resp = issueCommon(ConsoleConstants.RES_DEF_CN, commandParams);
+        final ZosmfIssueResponse resp = issueCommon(ConsoleConstants.RES_DEF_CN, commandParams);
         resp.setCmdResponse(StringEscapeUtils.escapeJava(resp.getCmdResponse().orElse("")));
         return resp;
     }
@@ -139,11 +139,11 @@ public class IssueCommand {
     public ConsoleResponse issue(IssueParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        String consoleName = params.getConsoleName().orElse(ConsoleConstants.RES_DEF_CN);
-        ZosmfIssueParams commandParams = buildZosmfConsoleApiParameters(params);
-        ConsoleResponse response = new ConsoleResponse();
+        final String consoleName = params.getConsoleName().orElse(ConsoleConstants.RES_DEF_CN);
+        final ZosmfIssueParams commandParams = buildZosmfConsoleApiParameters(params);
+        final ConsoleResponse response = new ConsoleResponse();
 
-        ZosmfIssueResponse resp = issueCommon(consoleName, commandParams);
+        final ZosmfIssueResponse resp = issueCommon(consoleName, commandParams);
         ConsoleUtils.populate(resp, response, params.getProcessResponses().orElse(true));
 
         return response;
@@ -158,7 +158,7 @@ public class IssueCommand {
      * @author Frank Giordano
      */
     public ConsoleResponse issueSimple(String theCommand) throws Exception {
-        IssueParams params = new IssueParams();
+        final IssueParams params = new IssueParams();
         params.setCommand(theCommand);
         return issue(params);
     }
@@ -174,7 +174,7 @@ public class IssueCommand {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getCommand().isEmpty(), "command not specified");
 
-        ZosmfIssueParams zosmfParams = new ZosmfIssueParams();
+        final ZosmfIssueParams zosmfParams = new ZosmfIssueParams();
         zosmfParams.setCmd(params.getCommand().get());
 
         params.getSolicitedKeyword().ifPresent(zosmfParams::setSolKey);

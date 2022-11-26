@@ -71,7 +71,7 @@ public class CheckStatus {
      * @throws Exception problem with response
      */
     public ZosmfInfoResponse getZosmfInfo() throws Exception {
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosmfConstants.RESOURCE + ZosmfConstants.INFO;
 
         LOG.debug(url);
@@ -81,7 +81,7 @@ public class CheckStatus {
         }
         request.setRequest(url);
 
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             throw new Exception("response is empty");
         }

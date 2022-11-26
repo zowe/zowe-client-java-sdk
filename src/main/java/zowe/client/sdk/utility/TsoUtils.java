@@ -45,9 +45,9 @@ public final class TsoUtils {
         ZosmfTsoResponse result;
         int statusCode = response.getStatusCode().get();
         if (response.getStatusCode().isPresent() && RestUtils.isHttpError(statusCode)) {
-            String errorMsg = (String) response.getResponsePhrase().orElseThrow(() -> new Exception("results not available"));
-            ZosmfMessages zosmfMsg = new ZosmfMessages(errorMsg, null, null);
-            List<ZosmfMessages> zosmfMessages = new ArrayList<>();
+            final String errorMsg = (String) response.getResponsePhrase().orElseThrow(() -> new Exception("results not available"));
+            final ZosmfMessages zosmfMsg = new ZosmfMessages(errorMsg, null, null);
+            final List<ZosmfMessages> zosmfMessages = new ArrayList<>();
             zosmfMessages.add(zosmfMsg);
             result = new ZosmfTsoResponse.Builder().msgData(zosmfMessages).build();
         } else {
@@ -77,9 +77,9 @@ public final class TsoUtils {
 
     @SuppressWarnings("unchecked")
     private static void parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
-        Map<String, String> tsoMessageMap = ((Map<String, String>) obj.get(TsoConstants.TSO_MESSAGE));
+        final Map<String, String> tsoMessageMap = ((Map<String, String>) obj.get(TsoConstants.TSO_MESSAGE));
         if (tsoMessageMap != null) {
-            TsoMessage tsoMessage = new TsoMessage();
+            final TsoMessage tsoMessage = new TsoMessage();
             tsoMessageMap.forEach((key, value) -> {
                 if ("DATA".equals(key)) {
                     tsoMessage.setData(value);
@@ -95,7 +95,7 @@ public final class TsoUtils {
 
     @SuppressWarnings("unchecked")
     private static void parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
-        Map<String, String> tsoPromptMap = ((Map<String, String>) obj.get(TsoConstants.TSO_PROMPT));
+        final Map<String, String> tsoPromptMap = ((Map<String, String>) obj.get(TsoConstants.TSO_PROMPT));
         if (tsoPromptMap != null) {
             TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();
             tsoPromptMap.forEach((key, value) -> {
@@ -114,7 +114,6 @@ public final class TsoUtils {
     @SuppressWarnings("unchecked")
     private static ZosmfTsoResponse parseJsonTsoResponse(JSONObject result) throws Exception {
         ValidateUtils.checkNullParameter(result == null, "no results to parse");
-
         ZosmfTsoResponse response;
         try {
             response = new ZosmfTsoResponse.Builder().queueId((String) result.get("queueID"))
@@ -126,11 +125,11 @@ public final class TsoUtils {
         }
 
         List<TsoMessages> tsoMessagesLst = new ArrayList<>();
-        Optional<JSONArray> tsoData = Optional.ofNullable((JSONArray) result.get("tsoData"));
+        final Optional<JSONArray> tsoData = Optional.ofNullable((JSONArray) result.get("tsoData"));
 
         tsoData.ifPresent(data -> {
             data.forEach(item -> {
-                JSONObject obj = (JSONObject) item;
+                final JSONObject obj = (JSONObject) item;
                 TsoMessages tsoMessages = new TsoMessages();
                 parseJsonTsoMessage(tsoMessagesLst, obj, tsoMessages);
                 parseJsonTsoPrompt(tsoMessagesLst, obj, tsoMessages);
@@ -150,13 +149,13 @@ public final class TsoUtils {
      */
     public static StartStopResponse populateStartAndStop(ZosmfTsoResponse zosmfResponse) {
         ValidateUtils.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
-        StartStopResponse startStopResponse = new StartStopResponse(false, zosmfResponse,
+        final StartStopResponse startStopResponse = new StartStopResponse(false, zosmfResponse,
                 zosmfResponse.getServletKey().orElse(""));
 
         startStopResponse.setSuccess(zosmfResponse.getServletKey().isPresent());
         if (!zosmfResponse.getMsgData().isEmpty()) {
-            ZosmfMessages zosmfMsg = zosmfResponse.getMsgData().get(0);
-            String msgText = zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR);
+            final ZosmfMessages zosmfMsg = zosmfResponse.getMsgData().get(0);
+            final String msgText = zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR);
             startStopResponse.setFailureResponse(msgText);
         }
 

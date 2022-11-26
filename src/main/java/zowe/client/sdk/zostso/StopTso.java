@@ -77,8 +77,8 @@ public class StopTso {
         ValidateUtils.checkNullParameter(servletKey == null, "servletKey is null");
         ValidateUtils.checkIllegalParameter(servletKey.isEmpty(), "servletKey not specified");
 
-        StopTsoParams commandParams = new StopTsoParams(servletKey);
-        ZosmfTsoResponse zosmfResponse = stopCommon(commandParams);
+        final StopTsoParams commandParams = new StopTsoParams(servletKey);
+        final ZosmfTsoResponse zosmfResponse = stopCommon(commandParams);
 
         // TODO
         return TsoUtils.populateStartAndStop(zosmfResponse);
@@ -97,7 +97,7 @@ public class StopTso {
         ValidateUtils.checkIllegalParameter(commandParams.getServletKey().isEmpty(), "servletKey not specified");
         ValidateUtils.checkIllegalParameter(commandParams.getServletKey().get().isEmpty(), "servletKey not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey().get();
         LOG.debug("StopTso::stopCommon url {}", url);
 
@@ -105,7 +105,7 @@ public class StopTso {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
         request.setRequest(url);
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return new ZosmfTsoResponse.Builder().build();
         }
@@ -113,10 +113,10 @@ public class StopTso {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            String errorMsg = e.getMessage();
+            final String errorMsg = e.getMessage();
             throw new Exception("Failed to stop active TSO address space. " + errorMsg);
         }
-        JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
+        final JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
         // noinspection ConstantConditions
         return TsoUtils.parseJsonStopResponse(result);
     }

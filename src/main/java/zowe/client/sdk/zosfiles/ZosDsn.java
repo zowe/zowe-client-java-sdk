@@ -75,7 +75,7 @@ public class ZosDsn {
      * @author Leonid Baranov
      */
     private static String buildBody(CreateParams params) {
-        Map<String, Object> jsonMap = new HashMap<>();
+        final Map<String, Object> jsonMap = new HashMap<>();
         params.getVolser().ifPresent(v -> jsonMap.put("volser", v));
         params.getUnit().ifPresent(v -> jsonMap.put("unit", v));
         params.getDsorg().ifPresent(v -> jsonMap.put("dsorg", v));
@@ -93,7 +93,7 @@ public class ZosDsn {
         params.getDataclass().ifPresent(v -> jsonMap.put("dataclass", v));
         params.getDsntype().ifPresent(v -> jsonMap.put("dsntype", v));
 
-        JSONObject jsonRequestBody = new JSONObject(jsonMap);
+        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
         return jsonRequestBody.toString();
     }
@@ -112,18 +112,18 @@ public class ZosDsn {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(dataSetName);
 
         LOG.debug(url);
 
-        String body = buildBody(params);
+        final String body = buildBody(params);
 
         if (request == null || !(request instanceof JsonPostRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
         }
         request.setRequest(url, body);
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
 
         try {
             RestUtils.checkHttpErrors(response);
@@ -148,7 +148,6 @@ public class ZosDsn {
         ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(member == null, "member is null");
         ValidateUtils.checkIllegalParameter(member.isEmpty(), "member not specified");
-
         return deleteDsn(String.format("%s(%s)", dataSetName, member));
     }
 
@@ -164,17 +163,16 @@ public class ZosDsn {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(dataSetName);
 
         LOG.debug(url);
-
 
         if (request == null || !(request instanceof JsonDeleteRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
         request.setRequest(url);
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
 
         try {
             RestUtils.checkHttpErrors(response);
@@ -198,13 +196,13 @@ public class ZosDsn {
         ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
         Dataset emptyDataSet = new Dataset.Builder().dsname(dataSetName).build();
 
-        String[] tokens = dataSetName.split("\\.");
+        final String[] tokens = dataSetName.split("\\.");
         int length = tokens.length - 1;
         if (1 >= length) {
             return emptyDataSet;
         }
 
-        StringBuilder str = new StringBuilder();
+        final StringBuilder str = new StringBuilder();
         for (int i = 0; i < length; i++) {
             str.append(tokens[i]);
             str.append(".");
@@ -212,11 +210,11 @@ public class ZosDsn {
 
         String dataSetSearchStr = str.toString();
         dataSetSearchStr = dataSetSearchStr.substring(0, str.length() - 1);
-        ZosDsnList zosDsnList = new ZosDsnList(connection);
-        ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
-        List<Dataset> dsLst = zosDsnList.listDsn(dataSetSearchStr, params);
+        final ZosDsnList zosDsnList = new ZosDsnList(connection);
+        final ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
+        final List<Dataset> dsLst = zosDsnList.listDsn(dataSetSearchStr, params);
 
-        Optional<Dataset> dataSet = dsLst.stream().filter(d -> d.getDsname().orElse("n/a").contains(dataSetName)).findFirst();
+        final Optional<Dataset> dataSet = dsLst.stream().filter(d -> d.getDsname().orElse("n/a").contains(dataSetName)).findFirst();
         return dataSet.orElse(emptyDataSet);
     }
 
@@ -236,7 +234,6 @@ public class ZosDsn {
         ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(member == null, "member is null");
         ValidateUtils.checkIllegalParameter(member.isEmpty(), "member not specified");
-
         return writeDsn(String.format("%s(%s)", dataSetName, member), content);
     }
 
@@ -254,7 +251,7 @@ public class ZosDsn {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(dataSetName);
 
         LOG.debug(url);
@@ -263,7 +260,7 @@ public class ZosDsn {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
         }
         request.setRequest(url, content);
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
 
         try {
             RestUtils.checkHttpErrors(response);

@@ -23,6 +23,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -36,11 +37,11 @@ public class GetJobsByJsonGetRequestTest {
     @Before
     public void init() {
         request = Mockito.mock(JsonGetRequest.class);
-        ZOSConnection connection = new ZOSConnection("1", "1", "1", "1");
+        final ZOSConnection connection = new ZOSConnection("1", "1", "1", "1");
         getJobs = new GetJobs(connection);
         Whitebox.setInternalState(getJobs, "request", request);
 
-        var jsonMap = new HashMap<String, String>();
+        final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("jobid", "jobid");
         jsonMap.put("jobname", "jobname");
         jsonMap.put("subsystem", "subsystem");
@@ -59,17 +60,17 @@ public class GetJobsByJsonGetRequestTest {
     @Test
     @SuppressWarnings("unchecked")
     public void tstGetJobFromMultipleJobsResultsExceptionFailure() throws Exception {
-        String msg = "Expected 1 job returned but received 2 jobs.";
+        final String msg = "Expected 1 job returned but received 2 jobs.";
         JSONArray jsonArray = new JSONArray();
 
-        var jsonJobMap1 = new HashMap<String, String>();
+        final Map<String, String> jsonJobMap1 = new HashMap<>();
         jsonJobMap1.put("jobid", "job1");
-        var jsonJob1 = new JSONObject(jsonJobMap1);
+        final Map<String, String> jsonJob1 = new JSONObject(jsonJobMap1);
         jsonArray.add(jsonJob1);
 
-        var jsonJobMap2 = new HashMap<String, String>();
+        final Map<String, String> jsonJobMap2 = new HashMap<>();
         jsonJobMap2.put("jobid", "job2");
-        var jsonJob2 = new JSONObject(jsonJobMap2);
+        final Map<String, String> jsonJob2 = new JSONObject(jsonJobMap2);
         jsonArray.add(jsonJob2);
 
         Response response = new Response(jsonArray, 200);
@@ -89,13 +90,13 @@ public class GetJobsByJsonGetRequestTest {
     @Test
     @SuppressWarnings("unchecked")
     public void tstGetJobWithAllJobMembersSuccess() throws Exception {
-        JSONArray jsonArray = new JSONArray();
+        final JSONArray jsonArray = new JSONArray();
         jsonArray.add(jobJson);
 
-        Response response = new Response(jsonArray, 200);
+        final Response response = new Response(jsonArray, 200);
         Mockito.when(request.executeRequest()).thenReturn(response);
 
-        Job job = getJobs.getJob("1");
+        final Job job = getJobs.getJob("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
         assertEquals("jobid", job.getJobId().get());
         assertEquals("jobname", job.getJobName().get());
@@ -114,17 +115,17 @@ public class GetJobsByJsonGetRequestTest {
     @Test
     @SuppressWarnings("unchecked")
     public void tstGetJobWithJobIdOnlySuccess() throws Exception {
-        JSONArray jsonArray = new JSONArray();
+        final JSONArray jsonArray = new JSONArray();
 
-        var jsonJobMap = new HashMap<String, String>();
+        final var jsonJobMap = new HashMap<String, String>();
         jsonJobMap.put("jobid", "job");
-        var jsonJob = new JSONObject(jsonJobMap);
+        final var jsonJob = new JSONObject(jsonJobMap);
         jsonArray.add(jsonJob);
 
-        Response response = new Response(jsonArray, 200);
+        final Response response = new Response(jsonArray, 200);
         Mockito.when(request.executeRequest()).thenReturn(response);
 
-        Job job = getJobs.getJob("1");
+        final Job job = getJobs.getJob("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
         assertEquals("job", job.getJobId().get());
     }
@@ -186,10 +187,10 @@ public class GetJobsByJsonGetRequestTest {
 
     @Test
     public void tstGetStatusForJobSuccess() throws Exception {
-        Response response = new Response(jobJson, 200);
+        final Response response = new Response(jobJson, 200);
         Mockito.when(request.executeRequest()).thenReturn(response);
 
-        Job job = getJobs.getStatusForJob(new Job.Builder().jobId("1").jobName("jobName").build());
+        final Job job = getJobs.getStatusForJob(new Job.Builder().jobId("1").jobName("jobName").build());
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/1?step-data=Y", getJobs.getUrl());
         assertEquals("jobid", job.getJobId().get());
         assertEquals("jobname", job.getJobName().get());

@@ -36,7 +36,7 @@ public final class FileUtils {
     public static Map<String, String> generateHeadersBasedOnOptions(DownloadParams options) {
         ValidateUtils.checkNullParameter(options == null, "options is null");
         String key, value;
-        Map<String, String> headers = new HashMap<>();
+        final Map<String, String> headers = new HashMap<>();
 
         if (options.getBinary().isPresent()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(0);

@@ -123,19 +123,19 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     private boolean checkMessage(MonitorJobWaitForParams params, String message) throws Exception {
-        GetJobs getJobs = new GetJobs(connection);
-        GetJobParams filter = new GetJobParams.Builder("*")
+        final GetJobs getJobs = new GetJobs(connection);
+        final GetJobParams filter = new GetJobParams.Builder("*")
                 .jobId(params.getJobId().orElseThrow(() -> new Exception("job id not specified")))
                 .prefix(params.getJobName().orElseThrow(() -> new Exception("job name not specified"))).build();
-        List<Job> jobs = getJobs.getJobsCommon(filter);
+        final List<Job> jobs = getJobs.getJobsCommon(filter);
         if (jobs.isEmpty()) {
             throw new Exception("job does not exist");
         }
-        List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
+        final List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
         String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
 
-        int lineLimit = params.getLineLimit().orElse(DEFAULT_LINE_LIMIT);
-        int size = output.length, start;
+        final int lineLimit = params.getLineLimit().orElse(DEFAULT_LINE_LIMIT);
+        final int size = output.length, start;
 
         if (size < lineLimit) {
             start = 0;
@@ -173,10 +173,10 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     private CheckJobStatus checkStatus(MonitorJobWaitForParams params, boolean getStepData) throws Exception {
-        GetJobs getJobs = new GetJobs(connection);
-        String statusNameCheck = params.getJobStatus().orElse(DEFAULT_STATUS).toString();
+        final GetJobs getJobs = new GetJobs(connection);
+        final String statusNameCheck = params.getJobStatus().orElse(DEFAULT_STATUS).toString();
 
-        Job job = getJobs.getStatusCommon(
+        final Job job = getJobs.getStatusCommon(
                 new CommonJobParams(params.getJobId().orElseThrow(() -> new Exception("job id not specified")),
                         params.getJobName().orElseThrow(() -> new Exception("job name not specified")),
                         getStepData));
@@ -185,13 +185,13 @@ public class MonitorJobs {
             return new CheckJobStatus(true, job);
         }
 
-        String invalidStatusMsg = "Invalid status when checking for status ordering.";
-        int orderIndexOfDesiredJobStatus = getOrderIndexOfStatus(statusNameCheck);
+        final String invalidStatusMsg = "Invalid status when checking for status ordering.";
+        final int orderIndexOfDesiredJobStatus = getOrderIndexOfStatus(statusNameCheck);
         if (orderIndexOfDesiredJobStatus == -1) { // this should never happen but let's check for it.
             throw new Exception(invalidStatusMsg);
         }
 
-        int orderIndexOfCurrRunningJobStatus =
+        final int orderIndexOfCurrRunningJobStatus =
                 getOrderIndexOfStatus(job.getStatus().orElseThrow(() -> new Exception("job status not specified")));
         if (orderIndexOfCurrRunningJobStatus == -1) {  // this should never happen but let's check for it.
             throw new Exception(invalidStatusMsg);
@@ -230,11 +230,10 @@ public class MonitorJobs {
      */
     public boolean isJobRunning(MonitorJobWaitForParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-
-        GetJobs getJobs = new GetJobs(connection);
-        String jobName = params.getJobName().orElseThrow(() -> new Exception("job name not specified"));
-        String jobId = params.getJobId().orElseThrow(() -> new Exception("job id not specified"));
-        String status = getJobs.getStatusValue(jobName, jobId);
+        final GetJobs getJobs = new GetJobs(connection);
+        final String jobName = params.getJobName().orElseThrow(() -> new Exception("job name not specified"));
+        final String jobId = params.getJobId().orElseThrow(() -> new Exception("job id not specified"));
+        final String status = getJobs.getStatusValue(jobName, jobId);
         return !JobStatus.Type.INPUT.toString().equals(status) && !JobStatus.Type.OUTPUT.toString().equals(status);
     }
 
@@ -248,11 +247,11 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     private boolean pollForMessage(MonitorJobWaitForParams params, String message) throws Exception {
-        int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
+        final int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
         boolean messageFound;  // no assigment boolean means by default it is false
         boolean shouldContinue;
         int numOfAttempts = 0;
-        int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);
+        final int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);
 
         LOG.info("Waiting for message \"{}\"", message);
 
@@ -284,11 +283,11 @@ public class MonitorJobs {
      * @author Frank Giordano
      */
     private Job pollForStatus(MonitorJobWaitForParams params) throws Exception {
-        int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
+        final int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
         boolean expectedStatus;  // no assigment boolean means by default it is false
         boolean shouldContinue;
         int numOfAttempts = 0;
-        int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);
+        final int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);
 
         String statusName = params.getJobStatus().orElse(DEFAULT_STATUS).toString();
         LOG.info("Waiting for status \"{}\"", statusName);
@@ -461,7 +460,6 @@ public class MonitorJobs {
         ValidateUtils.checkIllegalParameter(params.getJobName().get().isEmpty(), "job name not specified");
         ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), "job id not specified");
         ValidateUtils.checkIllegalParameter(params.getJobId().get().isEmpty(), "job id not specified");
-
         if (params.getAttempts().isEmpty()) {
             params.setAttempts(attempts);
         }
@@ -469,11 +467,9 @@ public class MonitorJobs {
         if (params.getWatchDelay().isEmpty()) {
             params.setWatchDelay(watchDelay);
         }
-
         if (params.getLineLimit().isEmpty()) {
             params.setLineLimit(lineLimit);
         }
-
         return pollForMessage(params, message);
     }
 
@@ -496,7 +492,6 @@ public class MonitorJobs {
         ValidateUtils.checkIllegalParameter(params.getJobName().get().isEmpty(), "job name not specified");
         ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), "job id not specified");
         ValidateUtils.checkIllegalParameter(params.getJobId().get().isEmpty(), "job id not specified");
-
         if (params.getJobStatus().isEmpty()) {
             params.setJobStatus(DEFAULT_STATUS);
         }
@@ -504,11 +499,9 @@ public class MonitorJobs {
         if (params.getAttempts().isEmpty()) {
             params.setAttempts(attempts);
         }
-
         if (params.getWatchDelay().isEmpty()) {
             params.setWatchDelay(watchDelay);
         }
-
         return pollForStatus(params);
     }
 

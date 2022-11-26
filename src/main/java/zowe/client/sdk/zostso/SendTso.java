@@ -92,23 +92,23 @@ public class SendTso {
      */
     public CollectedResponses getAllResponses(ZosmfTsoResponse tso) throws Exception {
         boolean done = false;
-        StringBuilder messages = new StringBuilder();
-        List<ZosmfTsoResponse> tsos = new ArrayList<>();
+        final StringBuilder messages = new StringBuilder();
+        final List<ZosmfTsoResponse> tsos = new ArrayList<>();
         tsos.add(tso);
         while (!done) {
             if (!tso.getTsoData().isEmpty()) {
                 for (TsoMessages tsoDatum : tso.getTsoData()) {
                     if (tsoDatum.getTsoMessage().isPresent()) {
-                        TsoMessage tsoMsg = tsoDatum.getTsoMessage().get();
+                        final TsoMessage tsoMsg = tsoDatum.getTsoMessage().get();
                         tsoMsg.getData().ifPresent(data -> {
                             messages.append(data);
                             messages.append("\n");
                         });
                     } else if (tsoDatum.getTsoPrompt().isPresent()) {
                         if (messages.toString().contains("IKJ56602I COMMAND SYSTEM RESTARTING DUE TO ERROR")) {
-                            String IKJ56602I = "IKJ56602I COMMAND SYSTEM RESTARTING DUE TO ERROR";
-                            String msg = messages.toString();
-                            int startIndex = msg.indexOf("IKJ56602I");
+                            final String IKJ56602I = "IKJ56602I COMMAND SYSTEM RESTARTING DUE TO ERROR";
+                            final String msg = messages.toString();
+                            final int startIndex = msg.indexOf("IKJ56602I");
                             messages.delete(startIndex, startIndex + IKJ56602I.length() + "\nREADY".length());
                         } else if (messages.length() > 0 && messages.toString().contains("READY")) {
                             done = true;
@@ -134,7 +134,7 @@ public class SendTso {
      * @author Frank Giordano
      */
     private ZosmfTsoResponse getDataFromTSO(String servletKey) throws Exception {
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
         LOG.debug("SendTso::getDataFromTSO - url {}", url);
 
@@ -142,7 +142,7 @@ public class SendTso {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setRequest(url, "");
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return new ZosmfTsoResponse.Builder().build();
         }
@@ -150,7 +150,7 @@ public class SendTso {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            String errorMsg = e.getMessage();
+            final String errorMsg = e.getMessage();
             throw new Exception("Follow up TSO Messages from TSO command cannot be retrieved. " + errorMsg);
         }
 
@@ -166,7 +166,7 @@ public class SendTso {
      * @author Frank Giordano
      */
     private String getTsoResponseSendMessage(TsoResponseMessage tsoResponseMessage) throws Exception {
-        String message = "{\"TSO RESPONSE\":{\"VERSION\":\"" +
+        final String message = "{\"TSO RESPONSE\":{\"VERSION\":\"" +
                 tsoResponseMessage.getVersion().orElseThrow((() -> new Exception("response version missing")))
                 + "\",\"DATA\":\"" +
                 tsoResponseMessage.getData().orElseThrow((() -> new Exception("response data missing"))) + "\"}}";
@@ -188,10 +188,8 @@ public class SendTso {
         ValidateUtils.checkNullParameter(command == null, "command is null");
         ValidateUtils.checkIllegalParameter(servletKey.isEmpty(), "servletKey not specified");
         ValidateUtils.checkIllegalParameter(command.isEmpty(), "command not specified");
-
-        ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParams(servletKey, command));
-
-        CollectedResponses responses = getAllResponses(putResponse);
+        final ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParams(servletKey, command));
+        final CollectedResponses responses = getAllResponses(putResponse);
         return createResponse(responses);
     }
 
@@ -208,18 +206,18 @@ public class SendTso {
         ValidateUtils.checkIllegalParameter(commandParams.getData().isEmpty(), "commandParams data not specified");
         ValidateUtils.checkIllegalParameter(commandParams.getServletKey().isEmpty(), "commandParams servletKey not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;
         LOG.debug("SendTso::sendDataToTSOCommon - url {}", url);
 
-        TsoResponseMessage tsoResponseMessage = new TsoResponseMessage("0100", commandParams.getData());
-        String jobObjBody = getTsoResponseSendMessage(tsoResponseMessage);
+        final TsoResponseMessage tsoResponseMessage = new TsoResponseMessage("0100", commandParams.getData());
+        final String jobObjBody = getTsoResponseSendMessage(tsoResponseMessage);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setRequest(url, jobObjBody);
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return new ZosmfTsoResponse.Builder().build();
         }
@@ -227,7 +225,7 @@ public class SendTso {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            String errorMsg = e.getMessage();
+            final String errorMsg = e.getMessage();
             throw new Exception("No results from executing tso command after getting TSO address space. " + errorMsg);
         }
 

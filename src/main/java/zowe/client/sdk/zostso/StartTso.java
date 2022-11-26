@@ -98,12 +98,12 @@ public class StartTso {
         if (params == null) {
             params = new StartTsoParams();
         }
-        String proc = params.getLogonProcedure().orElse(TsoConstants.DEFAULT_PROC);
-        String chset = params.getCharacterSet().orElse(TsoConstants.DEFAULT_CHSET);
-        String cpage = params.getCodePage().orElse(TsoConstants.DEFAULT_CPAGE);
-        String rowNum = params.getRows().orElse(TsoConstants.DEFAULT_ROWS);
-        String cols = params.getColumns().orElse(TsoConstants.DEFAULT_COLS);
-        String rSize = params.getRegionSize().orElse(TsoConstants.DEFAULT_RSIZE);
+        final String proc = params.getLogonProcedure().orElse(TsoConstants.DEFAULT_PROC);
+        final String chset = params.getCharacterSet().orElse(TsoConstants.DEFAULT_CHSET);
+        final String cpage = params.getCodePage().orElse(TsoConstants.DEFAULT_CPAGE);
+        final String rowNum = params.getRows().orElse(TsoConstants.DEFAULT_ROWS);
+        final String cols = params.getColumns().orElse(TsoConstants.DEFAULT_COLS);
+        final String rSize = params.getRegionSize().orElse(TsoConstants.DEFAULT_RSIZE);
         return new StartTsoParams(proc, chset, cpage, rowNum, cols, accountNumber, rSize);
     }
 
@@ -127,11 +127,11 @@ public class StartTso {
             customParams = setDefaultAddressSpaceParams(params, EncodeUtils.encodeURIComponent(accountNumber));
         }
 
-        ZosmfTsoResponse zosmfResponse = startCommon(customParams);
+        final ZosmfTsoResponse zosmfResponse = startCommon(customParams);
 
         CollectedResponses collectedResponses = null;
         if (zosmfResponse.getServletKey().isPresent()) {
-            SendTso sendTso = new SendTso(connection);
+            final SendTso sendTso = new SendTso(connection);
             collectedResponses = sendTso.getAllResponses(zosmfResponse);
         }
 
@@ -149,14 +149,14 @@ public class StartTso {
     public ZosmfTsoResponse startCommon(StartTsoParams commandParams) throws Exception {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
-        String url = getResourcesQuery(commandParams);
+        final String url = getResourcesQuery(commandParams);
         LOG.debug("StartTso::startCommon - url {}", url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
         }
         request.setRequest(url, null);
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return new ZosmfTsoResponse.Builder().build();
         }
@@ -164,7 +164,7 @@ public class StartTso {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            String errorMsg = e.getMessage();
+            final String errorMsg = e.getMessage();
             throw new Exception("No results from executing tso command while setting up TSO address space. " + errorMsg);
         }
         return TsoUtils.getZosmfTsoResponse(response);

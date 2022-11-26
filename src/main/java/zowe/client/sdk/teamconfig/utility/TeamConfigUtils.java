@@ -31,12 +31,12 @@ public class TeamConfigUtils {
      */
     public static Map<String, String> parseJsonPropsObj(JSONObject obj) {
         // example of props json value to parse properties='{"rejectUnauthorized":false,"host":"mvsxe47.lvn.company.net"}'
-        Map<String, String> props = new HashMap<>();
+        final Map<String, String> props = new HashMap<>();
         if (obj == null) {
             return props;
         }
         for (Object keyValObj : obj.keySet()) {
-            String key = (String) keyValObj;
+            final String key = (String) keyValObj;
             String value = null;
             try {
                 value = (String) obj.get(key);

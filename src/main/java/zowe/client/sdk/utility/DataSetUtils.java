@@ -57,11 +57,11 @@ public final class DataSetUtils {
         ValidateUtils.checkIllegalParameter(dsNames.isEmpty(), "dsNames not specified");
         ValidateUtils.checkNullParameter(type == null, "crudType is null");
 
-        String http404 = "is invalid or non-existent.";
-        String http500Pre = "You may not have permission to";
-        String http500 = ", the request is invalid,";
-        String http500Create = "or the dataset(s) or member already exists.";
-        String http500Post = "or the dataset(s) or member does not exist.";
+        final String http404 = "is invalid or non-existent.";
+        final String http500Pre = "You may not have permission to";
+        final String http500 = ", the request is invalid,";
+        final String http500Create = "or the dataset(s) or member already exists.";
+        final String http500Post = "or the dataset(s) or member does not exist.";
 
         // remove "." period at the end of the string
         errMsg = errMsg.substring(0, errMsg.length() - 1);
@@ -86,7 +86,7 @@ public final class DataSetUtils {
         // if we see create request handle it
         if ("create".equalsIgnoreCase(type.toString())) {
             if (errMsg.contains("500")) {
-                String newErrMsg = String.format("%s %s '%s' %s %s", errMsg, http500Pre, dsNames.get(0), http500Create,
+                final String newErrMsg = String.format("%s %s '%s' %s %s", errMsg, http500Pre, dsNames.get(0), http500Create,
                         http500Post);
                 throw new Exception(newErrMsg);
             }
@@ -97,7 +97,7 @@ public final class DataSetUtils {
         if ("copy".equalsIgnoreCase(type.toString())) {
             if (errMsg.contains("500")) {
                 if (dsNames.size() == 1) {
-                    String newErrMsg = formatPrePostMsg(errMsg, dsNames, http500Pre, http500, http500Post);
+                    final String newErrMsg = formatPrePostMsg(errMsg, dsNames, http500Pre, http500, http500Post);
                     throw new Exception(newErrMsg);
                 } else {
                     datasets.append(errMsg);

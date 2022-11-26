@@ -66,7 +66,7 @@ public class StartStopResponses {
         if (!zosmfTsoResponse.getMsgData().isEmpty()) {
             // more data means more tso responses to come and as such tso command request has not ended in success yet
             this.success = false;
-            ZosmfMessages zosmfMsg = zosmfTsoResponse.getMsgData().get(0);
+            final ZosmfMessages zosmfMsg = zosmfTsoResponse.getMsgData().get(0);
             this.failureResponse = zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR);
         } else {
             // no data means no more tso responses to come and as such tso command request has ended successfully 
@@ -76,8 +76,8 @@ public class StartStopResponses {
 
         this.servletKey = zosmfTsoResponse.getServletKey().orElseThrow(() -> new Exception("servletKey is missing"));
 
-        StringBuilder buildMessage = new StringBuilder();
-        List<TsoMessages> tsoMsgLst = zosmfTsoResponse.getTsoData();
+        final StringBuilder buildMessage = new StringBuilder();
+        final List<TsoMessages> tsoMsgLst = zosmfTsoResponse.getTsoData();
         tsoMsgLst.forEach(buildMessage::append);
         this.messages = buildMessage.toString();
         this.collectedResponses = collectedResponses.getTsos();

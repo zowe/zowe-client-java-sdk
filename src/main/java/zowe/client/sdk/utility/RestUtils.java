@@ -75,11 +75,11 @@ public final class RestUtils {
      */
     public static Object getJsonResponseEntity(HttpResponse httpResponse) throws Exception {
         ValidateUtils.checkNullParameter(httpResponse == null, "httpResponse is null");
-        HttpEntity entity = httpResponse.getEntity();
+        final HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
-            String result = EntityUtils.toString(entity);
+            final String result = EntityUtils.toString(entity);
             LOG.debug("UtilRest::getJsonResponseEntity - result = {}", result);
-            JSONParser parser = new JSONParser();
+            final JSONParser parser = new JSONParser();
             try {
                 if (result.isEmpty()) {
                     return null;
@@ -103,7 +103,7 @@ public final class RestUtils {
      */
     public static Object getTextResponseEntity(HttpResponse httpResponse) throws Exception {
         ValidateUtils.checkNullParameter(httpResponse == null, "httpResponse is null");
-        HttpEntity entity = httpResponse.getEntity();
+        final HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
             String result = EntityUtils.toString(entity);
             LOG.debug("UtilRest::getTextResponseEntity - result = {}", result);

@@ -20,7 +20,7 @@ public class UtilValidateTest {
      */
     @Test
     public void tstCheckIllegalParameterFalseSuccess() {
-        int input = 5;
+        final int input = 5;
         boolean isIllegalArgumentException = false;
         try {
             ValidateUtils.checkIllegalParameter(input == 15, "error msg");
@@ -35,7 +35,7 @@ public class UtilValidateTest {
      */
     @Test
     public void tstCheckIllegalParameterTrueSuccess() {
-        int input = 5;
+        final int input = 5;
         boolean isIllegalArgumentException = false;
         try {
             ValidateUtils.checkIllegalParameter(input == 5, "error msg");

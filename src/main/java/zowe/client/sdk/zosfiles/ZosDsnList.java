@@ -103,8 +103,8 @@ public class ZosDsnList {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
 
-        Map<String, String> headers = new HashMap<>();
-        List<Dataset> datasets = new ArrayList<>();
+        final Map<String, String> headers = new HashMap<>();
+        final List<Dataset> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
 
@@ -118,7 +118,7 @@ public class ZosDsnList {
             url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + params.getStart().get();
         }
 
-        Response response = getResponse(params, headers, url);
+        final Response response = getResponse(params, headers, url);
         if (response.isEmpty()) {
             return datasets;
         }
@@ -129,11 +129,11 @@ public class ZosDsnList {
             DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.READ);
         }
 
-        JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
+        final JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
         if (results.isEmpty()) {
             return datasets;
         }
-        JSONArray items = (JSONArray) results.get(ZosFilesConstants.RESPONSE_ITEMS);
+        final JSONArray items = (JSONArray) results.get(ZosFilesConstants.RESPONSE_ITEMS);
         items.forEach(item -> {
             JSONObject datasetObj = (JSONObject) item;
             datasets.add(DataSetUtils.parseJsonDSResponse(datasetObj));
@@ -157,8 +157,8 @@ public class ZosDsnList {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
 
-        Map<String, String> headers = new HashMap<>();
-        List<String> members = new ArrayList<>();
+        final Map<String, String> headers = new HashMap<>();
+        final List<String> members = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
@@ -168,7 +168,7 @@ public class ZosDsnList {
                     EncodeUtils.encodeURIComponent(params.getPattern().get());
         }
 
-        Response response = getResponse(params, headers, url);
+        final Response response = getResponse(params, headers, url);
         if (response.isEmpty()) {
             return members;
         }
@@ -179,11 +179,11 @@ public class ZosDsnList {
             DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.READ);
         }
 
-        JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
+        final JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
         if (results.isEmpty()) {
             return members;
         }
-        JSONArray items = (JSONArray) results.get("items");
+        final JSONArray items = (JSONArray) results.get("items");
         items.forEach(item -> {
             JSONObject datasetObj = (JSONObject) item;
             members.add(datasetObj.get("member").toString());

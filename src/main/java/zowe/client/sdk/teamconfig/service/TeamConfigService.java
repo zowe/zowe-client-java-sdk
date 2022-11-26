@@ -122,23 +122,23 @@ public class TeamConfigService {
     private ConfigContainer parseJson(JSONObject jsonObj) throws Exception {
         String schema = null;
         Boolean autoStore = null;
-        List<Profile> profiles = new ArrayList<>();
-        Map<String, String> defaults = new HashMap<>();
-        List<Partition> partitions = new ArrayList<>();
+        final List<Profile> profiles = new ArrayList<>();
+        final Map<String, String> defaults = new HashMap<>();
+        final List<Partition> partitions = new ArrayList<>();
 
         @SuppressWarnings("unchecked")
-        Set<String> jsonSectionKeys = jsonObj.keySet();
+        final Set<String> jsonSectionKeys = jsonObj.keySet();
         for (String keySectionVal : jsonSectionKeys) {
             if (SectionType.$SCHEMA.getValue().equals(keySectionVal)) {
                 schema = (String) jsonObj.get(SectionType.$SCHEMA.getValue());
             } else if (SectionType.PROFILES.getValue().equals(keySectionVal)) {
                 JSONObject jsonProfileObj = (JSONObject) jsonObj.get(SectionType.PROFILES.getValue());
                 @SuppressWarnings("unchecked")
-                Set<String> jsonProfileKeys = jsonProfileObj.keySet();
+                final Set<String> jsonProfileKeys = jsonProfileObj.keySet();
                 for (String profileKeyVal : jsonProfileKeys) {
                     JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
                     @SuppressWarnings("unchecked")
-                    Set<String> isEmbeddedKeyProfile = profileTypeJsonObj.keySet();
+                    final Set<String> isEmbeddedKeyProfile = profileTypeJsonObj.keySet();
                     if (isPartition(isEmbeddedKeyProfile)) {
                         partitions.add(getPartition(profileKeyVal, profileTypeJsonObj));
                     } else {
@@ -148,10 +148,10 @@ public class TeamConfigService {
                     }
                 }
             } else if (SectionType.DEFAULTS.getValue().equals(keySectionVal)) {
-                JSONObject keyValues = (JSONObject) jsonObj.get(SectionType.DEFAULTS.getValue());
+                final JSONObject keyValues = (JSONObject) jsonObj.get(SectionType.DEFAULTS.getValue());
                 for (Object defaultKeyVal : keyValues.keySet()) {
-                    String key = (String) defaultKeyVal;
-                    String value = (String) keyValues.get(key);
+                    final String key = (String) defaultKeyVal;
+                    final String value = (String) keyValues.get(key);
                     defaults.put(key, value);
                 }
             } else if (SectionType.AUTOSTORE.getValue().equals(keySectionVal)) {

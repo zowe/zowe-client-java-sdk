@@ -19,6 +19,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosconsole.input.IssueParams;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -36,15 +37,15 @@ public class IssueCommandTest {
 
     @Test
     public void tstIssueCommandCmdResponseAttributeSuccess() throws Exception {
-        var jsonMap = new HashMap<String, Object>();
+        final Map<String, Object> jsonMap = new HashMap<String, Object>();
         jsonMap.put("cmd-response", "student");
-        JSONObject json = new JSONObject(jsonMap);
+        final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(jsonGetRequest.executeRequest()).thenReturn(new Response(json, 200));
         Mockito.doNothing().when(jsonGetRequest).setRequest(anyString());
-        IssueCommand issueCommand = new IssueCommand(connection, jsonGetRequest);
-        IssueParams issueParams = new IssueParams();
+        final IssueCommand issueCommand = new IssueCommand(connection, jsonGetRequest);
+        final IssueParams issueParams = new IssueParams();
         issueParams.setCommand("test");
-        ConsoleResponse response = issueCommand.issue(issueParams);
+        final ConsoleResponse response = issueCommand.issue(issueParams);
         assertEquals("student",
                 response.getCommandResponse()
                         .orElse("n/a")
@@ -54,9 +55,9 @@ public class IssueCommandTest {
 
     @Test
     public void tstIssueCommandCmdResponseUrlAttributeSuccess() throws Exception {
-        var jsonMap = new HashMap<String, Object>();
+        final var jsonMap = new HashMap<String, Object>();
         jsonMap.put("cmd-response-url", "student");
-        JSONObject json = new JSONObject(jsonMap);
+        final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(jsonGetRequest.executeRequest()).thenReturn(new Response(json, 200));
         Mockito.doNothing().when(jsonGetRequest).setRequest(anyString());
         IssueCommand issueCommand = new IssueCommand(connection, jsonGetRequest);
@@ -72,11 +73,11 @@ public class IssueCommandTest {
 
     @Test
     public void tstIssueCommandHttpErrorFailure() throws Exception {
-        String obj = "Unauthorized";
+        final String obj = "Unauthorized";
         Mockito.when(jsonGetRequest.executeRequest()).thenReturn(new Response(obj, 401));
         Mockito.doNothing().when(jsonGetRequest).setRequest(anyString());
-        IssueCommand issueCommand = new IssueCommand(connection, jsonGetRequest);
-        IssueParams issueParams = new IssueParams();
+        final IssueCommand issueCommand = new IssueCommand(connection, jsonGetRequest);
+        final IssueParams issueParams = new IssueParams();
         issueParams.setCommand("test");
         String errorMsg = "";
         try {

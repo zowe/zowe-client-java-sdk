@@ -82,18 +82,18 @@ public class ZosDsnCopy {
         String fromDataSetName = params.getFromDataSet().orElseThrow(() -> new Exception("dataset not specified"));
         boolean isFullPartitionCopy = params.isCopyAllMembers();
 
-        Map<String, Object> jsonMap = new HashMap<>();
+        final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "copy");
 
         String member = "";
         // does fromDataSetName contain a member if so extract it and include member field and value in the json body
-        int startMemberIndex = fromDataSetName.indexOf("(");
+        final int startMemberIndex = fromDataSetName.indexOf("(");
         if (startMemberIndex > 0) {
             member = fromDataSetName.substring(startMemberIndex + 1, fromDataSetName.length() - 1);
             fromDataSetName = fromDataSetName.substring(0, startMemberIndex);
         }
 
-        Map<String, Object> fromDataSetReq = new HashMap<>();
+        final Map<String, Object> fromDataSetReq = new HashMap<>();
         fromDataSetReq.put("dsn", fromDataSetName);
         if (member.length() > 0) // include a member if it was specified in fromDataSetName
         {
@@ -102,7 +102,7 @@ public class ZosDsnCopy {
             fromDataSetReq.put("member", "*");
         }
 
-        JSONObject fromDataSetObj = new JSONObject(fromDataSetReq);
+        final JSONObject fromDataSetObj = new JSONObject(fromDataSetReq);
 
         jsonMap.put("from-dataset", fromDataSetObj);
         jsonMap.put("replace", params.isReplace());
@@ -111,7 +111,7 @@ public class ZosDsnCopy {
             jsonMap.put("volser", params.getFromVolser());
         }
 
-        JSONObject jsonRequestBody = new JSONObject(jsonMap);
+        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
         return jsonRequestBody.toString();
     }
@@ -173,12 +173,12 @@ public class ZosDsnCopy {
 
         LOG.debug(url);
 
-        String body = buildBody(params);
+        final String body = buildBody(params);
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setRequest(url, body);
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
 
         try {
             RestUtils.checkHttpErrors(response);

@@ -107,11 +107,11 @@ public class TeamConfig {
     public ProfileDao getDefaultProfileByName(String name) throws Exception {
         ValidateUtils.checkNullParameter(name == null, "name is null");
         ValidateUtils.checkIllegalParameter(name.isEmpty(), "name not specified");
-        Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(name));
-        Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(name));
-        Optional<Profile> base = teamConfig.getProfiles().stream().filter(isBaseProfile).findFirst();
+        final Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(name));
+        final Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(name));
+        final Optional<Profile> base = teamConfig.getProfiles().stream().filter(isBaseProfile).findFirst();
 
-        Optional<Profile> target = teamConfig.getProfiles().stream().filter(isProfileName).findFirst();
+        final Optional<Profile> target = teamConfig.getProfiles().stream().filter(isProfileName).findFirst();
         if (target.isEmpty()) {
             throw new Exception("Profile " + name + " not found");
         }
@@ -137,22 +137,22 @@ public class TeamConfig {
         ValidateUtils.checkIllegalParameter(profileName.isEmpty(), "profileName not specified");
         ValidateUtils.checkNullParameter(partitionName == null, "partitionName is null");
         ValidateUtils.checkIllegalParameter(partitionName.isEmpty(), "partitionName not specified");
-        Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(profileName));
-        Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(profileName));
-        Predicate<Partition> isPartitionName = i -> i.getName().equals(partitionName);
-        Optional<Profile> base = teamConfig.getProfiles().stream().filter(isBaseProfile).findFirst();
+        final Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(profileName));
+        final Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(profileName));
+        final Predicate<Partition> isPartitionName = i -> i.getName().equals(partitionName);
+        final Optional<Profile> base = teamConfig.getProfiles().stream().filter(isBaseProfile).findFirst();
 
-        Optional<Partition> partition = teamConfig.getPartitions().stream().filter(isPartitionName).findFirst();
+        final Optional<Partition> partition = teamConfig.getPartitions().stream().filter(isPartitionName).findFirst();
         if (partition.isEmpty()) {
             throw new Exception("Partition " + partitionName + " not found");
         }
 
-        Optional<Profile> target = partition.get().getProfiles().stream().filter(isProfileName).findFirst();
+        final Optional<Profile> target = partition.get().getProfiles().stream().filter(isProfileName).findFirst();
         if (target.isEmpty()) {
             throw new Exception("Profile " + profileName + " within partition not found");
         }
 
-        Map<String, String> props = partition.get().getProperties();
+        final Map<String, String> props = partition.get().getProperties();
         mergeProperties.setHost(props.get("host"));
         mergeProperties.setPort(props.get("port"));
 
@@ -169,8 +169,8 @@ public class TeamConfig {
      * @author Frank Giordano
      */
     private void merge(Optional<Profile> target, Optional<Profile> base) {
-        Optional<Map<String, String>> targetProps = Optional.ofNullable(target.get().getProperties());
-        Optional<Map<String, String>> baseProps = Optional.ofNullable(base.get().getProperties());
+        final Optional<Map<String, String>> targetProps = Optional.ofNullable(target.get().getProperties());
+        final Optional<Map<String, String>> baseProps = Optional.ofNullable(base.get().getProperties());
         if (mergeProperties.getHost().isEmpty() && targetProps.isPresent()) {
             mergeProperties.setHost(targetProps.get().get("host"));
         }

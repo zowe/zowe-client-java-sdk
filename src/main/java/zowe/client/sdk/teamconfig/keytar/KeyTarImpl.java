@@ -90,9 +90,9 @@ public class KeyTarImpl implements IKeyTar {
      * @author Frank Giordano
      */
     private List<KeyTarConfig> parseJson() throws ParseException {
-        JSONObject jsonKeyTar = (JSONObject) new JSONParser().parse(keyString);
+        final JSONObject jsonKeyTar = (JSONObject) new JSONParser().parse(keyString);
         @SuppressWarnings("unchecked")
-        Set<String> keyTarKeys = jsonKeyTar.keySet();
+        final Set<String> keyTarKeys = jsonKeyTar.keySet();
         for (String keyVal : keyTarKeys) {
             JSONObject jsonVal = (JSONObject) jsonKeyTar.get(keyVal);
             keyTarConfigs.add(new KeyTarConfig(keyVal,
@@ -114,13 +114,13 @@ public class KeyTarImpl implements IKeyTar {
         ValidateUtils.checkIllegalParameter(serviceName.isEmpty(), "serviceName is empty");
         ValidateUtils.checkNullParameter(accountName == null, "accountName is null");
         ValidateUtils.checkIllegalParameter(accountName.isEmpty(), "accountName is empty");
-        Keytar instance = Keytar.getInstance();
-        String encodedString = instance.getPassword(serviceName, accountName);
+        final Keytar instance = Keytar.getInstance();
+        final String encodedString = instance.getPassword(serviceName, accountName);
         LOG.debug("KeyTar encodedString retrieved {}", encodedString);
         if (encodedString == null) {
             throw new NullPointerException("Unknown service name or account name");
         }
-        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
+        final byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
         this.keyString = new String(decodedBytes);
     }
 

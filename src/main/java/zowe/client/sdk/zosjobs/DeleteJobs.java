@@ -91,13 +91,13 @@ public class DeleteJobs {
     public Response deleteJobCommon(ModifyJobParams params) throws Exception {
         JobUtils.checkModifyJobParameters(params);
 
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
                 JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
         LOG.debug(url);
 
-        Map<String, String> headers = new HashMap<>();
+        final Map<String, String> headers = new HashMap<>();
 
-        String version = params.getVersion().orElse(JobsConstants.DEFAULT_DELETE_VERSION);
+        final String version = params.getVersion().orElse(JobsConstants.DEFAULT_DELETE_VERSION);
 
         // To request asynchronous processing for this service (the default), set the "version" property to 1.0
         // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
@@ -119,10 +119,9 @@ public class DeleteJobs {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
         request.setRequest(url);
-
         request.setHeaders(headers);
 
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {

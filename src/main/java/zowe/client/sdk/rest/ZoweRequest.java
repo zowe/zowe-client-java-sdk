@@ -127,7 +127,7 @@ public abstract class ZoweRequest {
      * @author Frank Giordano
      */
     protected <T> Response executeJsonRequest(T request) throws Exception {
-        int statusCode = execute(request);
+        final int statusCode = execute(request);
 
         if (RestUtils.isHttpError(statusCode)) {
             return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
@@ -146,7 +146,7 @@ public abstract class ZoweRequest {
      * @author Frank Giordano
      */
     protected <T> Response executeTextRequest(T request) throws Exception {
-        int statusCode = execute(request);
+        final int statusCode = execute(request);
 
         if (RestUtils.isHttpError(statusCode)) {
             return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
@@ -165,7 +165,7 @@ public abstract class ZoweRequest {
      * @author Frank Giordano
      */
     protected <T> Response executeStreamRequest(T request) throws Exception {
-        int statusCode = execute(request);
+        final int statusCode = execute(request);
 
         if (RestUtils.isHttpError(statusCode)) {
             return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
@@ -193,7 +193,7 @@ public abstract class ZoweRequest {
 
         httpResponse = client.execute((HttpUriRequest) request, localContext);
 
-        int statusCode = httpResponse.getStatusLine().getStatusCode();
+        final int statusCode = httpResponse.getStatusLine().getStatusCode();
 
         LOG.debug("ZoweRequest::execute - Response statusCode {}, Response {}",
                 httpResponse.getStatusLine().getStatusCode(), httpResponse.toString());

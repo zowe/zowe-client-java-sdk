@@ -119,12 +119,12 @@ public class CancelJobs {
         JobUtils.checkModifyJobParameters(params);
 
         // generate full url request
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
                 JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
         LOG.debug(url);
 
         // generate json string body for the request
-        String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
+        final String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
 
         // To request asynchronous processing for this service (the default), set the "version" property to 1.0
         // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
@@ -138,10 +138,10 @@ public class CancelJobs {
             throw new IllegalArgumentException("invalid version specified");
         }
 
-        Map<String, String> jsonMap = new HashMap<>();
+        final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("request", JobsConstants.REQUEST_CANCEL);
         jsonMap.put("version", version);
-        JSONObject jsonRequestBody = new JSONObject(jsonMap);
+        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
 
         if (request == null) {
@@ -149,7 +149,7 @@ public class CancelJobs {
         }
         request.setRequest(url, jsonRequestBody.toString());
 
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {

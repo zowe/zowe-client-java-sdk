@@ -49,8 +49,7 @@ public final class JobUtils {
      */
     public static Job parseJsonJobResponse(JSONObject jsonObject) {
         ValidateUtils.checkNullParameter(jsonObject == null, "json is null");
-
-        Job.Builder job = new Job.Builder()
+        final Job.Builder job = new Job.Builder()
                 .jobId((String) jsonObject.get("jobid"))
                 .jobName((String) jsonObject.get("jobname"))
                 .subSystem((String) jsonObject.get("subsystem"))
@@ -66,10 +65,10 @@ public final class JobUtils {
                 .phaseName((String) jsonObject.get("phase-name"));
 
         // check for "step-data" used by getStatusCommon if flag is set to true
-        JSONArray stepData = (JSONArray) jsonObject.get("step-data");
+        final JSONArray stepData = (JSONArray) jsonObject.get("step-data");
         if (stepData != null) {
-            int size = stepData.size();
-            JobStepData[] jobStepDataArray = new JobStepData[size];
+            final int size = stepData.size();
+            final JobStepData[] jobStepDataArray = new JobStepData[size];
             for (int i = 0; i < size; i++) {
                 jobStepDataArray[i] = parseJsonJobStepDataResponse((JSONObject) stepData.get(i));
             }
@@ -107,7 +106,7 @@ public final class JobUtils {
      */
     public static void throwHttpException(ModifyJobParams params, Exception exception) throws Exception {
         JobUtils.checkModifyJobParameters(params);
-        String errorMsg = exception.getMessage();
+        final String errorMsg = exception.getMessage();
         if (errorMsg.contains("400")) {
             throw new Exception(errorMsg + " JobId " + params.getJobId().orElse("n/a") + " may not exist.");
         }

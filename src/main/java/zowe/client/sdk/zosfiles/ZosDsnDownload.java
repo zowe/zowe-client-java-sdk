@@ -88,7 +88,7 @@ public class ZosDsnDownload {
         LOG.debug(url);
 
         String key, value;
-        Map<String, String> headers = FileUtils.generateHeadersBasedOnOptions(params);
+        final Map<String, String> headers = FileUtils.generateHeadersBasedOnOptions(params);
 
         if (params.getReturnEtag().orElse(false)) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
@@ -108,7 +108,7 @@ public class ZosDsnDownload {
         request.setRequest(url);
         request.setHeaders(headers);
 
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return null;
         }

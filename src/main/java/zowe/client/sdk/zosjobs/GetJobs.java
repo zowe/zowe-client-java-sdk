@@ -106,7 +106,7 @@ public class GetJobs {
         }
         request.setRequest(url);
 
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return "";
         }
@@ -140,7 +140,7 @@ public class GetJobs {
         ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
         ValidateUtils.checkIllegalParameter(jobId.isEmpty(), "jobId not specified");
 
-        List<Job> jobs = getJobsCommon(new GetJobParams.Builder("*").jobId(jobId).build());
+        final List<Job> jobs = getJobsCommon(new GetJobParams.Builder("*").jobId(jobId).build());
         if (jobs.isEmpty()) {
             throw new Exception("Job not found");
         }
@@ -194,7 +194,6 @@ public class GetJobs {
         ValidateUtils.checkIllegalParameter(owner.isEmpty(), "owner not specified");
         ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
         ValidateUtils.checkIllegalParameter(prefix.isEmpty(), "prefix not specified");
-
         return getJobsCommon(new GetJobParams.Builder(owner).prefix(prefix).build());
     }
 
@@ -209,7 +208,6 @@ public class GetJobs {
     public List<Job> getJobsByPrefix(String prefix) throws Exception {
         ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
         ValidateUtils.checkIllegalParameter(prefix.isEmpty(), "prefix not specified");
-
         return getJobsCommon(new GetJobParams.Builder("*").prefix(prefix).build());
     }
 
@@ -265,12 +263,12 @@ public class GetJobs {
         }
         request.setRequest(url);
 
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return jobs;
         }
         RestUtils.checkHttpErrors(response);
-        JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
+        final JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
         if (results == null) {
             return jobs;
         }
@@ -320,7 +318,8 @@ public class GetJobs {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
         }
         request.setRequest(url);
-        Response response = request.executeRequest();
+
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return "";
         }
@@ -352,7 +351,8 @@ public class GetJobs {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
         }
         request.setRequest(url);
-        Response response = request.executeRequest();
+
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return "";
         }
@@ -401,12 +401,12 @@ public class GetJobs {
         }
         request.setRequest(url);
 
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return files;
         }
         RestUtils.checkHttpErrors(response);
-        JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
+        final JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
         if (results == null) {
             return files;
         }
@@ -461,7 +461,6 @@ public class GetJobs {
     public Job getStatus(String jobName, String jobId) throws Exception {
         ValidateUtils.checkNullParameter(jobName == null, "jobName is null");
         ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
-
         return getStatusCommon(new CommonJobParams(jobId, jobName, true));
     }
 
@@ -493,12 +492,13 @@ public class GetJobs {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
         request.setRequest(url);
-        Response response = request.executeRequest();
+
+        final Response response = request.executeRequest();
         if (response.isEmpty()) {
             return new Job.Builder().build();
         }
         RestUtils.checkHttpErrors(response);
-        JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
+        final JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
         if (result == null) {
             return new Job.Builder().build();
         }
@@ -520,7 +520,6 @@ public class GetJobs {
      */
     public Job getStatusForJob(Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-
         return getStatusCommon(new CommonJobParams(job.getJobId().orElse(null),
                 job.getJobName().orElse(null), true));
     }
@@ -537,8 +536,7 @@ public class GetJobs {
     public String getStatusValue(String jobName, String jobId) throws Exception {
         ValidateUtils.checkNullParameter(jobName == null, "jobName is null");
         ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
-
-        Job job = getStatusCommon(new CommonJobParams(jobId, jobName));
+        final Job job = getStatusCommon(new CommonJobParams(jobId, jobName));
         return job.getStatus().orElseThrow(() -> new Exception("job status is missing"));
     }
 
@@ -552,8 +550,7 @@ public class GetJobs {
      */
     public String getStatusValueForJob(Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-
-        Job result = getStatusCommon(
+        final Job result = getStatusCommon(
                 new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
         return result.getStatus().orElseThrow(() -> new Exception("job status is missing"));
     }
