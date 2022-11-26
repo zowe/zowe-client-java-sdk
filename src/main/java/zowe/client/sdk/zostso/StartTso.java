@@ -118,7 +118,7 @@ public class StartTso {
      */
     public StartStopResponses start(String accountNumber, StartTsoParams params) throws Exception {
         ValidateUtils.checkNullParameter(accountNumber == null, "accountNumber is null");
-        ValidateUtils.checkIllegalParameter(accountNumber.isEmpty(), "accountNumber not specified");
+        ValidateUtils.checkIllegalParameter(accountNumber.isBlank(), "accountNumber not specified");
 
         StartTsoParams customParams;
         if (params == null) {

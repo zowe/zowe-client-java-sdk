@@ -67,8 +67,8 @@ public class IssueTso {
             throws Exception {
         ValidateUtils.checkNullParameter(accountNumber == null, "accountNumber is null");
         ValidateUtils.checkNullParameter(command == null, "command is null");
-        ValidateUtils.checkIllegalParameter(accountNumber.isEmpty(), "accountNumber not specified");
-        ValidateUtils.checkIllegalParameter(command.isEmpty(), "command not specified");
+        ValidateUtils.checkIllegalParameter(accountNumber.isBlank(), "accountNumber not specified");
+        ValidateUtils.checkIllegalParameter(command.isBlank(), "command not specified");
         // first stage open tso servlet session to use for our tso command processing
         final StartTso startTso = new StartTso(connection);
         final StartStopResponses startResponse = startTso.start(accountNumber, startParams);

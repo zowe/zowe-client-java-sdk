@@ -186,8 +186,8 @@ public class SendTso {
     public SendResponse sendDataToTSOCollect(String servletKey, String command) throws Exception {
         ValidateUtils.checkNullParameter(servletKey == null, "servletKey is null");
         ValidateUtils.checkNullParameter(command == null, "command is null");
-        ValidateUtils.checkIllegalParameter(servletKey.isEmpty(), "servletKey not specified");
-        ValidateUtils.checkIllegalParameter(command.isEmpty(), "command not specified");
+        ValidateUtils.checkIllegalParameter(servletKey.isBlank(), "servletKey not specified");
+        ValidateUtils.checkIllegalParameter(command.isBlank(), "command not specified");
         final ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParams(servletKey, command));
         final CollectedResponses responses = getAllResponses(putResponse);
         return createResponse(responses);
@@ -203,8 +203,8 @@ public class SendTso {
      */
     public ZosmfTsoResponse sendDataToTSOCommon(SendTsoParams commandParams) throws Exception {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
-        ValidateUtils.checkIllegalParameter(commandParams.getData().isEmpty(), "commandParams data not specified");
-        ValidateUtils.checkIllegalParameter(commandParams.getServletKey().isEmpty(), "commandParams servletKey not specified");
+        ValidateUtils.checkIllegalParameter(commandParams.getData().isBlank(), "commandParams data not specified");
+        ValidateUtils.checkIllegalParameter(commandParams.getServletKey().isBlank(), "commandParams servletKey not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;
