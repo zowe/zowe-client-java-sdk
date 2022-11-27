@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
 public class GetZosLog {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetZosLog.class);
-    public static final String RESOURCE = "/zosmf/restconsoles/v1/log?";
+    private static final String RESOURCE = "/zosmf/restconsoles/v1/log?";
     private ZOSConnection connection;
     private ZoweRequest request;
 
