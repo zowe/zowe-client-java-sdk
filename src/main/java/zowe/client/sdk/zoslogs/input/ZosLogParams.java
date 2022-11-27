@@ -14,6 +14,7 @@ package zowe.client.sdk.zoslogs.input;
  * The z/OSMF log API parameters. See the z/OSMF REST API documentation for full details.
  *
  * @author Frank Giordano
+ * @version 1.0
  */
 public class ZosLogParams {
 

@@ -18,6 +18,7 @@ import java.util.OptionalLong;
  * Standard log response document. Represents the details about the messages and logs.
  *
  * @author Frank Giordano
+ * @version 1.0
  */
 public class ZosLogReply {
 

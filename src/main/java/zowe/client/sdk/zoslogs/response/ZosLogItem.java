@@ -17,6 +17,7 @@ import java.util.OptionalLong;
  * Represents the details of one log item.
  *
  * @author Frank Giordano
+ * @version 1.0
  */
 public class ZosLogItem {
 
