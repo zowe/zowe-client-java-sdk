@@ -38,6 +38,7 @@ import java.util.regex.Pattern;
  * Get zos log via z/OSMF restful api
  *
  * @author Frank Giordano
+ * @version 1.0
  */
 public class GetZosLog {
 
