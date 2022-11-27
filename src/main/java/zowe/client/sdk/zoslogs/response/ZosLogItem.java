@@ -10,13 +10,13 @@
  */
 package zowe.client.sdk.zoslogs.response;
 
-import zowe.client.sdk.zosfiles.input.DownloadParams;
-
 import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.OptionalLong;
 
 /**
- * Represents the details about one log item
+ * Represents the details of one log item.
+ *
+ * @author Frank Giordano
  */
 public class ZosLogItem {
 
@@ -63,8 +63,14 @@ public class ZosLogItem {
     /**
      * UNIX timestamp. For example, 1621920830109.
      */
-    private final OptionalInt number;
+    private final OptionalLong number;
 
+    /**
+     * ZosLogItem Constructor.
+     *
+     * @param builder ZosLogItem.Builder Object
+     * @author Frank Giordano
+     */
     private ZosLogItem(ZosLogItem.Builder builder) {
         this.cart = Optional.ofNullable(builder.cart);
         this.color = Optional.ofNullable(builder.color);
@@ -76,10 +82,10 @@ public class ZosLogItem {
         this.type = Optional.ofNullable(builder.type);
         this.subType = Optional.ofNullable(builder.subType);
         this.time = Optional.ofNullable(builder.time);
-        if (builder.number == null) {
-            this.number = OptionalInt.empty();
+        if (builder.number == 0) {
+            this.number = OptionalLong.empty();
         } else {
-            this.number = OptionalInt.of(builder.number);
+            this.number = OptionalLong.of(builder.number);
         }
     }
 
@@ -95,7 +101,7 @@ public class ZosLogItem {
         private String type;
         private String subType;
         private String time;
-        private Integer number;
+        private Long number;
 
         public ZosLogItem build() {
             return new ZosLogItem(this);
@@ -151,7 +157,7 @@ public class ZosLogItem {
             return this;
         }
 
-        public ZosLogItem.Builder type(int number) {
+        public ZosLogItem.Builder number(long number) {
             this.number = number;
             return this;
         }

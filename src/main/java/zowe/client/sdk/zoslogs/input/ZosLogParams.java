@@ -10,10 +10,10 @@
  */
 package zowe.client.sdk.zoslogs.input;
 
-import java.sql.Timestamp;
-
 /**
  * The z/OSMF log API parameters. See the z/OSMF REST API documentation for full details.
+ *
+ * @author Frank Giordano
  */
 public class ZosLogParams {
 
@@ -35,6 +35,17 @@ public class ZosLogParams {
      */
     private final boolean processResponses;
 
+    /**
+     * ZosLogParams constructor
+     *
+     * @param startTime        A String that represents either a Date in this format: YYYY-MM-DD
+     *                         or a DataTime format: YYYY-MM-DDTHH:MM:SSZ
+     * @param direction        a DirectionType enum value
+     * @param timeRange        range of log output to retrieve, the following are valid examples:
+     *                         1s (one second), 10m (tem minutes), 24h (24 hours), etc.
+     * @param processResponses true of false should message item be parsed for newline characters
+     * @author Frank Giordano
+     */
     public ZosLogParams(String startTime, DirectionType direction, String timeRange, boolean processResponses) {
         this.startTime = startTime;
         this.direction = direction;
@@ -42,25 +53,38 @@ public class ZosLogParams {
         this.processResponses = processResponses;
     }
 
-    public ZosLogParams(String startTime, DirectionType direction, String timeRange) {
-        this.startTime = startTime;
-        this.direction = direction;
-        this.timeRange = timeRange;
-        this.processResponses = false;
-    }
-
+    /**
+     * Return start time string value.
+     *
+     * @author Frank Giordano
+     */
     public String getStartTime() {
         return startTime;
     }
 
+    /**
+     * Return direction type enum type.
+     *
+     * @author Frank Giordano
+     */
     public DirectionType getDirection() {
         return direction;
     }
 
+    /**
+     * Return time range string value.
+     *
+     * @author Frank Giordano
+     */
     public String getTimeRange() {
         return timeRange;
     }
 
+    /**
+     * Return process response boolean value.
+     *
+     * @author Frank Giordano
+     */
     public boolean isProcessResponses() {
         return processResponses;
     }

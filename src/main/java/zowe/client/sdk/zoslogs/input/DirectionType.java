@@ -10,9 +10,20 @@
  */
 package zowe.client.sdk.zoslogs.input;
 
+/**
+ * Enum class representing direction to gather log data from start time.
+ *
+ * @author Frank Giordano
+ */
 public enum DirectionType {
 
+    /**
+     * Forward direction
+     */
     FORWARD("forward"),
+    /**
+     * backward direction
+     */
     BACKWARD("backward");
 
     private final String value;
