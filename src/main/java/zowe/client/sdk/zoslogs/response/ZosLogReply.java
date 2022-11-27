@@ -29,7 +29,7 @@ public class ZosLogReply {
     private final OptionalLong timeZone;
     /**
      * The UNIX timestamp. This value could be used in a subsequent request to specify a starting timestamp.
-     * Logs in the “nextTimestamp” are not returned to the current response.
+     * Logs in the "nextTimestamp" are not returned to the current response.
      */
     private final OptionalLong nextTimeStamp;
     /**
@@ -80,6 +80,7 @@ public class ZosLogReply {
     /**
      * Return timeZone OptionalLong value.
      *
+     * @return OptionalLong value
      * @author Frank Giordano
      */
     public OptionalLong getTimeZone() {
@@ -89,6 +90,7 @@ public class ZosLogReply {
     /**
      * Return nextTimeStamp OptionalLong value.
      *
+     * @return OptionalLong value
      * @author Frank Giordano
      */
     public OptionalLong getNextTimeStamp() {
@@ -98,6 +100,7 @@ public class ZosLogReply {
     /**
      * Return source Optional value.
      *
+     * @return OptionalLong value
      * @author Frank Giordano
      */
     public Optional<String> getSource() {
@@ -107,15 +110,17 @@ public class ZosLogReply {
     /**
      * Return totalItems OptionalLong value.
      *
+     * @return OptionalLong value
      * @author Frank Giordano
      */
     public OptionalLong getTotalItems() {
         return totalItems;
     }
-
+    
     /**
      * Return items value.
      *
+     * @return OptionalLong value
      * @author Frank Giordano
      */
     public List<ZosLogItem> getItemLst() {

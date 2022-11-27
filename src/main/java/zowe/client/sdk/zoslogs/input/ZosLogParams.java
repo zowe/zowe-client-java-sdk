@@ -57,6 +57,7 @@ public class ZosLogParams {
     /**
      * Return start time string value.
      *
+     * @return String value
      * @author Frank Giordano
      */
     public String getStartTime() {
@@ -66,6 +67,7 @@ public class ZosLogParams {
     /**
      * Return direction type enum type.
      *
+     * @return DirectionType enum type
      * @author Frank Giordano
      */
     public DirectionType getDirection() {
@@ -75,6 +77,7 @@ public class ZosLogParams {
     /**
      * Return time range string value.
      *
+     * @return string value
      * @author Frank Giordano
      */
     public String getTimeRange() {
@@ -84,6 +87,7 @@ public class ZosLogParams {
     /**
      * Return process response boolean value.
      *
+     * @return boolean value
      * @author Frank Giordano
      */
     public boolean isProcessResponses() {

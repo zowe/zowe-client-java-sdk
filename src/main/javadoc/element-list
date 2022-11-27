@@ -20,6 +20,9 @@ zowe.client.sdk.zosjobs
 zowe.client.sdk.zosjobs.input
 zowe.client.sdk.zosjobs.response
 zowe.client.sdk.zosjobs.types
+zowe.client.sdk.zoslogs
+zowe.client.sdk.zoslogs.input
+zowe.client.sdk.zoslogs.response
 zowe.client.sdk.zosmfinfo
 zowe.client.sdk.zosmfinfo.response
 zowe.client.sdk.zostso

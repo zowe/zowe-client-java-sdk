@@ -50,7 +50,7 @@ public class ZosLogItem {
      */
     private final Optional<String> system;
     /**
-     * “HARDCOPY”.
+     * Type variable
      */
     private final Optional<String> type;
     /**
@@ -58,7 +58,7 @@ public class ZosLogItem {
      */
     private final Optional<String> subType;
     /**
-     * For example, “Thu Feb 03 03:00 GMT 2021”.
+     * For example, "Thu Feb 03 03:00 GMT 2021".
      */
     private final Optional<String> time;
     /**
