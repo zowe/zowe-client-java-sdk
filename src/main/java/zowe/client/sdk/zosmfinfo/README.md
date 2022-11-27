@@ -24,7 +24,7 @@ public class CheckStatus extends ZosConnection {
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * CheckStatus functionality. Calls
+     * CheckStatus functionality.
      *
      * @param args for main not used
      * @throws Exception error in processing request
