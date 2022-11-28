@@ -101,6 +101,7 @@ public class GetZosLog {
         });
         params.getTimeRange().ifPresent(timeRange -> url.append("&timeRange=" + timeRange));
         params.getDirection().ifPresent(direction -> url.append("&direction=" + direction.getValue()));
+        params.getHardCopy().ifPresent(hardCopy -> url.append("&hardcopy=" + hardCopy.getValue()));
 
         LOG.debug(url.toString());
 

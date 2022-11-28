@@ -31,6 +31,13 @@ public class ZosLogParams {
      */
     private final Optional<String> startTime;
     /**
+     * The z/OS log type to retrieve log data from. See hardcopy attribute from the following link:
+     * <pre>
+     * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
+     * </pre>
+     */
+    private final Optional<HardCopyType> hardCopy;
+    /**
      * The direction param. See direction attribute from the following link:
      * <pre>
      * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
@@ -58,6 +65,16 @@ public class ZosLogParams {
      */
     public Optional<String> getStartTime() {
         return startTime;
+    }
+
+    /**
+     * Return hard copy enum type.
+     *
+     * @return HardCopyType enum value
+     * @author Frank Giordano
+     */
+    public Optional<HardCopyType> getHardCopy() {
+        return hardCopy;
     }
 
     /**
@@ -92,6 +109,7 @@ public class ZosLogParams {
 
     private ZosLogParams(ZosLogParams.Builder builder) {
         this.startTime = Optional.ofNullable(builder.startTime);
+        this.hardCopy = Optional.ofNullable(builder.hardCopy);
         this.direction = Optional.ofNullable(builder.direction);
         this.timeRange = Optional.ofNullable(builder.timeRange);
         this.processResponses = builder.processResponses;
@@ -100,6 +118,7 @@ public class ZosLogParams {
     public static class Builder {
 
         private String startTime;
+        private HardCopyType hardCopy;
         private DirectionType direction;
         private String timeRange;
         private boolean processResponses;
@@ -114,9 +133,7 @@ public class ZosLogParams {
          * The default value is the current UNIX timestamp on the server.
          *
          * @param startTime A String that represents either a DateTime in this format: YYYY-MM-DDTHH:MM:SSZ.
-         *                  <pre>
-         *                                   @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
-         *                                   </pre>
+         *                  <pre>@see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a></pre>
          * @return ZosLogParams.Builder this object
          * @author Frank Giordano
          */
@@ -126,14 +143,28 @@ public class ZosLogParams {
         }
 
         /**
+         * Set the z/OS log type (OPERLOG or SYSLOG) to retrieve log data from.
+         * <p>
+         * If the hardcopy parameter is not specified, the API tries OPERLOG first.
+         * If the OPERLOG is not enabled on the system, the API returns the SYSLOG to the user.
+         *
+         * @param hardCopy HardCopyType enum value.
+         *                 <pre>@see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a></pre>
+         * @return ZosLogParams.Builder this object
+         * @author Frank Giordano
+         */
+        public ZosLogParams.Builder hardCopy(HardCopyType hardCopy) {
+            this.hardCopy = hardCopy;
+            return this;
+        }
+
+        /**
          * Direction enum representing either forward or backward direction to retrieve log data from.
          * <p>
          * The default is "backward," meaning that messages are retrieved backward from the specified time.
          *
          * @param direction DirectionType enum value.
-         *                  <pre>
-         *                  @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
-         *                  </pre>
+         *                  <pre>@see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a></pre>
          * @return ZosLogParams.Builder this object
          * @author Frank Giordano
          */
@@ -149,9 +180,7 @@ public class ZosLogParams {
          *
          * @param timeRange range of log output to retrieve, the following are valid examples:
          *                  1s (one second), 10m (tem minutes), 24h (24 hours), etc.
-         *                  <pre>
-         *                  @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
-         *                  </pre>
+         *                  <pre>@see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a></pre>
          * @return ZosLogParams.Builder this object
          * @author Frank Giordano
          */

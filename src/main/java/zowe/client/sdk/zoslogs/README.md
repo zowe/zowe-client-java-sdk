@@ -33,6 +33,7 @@ public class ZosSysLog extends ZosConnection {
         GetZosLog getZosLog = new GetZosLog(connection);
         ZosLogParams zosLogParams = new ZosLogParams.Builder()
                 .startTime("2022-11-27T05:06:20Z")
+                .hardCopy(HardCopyType.SYSLOG)
                 .timeRange("24h")
                 .direction(DirectionType.BACKWARD)
                 .processResponses(true)
