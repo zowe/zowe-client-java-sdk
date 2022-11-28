@@ -66,6 +66,50 @@ public class ZosLogItem {
      */
     private final OptionalLong number;
 
+    public Optional<String> getCart() {
+        return cart;
+    }
+
+    public Optional<String> getColor() {
+        return color;
+    }
+
+    public Optional<String> getJobName() {
+        return jobName;
+    }
+
+    public Optional<String> getMessage() {
+        return message;
+    }
+
+    public Optional<String> getMessageId() {
+        return messageId;
+    }
+
+    public Optional<String> getReplyId() {
+        return replyId;
+    }
+
+    public Optional<String> getSystem() {
+        return system;
+    }
+
+    public Optional<String> getType() {
+        return type;
+    }
+
+    public Optional<String> getSubType() {
+        return subType;
+    }
+
+    public Optional<String> getTime() {
+        return time;
+    }
+
+    public OptionalLong getNumber() {
+        return number;
+    }
+
     /**
      * ZosLogItem Constructor.
      *
