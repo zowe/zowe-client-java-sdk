@@ -43,13 +43,13 @@ public class ZosLogParams {
      * ZosLogParams constructor
      *
      * @param startTime        A String that represents either a Date in this format: YYYY-MM-DD
-     *                         or a DataTime format: YYYY-MM-DDTHH:MM:SSZ. See time attribute from the following link:
+     *                         or a DataTime format: YYYY-MM-DDTHH:MM:SSZ. See time attribute from
      *                         https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
-     * @param direction        DirectionType enum value. See direction attribute from the following link:
+     * @param direction        DirectionType enum value. See direction attribute from
      *                         https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
      * @param timeRange        range of log output to retrieve, the following are valid examples:
      *                         1s (one second), 10m (tem minutes), 24h (24 hours), etc. See the timeRange attribute
-     *                         from the following link: https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
+     *                         from https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
      * @param processResponses true of false should message item be parsed for newline characters
      * @author Frank Giordano
      */
