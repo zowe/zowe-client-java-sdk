@@ -66,46 +66,112 @@ public class ZosLogItem {
      */
     private final OptionalLong number;
 
+    /**
+     * Retrieve cart optional value
+     *
+     * @return cart optional value
+     * @author Frank Giordano
+     */
     public Optional<String> getCart() {
         return cart;
     }
 
+    /**
+     * Retrieve color optional value
+     *
+     * @return color optional value
+     * @author Frank Giordano
+     */
     public Optional<String> getColor() {
         return color;
     }
 
+    /**
+     * Retrieve jobName optional value
+     *
+     * @return jobName optional value
+     * @author Frank Giordano
+     */
     public Optional<String> getJobName() {
         return jobName;
     }
 
+    /**
+     * Retrieve message optional value
+     *
+     * @return message optional value
+     * @author Frank Giordano
+     */
     public Optional<String> getMessage() {
         return message;
     }
 
+    /**
+     * Retrieve messageId optional value
+     *
+     * @return messageId optional value
+     * @author Frank Giordano
+     */
     public Optional<String> getMessageId() {
         return messageId;
     }
 
+    /**
+     * Retrieve replyId optional value
+     *
+     * @return replyId optional value
+     * @author Frank Giordano
+     */
     public Optional<String> getReplyId() {
         return replyId;
     }
 
+    /**
+     * Retrieve system optional value
+     *
+     * @return system optional value
+     * @author Frank Giordano
+     */
     public Optional<String> getSystem() {
         return system;
     }
 
+    /**
+     * Retrieve type optional value
+     *
+     * @return type optional value
+     * @author Frank Giordano
+     */
     public Optional<String> getType() {
         return type;
     }
 
+    /**
+     * Retrieve subType optional value
+     *
+     * @return subType optional value
+     * @author Frank Giordano
+     */
     public Optional<String> getSubType() {
         return subType;
     }
 
+    /**
+     * Retrieve time optional value
+     *
+     * @return time optional value
+     * @author Frank Giordano
+     */
     public Optional<String> getTime() {
         return time;
     }
 
+    /**
+     * Retrieve number optional value
+     *
+     * @return number optional value
+     * @author Frank Giordano
+     */
     public OptionalLong getNumber() {
         return number;
     }
