@@ -119,6 +119,7 @@ public class GetZosLog {
             if (httpCode == 500) {
                 throw new Exception(e.getMessage() + " May be missing APAR see PH35930 required for log operations.");
             }
+            throw new Exception((e.getMessage()));
         }
         final JSONObject results = (JSONObject) response.getResponsePhrase().orElse(null);
         if (results == null) {
