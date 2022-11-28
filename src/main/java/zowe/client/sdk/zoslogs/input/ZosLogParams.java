@@ -10,6 +10,8 @@
  */
 package zowe.client.sdk.zoslogs.input;
 
+import java.util.Optional;
+
 /**
  * The z/OSMF log API parameters. See the z/OSMF REST API documentation for full details.
  *
@@ -22,17 +24,17 @@ public class ZosLogParams {
      * The z/OS log api time param. See time attribute from the following link:
      * https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
      */
-    private final String startTime;
+    private final Optional<String> startTime;
     /**
      * The direction param. See direction attribute from the following link:
      * https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
      */
-    private final DirectionType direction;
+    private final Optional<DirectionType> direction;
     /**
      * The timeRange param. See the timeRange attribute from the following link:
      * https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
      */
-    private final String timeRange;
+    private final Optional<String> timeRange;
     /**
      * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
      * sequences with '\n', but there may be cases where that is not preferable. Specify false to prevent processing.
@@ -40,33 +42,12 @@ public class ZosLogParams {
     private final boolean processResponses;
 
     /**
-     * ZosLogParams constructor
-     *
-     * @param startTime        A String that represents either a Date in this format: YYYY-MM-DD
-     *                         or a DataTime format: YYYY-MM-DDTHH:MM:SSZ. See time attribute from
-     *                         https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
-     * @param direction        DirectionType enum value. See direction attribute from
-     *                         https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
-     * @param timeRange        range of log output to retrieve, the following are valid examples:
-     *                         1s (one second), 10m (tem minutes), 24h (24 hours), etc. See the timeRange attribute
-     *                         from https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
-     * @param processResponses true of false should message item be parsed for newline characters
-     * @author Frank Giordano
-     */
-    public ZosLogParams(String startTime, DirectionType direction, String timeRange, boolean processResponses) {
-        this.startTime = startTime;
-        this.direction = direction;
-        this.timeRange = timeRange;
-        this.processResponses = processResponses;
-    }
-
-    /**
      * Return start time string value.
      *
      * @return String value
      * @author Frank Giordano
      */
-    public String getStartTime() {
+    public Optional<String> getStartTime() {
         return startTime;
     }
 
@@ -76,7 +57,7 @@ public class ZosLogParams {
      * @return DirectionType enum type
      * @author Frank Giordano
      */
-    public DirectionType getDirection() {
+    public Optional<DirectionType> getDirection() {
         return direction;
     }
 
@@ -86,7 +67,7 @@ public class ZosLogParams {
      * @return string value
      * @author Frank Giordano
      */
-    public String getTimeRange() {
+    public Optional<String> getTimeRange() {
         return timeRange;
     }
 
@@ -98,6 +79,91 @@ public class ZosLogParams {
      */
     public boolean isProcessResponses() {
         return processResponses;
+    }
+
+    private ZosLogParams(ZosLogParams.Builder builder) {
+        this.startTime = Optional.ofNullable(builder.startTime);
+        this.direction = Optional.ofNullable(builder.direction);
+        this.timeRange = Optional.ofNullable(builder.timeRange);
+        this.processResponses = builder.processResponses;
+    }
+
+    public static class Builder {
+
+        private String startTime;
+        private DirectionType direction;
+        private String timeRange;
+        private boolean processResponses;
+
+        public ZosLogParams build() {
+            return new ZosLogParams(this);
+        }
+
+        /**
+         * Set the start time to retrieve log output from.
+         * <p>
+         * The default value is the current UNIX timestamp on the server.
+         *
+         * @param startTime A String that represents either a DateTime in this format: YYYY-MM-DDTHH:MM:SSZ.
+         *                  See time attribute from https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
+         *                  for more details.
+         * @return ZosLogParams.Builder this object
+         * @author Frank Giordano
+         */
+        public ZosLogParams.Builder startTime(String startTime) {
+            this.startTime = startTime;
+            return this;
+        }
+
+        /**
+         * Direction enum representing either forward or backward direction to retrieve log data from.
+         * <p>
+         * The default is "backward," meaning that messages are retrieved backward from the specified time.
+         *
+         * @param direction DirectionType enum value. See direction attribute from
+         *                  https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
+         *                  for more details.
+         * @return ZosLogParams.Builder this object
+         * @author Frank Giordano
+         */
+        public ZosLogParams.Builder direction(DirectionType direction) {
+            this.direction = direction;
+            return this;
+        }
+
+        /**
+         * Time range of log retrieval.
+         * <p>
+         * The default is 10m.
+         *
+         * @param timeRange range of log output to retrieve, the following are valid examples:
+         *                  1s (one second), 10m (tem minutes), 24h (24 hours), etc. See the timeRange attribute
+         *                  from https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
+         *                  for more details.
+         * @return ZosLogParams.Builder this object
+         * @author Frank Giordano
+         */
+        public ZosLogParams.Builder timeRange(String timeRange) {
+            this.timeRange = timeRange;
+            return this;
+        }
+
+        /**
+         * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
+         * sequences with '\n', but there may be cases where that is not preferable. Specify false to prevent processing.
+         * <p>
+         * Default is false.
+         *
+         * @param processResponses true of false should message item be parsed for newline characters
+         * @param processResponses
+         * @return ZosLogParams.Builder this object
+         * @author Frank Giordano
+         */
+        public ZosLogParams.Builder processResponses(boolean processResponses) {
+            this.processResponses = processResponses;
+            return this;
+        }
+
     }
 
 }

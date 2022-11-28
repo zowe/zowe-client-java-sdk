@@ -31,8 +31,18 @@ public class ZosSysLog extends ZosConnection {
     public static void main(String[] args) throws Exception {
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         GetZosLog getZosLog = new GetZosLog(connection);
-        ZosLogParams zosLogParams = new ZosLogParams("2022-11-27T05:06:20Z", null, "24h", false);
+        ZosLogParams zosLogParams = new ZosLogParams.Builder()
+                .startTime("2022-11-27T05:06:20Z")
+                .timeRange("24h")
+                .direction(DirectionType.BACKWARD)
+                .processResponses(true)
+                .build();
         ZosLogReply zosLogReply = getZosLog.getZosLog(zosLogParams);
+        zosLogReply.getItemLst().forEach(i -> System.out.println(i.getMessage().get()));
+
+        // following sends in an empty zosLogParams, hence API uses all default values
+        zosLogParams = new ZosLogParams.Builder().build();
+        zosLogReply = getZosLog.getZosLog(zosLogParams);
         zosLogReply.getItemLst().forEach(i -> System.out.println(i.getMessage().get()));
     }
 }

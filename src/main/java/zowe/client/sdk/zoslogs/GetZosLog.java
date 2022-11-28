@@ -86,34 +86,26 @@ public class GetZosLog {
      */
     public ZosLogReply getZosLog(ZosLogParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkNullParameter(params.getStartTime() == null, "startTime is not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + RESOURCE;
+        final String defaultUrl = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + RESOURCE;
+        final StringBuilder url = new StringBuilder();
+        url.append(defaultUrl);
 
-        final String patternStr = ".*[0-9]-.*[0-9]-.*[0-9]";
-        final Pattern pattern = Pattern.compile(patternStr);
-        final Matcher matcher = pattern.matcher(params.getStartTime());
-        if (matcher.matches()) {
-            throw new IllegalArgumentException("startTime date format is invalid");
-        }
+        params.getStartTime().ifPresent(time -> {
+            if (isNotValidDate(time)) {
+                throw new IllegalArgumentException("startTime date format is invalid");
+            }
+            final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT.withZone(ZoneId.systemDefault());
+            final ZonedDateTime zonedDateTime = ZonedDateTime.parse(time, formatter);
+            url.append("time=" + zonedDateTime.toString());
+        });
+        params.getTimeRange().ifPresent(timeRange -> url.append("&timeRange=" + timeRange));
+        params.getDirection().ifPresent(direction -> url.append("&direction=" + direction.getValue()));
 
-        final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT.withZone(ZoneId.systemDefault());
-        final ZonedDateTime zonedDateTime = ZonedDateTime.parse(params.getStartTime(), formatter);
-
-        url += "time=" + zonedDateTime.toString();
-
-        if (params.getTimeRange() != null) {
-            url += "&timeRange=" + params.getTimeRange();
-        }
-
-        if (params.getDirection() != null) {
-            url += "&direction=" + params.getDirection().getValue();
-        }
-
-        LOG.debug(url);
+        LOG.debug(url.toString());
 
         request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
-        request.setRequest(url);
+        request.setRequest(url.toString());
 
         final Response response = request.executeRequest();
         if (response.isEmpty()) {
@@ -173,6 +165,15 @@ public class GetZosLog {
                 results.get("source") != null ? (String) results.get("source") : null,
                 results.get("totalitems") != null ? (Long) results.get("totalitems") : null,
                 zosLogItems);
+    }
+
+    private static boolean isNotValidDate(String str) {
+        //  pattern to match example: 2022-11-27T05:06:20Z
+        final String patternStr = ".*[0-9]-.*[0-9]-.*[0-9][T].*[0-9][:]*[0-9][:]*[0-9][Z]";
+        final Pattern pattern = Pattern.compile(patternStr);
+        final Matcher matcher = pattern.matcher(str);
+        System.out.println(matcher.matches());
+        return !matcher.matches();
     }
 
 }
