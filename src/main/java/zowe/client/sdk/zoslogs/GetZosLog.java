@@ -174,5 +174,5 @@ public class GetZosLog {
                 results.get("totalitems") != null ? (Long) results.get("totalitems") : null,
                 zosLogItems);
     }
-    
+
 }
