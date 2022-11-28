@@ -19,15 +19,18 @@ package zowe.client.sdk.zoslogs.input;
 public class ZosLogParams {
 
     /**
-     * The z/OS log api time param.
+     * The z/OS log api time param. See time attribute from the following link:
+     * https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
      */
     private final String startTime;
     /**
-     * The direction param.
+     * The direction param. See direction attribute from the following link:
+     * https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
      */
     private final DirectionType direction;
     /**
-     * The timeRange param.
+     * The timeRange param. See the timeRange attribute from the following link:
+     * https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
      */
     private final String timeRange;
     /**
@@ -40,10 +43,13 @@ public class ZosLogParams {
      * ZosLogParams constructor
      *
      * @param startTime        A String that represents either a Date in this format: YYYY-MM-DD
-     *                         or a DataTime format: YYYY-MM-DDTHH:MM:SSZ
-     * @param direction        a DirectionType enum value
+     *                         or a DataTime format: YYYY-MM-DDTHH:MM:SSZ. See time attribute from the following link:
+     *                         https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
+     * @param direction        DirectionType enum value. See direction attribute from the following link:
+     *                         https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
      * @param timeRange        range of log output to retrieve, the following are valid examples:
-     *                         1s (one second), 10m (tem minutes), 24h (24 hours), etc.
+     *                         1s (one second), 10m (tem minutes), 24h (24 hours), etc. See the timeRange attribute
+     *                         from the following link: https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
      * @param processResponses true of false should message item be parsed for newline characters
      * @author Frank Giordano
      */
