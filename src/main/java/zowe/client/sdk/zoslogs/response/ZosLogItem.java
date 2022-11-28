@@ -218,56 +218,133 @@ public class ZosLogItem {
             return new ZosLogItem(this);
         }
 
+        /**
+         * Set cart string value from response
+         *
+         * @param cart string value
+         * @return ZosLogItem.Builder object
+         * @author Frank Giordano
+         */
         public ZosLogItem.Builder cart(String cart) {
             this.cart = cart;
             return this;
         }
 
+        /**
+         * Set color string value from response
+         *
+         * @param color string value
+         * @return ZosLogItem.Builder object
+         * @author Frank Giordano
+         */
         public ZosLogItem.Builder color(String color) {
             this.color = color;
             return this;
         }
 
+        /**
+         * Set jobName string value from response
+         *
+         * @param jobName string value
+         * @return ZosLogItem.Builder object
+         * @author Frank Giordano
+         */
         public ZosLogItem.Builder jobName(String jobName) {
             this.jobName = jobName;
             return this;
         }
 
+        /**
+         * Set message string value from response
+         *
+         * @param message string value
+         * @return ZosLogItem.Builder object
+         * @author Frank Giordano
+         */
         public ZosLogItem.Builder message(String message) {
             this.message = message;
             return this;
         }
 
+        /**
+         * Set messageId string value from response
+         *
+         * @param messageId string value
+         * @return ZosLogItem.Builder object
+         * @author Frank Giordano
+         */
         public ZosLogItem.Builder messageId(String messageId) {
             this.messageId = messageId;
             return this;
         }
 
+        /**
+         * Set replyId string value from response
+         *
+         * @param replyId string value
+         * @return ZosLogItem.Builder object
+         * @author Frank Giordano
+         */
         public ZosLogItem.Builder replyId(String replyId) {
             this.replyId = replyId;
             return this;
         }
 
+        /**
+         * Set system string value from response
+         *
+         * @param system string value
+         * @return ZosLogItem.Builder object
+         * @author Frank Giordano
+         */
         public ZosLogItem.Builder system(String system) {
             this.system = system;
             return this;
         }
 
+        /**
+         * Set type string value from response
+         *
+         * @param type string value
+         * @return ZosLogItem.Builder object
+         * @author Frank Giordano
+         */
         public ZosLogItem.Builder type(String type) {
             this.type = type;
             return this;
         }
 
+        /**
+         * Set subType string value from response
+         *
+         * @param subType string value
+         * @return ZosLogItem.Builder object
+         * @author Frank Giordano
+         */
         public ZosLogItem.Builder subType(String subType) {
             this.subType = subType;
             return this;
         }
 
+        /**
+         * Set time string value from response
+         *
+         * @param time string value
+         * @return ZosLogItem.Builder object
+         * @author Frank Giordano
+         */
         public ZosLogItem.Builder time(String time) {
             this.time = time;
             return this;
         }
 
+        /**
+         * Set number long value from response
+         *
+         * @param number long value
+         * @return ZosLogItem.Builder object
+         * @author Frank Giordano
+         */
         public ZosLogItem.Builder number(long number) {
             this.number = number;
             return this;

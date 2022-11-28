@@ -14,6 +14,9 @@ import java.util.Optional;
 
 /**
  * The z/OSMF log API parameters. See the z/OSMF REST API documentation for full details.
+ * <pre>
+ * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
+ * </pre>
  *
  * @author Frank Giordano
  * @version 1.0
@@ -22,17 +25,23 @@ public class ZosLogParams {
 
     /**
      * The z/OS log api time param. See time attribute from the following link:
-     * https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
+     * <pre>
+     * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
+     * </pre>
      */
     private final Optional<String> startTime;
     /**
      * The direction param. See direction attribute from the following link:
-     * https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
+     * <pre>
+     * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
+     * </pre>
      */
     private final Optional<DirectionType> direction;
     /**
      * The timeRange param. See the timeRange attribute from the following link:
-     * https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
+     * <pre>
+     * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
+     * </pre>
      */
     private final Optional<String> timeRange;
     /**
@@ -105,8 +114,9 @@ public class ZosLogParams {
          * The default value is the current UNIX timestamp on the server.
          *
          * @param startTime A String that represents either a DateTime in this format: YYYY-MM-DDTHH:MM:SSZ.
-         *                  See time attribute from https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
-         *                  for more details.
+         *                  <pre>
+         *                                   @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
+         *                                   </pre>
          * @return ZosLogParams.Builder this object
          * @author Frank Giordano
          */
@@ -120,9 +130,10 @@ public class ZosLogParams {
          * <p>
          * The default is "backward," meaning that messages are retrieved backward from the specified time.
          *
-         * @param direction DirectionType enum value. See direction attribute from
-         *                  https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
-         *                  for more details.
+         * @param direction DirectionType enum value.
+         *                  <pre>
+         *                  @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
+         *                  </pre>
          * @return ZosLogParams.Builder this object
          * @author Frank Giordano
          */
@@ -137,9 +148,10 @@ public class ZosLogParams {
          * The default is 10m.
          *
          * @param timeRange range of log output to retrieve, the following are valid examples:
-         *                  1s (one second), 10m (tem minutes), 24h (24 hours), etc. See the timeRange attribute
-         *                  from https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log
-         *                  for more details.
+         *                  1s (one second), 10m (tem minutes), 24h (24 hours), etc.
+         *                  <pre>
+         *                  @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
+         *                  </pre>
          * @return ZosLogParams.Builder this object
          * @author Frank Giordano
          */
@@ -155,7 +167,6 @@ public class ZosLogParams {
          * Default is false.
          *
          * @param processResponses true of false should message item be parsed for newline characters
-         * @param processResponses
          * @return ZosLogParams.Builder this object
          * @author Frank Giordano
          */
