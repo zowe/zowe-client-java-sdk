@@ -21,23 +21,24 @@ Issues worked on documenting main feature set provided can be view within MVP is
   
 Class names providing prebuilt API services:
 
-    GetJobs   
+    CancelJobs
+    CheckStatus (zosmf info)
+    CreateDataset  
+    CopyDataset
+    DeleteDataset 
+    DeleteJobs
+    DownloadDataset  
+    GetJobs
+    GetZosLog (syslog)
     IssueCommand (mvs commands)  
     IssuesTsoCommand  
-    SubmitJobs  
-    DownloadDataset  
-    CreateDataset  
-    DeleteDataset  
-    WriteDataset  
     ListDataset  
-    MonitorJobs  
-    CopyDataset
-    CancelJobs
-    DeleteJobs
-    CheckStatus (zosmf info)
     ListDefinedSystems (zosmf info)
+    MonitorJobs  
     Shell (uss commands)
+    SubmitJobs  
     TeamConfig (OS Credential store and Zowe Global Team Configuration info)  
+    WriteDataset
   
 ## TeamConfig Package  
   
