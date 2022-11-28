@@ -30,9 +30,10 @@ public class ZosSysLog extends ZosConnection {
      */
     public static void main(String[] args) throws Exception {
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-        GetZosLog getZosLog = new GetZosLog(zosConnection);
+        GetZosLog getZosLog = new GetZosLog(connection);
         ZosLogParams zosLogParams = new ZosLogParams("2022-11-27T05:06:20Z", null, "24h", false);
-        getZosLog.getZosLog(zosLogParams);
+        ZosLogReply zosLogReply = getZosLog.getZosLog(zosLogParams);
+        zosLogReply.getItemLst().forEach(i -> System.out.println(i.getMessage().get()));
     }
 }
 `````
