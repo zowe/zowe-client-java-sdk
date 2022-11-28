@@ -52,7 +52,7 @@ You can use this information to create a dynamic ZOSConnection object to perform
 ## Requirements  
     
     Maven  
-    Java 11  
+    Compatible with all Java versions 11 and above.
     z/OSMF installed on your backend z/OS instance.  
   
 ## Code Samples  
