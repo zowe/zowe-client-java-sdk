@@ -116,7 +116,7 @@ public class ZosLogReply {
     public OptionalLong getTotalItems() {
         return totalItems;
     }
-    
+
     /**
      * Return items value.
      *

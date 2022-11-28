@@ -41,7 +41,7 @@ public class KeyTarService {
     /**
      * IKeyTar implementation holder
      */
-    private IKeyTar keyTar;
+    private final IKeyTar keyTar;
 
     /**
      * KeyTarService constructor

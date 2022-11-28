@@ -27,7 +27,7 @@ public interface IKeyTar {
      * @return list of KeyTarConfig objects
      * @throws Exception error processing
      */
-    public List<KeyTarConfig> getKeyConfigs() throws Exception;
+    List<KeyTarConfig> getKeyConfigs() throws Exception;
 
     /**
      * Describes the method that will return KeyTar value from KeyTar processing done
@@ -35,27 +35,27 @@ public interface IKeyTar {
      * @return keyValue string containing KeyTar Json representation
      * @throws Exception error processing
      */
-    public String getKeyTarValue() throws Exception;
+    String getKeyTarValue() throws Exception;
 
     /**
      * Describes the method that will extract KeyTar key information
      *
      * @throws KeytarException error processing
      */
-    public void processKey() throws KeytarException;
+    void processKey() throws KeytarException;
 
     /**
      * set required service name used for OS credential store querying
      *
      * @param accountName string value used for OS credential store querying
      */
-    public void setAccountName(String accountName);
+    void setAccountName(String accountName);
 
     /**
      * set required account name used for OS credential store querying
      *
      * @param serviceName string value used for OS credential store querying
      */
-    public void setServiceName(String serviceName);
+    void setServiceName(String serviceName);
 
 }

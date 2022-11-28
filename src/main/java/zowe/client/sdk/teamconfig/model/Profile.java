@@ -34,7 +34,7 @@ public class Profile {
     /**
      * Profile property values
      */
-    private Map<String, String> properties;
+    private final Map<String, String> properties;
 
     /**
      * Partition constructor.

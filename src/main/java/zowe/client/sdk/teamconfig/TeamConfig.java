@@ -185,7 +185,7 @@ public class TeamConfig {
         }
     }
 
-    private class MergeProperties {
+    private static class MergeProperties {
         private Optional<String> host = Optional.empty();
         private Optional<String> port = Optional.empty();
 

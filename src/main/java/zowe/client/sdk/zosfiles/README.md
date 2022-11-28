@@ -181,15 +181,15 @@ public class CopyDataset extends ZosConnection {
     /**
      * Example on how to call ZosDsnCopy copy method.
      * Copy method accepts a from and too strings for copying.
-     *
+     * <p>
      * This copy method allows the following copy operations:
-     *
+     * <p>
      * - sequential dataset to sequential dataset
      * - sequential dataset to partition dataset member
      * - partition dataset member to partition dataset member
      * - partition dataset member to partition dataset non-existing member
      * - partition dataset member to sequential dataset
-     *
+     * <p>
      * This example sends false value for copyAllMembers parameter in copy method to indicate we
      * are not copying all members in a partition dataset to another.
      *
@@ -208,9 +208,9 @@ public class CopyDataset extends ZosConnection {
     /**
      * Example on how to call ZosDsnCopy copy method.
      * Copy method accepts a CopyParams object.
-     *
+     * <p>
      * This copy method allows the following copy operations:
-     *
+     * <p>
      * - sequential dataset to sequential dataset
      * - sequential dataset to partition dataset member
      * - partition dataset member to partition dataset member
@@ -235,7 +235,7 @@ public class CopyDataset extends ZosConnection {
     /**
      * Example on how to call ZosDsnCopy copy method.
      * Copy method accepts a CopyParams object.
-     *
+     * <p>
      * This copy method is different from the other two examples above as it
      * sets the copyAllMember variable true to indicate that the copy operation will be performed
      * on a partition dataset to another partition dataset copying all its members to the target.

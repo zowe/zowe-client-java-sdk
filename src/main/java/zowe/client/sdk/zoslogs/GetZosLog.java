@@ -44,7 +44,7 @@ public class GetZosLog {
 
     private static final Logger LOG = LoggerFactory.getLogger(GetZosLog.class);
     private static final String RESOURCE = "/zosmf/restconsoles/v1/log?";
-    private ZOSConnection connection;
+    private final ZOSConnection connection;
     private ZoweRequest request;
 
     /**
