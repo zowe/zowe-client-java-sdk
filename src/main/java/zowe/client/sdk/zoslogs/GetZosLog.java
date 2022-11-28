@@ -122,10 +122,6 @@ public class GetZosLog {
             throw new Exception((e.getMessage()));
         }
         final JSONObject results = (JSONObject) response.getResponsePhrase().orElse(null);
-        if (results == null) {
-            throw new Exception("response JSONObject was null");
-        }
-
         final JSONArray jsonArray = (JSONArray) results.get("items");
         final List<ZosLogItem> zosLogItems = new ArrayList<>();
         jsonArray.forEach(item -> {
@@ -173,7 +169,6 @@ public class GetZosLog {
         final String patternStr = ".*[0-9]-.*[0-9]-.*[0-9][T].*[0-9][:]*[0-9][:]*[0-9][Z]";
         final Pattern pattern = Pattern.compile(patternStr);
         final Matcher matcher = pattern.matcher(str);
-        System.out.println(matcher.matches());
         return !matcher.matches();
     }
 
