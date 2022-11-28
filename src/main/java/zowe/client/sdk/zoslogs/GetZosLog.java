@@ -137,18 +137,34 @@ public class GetZosLog {
         final List<ZosLogItem> zosLogItems = new ArrayList<>();
         jsonArray.forEach(item -> {
             JSONObject itemObj = (JSONObject) item;
-            ZosLogItem zosLogItem = new ZosLogItem.Builder()
+            ZosLogItem.Builder zosLogItemBuilder = new ZosLogItem.Builder()
                     .cart(itemObj.get("cart") != null ? (String) itemObj.get("cart") : null)
                     .color(itemObj.get("color") != null ? (String) itemObj.get("color") : null)
                     .jobName(itemObj.get("jobName") != null ? (String) itemObj.get("jobName") : null)
-                    .message(itemObj.get("message") != null ? (String) itemObj.get("message") : null)
                     .messageId(itemObj.get("messageId") != null ? (String) itemObj.get("messageId") : null)
                     .replyId(itemObj.get("replyId") != null ? (String) itemObj.get("replyId") : null)
                     .system(itemObj.get("system") != null ? (String) itemObj.get("system") : null)
                     .type(itemObj.get("type") != null ? (String) itemObj.get("type") : null)
                     .subType(itemObj.get("subType") != null ? (String) itemObj.get("subType") : null)
                     .time(itemObj.get("time") != null ? (String) itemObj.get("v") : null)
-                    .number(itemObj.get("number") != null ? (Long) itemObj.get("number") : 0).build();
+                    .number(itemObj.get("number") != null ? (Long) itemObj.get("number") : 0);
+            if (params.isProcessResponses()) {
+                String message = itemObj.get("message") != null ? (String) itemObj.get("message") : null;
+                if (message == null) {
+                    zosLogItemBuilder.message(null);
+                } else {
+                    if (message.contains("\r")) {
+                        message = message.replace('\r', '\n');
+                    }
+                    if (message.contains("\n\n")) {
+                        message = message.replaceAll("\n\n", "\n");
+                    }
+                    zosLogItemBuilder.message(message);
+                }
+            } else {
+                zosLogItemBuilder.message(itemObj.get("message") != null ? (String) itemObj.get("message") : null);
+            }
+            ZosLogItem zosLogItem = zosLogItemBuilder.build();
             zosLogItems.add(zosLogItem);
         });
 
@@ -158,5 +174,5 @@ public class GetZosLog {
                 results.get("totalitems") != null ? (Long) results.get("totalitems") : null,
                 zosLogItems);
     }
-
+    
 }
