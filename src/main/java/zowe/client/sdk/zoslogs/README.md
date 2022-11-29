@@ -1,6 +1,6 @@
 # Zos Logs Package
 
-Contains APIs to interact with retrieving z/OS SYSLOG information on z/OS (using z/OSMF logs REST endpoints).
+Contains APIs to interact with retrieving z/OS log (OPERLOG or SYSLOG) information on z/OS (using z/OSMF logs REST endpoints).
 
 ## API Examples
 
