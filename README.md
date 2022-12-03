@@ -29,7 +29,7 @@ Class names providing prebuilt API services:
     DeleteJobs
     DownloadDataset  
     GetJobs
-    GetZosLog (syslog)
+    GetZosLog (operlog or syslog)
     IssueCommand (mvs commands)  
     IssuesTsoCommand  
     ListDataset  
