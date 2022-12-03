@@ -124,12 +124,15 @@ public class GetZosLog {
         final JSONObject results = (JSONObject) response.getResponsePhrase().orElse(null);
         final JSONArray jsonArray = (JSONArray) results.get("items");
         final List<ZosLogItem> zosLogItems = new ArrayList<>();
+        final boolean isProcessResponse = params.isProcessResponses();
         jsonArray.forEach(item -> {
             JSONObject itemObj = (JSONObject) item;
+            String message = processMessage(itemObj, isProcessResponse);
             ZosLogItem.Builder zosLogItemBuilder = new ZosLogItem.Builder()
                     .cart(itemObj.get("cart") != null ? (String) itemObj.get("cart") : null)
                     .color(itemObj.get("color") != null ? (String) itemObj.get("color") : null)
                     .jobName(itemObj.get("jobName") != null ? (String) itemObj.get("jobName") : null)
+                    .message(message)
                     .messageId(itemObj.get("messageId") != null ? (String) itemObj.get("messageId") : null)
                     .replyId(itemObj.get("replyId") != null ? (String) itemObj.get("replyId") : null)
                     .system(itemObj.get("system") != null ? (String) itemObj.get("system") : null)
@@ -137,22 +140,6 @@ public class GetZosLog {
                     .subType(itemObj.get("subType") != null ? (String) itemObj.get("subType") : null)
                     .time(itemObj.get("time") != null ? (String) itemObj.get("v") : null)
                     .number(itemObj.get("number") != null ? (Long) itemObj.get("number") : 0);
-            if (params.isProcessResponses()) {
-                String message = itemObj.get("message") != null ? (String) itemObj.get("message") : null;
-                if (message == null) {
-                    zosLogItemBuilder.message(null);
-                } else {
-                    if (message.contains("\r")) {
-                        message = message.replace('\r', '\n');
-                    }
-                    if (message.contains("\n\n")) {
-                        message = message.replaceAll("\n\n", "\n");
-                    }
-                    zosLogItemBuilder.message(message);
-                }
-            } else {
-                zosLogItemBuilder.message(itemObj.get("message") != null ? (String) itemObj.get("message") : null);
-            }
             ZosLogItem zosLogItem = zosLogItemBuilder.build();
             zosLogItems.add(zosLogItem);
         });
@@ -162,6 +149,23 @@ public class GetZosLog {
                 results.get("source") != null ? (String) results.get("source") : null,
                 results.get("totalitems") != null ? (Long) results.get("totalitems") : null,
                 zosLogItems);
+    }
+
+    private static String processMessage(JSONObject itemObj, boolean isProcessResponse) {
+        try {
+            String message = (String) itemObj.get("message");
+            if (isProcessResponse) {
+                if (message.contains("\r")) {
+                    message = message.replace('\r', '\n');
+                }
+                if (message.contains("\n\n")) {
+                    message = message.replaceAll("\n\n", "\n");
+                }
+            }
+            return message;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private static boolean isNotValidDate(String str) {
