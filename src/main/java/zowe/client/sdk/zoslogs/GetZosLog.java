@@ -123,8 +123,15 @@ public class GetZosLog {
             }
             throw new Exception((e.getMessage()));
         }
+
         final JSONObject results = (JSONObject) response.getResponsePhrase().orElse(null);
-        final JSONArray jsonArray = (JSONArray) results.get("items");
+        if (results == null) {
+            throw new Exception("server error response phrase not returned");
+        }
+        JSONArray jsonArray = new JSONArray();
+        if (results.get("items") != null) {
+            jsonArray = (JSONArray) results.get("items");
+        }
         final List<ZosLogItem> zosLogItems = new ArrayList<>();
         final boolean isProcessResponse = params.isProcessResponses();
         jsonArray.forEach(item -> {
