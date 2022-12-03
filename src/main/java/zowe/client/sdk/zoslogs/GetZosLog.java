@@ -140,8 +140,7 @@ public class GetZosLog {
                     .subType(itemObj.get("subType") != null ? (String) itemObj.get("subType") : null)
                     .time(itemObj.get("time") != null ? (String) itemObj.get("v") : null)
                     .number(itemObj.get("number") != null ? (Long) itemObj.get("number") : 0);
-            ZosLogItem zosLogItem = zosLogItemBuilder.build();
-            zosLogItems.add(zosLogItem);
+            zosLogItems.add(zosLogItemBuilder.build());
         });
 
         return new ZosLogReply(results.get("timezone") != null ? (Long) results.get("timezone") : 0,
