@@ -96,11 +96,11 @@ public class GetZosLog {
             }
             final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT.withZone(ZoneId.systemDefault());
             final ZonedDateTime zonedDateTime = ZonedDateTime.parse(time, formatter);
-            url.append("time=" + zonedDateTime.toString());
+            url.append("time=").append(zonedDateTime.toString());
         });
-        params.getTimeRange().ifPresent(timeRange -> url.append("&timeRange=" + timeRange));
-        params.getDirection().ifPresent(direction -> url.append("&direction=" + direction.getValue()));
-        params.getHardCopy().ifPresent(hardCopy -> url.append("&hardcopy=" + hardCopy.getValue()));
+        params.getTimeRange().ifPresent(timeRange -> url.append("&timeRange=").append(timeRange));
+        params.getDirection().ifPresent(direction -> url.append("&direction=").append(direction.getValue()));
+        params.getHardCopy().ifPresent(hardCopy -> url.append("&hardcopy=").append(hardCopy.getValue()));
 
         LOG.debug(url.toString());
 
