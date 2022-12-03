@@ -104,7 +104,9 @@ public class GetZosLog {
 
         LOG.debug(url.toString());
 
-        request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
+        }
         request.setRequest(url.toString());
 
         final Response response = request.executeRequest();
