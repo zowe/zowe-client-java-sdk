@@ -88,8 +88,7 @@ public class GetZosLog {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String defaultUrl = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + RESOURCE;
-        final StringBuilder url = new StringBuilder();
-        url.append(defaultUrl);
+        final StringBuilder url = new StringBuilder(defaultUrl);
 
         params.getStartTime().ifPresent(time -> {
             if (isNotValidDate(time)) {
