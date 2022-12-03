@@ -126,9 +126,9 @@ public class GetZosLog {
         final List<ZosLogItem> zosLogItems = new ArrayList<>();
         final boolean isProcessResponse = params.isProcessResponses();
         jsonArray.forEach(item -> {
-            JSONObject itemObj = (JSONObject) item;
-            String message = processMessage(itemObj, isProcessResponse);
-            ZosLogItem.Builder zosLogItemBuilder = new ZosLogItem.Builder()
+            final JSONObject itemObj = (JSONObject) item;
+            final String message = processMessage(itemObj, isProcessResponse);
+            final ZosLogItem.Builder zosLogItemBuilder = new ZosLogItem.Builder()
                     .cart(itemObj.get("cart") != null ? (String) itemObj.get("cart") : null)
                     .color(itemObj.get("color") != null ? (String) itemObj.get("color") : null)
                     .jobName(itemObj.get("jobName") != null ? (String) itemObj.get("jobName") : null)
