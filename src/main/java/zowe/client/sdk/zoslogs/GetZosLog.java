@@ -117,7 +117,7 @@ public class GetZosLog {
         try {
             RestUtils.checkHttpErrors(response);
         } catch (Exception e) {
-            final int httpCode = response.getStatusCode().get();
+            final int httpCode = response.getStatusCode().orElseThrow(() -> new Exception("http code not found"));
             if (httpCode == 500) {
                 throw new Exception(e.getMessage() + " May be missing APAR see PH35930 required for log operations.");
             }
