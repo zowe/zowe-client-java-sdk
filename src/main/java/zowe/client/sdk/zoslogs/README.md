@@ -20,8 +20,6 @@ import java.util.Arrays;
  */
 public class ZosSysLog extends ZosConnection {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CheckStatus.class);
-
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
      * z/OS SYSLOG retrieval functionality.
