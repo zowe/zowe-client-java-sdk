@@ -159,9 +159,17 @@ public class GetZosLog {
                 zosLogItems);
     }
 
-    private static String processMessage(JSONObject itemObj, boolean isProcessResponse) {
+    /**
+     * Process response message; message contains a log line statement.
+     * Perform special newline replace if applicable.
+     *
+     * @param jsonObj JSONObject object
+     * @return string value of the message processed
+     * @author Frank Giordano
+     */
+    private static String processMessage(JSONObject jsonObj, boolean isProcessResponse) {
         try {
-            String message = (String) itemObj.get("message");
+            String message = (String) jsonObj.get("message");
             if (isProcessResponse) {
                 if (message.contains("\r")) {
                     message = message.replace('\r', '\n');
@@ -176,6 +184,13 @@ public class GetZosLog {
         }
     }
 
+    /**
+     * Check given string for correction in expected date/time string format.
+     *
+     * @param str string representing a date/time
+     * @return boolean value
+     * @author Frank Giordano
+     */
     private static boolean isNotValidDate(String str) {
         //  pattern to match example: 2022-11-27T05:06:20Z
         final String patternStr = ".*[0-9]-.*[0-9]-.*[0-9][T].*[0-9][:]*[0-9][:]*[0-9][Z]";
