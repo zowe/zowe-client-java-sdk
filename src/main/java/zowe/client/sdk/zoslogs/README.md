@@ -43,7 +43,7 @@ public class ZosSysLog extends ZosConnection {
         // following sends in an empty zosLogParams, hence API uses all default values
         zosLogParams = new ZosLogParams.Builder().build();
         zosLogReply = getZosLog.getZosLog(zosLogParams);
-        zosLogReply.getItemLst().forEach(i -> System.out.println(i.getMessage().get()));
+        zosLogReply.getItemLst().forEach(i -> System.out.println(i.getTime().get() + " " + i.getMessage().get()));
     }
 }
 `````
