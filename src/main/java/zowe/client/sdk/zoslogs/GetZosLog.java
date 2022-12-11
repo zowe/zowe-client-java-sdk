@@ -155,7 +155,7 @@ public class GetZosLog {
         });
 
         return new ZosLogReply(results.get("timezone") != null ? (Long) results.get("timezone") : 0,
-                results.get("timeTimestamp") != null ? (Long) results.get("timeTimestamp") : 0,
+                results.get("nextTimestamp") != null ? (Long) results.get("nextTimestamp") : 0,
                 results.get("source") != null ? (String) results.get("source") : null,
                 results.get("totalitems") != null ? (Long) results.get("totalitems") : null,
                 zosLogItems);
