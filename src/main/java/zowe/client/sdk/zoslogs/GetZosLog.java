@@ -78,6 +78,8 @@ public class GetZosLog {
 
     /**
      * Issue a z/OSMF syslog command, returns "raw" z/OSMF response.
+     * <p>
+     * If API fails you may be missing APAR see PH35930 required for log operations.
      *
      * @param params ZosLogParams object
      * @return ZosLogReply object with log messages/items
@@ -119,7 +121,7 @@ public class GetZosLog {
         } catch (Exception e) {
             final int httpCode = response.getStatusCode().orElseThrow(() -> new Exception("http code not found"));
             if (httpCode == 500) {
-                throw new Exception(e.getMessage() + " May be missing APAR see PH35930 required for log operations.");
+                throw new Exception(e.getMessage());
             }
             throw new Exception((e.getMessage()));
         }
