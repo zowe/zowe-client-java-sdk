@@ -38,11 +38,15 @@ public class ZosSysLog extends ZosConnection {
                 .processResponses(true)
                 .build();
         ZosLogReply zosLogReply = getZosLog.getZosLog(zosLogParams);
-        zosLogReply.getItemLst().forEach(i -> System.out.println(i.getMessage().get()));
+        zosLogReply.getItemLst().forEach(i -> System.out.println(i.getTime().get() + " " + i.getMessage().get()));
 
-        // following sends in an empty zosLogParams, hence API uses all default values
-        zosLogParams = new ZosLogParams.Builder().build();
-        zosLogReply = getZosLog.getZosLog(zosLogParams);
+        // get the last one minute of syslog from the date/time of now backwards...
+        zosLogParams = new ZosLogParams.Builder()
+                .hardCopy(HardCopyType.SYSLOG)
+                .timeRange("1m")
+                .direction(DirectionType.BACKWARD)
+                .processResponses(true)
+                .build();
         zosLogReply.getItemLst().forEach(i -> System.out.println(i.getTime().get() + " " + i.getMessage().get()));
     }
 }
