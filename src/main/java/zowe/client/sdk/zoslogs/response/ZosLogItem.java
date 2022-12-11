@@ -64,7 +64,7 @@ public class ZosLogItem {
     /**
      * UNIX timestamp. For example, 1621920830109.
      */
-    private final OptionalLong number;
+    private final OptionalLong timeStamp;
 
     /**
      * Retrieve cart optional value
@@ -172,8 +172,8 @@ public class ZosLogItem {
      * @return number optional value
      * @author Frank Giordano
      */
-    public OptionalLong getNumber() {
-        return number;
+    public OptionalLong getTimeStamp() {
+        return timeStamp;
     }
 
     /**
@@ -193,10 +193,10 @@ public class ZosLogItem {
         this.type = Optional.ofNullable(builder.type);
         this.subType = Optional.ofNullable(builder.subType);
         this.time = Optional.ofNullable(builder.time);
-        if (builder.number == 0) {
-            this.number = OptionalLong.empty();
+        if (builder.timeStamp == 0) {
+            this.timeStamp = OptionalLong.empty();
         } else {
-            this.number = OptionalLong.of(builder.number);
+            this.timeStamp = OptionalLong.of(builder.timeStamp);
         }
     }
 
@@ -212,7 +212,7 @@ public class ZosLogItem {
         private String type;
         private String subType;
         private String time;
-        private Long number;
+        private Long timeStamp;
 
         public ZosLogItem build() {
             return new ZosLogItem(this);
@@ -339,14 +339,14 @@ public class ZosLogItem {
         }
 
         /**
-         * Set number long value from response
+         * Set timeStamp long value from response
          *
-         * @param number long value
+         * @param timeStamp long value
          * @return ZosLogItem.Builder object
          * @author Frank Giordano
          */
-        public ZosLogItem.Builder number(long number) {
-            this.number = number;
+        public ZosLogItem.Builder timeStamp(long timeStamp) {
+            this.timeStamp = timeStamp;
             return this;
         }
 

@@ -150,7 +150,7 @@ public class GetZosLog {
                     .type(itemObj.get("type") != null ? (String) itemObj.get("type") : null)
                     .subType(itemObj.get("subType") != null ? (String) itemObj.get("subType") : null)
                     .time(itemObj.get("time") != null ? (String) itemObj.get("time") : null)
-                    .number(itemObj.get("number") != null ? (Long) itemObj.get("number") : 0);
+                    .timeStamp(itemObj.get("timestamp") != null ? (Long) itemObj.get("timestamp") : 0);
             zosLogItems.add(zosLogItemBuilder.build());
         });
 
