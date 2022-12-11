@@ -24,28 +24,28 @@ import java.util.Optional;
 public class ZosLogParams {
 
     /**
-     * The z/OS log api time param. See time attribute from the following link:
+     * The z/OS log api time param. See "time" attribute from the following link:
      * <pre>
      * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
      * </pre>
      */
     private final Optional<String> startTime;
     /**
-     * The z/OS log type to retrieve log data from. See hardcopy attribute from the following link:
+     * The z/OS log type to retrieve log data from. See "hardCopy" attribute from the following link:
      * <pre>
      * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
      * </pre>
      */
     private final Optional<HardCopyType> hardCopy;
     /**
-     * The direction param. See direction attribute from the following link:
+     * The direction param. See "direction" attribute from the following link:
      * <pre>
      * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
      * </pre>
      */
     private final Optional<DirectionType> direction;
     /**
-     * The timeRange param. See the timeRange attribute from the following link:
+     * The timeRange param. See "timeRange" attribute from the following link:
      * <pre>
      * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
      * </pre>
