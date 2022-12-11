@@ -35,7 +35,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Get zos log via z/OSMF restful api
+ * Get z/OS log via z/OSMF restful api
  *
  * @author Frank Giordano
  * @version 1.0
@@ -77,7 +77,7 @@ public class GetZosLog {
     }
 
     /**
-     * Issue a z/OSMF syslog command, returns "raw" z/OSMF response.
+     * Issue a z/OSMF log command, returns "raw" z/OSMF response.
      * <p>
      * If API fails you may be missing APAR see PH35930 required for log operations.
      *
@@ -163,7 +163,7 @@ public class GetZosLog {
 
     /**
      * Process response message; message contains a log line statement.
-     * Perform special newline replace if applicable.
+     * Perform special newline replacement if applicable.
      *
      * @param jsonObj JSONObject object
      * @return string value of the message processed
@@ -187,7 +187,7 @@ public class GetZosLog {
     }
 
     /**
-     * Check given string for correction in expected date/time string format.
+     * Validate given string in expected date/time string format.
      *
      * @param str string representing a date/time
      * @return boolean value
