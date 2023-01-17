@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.teamconfig.utility;
+package zowe.client.sdk.utility;
 
 import org.json.simple.JSONObject;
 

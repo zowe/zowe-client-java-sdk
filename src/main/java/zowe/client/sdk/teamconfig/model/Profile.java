@@ -11,7 +11,7 @@ package zowe.client.sdk.teamconfig.model;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import zowe.client.sdk.teamconfig.utility.TeamConfigUtils;
+import zowe.client.sdk.utility.TeamConfigUtils;
 
 import java.util.Map;
 
