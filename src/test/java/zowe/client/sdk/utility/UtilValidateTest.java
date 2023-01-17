@@ -16,6 +16,15 @@ import static org.junit.Assert.assertEquals;
 public class UtilValidateTest {
 
     /**
+     * Validate class structure
+     */
+    @Test
+    public void tstValidateUtilsClassStructureSuccess() {
+        final String privateConstructorExceptionMsg = "Utility class";
+        Utils.validateClass(ValidateUtils.class, privateConstructorExceptionMsg);
+    }
+
+    /**
      * Test validate utility method checkIllegalParameter validate false value correctly.
      */
     @Test

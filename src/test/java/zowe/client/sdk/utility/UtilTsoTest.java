@@ -26,6 +26,15 @@ public class UtilTsoTest {
     private static final String MISSING_FIELD_ERROR_MSG = "missing one of the following json field values: queueID," +
             " ver, servletKey, reused and timeout";
 
+    /**
+     * Validate class structure
+     */
+    @Test
+    public void tstTsoUtilsClassStructureSuccess() {
+        final String privateConstructorExceptionMsg = "Utility class";
+        Utils.validateClass(TsoUtils.class, privateConstructorExceptionMsg);
+    }
+
     @Test
     public void tstGetZosmfTsoResponseMissingQueueIDJsonFieldFail() throws Exception {
         final String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"tsoData\":" +
