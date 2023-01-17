@@ -15,7 +15,14 @@ package zowe.client.sdk.utility.timer;
  * @author Frank Giordano
  * @version 1.0
  */
-public class WaitUtil {
+public final class WaitUtil {
+
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
+    private WaitUtil() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      * Wait by time specified.

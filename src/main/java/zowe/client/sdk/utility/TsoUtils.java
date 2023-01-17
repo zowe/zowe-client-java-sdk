@@ -29,7 +29,11 @@ import java.util.Optional;
  */
 public final class TsoUtils {
 
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
     private TsoUtils() {
+        throw new IllegalStateException("Utility class");
     }
 
     /**

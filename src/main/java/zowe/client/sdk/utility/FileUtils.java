@@ -23,7 +23,11 @@ import java.util.Map;
  */
 public final class FileUtils {
 
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
     private FileUtils() {
+        throw new IllegalStateException("Utility class");
     }
 
     /**

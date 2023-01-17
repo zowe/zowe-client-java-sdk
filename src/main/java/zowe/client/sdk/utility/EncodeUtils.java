@@ -23,7 +23,11 @@ import java.util.Base64;
  */
 public final class EncodeUtils {
 
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
     private EncodeUtils() {
+        throw new IllegalStateException("Utility class");
     }
 
     /**

@@ -21,7 +21,11 @@ import zowe.client.sdk.zosconsole.zosmf.ZosmfIssueResponse;
  */
 public final class ConsoleUtils {
 
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
     private ConsoleUtils() {
+        throw new IllegalStateException("Utility class");
     }
 
     /**

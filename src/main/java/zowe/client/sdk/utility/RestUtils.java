@@ -30,7 +30,11 @@ import java.net.URL;
  */
 public final class RestUtils {
 
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
     private RestUtils() {
+        throw new IllegalStateException("Utility class");
     }
 
     private static final Logger LOG = LoggerFactory.getLogger(RestUtils.class);

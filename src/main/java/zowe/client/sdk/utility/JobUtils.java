@@ -23,7 +23,11 @@ import zowe.client.sdk.zosjobs.response.JobStepData;
  */
 public final class JobUtils {
 
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
     private JobUtils() {
+        throw new IllegalStateException("Utility class");
     }
 
     /**

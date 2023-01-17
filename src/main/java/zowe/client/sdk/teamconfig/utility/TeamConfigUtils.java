@@ -20,7 +20,14 @@ import java.util.Map;
  * @author Frank Giordano
  * @version 1.0
  */
-public class TeamConfigUtils {
+public final class TeamConfigUtils {
+
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
+    private TeamConfigUtils() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      * Parse Json representation of properties section.

@@ -23,7 +23,11 @@ import java.util.List;
  */
 public final class DataSetUtils {
 
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
     private DataSetUtils() {
+        throw new IllegalStateException("Utility class");
     }
 
     /**

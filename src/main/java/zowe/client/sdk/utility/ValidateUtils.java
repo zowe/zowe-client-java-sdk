@@ -21,7 +21,11 @@ import java.util.Optional;
  */
 public final class ValidateUtils {
 
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
     private ValidateUtils() {
+        throw new IllegalStateException("Utility class");
     }
 
     /**

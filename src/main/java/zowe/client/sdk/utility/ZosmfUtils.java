@@ -24,7 +24,11 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfPluginInfo;
  */
 public final class ZosmfUtils {
 
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
     private ZosmfUtils() {
+        throw new IllegalStateException("Utility class");
     }
 
     /**
