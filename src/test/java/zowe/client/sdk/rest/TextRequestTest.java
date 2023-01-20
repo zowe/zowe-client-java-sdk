@@ -27,6 +27,11 @@ import java.io.IOException;
 
 import static org.mockito.ArgumentMatchers.any;
 
+/**
+ * Class containing unit tests for TextRequest types.
+ *
+ * @author Frank Giordano
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class TextRequestTest {
 

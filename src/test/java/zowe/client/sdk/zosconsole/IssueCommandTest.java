@@ -24,6 +24,11 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 
+/**
+ * Class containing unit tests for IssueCommand.
+ *
+ * @author Frank Giordano
+ */
 public class IssueCommandTest {
 
     private JsonPutRequest jsonGetRequest;

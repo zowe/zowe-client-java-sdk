@@ -19,6 +19,11 @@ import zowe.client.sdk.rest.TextGetRequest;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Class containing unit tests for GetJobs.
+ *
+ * @author Frank Giordano
+ */
 public class GetJobsByTextGetRequestTest {
 
     private TextGetRequest request;

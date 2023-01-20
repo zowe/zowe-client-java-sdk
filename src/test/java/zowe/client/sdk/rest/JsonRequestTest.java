@@ -28,6 +28,11 @@ import java.io.IOException;
 
 import static org.mockito.ArgumentMatchers.any;
 
+/**
+ * Class containing unit tests for JsonRequest.
+ *
+ * @author Frank Giordano
+ */
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 @RunWith(MockitoJUnitRunner.class)
 public class JsonRequestTest {

@@ -27,6 +27,11 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Class containing unit tests for GetJobs.
+ *
+ * @author Frank Giordano
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class GetJobsByJsonGetRequestTest {
 
