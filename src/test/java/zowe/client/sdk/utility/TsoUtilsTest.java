@@ -20,8 +20,13 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
+/**
+ * Class containing unit tests for TsoUtils.
+ *
+ * @author Frank Giordano
+ */
 @SuppressWarnings("OptionalGetWithoutIsPresent")
-public class UtilTsoTest {
+public class TsoUtilsTest {
 
     private static final String MISSING_FIELD_ERROR_MSG = "missing one of the following json field values: queueID," +
             " ver, servletKey, reused and timeout";

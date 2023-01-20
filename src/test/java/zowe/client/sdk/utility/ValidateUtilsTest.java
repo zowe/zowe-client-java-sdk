@@ -13,7 +13,12 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class UtilValidateTest {
+/**
+ * Class containing unit tests for ValidateUtils.
+ *
+ * @author Frank Giordano
+ */
+public class ValidateUtilsTest {
 
     /**
      * Validate class structure
