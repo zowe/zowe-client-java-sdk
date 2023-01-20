@@ -126,16 +126,19 @@ public class TeamConfigService {
         final Map<String, String> defaults = new HashMap<>();
         final List<Partition> partitions = new ArrayList<>();
 
-        @SuppressWarnings("unchecked") final Set<String> jsonSectionKeys = jsonObj.keySet();
+        @SuppressWarnings("unchecked")
+        final Set<String> jsonSectionKeys = jsonObj.keySet();
         for (String keySectionVal : jsonSectionKeys) {
             if (SectionType.$SCHEMA.getValue().equals(keySectionVal)) {
                 schema = (String) jsonObj.get(SectionType.$SCHEMA.getValue());
             } else if (SectionType.PROFILES.getValue().equals(keySectionVal)) {
                 JSONObject jsonProfileObj = (JSONObject) jsonObj.get(SectionType.PROFILES.getValue());
-                @SuppressWarnings("unchecked") final Set<String> jsonProfileKeys = jsonProfileObj.keySet();
+                @SuppressWarnings("unchecked")
+                final Set<String> jsonProfileKeys = jsonProfileObj.keySet();
                 for (String profileKeyVal : jsonProfileKeys) {
                     JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
-                    @SuppressWarnings("unchecked") final Set<String> isEmbeddedKeyProfile = profileTypeJsonObj.keySet();
+                    @SuppressWarnings("unchecked")
+                    final Set<String> isEmbeddedKeyProfile = profileTypeJsonObj.keySet();
                     if (isPartition(isEmbeddedKeyProfile)) {
                         partitions.add(getPartition(profileKeyVal, profileTypeJsonObj));
                     } else {

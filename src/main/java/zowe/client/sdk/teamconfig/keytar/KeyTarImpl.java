@@ -91,7 +91,8 @@ public class KeyTarImpl implements IKeyTar {
      */
     private List<KeyTarConfig> parseJson() throws ParseException {
         final JSONObject jsonKeyTar = (JSONObject) new JSONParser().parse(keyString);
-        @SuppressWarnings("unchecked") final Set<String> keyTarKeys = jsonKeyTar.keySet();
+        @SuppressWarnings("unchecked")
+        final Set<String> keyTarKeys = jsonKeyTar.keySet();
         for (String keyVal : keyTarKeys) {
             JSONObject jsonVal = (JSONObject) jsonKeyTar.get(keyVal);
             keyTarConfigs.add(new KeyTarConfig(keyVal,
