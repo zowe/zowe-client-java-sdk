@@ -16,5 +16,15 @@ package zowe.client.sdk.rest.type;
  * @version 1.0
  */
 public enum ZoweRequestType {
-    GET_JSON, GET_TEXT, PUT_JSON, PUT_TEXT, DELETE_JSON, DELETE_TEXT, POST_JSON, POST_TEXT, GET_STREAM
+
+    GET_JSON,
+    GET_TEXT,
+    PUT_JSON,
+    PUT_TEXT,
+    DELETE_JSON,
+    DELETE_TEXT,
+    POST_JSON,
+    POST_TEXT,
+    GET_STREAM
+
 }
