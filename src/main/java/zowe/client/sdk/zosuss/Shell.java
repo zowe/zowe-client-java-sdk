@@ -50,7 +50,7 @@ public class Shell {
         Session session = null;
         ChannelExec channel = null;
 
-        try {
+        try (final ByteArrayOutputStream responseStream = new ByteArrayOutputStream()) {
             session = new JSch().getSession(connection.getUser(), connection.getHost(), connection.getPort());
             session.setPassword(connection.getPassword());
             final Properties config = new Properties();
@@ -61,7 +61,6 @@ public class Shell {
 
             channel = (ChannelExec) session.openChannel("exec");
             channel.setCommand(command);
-            final ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
             channel.setOutputStream(responseStream);
             channel.connect();
 
