@@ -35,7 +35,7 @@ public interface IKeyTar {
      * @return keyValue string containing KeyTar Json representation
      * @throws Exception error processing
      */
-    String getKeyTarValue() throws Exception;
+    String getKeyTarValue();
 
     /**
      * Describes the method that will extract KeyTar key information
