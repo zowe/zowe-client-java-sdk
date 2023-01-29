@@ -18,7 +18,14 @@ import com.google.common.collect.ListMultimap;
  * @author Frank Giordano
  * @version 1.0
  */
-public class ZosmfHeaders {
+public final class ZosmfHeaders {
+
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
+    private ZosmfHeaders() {
+        throw new IllegalStateException("Constants class");
+    }
 
     /**
      * lrecl header
