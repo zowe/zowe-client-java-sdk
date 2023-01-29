@@ -18,7 +18,14 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
  * @author Frank Giordano
  * @version 1.0
  */
-public class ZoweRequestFactory {
+public final class ZoweRequestFactory {
+
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
+    private ZoweRequestFactory() {
+        throw new IllegalStateException("Factory class");
+    }
 
     /**
      * Assign the request to the Http verb type request object
