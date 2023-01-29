@@ -15,7 +15,14 @@ package zowe.client.sdk.zosjobs;
  * @author Frank Giordano
  * @version 1.0
  */
-public class JobsConstants {
+public final class JobsConstants {
+
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
+    private JobsConstants() {
+        throw new IllegalStateException("Constants class");
+    }
 
     /**
      * Default version of cancel
