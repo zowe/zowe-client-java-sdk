@@ -94,6 +94,9 @@ public class TextGetRequest extends ZoweRequest {
 
     /**
      * Initialize the http request object with an url and body values
+     * <p>
+     * This method isn't valid for this request.
+     * Method returns exception error if used with message "request requires url only".
      *
      * @param url  rest url end point
      * @param body data to be sent with request

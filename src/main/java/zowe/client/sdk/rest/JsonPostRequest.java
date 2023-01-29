@@ -82,6 +82,9 @@ public class JsonPostRequest extends ZoweRequest {
 
     /**
      * Initialize the http request object with an url value
+     * <p>
+     * This method isn't valid for this request.
+     * Method returns exception error if used with message "request requires url and body values".
      *
      * @param url rest url end point
      * @author Frank Giordano
