@@ -67,7 +67,7 @@ public final class Utils {
     }
 
     /**
-     * Assertion checks class conforms to being set as final, one private constructor and with all static methods.
+     * Assertion checks class conforms to being set as final, one private constructor, and with all static methods.
      *
      * @param name
      */
