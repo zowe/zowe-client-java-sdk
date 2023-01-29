@@ -15,7 +15,14 @@ package zowe.client.sdk.zosconsole;
  * @author Frank Giordano
  * @version 1.0
  */
-public class ConsoleConstants {
+public final class ConsoleConstants {
+
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
+    private ConsoleConstants() {
+        throw new IllegalStateException("Constants class");
+    }
 
     /**
      * Functionality type
