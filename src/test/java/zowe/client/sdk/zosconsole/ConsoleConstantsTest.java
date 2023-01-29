@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosconsole;
 
 import org.junit.Test;
-import zowe.client.sdk.rest.ZosmfHeaders;
 import zowe.client.sdk.utility.Utils;
 
 public class ConsoleConstantsTest {
