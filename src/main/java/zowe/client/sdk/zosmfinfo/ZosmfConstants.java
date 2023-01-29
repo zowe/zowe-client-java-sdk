@@ -15,7 +15,14 @@ package zowe.client.sdk.zosmfinfo;
  * @author Frank Giordano
  * @version 1.0
  */
-public class ZosmfConstants {
+public final class ZosmfConstants {
+
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
+    private ZosmfConstants() {
+        throw new IllegalStateException("Constants class");
+    }
 
     /**
      * Indicator for get info request
