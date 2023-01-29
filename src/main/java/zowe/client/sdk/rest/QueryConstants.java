@@ -15,7 +15,14 @@ package zowe.client.sdk.rest;
  * @author Frank Giordano
  * @version 1.0
  */
-public class QueryConstants {
+public final class QueryConstants {
+
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
+    private QueryConstants() {
+        throw new IllegalStateException("Constants class");
+    }
 
     /**
      * Query parameter delimiter
