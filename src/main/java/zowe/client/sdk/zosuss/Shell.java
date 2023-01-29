@@ -46,7 +46,7 @@ public class Shell {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public String executeSshCwd(String command, int timeout) throws Exception {
+    public String executeSshCmd(String command, int timeout) throws Exception {
         Session session = null;
         ChannelExec channel = null;
 

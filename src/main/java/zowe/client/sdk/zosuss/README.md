@@ -23,7 +23,7 @@ public class USSCommand {
         SSHConnection conn = new SSHConnection("XXX", XXX, "XXX", "XXX");
         Shell shell = new Shell(conn);
         // 10000 is the timeout value in milliseconds 
-        System.out.println(shell.executeSshCwd("mkdir test;cd test;ls", 10000));
+        System.out.println(shell.executeSshCmd("mkdir test;cd test;ls", 10000));
     }
 
 }
