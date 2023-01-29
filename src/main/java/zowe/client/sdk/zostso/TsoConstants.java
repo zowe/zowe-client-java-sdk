@@ -15,7 +15,14 @@ package zowe.client.sdk.zostso;
  * @author Frank Giordano
  * @version 1.0
  */
-public class TsoConstants {
+public final class TsoConstants {
+
+    /**
+     * Private constructor defined to avoid instantiation of class
+     */
+    private TsoConstants() {
+        throw new IllegalStateException("Constants class");
+    }
 
     /**
      * Default character-set value
