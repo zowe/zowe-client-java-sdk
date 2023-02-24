@@ -33,7 +33,6 @@ public interface IKeyTar {
      * Describes the method that will return KeyTar value from KeyTar processing done
      *
      * @return keyValue string containing KeyTar Json representation
-     * @throws Exception error processing
      */
     String getKeyTarValue();
 
