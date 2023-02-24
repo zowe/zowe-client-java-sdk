@@ -108,7 +108,7 @@ public class ZosDsnCopy {
         jsonMap.put("replace", params.isReplace());
 
         if (params.getFromVolser().isPresent()) {
-            jsonMap.put("volser", params.getFromVolser());
+            jsonMap.put("volser", params.getFromVolser().get());
         }
 
         final JSONObject jsonRequestBody = new JSONObject(jsonMap);
