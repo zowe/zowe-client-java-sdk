@@ -221,7 +221,7 @@ public class ZosDsnList {
             value = params.getMaxLength().get();
         } else {
             key = ZosmfHeaders.HEADERS.get("X_IBM_MAX_ITEMS").get(0);
-            value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
+            value = ZosmfHeaders.HEADERS.get("X_IBM_MAX_ITEMS").get(1);
         }
         headers.put(key, value);
         if (params.getResponseTimeout().isPresent()) {
