@@ -11,6 +11,7 @@ package zowe.client.sdk.zosfiles.response;
 
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.OptionalLong;
 
 /**
  * Represents a z/OS partition data set member
@@ -28,12 +29,12 @@ public class Member {
     /**
      * The version of member
      */
-    private final OptionalInt vers;
+    private final OptionalLong vers;
 
     /**
      * The number of modifications of member
      */
-    private final OptionalInt mod;
+    private final OptionalLong mod;
 
     /**
      * The creation date of member
@@ -48,17 +49,17 @@ public class Member {
     /**
      * The cnorc of member
      */
-    private final OptionalInt cnorc;
+    private final OptionalLong cnorc;
 
     /**
      * The inorc of member
      */
-    private final OptionalInt inorc;
+    private final OptionalLong inorc;
 
     /**
      * The mnorc of member
      */
-    private final OptionalInt mnorc;
+    private final OptionalLong mnorc;
 
     /**
      * The mtime of member
@@ -83,31 +84,31 @@ public class Member {
     private Member(Member.Builder builder) {
         this.member = Optional.ofNullable(builder.member);
         if (builder.vers == null) {
-            this.vers = OptionalInt.empty();
+            this.vers = OptionalLong.empty();
         } else {
-            this.vers = OptionalInt.of(builder.vers);
+            this.vers = OptionalLong.of(builder.vers);
         }
         if (builder.mod == null) {
-            this.mod = OptionalInt.empty();
+            this.mod = OptionalLong.empty();
         } else {
-            this.mod = OptionalInt.of(builder.mod);
+            this.mod = OptionalLong.of(builder.mod);
         }
         this.c4date = Optional.ofNullable(builder.c4date);
         this.m4date = Optional.ofNullable(builder.m4date);
         if (builder.cnorc == null) {
-            this.cnorc = OptionalInt.empty();
+            this.cnorc = OptionalLong.empty();
         } else {
-            this.cnorc = OptionalInt.of(builder.cnorc);
+            this.cnorc = OptionalLong.of(builder.cnorc);
         }
         if (builder.inorc == null) {
-            this.inorc = OptionalInt.empty();
+            this.inorc = OptionalLong.empty();
         } else {
-            this.inorc = OptionalInt.of(builder.inorc);
+            this.inorc = OptionalLong.of(builder.inorc);
         }
         if (builder.mnorc == null) {
-            this.mnorc = OptionalInt.empty();
+            this.mnorc = OptionalLong.empty();
         } else {
-            this.mnorc = OptionalInt.of(builder.mnorc);
+            this.mnorc = OptionalLong.of(builder.mnorc);
         }
         this.mtime = Optional.ofNullable(builder.mtime);
         this.msec = Optional.ofNullable(builder.msec);
@@ -119,11 +120,11 @@ public class Member {
         return member;
     }
 
-    public OptionalInt getVers() {
+    public OptionalLong getVers() {
         return vers;
     }
 
-    public OptionalInt getMod() {
+    public OptionalLong getMod() {
         return mod;
     }
 
@@ -135,15 +136,15 @@ public class Member {
         return m4date;
     }
 
-    public OptionalInt getCnorc() {
+    public OptionalLong getCnorc() {
         return cnorc;
     }
 
-    public OptionalInt getInorc() {
+    public OptionalLong getInorc() {
         return inorc;
     }
 
-    public OptionalInt getMnorc() {
+    public OptionalLong getMnorc() {
         return mnorc;
     }
 
@@ -184,13 +185,13 @@ public class Member {
     public static class Builder {
 
         private String member;
-        private Integer vers;
-        private Integer mod;
+        private Long vers;
+        private Long mod;
         private String c4date;
         private String m4date;
-        private Integer cnorc;
-        private Integer inorc;
-        private Integer mnorc;
+        private Long cnorc;
+        private Long inorc;
+        private Long mnorc;
         private String mtime;
         private String msec;
         private String user;
@@ -201,12 +202,12 @@ public class Member {
             return this;
         }
 
-        public Member.Builder vers(Integer vers) {
+        public Member.Builder vers(Long vers) {
             this.vers = vers;
             return this;
         }
 
-        public Member.Builder mod(Integer mod) {
+        public Member.Builder mod(Long mod) {
             this.mod = mod;
             return this;
         }
@@ -221,17 +222,17 @@ public class Member {
             return this;
         }
 
-        public Member.Builder cnorc(Integer cnorc) {
+        public Member.Builder cnorc(Long cnorc) {
             this.cnorc = cnorc;
             return this;
         }
 
-        public Member.Builder inorc(Integer inorc) {
+        public Member.Builder inorc(Long inorc) {
             this.inorc = inorc;
             return this;
         }
 
-        public Member.Builder mnorc(Integer mnorc) {
+        public Member.Builder mnorc(Long mnorc) {
             this.mnorc = mnorc;
             return this;
         }

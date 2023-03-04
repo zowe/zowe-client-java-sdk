@@ -183,13 +183,13 @@ public final class DataSetUtils {
      */
     public static Member parseJsonMemberResponse(JSONObject jsonObject) {
         return new Member.Builder().member((String) jsonObject.get("member"))
-                .vers((Integer) jsonObject.get("vers"))
-                .mod((Integer) jsonObject.get("mod"))
+                .vers((Long) jsonObject.get("vers"))
+                .mod((Long) jsonObject.get("mod"))
                 .c4date((String) jsonObject.get("c4date"))
                 .m4date((String) jsonObject.get("m4date"))
-                .cnorc((Integer) jsonObject.get("cnorc"))
-                .inorc((Integer) jsonObject.get("inorc"))
-                .mnorc((Integer) jsonObject.get("mnorc"))
+                .cnorc((Long) jsonObject.get("cnorc"))
+                .inorc((Long) jsonObject.get("inorc"))
+                .mnorc((Long) jsonObject.get("mnorc"))
                 .mtime((String) jsonObject.get("mtime"))
                 .msec((String) jsonObject.get("msec"))
                 .user((String) jsonObject.get("user"))
