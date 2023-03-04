@@ -22,6 +22,7 @@ import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.input.ListParams;
 import zowe.client.sdk.zosfiles.response.Dataset;
+import zowe.client.sdk.zosfiles.response.Member;
 import zowe.client.sdk.zosfiles.types.AttributeType;
 import zowe.client.sdk.zosfiles.types.OperationType;
 
@@ -143,22 +144,22 @@ public class ZosDsnList {
     }
 
     /**
-     * Get a list of members from a Dataset
+     * Get a list of member objects from a partition Dataset
      *
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param params      list parameters, see ListParams object
-     * @return list of member names
+     * @return list of member objects
      * @throws Exception error processing request
      * @author Nikunj Goyal
      */
     @SuppressWarnings("unchecked")
-    public List<String> listDsnMembers(String dataSetName, ListParams params) throws Exception {
+    public List<Member> listDsnMembers(String dataSetName, ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
 
         final Map<String, String> headers = new HashMap<>();
-        final List<String> members = new ArrayList<>();
+        final List<Member> members = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
@@ -186,7 +187,7 @@ public class ZosDsnList {
         final JSONArray items = (JSONArray) results.get("items");
         items.forEach(item -> {
             JSONObject datasetObj = (JSONObject) item;
-            members.add(datasetObj.get("member").toString());
+            members.add(DataSetUtils.parseJsonMemberResponse(datasetObj));
         });
 
         return members;
