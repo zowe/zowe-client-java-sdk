@@ -136,82 +136,142 @@ public class Dataset {
         this.vol = Optional.ofNullable(builder.vol);
     }
 
+    /**
+     * Retrieve name of the dataset
+     */
     public Optional<String> getDsname() {
         return dsname;
     }
 
+    /**
+     * Retrieve block size of the dataset
+     */
     public Optional<String> getBlksz() {
         return blksz;
     }
 
+    /**
+     * Retrieve catnm of the dataset
+     */
     public Optional<String> getCatnm() {
         return catnm;
     }
 
+    /**
+     * Retrieve creation date of the dataset
+     */
     public Optional<String> getCdate() {
         return cdate;
     }
 
+    /**
+     * Retrieve dev of the dataset
+     */
     public Optional<String> getDev() {
         return dev;
     }
 
+    /**
+     * Retrieve dsntp of the dataset
+     */
     public Optional<String> getDsntp() {
         return dsntp;
     }
 
+    /**
+     * Retrieve dsorg of the dataset
+     */
     public Optional<String> getDsorg() {
         return dsorg;
     }
 
+    /**
+     * Retrieve edate of the dataset
+     */
     public Optional<String> getEdate() {
         return edate;
     }
 
+    /**
+     * Retrieve extx of the dataset
+     */
     public Optional<String> getExtx() {
         return extx;
     }
 
+    /**
+     * Retrieve lrectl of the dataset
+     */
     public Optional<String> getLrectl() {
         return lrectl;
     }
 
+    /**
+     * Retrieve migr of the dataset
+     */
     public Optional<String> getMigr() {
         return migr;
     }
 
+    /**
+     * Retrieve mvol of the dataset
+     */
     public Optional<String> getMvol() {
         return mvol;
     }
 
+    /**
+     * Retrieve ovf of the dataset
+     */
     public Optional<String> getOvf() {
         return ovf;
     }
 
+    /**
+     * Retrieve sizex of the dataset
+     */
     public Optional<String> getRdate() {
-        return rdate;
+        return sizex;
     }
 
+    /**
+     * Retrieve sizex of the dataset
+     */
     public Optional<String> getRecfm() {
-        return recfm;
+        return sizex;
     }
 
+    /**
+     * Retrieve sizex of the dataset
+     */
     public Optional<String> getSizex() {
         return sizex;
     }
 
+    /**
+     * Retrieve spacu of the dataset
+     */
     public Optional<String> getSpacu() {
         return spacu;
     }
 
+    /**
+     * Retrieve used of the dataset
+     */
     public Optional<String> getUsed() {
         return used;
     }
 
+    /**
+     * Retrieve volume of the dataset
+     */
     public Optional<String> getVol() {
         return vol;
     }
 
+    /**
+     * String representation of the Dataset object
+     */
     @Override
     public String toString() {
         return "Dataset{" +
