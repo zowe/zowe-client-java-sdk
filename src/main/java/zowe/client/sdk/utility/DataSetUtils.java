@@ -11,6 +11,7 @@ package zowe.client.sdk.utility;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosfiles.response.Dataset;
+import zowe.client.sdk.zosfiles.response.Member;
 import zowe.client.sdk.zosfiles.types.OperationType;
 
 import java.util.List;
@@ -170,6 +171,29 @@ public final class DataSetUtils {
                 .spacu((String) jsonObject.get("spacu"))
                 .used((String) jsonObject.get("used"))
                 .vol((String) jsonObject.get("vol"))
+                .build();
+    }
+
+    /**
+     * Transform JSON into Member object
+     *
+     * @param jsonObject JSON object
+     * @return Member object
+     * @author Frank Giordano
+     */
+    public static Member parseJsonMemberResponse(JSONObject jsonObject) {
+        return new Member.Builder().member((String) jsonObject.get("member"))
+                .vers((Long) jsonObject.get("vers"))
+                .mod((Long) jsonObject.get("mod"))
+                .c4date((String) jsonObject.get("c4date"))
+                .m4date((String) jsonObject.get("m4date"))
+                .cnorc((Long) jsonObject.get("cnorc"))
+                .inorc((Long) jsonObject.get("inorc"))
+                .mnorc((Long) jsonObject.get("mnorc"))
+                .mtime((String) jsonObject.get("mtime"))
+                .msec((String) jsonObject.get("msec"))
+                .user((String) jsonObject.get("user"))
+                .sclm((String) jsonObject.get("sclm"))
                 .build();
     }
 
