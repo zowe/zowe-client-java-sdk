@@ -107,9 +107,8 @@ public class ZosDsnList {
         final Map<String, String> headers = new HashMap<>();
         final List<Dataset> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID;
-
-        url += ZosFilesConstants.QUERY_DS_LEVEL + EncodeUtils.encodeURIComponent(dataSetName);
+                ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_DS_LEVEL +
+                EncodeUtils.encodeURIComponent(dataSetName);
 
         if (params.getVolume().isPresent()) {
             url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
