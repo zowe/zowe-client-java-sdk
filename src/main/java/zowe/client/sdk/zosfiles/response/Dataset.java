@@ -138,6 +138,9 @@ public class Dataset {
 
     /**
      * Retrieve name of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getDsname() {
         return dsname;
@@ -145,6 +148,9 @@ public class Dataset {
 
     /**
      * Retrieve block size of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getBlksz() {
         return blksz;
@@ -152,6 +158,9 @@ public class Dataset {
 
     /**
      * Retrieve catnm of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getCatnm() {
         return catnm;
@@ -159,6 +168,9 @@ public class Dataset {
 
     /**
      * Retrieve creation date of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getCdate() {
         return cdate;
@@ -166,6 +178,8 @@ public class Dataset {
 
     /**
      * Retrieve dev of the dataset
+     *
+     * @return Optional string value
      */
     public Optional<String> getDev() {
         return dev;
@@ -173,6 +187,9 @@ public class Dataset {
 
     /**
      * Retrieve dsntp of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getDsntp() {
         return dsntp;
@@ -180,6 +197,9 @@ public class Dataset {
 
     /**
      * Retrieve dsorg of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getDsorg() {
         return dsorg;
@@ -187,6 +207,9 @@ public class Dataset {
 
     /**
      * Retrieve edate of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getEdate() {
         return edate;
@@ -194,6 +217,9 @@ public class Dataset {
 
     /**
      * Retrieve extx of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getExtx() {
         return extx;
@@ -201,6 +227,9 @@ public class Dataset {
 
     /**
      * Retrieve lrectl of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getLrectl() {
         return lrectl;
@@ -208,6 +237,9 @@ public class Dataset {
 
     /**
      * Retrieve migr of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getMigr() {
         return migr;
@@ -215,6 +247,9 @@ public class Dataset {
 
     /**
      * Retrieve mvol of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getMvol() {
         return mvol;
@@ -222,6 +257,9 @@ public class Dataset {
 
     /**
      * Retrieve ovf of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getOvf() {
         return ovf;
@@ -229,6 +267,9 @@ public class Dataset {
 
     /**
      * Retrieve sizex of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getRdate() {
         return sizex;
@@ -236,6 +277,9 @@ public class Dataset {
 
     /**
      * Retrieve sizex of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getRecfm() {
         return sizex;
@@ -243,6 +287,9 @@ public class Dataset {
 
     /**
      * Retrieve sizex of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getSizex() {
         return sizex;
@@ -250,6 +297,9 @@ public class Dataset {
 
     /**
      * Retrieve spacu of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getSpacu() {
         return spacu;
@@ -257,6 +307,9 @@ public class Dataset {
 
     /**
      * Retrieve used of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getUsed() {
         return used;
@@ -264,6 +317,9 @@ public class Dataset {
 
     /**
      * Retrieve volume of the dataset
+     *
+     * @return Optional string value
+     * @author Nikunj Goyal
      */
     public Optional<String> getVol() {
         return vol;
@@ -271,6 +327,8 @@ public class Dataset {
 
     /**
      * String representation of the Dataset object
+     *
+     * @return string value
      */
     @Override
     public String toString() {
