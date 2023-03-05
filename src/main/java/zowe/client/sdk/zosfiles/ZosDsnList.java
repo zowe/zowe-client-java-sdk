@@ -200,9 +200,8 @@ public class ZosDsnList {
      * @author Nikunj Goyal
      */
     private void setHeaders(ListParams params, Map<String, String> headers) {
-        String key, value;
-        key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
-        value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
+        String key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
+        String value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
         headers.put(key, value);
 
         if (params.getAttribute().isPresent()) {
