@@ -68,7 +68,7 @@ public class ListParams {
     }
 
     /**
-     * Retrieve attributes value
+     * Retrieve attributes value. The indicator that we want to show more attributes.
      *
      * @return attributes value
      * @author Leonid Baranov
