@@ -116,54 +116,93 @@ public class Member {
         this.sclm = Optional.ofNullable(builder.sclm);
     }
 
+    /**
+     * Retrieve name of the member
+     */
     public Optional<String> getMember() {
         return member;
     }
 
+    /**
+     * Retrieve version number of the member
+     */
     public OptionalLong getVers() {
         return vers;
     }
 
+    /**
+     * Retrieve modification number of the member
+     */
     public OptionalLong getMod() {
         return mod;
     }
 
+    /**
+     * Retrieve creation date of the member
+     */
     public Optional<String> getC4date() {
         return c4date;
     }
 
+    /**
+     * Retrieve modification date of the member
+     */
     public Optional<String> getM4date() {
         return m4date;
     }
 
+    /**
+     * Retrieve cnorc of the member
+     */
     public OptionalLong getCnorc() {
         return cnorc;
     }
 
+    /**
+     * Retrieve inorc of the member
+     */
     public OptionalLong getInorc() {
         return inorc;
     }
 
+    /**
+     * Retrieve mnorc of the member
+     */
     public OptionalLong getMnorc() {
         return mnorc;
     }
 
+    /**
+     * Retrieve mtime of the member
+     */
     public Optional<String> getMtime() {
         return mtime;
     }
 
+    /**
+     * Retrieve msec of the member
+     */
     public Optional<String> getMsec() {
         return msec;
     }
 
+    /**
+     * Retrieve user of the member
+     */
     public Optional<String> getUser() {
         return user;
     }
 
+    /**
+     * Retrieve sclm of the member
+     */
     public Optional<String> getSclm() {
         return sclm;
     }
 
+    /**
+     * String representation of the member object
+     */
     @Override
     public String toString() {
         return "Member{" +
