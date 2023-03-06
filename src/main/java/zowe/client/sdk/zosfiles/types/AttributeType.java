@@ -10,13 +10,30 @@
 package zowe.client.sdk.zosfiles.types;
 
 /**
- * Attribute enum for querying a dataset and how its returned data will be retrieved with what properties.
+ * Attribute enum for querying a dataset(s) and member(s) and how its returned data will be retrieved with what properties.
  * <p>
+ * Member request that only member names be returned. If you omit this header, it is set to "member".
  * BASE return all properties of a dataset and its values.
  * VOL return volume and dataset name properties and its values only.
  *
  * @author Frank Giordano
  */
 public enum AttributeType {
-    BASE, VOL
+
+    /**
+     * A request that only member names be returned.
+     * If you omit this header, it is set to "member".
+     */
+    MEMBER,
+    /**
+     * Setting the X-IBM-Attribute to base returns all the basic attributes for the data sets or members being queried.
+     * These attributes are commonly found in the ISPF List Data set panel.
+     * The base key is mutually exclusive with member.
+     */
+    BASE,
+    /**
+     * Return volume and dataset name properties and its values only.
+     */
+    VOL
+
 }
