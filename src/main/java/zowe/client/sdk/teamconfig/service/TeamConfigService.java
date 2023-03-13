@@ -135,7 +135,7 @@ public class TeamConfigService {
                 final JSONObject jsonProfileObj = (JSONObject) jsonObj.get(SectionType.PROFILES.getValue());
                 @SuppressWarnings("unchecked")
                 final Set<String> jsonProfileKeys = jsonProfileObj.keySet();
-                for (String profileKeyVal : jsonProfileKeys) {
+                for (final String profileKeyVal : jsonProfileKeys) {
                     JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
                     @SuppressWarnings("unchecked")
                     final Set<String> isEmbeddedKeyProfile = profileTypeJsonObj.keySet();
