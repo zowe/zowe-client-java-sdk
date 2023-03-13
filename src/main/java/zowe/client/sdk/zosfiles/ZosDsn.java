@@ -197,7 +197,7 @@ public class ZosDsn {
         Dataset emptyDataSet = new Dataset.Builder().dsname(dataSetName).build();
 
         final String[] tokens = dataSetName.split("\\.");
-        int length = tokens.length - 1;
+        final int length = tokens.length - 1;
         if (1 >= length) {
             return emptyDataSet;
         }

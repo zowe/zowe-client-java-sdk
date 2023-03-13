@@ -47,7 +47,7 @@ public final class TsoUtils {
     public static ZosmfTsoResponse getZosmfTsoResponse(Response response) throws Exception {
         ValidateUtils.checkNullParameter(response == null, "response is null");
         ZosmfTsoResponse result;
-        int statusCode = response.getStatusCode().get();
+        final int statusCode = response.getStatusCode().get();
         if (response.getStatusCode().isPresent() && RestUtils.isHttpError(statusCode)) {
             final String errorMsg = (String) response.getResponsePhrase().orElseThrow(() -> new Exception("results not available"));
             final ZosmfMessages zosmfMsg = new ZosmfMessages(errorMsg, null, null);
@@ -134,7 +134,7 @@ public final class TsoUtils {
         tsoData.ifPresent(data -> {
             data.forEach(item -> {
                 final JSONObject obj = (JSONObject) item;
-                TsoMessages tsoMessages = new TsoMessages();
+                final TsoMessages tsoMessages = new TsoMessages();
                 parseJsonTsoMessage(tsoMessagesLst, obj, tsoMessages);
                 parseJsonTsoPrompt(tsoMessagesLst, obj, tsoMessages);
             });

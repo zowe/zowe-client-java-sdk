@@ -171,7 +171,7 @@ public abstract class ZoweRequest {
             return new Response(httpResponse.getStatusLine().getReasonPhrase(), statusCode);
         }
 
-        HttpEntity entity = httpResponse.getEntity();
+        final HttpEntity entity = httpResponse.getEntity();
         if (entity != null) {
             return new Response(entity.getContent(), statusCode);
         }

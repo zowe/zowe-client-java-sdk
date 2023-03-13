@@ -132,7 +132,7 @@ public class MonitorJobs {
             throw new Exception("job does not exist");
         }
         final List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
-        String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
+        final String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
 
         final int lineLimit = params.getLineLimit().orElse(DEFAULT_LINE_LIMIT);
         final int size = output.length, start;

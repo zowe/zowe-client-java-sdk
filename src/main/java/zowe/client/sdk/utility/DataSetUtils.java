@@ -73,7 +73,7 @@ public final class DataSetUtils {
         // append further info about the type of request that occurred
         errMsg += " for " + type.toString().toUpperCase() + " request.";
 
-        StringBuilder datasets = new StringBuilder();
+        final StringBuilder datasets = new StringBuilder();
 
         // if 404 is seen handle it generically for all types
         if (errMsg.contains("404")) {
@@ -123,7 +123,7 @@ public final class DataSetUtils {
 
         // at this point lets handle all other types: read, delete, write, download
         if (errMsg.contains("500")) {
-            String newErrMsg = formatPrePostMsg(errMsg, dsNames, http500Pre, http500, http500Post);
+            final String newErrMsg = formatPrePostMsg(errMsg, dsNames, http500Pre, http500, http500Post);
             throw new Exception(newErrMsg);
         }
         throw new Exception(errMsg);

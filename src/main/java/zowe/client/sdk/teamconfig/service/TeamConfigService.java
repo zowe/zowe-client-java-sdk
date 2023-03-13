@@ -50,18 +50,18 @@ public class TeamConfigService {
      */
     private Partition getPartition(String name, JSONObject jsonObject) {
         @SuppressWarnings("unchecked")
-        Set<String> keyObjs = jsonObject.keySet();
-        List<Profile> profiles = new ArrayList<>();
+        final Set<String> keyObjs = jsonObject.keySet();
+        final List<Profile> profiles = new ArrayList<>();
         Map<String, String> properties = new HashMap<>();
         LOG.debug("Partition found name {} containing {}:", name, jsonObject);
-        for (Object keyObj : keyObjs) {
-            String keyVal = (String) keyObj;
+        for (final Object keyObj : keyObjs) {
+            final String keyVal = (String) keyObj;
             if (SectionType.PROFILES.getValue().equals(keyVal)) {
                 JSONObject jsonProfileObj = (JSONObject) jsonObject.get(SectionType.PROFILES.getValue());
                 @SuppressWarnings("unchecked")
-                Set<String> jsonProfileKeys = jsonProfileObj.keySet();
-                for (String profileKeyVal : jsonProfileKeys) {
-                    JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
+                final Set<String> jsonProfileKeys = jsonProfileObj.keySet();
+                for (final String profileKeyVal : jsonProfileKeys) {
+                    final JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
                     profiles.add(new Profile((String) profileTypeJsonObj.get("type"),
                             (JSONObject) profileTypeJsonObj.get("properties"),
                             (JSONArray) profileTypeJsonObj.get("secure")));
@@ -83,7 +83,7 @@ public class TeamConfigService {
      */
     public ConfigContainer getTeamConfig(KeyTarConfig config) throws Exception {
         ValidateUtils.checkNullParameter(config == null, "config is null");
-        JSONParser parser = new JSONParser();
+        final JSONParser parser = new JSONParser();
         Object obj;
         try {
             obj = parser.parse(new FileReader(config.getLocation()));
@@ -102,7 +102,7 @@ public class TeamConfigService {
      * @author Frank Giordano
      */
     private boolean isPartition(Set<String> profileKeyObj) throws Exception {
-        Iterator<String> itr = profileKeyObj.iterator();
+        final Iterator<String> itr = profileKeyObj.iterator();
         if (itr.hasNext()) {
             String keyVal = itr.next();
             return SectionType.PROFILES.getValue().equals(keyVal);
@@ -128,11 +128,11 @@ public class TeamConfigService {
 
         @SuppressWarnings("unchecked")
         final Set<String> jsonSectionKeys = jsonObj.keySet();
-        for (String keySectionVal : jsonSectionKeys) {
+        for (final String keySectionVal : jsonSectionKeys) {
             if (SectionType.$SCHEMA.getValue().equals(keySectionVal)) {
                 schema = (String) jsonObj.get(SectionType.$SCHEMA.getValue());
             } else if (SectionType.PROFILES.getValue().equals(keySectionVal)) {
-                JSONObject jsonProfileObj = (JSONObject) jsonObj.get(SectionType.PROFILES.getValue());
+                final JSONObject jsonProfileObj = (JSONObject) jsonObj.get(SectionType.PROFILES.getValue());
                 @SuppressWarnings("unchecked")
                 final Set<String> jsonProfileKeys = jsonProfileObj.keySet();
                 for (String profileKeyVal : jsonProfileKeys) {
@@ -149,7 +149,7 @@ public class TeamConfigService {
                 }
             } else if (SectionType.DEFAULTS.getValue().equals(keySectionVal)) {
                 final JSONObject keyValues = (JSONObject) jsonObj.get(SectionType.DEFAULTS.getValue());
-                for (Object defaultKeyVal : keyValues.keySet()) {
+                for (final Object defaultKeyVal : keyValues.keySet()) {
                     final String key = (String) defaultKeyVal;
                     final String value = (String) keyValues.get(key);
                     defaults.put(key, value);
