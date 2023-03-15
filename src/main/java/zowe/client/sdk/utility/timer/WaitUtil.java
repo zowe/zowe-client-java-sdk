@@ -31,7 +31,7 @@ public final class WaitUtil {
      * @author Frank Giordano
      */
     public static void wait(int time) {
-        Timer timer = new Timer(time).initialize();
+        final Timer timer = new Timer(time).initialize();
         while (!timer.isEnded()) {
         }
     }

@@ -240,7 +240,7 @@ public class SubmitJobs {
         final Map<String, String> symbolMap = new HashMap<>();
 
         // Check for matching quotes
-        for (String value : keyValues.values()) {
+        for (final String value : keyValues.values()) {
             if (value.chars().filter(ch -> ch == '"').count() % 2 != 0) {
                 throw new Exception("Encountered invalid key/value pair. Mismatched quotes.");
             }

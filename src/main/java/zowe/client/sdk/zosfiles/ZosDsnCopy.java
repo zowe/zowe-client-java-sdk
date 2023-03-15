@@ -166,8 +166,8 @@ public class ZosDsnCopy {
             url += "-(" + params.getToVolser().get() + ")/";
         }
 
-        String toDataSet = params.getToDataSet().get();
-        String fromDataSet = params.getFromDataSet().get();
+        final String toDataSet = params.getToDataSet().get();
+        final String fromDataSet = params.getFromDataSet().get();
 
         url += EncodeUtils.encodeURIComponent(toDataSet);
 
