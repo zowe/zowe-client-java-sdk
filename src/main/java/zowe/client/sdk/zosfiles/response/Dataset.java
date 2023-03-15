@@ -266,23 +266,23 @@ public class Dataset {
     }
 
     /**
-     * Retrieve sizex of the dataset
+     * Retrieve rdate of the dataset
      *
      * @return Optional string value
      * @author Nikunj Goyal
      */
     public Optional<String> getRdate() {
-        return sizex;
+        return rdate;
     }
 
     /**
-     * Retrieve sizex of the dataset
+     * Retrieve recfm of the dataset
      *
      * @return Optional string value
      * @author Nikunj Goyal
      */
     public Optional<String> getRecfm() {
-        return sizex;
+        return recfm;
     }
 
     /**
