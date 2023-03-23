@@ -11,12 +11,11 @@ package zowe.client.sdk.zosjobs;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.unirest.*;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
@@ -130,35 +129,23 @@ public class SubmitJobs {
         if (request == null || !(request instanceof TextPutRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
         }
-        request.setRequest(url, body);
+        request.setUrl(url);
+        request.setBody(body);
         request.setHeaders(headers);
 
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return new Job.Builder().build();
-        }
+        Response response;
         try {
-            RestUtils.checkHttpErrors(response);
+            response = RestUtils.getResponse(request);
         } catch (Exception e) {
-            final String errorMsg = e.getMessage();
-            if (errorMsg.contains("400")) {
-                throw new Exception("Body sent may be invalid. " + errorMsg);
-            }
-            if (errorMsg.contains("401")) {
-                throw new Exception("Unauthorized user specified. " + errorMsg);
-            }
-            e.printStackTrace();
-            throw new Exception(e.getMessage());
+            throw e;
         }
 
-        final JSONParser parser = new JSONParser();
-        JSONObject json;
-        try {
-            json = (JSONObject) parser.parse((String) response.getResponsePhrase().orElse(""));
-        } catch (ParseException e) {
-            throw new Exception(e.getMessage());
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
         }
-        return JobUtils.parseJsonJobResponse(json);
+
+        return JobUtils.parseJsonJobResponse(
+                ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
     }
 
     /**
@@ -199,33 +186,26 @@ public class SubmitJobs {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
 
-        request.setRequest(url, jsonRequestBody.toString());
+        request.setUrl(url);
+        request.setBody(jsonRequestBody.toString());
 
         if (params.getJclSymbols().isPresent()) {
             request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));
         }
 
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return new Job.Builder().build();
-        }
-
+        Response response;
         try {
-            RestUtils.checkHttpErrors(response);
+            response = RestUtils.getResponse(request);
         } catch (Exception e) {
-            final String errorMsg = e.getMessage();
-            if (errorMsg.contains("400")) {
-                throw new Exception("Body sent may be invalid. " + errorMsg);
-            }
-            if (errorMsg.contains("500")) {
-                throw new Exception("File does not exist. " + errorMsg);
-            }
-            e.printStackTrace();
-            throw new Exception("No results for submitted job. " + errorMsg);
+            throw e;
         }
 
-        return JobUtils.parseJsonJobResponse(((JSONObject) response.getResponsePhrase()
-                .orElseThrow(() -> new Exception("response phrase missing"))));
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
+        }
+
+        return JobUtils.parseJsonJobResponse(
+                ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
     }
 
     /**
