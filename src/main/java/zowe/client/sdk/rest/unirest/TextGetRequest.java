@@ -22,7 +22,7 @@ import zowe.client.sdk.core.ZOSConnection;
 public class TextGetRequest extends ZoweRequest {
 
     /**
-     * TextGetRequest constructor.
+     * TextGetRequest constructor
      *
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano

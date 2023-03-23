@@ -23,7 +23,7 @@ import zowe.client.sdk.core.ZOSConnection;
 public class JsonGetRequest extends ZoweRequest {
 
     /**
-     * JsonGetRequest constructor.
+     * JsonGetRequest constructor
      *
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano

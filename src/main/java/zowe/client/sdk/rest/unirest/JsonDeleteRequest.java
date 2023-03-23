@@ -23,7 +23,7 @@ import zowe.client.sdk.core.ZOSConnection;
 public class JsonDeleteRequest extends ZoweRequest {
 
     /**
-     * JsonDeleteRequest constructor.
+     * JsonDeleteRequest constructor
      *
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano

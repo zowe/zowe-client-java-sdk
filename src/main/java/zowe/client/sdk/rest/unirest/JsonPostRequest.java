@@ -26,7 +26,7 @@ public class JsonPostRequest extends ZoweRequest {
     private String body;
 
     /**
-     * JsonPostRequest constructor.
+     * JsonPostRequest constructor
      *
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano

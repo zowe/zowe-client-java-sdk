@@ -25,7 +25,7 @@ public class TextPutRequest extends ZoweRequest {
     private String body;
 
     /**
-     * TextPutRequest constructor.
+     * TextPutRequest constructor
      *
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano

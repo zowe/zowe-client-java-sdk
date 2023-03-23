@@ -34,7 +34,7 @@ public abstract class ZoweRequest {
     protected String url;
 
     /**
-     * ZoweRequest constructor.
+     * ZoweRequest constructor
      *
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano

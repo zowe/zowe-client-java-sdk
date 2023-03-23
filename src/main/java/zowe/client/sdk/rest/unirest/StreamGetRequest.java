@@ -24,7 +24,7 @@ import java.io.InputStream;
 public class StreamGetRequest extends ZoweRequest {
 
     /**
-     * StreamGetRequest constructor.
+     * StreamGetRequest constructor
      *
      * @param connection connection information, see ZOSConnection object
      */
