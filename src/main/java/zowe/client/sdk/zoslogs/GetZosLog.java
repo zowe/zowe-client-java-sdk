@@ -12,16 +12,19 @@ package zowe.client.sdk.zoslogs;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.JsonGetRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.unirest.JsonGetRequest;
+import zowe.client.sdk.rest.unirest.Response;
+import zowe.client.sdk.rest.unirest.ZoweRequest;
+import zowe.client.sdk.rest.unirest.ZoweRequestFactory;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zoslogs.input.DirectionType;
+import zowe.client.sdk.zoslogs.input.HardCopyType;
 import zowe.client.sdk.zoslogs.input.ZosLogParams;
 import zowe.client.sdk.zoslogs.response.ZosLogItem;
 import zowe.client.sdk.zoslogs.response.ZosLogReply;
@@ -109,31 +112,26 @@ public class GetZosLog {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
-        request.setRequest(url.toString());
+        request.setUrl(url.toString());
 
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            throw new Exception("response was null");
-        }
-
+        Response response;
         try {
-            RestUtils.checkHttpErrors(response);
+            response = RestUtils.getResponse(request);
         } catch (Exception e) {
-            final int httpCode = response.getStatusCode().orElseThrow(() -> new Exception("http code not found"));
-            if (httpCode == 500) {
-                throw new Exception(e.getMessage());
-            }
-            throw new Exception((e.getMessage()));
+            throw e;
         }
 
-        final JSONObject results = (JSONObject) response.getResponsePhrase().orElse(null);
-        if (results == null) {
-            throw new Exception("server error response phrase not returned");
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
         }
+
+        final JSONParser parser = new JSONParser();
+        final JSONObject jsonObject = (JSONObject) parser.parse(response.getResponsePhrase().get().toString());
         JSONArray jsonArray = new JSONArray();
-        if (results.get("items") != null) {
-            jsonArray = (JSONArray) results.get("items");
+        if (jsonObject.get("items") != null) {
+            jsonArray = (JSONArray) jsonObject.get("items");
         }
+
         final List<ZosLogItem> zosLogItems = new ArrayList<>();
         final boolean isProcessResponse = params.isProcessResponses();
         jsonArray.forEach(item -> {
@@ -154,10 +152,10 @@ public class GetZosLog {
             zosLogItems.add(zosLogItemBuilder.build());
         });
 
-        return new ZosLogReply(results.get("timezone") != null ? (Long) results.get("timezone") : 0,
-                results.get("nextTimestamp") != null ? (Long) results.get("nextTimestamp") : 0,
-                results.get("source") != null ? (String) results.get("source") : null,
-                results.get("totalitems") != null ? (Long) results.get("totalitems") : null,
+        return new ZosLogReply(jsonObject.get("timezone") != null ? (Long) jsonObject.get("timezone") : 0,
+                jsonObject.get("nextTimestamp") != null ? (Long) jsonObject.get("nextTimestamp") : 0,
+                jsonObject.get("source") != null ? (String) jsonObject.get("source") : null,
+                jsonObject.get("totalitems") != null ? (Long) jsonObject.get("totalitems") : null,
                 zosLogItems);
     }
 
