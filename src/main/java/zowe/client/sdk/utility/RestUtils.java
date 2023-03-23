@@ -17,6 +17,7 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.unirest.ZoweRequest;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -26,7 +27,7 @@ import java.net.URL;
  * Utility Class for Rest related static helper methods.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 1.0
  */
 public final class RestUtils {
 
@@ -142,6 +143,27 @@ public final class RestUtils {
         } catch (URISyntaxException | MalformedURLException exception) {
             return true;
         }
+    }
+
+    public static zowe.client.sdk.rest.unirest.Response getResponse(ZoweRequest request) throws Exception {
+        zowe.client.sdk.rest.unirest.Response response = request.executeRequest();
+
+        if (response.getStatusCode().isEmpty()) {
+            throw new Exception("no response status code returned");
+        }
+
+        if (response.getResponsePhrase().isEmpty()) {
+            throw new Exception("no response phrase returned");
+        }
+
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            if (response.getStatusText().isEmpty()) {
+                throw new Exception("no response status text returned");
+            }
+            LOG.debug("Rest status code {}", response.getStatusCode().get());
+            LOG.debug("Rest status text {}", response.getStatusText().get());
+        }
+        return response;
     }
 
 }

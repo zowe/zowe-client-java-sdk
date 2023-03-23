@@ -10,18 +10,21 @@
 package zowe.client.sdk.zosmfinfo;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.JsonGetRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.unirest.JsonGetRequest;
+import zowe.client.sdk.rest.unirest.Response;
+import zowe.client.sdk.rest.unirest.ZoweRequest;
+import zowe.client.sdk.rest.unirest.ZoweRequestFactory;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.utility.ZosmfUtils;
 import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
+
+import java.util.Arrays;
 
 /**
  * This class is used to list the systems defined to z/OSMF through the z/OSMF APIs.
@@ -79,16 +82,21 @@ public class ListDefinedSystems {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
-        request.setRequest(url);
+        request.setUrl(url);
 
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            throw new Exception("response is empty");
+        Response response;
+        try {
+            response = RestUtils.getResponse(request);
+        } catch (Exception e) {
+            throw e;
         }
 
-        RestUtils.checkHttpErrors(response);
-        return ZosmfUtils.parseListDefinedSystems(((JSONObject) response.getResponsePhrase()
-                .orElseThrow(() -> new Exception("response phase missing"))));
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
+        }
+
+        return ZosmfUtils.parseListDefinedSystems(
+                ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
     }
 
 }
