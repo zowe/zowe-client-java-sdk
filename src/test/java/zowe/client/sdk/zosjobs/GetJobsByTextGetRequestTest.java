@@ -14,8 +14,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.TextGetRequest;
+import zowe.client.sdk.rest.unirest.Response;
+import zowe.client.sdk.rest.unirest.TextGetRequest;
 
 import static org.junit.Assert.assertEquals;
 
@@ -39,7 +39,7 @@ public class GetJobsByTextGetRequestTest {
 
     @Test
     public void tstGetSpoolContentByIdSuccess() throws Exception {
-        Response response = new Response("1\n2\n3\n", 200);
+        Response response = new Response("1\n2\n3\n", 200, "text");
         Mockito.when(request.executeRequest()).thenReturn(response);
 
         String results = getJobs.getSpoolContentById("jobName", "jobId", 1);

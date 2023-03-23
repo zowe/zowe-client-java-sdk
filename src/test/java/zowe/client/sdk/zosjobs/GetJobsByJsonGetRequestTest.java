@@ -18,8 +18,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.JsonGetRequest;
-import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.unirest.JsonGetRequest;
+import zowe.client.sdk.rest.unirest.Response;
 import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;
@@ -78,7 +78,7 @@ public class GetJobsByJsonGetRequestTest {
         final Map<String, String> jsonJob2 = new JSONObject(jsonJobMap2);
         jsonArray.add(jsonJob2);
 
-        Response response = new Response(jsonArray, 200);
+        Response response = new Response(jsonArray, 200, "Text");
         Mockito.when(request.executeRequest()).thenReturn(response);
 
         String msgResult = null;
@@ -98,7 +98,7 @@ public class GetJobsByJsonGetRequestTest {
         final JSONArray jsonArray = new JSONArray();
         jsonArray.add(jobJson);
 
-        final Response response = new Response(jsonArray, 200);
+        final Response response = new Response(jsonArray, 200, "Text");
         Mockito.when(request.executeRequest()).thenReturn(response);
 
         final Job job = getJobs.getJob("1");
@@ -127,7 +127,7 @@ public class GetJobsByJsonGetRequestTest {
         final var jsonJob = new JSONObject(jsonJobMap);
         jsonArray.add(jsonJob);
 
-        final Response response = new Response(jsonArray, 200);
+        final Response response = new Response(jsonArray, 200, "Text");
         Mockito.when(request.executeRequest()).thenReturn(response);
 
         final Job job = getJobs.getJob("1");
@@ -192,7 +192,7 @@ public class GetJobsByJsonGetRequestTest {
 
     @Test
     public void tstGetStatusForJobSuccess() throws Exception {
-        final Response response = new Response(jobJson, 200);
+        final Response response = new Response(jobJson, 200, "Text");
         Mockito.when(request.executeRequest()).thenReturn(response);
 
         final Job job = getJobs.getStatusForJob(new Job.Builder().jobId("1").jobName("jobName").build());
