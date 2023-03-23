@@ -11,11 +11,12 @@ package zowe.client.sdk.zosfiles;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.unirest.*;
 import zowe.client.sdk.utility.DataSetUtils;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
@@ -24,7 +25,6 @@ import zowe.client.sdk.zosfiles.input.ListParams;
 import zowe.client.sdk.zosfiles.response.Dataset;
 import zowe.client.sdk.zosfiles.response.Member;
 import zowe.client.sdk.zosfiles.types.AttributeType;
-import zowe.client.sdk.zosfiles.types.OperationType;
 
 import java.util.*;
 
@@ -32,6 +32,7 @@ import java.util.*;
  * ZosDsnList class that provides Dataset member list function
  *
  * @author Nikunj Goyal
+ * @author Frank Giordano
  * @version 2.0
  */
 public class ZosDsnList {
@@ -70,7 +71,7 @@ public class ZosDsnList {
     }
 
     /**
-     * Perform the http request
+     * Perform the http request and return its response.
      *
      * @param params  list parameters
      * @param headers list of headers for http request
@@ -84,9 +85,69 @@ public class ZosDsnList {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
-        request.setRequest(url);
+        request.setUrl(url);
         request.setHeaders(headers);
         return request.executeRequest();
+    }
+
+    private <T> List<T> getResult(Response response, List<T> datasetLst, List<T> memberLst) throws Exception {
+        if (response.getStatusCode().isEmpty()) {
+            LOG.debug("ZosDsnList::getResult - no status code returned");
+            if (datasetLst == null) {
+                return memberLst;
+            } else {
+                return datasetLst;
+            }
+        }
+
+        if (response.getResponsePhrase().isEmpty()) {
+            LOG.debug("ZosDsnList::getResult - no response phrase returned");
+            if (datasetLst == null) {
+                return memberLst;
+            } else {
+                return datasetLst;
+            }
+        }
+
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            if (response.getStatusText().isEmpty()) {
+                LOG.debug("ZosDsnList::getResult - no status text returned");
+                if (datasetLst == null) {
+                    return memberLst;
+                } else {
+                    return datasetLst;
+                }
+            }
+            LOG.debug("Rest status code {}", response.getStatusCode().get());
+            LOG.debug("Rest status text {}", response.getStatusText().get());
+            throw new Exception(response.getResponsePhrase().get().toString());
+        }
+
+        JSONParser parser = new JSONParser();
+        final JSONObject jsonObject = (JSONObject) parser.parse(response.getResponsePhrase().get().toString());
+        if (jsonObject.isEmpty()) {
+            if (datasetLst == null) {
+                return memberLst;
+            } else {
+                return datasetLst;
+            }
+        }
+
+        final JSONArray items = (JSONArray) jsonObject.get(ZosFilesConstants.RESPONSE_ITEMS);
+        items.forEach(item -> {
+            JSONObject obj = (JSONObject) item;
+            if (datasetLst == null) {
+                memberLst.add((T) DataSetUtils.parseJsonMemberResponse(obj));
+            } else {
+                datasetLst.add((T) DataSetUtils.parseJsonDSResponse(obj));
+            }
+        });
+
+        if (datasetLst == null) {
+            return memberLst;
+        } else {
+            return datasetLst;
+        }
     }
 
     /**
@@ -118,28 +179,7 @@ public class ZosDsnList {
             url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + params.getStart().get();
         }
 
-        final Response response = getResponse(params, headers, url);
-        if (response.isEmpty()) {
-            return datasets;
-        }
-
-        try {
-            RestUtils.checkHttpErrors(response);
-        } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.READ);
-        }
-
-        final JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
-        if (results.isEmpty()) {
-            return datasets;
-        }
-        final JSONArray items = (JSONArray) results.get(ZosFilesConstants.RESPONSE_ITEMS);
-        items.forEach(item -> {
-            JSONObject datasetObj = (JSONObject) item;
-            datasets.add(DataSetUtils.parseJsonDSResponse(datasetObj));
-        });
-
-        return datasets;
+        return getResult(getResponse(params, headers, url), datasets, null);
     }
 
     /**
@@ -168,28 +208,7 @@ public class ZosDsnList {
                     EncodeUtils.encodeURIComponent(params.getPattern().get());
         }
 
-        final Response response = getResponse(params, headers, url);
-        if (response.isEmpty()) {
-            return members;
-        }
-
-        try {
-            RestUtils.checkHttpErrors(response);
-        } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.READ);
-        }
-
-        final JSONObject results = (JSONObject) response.getResponsePhrase().orElse(new JSONObject());
-        if (results.isEmpty()) {
-            return members;
-        }
-        final JSONArray items = (JSONArray) results.get("items");
-        items.forEach(item -> {
-            JSONObject datasetObj = (JSONObject) item;
-            members.add(DataSetUtils.parseJsonMemberResponse(datasetObj));
-        });
-
-        return members;
+        return getResult(getResponse(params, headers, url), null, members);
     }
 
     /**
