@@ -14,6 +14,7 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.rest.ZosmfHeaders;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.rest.unirest.*;
 import zowe.client.sdk.utility.EncodeUtils;
