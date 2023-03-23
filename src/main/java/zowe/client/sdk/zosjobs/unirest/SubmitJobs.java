@@ -7,20 +7,21 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs;
+package zowe.client.sdk.zosjobs.unirest;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.ZosmfHeaders;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.unirest.*;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.SubmitJclParams;
 import zowe.client.sdk.zosjobs.input.SubmitJobParams;
 import zowe.client.sdk.zosjobs.response.Job;
@@ -32,7 +33,7 @@ import java.util.Map;
  * Class to handle submitting of z/OS batch jobs via z/OSMF
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class SubmitJobs {
 
@@ -130,35 +131,23 @@ public class SubmitJobs {
         if (request == null || !(request instanceof TextPutRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
         }
-        request.setRequest(url, body);
+        request.setUrl(url);
+        request.setBody(body);
         request.setHeaders(headers);
 
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return new Job.Builder().build();
-        }
+        Response response;
         try {
-            RestUtils.checkHttpErrors(response);
+            response = RestUtils.getResponse(request);
         } catch (Exception e) {
-            final String errorMsg = e.getMessage();
-            if (errorMsg.contains("400")) {
-                throw new Exception("Body sent may be invalid. " + errorMsg);
-            }
-            if (errorMsg.contains("401")) {
-                throw new Exception("Unauthorized user specified. " + errorMsg);
-            }
-            e.printStackTrace();
-            throw new Exception(e.getMessage());
+            throw e;
         }
 
-        final JSONParser parser = new JSONParser();
-        JSONObject json;
-        try {
-            json = (JSONObject) parser.parse((String) response.getResponsePhrase().orElse(""));
-        } catch (ParseException e) {
-            throw new Exception(e.getMessage());
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
         }
-        return JobUtils.parseJsonJobResponse(json);
+
+        return JobUtils.parseJsonJobResponse(
+                ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
     }
 
     /**
@@ -199,33 +188,26 @@ public class SubmitJobs {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
 
-        request.setRequest(url, jsonRequestBody.toString());
+        request.setUrl(url);
+        request.setBody(jsonRequestBody.toString());
 
         if (params.getJclSymbols().isPresent()) {
             request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));
         }
 
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return new Job.Builder().build();
-        }
-
+        Response response;
         try {
-            RestUtils.checkHttpErrors(response);
+            response = RestUtils.getResponse(request);
         } catch (Exception e) {
-            final String errorMsg = e.getMessage();
-            if (errorMsg.contains("400")) {
-                throw new Exception("Body sent may be invalid. " + errorMsg);
-            }
-            if (errorMsg.contains("500")) {
-                throw new Exception("File does not exist. " + errorMsg);
-            }
-            e.printStackTrace();
-            throw new Exception("No results for submitted job. " + errorMsg);
+            throw e;
         }
 
-        return JobUtils.parseJsonJobResponse(((JSONObject) response.getResponsePhrase()
-                .orElseThrow(() -> new Exception("response phrase missing"))));
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
+        }
+
+        return JobUtils.parseJsonJobResponse(
+                ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
     }
 
     /**

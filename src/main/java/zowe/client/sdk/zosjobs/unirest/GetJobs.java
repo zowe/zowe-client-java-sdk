@@ -7,19 +7,22 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs;
+package zowe.client.sdk.zosjobs.unirest;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.QueryConstants;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.unirest.*;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.CommonJobParams;
 import zowe.client.sdk.zosjobs.input.GetJobParams;
 import zowe.client.sdk.zosjobs.input.JobFile;
@@ -32,7 +35,7 @@ import java.util.List;
  * Class to handle obtaining of z/OS batch job information
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class GetJobs {
 
@@ -104,14 +107,20 @@ public class GetJobs {
         if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
         }
-        request.setRequest(url);
+        request.setUrl(url);
 
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return "";
+        Response response;
+        try {
+            response = RestUtils.getResponse(request);
+        } catch (Exception e) {
+            throw e;
         }
-        RestUtils.checkHttpErrors(response);
-        return (String) response.getResponsePhrase().orElse("");
+
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
+        }
+
+        return (String) response.getResponsePhrase().get();
     }
 
     /**
@@ -261,18 +270,24 @@ public class GetJobs {
         if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
-        request.setRequest(url);
+        request.setUrl(url);
 
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return jobs;
-        }
-        RestUtils.checkHttpErrors(response);
-        final JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
-        if (results == null) {
-            return jobs;
+        Response response;
+        try {
+            response = RestUtils.getResponse(request);
+        } catch (Exception e) {
+            LOG.debug("GetJobs::getJobsCommon - {}", e.getMessage());
+            if (e.getMessage().contains("no response phrase returned")) {
+                return jobs;
+            }
+            throw e;
         }
 
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
+        }
+
+        final JSONArray results = (JSONArray) new JSONParser().parse(response.getResponsePhrase().get().toString());
         results.forEach(item -> {
             JSONObject jobObj = (JSONObject) item;
             jobs.add(JobUtils.parseJsonJobResponse(jobObj));
@@ -317,14 +332,20 @@ public class GetJobs {
         if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
         }
-        request.setRequest(url);
+        request.setUrl(url);
 
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return "";
+        Response response;
+        try {
+            response = RestUtils.getResponse(request);
+        } catch (Exception e) {
+            throw e;
         }
-        RestUtils.checkHttpErrors(response);
-        return (String) response.getResponsePhrase().orElse("");
+
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
+        }
+
+        return (String) response.getResponsePhrase().get();
     }
 
     /**
@@ -350,14 +371,20 @@ public class GetJobs {
         if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
         }
-        request.setRequest(url);
+        request.setUrl(url);
 
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return "";
+        Response response;
+        try {
+            response = RestUtils.getResponse(request);
+        } catch (Exception e) {
+            throw e;
         }
-        RestUtils.checkHttpErrors(response);
-        return (String) response.getResponsePhrase().orElse("");
+
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
+        }
+
+        return (String) response.getResponsePhrase().get();
     }
 
     /**
@@ -399,18 +426,24 @@ public class GetJobs {
         if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
-        request.setRequest(url);
+        request.setUrl(url);
 
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return files;
-        }
-        RestUtils.checkHttpErrors(response);
-        final JSONArray results = (JSONArray) response.getResponsePhrase().orElse(null);
-        if (results == null) {
-            return files;
+        Response response;
+        try {
+            response = RestUtils.getResponse(request);
+        } catch (Exception e) {
+            LOG.debug("GetJobs::getSpoolFilesCommon - {}", e.getMessage());
+            if (e.getMessage().contains("no response phrase returned")) {
+                return files;
+            }
+            throw e;
         }
 
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
+        }
+
+        final JSONArray results = (JSONArray) new JSONParser().parse(response.getResponsePhrase().get().toString());
         results.forEach(item -> {
             JSONObject fileObj = (JSONObject) item;
             files.add(new JobFile.Builder().jobId((String) fileObj.get("jobid"))
@@ -491,19 +524,21 @@ public class GetJobs {
         if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
-        request.setRequest(url);
+        request.setUrl(url);
 
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return new Job.Builder().build();
-        }
-        RestUtils.checkHttpErrors(response);
-        final JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
-        if (result == null) {
-            return new Job.Builder().build();
+        Response response;
+        try {
+            response = RestUtils.getResponse(request);
+        } catch (Exception e) {
+            throw e;
         }
 
-        return JobUtils.parseJsonJobResponse(result);
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
+        }
+
+        return JobUtils.parseJsonJobResponse(
+                ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
     }
 
     /**
