@@ -24,6 +24,7 @@ import java.util.Optional;
 /**
  * Http get stream operation with Json content type
  *
+ * @author Frank Giordano
  * @version 1.0
  */
 public class StreamGetRequest extends ZoweRequest {
@@ -35,6 +36,7 @@ public class StreamGetRequest extends ZoweRequest {
      * StreamGetRequest constructor.
      *
      * @param connection connection information, see ZOSConnection object
+     * @author Frank Giordano
      */
     public StreamGetRequest(ZOSConnection connection) {
         super(connection, ZoweRequestType.GET_STREAM);
