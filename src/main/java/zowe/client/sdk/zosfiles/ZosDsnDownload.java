@@ -9,23 +9,27 @@
  */
 package zowe.client.sdk.zosfiles;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
-import zowe.client.sdk.utility.*;
+import zowe.client.sdk.rest.unirest.*;
+import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.FileUtils;
+import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.input.DownloadParams;
-import zowe.client.sdk.zosfiles.types.OperationType;
 
 import java.io.InputStream;
-import java.util.List;
+import java.io.StringWriter;
 import java.util.Map;
 
 /**
  * ZosDsnDownload class that provides download DataSet function
  *
  * @author Nikunj Goyal
+ * @author Frank Giordano
  * @version 2.0
  */
 public class ZosDsnDownload {
@@ -105,21 +109,17 @@ public class ZosDsnDownload {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_STREAM);
         }
-        request.setRequest(url);
+        request.setUrl(url);
         request.setHeaders(headers);
 
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return null;
-        }
-
+        Response response;
         try {
-            RestUtils.checkHttpErrors(response);
+            response = RestUtils.getResponse(request);
         } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.DOWNLOAD);
+            throw e;
         }
 
-        return (InputStream) response.getResponsePhrase().orElse(null);
+        return (InputStream) response.getResponsePhrase().get();
     }
 
 }
