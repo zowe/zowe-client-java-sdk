@@ -45,7 +45,7 @@ public class StreamGetRequest extends ZoweRequest {
     }
 
     /**
-     * Set the body information for the http request
+     * Method to set the body information for the http request which is not used for this request.
      *
      * @author Frank Giordano
      */
