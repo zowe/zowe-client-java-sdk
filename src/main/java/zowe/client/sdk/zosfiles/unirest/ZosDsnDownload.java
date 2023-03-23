@@ -20,8 +20,8 @@ import zowe.client.sdk.rest.unirest.ZoweRequest;
 import zowe.client.sdk.rest.unirest.ZoweRequestFactory;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.input.DownloadParams;
 
@@ -117,7 +117,7 @@ public class ZosDsnDownload {
 
         Response response;
         try {
-            response = RestUtils.getResponse(request);
+            response = UniRestUtils.getResponse(request);
         } catch (Exception e) {
             throw e;
         }

@@ -22,6 +22,7 @@ import zowe.client.sdk.rest.unirest.ZoweRequestFactory;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.utility.ZosmfUtils;
+import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosmfinfo.ZosmfConstants;
 import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
 
@@ -85,7 +86,7 @@ public class ListDefinedSystems {
 
         Response response;
         try {
-            response = RestUtils.getResponse(request);
+            response = UniRestUtils.getResponse(request);
         } catch (Exception e) {
             throw e;
         }

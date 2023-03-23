@@ -23,6 +23,7 @@ import zowe.client.sdk.rest.unirest.ZoweRequest;
 import zowe.client.sdk.rest.unirest.ZoweRequestFactory;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zoslogs.input.ZosLogParams;
 import zowe.client.sdk.zoslogs.response.ZosLogItem;
 import zowe.client.sdk.zoslogs.response.ZosLogReply;
@@ -114,7 +115,7 @@ public class GetZosLog {
 
         Response response;
         try {
-            response = RestUtils.getResponse(request);
+            response = UniRestUtils.getResponse(request);
         } catch (Exception e) {
             throw e;
         }

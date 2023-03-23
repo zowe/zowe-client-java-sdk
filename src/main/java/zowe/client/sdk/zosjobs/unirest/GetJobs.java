@@ -22,6 +22,7 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.CommonJobParams;
 import zowe.client.sdk.zosjobs.input.GetJobParams;
@@ -111,7 +112,7 @@ public class GetJobs {
 
         Response response;
         try {
-            response = RestUtils.getResponse(request);
+            response = UniRestUtils.getResponse(request);
         } catch (Exception e) {
             throw e;
         }
@@ -274,7 +275,7 @@ public class GetJobs {
 
         Response response;
         try {
-            response = RestUtils.getResponse(request);
+            response = UniRestUtils.getResponse(request);
         } catch (Exception e) {
             LOG.debug("GetJobs::getJobsCommon - {}", e.getMessage());
             if (e.getMessage().contains("no response phrase returned")) {
@@ -336,7 +337,7 @@ public class GetJobs {
 
         Response response;
         try {
-            response = RestUtils.getResponse(request);
+            response = UniRestUtils.getResponse(request);
         } catch (Exception e) {
             throw e;
         }
@@ -375,7 +376,7 @@ public class GetJobs {
 
         Response response;
         try {
-            response = RestUtils.getResponse(request);
+            response = UniRestUtils.getResponse(request);
         } catch (Exception e) {
             throw e;
         }
@@ -430,7 +431,7 @@ public class GetJobs {
 
         Response response;
         try {
-            response = RestUtils.getResponse(request);
+            response = UniRestUtils.getResponse(request);
         } catch (Exception e) {
             LOG.debug("GetJobs::getSpoolFilesCommon - {}", e.getMessage());
             if (e.getMessage().contains("no response phrase returned")) {
@@ -528,7 +529,7 @@ public class GetJobs {
 
         Response response;
         try {
-            response = RestUtils.getResponse(request);
+            response = UniRestUtils.getResponse(request);
         } catch (Exception e) {
             throw e;
         }

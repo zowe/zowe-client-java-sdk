@@ -21,6 +21,7 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.SubmitJclParams;
 import zowe.client.sdk.zosjobs.input.SubmitJobParams;
@@ -137,7 +138,7 @@ public class SubmitJobs {
 
         Response response;
         try {
-            response = RestUtils.getResponse(request);
+            response = UniRestUtils.getResponse(request);
         } catch (Exception e) {
             throw e;
         }
@@ -197,7 +198,7 @@ public class SubmitJobs {
 
         Response response;
         try {
-            response = RestUtils.getResponse(request);
+            response = UniRestUtils.getResponse(request);
         } catch (Exception e) {
             throw e;
         }
