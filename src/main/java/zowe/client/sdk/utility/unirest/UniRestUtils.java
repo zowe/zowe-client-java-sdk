@@ -32,8 +32,16 @@ public final class UniRestUtils {
         throw new IllegalStateException("Utility class");
     }
 
+    /**
+     * Perform Zowe Rest and retrieve its response
+     *
+     * @param request zowe request object
+     * @return response object
+     * @throws Exception response missing information
+     * @author Frank Giordano
+     */
     public static Response getResponse(ZoweRequest request) throws Exception {
-        zowe.client.sdk.rest.unirest.Response response = request.executeRequest();
+        Response response = request.executeRequest();
 
         if (response.getStatusCode().isEmpty()) {
             throw new Exception("no response status code returned");
