@@ -19,7 +19,7 @@ import java.util.Map;
  * Profile POJO to act as a container for a parsed Zowe Global Team Configuration file representing a profile section.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class Profile {
 

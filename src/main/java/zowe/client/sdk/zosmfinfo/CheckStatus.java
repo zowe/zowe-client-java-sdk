@@ -27,7 +27,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
  * This class holds the helper functions that are used to gather zosmf information through the z/OSMF APIs.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class CheckStatus {
 

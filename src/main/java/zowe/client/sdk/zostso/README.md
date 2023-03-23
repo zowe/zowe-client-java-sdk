@@ -18,7 +18,7 @@ import java.util.Arrays;
  * Class example to test tso command functionality.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class IssueTsoCommand extends ZosConnection {
 
@@ -68,7 +68,7 @@ package examples;
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class ZosConnection {
 

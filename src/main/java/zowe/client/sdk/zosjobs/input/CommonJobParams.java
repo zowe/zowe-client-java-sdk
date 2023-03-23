@@ -15,7 +15,7 @@ import java.util.Optional;
  * Interface for various common GetJobs APIs
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class CommonJobParams {
 

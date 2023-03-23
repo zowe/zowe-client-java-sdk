@@ -27,7 +27,7 @@ import java.util.Map;
  * DeleteJobs class to handle Job delete
  *
  * @author Nikunj Goyal
- * @version 1.0
+ * @version 2.0
  */
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class DeleteJobs {

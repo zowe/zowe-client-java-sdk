@@ -32,7 +32,7 @@ import java.util.Map;
  * Class to handle submitting of z/OS batch jobs via z/OSMF
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class SubmitJobs {
 

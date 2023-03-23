@@ -18,7 +18,7 @@ import java.util.Map;
  * TeamConfigUtils static class provides helper method(s).
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public final class TeamConfigUtils {
 

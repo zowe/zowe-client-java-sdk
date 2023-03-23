@@ -32,7 +32,7 @@ import java.util.List;
  * Class to handle obtaining of z/OS batch job information
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class GetJobs {
 

@@ -15,7 +15,7 @@ import java.util.Optional;
  * Common z/OS Consoles API Parameters.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class ConsoleParams {
 

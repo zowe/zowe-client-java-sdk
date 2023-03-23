@@ -15,7 +15,7 @@ import java.util.Optional;
  * TSO Prompt interface for one of TSO/E messages
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class TsoPromptMessage {
 

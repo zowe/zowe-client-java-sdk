@@ -19,7 +19,7 @@ import java.util.Base64;
  * Utility Class contains helper methods for encoding processing
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public final class EncodeUtils {
 

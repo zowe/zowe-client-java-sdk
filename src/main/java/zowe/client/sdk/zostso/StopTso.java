@@ -28,7 +28,7 @@ import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
  * Stop active TSO address space using servlet key
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class StopTso {
 

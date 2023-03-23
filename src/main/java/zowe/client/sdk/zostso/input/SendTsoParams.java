@@ -13,7 +13,7 @@ package zowe.client.sdk.zostso.input;
  * TSO issue command z/OSMF parameters
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class SendTsoParams {
 

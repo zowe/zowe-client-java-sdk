@@ -15,7 +15,7 @@ import java.util.Optional;
  * API response for list systems defined to z/OSMF.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class ZosmfListDefinedSystemsResponse {
 

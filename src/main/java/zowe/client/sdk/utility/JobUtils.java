@@ -19,7 +19,7 @@ import zowe.client.sdk.zosjobs.response.JobStepData;
  * Utility Class for GetJobs related static helper methods.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public final class JobUtils {
 

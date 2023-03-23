@@ -15,7 +15,7 @@ import java.util.Optional;
  * Interface for Issue command parameters
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class IssueParams extends ConsoleParams {
 

@@ -33,7 +33,7 @@ import java.util.Map;
  * Issue MVS Console commands by using a system console
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class IssueCommand {
 

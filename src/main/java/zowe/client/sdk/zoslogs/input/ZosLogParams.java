@@ -19,7 +19,7 @@ import java.util.Optional;
  * </pre>
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class ZosLogParams {
 

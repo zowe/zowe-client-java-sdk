@@ -33,7 +33,7 @@ import java.util.Map;
  * Provides copy dataset and dataset member functionality
  *
  * @author Leonid Baranov
- * @version 1.0
+ * @version 2.0
  */
 public class ZosDsnCopy {
 

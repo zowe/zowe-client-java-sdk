@@ -27,7 +27,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
  * This class is used to list the systems defined to z/OSMF through the z/OSMF APIs.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class ListDefinedSystems {
 

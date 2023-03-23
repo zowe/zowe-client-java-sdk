@@ -15,7 +15,7 @@ import java.util.Optional;
  * The z/OSMF Ping API error message parameters. See the z/OSMF REST API documentation for full details.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class ZosmfMessages {
 

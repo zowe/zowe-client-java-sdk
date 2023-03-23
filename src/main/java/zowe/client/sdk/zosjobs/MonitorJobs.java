@@ -30,7 +30,7 @@ import java.util.List;
  * in MonitorJobs invoke z/OSMF jobs REST endpoints to obtain job status information.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class MonitorJobs {
 

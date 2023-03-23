@@ -15,7 +15,7 @@ import java.util.Optional;
  * This interface defines the options that can be sent into the copy data set function.
  *
  * @author Leonid Baranov
- * @version 1.0
+ * @version 2.0
  */
 public class CopyParams {
 

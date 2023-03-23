@@ -13,7 +13,7 @@ package zowe.client.sdk.zosmfinfo;
  * Constants to be used by the z/OSMF API
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public final class ZosmfConstants {
 

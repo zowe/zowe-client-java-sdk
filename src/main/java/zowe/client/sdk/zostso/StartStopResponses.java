@@ -20,7 +20,7 @@ import java.util.Optional;
  * The TsoStartStop API responses
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class StartStopResponses {
 

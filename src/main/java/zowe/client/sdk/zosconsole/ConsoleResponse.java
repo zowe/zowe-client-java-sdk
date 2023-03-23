@@ -17,7 +17,7 @@ import java.util.Optional;
  * The Console API response.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class ConsoleResponse {
 

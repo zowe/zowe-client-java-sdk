@@ -32,7 +32,7 @@ import java.util.*;
  * ZosDsnList class that provides Dataset member list function
  *
  * @author Nikunj Goyal
- * @version 1.0
+ * @version 2.0
  */
 public class ZosDsnList {
 

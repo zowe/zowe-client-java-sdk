@@ -16,7 +16,7 @@ import java.util.OptionalLong;
  * Step info on a job interface
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class JobStepData {
 
