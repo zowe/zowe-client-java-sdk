@@ -22,7 +22,7 @@ import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.unirest.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.utility.unirest.UniRestUtils;
-import zowe.client.sdk.zostso.SendTso;
+import zowe.client.sdk.zostso.lifecycle.SendTso;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StartTsoParams;
 import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
@@ -136,7 +136,7 @@ public class StartTso {
 
         CollectedResponses collectedResponses = null;
         if (zosmfResponse.getServletKey().isPresent()) {
-            final zowe.client.sdk.zostso.SendTso sendTso = new SendTso(connection);
+            final SendTso sendTso = new SendTso(connection);
             collectedResponses = sendTso.getAllResponses(zosmfResponse);
         }
 
