@@ -96,6 +96,18 @@ public class ZosDsnList {
         return request.executeRequest();
     }
 
+    /**
+     * Retrieve list result of either members or datasets from rest api response.
+     * Use null of either datasetLst or memberLst to denote the list object being processed.
+     *
+     * @param response   response object containing rest api result
+     * @param datasetLst dataset arraylist object container
+     * @param memberLst  member arraylist object container
+     * @param <T>        DataSet or Member object
+     * @return one of the container filled with either member or datasets
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
     private <T> List<T> getResult(Response response, List<T> datasetLst, List<T> memberLst) throws Exception {
         if (response.getStatusCode().isEmpty()) {
             LOG.debug("ZosDsnList::getResult - no status code returned");
