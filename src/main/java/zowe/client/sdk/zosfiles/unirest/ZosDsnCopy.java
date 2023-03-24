@@ -7,25 +7,24 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles;
+package zowe.client.sdk.zosfiles.unirest;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.JsonPutRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
-import zowe.client.sdk.utility.DataSetUtils;
+import zowe.client.sdk.rest.unirest.JsonPutRequest;
+import zowe.client.sdk.rest.unirest.Response;
+import zowe.client.sdk.rest.unirest.ZoweRequest;
+import zowe.client.sdk.rest.unirest.ZoweRequestFactory;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.unirest.UniRestUtils;
+import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.input.CopyParams;
-import zowe.client.sdk.zosfiles.types.OperationType;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +33,7 @@ import java.util.Map;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class ZosDsnCopy {
 
@@ -168,7 +167,6 @@ public class ZosDsnCopy {
         }
 
         final String toDataSet = params.getToDataSet().get();
-        final String fromDataSet = params.getFromDataSet().get();
 
         url += EncodeUtils.encodeURIComponent(toDataSet);
 
@@ -178,13 +176,12 @@ public class ZosDsnCopy {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
-        request.setRequest(url, body);
-        final Response response = request.executeRequest();
+        request.setUrl(url);
+        request.setBody(body);
 
-        try {
-            RestUtils.checkHttpErrors(response);
-        } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), Arrays.asList(toDataSet, fromDataSet), OperationType.COPY);
+        final Response response = UniRestUtils.getResponse(request);
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
         }
 
         return response;

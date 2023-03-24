@@ -30,7 +30,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
  * This class is used to list the systems defined to z/OSMF through the z/OSMF APIs.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 1.0
  */
 public class ListDefinedSystems {
 
@@ -84,13 +84,7 @@ public class ListDefinedSystems {
         }
         request.setUrl(url);
 
-        Response response;
-        try {
-            response = UniRestUtils.getResponse(request);
-        } catch (Exception e) {
-            throw e;
-        }
-
+        final Response response = UniRestUtils.getResponse(request);
         if (RestUtils.isHttpError(response.getStatusCode().get())) {
             throw new Exception(response.getResponsePhrase().get().toString());
         }

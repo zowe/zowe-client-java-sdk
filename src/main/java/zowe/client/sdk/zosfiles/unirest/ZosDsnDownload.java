@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.ZosmfHeaders;
 import zowe.client.sdk.rest.type.ZoweRequestType;
-import zowe.client.sdk.rest.unirest.Response;
 import zowe.client.sdk.rest.unirest.StreamGetRequest;
 import zowe.client.sdk.rest.unirest.ZoweRequest;
 import zowe.client.sdk.rest.unirest.ZoweRequestFactory;
@@ -115,14 +114,7 @@ public class ZosDsnDownload {
         request.setUrl(url);
         request.setHeaders(headers);
 
-        Response response;
-        try {
-            response = UniRestUtils.getResponse(request);
-        } catch (Exception e) {
-            throw e;
-        }
-
-        return (InputStream) response.getResponsePhrase().get();
+        return (InputStream) UniRestUtils.getResponse(request).getResponsePhrase().get();
     }
 
 }

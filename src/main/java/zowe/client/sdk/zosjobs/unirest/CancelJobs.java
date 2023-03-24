@@ -7,20 +7,22 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs;
+package zowe.client.sdk.zosjobs.unirest;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.JsonPutRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.unirest.JsonPutRequest;
+import zowe.client.sdk.rest.unirest.Response;
+import zowe.client.sdk.rest.unirest.ZoweRequest;
+import zowe.client.sdk.rest.unirest.ZoweRequestFactory;
 import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.unirest.UniRestUtils;
+import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.ModifyJobParams;
 import zowe.client.sdk.zosjobs.response.Job;
 
@@ -31,7 +33,8 @@ import java.util.Map;
  * CancelJobs class to handle Job cancel
  *
  * @author Nikunj Goyal
- * @version 1.0
+ * @author Frank Giordano
+ * @version 2.0
  */
 public class CancelJobs {
 
@@ -147,13 +150,12 @@ public class CancelJobs {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
-        request.setRequest(url, jsonRequestBody.toString());
+        request.setUrl(url);
+        request.setBody(jsonRequestBody.toString());
 
-        final Response response = request.executeRequest();
-        try {
-            RestUtils.checkHttpErrors(response);
-        } catch (Exception e) {
-            JobUtils.throwHttpException(params, e);
+        final Response response = UniRestUtils.getResponse(request);
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
         }
 
         // if synchronously response should contain job document that was cancelled and http return code

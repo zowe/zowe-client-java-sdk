@@ -113,13 +113,7 @@ public class GetZosLog {
         }
         request.setUrl(url.toString());
 
-        Response response;
-        try {
-            response = UniRestUtils.getResponse(request);
-        } catch (Exception e) {
-            throw e;
-        }
-
+        final Response response = UniRestUtils.getResponse(request);
         if (RestUtils.isHttpError(response.getStatusCode().get())) {
             throw new Exception(response.getResponsePhrase().get().toString());
         }

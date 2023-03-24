@@ -7,23 +7,23 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles;
+package zowe.client.sdk.zosfiles.unirest;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
-import zowe.client.sdk.utility.DataSetUtils;
+import zowe.client.sdk.rest.unirest.*;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.unirest.UniRestUtils;
+import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.input.CreateParams;
 import zowe.client.sdk.zosfiles.input.ListParams;
 import zowe.client.sdk.zosfiles.response.Dataset;
 import zowe.client.sdk.zosfiles.types.AttributeType;
-import zowe.client.sdk.zosfiles.types.OperationType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +35,7 @@ import java.util.Optional;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class ZosDsn {
 
@@ -123,13 +123,12 @@ public class ZosDsn {
         if (request == null || !(request instanceof JsonPostRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
         }
-        request.setRequest(url, body);
-        final Response response = request.executeRequest();
+        request.setUrl(url);
+        request.setBody(body);
 
-        try {
-            RestUtils.checkHttpErrors(response);
-        } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.CREATE);
+        final Response response = UniRestUtils.getResponse(request);
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
         }
 
         return response;
@@ -172,13 +171,11 @@ public class ZosDsn {
         if (request == null || !(request instanceof JsonDeleteRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
-        request.setRequest(url);
-        final Response response = request.executeRequest();
+        request.setUrl(url);
 
-        try {
-            RestUtils.checkHttpErrors(response);
-        } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.DELETE);
+        final Response response = UniRestUtils.getResponse(request);
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
         }
 
         return response;
@@ -260,13 +257,12 @@ public class ZosDsn {
         if (request == null || !(request instanceof TextPutRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
         }
-        request.setRequest(url, content);
-        final Response response = request.executeRequest();
+        request.setUrl(url);
+        request.setBody(content);
 
-        try {
-            RestUtils.checkHttpErrors(response);
-        } catch (Exception e) {
-            DataSetUtils.checkHttpErrors(e.getMessage(), List.of(dataSetName), OperationType.WRITE);
+        final Response response = UniRestUtils.getResponse(request);
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
         }
 
         return response;

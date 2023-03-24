@@ -32,6 +32,7 @@ import java.util.*;
  * ZosDsnList class that provides Dataset member list function
  *
  * @author Nikunj Goyal
+ * @author Frank Giordano
  * @version 1.0
  */
 public class ZosDsnList {
