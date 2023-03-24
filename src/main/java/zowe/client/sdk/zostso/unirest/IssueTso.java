@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso;
+package zowe.client.sdk.zostso.unirest;
 
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -17,6 +17,9 @@ import zowe.client.sdk.zostso.response.IssueResponse;
 import zowe.client.sdk.zostso.response.SendResponse;
 import zowe.client.sdk.zostso.response.StartStopResponse;
 import zowe.client.sdk.zostso.response.StartStopResponses;
+import zowe.client.sdk.zostso.unirest.lifecycle.SendTso;
+import zowe.client.sdk.zostso.unirest.lifecycle.StartTso;
+import zowe.client.sdk.zostso.unirest.lifecycle.StopTso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,7 @@ import java.util.List;
  * Class to handle issue command to TSO
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class IssueTso {
 

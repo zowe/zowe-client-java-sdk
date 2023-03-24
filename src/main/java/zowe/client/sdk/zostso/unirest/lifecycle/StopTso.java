@@ -7,20 +7,22 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso;
+package zowe.client.sdk.zostso.unirest.lifecycle;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.JsonDeleteRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
+import zowe.client.sdk.rest.unirest.JsonDeleteRequest;
+import zowe.client.sdk.rest.unirest.ZoweRequest;
+import zowe.client.sdk.rest.unirest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.unirest.Response;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.unirest.UniRestUtils;
+import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StopTsoParams;
 import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
 import zowe.client.sdk.zostso.response.StartStopResponse;
@@ -29,7 +31,7 @@ import zowe.client.sdk.zostso.response.StartStopResponse;
  * Stop active TSO address space using servlet key
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class StopTso {
 
@@ -105,20 +107,14 @@ public class StopTso {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
-        request.setRequest(url);
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return new ZosmfTsoResponse.Builder().build();
+        request.setUrl(url);
+
+        final Response response = UniRestUtils.getResponse(request);
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
         }
 
-        try {
-            RestUtils.checkHttpErrors(response);
-        } catch (Exception e) {
-            final String errorMsg = e.getMessage();
-            throw new Exception("Failed to stop active TSO address space. " + errorMsg);
-        }
-        final JSONObject result = (JSONObject) response.getResponsePhrase().orElse(null);
-        return TsoUtils.parseJsonStopResponse(result);
+        return TsoUtils.parseJsonStopResponse((JSONObject) response.getResponsePhrase().get());
     }
 
 }
