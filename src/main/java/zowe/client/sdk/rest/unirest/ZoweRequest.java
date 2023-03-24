@@ -51,7 +51,7 @@ public abstract class ZoweRequest {
      * @author Frank Giordano
      */
     protected static Response getJsonResponse(HttpResponse<JsonNode> reply) {
-        if (reply.getBody().isArray() == true) {
+        if (reply.getBody().isArray()) {
             return new Response(reply.getBody().getArray(), reply.getStatus(), reply.getStatusText());
         }
         return new Response(reply.getBody().getObject(), reply.getStatus(), reply.getStatusText());
