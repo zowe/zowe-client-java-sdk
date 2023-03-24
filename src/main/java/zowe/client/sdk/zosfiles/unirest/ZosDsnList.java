@@ -177,7 +177,6 @@ public class ZosDsnList {
      * @throws Exception error processing request
      * @author Nikunj Goyal
      */
-    @SuppressWarnings("unchecked")
     public List<Dataset> listDsn(String dataSetName, ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
@@ -209,7 +208,6 @@ public class ZosDsnList {
      * @throws Exception error processing request
      * @author Nikunj Goyal
      */
-    @SuppressWarnings("unchecked")
     public List<Member> listDsnMembers(String dataSetName, ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
