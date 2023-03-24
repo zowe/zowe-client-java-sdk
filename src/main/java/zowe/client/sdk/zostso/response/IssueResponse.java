@@ -7,9 +7,9 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso;
+package zowe.client.sdk.zostso.response;
 
-import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
+import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * The TsoSend API response
+ * The TsoIssue API response
  *
  * @author Frank Giordano
  * @version 2.0

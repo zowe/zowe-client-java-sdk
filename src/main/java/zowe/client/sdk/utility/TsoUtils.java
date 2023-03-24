@@ -12,9 +12,9 @@ package zowe.client.sdk.utility;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.zostso.StartStopResponse;
+import zowe.client.sdk.zostso.response.StartStopResponse;
 import zowe.client.sdk.zostso.TsoConstants;
-import zowe.client.sdk.zostso.zosmf.*;
+import zowe.client.sdk.zostso.message.*;
 
 import java.util.ArrayList;
 import java.util.List;

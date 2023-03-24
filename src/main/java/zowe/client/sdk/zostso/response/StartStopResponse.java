@@ -7,9 +7,9 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso;
+package zowe.client.sdk.zostso.response;
 
-import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
+import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
 
 import java.util.Optional;
 

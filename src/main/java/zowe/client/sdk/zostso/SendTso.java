@@ -21,10 +21,12 @@ import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.input.SendTsoParams;
-import zowe.client.sdk.zostso.zosmf.TsoMessage;
-import zowe.client.sdk.zostso.zosmf.TsoMessages;
-import zowe.client.sdk.zostso.zosmf.TsoResponseMessage;
-import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
+import zowe.client.sdk.zostso.message.TsoMessage;
+import zowe.client.sdk.zostso.message.TsoMessages;
+import zowe.client.sdk.zostso.message.TsoResponseMessage;
+import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
+import zowe.client.sdk.zostso.response.CollectedResponses;
+import zowe.client.sdk.zostso.response.SendResponse;
 
 import java.util.ArrayList;
 import java.util.List;

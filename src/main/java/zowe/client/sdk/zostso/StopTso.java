@@ -22,7 +22,8 @@ import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.input.StopTsoParams;
-import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
+import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
+import zowe.client.sdk.zostso.response.StartStopResponse;
 
 /**
  * Stop active TSO address space using servlet key

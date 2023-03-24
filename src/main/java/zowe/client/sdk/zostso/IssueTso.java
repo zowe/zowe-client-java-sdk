@@ -12,7 +12,11 @@ package zowe.client.sdk.zostso;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.input.StartTsoParams;
-import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
+import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
+import zowe.client.sdk.zostso.response.IssueResponse;
+import zowe.client.sdk.zostso.response.SendResponse;
+import zowe.client.sdk.zostso.response.StartStopResponse;
+import zowe.client.sdk.zostso.response.StartStopResponses;
 
 import java.util.ArrayList;
 import java.util.List;

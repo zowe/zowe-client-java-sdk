@@ -7,11 +7,12 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso;
+package zowe.client.sdk.zostso.response;
 
-import zowe.client.sdk.zostso.zosmf.TsoMessages;
-import zowe.client.sdk.zostso.zosmf.ZosmfMessages;
-import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
+import zowe.client.sdk.zostso.TsoConstants;
+import zowe.client.sdk.zostso.message.TsoMessages;
+import zowe.client.sdk.zostso.message.ZosmfMessages;
+import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
 
 import java.util.List;
 import java.util.Optional;
