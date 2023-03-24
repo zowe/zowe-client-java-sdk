@@ -11,6 +11,7 @@ package zowe.client.sdk.zosconsole.unirest;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
@@ -74,6 +75,49 @@ public class IssueCommand {
     }
 
     /**
+     * Build ZosmfIssueParams object from provided parameters
+     *
+     * @param params parameters for issue command, see IssueParams object
+     * @return request body parameters, see ZosmfIssueParams object
+     * @author Frank Giordano
+     */
+    private ZosmfIssueParams buildZosmfConsoleApiParameters(IssueParams params) {
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkIllegalParameter(params.getCommand().isEmpty(), "command not specified");
+
+        final ZosmfIssueParams zosmfParams = new ZosmfIssueParams();
+        zosmfParams.setCmd(params.getCommand().get());
+
+        params.getSolicitedKeyword().ifPresent(zosmfParams::setSolKey);
+        params.getSysplexSystem().ifPresent(zosmfParams::setSystem);
+
+        return zosmfParams;
+    }
+
+    /**
+     * Issue an MVS console command done synchronously - meaning solicited (direct command responses) are gathered
+     * immediately after the command is issued. However, after (according to the z/OSMF REST API documentation)
+     * approximately 3 seconds the response will be returned.
+     *
+     * @param params console issue parameters, see IssueParams object
+     * @return command response on resolve, see ConsoleResponse object
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
+    public ConsoleResponse issue(IssueParams params) throws Exception {
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+
+        final String consoleName = params.getConsoleName().orElse(ConsoleConstants.RES_DEF_CN);
+        final ZosmfIssueParams commandParams = buildZosmfConsoleApiParameters(params);
+        final ConsoleResponse response = new ConsoleResponse();
+
+        final ZosmfIssueResponse resp = issueCommon(consoleName, commandParams);
+        ConsoleUtils.populate(resp, response, params.getProcessResponses().orElse(true));
+
+        return response;
+    }
+
+    /**
      * Issue an MVS console command, returns "raw" z/OSMF response
      *
      * @param consoleName   string name of the mvs console that is used to issue the command
@@ -109,7 +153,8 @@ public class IssueCommand {
             throw new Exception(response.getResponsePhrase().get().toString());
         }
 
-        return ConsoleUtils.parseJsonIssueCmdResponse((JSONObject) response.getResponsePhrase().get());
+        return ConsoleUtils.parseJsonIssueCmdResponse(
+                (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString()));
     }
 
     /**
@@ -127,29 +172,6 @@ public class IssueCommand {
     }
 
     /**
-     * Issue an MVS console command done synchronously - meaning solicited (direct command responses) are gathered
-     * immediately after the command is issued. However, after (according to the z/OSMF REST API documentation)
-     * approximately 3 seconds the response will be returned.
-     *
-     * @param params console issue parameters, see IssueParams object
-     * @return command response on resolve, see ConsoleResponse object
-     * @throws Exception processing error
-     * @author Frank Giordano
-     */
-    public ConsoleResponse issue(IssueParams params) throws Exception {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
-
-        final String consoleName = params.getConsoleName().orElse(ConsoleConstants.RES_DEF_CN);
-        final ZosmfIssueParams commandParams = buildZosmfConsoleApiParameters(params);
-        final ConsoleResponse response = new ConsoleResponse();
-
-        final ZosmfIssueResponse resp = issueCommon(consoleName, commandParams);
-        ConsoleUtils.populate(resp, response, params.getProcessResponses().orElse(true));
-
-        return response;
-    }
-
-    /**
      * Simple issue console command method. Does not accept parameters, so all defaults on the z/OSMF API are taken.
      *
      * @param theCommand string command to issue
@@ -161,26 +183,6 @@ public class IssueCommand {
         final IssueParams params = new IssueParams();
         params.setCommand(theCommand);
         return issue(params);
-    }
-
-    /**
-     * Build ZosmfIssueParams object from provided parameters
-     *
-     * @param params parameters for issue command, see IssueParams object
-     * @return request body parameters, see ZosmfIssueParams object
-     * @author Frank Giordano
-     */
-    private ZosmfIssueParams buildZosmfConsoleApiParameters(IssueParams params) {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getCommand().isEmpty(), "command not specified");
-
-        final ZosmfIssueParams zosmfParams = new ZosmfIssueParams();
-        zosmfParams.setCmd(params.getCommand().get());
-
-        params.getSolicitedKeyword().ifPresent(zosmfParams::setSolKey);
-        params.getSysplexSystem().ifPresent(zosmfParams::setSystem);
-
-        return zosmfParams;
     }
 
 }
