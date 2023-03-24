@@ -13,7 +13,6 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.ZosmfHeaders;
-import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 
 import java.util.HashMap;
@@ -86,11 +85,7 @@ public abstract class ZoweRequest {
      *
      * @author Frank Giordano
      */
-    protected void setStandardHeaders() {
-        headers.put("Authorization", "Basic " + EncodeUtils.getAuthEncoding(connection));
-        headers.put("Content-Type", "application/json");
-        headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
-    }
+    public abstract void setStandardHeaders();
 
     /**
      * Set the url needed for the http request

@@ -11,7 +11,9 @@ package zowe.client.sdk.rest.unirest;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
+import org.apache.http.HttpHeaders;
 import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.utility.EncodeUtils;
 
 import java.io.InputStream;
 
@@ -52,6 +54,18 @@ public class StreamGetRequest extends ZoweRequest {
     @Override
     public void setBody(String body) throws Exception {
         throw new Exception("setting body for this request is invalid");
+    }
+
+    /**
+     * Set the standard headers for the http request
+     *
+     * @author Frank Giordano
+     */
+    @Override
+    public void setStandardHeaders() {
+        headers.put("Authorization", "Basic " + EncodeUtils.getAuthEncoding(connection));
+        headers.put("Content-Type", "application/json");
+        headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
 
 }
