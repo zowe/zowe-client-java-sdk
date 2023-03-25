@@ -7,20 +7,22 @@ Contains APIs to interact with files and data sets on z/OS (using z/OSMF files R
 **Create a dataset**
 
 ````java
-import core.ZOSConnection;
-import examples.ZosConnection;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import rest.Response;
-import zosfiles.ZosDsn;
-import zosfiles.input.CreateParams;
+package zowe.client.sdk.examples.zosfiles;
+
+import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.zosfiles.ZosDsn;
+import zowe.client.sdk.zosfiles.input.CreateParams;
 
 /**
  * Class example to showcase CreateDataset functionality.
+ *
+ * @author Leonid Baranov
+ * @author Frank Giordano
+ * @version 2.0
  */
-public class CreateDataset extends ZosConnection {
-
-    private static final Logger LOG = LogManager.getLogger(CreateDataset.class);
+public class CreateDatasetTst extends TstZosConnection {
 
     private static ZOSConnection connection;
 
@@ -30,11 +32,28 @@ public class CreateDataset extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
+     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
-        String dataSetName = "XXX";
+        String dataSetName = "xxx";
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-        createDataSet(dataSetName);
+        createPartitionDataSet(dataSetName);
+        dataSetName = "xxx";
+        createSequentialDataSet(dataSetName);
+
+    }
+
+    /**
+     * Create a new sequential data set
+     *
+     * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
+     * @throws Exception error processing request
+     * @author Frank Giordano
+     */
+    public static void createSequentialDataSet(String dataSetName) throws Exception {
+        ZosDsn zosDsn = new ZosDsn(connection);
+        Response response = zosDsn.createDsn(dataSetName, sequential());
+        System.out.println("http response code " + response.getStatusCode());
     }
 
     /**
@@ -42,11 +61,12 @@ public class CreateDataset extends ZosConnection {
      *
      * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
      * @throws Exception error processing request
+     * @author Frank Giordano
      */
-    public static void createDataSet(String dataSetName) throws Exception {
+    public static void createPartitionDataSet(String dataSetName) throws Exception {
         ZosDsn zosDsn = new ZosDsn(connection);
         Response response = zosDsn.createDsn(dataSetName, partitioned());
-        LOG.info("http response code " + response.getStatusCode());
+        System.out.println("http response code " + response.getStatusCode());
     }
 
     /**
@@ -139,25 +159,28 @@ public class CreateDataset extends ZosConnection {
     }
 
 }
+
 `````
 
 **Copy a data set**
 
 ````java
-import core.ZOSConnection;
-import examples.ZosConnection;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import rest.Response;
-import zosfiles.ZosDsnCopy;
-import zosfiles.input.CopyParams;
+package zowe.client.sdk.examples.zosfiles;
+
+import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.zosfiles.ZosDsnCopy;
+import zowe.client.sdk.zosfiles.input.CopyParams;
 
 /**
  * Class example to showcase CopyDataset functionality.
+ *
+ * @author Leonid Baranov
+ * @author Frank Giordano
+ * @version 2.0
  */
-public class CopyDataset extends ZosConnection {
-
-    private static final Logger LOG = LogManager.getLogger(CopyDataset.class);
+public class CopyDatasetTst extends TstZosConnection {
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -165,16 +188,16 @@ public class CopyDataset extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error processing examples
+     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
-        String fromDataSetName = "XXX";
-        String toDataSetName = "XXX";
-
+        String fromDataSetName = "xxx";
+        String toDataSetName = "xxx";
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         copyDataset(connection, fromDataSetName, toDataSetName);
         copyDatasetByCopyParams(connection, fromDataSetName, toDataSetName);
-        fromDataSetName = "XXX";  // specify a partition dataset only no member
-        toDataSetName = "XXX"; // specify a partition dataset only no member
+        fromDataSetName = "xxx";  // specify a partition dataset only no member
+        toDataSetName = "xxx"; // specify a partition dataset only no member
         copyFullPartitionDatasetByCopyParams(connection, fromDataSetName, toDataSetName);
     }
 
@@ -197,12 +220,13 @@ public class CopyDataset extends ZosConnection {
      * @param fromDataSetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
      * @param toDataSetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
      * @throws Exception error processing copy request
+     * @author Frank Giordano
      */
     public static void copyDataset(ZOSConnection connection, String fromDataSetName, String toDataSetName)
             throws Exception {
         ZosDsnCopy zosDsnCopy = new ZosDsnCopy(connection);
         Response response = zosDsnCopy.copy(fromDataSetName, toDataSetName, true, false);
-        LOG.info("http response code " + response.getStatusCode());
+        System.out.println("http response code " + response.getStatusCode());
     }
 
     /**
@@ -221,15 +245,16 @@ public class CopyDataset extends ZosConnection {
      * @param fromDataSetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
      * @param toDataSetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
      * @throws Exception error processing copy request
+     * @author Frank Giordano
      */
-    public static void copyDatasetByCopyParams(ZOSConnection connection, String fromDataSetName, String toDataSetName)
-            throws Exception {
+    public static void copyDatasetByCopyParams(zowe.client.sdk.core.ZOSConnection connection, String fromDataSetName,
+                                               String toDataSetName) throws Exception {
         ZosDsnCopy zosDsnCopy = new ZosDsnCopy(connection);
         // 'replace' builder variable here will be true by default if not specified in builder.
         // 'copyAllMembers' builder variable here will be false by default
         CopyParams copyParams = new CopyParams.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).build();
         Response response = zosDsnCopy.copy(copyParams);
-        LOG.info("http response code " + response.getStatusCode());
+        System.out.println("http response code " + response.getStatusCode());
     }
 
     /**
@@ -244,6 +269,7 @@ public class CopyDataset extends ZosConnection {
      * @param fromDataSetName source dataset (e.g. 'SOURCE.PARTITION.DATASET')
      * @param toDataSetName   destination dataset (e.g. 'TARGET.PARTITION.DATASET')
      * @throws Exception error processing copy request
+     * @author Frank Giordano
      */
     public static void copyFullPartitionDatasetByCopyParams(ZOSConnection connection, String fromDataSetName,
                                                             String toDataSetName) throws Exception {
@@ -252,28 +278,31 @@ public class CopyDataset extends ZosConnection {
         CopyParams copyParams = new CopyParams.Builder()
                 .fromDataSet(fromDataSetName).toDataSet(toDataSetName).copyAllMembers(true).build();
         Response response = zosDsnCopy.copy(copyParams);
-        LOG.info("http response code " + response.getStatusCode());
+        System.out.println("http response code " + response.getStatusCode());
     }
 
 }
+
 `````
 
 **Delete a data set**
 
 ````java
-import core.ZOSConnection;
-import examples.ZosConnection;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import rest.Response;
-import zosfiles.ZosDsn;
+package zowe.client.sdk.examples.zosfiles;
+
+import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.zosfiles.ZosDsn;
 
 /**
  * Class example to showcase DeleteDataset functionality.
+ *
+ * @author Leonid Baranov
+ * @author Frank Giordano
+ * @version 2.0
  */
-public class DeleteDataset extends ZosConnection {
-
-    private static final Logger LOG = LogManager.getLogger(DeleteDataset.class);
+public class DeleteDatasetTst extends TstZosConnection {
 
     private static ZOSConnection connection;
 
@@ -283,11 +312,11 @@ public class DeleteDataset extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
+     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
-        String dataSetName = "XXX";
-        String member = "XXX";
-
+        String dataSetName = "xxx";
+        String member = "xxx";
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         deleteDataSet(dataSetName);
         deleteMember(dataSetName, member);
@@ -296,48 +325,51 @@ public class DeleteDataset extends ZosConnection {
     /**
      * @param dataSetName name of a dataset to delete (e.g. 'DATASET.LIB')
      * @throws Exception error processing request
+     * @author Frank Giordano
      */
     public static void deleteDataSet(String dataSetName) throws Exception {
         ZosDsn zosDsn = new ZosDsn(connection);
         Response response = zosDsn.deleteDsn(dataSetName);
-        LOG.info("http response code " + response.getStatusCode());
+        System.out.println("http response code " + response.getStatusCode());
     }
 
     /**
      * @param dataSetName name of a dataset where member should be located (e.g. 'DATASET.LIB')
      * @param member      name of member to delete
      * @throws Exception error processing request
+     * @author Frank Giordano
      */
     public static void deleteMember(String dataSetName, String member) throws Exception {
         ZosDsn zosDsn = new ZosDsn(connection);
         Response response = zosDsn.deleteDsn(dataSetName, member);
-        LOG.info("http response code " + response.getStatusCode());
+        System.out.println("http response code " + response.getStatusCode());
     }
 
 }
+
 `````
 
 **Download a data set**
 
 ````java
-import core.ZOSConnection;
-import examples.ZosConnection;
+package zowe.client.sdk.examples.zosfiles;
+
 import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import utility.UtilIO;
-import zosfiles.ZosDsnDownload;
-import zosfiles.input.DownloadParams;
+import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.zosfiles.ZosDsnDownload;
+import zowe.client.sdk.zosfiles.input.DownloadParams;
 
 import java.io.InputStream;
 import java.io.StringWriter;
 
 /**
  * Class example to showcase DownloadDataset functionality.
+ *
+ * @author Leonid Baranov
+ * @version 2.0
  */
-public class DownloadDataset extends ZosConnection {
-
-    private static final Logger LOG = LogManager.getLogger(DownloadDataset.class);
+public class DownloadDatasetTst extends TstZosConnection {
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -345,13 +377,13 @@ public class DownloadDataset extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
+     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
-        String datasetMember = "XXX";
-
+        String datasetMember = "xxx";
         DownloadParams params = new DownloadParams.Builder().build();
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-        DownloadDataset.downloadDsnMember(connection, datasetMember, params);
+        DownloadDatasetTst.downloadDsnMember(connection, datasetMember, params);
     }
 
     /**
@@ -361,14 +393,15 @@ public class DownloadDataset extends ZosConnection {
      * @param name       data set name
      * @param params     download parameters object
      * @throws Exception error processing request
+     * @author Leonid Baranov
      */
-    public static void downloadDsnMember(ZOSConnection connection, String name, DownloadParams params) throws Exception {
+    public static void downloadDsnMember(zowe.client.sdk.core.ZOSConnection connection, String name, DownloadParams params) throws Exception {
         try (InputStream inputStream = new ZosDsnDownload(connection).downloadDsn(name, params)) {
             if (inputStream != null) {
                 StringWriter writer = new StringWriter();
-                IOUtils.copy(inputStream, writer, UtilIO.UTF8);
+                IOUtils.copy(inputStream, writer, "UTF8");
                 String content = writer.toString();
-                LOG.info(content);
+                System.out.println(content);
             }
         }
     }
@@ -379,23 +412,26 @@ public class DownloadDataset extends ZosConnection {
 **List a data set**
 
 ````java
-import core.ZOSConnection;
-import examples.ZosConnection;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import utility.UtilDataset;
-import zosfiles.ZosDsnList;
-import zosfiles.input.ListParams;
-import zosfiles.response.Dataset;
+package zowe.client.sdk.examples.zosfiles;
+
+import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.zosfiles.ZosDsnList;
+import zowe.client.sdk.zosfiles.input.ListParams;
+import zowe.client.sdk.zosfiles.response.Dataset;
+import zowe.client.sdk.zosfiles.response.Member;
+import zowe.client.sdk.zosfiles.types.AttributeType;
 
 import java.util.List;
 
 /**
  * Class example to showcase ListDatasets functionality.
+ *
+ * @author Leonid Baranov
+ * @author Frank Giordano
+ * @version 2.0
  */
-public class ListDatasets extends ZosConnection {
-
-    private static final Logger LOG = LogManager.getLogger(ListDatasets.class);
+public class ListDatasetsTst extends TstZosConnection {
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -403,16 +439,31 @@ public class ListDatasets extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error processing request
+     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
-        String dataSetMask = "XXX";
-        String dataSetName = "XXX";
-
+        String dataSetMask = "xxx";
+        String dataSetName = "xxx";
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        ListDatasetsTst.listDsn(connection, dataSetMask);
+        ListDatasetsTst.listDsnVol(connection, dataSetMask);
+        ListDatasetsTst.listMembersWithAllAttributes(connection, dataSetName);
+        ListDatasetsTst.listMembers(connection, dataSetName);
+    }
 
-        ListDatasets.listDsn(connection, dataSetMask);
-        ListDatasets.listDsnVol(connection, dataSetMask);
-        ListDatasets.listMembers(connection, dataSetName);
+    /**
+     * List out all members and its attribute values of the given data set
+     *
+     * @param connection  ZOSConnection object
+     * @param dataSetName data set name
+     * @throws Exception error processing request
+     * @author Leonid Baranov
+     */
+    public static void listMembersWithAllAttributes(ZOSConnection connection, String dataSetName) throws Exception {
+        ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
+        ZosDsnList zosDsnList = new ZosDsnList(connection);
+        List<Member> datasets = zosDsnList.listDsnMembers(dataSetName, params);
+        datasets.forEach(m -> System.out.println(m.toString()));
     }
 
     /**
@@ -421,12 +472,13 @@ public class ListDatasets extends ZosConnection {
      * @param connection  ZOSConnection object
      * @param dataSetName data set name
      * @throws Exception error processing request
+     * @author Leonid Baranov
      */
     public static void listMembers(ZOSConnection connection, String dataSetName) throws Exception {
-        ListParams params = new ListParams.Builder().build();
+        ListParams params = new ListParams.Builder().attribute(AttributeType.MEMBER).build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
-        List<String> datasets = zosDsnList.listDsnMembers(dataSetName, params);
-        datasets.forEach(LOG::info);
+        List<Member> datasets = zosDsnList.listDsnMembers(dataSetName, params);
+        datasets.forEach(m -> System.out.println(m.toString()));
     }
 
     /**
@@ -435,12 +487,13 @@ public class ListDatasets extends ZosConnection {
      * @param connection  ZOSConnection object
      * @param dataSetName data set name
      * @throws Exception error processing request
+     * @author Leonid Baranov
      */
     public static void listDsn(ZOSConnection connection, String dataSetName) throws Exception {
-        ListParams params = new ListParams.Builder().attribute(UtilDataset.Attribute.BASE).build();
+        ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
         List<Dataset> datasets = zosDsnList.listDsn(dataSetName, params);
-        datasets.forEach(LOG::info);
+        datasets.forEach(i -> System.out.println(i));
     }
 
     /**
@@ -449,12 +502,13 @@ public class ListDatasets extends ZosConnection {
      * @param connection  ZOSConnection object
      * @param dataSetName data set name
      * @throws Exception error processing request
+     * @author Frank Giordano
      */
     public static void listDsnVol(ZOSConnection connection, String dataSetName) throws Exception {
-        ListParams params = new ListParams.Builder().attribute(UtilDataset.Attribute.VOL).build();
+        ListParams params = new ListParams.Builder().attribute(AttributeType.VOL).build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
         List<Dataset> datasets = zosDsnList.listDsn(dataSetName, params);
-        datasets.forEach(LOG::info);
+        datasets.forEach(i -> System.out.println(i));
     }
 
 }
@@ -463,19 +517,21 @@ public class ListDatasets extends ZosConnection {
 **Write to a data set**
 
 ````java
-import core.ZOSConnection;
-import examples.ZosConnection;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import rest.Response;
-import zosfiles.ZosDsn;
+package zowe.client.sdk.examples.zosfiles;
+
+import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.zosfiles.ZosDsn;
 
 /**
  * Class example to showcase WriteDataset functionality.
+ *
+ * @author Leonid Baranov
+ * @author Frank Giordano
+ * @version 2.0
  */
-public class WriteDataset extends ZosConnection {
-
-    private static final Logger LOG = LogManager.getLogger(WriteDataset.class);
+public class WriteDatasetTst extends TstZosConnection {
 
     private static ZOSConnection connection;
 
@@ -485,14 +541,14 @@ public class WriteDataset extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
+     * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
-        String dataSetName = "XXX";
-        String member = "XXX";
-
+        String dataSetName = "xxx";
+        String member = "xxx";
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
         var content = "NEW CONTENT\nTHE SECOND LINE UPDATED";
-        WriteDataset.writeToDsnMember(dataSetName, member, content);
+        WriteDatasetTst.writeToDsnMember(dataSetName, member, content);
     }
 
     /**
@@ -502,32 +558,35 @@ public class WriteDataset extends ZosConnection {
      * @param member      name of member to write
      * @param content     content for write
      * @throws Exception error processing request
+     * @author Frank Giordano
      */
     public static void writeToDsnMember(String dataSetName, String member, String content) throws Exception {
         ZosDsn zosDsn = new ZosDsn(connection);
         Response response = zosDsn.writeDsn(dataSetName, member, content);
-        LOG.info("http response code " + response.getStatusCode());
+        System.out.println("http response code " + response.getStatusCode());
     }
 
 }
+
 `````
 
 **List a data set info**
 
 ````java
-import core.ZOSConnection;
-import examples.ZosConnection;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import zosfiles.ZosDsn;
-import zosfiles.response.Dataset;
+package zowe.client.sdk.examples.zosfiles;
+
+import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.zosfiles.ZosDsn;
+import zowe.client.sdk.zosfiles.response.Dataset;
 
 /**
  * Class example to showcase ZosDsn getDataSetInfo functionality.
+ *
+ * @author Frank Giordano
+ * @version 2.0
  */
-public class DataSetInfo extends ZosConnection {
-
-    private static final Logger LOG = LogManager.getLogger(DataSetInfo.class);
+public class DataSetInfoTst extends TstZosConnection {
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -535,15 +594,15 @@ public class DataSetInfo extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error processing request
+     * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        String dataSetName = "XXX";
-
+        String dataSetName = "xxx";
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-        LOG.info(DataSetInfo.getDataSetInfo(connection, dataSetName));
+        System.out.println(DataSetInfoTst.getDataSetInfo(connection, dataSetName));
     }
 
-    private static Dataset getDataSetInfo(ZOSConnection connection, String dataSetName) throws Exception {
+    private static Dataset getDataSetInfo(zowe.client.sdk.core.ZOSConnection connection, String dataSetName) throws Exception {
         ZosDsn zosDsn = new ZosDsn(connection);
         return zosDsn.getDataSetInfo(dataSetName);
     }
@@ -552,18 +611,37 @@ public class DataSetInfo extends ZosConnection {
 `````
 
 ````java
-package examples;
+package zowe.client.sdk.examples;
+
+import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.teamconfig.TeamConfig;
+import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
+import zowe.client.sdk.teamconfig.model.ProfileDao;
+import zowe.client.sdk.teamconfig.service.KeyTarService;
+import zowe.client.sdk.teamconfig.service.TeamConfigService;
 
 /**
  * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
  * duplicating connection details in each example.
+ *
+ * @author Frank Giordano
+ * @version 2.0
  */
-public class ZosConnection {
+public class TstZosConnection {
 
-    public static final String hostName = "XXX";
-    public static final String zosmfPort = "XXX";
-    public static final String userName = "XXX";
-    public static final String password = "XXX";
+    // replace "xxx" with hard coded values to execute the examples in this project
+    public static final String hostName = "xxx";
+    public static final String zosmfPort = "xxx";
+    public static final String userName = "xxx";
+    public static final String password = "xxx";
+
+    // or use the following method to retrieve Zowe OS credential store for your
+    // secure Zowe V2 credentials you entered when you initially set up Zowe Global Team Configuration.
+    public static ZOSConnection getSecureZosConnection() throws Exception {
+        TeamConfig teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
+        ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
+        return (new ZOSConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+    }
 
 }
 `````

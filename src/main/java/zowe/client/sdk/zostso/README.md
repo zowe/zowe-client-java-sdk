@@ -5,12 +5,12 @@ Contains APIs to interact with TSO on z/OS (using z/OSMF TSO REST endpoints).
 ## API Examples
 
 ````java
-import core.ZOSConnection;
-import examples.ZosConnection;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import zostso.IssueResponse;
-import zostso.IssueTso;
+package zowe.client.sdk.examples.zostso;
+
+import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.zostso.IssueResponse;
+import zowe.client.sdk.zostso.IssueTso;
 
 import java.util.Arrays;
 
@@ -20,9 +20,7 @@ import java.util.Arrays;
  * @author Frank Giordano
  * @version 1.0
  */
-public class IssueTsoCommand extends ZosConnection {
-
-    private static final Logger LOG = LogManager.getLogger(IssueTsoCommand.class);
+public class IssueTsoCommandTst extends TstZosConnection {
 
     private static ZOSConnection connection;
 
@@ -34,13 +32,13 @@ public class IssueTsoCommand extends ZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        String command = "XXX";
-        String accountNumber = "XXX";
+        String command = "xxx";
+        String accountNumber = "xxx";
 
         connection = new ZOSConnection(hostName, zosmfPort, userName, password);
-        IssueResponse response = IssueTsoCommand.tsoConsoleCmdByIssue(accountNumber, command);
+        IssueResponse response = IssueTsoCommandTst.tsoConsoleCmdByIssue(accountNumber, command);
         String[] results = response.getCommandResponses().orElse("").split("\n");
-        Arrays.stream(results).sequential().forEach(LOG::info);
+        Arrays.stream(results).sequential().forEach(System.out::println);
     }
 
     /**
@@ -61,21 +59,37 @@ public class IssueTsoCommand extends ZosConnection {
 `````
 
 ````java
-package examples;
+package zowe.client.sdk.examples;
+
+import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.teamconfig.TeamConfig;
+import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
+import zowe.client.sdk.teamconfig.model.ProfileDao;
+import zowe.client.sdk.teamconfig.service.KeyTarService;
+import zowe.client.sdk.teamconfig.service.TeamConfigService;
 
 /**
  * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
-public class ZosConnection {
+public class TstZosConnection {
 
-    public static final String hostName = "XXX";
-    public static final String zosmfPort = "XXX";
-    public static final String userName = "XXX";
-    public static final String password = "XXX";
+    // replace "xxx" with hard coded values to execute the examples in this project
+    public static final String hostName = "xxx";
+    public static final String zosmfPort = "xxx";
+    public static final String userName = "xxx";
+    public static final String password = "xxx";
+
+    // or use the following method to retrieve Zowe OS credential store for your
+    // secure Zowe V2 credentials you entered when you initially set up Zowe Global Team Configuration.
+    public static ZOSConnection getSecureZosConnection() throws Exception {
+        TeamConfig teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
+        ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
+        return (new ZOSConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+    }
 
 }
 `````

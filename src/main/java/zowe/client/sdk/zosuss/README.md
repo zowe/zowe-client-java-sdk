@@ -5,11 +5,16 @@ Contains Shell class to execute USS (Unix System Serves) commands via SSH connec
 ## Example
 
 ````java
+package zowe.client.sdk.examples.zosuss;
+
 import zowe.client.sdk.core.SSHConnection;
-import zowe.client.sdk.core.Shell;
+import zowe.client.sdk.zosuss.Shell;
 
 /**
  * Class example to showcase USS command(s) execution.
+ *
+ * @author Frank Giordano
+ * @version 2.0
  */
 public class USSCommand {
 
@@ -18,12 +23,15 @@ public class USSCommand {
      *
      * @param args for main not used
      * @throws Exception error in processing request
+     * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        SSHConnection conn = new SSHConnection("XXX", XXX, "XXX", "XXX");
+        int portNum = 0; // replace with valid value
+        SSHConnection conn = new SSHConnection("xxx", portNum, "xxx", "xxx");
         Shell shell = new Shell(conn);
-        // 10000 is the timeout value in milliseconds 
-        System.out.println(shell.executeSshCmd("mkdir test;cd test;ls", 10000));
+        // 10000 is the timeout value in milliseconds
+        System.out.println(shell.executeSshCmd("mkdir test;cd test;touch frank;ls", 10000));
+        // value "frank" should display
     }
 
 }
