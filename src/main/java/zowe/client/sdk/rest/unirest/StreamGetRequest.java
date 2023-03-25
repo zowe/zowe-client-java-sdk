@@ -11,7 +11,6 @@ package zowe.client.sdk.rest.unirest;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
-import org.apache.http.HttpHeaders;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.utility.EncodeUtils;
 
