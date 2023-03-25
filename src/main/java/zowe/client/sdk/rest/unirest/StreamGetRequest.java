@@ -42,6 +42,9 @@ public class StreamGetRequest extends ZoweRequest {
     @Override
     public Response executeRequest() throws Exception {
         HttpResponse<InputStream> reply = Unirest.get(url).headers(headers).asBinary();
+        if (reply.getStatusText().contains("No Content")) {
+            return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
+        }
         return new Response(reply.getBody(), reply.getStatus(), reply.getStatusText());
     }
 

@@ -42,6 +42,9 @@ public class JsonGetRequest extends ZoweRequest {
     @Override
     public Response executeRequest() throws Exception {
         HttpResponse<JsonNode> reply = Unirest.get(url).headers(headers).asJson();
+        if (reply.getStatusText().contains("No Content")) {
+            return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
+        }
         return getJsonResponse(reply);
     }
 
