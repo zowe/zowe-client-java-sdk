@@ -10,6 +10,7 @@
 package zowe.client.sdk.zostso.unirest.lifecycle;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
@@ -114,7 +115,8 @@ public class StopTso {
             throw new Exception(response.getResponsePhrase().get().toString());
         }
 
-        return TsoUtils.parseJsonStopResponse((JSONObject) response.getResponsePhrase().get());
+        return TsoUtils.parseJsonStopResponse(
+                (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString()));
     }
 
 }
