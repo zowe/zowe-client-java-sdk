@@ -9,14 +9,16 @@ Copyright Contributors to the Zowe Project.
 [![Maven Central](https://img.shields.io/maven-central/v/org.zowe.client.java.sdk/zowe-client-java-sdk.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22org.zowe.client.java.sdk%22%20AND%20a:%22zowe-client-java-sdk%22)
 [![javadoc](https://javadoc.io/badge2/org.zowe.client.java.sdk/zowe-client-java-sdk/javadoc.svg)](https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk)
 
-This project is a subproject of Zowe, focusing on modernizing mainframe experience. Zowe is a project hosted by the Open Mainframe Project, a Linux Foundation project.  
+This project is a subproject of Zowe, focusing on modernizing mainframe experience. Zowe is a project hosted by the Open Mainframe Project, a Linux Foundation project.
 
-This SDK lets you leverage the underlying z/OSMF REST APIs on a z/OS system to build client applications and scripts that interface with your z/OS instance seamlessly. 
+The Java SDK lets you leverage the underlying z/OSMF REST APIs on a z/OS system to build client applications and scripts that interface with your z/OS instance seamlessly.
 
-For instance, one API package provides the ability to upload and download z/OS data sets. You can leverage that package to rapidly build a client application that interacts with data sets.  
-   
-This Java SDK joins an existing community of language specific SDKs: Python, NodeJS, Swift, and Kotlin. This project provides the Java community compatible capabilities to rapidly build client applications to interface with your z/OS instance. You can introduce such client applications to modern CI/CD pipelines on any modern OS with a JVM instance. 
+For instance, one API package provides the ability to upload and download z/OS data sets. You can leverage that package to rapidly build a client application that interacts with data sets.
 
+The Java SDK joins an existing community of language-specific SDKs: Python, NodeJS, Swift, and Kotlin. It provides the Java community with similar capabilities based on the NodeJS SDK. It is in a mature state compared with NodeJS SDK functionality.
+
+This SDK differs from some others with the MonitorJobs package adding rebuilt functionality for automation tasks.  
+  
 Issues worked on documenting main feature set provided can be view within MVP issues [#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) and [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219).
   
 Class names providing prebuilt API services:
@@ -68,7 +70,7 @@ and the JSON error report document body response is:
 
     {"rc":4,"reason":13,"category":1,"message":"query parm dslevel= or volser= must be specified"} 
 
-At the moment the legacy rest processing will stay in place while unirest is given a test drive.
+At the moment the legacy rest processing will stay in place while Unirest is given a test drive.
 
 You are welcome to use unirest processing by importing the API classes existing within the unirest package in your project. 
   
