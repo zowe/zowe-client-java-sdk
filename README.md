@@ -50,7 +50,7 @@ If you have Zowe CLI on your system with Global Team Configuration initialized, 
   
 You can use this information to create a dynamic ZOSConnection object to perform zosmf authentication for the all the other packages. This avoids the need to hard code values.    
 
-## Unirest Package
+## Unirest Package - PREVIEW FEATURE
 
 Http functionality used by the SDK via Unirest for Java.
 
