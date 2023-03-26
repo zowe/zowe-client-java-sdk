@@ -8,17 +8,23 @@ endpoints).
 **Retrieve syslog from a start time and time range**
 
 ````java
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.examples.ZosConnection;
+package zowe.client.sdk.examples.zoslogs;
 
-import java.util.Arrays;
+import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.zoslogs.GetZosLog;
+import zowe.client.sdk.zoslogs.input.DirectionType;
+import zowe.client.sdk.zoslogs.input.HardCopyType;
+import zowe.client.sdk.zoslogs.input.ZosLogParams;
+import zowe.client.sdk.zoslogs.response.ZosLogReply;
 
 /**
- * Class example to showcase z/OS Syslog retrieval functionality.
+ * Class example to showcase GetZosLog functionality.
+ *
+ * @author Frank Giordano
+ * @version 2.0
  */
-public class ZosSysLog extends ZosConnection {
+public class ZosGetLogTst extends TstZosConnection {
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -26,6 +32,7 @@ public class ZosSysLog extends ZosConnection {
      *
      * @param args for main not used
      * @throws Exception error in processing request
+     * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
@@ -47,24 +54,45 @@ public class ZosSysLog extends ZosConnection {
                 .direction(DirectionType.BACKWARD)
                 .processResponses(true)
                 .build();
+        zosLogReply = getZosLog.getZosLog(zosLogParams);
         zosLogReply.getItemLst().forEach(i -> System.out.println(i.getTime().get() + " " + i.getMessage().get()));
     }
+
 }
 `````
 
 ````java
-package examples;
+package zowe.client.sdk.examples;
+
+import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.teamconfig.TeamConfig;
+import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
+import zowe.client.sdk.teamconfig.model.ProfileDao;
+import zowe.client.sdk.teamconfig.service.KeyTarService;
+import zowe.client.sdk.teamconfig.service.TeamConfigService;
 
 /**
  * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
  * duplicating connection details in each example.
+ *
+ * @author Frank Giordano
+ * @version 2.0
  */
-public class ZosConnection {
+public class TstZosConnection {
 
-    public static final String hostName = "XXX";
-    public static final String zosmfPort = "XXX";
-    public static final String userName = "XXX";
-    public static final String password = "XXX";
+    // replace "xxx" with hard coded values to execute the examples in this project
+    public static final String hostName = "xxx";
+    public static final String zosmfPort = "xxx";
+    public static final String userName = "xxx";
+    public static final String password = "xxx";
+
+    // or use the following method to retrieve Zowe OS credential store for your
+    // secure Zowe V2 credentials you entered when you initially set up Zowe Global Team Configuration.
+    public static ZOSConnection getSecureZosConnection() throws Exception {
+        TeamConfig teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
+        ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
+        return (new ZOSConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+    }
 
 }
 `````
