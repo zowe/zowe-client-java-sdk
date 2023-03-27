@@ -17,7 +17,7 @@ For instance, one API package provides the ability to upload and download z/OS d
 
 The Java SDK joins an existing community of language-specific SDKs: Python, NodeJS, Swift, and Kotlin. It provides the Java community with similar capabilities based on the NodeJS SDK. It is in a mature state compared with NodeJS SDK functionality.
 
-This SDK differs from some others with the MonitorJobs package adding rebuilt functionality for automation tasks.  
+This SDK differs from some others with the MonitorJobs package adding prebuilt functionality for automation tasks.  
   
 Issues worked on documenting main feature set provided can be view within MVP issues [#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) and [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219).
   
@@ -58,7 +58,7 @@ Http functionality used by the SDK via Unirest for Java.
 
 This package provides an alternative to the legacy org.apache.http library implemented and in place since the beginning.
 
-With legacy, http request failure does not retrieve the IBM z/OSMF's JSON error report document which provides information on why the REST API request failed. Legacy returns http code error with basic error status text and speculation description we provide on possible causes of the error.   
+With legacy, http request failure does not retrieve the IBM z/OSMF's JSON error report document which provides IBM error information on why the REST API request failed. Legacy returns http response status error code with basic error status text and custom SDK speculative description on possible causes of the error.   
 
 Unirest library provides the ability to retrieve JSON error document.
 
