@@ -11,6 +11,7 @@ package zowe.client.sdk.rest.unirest;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestException;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -42,7 +43,7 @@ public class TextPutRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     @Override
-    public Response executeRequest() throws Exception {
+    public Response executeRequest() throws UnirestException {
         ValidateUtils.checkNullParameter(body == null, "body is null");
         HttpResponse<String> reply = Unirest.put(url).headers(headers).body(body).asString();
         if (reply.getStatusText().contains("No Content")) {

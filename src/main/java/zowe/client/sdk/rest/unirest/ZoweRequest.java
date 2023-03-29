@@ -11,6 +11,7 @@ package zowe.client.sdk.rest.unirest;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
+import kong.unirest.UnirestException;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.ZosmfHeaders;
 import zowe.client.sdk.utility.RestUtils;
@@ -61,14 +62,14 @@ public abstract class ZoweRequest {
      *
      * @author Frank Giordano
      */
-    public abstract Response executeRequest() throws Exception;
+    public abstract Response executeRequest() throws UnirestException;
 
     /**
      * Set the body information for the http request
      *
      * @author Frank Giordano
      */
-    public abstract void setBody(String body) throws Exception;
+    public abstract void setBody(String body) throws UnirestException;
 
     /**
      * Set any headers needed for the http request
@@ -94,9 +95,9 @@ public abstract class ZoweRequest {
      * @throws Exception error setting the http request
      * @author Frank Giordano
      */
-    public void setUrl(String url) throws Exception {
+    public void setUrl(String url) throws IllegalArgumentException {
         if (RestUtils.isUrlNotValid(url)) {
-            throw new Exception("url is invalid");
+            throw new IllegalArgumentException("url is invalid");
         }
         this.url = url;
     }

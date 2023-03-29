@@ -11,6 +11,7 @@ package zowe.client.sdk.rest.unirest;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestException;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.utility.EncodeUtils;
 
@@ -38,7 +39,7 @@ public class StreamGetRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     @Override
-    public Response executeRequest() throws Exception {
+    public Response executeRequest() throws UnirestException {
         HttpResponse<byte[]> reply = Unirest.get(url).headers(headers).asBytes();
         if (reply.getStatusText().contains("No Content")) {
             return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
@@ -52,8 +53,8 @@ public class StreamGetRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     @Override
-    public void setBody(String body) throws Exception {
-        throw new Exception("setting body for this request is invalid");
+    public void setBody(String body) throws UnirestException {
+        throw new UnirestException("setting body for this request is invalid");
     }
 
     /**
