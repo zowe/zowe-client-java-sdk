@@ -78,6 +78,8 @@ public abstract class ZoweRequest {
      * @author Frank Giordano
      */
     public void setHeaders(Map<String, String> headers) {
+        this.headers.clear();
+        this.setStandardHeaders();
         this.headers.putAll(headers);
     }
 
