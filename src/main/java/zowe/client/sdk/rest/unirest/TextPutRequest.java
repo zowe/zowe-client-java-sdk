@@ -9,8 +9,8 @@
  */
 package zowe.client.sdk.rest.unirest;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;

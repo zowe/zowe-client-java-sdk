@@ -9,12 +9,10 @@
  */
 package zowe.client.sdk.rest.unirest;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.utility.EncodeUtils;
-
-import java.io.InputStream;
 
 /**
  * Http get stream operation with Json content type
@@ -41,7 +39,7 @@ public class StreamGetRequest extends ZoweRequest {
      */
     @Override
     public Response executeRequest() throws Exception {
-        HttpResponse<InputStream> reply = Unirest.get(url).headers(headers).asBinary();
+        HttpResponse<byte[]> reply = Unirest.get(url).headers(headers).asBytes();
         if (reply.getStatusText().contains("No Content")) {
             return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
         }

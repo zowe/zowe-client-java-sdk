@@ -9,8 +9,8 @@
  */
 package zowe.client.sdk.rest.unirest;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.ZosmfHeaders;
 import zowe.client.sdk.utility.RestUtils;
