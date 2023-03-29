@@ -24,6 +24,7 @@ import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.input.DownloadParams;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Map;
 
@@ -114,7 +115,7 @@ public class ZosDsnDownload {
         request.setUrl(url);
         request.setHeaders(headers);
 
-        return (InputStream) UniRestUtils.getResponse(request).getResponsePhrase().get();
+        return new ByteArrayInputStream((byte[]) UniRestUtils.getResponse(request).getResponsePhrase().get());
     }
 
 }
