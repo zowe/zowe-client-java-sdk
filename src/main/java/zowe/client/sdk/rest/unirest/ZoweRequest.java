@@ -78,7 +78,7 @@ public abstract class ZoweRequest {
      * @author Frank Giordano
      */
     public void setHeaders(Map<String, String> headers) {
-        this.headers.forEach(headers::put);
+        this.headers.putAll(headers);
     }
 
     /**
