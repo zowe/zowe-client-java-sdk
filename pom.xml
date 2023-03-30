@@ -6,7 +6,7 @@
 
     <groupId>org.zowe.client.java.sdk</groupId>
     <artifactId>zowe-client-java-sdk</artifactId>
-    <version>1.1.8</version>
+    <version>2.0.0-RC1</version>
     <build>
         <plugins>
             <plugin>
@@ -134,6 +134,11 @@
             <groupId>com.starxg</groupId>
             <artifactId>java-keytar</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.konghq</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>3.14.2</version>
         </dependency>
 
         <!-- Test -->

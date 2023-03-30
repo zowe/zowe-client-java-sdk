@@ -17,7 +17,7 @@ import zowe.client.sdk.zosconsole.zosmf.ZosmfIssueResponse;
  * Utility Class contains helper methods for console response commands and response processing
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public final class ConsoleUtils {
 

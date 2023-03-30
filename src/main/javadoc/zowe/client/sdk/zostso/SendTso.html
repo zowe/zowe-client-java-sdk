@@ -123,7 +123,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>zowe.client.sdk.zostso.SendTso</li>
+<li>zowe.client.sdk.zostso.lifecycle.SendTso</li>
 </ul>
 </li>
 </ul>
@@ -192,7 +192,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="CollectedResponses.html" title="class in zowe.client.sdk.zostso">CollectedResponses</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllResponses(zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse)">getAllResponses</a></span>&#8203;(<a href="zosmf/ZosmfTsoResponse.html" title="class in zowe.client.sdk.zostso.zosmf">ZosmfTsoResponse</a>&nbsp;tso)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllResponses(zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse)">getAllResponses</a></span>&#8203;(<a href="zosmf/ZosmfTsoResponse.html" title="class in zowe.client.sdk.zostso.message">ZosmfTsoResponse</a>&nbsp;tso)</code></th>
 <td class="colLast">
 <div class="block">Collects responses from address space until it reaches prompt</div>
 </td>
@@ -206,7 +206,7 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="zosmf/ZosmfTsoResponse.html" title="class in zowe.client.sdk.zostso.zosmf">ZosmfTsoResponse</a></code></td>
+<td class="colFirst"><code><a href="zosmf/ZosmfTsoResponse.html" title="class in zowe.client.sdk.zostso.message">ZosmfTsoResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendDataToTSOCommon(zowe.client.sdk.zostso.input.SendTsoParams)">sendDataToTSOCommon</a></span>&#8203;(<a href="input/SendTsoParams.html" title="class in zowe.client.sdk.zostso.input">SendTsoParams</a>&nbsp;commandParams)</code></th>
 <td class="colLast">
 <div class="block">API method to send data to already started TSO address space</div>
@@ -286,7 +286,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAllResponses</h4>
-<pre class="methodSignature">public&nbsp;<a href="CollectedResponses.html" title="class in zowe.client.sdk.zostso">CollectedResponses</a>&nbsp;getAllResponses&#8203;(<a href="zosmf/ZosmfTsoResponse.html" title="class in zowe.client.sdk.zostso.zosmf">ZosmfTsoResponse</a>&nbsp;tso)
+<pre class="methodSignature">public&nbsp;<a href="CollectedResponses.html" title="class in zowe.client.sdk.zostso">CollectedResponses</a>&nbsp;getAllResponses&#8203;(<a href="zosmf/ZosmfTsoResponse.html" title="class in zowe.client.sdk.zostso.message">ZosmfTsoResponse</a>&nbsp;tso)
                                    throws java.lang.Exception</pre>
 <div class="block">Collects responses from address space until it reaches prompt</div>
 <dl>
@@ -326,7 +326,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>sendDataToTSOCommon</h4>
-<pre class="methodSignature">public&nbsp;<a href="zosmf/ZosmfTsoResponse.html" title="class in zowe.client.sdk.zostso.zosmf">ZosmfTsoResponse</a>&nbsp;sendDataToTSOCommon&#8203;(<a href="input/SendTsoParams.html" title="class in zowe.client.sdk.zostso.input">SendTsoParams</a>&nbsp;commandParams)
+<pre class="methodSignature">public&nbsp;<a href="zosmf/ZosmfTsoResponse.html" title="class in zowe.client.sdk.zostso.message">ZosmfTsoResponse</a>&nbsp;sendDataToTSOCommon&#8203;(<a href="input/SendTsoParams.html" title="class in zowe.client.sdk.zostso.input">SendTsoParams</a>&nbsp;commandParams)
                                      throws java.lang.Exception</pre>
 <div class="block">API method to send data to already started TSO address space</div>
 <dl>

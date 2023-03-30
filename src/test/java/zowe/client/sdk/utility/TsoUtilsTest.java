@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.junit.Test;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.zostso.zosmf.ZosmfTsoResponse;
+import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
 
 import java.util.HashMap;
 import java.util.Map;

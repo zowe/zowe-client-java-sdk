@@ -19,7 +19,7 @@ import java.util.OptionalInt;
  * MonitorJobs "waitFor..." APIs parameters interface
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class MonitorJobWaitForParams {
 

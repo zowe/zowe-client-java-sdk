@@ -16,7 +16,7 @@ import java.util.Optional;
  * Submit jcl parameters
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class SubmitJclParams {
 

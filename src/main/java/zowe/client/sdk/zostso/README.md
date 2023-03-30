@@ -9,7 +9,7 @@ package zowe.client.sdk.examples.zostso;
 
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.zostso.IssueResponse;
+import zowe.client.sdk.zostso.response.IssueResponse;
 import zowe.client.sdk.zostso.IssueTso;
 
 import java.util.Arrays;
@@ -18,7 +18,7 @@ import java.util.Arrays;
  * Class example to test tso command functionality.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class IssueTsoCommandTst extends TstZosConnection {
 

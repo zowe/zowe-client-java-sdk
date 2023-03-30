@@ -15,7 +15,7 @@ import java.util.Optional;
  * TSO start command z/OSMF parameters
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class StartTsoParams {
 

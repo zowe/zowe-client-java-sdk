@@ -14,7 +14,7 @@ package zowe.client.sdk.utility.timer;
  * Timer class to help support wait time operations.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class Timer {
 

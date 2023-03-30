@@ -12,9 +12,9 @@ package zowe.client.sdk.utility;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.zostso.StartStopResponse;
 import zowe.client.sdk.zostso.TsoConstants;
-import zowe.client.sdk.zostso.zosmf.*;
+import zowe.client.sdk.zostso.message.*;
+import zowe.client.sdk.zostso.response.StartStopResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.Optional;
  * Utility Class for Tso command related static helper methods.
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public final class TsoUtils {
 

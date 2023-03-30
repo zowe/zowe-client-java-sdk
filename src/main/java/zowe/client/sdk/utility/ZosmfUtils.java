@@ -20,7 +20,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfPluginInfo;
  * Utility Class contains helper methods for z/OSMF related processing
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public final class ZosmfUtils {
 

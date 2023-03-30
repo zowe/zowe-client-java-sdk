@@ -34,6 +34,7 @@ import java.util.Optional;
  * ZosDsn class that provides CRUD operations on Datasets
  *
  * @author Leonid Baranov
+ * @author Frank Giordano
  * @version 1.0
  */
 public class ZosDsn {

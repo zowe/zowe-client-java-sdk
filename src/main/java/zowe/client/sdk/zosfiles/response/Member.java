@@ -16,7 +16,7 @@ import java.util.OptionalLong;
  * Represents a z/OS partition data set member
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class Member {
 

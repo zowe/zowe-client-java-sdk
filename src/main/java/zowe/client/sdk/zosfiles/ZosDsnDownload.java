@@ -26,6 +26,7 @@ import java.util.Map;
  * ZosDsnDownload class that provides download DataSet function
  *
  * @author Nikunj Goyal
+ * @author Frank Giordano
  * @version 1.0
  */
 public class ZosDsnDownload {
