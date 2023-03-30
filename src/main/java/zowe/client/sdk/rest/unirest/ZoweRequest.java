@@ -72,6 +72,8 @@ public abstract class ZoweRequest {
     /**
      * Perform the http rest request
      *
+     * @return Response object
+     * @throws UnirestException processing request error
      * @author Frank Giordano
      */
     public abstract Response executeRequest() throws UnirestException;
@@ -79,6 +81,8 @@ public abstract class ZoweRequest {
     /**
      * Set the body information for the http request
      *
+     * @param body string value
+     * @throws UnirestException error setting body string
      * @author Frank Giordano
      */
     public abstract void setBody(String body) throws UnirestException;
@@ -106,7 +110,7 @@ public abstract class ZoweRequest {
      * Set the url needed for the http request
      *
      * @param url rest url end point
-     * @throws Exception error setting the http request
+     * @throws IllegalArgumentException error setting valid url string
      * @author Frank Giordano
      */
     public void setUrl(String url) throws IllegalArgumentException {
