@@ -32,7 +32,6 @@ public class JsonDeleteRequest extends ZoweRequest {
      */
     public JsonDeleteRequest(ZOSConnection connection) {
         super(connection);
-        this.setStandardHeaders();
     }
 
     /**

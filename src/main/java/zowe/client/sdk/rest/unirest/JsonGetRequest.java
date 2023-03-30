@@ -32,7 +32,6 @@ public class JsonGetRequest extends ZoweRequest {
      */
     public JsonGetRequest(ZOSConnection connection) {
         super(connection);
-        this.setStandardHeaders();
     }
 
     /**

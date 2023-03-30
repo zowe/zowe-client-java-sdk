@@ -11,6 +11,7 @@ package zowe.client.sdk.rest.unirest;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
+import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.ZosmfHeaders;
@@ -41,6 +42,7 @@ public abstract class ZoweRequest {
      */
     public ZoweRequest(ZOSConnection connection) {
         this.connection = connection;
+        this.setup();
     }
 
     /**
@@ -55,6 +57,16 @@ public abstract class ZoweRequest {
             return new Response(reply.getBody().getArray(), reply.getStatus(), reply.getStatusText());
         }
         return new Response(reply.getBody().getObject(), reply.getStatus(), reply.getStatusText());
+    }
+
+    /**
+     * Setup to be used first in setting up the http request
+     *
+     * @author Frank Giordano
+     */
+    private void setup() {
+        Unirest.config().verifySsl(false);
+        this.setStandardHeaders();
     }
 
     /**

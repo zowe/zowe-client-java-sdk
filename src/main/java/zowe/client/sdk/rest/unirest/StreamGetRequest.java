@@ -30,7 +30,6 @@ public class StreamGetRequest extends ZoweRequest {
      */
     public StreamGetRequest(ZOSConnection connection) {
         super(connection);
-        this.setStandardHeaders();
     }
 
     /**

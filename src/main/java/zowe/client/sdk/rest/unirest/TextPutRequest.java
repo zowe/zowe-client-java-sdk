@@ -34,7 +34,6 @@ public class TextPutRequest extends ZoweRequest {
      */
     public TextPutRequest(ZOSConnection connection) {
         super(connection);
-        this.setStandardHeaders();
     }
 
     /**

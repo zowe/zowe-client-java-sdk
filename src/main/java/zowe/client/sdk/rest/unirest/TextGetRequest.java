@@ -31,7 +31,6 @@ public class TextGetRequest extends ZoweRequest {
      */
     public TextGetRequest(ZOSConnection connection) {
         super(connection);
-        this.setStandardHeaders();
     }
 
     /**

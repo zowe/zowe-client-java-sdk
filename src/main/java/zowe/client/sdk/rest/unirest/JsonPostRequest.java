@@ -35,7 +35,6 @@ public class JsonPostRequest extends ZoweRequest {
      */
     public JsonPostRequest(ZOSConnection connection) {
         super(connection);
-        this.setStandardHeaders();
     }
 
     /**
