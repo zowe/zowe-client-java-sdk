@@ -212,7 +212,6 @@ public class DeleteJobsTst extends TstZosConnection {
     }
 
 }
-}
 `````
 
 **Get a job**

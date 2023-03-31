@@ -84,7 +84,7 @@ public class ZosmfDefinedSystemsTst extends TstZosConnection {
         System.out.println(zosmfInfoResponse.toString());
         Arrays.stream(zosmfInfoResponse.getDefinedSystems().get()).forEach(i -> System.out.println(i.toString()));
     }
-
+}
 `````
 
 ````java
