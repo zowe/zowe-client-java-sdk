@@ -141,8 +141,7 @@ public class ZosDsnList {
             throw new Exception(response.getResponsePhrase().get().toString());
         }
 
-        JSONParser parser = new JSONParser();
-        final JSONObject jsonObject = (JSONObject) parser.parse(response.getResponsePhrase().get().toString());
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString());
         if (jsonObject.isEmpty()) {
             if (datasetLst == null) {
                 return memberLst;

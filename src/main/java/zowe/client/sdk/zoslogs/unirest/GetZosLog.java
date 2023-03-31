@@ -118,8 +118,7 @@ public class GetZosLog {
             throw new Exception(response.getResponsePhrase().get().toString());
         }
 
-        final JSONParser parser = new JSONParser();
-        final JSONObject jsonObject = (JSONObject) parser.parse(response.getResponsePhrase().get().toString());
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString());
         JSONArray jsonArray = new JSONArray();
         if (jsonObject.get("items") != null) {
             jsonArray = (JSONArray) jsonObject.get("items");
