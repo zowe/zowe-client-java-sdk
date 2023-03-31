@@ -86,6 +86,7 @@ public class GetZosLog {
      * @throws Exception processing error
      * @author Frank Giordano
      */
+    @SuppressWarnings("unchecked")
     public ZosLogReply getZosLog(ZosLogParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 

@@ -108,6 +108,7 @@ public class ZosDsnList {
      * @throws Exception processing error
      * @author Frank Giordano
      */
+    @SuppressWarnings("unchecked")
     private <T> List<T> getResult(Response response, List<T> datasetLst, List<T> memberLst) throws Exception {
         if (response.getStatusCode().isEmpty()) {
             LOG.debug("ZosDsnList::getResult - no status code returned");
