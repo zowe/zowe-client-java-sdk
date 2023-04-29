@@ -33,7 +33,7 @@ Class names providing prebuilt API services:
     GetJobs
     GetZosLog (operlog or syslog)
     IssueCommand (mvs commands)  
-    IssuesTsoCommand  
+    IssueTso 
     ListDataset  
     ListDefinedSystems (zosmf info)
     MonitorJobs  
