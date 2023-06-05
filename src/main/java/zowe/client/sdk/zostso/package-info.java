@@ -1,4 +1,4 @@
 /**
- * Zos tso console functionality provided by the SDK
+ * z/OS tso package
  */
 package zowe.client.sdk.zostso;

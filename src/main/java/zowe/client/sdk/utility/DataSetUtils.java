@@ -10,9 +10,9 @@
 package zowe.client.sdk.utility;
 
 import org.json.simple.JSONObject;
-import zowe.client.sdk.zosfiles.response.Dataset;
-import zowe.client.sdk.zosfiles.response.Member;
-import zowe.client.sdk.zosfiles.types.OperationType;
+import zowe.client.sdk.zosfiles.dsn.response.Dataset;
+import zowe.client.sdk.zosfiles.dsn.response.Member;
+import zowe.client.sdk.zosfiles.dsn.types.OperationType;
 
 import java.util.List;
 

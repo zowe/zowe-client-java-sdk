@@ -1,4 +1,4 @@
 /**
- * Request input objects for zos jobs processing
+ * Request input objects for z/OS jobs processing
  */
 package zowe.client.sdk.zosjobs.input;

@@ -49,7 +49,8 @@ public final class TsoUtils {
         ZosmfTsoResponse result;
         final int statusCode = response.getStatusCode().get();
         if (response.getStatusCode().isPresent() && RestUtils.isHttpError(statusCode)) {
-            final String errorMsg = (String) response.getResponsePhrase().orElseThrow(() -> new Exception("results not available"));
+            final String errorMsg =
+                    (String) response.getResponsePhrase().orElseThrow(() -> new Exception("results not available"));
             final ZosmfMessages zosmfMsg = new ZosmfMessages(errorMsg, null, null);
             final List<ZosmfMessages> zosmfMessages = new ArrayList<>();
             zosmfMessages.add(zosmfMsg);

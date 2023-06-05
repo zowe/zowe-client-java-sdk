@@ -1,4 +1,4 @@
 /**
- * Zos logs related processing provided by the SDK
+ * z/OS log package
  */
 package zowe.client.sdk.zoslogs;

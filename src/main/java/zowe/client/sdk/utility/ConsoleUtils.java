@@ -10,8 +10,8 @@
 package zowe.client.sdk.utility;
 
 import org.json.simple.JSONObject;
-import zowe.client.sdk.zosconsole.ConsoleResponse;
-import zowe.client.sdk.zosconsole.zosmf.ZosmfIssueResponse;
+import zowe.client.sdk.zosconsole.response.ConsoleResponse;
+import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
 
 /**
  * Utility Class contains helper methods for console response commands and response processing

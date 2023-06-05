@@ -12,33 +12,40 @@ package zowe.client.sdk.rest;
 import java.util.Optional;
 
 /**
- * Holds Http response information
+ * Holds http response information
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class Response {
 
     /**
-     * Holds Http response information
+     * Holds http response information
      */
     private final Optional<Object> responsePhrase;
 
     /**
-     * Holds Http response status code
+     * Holds http response status code
      */
     private final Optional<Integer> statusCode;
+
+    /**
+     * Holds http response status text
+     */
+    private final Optional<String> statusText;
 
     /**
      * Response constructor
      *
      * @param responsePhrase http response information
      * @param statusCode     http response status code
+     * @param statusText     http response status text
      * @author Frank Giordano
      */
-    public Response(Object responsePhrase, Integer statusCode) {
+    public Response(Object responsePhrase, Integer statusCode, String statusText) {
         this.responsePhrase = Optional.ofNullable(responsePhrase);
         this.statusCode = Optional.ofNullable(statusCode);
+        this.statusText = Optional.ofNullable(statusText);
     }
 
     /**
@@ -54,7 +61,7 @@ public class Response {
     /**
      * Retrieve statusCode value
      *
-     * @return status code value
+     * @return statusCode value
      * @author Frank Giordano
      */
     public Optional<Integer> getStatusCode() {
@@ -62,13 +69,13 @@ public class Response {
     }
 
     /**
-     * Does object contain all empty values
+     * Retrieve statusText value
      *
-     * @return boolean true if all values in object are empty
+     * @return statusText value
      * @author Frank Giordano
      */
-    public boolean isEmpty() {
-        return (responsePhrase.isEmpty() && statusCode.isEmpty());
+    public Optional<String> getStatusText() {
+        return statusText;
     }
 
     @Override
@@ -76,6 +83,7 @@ public class Response {
         return "Response{" +
                 "responsePhrase=" + responsePhrase +
                 ", statusCode=" + statusCode +
+                ", statusText=" + statusText +
                 '}';
     }
 

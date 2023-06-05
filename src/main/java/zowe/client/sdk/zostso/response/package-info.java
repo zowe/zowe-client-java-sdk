@@ -1,4 +1,4 @@
 /**
- * Zos tso console response handling provided by the SDK
+ * z/OS tso console response handling processing
  */
 package zowe.client.sdk.zostso.response;

@@ -17,6 +17,7 @@ import static org.junit.Assert.assertEquals;
  * Class containing unit tests for ValidateUtils.
  *
  * @author Frank Giordano
+ * @version 2.0
  */
 public class ValidateUtilsTest {
 

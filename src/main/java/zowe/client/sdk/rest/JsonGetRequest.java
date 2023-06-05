@@ -9,51 +9,53 @@
  */
 package zowe.client.sdk.rest;
 
-import org.apache.http.HttpHeaders;
-import org.apache.http.client.methods.HttpGet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
+import kong.unirest.Unirest;
+import kong.unirest.UnirestException;
 import zowe.client.sdk.core.ZOSConnection;
-import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.RestUtils;
-
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * Http get operation with Json content type
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class JsonGetRequest extends ZoweRequest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JsonGetRequest.class);
-    private HttpGet request;
-
     /**
-     * JsonGetRequest constructor.
+     * JsonGetRequest constructor
      *
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
     public JsonGetRequest(ZOSConnection connection) {
-        super(connection, ZoweRequestType.GET_JSON);
+        super(connection);
     }
 
     /**
-     * Execute the formulated http request
+     * Perform the http rest request
      *
      * @author Frank Giordano
      */
     @Override
-    public Response executeRequest() throws Exception {
-        if (request == null) {
-            throw new Exception("request not defined");
+    public Response executeRequest() throws UnirestException {
+        HttpResponse<JsonNode> reply = Unirest.get(url).headers(headers).asJson();
+        if (reply.getStatusText().contains("No Content")) {
+            return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
         }
-        LOG.debug("JsonGetRequest::executeRequest");
-        return executeJsonRequest(request);
+        return getJsonResponse(reply);
+    }
+
+    /**
+     * Method to set the body information for the http request which is not used for this request.
+     *
+     * @author Frank Giordano
+     */
+    @Override
+    public void setBody(String body) throws UnirestException {
+        throw new UnirestException("setting body for this request is invalid");
     }
 
     /**
@@ -63,52 +65,9 @@ public class JsonGetRequest extends ZoweRequest {
      */
     @Override
     public void setStandardHeaders() {
-        request.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + EncodeUtils.getAuthEncoding(connection));
-        request.setHeader("Content-Type", "application/json");
-        request.setHeader(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
-    }
-
-    /**
-     * Set any headers needed for the http request
-     *
-     * @param headers headers to add to the request
-     * @author Frank Giordano
-     */
-    @Override
-    public void setHeaders(Map<String, String> headers) {
-        headers.forEach((key, value) -> request.setHeader(key, value));
-    }
-
-    /**
-     * Initialize the http request object with an url value
-     *
-     * @param url rest url end point
-     * @throws Exception error setting the http request
-     * @author Frank Giordano
-     */
-    @Override
-    public void setRequest(String url) throws Exception {
-        if (RestUtils.isUrlNotValid(url)) {
-            throw new Exception("url is invalid");
-        }
-        this.request = new HttpGet(Optional.ofNullable(url).orElseThrow(() -> new Exception("url not specified")));
-        this.setup();
-    }
-
-    /**
-     * Initialize the http request object with an url and body values
-     * <p>
-     * This method isn't valid for this request.
-     * Method returns exception error if used with message "request requires url only".
-     *
-     * @param url  rest url end point
-     * @param body data to be sent with request
-     * @throws Exception error setting the http request
-     * @author Frank Giordano
-     */
-    @Override
-    public void setRequest(String url, String body) throws Exception {
-        throw new Exception("request requires url only");
+        headers.put("Authorization", "Basic " + EncodeUtils.getAuthEncoding(connection));
+        headers.put("Content-Type", "application/json");
+        headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
 
 }

@@ -12,9 +12,10 @@ package zowe.client.sdk.utility;
 import org.junit.Test;
 
 /**
- * Class containing unit tests for FileUtils.
+ * Class containing unit test for FileUtils.
  *
  * @author Frank Giordano
+ * @version 2.0
  */
 public class FileUtilsTest {
 

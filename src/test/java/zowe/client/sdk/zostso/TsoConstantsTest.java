@@ -12,6 +12,12 @@ package zowe.client.sdk.zostso;
 import org.junit.Test;
 import zowe.client.sdk.utility.Utils;
 
+/**
+ * Class containing unit test for TsoConstantsTest.
+ *
+ * @author Frank Giordano
+ * @version 2.0
+ */
 public class TsoConstantsTest {
 
     /**

@@ -16,7 +16,7 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
  * Zowe request factory that generates the desire CRUD operation
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public final class ZoweRequestFactory {
 
@@ -31,7 +31,7 @@ public final class ZoweRequestFactory {
      * Assign the request to the Http verb type request object
      *
      * @param connection connection information, see ZOSConnection object
-     * @param type       request http type, see ZoweRequestType.VerbType object
+     * @param type       request http type, see ZoweRequestType object
      * @return ZoweRequest value
      * @throws Exception error with type not found
      * @author Frank Giordano
