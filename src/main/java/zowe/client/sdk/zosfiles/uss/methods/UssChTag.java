@@ -9,5 +9,5 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-public class UssChangeMode {
+public class UssChTag {
 }
