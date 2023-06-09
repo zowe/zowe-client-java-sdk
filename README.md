@@ -6,6 +6,7 @@ Copyright Contributors to the Zowe Project.
 
 # Zowe Java Client SDK
 
+![](https://img.shields.io/badge/license-EPL--2.0-blue)
 [![Maven Central](https://img.shields.io/maven-central/v/org.zowe.client.java.sdk/zowe-client-java-sdk.svg?label=Maven%20Central)](https://central.sonatype.com/search?q=org.zowe.client.java.sdk&smo=true)
 [![javadoc](https://javadoc.io/badge2/org.zowe.client.java.sdk/zowe-client-java-sdk/javadoc.svg)](https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk)
 
