@@ -76,7 +76,7 @@ public class JobSubmit {
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
-    public Job submitJcl(String jcl, String internalReaderRecfm, String internalReaderLrecl) throws Exception {
+    public Job submitByJcl(String jcl, String internalReaderRecfm, String internalReaderLrecl) throws Exception {
         return this.submitJclCommon(new SubmitJclParams(jcl, internalReaderRecfm, internalReaderLrecl));
     }
 
@@ -145,26 +145,26 @@ public class JobSubmit {
     }
 
     /**
-     * Submit a job that resides in a z/OS data set.
+     * Submit a job that resides in a z/OS dataset.
      *
      * @param jobDataSet job dataset to be translated into SubmitJobParams object
      * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
-    public Job submitJob(String jobDataSet) throws Exception {
-        return this.submitJobCommon(new SubmitJobParams(jobDataSet));
+    public Job submit(String jobDataSet) throws Exception {
+        return this.submitCommon(new SubmitJobParams(jobDataSet));
     }
 
     /**
-     * Submit a job that resides in a z/OS data set.
+     * Submit a job that resides in a z/OS dataset.
      *
      * @param params submit job parameters, see SubmitJobParams object
      * @return job document with details about the submitted job
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
-    public Job submitJobCommon(SubmitJobParams params) throws Exception {
+    public Job submitCommon(SubmitJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJobDataSet().isEmpty(), "jobDataSet not specified");
         ValidateUtils.checkIllegalParameter(params.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
@@ -206,7 +206,7 @@ public class JobSubmit {
      * @throws Exception error on submitting
      * @author Corinne DeStefano
      */
-    public Map<String, String> getSubstitutionHeaders(Map<String, String> keyValues) throws Exception {
+    private Map<String, String> getSubstitutionHeaders(Map<String, String> keyValues) throws Exception {
         final Map<String, String> symbolMap = new HashMap<>();
 
         // Check for matching quotes

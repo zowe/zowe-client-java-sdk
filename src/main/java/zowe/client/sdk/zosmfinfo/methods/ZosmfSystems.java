@@ -24,33 +24,33 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.utility.ZosmfUtils;
 import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosmfinfo.ZosmfConstants;
-import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
+import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
 
 /**
- * This class holds the helper functions that are used to gather z/OSMF information through the z/OSMF APIs.
+ * This class is used to list the systems defined to z/OSMF through the z/OSMF APIs.
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public class ZosmfGetStatus {
+public class ZosmfSystems {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ZosmfGetStatus.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ZosmfSystems.class);
     private final ZOSConnection connection;
     private ZoweRequest request;
 
     /**
-     * CheckStatus Constructor.
+     * ListDefinedSystems Constructor.
      *
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public ZosmfGetStatus(ZOSConnection connection) {
+    public ZosmfSystems(ZOSConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
     /**
-     * Alternative CheckStatus constructor with ZoweRequest object. This is mainly used for internal code unit testing
+     * Alternative ListDefinedSystems constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZOSConnection object
@@ -58,7 +58,7 @@ public class ZosmfGetStatus {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ZosmfGetStatus(ZOSConnection connection, ZoweRequest request) throws Exception {
+    public ZosmfSystems(ZOSConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {
@@ -68,14 +68,14 @@ public class ZosmfGetStatus {
     }
 
     /**
-     * Get z/OSMF information
+     * List systems defined to z/OSMF
      *
-     * @return ZosmfInfoResponse object
+     * @return ZosmfListDefinedSystemsResponse object
      * @throws Exception problem with response
      */
-    public ZosmfInfoResponse getZosmfInfo() throws Exception {
+    public ZosmfListDefinedSystemsResponse get() throws Exception {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosmfConstants.RESOURCE + ZosmfConstants.INFO;
+                + ZosmfConstants.RESOURCE + ZosmfConstants.TOPOLOGY + ZosmfConstants.SYSTEMS;
 
         LOG.debug(url);
 
@@ -89,7 +89,7 @@ public class ZosmfGetStatus {
             throw new Exception(response.getResponsePhrase().get().toString());
         }
 
-        return ZosmfUtils.parseZosmfInfo(
+        return ZosmfUtils.parseListDefinedSystems(
                 ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
     }
 

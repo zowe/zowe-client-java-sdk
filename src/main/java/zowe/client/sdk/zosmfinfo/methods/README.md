@@ -11,7 +11,7 @@ package zowe.client.sdk.examples.zosmfInfo;
 
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.zosmfinfo.methods.ZosmfGetStatus;
+import zowe.client.sdk.zosmfinfo.methods.ZosmfStatus;
 import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
 
 import java.util.Arrays;
@@ -24,7 +24,7 @@ import java.util.Arrays;
  */
 public class CheckStatusTst extends TstZosConnection {
 
-    private static ZosmfGetStatus checkStatus;
+    private static ZosmfStatus checkStatus;
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -37,7 +37,7 @@ public class CheckStatusTst extends TstZosConnection {
     public static void main(String[] args) throws Exception {
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
-        checkStatus = new ZosmfGetStatus(connection);
+        checkStatus = new ZosmfStatus(connection);
         ZosmfInfoResponse zosmfInfoResponse = checkStatus.getZosmfInfo();
         System.out.println(zosmfInfoResponse.toString());
         Arrays.stream(zosmfInfoResponse.getZosmfPluginsInfo().get()).forEach(i -> System.out.println(i.toString()));
@@ -53,7 +53,7 @@ package zowe.client.sdk.examples.zosmfInfo;
 
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.zosmfinfo.methods.ZosmfGetSystems;
+import zowe.client.sdk.zosmfinfo.methods.ZosmfSystems;
 import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
 
 import java.util.Arrays;
@@ -66,7 +66,7 @@ import java.util.Arrays;
  */
 public class ZosmfDefinedSystemsTst extends TstZosConnection {
 
-    private static ZosmfGetSystems listDefinedSystems;
+    private static ZosmfSystems listDefinedSystems;
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -79,7 +79,7 @@ public class ZosmfDefinedSystemsTst extends TstZosConnection {
     public static void main(String[] args) throws Exception {
         ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
 
-        listDefinedSystems = new ZosmfGetSystems(connection);
+        listDefinedSystems = new ZosmfSystems(connection);
         ZosmfListDefinedSystemsResponse zosmfInfoResponse = listDefinedSystems.listDefinedSystems();
         System.out.println(zosmfInfoResponse.toString());
         Arrays.stream(zosmfInfoResponse.getDefinedSystems().get()).forEach(i -> System.out.println(i.toString()));

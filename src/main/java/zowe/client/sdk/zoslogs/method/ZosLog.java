@@ -42,9 +42,9 @@ import java.util.regex.Pattern;
  * @author Frank Giordano
  * @version 2.0
  */
-public class ZosGetLog {
+public class ZosLog {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ZosGetLog.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ZosLog.class);
     private static final String RESOURCE = "/zosmf/restconsoles/v1/log?";
     private final ZOSConnection connection;
     private ZoweRequest request;
@@ -55,7 +55,7 @@ public class ZosGetLog {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public ZosGetLog(ZOSConnection connection) {
+    public ZosLog(ZOSConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -69,7 +69,7 @@ public class ZosGetLog {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ZosGetLog(ZOSConnection connection, ZoweRequest request) throws Exception {
+    public ZosLog(ZOSConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {
@@ -89,7 +89,7 @@ public class ZosGetLog {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    public ZosLogReply getZosLog(ZosLogParams params) throws Exception {
+    public ZosLogReply issueCommand(ZosLogParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String defaultUrl = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + RESOURCE;
@@ -101,7 +101,7 @@ public class ZosGetLog {
             }
             final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT.withZone(ZoneId.systemDefault());
             final ZonedDateTime zonedDateTime = ZonedDateTime.parse(time, formatter);
-            url.append("time=").append(zonedDateTime.toString());
+            url.append("time=").append(zonedDateTime);
         });
         params.getTimeRange().ifPresent(timeRange -> url.append("&timeRange=").append(timeRange));
         params.getDirection().ifPresent(direction -> url.append("&direction=").append(direction.getValue()));

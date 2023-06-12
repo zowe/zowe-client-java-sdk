@@ -44,7 +44,7 @@ public class GetJobsByTextGetRequestTest {
         Response response = new Response("1\n2\n3\n", 200, "success");
         Mockito.when(request.executeRequest()).thenReturn(response);
 
-        String results = getJobs.getSpoolContentById("jobName", "jobId", 1);
+        String results = getJobs.getSpoolContent("jobName", "jobId", 1);
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
         assertEquals("1\n2\n3\n", results);
     }

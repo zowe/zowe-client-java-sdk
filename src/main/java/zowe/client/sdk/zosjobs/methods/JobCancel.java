@@ -85,8 +85,8 @@ public class JobCancel {
      * @throws Exception error canceling
      * @author Nikunj goyal
      */
-    public Response cancelJob(String jobName, String jobId, String version) throws Exception {
-        return this.cancelJobsCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
+    public Response cancel(String jobName, String jobId, String version) throws Exception {
+        return this.cancelCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
     /**
@@ -102,8 +102,8 @@ public class JobCancel {
      * @throws Exception error canceling
      * @author Frank Giordano
      */
-    public Response cancelJobForJob(Job job, String version) throws Exception {
-        return this.cancelJobsCommon(
+    public Response cancelByJob(Job job, String version) throws Exception {
+        return this.cancelCommon(
                 new ModifyJobParams.Builder(job.getJobName().orElse(null), job.getJobId().orElse(null))
                         .version(version).build());
     }
@@ -118,7 +118,7 @@ public class JobCancel {
      * @author Frank Giordano
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public Response cancelJobsCommon(ModifyJobParams params) throws Exception {
+    public Response cancelCommon(ModifyJobParams params) throws Exception {
         JobUtils.checkModifyJobParameters(params);
 
         // generate full url request

@@ -127,7 +127,7 @@ public class JobGet {
      * @throws Exception error on getting jcl content
      * @author Frank Giordano
      */
-    public String getJclForJob(Job job) throws Exception {
+    public String getJclByJob(Job job) throws Exception {
         return getJclCommon(new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
     }
 
@@ -139,11 +139,11 @@ public class JobGet {
      * @throws Exception error on getting job
      * @author Frank Giordano
      */
-    public Job getJob(String jobId) throws Exception {
+    public Job getById(String jobId) throws Exception {
         ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
         ValidateUtils.checkIllegalParameter(jobId.isEmpty(), "jobId not specified");
 
-        final List<Job> jobs = getJobsCommon(new GetJobParams.Builder("*").jobId(jobId).build());
+        final List<Job> jobs = getCommon(new GetJobParams.Builder("*").jobId(jobId).build());
         if (jobs.isEmpty()) {
             throw new Exception("Job not found");
         }
@@ -161,8 +161,8 @@ public class JobGet {
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
-    public List<Job> getJobs() throws Exception {
-        return getJobsCommon(null);
+    public List<Job> getAll() throws Exception {
+        return getCommon(null);
     }
 
     /**
@@ -174,11 +174,11 @@ public class JobGet {
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
-    public List<Job> getJobsByOwner(String owner) throws Exception {
+    public List<Job> getByOwner(String owner) throws Exception {
         ValidateUtils.checkNullParameter(owner == null, "owner is null");
         ValidateUtils.checkIllegalParameter(owner.isEmpty(), "owner not specified");
 
-        return getJobsCommon(new GetJobParams.Builder(owner).build());
+        return getCommon(new GetJobParams.Builder(owner).build());
     }
 
     /**
@@ -192,12 +192,12 @@ public class JobGet {
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
-    public List<Job> getJobsByOwnerAndPrefix(String owner, String prefix) throws Exception {
+    public List<Job> getByOwnerAndPrefix(String owner, String prefix) throws Exception {
         ValidateUtils.checkNullParameter(owner == null, "owner is null");
         ValidateUtils.checkIllegalParameter(owner.isEmpty(), "owner not specified");
         ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
         ValidateUtils.checkIllegalParameter(prefix.isEmpty(), "prefix not specified");
-        return getJobsCommon(new GetJobParams.Builder(owner).prefix(prefix).build());
+        return getCommon(new GetJobParams.Builder(owner).prefix(prefix).build());
     }
 
     /**
@@ -208,10 +208,10 @@ public class JobGet {
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
-    public List<Job> getJobsByPrefix(String prefix) throws Exception {
+    public List<Job> getByPrefix(String prefix) throws Exception {
         ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
         ValidateUtils.checkIllegalParameter(prefix.isEmpty(), "prefix not specified");
-        return getJobsCommon(new GetJobParams.Builder("*").prefix(prefix).build());
+        return getCommon(new GetJobParams.Builder("*").prefix(prefix).build());
     }
 
     /**
@@ -223,7 +223,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    public List<Job> getJobsCommon(GetJobParams params) throws Exception {
+    public List<Job> getCommon(GetJobParams params) throws Exception {
         List<Job> jobs = new ArrayList<>();
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
@@ -312,7 +312,7 @@ public class JobGet {
      * @throws Exception error on getting spool content
      * @author Frank Giordano
      */
-    public String getSpoolContentById(String jobName, String jobId, int spoolId) throws Exception {
+    public String getSpoolContent(String jobName, String jobId, int spoolId) throws Exception {
         ValidateUtils.checkNullParameter(jobName == null, "jobName is null");
         ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
         ValidateUtils.checkIllegalParameter(spoolId <= 0, "spoolId not specified");
@@ -458,7 +458,7 @@ public class JobGet {
      * @throws Exception error on getting spool files info
      * @author Frank Giordano
      */
-    public List<JobFile> getSpoolFilesForJob(Job job) throws Exception {
+    public List<JobFile> getSpoolFilesByJob(Job job) throws Exception {
         return getSpoolFilesCommon(
                 new CommonJobParams(job.getJobId().orElseThrow(() -> new Exception("job id not specified")),
                         job.getJobName().orElseThrow(() -> new Exception("job name not specified"))));
@@ -529,7 +529,7 @@ public class JobGet {
      * @throws Exception error getting job status
      * @author Frank Giordano
      */
-    public Job getStatusForJob(Job job) throws Exception {
+    public Job getStatusByJob(Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return getStatusCommon(new CommonJobParams(job.getJobId().orElse(null),
                 job.getJobName().orElse(null), true));
@@ -559,7 +559,7 @@ public class JobGet {
      * @throws Exception error getting job status
      * @author Frank Giordano
      */
-    public String getStatusValueForJob(Job job) throws Exception {
+    public String getStatusValueByJob(Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         final Job result = getStatusCommon(
                 new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));

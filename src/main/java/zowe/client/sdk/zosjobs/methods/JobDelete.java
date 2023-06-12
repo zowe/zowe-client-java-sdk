@@ -77,8 +77,8 @@ public class JobDelete {
      * @throws Exception error deleting
      * @author Nikunj goyal
      */
-    public Response deleteJob(String jobName, String jobId, String version) throws Exception {
-        return deleteJobCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
+    public Response delete(String jobName, String jobId, String version) throws Exception {
+        return deleteCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
     /**
@@ -90,7 +90,7 @@ public class JobDelete {
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
-    public Response deleteJobCommon(ModifyJobParams params) throws Exception {
+    public Response deleteCommon(ModifyJobParams params) throws Exception {
         JobUtils.checkModifyJobParameters(params);
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
@@ -143,8 +143,8 @@ public class JobDelete {
      * @throws Exception error deleting
      * @author Frank Giordano
      */
-    public Response deleteJobForJob(Job job, String version) throws Exception {
-        return this.deleteJobCommon(
+    public Response deleteByJob(Job job, String version) throws Exception {
+        return this.deleteCommon(
                 new ModifyJobParams.Builder(job.getJobName().orElse(null), job.getJobId().orElse(null))
                         .version(version).build());
     }

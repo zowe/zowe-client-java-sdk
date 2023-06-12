@@ -21,7 +21,7 @@ import java.util.Optional;
 public class SubmitJobParams {
 
     /**
-     * z/OS data set which should contain syntactically correct JCL. Example value: IBMUSER.PUBLIC.CNTL(IEFBR14)
+     * z/OS dataset which should contain syntactically correct JCL. Example value: IBMUSER.PUBLIC.CNTL(IEFBR14)
      * where IEFBR14 contains statements like:
      * //IEFBR14 JOB ()
      * //RUN     EXEC PGM=IEFBR14

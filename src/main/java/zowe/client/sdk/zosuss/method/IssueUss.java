@@ -46,7 +46,7 @@ public class IssueUss {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public String executeSshCmd(String command, int timeout) throws Exception {
+    public String issueCommand(String command, int timeout) throws Exception {
         Session session = null;
         ChannelExec channel = null;
 

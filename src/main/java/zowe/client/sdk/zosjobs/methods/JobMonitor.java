@@ -127,11 +127,11 @@ public class JobMonitor {
         final GetJobParams filter = new GetJobParams.Builder("*")
                 .jobId(params.getJobId().orElseThrow(() -> new Exception("job id not specified")))
                 .prefix(params.getJobName().orElseThrow(() -> new Exception("job name not specified"))).build();
-        final List<Job> jobs = getJobs.getJobsCommon(filter);
+        final List<Job> jobs = getJobs.getCommon(filter);
         if (jobs.isEmpty()) {
             throw new Exception("job does not exist");
         }
-        final List<JobFile> files = getJobs.getSpoolFilesForJob(jobs.get(0));
+        final List<JobFile> files = getJobs.getSpoolFilesByJob(jobs.get(0));
         final String[] output = getJobs.getSpoolContent(files.get(0)).split("\n");
 
         final int lineLimit = params.getLineLimit().orElse(DEFAULT_LINE_LIMIT);
@@ -228,7 +228,7 @@ public class JobMonitor {
      * @throws Exception error processing running status check
      * @author Frank Giordano
      */
-    public boolean isJobRunning(MonitorJobWaitForParams params) throws Exception {
+    public boolean isRunning(MonitorJobWaitForParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         final JobGet getJobs = new JobGet(connection);
         final String jobName = params.getJobName().orElseThrow(() -> new Exception("job name not specified"));
@@ -246,7 +246,7 @@ public class JobMonitor {
      * @throws Exception error processing poll check request
      * @author Frank Giordano
      */
-    private boolean pollForMessage(MonitorJobWaitForParams params, String message) throws Exception {
+    private boolean pollByMessage(MonitorJobWaitForParams params, String message) throws Exception {
         final int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
         boolean messageFound;  // no assigment boolean means by default it is false
         boolean shouldContinue;
@@ -264,7 +264,7 @@ public class JobMonitor {
 
             if (shouldContinue) {
                 WaitUtil.wait(timeoutVal);
-                if (!isJobRunning(params)) {
+                if (!isRunning(params)) {
                     return false;
                 }
                 LOG.info("Waiting for message \"{}\"", message);
@@ -282,7 +282,7 @@ public class JobMonitor {
      * @throws Exception error processing poll check request
      * @author Frank Giordano
      */
-    private Job pollForStatus(MonitorJobWaitForParams params) throws Exception {
+    private Job pollByStatus(MonitorJobWaitForParams params) throws Exception {
         final int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
         boolean expectedStatus;  // no assigment boolean means by default it is false
         boolean shouldContinue;
@@ -334,13 +334,13 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public boolean waitForJobMessage(Job job, String message) throws Exception {
+    public boolean waitByMessage(Job job, String message) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         ValidateUtils.checkIllegalParameter(job.getJobName().isEmpty(), "job name not specified");
         ValidateUtils.checkIllegalParameter(job.getJobName().get().isEmpty(), "job name not specified");
         ValidateUtils.checkIllegalParameter(job.getJobId().isEmpty(), "job id not specified");
         ValidateUtils.checkIllegalParameter(job.getJobId().get().isEmpty(), "job id not specified");
-        return waitForMessageCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
+        return waitMessageCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
                 .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build(), message);
     }
 
@@ -358,8 +358,8 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public boolean waitForJobMessage(String jobName, String jobId, String message) throws Exception {
-        return waitForMessageCommon(new MonitorJobWaitForParams.Builder(jobName, jobId).jobStatus(JobStatus.Type.OUTPUT)
+    public boolean waitByMessage(String jobName, String jobId, String message) throws Exception {
+        return waitMessageCommon(new MonitorJobWaitForParams.Builder(jobName, jobId).jobStatus(JobStatus.Type.OUTPUT)
                 .attempts(attempts).watchDelay(watchDelay).build(), message);
     }
 
@@ -375,13 +375,13 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public Job waitForJobOutputStatus(Job job) throws Exception {
+    public Job waitByOutputStatus(Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         ValidateUtils.checkIllegalParameter(job.getJobName().isEmpty(), "job name not specified");
         ValidateUtils.checkIllegalParameter(job.getJobName().get().isEmpty(), "job name not specified");
         ValidateUtils.checkIllegalParameter(job.getJobId().isEmpty(), "job id not specified");
         ValidateUtils.checkIllegalParameter(job.getJobId().get().isEmpty(), "job id not specified");
-        return waitForStatusCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
+        return waitStatusCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
                 .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build());
     }
 
@@ -398,8 +398,8 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public Job waitForJobOutputStatus(String jobName, String jobId) throws Exception {
-        return waitForStatusCommon(new MonitorJobWaitForParams.Builder(jobName, jobId).jobStatus(JobStatus.Type.OUTPUT).
+    public Job waitByOutputStatus(String jobName, String jobId) throws Exception {
+        return waitStatusCommon(new MonitorJobWaitForParams.Builder(jobName, jobId).jobStatus(JobStatus.Type.OUTPUT).
                 attempts(attempts).watchDelay(watchDelay).build());
     }
 
@@ -416,13 +416,13 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public Job waitForJobStatus(Job job, JobStatus.Type statusType) throws Exception {
+    public Job waitByStatus(Job job, JobStatus.Type statusType) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         ValidateUtils.checkIllegalParameter(job.getJobName().isEmpty(), "job name not specified");
         ValidateUtils.checkIllegalParameter(job.getJobName().get().isEmpty(), "job name not specified");
         ValidateUtils.checkIllegalParameter(job.getJobId().isEmpty(), "job id not specified");
         ValidateUtils.checkIllegalParameter(job.getJobId().get().isEmpty(), "job id not specified");
-        return waitForStatusCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
+        return waitStatusCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
                 .jobStatus(statusType).attempts(attempts).watchDelay(watchDelay).build());
     }
 
@@ -440,8 +440,8 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public Job waitForJobStatus(String jobName, String jobId, JobStatus.Type statusType) throws Exception {
-        return waitForStatusCommon(new MonitorJobWaitForParams.Builder(jobName, jobId).jobStatus(statusType)
+    public Job waitByStatus(String jobName, String jobId, JobStatus.Type statusType) throws Exception {
+        return waitStatusCommon(new MonitorJobWaitForParams.Builder(jobName, jobId).jobStatus(statusType)
                 .attempts(attempts).watchDelay(watchDelay).build());
     }
 
@@ -454,7 +454,7 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public boolean waitForMessageCommon(MonitorJobWaitForParams params, String message) throws Exception {
+    public boolean waitMessageCommon(MonitorJobWaitForParams params, String message) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), "job name not specified");
         ValidateUtils.checkIllegalParameter(params.getJobName().get().isEmpty(), "job name not specified");
@@ -470,7 +470,7 @@ public class JobMonitor {
         if (params.getLineLimit().isEmpty()) {
             params.setLineLimit(lineLimit);
         }
-        return pollForMessage(params, message);
+        return pollByMessage(params, message);
     }
 
     /**
@@ -486,7 +486,7 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public Job waitForStatusCommon(MonitorJobWaitForParams params) throws Exception {
+    public Job waitStatusCommon(MonitorJobWaitForParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), "job name not specified");
         ValidateUtils.checkIllegalParameter(params.getJobName().get().isEmpty(), "job name not specified");
@@ -502,7 +502,7 @@ public class JobMonitor {
         if (params.getWatchDelay().isEmpty()) {
             params.setWatchDelay(watchDelay);
         }
-        return pollForStatus(params);
+        return pollByStatus(params);
     }
 
 }

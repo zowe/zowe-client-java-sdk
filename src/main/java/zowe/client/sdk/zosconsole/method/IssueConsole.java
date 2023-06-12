@@ -172,14 +172,14 @@ public class IssueConsole {
     }
 
     /**
-     * Simple issue console command method. Does not accept parameters, so all defaults on the z/OSMF API are taken.
+     * Issue console command method. Does not accept parameters, so all defaults on the z/OSMF API are taken.
      *
      * @param theCommand string command to issue
      * @return command response on resolve, see ConsoleResponse object
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ConsoleResponse issueSimpleCommand(String theCommand) throws Exception {
+    public ConsoleResponse issueCommand(String theCommand) throws Exception {
         final IssueParams params = new IssueParams();
         params.setCommand(theCommand);
         return issueCommand(params);
