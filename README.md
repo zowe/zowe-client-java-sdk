@@ -17,12 +17,13 @@ The Java SDK lets you leverage the underlying z/OSMF REST APIs on a z/OS system 
 For instance, one API package provides the ability to upload and download z/OS data sets. You can leverage that package to rapidly build a client application that interacts with data sets.
 
 The Java SDK joins an existing community of language-specific SDKs: Python, NodeJS, Swift, and Kotlin. It provides the Java community with similar capabilities based on the NodeJS SDK. It is in a mature state compared with NodeJS SDK functionality.
-
-This SDK differs from some others with the MonitorJobs package adding prebuilt functionality for automation tasks.  
   
-Issues worked on documenting main feature set provided can be view within MVP issues [#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) and [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219).
+This SDK differs from some others with the JobMonitor package adding prebuilt functionality for automation tasks.  
   
-Prebuilt API services package/class:  
+Issues worked on documenting main feature set provided can be view within the following MVP issues:  
+[#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219) [#3](https://github.com/zowe/zowe-client-java-sdk/issues/281)
+  
+Prebuilt API services located in the following classes:  
 
 zowe.client.sdk.zosconsole.method  
   
@@ -39,9 +40,9 @@ zowe.client.sdk.zosfiles.dsn.methods
   
 zowe.client.sdk.zosfiles.uss.methods  
     
-    UssChangeMode
-    UssChangeOwner
-    UssChangeTag
+    UssChMod
+    UssChOwn
+    UssChTag
     UssCopy
     UssCreate
     UssDelete
