@@ -23,7 +23,7 @@ This SDK differs from some others with the JobMonitor package adding prebuilt fu
 Issues worked on documenting main feature set provided can be view within the following MVP issues:  
 [#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219) [#3](https://github.com/zowe/zowe-client-java-sdk/issues/281)
   
-Prebuilt API services located in the following classes:  
+Prebuilt API services located in the following packages/classes:  
 
 zowe.client.sdk.zosconsole.method  
   
@@ -64,12 +64,12 @@ zowe.client.sdk.zosjobs.methods
 
 zowe.client.sdk.zoslogs.method  
   
-    ZosGetLog  
+    ZosLog  
 
 zowe.client.sdk.zosmfinfo.methods  
   
-    ZosmfGetStatus
-    ZosmfGetSystems 
+    ZosmfStatus
+    ZosmfSystems 
 
 zowe.client.sdk.zostso.method  
   
@@ -81,14 +81,20 @@ zowe.client.sdk.zosuss.method
           
 ## TeamConfig Package  
   
-The TeamConfig package provides API method(s) to retrieve a profile section from Zowe Global Team Configuration with keytar information to help perform connection processing without hard coding username and password. Keytar represents credentials stored securely on your computer when performing the Zowe global initialize [command](https://docs.zowe.org/stable/user-guide/cli-using-initializing-team-configuration/) which prompts you for username and password.   
+The TeamConfig package provides API methods to retrieve a profile section from Zowe Global Team Configuration with keytar information to help perform connection processing without hard coding username and password. Keytar represents credentials stored securely on your computer when performing the Zowe global initialize [command](https://docs.zowe.org/stable/user-guide/cli-using-initializing-team-configuration/) which prompts you for username and password.   
   
 TeamConfig class only supports Zowe Global Team Configuration provided by Zowe V2.  
   
-If you have Zowe CLI on your system with Global Team Configuration initialized, you can use TeamConfig API method(s) to retrieve a profile type which will include the secure username and password information stored in our OS credential store manager.   
+If you have Zowe CLI on your system with Global Team Configuration initialized, you can use TeamConfig API methods to retrieve a profile type which will include the secure username and password information stored in our OS credential store manager.   
   
 You can use this information to create a dynamic ZOSConnection object to perform zosmf authentication for the all the other packages. This avoids the need to hard code values.    
-
+  
+See following package/class:  
+  
+zowe.client.sdk.zosmfinfo  
+    
+    TeamConfig
+  
 ## Http Rest Processing
 
 Http functionality used by the SDK via Unirest for Java.
