@@ -6,6 +6,7 @@ Copyright Contributors to the Zowe Project.
 
 # Zowe Java Client SDK
 
+![](https://img.shields.io/badge/license-EPL--2.0-blue)
 [![Maven Central](https://img.shields.io/maven-central/v/org.zowe.client.java.sdk/zowe-client-java-sdk.svg?label=Maven%20Central)](https://central.sonatype.com/search?q=org.zowe.client.java.sdk&smo=true)
 [![javadoc](https://javadoc.io/badge2/org.zowe.client.java.sdk/zowe-client-java-sdk/javadoc.svg)](https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk)
 
@@ -16,50 +17,88 @@ The Java SDK lets you leverage the underlying z/OSMF REST APIs on a z/OS system 
 For instance, one API package provides the ability to upload and download z/OS data sets. You can leverage that package to rapidly build a client application that interacts with data sets.
 
 The Java SDK joins an existing community of language-specific SDKs: Python, NodeJS, Swift, and Kotlin. It provides the Java community with similar capabilities based on the NodeJS SDK. It is in a mature state compared with NodeJS SDK functionality.
+  
+This SDK differs from some others with the JobMonitor package adding prebuilt functionality for automation tasks.  
+  
+Issues worked on documenting main feature set provided can be view within the following MVP issues:  
+[#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219) [#3](https://github.com/zowe/zowe-client-java-sdk/issues/281)
+  
+Prebuilt API services located in the following packages/classes:  
 
-This SDK differs from some others with the MonitorJobs package adding prebuilt functionality for automation tasks.  
+zowe.client.sdk.zosconsole.method  
   
-Issues worked on documenting main feature set provided can be view within MVP issues [#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) and [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219).
+    IssueConsole
   
-Class names providing prebuilt API services:
+zowe.client.sdk.zosfiles.dsn.methods  
+  
+    DsnCopy
+    DsnCreate
+    DsnDelete
+    DsnGet
+    DsnList
+    DsnWrite
+  
+zowe.client.sdk.zosfiles.uss.methods  
+    
+    UssChMod
+    UssChOwn
+    UssChTag
+    UssCopy
+    UssCreate
+    UssDelete
+    UssExtAttrs
+    UssGet
+    UssList
+    UssMount
+    UssSetAcl
+    UssUnmount
+    UssWrite
 
-    CancelJobs
-    CheckStatus (zosmf info)
-    CreateDataset  
-    CopyDataset
-    DeleteDataset 
-    DeleteJobs
-    DownloadDataset  
-    GetJobs
-    GetZosLog (operlog or syslog)
-    IssueCommand (mvs commands)  
-    IssueTso 
-    ListDataset  
-    ListDefinedSystems (zosmf info)
-    MonitorJobs  
-    Shell (uss commands)
-    SubmitJobs  
-    TeamConfig (OS Credential store and Zowe Global Team Configuration info)  
-    WriteDataset
+zowe.client.sdk.zosjobs.methods
   
+    JobCancel
+    JobDelete
+    JobGet
+    JobMonitor
+    JobSubmit
+
+zowe.client.sdk.zoslogs.method  
+  
+    ZosLog  
+
+zowe.client.sdk.zosmfinfo.methods  
+  
+    ZosmfStatus
+    ZosmfSystems 
+
+zowe.client.sdk.zostso.method  
+  
+    IssueTso    
+
+zowe.client.sdk.zosuss.method  
+  
+    IssueUss   
+          
 ## TeamConfig Package  
   
-The TeamConfig package provides API method(s) to retrieve a profile section from Zowe Global Team Configuration with keytar information to help perform connection processing without hard coding username and password. Keytar represents credentials stored securely on your computer when performing the Zowe global initialize [command](https://docs.zowe.org/stable/user-guide/cli-using-initializing-team-configuration/) which prompts you for username and password.   
+The TeamConfig package provides API methods to retrieve a profile section from Zowe Global Team Configuration with keytar information to help perform connection processing without hard coding username and password. Keytar represents credentials stored securely on your computer when performing the Zowe global initialize [command](https://docs.zowe.org/stable/user-guide/cli-using-initializing-team-configuration/) which prompts you for username and password.   
   
 TeamConfig class only supports Zowe Global Team Configuration provided by Zowe V2.  
   
-If you have Zowe CLI on your system with Global Team Configuration initialized, you can use TeamConfig API method(s) to retrieve a profile type which will include the secure username and password information stored in our OS credential store manager.   
+If you have Zowe CLI on your system with Global Team Configuration initialized, you can use TeamConfig API methods to retrieve a profile type which will include the secure username and password information stored in our OS credential store manager.   
   
 You can use this information to create a dynamic ZOSConnection object to perform zosmf authentication for the all the other packages. This avoids the need to hard code values.    
-
-## Unirest Package - PREVIEW FEATURE
+  
+See following package/class:  
+  
+zowe.client.sdk.zosmfinfo  
+    
+    TeamConfig
+  
+## Http Rest Processing
 
 Http functionality used by the SDK via Unirest for Java.
-
-This package provides an alternative to the legacy org.apache.http library implemented and in place since the beginning.
-
-With legacy, http request failure does not retrieve the IBM z/OSMF's JSON error report document which provides IBM error information on why the REST API request failed. Legacy returns http response status error code with basic error status text and custom SDK speculative description on possible causes of the error.   
-
+  
 Unirest library provides the ability to retrieve JSON error document.
 
 For example, the following http GET request will result in an HTTP 500 error:
@@ -69,10 +108,6 @@ For example, the following http GET request will result in an HTTP 500 error:
 and the JSON error report document body response is:
 
     {"rc":4,"reason":13,"category":1,"message":"query parm dslevel= or volser= must be specified"} 
-
-At the moment the legacy rest processing will stay in place while Unirest is given a test drive.
-
-You are welcome to use unirest processing by importing the API classes existing within the unirest package in your project. 
   
 ## Requirements  
     
@@ -110,4 +145,3 @@ https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk/latest/inde
 
 https://mvnrepository.com/artifact/org.zowe.client.java.sdk/zowe-client-java-sdk  
   
-

@@ -12,9 +12,10 @@ package zowe.client.sdk.utility;
 import org.junit.Test;
 
 /**
- * Class containing unit tests for ConsoleUtils.
+ * Class containing unit test for ConsoleUtils.
  *
  * @author Frank Giordano
+ * @version 2.0
  */
 public class ConsoleUtilsTest {
 

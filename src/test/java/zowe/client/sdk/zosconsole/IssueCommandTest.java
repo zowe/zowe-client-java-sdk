@@ -17,17 +17,19 @@ import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosconsole.input.IssueParams;
+import zowe.client.sdk.zosconsole.method.IssueConsole;
+import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyString;
 
 /**
  * Class containing unit tests for IssueCommand.
  *
  * @author Frank Giordano
+ * @version 2.0
  */
 public class IssueCommandTest {
 
@@ -45,12 +47,12 @@ public class IssueCommandTest {
         final Map<String, Object> jsonMap = new HashMap<String, Object>();
         jsonMap.put("cmd-response", "student");
         final JSONObject json = new JSONObject(jsonMap);
-        Mockito.when(jsonGetRequest.executeRequest()).thenReturn(new Response(json, 200));
-        Mockito.doNothing().when(jsonGetRequest).setRequest(anyString());
-        final IssueCommand issueCommand = new IssueCommand(connection, jsonGetRequest);
+        Mockito.when(jsonGetRequest.executeRequest()).thenReturn(
+                new Response(json, 200, "success"));
+        final IssueConsole issueCommand = new IssueConsole(connection, jsonGetRequest);
         final IssueParams issueParams = new IssueParams();
         issueParams.setCommand("test");
-        final ConsoleResponse response = issueCommand.issue(issueParams);
+        final ConsoleResponse response = issueCommand.issueCommand(issueParams);
         assertEquals("student",
                 response.getCommandResponse()
                         .orElse("n/a")
@@ -63,12 +65,12 @@ public class IssueCommandTest {
         final var jsonMap = new HashMap<String, Object>();
         jsonMap.put("cmd-response-url", "student");
         final JSONObject json = new JSONObject(jsonMap);
-        Mockito.when(jsonGetRequest.executeRequest()).thenReturn(new Response(json, 200));
-        Mockito.doNothing().when(jsonGetRequest).setRequest(anyString());
-        IssueCommand issueCommand = new IssueCommand(connection, jsonGetRequest);
+        Mockito.when(jsonGetRequest.executeRequest()).thenReturn(
+                new Response(json, 200, "success"));
+        IssueConsole issueCommand = new IssueConsole(connection, jsonGetRequest);
         IssueParams issueParams = new IssueParams();
         issueParams.setCommand("test");
-        ConsoleResponse response = issueCommand.issue(issueParams);
+        ConsoleResponse response = issueCommand.issueCommand(issueParams);
         assertEquals("student",
                 response.getCmdResponseUrl()
                         .orElse("n/a")
@@ -79,18 +81,18 @@ public class IssueCommandTest {
     @Test
     public void tstIssueCommandHttpErrorFailure() throws Exception {
         final String obj = "Unauthorized";
-        Mockito.when(jsonGetRequest.executeRequest()).thenReturn(new Response(obj, 401));
-        Mockito.doNothing().when(jsonGetRequest).setRequest(anyString());
-        final IssueCommand issueCommand = new IssueCommand(connection, jsonGetRequest);
+        Mockito.when(jsonGetRequest.executeRequest()).thenReturn(
+                new Response(obj, 401, "auth error"));
+        final IssueConsole issueCommand = new IssueConsole(connection, jsonGetRequest);
         final IssueParams issueParams = new IssueParams();
         issueParams.setCommand("test");
         String errorMsg = "";
         try {
-            issueCommand.issue(issueParams);
+            issueCommand.issueCommand(issueParams);
         } catch (Exception e) {
             errorMsg = e + "";
         }
-        assertEquals("java.lang.Exception: Http error code 401 Unauthorized.", errorMsg);
+        assertEquals("java.lang.Exception: Unauthorized", errorMsg);
     }
 
 }

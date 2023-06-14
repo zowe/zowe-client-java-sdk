@@ -10,7 +10,7 @@
 package zowe.client.sdk.utility;
 
 import zowe.client.sdk.rest.ZosmfHeaders;
-import zowe.client.sdk.zosfiles.input.DownloadParams;
+import zowe.client.sdk.zosfiles.dsn.input.DownloadParams;
 
 import java.util.HashMap;
 import java.util.Map;

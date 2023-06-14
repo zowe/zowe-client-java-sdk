@@ -1,4 +1,4 @@
 /**
- * USS commands via SSH connection package
+ * z/OS ssh unix system services package
  */
 package zowe.client.sdk.zosuss;

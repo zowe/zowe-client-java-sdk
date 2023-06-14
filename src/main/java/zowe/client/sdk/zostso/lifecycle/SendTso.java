@@ -18,8 +18,9 @@ import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
-import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.unirest.TsoUtils;
+import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.SendTsoParams;
 import zowe.client.sdk.zostso.message.TsoMessage;
@@ -36,7 +37,7 @@ import java.util.List;
  * Class to handle sending data to TSO
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class SendTso {
 
@@ -144,17 +145,12 @@ public class SendTso {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
-        request.setRequest(url, "");
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return new ZosmfTsoResponse.Builder().build();
-        }
+        request.setUrl(url);
+        request.setBody("");
 
-        try {
-            RestUtils.checkHttpErrors(response);
-        } catch (Exception e) {
-            final String errorMsg = e.getMessage();
-            throw new Exception("Follow up TSO Messages from TSO command cannot be retrieved. " + errorMsg);
+        final Response response = UniRestUtils.getResponse(request);
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
         }
 
         return TsoUtils.getZosmfTsoResponse(response);
@@ -219,17 +215,12 @@ public class SendTso {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
-        request.setRequest(url, jobObjBody);
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return new ZosmfTsoResponse.Builder().build();
-        }
+        request.setUrl(url);
+        request.setBody(jobObjBody);
 
-        try {
-            RestUtils.checkHttpErrors(response);
-        } catch (Exception e) {
-            final String errorMsg = e.getMessage();
-            throw new Exception("No results from executing tso command after getting TSO address space. " + errorMsg);
+        final Response response = UniRestUtils.getResponse(request);
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
         }
 
         return TsoUtils.getZosmfTsoResponse(response);

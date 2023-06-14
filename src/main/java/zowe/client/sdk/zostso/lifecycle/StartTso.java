@@ -19,8 +19,9 @@ import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
-import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.unirest.TsoUtils;
+import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StartTsoParams;
 import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
@@ -31,7 +32,7 @@ import zowe.client.sdk.zostso.response.StartStopResponses;
  * Start TSO address space and receive servlet key
  *
  * @author Frank Giordano
- * @version 1.0
+ * @version 2.0
  */
 public class StartTso {
 
@@ -158,18 +159,14 @@ public class StartTso {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
         }
-        request.setRequest(url, null);
-        final Response response = request.executeRequest();
-        if (response.isEmpty()) {
-            return new ZosmfTsoResponse.Builder().build();
+        request.setUrl(url);
+        request.setBody("");
+
+        final Response response = UniRestUtils.getResponse(request);
+        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+            throw new Exception(response.getResponsePhrase().get().toString());
         }
 
-        try {
-            RestUtils.checkHttpErrors(response);
-        } catch (Exception e) {
-            final String errorMsg = e.getMessage();
-            throw new Exception("No results from executing tso command while setting up TSO address space. " + errorMsg);
-        }
         return TsoUtils.getZosmfTsoResponse(response);
     }
 

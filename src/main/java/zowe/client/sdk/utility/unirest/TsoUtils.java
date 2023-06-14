@@ -12,7 +12,7 @@ package zowe.client.sdk.utility.unirest;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import zowe.client.sdk.rest.unirest.Response;
+import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;

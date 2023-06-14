@@ -16,33 +16,35 @@ import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZOSConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.TextGetRequest;
+import zowe.client.sdk.zosjobs.methods.JobGet;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * Class containing unit tests for GetJobs.
+ * Class containing unit tests for JobGet.
  *
  * @author Frank Giordano
+ * @version 2.0
  */
 public class GetJobsByTextGetRequestTest {
 
     private TextGetRequest request;
-    private GetJobs getJobs;
+    private JobGet getJobs;
 
     @Before
     public void init() {
         request = Mockito.mock(TextGetRequest.class);
         ZOSConnection connection = new ZOSConnection("1", "1", "1", "1");
-        getJobs = new GetJobs(connection);
+        getJobs = new JobGet(connection);
         Whitebox.setInternalState(getJobs, "request", request);
     }
 
     @Test
     public void tstGetSpoolContentByIdSuccess() throws Exception {
-        Response response = new Response("1\n2\n3\n", 200);
+        Response response = new Response("1\n2\n3\n", 200, "success");
         Mockito.when(request.executeRequest()).thenReturn(response);
 
-        String results = getJobs.getSpoolContentById("jobName", "jobId", 1);
+        String results = getJobs.getSpoolContent("jobName", "jobId", 1);
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
         assertEquals("1\n2\n3\n", results);
     }

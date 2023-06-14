@@ -20,7 +20,7 @@ import zowe.client.sdk.teamconfig.model.ProfileDao;
 import zowe.client.sdk.teamconfig.service.KeyTarService;
 import zowe.client.sdk.teamconfig.service.TeamConfigService;
 import zowe.client.sdk.zosfiles.ZosDsnList;
-import zowe.client.sdk.zosfiles.input.ListParams;
+import zowe.client.sdk.zosfiles.dsn.input.ListParams;
 
 import java.util.List;
 

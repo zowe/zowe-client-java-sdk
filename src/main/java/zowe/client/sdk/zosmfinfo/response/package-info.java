@@ -1,4 +1,4 @@
 /**
- * Response objects for zosmf info processing
+ * Response objects for z/OSMF info processing
  */
 package zowe.client.sdk.zosmfinfo.response;

@@ -12,6 +12,12 @@ package zowe.client.sdk.rest;
 import org.junit.Test;
 import zowe.client.sdk.utility.Utils;
 
+/**
+ * Class containing unit test for QueryConstantsTest.
+ *
+ * @author Frank Giordano
+ * @version 2.0
+ */
 public class QueryConstantsTest {
 
     /**

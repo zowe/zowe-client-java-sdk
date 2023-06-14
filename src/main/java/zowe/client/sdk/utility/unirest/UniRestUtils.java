@@ -11,8 +11,8 @@ package zowe.client.sdk.utility.unirest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.rest.unirest.Response;
-import zowe.client.sdk.rest.unirest.ZoweRequest;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.utility.RestUtils;
 
 /**

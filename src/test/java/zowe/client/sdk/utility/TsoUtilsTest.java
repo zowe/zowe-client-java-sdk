@@ -44,7 +44,7 @@ public class TsoUtilsTest {
     public void tstGetZosmfTsoResponseMissingQueueIDJsonFieldFail() throws Exception {
         final String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"tsoData\":" +
                 "[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":\"--> LOGON proc version = 04/28/2011\"}}]}";
-        final Response response = new Response(new JSONParser().parse(json), 200);
+        final Response response = new Response(new JSONParser().parse(json), 200, "success");
         String msg = null;
         try {
             TsoUtils.getZosmfTsoResponse(response);
@@ -58,7 +58,7 @@ public class TsoUtilsTest {
     public void tstGetZosmfTsoResponseMissingServletKeyJsonFieldFail() throws Exception {
         final String json = "{\"ver\":\"0100\",\"queueID\":\"0100\",\"tsoData\":\n" +
                 "[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":\"--> LOGON proc version = 04/28/2011\"}}]}";
-        final Response response = new Response(new JSONParser().parse(json), 200);
+        final Response response = new Response(new JSONParser().parse(json), 200, "success");
         String msg = null;
         try {
             TsoUtils.getZosmfTsoResponse(response);
@@ -72,7 +72,7 @@ public class TsoUtilsTest {
     public void tstGetZosmfTsoResponseMissingTsoDataJsonFieldFailWithEmptyResults() throws Exception {
         final String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"queueID\":\"0100\"," +
                 "\"reused\":true,\"timeout\":true}";
-        final Response response = new Response(new JSONParser().parse(json), 200);
+        final Response response = new Response(new JSONParser().parse(json), 200, "success");
         final ZosmfTsoResponse zosmfTsoResponse = TsoUtils.getZosmfTsoResponse(response);
         assertTrue(zosmfTsoResponse.getTsoData().isEmpty());
     }
@@ -81,7 +81,7 @@ public class TsoUtilsTest {
     public void tstGetZosmfTsoResponseMissingVerJsonFieldFail() throws Exception {
         final String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"queueID\":\"0100\",\"tsoData\":" +
                 "[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":\"--> LOGON proc version = 04/28/2011\"}}]}";
-        final Response response = new Response(new JSONParser().parse(json), 200);
+        final Response response = new Response(new JSONParser().parse(json), 200, "success");
         String msg = null;
         try {
             TsoUtils.getZosmfTsoResponse(response);
@@ -106,7 +106,7 @@ public class TsoUtilsTest {
 
     @Test
     public void tstGetZosmfTsoResponseResultsNullStatusCodeErrorFail() {
-        Response response = new Response(null, 10);
+        Response response = new Response(null, 10, "fail");
         String msg = null;
         try {
             TsoUtils.getZosmfTsoResponse(response);
@@ -118,7 +118,7 @@ public class TsoUtilsTest {
 
     @Test
     public void tstGetZosmfTsoResponseResultsNullStatusCodeNonErrorFail() {
-        Response response = new Response(null, 200);
+        Response response = new Response(null, 200, "success");
         String msg = null;
         try {
             TsoUtils.getZosmfTsoResponse(response);
@@ -134,7 +134,7 @@ public class TsoUtilsTest {
                 "\"reused\":true,\"timeout\":true,\"tsoData\":[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":" +
                 "\"--> LOGON proc version = 04/28/2011\"}},{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":" +
                 "\"hidden\"}}]}";
-        final Response response = new Response(new JSONParser().parse(json), 200);
+        final Response response = new Response(new JSONParser().parse(json), 200, "success");
         final ZosmfTsoResponse zosmfTsoResponse = TsoUtils.getZosmfTsoResponse(response);
         assertFalse(zosmfTsoResponse.getTsoData().isEmpty());
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty());
@@ -160,7 +160,7 @@ public class TsoUtilsTest {
         final String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"queueID\":\"0100\"," +
                 "\"reused\":true,\"timeout\":true,\"tsoData\":[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":" +
                 "\"--> LOGON proc version = 04/28/2011\"}}]}";
-        final Response response = new Response(new JSONParser().parse(json), 200);
+        final Response response = new Response(new JSONParser().parse(json), 200, "success");
         final ZosmfTsoResponse zosmfTsoResponse = TsoUtils.getZosmfTsoResponse(response);
         assertFalse(zosmfTsoResponse.getTsoData().isEmpty());
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty());
@@ -180,7 +180,7 @@ public class TsoUtilsTest {
         final String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"queueID\":\"0100\"," +
                 "\"reused\":true,\"timeout\":true,\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":" +
                 "\"--> LOGON proc version = 04/28/2011\"}}]}";
-        final Response response = new Response(new JSONParser().parse(json), 200);
+        final Response response = new Response(new JSONParser().parse(json), 200, "success");
         final ZosmfTsoResponse zosmfTsoResponse = TsoUtils.getZosmfTsoResponse(response);
         assertFalse(zosmfTsoResponse.getTsoData().isEmpty());
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty());
@@ -197,7 +197,7 @@ public class TsoUtilsTest {
 
     @Test
     public void tstGetZosmfTsoResponseStatusCodeFail() throws Exception {
-        final Response response = new Response("error", 10);
+        final Response response = new Response("error", 10, "fail");
         final ZosmfTsoResponse zosmfTsoResponse = TsoUtils.getZosmfTsoResponse(response);
         String errorValue = zosmfTsoResponse.getMsgData().get(0).getMessageText().get();
         assertEquals("error", errorValue);
