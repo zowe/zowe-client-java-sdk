@@ -20,7 +20,7 @@ The Java SDK joins an existing community of language-specific SDKs: Python, Node
   
 This SDK may differ from some others with the JobMonitor class adding prebuilt functionality for automation tasks.  
   
-Issues worked on documenting main feature set provided can be view within the following MVP issues:  
+Issues worked on documenting main feature set provided can be viewed within the following MVP issues:  
 [#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219) [#3](https://github.com/zowe/zowe-client-java-sdk/issues/281)
   
 Prebuilt API services located in the following packages/classes:  
