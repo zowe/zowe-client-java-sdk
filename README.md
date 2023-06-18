@@ -18,7 +18,7 @@ For instance, one API package provides the ability to upload and download z/OS d
 
 The Java SDK joins an existing community of language-specific SDKs: Python, NodeJS, Swift, and Kotlin. It provides the Java community with similar capabilities based on the NodeJS SDK. It is in a mature state compared with NodeJS SDK functionality.
   
-This SDK differs from some others with the JobMonitor package adding prebuilt functionality for automation tasks.  
+This SDK may differ from some others with the JobMonitor class adding prebuilt functionality for automation tasks.  
   
 Issues worked on documenting main feature set provided can be view within the following MVP issues:  
 [#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219) [#3](https://github.com/zowe/zowe-client-java-sdk/issues/281)
@@ -96,8 +96,8 @@ zowe.client.sdk.teamconfig
     TeamConfig
   
 ## Http Rest Processing
-
-Http functionality used by the SDK via Unirest for Java.
+  
+SDK release version 2 and above uses Unirest for Java for Http functionality.  
   
 Unirest library provides the ability to retrieve JSON error document.
 
