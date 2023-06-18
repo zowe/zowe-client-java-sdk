@@ -96,17 +96,17 @@ zowe.client.sdk.teamconfig
     TeamConfig
   
 ## Http Rest Processing
-  
+   
 SDK release version 2 and above uses Unirest for Java for Http functionality.  
+   
+Unirest library provides the ability to retrieve JSON error document.  
   
-Unirest library provides the ability to retrieve JSON error document.
-
-For example, the following http GET request will result in an HTTP 500 error:
-
+For example, the following http GET request will result in an HTTP 500 error:  
+  
     https://xxxxxxx.xxxxx.net:xxxx/zosmf/restfiles/ds?
-
-and the JSON error report document body response is:
-
+  
+and the JSON error report document body response is:  
+  
     {"rc":4,"reason":13,"category":1,"message":"query parm dslevel= or volser= must be specified"} 
   
 ## Requirements  
