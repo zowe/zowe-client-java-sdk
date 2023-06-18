@@ -99,7 +99,7 @@ zowe.client.sdk.teamconfig
    
 SDK release version 2 and above uses Unirest for Java for Http functionality.  
    
-Unirest library provides the ability to retrieve IBM's JSON error document.  
+Unirest library provides the ability to retrieve IBM z/OSMF JSON error document.  
   
 For example, the following http GET request will result in an HTTP 500 error:  
   
