@@ -91,7 +91,7 @@ You can use this information to create a dynamic ZOSConnection object to perform
   
 See following package/class:  
   
-zowe.client.sdk.zosmfinfo  
+zowe.client.sdk.teamconfig  
     
     TeamConfig
   
