@@ -1,8 +1,10 @@
 # Zos Logs Package
 
-Contains APIs to interact with retrieving z/OS log (OPERLOG or SYSLOG) information on z/OS (using z/OSMF logs REST
-endpoints).
+Contains API to interact with retrieving z/OS log (OPERLOG or SYSLOG) information on z/OS (using z/OSMF logs REST
+endpoints).  
 
+API located in method package.  
+  
 ## API Examples
 
 **Retrieve syslog from a start time and time range**

@@ -1,8 +1,10 @@
 # z/OS USS Package
 
-Contains Shell class to execute USS (Unix System Serves) commands via SSH connection.
+Contains API to execute USS (Unix System Serves) commands via SSH connection.  
 
-## Example
+API located in method package.    
+  
+## API Example
 
 ````java
 package zowe.client.sdk.examples.zosuss;
