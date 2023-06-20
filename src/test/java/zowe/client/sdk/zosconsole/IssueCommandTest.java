@@ -82,7 +82,7 @@ public class IssueCommandTest {
     public void tstIssueCommandHttpErrorFailure() throws Exception {
         final String obj = "Unauthorized";
         Mockito.when(jsonGetRequest.executeRequest()).thenReturn(
-                new Response(obj, 401, "auth error"));
+                new Response(obj, 401, "Unauthorized"));
         final IssueConsole issueCommand = new IssueConsole(connection, jsonGetRequest);
         final IssueParams issueParams = new IssueParams();
         issueParams.setCommand("test");
@@ -92,7 +92,7 @@ public class IssueCommandTest {
         } catch (Exception e) {
             errorMsg = e + "";
         }
-        assertEquals("java.lang.Exception: Unauthorized", errorMsg);
+        assertEquals("java.lang.Exception: 401 - Unauthorized", errorMsg);
     }
 
 }
