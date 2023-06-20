@@ -135,10 +135,6 @@ public class JobSubmit {
         request.setHeaders(headers);
 
         final Response response = RestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
         return JobUtils.parseJsonJobResponse(
                 ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
     }
@@ -189,10 +185,6 @@ public class JobSubmit {
         }
 
         final Response response = RestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
         return JobUtils.parseJsonJobResponse(
                 ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
     }
