@@ -109,21 +109,21 @@ public final class RestUtils {
     public static Response getResponse(ZoweRequest request) throws Exception {
         Response response = request.executeRequest();
 
-        if (response.getStatusCode().isEmpty()) {
-            throw new Exception("no response status code returned");
-        }
+        final int statusCode = response.getStatusCode()
+                .orElseThrow(() -> new Exception("no response status code returned"));
 
         if (response.getResponsePhrase().isEmpty()) {
             throw new Exception("no response phrase returned");
         }
 
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            if (response.getStatusText().isEmpty()) {
-                throw new Exception("no response status text returned");
-            }
-            LOG.debug("Rest status code {}", response.getStatusCode().get());
-            LOG.debug("Rest status text {}", response.getStatusText().get());
+        if (RestUtils.isHttpError(statusCode)) {
+            final String statusText = response.getStatusText()
+                    .orElseThrow(() -> new Exception("no response status text returned"));
+            LOG.debug("Rest status code {}", statusCode);
+            LOG.debug("Rest status text {}", statusText);
+            throw new Exception(statusCode + " - " + statusText);
         }
+
         return response;
     }
 
