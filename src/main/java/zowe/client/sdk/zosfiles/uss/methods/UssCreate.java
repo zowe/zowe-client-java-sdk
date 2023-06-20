@@ -26,6 +26,12 @@ import zowe.client.sdk.zosfiles.uss.input.CreateParams;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Provides unis system service create file or directory functionality
+ *
+ * @author James Kostrewski
+ * @version 2.0
+ */
 public class UssCreate {
 
     private static final Logger LOG = LoggerFactory.getLogger(UssCreate.class);
@@ -76,9 +82,9 @@ public class UssCreate {
     }
 
     /**
-     * Creates a new response with specified parameters
+     * Peform a create request
      *
-     * @param destName name of a file to create
+     * @param destName name of a file or dir to create
      * @param params   create response parameters, see CreateParams object
      * @return http response object
      * @throws Exception error processing request
