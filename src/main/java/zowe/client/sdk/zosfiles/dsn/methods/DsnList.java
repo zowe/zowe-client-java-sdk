@@ -133,7 +133,7 @@ public class DsnList {
             }
             LOG.debug("Rest status code {}", response.getStatusCode().get());
             LOG.debug("Rest status text {}", response.getStatusText().get());
-            throw new Exception(response.getResponsePhrase().get().toString());
+            throw new Exception((response.getStatusCode().get() + " - " + response.getResponsePhrase().get());
         }
 
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString());
