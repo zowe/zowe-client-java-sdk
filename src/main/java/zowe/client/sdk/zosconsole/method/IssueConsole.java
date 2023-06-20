@@ -148,10 +148,6 @@ public class IssueConsole {
         request.setBody(jsonRequestBody.toString());
 
         final Response response = RestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
         return ConsoleUtils.parseJsonIssueCmdResponse(
                 (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString()));
     }
