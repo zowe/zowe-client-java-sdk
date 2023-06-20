@@ -95,8 +95,7 @@ public class DsnCopy {
 
         final Map<String, Object> fromDataSetReq = new HashMap<>();
         fromDataSetReq.put("dsn", fromDataSetName);
-        if (member.length() > 0) // include a member if it was specified in fromDataSetName
-        {
+        if (member.length() > 0) { // include a member if it was specified in fromDataSetName
             fromDataSetReq.put("member", member);
         } else if (isFullPartitionCopy) {  // if true indicates a copy of all members in partition dataset to another
             fromDataSetReq.put("member", "*");

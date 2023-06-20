@@ -20,12 +20,12 @@ import java.util.Optional;
 public class CopyParams {
 
     /**
-     * The volume to copy from.
+     * The volume to copy from
      */
     private final Optional<String> fromVolser;
 
     /**
-     * The dataset to copy from.
+     * The dataset to copy from
      */
     private final Optional<String> fromDataSet;
 
