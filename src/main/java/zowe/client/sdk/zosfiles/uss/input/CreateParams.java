@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
-import java.util.Optional;
-
 /**
  * Interface for create UNIX files and directories
  * zOSMF REST API information:
@@ -35,11 +33,11 @@ public class CreateParams {
      * x: Permission to execute the file
      * -: No permission
      */
-    private final Optional<String> mode;
+    private final String mode;
     
-    private CreateParams(CreateParams.Builder builder) {
-        this.type = builder.type;
-        this.mode = Optional.ofNullable(builder.mode);
+    private CreateParams(UssType type, String mode) {
+        this.type = type;
+        this.mode = mode;
     }
 
     /**
@@ -56,7 +54,7 @@ public class CreateParams {
      * @return mode value
      * @author James Kostrewski
      */
-    public Optional<String> getMode() {
+    public String getMode() {
         return mode;
     }
     
@@ -68,24 +66,5 @@ public class CreateParams {
                 ", mode=" + mode +
                 "}";
     }
-    
-    public static class Builder {
-        private UssType type;
-        private String mode;
-        
-        public CreateParams.Builder type(UssType type) {
-            this.type = type;
-            return this;
-        }
-        
-        public CreateParams.Builder mode(String mode) {
-            this.mode = mode;
-            return this;
-        }
-        
-        public CreateParams build() {
-            return new CreateParams(this);
-        }
-    }
-   
+
 }

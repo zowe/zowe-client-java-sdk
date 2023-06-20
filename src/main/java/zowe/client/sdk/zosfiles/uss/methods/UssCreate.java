@@ -70,7 +70,7 @@ public class UssCreate {
     private static String buildBody(CreateParams params) {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("type", params.getType().getValue());
-        params.getMode().ifPresent(v -> jsonMap.put("mode", v));
+        jsonMap.put("mode", params.getMode());
 
         final JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
