@@ -271,10 +271,6 @@ public class JobGet {
             throw e;
         }
 
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
         final JSONArray results = (JSONArray) new JSONParser().parse(response.getResponsePhrase().get().toString());
         results.forEach(item -> {
             JSONObject jobObj = (JSONObject) item;
@@ -405,10 +401,6 @@ public class JobGet {
                 return files;
             }
             throw e;
-        }
-
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
         }
 
         final JSONArray results = (JSONArray) new JSONParser().parse(response.getResponsePhrase().get().toString());
