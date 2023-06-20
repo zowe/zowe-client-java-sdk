@@ -76,7 +76,7 @@ public class UssCreate {
         return jsonRequestBody.toString();
     }
     
-        /**
+    /**
      * Creates a new response with specified parameters
      *
      * @param destName name of a file to create
@@ -85,13 +85,12 @@ public class UssCreate {
      * @throws Exception error processing request
      * @author James Kostrewski
      */
-    public Response create(String destName, zowe.client.sdk.zosfiles.uss.input.CreateParams params) throws Exception {
+    public Response create(String destName, CreateParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(destName == null, "destName is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_USS_FILES + destName;
-
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + 
+            ZosFilesConstants.RESOURCE +  ZosFilesConstants.RES_USS_FILES + destName;
         LOG.debug(url);
 
         final String body = buildBody(params);
@@ -104,4 +103,5 @@ public class UssCreate {
 
         return RestUtils.getResponse(request);
     }
+    
 }
