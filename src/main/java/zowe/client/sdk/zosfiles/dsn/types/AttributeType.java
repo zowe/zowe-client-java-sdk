@@ -17,6 +17,7 @@ package zowe.client.sdk.zosfiles.dsn.types;
  * VOL return volume and dataset name properties and its values only.
  *
  * @author Frank Giordano
+ * @version 2.0
  */
 public enum AttributeType {
 

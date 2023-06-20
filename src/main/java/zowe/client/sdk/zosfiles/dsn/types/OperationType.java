@@ -13,6 +13,7 @@ package zowe.client.sdk.zosfiles.dsn.types;
  * Operation enum for identifying the type of dataset request that will be performed.
  *
  * @author Frank Giordano
+ * @version 2.0
  */
 public enum OperationType {
     CREATE, READ, COPY, DELETE, WRITE, DOWNLOAD
