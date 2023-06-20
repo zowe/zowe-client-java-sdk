@@ -99,12 +99,7 @@ public class DsnDelete {
         }
         request.setUrl(url);
 
-        final Response response = RestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
-        return response;
+        return RestUtils.getResponse(request);
     }
 
 }
