@@ -22,6 +22,12 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.CreateParams;
 
+/**
+ * Provides unix system service delete object functionality
+ *
+ * @author James Kostrewski
+ * @version 2.0
+ */
 public class UssDelete {
 
     private static final Logger LOG = LoggerFactory.getLogger(UssDelete.class);
@@ -29,7 +35,7 @@ public class UssDelete {
     private ZoweRequest request;
 
     /**
-     * Uss Delete Constructor
+     * UssDelete Constructor
      *
      * @param connection connection information, see ZOSConnection object
      * @author James Kostrewski
@@ -55,10 +61,10 @@ public class UssDelete {
     }
 
     /**
-     * Delete a UNIX object
+     * Perform a delete UNIX object request
      *
-     * @param destName name of a response to create (e.g. 'DATASET.LIB')
-     * @param params   create response parameters, see CreateParams object
+     * @param destName name of object
+     * @param params   delete response parameters, see DeleteParams object
      * @return http response object
      * @throws Exception error processing request
      * @author James Kostrewski
