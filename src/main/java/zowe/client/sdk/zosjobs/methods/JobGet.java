@@ -109,10 +109,6 @@ public class JobGet {
         request.setUrl(url);
 
         final Response response = RestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
         return (String) response.getResponsePhrase().get();
     }
 
