@@ -114,10 +114,6 @@ public class ZosLog {
         request.setUrl(url.toString());
 
         final Response response = RestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString());
         JSONArray jsonArray = new JSONArray();
         if (jsonObject.get("items") != null) {
