@@ -12,7 +12,10 @@ package zowe.client.sdk.zosfiles.uss.input;
 import java.util.Optional;
 
 /**
- * Utility class for USS methods
+ * Interface for create UNIX files and directories
+ * zOSMF REST API information:
+ * <a href="">https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-create-unix-file-directory</a>
+ * 
  * 
  * @author James Kostrewski
  */
@@ -22,7 +25,7 @@ public class CreateParams {
      * The request type. This field supports the values: directory or dir to
      * create a directory. file to create a file
      */
-    private final Optional<String> type;
+    private UssType type;
     
     /**
      * Specifies the file or directory permission bits to be used in creating
@@ -35,7 +38,7 @@ public class CreateParams {
     private final Optional<String> mode;
     
     private CreateParams(CreateParams.Builder builder) {
-        this.type = Optional.ofNullable(builder.type);
+        this.type = builder.type;
         this.mode = Optional.ofNullable(builder.mode);
     }
 
@@ -44,7 +47,7 @@ public class CreateParams {
      * @return type value
      * @author James Kostrewski
      */
-    public Optional<String> getType() {
+    public UssType getType() {
         return type;
     }
     
@@ -67,10 +70,10 @@ public class CreateParams {
     }
     
     public static class Builder {
-        private String type;
+        private UssType type;
         private String mode;
         
-        public CreateParams.Builder type(String type) {
+        public CreateParams.Builder type(UssType type) {
             this.type = type;
             return this;
         }

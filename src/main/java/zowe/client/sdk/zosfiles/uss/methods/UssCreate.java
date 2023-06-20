@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
-import zowe.client.sdk.utility.EncodeUtils;
+//import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.utility.unirest.UniRestUtils;
@@ -45,12 +45,13 @@ public class UssCreate {
     }
 
     /**
-     * Alternative DsnCreate constructor with ZoweRequest object. This is mainly
+     * Alternative UssCreate constructor with ZoweRequest object. This is mainly
      * used for internal code unit testing with mockito, and it is not
      * recommended to be used by the larger community.
      *
      * @param connection connection information, see ZOSConnection object
      * @param request any compatible ZoweRequest Interface type object
+     * @author James Kostrewski
      * @author Frank Giordano
      */
     public UssCreate(ZOSConnection connection, ZoweRequest request) {
@@ -68,7 +69,7 @@ public class UssCreate {
      */
     private static String buildBody(CreateParams params) {
         final Map<String, Object> jsonMap = new HashMap<>();
-        params.getType().ifPresent(v -> jsonMap.put("type", v));
+        jsonMap.put("type", params.getType().getValue());
         params.getMode().ifPresent(v -> jsonMap.put("mode", v));
 
         final JSONObject jsonRequestBody = new JSONObject(jsonMap);
@@ -79,16 +80,15 @@ public class UssCreate {
         /**
      * Creates a new response with specified parameters
      *
-     * @param destName name of a dataset to create (e.g. 'DATASET.LIB')
-     * @param params      create dataset parameters, see CreateParams object
+     * @param destName name of a file to create
+     * @param params      create response parameters, see CreateParams object
      * @return http response object
      * @throws Exception error processing request
      * @author James Kostrewski
      */
     public Response create(String destName, zowe.client.sdk.zosfiles.uss.input.CreateParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkNullParameter(destName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(destName.isEmpty(), "dataSetName not specified");
+        ValidateUtils.checkNullParameter(destName == null, "destName is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_USS_FILES + destName;
