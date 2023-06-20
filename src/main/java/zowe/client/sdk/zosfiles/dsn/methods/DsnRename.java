@@ -130,20 +130,23 @@ public class DsnRename {
      * @author Frank Giordano
      */
     public Response memberName(String dsName, String source, String destination) throws Exception {
-        setUrl(destination);
+        setUrl(dsName, destination);
         return executeRequest(buildBody(dsName, source));
     }
 
     /**
      * Set the global url value
      *
-     * @param destination new dataset or member name
+     * @param args new or current dataset name and/or new member name
      * @author Frank Giordano
      */
-    private void setUrl(String destination) {
+    private void setUrl(String... args) {
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
-                EncodeUtils.encodeURIComponent(destination);
+                EncodeUtils.encodeURIComponent(args[0]);
+        if (args.length > 1) {
+            url += "(" + EncodeUtils.encodeURIComponent(args[1]) + ")";
+        }
     }
 
 }
