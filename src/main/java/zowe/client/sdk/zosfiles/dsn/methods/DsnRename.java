@@ -21,7 +21,6 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 
 import java.util.HashMap;
@@ -64,23 +63,7 @@ public class DsnRename {
         this.connection = connection;
         this.request = request;
     }
-
-    public Response dataSetName(String source, String destination) throws Exception {
-        setUrl(destination);
-        return executeRequest(buildBody(source));
-    }
-
-    public Response memberName(String dsName, String source, String destination) throws Exception {
-        setUrl(destination);
-        return executeRequest(buildBody(dsName, source));
-    }
-
-    private void setUrl(String source) {
-        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
-                EncodeUtils.encodeURIComponent(source);
-    }
-
+    
     private String buildBody(String... args) {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "rename");
@@ -98,7 +81,12 @@ public class DsnRename {
         LOG.debug(String.valueOf(jsonRequestBody));
         return jsonRequestBody.toString();
     }
-
+    
+    public Response dataSetName(String source, String destination) throws Exception {
+        setUrl(destination);
+        return executeRequest(buildBody(source));
+    }
+    
     private Response executeRequest(String body) throws Exception {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
@@ -107,6 +95,17 @@ public class DsnRename {
         request.setBody(body);
 
         return RestUtils.getResponse(request);
+    }
+    
+    public Response memberName(String dsName, String source, String destination) throws Exception {
+        setUrl(destination);
+        return executeRequest(buildBody(dsName, source));
+    }
+    
+    private void setUrl(String source) {
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
+                EncodeUtils.encodeURIComponent(source);
     }
 
 }
