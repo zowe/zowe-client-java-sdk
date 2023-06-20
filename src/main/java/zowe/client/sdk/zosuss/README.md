@@ -1,9 +1,9 @@
 # z/OS USS Package
 
-Contains API to execute USS (Unix System Serves) commands via SSH connection.  
+Contains API to execute USS (Unix System Serves) commands via SSH connection.
 
-API located in method package.    
-  
+API located in method package.
+
 ## API Example
 
 ````java
