@@ -106,12 +106,7 @@ public class DsnRename {
         request.setUrl(url);
         request.setBody(body);
 
-        final Response response = UniRestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
-        return response;
+        return RestUtils.getResponse(request);
     }
 
 }
