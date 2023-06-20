@@ -110,10 +110,6 @@ public class StopTso {
         request.setUrl(url);
 
         final Response response = RestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
         return TsoUtils.parseJsonStopResponse(
                 (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString()));
     }
