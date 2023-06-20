@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Provides unis system service create file or directory functionality
+ * Provides unix system service create object functionality
  *
  * @author James Kostrewski
  * @version 2.0
@@ -82,9 +82,9 @@ public class UssCreate {
     }
 
     /**
-     * Peform a create request
+     * Perform a create UNIX object request
      *
-     * @param destName name of a file or dir to create
+     * @param destName name of object to create
      * @param params   create response parameters, see CreateParams object
      * @return http response object
      * @throws Exception error processing request
