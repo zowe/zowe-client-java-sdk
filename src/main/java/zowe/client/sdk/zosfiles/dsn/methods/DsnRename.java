@@ -104,6 +104,8 @@ public class DsnRename {
     }
 
     /**
+     * Execute the zowe http request
+     *
      * @param body json string value
      * @return Response object
      * @throws Exception processing error
