@@ -100,21 +100,4 @@ public final class JobUtils {
                 .procStepName((String) jsonObject.get("proc-step-name")).build();
     }
 
-    /**
-     * Formulate an exception to throw base on http error code
-     *
-     * @param params    ModifyJobParams object
-     * @param exception incoming exception to inspect and use
-     * @throws Exception error base on http error code
-     * @author Frank Giordano
-     */
-    public static void throwHttpException(ModifyJobParams params, Exception exception) throws Exception {
-        JobUtils.checkModifyJobParameters(params);
-        final String errorMsg = exception.getMessage();
-        if (errorMsg.contains("400")) {
-            throw new Exception(errorMsg + " JobId " + params.getJobId().orElse("n/a") + " may not exist.");
-        }
-        throw new Exception(errorMsg);
-    }
-
 }
