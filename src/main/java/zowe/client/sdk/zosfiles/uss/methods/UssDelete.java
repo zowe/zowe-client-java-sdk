@@ -9,9 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-//import java.util.HashMap;
-//import java.util.Map;
-//import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZOSConnection;
@@ -20,11 +17,10 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
-//import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
+import zowe.client.sdk.zosfiles.uss.input.CreateParams;
 
 public class UssDelete {
 
@@ -49,7 +45,7 @@ public class UssDelete {
      * recommended to be used by the larger community.
      *
      * @param connection connection information, see ZOSConnection object
-     * @param request any compatible ZoweRequest Interface type object
+     * @param request    any compatible ZoweRequest Interface type object
      * @author James Kostrewski
      * @author Frank Giordano
      */
@@ -58,17 +54,17 @@ public class UssDelete {
         this.connection = connection;
         this.request = request;
     }
-    
+
     /**
      * Delete a UNIX object
      *
      * @param destName name of a response to create (e.g. 'DATASET.LIB')
-     * @param params      create response parameters, see CreateParams object
+     * @param params   create response parameters, see CreateParams object
      * @return http response object
      * @throws Exception error processing request
      * @author James Kostrewski
      */
-    public Response delete(String destName, zowe.client.sdk.zosfiles.uss.input.CreateParams params) throws Exception {
+    public Response delete(String destName, CreateParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(destName == null, "destName is null");
 
@@ -83,4 +79,5 @@ public class UssDelete {
 
         return RestUtils.getResponse(request);
     }
+
 }
