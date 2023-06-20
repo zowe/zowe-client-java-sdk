@@ -22,7 +22,6 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StopTsoParams;
 import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
@@ -110,11 +109,7 @@ public class StopTso {
         }
         request.setUrl(url);
 
-        final Response response = UniRestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
+        final Response response = RestUtils.getResponse(request);
         return TsoUtils.parseJsonStopResponse(
                 (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString()));
     }

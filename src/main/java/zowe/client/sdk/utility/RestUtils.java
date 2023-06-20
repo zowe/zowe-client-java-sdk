@@ -17,6 +17,7 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZoweRequest;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -40,80 +41,32 @@ public final class RestUtils {
     }
 
     /**
-     * Return specialized http error message
+     * Perform zowe rest request and retrieve its response
      *
-     * @param response Response object
-     * @throws Exception containing specialized http error message
+     * @param request zowe request object
+     * @return response object
+     * @throws Exception response missing information
      * @author Frank Giordano
      */
-    public static void checkHttpErrors(Response response) throws Exception {
-        ValidateUtils.checkNullParameter(response == null, "response is null");
-        int httpCode;
-        if (response.getStatusCode().isPresent()) {
-            httpCode = response.getStatusCode().get();
-        } else {
-            throw new Exception("no http code value returned");
-        }
-        if (isHttpError(httpCode)) {
-            String responsePhrase = "";
-            if (response.getResponsePhrase().isPresent()) {
-                responsePhrase = (String) response.getResponsePhrase().get();
-            }
-            String errorMsg = "Http error code ";
-            if (!responsePhrase.isEmpty()) {
-                errorMsg += httpCode + " " + responsePhrase + ".";
-            } else {
-                errorMsg += httpCode + ".";
-            }
-            throw new Exception(errorMsg);
-        }
-    }
+    public static Response getResponse(ZoweRequest request) throws Exception {
+        Response response = request.executeRequest();
 
-    /**
-     * Retrieve response JSON entity content from httpResponse object
-     *
-     * @param httpResponse HttpResponse object
-     * @return response Json entity content
-     * @throws Exception due to extracting entity or parsing entity problem
-     * @author Frank Giordano
-     */
-    public static Object getJsonResponseEntity(HttpResponse httpResponse) throws Exception {
-        ValidateUtils.checkNullParameter(httpResponse == null, "httpResponse is null");
-        final HttpEntity entity = httpResponse.getEntity();
-        if (entity != null) {
-            final String result = EntityUtils.toString(entity);
-            LOG.debug("UtilRest::getJsonResponseEntity - result = {}", result);
-            final JSONParser parser = new JSONParser();
-            try {
-                if (result.isEmpty()) {
-                    return null;
-                } else {
-                    return parser.parse(result);
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
+        final int statusCode = response.getStatusCode()
+                .orElseThrow(() -> new Exception("no response status code returned"));
 
-    /**
-     * Retrieve response text entity content from httpResponse object
-     *
-     * @param httpResponse HttpResponse object
-     * @return response text entity content
-     * @throws Exception due to extracting entity or parsing entity problem
-     * @author Frank Giordano
-     */
-    public static Object getTextResponseEntity(HttpResponse httpResponse) throws Exception {
-        ValidateUtils.checkNullParameter(httpResponse == null, "httpResponse is null");
-        final HttpEntity entity = httpResponse.getEntity();
-        if (entity != null) {
-            String result = EntityUtils.toString(entity);
-            LOG.debug("UtilRest::getTextResponseEntity - result = {}", result);
-            return result;
+        if (response.getResponsePhrase().isEmpty()) {
+            throw new Exception("no response phrase returned");
         }
-        return null;
+
+        if (RestUtils.isHttpError(statusCode)) {
+            final String statusText = response.getStatusText()
+                    .orElseThrow(() -> new Exception("no response status text returned"));
+            LOG.debug("Rest status code {}", statusCode);
+            LOG.debug("Rest status text {}", statusText);
+            throw new Exception(statusCode + " - " + statusText);
+        }
+
+        return response;
     }
 
     /**

@@ -20,7 +20,6 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 
 /**
@@ -105,12 +104,7 @@ public class DsnWrite {
         request.setUrl(url);
         request.setBody(content);
 
-        final Response response = UniRestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
-        return response;
+        return RestUtils.getResponse(request);
     }
 
 }

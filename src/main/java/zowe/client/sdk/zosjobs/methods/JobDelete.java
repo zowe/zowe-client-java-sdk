@@ -17,7 +17,6 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.ModifyJobParams;
 import zowe.client.sdk.zosjobs.response.Job;
@@ -123,15 +122,10 @@ public class JobDelete {
         request.setHeaders(headers);
         request.setUrl(url);
 
-        final Response response = UniRestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
         // if synchronously response should contain job document that was cancelled and http return code
         // if asynchronously response should only contain http return code
         // let the caller handle the response json parsing
-        return response;
+        return RestUtils.getResponse(request);
     }
 
     /**

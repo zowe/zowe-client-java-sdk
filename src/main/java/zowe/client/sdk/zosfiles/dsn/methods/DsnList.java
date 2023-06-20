@@ -105,7 +105,7 @@ public class DsnList {
     @SuppressWarnings("unchecked")
     private <T> java.util.List<T> getResult(Response response, List<T> datasetLst, List<T> memberLst) throws Exception {
         if (response.getStatusCode().isEmpty()) {
-            LOG.debug("ZosDsnList::getResult - no status code returned");
+            LOG.debug("DsnList::getResult - no status code returned");
             if (datasetLst == null) {
                 return memberLst;
             } else {
@@ -114,7 +114,7 @@ public class DsnList {
         }
 
         if (response.getResponsePhrase().isEmpty()) {
-            LOG.debug("ZosDsnList::getResult - no response phrase returned");
+            LOG.debug("DsnList::getResult - no response phrase returned");
             if (datasetLst == null) {
                 return memberLst;
             } else {
@@ -124,7 +124,7 @@ public class DsnList {
 
         if (RestUtils.isHttpError(response.getStatusCode().get())) {
             if (response.getStatusText().isEmpty()) {
-                LOG.debug("ZosDsnList::getResult - no status text returned");
+                LOG.debug("DsnList::getResult - no status text returned");
                 if (datasetLst == null) {
                     return memberLst;
                 } else {
@@ -133,7 +133,7 @@ public class DsnList {
             }
             LOG.debug("Rest status code {}", response.getStatusCode().get());
             LOG.debug("Rest status text {}", response.getStatusText().get());
-            throw new Exception(response.getResponsePhrase().get().toString());
+            throw new Exception(response.getStatusCode().get() + " - " + response.getResponsePhrase().get());
         }
 
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString());

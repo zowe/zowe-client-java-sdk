@@ -21,7 +21,6 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.CommonJobParams;
 import zowe.client.sdk.zosjobs.input.GetJobParams;
@@ -109,11 +108,7 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final Response response = UniRestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
+        final Response response = RestUtils.getResponse(request);
         return (String) response.getResponsePhrase().get();
     }
 
@@ -177,7 +172,6 @@ public class JobGet {
     public List<Job> getByOwner(String owner) throws Exception {
         ValidateUtils.checkNullParameter(owner == null, "owner is null");
         ValidateUtils.checkIllegalParameter(owner.isEmpty(), "owner not specified");
-
         return getCommon(new GetJobParams.Builder(owner).build());
     }
 
@@ -268,17 +262,13 @@ public class JobGet {
 
         Response response;
         try {
-            response = UniRestUtils.getResponse(request);
+            response = RestUtils.getResponse(request);
         } catch (Exception e) {
             LOG.debug("GetJobs::getJobsCommon - {}", e.getMessage());
             if (e.getMessage().contains("no response phrase returned")) {
                 return jobs;
             }
             throw e;
-        }
-
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
         }
 
         final JSONArray results = (JSONArray) new JSONParser().parse(response.getResponsePhrase().get().toString());
@@ -328,11 +318,7 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final Response response = UniRestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
+        final Response response = RestUtils.getResponse(request);
         return (String) response.getResponsePhrase().get();
     }
 
@@ -361,11 +347,7 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final Response response = UniRestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
+        final Response response = RestUtils.getResponse(request);
         return (String) response.getResponsePhrase().get();
     }
 
@@ -412,17 +394,13 @@ public class JobGet {
 
         Response response;
         try {
-            response = UniRestUtils.getResponse(request);
+            response = RestUtils.getResponse(request);
         } catch (Exception e) {
             LOG.debug("GetJobs::getSpoolFilesCommon - {}", e.getMessage());
             if (e.getMessage().contains("no response phrase returned")) {
                 return files;
             }
             throw e;
-        }
-
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
         }
 
         final JSONArray results = (JSONArray) new JSONParser().parse(response.getResponsePhrase().get().toString());
@@ -508,11 +486,7 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final Response response = UniRestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
+        final Response response = RestUtils.getResponse(request);
         return JobUtils.parseJsonJobResponse(
                 ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
     }

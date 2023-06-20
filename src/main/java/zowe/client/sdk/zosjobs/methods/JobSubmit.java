@@ -20,7 +20,6 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.SubmitJclParams;
 import zowe.client.sdk.zosjobs.input.SubmitJobParams;
@@ -135,11 +134,7 @@ public class JobSubmit {
         request.setBody(body);
         request.setHeaders(headers);
 
-        final Response response = UniRestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
+        final Response response = RestUtils.getResponse(request);
         return JobUtils.parseJsonJobResponse(
                 ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
     }
@@ -189,11 +184,7 @@ public class JobSubmit {
             request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));
         }
 
-        final Response response = UniRestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
+        final Response response = RestUtils.getResponse(request);
         return JobUtils.parseJsonJobResponse(
                 ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
     }

@@ -23,7 +23,6 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.ConsoleUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.input.IssueParams;
 import zowe.client.sdk.zosconsole.input.ZosmfIssueParams;
@@ -148,11 +147,7 @@ public class IssueConsole {
         request.setUrl(url);
         request.setBody(jsonRequestBody.toString());
 
-        final Response response = UniRestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
+        final Response response = RestUtils.getResponse(request);
         return ConsoleUtils.parseJsonIssueCmdResponse(
                 (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString()));
     }
