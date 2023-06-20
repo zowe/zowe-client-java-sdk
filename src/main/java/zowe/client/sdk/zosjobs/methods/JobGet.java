@@ -172,7 +172,6 @@ public class JobGet {
     public List<Job> getByOwner(String owner) throws Exception {
         ValidateUtils.checkNullParameter(owner == null, "owner is null");
         ValidateUtils.checkIllegalParameter(owner.isEmpty(), "owner not specified");
-
         return getCommon(new GetJobParams.Builder(owner).build());
     }
 
@@ -353,10 +352,6 @@ public class JobGet {
         request.setUrl(url);
 
         final Response response = RestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
         return (String) response.getResponsePhrase().get();
     }
 
@@ -500,10 +495,6 @@ public class JobGet {
         request.setUrl(url);
 
         final Response response = RestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
         return JobUtils.parseJsonJobResponse(
                 ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
     }
