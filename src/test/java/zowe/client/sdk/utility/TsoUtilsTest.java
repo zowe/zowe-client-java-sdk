@@ -113,7 +113,7 @@ public class TsoUtilsTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        assertEquals("results not available", msg);
+        assertEquals("no response phrase", msg);
     }
 
     @Test
@@ -125,7 +125,7 @@ public class TsoUtilsTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        assertEquals("no results to parse", msg);
+        assertEquals("no response phrase", msg);
     }
 
     @Test
