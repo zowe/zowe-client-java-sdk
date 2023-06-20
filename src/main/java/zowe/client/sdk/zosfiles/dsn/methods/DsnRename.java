@@ -63,7 +63,14 @@ public class DsnRename {
         this.connection = connection;
         this.request = request;
     }
-    
+
+    /**
+     * Build request body to handle the incoming request
+     *
+     * @param args from dataset name and/or member name
+     * @return json string value
+     * @author Frank Giordano
+     */
     private String buildBody(String... args) {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "rename");
@@ -81,12 +88,27 @@ public class DsnRename {
         LOG.debug(String.valueOf(jsonRequestBody));
         return jsonRequestBody.toString();
     }
-    
+
+    /**
+     * Change the existing dataset name (source) to new dataset name (destination)
+     *
+     * @param source      existing dataset name
+     * @param destination new dataset name
+     * @return Response object
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
     public Response dataSetName(String source, String destination) throws Exception {
         setUrl(destination);
         return executeRequest(buildBody(source));
     }
-    
+
+    /**
+     * @param body json string value
+     * @return Response object
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
     private Response executeRequest(String body) throws Exception {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
@@ -96,16 +118,32 @@ public class DsnRename {
 
         return RestUtils.getResponse(request);
     }
-    
+
+    /**
+     * Change the existing member name (source) to new member name (destination) within a partition dataset
+     *
+     * @param dsName      from dataset name
+     * @param source      existing member name
+     * @param destination new member name
+     * @return Response object
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
     public Response memberName(String dsName, String source, String destination) throws Exception {
         setUrl(destination);
         return executeRequest(buildBody(dsName, source));
     }
-    
-    private void setUrl(String source) {
+
+    /**
+     * Set the global url value
+     *
+     * @param destination new dataset or member name
+     * @author Frank Giordano
+     */
+    private void setUrl(String destination) {
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
-                EncodeUtils.encodeURIComponent(source);
+                EncodeUtils.encodeURIComponent(destination);
     }
 
 }
