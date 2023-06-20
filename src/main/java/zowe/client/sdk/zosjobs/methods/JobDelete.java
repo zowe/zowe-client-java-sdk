@@ -17,7 +17,6 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.ModifyJobParams;
 import zowe.client.sdk.zosjobs.response.Job;
@@ -123,7 +122,7 @@ public class JobDelete {
         request.setHeaders(headers);
         request.setUrl(url);
 
-        final Response response = UniRestUtils.getResponse(request);
+        final Response response = RestUtils.getResponse(request);
         if (RestUtils.isHttpError(response.getStatusCode().get())) {
             throw new Exception(response.getResponsePhrase().get().toString());
         }

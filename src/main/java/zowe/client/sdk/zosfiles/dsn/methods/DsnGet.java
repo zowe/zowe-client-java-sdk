@@ -19,8 +19,8 @@ import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
+import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.dsn.input.DownloadParams;
 import zowe.client.sdk.zosfiles.dsn.input.ListParams;
@@ -155,7 +155,7 @@ public class DsnGet {
         request.setUrl(url);
         request.setHeaders(headers);
 
-        return new ByteArrayInputStream((byte[]) UniRestUtils.getResponse(request).getResponsePhrase().get());
+        return new ByteArrayInputStream((byte[]) RestUtils.getResponse(request).getResponsePhrase().get());
     }
 
 }

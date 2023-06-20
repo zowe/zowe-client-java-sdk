@@ -22,7 +22,6 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.utility.ZosmfUtils;
-import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosmfinfo.ZosmfConstants;
 import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
 
@@ -84,7 +83,7 @@ public class ZosmfSystems {
         }
         request.setUrl(url);
 
-        final Response response = UniRestUtils.getResponse(request);
+        final Response response = RestUtils.getResponse(request);
         if (RestUtils.isHttpError(response.getStatusCode().get())) {
             throw new Exception(response.getResponsePhrase().get().toString());
         }

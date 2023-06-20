@@ -11,6 +11,7 @@ package zowe.client.sdk.utility;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.message.*;
@@ -49,14 +50,16 @@ public final class TsoUtils {
         ZosmfTsoResponse result;
         final int statusCode = response.getStatusCode().get();
         if (response.getStatusCode().isPresent() && RestUtils.isHttpError(statusCode)) {
-            final String errorMsg =
-                    (String) response.getResponsePhrase().orElseThrow(() -> new Exception("results not available"));
-            final ZosmfMessages zosmfMsg = new ZosmfMessages(errorMsg, null, null);
+            final ZosmfMessages zosmfMsg = new ZosmfMessages(
+                    (String) response.getResponsePhrase().orElseThrow(() -> new Exception("no response phrase")),
+                    null, null);
             final List<ZosmfMessages> zosmfMessages = new ArrayList<>();
             zosmfMessages.add(zosmfMsg);
             result = new ZosmfTsoResponse.Builder().msgData(zosmfMessages).build();
         } else {
-            result = TsoUtils.parseJsonTsoResponse((JSONObject) (response.getResponsePhrase().orElse(null)));
+            result = TsoUtils.parseJsonTsoResponse(
+                    (JSONObject) new JSONParser().parse(response.getResponsePhrase()
+                            .orElseThrow(() -> new Exception("no response phrase")).toString()));
         }
 
         return result;
