@@ -104,12 +104,7 @@ public class DsnWrite {
         request.setUrl(url);
         request.setBody(content);
 
-        final Response response = RestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
-        return response;
+        return RestUtils.getResponse(request);
     }
 
 }
