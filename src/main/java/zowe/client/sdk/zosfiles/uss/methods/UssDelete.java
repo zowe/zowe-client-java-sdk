@@ -73,8 +73,8 @@ public class UssDelete {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(destName == null, "destName is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + 
-            ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destName;
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destName;
         LOG.debug(url);
 
         if (request == null || !(request instanceof JsonPostRequest)) {

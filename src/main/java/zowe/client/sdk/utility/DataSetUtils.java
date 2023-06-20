@@ -12,9 +12,6 @@ package zowe.client.sdk.utility;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosfiles.dsn.response.Dataset;
 import zowe.client.sdk.zosfiles.dsn.response.Member;
-import zowe.client.sdk.zosfiles.dsn.types.OperationType;
-
-import java.util.List;
 
 /**
  * Utility Class for Dataset related static helper methods.

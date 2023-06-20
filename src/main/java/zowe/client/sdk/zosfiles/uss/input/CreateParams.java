@@ -13,8 +13,7 @@ package zowe.client.sdk.zosfiles.uss.input;
  * Interface for create UNIX files and directories
  * zOSMF REST API information:
  * <a href="">https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-create-unix-file-directory</a>
- * 
- * 
+ *
  * @author James Kostrewski
  */
 public class CreateParams {
@@ -24,7 +23,7 @@ public class CreateParams {
      * create a directory. file to create a file
      */
     private UssType type;
-    
+
     /**
      * Specifies the file or directory permission bits to be used in creating
      * the file or directory. The characters used to describe permissions are:
@@ -34,7 +33,7 @@ public class CreateParams {
      * -: No permission
      */
     private final String mode;
-    
+
     private CreateParams(UssType type, String mode) {
         this.type = type;
         this.mode = mode;
@@ -42,23 +41,25 @@ public class CreateParams {
 
     /**
      * Retrieve type value
+     *
      * @return type value
      * @author James Kostrewski
      */
     public UssType getType() {
         return type;
     }
-    
+
     /**
      * Retrieve mode value
+     *
      * @return mode value
      * @author James Kostrewski
      */
     public String getMode() {
         return mode;
     }
-    
-    
+
+
     @Override
     public String toString() {
         return "CreateOptions{" +
