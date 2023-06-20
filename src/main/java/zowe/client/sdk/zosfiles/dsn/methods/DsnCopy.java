@@ -80,7 +80,7 @@ public class DsnCopy {
      */
     private String buildBody(CopyParams params) throws Exception {
         String fromDataSetName = params.getFromDataSet().orElseThrow(() -> new Exception("dataset not specified"));
-        boolean isFullPartitionCopy = params.isCopyAllMembers();
+        final boolean isFullPartitionCopy = params.isCopyAllMembers();
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "copy");
