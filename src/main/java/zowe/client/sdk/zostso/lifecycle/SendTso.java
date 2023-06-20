@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.unirest.TsoUtils;
+import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.SendTsoParams;
 import zowe.client.sdk.zostso.message.TsoMessage;
