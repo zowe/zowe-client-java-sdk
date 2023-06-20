@@ -122,15 +122,10 @@ public class JobDelete {
         request.setHeaders(headers);
         request.setUrl(url);
 
-        final Response response = RestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
         // if synchronously response should contain job document that was cancelled and http return code
         // if asynchronously response should only contain http return code
         // let the caller handle the response json parsing
-        return response;
+        return RestUtils.getResponse(request);
     }
 
     /**
