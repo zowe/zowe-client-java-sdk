@@ -161,12 +161,7 @@ public class StartTso {
         request.setUrl(url);
         request.setBody("");
 
-        final Response response = RestUtils.getResponse(request);
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
-            throw new Exception(response.getResponsePhrase().get().toString());
-        }
-
-        return TsoUtils.getZosmfTsoResponse(response);
+        return TsoUtils.getZosmfTsoResponse(RestUtils.getResponse(request));
     }
 
 }
