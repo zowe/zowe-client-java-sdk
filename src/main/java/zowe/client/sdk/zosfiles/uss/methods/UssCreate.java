@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +20,11 @@ import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.unirest.UniRestUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.CreateParams;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UssCreate {
 
@@ -44,12 +44,11 @@ public class UssCreate {
     }
 
     /**
-     * Alternative UssCreate constructor with ZoweRequest object. This is mainly
-     * used for internal code unit testing with mockito, and it is not
-     * recommended to be used by the larger community.
+     * Alternative UssCreate constructor with ZoweRequest object. This is mainly used for internal code
+     * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZOSConnection object
-     * @param request any compatible ZoweRequest Interface type object
+     * @param request    any compatible ZoweRequest Interface type object
      * @author James Kostrewski
      * @author Frank Giordano
      */
@@ -75,12 +74,12 @@ public class UssCreate {
         LOG.debug(String.valueOf(jsonRequestBody));
         return jsonRequestBody.toString();
     }
-    
+
     /**
      * Creates a new response with specified parameters
      *
      * @param destName name of a file to create
-     * @param params      create response parameters, see CreateParams object
+     * @param params   create response parameters, see CreateParams object
      * @return http response object
      * @throws Exception error processing request
      * @author James Kostrewski
@@ -89,8 +88,8 @@ public class UssCreate {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(destName == null, "destName is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + 
-            ZosFilesConstants.RESOURCE +  ZosFilesConstants.RES_USS_FILES + destName;
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destName;
         LOG.debug(url);
 
         final String body = buildBody(params);
@@ -103,5 +102,5 @@ public class UssCreate {
 
         return RestUtils.getResponse(request);
     }
-    
+
 }
