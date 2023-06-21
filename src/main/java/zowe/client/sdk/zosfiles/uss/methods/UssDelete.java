@@ -12,10 +12,7 @@ package zowe.client.sdk.zosfiles.uss.methods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.JsonPostRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -63,7 +60,7 @@ public class UssDelete {
     /**
      * Perform a delete UNIX object request
      *
-     * @param destName name of object
+     * @param destName name of file or directory with path
      * @param params   delete response parameters, see DeleteParams object
      * @return http response object
      * @throws Exception error processing request
@@ -77,7 +74,7 @@ public class UssDelete {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destName;
         LOG.debug(url);
 
-        if (request == null || !(request instanceof JsonPostRequest)) {
+        if (request == null || !(request instanceof JsonDeleteRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
         request.setUrl(url);
