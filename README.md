@@ -36,6 +36,7 @@ zowe.client.sdk.zosfiles.dsn.methods
     DsnDelete
     DsnGet
     DsnList
+    DsnRename
     DsnWrite
   
 zowe.client.sdk.zosfiles.uss.methods  
@@ -48,6 +49,7 @@ zowe.client.sdk.zosfiles.uss.methods
     UssDelete
     UssExtAttrs
     UssGet
+    UssGetAcl
     UssList
     UssMount
     UssSetAcl
