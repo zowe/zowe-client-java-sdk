@@ -28,6 +28,9 @@ import java.util.Map;
 
 /**
  * Provides unix system service create object functionality
+ * <p>
+ * zOSMF REST API information:
+ * <a href="">https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-create-unix-file-directory</a>
  *
  * @author James Kostrewski
  * @version 2.0

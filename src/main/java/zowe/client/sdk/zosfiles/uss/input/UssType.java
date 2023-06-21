@@ -16,6 +16,7 @@ package zowe.client.sdk.zosfiles.uss.input;
  * @version 2.0
  */
 public enum UssType {
+
     FILE("file"),
     DIR("dir");
 

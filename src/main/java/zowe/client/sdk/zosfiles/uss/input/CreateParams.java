@@ -10,8 +10,9 @@
 package zowe.client.sdk.zosfiles.uss.input;
 
 /**
- * Interface for create UNIX files and directories
- * zOSMF REST API information:
+ * Parameter container class for unix system services create file or directory object
+ * <p>
+ * z/OSMF REST API information:
  * <a href="">https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-create-unix-file-directory</a>
  *
  * @author James Kostrewski
@@ -19,28 +20,45 @@ package zowe.client.sdk.zosfiles.uss.input;
 public class CreateParams {
 
     /**
-     * The request type. This field supports the values: directory or dir to
-     * create a directory. file to create a file
+     * The request type defined as a UssType enum value.
+     * <p>
+     * This field supports the values:
+     * dir to create a directory
+     * file to create a file
      */
     private UssType type;
 
     /**
-     * Specifies the file or directory permission bits to be used in creating
-     * the file or directory. The characters used to describe permissions are:
+     * Specifies the file or directory permission bits to be used in creating the file or directory.
+     * <p>
+     * The characters used to describe permissions are:
      * r: Permission to read the file
      * w: Permission to write on the file
      * x: Permission to execute the file
      * -: No permission
+     * <p>
+     * An example would be: rwxrwxrwx
+     * <p>
+     * The nine characters are in three groups of three; they describe the permissions on the file or directory.
+     * The first group of 3 describes owner permissions; the second describes group permissions;
+     * the third describes other (or world) permissions.
      */
     private final String mode;
 
+    /**
+     * CreateParams constructor
+     *
+     * @param type UssType enum value
+     * @param mode permission string value
+     * @author James Kostrewski
+     */
     private CreateParams(UssType type, String mode) {
         this.type = type;
         this.mode = mode;
     }
 
     /**
-     * Retrieve type value
+     * Retrieve UssType enum type value
      *
      * @return type value
      * @author James Kostrewski
