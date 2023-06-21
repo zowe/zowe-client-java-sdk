@@ -8,7 +8,6 @@ zowe.client.sdk.teamconfig.service
 zowe.client.sdk.teamconfig.types
 zowe.client.sdk.utility
 zowe.client.sdk.utility.timer
-zowe.client.sdk.utility.unirest
 zowe.client.sdk.zosconsole
 zowe.client.sdk.zosconsole.input
 zowe.client.sdk.zosconsole.method
@@ -18,6 +17,7 @@ zowe.client.sdk.zosfiles.dsn.input
 zowe.client.sdk.zosfiles.dsn.methods
 zowe.client.sdk.zosfiles.dsn.response
 zowe.client.sdk.zosfiles.dsn.types
+zowe.client.sdk.zosfiles.uss.input
 zowe.client.sdk.zosfiles.uss.methods
 zowe.client.sdk.zosjobs
 zowe.client.sdk.zosjobs.input

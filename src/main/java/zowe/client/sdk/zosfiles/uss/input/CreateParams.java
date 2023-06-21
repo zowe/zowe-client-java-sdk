@@ -12,8 +12,7 @@ package zowe.client.sdk.zosfiles.uss.input;
 /**
  * Parameter container class for unix system services create file or directory object
  * <p>
- * z/OSMF REST API information:
- * <a href="">https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-create-unix-file-directory</a>
+ * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-create-unix-file-directory">z/OSMF REST API</a>
  *
  * @author James Kostrewski
  */
