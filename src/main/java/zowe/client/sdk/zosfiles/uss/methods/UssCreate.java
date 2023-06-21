@@ -94,6 +94,8 @@ public class UssCreate {
      */
     public Response create(String destName, CreateParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(params.getType() == null, "params type is null");
+        ValidateUtils.checkNullParameter(params.getMode() == null, "params mode is null");
         ValidateUtils.checkNullParameter(destName == null, "destName is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
