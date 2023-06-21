@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.utility;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -57,7 +57,7 @@ public final class EncodeUtils {
      * @return encoded String
      * @author Frank Giordano
      */
-    public static String getAuthEncoding(ZOSConnection connection) {
+    public static String getAuthEncoding(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         return Base64.getEncoder().encodeToString((connection.getUser() + ":" + connection.getPassword())
                 .getBytes(StandardCharsets.UTF_8));

@@ -12,7 +12,7 @@ package zowe.client.sdk.zosjobs.methods;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -38,7 +38,7 @@ import java.util.Map;
 public class JobCancel {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobCancel.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
@@ -47,7 +47,7 @@ public class JobCancel {
      * @param connection connection information, see ZOSConnection object
      * @author Nikunj Goyal
      */
-    public JobCancel(ZOSConnection connection) {
+    public JobCancel(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -61,7 +61,7 @@ public class JobCancel {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public JobCancel(ZOSConnection connection, ZoweRequest request) throws Exception {
+    public JobCancel(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {

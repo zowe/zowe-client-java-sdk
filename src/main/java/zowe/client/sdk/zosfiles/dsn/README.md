@@ -11,7 +11,7 @@ APIs located in methods package.
 ````java
 package zowe.client.sdk.examples.zosfiles;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnCreate;
@@ -26,7 +26,7 @@ import zowe.client.sdk.zosfiles.dsn.input.CreateParams;
  */
 public class CreateDatasetTst extends TstZosConnection {
 
-    private static ZOSConnection connection;
+    private static ZosConnection connection;
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -38,7 +38,7 @@ public class CreateDatasetTst extends TstZosConnection {
      */
     public static void main(String[] args) throws Exception {
         String dataSetName = "xxx";
-        connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        connection = new ZosConnection(hostName, zosmfPort, userName, password);
         createPartitionDataSet(dataSetName);
         dataSetName = "xxx";
         createSequentialDataSet(dataSetName);
@@ -169,7 +169,7 @@ public class CreateDatasetTst extends TstZosConnection {
 ````java
 package zowe.client.sdk.examples.zosfiles;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.dsn.methods.ZosDsnCopy;
@@ -195,7 +195,7 @@ public class CopyDatasetTst extends TstZosConnection {
     public static void main(String[] args) throws Exception {
         String fromDataSetName = "xxx";
         String toDataSetName = "xxx";
-        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         copyDataset(connection, fromDataSetName, toDataSetName);
         copyDatasetByCopyParams(connection, fromDataSetName, toDataSetName);
         fromDataSetName = "xxx";  // specify a partition dataset only no member
@@ -224,7 +224,7 @@ public class CopyDatasetTst extends TstZosConnection {
      * @throws Exception error processing copy request
      * @author Frank Giordano
      */
-    public static void copyDataset(ZOSConnection connection, String fromDataSetName, String toDataSetName)
+    public static void copyDataset(ZosConnection connection, String fromDataSetName, String toDataSetName)
             throws Exception {
         DsnCopy dsnCopy = new DsnCopy(connection);
         Response response = dsnCopy.copy(fromDataSetName, toDataSetName, true, false);
@@ -249,7 +249,7 @@ public class CopyDatasetTst extends TstZosConnection {
      * @throws Exception error processing copy request
      * @author Frank Giordano
      */
-    public static void copyDatasetByCopyParams(zowe.client.sdk.core.ZOSConnection connection, String fromDataSetName,
+    public static void copyDatasetByCopyParams(zowe.client.sdk.core.ZosConnection connection, String fromDataSetName,
                                                String toDataSetName) throws Exception {
         DsnCopy dsnCopy = new DsnCopy(connection);
         // 'replace' builder variable here will be true by default if not specified in builder.
@@ -273,7 +273,7 @@ public class CopyDatasetTst extends TstZosConnection {
      * @throws Exception error processing copy request
      * @author Frank Giordano
      */
-    public static void copyFullPartitionDatasetByCopyParams(ZOSConnection connection, String fromDataSetName,
+    public static void copyFullPartitionDatasetByCopyParams(ZosConnection connection, String fromDataSetName,
                                                             String toDataSetName) throws Exception {
         DsnCopy dsnCopy = new DsnCopy(connection);
         // 'replace' here will be true by default if not specified in builder.
@@ -292,7 +292,7 @@ public class CopyDatasetTst extends TstZosConnection {
 ````java
 package zowe.client.sdk.examples.zosfiles;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zzowe.client.sdk.zosfiles.dsn.methods.DsnDelete;
@@ -306,7 +306,7 @@ import zzowe.client.sdk.zosfiles.dsn.methods.DsnDelete;
  */
 public class DeleteDatasetTst extends TstZosConnection {
 
-    private static ZOSConnection connection;
+    private static ZosConnection connection;
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -319,7 +319,7 @@ public class DeleteDatasetTst extends TstZosConnection {
     public static void main(String[] args) throws Exception {
         String dataSetName = "xxx";
         String member = "xxx";
-        connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        connection = new ZosConnection(hostName, zosmfPort, userName, password);
         deleteDataSet(dataSetName);
         deleteMember(dataSetName, member);
     }
@@ -361,7 +361,7 @@ public class DeleteDatasetTst extends TstZosConnection {
 package zowe.client.sdk.examples.zosfiles;
 
 import org.apache.commons.io.IOUtils;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnGet;
 import zowe.client.sdk.zosfiles.dsn.input.DownloadParams;
@@ -388,7 +388,7 @@ public class GetDatasetTst extends TstZosConnection {
     public static void main(String[] args) throws Exception {
         String datasetMember = "xxx";
         DownloadParams params = new DownloadParams.Builder().build();
-        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         DownloadDatasetTst.downloadDsnMember(connection, datasetMember, params);
     }
 
@@ -401,7 +401,7 @@ public class GetDatasetTst extends TstZosConnection {
      * @throws Exception error processing request
      * @author Leonid Baranov
      */
-    public static void downloadDsnMember(ZOSConnection connection, String name, DownloadParams params) throws Exception {
+    public static void downloadDsnMember(ZosConnection connection, String name, DownloadParams params) throws Exception {
         try (InputStream inputStream = new DsnGet(connection).get(name, params)) {
             if (inputStream != null) {
                 StringWriter writer = new StringWriter();
@@ -420,7 +420,7 @@ public class GetDatasetTst extends TstZosConnection {
 ````java
 package zowe.client.sdk.examples.zosfiles;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnList;
 import zowe.client.sdk.zosfiles.dsn.input.ListParams;
@@ -450,7 +450,7 @@ public class ListDatasetsTst extends TstZosConnection {
     public static void main(String[] args) throws Exception {
         String dataSetMask = "xxx";
         String dataSetName = "xxx";
-        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         ListDatasetsTst.listDsn(connection, dataSetMask);
         ListDatasetsTst.listDsnVol(connection, dataSetMask);
         ListDatasetsTst.listMembersWithAllAttributes(connection, dataSetName);
@@ -465,7 +465,7 @@ public class ListDatasetsTst extends TstZosConnection {
      * @throws Exception error processing request
      * @author Leonid Baranov
      */
-    public static void listMembersWithAllAttributes(ZOSConnection connection, String dataSetName) throws Exception {
+    public static void listMembersWithAllAttributes(ZosConnection connection, String dataSetName) throws Exception {
         ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
         DsnList dsnList = new DsnList(connection);
         List<Member> datasets = dsnList.listDsnMembers(dataSetName, params);
@@ -480,7 +480,7 @@ public class ListDatasetsTst extends TstZosConnection {
      * @throws Exception error processing request
      * @author Leonid Baranov
      */
-    public static void listMembers(ZOSConnection connection, String dataSetName) throws Exception {
+    public static void listMembers(ZosConnection connection, String dataSetName) throws Exception {
         ListParams params = new ListParams.Builder().attribute(AttributeType.MEMBER).build();
         DsnList dsnList = new DsnList(connection);
         List<Member> datasets = dsnList.listDsnMembers(dataSetName, params);
@@ -495,7 +495,7 @@ public class ListDatasetsTst extends TstZosConnection {
      * @throws Exception error processing request
      * @author Leonid Baranov
      */
-    public static void listDsn(ZOSConnection connection, String dataSetName) throws Exception {
+    public static void listDsn(ZosConnection connection, String dataSetName) throws Exception {
         ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
         DsnList dsnList = new DsnList(connection);
         List<Dataset> datasets = dsnList.listDsn(dataSetName, params);
@@ -510,7 +510,7 @@ public class ListDatasetsTst extends TstZosConnection {
      * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public static void listDsnVol(ZOSConnection connection, String dataSetName) throws Exception {
+    public static void listDsnVol(ZosConnection connection, String dataSetName) throws Exception {
         ListParams params = new ListParams.Builder().attribute(AttributeType.VOL).build();
         DsnList dsnList = new DsnList(connection);
         List<Dataset> datasets = dsnList.listDsn(dataSetName, params);
@@ -525,7 +525,7 @@ public class ListDatasetsTst extends TstZosConnection {
 ````java
 package zowe.client.sdk.examples.zosfiles;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnWrite;
@@ -539,7 +539,7 @@ import zowe.client.sdk.zosfiles.dsn.methods.DsnWrite;
  */
 public class WriteDatasetTst extends TstZosConnection {
 
-    private static ZOSConnection connection;
+    private static ZosConnection connection;
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -552,7 +552,7 @@ public class WriteDatasetTst extends TstZosConnection {
     public static void main(String[] args) throws Exception {
         String dataSetName = "xxx";
         String member = "xxx";
-        connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        connection = new ZosConnection(hostName, zosmfPort, userName, password);
         var content = "NEW CONTENT\nTHE SECOND LINE UPDATED";
         WriteDatasetTst.writeToDsnMember(dataSetName, member, content);
     }
@@ -581,7 +581,7 @@ public class WriteDatasetTst extends TstZosConnection {
 ````java
 package zowe.client.sdk.examples.zosfiles;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnGet;
 import zowe.client.sdk.zosfiles.dsn.response.Dataset;
@@ -604,11 +604,11 @@ public class DataSetInfoTst extends TstZosConnection {
      */
     public static void main(String[] args) throws Exception {
         String dataSetName = "xxx";
-        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         System.out.println(DataSetInfoTst.getDataSetInfo(connection, dataSetName));
     }
 
-    private static Dataset getDataSetInfo(zowe.client.sdk.core.ZOSConnection connection, String dataSetName) throws Exception {
+    private static Dataset getDataSetInfo(zowe.client.sdk.core.ZosConnection connection, String dataSetName) throws Exception {
         DsnGet dsnGet = new DsnGet(connection);
         return dsnGet.getDsnInfo(dataSetName);
     }
@@ -619,7 +619,7 @@ public class DataSetInfoTst extends TstZosConnection {
 ````java
 package zowe.client.sdk.examples;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
@@ -643,10 +643,10 @@ public class TstZosConnection {
 
     // or use the following method to retrieve Zowe OS credential store for your
     // secure Zowe V2 credentials you entered when you initially set up Zowe Global Team Configuration.
-    public static ZOSConnection getSecureZosConnection() throws Exception {
+    public static ZosConnection getSecureZosConnection() throws Exception {
         TeamConfig teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
         ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
-        return (new ZOSConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

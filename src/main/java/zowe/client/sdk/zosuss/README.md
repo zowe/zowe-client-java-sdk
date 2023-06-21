@@ -9,7 +9,7 @@ API located in method package.
 ````java
 package zowe.client.sdk.examples.zosuss;
 
-import zowe.client.sdk.core.SSHConnection;
+import zowe.client.sdk.core.SshConnection;
 import zowe.client.sdk.zosuss.method.IssueUss;
 
 /**
@@ -29,7 +29,7 @@ public class USSCommand {
      */
     public static void main(String[] args) throws Exception {
         int portNum = 0; // replace with valid value
-        SSHConnection conn = new SSHConnection("xxx", portNum, "xxx", "xxx");
+        SshConnection conn = new SshConnection("xxx", portNum, "xxx", "xxx");
         IssueUss shell = new IssueUss(conn);
         // 10000 is the timeout value in milliseconds
         System.out.println(shell.executeSshCmd("mkdir test;cd test;touch frank;ls", 10000));

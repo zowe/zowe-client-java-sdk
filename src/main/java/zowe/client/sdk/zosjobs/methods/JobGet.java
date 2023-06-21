@@ -14,7 +14,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -39,7 +39,7 @@ import java.util.List;
 public class JobGet {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobGet.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
     private String url;
 
@@ -49,7 +49,7 @@ public class JobGet {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public JobGet(ZOSConnection connection) {
+    public JobGet(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -62,7 +62,7 @@ public class JobGet {
      * @param request    any compatible ZoweRequest Interface type object
      * @author Frank Giordano
      */
-    public JobGet(ZOSConnection connection, ZoweRequest request) {
+    public JobGet(ZosConnection connection, ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;

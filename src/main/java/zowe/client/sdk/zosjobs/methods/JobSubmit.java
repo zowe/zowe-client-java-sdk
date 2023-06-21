@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -37,7 +37,7 @@ import java.util.Map;
 public class JobSubmit {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobSubmit.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
@@ -46,7 +46,7 @@ public class JobSubmit {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public JobSubmit(ZOSConnection connection) {
+    public JobSubmit(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -59,7 +59,7 @@ public class JobSubmit {
      * @param request    any compatible ZoweRequest Interface type object
      * @author Frank Giordano
      */
-    public JobSubmit(ZOSConnection connection, ZoweRequest request) {
+    public JobSubmit(ZosConnection connection, ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;

@@ -11,7 +11,7 @@ package zowe.client.sdk.zostso.lifecycle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPostRequest;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
@@ -35,7 +35,7 @@ import zowe.client.sdk.zostso.response.StartStopResponses;
 public class StartTso {
 
     private static final Logger LOG = LoggerFactory.getLogger(StartTso.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
@@ -44,7 +44,7 @@ public class StartTso {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public StartTso(ZOSConnection connection) {
+    public StartTso(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -58,7 +58,7 @@ public class StartTso {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public StartTso(ZOSConnection connection, ZoweRequest request) throws Exception {
+    public StartTso(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonPostRequest)) {

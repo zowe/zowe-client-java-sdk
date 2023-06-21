@@ -13,7 +13,7 @@ import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.utility.EncodeUtils;
 
 /**
@@ -30,7 +30,7 @@ public class JsonGetRequest extends ZoweRequest {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public JsonGetRequest(ZOSConnection connection) {
+    public JsonGetRequest(ZosConnection connection) {
         super(connection);
     }
 

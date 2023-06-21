@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.reflect.Whitebox;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonGetRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosjobs.methods.JobGet;
@@ -44,7 +44,7 @@ public class GetJobsByJsonGetRequestTest {
     @Before
     public void init() {
         request = Mockito.mock(JsonGetRequest.class);
-        final ZOSConnection connection = new ZOSConnection("1", "1", "1", "1");
+        final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
         getJobs = new JobGet(connection);
         Whitebox.setInternalState(getJobs, "request", request);
 

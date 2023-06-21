@@ -12,7 +12,7 @@ package zowe.client.sdk.zosfiles.dsn.methods;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -37,7 +37,7 @@ import java.util.Map;
 public class DsnCopy {
 
     private static final Logger LOG = LoggerFactory.getLogger(DsnCopy.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
@@ -46,7 +46,7 @@ public class DsnCopy {
      * @param connection is a connection, see ZOSConnection object
      * @author Leonid Baranov
      */
-    public DsnCopy(ZOSConnection connection) {
+    public DsnCopy(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -60,7 +60,7 @@ public class DsnCopy {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public DsnCopy(ZOSConnection connection, ZoweRequest request) throws Exception {
+    public DsnCopy(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {

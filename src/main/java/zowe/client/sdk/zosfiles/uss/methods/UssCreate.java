@@ -12,7 +12,7 @@ package zowe.client.sdk.zosfiles.uss.methods;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPostRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -35,7 +35,7 @@ import java.util.Map;
 public class UssCreate {
 
     private static final Logger LOG = LoggerFactory.getLogger(UssCreate.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
@@ -44,7 +44,7 @@ public class UssCreate {
      * @param connection connection information, see ZOSConnection object
      * @author James Kostrewski
      */
-    public UssCreate(ZOSConnection connection) {
+    public UssCreate(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -58,7 +58,7 @@ public class UssCreate {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public UssCreate(ZOSConnection connection, ZoweRequest request) {
+    public UssCreate(ZosConnection connection, ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;

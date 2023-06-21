@@ -13,7 +13,7 @@ import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
@@ -33,7 +33,7 @@ public class JsonPutRequest extends ZoweRequest {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public JsonPutRequest(ZOSConnection connection) {
+    public JsonPutRequest(ZosConnection connection) {
         super(connection);
     }
 

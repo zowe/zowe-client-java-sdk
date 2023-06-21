@@ -11,7 +11,7 @@ APIs located in method package.
 ````java
 package zowe.client.sdk.examples.zosconsole;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zosconsole.method.IssueConsole;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
@@ -35,7 +35,7 @@ public class IssueCommandTst extends TstZosConnection {
      */
     public static void main(String[] args) {
         String command = "D IPLINFO";
-        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         IssueCommandTst.consoleCmdByIssue(connection, command);
         IssueCommandTst.consoleCmdByIssueSimple(connection, command);
         IssueCommandTst.consoleCmdByIssueDefConsoleCommon(connection, command);
@@ -48,7 +48,7 @@ public class IssueCommandTst extends TstZosConnection {
      * @param cmd        mvs command to execute
      * @author Frank Giordano
      */
-    public static void consoleCmdByIssue(ZOSConnection connection, String cmd) {
+    public static void consoleCmdByIssue(ZosConnection connection, String cmd) {
         IssueParams params = new IssueParams();
         params.setCommand(cmd);
         ConsoleResponse response;
@@ -68,7 +68,7 @@ public class IssueCommandTst extends TstZosConnection {
      * @param cmd        mvs command to execute
      * @author Frank Giordano
      */
-    public static void consoleCmdByIssueSimple(ZOSConnection connection, String cmd) {
+    public static void consoleCmdByIssueSimple(ZosConnection connection, String cmd) {
         ConsoleResponse response;
         IssueConsole issueCommand = new IssueConsole(connection);
         try {
@@ -86,7 +86,7 @@ public class IssueCommandTst extends TstZosConnection {
      * @param cmd        mvs command to execute
      * @author Frank Giordano
      */
-    public static void consoleCmdByIssueDefConsoleCommon(ZOSConnection connection, String cmd) {
+    public static void consoleCmdByIssueDefConsoleCommon(ZosConnection connection, String cmd) {
         ZosmfIssueParams params = new ZosmfIssueParams();
         params.setCmd(cmd);
         ZosmfIssueResponse response;
@@ -106,7 +106,7 @@ public class IssueCommandTst extends TstZosConnection {
 ````java
 package zowe.client.sdk.examples;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
@@ -130,10 +130,10 @@ public class TstZosConnection {
 
     // or use the following method to retrieve Zowe OS credential store for your
     // secure Zowe V2 credentials you entered when you initially set up Zowe Global Team Configuration.
-    public static ZOSConnection getSecureZosConnection() throws Exception {
+    public static ZosConnection getSecureZosConnection() throws Exception {
         TeamConfig teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
         ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
-        return (new ZOSConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

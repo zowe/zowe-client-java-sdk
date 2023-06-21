@@ -15,7 +15,7 @@ package zowe.client.sdk.core;
  * @author Frank Giordano
  * @version 2.0
  */
-public class SSHConnection {
+public class SshConnection {
 
     /**
      * machine host pointing to backend z/OS instance
@@ -46,7 +46,7 @@ public class SSHConnection {
      * @param password machine host username's password with access to backend z/OS instance
      * @author Frank Giordano
      */
-    public SSHConnection(String host, int port, String user, String password) {
+    public SshConnection(String host, int port, String user, String password) {
         this.host = host;
         this.port = port;
         this.user = user;

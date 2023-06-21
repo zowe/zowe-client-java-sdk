@@ -15,7 +15,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonGetRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -45,7 +45,7 @@ public class ZosLog {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZosLog.class);
     private static final String RESOURCE = "/zosmf/restconsoles/v1/log?";
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
@@ -54,7 +54,7 @@ public class ZosLog {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public ZosLog(ZOSConnection connection) {
+    public ZosLog(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -68,7 +68,7 @@ public class ZosLog {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ZosLog(ZOSConnection connection, ZoweRequest request) throws Exception {
+    public ZosLog(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {

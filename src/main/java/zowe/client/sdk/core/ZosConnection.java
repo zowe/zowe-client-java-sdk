@@ -15,7 +15,7 @@ package zowe.client.sdk.core;
  * @author Frank Giordano
  * @version 2.0
  */
-public class ZOSConnection {
+public class ZosConnection {
 
     /**
      * machine host pointing to backend z/OS instance
@@ -46,7 +46,7 @@ public class ZOSConnection {
      * @param password  machine host username's password with access to backend z/OS instance
      * @author Frank Giordano
      */
-    public ZOSConnection(String host, String zosmfPort, String user, String password) {
+    public ZosConnection(String host, String zosmfPort, String user, String password) {
         this.host = host;
         this.zosmfPort = zosmfPort;
         this.user = user;

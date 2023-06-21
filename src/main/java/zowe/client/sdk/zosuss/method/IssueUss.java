@@ -12,7 +12,7 @@ package zowe.client.sdk.zosuss.method;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import zowe.client.sdk.core.SSHConnection;
+import zowe.client.sdk.core.SshConnection;
 import zowe.client.sdk.utility.timer.WaitUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -26,14 +26,14 @@ import java.util.Properties;
  */
 public class IssueUss {
 
-    private final SSHConnection connection;
+    private final SshConnection connection;
 
     /**
      * Shell constructor
      *
      * @param connection SSHConnection object
      */
-    public IssueUss(SSHConnection connection) {
+    public IssueUss(SshConnection connection) {
         this.connection = connection;
     }
 

@@ -11,7 +11,7 @@ package zowe.client.sdk.zosfiles.uss.methods;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPostRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -31,7 +31,7 @@ import zowe.client.sdk.zosfiles.uss.input.CreateParams;
 public class UssDelete {
 
     private static final Logger LOG = LoggerFactory.getLogger(UssDelete.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
@@ -40,7 +40,7 @@ public class UssDelete {
      * @param connection connection information, see ZOSConnection object
      * @author James Kostrewski
      */
-    public UssDelete(ZOSConnection connection) {
+    public UssDelete(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -54,7 +54,7 @@ public class UssDelete {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public UssDelete(ZOSConnection connection, ZoweRequest request) {
+    public UssDelete(ZosConnection connection, ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;

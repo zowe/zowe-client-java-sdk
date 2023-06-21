@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonDeleteRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -36,7 +36,7 @@ import zowe.client.sdk.zostso.response.StartStopResponse;
 public class StopTso {
 
     private static final Logger LOG = LoggerFactory.getLogger(StopTso.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
@@ -45,7 +45,7 @@ public class StopTso {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public StopTso(ZOSConnection connection) {
+    public StopTso(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -59,7 +59,7 @@ public class StopTso {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public StopTso(ZOSConnection connection, ZoweRequest request) throws Exception {
+    public StopTso(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonDeleteRequest)) {

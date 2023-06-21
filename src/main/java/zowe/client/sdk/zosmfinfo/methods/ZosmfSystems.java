@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonGetRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -34,7 +34,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
 public class ZosmfSystems {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZosmfSystems.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
@@ -43,7 +43,7 @@ public class ZosmfSystems {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public ZosmfSystems(ZOSConnection connection) {
+    public ZosmfSystems(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -57,7 +57,7 @@ public class ZosmfSystems {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ZosmfSystems(ZOSConnection connection, ZoweRequest request) throws Exception {
+    public ZosmfSystems(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {

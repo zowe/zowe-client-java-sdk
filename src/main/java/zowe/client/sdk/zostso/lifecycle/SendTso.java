@@ -11,7 +11,7 @@ package zowe.client.sdk.zostso.lifecycle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
@@ -40,7 +40,7 @@ import java.util.List;
 public class SendTso {
 
     private static final Logger LOG = LoggerFactory.getLogger(SendTso.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
@@ -49,7 +49,7 @@ public class SendTso {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public SendTso(ZOSConnection connection) {
+    public SendTso(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -63,7 +63,7 @@ public class SendTso {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public SendTso(ZOSConnection connection, ZoweRequest request) throws Exception {
+    public SendTso(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {

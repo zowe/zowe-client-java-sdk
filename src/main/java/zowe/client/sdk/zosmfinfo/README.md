@@ -11,7 +11,7 @@ APIs located in methods package.
 ````java
 package zowe.client.sdk.examples.zosmfInfo;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zosmfinfo.methods.ZosmfStatus;
 import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
@@ -37,7 +37,7 @@ public class CheckStatusTst extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
 
         checkStatus = new ZosmfStatus(connection);
         ZosmfInfoResponse zosmfInfoResponse = checkStatus.getZosmfInfo();
@@ -53,7 +53,7 @@ public class CheckStatusTst extends TstZosConnection {
 `````java
 package zowe.client.sdk.examples.zosmfInfo;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zosmfinfo.methods.ZosmfSystems;
 import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
@@ -79,7 +79,7 @@ public class ZosmfDefinedSystemsTst extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
 
         listDefinedSystems = new ZosmfSystems(connection);
         ZosmfListDefinedSystemsResponse zosmfInfoResponse = listDefinedSystems.listDefinedSystems();
@@ -92,7 +92,7 @@ public class ZosmfDefinedSystemsTst extends TstZosConnection {
 ````java
 package zowe.client.sdk.examples;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
@@ -116,10 +116,10 @@ public class TstZosConnection {
 
     // or use the following method to retrieve Zowe OS credential store for your
     // secure Zowe V2 credentials you entered when you initially set up Zowe Global Team Configuration.
-    public static ZOSConnection getSecureZosConnection() throws Exception {
+    public static ZosConnection getSecureZosConnection() throws Exception {
         TeamConfig teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
         ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
-        return (new ZOSConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

@@ -11,7 +11,7 @@ package zowe.client.sdk.zosfiles.dsn.methods;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.StreamGetRequest;
 import zowe.client.sdk.rest.ZosmfHeaders;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -43,7 +43,7 @@ import java.util.Optional;
 public class DsnGet {
 
     private static final Logger LOG = LoggerFactory.getLogger(DsnGet.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
@@ -52,7 +52,7 @@ public class DsnGet {
      * @param connection connection information, see ZOSConnection object
      * @author Nikunj Goyal
      */
-    public DsnGet(ZOSConnection connection) {
+    public DsnGet(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -66,7 +66,7 @@ public class DsnGet {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public DsnGet(ZOSConnection connection, ZoweRequest request) throws Exception {
+    public DsnGet(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof StreamGetRequest)) {

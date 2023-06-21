@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.utility;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 
 import java.util.Optional;
 
@@ -35,7 +35,7 @@ public final class ValidateUtils {
      * @throws IllegalStateException with message "Connection data not setup properly"
      * @author Frank Giordano
      */
-    public static void checkConnection(ZOSConnection connection) {
+    public static void checkConnection(ZosConnection connection) {
         if (connection == null || connection.getZosmfPort() == null || connection.getHost() == null ||
                 connection.getPassword() == null || connection.getUser() == null || connection.getZosmfPort().isEmpty() ||
                 connection.getHost().isEmpty() || connection.getPassword().isEmpty() || connection.getUser().isEmpty()) {

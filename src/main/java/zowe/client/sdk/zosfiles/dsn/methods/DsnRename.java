@@ -13,7 +13,7 @@ package zowe.client.sdk.zosfiles.dsn.methods;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
@@ -35,7 +35,7 @@ import java.util.Map;
 public class DsnRename {
 
     private static final Logger LOG = LoggerFactory.getLogger(DsnRename.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
     private String url;
 
@@ -45,7 +45,7 @@ public class DsnRename {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public DsnRename(ZOSConnection connection) {
+    public DsnRename(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -58,7 +58,7 @@ public class DsnRename {
      * @param request    any compatible ZoweRequest Interface type object
      * @author Frank Giordano
      */
-    public DsnRename(ZOSConnection connection, ZoweRequest request) {
+    public DsnRename(ZosConnection connection, ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;

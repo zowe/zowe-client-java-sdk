@@ -13,7 +13,7 @@ import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.utility.RestUtils;
 
 import java.util.HashMap;
@@ -29,7 +29,7 @@ public abstract class ZoweRequest {
 
     public static final String X_CSRF_ZOSMF_HEADER_KEY = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
     public static final String X_CSRF_ZOSMF_HEADER_VALUE = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
-    protected final ZOSConnection connection;
+    protected final ZosConnection connection;
     protected final Map<String, String> headers = new HashMap<>();
     protected String url;
 
@@ -39,7 +39,7 @@ public abstract class ZoweRequest {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public ZoweRequest(ZOSConnection connection) {
+    public ZoweRequest(ZosConnection connection) {
         this.connection = connection;
         this.setup();
     }

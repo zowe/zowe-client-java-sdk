@@ -11,7 +11,7 @@ package zowe.client.sdk.zosjobs.methods;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.JobUtils;
@@ -34,7 +34,7 @@ import java.util.Map;
 public class JobDelete {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobDelete.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
@@ -43,7 +43,7 @@ public class JobDelete {
      * @param connection connection information, see ZOSConnection object
      * @author Nikunj Goyal
      */
-    public JobDelete(ZOSConnection connection) {
+    public JobDelete(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -57,7 +57,7 @@ public class JobDelete {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public JobDelete(ZOSConnection connection, ZoweRequest request) throws Exception {
+    public JobDelete(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonDeleteRequest)) {

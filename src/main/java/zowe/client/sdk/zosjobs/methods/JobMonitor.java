@@ -12,7 +12,7 @@ package zowe.client.sdk.zosjobs.methods;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.utility.timer.WaitUtil;
 import zowe.client.sdk.zosjobs.input.CommonJobParams;
@@ -51,7 +51,7 @@ public class JobMonitor {
      */
     public static final int DEFAULT_WATCH_DELAY = 3000;
     private static final Logger LOG = LoggerFactory.getLogger(JobMonitor.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     // double settings from DEFAULTS variables to allow constructor to control them also
     private int attempts = DEFAULT_ATTEMPTS;
     private int watchDelay = DEFAULT_WATCH_DELAY;
@@ -63,7 +63,7 @@ public class JobMonitor {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public JobMonitor(ZOSConnection connection) {
+    public JobMonitor(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -75,7 +75,7 @@ public class JobMonitor {
      * @param attempts   number of attempts to get status
      * @author Frank Giordano
      */
-    public JobMonitor(ZOSConnection connection, int attempts) {
+    public JobMonitor(ZosConnection connection, int attempts) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.attempts = attempts;
@@ -89,7 +89,7 @@ public class JobMonitor {
      * @param watchDelay delay time in milliseconds to wait each time requesting status
      * @author Frank Giordano
      */
-    public JobMonitor(ZOSConnection connection, int attempts, int watchDelay) {
+    public JobMonitor(ZosConnection connection, int attempts, int watchDelay) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.attempts = attempts;
@@ -105,7 +105,7 @@ public class JobMonitor {
      * @param lineLimit  number of line to inspect job output
      * @author Frank Giordano
      */
-    public JobMonitor(ZOSConnection connection, int attempts, int watchDelay, int lineLimit) {
+    public JobMonitor(ZosConnection connection, int attempts, int watchDelay, int lineLimit) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.attempts = attempts;

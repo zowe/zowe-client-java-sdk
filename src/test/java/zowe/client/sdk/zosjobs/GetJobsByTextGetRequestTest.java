@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.TextGetRequest;
 import zowe.client.sdk.zosjobs.methods.JobGet;
@@ -34,7 +34,7 @@ public class GetJobsByTextGetRequestTest {
     @Before
     public void init() {
         request = Mockito.mock(TextGetRequest.class);
-        ZOSConnection connection = new ZOSConnection("1", "1", "1", "1");
+        ZosConnection connection = new ZosConnection("1", "1", "1", "1");
         getJobs = new JobGet(connection);
         Whitebox.setInternalState(getJobs, "request", request);
     }

@@ -11,7 +11,7 @@ APIs located in methods package.
 ````java
 package zowe.client.sdk.examples.zosjobs;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosjobs.methods.JobCancel;
@@ -27,7 +27,7 @@ import zowe.client.sdk.zosjobs.response.Job;
  */
 public class CancelJobsTst extends TstZosConnection {
 
-    private static ZOSConnection connection;
+    private static ZosConnection connection;
     private static String jobName;
     private static String jobId;
 
@@ -40,7 +40,7 @@ public class CancelJobsTst extends TstZosConnection {
      * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
-        connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        connection = new ZosConnection(hostName, zosmfPort, userName, password);
         System.out.println(cancelJobsCommonWithVersion("2.0"));
         System.out.println(cancelJobsCommon());
         System.out.println(cancelJobForJob());
@@ -116,7 +116,7 @@ public class CancelJobsTst extends TstZosConnection {
 `````java
 package zowe.client.sdk.examples.zosjobs;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosjobs.methods.JobDelete;
@@ -132,7 +132,7 @@ import zowe.client.sdk.zosjobs.response.Job;
  */
 public class DeleteJobsTst extends TstZosConnection {
 
-    private static ZOSConnection connection;
+    private static ZosConnection connection;
     private static String jobName;
     private static String jobId;
 
@@ -145,7 +145,7 @@ public class DeleteJobsTst extends TstZosConnection {
      * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
-        connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        connection = new ZosConnection(hostName, zosmfPort, userName, password);
         System.out.println(deleteJobsCommonWithVersion("2.0"));
         System.out.println(deleteJobsCommon());
         System.out.println(deleteJobForJob());
@@ -221,7 +221,7 @@ public class DeleteJobsTst extends TstZosConnection {
 `````java
 package zowe.client.sdk.examples.zosjobs;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zosjobs.methods.JobGet;
 import zowe.client.sdk.zosjobs.input.CommonJobParams;
@@ -255,7 +255,7 @@ public class GetJobsTst extends TstZosConnection {
         String owner = "xxx";
         String jobId = "xxx";
 
-        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         getJobs = new JobGet(connection);
 
         GetJobsTst.getJobsCommon(prefix);
@@ -542,7 +542,7 @@ public class GetJobsTst extends TstZosConnection {
 `````java
 package zowe.client.sdk.examples.zosjobs;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zosjobs.methods.JobSubmit;
 import zowe.client.sdk.zosjobs.methods.SubmitJobs;
@@ -559,7 +559,7 @@ import zowe.client.sdk.zosjobs.types.JobStatus;
 public class MonitorJobsTst extends TstZosConnection {
 
     private static JobSubmit submitJobs;
-    private static ZOSConnection connection;
+    private static ZosConnection connection;
 
     /**
      * Main method defines z/OSMF host and user connection needed to showcase
@@ -570,7 +570,7 @@ public class MonitorJobsTst extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        connection = new ZosConnection(hostName, zosmfPort, userName, password);
         submitJobs = new JobSubmit(connection);
         MonitorJobsTst.monitorJobsForOutputStatusByJobObject();
         MonitorJobsTst.monitorJobsForOutputStatusByJobNameAndId();
@@ -692,7 +692,7 @@ public class MonitorJobsTst extends TstZosConnection {
 ````java
 package zowe.client.sdk.examples.zosjobs;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zosjobs.methods.JobMonitor;
 import zowe.client.sdk.zosjobs.methods.JobSubmit;
@@ -717,7 +717,7 @@ public class SubmitJobsTst extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        ZOSConnection connection = new ZOSConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         System.out.println(SubmitJobsTst.submitJob(connection, "xxx.xxx.xxx.xxx(xxx)"));
 
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\n// EXEC PGM=IEFBR14";
@@ -741,7 +741,7 @@ public class SubmitJobsTst extends TstZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Job submitJclJob(zowe.client.sdk.core.ZOSConnection connection, String jclString) throws Exception {
+    public static Job submitJclJob(zowe.client.sdk.core.ZosConnection connection, String jclString) throws Exception {
         JobSubmit submitJobs = new JobSubmit(connection);
         return submitJobs.submitJcl(jclString, null, null);
     }
@@ -756,7 +756,7 @@ public class SubmitJobsTst extends TstZosConnection {
      * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static Job submitJob(zowe.client.sdk.core.ZOSConnection connection, String dsMember) throws Exception {
+    public static Job submitJob(zowe.client.sdk.core.ZosConnection connection, String dsMember) throws Exception {
         JobSubmit submitJobs = new JobSubmit(connection);
         return submitJobs.submitJob(dsMember);
     }
@@ -768,7 +768,7 @@ public class SubmitJobsTst extends TstZosConnection {
 ````java
 package zowe.client.sdk.examples;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
@@ -792,10 +792,10 @@ public class TstZosConnection {
 
     // or use the following method to retrieve Zowe OS credential store for your
     // secure Zowe V2 credentials you entered when you initially set up Zowe Global Team Configuration.
-    public static ZOSConnection getSecureZosConnection() throws Exception {
+    public static ZosConnection getSecureZosConnection() throws Exception {
         TeamConfig teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
         ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
-        return (new ZOSConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

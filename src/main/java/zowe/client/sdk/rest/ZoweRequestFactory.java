@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.rest;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 
 /**
@@ -36,7 +36,7 @@ public final class ZoweRequestFactory {
      * @throws Exception error with type not found
      * @author Frank Giordano
      */
-    public static ZoweRequest buildRequest(ZOSConnection connection, ZoweRequestType type) throws Exception {
+    public static ZoweRequest buildRequest(ZosConnection connection, ZoweRequestType type) throws Exception {
         ZoweRequest request;
         switch (type) {
             case GET_JSON:

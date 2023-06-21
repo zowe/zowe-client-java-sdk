@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zostso.method;
 
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.input.StartTsoParams;
 import zowe.client.sdk.zostso.lifecycle.SendTso;
@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class IssueTso {
 
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
 
     /**
      * IssueTso constructor
@@ -40,7 +40,7 @@ public class IssueTso {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public IssueTso(ZOSConnection connection) {
+    public IssueTso(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }

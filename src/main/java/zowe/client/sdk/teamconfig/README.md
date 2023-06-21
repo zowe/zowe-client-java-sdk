@@ -13,7 +13,7 @@ username and password and retrieve a list of members from the dataset input stri
 ````java
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
@@ -40,7 +40,7 @@ public class ListDatasets {
 
         TeamConfig teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
         ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
-        ZOSConnection connection = new ZOSConnection(
+        ZosConnection connection = new ZosConnection(
                 profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword());
 
         ListDatasets.listMembers(connection, dataSetName);
@@ -53,7 +53,7 @@ public class ListDatasets {
      * @param dataSetName data set name
      * @throws Exception error processing request
      */
-    public static void listMembers(ZOSConnection connection, String dataSetName) throws Exception {
+    public static void listMembers(ZosConnection connection, String dataSetName) throws Exception {
         ListParams params = new ListParams.Builder().build();
         ZosDsnList zosDsnList = new ZosDsnList(connection);
         List<String> datasets = zosDsnList.listDsnMembers(dataSetName, params);

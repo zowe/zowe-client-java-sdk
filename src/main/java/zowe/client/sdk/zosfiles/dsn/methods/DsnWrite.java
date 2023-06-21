@@ -11,7 +11,7 @@ package zowe.client.sdk.zosfiles.dsn.methods;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.core.ZOSConnection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.TextPutRequest;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -32,7 +32,7 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
 public class DsnWrite {
 
     private static final Logger LOG = LoggerFactory.getLogger(DsnWrite.class);
-    private final ZOSConnection connection;
+    private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
@@ -41,7 +41,7 @@ public class DsnWrite {
      * @param connection connection information, see ZOSConnection object
      * @author Leonid Baranov
      */
-    public DsnWrite(ZOSConnection connection) {
+    public DsnWrite(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -54,7 +54,7 @@ public class DsnWrite {
      * @param request    any compatible ZoweRequest Interface type object
      * @author Frank Giordano
      */
-    public DsnWrite(ZOSConnection connection, ZoweRequest request) {
+    public DsnWrite(ZosConnection connection, ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
