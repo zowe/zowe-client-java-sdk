@@ -1,9 +1,9 @@
 # z/OS TSO Package
 
-Contains APIs to interact with TSO on z/OS (using z/OSMF TSO REST endpoints).  
+Contains APIs to interact with TSO on z/OS (using z/OSMF TSO REST endpoints).
 
-APIs located in method package.  
-  
+APIs located in method package.
+
 ## API Examples
 
 ````java

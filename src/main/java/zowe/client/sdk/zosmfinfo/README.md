@@ -1,9 +1,9 @@
 # z/OSMF INFO Package
 
-Contains APIs to interact with retrieving z/OSMF information on z/OS (using z/OSMF jobs REST endpoints).  
+Contains APIs to interact with retrieving z/OSMF information on z/OS (using z/OSMF jobs REST endpoints).
 
-APIs located in methods package.  
-  
+APIs located in methods package.
+
 ## API Examples
 
 **Check the status of your z/OSMF instance**

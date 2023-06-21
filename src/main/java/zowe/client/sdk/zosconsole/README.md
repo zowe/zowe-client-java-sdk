@@ -1,9 +1,9 @@
 # z/OS Console Package
-  
-Contains APIs to interact with the z/OS mvs console (using z/OSMF console REST endpoints).  
-    
-APIs located in method package.     
-  
+
+Contains APIs to interact with the z/OS mvs console (using z/OSMF console REST endpoints).
+
+APIs located in method package.
+
 ## API Examples
 
 **Submit a command to the z/OS console**
