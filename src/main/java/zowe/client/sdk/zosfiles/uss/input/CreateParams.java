@@ -51,7 +51,7 @@ public class CreateParams {
      * @param mode permission string value
      * @author James Kostrewski
      */
-    private CreateParams(UssType type, String mode) {
+    public CreateParams(UssType type, String mode) {
         this.type = type;
         this.mode = mode;
     }
