@@ -40,25 +40,23 @@ public final class RestUtils {
      *
      * @param request zowe request object
      * @return response object
-     * @throws Exception response missing information
+     * @throws Exception http error code
      * @author Frank Giordano
      */
     public static Response getResponse(ZoweRequest request) throws Exception {
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
 
         final int statusCode = response.getStatusCode()
                 .orElseThrow(() -> new Exception("no response status code returned"));
 
-        if (response.getResponsePhrase().isEmpty()) {
-            throw new Exception("no response phrase returned");
-        }
+        final String responsePhrase = String.valueOf((response.getResponsePhrase()
+                .orElse("n/a")));
 
         if (RestUtils.isHttpError(statusCode)) {
             final String statusText = response.getStatusText()
                     .orElseThrow(() -> new Exception("no response status text returned"));
-            LOG.debug("Rest status code {}", statusCode);
-            LOG.debug("Rest status text {}", statusText);
-            throw new Exception(statusCode + " - " + statusText);
+            throw new Exception("http status error code: " + statusCode + ", status text: " + statusText
+                    + ", response phrase: " + responsePhrase);
         }
 
         return response;
