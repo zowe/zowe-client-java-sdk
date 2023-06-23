@@ -69,7 +69,7 @@ public class UssDelete {
      *
      * @param name name of file or directory with path
      * @return http response object
-     * @throws Exception error processing request
+     * @throws Exception processing error
      * @author James Kostrewski
      */
     public Response delete(String name) throws Exception {
