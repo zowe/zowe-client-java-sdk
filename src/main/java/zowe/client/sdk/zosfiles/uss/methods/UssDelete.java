@@ -112,9 +112,7 @@ public class UssDelete {
         request.setUrl(url);
 
         if (recursive) {
-            Map<String, String> headers = new HashMap<>();
-            headers.put("X-IBM-Option", "recursive");
-            request.setHeaders(headers);
+            request.setHeaders(Map.of("X-IBM-Option", "recursive"));
         }
 
         return RestUtils.getResponse(request);
