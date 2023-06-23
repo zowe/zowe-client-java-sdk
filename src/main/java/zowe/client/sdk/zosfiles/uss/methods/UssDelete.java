@@ -21,7 +21,6 @@ import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
