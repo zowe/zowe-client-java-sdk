@@ -51,8 +51,11 @@ public final class RestUtils {
         if (RestUtils.isHttpError(statusCode)) {
             final String statusText = response.getStatusText()
                     .orElseThrow(() -> new Exception("no response status text returned"));
-            throw new Exception("http status error code: " + statusCode + ", status text: " + statusText
-                    + ", response phrase: " + responsePhrase);
+            String msg = "http status error code: " + statusCode + ", status text: " + statusText;
+            if (!statusText.equalsIgnoreCase(responsePhrase)) {
+                msg += ", response phrase: " + responsePhrase;
+            }
+            throw new Exception(msg);
         }
 
         return response;
