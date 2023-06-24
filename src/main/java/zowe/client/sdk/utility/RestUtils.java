@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.utility;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 
@@ -26,8 +24,6 @@ import java.net.URL;
  */
 public final class RestUtils {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RestUtils.class);
-
     /**
      * Private constructor defined to avoid instantiation of class
      */
@@ -40,25 +36,26 @@ public final class RestUtils {
      *
      * @param request zowe request object
      * @return response object
-     * @throws Exception response missing information
+     * @throws Exception http error code
      * @author Frank Giordano
      */
     public static Response getResponse(ZoweRequest request) throws Exception {
-        Response response = request.executeRequest();
+        final Response response = request.executeRequest();
 
         final int statusCode = response.getStatusCode()
                 .orElseThrow(() -> new Exception("no response status code returned"));
 
-        if (response.getResponsePhrase().isEmpty()) {
-            throw new Exception("no response phrase returned");
-        }
+        final String responsePhrase = String.valueOf((response.getResponsePhrase()
+                .orElse("n/a")));
 
         if (RestUtils.isHttpError(statusCode)) {
             final String statusText = response.getStatusText()
                     .orElseThrow(() -> new Exception("no response status text returned"));
-            LOG.debug("Rest status code {}", statusCode);
-            LOG.debug("Rest status text {}", statusText);
-            throw new Exception(statusCode + " - " + statusText);
+            String msg = "http status error code: " + statusCode + ", status text: " + statusText;
+            if (!statusText.equalsIgnoreCase(responsePhrase)) {
+                msg += ", response phrase: " + responsePhrase;
+            }
+            throw new Exception(msg);
         }
 
         return response;

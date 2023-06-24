@@ -17,6 +17,7 @@ import zowe.client.sdk.zosfiles.uss.type.UssType;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-create-unix-file-directory">z/OSMF REST API</a>
  *
  * @author James Kostrewski
+ * @version 2.0
  */
 public class CreateParams {
 
@@ -53,7 +54,7 @@ public class CreateParams {
      * @param mode permission string value
      * @author James Kostrewski
      */
-    private CreateParams(UssType type, String mode) {
+    public CreateParams(UssType type, String mode) {
         this.type = type;
         this.mode = mode;
     }

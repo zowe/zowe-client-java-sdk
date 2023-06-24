@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Provides unix system service create object functionality
+ * Provides Unix System Services (USS) create object functionality
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-create-unix-file-directory">z/OSMF REST API</a>
  *
@@ -84,22 +84,22 @@ public class UssCreate {
     }
 
     /**
-     * Perform a create UNIX object request
+     * Perform USS create file or directory name request
      *
-     * @param destName name of object to create
-     * @param params   create response parameters, see CreateParams object
-     * @return http response object
+     * @param name   name of object to create
+     * @param params create response parameters, see CreateParams object
+     * @return response object
      * @throws Exception error processing request
      * @author James Kostrewski
      */
-    public Response create(String destName, CreateParams params) throws Exception {
+    public Response create(String name, CreateParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(params.getType() == null, "params type is null");
         ValidateUtils.checkNullParameter(params.getMode() == null, "params mode is null");
-        ValidateUtils.checkNullParameter(destName == null, "destName is null");
+        ValidateUtils.checkNullParameter(name == null, "name is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destName;
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + name;
         LOG.debug(url);
 
         final String body = buildBody(params);
