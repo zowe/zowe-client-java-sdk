@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.type;
 
 /**
  * UssType class provides type representation of UNIX objects
