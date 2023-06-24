@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.zosfiles.uss.type.ListFilterType;
+
 import java.util.Optional;
 import java.util.OptionalInt;
 
@@ -72,7 +74,7 @@ public class ListParams {
      * p - FIFO (named pipe),
      * s - socket
      */
-    private final Optional<String> type;
+    private final Optional<ListFilterType> type;
 
     /**
      * The depth of the directory structure to list files and directories for
@@ -145,7 +147,7 @@ public class ListParams {
         return perm;
     }
 
-    public Optional<String> getType() {
+    public Optional<ListFilterType> getType() {
         return type;
     }
 
@@ -187,7 +189,7 @@ public class ListParams {
         private Integer size;
         private String name;
         private String perm;
-        private String type;
+        private ListFilterType type;
         private String depth;
         private boolean filesys = false;
         private boolean symlinks = false;
@@ -231,7 +233,7 @@ public class ListParams {
             return this;
         }
 
-        public ListParams.Builder type(String type) {
+        public ListParams.Builder type(ListFilterType type) {
             this.type = type;
             return this;
         }

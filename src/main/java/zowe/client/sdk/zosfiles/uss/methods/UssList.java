@@ -85,7 +85,7 @@ public class UssList {
         params.getMtime().ifPresent(mtime -> url.append("?mtime=").append(mtime));
         params.getSize().ifPresent(size -> url.append("?size=").append(size));
         params.getPerm().ifPresent(perm -> url.append("?perm=").append(perm));
-        params.getType().ifPresent(type -> url.append("?type=").append(type));
+        params.getType().ifPresent(type -> url.append("?type=").append(type.getValue()));
         params.getDepth().ifPresent(depth -> url.append("?depth=").append(depth));
         if (params.isFilesys()) {
             url.append("?filesys=all");
