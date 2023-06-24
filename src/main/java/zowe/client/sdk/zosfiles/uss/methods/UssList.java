@@ -74,7 +74,7 @@ public class UssList {
      */
     private Response list(ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkNullParameter(!params.getName().isPresent(), "params name is empty");
+        ValidateUtils.checkNullParameter(params.getName().isEmpty(), "params name is empty");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
