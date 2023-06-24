@@ -65,7 +65,7 @@ public class UssList {
     }
 
     /**
-     * Performs USS list operation
+     * Perform USS list operation
      *
      * @param params ListParams object
      * @return Response object
