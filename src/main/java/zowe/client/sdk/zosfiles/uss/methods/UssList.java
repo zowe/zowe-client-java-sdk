@@ -85,7 +85,13 @@ public class UssList {
         params.getMtime().ifPresent(mtime -> url.append("?mtime=").append(mtime));
         params.getSize().ifPresent(size -> url.append("?size=").append(size));
         params.getPerm().ifPresent(perm -> url.append("?perm=").append(perm));
-        params.getType().ifPresent(type -> url.append("?type=").append(type.getValue()));
+        // If type parameter is specified with the size parameter, it must be set to 'f'.
+        // Sizes that are associated with all other types are unspecified.
+        if (params.getSize().isPresent() && params.getType().isPresent()) {
+            url.append("?type=f");
+        } else {
+            params.getType().ifPresent(type -> url.append("?type=").append(type.getValue()));
+        }
         params.getDepth().ifPresent(depth -> url.append("?depth=").append(depth));
         if (params.isFilesys()) {
             url.append("?filesys=all");
