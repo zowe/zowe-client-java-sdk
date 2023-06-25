@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
-import zowe.client.sdk.zosfiles.uss.type.ListFilterType;
+import zowe.client.sdk.zosfiles.uss.types.ListFilterType;
 
 import java.util.Optional;
 import java.util.OptionalInt;

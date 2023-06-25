@@ -7,22 +7,26 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.type;
+package zowe.client.sdk.zosfiles.uss.types;
 
 /**
- * CreateType class provides type representation of UNIX objects
+ * Type of file to filer for during USS list operation
  *
- * @author James Kostrewski
+ * @author Frank Giordano
  * @version 2.0
  */
-public enum CreateType {
+public enum ListFilterType {
 
-    FILE("file"),
-    DIR("dir");
+    CHAR_SPECIAL_FILE("c"),
+    DIRECTORY("d"),
+    FILE("f"),
+    SYMBOLIC_LINK("l"),
+    FIFO_NAMED_PIPE("p"),
+    SOCKET("s");
 
     private final String value;
 
-    CreateType(String value) {
+    ListFilterType(String value) {
         this.value = value;
     }
 

@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
-import zowe.client.sdk.zosfiles.uss.type.CreateType;
+import zowe.client.sdk.zosfiles.uss.types.CreateType;
 
 /**
  * Parameter container class for unix system services create file or directory object
