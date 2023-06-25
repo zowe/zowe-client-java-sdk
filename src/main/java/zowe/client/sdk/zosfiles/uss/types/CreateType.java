@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.types;
 
 /**
- * CreateType class provides type representation of UNIX objects
+ * CreateType class provides type representation of unix system services objects
  *
  * @author James Kostrewski
  * @version 2.0

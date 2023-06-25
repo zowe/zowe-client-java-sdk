@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.types;
 
 /**
- * Type of file to filer for during USS list operation
+ * Type of file to filer for during unix system services list operation
  *
  * @author Frank Giordano
  * @version 2.0
