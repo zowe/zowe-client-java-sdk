@@ -64,15 +64,7 @@ public class ListParams {
     private final Optional<String> perm;
 
     /**
-     * The type of file to filter for
-     * <p>
-     * Allowed values are:
-     * c - character special file,
-     * d - directory,
-     * f - file,
-     * l - symbolic link,
-     * p - FIFO (named pipe),
-     * s - socket
+     * The type of file to filter for, see ListFilterType enum object
      */
     private final Optional<ListFilterType> type;
 
