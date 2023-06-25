@@ -10,19 +10,19 @@
 package zowe.client.sdk.zosfiles.uss.type;
 
 /**
- * UssType class provides type representation of UNIX objects
+ * CreateType class provides type representation of UNIX objects
  *
  * @author James Kostrewski
  * @version 2.0
  */
-public enum UssType {
+public enum CreateType {
 
     FILE("file"),
     DIR("dir");
 
     private final String value;
 
-    UssType(String value) {
+    CreateType(String value) {
         this.value = value;
     }
 
