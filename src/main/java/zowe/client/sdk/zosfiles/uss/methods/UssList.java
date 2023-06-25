@@ -9,6 +9,9 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -21,7 +24,10 @@ import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.ListParams;
+import zowe.client.sdk.zosfiles.uss.response.ListItem;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -72,7 +78,7 @@ public class UssList {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    private Response list(ListParams params) throws Exception {
+    private List<ListItem> list(ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getName().isEmpty(), "params name is empty");
 
@@ -111,7 +117,39 @@ public class UssList {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
 
-        return RestUtils.getResponse(request);
+        Response response = RestUtils.getResponse(request);
+
+        List<ListItem> items = new ArrayList<>();
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse((String) response.getResponsePhrase()
+                .orElseThrow(() -> new Exception("error retrieving uss list")));
+        final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.size(); i++) {
+                items.add(parseJsonUssListResponse((JSONObject) jsonArray.get(i)));
+            }
+        }
+
+        return items;
+    }
+
+    /**
+     * Transform JSON into ListItem object
+     *
+     * @param jsonObject JSON object
+     * @return ListItem object
+     * @author Frank Giordano
+     */
+    private ListItem parseJsonUssListResponse(JSONObject jsonObject) {
+        return new ListItem.Builder()
+                .name((String) jsonObject.get("name"))
+                .mode((String) jsonObject.get("mode"))
+                .size((Long) jsonObject.get("size"))
+                .uid((Long) jsonObject.get("uid"))
+                .user((String) jsonObject.get("user"))
+                .gid((Long) jsonObject.get("gid"))
+                .group((String) jsonObject.get("group"))
+                .mtime((String) jsonObject.get("mtime"))
+                .build();
     }
 
 }
