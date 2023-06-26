@@ -18,7 +18,7 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 2.0
  */
-public class ListItem {
+public class UssItem {
 
     /**
      * File, symbolic file or directory name
@@ -53,7 +53,7 @@ public class ListItem {
      */
     public final Optional<String> mtime;
 
-    public ListItem(ListItem.Builder builder) {
+    public UssItem(UssItem.Builder builder) {
         this.name = Optional.ofNullable(builder.name);
         this.mode = Optional.ofNullable(builder.mode);
         if (builder.size == null) {
@@ -119,46 +119,46 @@ public class ListItem {
         private String group;
         private String mtime;
 
-        public ListItem build() {
-            return new ListItem(this);
+        public UssItem build() {
+            return new UssItem(this);
         }
 
-        public ListItem.Builder name(String name) {
+        public UssItem.Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        public ListItem.Builder mode(String mode) {
+        public UssItem.Builder mode(String mode) {
             this.mode = mode;
             return this;
         }
 
-        public ListItem.Builder size(Long size) {
+        public UssItem.Builder size(Long size) {
             this.size = size;
             return this;
         }
 
-        public ListItem.Builder uid(Long uid) {
+        public UssItem.Builder uid(Long uid) {
             this.uid = uid;
             return this;
         }
 
-        public ListItem.Builder user(String user) {
+        public UssItem.Builder user(String user) {
             this.user = user;
             return this;
         }
 
-        public ListItem.Builder gid(Long gid) {
+        public UssItem.Builder gid(Long gid) {
             this.gid = gid;
             return this;
         }
 
-        public ListItem.Builder group(String group) {
+        public UssItem.Builder group(String group) {
             this.group = group;
             return this;
         }
 
-        public ListItem.Builder mtime(String mtime) {
+        public UssItem.Builder mtime(String mtime) {
             this.mtime = mtime;
             return this;
         }
