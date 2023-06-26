@@ -108,6 +108,20 @@ public class UssItem {
         return mtime;
     }
 
+    @Override
+    public String toString() {
+        return "UssItem{" +
+                "name=" + name +
+                ", mode=" + mode +
+                ", size=" + size +
+                ", uid=" + uid +
+                ", user=" + user +
+                ", gid=" + gid +
+                ", group=" + group +
+                ", mtime=" + mtime +
+                '}';
+    }
+
     public static class Builder {
 
         private String name;
