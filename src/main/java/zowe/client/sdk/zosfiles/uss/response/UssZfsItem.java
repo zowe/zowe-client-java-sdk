@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.response;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.OptionalLong;
 

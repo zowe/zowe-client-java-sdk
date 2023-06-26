@@ -113,8 +113,8 @@ public class UssList {
         Response response = getResponse(url.toString(), params.getMaxLength());
 
         List<UssItem> items = new ArrayList<>();
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse((String) response.getResponsePhrase()
-                .orElseThrow(() -> new Exception("error retrieving uss list")));
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
+                response.getResponsePhrase().orElseThrow(() -> new Exception("error retrieving uss list"))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (int i = 0; i < jsonArray.size(); i++) {
@@ -150,8 +150,8 @@ public class UssList {
         Response response = getResponse(url.toString(), params.getMaxLength());
 
         List<UssZfsItem> items = new ArrayList<>();
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse((String) response.getResponsePhrase()
-                .orElseThrow(() -> new Exception("error retrieving uss zfs list")));
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
+                response.getResponsePhrase().orElseThrow(() -> new Exception("error retrieving uss zfs list"))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (int i = 0; i < jsonArray.size(); i++) {
