@@ -19,7 +19,7 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 2.0
  */
-public class ZfsItem {
+public class UssZfsItem {
 
     public Optional<String> name;
     public Optional<String> mountpoint;
@@ -39,7 +39,7 @@ public class ZfsItem {
     public OptionalLong totalRows;
     public boolean moreRows;
 
-    public ZfsItem(ZfsItem.Builder builder) {
+    public UssZfsItem(UssZfsItem.Builder builder) {
         this.name = Optional.ofNullable(builder.name);
         this.mountpoint = Optional.ofNullable(builder.mountpoint);
         this.fstname = Optional.ofNullable(builder.fstname);
@@ -188,86 +188,86 @@ public class ZfsItem {
         private Long totalRows;
         private boolean moreRows = false;
 
-        public ZfsItem build() {
-            return new ZfsItem(this);
+        public UssZfsItem build() {
+            return new UssZfsItem(this);
         }
 
-        public ZfsItem.Builder name(String name) {
+        public UssZfsItem.Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        public ZfsItem.Builder mountpoint(String mountpoint) {
+        public UssZfsItem.Builder mountpoint(String mountpoint) {
             this.mountpoint = mountpoint;
             return this;
         }
 
-        public ZfsItem.Builder fstname(String fstname) {
+        public UssZfsItem.Builder fstname(String fstname) {
             this.fstname = fstname;
             return this;
         }
 
-        public ZfsItem.Builder status(String status) {
+        public UssZfsItem.Builder status(String status) {
             this.status = status;
             return this;
         }
 
-        public ZfsItem.Builder mode(List<String> mode) {
+        public UssZfsItem.Builder mode(List<String> mode) {
             this.mode = mode;
             return this;
         }
 
-        public ZfsItem.Builder dev(Long dev) {
+        public UssZfsItem.Builder dev(Long dev) {
             this.dev = dev;
             return this;
         }
 
-        public ZfsItem.Builder fstype(Long fstype) {
+        public UssZfsItem.Builder fstype(Long fstype) {
             this.fstype = fstype;
             return this;
         }
 
-        public ZfsItem.Builder bsize(Long bsize) {
+        public UssZfsItem.Builder bsize(Long bsize) {
             this.bsize = bsize;
             return this;
         }
 
-        public ZfsItem.Builder bavail(Long bavail) {
+        public UssZfsItem.Builder bavail(Long bavail) {
             this.bavail = bavail;
             return this;
         }
 
-        public ZfsItem.Builder blocks(Long blocks) {
+        public UssZfsItem.Builder blocks(Long blocks) {
             this.blocks = blocks;
             return this;
         }
 
-        public ZfsItem.Builder sysname(String sysname) {
+        public UssZfsItem.Builder sysname(String sysname) {
             this.sysname = sysname;
             return this;
         }
 
-        public ZfsItem.Builder readibc(Long readibc) {
+        public UssZfsItem.Builder readibc(Long readibc) {
             this.readibc = readibc;
             return this;
         }
 
-        public ZfsItem.Builder writeibc(Long writeibc) {
+        public UssZfsItem.Builder writeibc(Long writeibc) {
             this.writeibc = writeibc;
             return this;
         }
 
-        public ZfsItem.Builder diribc(Long diribc) {
+        public UssZfsItem.Builder diribc(Long diribc) {
             this.diribc = diribc;
             return this;
         }
 
-        public ZfsItem.Builder returnedRows(Long returnedRows) {
+        public UssZfsItem.Builder returnedRows(Long returnedRows) {
             this.returnedRows  = returnedRows;
             return this;
         }
 
-        public ZfsItem.Builder moreRows(boolean moreRows) {
+        public UssZfsItem.Builder moreRows(boolean moreRows) {
             this.moreRows  = moreRows;
             return this;
         }
