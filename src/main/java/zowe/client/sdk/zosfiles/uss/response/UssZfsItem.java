@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.OptionalLong;
 
 /**
- * ListZfsItem object representing a zfs item from unix system services list operation
+ * UssZfsItem object representing a zfs item from unix system services list operation
  *
  * @author Frank Giordano
  * @version 2.0
