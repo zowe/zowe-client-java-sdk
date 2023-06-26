@@ -96,7 +96,7 @@ public class UssZfsItem {
         } else {
             this.totalRows = OptionalLong.of(builder.totalRows);
         }
-        this.moreRows = moreRows;
+        this.moreRows = builder.moreRows;
     }
 
     public Optional<String> getName() {
