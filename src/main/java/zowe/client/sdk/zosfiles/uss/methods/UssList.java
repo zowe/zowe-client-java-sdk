@@ -24,11 +24,14 @@ import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.ListParams;
+import zowe.client.sdk.zosfiles.uss.input.ListZfsParams;
 import zowe.client.sdk.zosfiles.uss.response.UssItem;
+import zowe.client.sdk.zosfiles.uss.response.UssZfsItem;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalInt;
 
 /**
  * Provides Unix System Services (USS) list object functionality
@@ -107,17 +110,7 @@ public class UssList {
         }
         LOG.debug(url.toString());
 
-        if (request == null || !(request instanceof JsonGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
-        }
-
-        request.setUrl(url.toString());
-        final int maxLength = params.getMaxLength().orElse(0);
-        if (maxLength > 0) {
-            request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
-        }
-
-        Response response = RestUtils.getResponse(request);
+        Response response = getResponse(url, params.getMaxLength());
 
         List<UssItem> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse((String) response.getResponsePhrase()
@@ -130,6 +123,41 @@ public class UssList {
         }
 
         return items;
+    }
+
+    public List<UssZfsItem> zfsList(ListZfsParams params) throws Exception {
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkIllegalParameter(params.getPath().isEmpty() && params.getFsname().isEmpty(),
+                "no path or fsname specified");
+        ValidateUtils.checkIllegalParameter(params.getPath().isPresent() && params.getFsname().isPresent(),
+                "specify either path or fsname");
+
+
+        final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
+                connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS);
+
+        params.getPath().ifPresent(path -> url.append("?path=").append(path));
+        params.getFsname().ifPresent(name -> url.append("?fsname=").append(name));
+
+        LOG.debug(url.toString());
+
+        Response response = getResponse(url, params.getMaxLength());
+
+        List<UssZfsItem> items = new ArrayList<>();
+        return items;
+    }
+
+    private Response getResponse(StringBuilder url, OptionalInt maxLength) throws Exception {
+        if (request == null || !(request instanceof JsonGetRequest)) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
+        }
+
+        request.setUrl(url.toString());
+        if (maxLength.orElse(0) > 0) {
+            request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
+        }
+
+       return RestUtils.getResponse(request);
     }
 
     /**
