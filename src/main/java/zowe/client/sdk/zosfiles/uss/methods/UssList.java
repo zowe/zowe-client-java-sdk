@@ -155,7 +155,7 @@ public class UssList {
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (int i = 0; i < jsonArray.size(); i++) {
-                // TODO
+                items.add(parseJsonUssZfsListResponse((JSONObject) jsonArray.get(i)));
             }
         }
         return items;
@@ -201,6 +201,35 @@ public class UssList {
                 .gid((Long) jsonObject.get("gid"))
                 .group((String) jsonObject.get("group"))
                 .mtime((String) jsonObject.get("mtime"))
+                .build();
+    }
+
+    /**
+     * Transform JSON into UssZfsItem object
+     *
+     * @param jsonObject JSON object
+     * @return ListItem object
+     * @author Frank Giordano
+     */
+    private UssZfsItem parseJsonUssZfsListResponse(JSONObject jsonObject) {
+        return new UssZfsItem.Builder()
+                .name((String) jsonObject.get("name"))
+                .mountpoint((String) jsonObject.get("mountpoint"))
+                .fstname((String) jsonObject.get("fstname"))
+                .status((String) jsonObject.get("status"))
+                .mode((String) jsonObject.get("mode"))
+                .dev((Long) jsonObject.get("dev"))
+                .fstype((Long) jsonObject.get("fstype"))
+                .bsize((Long) jsonObject.get("bsize"))
+                .bavail((Long) jsonObject.get("bavail"))
+                .blocks((Long) jsonObject.get("blocks"))
+                .sysname((String) jsonObject.get("sysname"))
+                .readibc((Long) jsonObject.get("readibc"))
+                .writeibc((Long) jsonObject.get("writeibc"))
+                .diribc((Long) jsonObject.get("diribc"))
+                .returnedRows(jsonObject.get("returnedRows") != null ? (Long) jsonObject.get("returnedRows") : null)
+                .totalRows(jsonObject.get("totalRows") != null ? (Long) jsonObject.get("totalRows") : null)
+                .moreRows(jsonObject.get("moreRows") != null ? (Boolean) jsonObject.get("moreRows") : null)
                 .build();
     }
 

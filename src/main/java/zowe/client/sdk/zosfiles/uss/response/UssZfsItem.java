@@ -40,7 +40,7 @@ public class UssZfsItem {
     /**
      * Mode values
      */
-    public List<String> mode;
+    public Optional<String> mode;
     public OptionalLong dev;
     /**
      * File system type
@@ -93,7 +93,7 @@ public class UssZfsItem {
         this.mountpoint = Optional.ofNullable(builder.mountpoint);
         this.fstname = Optional.ofNullable(builder.fstname);
         this.status = Optional.ofNullable(builder.status);
-        this.mode = builder.mode;
+        this.mode = Optional.ofNullable(builder.mode);
         if (builder.dev == null) {
             this.dev = OptionalLong.empty();
         } else {
@@ -164,7 +164,7 @@ public class UssZfsItem {
         return status;
     }
 
-    public List<String> getMode() {
+    public Optional<String> getMode() {
         return mode;
     }
 
@@ -223,7 +223,7 @@ public class UssZfsItem {
         private String fstname;
         private String status;
 
-        private List<String> mode;
+        private String mode;
         private Long dev;
         private Long fstype;
         private Long bsize;
@@ -261,7 +261,7 @@ public class UssZfsItem {
             return this;
         }
 
-        public UssZfsItem.Builder mode(List<String> mode) {
+        public UssZfsItem.Builder mode(String mode) {
             this.mode = mode;
             return this;
         }
@@ -313,6 +313,11 @@ public class UssZfsItem {
 
         public UssZfsItem.Builder returnedRows(Long returnedRows) {
             this.returnedRows = returnedRows;
+            return this;
+        }
+
+        public UssZfsItem.Builder totalRows(Long totalRows) {
+            this.totalRows = totalRows;
             return this;
         }
 
