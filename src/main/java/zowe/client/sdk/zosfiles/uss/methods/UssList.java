@@ -110,7 +110,7 @@ public class UssList {
         }
         LOG.debug(url.toString());
 
-        Response response = getResponse(url, params.getMaxLength());
+        Response response = getResponse(url.toString(), params.getMaxLength());
 
         List<UssItem> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse((String) response.getResponsePhrase()
@@ -149,7 +149,7 @@ public class UssList {
 
         LOG.debug(url.toString());
 
-        Response response = getResponse(url, params.getMaxLength());
+        Response response = getResponse(url.toString(), params.getMaxLength());
 
         List<UssZfsItem> items = new ArrayList<>();
         return items;
@@ -164,12 +164,12 @@ public class UssList {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    private Response getResponse(StringBuilder url, OptionalInt maxLength) throws Exception {
+    private Response getResponse(String url, OptionalInt maxLength) throws Exception {
         if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
 
-        request.setUrl(url.toString());
+        request.setUrl(url);
         if (maxLength.orElse(0) > 0) {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
