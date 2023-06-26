@@ -312,12 +312,12 @@ public class UssZfsItem {
         }
 
         public UssZfsItem.Builder returnedRows(Long returnedRows) {
-            this.returnedRows  = returnedRows;
+            this.returnedRows = returnedRows;
             return this;
         }
 
         public UssZfsItem.Builder moreRows(boolean moreRows) {
-            this.moreRows  = moreRows;
+            this.moreRows = moreRows;
             return this;
         }
 
