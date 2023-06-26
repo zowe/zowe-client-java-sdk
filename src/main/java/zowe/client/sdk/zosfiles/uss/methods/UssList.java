@@ -74,7 +74,7 @@ public class UssList {
     }
 
     /**
-     * Perform USS list operation
+     * Perform list z/OS UNIX files operation
      *
      * @param params ListParams object
      * @return Response object
@@ -125,6 +125,14 @@ public class UssList {
         return items;
     }
 
+    /**
+     * Perform list z/OS UNIX filesystems operation
+     *
+     * @param params
+     * @return
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
     public List<UssZfsItem> zfsList(ListZfsParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getPath().isEmpty() && params.getFsname().isEmpty(),
@@ -147,6 +155,15 @@ public class UssList {
         return items;
     }
 
+    /**
+     * Perform zowe request and retrieve response
+     *
+     * @param url       string value
+     * @param maxLength length max request value
+     * @return response object
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
     private Response getResponse(StringBuilder url, OptionalInt maxLength) throws Exception {
         if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
@@ -157,7 +174,7 @@ public class UssList {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
 
-       return RestUtils.getResponse(request);
+        return RestUtils.getResponse(request);
     }
 
     /**
