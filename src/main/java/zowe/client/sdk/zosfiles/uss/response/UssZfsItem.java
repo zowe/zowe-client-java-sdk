@@ -21,22 +21,71 @@ import java.util.OptionalLong;
  */
 public class UssZfsItem {
 
+    /**
+     * zfs name
+     */
     public Optional<String> name;
+    /**
+     * Mount point name
+     */
     public Optional<String> mountpoint;
+    /**
+     * FST name
+     */
     public Optional<String> fstname;
+    /**
+     * Status value
+     */
     public Optional<String> status;
+    /**
+     * Mode values
+     */
     public List<String> mode;
     public OptionalLong dev;
+    /**
+     * File system type
+     */
     public OptionalLong fstype;
+    /**
+     * Block size
+     */
     public OptionalLong bsize;
+    /**
+     * Blocks available
+     */
     public OptionalLong bavail;
+    /**
+     * Count of blocks in I/O operations
+     */
     public OptionalLong blocks;
+    /**
+     * Target system name
+     */
     public Optional<String> sysname;
+    /**
+     * Count of I/O operations
+     */
     public OptionalLong readibc;
+    /**
+     * Count of I/O operations
+     */
     public OptionalLong writeibc;
+    /**
+     * Count of I/O operations
+     */
     public OptionalLong diribc;
+    /**
+     * The number of filesystem items returned
+     */
     public OptionalLong returnedRows;
+    /**
+     * The total number of filesystems
+     */
     public OptionalLong totalRows;
+    /**
+     * If more items than specified by X-IBM-Max-Items (or the default of 1000) match the request,
+     * then moreRows will be true
+     */
     public boolean moreRows;
 
     public UssZfsItem(UssZfsItem.Builder builder) {
