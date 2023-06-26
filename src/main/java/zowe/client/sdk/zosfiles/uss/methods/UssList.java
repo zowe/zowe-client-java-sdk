@@ -24,7 +24,7 @@ import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.ListParams;
-import zowe.client.sdk.zosfiles.uss.response.ListItem;
+import zowe.client.sdk.zosfiles.uss.response.UssItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +78,7 @@ public class UssList {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    private List<ListItem> fileList(ListParams params) throws Exception {
+    private List<UssItem> fileList(ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getName().isEmpty(), "params name is empty");
 
@@ -119,7 +119,7 @@ public class UssList {
 
         Response response = RestUtils.getResponse(request);
 
-        List<ListItem> items = new ArrayList<>();
+        List<UssItem> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse((String) response.getResponsePhrase()
                 .orElseThrow(() -> new Exception("error retrieving uss list")));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
@@ -139,8 +139,8 @@ public class UssList {
      * @return ListItem object
      * @author Frank Giordano
      */
-    private ListItem parseJsonUssListResponse(JSONObject jsonObject) {
-        return new ListItem.Builder()
+    private UssItem parseJsonUssListResponse(JSONObject jsonObject) {
+        return new UssItem.Builder()
                 .name((String) jsonObject.get("name"))
                 .mode((String) jsonObject.get("mode"))
                 .size((Long) jsonObject.get("size"))
