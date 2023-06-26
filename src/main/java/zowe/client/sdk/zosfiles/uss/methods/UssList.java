@@ -176,8 +176,9 @@ public class UssList {
         }
 
         request.setUrl(url);
-        if (maxLength.orElse(0) > 0) {
-            request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
+        final int value = maxLength.orElse(0);
+        if (value > 0) {
+            request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(value)));
         }
 
         return RestUtils.getResponse(request);
