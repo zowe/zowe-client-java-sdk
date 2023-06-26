@@ -139,13 +139,12 @@ public class UssList {
                 "no path or fsname specified");
         ValidateUtils.checkIllegalParameter(params.getPath().isPresent() && params.getFsname().isPresent(),
                 "specify either path or fsname");
-        
+
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS);
 
         params.getPath().ifPresent(path -> url.append("?path=").append(path));
         params.getFsname().ifPresent(name -> url.append("?fsname=").append(name));
-
         LOG.debug(url.toString());
 
         Response response = getResponse(url.toString(), params.getMaxLength());
