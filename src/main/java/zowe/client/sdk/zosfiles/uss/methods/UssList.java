@@ -128,8 +128,8 @@ public class UssList {
     /**
      * Perform list z/OS UNIX filesystems operation
      *
-     * @param params
-     * @return
+     * @param params ListZfsParams parameter object
+     * @return list of UssZfsItem objects
      * @throws Exception processing error
      * @author Frank Giordano
      */
