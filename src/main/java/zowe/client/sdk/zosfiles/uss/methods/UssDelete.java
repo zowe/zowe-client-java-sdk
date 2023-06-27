@@ -9,22 +9,24 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.JsonDeleteRequest;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZoweRequest;
+import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 
+import java.util.Map;
+
 /**
- * Provides unix system service delete object functionality
+ * Provides Unix System Services (USS) delete object functionality
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-delete-unix-file-directory">z/OSMF
- * REST API</a>
+ * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-delete-unix-file-directory">z/OSMF REST API</a>
  *
  * @author James Kostrewski
  * @version 2.0
@@ -47,12 +49,11 @@ public class UssDelete {
     }
 
     /**
-     * Alternative UssDelete constructor with ZoweRequest object. This is mainly
-     * used for internal code unit testing with mockito, and it is not
-     * recommended to be used by the larger community.
+     * Alternative UssDelete constructor with ZoweRequest object. This is mainly used for internal code
+     * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZOSConnection object
-     * @param request any compatible ZoweRequest Interface type object
+     * @param request    any compatible ZoweRequest Interface type object
      * @author James Kostrewski
      * @author Frank Giordano
      */
@@ -63,46 +64,44 @@ public class UssDelete {
     }
 
     /**
-     * Perform a delete UNIX object request
+     * Perform USS delete file or directory name request
      *
-     * @param destName name of file or directory with path
+     * @param name name of file or directory with path
      * @return http response object
-     * @throws Exception error processing request
+     * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response delete(String destName) throws Exception {
-        return deleteCommon(destName, false);
+    public Response delete(String name) throws Exception {
+        return deleteCommon(name, false);
     }
 
     /**
-     * Perform a delete UNIX object request
+     * Perform USS delete file or directory name request with recursive flag
      *
-     * @param destName name of file or directory with path
-     * @param recursive boolean indicates if contents of directory should also
-     * be deleted
-     * @return Exception error processing request
-     * @throws Exception
+     * @param name      name of file or directory with path
+     * @param recursive flag indicates if contents of directory should also be deleted
+     * @return response object
+     * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response delete(String destName, boolean recursive) throws Exception {
-        return deleteCommon(destName, recursive);
+    public Response delete(String name, boolean recursive) throws Exception {
+        return deleteCommon(name, recursive);
     }
 
     /**
      * Performs the processing described in delete
      *
-     * @param destName name of file or directory with path
-     * @param recursive boolean indicates if contents of directory should also
-     * be deleted
-     * @return Exception error processing request
-     * @throws Exception
+     * @param name      name of file or directory with path
+     * @param recursive flag indicates if contents of directory should also be deleted
+     * @return response object
+     * @throws Exception processing error
      * @author James Kostrewski
      */
-    private Response deleteCommon(String destName, boolean recursive) throws Exception {
-        ValidateUtils.checkNullParameter(destName == null, "destName is null");
+    private Response deleteCommon(String name, boolean recursive) throws Exception {
+        ValidateUtils.checkNullParameter(name == null, "name is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destName;
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + name;
         LOG.debug(url);
 
         if (request == null || !(request instanceof JsonDeleteRequest)) {
@@ -110,11 +109,11 @@ public class UssDelete {
         }
 
         request.setUrl(url);
+
         if (recursive) {
-            Map<String, String> headers = new HashMap<String, String>();
-            headers.put("X-IBM-Option", "recursive");
-            request.setHeaders(headers);
+            request.setHeaders(Map.of("X-IBM-Option", "recursive"));
         }
+
         return RestUtils.getResponse(request);
     }
 

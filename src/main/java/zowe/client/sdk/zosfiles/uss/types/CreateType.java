@@ -7,22 +7,24 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.types;
 
 /**
- * UssType class provides type representation of UNIX objects
+ * CreateType class provides type representation of unix system services objects
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-create-unix-file-directory">z/OSMF REST API</a>
  *
  * @author James Kostrewski
  * @version 2.0
  */
-public enum UssType {
+public enum CreateType {
 
     FILE("file"),
     DIR("dir");
 
     private final String value;
 
-    UssType(String value) {
+    CreateType(String value) {
         this.value = value;
     }
 

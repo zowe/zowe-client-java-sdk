@@ -9,23 +9,26 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.zosfiles.uss.types.CreateType;
+
 /**
  * Parameter container class for unix system services create file or directory object
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-create-unix-file-directory">z/OSMF REST API</a>
  *
  * @author James Kostrewski
+ * @version 2.0
  */
 public class CreateParams {
 
     /**
-     * The request type defined as a UssType enum value.
+     * The request type defined as a CreateType enum value.
      * <p>
      * This field supports the values:
      * dir to create a directory
      * file to create a file
      */
-    private UssType type;
+    private CreateType type;
 
     /**
      * Specifies the file or directory permission bits to be used in creating the file or directory.
@@ -47,22 +50,22 @@ public class CreateParams {
     /**
      * CreateParams constructor
      *
-     * @param type UssType enum value
+     * @param type CreateType enum value
      * @param mode permission string value
      * @author James Kostrewski
      */
-    public CreateParams(UssType type, String mode) {
+    public CreateParams(CreateType type, String mode) {
         this.type = type;
         this.mode = mode;
     }
 
     /**
-     * Retrieve UssType enum type value
+     * Retrieve CreateType enum type value
      *
      * @return type value
      * @author James Kostrewski
      */
-    public UssType getType() {
+    public CreateType getType() {
         return type;
     }
 

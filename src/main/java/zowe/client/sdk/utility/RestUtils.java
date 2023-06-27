@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.utility;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 
@@ -25,8 +23,6 @@ import java.net.URL;
  * @version 2.0
  */
 public final class RestUtils {
-
-    private static final Logger LOG = LoggerFactory.getLogger(RestUtils.class);
 
     /**
      * Private constructor defined to avoid instantiation of class
@@ -55,8 +51,11 @@ public final class RestUtils {
         if (RestUtils.isHttpError(statusCode)) {
             final String statusText = response.getStatusText()
                     .orElseThrow(() -> new Exception("no response status text returned"));
-            throw new Exception("http status error code: " + statusCode + ", status text: " + statusText
-                    + ", response phrase: " + responsePhrase);
+            String msg = "http status error code: " + statusCode + ", status text: " + statusText;
+            if (!statusText.equalsIgnoreCase(responsePhrase)) {
+                msg += ", response phrase: " + responsePhrase;
+            }
+            throw new Exception(msg);
         }
 
         return response;
