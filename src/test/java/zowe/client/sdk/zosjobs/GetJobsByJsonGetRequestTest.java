@@ -66,7 +66,7 @@ public class GetJobsByJsonGetRequestTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void tstGetJobFromMultipleJobsResultsExceptionFailure() throws Exception {
+    public void tstGetJobFromMultipleJobsResultsExceptionFailure() {
         final String msg = "Expected 1 job returned but received 2 jobs.";
         JSONArray jsonArray = new JSONArray();
 
