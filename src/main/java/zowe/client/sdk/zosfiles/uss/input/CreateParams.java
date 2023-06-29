@@ -28,7 +28,7 @@ public class CreateParams {
      * dir to create a directory
      * file to create a file
      */
-    private CreateType type;
+    private final CreateType type;
 
     /**
      * Specifies the file or directory permission bits to be used in creating the file or directory.
