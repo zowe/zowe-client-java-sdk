@@ -14,8 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Utility class for test package.
@@ -76,15 +75,15 @@ public final class Utils {
             Utils.assertUtilityClassWellDefined(name);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalStateException e) {
             e.printStackTrace();
-            assertTrue(false);
+            fail();
         } catch (InvocationTargetException e) {
             if (e.getTargetException() instanceof IllegalStateException) {
                 assertEquals(privateConstructorMsg, e.getTargetException().getMessage());
             } else {
                 e.printStackTrace();
-                assertTrue(false);
+                fail();
             }
         }
     }
-
+    
 }
