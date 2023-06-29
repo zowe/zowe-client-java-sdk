@@ -212,12 +212,25 @@ public class UssList {
      * @author Frank Giordano
      */
     private UssZfsItem parseJsonUssZfsListResponse(JSONObject jsonObject) {
+        final StringBuilder modeStr = new StringBuilder();
+        try {
+            final JSONArray modeLst = (JSONArray) jsonObject.get("mode");
+            final int size = modeLst.size();
+            for (int i = 0; i < size; i++) {
+                if (size - 1 == i) {
+                    modeStr.append(modeLst.get(i).toString());
+                } else {
+                    modeStr.append(modeLst.get(i).toString()).append(", ");
+                }
+            }
+        } catch (Exception ignored) {
+        }
         return new UssZfsItem.Builder()
                 .name((String) jsonObject.get("name"))
                 .mountpoint((String) jsonObject.get("mountpoint"))
                 .fstname((String) jsonObject.get("fstname"))
                 .status((String) jsonObject.get("status"))
-                .mode((String) jsonObject.get("mode"))
+                .mode(modeStr.toString())
                 .dev((Long) jsonObject.get("dev"))
                 .fstype((Long) jsonObject.get("fstype"))
                 .bsize((Long) jsonObject.get("bsize"))
