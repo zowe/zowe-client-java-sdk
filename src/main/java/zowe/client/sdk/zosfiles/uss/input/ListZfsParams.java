@@ -25,19 +25,19 @@ public class ListZfsParams {
     /**
      * The indicator that we want to show less files
      */
-    public OptionalInt maxLength;
+    public final OptionalInt maxLength;
     /**
      * This parameter identifies the UNIX directory that contains the files and directories to be listed.
      * This parameter may not be specified if the 'fsname' parameter is specified. It can consist a directory or
      * fully qualified path name in the UNIX file system structure. A fully qualified file name can be up to 1023
      * bytes long. You cannot use wildcard characters for this parameter.
      */
-    public Optional<String> path;
+    public final Optional<String> path;
     /**
      * This parameter identifies the fully qualified filesystem name to be listed. For zFS filesystems, this is
      * the data set name of the aggregate. This parameter may not be specified if the 'path' parameter is specified.
      */
-    public Optional<String> fsname;
+    public final Optional<String> fsname;
 
     public ListZfsParams(ListZfsParams.Builder builder) {
         if (builder.maxLength == null) {
