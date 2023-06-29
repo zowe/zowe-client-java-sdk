@@ -242,7 +242,7 @@ public class UssList {
                 .diribc((Long) jsonObject.get("diribc"))
                 .returnedRows(jsonObject.get("returnedRows") != null ? (Long) jsonObject.get("returnedRows") : null)
                 .totalRows(jsonObject.get("totalRows") != null ? (Long) jsonObject.get("totalRows") : null)
-                .moreRows(jsonObject.get("moreRows") != null ? (Boolean) jsonObject.get("moreRows") : null)
+                .moreRows(jsonObject.get("moreRows") != null ? (Boolean) jsonObject.get("moreRows") : false)
                 .build();
     }
 
