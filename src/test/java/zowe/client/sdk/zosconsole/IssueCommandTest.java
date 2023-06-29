@@ -90,7 +90,7 @@ public class IssueCommandTest {
         try {
             issueCommand.issueCommand(issueParams);
         } catch (Exception e) {
-            errorMsg = e + "";
+            errorMsg = String.valueOf(e);
         }
         assertEquals("java.lang.Exception: http status error code: 401, status text: Unauthorized", errorMsg);
     }
