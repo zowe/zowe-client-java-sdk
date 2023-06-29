@@ -44,7 +44,7 @@ public class IssueCommandTest {
 
     @Test
     public void tstIssueCommandCmdResponseAttributeSuccess() throws Exception {
-        final Map<String, Object> jsonMap = new HashMap<String, Object>();
+        final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "student");
         final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(jsonGetRequest.executeRequest()).thenReturn(
@@ -62,7 +62,7 @@ public class IssueCommandTest {
 
     @Test
     public void tstIssueCommandCmdResponseUrlAttributeSuccess() throws Exception {
-        final var jsonMap = new HashMap<String, Object>();
+        final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response-url", "student");
         final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(jsonGetRequest.executeRequest()).thenReturn(
