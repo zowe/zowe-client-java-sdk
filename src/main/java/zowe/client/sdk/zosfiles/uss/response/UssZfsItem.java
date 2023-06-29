@@ -23,64 +23,64 @@ public class UssZfsItem {
     /**
      * zfs name
      */
-    public Optional<String> name;
+    public final Optional<String> name;
     /**
      * Mount point name
      */
-    public Optional<String> mountpoint;
+    public final Optional<String> mountpoint;
     /**
      * FST name
      */
-    public Optional<String> fstname;
+    public final Optional<String> fstname;
     /**
      * Status value
      */
-    public Optional<String> status;
+    public final Optional<String> status;
     /**
      * Mode values
      */
-    public Optional<String> mode;
-    public OptionalLong dev;
+    public final Optional<String> mode;
+    public final OptionalLong dev;
     /**
      * File system type
      */
-    public OptionalLong fstype;
+    public final OptionalLong fstype;
     /**
      * Block size
      */
-    public OptionalLong bsize;
+    public final OptionalLong bsize;
     /**
      * Blocks available
      */
-    public OptionalLong bavail;
+    public final OptionalLong bavail;
     /**
      * Count of blocks in I/O operations
      */
-    public OptionalLong blocks;
+    public final OptionalLong blocks;
     /**
      * Target system name
      */
-    public Optional<String> sysname;
+    public final Optional<String> sysname;
     /**
      * Count of I/O operations
      */
-    public OptionalLong readibc;
+    public final OptionalLong readibc;
     /**
      * Count of I/O operations
      */
-    public OptionalLong writeibc;
+    public final OptionalLong writeibc;
     /**
      * Count of I/O operations
      */
-    public OptionalLong diribc;
+    public final OptionalLong diribc;
     /**
      * The number of filesystem items returned
      */
-    public OptionalLong returnedRows;
+    public final OptionalLong returnedRows;
     /**
      * The total number of filesystems
      */
-    public OptionalLong totalRows;
+    public final OptionalLong totalRows;
     /**
      * If more items than specified by X-IBM-Max-Items (or the default of 1000) match the request,
      * then moreRows will be true
