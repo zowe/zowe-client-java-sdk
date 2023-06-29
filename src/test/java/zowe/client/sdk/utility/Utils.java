@@ -69,7 +69,7 @@ public final class Utils {
     /**
      * Assertion checks class conforms to being set as final, one private constructor, and with all static methods.
      *
-     * @param name
+     * @param name class object name
      */
     public static void validateClass(Class name, String privateConstructorMsg) {
         try {
