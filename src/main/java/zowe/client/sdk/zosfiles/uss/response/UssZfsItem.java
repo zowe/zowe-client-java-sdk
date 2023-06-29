@@ -85,7 +85,7 @@ public class UssZfsItem {
      * If more items than specified by X-IBM-Max-Items (or the default of 1000) match the request,
      * then moreRows will be true
      */
-    public boolean moreRows;
+    public final boolean moreRows;
 
     public UssZfsItem(UssZfsItem.Builder builder) {
         this.name = Optional.ofNullable(builder.name);
