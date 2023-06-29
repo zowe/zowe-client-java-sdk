@@ -215,6 +215,29 @@ public class UssZfsItem {
         return moreRows;
     }
 
+    @Override
+    public String toString() {
+        return "UssZfsItem{" +
+                "name=" + name +
+                ", mountpoint=" + mountpoint +
+                ", fstname=" + fstname +
+                ", status=" + status +
+                ", mode=" + mode +
+                ", dev=" + dev +
+                ", fstype=" + fstype +
+                ", bsize=" + bsize +
+                ", bavail=" + bavail +
+                ", blocks=" + blocks +
+                ", sysname=" + sysname +
+                ", readibc=" + readibc +
+                ", writeibc=" + writeibc +
+                ", diribc=" + diribc +
+                ", returnedRows=" + returnedRows +
+                ", totalRows=" + totalRows +
+                ", moreRows=" + moreRows +
+                '}';
+    }
+
     public static class Builder {
 
         private String name;
