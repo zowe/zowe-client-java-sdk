@@ -74,7 +74,7 @@ public final class Utils {
     public static void validateClass(Class name, String privateConstructorMsg) {
         try {
             Utils.assertUtilityClassWellDefined(name);
-        } catch (NoSuchMethodException e) {
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalStateException e) {
             e.printStackTrace();
             assertTrue(false);
         } catch (InvocationTargetException e) {
@@ -84,15 +84,6 @@ public final class Utils {
                 e.printStackTrace();
                 assertTrue(false);
             }
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-            assertTrue(false);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            assertTrue(false);
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-            assertTrue(false);
         }
     }
 
