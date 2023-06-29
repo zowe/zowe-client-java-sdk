@@ -27,7 +27,7 @@ public class ListParams {
     /**
      * The indicator that we want to show less files
      */
-    public OptionalInt maxLength;
+    public final OptionalInt maxLength;
 
     /**
      * The group owner or GID to filter
@@ -50,7 +50,7 @@ public class ListParams {
      * Valid values are either an integer, and integer with a suffix (K, M, G),
      * or an integer with leading plus (+) or minus (-)
      */
-    public OptionalInt size;
+    public final OptionalInt size;
 
     /**
      * The name of the file or directory to filter
@@ -79,7 +79,7 @@ public class ListParams {
      * True means search all
      * False means search same
      */
-    public boolean filesys;
+    public final boolean filesys;
 
     /**
      * Whether to follow symlinks, or report them
@@ -87,7 +87,7 @@ public class ListParams {
      * True means to report
      * False means to follow
      */
-    public boolean symlinks;
+    public final boolean symlinks;
 
     public ListParams(ListParams.Builder builder) {
         if (builder.maxLength == null) {
