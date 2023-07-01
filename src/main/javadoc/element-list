@@ -19,6 +19,8 @@ zowe.client.sdk.zosfiles.dsn.response
 zowe.client.sdk.zosfiles.dsn.types
 zowe.client.sdk.zosfiles.uss.input
 zowe.client.sdk.zosfiles.uss.methods
+zowe.client.sdk.zosfiles.uss.response
+zowe.client.sdk.zosfiles.uss.types
 zowe.client.sdk.zosjobs
 zowe.client.sdk.zosjobs.input
 zowe.client.sdk.zosjobs.methods
