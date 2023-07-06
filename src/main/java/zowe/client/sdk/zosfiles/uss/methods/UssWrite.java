@@ -62,43 +62,49 @@ public class UssWrite {
         this.request = request;
     }
 
-    public Response write(String destName, String content) throws Exception {
-        return writeCommon(destName, null, content);
-    }
-
     /**
      * Perform a write to UNIX object request
      *
      * @param destName name of file or directory with path
-     * @param ifMatch standard but optional header to coorelate with previous requests on same unix file
+     * @param params standard but optional header to coorelate with previous
+     * requests on same unix file
      * @param content new content
      * @return http response object
      * @throws Exception error processing request
      * @author James Kostrewski
      */
-    public Response writeCommon(String destName, String ifMatch, String content) throws Exception {
+    public Response write(String destName, WriteParams params, String content) throws Exception {
         ValidateUtils.checkNullParameter(destName == null, "destName is null");
         ValidateUtils.checkNullParameter(content == null, "content is null");
         String url;
-        Map map = new HashMap<String, String>();
-        if (ifMatch != null) {
-            url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                     + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destName;
-            map.put("If-Match", ifMatch);
-        } else {
-            url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                    + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destName;
-        }
+        Map<String, String> map = new HashMap<>();
+        if (params.dataType.equals("text")) {
+            map.put("X-IBM-Data-Type", dataType);
+        } 
         LOG.debug(url);
 
-        if (request == null || !(request instanceof JsonDeleteRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
+        if (request == null || !(request instanceof TextPutRequest)) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
         }
         request.setHeaders(map);
         request.setUrl(url);
         request.setBody(content);
-
+        //System.out.println(content);
         return RestUtils.getResponse(request);
     }
 
+    public static void main(String[] args) throws Exception {
+        final String hostName = "47.19.64.77";
+        final String zosmfPort = "443";
+        final String userName = "FGIORDA";
+        final String password = "R9$WFu77";
+        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+
+        UssWrite myWrite = new UssWrite(connection);
+        
+        myWrite.write("/u/fgiorda/test","text", "this is a test message");
+        
+    }
 }
