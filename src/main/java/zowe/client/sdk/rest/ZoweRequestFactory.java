@@ -32,7 +32,7 @@ public final class ZoweRequestFactory {
      *
      * @param connection connection information, see ZOSConnection object
      * @param type       request http type, see ZoweRequestType object
-     * @return ZoweRequest value
+     * @return ZoweRequest abstract object of ZoweRequestType value
      * @throws Exception error with type not found
      * @author Frank Giordano
      */
