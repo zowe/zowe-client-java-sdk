@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -21,8 +23,9 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
 /**
  * Provides unix system service write to object functionality
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-write-data-zos-unix-file">z/OSMF REST API</a>
- * 
+ * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-write-data-zos-unix-file">z/OSMF
+ * REST API</a>
+ *
  * @author James Kostrewski
  * @version 2.0
  */
@@ -44,11 +47,12 @@ public class UssWrite {
     }
 
     /**
-     * Alternative UssWrite constructor with ZoweRequest object. This is mainly used for internal code
-     * unit testing with mockito, and it is not recommended to be used by the larger community.
+     * Alternative UssWrite constructor with ZoweRequest object. This is mainly
+     * used for internal code unit testing with mockito, and it is not
+     * recommended to be used by the larger community.
      *
      * @param connection connection information, see ZOSConnection object
-     * @param request    any compatible ZoweRequest Interface type object
+     * @param request any compatible ZoweRequest Interface type object
      * @author James Kostrewski
      * @author Frank Giordano
      */
@@ -57,45 +61,40 @@ public class UssWrite {
         this.connection = connection;
         this.request = request;
     }
-    
-    /**
-     * Replaces the content of a unix file with new content.
-     *
-     * @param destName destination name of where the file is located
-     * @param memberName  name of member to add new content
-     * @param content     new content
-     * @return http response object
-     * @throws Exception error processing request
-     * @author Frank Giordano
-     */
-    public Response write(String destName, String memberName, String content) throws Exception {
-        ValidateUtils.checkNullParameter(destName == null, "destName is null");
-        ValidateUtils.checkIllegalParameter(destName.isEmpty(), "dataSetName not specified");
-        ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
-        ValidateUtils.checkIllegalParameter(memberName.isEmpty(), "memberName not specified");
-        return write(String.format("%s(%s)", destName, memberName), content);
+
+    public Response write(String destName, String content) throws Exception {
+        return writeCommon(destName, null, content);
     }
-    
+
     /**
      * Perform a write to UNIX object request
      *
      * @param destName name of file or directory with path
+     * @param ifMatch standard but optional header to coorelate with previous requests on same unix file
      * @param content new content
      * @return http response object
      * @throws Exception error processing request
      * @author James Kostrewski
      */
-    public Response write(String destName, String content) throws Exception {
+    public Response writeCommon(String destName, String ifMatch, String content) throws Exception {
         ValidateUtils.checkNullParameter(destName == null, "destName is null");
         ValidateUtils.checkNullParameter(content == null, "content is null");
-
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destName;
+        String url;
+        Map map = new HashMap<String, String>();
+        if (ifMatch != null) {
+            url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
+                    + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destName;
+            map.put("If-Match", ifMatch);
+        } else {
+            url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
+                    + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destName;
+        }
         LOG.debug(url);
 
         if (request == null || !(request instanceof JsonDeleteRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
+        request.setHeaders(map);
         request.setUrl(url);
         request.setBody(content);
 
