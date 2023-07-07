@@ -14,6 +14,7 @@ import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 
 /**
  * Http get stream operation with Json content type
@@ -40,6 +41,7 @@ public class StreamGetRequest extends ZoweRequest {
      */
     @Override
     public Response executeRequest() throws UnirestException {
+        ValidateUtils.checkNullParameter(url == null, "url is null");
         HttpResponse<byte[]> reply = Unirest.get(url).headers(headers).asBytes();
         if (reply.getStatusText().contains("No Content")) {
             return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
@@ -53,7 +55,7 @@ public class StreamGetRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     @Override
-    public void setBody(String body) throws UnirestException {
+    public void setBody(Object body) throws UnirestException {
         throw new UnirestException("setting body for this request is invalid");
     }
 

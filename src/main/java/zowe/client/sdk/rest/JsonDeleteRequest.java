@@ -15,6 +15,7 @@ import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 
 /**
  * Http delete operation with Json content type
@@ -41,6 +42,7 @@ public class JsonDeleteRequest extends ZoweRequest {
      */
     @Override
     public Response executeRequest() throws UnirestException {
+        ValidateUtils.checkNullParameter(url == null, "url is null");
         HttpResponse<JsonNode> reply = Unirest.delete(url).headers(headers).asJson();
         if (reply.getStatusText().contains("No Content")) {
             return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
@@ -54,7 +56,7 @@ public class JsonDeleteRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     @Override
-    public void setBody(String body) throws UnirestException {
+    public void setBody(Object body) throws UnirestException {
         throw new UnirestException("setting body for this request is invalid");
     }
 

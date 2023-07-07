@@ -18,25 +18,25 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Http post operation with Json content type
+ * Http put stream operation with binary content type
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public class JsonPostRequest extends ZoweRequest {
+public class StreamPutRequest extends ZoweRequest {
 
     /**
-     * JSON String representation
+     * Binary data representation
      */
-    private String body;
+    private byte[] body;
 
     /**
-     * JsonPostRequest constructor
+     * ZoweRequest constructor
      *
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public JsonPostRequest(ZosConnection connection) {
+    public StreamPutRequest(ZosConnection connection) {
         super(connection);
     }
 
@@ -49,7 +49,7 @@ public class JsonPostRequest extends ZoweRequest {
     public Response executeRequest() throws UnirestException {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         ValidateUtils.checkNullParameter(body == null, "body is null");
-        HttpResponse<JsonNode> reply = Unirest.post(url).headers(headers).body(body).asJson();
+        HttpResponse<JsonNode> reply = Unirest.put(url).headers(headers).body(body).asJson();
         if (reply.getStatusText().contains("No Content")) {
             return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
         }
@@ -57,14 +57,14 @@ public class JsonPostRequest extends ZoweRequest {
     }
 
     /**
-     * Set the body information for the http request
+     * Set the body byte array value for request
      *
-     * @param body String value
+     * @param body byte array value
      * @author Frank Giordano
      */
     @Override
     public void setBody(Object body) {
-        this.body = (String) body;
+        this.body = (byte[]) body;
     }
 
     /**
@@ -75,7 +75,7 @@ public class JsonPostRequest extends ZoweRequest {
     @Override
     public void setStandardHeaders() {
         headers.put("Authorization", "Basic " + EncodeUtils.getAuthEncoding(connection));
-        headers.put("Content-Type", "application/json");
+        headers.put("Content-Type", "binary");
         headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
 

@@ -15,6 +15,7 @@ import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.utility.RestUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -80,11 +81,11 @@ public abstract class ZoweRequest {
     /**
      * Set the body information for the http request
      *
-     * @param body string value
-     * @throws UnirestException error setting body string
+     * @param body object value
+     * @throws UnirestException error setting body
      * @author Frank Giordano
      */
-    public abstract void setBody(String body) throws UnirestException;
+    public abstract void setBody(Object body) throws UnirestException;
 
     /**
      * Set any headers needed for the http request
@@ -113,6 +114,8 @@ public abstract class ZoweRequest {
      * @author Frank Giordano
      */
     public void setUrl(String url) throws IllegalArgumentException {
+        ValidateUtils.checkNullParameter(url == null, "url is null");
+        ValidateUtils.checkNullParameter(url.isEmpty(), "url not specified");
         if (RestUtils.isUrlNotValid(url)) {
             throw new IllegalArgumentException("url is invalid");
         }
