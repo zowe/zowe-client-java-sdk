@@ -99,6 +99,7 @@ public class UssDelete {
      */
     private Response deleteCommon(String name, boolean recursive) throws Exception {
         ValidateUtils.checkNullParameter(name == null, "name is null");
+        ValidateUtils.checkIllegalParameter(name.isEmpty(), "name is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + name;
