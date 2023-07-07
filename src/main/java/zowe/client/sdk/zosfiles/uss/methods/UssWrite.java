@@ -45,6 +45,20 @@ public class UssWrite {
     }
 
     /**
+     * Alternative UssWrite constructor with ZoweRequest object. This is mainly used for internal code
+     * unit testing with mockito, and it is not recommended to be used by the larger community.
+     *
+     * @param connection connection information, see ZOSConnection object
+     * @param request    any compatible ZoweRequest Interface type object
+     * @author Frank Giordano
+     */
+    public UssWrite(ZosConnection connection, ZoweRequest request) {
+        ValidateUtils.checkConnection(connection);
+        this.connection = connection;
+        this.request = request;
+    }
+
+    /**
      * Perform write string content request
      *
      * @param value   file name with path
