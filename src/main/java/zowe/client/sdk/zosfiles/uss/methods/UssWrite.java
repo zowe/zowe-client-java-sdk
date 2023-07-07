@@ -51,7 +51,7 @@ public class UssWrite {
      * @param content string content to write to file
      * @return Response object
      */
-    public Response writeFile(String value, String content) {
+    public Response writeText(String value, String content) {
         // TODO
         return writeCommon(value, null);
     }
