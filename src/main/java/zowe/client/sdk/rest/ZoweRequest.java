@@ -115,7 +115,7 @@ public abstract class ZoweRequest {
      */
     public void setUrl(String url) throws IllegalArgumentException {
         ValidateUtils.checkNullParameter(url == null, "url is null");
-        ValidateUtils.checkNullParameter(url.isEmpty(), "url not specified");
+        ValidateUtils.checkIllegalParameter(url.isEmpty(), "url not specified");
         if (RestUtils.isUrlNotValid(url)) {
             throw new IllegalArgumentException("url is invalid");
         }

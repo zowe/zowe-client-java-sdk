@@ -166,7 +166,7 @@ public class UssList {
      *
      * @param url       string value
      * @param maxLength length max request value
-     * @return response object
+     * @return Response object
      * @throws Exception processing error
      * @author Frank Giordano
      */
