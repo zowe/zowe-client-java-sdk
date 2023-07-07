@@ -45,7 +45,7 @@ public class UssWrite {
     }
 
     /**
-     * Perform a write string content request
+     * Perform write string content request
      *
      * @param value   file name with path
      * @param content string content to write to file
@@ -57,7 +57,7 @@ public class UssWrite {
     }
 
     /**
-     * Perform a write binary content request
+     * Perform write binary content request
      *
      * @param value   file name with path
      * @param content binary content to write to file
@@ -69,7 +69,7 @@ public class UssWrite {
     }
 
     /**
-     * Perform a write request based on WriteParams settings
+     * Perform write request based on WriteParams settings
      *
      * @param value  file name with path
      * @param params WriteParams parameters that specifies write action request
