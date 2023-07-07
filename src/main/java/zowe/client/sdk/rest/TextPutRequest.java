@@ -24,6 +24,9 @@ import zowe.client.sdk.utility.ValidateUtils;
  */
 public class TextPutRequest extends ZoweRequest {
 
+    /**
+     * Text representation
+     */
     private String body;
 
     /**
@@ -43,6 +46,7 @@ public class TextPutRequest extends ZoweRequest {
      */
     @Override
     public Response executeRequest() throws UnirestException {
+        ValidateUtils.checkNullParameter(url == null, "url is null");
         ValidateUtils.checkNullParameter(body == null, "body is null");
         HttpResponse<String> reply = Unirest.put(url).headers(headers).body(body).asString();
         if (reply.getStatusText().contains("No Content")) {
@@ -54,11 +58,12 @@ public class TextPutRequest extends ZoweRequest {
     /**
      * Set the body information for the http request
      *
+     * @param body String value
      * @author Frank Giordano
      */
     @Override
-    public void setBody(String body) {
-        this.body = body;
+    public void setBody(Object body) {
+        this.body = (String) body;
     }
 
     /**

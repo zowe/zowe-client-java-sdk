@@ -25,6 +25,7 @@ public enum ZoweRequestType {
     DELETE_TEXT,
     POST_JSON,
     POST_TEXT,
-    GET_STREAM
+    GET_STREAM,
+    PUT_STREAM
 
 }

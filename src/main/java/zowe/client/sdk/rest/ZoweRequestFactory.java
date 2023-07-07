@@ -60,6 +60,9 @@ public final class ZoweRequestFactory {
             case GET_STREAM:
                 request = new StreamGetRequest(connection);
                 break;
+            case PUT_STREAM:
+                request = new StreamPutRequest(connection);
+                break;
             default:
                 throw new Exception("no valid type specified");
         }

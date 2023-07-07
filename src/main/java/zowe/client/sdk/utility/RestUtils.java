@@ -80,7 +80,6 @@ public final class RestUtils {
      * @author Frank Giordano
      */
     public static boolean isUrlNotValid(String url) {
-        ValidateUtils.checkNullParameter(url == null, "url is null");
         try {
             new URL(url).toURI();
             return false;
