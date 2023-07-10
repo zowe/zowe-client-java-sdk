@@ -34,8 +34,8 @@ public class WriteParams {
      */
     public Optional<String> fileEncoding;
     /**
-     *  Can be used to control whether each input text line is terminated with a carriage return line feed (CRLF),
-     *  rather than a line feed (LF), which is the default. Set to true to turn off default.
+     * Can be used to control whether each input text line is terminated with a carriage return line feed (CRLF),
+     * rather than a line feed (LF), which is the default. Set to true to turn off default.
      */
     public boolean crlf;
     /**
