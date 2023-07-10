@@ -110,9 +110,9 @@ public class UssList {
         }
         LOG.debug(url.toString());
 
-        Response response = getResponse(url.toString(), params.getMaxLength());
+        final Response response = getResponse(url.toString(), params.getMaxLength());
 
-        List<UssItem> items = new ArrayList<>();
+        final List<UssItem> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
                 response.getResponsePhrase().orElseThrow(() -> new Exception("error retrieving uss list"))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
@@ -147,9 +147,9 @@ public class UssList {
         params.getFsname().ifPresent(name -> url.append("?fsname=").append(name));
         LOG.debug(url.toString());
 
-        Response response = getResponse(url.toString(), params.getMaxLength());
+        final Response response = getResponse(url.toString(), params.getMaxLength());
 
-        List<UssZfsItem> items = new ArrayList<>();
+        final List<UssZfsItem> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
                 response.getResponsePhrase().orElseThrow(() -> new Exception("error retrieving uss zfs list"))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
