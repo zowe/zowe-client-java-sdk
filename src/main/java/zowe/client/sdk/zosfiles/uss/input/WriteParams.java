@@ -22,7 +22,7 @@ import java.util.Optional;
 public class WriteParams {
 
     /**
-     * Content text string for file write
+     * Text content for file write
      */
     public Optional<String> textContent;
     /**
