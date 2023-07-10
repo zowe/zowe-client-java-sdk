@@ -26,8 +26,7 @@ public class WriteParams {
     public Optional<byte[]> binaryContent;
     public Optional<String> fileEncoding;
     public Optional<String> crlf;
-    public boolean textRequest;
-    public boolean binaryRequest;
+    public boolean binary;
 
     // TODO build builder pattern below...
 
