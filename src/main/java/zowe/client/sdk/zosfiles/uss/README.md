@@ -145,6 +145,77 @@ public class DeleteUssTst extends TstZosConnection {
 }
 `````
 
+**List a USS file and zFS**
+
+````java
+
+package zowe.client.sdk.examples.zosfiles;
+
+import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.zosfiles.uss.input.ListParams;
+import zowe.client.sdk.zosfiles.uss.input.ListZfsParams;
+import zowe.client.sdk.zosfiles.uss.methods.UssList;
+import zowe.client.sdk.zosfiles.uss.response.UssItem;
+import zowe.client.sdk.zosfiles.uss.response.UssZfsItem;
+
+import java.util.List;
+
+/**
+ * Class example to showcase UssList class functionality.
+ *
+ * @author Frank Giordano
+ * @version 2.0
+ */
+public class ListUssTst extends TstZosConnection {
+
+    private static ZosConnection connection;
+
+    /**
+     * Main method performs setup and method calls to test UssList
+     *
+     * @param args for main not used
+     * @throws Exception error processing request
+     * @author Frank Giordano
+     */
+    public static void main(String[] args) throws Exception {
+        String fileNamePath = "/xxx/xx/xx";
+        String dirNamePath = "/xxx/xx/xx";
+
+        connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        fileList(fileNamePath);
+        zfsList(dirNamePath);
+    }
+
+    /**
+     * Perform a Unix System Service zFS list
+     *
+     * @param value file name with path
+     * @throws Exception processing error
+     */
+    private static void zfsList(String value) throws Exception {
+        UssList ussList = new UssList(connection);
+        ListZfsParams params = new ListZfsParams.Builder().path(value).build();
+        List<UssZfsItem> items = ussList.zfsList(params);
+        items.forEach(System.out::println);
+    }
+
+    /**
+     * Perform a Unix System Service file list
+     *
+     * @param value file name with path
+     * @throws Exception processing error
+     */
+    private static void fileList(String value) throws Exception {
+        UssList ussList = new UssList(connection);
+        ListParams params = new ListParams.Builder().name(value).build();
+        List<UssItem> items = ussList.fileList(params);
+        items.forEach(System.out::println);
+    }
+
+}
+`````
+
 ````java
 package zowe.client.sdk.examples;
 
