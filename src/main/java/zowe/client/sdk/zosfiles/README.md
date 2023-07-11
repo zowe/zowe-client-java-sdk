@@ -1,6 +1,6 @@
 # z/OS Files Package
 
-Contains APIs to interact with datasets, members, and unix system services object on z/OS (using z/OSMF files REST
+Contains APIs to interact with datasets, members, and unix system services objects on z/OS (using z/OSMF files REST
 endpoints).
 
 See dns package for datasets and members APIs.  
