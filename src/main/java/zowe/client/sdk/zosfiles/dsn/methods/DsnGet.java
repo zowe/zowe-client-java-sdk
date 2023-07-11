@@ -134,18 +134,17 @@ public class DsnGet {
         url += EncodeUtils.encodeURIComponent(dataSetName);
         LOG.debug(url);
 
-        String key, value;
         final Map<String, String> headers = FileUtils.generateHeadersBasedOnOptions(params);
 
         if (params.getReturnEtag().orElse(false)) {
-            key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
-            value = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(1);
+            final String key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
+            final String value = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(1);
             headers.put(key, value);
         }
 
         if (params.getBinary().orElse(false)) {
-            key = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(0);
-            value = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(1);
+            final String key = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(0);
+            final String value = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(1);
             headers.put(key, value);
         }
 
