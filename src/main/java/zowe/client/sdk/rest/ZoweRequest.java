@@ -37,7 +37,7 @@ public abstract class ZoweRequest {
     /**
      * ZoweRequest constructor
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public ZoweRequest(ZosConnection connection) {

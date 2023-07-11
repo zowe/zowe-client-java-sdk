@@ -27,7 +27,7 @@ public class StreamGetRequest extends ZoweRequest {
     /**
      * StreamGetRequest constructor
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public StreamGetRequest(ZosConnection connection) {

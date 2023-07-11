@@ -32,7 +32,7 @@ public class TextPutRequest extends ZoweRequest {
     /**
      * TextPutRequest constructor
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public TextPutRequest(ZosConnection connection) {

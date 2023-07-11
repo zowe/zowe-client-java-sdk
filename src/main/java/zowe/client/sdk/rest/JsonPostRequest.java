@@ -33,7 +33,7 @@ public class JsonPostRequest extends ZoweRequest {
     /**
      * JsonPostRequest constructor
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public JsonPostRequest(ZosConnection connection) {

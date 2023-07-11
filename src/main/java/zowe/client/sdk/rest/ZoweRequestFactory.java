@@ -30,7 +30,7 @@ public final class ZoweRequestFactory {
     /**
      * Assign the request to the Http verb type request object
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @param type       request http type, see ZoweRequestType object
      * @return ZoweRequest abstract object of ZoweRequestType value
      * @throws Exception error with type not found

@@ -50,7 +50,7 @@ public class UssList {
     /**
      * UssList Constructor
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public UssList(ZosConnection connection) {

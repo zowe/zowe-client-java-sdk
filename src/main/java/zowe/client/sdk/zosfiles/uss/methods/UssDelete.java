@@ -40,7 +40,7 @@ public class UssDelete {
     /**
      * UssDelete Constructor
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
     public UssDelete(ZosConnection connection) {
@@ -52,7 +52,7 @@ public class UssDelete {
      * Alternative UssDelete constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface type object
      * @author James Kostrewski
      * @author Frank Giordano

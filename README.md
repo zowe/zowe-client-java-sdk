@@ -89,7 +89,7 @@ TeamConfig class only supports Zowe Global Team Configuration provided by Zowe V
   
 If you have Zowe CLI on your system with Global Team Configuration initialized, you can use TeamConfig API methods to retrieve a profile type which will include the secure username and password information stored in our OS credential store manager.   
   
-You can use this information to create a dynamic ZOSConnection object to perform zosmf authentication for the all the other packages. This avoids the need to hard code values.    
+You can use this information to create a dynamic ZosConnection object to perform zosmf authentication for the all the other packages. This avoids the need to hard code values.    
   
 See following package/class:  
   

@@ -27,7 +27,7 @@ public class TextGetRequest extends ZoweRequest {
     /**
      * TextGetRequest constructor
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public TextGetRequest(ZosConnection connection) {

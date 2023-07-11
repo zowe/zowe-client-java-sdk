@@ -31,7 +31,7 @@ public final class ValidateUtils {
     /**
      * Check connection for validity.
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @throws IllegalStateException with message "Connection data not setup properly"
      * @author Frank Giordano
      */

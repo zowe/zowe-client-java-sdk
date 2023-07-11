@@ -38,7 +38,7 @@ public class ZosConnection {
     private final String password;
 
     /**
-     * ZOSConnection constructor
+     * ZosConnection constructor
      *
      * @param host      machine host pointing to backend z/OS instance
      * @param zosmfPort machine host z/OSMF port number pointing to backend z/OS instance
@@ -95,7 +95,7 @@ public class ZosConnection {
 
     @Override
     public String toString() {
-        return "ZOSConnection{" +
+        return "ZosConnection{" +
                 "host='" + host + '\'' +
                 ", zosmfPort='" + zosmfPort + '\'' +
                 ", user='" + user + '\'' +
