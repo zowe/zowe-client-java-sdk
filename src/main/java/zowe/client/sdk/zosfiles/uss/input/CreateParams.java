@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.zosfiles.uss.types.CreateType;
 
 /**
@@ -56,7 +57,7 @@ public class CreateParams {
      */
     public CreateParams(CreateType type, String mode) {
         this.type = type;
-        this.mode = mode;
+        this.mode = FileUtils.validatePermission(mode);
     }
 
     /**
