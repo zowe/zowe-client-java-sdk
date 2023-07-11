@@ -4,10 +4,10 @@ Contains APIs to interact with Unix System Services (USS) objects on z/OS (using
 
 APIs located in methods package.
 
-## API Examples  
+## API Examples
 
-**Create a USS file and directory**  
-  
+**Create a USS file and directory**
+
 ````java
 package zowe.client.sdk.examples.zosfiles;
 
