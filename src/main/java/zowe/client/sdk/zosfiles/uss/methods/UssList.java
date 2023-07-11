@@ -81,7 +81,7 @@ public class UssList {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    private List<UssItem> fileList(ListParams params) throws Exception {
+    public List<UssItem> fileList(ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getName().isEmpty(), "params name is empty");
 
