@@ -31,7 +31,6 @@ import zowe.client.sdk.zosfiles.uss.response.UssZfsItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalInt;
 
 /**
  * Provides Unix System Services (USS) list object functionality
@@ -110,7 +109,7 @@ public class UssList {
         }
         LOG.debug(url.toString());
 
-        final Response response = getResponse(url.toString(), params.getMaxLength());
+        final Response response = getResponse(url.toString(), params.getMaxLength().orElse(0));
 
         final List<UssItem> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
@@ -147,7 +146,7 @@ public class UssList {
         params.getFsname().ifPresent(name -> url.append("?fsname=").append(name));
         LOG.debug(url.toString());
 
-        final Response response = getResponse(url.toString(), params.getMaxLength());
+        final Response response = getResponse(url.toString(), params.getMaxLength().orElse(0));
 
         final List<UssZfsItem> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
@@ -170,13 +169,13 @@ public class UssList {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    private Response getResponse(String url, OptionalInt maxLength) throws Exception {
+    private Response getResponse(String url, int maxLength) throws Exception {
         if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
 
         request.setUrl(url);
-        final int value = maxLength.orElse(0);
+        final int value = maxLength;
         if (value > 0) {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(value)));
         }
