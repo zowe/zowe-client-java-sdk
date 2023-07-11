@@ -14,7 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Utility class for test package.
@@ -85,5 +86,5 @@ public final class Utils {
             }
         }
     }
-    
+
 }
