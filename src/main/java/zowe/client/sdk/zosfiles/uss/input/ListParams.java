@@ -69,9 +69,14 @@ public class ListParams {
     private final Optional<ListFilterType> type;
 
     /**
-     * The depth of the directory structure to list files and directories for
+     * The default value for this parameter is 0, which means that all subdirectories under path are listed,
+     * regardless of depth. When depth is greater than 1, subdirectories up to the specified depth are listed.
+     * depth is 1, only the files in the path are listed.
+     * <p>
+     * The name field in the returned JSON document contains the path of the entry,
+     * relative to the path query parameter.
      */
-    private final Optional<String> depth;
+    private final OptionalInt depth;
 
     /**
      * Whether to search all filesystems under the path, or just the same filesystem as the path
@@ -106,7 +111,11 @@ public class ListParams {
         this.name = Optional.ofNullable(builder.name);
         this.perm = Optional.ofNullable(builder.perm);
         this.type = Optional.ofNullable(builder.type);
-        this.depth = Optional.ofNullable(builder.depth);
+        if (builder.depth == null) {
+            this.depth = OptionalInt.empty();
+        } else {
+            this.depth = OptionalInt.of(builder.depth);
+        }
         this.filesys = builder.filesys;
         this.symlinks = builder.symlinks;
     }
@@ -143,7 +152,7 @@ public class ListParams {
         return type;
     }
 
-    public Optional<String> getDepth() {
+    public OptionalInt getDepth() {
         return depth;
     }
 
@@ -182,7 +191,7 @@ public class ListParams {
         private String name;
         private String perm;
         private ListFilterType type;
-        private String depth;
+        private Integer depth;
         private boolean filesys = false;
         private boolean symlinks = false;
 
@@ -230,7 +239,7 @@ public class ListParams {
             return this;
         }
 
-        public ListParams.Builder depth(String depth) {
+        public ListParams.Builder depth(int depth) {
             this.depth = depth;
             return this;
         }
