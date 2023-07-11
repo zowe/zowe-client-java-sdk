@@ -29,6 +29,7 @@ import zowe.client.sdk.zosfiles.dsn.types.AttributeType;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -134,19 +135,34 @@ public class DsnGet {
         url += EncodeUtils.encodeURIComponent(dataSetName);
         LOG.debug(url);
 
-        final Map<String, String> headers = FileUtils.generateHeadersBasedOnOptions(params);
+        String key, value;
+        final Map<String, String> headers = new HashMap<>();
+
+        if (params.getBinary().isPresent()) {
+            key = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(0);
+            value = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(1);
+            headers.put(key, value);
+        } else if (params.getEncoding().isPresent()) {
+            key = ZosmfHeaders.X_IBM_TEXT;
+            value = ZosmfHeaders.X_IBM_TEXT + ZosmfHeaders.X_IBM_TEXT_ENCODING + params.getEncoding();
+            headers.put(key, value);
+        }
 
         if (params.getReturnEtag().orElse(false)) {
-            final String key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
-            final String value = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(1);
+            key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
+            value = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(1);
             headers.put(key, value);
         }
 
-        if (params.getBinary().orElse(false)) {
-            final String key = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(0);
-            final String value = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(1);
+        if (params.getResponseTimeout().isPresent()) {
+            key = ZosmfHeaders.HEADERS.get("X_IBM_RESPONSE_TIMEOUT").get(0);
+            value = ZosmfHeaders.HEADERS.get(params.getResponseTimeout().toString()).get(1);
             headers.put(key, value);
         }
+
+        key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
+        value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
+        headers.put(key, value);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_STREAM);
