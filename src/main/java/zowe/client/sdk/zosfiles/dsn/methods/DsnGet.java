@@ -18,7 +18,6 @@ import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
@@ -138,7 +137,7 @@ public class DsnGet {
         String key, value;
         final Map<String, String> headers = new HashMap<>();
 
-        if (params.getBinary().isPresent()) {
+        if (params.getBinary().orElse(false)) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(1);
             headers.put(key, value);
