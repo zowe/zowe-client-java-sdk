@@ -24,24 +24,24 @@ public class WriteParams {
     /**
      * Text content for file write
      */
-    public Optional<String> textContent;
+    public final Optional<String> textContent;
     /**
      * Binary byte array content for file write
      */
-    public Optional<byte[]> binaryContent;
+    public final Optional<byte[]> binaryContent;
     /**
      * Can be used to specify an alternate EBCDIC code page. The default code page is IBM-1047.
      */
-    public Optional<String> fileEncoding;
+    public final Optional<String> fileEncoding;
     /**
      * Can be used to control whether each input text line is terminated with a carriage return line feed (CRLF),
      * rather than a line feed (LF), which is the default. Set to true to turn off default.
      */
-    public boolean crlf;
+    public final boolean crlf;
     /**
      * If true perform binary write instead of text.
      */
-    public boolean binary;
+    public final boolean binary;
 
     public WriteParams(WriteParams.Builder builder) {
         this.textContent = Optional.ofNullable(builder.textContent);
