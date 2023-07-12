@@ -74,4 +74,28 @@ public class UssDeleteTest {
         assertEquals(errMsg, "name not specified");
     }
 
+    @Test
+    public void tstUssDeleteNameNullRecursiveFailure() {
+        UssDelete ussDelete = new UssDelete(connection, jsonDeleteRequest);
+        String errMsg = "";
+        try {
+            ussDelete.delete(null, true);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals(errMsg, "name is null");
+    }
+
+    @Test
+    public void tstUssDeleteNameEmptyRecursiveFailure() {
+        UssDelete ussDelete = new UssDelete(connection, jsonDeleteRequest);
+        String errMsg = "";
+        try {
+            ussDelete.delete("", true);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals(errMsg, "name not specified");
+    }
+
 }
