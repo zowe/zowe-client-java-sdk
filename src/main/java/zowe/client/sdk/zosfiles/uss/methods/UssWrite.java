@@ -116,6 +116,7 @@ public class UssWrite {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + value;
+        LOG.debug(url);
 
         final Map<String, String> map = new HashMap<>();
 
