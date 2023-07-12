@@ -9,5 +9,99 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZoweRequest;
+import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosfiles.ZosFilesConstants;
+import zowe.client.sdk.zosfiles.uss.input.GetParams;
+
+/**
+ * Provides unix system services read from object functionality
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-retrieve-contents-zos-unix-file">z/OSMF REST API</a>
+ *
+ * @author James Kostrewski
+ * @author Frank Giordano
+ * @version 2.0
+ */
 public class UssGet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UssGet.class);
+    private final ZosConnection connection;
+    private ZoweRequest request;
+
+    /**
+     * UssGet Constructor
+     *
+     * @param connection connection information, see ZosConnection object
+     * @author Frank Giordano
+     * @author James Kostrewski
+     */
+    public UssGet(ZosConnection connection) {
+        ValidateUtils.checkConnection(connection);
+        this.connection = connection;
+    }
+
+    /**
+     * Alternative UssGet constructor with ZoweRequest object. This is mainly used for internal code
+     * unit testing with mockito, and it is not recommended to be used by the larger community.
+     *
+     * @param connection connection information, see ZosConnection object
+     * @param request    any compatible ZoweRequest Interface type object
+     * @author Frank Giordano
+     * @author James Kostrewski
+     */
+    public UssGet(ZosConnection connection, ZoweRequest request) {
+        ValidateUtils.checkConnection(connection);
+        this.connection = connection;
+        this.request = request;
+    }
+
+    /**
+     * Get the binary contents of a USS file
+     *
+     * @param fileNamePath the path of the file to read
+     * @return the contents of the file as a byte array
+     * @throws Exception processing error
+     */
+    public byte[] getBinary(String fileNamePath) throws Exception {
+        GetParams params = new GetParams.Builder().binary(true).build();
+        Response response = getCommon(fileNamePath, params);
+        return (byte[]) response.getResponsePhrase().orElse(new byte[0]);
+    }
+
+    /**
+     * Get the text contents of a USS file
+     *
+     * @param fileNamePath the path of the file to read
+     * @return the text contents of a USS file
+     * @throws Exception processing error
+     */
+    public String getText(String fileNamePath) throws Exception {
+        GetParams params = new GetParams.Builder().build();
+        Response response = getCommon(fileNamePath, params);
+        return (String) response.getResponsePhrase().orElse("");
+    }
+
+    /**
+     * Get the contents of a USS file
+     *
+     * @param filePathName the path of the file to read
+     * @return the contents of the file as a string
+     * @throws Exception processing error
+     */
+    public Response getCommon(String filePathName, GetParams params) throws Exception {
+        ValidateUtils.checkNullParameter(filePathName == null, "file path name is null");
+        ValidateUtils.checkIllegalParameter(filePathName.isEmpty(), "file path name not specified");
+
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + filePathName;
+
+
+        return null;
+    }
+
 }
