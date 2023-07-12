@@ -69,6 +69,7 @@ public class UssWrite {
      * @param value   file name with path
      * @param content string content to write to file
      * @return Response object
+     * @author James Kostrewski
      */
 
     /**
@@ -78,6 +79,7 @@ public class UssWrite {
      * @param value   file name with path
      * @param content string content to write to file
      * @return Response object
+     * @author James Kostrewski
      */
     public Response writeText(String value, String content) throws Exception {
         WriteParams.Builder builder = new WriteParams.Builder();
@@ -94,6 +96,7 @@ public class UssWrite {
      * @param value   file name with path
      * @param content binary content to write to file
      * @return Response object
+     * @author James Kostrewski
      */
     public Response writeBinary(String value, byte[] content) throws Exception {
         WriteParams.Builder builder = new WriteParams.Builder();
@@ -108,6 +111,8 @@ public class UssWrite {
      * @param value  file name with path
      * @param params WriteParams parameters that specifies write action request
      * @return Response object
+     * @author James Kostrewski
+     * @author Frank Giordano
      */
     public Response writeCommon(String value, WriteParams params) throws Exception {
         ValidateUtils.checkNullParameter(value == null, "value is null");
