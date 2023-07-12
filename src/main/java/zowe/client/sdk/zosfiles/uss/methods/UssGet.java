@@ -63,8 +63,8 @@ public class UssGet {
     /**
      * Get the binary contents of a USS file
      *
-     * @param fileNamePath the path of the file to read
-     * @return the contents of the file as a byte array
+     * @param fileNamePath file name with path
+     * @return the byte array contents of the file
      * @throws Exception processing error
      */
     public byte[] getBinary(String fileNamePath) throws Exception {
@@ -76,8 +76,8 @@ public class UssGet {
     /**
      * Get the text contents of a USS file
      *
-     * @param fileNamePath the path of the file to read
-     * @return the text contents of a USS file
+     * @param fileNamePath file name with path
+     * @return the text contents of file
      * @throws Exception processing error
      */
     public String getText(String fileNamePath) throws Exception {
@@ -89,8 +89,8 @@ public class UssGet {
     /**
      * Get the contents of a USS file
      *
-     * @param filePathName the path of the file to read
-     * @return the contents of the file as a string
+     * @param filePathName file name with path
+     * @return Response object
      * @throws Exception processing error
      */
     public Response getCommon(String filePathName, GetParams params) throws Exception {
