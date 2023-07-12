@@ -24,7 +24,7 @@ public class WriteParams {
     /**
      * Text content for file write
      */
-    public final Optional<String> textContent;
+    public final String textContent;
     /**
      * Binary byte array content for file write
      */
@@ -44,14 +44,14 @@ public class WriteParams {
     public final boolean binary;
 
     public WriteParams(WriteParams.Builder builder) {
-        this.textContent = Optional.ofNullable(builder.textContent);
+        this.textContent = builder.textContent;
         this.binaryContent = Optional.ofNullable(builder.binaryContent);
         this.fileEncoding = Optional.ofNullable(builder.fileEncoding);
         this.crlf = builder.crlf;
         this.binary = builder.binary;
     }
 
-    public Optional<String> getTextContent() {
+    public String getTextContent() {
         return textContent;
     }
 

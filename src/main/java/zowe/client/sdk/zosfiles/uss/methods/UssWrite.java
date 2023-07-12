@@ -14,9 +14,15 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
+import zowe.client.sdk.rest.ZoweRequestFactory;
+import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.WriteParams;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Provides unix system service write to object functionality
@@ -65,9 +71,14 @@ public class UssWrite {
      * @param content string content to write to file
      * @return Response object
      */
-    public Response writeText(String value, String content) {
-        // TODO
-        return writeCommon(value, null);
+    public Response writeText(String value, String content) throws Exception {
+        WriteParams.Builder builder = new WriteParams.Builder();
+        builder.textContent(content);
+        builder.fileEncoding("IBM-1047");
+        builder.crlf(false);
+        builder.binary(false);
+
+        return writeCommon(value, builder.build());
     }
 
     /**
@@ -77,9 +88,11 @@ public class UssWrite {
      * @param content binary content to write to file
      * @return Response object
      */
-    public Response writeBinary(String value, byte[] content) {
-        // TODO
-        return writeCommon(value, null);
+    public Response writeBinary(String value, byte[] content) throws Exception {
+        WriteParams.Builder builder = new WriteParams.Builder();
+        builder.binaryContent(content);
+        builder.binary(true);
+        return writeCommon(value, builder.build());
     }
 
     /**
@@ -89,15 +102,33 @@ public class UssWrite {
      * @param params WriteParams parameters that specifies write action request
      * @return Response object
      */
-    public Response writeCommon(String value, WriteParams params) {
+    private Response writeCommon(String value, WriteParams params) throws Exception {
         ValidateUtils.checkNullParameter(value == null, "value is null");
         ValidateUtils.checkIllegalParameter(value.isEmpty(), "value not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + value;
-        // TODO
-        return null;
+
+        request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
+
+        Map<String, String> map = new HashMap<String, String>();
+
+        if (params.binary) {
+            map.put("X-IBM-Data-Type", "binary");
+            request.setBody(params.binaryContent);
+        } else {
+            if (params.crlf) {
+                map.put("X-IBM-Data-Type", "text;crlf=true");
+            } else {
+                map.put("X-IBM-Data-Type", "text");
+            }
+            request.setBody(params.textContent);
+        }
+        request.setHeaders(map);
+        request.setUrl(url);
+
+        return RestUtils.getResponse(request);
     }
 
 }
