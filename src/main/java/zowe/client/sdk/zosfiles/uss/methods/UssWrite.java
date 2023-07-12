@@ -65,7 +65,7 @@ public class UssWrite {
     }
 
     /**
-     * Perform write string content request
+     * Perform write text content request
      *
      * @param value   file name with path
      * @param content string content to write to file
@@ -73,10 +73,7 @@ public class UssWrite {
      * @author James Kostrewski
      */
     public Response writeText(String value, String content) throws Exception {
-        WriteParams.Builder builder = new WriteParams.Builder();
-        builder.textContent(content);
-        builder.binary(false);
-        return writeCommon(value, builder.build());
+        return writeCommon(value, new WriteParams.Builder().textContent(content).build());
     }
 
     /**
@@ -88,10 +85,7 @@ public class UssWrite {
      * @author James Kostrewski
      */
     public Response writeBinary(String value, byte[] content) throws Exception {
-        WriteParams.Builder builder = new WriteParams.Builder();
-        builder.binaryContent(content);
-        builder.binary(true);
-        return writeCommon(value, builder.build());
+        return writeCommon(value, new WriteParams.Builder().binaryContent(content).binary(true).build());
     }
 
     /**
