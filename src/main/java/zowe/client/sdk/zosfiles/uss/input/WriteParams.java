@@ -28,16 +28,8 @@ public class WriteParams {
     /**
      * Binary byte array content for file write
      */
+    public final String textHeader;
     public final Optional<byte[]> binaryContent;
-    /**
-     * Can be used to specify an alternate EBCDIC code page. The default code page is IBM-1047.
-     */
-    public final Optional<String> fileEncoding;
-    /**
-     * Can be used to control whether each input text line is terminated with a carriage return line feed (CRLF),
-     * rather than a line feed (LF), which is the default. Set to true to turn off default.
-     */
-    public final boolean crlf;
     /**
      * If true perform binary write instead of text.
      */
@@ -45,9 +37,8 @@ public class WriteParams {
 
     public WriteParams(WriteParams.Builder builder) {
         this.textContent = builder.textContent;
+        this.textHeader = builder.textHeader;
         this.binaryContent = Optional.ofNullable(builder.binaryContent);
-        this.fileEncoding = Optional.ofNullable(builder.fileEncoding);
-        this.crlf = builder.crlf;
         this.binary = builder.binary;
     }
 
@@ -55,16 +46,10 @@ public class WriteParams {
         return textContent;
     }
 
+    public String getTextHeader() { return textHeader; }
+
     public Optional<byte[]> getBinaryContent() {
         return binaryContent;
-    }
-
-    public Optional<String> getFileEncoding() {
-        return fileEncoding;
-    }
-
-    public boolean isCrlf() {
-        return crlf;
     }
 
     public boolean isBinary() {
@@ -76,18 +61,15 @@ public class WriteParams {
         return "WriteParams{" +
                 "textContent=" + textContent +
                 ", binaryContent=" + binaryContent +
-                ", fileEncoding=" + fileEncoding +
-                ", crlf=" + crlf +
+
                 ", binary=" + binary +
                 '}';
     }
 
     public static class Builder {
-
         private String textContent;
+        private String textHeader;
         private byte[] binaryContent;
-        private String fileEncoding;
-        private boolean crlf = false;
         private boolean binary = false;
 
         public WriteParams build() {
@@ -99,18 +81,12 @@ public class WriteParams {
             return this;
         }
 
+        public WriteParams.Builder textHeader(String textHeader) {
+            this.textHeader = textHeader;
+            return this;
+        }
         public WriteParams.Builder binaryContent(byte[] binaryContent) {
             this.binaryContent = binaryContent;
-            return this;
-        }
-
-        public WriteParams.Builder fileEncoding(String fileEncoding) {
-            this.fileEncoding = fileEncoding;
-            return this;
-        }
-
-        public WriteParams.Builder crlf(boolean crlf) {
-            this.crlf = crlf;
             return this;
         }
 

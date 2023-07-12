@@ -63,7 +63,6 @@ public class UssWrite {
         this.connection = connection;
         this.request = request;
     }
-
     /**
      * Perform write string content request
      *
@@ -72,10 +71,21 @@ public class UssWrite {
      * @return Response object
      */
     public Response writeText(String value, String content) throws Exception {
+        return writeText(value, content, "text");
+    }
+    /**
+     * Perform write string content request. Provides support for the use of custom headers, allows alternative
+     * file encoding (default IBM-1047) and crlf (default false). See IBM documentation for further details
+     *
+     * @param value   file name with path
+     * @param content string content to write to file
+     * @param customHeader custom header to denote file encoding or crlf value
+     * @return Response object
+     */
+    public Response writeText(String value, String content, String customHeader) throws Exception {
         WriteParams.Builder builder = new WriteParams.Builder();
         builder.textContent(content);
-        builder.fileEncoding("IBM-1047");
-        builder.crlf(false);
+        builder.textHeader(customHeader);
         builder.binary(false);
 
         return writeCommon(value, builder.build());
@@ -118,13 +128,10 @@ public class UssWrite {
             map.put("X-IBM-Data-Type", "binary");
             request.setBody(params.binaryContent);
         } else {
-            if (params.crlf) {
-                map.put("X-IBM-Data-Type", "text;crlf=true");
-            } else {
-                map.put("X-IBM-Data-Type", "text");
-            }
-            request.setBody(params.textContent);
+            map.put("X-IBM-Data-Type", params.getTextHeader());
         }
+
+        request.setBody(params.textContent);
         request.setHeaders(map);
         request.setUrl(url);
 
