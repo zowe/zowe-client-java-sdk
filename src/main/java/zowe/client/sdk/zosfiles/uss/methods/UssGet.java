@@ -61,7 +61,7 @@ public class UssGet {
     }
 
     /**
-     * Get the binary contents of a USS file
+     * Get the binary contents of a file
      *
      * @param fileNamePath file name with path
      * @return the byte array contents of the file
@@ -74,7 +74,7 @@ public class UssGet {
     }
 
     /**
-     * Get the text contents of a USS file
+     * Get the text contents of a file
      *
      * @param fileNamePath file name with path
      * @return the text contents of file
@@ -87,7 +87,7 @@ public class UssGet {
     }
 
     /**
-     * Get the contents of a USS file
+     * Get the contents of a file
      *
      * @param filePathName file name with path
      * @return Response object
