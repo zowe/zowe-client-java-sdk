@@ -70,22 +70,19 @@ public class UssWrite {
      * @param content string content to write to file
      * @return Response object
      */
-    public Response writeText(String value, String content) throws Exception {
-        return writeText(value, content, "text");
-    }
+
     /**
      * Perform write string content request. Provides support for the use of custom headers, allows alternative
      * file encoding (default IBM-1047) and crlf (default false). See IBM documentation for further details
      *
      * @param value   file name with path
      * @param content string content to write to file
-     * @param customHeader custom header to denote file encoding or crlf value
      * @return Response object
      */
-    public Response writeText(String value, String content, String customHeader) throws Exception {
+    public Response writeText(String value, String content) throws Exception {
         WriteParams.Builder builder = new WriteParams.Builder();
         builder.textContent(content);
-        builder.textHeader(customHeader);
+        //builder.textHeader(customHeader);
         builder.binary(false);
 
         return writeCommon(value, builder.build());
@@ -112,7 +109,7 @@ public class UssWrite {
      * @param params WriteParams parameters that specifies write action request
      * @return Response object
      */
-    private Response writeCommon(String value, WriteParams params) throws Exception {
+    public Response writeCommon(String value, WriteParams params) throws Exception {
         ValidateUtils.checkNullParameter(value == null, "value is null");
         ValidateUtils.checkIllegalParameter(value.isEmpty(), "value not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
@@ -120,18 +117,26 @@ public class UssWrite {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + value;
 
-        request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
-
-        Map<String, String> map = new HashMap<String, String>();
+        final Map<String, String> map = new HashMap<>();
 
         if (params.binary) {
-            map.put("X-IBM-Data-Type", "binary");
-            request.setBody(params.binaryContent);
+            map.put("X-IBM-Data-Type", "binary;");
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_STREAM);
+            request.setBody(params.binaryContent.orElse(new byte[0]));
         } else {
-            map.put("X-IBM-Data-Type", params.getTextHeader());
+            final StringBuilder customHeader = new StringBuilder("text");
+            params.getFileEncoding().ifPresent(encoding -> customHeader.append(";fileEncoding=").append(encoding));
+            if (params.isCrlf()) {
+                customHeader.append(";crlf=true");
+            }
+            if ("text".contentEquals(customHeader)) {
+                customHeader.append(";");
+            }
+            map.put("X-IBM-Data-Type", customHeader.toString());
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
+            request.setBody(params.textContent.orElse(""));
         }
 
-        request.setBody(params.textContent);
         request.setHeaders(map);
         request.setUrl(url);
 
