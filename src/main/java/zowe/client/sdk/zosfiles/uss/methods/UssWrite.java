@@ -63,18 +63,9 @@ public class UssWrite {
         this.connection = connection;
         this.request = request;
     }
-    /**
-     * Perform write string content request
-     *
-     * @param value   file name with path
-     * @param content string content to write to file
-     * @return Response object
-     * @author James Kostrewski
-     */
 
     /**
-     * Perform write string content request. Provides support for the use of custom headers, allows alternative
-     * file encoding (default IBM-1047) and crlf (default false). See IBM documentation for further details
+     * Perform write string content request
      *
      * @param value   file name with path
      * @param content string content to write to file
@@ -84,9 +75,7 @@ public class UssWrite {
     public Response writeText(String value, String content) throws Exception {
         WriteParams.Builder builder = new WriteParams.Builder();
         builder.textContent(content);
-        //builder.textHeader(customHeader);
         builder.binary(false);
-
         return writeCommon(value, builder.build());
     }
 
