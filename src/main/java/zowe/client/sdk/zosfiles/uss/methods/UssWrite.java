@@ -67,13 +67,13 @@ public class UssWrite {
     /**
      * Perform write text content request
      *
-     * @param value   file name with path
-     * @param content string content to write to file
+     * @param fileNamePath file name with path
+     * @param content      string content to write to file
      * @return Response object
      * @author James Kostrewski
      */
-    public Response writeText(String value, String content) throws Exception {
-        return writeCommon(value, new WriteParams.Builder().textContent(content).build());
+    public Response writeText(String fileNamePath, String content) throws Exception {
+        return writeCommon(fileNamePath, new WriteParams.Builder().textContent(content).build());
     }
 
     /**
@@ -84,27 +84,27 @@ public class UssWrite {
      * @return Response object
      * @author James Kostrewski
      */
-    public Response writeBinary(String value, byte[] content) throws Exception {
-        return writeCommon(value, new WriteParams.Builder().binaryContent(content).binary(true).build());
+    public Response writeBinary(String fileNamePath, byte[] content) throws Exception {
+        return writeCommon(fileNamePath, new WriteParams.Builder().binaryContent(content).binary(true).build());
     }
 
     /**
      * Perform write request based on WriteParams settings
      *
-     * @param value  file name with path
-     * @param params WriteParams parameters that specifies write action request
+     * @param fileNamePath file name with path
+     * @param params       WriteParams parameters that specifies write action request
      * @return Response object
      * @throws Exception processing error
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response writeCommon(String value, WriteParams params) throws Exception {
-        ValidateUtils.checkNullParameter(value == null, "value is null");
-        ValidateUtils.checkIllegalParameter(value.isEmpty(), "value not specified");
+    public Response writeCommon(String fileNamePath, WriteParams params) throws Exception {
+        ValidateUtils.checkNullParameter(fileNamePath == null, "file name path is null");
+        ValidateUtils.checkIllegalParameter(fileNamePath.isEmpty(), "fil name path not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + value;
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + fileNamePath;
         LOG.debug(url);
 
         final Map<String, String> map = new HashMap<>();
