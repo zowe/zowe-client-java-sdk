@@ -48,15 +48,7 @@ public class GetParams {
      * If true perform binary read instead of text.
      */
     public boolean binary;
-
-    /**
-     * GetParams constructor
-     *
-     * @param builder GetParams builder
-     * @author James Kostrewski
-     * @author Frank Giordano
-     * @version 2.0
-     */
+    
     public GetParams(GetParams.Builder builder) {
         this.search = Optional.ofNullable(builder.search);
         this.research = Optional.ofNullable(builder.research);
