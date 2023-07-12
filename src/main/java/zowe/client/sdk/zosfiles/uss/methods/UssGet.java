@@ -99,8 +99,8 @@ public class UssGet {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + filePathName;
-
-
+        LOG.debug(url);
+        
         return null;
     }
 
