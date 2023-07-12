@@ -94,6 +94,7 @@ public class UssWrite {
      * @param value  file name with path
      * @param params WriteParams parameters that specifies write action request
      * @return Response object
+     * @throws Exception processing error
      * @author James Kostrewski
      * @author Frank Giordano
      */
