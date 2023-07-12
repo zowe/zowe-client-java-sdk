@@ -119,9 +119,8 @@ public class UssWrite {
             if (params.isCrlf()) {
                 customHeader.append(";crlf=true");
             }
-            if ("text".contentEquals(customHeader)) {
-                customHeader.append(";");
-            }
+            // end with semicolon
+            customHeader.append(";");
             map.put("X-IBM-Data-Type", customHeader.toString());
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
             request.setBody(params.textContent.orElse(""));
