@@ -66,6 +66,8 @@ public class UssGet {
      * @param fileNamePath file name with path
      * @return the byte array contents of the file
      * @throws Exception processing error
+     * @author Frank Giordano
+     * @author James Kostrewski
      */
     public byte[] getBinary(String fileNamePath) throws Exception {
         GetParams params = new GetParams.Builder().binary(true).build();
@@ -79,6 +81,8 @@ public class UssGet {
      * @param fileNamePath file name with path
      * @return the text contents of file
      * @throws Exception processing error
+     * @author Frank Giordano
+     * @author James Kostrewski
      */
     public String getText(String fileNamePath) throws Exception {
         GetParams params = new GetParams.Builder().build();
