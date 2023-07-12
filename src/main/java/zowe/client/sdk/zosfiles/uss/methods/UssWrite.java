@@ -79,8 +79,8 @@ public class UssWrite {
     /**
      * Perform write binary content request
      *
-     * @param value   file name with path
-     * @param content binary content to write to file
+     * @param fileNamePath file name with path
+     * @param content      binary content to write to file
      * @return Response object
      * @author James Kostrewski
      */
