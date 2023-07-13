@@ -100,6 +100,7 @@ public class UssGet {
     public Response getCommon(String filePathName, GetParams params) throws Exception {
         ValidateUtils.checkNullParameter(filePathName == null, "file path name is null");
         ValidateUtils.checkIllegalParameter(filePathName.isEmpty(), "file path name not specified");
+        ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + filePathName;
