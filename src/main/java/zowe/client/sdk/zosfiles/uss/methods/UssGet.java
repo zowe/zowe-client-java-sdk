@@ -104,6 +104,8 @@ public class UssGet {
      * @param params       GetParams object to drive the request
      * @return Response object
      * @throws Exception processing error
+     * @author Frank Giordano
+     * @author James Kostrewski
      */
     public Response getCommon(String filePathName, GetParams params) throws Exception {
         ValidateUtils.checkNullParameter(filePathName == null, "file path name is null");
