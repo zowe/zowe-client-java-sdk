@@ -26,6 +26,7 @@ public class ListZfsParams {
      * The indicator that we want to show less files
      */
     private final OptionalInt maxLength;
+
     /**
      * This parameter identifies the UNIX directory that contains the files and directories to be listed.
      * This parameter may not be specified if the 'fsname' parameter is specified. It can consist a directory or
@@ -33,6 +34,7 @@ public class ListZfsParams {
      * bytes long. You cannot use wildcard characters for this parameter.
      */
     private final Optional<String> path;
+
     /**
      * This parameter identifies the fully qualified filesystem name to be listed. For zFS filesystems, this is
      * the data set name of the aggregate. This parameter may not be specified if the 'path' parameter is specified.
