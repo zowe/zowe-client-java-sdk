@@ -27,7 +27,7 @@ public class ListParams {
     /**
      * The indicator that we want to show less files
      */
-    public final OptionalInt maxLength;
+    private final OptionalInt maxLength;
 
     /**
      * The group owner or GID to filter
@@ -50,7 +50,7 @@ public class ListParams {
      * Valid values are either an integer, and integer with a suffix (K, M, G),
      * or an integer with leading plus (+) or minus (-)
      */
-    public final OptionalInt size;
+    private final OptionalInt size;
 
     /**
      * The name of the file or directory to filter

@@ -111,13 +111,13 @@ public class UssWrite {
 
         final Map<String, String> headers = new HashMap<>();
 
-        if (params.binary) {
+        if (params.isBinary()) {
             headers.put("X-IBM-Data-Type", "binary;");
-            if (params.binaryContent.isEmpty()) {
+            if (params.getBinaryContent().isEmpty()) {
                 LOG.debug("binaryContent is empty");
             }
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_STREAM);
-            request.setBody(params.binaryContent.orElse(new byte[0]));
+            request.setBody(params.getBinaryContent().orElse(new byte[0]));
         } else {
             final StringBuilder textHeader = new StringBuilder("text");
             params.getFileEncoding().ifPresent(encoding -> textHeader.append(";fileEncoding=").append(encoding));
@@ -127,11 +127,11 @@ public class UssWrite {
             // end with semicolon
             textHeader.append(";");
             headers.put("X-IBM-Data-Type", textHeader.toString());
-            if (params.textContent.isEmpty()) {
+            if (params.getTextContent().isEmpty()) {
                 LOG.debug("textContent is empty");
             }
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
-            request.setBody(params.textContent.orElse(""));
+            request.setBody(params.getTextContent().orElse(""));
         }
 
         request.setHeaders(headers);
