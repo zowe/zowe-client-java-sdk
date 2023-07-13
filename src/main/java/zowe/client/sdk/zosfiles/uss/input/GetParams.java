@@ -43,6 +43,9 @@ public class GetParams {
      * The default, if not specified, is 100.
      */
     private OptionalInt maxreturnsize;
+    /**
+     * Internal use to count number of query parameters specified
+     */
     private int queryCount;
     /**
      * If true perform binary read instead of text.
