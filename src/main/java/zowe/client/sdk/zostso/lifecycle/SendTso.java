@@ -171,7 +171,7 @@ public class SendTso {
      *
      * @param command    to send to the TSO address space.
      * @param servletKey returned from a successful start
-     * @return response object, see ISendResponse
+     * @return SendResponse object
      * @throws Exception error executing command
      * @author Frank Giordano
      */
