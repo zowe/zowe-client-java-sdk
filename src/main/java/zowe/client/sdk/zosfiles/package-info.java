@@ -1,4 +1,4 @@
 /**
- * z/OS unix system services files package
+ * z/OS Unix System Services (USS) files package
  */
 package zowe.client.sdk.zosfiles;
