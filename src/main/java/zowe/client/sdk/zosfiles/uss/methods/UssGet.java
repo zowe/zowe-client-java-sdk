@@ -115,7 +115,7 @@ public class UssGet {
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + filePathName);
 
-        params.getSearch().ifPresent(str -> url.append("?search=").append(str));
+        params.getSearch().ifPresent(str -> url.append("?search=").append(EncodeUtils.encodeURIComponent(str)));
         params.getResearch().ifPresent(str -> url.append("?research=").append(EncodeUtils.encodeURIComponent(str)));
         if (!params.isInsensitive()) {
             if (params.getQueryCount() > 1) {
