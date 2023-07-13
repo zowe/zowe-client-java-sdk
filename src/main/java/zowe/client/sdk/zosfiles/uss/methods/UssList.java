@@ -183,7 +183,7 @@ public class UssList {
     }
 
     /**
-     * Transform JSON into ListItem object
+     * Transform JSON into UssItem object
      *
      * @param jsonObject JSON object
      * @return ListItem object
