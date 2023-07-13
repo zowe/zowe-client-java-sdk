@@ -94,6 +94,7 @@ public class UssGet {
      * Get the contents of a file
      *
      * @param filePathName file name with path
+     * @param params GetParams object to drive the request
      * @return Response object
      * @throws Exception processing error
      */

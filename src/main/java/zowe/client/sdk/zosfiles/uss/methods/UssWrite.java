@@ -70,6 +70,7 @@ public class UssWrite {
      * @param fileNamePath file name with path
      * @param content      string content to write to file
      * @return Response object
+     * @throws Exception processing error
      * @author James Kostrewski
      */
     public Response writeText(String fileNamePath, String content) throws Exception {
@@ -82,6 +83,7 @@ public class UssWrite {
      * @param fileNamePath file name with path
      * @param content      binary content to write to file
      * @return Response object
+     * @throws Exception processing error
      * @author James Kostrewski
      */
     public Response writeBinary(String fileNamePath, byte[] content) throws Exception {
