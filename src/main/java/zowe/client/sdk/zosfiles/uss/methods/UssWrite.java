@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Provides unix system services write to object functionality
+ * Provides Unix System Services (USS) write to object functionality
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-write-data-zos-unix-file">z/OSMF REST API</a>
  *
