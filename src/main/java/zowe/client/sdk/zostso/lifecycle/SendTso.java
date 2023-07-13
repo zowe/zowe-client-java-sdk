@@ -189,7 +189,7 @@ public class SendTso {
      * API method to send data to already started TSO address space
      *
      * @param commandParams object with required parameters, see SendTsoParams object
-     * @return response object, see ZosmfTsoResponse
+     * @return ZosmfTsoResponse object
      * @throws Exception error executing command
      * @author Frank Giordano
      */
