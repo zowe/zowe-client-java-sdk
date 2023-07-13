@@ -107,26 +107,26 @@ public class UssWrite {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + fileNamePath;
         LOG.debug(url);
 
-        final Map<String, String> map = new HashMap<>();
+        final Map<String, String> headers = new HashMap<>();
 
         if (params.binary) {
-            map.put("X-IBM-Data-Type", "binary;");
+            headers.put("X-IBM-Data-Type", "binary;");
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_STREAM);
             request.setBody(params.binaryContent.orElse(new byte[0]));
         } else {
-            final StringBuilder customHeader = new StringBuilder("text");
-            params.getFileEncoding().ifPresent(encoding -> customHeader.append(";fileEncoding=").append(encoding));
+            final StringBuilder textHeader = new StringBuilder("text");
+            params.getFileEncoding().ifPresent(encoding -> textHeader.append(";fileEncoding=").append(encoding));
             if (params.isCrlf()) {
-                customHeader.append(";crlf=true");
+                textHeader.append(";crlf=true");
             }
             // end with semicolon
-            customHeader.append(";");
-            map.put("X-IBM-Data-Type", customHeader.toString());
+            textHeader.append(";");
+            headers.put("X-IBM-Data-Type", textHeader.toString());
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
             request.setBody(params.textContent.orElse(""));
         }
 
-        request.setHeaders(map);
+        request.setHeaders(headers);
         request.setUrl(url);
 
         return RestUtils.getResponse(request);
