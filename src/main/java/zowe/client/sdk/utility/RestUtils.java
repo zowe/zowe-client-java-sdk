@@ -35,7 +35,7 @@ public final class RestUtils {
      * Perform zowe rest request and retrieve its response
      *
      * @param request zowe request object
-     * @return response object
+     * @return Response object
      * @throws Exception http error code
      * @author Frank Giordano
      */
