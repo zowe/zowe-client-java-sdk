@@ -131,7 +131,6 @@ public class UssGet {
                 url.append("?maxreturnsize=").append(size);
             }
         });
-
         LOG.debug(url.toString());
 
         final Map<String, String> headers = new HashMap<>();
