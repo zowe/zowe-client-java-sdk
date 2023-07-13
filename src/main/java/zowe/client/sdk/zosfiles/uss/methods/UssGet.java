@@ -23,7 +23,6 @@ import zowe.client.sdk.zosfiles.uss.input.GetParams;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Provides unix system services read from object functionality
@@ -68,11 +67,13 @@ public class UssGet {
     }
 
     /**
-     * Get the binary contents of a USS file
+     * Get the binary contents of a file
      *
-     * @param fileNamePath the path of the file to read
-     * @return the contents of the file as a byte array
+     * @param fileNamePath file name with path
+     * @return the byte array contents of the file
      * @throws Exception processing error
+     * @author Frank Giordano
+     * @author James Kostrewski
      */
     public byte[] getBinary(String fileNamePath) throws Exception {
         GetParams params = new GetParams.Builder().binary(true).build();
@@ -81,11 +82,13 @@ public class UssGet {
     }
 
     /**
-     * Get the text contents of a USS file
+     * Get the text contents of a file
      *
-     * @param fileNamePath the path of the file to read
-     * @return the text contents of a USS file
+     * @param fileNamePath file name with path
+     * @return the text contents of file
      * @throws Exception processing error
+     * @author Frank Giordano
+     * @author James Kostrewski
      */
     public String getText(String fileNamePath) throws Exception {
         GetParams params = new GetParams.Builder().build();
@@ -94,30 +97,33 @@ public class UssGet {
     }
 
     /**
-     * Get the contents of a USS file
+     * Get the contents of a file
      *
-     * @param filePathName the path of the file to read
-     * @return the contents of the file as a string
+     * @param filePathName file name with path
+     * @param params       GetParams object to drive the request
+     * @return Response object
      * @throws Exception processing error
      */
     public Response getCommon(String filePathName, GetParams params) throws Exception {
         ValidateUtils.checkNullParameter(filePathName == null, "file path name is null");
         ValidateUtils.checkIllegalParameter(filePathName.isEmpty(), "file path name not specified");
+        ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + filePathName;
+        LOG.debug(url);
 
-        final Map<String, String> map = new HashMap<>();
+        final Map<String, String> headers = new HashMap<>();
 
         if (params.binary) {
-            map.put("X-IBM-Data-Type", "binary");
+            headers.put("X-IBM-Data-Type", "binary");
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_STREAM);
         } else {
-            map.put("X-IBM-Data-Type", "text");
+            headers.put("X-IBM-Data-Type", "text");
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
         }
 
-        request.setHeaders(map);
+        request.setHeaders(headers);
         request.setUrl(url);
 
         return RestUtils.getResponse(request);

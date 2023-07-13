@@ -9,10 +9,13 @@
  */
 package zowe.client.sdk.utility;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Utility Class for zosFiles related static helper methods.
  *
- * @author Nikunj Goyal
+ * @author Frank Giordano
  * @version 2.0
  */
 public final class FileUtils {
@@ -22,6 +25,30 @@ public final class FileUtils {
      */
     private FileUtils() {
         throw new IllegalStateException("Utility class");
+    }
+
+    /**
+     * Validate permission
+     * <p>
+     * A valid permission is nine characters in three groups of three;
+     * they describe the permissions on the file or directory. The first group
+     * of 3 describes owner permissions; the second describes group permissions;
+     * the third describes other (or world) permissions.
+     * <p>
+     * Each group contains a value of either r w x or -.
+     *
+     * @param value permission string
+     * @return same value string back to caller if valid
+     * @author Frank Giordano
+     */
+    public static String validatePermission(String value) {
+        ValidateUtils.checkIllegalParameter(value.length() != 9, "specify 9 char permission");
+        Pattern p = Pattern.compile("(rwx|rw-|r--|r-x|--x|-wx|-w-)+");
+        Matcher m = p.matcher(value);
+        if (!m.matches()) {
+            throw new IllegalStateException("specify valid permission");
+        }
+        return value;
     }
 
 }
