@@ -16,6 +16,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
@@ -113,7 +114,7 @@ public class UssGet {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + filePathName);
 
         params.getSearch().ifPresent(search -> url.append("?search=").append(search));
-        params.getResearch().ifPresent(research -> url.append("?research=").append(research));
+        params.getResearch().ifPresent(research -> url.append("?research=").append(EncodeUtils.encodeURIComponent(research)));
         if (!params.isInsensitive()) {
             if (params.getQueryCount() > 1) {
                 url.append("&?insensitive=false");
@@ -146,5 +147,4 @@ public class UssGet {
 
         return RestUtils.getResponse(request);
     }
-
 }
