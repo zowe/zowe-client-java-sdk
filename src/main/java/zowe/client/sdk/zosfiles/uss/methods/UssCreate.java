@@ -88,7 +88,7 @@ public class UssCreate {
      *
      * @param name   name of object to create
      * @param params create response parameters, see CreateParams object
-     * @return response object
+     * @return Response object
      * @throws Exception error processing request
      * @author James Kostrewski
      */
