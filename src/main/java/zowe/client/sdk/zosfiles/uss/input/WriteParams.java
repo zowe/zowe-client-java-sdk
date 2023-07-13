@@ -12,7 +12,7 @@ package zowe.client.sdk.zosfiles.uss.input;
 import java.util.Optional;
 
 /**
- * Parameter container class for unix system services write to file object
+ * Parameter container class for Unix System Services (USS) write to file object
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-write-data-zos-unix-file">z/OSMF REST API</a>
  *
