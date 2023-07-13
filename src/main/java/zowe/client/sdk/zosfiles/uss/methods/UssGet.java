@@ -14,9 +14,16 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
+import zowe.client.sdk.rest.ZoweRequestFactory;
+import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.GetParams;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * Provides unix system services read from object functionality
@@ -100,8 +107,20 @@ public class UssGet {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + filePathName;
 
+        final Map<String, String> map = new HashMap<>();
 
-        return null;
+        if (params.binary) {
+            map.put("X-IBM-Data-Type", "binary");
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_STREAM);
+        } else {
+            map.put("X-IBM-Data-Type", "text");
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
+        }
+
+        request.setHeaders(map);
+        request.setUrl(url);
+
+        return RestUtils.getResponse(request);
     }
 
 }
