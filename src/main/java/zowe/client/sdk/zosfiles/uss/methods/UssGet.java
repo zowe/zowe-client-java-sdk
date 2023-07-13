@@ -14,9 +14,15 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
+import zowe.client.sdk.rest.ZoweRequestFactory;
+import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.GetParams;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Provides Unix System Services (USS) read from object functionality
@@ -94,7 +100,7 @@ public class UssGet {
      * Get the contents of a file
      *
      * @param filePathName file name with path
-     * @param params GetParams object to drive the request
+     * @param params       GetParams object to drive the request
      * @return Response object
      * @throws Exception processing error
      */
@@ -103,11 +109,42 @@ public class UssGet {
         ValidateUtils.checkIllegalParameter(filePathName.isEmpty(), "file path name not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + filePathName;
-        LOG.debug(url);
+        final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + filePathName);
 
-        return null;
+        params.getSearch().ifPresent(search -> url.append("?search=").append(search));
+        params.getResearch().ifPresent(research -> url.append("?research=").append(research));
+        if (!params.isInsensitive()) {
+            if (params.getQueryCount() > 1) {
+                url.append("&?insensitive=false");
+            } else {
+                url.append("?insensitive=false");
+            }
+        }
+        params.getMaxReturnSize().ifPresent(size -> {
+            if (params.getQueryCount() > 1) {
+                url.append("&?maxreturnsize=").append(size);
+            } else {
+                url.append("?maxreturnsize=").append(size);
+            }
+        });
+
+        LOG.debug(url.toString());
+
+        final Map<String, String> headers = new HashMap<>();
+
+        if (params.isBinary()) {
+            headers.put("X-IBM-Data-Type", "binary");
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_STREAM);
+        } else {
+            headers.put("X-IBM-Data-Type", "text");
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
+        }
+
+        request.setHeaders(headers);
+        request.setUrl(url.toString());
+
+        return RestUtils.getResponse(request);
     }
 
 }

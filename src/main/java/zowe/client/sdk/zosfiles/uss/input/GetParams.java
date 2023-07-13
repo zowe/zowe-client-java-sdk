@@ -26,27 +26,28 @@ public class GetParams {
      * Optionally, insensitive=false may be specified for case-sensitive matching.
      * This parameter may not be specified with the research parameter.
      */
-    public Optional<String> search;
+    private Optional<String> search;
     /**
      * The file is searched for the first line that matches the given extended regular expression.
      * This parameter may not be specified with the search parameter.
      */
-    public Optional<String> research;
+    private Optional<String> research;
     /**
      * The default is 'true'. When 'true', searches (search and research) are case-insensitive.
      * For case-sensitive searches, specify 'false'.
      */
-    public boolean insensitive;
+    private boolean insensitive;
     /**
      * This parameter may be specified only with search or research parameters.
      * The value given is the maximum number of lines to return.
      * The default, if not specified, is 100.
      */
-    public OptionalInt maxreturnsize;
+    private OptionalInt maxreturnsize;
+    private int queryCount;
     /**
      * If true perform binary read instead of text.
      */
-    public boolean binary;
+    private boolean binary;
 
     public GetParams(GetParams.Builder builder) {
         this.search = Optional.ofNullable(builder.search);
@@ -57,6 +58,7 @@ public class GetParams {
         } else {
             this.maxreturnsize = OptionalInt.of(builder.maxreturnsize);
         }
+        this.queryCount = builder.queryCount;
         this.binary = builder.binary;
     }
 
@@ -74,6 +76,10 @@ public class GetParams {
 
     public OptionalInt getMaxReturnSize() {
         return maxreturnsize;
+    }
+
+    public int getQueryCount() {
+        return queryCount;
     }
 
     public boolean isBinary() {
@@ -95,30 +101,41 @@ public class GetParams {
         private String search;
         private String research;
         private boolean insensitive = true;
-        private Integer maxreturnsize = 100;
+        private Integer maxreturnsize;
         private boolean binary = false;
+        private int queryCount = 0;
 
         public GetParams build() {
             return new GetParams(this);
         }
 
-        public GetParams.Builder search(String search) {
+        public GetParams.Builder search(String search) throws Exception {
+            if (this.research != null) {
+                throw new Exception("cannot specify both search and research parameters");
+            }
             this.search = search;
+            queryCount++;
             return this;
         }
 
-        public GetParams.Builder research(String research) {
+        public GetParams.Builder research(String research) throws Exception {
+            if (this.search != null) {
+                throw new Exception("cannot specify both search and research parameters");
+            }
             this.research = research;
+            queryCount++;
             return this;
         }
 
         public GetParams.Builder insensitive(boolean insensitive) {
             this.insensitive = insensitive;
+            queryCount++;
             return this;
         }
 
         public GetParams.Builder maxreturnsize(int maxreturnsize) {
             this.maxreturnsize = maxreturnsize;
+            queryCount++;
             return this;
         }
 
