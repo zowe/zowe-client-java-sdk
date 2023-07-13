@@ -109,13 +109,31 @@ public class UssGet {
         ValidateUtils.checkIllegalParameter(filePathName.isEmpty(), "file path name not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + filePathName;
-        LOG.debug(url);
+        final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + filePathName);
+
+        params.getSearch().ifPresent(search -> url.append("?search=").append(search));
+        params.getResearch().ifPresent(research -> url.append("?research=").append(research));
+        if (!params.isInsensitive()) {
+            if (params.getQueryCount() > 1) {
+                url.append("&?insensitive=false");
+            } else {
+                url.append("?insensitive=false");
+            }
+        }
+        params.getMaxReturnSize().ifPresent(size -> {
+            if (params.getQueryCount() > 1) {
+                url.append("&?maxreturnsize=").append(size);
+            } else {
+                url.append("?maxreturnsize=").append(size);
+            }
+        });
+
+        LOG.debug(url.toString());
 
         final Map<String, String> headers = new HashMap<>();
 
-        if (params.binary) {
+        if (params.isBinary()) {
             headers.put("X-IBM-Data-Type", "binary");
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_STREAM);
         } else {
@@ -124,7 +142,7 @@ public class UssGet {
         }
 
         request.setHeaders(headers);
-        request.setUrl(url);
+        request.setUrl(url.toString());
 
         return RestUtils.getResponse(request);
     }
