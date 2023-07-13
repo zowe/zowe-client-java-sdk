@@ -30,6 +30,7 @@ public class ZosLogParams {
      * </pre>
      */
     private final Optional<String> startTime;
+
     /**
      * The z/OS log type to retrieve log data from. See "hardCopy" attribute from the following link:
      * <pre>
@@ -37,6 +38,7 @@ public class ZosLogParams {
      * </pre>
      */
     private final Optional<HardCopyType> hardCopy;
+
     /**
      * The direction param. See "direction" attribute from the following link:
      * <pre>
@@ -44,6 +46,7 @@ public class ZosLogParams {
      * </pre>
      */
     private final Optional<DirectionType> direction;
+
     /**
      * The timeRange param. See "timeRange" attribute from the following link:
      * <pre>
@@ -51,6 +54,7 @@ public class ZosLogParams {
      * </pre>
      */
     private final Optional<String> timeRange;
+
     /**
      * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
      * sequences with '\n', but there may be cases where that is not preferable. Specify false to prevent processing.
