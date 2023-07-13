@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
- * Parameter container class for unix system services get operation
+ * Parameter container class forUnix System Services (USS) get operation
  *
  * @author James Kostrewski
  * @author Frank Giordano
