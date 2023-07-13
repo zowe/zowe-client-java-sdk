@@ -101,6 +101,7 @@ public class GetParams {
                 ", research=" + research +
                 ", insensitive=" + insensitive +
                 ", maxreturnsize=" + maxreturnsize +
+                ", queryCount=" + queryCount +
                 ", binary=" + binary +
                 '}';
     }
