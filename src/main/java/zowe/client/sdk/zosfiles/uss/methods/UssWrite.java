@@ -113,6 +113,9 @@ public class UssWrite {
 
         if (params.binary) {
             headers.put("X-IBM-Data-Type", "binary;");
+            if (params.binaryContent.isEmpty()) {
+                LOG.debug("binaryContent is empty");
+            }
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_STREAM);
             request.setBody(params.binaryContent.orElse(new byte[0]));
         } else {
@@ -124,6 +127,9 @@ public class UssWrite {
             // end with semicolon
             textHeader.append(";");
             headers.put("X-IBM-Data-Type", textHeader.toString());
+            if (params.textContent.isEmpty()) {
+                LOG.debug("textContent is empty");
+            }
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
             request.setBody(params.textContent.orElse(""));
         }
