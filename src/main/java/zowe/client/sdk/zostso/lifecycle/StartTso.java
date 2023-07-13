@@ -93,7 +93,7 @@ public class StartTso {
      *
      * @param params        object with required parameters, see StartTsoParams
      * @param accountNumber user's account number for permission
-     * @return response object, see StartTsoParams
+     * @return StartTsoParams object
      * @author Frank Giordano
      */
     private StartTsoParams setDefaultAddressSpaceParams(StartTsoParams params, String accountNumber) {
