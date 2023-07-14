@@ -84,7 +84,7 @@ public class UssCreate {
     }
 
     /**
-     * Perform USS create file or directory name request
+     * Perform USS create file or directory name request driven by CreateParams object settings
      *
      * @param name   name of object to create
      * @param params create response parameters, see CreateParams object

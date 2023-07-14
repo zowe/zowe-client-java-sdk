@@ -93,7 +93,7 @@ public class UssWrite {
     }
 
     /**
-     * Perform write request based on WriteParams settings
+     * Perform write request driven by WriteParams settings
      *
      * @param fileNamePath file name with path
      * @param params       WriteParams parameters that specifies write action request
