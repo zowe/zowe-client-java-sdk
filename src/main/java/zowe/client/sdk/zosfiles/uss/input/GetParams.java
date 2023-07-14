@@ -62,7 +62,7 @@ public class GetParams {
      * The values given must be in the form "start-end" or "start,end" format where start and end are integers.
      */
     private Optional<String> recordsRange;
-    
+
     public GetParams(GetParams.Builder builder) {
         this.search = Optional.ofNullable(builder.search);
         this.research = Optional.ofNullable(builder.research);
