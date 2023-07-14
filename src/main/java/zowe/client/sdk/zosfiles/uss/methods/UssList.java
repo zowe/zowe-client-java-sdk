@@ -20,6 +20,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
@@ -88,12 +89,12 @@ public class UssList {
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
 
         url.append("?path=").append(params.getPath().get());
-        params.getGroup().ifPresent(group -> url.append("&group=").append(group));
-        params.getUser().ifPresent(user -> url.append("&user=").append(user));
-        params.getMtime().ifPresent(mtime -> url.append("&mtime=").append(mtime));
+        params.getGroup().ifPresent(group -> url.append("&group=").append(EncodeUtils.encodeURIComponent(group)));
+        params.getUser().ifPresent(user -> url.append("&user=").append(EncodeUtils.encodeURIComponent(user)));
+        params.getMtime().ifPresent(mtime -> url.append("&mtime=").append(EncodeUtils.encodeURIComponent(mtime)));
         params.getSize().ifPresent(size -> url.append("&size=").append(size));
-        params.getName().ifPresent(name -> url.append("&name=").append(name));
-        params.getPerm().ifPresent(perm -> url.append("&perm=").append(perm));
+        params.getName().ifPresent(name -> url.append("&name=").append(EncodeUtils.encodeURIComponent(name)));
+        params.getPerm().ifPresent(perm -> url.append("&perm=").append(EncodeUtils.encodeURIComponent(perm)));
         // If type parameter is specified with the size parameter, it must be set to 'f'.
         // Sizes that are associated with all other types are unspecified.
         if (params.getSize().isPresent() && params.getType().isPresent()) {
