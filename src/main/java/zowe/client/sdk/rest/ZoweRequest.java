@@ -49,7 +49,7 @@ public abstract class ZoweRequest {
      * Retrieve the http response information
      *
      * @param reply json http response object
-     * @return response object
+     * @return Response object
      * @author Frank Giordano
      */
     protected static Response getJsonResponse(HttpResponse<JsonNode> reply) {

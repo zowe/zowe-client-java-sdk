@@ -20,6 +20,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
@@ -62,7 +63,7 @@ public class UssList {
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZOSConnection object
-     * @param request    any compatible ZoweRequest Interface type object
+     * @param request    any compatible ZoweRequest Interface object
      * @author James Kostrewski
      * @author Frank Giordano
      */
@@ -82,30 +83,31 @@ public class UssList {
      */
     public List<UssItem> fileList(ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getName().isEmpty(), "params name is empty");
+        ValidateUtils.checkIllegalParameter(params.getPath().isEmpty(), "params path not specified");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
 
-        url.append("?path=").append(params.getName().get());
-        params.getGroup().ifPresent(group -> url.append("?group=").append(group));
-        params.getUser().ifPresent(user -> url.append("?user=").append(user));
-        params.getMtime().ifPresent(mtime -> url.append("?mtime=").append(mtime));
-        params.getSize().ifPresent(size -> url.append("?size=").append(size));
-        params.getPerm().ifPresent(perm -> url.append("?perm=").append(perm));
+        url.append("?path=").append(params.getPath().get());
+        params.getGroup().ifPresent(group -> url.append("&group=").append(EncodeUtils.encodeURIComponent(group)));
+        params.getUser().ifPresent(user -> url.append("&user=").append(EncodeUtils.encodeURIComponent(user)));
+        params.getMtime().ifPresent(mtime -> url.append("&mtime=").append(EncodeUtils.encodeURIComponent(mtime)));
+        params.getSize().ifPresent(size -> url.append("&size=").append(size));
+        params.getName().ifPresent(name -> url.append("&name=").append(EncodeUtils.encodeURIComponent(name)));
+        params.getPerm().ifPresent(perm -> url.append("&perm=").append(EncodeUtils.encodeURIComponent(perm)));
         // If type parameter is specified with the size parameter, it must be set to 'f'.
         // Sizes that are associated with all other types are unspecified.
         if (params.getSize().isPresent() && params.getType().isPresent()) {
-            url.append("?type=f");
+            url.append("&type=f");
         } else {
-            params.getType().ifPresent(type -> url.append("?type=").append(type.getValue()));
+            params.getType().ifPresent(type -> url.append("&type=").append(type.getValue()));
         }
-        params.getDepth().ifPresent(depth -> url.append("?depth=").append(depth));
+        params.getDepth().ifPresent(depth -> url.append("&depth=").append(depth));
         if (params.isFilesys()) {
-            url.append("?filesys=all");
+            url.append("&filesys=all");
         }
         if (params.isSymlinks()) {
-            url.append("?symlinks=report");
+            url.append("&symlinks=report");
         }
         LOG.debug(url.toString());
 
@@ -142,8 +144,8 @@ public class UssList {
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS);
 
-        params.getPath().ifPresent(path -> url.append("?path=").append(path));
-        params.getFsname().ifPresent(name -> url.append("?fsname=").append(name));
+        params.getPath().ifPresent(path -> url.append("?path=").append(EncodeUtils.encodeURIComponent(path)));
+        params.getFsname().ifPresent(fsname -> url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
         LOG.debug(url.toString());
 
         final Response response = getResponse(url.toString(), params.getMaxLength().orElse(0));
@@ -183,7 +185,7 @@ public class UssList {
     }
 
     /**
-     * Transform JSON into ListItem object
+     * Transform JSON into UssItem object
      *
      * @param jsonObject JSON object
      * @return ListItem object

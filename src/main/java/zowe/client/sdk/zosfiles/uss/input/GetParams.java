@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
- * Parameter container class for unix system services get operation
+ * Parameter container class forUnix System Services (USS) get operation
  *
  * @author James Kostrewski
  * @author Frank Giordano
@@ -27,23 +27,31 @@ public class GetParams {
      * This parameter may not be specified with the research parameter.
      */
     private Optional<String> search;
+
     /**
      * The file is searched for the first line that matches the given extended regular expression.
      * This parameter may not be specified with the search parameter.
      */
     private Optional<String> research;
+
     /**
      * The default is 'true'. When 'true', searches (search and research) are case-insensitive.
      * For case-sensitive searches, specify 'false'.
      */
     private boolean insensitive;
+
     /**
      * This parameter may be specified only with search or research parameters.
      * The value given is the maximum number of lines to return.
      * The default, if not specified, is 100.
      */
     private OptionalInt maxreturnsize;
+
+    /**
+     * Internal use to count number of query parameters specified
+     */
     private int queryCount;
+
     /**
      * If true perform binary read instead of text.
      */
@@ -104,6 +112,7 @@ public class GetParams {
                 ", research=" + research +
                 ", insensitive=" + insensitive +
                 ", maxreturnsize=" + maxreturnsize +
+                ", queryCount=" + queryCount +
                 ", binary=" + binary +
                 ", queryCount=" + queryCount +
                 ", recordsRange=" + recordsRange +

@@ -59,7 +59,7 @@ public class SendTso {
      * with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZOSConnection object
-     * @param request    any compatible ZoweRequest Interface type object
+     * @param request    any compatible ZoweRequest Interface object
      * @throws Exception processing error
      * @author Frank Giordano
      */
@@ -171,7 +171,7 @@ public class SendTso {
      *
      * @param command    to send to the TSO address space.
      * @param servletKey returned from a successful start
-     * @return response object, see ISendResponse
+     * @return SendResponse object
      * @throws Exception error executing command
      * @author Frank Giordano
      */
@@ -189,7 +189,7 @@ public class SendTso {
      * API method to send data to already started TSO address space
      *
      * @param commandParams object with required parameters, see SendTsoParams object
-     * @return response object, see ZosmfTsoResponse
+     * @return ZosmfTsoResponse object
      * @throws Exception error executing command
      * @author Frank Giordano
      */

@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
- * Parameter container class for unix system services list operation
+ * Parameter container class for Unix System Services (USS) list operation
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-list-files-directories-unix-file-path">z/OSMF REST API</a>
  *
@@ -25,9 +25,23 @@ import java.util.OptionalInt;
 public class ListParams {
 
     /**
+     * This parameter identifies the UNIX directory that contains the files and directories to be listed.
+     * This parameter is required and can consist of one or more directories in the hierarchical file system structure,
+     * or a fully qualified file name. A fully qualified file name, which consists of the name of each directory in
+     * the path to a file plus the file name itself, can be up to 1023 bytes long. You cannot use wildcard characters
+     * for this parameter.
+     * <p>
+     * The following list contains sample file path names:
+     * /
+     * /bin
+     * /usr/lib/libSM.a
+     */
+    private final Optional<String> path;
+
+    /**
      * The indicator that we want to show less files
      */
-    public final OptionalInt maxLength;
+    private final OptionalInt maxLength;
 
     /**
      * The group owner or GID to filter
@@ -50,10 +64,12 @@ public class ListParams {
      * Valid values are either an integer, and integer with a suffix (K, M, G),
      * or an integer with leading plus (+) or minus (-)
      */
-    public final OptionalInt size;
+    private final OptionalInt size;
 
     /**
-     * The name of the file or directory to filter
+     * Select entries that match pattern according to the rules of fnmatch().
+     * The supplied pattern is matched against the absolute path of the entry,
+     * with behavior similar to the find -name option.
      */
     private final Optional<String> name;
 
@@ -95,6 +111,7 @@ public class ListParams {
     public final boolean symlinks;
 
     public ListParams(ListParams.Builder builder) {
+        this.path = Optional.ofNullable(builder.path);
         if (builder.maxLength == null) {
             this.maxLength = OptionalInt.empty();
         } else {
@@ -118,6 +135,10 @@ public class ListParams {
         }
         this.filesys = builder.filesys;
         this.symlinks = builder.symlinks;
+    }
+
+    public Optional<String> getPath() {
+        return path;
     }
 
     public OptionalInt getMaxLength() {
@@ -167,7 +188,8 @@ public class ListParams {
     @Override
     public String toString() {
         return "ListParams{" +
-                "maxLength=" + maxLength +
+                "path=" + path +
+                ", maxLength=" + maxLength +
                 ", group=" + group +
                 ", user=" + user +
                 ", mtime=" + mtime +
@@ -183,6 +205,7 @@ public class ListParams {
 
     public static class Builder {
 
+        private String path;
         private Integer maxLength;
         private String group;
         private String user;
@@ -197,6 +220,11 @@ public class ListParams {
 
         public ListParams build() {
             return new ListParams(this);
+        }
+
+        public ListParams.Builder path(String path) {
+            this.path = path;
+            return this;
         }
 
         public ListParams.Builder maxLength(int maxLength) {

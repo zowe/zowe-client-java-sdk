@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.OptionalLong;
 
 /**
- * ListItem object representing an item from unix system services list operation
+ * ListItem object representing an item from Unix System Services (USS) list operation
  *
  * @author Frank Giordano
  * @version 2.0

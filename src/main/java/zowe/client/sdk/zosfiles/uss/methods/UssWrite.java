@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Provides unix system services write to object functionality
+ * Provides Unix System Services (USS) write to object functionality
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-write-data-zos-unix-file">z/OSMF REST API</a>
  *
@@ -55,7 +55,7 @@ public class UssWrite {
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZosConnection object
-     * @param request    any compatible ZoweRequest Interface type object
+     * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
     public UssWrite(ZosConnection connection, ZoweRequest request) {
@@ -71,6 +71,7 @@ public class UssWrite {
      * @param content      string content to write to file
      * @return Response object
      * @throws Exception processing error
+     * @author Frank Giordano
      * @author James Kostrewski
      */
     public Response writeText(String fileNamePath, String content) throws Exception {
@@ -84,6 +85,7 @@ public class UssWrite {
      * @param content      binary content to write to file
      * @return Response object
      * @throws Exception processing error
+     * @author Frank Giordano
      * @author James Kostrewski
      */
     public Response writeBinary(String fileNamePath, byte[] content) throws Exception {
@@ -91,7 +93,7 @@ public class UssWrite {
     }
 
     /**
-     * Perform write request based on WriteParams settings
+     * Perform write request driven by WriteParams settings
      *
      * @param fileNamePath file name with path
      * @param params       WriteParams parameters that specifies write action request
@@ -111,10 +113,13 @@ public class UssWrite {
 
         final Map<String, String> headers = new HashMap<>();
 
-        if (params.binary) {
+        if (params.isBinary()) {
             headers.put("X-IBM-Data-Type", "binary;");
+            if (params.getBinaryContent().isEmpty()) {
+                LOG.debug("binaryContent is empty");
+            }
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_STREAM);
-            request.setBody(params.binaryContent.orElse(new byte[0]));
+            request.setBody(params.getBinaryContent().orElse(new byte[0]));
         } else {
             final StringBuilder textHeader = new StringBuilder("text");
             params.getFileEncoding().ifPresent(encoding -> textHeader.append(";fileEncoding=").append(encoding));
@@ -124,8 +129,11 @@ public class UssWrite {
             // end with semicolon
             textHeader.append(";");
             headers.put("X-IBM-Data-Type", textHeader.toString());
+            if (params.getTextContent().isEmpty()) {
+                LOG.debug("textContent is empty");
+            }
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
-            request.setBody(params.textContent.orElse(""));
+            request.setBody(params.getTextContent().orElse(""));
         }
 
         request.setHeaders(headers);

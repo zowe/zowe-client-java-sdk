@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Provides unix system services read from object functionality
+ * Provides Unix System Services (USS) read from object functionality
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-retrieve-contents-zos-unix-file">z/OSMF REST API</a>
  *
@@ -57,7 +57,7 @@ public class UssGet {
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZosConnection object
-     * @param request    any compatible ZoweRequest Interface type object
+     * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      * @author James Kostrewski
      */
@@ -98,12 +98,14 @@ public class UssGet {
     }
 
     /**
-     * Get the contents of a file
+     * Get the contents of a file driven by the GetParams object settings
      *
      * @param filePathName file name with path
      * @param params       GetParams object to drive the request
      * @return Response object
      * @throws Exception processing error
+     * @author Frank Giordano
+     * @author James Kostrewski
      */
     public Response getCommon(String filePathName, GetParams params) throws Exception {
         ValidateUtils.checkNullParameter(filePathName == null, "file path name is null");
@@ -113,23 +115,22 @@ public class UssGet {
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + filePathName);
 
-        params.getSearch().ifPresent(search -> url.append("?search=").append(search));
-        params.getResearch().ifPresent(research -> url.append("?research=").append(EncodeUtils.encodeURIComponent(research)));
+        params.getSearch().ifPresent(str -> url.append("?search=").append(EncodeUtils.encodeURIComponent(str)));
+        params.getResearch().ifPresent(str -> url.append("?research=").append(EncodeUtils.encodeURIComponent(str)));
         if (!params.isInsensitive()) {
             if (params.getQueryCount() > 1) {
-                url.append("&?insensitive=false");
+                url.append("&insensitive=false");
             } else {
                 url.append("?insensitive=false");
             }
         }
         params.getMaxReturnSize().ifPresent(size -> {
             if (params.getQueryCount() > 1) {
-                url.append("&?maxreturnsize=").append(size);
+                url.append("&maxreturnsize=").append(size);
             } else {
                 url.append("?maxreturnsize=").append(size);
             }
         });
-
         LOG.debug(url.toString());
 
         final Map<String, String> headers = new HashMap<>();

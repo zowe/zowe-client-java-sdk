@@ -56,7 +56,7 @@ public class UssCreate {
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZosConnection object
-     * @param request    any compatible ZoweRequest Interface type object
+     * @param request    any compatible ZoweRequest Interface object
      * @author James Kostrewski
      * @author Frank Giordano
      */
@@ -84,11 +84,11 @@ public class UssCreate {
     }
 
     /**
-     * Perform USS create file or directory name request
+     * Perform USS create file or directory name request driven by CreateParams object settings
      *
      * @param name   name of object to create
      * @param params create response parameters, see CreateParams object
-     * @return response object
+     * @return Response object
      * @throws Exception error processing request
      * @author James Kostrewski
      */

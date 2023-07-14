@@ -57,7 +57,7 @@ public class DsnList {
      * with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZosConnection object
-     * @param request    any compatible ZoweRequest Interface type object
+     * @param request    any compatible ZoweRequest Interface object
      * @throws Exception processing error
      * @author Frank Giordano
      */
@@ -94,7 +94,7 @@ public class DsnList {
      * Retrieve list result of either members or datasets from rest api response.
      * Use null of either datasetLst or memberLst to denote the list object being processed.
      *
-     * @param response   response object containing rest api result
+     * @param response   Response object containing rest api result
      * @param datasetLst dataset arraylist object container
      * @param memberLst  member arraylist object container
      * @param <T>        DataSet or Member object

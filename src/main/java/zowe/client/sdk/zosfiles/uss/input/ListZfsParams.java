@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
- * Parameter container class for unix system services list operation
+ * Parameter container class for Unix System Services (USS) list operation
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-list-files-directories-unix-file-path">z/OSMF REST API</a>
  *
@@ -25,19 +25,21 @@ public class ListZfsParams {
     /**
      * The indicator that we want to show less files
      */
-    public final OptionalInt maxLength;
+    private final OptionalInt maxLength;
+
     /**
      * This parameter identifies the UNIX directory that contains the files and directories to be listed.
      * This parameter may not be specified if the 'fsname' parameter is specified. It can consist a directory or
      * fully qualified path name in the UNIX file system structure. A fully qualified file name can be up to 1023
      * bytes long. You cannot use wildcard characters for this parameter.
      */
-    public final Optional<String> path;
+    private final Optional<String> path;
+
     /**
      * This parameter identifies the fully qualified filesystem name to be listed. For zFS filesystems, this is
      * the data set name of the aggregate. This parameter may not be specified if the 'path' parameter is specified.
      */
-    public final Optional<String> fsname;
+    private final Optional<String> fsname;
 
     public ListZfsParams(ListZfsParams.Builder builder) {
         if (builder.maxLength == null) {

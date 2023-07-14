@@ -23,6 +23,7 @@ public class StartTsoParams {
      * User's z/OS permission account number
      */
     public Optional<String> account = Optional.empty();
+
     /**
      * Character set for address space
      */
@@ -32,18 +33,22 @@ public class StartTsoParams {
      * Code page for tso address space
      */
     public Optional<String> codePage = Optional.empty();
+
     /**
      * Number of columns
      */
     public Optional<String> columns = Optional.empty();
+
     /**
      * Name of the logonProcedure for address space
      */
     public Optional<String> logonProcedure = Optional.empty();
+
     /**
      * Region size for tso address space
      */
     public Optional<String> regionSize = Optional.empty();
+
     /**
      * Number of rows
      */

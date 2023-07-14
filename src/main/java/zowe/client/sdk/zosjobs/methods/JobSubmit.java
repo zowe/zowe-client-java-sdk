@@ -56,7 +56,7 @@ public class JobSubmit {
      * with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZOSConnection object
-     * @param request    any compatible ZoweRequest Interface type object
+     * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
     public JobSubmit(ZosConnection connection, ZoweRequest request) {

@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.types;
 
 /**
- * Type of file to filer for during unix system services list operation
+ * Type of file to filer for during Unix System Services (USS) list operation
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-list-files-directories-unix-file-path">z/OSMF REST API</a>
  *

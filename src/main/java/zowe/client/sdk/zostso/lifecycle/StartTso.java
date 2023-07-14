@@ -54,7 +54,7 @@ public class StartTso {
      * with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZOSConnection object
-     * @param request    any compatible ZoweRequest Interface type object
+     * @param request    any compatible ZoweRequest Interface object
      * @throws Exception processing error
      * @author Frank Giordano
      */
@@ -93,7 +93,7 @@ public class StartTso {
      *
      * @param params        object with required parameters, see StartTsoParams
      * @param accountNumber user's account number for permission
-     * @return response object, see StartTsoParams
+     * @return StartTsoParams object
      * @author Frank Giordano
      */
     private StartTsoParams setDefaultAddressSpaceParams(StartTsoParams params, String accountNumber) {
