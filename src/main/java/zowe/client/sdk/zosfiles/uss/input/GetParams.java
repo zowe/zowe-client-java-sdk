@@ -59,11 +59,10 @@ public class GetParams {
 
     /**
      * Use this header to retrieve a range of records (lines delimited by '\n') from a file.
-     * The values given must be in the form "start-end" or "start,end" where start and end are integers.
+     * The values given must be in the form "start-end" or "start,end" format where start and end are integers.
      */
     private Optional<String> recordsRange;
-
-
+    
     public GetParams(GetParams.Builder builder) {
         this.search = Optional.ofNullable(builder.search);
         this.research = Optional.ofNullable(builder.research);
@@ -121,7 +120,7 @@ public class GetParams {
     }
 
     public static class Builder {
-        
+
         private String search;
         private String research;
         private boolean insensitive = true;
