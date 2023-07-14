@@ -82,16 +82,17 @@ public class UssList {
      */
     public List<UssItem> fileList(ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getName().isEmpty(), "params name is empty");
+        ValidateUtils.checkIllegalParameter(params.getPath().isEmpty(), "params path not specified");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
 
-        url.append("?path=").append(params.getName().get());
+        url.append("?path=").append(params.getPath().get());
         params.getGroup().ifPresent(group -> url.append("&group=").append(group));
         params.getUser().ifPresent(user -> url.append("&user=").append(user));
         params.getMtime().ifPresent(mtime -> url.append("&mtime=").append(mtime));
         params.getSize().ifPresent(size -> url.append("&size=").append(size));
+        params.getName().ifPresent(name -> url.append("&name=").append(name));
         params.getPerm().ifPresent(perm -> url.append("&perm=").append(perm));
         // If type parameter is specified with the size parameter, it must be set to 'f'.
         // Sizes that are associated with all other types are unspecified.
