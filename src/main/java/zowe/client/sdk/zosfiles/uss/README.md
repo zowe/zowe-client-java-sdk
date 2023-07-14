@@ -216,7 +216,7 @@ public class ListUssTst extends TstZosConnection {
 }
 `````
 
-**Create a file, add data to file, and retrieve file's data with filters**
+**Create a file, add data to file, retrieve entire file content, and retrieve file content via filters and range**
 
 ````java
 
@@ -256,6 +256,7 @@ public class UssGetTst extends TstZosConnection {
         getFileTextContentWithSearchFilterNoResults(fileNamePath);
         getFileTextContentWithSearchFilter(fileNamePath);
         getFileTextContent(fileNamePath);
+        getFileTextContentWithRange(fileNamePath);
     }
 
     /**
@@ -315,6 +316,20 @@ public class UssGetTst extends TstZosConnection {
     private static void getFileTextContent(String fileNamePath) throws Exception {
         UssGet ussGet = new UssGet(connection);
         System.out.println(ussGet.getText(fileNamePath));
+    }
+
+    /**
+     * This method returns the last two records (lines) from the file name path value.
+     *
+     * @param fileNamePath file name with path
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
+    private static void getFileTextContentWithRange(String fileNamePath) throws Exception {
+        UssGet ussGet = new UssGet(connection);
+        GetParams params = new GetParams.Builder().recordsRange("-2").build();
+        Response response = ussGet.getCommon(fileNamePath, params);
+        System.out.println(response.getResponsePhrase().get());
     }
 
 }
