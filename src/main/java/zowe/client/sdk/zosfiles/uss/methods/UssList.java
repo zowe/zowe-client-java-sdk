@@ -88,24 +88,24 @@ public class UssList {
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
 
         url.append("?path=").append(params.getName().get());
-        params.getGroup().ifPresent(group -> url.append("?group=").append(group));
-        params.getUser().ifPresent(user -> url.append("?user=").append(user));
-        params.getMtime().ifPresent(mtime -> url.append("?mtime=").append(mtime));
-        params.getSize().ifPresent(size -> url.append("?size=").append(size));
-        params.getPerm().ifPresent(perm -> url.append("?perm=").append(perm));
+        params.getGroup().ifPresent(group -> url.append("&group=").append(group));
+        params.getUser().ifPresent(user -> url.append("&user=").append(user));
+        params.getMtime().ifPresent(mtime -> url.append("&mtime=").append(mtime));
+        params.getSize().ifPresent(size -> url.append("&size=").append(size));
+        params.getPerm().ifPresent(perm -> url.append("&perm=").append(perm));
         // If type parameter is specified with the size parameter, it must be set to 'f'.
         // Sizes that are associated with all other types are unspecified.
         if (params.getSize().isPresent() && params.getType().isPresent()) {
-            url.append("?type=f");
+            url.append("&type=f");
         } else {
-            params.getType().ifPresent(type -> url.append("?type=").append(type.getValue()));
+            params.getType().ifPresent(type -> url.append("&type=").append(type.getValue()));
         }
-        params.getDepth().ifPresent(depth -> url.append("?depth=").append(depth));
+        params.getDepth().ifPresent(depth -> url.append("&depth=").append(depth));
         if (params.isFilesys()) {
-            url.append("?filesys=all");
+            url.append("&filesys=all");
         }
         if (params.isSymlinks()) {
-            url.append("?symlinks=report");
+            url.append("&symlinks=report");
         }
         LOG.debug(url.toString());
 
