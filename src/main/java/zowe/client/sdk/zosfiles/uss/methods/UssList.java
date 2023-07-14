@@ -144,8 +144,8 @@ public class UssList {
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS);
 
-        params.getPath().ifPresent(path -> url.append("?path=").append(path));
-        params.getFsname().ifPresent(name -> url.append("?fsname=").append(name));
+        params.getPath().ifPresent(path -> url.append("?path=").append(EncodeUtils.encodeURIComponent(path)));
+        params.getFsname().ifPresent(fsname -> url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
         LOG.debug(url.toString());
 
         final Response response = getResponse(url.toString(), params.getMaxLength().orElse(0));
