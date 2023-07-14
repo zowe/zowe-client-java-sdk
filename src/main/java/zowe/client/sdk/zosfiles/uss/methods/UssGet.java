@@ -98,7 +98,7 @@ public class UssGet {
     }
 
     /**
-     * Get the contents of a file
+     * Get the contents of a file driven by the GetParams object settings
      *
      * @param filePathName file name with path
      * @param params       GetParams object to drive the request
