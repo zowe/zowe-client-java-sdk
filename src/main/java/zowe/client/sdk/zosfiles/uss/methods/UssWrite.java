@@ -55,7 +55,7 @@ public class UssWrite {
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZosConnection object
-     * @param request    any compatible ZoweRequest Interface type object
+     * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
     public UssWrite(ZosConnection connection, ZoweRequest request) {

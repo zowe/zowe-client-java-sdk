@@ -59,7 +59,7 @@ public class SendTso {
      * with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZOSConnection object
-     * @param request    any compatible ZoweRequest Interface type object
+     * @param request    any compatible ZoweRequest Interface object
      * @throws Exception processing error
      * @author Frank Giordano
      */
