@@ -58,8 +58,21 @@ public class GetParams {
     private boolean binary;
 
     /**
-     * Use this header to retrieve a range of records (lines delimited by '\n') from a file.
-     * The values given must be in the form "start-end" or "start,end" format where start and end are integers.
+     * Specify a range of records (lines delimited by '\n') to retrieve from a file.
+     * <p>
+     * Specify the range as a string in the following format:
+     * <p>
+     * SSS-EEE
+     * <p>
+     * Where SSS identifies the start record and EEE identifies the end record to be retrieved.
+     * Both values are relative offsets (0-based). When EEE is set to 0, records through the end of the
+     * file are retrieved. When SSS is omitted (i.e. -EEE), the final EEE records of the file are retrieved.
+     * <p>
+     * SSS,NNN
+     * <p>
+     * Where SSS identifies the start record and NNN identifies the number of records to be retrieved.
+     * <p>
+     * Usage note: If zero bytes are returned due to the range specified, status code 500 is returned.
      */
     private Optional<String> recordsRange;
 
