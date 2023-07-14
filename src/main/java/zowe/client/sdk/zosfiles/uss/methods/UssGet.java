@@ -119,14 +119,14 @@ public class UssGet {
         params.getResearch().ifPresent(str -> url.append("?research=").append(EncodeUtils.encodeURIComponent(str)));
         if (!params.isInsensitive()) {
             if (params.getQueryCount() > 1) {
-                url.append("&?insensitive=false");
+                url.append("&insensitive=false");
             } else {
                 url.append("?insensitive=false");
             }
         }
         params.getMaxReturnSize().ifPresent(size -> {
             if (params.getQueryCount() > 1) {
-                url.append("&?maxreturnsize=").append(size);
+                url.append("&maxreturnsize=").append(size);
             } else {
                 url.append("?maxreturnsize=").append(size);
             }
