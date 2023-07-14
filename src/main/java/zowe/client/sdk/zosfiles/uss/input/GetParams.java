@@ -56,6 +56,7 @@ public class GetParams {
      * If true perform binary read instead of text.
      */
     private boolean binary;
+
     /**
      * Use this header to retrieve a range of records (lines delimited by '\n') from a file.
      * The values given must be in the form "start-end" or "start,end" where start and end are integers.
@@ -120,6 +121,7 @@ public class GetParams {
     }
 
     public static class Builder {
+        
         private String search;
         private String research;
         private boolean insensitive = true;
