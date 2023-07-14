@@ -48,6 +48,12 @@ public class GetParams {
      * If true perform binary read instead of text.
      */
     private boolean binary;
+    /**
+     * Use this header to retrieve a range of records (lines delimited by '\n') from a file.
+     * The values given must be in the form "start-end" or "start,end" where start and end are integers.
+     */
+    private Optional<String> recordsRange;
+
 
     public GetParams(GetParams.Builder builder) {
         this.search = Optional.ofNullable(builder.search);
@@ -60,6 +66,7 @@ public class GetParams {
         }
         this.queryCount = builder.queryCount;
         this.binary = builder.binary;
+        this.recordsRange = Optional.ofNullable(builder.recordsRange);
     }
 
     public Optional<String> getSearch() {
@@ -86,6 +93,10 @@ public class GetParams {
         return binary;
     }
 
+    public Optional<String> getRecordsRange() {
+        return recordsRange;
+    }
+
     @Override
     public String toString() {
         return "GetParams{" +
@@ -94,6 +105,8 @@ public class GetParams {
                 ", insensitive=" + insensitive +
                 ", maxreturnsize=" + maxreturnsize +
                 ", binary=" + binary +
+                ", queryCount=" + queryCount +
+                ", recordsRange=" + recordsRange +
                 '}';
     }
 
@@ -104,6 +117,7 @@ public class GetParams {
         private Integer maxreturnsize;
         private boolean binary = false;
         private int queryCount = 0;
+        private String recordsRange;
 
         public GetParams build() {
             return new GetParams(this);
@@ -141,6 +155,11 @@ public class GetParams {
 
         public GetParams.Builder binary(boolean binary) {
             this.binary = binary;
+            return this;
+        }
+
+        public GetParams.Builder recordsRange(String recordsRange) {
+            this.recordsRange = recordsRange;
             return this;
         }
 

@@ -141,10 +141,12 @@ public class UssGet {
             headers.put("X-IBM-Data-Type", "text");
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
         }
+        params.getRecordsRange().ifPresent(range -> headers.put("X-IBM-Record-Range", range));
 
         request.setHeaders(headers);
         request.setUrl(url.toString());
 
         return RestUtils.getResponse(request);
     }
+
 }
