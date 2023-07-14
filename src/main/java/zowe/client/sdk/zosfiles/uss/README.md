@@ -250,7 +250,7 @@ public class UssGetTst extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        String fileNamePath = "/u/fgiorda/test1";
+        String fileNamePath = "/xx/xx/xxx";  // where xxx is a file name the rest a directory path...
 
         connection = new ZosConnection(hostName, zosmfPort, userName, password);
         getFileTextContentWithSearchFilterNoResults(fileNamePath);
