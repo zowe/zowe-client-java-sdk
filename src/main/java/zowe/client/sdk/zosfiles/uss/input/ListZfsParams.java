@@ -87,12 +87,18 @@ public class ListZfsParams {
             return this;
         }
 
-        public ListZfsParams.Builder path(String path) {
+        public ListZfsParams.Builder path(String path) throws Exception {
+            if (this.fsname != null) {
+                throw new Exception("cannot specify both path and fsname parameters");
+            }
             this.path = path;
             return this;
         }
 
-        public ListZfsParams.Builder fsname(String fsname) {
+        public ListZfsParams.Builder fsname(String fsname) throws Exception {
+            if (this.path != null) {
+                throw new Exception("cannot specify both path and fsname parameters");
+            }
             this.fsname = fsname;
             return this;
         }
