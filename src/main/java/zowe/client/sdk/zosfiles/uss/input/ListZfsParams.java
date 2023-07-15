@@ -92,7 +92,7 @@ public class ListZfsParams {
             return this;
         }
 
-        public ListZfsParams.Builder user(String fsname) {
+        public ListZfsParams.Builder fsname(String fsname) {
             this.fsname = fsname;
             return this;
         }
