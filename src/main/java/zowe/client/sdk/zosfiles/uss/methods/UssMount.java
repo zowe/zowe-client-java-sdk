@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -16,11 +17,15 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.MountParams;
 import zowe.client.sdk.zosfiles.uss.types.MountActionType;
 import zowe.client.sdk.zosfiles.uss.types.MountModeType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Provides Unix System Services (USS) mount and unmount of a file system name
@@ -106,9 +111,10 @@ public class UssMount {
         ValidateUtils.checkNullParameter(fileSystemName == null, "file system name is null");
         ValidateUtils.checkIllegalParameter(fileSystemName.isEmpty(), "file system name not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getAction() == null, "mount action value not specified");
-        ValidateUtils.checkIllegalParameter(
-                params.getAction().getValue().equals(MountActionType.MOUNT) && params.getFsType().isEmpty(),
+        ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "mount action value not specified");
+
+        final String action = params.getAction().get().getValue();
+        ValidateUtils.checkIllegalParameter("MOUNT".equals(action) && params.getFsType().isEmpty(),
                 "fsType value not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
@@ -117,7 +123,19 @@ public class UssMount {
 
         request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
 
-        return null;
+        final Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("action", action);
+        params.getMountPoint().ifPresent(str -> jsonMap.put("mount-point", str));
+        params.getFsType().ifPresent(str -> jsonMap.put("fs-type", str));
+        params.getMode().ifPresent(str -> jsonMap.put("mode", str));
+
+        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
+        LOG.debug(String.valueOf(jsonRequestBody));
+
+        request.setBody(jsonRequestBody.toString());
+        request.setUrl(url);
+
+        return RestUtils.getResponse(request);
     }
 
 }
