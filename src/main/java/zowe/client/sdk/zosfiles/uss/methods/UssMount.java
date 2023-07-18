@@ -58,9 +58,9 @@ public class UssMount {
     }
 
     /**
-     * Perform mount of a file system to the USS file system
+     * Perform mount of a file system name to the USS UNIX file system
      *
-     * @param fileSystemName the file system that you want to mount
+     * @param fileSystemName the file system name
      * @param mountPoint     the mount point to be used for mounting the UNIX file system
      * @return Response object
      * @author Frank Giordano
@@ -71,9 +71,9 @@ public class UssMount {
     }
 
     /**
-     * Perform unmount of a file system
+     * Perform unmount of a file system name
      *
-     * @param fileSystemName the file system that you want to unmount
+     * @param fileSystemName the file system name
      * @return Response object
      * @author Frank Giordano
      */
@@ -83,9 +83,9 @@ public class UssMount {
     }
 
     /**
-     * Perform mount or unmount request driven by MountParams settings
+     * Perform mount or unmount of a file system name request driven by MountParams settings
      *
-     * @param fileSystemName the file system that you want to mount or unmount
+     * @param fileSystemName the file system name 
      * @return Response object
      * @author Frank Giordano
      */
