@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.input;
 
 /**
- * Parameter container class for Unix System Services (USS) mount and unmount of file system name
+ * Parameter container class for Unix System Services (USS) mount and unmount of a file system name
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-mount-zos-unix-file-system">z/OSMF REST MOUNT API</a>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-unmount-unix-file-system">z/OSMF REST UNMOUNT API</a>
