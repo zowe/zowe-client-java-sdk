@@ -110,11 +110,11 @@ public class UssMount {
         ValidateUtils.checkNullParameter(fileSystemName == null, "file system name is null");
         ValidateUtils.checkIllegalParameter(fileSystemName.isEmpty(), "file system name not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "mount action value not specified");
+        ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "params action not specified");
 
         final String action = params.getAction().get().getValue();
         ValidateUtils.checkIllegalParameter("MOUNT".equals(action) && params.getFsType().isEmpty(),
-                "fsType value not specified");
+                "params fsType not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" + fileSystemName;
