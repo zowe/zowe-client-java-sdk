@@ -53,7 +53,6 @@ zowe.client.sdk.zosfiles.uss.methods
     UssList
     UssMount
     UssSetAcl
-    UssUnmount
     UssWrite
 
 zowe.client.sdk.zosjobs.methods
