@@ -9,6 +9,11 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.zosfiles.uss.types.MountActionType;
+import zowe.client.sdk.zosfiles.uss.types.MountModeType;
+
+import java.util.Optional;
+
 /**
  * Parameter container class for Unix System Services (USS) mount and unmount of a file system name
  * <p>
@@ -19,4 +24,94 @@ package zowe.client.sdk.zosfiles.uss.input;
  * @version 2.0
  */
 public class MountParams {
+
+    /**
+     * Specifies the action mount to mount an UNIX file system.
+     */
+    private final MountActionType action;
+
+    /**
+     * Specifies the mount point to be used for mounting the UNIX file system.
+     */
+    private final Optional<String> mountPoint;
+
+    /**
+     * Specifies the type of file system to be mounted. This value must match the TYPE operand on a FILESYSTYPE
+     * statement in the BPXPRMxx parmlib member for your system.
+     */
+    private final Optional<String> fsType;
+
+    /**
+     * Specifies the mode in which the file system is mounted.
+     * If not specified, this value defaults to rdonly.
+     */
+    private final MountModeType mode;
+
+
+    public MountParams(MountParams.Builder builder) {
+        this.action = builder.action;
+        this.mountPoint = Optional.ofNullable(builder.mountPoint);
+        this.fsType = Optional.ofNullable(builder.fsType);
+        this.mode = builder.mode;
+    }
+
+    public MountActionType getAction() {
+        return action;
+    }
+
+    public Optional<String> getMountPoint() {
+        return mountPoint;
+    }
+
+    public Optional<String> getFsType() {
+        return fsType;
+    }
+
+    public MountModeType getMode() {
+        return mode;
+    }
+
+    @Override
+    public String toString() {
+        return "MountParams{" +
+                "action=" + action +
+                ", mountPoint=" + mountPoint +
+                ", fsType=" + fsType +
+                ", mode=" + mode +
+                '}';
+    }
+
+    public static class Builder {
+
+        private MountActionType action;
+        private String mountPoint;
+        private String fsType;
+        private MountModeType mode;
+
+        public MountParams build() {
+            return new MountParams(this);
+        }
+
+        public MountParams.Builder action(MountActionType action) {
+            this.action = action;
+            return this;
+        }
+
+        public MountParams.Builder mountPoint(String mountPoint) {
+            this.mountPoint = mountPoint;
+            return this;
+        }
+
+        public MountParams.Builder fsType(String fsType) {
+            this.fsType = fsType;
+            return this;
+        }
+
+        public MountParams.Builder mode(MountModeType mode) {
+            this.mode = mode;
+            return this;
+        }
+
+    }
+
 }
