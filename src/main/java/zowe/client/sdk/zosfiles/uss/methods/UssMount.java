@@ -138,6 +138,7 @@ public class UssMount {
         });
         final StringBuilder jsonFinalStr = new StringBuilder(jsonStr.substring(0, jsonStr.length() - 1));
         jsonFinalStr.append("}");
+        LOG.debug(jsonFinalStr.toString());
 
         request.setBody(jsonFinalStr.toString());
         request.setUrl(url);
