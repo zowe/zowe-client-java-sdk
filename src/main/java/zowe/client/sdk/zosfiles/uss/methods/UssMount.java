@@ -15,7 +15,10 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.MountParams;
+import zowe.client.sdk.zosfiles.uss.types.MountActionType;
+import zowe.client.sdk.zosfiles.uss.types.MountModeType;
 
 /**
  * Provides Unix System Services (USS) mount and unmount of a file system name
@@ -58,16 +61,22 @@ public class UssMount {
     }
 
     /**
-     * Perform mount of a file system name to the USS UNIX file system
+     * Perform mount of a file system name to the USS UNIX file system. Mount mode will be Read-Write type.
      *
      * @param fileSystemName the file system name
      * @param mountPoint     the mount point to be used for mounting the UNIX file system
+     * @param fsType         the type of file system to be mounted.
      * @return Response object
      * @author Frank Giordano
      */
-    public Response mount(String fileSystemName, String mountPoint) {
-
-        return null;
+    public Response mount(String fileSystemName, String mountPoint, String fsType) {
+        return mountCommon(fileSystemName,
+                new MountParams.Builder()
+                        .action(MountActionType.MOUNT)
+                        .mountPoint(mountPoint)
+                        .fsType(fsType)
+                        .mode(MountModeType.READ_WRITE)
+                        .build());
     }
 
     /**
@@ -78,18 +87,25 @@ public class UssMount {
      * @author Frank Giordano
      */
     public Response unMount(String fileSystemName) {
-
-        return null;
+        return mountCommon(fileSystemName, new MountParams.Builder().action(MountActionType.UNMOUNT).build());
     }
 
     /**
      * Perform mount or unmount of a file system name request driven by MountParams settings
      *
-     * @param fileSystemName the file system name 
+     * @param fileSystemName the file system name
      * @return Response object
      * @author Frank Giordano
      */
     public Response mountCommon(String fileSystemName, MountParams params) {
+        ValidateUtils.checkNullParameter(fileSystemName == null, "file system name is null");
+        ValidateUtils.checkIllegalParameter(fileSystemName.isEmpty(), "file system name not specified");
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkIllegalParameter(params.getAction() == null, "mount action parameter is empty");
+
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + fileSystemName;
+        LOG.debug(url);
 
         return null;
     }
