@@ -28,7 +28,7 @@ public class MountParams {
     /**
      * Specifies the action mount to mount an UNIX file system.
      */
-    private final MountActionType action;
+    private final Optional<MountActionType> action;
 
     /**
      * Specifies the mount point to be used for mounting the UNIX file system.
@@ -45,17 +45,17 @@ public class MountParams {
      * Specifies the mode in which the file system is mounted.
      * If not specified, this value defaults to rdonly.
      */
-    private final MountModeType mode;
+    private final Optional<MountModeType> mode;
 
 
     public MountParams(MountParams.Builder builder) {
-        this.action = builder.action;
+        this.action = Optional.ofNullable(builder.action);
         this.mountPoint = Optional.ofNullable(builder.mountPoint);
         this.fsType = Optional.ofNullable(builder.fsType);
-        this.mode = builder.mode;
+        this.mode = Optional.ofNullable(builder.mode);
     }
 
-    public MountActionType getAction() {
+    public Optional<MountActionType> getAction() {
         return action;
     }
 
@@ -67,7 +67,7 @@ public class MountParams {
         return fsType;
     }
 
-    public MountModeType getMode() {
+    public Optional<MountModeType> getMode() {
         return mode;
     }
 
