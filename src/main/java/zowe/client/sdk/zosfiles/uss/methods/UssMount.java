@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -127,12 +126,20 @@ public class UssMount {
         jsonMap.put("action", action);
         params.getMountPoint().ifPresent(str -> jsonMap.put("mount-point", str));
         params.getFsType().ifPresent(str -> jsonMap.put("fs-type", str));
-        params.getMode().ifPresent(str -> jsonMap.put("mode", str));
+        params.getMode().ifPresent(str -> jsonMap.put("mode", str.getValue()));
 
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
+        final StringBuilder jsonStr = new StringBuilder();
+        jsonStr.append("{");
+        jsonMap.forEach((k, v) -> {
+            jsonStr.append("\"").append(k).append("\"");
+            jsonStr.append(":");
+            jsonStr.append("\"").append(v).append("\"");
+            jsonStr.append(",");
+        });
+        final StringBuilder jsonFinalStr = new StringBuilder(jsonStr.substring(0, jsonStr.length() - 1));
+        jsonFinalStr.append("}");
 
-        request.setBody(jsonRequestBody.toString());
+        request.setBody(jsonFinalStr.toString());
         request.setUrl(url);
 
         return RestUtils.getResponse(request);
