@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
+import zowe.client.sdk.rest.ZoweRequestFactory;
+import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.MountParams;
@@ -67,9 +69,10 @@ public class UssMount {
      * @param mountPoint     the mount point to be used for mounting the UNIX file system
      * @param fsType         the type of file system to be mounted.
      * @return Response object
+     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response mount(String fileSystemName, String mountPoint, String fsType) {
+    public Response mount(String fileSystemName, String mountPoint, String fsType) throws Exception {
         return mountCommon(fileSystemName,
                 new MountParams.Builder()
                         .action(MountActionType.MOUNT)
@@ -84,9 +87,10 @@ public class UssMount {
      *
      * @param fileSystemName the file system name
      * @return Response object
+     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response unMount(String fileSystemName) {
+    public Response unMount(String fileSystemName) throws Exception {
         return mountCommon(fileSystemName, new MountParams.Builder().action(MountActionType.UNMOUNT).build());
     }
 
@@ -95,17 +99,23 @@ public class UssMount {
      *
      * @param fileSystemName the file system name
      * @return Response object
+     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response mountCommon(String fileSystemName, MountParams params) {
+    public Response mountCommon(String fileSystemName, MountParams params) throws Exception {
         ValidateUtils.checkNullParameter(fileSystemName == null, "file system name is null");
         ValidateUtils.checkIllegalParameter(fileSystemName.isEmpty(), "file system name not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getAction() == null, "mount action parameter is empty");
+        ValidateUtils.checkIllegalParameter(params.getAction() == null, "mount action value not specified");
+        ValidateUtils.checkIllegalParameter(
+                params.getAction().getValue().equals(MountActionType.MOUNT) && params.getFsType().isEmpty(),
+                "fsType value not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + fileSystemName;
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" + fileSystemName;
         LOG.debug(url);
+
+        request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
 
         return null;
     }
