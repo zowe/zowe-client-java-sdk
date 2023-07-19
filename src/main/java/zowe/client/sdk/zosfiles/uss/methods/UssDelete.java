@@ -119,7 +119,7 @@ public class UssDelete {
     }
 
     /**
-     * Delete z/OS UNIX zFS Filesystem
+     * Delete UNIX zFS Filesystem
      *
      * @param fileSystemName file system name
      * @return Response object
