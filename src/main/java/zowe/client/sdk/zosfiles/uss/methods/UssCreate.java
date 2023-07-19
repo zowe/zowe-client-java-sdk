@@ -96,8 +96,6 @@ public class UssCreate {
         ValidateUtils.checkNullParameter(name == null, "name is null");
         ValidateUtils.checkIllegalParameter(name.isEmpty(), "name not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkNullParameter(params.getType() == null, "params type is null");
-        ValidateUtils.checkNullParameter(params.getMode() == null, "params mode is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + name;
