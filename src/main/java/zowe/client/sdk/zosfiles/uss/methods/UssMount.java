@@ -115,8 +115,10 @@ public class UssMount {
         ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "params action not specified");
 
         final String action = params.getAction().get().getValue();
-        ValidateUtils.checkIllegalParameter("MOUNT".equals(action) && params.getFsType().isEmpty(),
-                "params fsType not specified");
+        if ("MOUNT".equalsIgnoreCase(action)) {
+            ValidateUtils.checkIllegalParameter(params.getMountPoint().isEmpty(), "mountPoint not specified");
+            ValidateUtils.checkIllegalParameter(params.getFsType().isEmpty(), "fsType not specified");
+        }
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" + fileSystemName;
