@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
 import java.util.Optional;
 import java.util.OptionalInt;
 
@@ -88,6 +90,8 @@ public class ListZfsParams {
         }
 
         public ListZfsParams.Builder path(String path) throws Exception {
+            ValidateUtils.checkNullParameter(path == null, "path is null");
+            ValidateUtils.checkIllegalParameter(path.isEmpty(), "path not specified");
             if (this.fsname != null) {
                 throw new Exception("cannot specify both path and fsname parameters");
             }
@@ -96,6 +100,8 @@ public class ListZfsParams {
         }
 
         public ListZfsParams.Builder fsname(String fsname) throws Exception {
+            ValidateUtils.checkNullParameter(fsname == null, "fsname is null");
+            ValidateUtils.checkIllegalParameter(fsname.isEmpty(), "fsname not specified");
             if (this.path != null) {
                 throw new Exception("cannot specify both path and fsname parameters");
             }
