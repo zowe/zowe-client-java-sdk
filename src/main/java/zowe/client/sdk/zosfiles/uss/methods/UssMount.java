@@ -12,6 +12,7 @@ package zowe.client.sdk.zosfiles.uss.methods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
@@ -120,7 +121,9 @@ public class UssMount {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" + fileSystemName;
         LOG.debug(url);
 
-        request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
+        if (request == null || !(request instanceof JsonPutRequest)) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
+        }
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("action", action);

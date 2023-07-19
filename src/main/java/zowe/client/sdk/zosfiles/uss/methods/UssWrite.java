@@ -12,9 +12,7 @@ package zowe.client.sdk.zosfiles.uss.methods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -118,7 +116,9 @@ public class UssWrite {
             if (params.getBinaryContent().isEmpty()) {
                 LOG.debug("binaryContent is empty");
             }
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_STREAM);
+            if (request == null || !(request instanceof StreamPutRequest)) {
+                request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_STREAM);
+            }
             request.setBody(params.getBinaryContent().orElse(new byte[0]));
         } else {
             final StringBuilder textHeader = new StringBuilder("text");
@@ -132,7 +132,9 @@ public class UssWrite {
             if (params.getTextContent().isEmpty()) {
                 LOG.debug("textContent is empty");
             }
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
+            if (request == null || !(request instanceof TextPutRequest)) {
+                request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
+            }
             request.setBody(params.getTextContent().orElse(""));
         }
 

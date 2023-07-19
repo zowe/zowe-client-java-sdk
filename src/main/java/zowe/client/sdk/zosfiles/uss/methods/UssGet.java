@@ -12,9 +12,7 @@ package zowe.client.sdk.zosfiles.uss.methods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
@@ -137,10 +135,14 @@ public class UssGet {
 
         if (params.isBinary()) {
             headers.put("X-IBM-Data-Type", "binary");
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_STREAM);
+            if (request == null || !(request instanceof StreamGetRequest)) {
+                request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_STREAM);
+            }
         } else {
             headers.put("X-IBM-Data-Type", "text");
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
+            if (request == null || !(request instanceof TextGetRequest)) {
+                request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
+            }
         }
         params.getRecordsRange().ifPresent(range -> headers.put("X-IBM-Record-Range", range));
 
