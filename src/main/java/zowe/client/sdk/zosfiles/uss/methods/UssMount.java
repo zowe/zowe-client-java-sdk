@@ -94,7 +94,7 @@ public class UssMount {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response unMount(String fileSystemName) throws Exception {
+    public Response unmount(String fileSystemName) throws Exception {
         return mountCommon(fileSystemName, new MountParams.Builder().action(MountActionType.UNMOUNT).build());
     }
 
