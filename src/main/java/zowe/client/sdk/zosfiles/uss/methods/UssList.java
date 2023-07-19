@@ -84,7 +84,6 @@ public class UssList {
      */
     public List<UssItem> fileList(ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getPath().isEmpty(), "params path not specified");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
@@ -139,8 +138,6 @@ public class UssList {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getPath().isEmpty() && params.getFsname().isEmpty(),
                 "no path or fsname specified");
-        ValidateUtils.checkIllegalParameter(params.getPath().isPresent() && params.getFsname().isPresent(),
-                "specify either path or fsname");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS);
