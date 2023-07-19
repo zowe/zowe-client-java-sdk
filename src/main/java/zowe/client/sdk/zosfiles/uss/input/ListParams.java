@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.ListFilterType;
 
 import java.util.Optional;
@@ -111,7 +112,7 @@ public class ListParams {
     public final boolean symlinks;
 
     public ListParams(ListParams.Builder builder) {
-        this.path = Optional.ofNullable(builder.path);
+        this.path = Optional.of(builder.path);
         if (builder.maxLength == null) {
             this.maxLength = OptionalInt.empty();
         } else {
@@ -223,6 +224,8 @@ public class ListParams {
         }
 
         public ListParams.Builder path(String path) {
+            ValidateUtils.checkNullParameter(path == null, "path is null");
+            ValidateUtils.checkIllegalParameter(path.isEmpty(), "path not specified");
             this.path = path;
             return this;
         }
@@ -285,3 +288,4 @@ public class ListParams {
     }
 
 }
+
