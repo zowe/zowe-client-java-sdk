@@ -98,4 +98,28 @@ public class UssDeleteTest {
         assertEquals(errMsg, "name not specified");
     }
 
+    @Test
+    public void tstUssDeleteZfsDeleteNullFailure() {
+        UssDelete ussDelete = new UssDelete(connection, jsonDeleteRequest);
+        String errMsg = "";
+        try {
+            ussDelete.zfsDelete(null);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals(errMsg, "file system name is null");
+    }
+
+    @Test
+    public void tstUssDeleteZfsDeleteEmptyFailure() {
+        UssDelete ussDelete = new UssDelete(connection, jsonDeleteRequest);
+        String errMsg = "";
+        try {
+            ussDelete.zfsDelete("");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals(errMsg, "file system name not specified");
+    }
+
 }
