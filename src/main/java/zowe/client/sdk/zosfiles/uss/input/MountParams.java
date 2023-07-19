@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.MountActionType;
 import zowe.client.sdk.zosfiles.uss.types.MountModeType;
 
@@ -98,11 +99,15 @@ public class MountParams {
         }
 
         public MountParams.Builder mountPoint(String mountPoint) {
+            ValidateUtils.checkNullParameter(mountPoint == null, "mountPoint is null");
+            ValidateUtils.checkIllegalParameter(mountPoint.isEmpty(), "mountPoint not specified");
             this.mountPoint = mountPoint;
             return this;
         }
 
         public MountParams.Builder fsType(String fsType) {
+            ValidateUtils.checkNullParameter(fsType == null, "fsType is null");
+            ValidateUtils.checkIllegalParameter(fsType.isEmpty(), "fsType not specified");
             this.fsType = fsType;
             return this;
         }
