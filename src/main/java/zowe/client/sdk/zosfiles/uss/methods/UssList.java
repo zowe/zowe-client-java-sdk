@@ -75,7 +75,7 @@ public class UssList {
     }
 
     /**
-     * Perform list z/OS UNIX files operation
+     * Perform list of UNIX files operation
      *
      * @param params ListParams object
      * @return Response object
@@ -128,7 +128,7 @@ public class UssList {
     }
 
     /**
-     * Perform list z/OS UNIX filesystems operation
+     * Perform list of UNIX filesystems operation
      *
      * @param params ListZfsParams parameter object
      * @return list of UssZfsItem objects

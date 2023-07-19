@@ -68,7 +68,7 @@ public class UssMount {
     }
 
     /**
-     * Perform mount of a file system name to the USS UNIX file system. Mount mode will be Read-Write type.
+     * Perform mount of a file system name to the UNIX file system. Mount mode will be Read-Write type.
      *
      * @param fileSystemName the file system name
      * @param mountPoint     the mount point to be used for mounting the UNIX file system
