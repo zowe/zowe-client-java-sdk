@@ -10,6 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.input;
 
 import zowe.client.sdk.utility.FileUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.CreateType;
 
 /**
@@ -56,6 +57,8 @@ public class CreateParams {
      * @author James Kostrewski
      */
     public CreateParams(CreateType type, String mode) {
+        ValidateUtils.checkNullParameter(type == null, "type is null");
+        ValidateUtils.checkNullParameter(mode == null, "mode is null");
         this.type = type;
         this.mode = FileUtils.validatePermission(mode);
     }
