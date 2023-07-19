@@ -64,7 +64,7 @@ public class UssDelete {
     }
 
     /**
-     * Perform USS delete file or directory name request
+     * Perform UNIX delete file or directory name request
      *
      * @param name name of file or directory with path
      * @return Response object
@@ -76,7 +76,7 @@ public class UssDelete {
     }
 
     /**
-     * Perform USS delete file or directory name request with recursive flag
+     * Perform UNIX delete file or directory name request with recursive flag
      *
      * @param name      name of file or directory with path
      * @param recursive flag indicates if contents of directory should also be deleted
@@ -89,7 +89,7 @@ public class UssDelete {
     }
 
     /**
-     * Performs the processing described in delete
+     * Perform UNIX delete request
      *
      * @param name      name of file or directory with path
      * @param recursive flag indicates if contents of directory should also be deleted
@@ -114,6 +114,31 @@ public class UssDelete {
         if (recursive) {
             request.setHeaders(Map.of("X-IBM-Option", "recursive"));
         }
+
+        return RestUtils.getResponse(request);
+    }
+
+    /**
+     * Delete z/OS UNIX zFS Filesystem
+     *
+     * @param fileSystemName file system name
+     * @return Response object
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
+    public Response zfsDelete(String fileSystemName) throws Exception {
+        ValidateUtils.checkNullParameter(fileSystemName == null, "file system name is null");
+        ValidateUtils.checkIllegalParameter(fileSystemName.isEmpty(), "file system name not specified");
+
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" + fileSystemName;
+        LOG.debug(url);
+
+        if (request == null || !(request instanceof JsonDeleteRequest)) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
+        }
+
+        request.setUrl(url);
 
         return RestUtils.getResponse(request);
     }
