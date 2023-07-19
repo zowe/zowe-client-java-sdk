@@ -52,7 +52,7 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteNameNullFailure() {
-        UssDelete ussDelete = new UssDelete(connection, jsonDeleteRequest);
+        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.delete(null);
@@ -64,7 +64,7 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteNameEmptyFailure() {
-        UssDelete ussDelete = new UssDelete(connection, jsonDeleteRequest);
+        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.delete("");
@@ -76,7 +76,7 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteNameNullRecursiveFailure() {
-        UssDelete ussDelete = new UssDelete(connection, jsonDeleteRequest);
+        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.delete(null, true);
@@ -88,7 +88,7 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteNameEmptyRecursiveFailure() {
-        UssDelete ussDelete = new UssDelete(connection, jsonDeleteRequest);
+        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.delete("", true);
@@ -100,7 +100,7 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteZfsDeleteNullFailure() {
-        UssDelete ussDelete = new UssDelete(connection, jsonDeleteRequest);
+        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.zfsDelete(null);
@@ -112,7 +112,7 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteZfsDeleteEmptyFailure() {
-        UssDelete ussDelete = new UssDelete(connection, jsonDeleteRequest);
+        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.zfsDelete("");
