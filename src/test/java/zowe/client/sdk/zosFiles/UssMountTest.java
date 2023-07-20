@@ -193,4 +193,16 @@ public class UssMountTest {
         assertEquals(errMsg, "file system name not specified");
     }
 
+    @Test
+    public void tstUssMountEmptyActionFailure() {
+        UssMount ussMount = new UssMount(connection);
+        String errMsg = "";
+        try {
+            ussMount.mountCommon("name", new MountParams.Builder().build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals(errMsg, "params action not specified");
+    }
+
 }
