@@ -60,7 +60,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteNameNullFailure() {
+    public void tstUssDeleteNullNameFailure() {
         UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
@@ -72,7 +72,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteNameEmptyFailure() {
+    public void tstUssDeleteEmptyNameFailure() {
         UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
@@ -84,7 +84,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteNameNullRecursiveFailure() {
+    public void tstUssDeleteNullNameRecursiveFailure() {
         UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
@@ -96,7 +96,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteNameEmptyRecursiveFailure() {
+    public void tstUssDeleteEmptyNameRecursiveFailure() {
         UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
@@ -108,7 +108,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteZfsDeleteNullFailure() {
+    public void tstUssDeleteZfsNullFileSystemNameFailure() {
         UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
@@ -120,7 +120,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteZfsDeleteEmptyFailure() {
+    public void tstUssDeleteZfsEmptyFileSystemNameFailure() {
         UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
