@@ -9,48 +9,42 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
 import java.util.Optional;
 
 /**
- * Parameter container class forUnix System Services (USS) copy operation
+ * Parameter container class for Unix System Services (USS) copy operation
  *
  * @author James Kostrewski
  * @version 2.0
  */
 public class CopyParams {
+
     /**
      * The file or directory to be copied. May not be specified with 'from-dataset'.
      */
     private Optional<String> from;
+
     /**
-     * The dataset to be copied. May not be specified with 'from'
-     */
-    private Optional<String> from_dataset;
-    /**
-     * The default is true. May not be specified with 'from_dataset'
+     * The default is true.
      */
     private boolean overwrite;
+
     /**
      * The default is false.
      * When 'true', copies all the files and subdirectories that are specified by source into a directory (cp -R).
-     * May not be specified with 'from-dataset'.
      */
     private boolean recursive;
 
-
     public CopyParams(CopyParams.Builder builder) {
         this.from = Optional.ofNullable(builder.from);
-        this.from_dataset = Optional.ofNullable(builder.from_dataset);
         this.overwrite = builder.overwrite;
         this.recursive = builder.recursive;
     }
 
     public Optional<String> getFrom() {
         return from;
-    }
-
-    public Optional<String> getFrom_dataset() {
-        return from_dataset;
     }
 
     public boolean isOverwrite() {
@@ -65,14 +59,14 @@ public class CopyParams {
     public String toString() {
         return "CopyParams{" +
                 "from=" + this.getFrom() +
-                ", from_dataset=" + this.getFrom_dataset() +
                 ", overwrite=" + this.isOverwrite() +
                 ", recursive=" + this.isRecursive() +
                 "}";
     }
+
     public static class Builder {
+        
         private String from;
-        private String from_dataset;
         private boolean overwrite = true;
         private boolean recursive = false;
 
@@ -80,16 +74,10 @@ public class CopyParams {
             return new CopyParams(this);
         }
 
-        public CopyParams.Builder from(String from) throws Exception {
-            if (this.from_dataset != null) {
-                throw new Exception("Cannot specify both 'from' and 'from_dataset'");
-            }
+        public CopyParams.Builder from(String from) {
+            ValidateUtils.checkNullParameter(from == null, "from is null");
+            ValidateUtils.checkIllegalParameter(from.isEmpty(), "from not specified");
             this.from = from;
-            return this;
-        }
-
-        public CopyParams.Builder from_dataset(String from_dataset) {
-            this.from_dataset = from_dataset;
             return this;
         }
 

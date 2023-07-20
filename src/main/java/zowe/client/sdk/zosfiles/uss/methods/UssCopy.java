@@ -23,11 +23,8 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.CopyParams;
 
-
 import java.util.HashMap;
 import java.util.Map;
-
-
 
 /**
  * Provides Unix System Services (USS) copy functionality
@@ -44,6 +41,7 @@ public class UssCopy {
      * UssCopy Constructor
      *
      * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
+     *
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
@@ -66,17 +64,19 @@ public class UssCopy {
         this.request = request;
     }
 
+    /**
+     * Build request body to handle the incoming request
+     *
+     * @param params CopyParams object
+     * @return json string value
+     * @author James Kostrewski
+     * @author Frank Giordano
+     */
     private static String buildBody(CopyParams params) {
         final Map<String, Object> jsonMap = new HashMap<>();
-
         jsonMap.put("request", "copy");
-        if (params.getFrom().isPresent()) {
-            jsonMap.put("from", params.getFrom().get());
-        }
-        if (params.getFrom_dataset().isPresent()) {
-            jsonMap.put("from-dataset", params.getFrom_dataset().get());
-        }
-        if (params.isOverwrite() == false) {
+        params.getFrom().ifPresent(str -> jsonMap.put("from", str));
+        if (!params.isOverwrite()) {
             jsonMap.put("overwrite", "false");
         }
         if (params.isRecursive()) {
@@ -85,47 +85,47 @@ public class UssCopy {
 
         final JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
+
         return jsonRequestBody.toString();
     }
 
     /**
-     * Copy a USS file or directory to another location
+     * Copy a Unix file or directory to another location
      *
      * @param destinationPath the destination path of the file or directory to copy
      * @param sourcePath      the source path of the file or directory to copy
-     * @return ZoweRequest object with the response from the server
-     * @throws Exception if the request fails
+     * @return Response object
+     * @throws Exception processing error
      */
     public Response copy(String destinationPath, String sourcePath) throws Exception {
-        CopyParams.Builder builder = new CopyParams.Builder();
-        builder.from(sourcePath);
-        return copy(destinationPath, new CopyParams(builder));
+        return copyCommon(destinationPath, new CopyParams.Builder().from(sourcePath).build());
     }
 
     /**
-     * Copy a USS file or directory to another location
+     * Copy a Unix file or directory to another location
      *
      * @param destinationPath the destination path of the file or directory to copy
-     * @param copyParams       if true, overwrite the destination file if it exists
-     * @return ZoweRequest object with the response from the server
-     * @throws Exception if the request fails
+     * @param params          CopyParams parameters that specifies copy action request
+     * @return Response object
+     * @throws Exception processing error
      */
-    public Response copy(String destinationPath, CopyParams copyParams) throws Exception {
+    public Response copyCommon(String destinationPath, CopyParams params) throws Exception {
         ValidateUtils.checkNullParameter(destinationPath == null, "destinationPath is null");
         ValidateUtils.checkIllegalParameter(destinationPath.isEmpty(), "destinationPath not specified");
-        ValidateUtils.checkNullParameter(copyParams == null, "copyParams is null");
+        ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destinationPath;
         LOG.debug(url);
 
-        final String body = buildBody(copyParams);
+        final String body = buildBody(params);
 
         if (request == null || !(request instanceof JsonPostRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
         request.setBody(body);
+
         return RestUtils.getResponse(request);
     }
 
