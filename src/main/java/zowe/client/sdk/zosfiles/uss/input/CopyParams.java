@@ -24,18 +24,18 @@ public class CopyParams {
     /**
      * The file or directory to be copied. May not be specified with 'from-dataset'.
      */
-    private Optional<String> from;
+    private final Optional<String> from;
 
     /**
      * The default is true.
      */
-    private boolean overwrite;
+    private final boolean overwrite;
 
     /**
      * The default is false.
      * When 'true', copies all the files and subdirectories that are specified by source into a directory (cp -R).
      */
-    private boolean recursive;
+    private final boolean recursive;
 
     public CopyParams(CopyParams.Builder builder) {
         this.from = Optional.ofNullable(builder.from);

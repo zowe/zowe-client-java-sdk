@@ -26,36 +26,36 @@ public class GetParams {
      * Optionally, insensitive=false may be specified for case-sensitive matching.
      * This parameter may not be specified with the research parameter.
      */
-    private Optional<String> search;
+    private final Optional<String> search;
 
     /**
      * The file is searched for the first line that matches the given extended regular expression.
      * This parameter may not be specified with the search parameter.
      */
-    private Optional<String> research;
+    private final Optional<String> research;
 
     /**
      * The default is 'true'. When 'true', searches (search and research) are case-insensitive.
      * For case-sensitive searches, specify 'false'.
      */
-    private boolean insensitive;
+    private final boolean insensitive;
 
     /**
      * This parameter may be specified only with search or research parameters.
      * The value given is the maximum number of lines to return.
      * The default, if not specified, is 100.
      */
-    private OptionalInt maxreturnsize;
+    private final OptionalInt maxreturnsize;
 
     /**
      * Internal use to count number of query parameters specified
      */
-    private int queryCount;
+    private final int queryCount;
 
     /**
      * If true perform binary read instead of text.
      */
-    private boolean binary;
+    private final boolean binary;
 
     /**
      * Specify a range of records (lines delimited by '\n') to retrieve from a file.
@@ -74,7 +74,7 @@ public class GetParams {
      * <p>
      * Usage note: If zero bytes are returned due to the range specified, status code 500 is returned.
      */
-    private Optional<String> recordsRange;
+    private final Optional<String> recordsRange;
 
     public GetParams(GetParams.Builder builder) {
         this.search = Optional.ofNullable(builder.search);
