@@ -72,7 +72,7 @@ public class GetParams {
      * <p>
      * Where SSS identifies the start record and NNN identifies the number of records to be retrieved.
      * <p>
-     * Usage note: If zero bytes are returned due to the range specified, status code 500 is returned.
+     * Usage note: If zero bytes returned due to the range specified, status code 500 is returned.
      */
     private final Optional<String> recordsRange;
 

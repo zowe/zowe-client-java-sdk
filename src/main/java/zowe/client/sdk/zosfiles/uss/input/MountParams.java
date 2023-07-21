@@ -27,7 +27,7 @@ import java.util.Optional;
 public class MountParams {
 
     /**
-     * Specifies the action mount to mount an UNIX file system.
+     * Specifies the action mount to mount a UNIX file system.
      */
     private final Optional<MountActionType> action;
 
