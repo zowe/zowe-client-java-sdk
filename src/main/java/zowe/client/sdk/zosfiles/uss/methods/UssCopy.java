@@ -111,12 +111,14 @@ public class UssCopy {
      *
      * @param params CopyParams object
      * @return json string value
+     * @throws Exception from value in params not specified error
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    private static String buildBody(CopyParams params) {
+    private static String buildBody(CopyParams params) throws Exception {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "copy");
+        jsonMap.put("from", params.getFrom().orElseThrow(() -> new Exception("from not specified")));
         params.getFrom().ifPresent(str -> jsonMap.put("from", str));
         if (!params.isOverwrite()) {
             jsonMap.put("overwrite", "false");
