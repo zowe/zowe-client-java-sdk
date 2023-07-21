@@ -95,6 +95,7 @@ public class UssCopy {
         LOG.debug(url);
 
         final String body = buildBody(params);
+        LOG.debug(body);
 
         if (request == null || !(request instanceof JsonPostRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
@@ -123,11 +124,7 @@ public class UssCopy {
         if (params.isRecursive()) {
             jsonMap.put("recursive", "true");
         }
-
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
-
-        return jsonRequestBody.toString();
+        return new JSONObject(jsonMap).toString();
     }
 
 }
