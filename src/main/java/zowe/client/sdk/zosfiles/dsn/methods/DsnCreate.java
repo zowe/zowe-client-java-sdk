@@ -70,6 +70,36 @@ public class DsnCreate {
     }
 
     /**
+     * Creates a new dataset with specified parameters
+     *
+     * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
+     * @param params      create dataset parameters, see CreateParams object
+     * @return http response object
+     * @throws Exception error processing request
+     * @author Leonid Baranov
+     */
+    public Response create(String dataSetName, CreateParams params) throws Exception {
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
+        ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(dataSetName);
+
+        LOG.debug(url);
+
+        final String body = buildBody(params);
+
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
+        }
+        request.setUrl(url);
+        request.setBody(body);
+
+        return RestUtils.getResponse(request);
+    }
+
+    /**
      * Create the http body request
      *
      * @param params CreateParams parameters
@@ -98,36 +128,6 @@ public class DsnCreate {
         final JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
         return jsonRequestBody.toString();
-    }
-
-    /**
-     * Creates a new dataset with specified parameters
-     *
-     * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
-     * @param params      create dataset parameters, see CreateParams object
-     * @return http response object
-     * @throws Exception error processing request
-     * @author Leonid Baranov
-     */
-    public Response create(String dataSetName, CreateParams params) throws Exception {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
-
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(dataSetName);
-
-        LOG.debug(url);
-
-        final String body = buildBody(params);
-
-        if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
-        }
-        request.setUrl(url);
-        request.setBody(body);
-
-        return RestUtils.getResponse(request);
     }
 
 }

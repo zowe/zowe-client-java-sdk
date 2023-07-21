@@ -65,6 +65,68 @@ public class DsnRename {
     }
 
     /**
+     * Change the existing dataset name (source) to new dataset name (destination)
+     *
+     * @param source      existing dataset name
+     * @param destination new dataset name
+     * @return Response object
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
+    public Response dataSetName(String source, String destination) throws Exception {
+        setUrl(destination);
+        return executeRequest(buildBody(source));
+    }
+
+    /**
+     * Change the existing member name (source) to new member name (destination) within a partition dataset
+     *
+     * @param dsName      from dataset name
+     * @param source      existing member name
+     * @param destination new member name
+     * @return Response object
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
+    public Response memberName(String dsName, String source, String destination) throws Exception {
+        setUrl(dsName, destination);
+        return executeRequest(buildBody(dsName, source));
+    }
+
+    /**
+     * Execute the zowe http request
+     *
+     * @param body json string value
+     * @return Response object
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
+    private Response executeRequest(String body) throws Exception {
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
+        }
+        request.setUrl(url);
+        request.setBody(body);
+
+        return RestUtils.getResponse(request);
+    }
+
+    /**
+     * Set the global url value
+     *
+     * @param args new or current dataset name and/or new member name
+     * @author Frank Giordano
+     */
+    private void setUrl(String... args) {
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
+                EncodeUtils.encodeURIComponent(args[0]);
+        if (args.length > 1) {
+            url += "(" + EncodeUtils.encodeURIComponent(args[1]) + ")";
+        }
+    }
+
+    /**
      * Build request body to handle the incoming request
      *
      * @param args from dataset name and/or member name
@@ -87,68 +149,6 @@ public class DsnRename {
         final JSONObject jsonRequestBody = new JSONObject(jsonMap);
         LOG.debug(String.valueOf(jsonRequestBody));
         return jsonRequestBody.toString();
-    }
-
-    /**
-     * Change the existing dataset name (source) to new dataset name (destination)
-     *
-     * @param source      existing dataset name
-     * @param destination new dataset name
-     * @return Response object
-     * @throws Exception processing error
-     * @author Frank Giordano
-     */
-    public Response dataSetName(String source, String destination) throws Exception {
-        setUrl(destination);
-        return executeRequest(buildBody(source));
-    }
-
-    /**
-     * Execute the zowe http request
-     *
-     * @param body json string value
-     * @return Response object
-     * @throws Exception processing error
-     * @author Frank Giordano
-     */
-    private Response executeRequest(String body) throws Exception {
-        if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
-        }
-        request.setUrl(url);
-        request.setBody(body);
-
-        return RestUtils.getResponse(request);
-    }
-
-    /**
-     * Change the existing member name (source) to new member name (destination) within a partition dataset
-     *
-     * @param dsName      from dataset name
-     * @param source      existing member name
-     * @param destination new member name
-     * @return Response object
-     * @throws Exception processing error
-     * @author Frank Giordano
-     */
-    public Response memberName(String dsName, String source, String destination) throws Exception {
-        setUrl(dsName, destination);
-        return executeRequest(buildBody(dsName, source));
-    }
-
-    /**
-     * Set the global url value
-     *
-     * @param args new or current dataset name and/or new member name
-     * @author Frank Giordano
-     */
-    private void setUrl(String... args) {
-        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
-                EncodeUtils.encodeURIComponent(args[0]);
-        if (args.length > 1) {
-            url += "(" + EncodeUtils.encodeURIComponent(args[1]) + ")";
-        }
     }
 
 }
