@@ -28,6 +28,8 @@ import java.util.Map;
 
 /**
  * Provides Unix System Services (USS) copy functionality
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
  * @version 2.0
@@ -39,8 +41,6 @@ public class UssCopy {
 
     /**
      * UssCopy Constructor
-     *
-     * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
      *
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski

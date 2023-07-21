@@ -65,7 +65,7 @@ public class CopyParams {
     }
 
     public static class Builder {
-        
+
         private String from;
         private boolean overwrite = true;
         private boolean recursive = false;
