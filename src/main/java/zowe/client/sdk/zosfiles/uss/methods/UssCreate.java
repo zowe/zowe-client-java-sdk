@@ -67,23 +67,6 @@ public class UssCreate {
     }
 
     /**
-     * Create the http body request
-     *
-     * @param params CreateParams parameters
-     * @return body string value for http request
-     * @author James Kostrewski
-     */
-    private static String buildBody(CreateParams params) {
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("type", params.getType().getValue());
-        jsonMap.put("mode", params.getMode());
-
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
-        return jsonRequestBody.toString();
-    }
-
-    /**
      * Perform UNIX create file or directory name request driven by CreateParams object settings
      *
      * @param name   name of object to create
@@ -110,6 +93,23 @@ public class UssCreate {
         request.setBody(body);
 
         return RestUtils.getResponse(request);
+    }
+
+    /**
+     * Create the http body request
+     *
+     * @param params CreateParams parameters
+     * @return body string value for http request
+     * @author James Kostrewski
+     */
+    private static String buildBody(CreateParams params) {
+        final Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("type", params.getType().getValue());
+        jsonMap.put("mode", params.getMode());
+
+        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
+        LOG.debug(String.valueOf(jsonRequestBody));
+        return jsonRequestBody.toString();
     }
 
 }
