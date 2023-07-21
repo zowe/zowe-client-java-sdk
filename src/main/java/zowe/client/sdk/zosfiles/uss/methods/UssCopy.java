@@ -35,6 +35,7 @@ import java.util.Map;
  * @version 2.0
  */
 public class UssCopy {
+
     private static final Logger LOG = LoggerFactory.getLogger(UssCopy.class);
     private final ZosConnection connection;
     private ZoweRequest request;
@@ -62,31 +63,6 @@ public class UssCopy {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
-    }
-
-    /**
-     * Build request body to handle the incoming request
-     *
-     * @param params CopyParams object
-     * @return json string value
-     * @author James Kostrewski
-     * @author Frank Giordano
-     */
-    private static String buildBody(CopyParams params) {
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("request", "copy");
-        params.getFrom().ifPresent(str -> jsonMap.put("from", str));
-        if (!params.isOverwrite()) {
-            jsonMap.put("overwrite", "false");
-        }
-        if (params.isRecursive()) {
-            jsonMap.put("recursive", "true");
-        }
-
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
-
-        return jsonRequestBody.toString();
     }
 
     /**
@@ -129,4 +105,29 @@ public class UssCopy {
         return RestUtils.getResponse(request);
     }
 
+    /**
+     * Build request body to handle the incoming request
+     *
+     * @param params CopyParams object
+     * @return json string value
+     * @author James Kostrewski
+     * @author Frank Giordano
+     */
+    private static String buildBody(CopyParams params) {
+        final Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("request", "copy");
+        params.getFrom().ifPresent(str -> jsonMap.put("from", str));
+        if (!params.isOverwrite()) {
+            jsonMap.put("overwrite", "false");
+        }
+        if (params.isRecursive()) {
+            jsonMap.put("recursive", "true");
+        }
+
+        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
+        LOG.debug(String.valueOf(jsonRequestBody));
+
+        return jsonRequestBody.toString();
+    }
+    
 }
