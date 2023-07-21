@@ -59,11 +59,15 @@ public class UssMount {
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
+     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public UssMount(ZosConnection connection, ZoweRequest request) {
+    public UssMount(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
+        if (!(request instanceof JsonPutRequest)) {
+            throw new Exception("PUT_JSON request type required");
+        }
         this.request = request;
     }
 
@@ -124,7 +128,7 @@ public class UssMount {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" + fileSystemName;
         LOG.debug(url);
 
-        if (request == null || !(request instanceof JsonPutRequest)) {
+        if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
 

@@ -52,11 +52,15 @@ public class DsnWrite {
      *
      * @param connection connection information, see ZOSConnection object
      * @param request    any compatible ZoweRequest Interface object
+     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public DsnWrite(ZosConnection connection, ZoweRequest request) {
+    public DsnWrite(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
+        if (!(request instanceof TextPutRequest)) {
+            throw new Exception("PUT_TEXT request type required");
+        }
         this.request = request;
     }
 
@@ -98,7 +102,7 @@ public class DsnWrite {
 
         LOG.debug(url);
 
-        if (request == null || !(request instanceof TextPutRequest)) {
+        if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
         }
         request.setUrl(url);

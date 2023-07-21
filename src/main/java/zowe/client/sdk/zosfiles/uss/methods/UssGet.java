@@ -56,12 +56,16 @@ public class UssGet {
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
+     * @throws Exception processing error
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public UssGet(ZosConnection connection, ZoweRequest request) {
+    public UssGet(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
+        if (!(request instanceof TextGetRequest)) {
+            throw new Exception("GET_TEXT request type required");
+        }
         this.request = request;
     }
 
@@ -140,7 +144,7 @@ public class UssGet {
             }
         } else {
             headers.put("X-IBM-Data-Type", "text");
-            if (request == null || !(request instanceof TextGetRequest)) {
+            if (request == null) {
                 request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
             }
         }

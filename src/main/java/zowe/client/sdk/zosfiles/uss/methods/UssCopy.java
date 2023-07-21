@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.JsonPostRequest;
+import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
@@ -57,11 +57,15 @@ public class UssCopy {
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
+     * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssCopy(ZosConnection connection, ZoweRequest request) {
+    public UssCopy(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
+        if (!(request instanceof JsonPutRequest)) {
+            throw new Exception("PUT_JSON request type required");
+        }
         this.request = request;
     }
 
@@ -97,7 +101,7 @@ public class UssCopy {
         final String body = buildBody(params);
         LOG.debug(body);
 
-        if (request == null || !(request instanceof JsonPostRequest)) {
+        if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);

@@ -57,12 +57,16 @@ public class UssCreate {
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
+     * @throws Exception processing error
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public UssCreate(ZosConnection connection, ZoweRequest request) {
+    public UssCreate(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
+        if (!(request instanceof JsonPostRequest)) {
+            throw new Exception("POST_JSON request type required");
+        }
         this.request = request;
     }
 
@@ -86,7 +90,7 @@ public class UssCreate {
 
         final String body = buildBody(params);
 
-        if (request == null || !(request instanceof JsonPostRequest)) {
+        if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
         }
         request.setUrl(url);

@@ -57,11 +57,15 @@ public class DsnCreate {
      *
      * @param connection connection information, see ZOSConnection object
      * @param request    any compatible ZoweRequest Interface object
+     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public DsnCreate(ZosConnection connection, ZoweRequest request) {
+    public DsnCreate(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
+        if (!(request instanceof JsonPostRequest)) {
+            throw new Exception("POST_JSON request type required");
+        }
         this.request = request;
     }
 
@@ -117,7 +121,7 @@ public class DsnCreate {
 
         final String body = buildBody(params);
 
-        if (request == null || !(request instanceof JsonPostRequest)) {
+        if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
         }
         request.setUrl(url);

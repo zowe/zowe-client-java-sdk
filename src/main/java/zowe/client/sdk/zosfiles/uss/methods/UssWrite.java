@@ -54,11 +54,15 @@ public class UssWrite {
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
+     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public UssWrite(ZosConnection connection, ZoweRequest request) {
+    public UssWrite(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
+        if (!(request instanceof StreamPutRequest)) {
+            throw new Exception("PUT_STREAM request type required");
+        }
         this.request = request;
     }
 
@@ -116,7 +120,7 @@ public class UssWrite {
             if (params.getBinaryContent().isEmpty()) {
                 LOG.debug("binaryContent is empty");
             }
-            if (request == null || !(request instanceof StreamPutRequest)) {
+            if (request == null) {
                 request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_STREAM);
             }
             request.setBody(params.getBinaryContent().orElse(new byte[0]));

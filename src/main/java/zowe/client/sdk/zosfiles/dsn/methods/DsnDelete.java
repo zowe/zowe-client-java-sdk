@@ -52,11 +52,15 @@ public class DsnDelete {
      *
      * @param connection connection information, see ZOSConnection object
      * @param request    any compatible ZoweRequest Interface object
+     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public DsnDelete(ZosConnection connection, ZoweRequest request) {
+    public DsnDelete(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
+        if (!(request instanceof JsonDeleteRequest)) {
+            throw new Exception("DELETE_JSON request type required");
+        }
         this.request = request;
     }
 
@@ -94,7 +98,7 @@ public class DsnDelete {
 
         LOG.debug(url);
 
-        if (request == null || !(request instanceof JsonDeleteRequest)) {
+        if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
         request.setUrl(url);
