@@ -65,12 +65,15 @@ public class UssList {
      *
      * @param connection connection information, see ZOSConnection object
      * @param request    any compatible ZoweRequest Interface object
-     * @author James Kostrewski
      * @author Frank Giordano
      */
     public UssList(ZosConnection connection, ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
+        if (!(request instanceof JsonGetRequest)) {
+            throw new Exception("GET_JSON request type required");
+        }
         this.request = request;
     }
 
@@ -170,7 +173,7 @@ public class UssList {
      * @author Frank Giordano
      */
     private Response getResponse(String url, int maxLength) throws Exception {
-        if (request == null || !(request instanceof JsonGetRequest)) {
+        if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
 
