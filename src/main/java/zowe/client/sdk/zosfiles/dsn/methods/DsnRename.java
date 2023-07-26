@@ -58,7 +58,7 @@ public class DsnRename {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public DsnRename(ZosConnection connection, ZoweRequest request) {
+    public DsnRename(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
