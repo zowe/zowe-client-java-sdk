@@ -62,6 +62,7 @@ public class UssCopy {
      */
     public UssCopy(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
             throw new Exception("PUT_JSON request type required");
