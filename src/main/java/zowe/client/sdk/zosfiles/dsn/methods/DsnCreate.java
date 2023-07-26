@@ -62,6 +62,7 @@ public class DsnCreate {
      */
     public DsnCreate(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPostRequest)) {
             throw new Exception("POST_JSON request type required");
