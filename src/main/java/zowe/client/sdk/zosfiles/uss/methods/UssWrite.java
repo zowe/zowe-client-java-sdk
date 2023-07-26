@@ -57,7 +57,7 @@ public class UssWrite {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public UssWrite(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssWrite(ZosConnection connection, ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
