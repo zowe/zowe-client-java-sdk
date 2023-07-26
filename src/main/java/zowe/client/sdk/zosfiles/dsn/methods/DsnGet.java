@@ -68,6 +68,7 @@ public class DsnGet {
      */
     public DsnGet(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof StreamGetRequest)) {
             throw new Exception("GET_STREAM request type required");
