@@ -62,6 +62,7 @@ public class UssGet {
      */
     public UssGet(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof TextGetRequest)) {
             throw new Exception("GET_TEXT request type required");
