@@ -103,9 +103,9 @@ public class DsnGet {
 
         String dataSetSearchStr = str.toString();
         dataSetSearchStr = dataSetSearchStr.substring(0, str.length() - 1);
-        final DsnList zosDsnList = new DsnList(connection);
+        final DsnList dsnList = new DsnList(connection);
         final ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
-        final List<Dataset> dsLst = zosDsnList.listDsn(dataSetSearchStr, params);
+        final List<Dataset> dsLst = dsnList.listDsn(dataSetSearchStr, params);
 
         final Optional<Dataset> dataSet = dsLst.stream().filter(d -> d.getDsname().orElse("n/a").contains(dataSetName)).findFirst();
         return dataSet.orElse(emptyDataSet);
