@@ -60,8 +60,11 @@ public class DsnRename {
      */
     public DsnRename(ZosConnection connection, ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        this.request = request;
+        if (!(request instanceof JsonPutRequest)) {
+            throw new Exception("PUT_JSON request type required");
+        }
     }
 
     /**
