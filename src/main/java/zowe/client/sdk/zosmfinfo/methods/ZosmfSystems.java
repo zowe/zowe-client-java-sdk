@@ -59,6 +59,7 @@ public class ZosmfSystems {
      */
     public ZosmfSystems(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {
             throw new Exception("GET_JSON request type required");
