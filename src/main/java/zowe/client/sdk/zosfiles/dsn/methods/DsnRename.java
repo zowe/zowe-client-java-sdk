@@ -98,6 +98,21 @@ public class DsnRename {
     }
 
     /**
+     * Set the global url value
+     *
+     * @param args new or current dataset name and/or new member name
+     * @author Frank Giordano
+     */
+    private void setUrl(String... args) {
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
+                EncodeUtils.encodeURIComponent(args[0]);
+        if (args.length > 1) {
+            url += "(" + EncodeUtils.encodeURIComponent(args[1]) + ")";
+        }
+    }
+
+    /**
      * Execute the zowe http request
      *
      * @param body json string value
@@ -113,21 +128,6 @@ public class DsnRename {
         request.setBody(body);
 
         return RestUtils.getResponse(request);
-    }
-
-    /**
-     * Set the global url value
-     *
-     * @param args new or current dataset name and/or new member name
-     * @author Frank Giordano
-     */
-    private void setUrl(String... args) {
-        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
-                EncodeUtils.encodeURIComponent(args[0]);
-        if (args.length > 1) {
-            url += "(" + EncodeUtils.encodeURIComponent(args[1]) + ")";
-        }
     }
 
     /**
