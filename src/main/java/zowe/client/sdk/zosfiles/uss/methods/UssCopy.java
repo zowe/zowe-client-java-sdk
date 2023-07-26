@@ -123,7 +123,6 @@ public class UssCopy {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "copy");
         jsonMap.put("from", params.getFrom().orElseThrow(() -> new Exception("from not specified")));
-        params.getFrom().ifPresent(str -> jsonMap.put("from", str));
         if (!params.isOverwrite()) {
             jsonMap.put("overwrite", "false");
         }
