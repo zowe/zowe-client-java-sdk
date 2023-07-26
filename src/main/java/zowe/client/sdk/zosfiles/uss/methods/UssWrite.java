@@ -59,11 +59,7 @@ public class UssWrite {
      */
     public UssWrite(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
-        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if (!(request instanceof StreamPutRequest)) {
-            throw new Exception("PUT_STREAM request type required");
-        }
         this.request = request;
     }
 
@@ -121,7 +117,7 @@ public class UssWrite {
             if (params.getBinaryContent().isEmpty()) {
                 LOG.debug("binaryContent is empty");
             }
-            if (request == null) {
+            if (request == null || !(request instanceof StreamPutRequest)) {
                 request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_STREAM);
             }
             request.setBody(params.getBinaryContent().orElse(new byte[0]));
