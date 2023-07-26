@@ -67,7 +67,7 @@ public class UssList {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public UssList(ZosConnection connection, ZoweRequest request) {
+    public UssList(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
