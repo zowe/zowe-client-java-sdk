@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.ChangeModeParams;
+import zowe.client.sdk.zosfiles.uss.input.ChgModeParams;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,24 +32,24 @@ import java.util.Map;
  * @author James Kostrewski
  * @version 2.0
  */
-public class UssChMod {
+public class UssChgMode {
 
     private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
-     * UssChMod Constructor
+     * UssChgMode Constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssChMod(ZosConnection connection) {
+    public UssChgMode(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
     /**
-     * Alternative UssChMod constructor with ZoweRequest object. This is mainly used for internal code
+     * Alternative UssChgMode constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZosConnection object
@@ -57,7 +57,7 @@ public class UssChMod {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssChMod(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssChgMode(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
@@ -75,7 +75,7 @@ public class UssChMod {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response changeMode(String targetPath, ChangeModeParams params) throws Exception {
+    public Response changeMode(String targetPath, ChgModeParams params) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

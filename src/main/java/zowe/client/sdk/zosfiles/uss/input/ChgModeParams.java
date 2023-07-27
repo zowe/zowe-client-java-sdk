@@ -19,7 +19,7 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 2.0
  */
-public class ChangeModeParams {
+public class ChgModeParams {
 
     /**
      * The mode value, which is specified as the POSIX symbolic form or octal value (as a JSON string).
@@ -32,7 +32,7 @@ public class ChangeModeParams {
      */
     private final boolean recursive;
 
-    public ChangeModeParams(ChangeModeParams.Builder builder) {
+    public ChgModeParams(ChgModeParams.Builder builder) {
         this.mode = Optional.of(builder.mode);
         this.recursive = builder.recursive;
     }
@@ -58,18 +58,18 @@ public class ChangeModeParams {
         private String mode;
         private boolean recursive = false;
 
-        public ChangeModeParams build() {
-            return new ChangeModeParams(this);
+        public ChgModeParams build() {
+            return new ChgModeParams(this);
         }
 
-        public ChangeModeParams.Builder mode(String mode) {
+        public ChgModeParams.Builder mode(String mode) {
             ValidateUtils.checkNullParameter(mode == null, "mode is null");
             ValidateUtils.checkIllegalParameter(mode.isEmpty(), "mode not specified");
             this.mode = mode;
             return this;
         }
 
-        public ChangeModeParams.Builder recursive(boolean recursive) {
+        public ChgModeParams.Builder recursive(boolean recursive) {
             this.recursive = recursive;
             return this;
         }

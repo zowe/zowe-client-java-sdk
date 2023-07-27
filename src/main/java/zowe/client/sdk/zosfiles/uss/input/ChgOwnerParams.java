@@ -20,7 +20,7 @@ import java.util.Optional;
  * @version 2.0
  */
 
-public class ChOwnParams {
+public class ChgOwnerParams {
 
     /**
      * The user ID or UID
@@ -33,13 +33,12 @@ public class ChOwnParams {
     private final Optional<String> group;
 
     /**
-     * The default is false.
-     * When 'true', changes all the files and subdirectories in that directory to belong to the specified owner
-     * (and group, if :group is specified). (chown -R)
+     * The default is false. When 'true', changes all the files and subdirectories in that directory to
+     * belong to the specified owner (and group, if :group is specified). (chown -R)
      */
     private boolean recursive;
 
-    public ChOwnParams(ChOwnParams.Builder builder) {
+    public ChgOwnerParams(ChgOwnerParams.Builder builder) {
         this.owner = builder.owner;
         this.group = Optional.ofNullable(builder.group);
         this.recursive = builder.recursive;
@@ -67,27 +66,28 @@ public class ChOwnParams {
     }
 
     public static class Builder {
+
         private String owner;
         private String group;
         private boolean recursive = false;
 
-        public ChOwnParams build() {
-            return new ChOwnParams(this);
+        public ChgOwnerParams build() {
+            return new ChgOwnerParams(this);
         }
 
-        public ChOwnParams.Builder owner(String owner) {
+        public ChgOwnerParams.Builder owner(String owner) {
             ValidateUtils.checkNullParameter(owner == null, "owner is null");
             ValidateUtils.checkIllegalParameter(owner.isEmpty(), "owner is empty");
             this.owner = owner;
             return this;
         }
 
-        public ChOwnParams.Builder group(String group) {
+        public ChgOwnerParams.Builder group(String group) {
             this.group = group;
             return this;
         }
 
-        public ChOwnParams.Builder recursive(boolean recursive) {
+        public ChgOwnerParams.Builder recursive(boolean recursive) {
             this.recursive = recursive;
             return this;
         }

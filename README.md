@@ -41,8 +41,8 @@ zowe.client.sdk.zosfiles.dsn.methods
   
 zowe.client.sdk.zosfiles.uss.methods  
     
-    UssChMod
-    UssChOwn
+    UssChgMode
+    UssChgOwner
     UssChTag
     UssCopy
     UssCreate

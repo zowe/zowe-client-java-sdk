@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.ChOwnParams;
+import zowe.client.sdk.zosfiles.uss.input.ChgOwnerParams;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,31 +30,31 @@ import java.util.Map;
  * @author James Kostrewski
  * @version 2.0
  */
-public class UssChOwn {
+public class UssChgOwner {
 
     private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
-     * UssChOwn constructor
+     * UssChgOwner constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssChOwn(ZosConnection connection) {
+    public UssChgOwner(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
     /**
-     * Alternative UssChOwn constructor with ZoweRequest object. This is mainly used for internal code
+     * Alternative UssChgOwner constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @throws Exception processing error
      */
-    public UssChOwn(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssChgOwner(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
@@ -71,8 +71,8 @@ public class UssChOwn {
      * @return Response object
      * @throws Exception processing error
      */
-    public Response chmod(String path, String owner) throws Exception {
-        return chmod(path, new ChOwnParams.Builder().owner(owner).build());
+    public Response changeOwner(String path, String owner) throws Exception {
+        return changeOwner(path, new ChgOwnerParams.Builder().owner(owner).build());
     }
 
     /**
@@ -83,7 +83,7 @@ public class UssChOwn {
      * @return Response object
      * @throws Exception processing error
      */
-    public Response chmod(String path, ChOwnParams params) throws Exception {
+    public Response changeOwner(String path, ChgOwnerParams params) throws Exception {
         ValidateUtils.checkNullParameter(path == null, "path is null");
         ValidateUtils.checkIllegalParameter(path.isEmpty(), "path not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
