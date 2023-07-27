@@ -73,7 +73,7 @@ public class UssChangeOwner {
      * @author James Kostrewski
      */
     public Response change(String targetPath, String owner) throws Exception {
-        return change(path, new ChangeOwnerParams.Builder().owner(owner).build());
+        return change(targetPath, new ChangeOwnerParams.Builder().owner(owner).build());
     }
 
     /**
