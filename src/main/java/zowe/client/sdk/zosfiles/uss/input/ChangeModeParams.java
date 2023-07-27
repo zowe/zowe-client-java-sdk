@@ -20,7 +20,7 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 2.0
  */
-public class ChgModeParams {
+public class ChangeModeParams {
 
     /**
      * The mode value, which is specified as the POSIX symbolic form or octal value (as a JSON string).
