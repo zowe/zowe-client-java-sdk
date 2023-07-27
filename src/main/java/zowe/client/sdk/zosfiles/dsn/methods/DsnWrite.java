@@ -31,7 +31,6 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
  */
 public class DsnWrite {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DsnWrite.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -99,8 +98,6 @@ public class DsnWrite {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(dataSetName);
-
-        LOG.debug(url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);

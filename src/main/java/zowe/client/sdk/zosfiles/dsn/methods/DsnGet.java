@@ -42,7 +42,6 @@ import java.util.Optional;
  */
 public class DsnGet {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DsnGet.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -133,7 +132,6 @@ public class DsnGet {
             url += "-(" + params.getVolume().get() + ")/";
         }
         url += EncodeUtils.encodeURIComponent(dataSetName);
-        LOG.debug(url);
 
         String key, value;
         final Map<String, String> headers = new HashMap<>();

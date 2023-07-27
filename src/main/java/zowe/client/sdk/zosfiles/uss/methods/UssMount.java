@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
@@ -38,7 +36,6 @@ import java.util.Map;
  */
 public class UssMount {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UssMount.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -127,7 +124,6 @@ public class UssMount {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" + fileSystemName;
-        LOG.debug(url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
@@ -149,10 +145,9 @@ public class UssMount {
         });
         final StringBuilder jsonFinalStr = new StringBuilder(jsonStr.substring(0, jsonStr.length() - 1));
         jsonFinalStr.append("}");
-        LOG.debug(jsonFinalStr.toString());
 
-        request.setBody(jsonFinalStr.toString());
         request.setUrl(url);
+        request.setBody(jsonFinalStr.toString());
 
         return RestUtils.getResponse(request);
     }

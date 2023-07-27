@@ -54,7 +54,9 @@ public class ChModParams {
         private String mode;
         private boolean recursive = false;
 
-        public ChModParams build() {return new ChModParams(this);}
+        public ChModParams build() {
+            return new ChModParams(this);
+        }
 
         public ChModParams.Builder mode(String mode) {
             this.mode = mode;

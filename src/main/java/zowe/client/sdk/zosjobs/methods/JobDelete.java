@@ -95,7 +95,6 @@ public class JobDelete {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
                 JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
-        LOG.debug(url);
 
         final Map<String, String> headers = new HashMap<>();
 

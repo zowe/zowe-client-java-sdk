@@ -101,8 +101,6 @@ public class JobGet {
                 JobsConstants.RESOURCE_SPOOL_FILES + JobsConstants.RESOURCE_JCL_CONTENT +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
 
-        LOG.debug(url);
-
         if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
         }
@@ -253,8 +251,6 @@ public class JobGet {
             url += JobsConstants.QUERY_OWNER + connection.getUser();
         }
 
-        LOG.debug(url);
-
         if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
@@ -264,7 +260,7 @@ public class JobGet {
         try {
             response = RestUtils.getResponse(request);
         } catch (Exception e) {
-            LOG.debug("GetJobs::getJobsCommon - {}", e.getMessage());
+            LOG.debug("JobGet::getJobsCommon - {}", e.getMessage());
             if (e.getMessage().contains("no response phrase returned")) {
                 return jobs;
             }
@@ -311,8 +307,6 @@ public class JobGet {
                 EncodeUtils.encodeURIComponent(jobName) + "/" + jobId + JobsConstants.RESOURCE_SPOOL_FILES + "/" +
                 spoolId + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
-        LOG.debug(url);
-
         if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
         }
@@ -339,8 +333,6 @@ public class JobGet {
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(jobFile.getJobName().get()) + "/" + jobFile.getJobId().get() +
                 JobsConstants.RESOURCE_SPOOL_FILES + "/" + jobFile.getId().get() + JobsConstants.RESOURCE_SPOOL_CONTENT;
-
-        LOG.debug(url);
 
         if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
@@ -385,8 +377,6 @@ public class JobGet {
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() + "/files";
 
-        LOG.debug(url);
-
         if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
@@ -396,7 +386,7 @@ public class JobGet {
         try {
             response = RestUtils.getResponse(request);
         } catch (Exception e) {
-            LOG.debug("GetJobs::getSpoolFilesCommon - {}", e.getMessage());
+            LOG.debug("JobGet::getSpoolFilesCommon - {}", e.getMessage());
             if (e.getMessage().contains("no response phrase returned")) {
                 return files;
             }
@@ -478,8 +468,6 @@ public class JobGet {
         if (params.isStepData()) {
             url += JobsConstants.QUERY_ID + JobsConstants.STEP_DATA;
         }
-
-        LOG.debug(url);
 
         if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);

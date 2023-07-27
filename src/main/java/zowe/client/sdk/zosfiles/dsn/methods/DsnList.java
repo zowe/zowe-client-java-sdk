@@ -81,7 +81,6 @@ public class DsnList {
      * @author Frank Giordano
      */
     private Response getResponse(ListParams params, Map<String, String> headers, String url) throws Exception {
-        LOG.debug(url);
         setHeaders(params, headers);
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);

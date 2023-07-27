@@ -12,8 +12,6 @@ package zowe.client.sdk.zosfiles.uss.methods;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonGetRequest;
 import zowe.client.sdk.rest.Response;
@@ -44,7 +42,6 @@ import java.util.Map;
  */
 public class UssList {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UssList.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -112,7 +109,6 @@ public class UssList {
         if (params.isSymlinks()) {
             url.append("&symlinks=report");
         }
-        LOG.debug(url.toString());
 
         final Response response = getResponse(url.toString(), params.getMaxLength().orElse(0));
 
@@ -147,7 +143,6 @@ public class UssList {
 
         params.getPath().ifPresent(path -> url.append("?path=").append(EncodeUtils.encodeURIComponent(path)));
         params.getFsname().ifPresent(fsname -> url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
-        LOG.debug(url.toString());
 
         final Response response = getResponse(url.toString(), params.getMaxLength().orElse(0));
 

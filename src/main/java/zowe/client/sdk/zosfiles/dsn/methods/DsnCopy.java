@@ -36,7 +36,6 @@ import java.util.Map;
  */
 public class DsnCopy {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DsnCopy.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -105,14 +104,11 @@ public class DsnCopy {
 
         jsonMap.put("from-dataset", fromDataSetObj);
         jsonMap.put("replace", params.isReplace());
-
         if (params.getFromVolser().isPresent()) {
             jsonMap.put("volser", params.getFromVolser().get());
         }
 
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
-        return jsonRequestBody.toString();
+        return new JSONObject(jsonMap).toString();
     }
 
     /**
@@ -168,8 +164,6 @@ public class DsnCopy {
         final String toDataSet = params.getToDataSet().get();
 
         url += EncodeUtils.encodeURIComponent(toDataSet);
-
-        LOG.debug(url);
 
         final String body = buildBody(params);
         if (request == null) {

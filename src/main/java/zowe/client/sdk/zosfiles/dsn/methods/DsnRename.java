@@ -35,7 +35,6 @@ import java.util.Map;
  */
 public class DsnRename {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DsnRename.class);
     private final ZosConnection connection;
     private ZoweRequest request;
     private String url;
@@ -150,9 +149,7 @@ public class DsnRename {
         final JSONObject fromDataSetObj = new JSONObject(fromDataSetReq);
         jsonMap.put("from-dataset", fromDataSetObj);
 
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
-        return jsonRequestBody.toString();
+        return new JSONObject(jsonMap).toString();
     }
 
 }

@@ -108,10 +108,8 @@ public class UssWrite {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + fileNamePath;
-        LOG.debug(url);
 
         final Map<String, String> headers = new HashMap<>();
-
         if (params.isBinary()) {
             headers.put("X-IBM-Data-Type", "binary;");
             if (params.getBinaryContent().isEmpty()) {

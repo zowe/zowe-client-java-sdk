@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonDeleteRequest;
 import zowe.client.sdk.rest.Response;
@@ -33,7 +31,6 @@ import java.util.Map;
  */
 public class UssDelete {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UssDelete.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -89,13 +86,12 @@ public class UssDelete {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    private Response delete(String name, boolean recursive) throws Exception {
+    public Response delete(String name, boolean recursive) throws Exception {
         ValidateUtils.checkNullParameter(name == null, "name is null");
         ValidateUtils.checkIllegalParameter(name.isEmpty(), "name not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + name;
-        LOG.debug(url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
@@ -123,7 +119,6 @@ public class UssDelete {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" + fileSystemName;
-        LOG.debug(url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);

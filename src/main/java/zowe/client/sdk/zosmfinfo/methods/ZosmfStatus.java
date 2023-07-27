@@ -33,7 +33,6 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
  */
 public class ZosmfStatus {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ZosmfStatus.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -76,8 +75,6 @@ public class ZosmfStatus {
     public ZosmfInfoResponse get() throws Exception {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosmfConstants.RESOURCE + ZosmfConstants.INFO;
-
-        LOG.debug(url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);

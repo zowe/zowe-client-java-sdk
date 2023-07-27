@@ -124,7 +124,6 @@ public class JobSubmit {
         headers.put(key, value);
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
-        LOG.debug(url);
 
         final String body = params.getJcl().get();
         if (request == null || !(request instanceof TextPutRequest)) {
@@ -165,20 +164,16 @@ public class JobSubmit {
         ValidateUtils.checkIllegalParameter(params.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
-        LOG.debug(url);
 
         final String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(params.getJobDataSet().get()) + "'";
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("file", fullyQualifiedDataset);
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
 
         if (request == null || !(request instanceof JsonPutRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
-
         request.setUrl(url);
-        request.setBody(jsonRequestBody.toString());
+        request.setBody(new JSONObject(jsonMap).toString());
 
         if (params.getJclSymbols().isPresent()) {
             request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));

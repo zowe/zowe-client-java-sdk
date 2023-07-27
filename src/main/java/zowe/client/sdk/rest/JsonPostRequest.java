@@ -13,6 +13,8 @@ import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -24,6 +26,8 @@ import zowe.client.sdk.utility.ValidateUtils;
  * @version 2.0
  */
 public class JsonPostRequest extends ZoweRequest {
+
+    private static final Logger LOG = LoggerFactory.getLogger(JsonPostRequest.class);
 
     /**
      * JSON String representation
@@ -65,6 +69,7 @@ public class JsonPostRequest extends ZoweRequest {
     @Override
     public void setBody(Object body) {
         this.body = (String) body;
+        LOG.debug(this.body);
     }
 
     /**

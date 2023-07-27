@@ -163,7 +163,7 @@ public class SendTso {
                 tsoResponseMessage.getVersion().orElseThrow((() -> new Exception("response version missing")))
                 + "\",\"DATA\":\"" +
                 tsoResponseMessage.getData().orElseThrow((() -> new Exception("response data missing"))) + "\"}}";
-        LOG.debug("SendTo::getTsoResponseSendMessage - message {}", message);
+        LOG.debug("SendTso::getTsoResponseSendMessage - message {}", message);
         return message;
     }
 

@@ -31,7 +31,6 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
  */
 public class DsnDelete {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DsnDelete.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -96,8 +95,6 @@ public class DsnDelete {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(dataSetName);
-
-        LOG.debug(url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
