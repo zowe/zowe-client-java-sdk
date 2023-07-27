@@ -10,6 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.input;
 
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosfiles.uss.types.LinkType;
 
 import java.util.Optional;
 
@@ -38,10 +39,16 @@ public class ChangeOwnerParams {
      */
     private boolean recursive;
 
+    /**
+     * The default is 'follow'. 'change' does not follow the link, but instead changes the link itself (chown -h).
+     */
+    private final Optional<LinkType> linkType;
+
     public ChangeOwnerParams(ChangeOwnerParams.Builder builder) {
         this.owner = builder.owner;
         this.group = Optional.ofNullable(builder.group);
         this.recursive = builder.recursive;
+        this.linkType = Optional.ofNullable(builder.linkType);
     }
 
     public String getOwner() {
@@ -56,12 +63,17 @@ public class ChangeOwnerParams {
         return recursive;
     }
 
+    public Optional<LinkType> getLinkType() {
+        return linkType;
+    }
+
     @Override
     public String toString() {
         return "ChangeOwnerParams{" +
-                "owner=" + this.getOwner() +
-                ", group=" + this.getGroup().get() +
-                ", recursive=" + this.isRecursive() +
+                "owner='" + owner + '\'' +
+                ", group=" + group +
+                ", recursive=" + recursive +
+                ", linkType=" + linkType +
                 '}';
     }
 
@@ -70,6 +82,7 @@ public class ChangeOwnerParams {
         private String owner;
         private String group;
         private boolean recursive = false;
+        private LinkType linkType;
 
         public ChangeOwnerParams build() {
             return new ChangeOwnerParams(this);
@@ -91,6 +104,12 @@ public class ChangeOwnerParams {
             this.recursive = recursive;
             return this;
         }
+
+        public ChangeOwnerParams.Builder linktype(LinkType type) {
+            this.linkType = type;
+            return this;
+        }
+
     }
 
 }
