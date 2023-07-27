@@ -74,7 +74,7 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyNullDestinationPathFailure() {
+    public void tstUssCopyNullFromPathFailure() {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
@@ -86,7 +86,7 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyEmptyDestinationPathFailure() {
+    public void tstUssCopyEmptyFromPathFailure() {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
@@ -98,7 +98,7 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyNullSourcePathFailure() {
+    public void tstUssCopyNullTargetPathFailure() {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
@@ -110,7 +110,7 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyEmptySourcePathFailure() {
+    public void tstUssCopyEmptyTargetPathFailure() {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
@@ -122,7 +122,7 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyCommonNullParamsFailure() {
+    public void tstUssCopyNullParamsFailure() {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
@@ -134,7 +134,7 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyCommonNullFromFailure() {
+    public void tstUssCopyNullFromInParamsFailure() {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
@@ -146,7 +146,7 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyCommonEmptyFromFailure() {
+    public void tstUssCopyEmptyFromInParamsFailure() {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {

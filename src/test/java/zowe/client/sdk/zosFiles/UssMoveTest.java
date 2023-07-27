@@ -60,7 +60,7 @@ public class UssMoveTest {
     }
 
     @Test
-    public void tstUssMoveNullTargetPathFailure() {
+    public void tstUssMoveNullFromPathFailure() {
         UssMove ussMove = new UssMove(connection);
         String errMsg = "";
         try {
@@ -72,7 +72,7 @@ public class UssMoveTest {
     }
 
     @Test
-    public void tstUssMoveEmptyDestinationPathFailure() {
+    public void tstUssMoveEmptyFromPathFailure() {
         UssMove ussMove = new UssMove(connection);
         String errMsg = "";
         try {
@@ -84,7 +84,7 @@ public class UssMoveTest {
     }
 
     @Test
-    public void tstUssMoveNullSourcePathFailure() {
+    public void tstUssMoveNullTargetPathFailure() {
         UssMove ussMove = new UssMove(connection);
         String errMsg = "";
         try {
@@ -96,7 +96,7 @@ public class UssMoveTest {
     }
 
     @Test
-    public void tstUssMoveEmptySourcePathFailure() {
+    public void tstUssMoveEmptyTargetPathFailure() {
         UssMove ussMove = new UssMove(connection);
         String errMsg = "";
         try {
