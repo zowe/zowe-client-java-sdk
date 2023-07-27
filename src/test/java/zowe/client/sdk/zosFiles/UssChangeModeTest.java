@@ -16,8 +16,8 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.zosfiles.uss.input.ChModParams;
-import zowe.client.sdk.zosfiles.uss.methods.UssChMod;
+import zowe.client.sdk.zosfiles.uss.input.ChangeModeParams;
+import zowe.client.sdk.zosfiles.uss.methods.UssChangeMode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author James Kostrewski
  * @version 2.0
  */
-public class UssChModTest {
+public class UssChangeModeTest {
 
     private JsonPutRequest jsonPutRequest;
     private ZosConnection connection;
@@ -42,9 +42,9 @@ public class UssChModTest {
     public void tstUssChModSuccess() throws Exception {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        UssChMod ussChMod = new UssChMod(connection, jsonPutRequest);
-        Response response = ussChMod.chMod("/xxx/xx/xx",
-                new ChModParams(new ChModParams.Builder().mode("rwxrwxrwx")));
+        UssChangeMode ussChMod = new UssChangeMode(connection, jsonPutRequest);
+        Response response = ussChMod.change("/xxx/xx/xx",
+                new ChangeModeParams(new ChangeModeParams.Builder().mode("rwxrwxrwx")));
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get().toString());
@@ -54,44 +54,44 @@ public class UssChModTest {
     public void tstUssChModRecursiveSuccess() throws Exception {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        UssChMod ussChMod = new UssChMod(connection, jsonPutRequest);
-        Response response = ussChMod.chMod("/xxx/xx/xx",
-                new ChModParams(new ChModParams.Builder().mode("rwxrwxrwx").recursive(true)));
+        UssChangeMode ussChMod = new UssChangeMode(connection, jsonPutRequest);
+        Response response = ussChMod.change("/xxx/xx/xx",
+                new ChangeModeParams.Builder().mode("rwxrwxrwx").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get().toString());
     }
 
     @Test
-    public void tstUssChModNullPathFailure() throws Exception {
-        UssChMod ussChMod = new UssChMod(connection);
+    public void tstUssChModNullPathFailure() {
+        UssChangeMode ussChMod = new UssChangeMode(connection);
         String errMsg = "";
-        try{
-            ussChMod.chMod(null, new ChModParams(new ChModParams.Builder().mode("rwxrwxrwx")));
+        try {
+            ussChMod.change(null, new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("path is null", errMsg);
+        assertEquals("targetPath is null", errMsg);
     }
 
     @Test
-    public void tstUssChModEmptyPathFailure() throws Exception {
-        UssChMod ussChMod = new UssChMod(connection);
+    public void tstUssChModEmptyPathFailure() {
+        UssChangeMode ussChMod = new UssChangeMode(connection);
         String errMsg = "";
-        try{
-            ussChMod.chMod("", new ChModParams(new ChModParams.Builder().mode("rwxrwxrwx")));
+        try {
+            ussChMod.change("", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("path not specified", errMsg);
+        assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChModNullModeFailure() throws Exception {
-        UssChMod ussChMod = new UssChMod(connection);
+    public void tstUssChModNullModeFailure() {
+        UssChangeMode ussChMod = new UssChangeMode(connection);
         String errMsg = "";
-        try{
-            ussChMod.chMod("/xxx/xx/xx", new ChModParams(new ChModParams.Builder().mode(null)));
+        try {
+            ussChMod.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode(null).build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -99,11 +99,11 @@ public class UssChModTest {
     }
 
     @Test
-    public void tstUssChModEmptyModeFailure() throws Exception {
-        UssChMod ussChMod = new UssChMod(connection);
+    public void tstUssChModEmptyModeFailure() {
+        UssChangeMode ussChMod = new UssChangeMode(connection);
         String errMsg = "";
-        try{
-            ussChMod.chMod("/xxx/xx/xx", new ChModParams(new ChModParams.Builder().mode("")));
+        try {
+            ussChMod.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
