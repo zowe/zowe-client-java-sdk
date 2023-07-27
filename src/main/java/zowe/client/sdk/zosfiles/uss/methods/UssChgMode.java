@@ -73,7 +73,8 @@ public class UssChgMode {
      * @param params     change mode response parameters, see ChgModeParams object
      * @return Response object
      * @throws Exception processing error
-     * @author James Kostrewski
+     * @author James Kostrewsk
+     * @author Frank Giordano
      */
     public Response changeMode(String targetPath, ChgModeParams params) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
