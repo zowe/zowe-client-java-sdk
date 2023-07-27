@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
 /**
  * Parameter container class for Unix System Services (USS) chmod operation
  *
@@ -57,6 +59,8 @@ public class ChModParams {
         public ChModParams build() {return new ChModParams(this);}
 
         public ChModParams.Builder mode(String mode) {
+            ValidateUtils.checkNullParameter(mode == null, "mode is null");
+            ValidateUtils.checkIllegalParameter(mode.isEmpty(), "mode not specified");
             this.mode = mode;
             return this;
         }
