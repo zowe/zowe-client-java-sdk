@@ -40,7 +40,7 @@ public class ChangeModeParams {
      */
     private final Optional<LinkType> linkType;
 
-    public ChgModeParams(ChgModeParams.Builder builder) {
+    public ChangeModeParams(ChangeModeParams.Builder builder) {
         this.mode = Optional.of(builder.mode);
         this.recursive = builder.recursive;
         this.linkType = Optional.ofNullable(builder.linkType);
@@ -60,7 +60,7 @@ public class ChangeModeParams {
 
     @Override
     public String toString() {
-        return "ChgModeParams{" +
+        return "ChangeModeParams{" +
                 "mode=" + mode +
                 ", recursive=" + recursive +
                 ", linkType=" + linkType +
