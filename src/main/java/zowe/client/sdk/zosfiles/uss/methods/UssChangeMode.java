@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.ChgModeParams;
+import zowe.client.sdk.zosfiles.uss.input.ChangeModeParams;
 
 import java.util.HashMap;
 import java.util.Map;
