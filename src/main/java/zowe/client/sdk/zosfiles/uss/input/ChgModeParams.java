@@ -10,6 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.input;
 
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosfiles.uss.types.LinkType;
 
 import java.util.Optional;
 
@@ -32,9 +33,17 @@ public class ChgModeParams {
      */
     private final boolean recursive;
 
+    /**
+     * The default is 'follow' encountered links. This applies a mode change to the file or directory pointed
+     * to by any encountered links. 'suppress' is a mode change for the file or directory pointed to by any
+     * encountered symbolic links.
+     */
+    private final Optional<LinkType> linkType;
+
     public ChgModeParams(ChgModeParams.Builder builder) {
         this.mode = Optional.of(builder.mode);
         this.recursive = builder.recursive;
+        this.linkType = Optional.ofNullable(builder.linkType);
     }
 
     public Optional<String> getMode() {
@@ -45,11 +54,16 @@ public class ChgModeParams {
         return recursive;
     }
 
+    public Optional<LinkType> getLinkType() {
+        return linkType;
+    }
+
     @Override
     public String toString() {
-        return "ChangeModeParams{" +
+        return "ChgModeParams{" +
                 "mode=" + mode +
                 ", recursive=" + recursive +
+                ", linkType=" + linkType +
                 '}';
     }
 
@@ -57,6 +71,7 @@ public class ChgModeParams {
 
         private String mode;
         private boolean recursive = false;
+        private LinkType linkType;
 
         public ChgModeParams build() {
             return new ChgModeParams(this);
@@ -71,6 +86,11 @@ public class ChgModeParams {
 
         public ChgModeParams.Builder recursive(boolean recursive) {
             this.recursive = recursive;
+            return this;
+        }
+
+        public ChgModeParams.Builder linktype(LinkType type) {
+            this.linkType = type;
             return this;
         }
 

@@ -67,10 +67,10 @@ public class UssChgMode {
     }
 
     /**
-     * Change the mode of a file or directory request driven by ChangeModeParams object settings
+     * Change the mode of a file or directory request driven by ChgModeParams object settings
      *
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
-     * @param params     change mode response parameters, see ChangeModeParams object
+     * @param params     change mode response parameters, see ChgModeParams object
      * @return Response object
      * @throws Exception processing error
      * @author James Kostrewski
@@ -89,6 +89,7 @@ public class UssChgMode {
         if (params.isRecursive()) {
             jsonMap.put("recursive", "true");
         }
+        params.getLinkType().ifPresent(type -> jsonMap.put("links", type.getValue()));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
