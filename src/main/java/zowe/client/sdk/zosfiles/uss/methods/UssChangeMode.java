@@ -68,7 +68,7 @@ public class UssChangeMode {
     }
 
     /**
-     * Change the mode of a file or directory request driven by ChangeModeParams object settings
+     * Change the mode of a UNIX file or directory request driven by ChangeModeParams object settings
      *
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
      * @param params     change mode response parameters, see ChangeModeParams object
