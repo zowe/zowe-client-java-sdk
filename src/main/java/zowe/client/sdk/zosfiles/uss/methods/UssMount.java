@@ -125,29 +125,17 @@ public class UssMount {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" + fileSystemName;
 
-        if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
-        }
-
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("action", action);
         params.getMountPoint().ifPresent(str -> jsonMap.put("mount-point", str));
         params.getFsType().ifPresent(str -> jsonMap.put("fs-type", str));
         params.getMode().ifPresent(str -> jsonMap.put("mode", str.getValue()));
 
-        final StringBuilder jsonStr = new StringBuilder();
-        jsonStr.append("{");
-        jsonMap.forEach((k, v) -> {
-            jsonStr.append("\"").append(k).append("\"");
-            jsonStr.append(":");
-            jsonStr.append("\"").append(v).append("\"");
-            jsonStr.append(",");
-        });
-        final StringBuilder jsonFinalStr = new StringBuilder(jsonStr.substring(0, jsonStr.length() - 1));
-        jsonFinalStr.append("}");
-
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
+        }
         request.setUrl(url);
-        request.setBody(jsonFinalStr.toString());
+        request.setBody(new JSONObject(jsonMap).toString());
 
         return RestUtils.getResponse(request);
     }
