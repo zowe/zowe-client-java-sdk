@@ -16,7 +16,6 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.zosfiles.uss.input.MoveParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssMove;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,71 +53,58 @@ public class UssMoveTest {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssMove ussMove = new UssMove(connection, jsonPutRequest);
-        Response response = ussMove.moveCommon("/xxx/xx/xx",
-                new MoveParams(new MoveParams.Builder().from("/xxx/xx/xx").overwrite(true)));
+        Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx", true);
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get().toString());
     }
 
     @Test
-    public void tstUssMoveNullDestinationPathFailure() throws Exception {
+    public void tstUssMoveNullTargetPathFailure() {
         UssMove ussMove = new UssMove(connection);
         String errMsg = "";
-        try{
+        try {
             ussMove.move(null, "/xxx/xx/xx");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("destinationPath is null", errMsg);
+        assertEquals("fromPath is null", errMsg);
     }
 
     @Test
-    public void tstUssMoveEmptyDestinationPathFailure() throws Exception {
+    public void tstUssMoveEmptyDestinationPathFailure() {
         UssMove ussMove = new UssMove(connection);
         String errMsg = "";
-        try{
+        try {
             ussMove.move("", "/xxx/xx/xx");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("destinationPath not specified", errMsg);
+        assertEquals("fromPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssMoveNullSourcePathFailure() throws Exception {
+    public void tstUssMoveNullSourcePathFailure() {
         UssMove ussMove = new UssMove(connection);
         String errMsg = "";
-        try{
+        try {
             ussMove.move("/xxx/xx/xx", null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("from is null", errMsg);
+        assertEquals("targetPath is null", errMsg);
     }
 
     @Test
-    public void tstUssMoveEmptySourcePathFailure() throws Exception {
+    public void tstUssMoveEmptySourcePathFailure() {
         UssMove ussMove = new UssMove(connection);
         String errMsg = "";
-        try{
+        try {
             ussMove.move("/xxx/xx/xx", "");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("from not specified", errMsg);
-    }
-
-    @Test
-    public void tstUssMoveCommonNullMoveParamsFailure() throws Exception {
-        UssMove ussMove = new UssMove(connection);
-        String errMsg = "";
-        try{
-            ussMove.moveCommon("/xxx/xx/xx",  null);
-        } catch (Exception e) {
-            errMsg = e.getMessage();
-        }
-        assertEquals("params is null", errMsg);
+        assertEquals("targetPath not specified", errMsg);
     }
 
 }
