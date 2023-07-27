@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonDeleteRequest;
 import zowe.client.sdk.rest.Response;
@@ -33,7 +31,6 @@ import java.util.Map;
  */
 public class UssDelete {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UssDelete.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -60,6 +57,7 @@ public class UssDelete {
      */
     public UssDelete(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonDeleteRequest)) {
             throw new Exception("DELETE_JSON request type required");
@@ -70,49 +68,34 @@ public class UssDelete {
     /**
      * Perform UNIX delete file or directory name request
      *
-     * @param name name of file or directory with path
+     * @param name the name of the file or directory you are going to delete
      * @return Response object
      * @throws Exception processing error
      * @author James Kostrewski
      */
     public Response delete(String name) throws Exception {
-        return deleteCommon(name, false);
+        return delete(name, false);
     }
 
     /**
      * Perform UNIX delete file or directory name request with recursive flag
      *
-     * @param name      name of file or directory with path
+     * @param name      the name of the file or directory you are going to delete
      * @param recursive flag indicates if contents of directory should also be deleted
      * @return Response object
      * @throws Exception processing error
      * @author James Kostrewski
      */
     public Response delete(String name, boolean recursive) throws Exception {
-        return deleteCommon(name, recursive);
-    }
-
-    /**
-     * Perform UNIX delete request
-     *
-     * @param name      name of file or directory with path
-     * @param recursive flag indicates if contents of directory should also be deleted
-     * @return Response object
-     * @throws Exception processing error
-     * @author James Kostrewski
-     */
-    private Response deleteCommon(String name, boolean recursive) throws Exception {
         ValidateUtils.checkNullParameter(name == null, "name is null");
         ValidateUtils.checkIllegalParameter(name.isEmpty(), "name not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + name;
-        LOG.debug(url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
-
         request.setUrl(url);
 
         if (recursive) {
@@ -136,12 +119,10 @@ public class UssDelete {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" + fileSystemName;
-        LOG.debug(url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
-
         request.setUrl(url);
 
         return RestUtils.getResponse(request);

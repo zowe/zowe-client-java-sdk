@@ -10,8 +10,6 @@
 package zowe.client.sdk.zosfiles.dsn.methods;
 
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
@@ -36,7 +34,6 @@ import java.util.Map;
  */
 public class DsnCopy {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DsnCopy.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -62,6 +59,7 @@ public class DsnCopy {
      */
     public DsnCopy(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
             throw new Exception("PUT_JSON request type required");
@@ -104,14 +102,11 @@ public class DsnCopy {
 
         jsonMap.put("from-dataset", fromDataSetObj);
         jsonMap.put("replace", params.isReplace());
-
         if (params.getFromVolser().isPresent()) {
             jsonMap.put("volser", params.getFromVolser().get());
         }
 
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
-        return jsonRequestBody.toString();
+        return new JSONObject(jsonMap).toString();
     }
 
     /**
@@ -167,8 +162,6 @@ public class DsnCopy {
         final String toDataSet = params.getToDataSet().get();
 
         url += EncodeUtils.encodeURIComponent(toDataSet);
-
-        LOG.debug(url);
 
         final String body = buildBody(params);
         if (request == null) {

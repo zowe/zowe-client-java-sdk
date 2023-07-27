@@ -11,9 +11,8 @@
 package zowe.client.sdk.zosfiles.dsn.methods;
 
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
@@ -34,7 +33,6 @@ import java.util.Map;
  */
 public class DsnRename {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DsnRename.class);
     private final ZosConnection connection;
     private ZoweRequest request;
     private String url;
@@ -58,10 +56,13 @@ public class DsnRename {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public DsnRename(ZosConnection connection, ZoweRequest request) {
+    public DsnRename(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        this.request = request;
+        if (!(request instanceof JsonPutRequest)) {
+            throw new Exception("PUT_JSON request type required");
+        }
     }
 
     /**
@@ -94,6 +95,21 @@ public class DsnRename {
     }
 
     /**
+     * Set the global url value
+     *
+     * @param args new or current dataset name and/or new member name
+     * @author Frank Giordano
+     */
+    private void setUrl(String... args) {
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
+                EncodeUtils.encodeURIComponent(args[0]);
+        if (args.length > 1) {
+            url += "(" + EncodeUtils.encodeURIComponent(args[1]) + ")";
+        }
+    }
+
+    /**
      * Execute the zowe http request
      *
      * @param body json string value
@@ -109,21 +125,6 @@ public class DsnRename {
         request.setBody(body);
 
         return RestUtils.getResponse(request);
-    }
-
-    /**
-     * Set the global url value
-     *
-     * @param args new or current dataset name and/or new member name
-     * @author Frank Giordano
-     */
-    private void setUrl(String... args) {
-        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
-                EncodeUtils.encodeURIComponent(args[0]);
-        if (args.length > 1) {
-            url += "(" + EncodeUtils.encodeURIComponent(args[1]) + ")";
-        }
     }
 
     /**
@@ -146,9 +147,7 @@ public class DsnRename {
         final JSONObject fromDataSetObj = new JSONObject(fromDataSetReq);
         jsonMap.put("from-dataset", fromDataSetObj);
 
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
-        return jsonRequestBody.toString();
+        return new JSONObject(jsonMap).toString();
     }
 
 }

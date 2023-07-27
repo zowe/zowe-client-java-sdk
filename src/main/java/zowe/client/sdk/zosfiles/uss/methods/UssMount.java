@@ -9,8 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
@@ -38,7 +37,6 @@ import java.util.Map;
  */
 public class UssMount {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UssMount.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -64,6 +62,7 @@ public class UssMount {
      */
     public UssMount(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
             throw new Exception("PUT_JSON request type required");
@@ -126,11 +125,6 @@ public class UssMount {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" + fileSystemName;
-        LOG.debug(url);
-
-        if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
-        }
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("action", action);
@@ -138,20 +132,11 @@ public class UssMount {
         params.getFsType().ifPresent(str -> jsonMap.put("fs-type", str));
         params.getMode().ifPresent(str -> jsonMap.put("mode", str.getValue()));
 
-        final StringBuilder jsonStr = new StringBuilder();
-        jsonStr.append("{");
-        jsonMap.forEach((k, v) -> {
-            jsonStr.append("\"").append(k).append("\"");
-            jsonStr.append(":");
-            jsonStr.append("\"").append(v).append("\"");
-            jsonStr.append(",");
-        });
-        final StringBuilder jsonFinalStr = new StringBuilder(jsonStr.substring(0, jsonStr.length() - 1));
-        jsonFinalStr.append("}");
-        LOG.debug(jsonFinalStr.toString());
-
-        request.setBody(jsonFinalStr.toString());
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
+        }
         request.setUrl(url);
+        request.setBody(new JSONObject(jsonMap).toString());
 
         return RestUtils.getResponse(request);
     }

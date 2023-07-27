@@ -65,6 +65,7 @@ public class SendTso {
      */
     public SendTso(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
             throw new Exception("PUT_JSON request type required");
@@ -162,7 +163,7 @@ public class SendTso {
                 tsoResponseMessage.getVersion().orElseThrow((() -> new Exception("response version missing")))
                 + "\",\"DATA\":\"" +
                 tsoResponseMessage.getData().orElseThrow((() -> new Exception("response data missing"))) + "\"}}";
-        LOG.debug("SendTo::getTsoResponseSendMessage - message {}", message);
+        LOG.debug("SendTso::getTsoResponseSendMessage - message {}", message);
         return message;
     }
 

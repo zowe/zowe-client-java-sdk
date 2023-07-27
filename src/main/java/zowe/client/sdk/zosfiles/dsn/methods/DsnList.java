@@ -63,6 +63,7 @@ public class DsnList {
      */
     public DsnList(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {
             throw new Exception("GET_JSON request type required");
@@ -80,7 +81,6 @@ public class DsnList {
      * @author Frank Giordano
      */
     private Response getResponse(ListParams params, Map<String, String> headers, String url) throws Exception {
-        LOG.debug(url);
         setHeaders(params, headers);
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);

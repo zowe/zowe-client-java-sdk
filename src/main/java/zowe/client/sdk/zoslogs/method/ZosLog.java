@@ -13,8 +13,6 @@ package zowe.client.sdk.zoslogs.method;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonGetRequest;
 import zowe.client.sdk.rest.Response;
@@ -43,7 +41,6 @@ import java.util.regex.Pattern;
  */
 public class ZosLog {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ZosLog.class);
     private static final String RESOURCE = "/zosmf/restconsoles/v1/log?";
     private final ZosConnection connection;
     private ZoweRequest request;
@@ -105,8 +102,6 @@ public class ZosLog {
         params.getTimeRange().ifPresent(timeRange -> url.append("&timeRange=").append(timeRange));
         params.getDirection().ifPresent(direction -> url.append("&direction=").append(direction.getValue()));
         params.getHardCopy().ifPresent(hardCopy -> url.append("&hardcopy=").append(hardCopy.getValue()));
-
-        LOG.debug(url.toString());
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);

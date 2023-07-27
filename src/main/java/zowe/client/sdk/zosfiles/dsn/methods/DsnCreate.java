@@ -10,8 +10,6 @@
 package zowe.client.sdk.zosfiles.dsn.methods;
 
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPostRequest;
 import zowe.client.sdk.rest.Response;
@@ -36,7 +34,6 @@ import java.util.Map;
  */
 public class DsnCreate {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DsnCreate.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -62,6 +59,7 @@ public class DsnCreate {
      */
     public DsnCreate(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPostRequest)) {
             throw new Exception("POST_JSON request type required");
@@ -85,8 +83,6 @@ public class DsnCreate {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(dataSetName);
-
-        LOG.debug(url);
 
         final String body = buildBody(params);
 
@@ -124,10 +120,7 @@ public class DsnCreate {
         params.getMgntclass().ifPresent(v -> jsonMap.put("mgntclass", v));
         params.getDataclass().ifPresent(v -> jsonMap.put("dataclass", v));
         params.getDsntype().ifPresent(v -> jsonMap.put("dsntype", v));
-
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
-        return jsonRequestBody.toString();
+        return new JSONObject(jsonMap).toString();
     }
 
 }

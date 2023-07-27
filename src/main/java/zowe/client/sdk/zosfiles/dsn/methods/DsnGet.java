@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.StreamGetRequest;
 import zowe.client.sdk.rest.ZosmfHeaders;
@@ -42,7 +40,6 @@ import java.util.Optional;
  */
 public class DsnGet {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DsnGet.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -68,6 +65,7 @@ public class DsnGet {
      */
     public DsnGet(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof StreamGetRequest)) {
             throw new Exception("GET_STREAM request type required");
@@ -102,9 +100,9 @@ public class DsnGet {
 
         String dataSetSearchStr = str.toString();
         dataSetSearchStr = dataSetSearchStr.substring(0, str.length() - 1);
-        final DsnList zosDsnList = new DsnList(connection);
+        final DsnList dsnList = new DsnList(connection);
         final ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
-        final List<Dataset> dsLst = zosDsnList.listDsn(dataSetSearchStr, params);
+        final List<Dataset> dsLst = dsnList.listDsn(dataSetSearchStr, params);
 
         final Optional<Dataset> dataSet = dsLst.stream().filter(d -> d.getDsname().orElse("n/a").contains(dataSetName)).findFirst();
         return dataSet.orElse(emptyDataSet);
@@ -132,7 +130,6 @@ public class DsnGet {
             url += "-(" + params.getVolume().get() + ")/";
         }
         url += EncodeUtils.encodeURIComponent(dataSetName);
-        LOG.debug(url);
 
         String key, value;
         final Map<String, String> headers = new HashMap<>();

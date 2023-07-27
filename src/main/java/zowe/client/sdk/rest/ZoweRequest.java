@@ -13,6 +13,8 @@ import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -28,6 +30,7 @@ import java.util.Map;
  */
 public abstract class ZoweRequest {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ZoweRequest.class);
     public static final String X_CSRF_ZOSMF_HEADER_KEY = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
     public static final String X_CSRF_ZOSMF_HEADER_VALUE = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
     protected final ZosConnection connection;
@@ -120,6 +123,7 @@ public abstract class ZoweRequest {
             throw new IllegalArgumentException("url is invalid");
         }
         this.url = url;
+        LOG.debug(this.url);
     }
 
 }

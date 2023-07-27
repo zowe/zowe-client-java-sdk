@@ -10,8 +10,6 @@
 package zowe.client.sdk.zosfiles.uss.methods;
 
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
@@ -36,7 +34,6 @@ import java.util.Map;
  */
 public class UssCopy {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UssCopy.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -62,6 +59,7 @@ public class UssCopy {
      */
     public UssCopy(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
             throw new Exception("PUT_JSON request type required");
@@ -72,65 +70,52 @@ public class UssCopy {
     /**
      * Copy a Unix file or directory to another location
      *
-     * @param destinationPath the destination path of the file or directory to copy
-     * @param sourcePath      the source path of the file or directory to copy
+     * @param fromPath   the source path of the file or directory to copy
+     * @param targetPath target path of where the file or directory will be copied too
      * @return Response object
      * @throws Exception processing error
-     */
-    public Response copy(String destinationPath, String sourcePath) throws Exception {
-        return copyCommon(destinationPath, new CopyParams.Builder().from(sourcePath).build());
-    }
-
-    /**
-     * Copy a Unix file or directory to another location
-     *
-     * @param destinationPath the destination path of the file or directory to copy
-     * @param params          CopyParams parameters that specifies copy action request
-     * @return Response object
-     * @throws Exception processing error
-     */
-    public Response copyCommon(String destinationPath, CopyParams params) throws Exception {
-        ValidateUtils.checkNullParameter(destinationPath == null, "destinationPath is null");
-        ValidateUtils.checkIllegalParameter(destinationPath.isEmpty(), "destinationPath not specified");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
-
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destinationPath;
-        LOG.debug(url);
-
-        final String body = buildBody(params);
-        LOG.debug(body);
-
-        if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
-        }
-        request.setUrl(url);
-        request.setBody(body);
-
-        return RestUtils.getResponse(request);
-    }
-
-    /**
-     * Build request body to handle the incoming request
-     *
-     * @param params CopyParams object
-     * @return json string value
-     * @throws Exception from value in params not specified error
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    private static String buildBody(CopyParams params) throws Exception {
+    public Response copy(String fromPath, String targetPath) throws Exception {
+        return copy(targetPath, new CopyParams.Builder().from(fromPath).build());
+    }
+
+    /**
+     * Copy a Unix file or directory to another location request driven by CopyParams object settings
+     *
+     * @param targetPath target path of where the file or directory will be copied too
+     * @param params     CopyParams parameters that specifies copy action request
+     * @return Response object
+     * @throws Exception processing error
+     * @author James Kostrewski
+     * @author Frank Giordano
+     */
+    public Response copy(String targetPath, CopyParams params) throws Exception {
+        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
+        ValidateUtils.checkIllegalParameter(targetPath.isEmpty(), "targetPath not specified");
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + targetPath;
+
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "copy");
         jsonMap.put("from", params.getFrom().orElseThrow(() -> new Exception("from not specified")));
-        params.getFrom().ifPresent(str -> jsonMap.put("from", str));
         if (!params.isOverwrite()) {
             jsonMap.put("overwrite", "false");
         }
         if (params.isRecursive()) {
             jsonMap.put("recursive", "true");
         }
-        return new JSONObject(jsonMap).toString();
+
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
+        }
+        request.setUrl(url);
+        request.setBody(new JSONObject(jsonMap).toString());
+
+        return RestUtils.getResponse(request);
     }
 
 }

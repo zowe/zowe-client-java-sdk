@@ -11,8 +11,6 @@ package zowe.client.sdk.zosmfinfo.methods;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonGetRequest;
 import zowe.client.sdk.rest.Response;
@@ -33,7 +31,6 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
  */
 public class ZosmfStatus {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ZosmfStatus.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -59,6 +56,7 @@ public class ZosmfStatus {
      */
     public ZosmfStatus(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {
             throw new Exception("GET_JSON request type required");
@@ -75,8 +73,6 @@ public class ZosmfStatus {
     public ZosmfInfoResponse get() throws Exception {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosmfConstants.RESOURCE + ZosmfConstants.INFO;
-
-        LOG.debug(url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);

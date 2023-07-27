@@ -10,8 +10,6 @@
 package zowe.client.sdk.zosfiles.uss.methods;
 
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
@@ -21,7 +19,6 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.MoveParams;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +33,6 @@ import java.util.Map;
  */
 public class UssMove {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UssMove.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -62,71 +58,74 @@ public class UssMove {
      */
     public UssMove(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
-            throw new Exception("Invalid request type for UssMove");
+            throw new Exception("PUT_JSON request type required");
         }
         this.request = request;
     }
 
     /**
-     * Move a USS file or directory
+     * Move a UNIX file or directory with overwrite set as true
      *
-     * @param destinationPath the destination path of the file or directory to move
-     * @param sourcePath      the source path of the file or directory to move
+     * @param fromPath   the source path of the file or directory to move
+     * @param targetPath the target path of where the file or directory will be moved too
      * @return Response object
      * @throws Exception processing error
+     * @author James Kostrewski
+     * @author Frank Giordano
      */
-    public Response move(String destinationPath, String sourcePath) throws Exception {
-        return move(destinationPath, new MoveParams.Builder().from(sourcePath).build());
+    public Response move(String fromPath, String targetPath) throws Exception {
+        return moveCommon(fromPath, targetPath, true);
     }
 
     /**
-     * Move a USS file or directory
+     * Move a UNIX file or directory with overwrite value specified
      *
-     * @param params MoveParams object containing source and target information
+     * @param fromPath   the source path of the file or directory to move
+     * @param targetPath the target path of where the file or directory will be moved too
+     * @param overwrite  true if you want to override existing data at target path or false to not override
      * @return Response object
      * @throws Exception processing error
+     * @author Frank Giordano
      */
-    public Response move(String destinationPath, MoveParams params) throws Exception {
-        ValidateUtils.checkNullParameter(destinationPath == null, "destinationPath is null");
-        ValidateUtils.checkIllegalParameter(destinationPath.isEmpty(), "destinationPath not specified");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+    public Response move(String fromPath, String targetPath, boolean overwrite) throws Exception {
+        return moveCommon(fromPath, targetPath, overwrite);
+    }
+
+    /**
+     * Move a UNIX file or directory
+     *
+     * @param fromPath   the source path of the file or directory to move
+     * @param targetPath the target path of where the file or directory will be moved too
+     * @param overwrite  true if you want to override existing data at target path or false to not override
+     * @return Response object
+     * @throws Exception processing error
+     * @author James Kostrewski
+     * @author Frank Giordano
+     */
+    private Response moveCommon(String fromPath, String targetPath, boolean overwrite) throws Exception {
+        ValidateUtils.checkNullParameter(fromPath == null, "fromPath is null");
+        ValidateUtils.checkIllegalParameter(fromPath.isEmpty(), "fromPath not specified");
+        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
+        ValidateUtils.checkIllegalParameter(targetPath.isEmpty(), "targetPath not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + destinationPath;
-        LOG.debug(url);
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + targetPath;
 
-        final String body = buildBody(params);
-        LOG.debug(body);
+        final Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("request", "move");
+        jsonMap.put("from", fromPath);
+        jsonMap.put("overwrite", overwrite);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(body);
+        request.setBody(new JSONObject(jsonMap).toString());
 
         return RestUtils.getResponse(request);
-    }
-
-
-    /**
-     * Build request body to handle the incoming request
-     *
-     * @param params CopyParams object
-     * @return json string value
-     * @throws Exception from value in params not specified error
-     * @author James Kostrewski
-     */
-    private static String buildBody(MoveParams params) throws Exception {
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("request", "move");
-        jsonMap.put("from", params.getFrom().orElseThrow(() -> new Exception("from not specified")));
-        params.getFrom().ifPresent(from -> jsonMap.put("from", from));
-        if (!params.isOverwrite()) {
-            jsonMap.put("overwrite", false);
-        }
-        return new JSONObject(jsonMap).toString();
     }
 
 }

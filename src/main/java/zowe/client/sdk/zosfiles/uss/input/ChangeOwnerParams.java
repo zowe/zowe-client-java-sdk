@@ -10,6 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.input;
 
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosfiles.uss.types.LinkType;
 
 import java.util.Optional;
 
@@ -19,13 +20,12 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 2.0
  */
-
-public class ChOwnParams {
+public class ChangeOwnerParams {
 
     /**
      * The user ID or UID
      */
-    private final String owner;
+    private final Optional<String> owner;
 
     /**
      * The group ID or GID
@@ -33,19 +33,24 @@ public class ChOwnParams {
     private final Optional<String> group;
 
     /**
-     * The default is false.
-     * When 'true', changes all the files and subdirectories in that directory to belong to the specified owner
-     * (and group, if :group is specified). (chown -R)
+     * The default is false. When 'true', changes all the files and subdirectories in that directory to
+     * belong to the specified owner (and group, if :group is specified). (chown -R)
      */
-    private boolean recursive;
+    private final boolean recursive;
 
-    public ChOwnParams(ChOwnParams.Builder builder) {
-        this.owner = builder.owner;
+    /**
+     * The default is 'follow'. 'change' does not follow the link, but instead changes the link itself (chown -h).
+     */
+    private final Optional<LinkType> linkType;
+
+    public ChangeOwnerParams(ChangeOwnerParams.Builder builder) {
+        this.owner = Optional.of(builder.owner);
         this.group = Optional.ofNullable(builder.group);
         this.recursive = builder.recursive;
+        this.linkType = Optional.ofNullable(builder.linkType);
     }
 
-    public String getOwner() {
+    public Optional<String> getOwner() {
         return owner;
     }
 
@@ -57,40 +62,53 @@ public class ChOwnParams {
         return recursive;
     }
 
+    public Optional<LinkType> getLinkType() {
+        return linkType;
+    }
+
     @Override
     public String toString() {
-        return "ChOwnParams{" +
-                "owner=" + this.getOwner() +
-                ", group=" + this.getGroup().get() +
-                ", recursive=" + this.isRecursive() +
+        return "ChangeOwnerParams{" +
+                "owner='" + owner + '\'' +
+                ", group=" + group +
+                ", recursive=" + recursive +
+                ", linkType=" + linkType +
                 '}';
     }
 
     public static class Builder {
+
         private String owner;
         private String group;
         private boolean recursive = false;
+        private LinkType linkType;
 
-        public ChOwnParams build() {
-            return new ChOwnParams(this);
+        public ChangeOwnerParams build() {
+            return new ChangeOwnerParams(this);
         }
 
-        public ChOwnParams.Builder owner(String owner) {
+        public ChangeOwnerParams.Builder owner(String owner) {
             ValidateUtils.checkNullParameter(owner == null, "owner is null");
             ValidateUtils.checkIllegalParameter(owner.isEmpty(), "owner is empty");
             this.owner = owner;
             return this;
         }
 
-        public ChOwnParams.Builder group(String group) {
+        public ChangeOwnerParams.Builder group(String group) {
             this.group = group;
             return this;
         }
 
-        public ChOwnParams.Builder recursive(boolean recursive) {
+        public ChangeOwnerParams.Builder recursive(boolean recursive) {
             this.recursive = recursive;
             return this;
         }
+
+        public ChangeOwnerParams.Builder linktype(LinkType type) {
+            this.linkType = type;
+            return this;
+        }
+
     }
 
 }

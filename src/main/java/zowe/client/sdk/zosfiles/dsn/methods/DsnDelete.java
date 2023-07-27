@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonDeleteRequest;
 import zowe.client.sdk.rest.Response;
@@ -31,7 +29,6 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
  */
 public class DsnDelete {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DsnDelete.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -57,6 +54,7 @@ public class DsnDelete {
      */
     public DsnDelete(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonDeleteRequest)) {
             throw new Exception("DELETE_JSON request type required");
@@ -95,8 +93,6 @@ public class DsnDelete {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(dataSetName);
-
-        LOG.debug(url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);

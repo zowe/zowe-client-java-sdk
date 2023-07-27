@@ -10,8 +10,6 @@
 package zowe.client.sdk.zosfiles.uss.methods;
 
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPostRequest;
 import zowe.client.sdk.rest.Response;
@@ -36,7 +34,6 @@ import java.util.Map;
  */
 public class UssCreate {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UssCreate.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -63,6 +60,7 @@ public class UssCreate {
      */
     public UssCreate(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPostRequest)) {
             throw new Exception("POST_JSON request type required");
@@ -73,11 +71,12 @@ public class UssCreate {
     /**
      * Perform UNIX create file or directory name request driven by CreateParams object settings
      *
-     * @param name   name of object to create
+     * @param name   the name of the file or directory you are going to create
      * @param params create response parameters, see CreateParams object
      * @return Response object
      * @throws Exception error processing request
      * @author James Kostrewski
+     * @author Frank Giordano
      */
     public Response create(String name, CreateParams params) throws Exception {
         ValidateUtils.checkNullParameter(name == null, "name is null");
@@ -86,34 +85,18 @@ public class UssCreate {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + name;
-        LOG.debug(url);
 
-        final String body = buildBody(params);
+        final Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("type", params.getType().getValue());
+        jsonMap.put("mode", params.getMode());
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
         }
         request.setUrl(url);
-        request.setBody(body);
+        request.setBody(new JSONObject(jsonMap).toString());
 
         return RestUtils.getResponse(request);
-    }
-
-    /**
-     * Create the http body request
-     *
-     * @param params CreateParams parameters
-     * @return body string value for http request
-     * @author James Kostrewski
-     */
-    private static String buildBody(CreateParams params) {
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("type", params.getType().getValue());
-        jsonMap.put("mode", params.getMode());
-
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
-        return jsonRequestBody.toString();
     }
 
 }

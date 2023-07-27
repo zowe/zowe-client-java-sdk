@@ -12,8 +12,6 @@ package zowe.client.sdk.zosfiles.uss.methods;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonGetRequest;
 import zowe.client.sdk.rest.Response;
@@ -44,7 +42,6 @@ import java.util.Map;
  */
 public class UssList {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UssList.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -65,12 +62,15 @@ public class UssList {
      *
      * @param connection connection information, see ZOSConnection object
      * @param request    any compatible ZoweRequest Interface object
-     * @author James Kostrewski
      * @author Frank Giordano
      */
-    public UssList(ZosConnection connection, ZoweRequest request) {
+    public UssList(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
+        if (!(request instanceof JsonGetRequest)) {
+            throw new Exception("GET_JSON request type required");
+        }
         this.request = request;
     }
 
@@ -109,7 +109,6 @@ public class UssList {
         if (params.isSymlinks()) {
             url.append("&symlinks=report");
         }
-        LOG.debug(url.toString());
 
         final Response response = getResponse(url.toString(), params.getMaxLength().orElse(0));
 
@@ -144,7 +143,6 @@ public class UssList {
 
         params.getPath().ifPresent(path -> url.append("?path=").append(EncodeUtils.encodeURIComponent(path)));
         params.getFsname().ifPresent(fsname -> url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
-        LOG.debug(url.toString());
 
         final Response response = getResponse(url.toString(), params.getMaxLength().orElse(0));
 
@@ -170,7 +168,7 @@ public class UssList {
      * @author Frank Giordano
      */
     private Response getResponse(String url, int maxLength) throws Exception {
-        if (request == null || !(request instanceof JsonGetRequest)) {
+        if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
 

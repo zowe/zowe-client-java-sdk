@@ -12,8 +12,6 @@ package zowe.client.sdk.zosconsole.method;
 import org.apache.commons.text.StringEscapeUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
@@ -40,7 +38,6 @@ import java.util.Map;
  */
 public class IssueConsole {
 
-    private static final Logger LOG = LoggerFactory.getLogger(IssueConsole.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -66,6 +63,7 @@ public class IssueConsole {
      */
     public IssueConsole(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
             throw new Exception("PUT_JSON request type required");
@@ -134,18 +132,14 @@ public class IssueConsole {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ConsoleConstants.RESOURCE + "/" + consoleName;
 
-        LOG.debug(url);
-
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd", commandParams.getCmd().get());
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(jsonRequestBody.toString());
+        request.setBody(new JSONObject(jsonMap).toString());
 
         final Response response = RestUtils.getResponse(request);
         return ConsoleUtils.parseJsonIssueCmdResponse(

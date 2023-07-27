@@ -10,8 +10,6 @@
 package zowe.client.sdk.zosfiles.uss.methods;
 
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
@@ -21,7 +19,7 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.ChModParams;
+import zowe.client.sdk.zosfiles.uss.input.ChangeModeParams;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,24 +32,24 @@ import java.util.Map;
  * @author James Kostrewski
  * @version 2.0
  */
-public class UssChMod {
-    private static final Logger LOG = LoggerFactory.getLogger(UssChMod.class);
+public class UssChangeMode {
+
     private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
-     * UssChMod Constructor
+     * UssChangeMode Constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssChMod(ZosConnection connection) {
+    public UssChangeMode(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
     /**
-     * Alternative UssChMod constructor with ZoweRequest object. This is mainly used for internal code
+     * Alternative UssChangeMode constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZosConnection object
@@ -59,50 +57,49 @@ public class UssChMod {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssChMod(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssChangeMode(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if(!(request instanceof JsonPutRequest)) {
+        if (!(request instanceof JsonPutRequest)) {
             throw new Exception("PUT_JSON request type required");
         }
         this.request = request;
     }
 
     /**
-     * Change the mode of a file or directory
+     * Change the mode of a UNIX file or directory request driven by ChangeModeParams object settings
      *
-     * @param
+     * @param targetPath identifies the UNIX file or directory to be the target of the operation
+     * @param params     change mode response parameters, see ChangeModeParams object
+     * @return Response object
+     * @throws Exception processing error
+     * @author James Kostrewsk
+     * @author Frank Giordano
      */
-    public Response chMod(String path, ChModParams params) throws Exception {
-        ValidateUtils.checkNullParameter(path == null, "path is null");
-        ValidateUtils.checkIllegalParameter(path.isEmpty(), "path not specified");
+    public Response change(String targetPath, ChangeModeParams params) throws Exception {
+        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
+        ValidateUtils.checkIllegalParameter(targetPath.isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + path;
-        LOG.debug(url);
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + targetPath;
 
-        final String body = buildBody(params);
-        LOG.debug(body);
+        final Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("request", "chmod");
+        if (params.isRecursive()) {
+            jsonMap.put("recursive", "true");
+        }
+        params.getLinkType().ifPresent(type -> jsonMap.put("links", type.getValue()));
+        jsonMap.put("mode", params.getMode().orElseThrow(() -> new Exception("mode not specified")));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(body);
+        request.setBody(new JSONObject(jsonMap).toString());
 
         return RestUtils.getResponse(request);
-    }
-
-    public static String buildBody(ChModParams params) throws Exception {
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("request", "chmod");
-        jsonMap.put("mode", params.getMode());
-        if (params.isRecursive()) {
-            jsonMap.put("recursive", "true");
-        }
-        return new JSONObject(jsonMap).toString();
     }
 
 }

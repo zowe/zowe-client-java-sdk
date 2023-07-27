@@ -63,6 +63,7 @@ public class JobCancel {
      */
     public JobCancel(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
             throw new Exception("PUT_JSON request type required");
@@ -123,7 +124,6 @@ public class JobCancel {
         // generate full url request
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
                 JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
-        LOG.debug(url);
 
         // generate json string body for the request
         final String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
@@ -143,14 +143,12 @@ public class JobCancel {
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("request", JobsConstants.REQUEST_CANCEL);
         jsonMap.put("version", version);
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(jsonRequestBody.toString());
+        request.setBody(new JSONObject(jsonMap).toString());
 
         // if synchronously response should contain job document that was cancelled and http return code
         // if asynchronously response should only contain http return code

@@ -59,6 +59,7 @@ public class JobDelete {
      */
     public JobDelete(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonDeleteRequest)) {
             throw new Exception("DELETE_JSON request type required");
@@ -94,7 +95,6 @@ public class JobDelete {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
                 JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
-        LOG.debug(url);
 
         final Map<String, String> headers = new HashMap<>();
 

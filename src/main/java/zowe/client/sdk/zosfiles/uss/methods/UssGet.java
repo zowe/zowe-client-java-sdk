@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
@@ -34,7 +32,6 @@ import java.util.Map;
  */
 public class UssGet {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UssGet.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -56,16 +53,12 @@ public class UssGet {
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
-     * @throws Exception processing error
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public UssGet(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssGet(ZosConnection connection, ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
-        if (!(request instanceof TextGetRequest)) {
-            throw new Exception("GET_TEXT request type required");
-        }
         this.request = request;
     }
 
@@ -133,7 +126,6 @@ public class UssGet {
                 url.append("?maxreturnsize=").append(size);
             }
         });
-        LOG.debug(url.toString());
 
         final Map<String, String> headers = new HashMap<>();
 
@@ -144,7 +136,7 @@ public class UssGet {
             }
         } else {
             headers.put("X-IBM-Data-Type", "text");
-            if (request == null) {
+            if (request == null || !(request instanceof TextGetRequest)) {
                 request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
             }
         }

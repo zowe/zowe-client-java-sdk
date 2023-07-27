@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Provides Unix System Services (USS) write to object functionality
+ * Provides Unix System Services (USS) write object functionality
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-write-data-zos-unix-file">z/OSMF REST API</a>
  *
@@ -54,15 +54,11 @@ public class UssWrite {
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public UssWrite(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssWrite(ZosConnection connection, ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
-        if (!(request instanceof StreamPutRequest)) {
-            throw new Exception("PUT_STREAM request type required");
-        }
         this.request = request;
     }
 
@@ -111,16 +107,14 @@ public class UssWrite {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + fileNamePath;
-        LOG.debug(url);
 
         final Map<String, String> headers = new HashMap<>();
-
         if (params.isBinary()) {
             headers.put("X-IBM-Data-Type", "binary;");
             if (params.getBinaryContent().isEmpty()) {
                 LOG.debug("binaryContent is empty");
             }
-            if (request == null) {
+            if (request == null || !(request instanceof StreamPutRequest)) {
                 request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_STREAM);
             }
             request.setBody(params.getBinaryContent().orElse(new byte[0]));
