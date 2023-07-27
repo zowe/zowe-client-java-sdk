@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.StreamGetRequest;
 import zowe.client.sdk.rest.ZosmfHeaders;

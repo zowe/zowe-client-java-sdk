@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.ChModParams;
+import zowe.client.sdk.zosfiles.uss.input.ChangeModeParams;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,21 +67,25 @@ public class UssChMod {
     }
 
     /**
-     * Change the mode of a file or directory
+     * Change the mode of a file or directory request driven by ChangeModeParams object settings
      *
-     * @param
+     * @param targetPath identifies the UNIX file or directory to be the target of the operation
+     * @param params     change mode response parameters, see ChangeModeParams object
+     * @return Response object
+     * @throws Exception processing error
+     * @author James Kostrewski
      */
-    public Response chMod(String path, ChModParams params) throws Exception {
-        ValidateUtils.checkNullParameter(path == null, "path is null");
-        ValidateUtils.checkIllegalParameter(path.isEmpty(), "path not specified");
+    public Response changeMode(String targetPath, ChangeModeParams params) throws Exception {
+        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
+        ValidateUtils.checkIllegalParameter(targetPath.isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + path;
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + targetPath;
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "chmod");
-        jsonMap.put("mode", params.getMode());
+        jsonMap.put("mode", params.getMode().orElseThrow(() -> new Exception("mode not specified")));
         if (params.isRecursive()) {
             jsonMap.put("recursive", "true");
         }
