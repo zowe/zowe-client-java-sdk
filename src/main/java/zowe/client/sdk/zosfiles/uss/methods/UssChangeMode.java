@@ -102,17 +102,4 @@ public class UssChangeMode {
         return RestUtils.getResponse(request);
     }
 
-    public static void main(String[] args) throws Exception {
-        final String hostName = "10.175.84.31";
-        final String zosmfPort = "1443";
-        final String userName = "FG892105";
-        final String password = "again1";
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
-
-        UssChangeMode chmod = new UssChangeMode(connection);
-        ChangeModeParams params = new ChangeModeParams.Builder().mode("rwxrwxrwx").build();
-        Response response = chmod.change("/u/fgiorda/test3", params);
-
-    }
-
 }
