@@ -73,23 +73,23 @@ public class ChangeModeParams {
         private boolean recursive = false;
         private LinkType linkType;
 
-        public ChgModeParams build() {
-            return new ChgModeParams(this);
+        public ChangeModeParams build() {
+            return new ChangeModeParams(this);
         }
 
-        public ChgModeParams.Builder mode(String mode) {
+        public ChangeModeParams.Builder mode(String mode) {
             ValidateUtils.checkNullParameter(mode == null, "mode is null");
             ValidateUtils.checkIllegalParameter(mode.isEmpty(), "mode not specified");
             this.mode = mode;
             return this;
         }
 
-        public ChgModeParams.Builder recursive(boolean recursive) {
+        public ChangeModeParams.Builder recursive(boolean recursive) {
             this.recursive = recursive;
             return this;
         }
 
-        public ChgModeParams.Builder linktype(LinkType type) {
+        public ChangeModeParams.Builder linktype(LinkType type) {
             this.linkType = type;
             return this;
         }
