@@ -20,7 +20,7 @@ import java.util.Optional;
  * @version 2.0
  */
 
-public class ChgOwnerParams {
+public class ChangeOwnerParams {
 
     /**
      * The user ID or UID
