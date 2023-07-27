@@ -36,7 +36,7 @@ public class ChangeOwnerParams {
      * The default is false. When 'true', changes all the files and subdirectories in that directory to
      * belong to the specified owner (and group, if :group is specified). (chown -R)
      */
-    private boolean recursive;
+    private final boolean recursive;
 
     /**
      * The default is 'follow'. 'change' does not follow the link, but instead changes the link itself (chown -h).
