@@ -34,7 +34,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListFileListParmsNullFailure() {
+    public void tstUssListFileListParamsNullFailure() {
         UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
@@ -46,7 +46,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListFileListParmsPathEmptyFailure() {
+    public void tstUssListFileListParamsPathEmptyFailure() {
         UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
@@ -58,7 +58,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListFileListParmsPathNullFailure() {
+    public void tstUssListFileListParamsPathNullFailure() {
         UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
@@ -70,7 +70,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListZfsListEmptyParmsFailure() {
+    public void tstUssListZfsListEmptyParamsFailure() {
         UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
@@ -82,7 +82,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListZfsListParmsFsnameEmptyFailure() {
+    public void tstUssListZfsListParamsFsnameEmptyFailure() {
         UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
@@ -94,7 +94,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListZfsListParmsFsnameNullFailure() {
+    public void tstUssListZfsListParamsFsnameNullFailure() {
         UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
@@ -106,7 +106,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListZfsListParmsPathAndFsnameFailure() {
+    public void tstUssListZfsListParamsPathAndFsnameFailure() {
         UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
@@ -118,7 +118,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListZfsListParmsPathEmptyFailure() {
+    public void tstUssListZfsListParamsPathEmptyFailure() {
         UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
@@ -130,7 +130,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListZfsListParmsPathNullFailure() {
+    public void tstUssListZfsListParamsPathNullFailure() {
         UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
