@@ -71,7 +71,7 @@ public class UssDelete {
     /**
      * Perform UNIX delete file or directory name request
      *
-     * @param name name of file or directory with path
+     * @param name the name of the file or directory you are going to delete
      * @return Response object
      * @throws Exception processing error
      * @author James Kostrewski
@@ -83,7 +83,7 @@ public class UssDelete {
     /**
      * Perform UNIX delete file or directory name request with recursive flag
      *
-     * @param name      name of file or directory with path
+     * @param name      the name of the file or directory you are going to delete
      * @param recursive flag indicates if contents of directory should also be deleted
      * @return Response object
      * @throws Exception processing error
@@ -96,7 +96,7 @@ public class UssDelete {
     /**
      * Perform UNIX delete request
      *
-     * @param name      name of file or directory with path
+     * @param name      the name of the file or directory you are going to delete
      * @param recursive flag indicates if contents of directory should also be deleted
      * @return Response object
      * @throws Exception processing error
