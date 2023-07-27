@@ -62,7 +62,7 @@ public class UssChMod {
     public UssChMod(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
-        if(!(request instanceof JsonPutRequest)) {
+        if (!(request instanceof JsonPutRequest)) {
             throw new Exception("PUT_JSON request type required");
         }
         this.request = request;
@@ -78,12 +78,17 @@ public class UssChMod {
         ValidateUtils.checkIllegalParameter(path.isEmpty(), "path not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + path;
         LOG.debug(url);
 
-        final String body = buildBody(params);
+        final Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("request", "chmod");
+        jsonMap.put("mode", params.getMode());
+        if (params.isRecursive()) {
+            jsonMap.put("recursive", "true");
+        }
+        final String body = new JSONObject(jsonMap).toString();
         LOG.debug(body);
 
         if (request == null) {
@@ -93,16 +98,6 @@ public class UssChMod {
         request.setBody(body);
 
         return RestUtils.getResponse(request);
-    }
-
-    public static String buildBody(ChModParams params) throws Exception {
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("request", "chmod");
-        jsonMap.put("mode", params.getMode());
-        if (params.isRecursive()) {
-            jsonMap.put("recursive", "true");
-        }
-        return new JSONObject(jsonMap).toString();
     }
 
 }

@@ -74,7 +74,7 @@ public class UssCreate {
     /**
      * Perform UNIX create file or directory name request driven by CreateParams object settings
      *
-     * @param name   name of object to create
+     * @param name   the name of the file or directory you are going to create
      * @param params create response parameters, see CreateParams object
      * @return Response object
      * @throws Exception error processing request
@@ -89,7 +89,11 @@ public class UssCreate {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + name;
         LOG.debug(url);
 
-        final String body = buildBody(params);
+        final Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("type", params.getType().getValue());
+        jsonMap.put("mode", params.getMode());
+        final String body = new JSONObject(jsonMap).toString();
+        LOG.debug(body);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
@@ -98,23 +102,6 @@ public class UssCreate {
         request.setBody(body);
 
         return RestUtils.getResponse(request);
-    }
-
-    /**
-     * Create the http body request
-     *
-     * @param params CreateParams parameters
-     * @return body string value for http request
-     * @author James Kostrewski
-     */
-    private static String buildBody(CreateParams params) {
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("type", params.getType().getValue());
-        jsonMap.put("mode", params.getMode());
-
-        final JSONObject jsonRequestBody = new JSONObject(jsonMap);
-        LOG.debug(String.valueOf(jsonRequestBody));
-        return jsonRequestBody.toString();
     }
 
 }

@@ -21,7 +21,6 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.ChModParams;
 import zowe.client.sdk.zosfiles.uss.input.ChOwnParams;
 
 import java.util.HashMap;
@@ -70,8 +69,8 @@ public class UssChOwn {
     /**
      * Performs the chown operation
      *
-     * @param path path to the file or directory to be changed
-     * @param owner   new owner of the file or directory
+     * @param path  path to the file or directory to be changed
+     * @param owner new owner of the file or directory
      * @return Response object
      * @throws Exception processing error
      */
@@ -82,7 +81,7 @@ public class UssChOwn {
     /**
      * Performs the chown operation
      *
-     * @param path path to the file or directory to be changed
+     * @param path   path to the file or directory to be changed
      * @param params parameter object
      * @return Response object
      * @throws Exception processing error
@@ -96,7 +95,12 @@ public class UssChOwn {
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + path;
         LOG.debug(url);
 
-        final String body = buildBody(params);
+        final Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("request", "chown");
+        jsonMap.put("owner", params.getOwner());
+        params.getGroup().ifPresent(group -> jsonMap.put("group", group));
+        jsonMap.put("recursive", params.isRecursive());
+        final String body = new JSONObject(jsonMap).toString();
         LOG.debug(body);
 
         if (request == null) {
@@ -106,24 +110,6 @@ public class UssChOwn {
         request.setBody(body);
 
         return RestUtils.getResponse(request);
-    }
-
-    /**
-     * Build request body to handle the incoming request
-     *
-     * @param params parameter object
-     * @return json string value
-     * @throws Exception from value in params not specified error
-     * @author James Kostrewski
-     * @version 2.0
-     */
-    private static String buildBody(ChOwnParams params) throws Exception {
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("request", "chown");
-        jsonMap.put("owner", params.getOwner());
-        params.getGroup().ifPresent(group -> jsonMap.put("group", group));
-        jsonMap.put("recursive", params.isRecursive());
-        return JSONObject.toJSONString(jsonMap).toString();
     }
 
 }
