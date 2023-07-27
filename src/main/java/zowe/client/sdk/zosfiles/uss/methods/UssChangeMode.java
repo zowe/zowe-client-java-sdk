@@ -86,11 +86,11 @@ public class UssChangeMode {
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "chmod");
-        jsonMap.put("mode", params.getMode().orElseThrow(() -> new Exception("mode not specified")));
         if (params.isRecursive()) {
             jsonMap.put("recursive", "true");
         }
         params.getLinkType().ifPresent(type -> jsonMap.put("links", type.getValue()));
+        jsonMap.put("mode", params.getMode().orElseThrow(() -> new Exception("mode not specified")));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
