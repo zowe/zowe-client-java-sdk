@@ -113,7 +113,6 @@ public class UssDelete {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
-
         request.setUrl(url);
 
         if (recursive) {
@@ -142,7 +141,6 @@ public class UssDelete {
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
         }
-
         request.setUrl(url);
 
         return RestUtils.getResponse(request);
