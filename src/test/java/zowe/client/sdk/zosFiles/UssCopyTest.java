@@ -54,7 +54,7 @@ public class UssCopyTest {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssCopy ussCopy = new UssCopy(connection, jsonPutRequest);
-        Response response = ussCopy.copyCommon("/xxx/xx/xx",
+        Response response = ussCopy.copy("/xxx/xx/xx",
                 new CopyParams(new CopyParams.Builder().from("/xxx/xx/xx").recursive(true)));
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
@@ -66,7 +66,7 @@ public class UssCopyTest {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssCopy ussCopy = new UssCopy(connection, jsonPutRequest);
-        Response response = ussCopy.copyCommon("/xxx/xx/xx",
+        Response response = ussCopy.copy("/xxx/xx/xx",
                 new CopyParams(new CopyParams.Builder().from("/xxx/xx/xx").overwrite(true)));
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
@@ -74,35 +74,11 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyNullDestinationPathFailure() throws Exception {
+    public void tstUssCopyNullDestinationPathFailure() {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
-        try{
+        try {
             ussCopy.copy(null, "/xxx/xx/xx");
-        } catch (Exception e) {
-            errMsg = e.getMessage();
-        }
-        assertEquals("destinationPath is null", errMsg);
-    }
-
-    @Test
-    public void tstUssCopyEmptyDestinationPathFailure() throws Exception {
-        UssCopy ussCopy = new UssCopy(connection);
-        String errMsg = "";
-        try{
-            ussCopy.copy("", "/xxx/xx/xx");
-        } catch (Exception e) {
-            errMsg = e.getMessage();
-        }
-        assertEquals("destinationPath not specified", errMsg);
-    }
-
-    @Test
-    public void tstUssCopyNullSourcePathFailure() throws Exception {
-        UssCopy ussCopy = new UssCopy(connection);
-        String errMsg = "";
-        try{
-            ussCopy.copy("/xxx/xx/xx", null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -110,11 +86,11 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyEmptySourcePathFailure() throws Exception {
+    public void tstUssCopyEmptyDestinationPathFailure() {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
-        try{
-            ussCopy.copy("/xxx/xx/xx", "");
+        try {
+            ussCopy.copy("", "/xxx/xx/xx");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -122,11 +98,35 @@ public class UssCopyTest {
     }
 
     @Test
+    public void tstUssCopyNullSourcePathFailure() {
+        UssCopy ussCopy = new UssCopy(connection);
+        String errMsg = "";
+        try {
+            ussCopy.copy("/xxx/xx/xx", (String) null);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("targetPath is null", errMsg);
+    }
+
+    @Test
+    public void tstUssCopyEmptySourcePathFailure() {
+        UssCopy ussCopy = new UssCopy(connection);
+        String errMsg = "";
+        try {
+            ussCopy.copy("/xxx/xx/xx", "");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("targetPath not specified", errMsg);
+    }
+
+    @Test
     public void tstUssCopyCommonNullParamsFailure() {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
-        try{
-            ussCopy.copyCommon("/xxx/xx/xx", null);
+        try {
+            ussCopy.copy("/xxx/xx/xx", (CopyParams) null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -137,8 +137,8 @@ public class UssCopyTest {
     public void tstUssCopyCommonNullFromFailure() {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
-        try{
-            ussCopy.copyCommon("/xxx/xx/xx", new CopyParams(new CopyParams.Builder().from(null)));
+        try {
+            ussCopy.copy("/xxx/xx/xx", new CopyParams(new CopyParams.Builder().from(null)));
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -149,14 +149,12 @@ public class UssCopyTest {
     public void tstUssCopyCommonEmptyFromFailure() {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
-        try{
-            ussCopy.copyCommon("/xxx/xx/xx", new CopyParams(new CopyParams.Builder().from("")));
+        try {
+            ussCopy.copy("/xxx/xx/xx", new CopyParams(new CopyParams.Builder().from("")));
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
         assertEquals("from not specified", errMsg);
     }
-
-
 
 }
