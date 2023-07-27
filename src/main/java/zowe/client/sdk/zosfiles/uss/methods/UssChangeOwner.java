@@ -77,15 +77,15 @@ public class UssChangeOwner {
     }
 
     /**
-     * Performs the chown operation request driven by ChgOwnerParams object settings
+     * Performs the chown operation request driven by ChangeOwnerParams object settings
      *
      * @param path   path to the file or directory to be changed
-     * @param params parameter object
+     * @param params change owner response parameters, see ChangeOwnerParams object
      * @return Response object
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response change(String path, ChgOwnerParams params) throws Exception {
+    public Response change(String path, ChangeOwnerParams params) throws Exception {
         ValidateUtils.checkNullParameter(path == null, "path is null");
         ValidateUtils.checkIllegalParameter(path.isEmpty(), "path not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
