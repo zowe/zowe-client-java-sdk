@@ -26,7 +26,7 @@ public class ChangeOwnerParams {
     /**
      * The user ID or UID
      */
-    private final String owner;
+    private final Optional<String> owner;
 
     /**
      * The group ID or GID
@@ -45,13 +45,13 @@ public class ChangeOwnerParams {
     private final Optional<LinkType> linkType;
 
     public ChangeOwnerParams(ChangeOwnerParams.Builder builder) {
-        this.owner = builder.owner;
+        this.owner = Optional.of(builder.owner);
         this.group = Optional.ofNullable(builder.group);
         this.recursive = builder.recursive;
         this.linkType = Optional.ofNullable(builder.linkType);
     }
 
-    public String getOwner() {
+    public Optional<String> getOwner() {
         return owner;
     }
 
