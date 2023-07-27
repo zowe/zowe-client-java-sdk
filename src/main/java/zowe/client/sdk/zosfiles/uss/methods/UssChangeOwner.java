@@ -70,18 +70,20 @@ public class UssChangeOwner {
      * @param owner new owner of the file or directory
      * @return Response object
      * @throws Exception processing error
+     * @author James Kostrewski
      */
     public Response change(String path, String owner) throws Exception {
         return change(path, new ChgOwnerParams.Builder().owner(owner).build());
     }
 
     /**
-     * Performs the chown operation
+     * Performs the chown operation request driven by ChgOwnerParams object settings
      *
      * @param path   path to the file or directory to be changed
      * @param params parameter object
      * @return Response object
      * @throws Exception processing error
+     * @author James Kostrewski
      */
     public Response change(String path, ChgOwnerParams params) throws Exception {
         ValidateUtils.checkNullParameter(path == null, "path is null");
