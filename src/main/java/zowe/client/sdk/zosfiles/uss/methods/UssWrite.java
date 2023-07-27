@@ -54,7 +54,6 @@ public class UssWrite {
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
     public UssWrite(ZosConnection connection, ZoweRequest request) {
