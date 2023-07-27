@@ -9,32 +9,35 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
+import java.util.Optional;
+
 /**
  * Parameter container class for Unix System Services (USS) chmod operation
  *
  * @author James Kostrewski
  * @version 2.0
  */
-public class ChModParams {
+public class ChangeModeParams {
 
     /**
-     * The mode value
+     * The mode value, which is specified as the POSIX symbolic form or octal value (as a JSON string).
      */
-    private final String mode;
+    private final Optional<String> mode;
 
     /**
-     * The default is false.
-     * When 'true', the file mode bits of the directory and all files in the file hierarchy below it are changed
-     * (chmod -R)
+     * The default is false. When 'true', the file mode bits of the directory and all files in the
+     * file hierarchy below it are changed (chmod -R)
      */
     private final boolean recursive;
 
-    public ChModParams(ChModParams.Builder builder) {
-        this.mode = builder.mode;
+    public ChangeModeParams(ChangeModeParams.Builder builder) {
+        this.mode = Optional.of(builder.mode);
         this.recursive = builder.recursive;
     }
 
-    public String getMode() {
+    public Optional<String> getMode() {
         return mode;
     }
 
@@ -44,29 +47,33 @@ public class ChModParams {
 
     @Override
     public String toString() {
-        return "ChModParams{" +
-                "mode='" + this.getMode() + '\'' +
-                ", recursive=" + this.isRecursive() +
+        return "ChangeModeParams{" +
+                "mode=" + mode +
+                ", recursive=" + recursive +
                 '}';
     }
 
     public static class Builder {
+
         private String mode;
         private boolean recursive = false;
 
-        public ChModParams build() {
-            return new ChModParams(this);
+        public ChangeModeParams build() {
+            return new ChangeModeParams(this);
         }
 
-        public ChModParams.Builder mode(String mode) {
+        public ChangeModeParams.Builder mode(String mode) {
+            ValidateUtils.checkNullParameter(mode == null, "mode is null");
+            ValidateUtils.checkIllegalParameter(mode.isEmpty(), "mode not specified");
             this.mode = mode;
             return this;
         }
 
-        public ChModParams.Builder recursive(boolean recursive) {
+        public ChangeModeParams.Builder recursive(boolean recursive) {
             this.recursive = recursive;
             return this;
         }
 
     }
+
 }
