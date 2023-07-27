@@ -20,7 +20,6 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 2.0
  */
-
 public class ChangeOwnerParams {
 
     /**
