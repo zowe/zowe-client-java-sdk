@@ -77,6 +77,8 @@ public class UssCopy {
      * @param targetPath target path of where the file or directory will be copied too
      * @return Response object
      * @throws Exception processing error
+     * @author James Kostrewski
+     * @author Frank Giordano
      */
     public Response copy(String fromPath, String targetPath) throws Exception {
         return copy(targetPath, new CopyParams.Builder().from(fromPath).build());
@@ -89,6 +91,8 @@ public class UssCopy {
      * @param params     CopyParams parameters that specifies copy action request
      * @return Response object
      * @throws Exception processing error
+     * @author James Kostrewski
+     * @author Frank Giordano
      */
     public Response copy(String targetPath, CopyParams params) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
