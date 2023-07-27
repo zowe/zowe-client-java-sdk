@@ -76,6 +76,7 @@ public class UssCreate {
      * @return Response object
      * @throws Exception error processing request
      * @author James Kostrewski
+     * @author Frank Giordano
      */
     public Response create(String name, CreateParams params) throws Exception {
         ValidateUtils.checkNullParameter(name == null, "name is null");
