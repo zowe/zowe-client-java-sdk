@@ -32,24 +32,24 @@ import java.util.Map;
  * @author James Kostrewski
  * @version 2.0
  */
-public class UssChgMode {
+public class UssChangeMode {
 
     private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
-     * UssChgMode Constructor
+     * UssChangeMode Constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssChgMode(ZosConnection connection) {
+    public UssChangeMode(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
     /**
-     * Alternative UssChgMode constructor with ZoweRequest object. This is mainly used for internal code
+     * Alternative UssChangeMode constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZosConnection object
@@ -57,7 +57,7 @@ public class UssChgMode {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssChgMode(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssChangeMode(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
@@ -76,7 +76,7 @@ public class UssChgMode {
      * @author James Kostrewsk
      * @author Frank Giordano
      */
-    public Response changeMode(String targetPath, ChgModeParams params) throws Exception {
+    public Response change(String targetPath, ChgModeParams params) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
