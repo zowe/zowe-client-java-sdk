@@ -41,7 +41,7 @@ public class UssChangeOwner {
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssChgOwner(ZosConnection connection) {
+    public UssChangeOwner(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
