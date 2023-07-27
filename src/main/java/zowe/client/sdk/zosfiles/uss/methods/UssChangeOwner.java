@@ -72,7 +72,7 @@ public class UssChangeOwner {
      * @throws Exception processing error
      */
     public Response change(String path, String owner) throws Exception {
-        return changeOwner(path, new ChgOwnerParams.Builder().owner(owner).build());
+        return change(path, new ChgOwnerParams.Builder().owner(owner).build());
     }
 
     /**
