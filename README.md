@@ -43,7 +43,7 @@ zowe.client.sdk.zosfiles.uss.methods
     
     UssChgMode
     UssChgOwner
-    UssChTag
+    UssChgTag
     UssCopy
     UssCreate
     UssDelete
