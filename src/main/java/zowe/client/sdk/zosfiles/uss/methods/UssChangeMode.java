@@ -82,7 +82,7 @@ public class UssChangeMode {
         ValidateUtils.checkIllegalParameter(targetPath.isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + targetPath;
 
         final Map<String, Object> jsonMap = new HashMap<>();
