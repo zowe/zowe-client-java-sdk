@@ -66,38 +66,40 @@ public class UssChangeOwner {
     /**
      * Performs the chown operation
      *
-     * @param path  path to the file or directory to be changed
-     * @param owner new owner of the file or directory
+     * @param targetPath identifies the UNIX file or directory to be the target of the operation
+     * @param owner      new owner of the file or directory
      * @return Response object
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response change(String path, String owner) throws Exception {
+    public Response change(String targetPath, String owner) throws Exception {
         return change(path, new ChangeOwnerParams.Builder().owner(owner).build());
     }
 
     /**
      * Performs the chown operation request driven by ChangeOwnerParams object settings
      *
-     * @param path   path to the file or directory to be changed
-     * @param params change owner response parameters, see ChangeOwnerParams object
+     * @param targetPath identifies the UNIX file or directory to be the target of the operation
+     * @param params     change owner response parameters, see ChangeOwnerParams object
      * @return Response object
      * @throws Exception processing error
      * @author James Kostrewski
+     * @author Frank Giordano
      */
-    public Response change(String path, ChangeOwnerParams params) throws Exception {
-        ValidateUtils.checkNullParameter(path == null, "path is null");
-        ValidateUtils.checkIllegalParameter(path.isEmpty(), "path not specified");
+    public Response change(String targetPath, ChangeOwnerParams params) throws Exception {
+        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
+        ValidateUtils.checkIllegalParameter(targetPath.isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + path;
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + targetPath;
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "chown");
-        jsonMap.put("owner", params.getOwner());
+        jsonMap.put("owner", params.getOwner().orElseThrow(() -> new Exception("owner not specified")));
         params.getGroup().ifPresent(group -> jsonMap.put("group", group));
         jsonMap.put("recursive", params.isRecursive());
+        params.getLinkType().ifPresent(type -> jsonMap.put("links", type.getValue()));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
