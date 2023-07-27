@@ -97,7 +97,7 @@ public class UssChangeOwner {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "chown");
         params.getGroup().ifPresent(group -> jsonMap.put("group", group));
-                if (params.isRecursive()) {
+        if (params.isRecursive()) {
             jsonMap.put("recursive", "true");
         }
         params.getLinkType().ifPresent(type -> jsonMap.put("links", type.getValue()));
