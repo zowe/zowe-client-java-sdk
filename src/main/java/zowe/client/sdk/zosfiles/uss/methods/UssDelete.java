@@ -77,7 +77,7 @@ public class UssDelete {
      * @author James Kostrewski
      */
     public Response delete(String name) throws Exception {
-        return deleteCommon(name, false);
+        return delete(name, false);
     }
 
     /**
@@ -89,20 +89,7 @@ public class UssDelete {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response delete(String name, boolean recursive) throws Exception {
-        return deleteCommon(name, recursive);
-    }
-
-    /**
-     * Perform UNIX delete request
-     *
-     * @param name      the name of the file or directory you are going to delete
-     * @param recursive flag indicates if contents of directory should also be deleted
-     * @return Response object
-     * @throws Exception processing error
-     * @author James Kostrewski
-     */
-    private Response deleteCommon(String name, boolean recursive) throws Exception {
+    private Response delete(String name, boolean recursive) throws Exception {
         ValidateUtils.checkNullParameter(name == null, "name is null");
         ValidateUtils.checkIllegalParameter(name.isEmpty(), "name not specified");
 
