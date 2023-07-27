@@ -39,7 +39,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChModSuccess() throws Exception {
+    public void tstUssChangeModeSuccess() throws Exception {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssChangeMode ussChMod = new UssChangeMode(connection, jsonPutRequest);
@@ -51,7 +51,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChModRecursiveSuccess() throws Exception {
+    public void tstUssChangeModeRecursiveSuccess() throws Exception {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssChangeMode ussChMod = new UssChangeMode(connection, jsonPutRequest);
@@ -63,7 +63,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChModNullPathFailure() {
+    public void tstUssChangeModeNullTargetPathFailure() {
         UssChangeMode ussChMod = new UssChangeMode(connection);
         String errMsg = "";
         try {
@@ -75,7 +75,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChModEmptyPathFailure() {
+    public void tstUssChangeModeEmptyTargetPathFailure() {
         UssChangeMode ussChMod = new UssChangeMode(connection);
         String errMsg = "";
         try {
@@ -87,7 +87,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChModNullModeFailure() {
+    public void tstUssChangeModeNullModeFailure() {
         UssChangeMode ussChMod = new UssChangeMode(connection);
         String errMsg = "";
         try {
@@ -99,7 +99,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChModEmptyModeFailure() {
+    public void tstUssChangeModeEmptyModeFailure() {
         UssChangeMode ussChMod = new UssChangeMode(connection);
         String errMsg = "";
         try {
