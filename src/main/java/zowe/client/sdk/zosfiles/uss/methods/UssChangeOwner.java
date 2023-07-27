@@ -30,13 +30,13 @@ import java.util.Map;
  * @author James Kostrewski
  * @version 2.0
  */
-public class UssChgOwner {
+public class UssChangeOwner {
 
     private final ZosConnection connection;
     private ZoweRequest request;
 
     /**
-     * UssChgOwner constructor
+     * UssChangeOwner constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
@@ -47,14 +47,14 @@ public class UssChgOwner {
     }
 
     /**
-     * Alternative UssChgOwner constructor with ZoweRequest object. This is mainly used for internal code
+     * Alternative UssChangeOwner constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @throws Exception processing error
      */
-    public UssChgOwner(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssChangeOwner(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
@@ -71,7 +71,7 @@ public class UssChgOwner {
      * @return Response object
      * @throws Exception processing error
      */
-    public Response changeOwner(String path, String owner) throws Exception {
+    public Response change(String path, String owner) throws Exception {
         return changeOwner(path, new ChgOwnerParams.Builder().owner(owner).build());
     }
 
@@ -83,7 +83,7 @@ public class UssChgOwner {
      * @return Response object
      * @throws Exception processing error
      */
-    public Response changeOwner(String path, ChgOwnerParams params) throws Exception {
+    public Response change(String path, ChgOwnerParams params) throws Exception {
         ValidateUtils.checkNullParameter(path == null, "path is null");
         ValidateUtils.checkIllegalParameter(path.isEmpty(), "path not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
