@@ -71,23 +71,23 @@ public class ChangeOwnerParams {
         private String group;
         private boolean recursive = false;
 
-        public ChgOwnerParams build() {
+        public ChangeOwnerParams build() {
             return new ChgOwnerParams(this);
         }
 
-        public ChgOwnerParams.Builder owner(String owner) {
+        public ChangeOwnerParams.Builder owner(String owner) {
             ValidateUtils.checkNullParameter(owner == null, "owner is null");
             ValidateUtils.checkIllegalParameter(owner.isEmpty(), "owner is empty");
             this.owner = owner;
             return this;
         }
 
-        public ChgOwnerParams.Builder group(String group) {
+        public ChangeOwnerParams.Builder group(String group) {
             this.group = group;
             return this;
         }
 
-        public ChgOwnerParams.Builder recursive(boolean recursive) {
+        public ChangeOwnerParams.Builder recursive(boolean recursive) {
             this.recursive = recursive;
             return this;
         }
