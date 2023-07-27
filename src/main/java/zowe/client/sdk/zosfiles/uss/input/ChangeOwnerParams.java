@@ -72,7 +72,7 @@ public class ChangeOwnerParams {
         private boolean recursive = false;
 
         public ChangeOwnerParams build() {
-            return new ChgOwnerParams(this);
+            return new ChangeOwnerParams(this);
         }
 
         public ChangeOwnerParams.Builder owner(String owner) {
