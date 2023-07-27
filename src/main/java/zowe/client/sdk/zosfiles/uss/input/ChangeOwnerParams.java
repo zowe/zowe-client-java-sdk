@@ -38,7 +38,7 @@ public class ChangeOwnerParams {
      */
     private boolean recursive;
 
-    public ChgOwnerParams(ChgOwnerParams.Builder builder) {
+    public ChgOwnerParams(ChangeOwnerParams.Builder builder) {
         this.owner = builder.owner;
         this.group = Optional.ofNullable(builder.group);
         this.recursive = builder.recursive;
@@ -58,7 +58,7 @@ public class ChangeOwnerParams {
 
     @Override
     public String toString() {
-        return "ChOwnParams{" +
+        return "ChangeOwnerParams{" +
                 "owner=" + this.getOwner() +
                 ", group=" + this.getGroup().get() +
                 ", recursive=" + this.isRecursive() +
