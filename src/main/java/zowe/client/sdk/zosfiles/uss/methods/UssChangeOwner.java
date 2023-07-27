@@ -96,10 +96,12 @@ public class UssChangeOwner {
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "chown");
-        jsonMap.put("owner", params.getOwner().orElseThrow(() -> new Exception("owner not specified")));
         params.getGroup().ifPresent(group -> jsonMap.put("group", group));
-        jsonMap.put("recursive", params.isRecursive());
+                if (params.isRecursive()) {
+            jsonMap.put("recursive", "true");
+        }
         params.getLinkType().ifPresent(type -> jsonMap.put("links", type.getValue()));
+        jsonMap.put("owner", params.getOwner().orElseThrow(() -> new Exception("owner not specified")));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
