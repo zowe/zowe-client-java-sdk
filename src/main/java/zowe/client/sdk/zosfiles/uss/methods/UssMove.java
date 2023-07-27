@@ -78,7 +78,7 @@ public class UssMove {
      * @throws Exception processing error
      */
     public Response move(String destinationPath, String sourcePath) throws Exception {
-        return move(destinationPath, new MoveParams.Builder().from(sourcePath).build());
+        return moveCommon(destinationPath, new MoveParams.Builder().from(sourcePath).build());
     }
 
     /**
@@ -88,7 +88,7 @@ public class UssMove {
      * @return Response object
      * @throws Exception processing error
      */
-    public Response move(String destinationPath, MoveParams params) throws Exception {
+    public Response moveCommon(String destinationPath, MoveParams params) throws Exception {
         ValidateUtils.checkNullParameter(destinationPath == null, "destinationPath is null");
         ValidateUtils.checkIllegalParameter(destinationPath.isEmpty(), "destinationPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
