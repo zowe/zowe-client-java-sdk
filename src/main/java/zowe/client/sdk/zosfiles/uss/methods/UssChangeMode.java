@@ -67,16 +67,16 @@ public class UssChangeMode {
     }
 
     /**
-     * Change the mode of a file or directory request driven by ChgModeParams object settings
+     * Change the mode of a file or directory request driven by ChangeModeParams object settings
      *
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
-     * @param params     change mode response parameters, see ChgModeParams object
+     * @param params     change mode response parameters, see ChangeModeParams object
      * @return Response object
      * @throws Exception processing error
      * @author James Kostrewsk
      * @author Frank Giordano
      */
-    public Response change(String targetPath, ChgModeParams params) throws Exception {
+    public Response change(String targetPath, ChangeModeParams params) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
