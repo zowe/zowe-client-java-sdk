@@ -38,7 +38,7 @@ public class ChangeOwnerParams {
      */
     private boolean recursive;
 
-    public ChgOwnerParams(ChangeOwnerParams.Builder builder) {
+    public ChangeOwnerParams(ChangeOwnerParams.Builder builder) {
         this.owner = builder.owner;
         this.group = Optional.ofNullable(builder.group);
         this.recursive = builder.recursive;
