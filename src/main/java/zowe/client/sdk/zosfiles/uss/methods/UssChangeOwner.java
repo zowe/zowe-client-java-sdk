@@ -53,6 +53,7 @@ public class UssChangeOwner {
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @throws Exception processing error
+     * @author Frank Giordano
      */
     public UssChangeOwner(ZosConnection connection, ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
