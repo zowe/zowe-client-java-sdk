@@ -46,14 +46,32 @@ public class ChangeModeParams {
         this.linkType = Optional.ofNullable(builder.linkType);
     }
 
+    /**
+     * Retrieve mode value
+     *
+     * @return mode value
+     * @author James Kostrewski
+     */
     public Optional<String> getMode() {
         return mode;
     }
 
+    /**
+     * Is recursive value true or false
+     *
+     * @return recursive value
+     * @author James Kostrewski
+     */
     public boolean isRecursive() {
         return recursive;
     }
 
+    /**
+     * Retrieve linkType value
+     *
+     * @return linkType value
+     * @author James Kostrewski
+     */
     public Optional<LinkType> getLinkType() {
         return linkType;
     }

@@ -43,14 +43,32 @@ public class CopyParams {
         this.recursive = builder.recursive;
     }
 
+    /**
+     * Retrieve from value
+     *
+     * @return from value
+     * @author James Kostrewski
+     */
     public Optional<String> getFrom() {
         return from;
     }
 
+    /**
+     * Retrieve overwrite value
+     *
+     * @return overwrite value
+     * @author James Kostrewski
+     */
     public boolean isOverwrite() {
         return overwrite;
     }
 
+    /**
+     * Is recursive value true or false
+     *
+     * @return recursive value
+     * @author James Kostrewski
+     */
     public boolean isRecursive() {
         return recursive;
     }

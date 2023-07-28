@@ -56,18 +56,42 @@ public class MountParams {
         this.mode = Optional.ofNullable(builder.mode);
     }
 
+    /**
+     * Retrieve action value
+     *
+     * @return action value
+     * @author Frank Giordano
+     */
     public Optional<MountActionType> getAction() {
         return action;
     }
 
+    /**
+     * Retrieve mountPoint value
+     *
+     * @return mountPoint value
+     * @author Frank Giordano
+     */
     public Optional<String> getMountPoint() {
         return mountPoint;
     }
 
+    /**
+     * Retrieve fsType value
+     *
+     * @return fsType value
+     * @author Frank Giordano
+     */
     public Optional<String> getFsType() {
         return fsType;
     }
 
+    /**
+     * Retrieve mode value
+     *
+     * @return mode value
+     * @author Frank Giordano
+     */
     public Optional<MountModeType> getMode() {
         return mode;
     }

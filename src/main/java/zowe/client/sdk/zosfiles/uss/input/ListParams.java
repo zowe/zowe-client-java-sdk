@@ -138,50 +138,122 @@ public class ListParams {
         this.symlinks = builder.symlinks;
     }
 
+    /**
+     * Retrieve path value
+     *
+     * @return path value
+     * @author Frank Giordano
+     */
     public Optional<String> getPath() {
         return path;
     }
 
+    /**
+     * Retrieve maxLength value
+     *
+     * @return maxLength value
+     * @author Frank Giordano
+     */
     public OptionalInt getMaxLength() {
         return maxLength;
     }
 
+    /**
+     * Retrieve group value
+     *
+     * @return group value
+     * @author Frank Giordano
+     */
     public Optional<String> getGroup() {
         return group;
     }
 
+    /**
+     * Retrieve user value
+     *
+     * @return user value
+     * @author Frank Giordano
+     */
     public Optional<String> getUser() {
         return user;
     }
 
+    /**
+     * Retrieve mtime value
+     *
+     * @return mtime value
+     * @author Frank Giordano
+     */
     public Optional<String> getMtime() {
         return mtime;
     }
 
+    /**
+     * Retrieve size value
+     *
+     * @return size value
+     * @author Frank Giordano
+     */
     public OptionalInt getSize() {
         return size;
     }
 
+    /**
+     * Retrieve name value
+     *
+     * @return name value
+     * @author Frank Giordano
+     */
     public Optional<String> getName() {
         return name;
     }
 
+    /**
+     * Retrieve perm value
+     *
+     * @return perm value
+     * @author Frank Giordano
+     */
     public Optional<String> getPerm() {
         return perm;
     }
 
+    /**
+     * Retrieve type value
+     *
+     * @return type value
+     * @author Frank Giordano
+     */
     public Optional<ListFilterType> getType() {
         return type;
     }
 
+    /**
+     * Retrieve depth value
+     *
+     * @return depth value
+     * @author Frank Giordano
+     */
     public OptionalInt getDepth() {
         return depth;
     }
 
+    /**
+     * Retrieve filesys value
+     *
+     * @return filesys value
+     * @author Frank Giordano
+     */
     public boolean isFilesys() {
         return filesys;
     }
 
+    /**
+     * Retrieve symlinks value
+     *
+     * @return symlinks value
+     * @author Frank Giordano
+     */
     public boolean isSymlinks() {
         return symlinks;
     }

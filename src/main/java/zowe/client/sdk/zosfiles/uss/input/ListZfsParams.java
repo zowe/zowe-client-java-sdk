@@ -53,14 +53,32 @@ public class ListZfsParams {
         this.fsname = Optional.ofNullable(builder.fsname);
     }
 
+    /**
+     * Retrieve maxLength value
+     *
+     * @return maxLength value
+     * @author Frank Giordano
+     */
     public OptionalInt getMaxLength() {
         return maxLength;
     }
 
+    /**
+     * Retrieve path value
+     *
+     * @return path value
+     * @author Frank Giordano
+     */
     public Optional<String> getPath() {
         return path;
     }
 
+    /**
+     * Retrieve fsname value
+     *
+     * @return fsname value
+     * @author Frank Giordano
+     */
     public Optional<String> getFsname() {
         return fsname;
     }

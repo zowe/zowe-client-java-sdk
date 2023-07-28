@@ -90,30 +90,72 @@ public class GetParams {
         this.recordsRange = Optional.ofNullable(builder.recordsRange);
     }
 
+    /**
+     * Retrieve search value
+     *
+     * @return search value
+     * @author James Kostrewski
+     */
     public Optional<String> getSearch() {
         return search;
     }
 
+    /**
+     * Retrieve research value
+     *
+     * @return research value
+     * @author James Kostrewski
+     */
     public Optional<String> getResearch() {
         return research;
     }
 
+    /**
+     * Retrieve insensitive value
+     *
+     * @return insensitive value
+     * @author James Kostrewski
+     */
     public boolean isInsensitive() {
         return insensitive;
     }
 
+    /**
+     * Retrieve maxreturnsize value
+     *
+     * @return maxreturnsize value
+     * @author James Kostrewski
+     */
     public OptionalInt getMaxReturnSize() {
         return maxreturnsize;
     }
 
+    /**
+     * Retrieve queryCount value
+     *
+     * @return queryCount value
+     * @author James Kostrewski
+     */
     public int getQueryCount() {
         return queryCount;
     }
 
+    /**
+     * Retrieve binary value
+     *
+     * @return binary value
+     * @author James Kostrewski
+     */
     public boolean isBinary() {
         return binary;
     }
 
+    /**
+     * Retrieve recordsRange value
+     *
+     * @return recordsRange value
+     * @author James Kostrewski
+     */
     public Optional<String> getRecordsRange() {
         return recordsRange;
     }

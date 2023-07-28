@@ -50,18 +50,42 @@ public class ChangeOwnerParams {
         this.linkType = Optional.ofNullable(builder.linkType);
     }
 
+    /**
+     * Retrieve owner value
+     *
+     * @return owner value
+     * @author James Kostrewski
+     */
     public Optional<String> getOwner() {
         return owner;
     }
 
+    /**
+     * Retrieve group value
+     *
+     * @return group value
+     * @author James Kostrewski
+     */
     public Optional<String> getGroup() {
         return group;
     }
 
+    /**
+     * Is recursive value true or false
+     *
+     * @return recursive value
+     * @author James Kostrewski
+     */
     public boolean isRecursive() {
         return recursive;
     }
 
+    /**
+     * Retrieve linkType value
+     *
+     * @return linkType value
+     * @author James Kostrewski
+     */
     public Optional<LinkType> getLinkType() {
         return linkType;
     }

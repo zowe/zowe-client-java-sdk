@@ -55,22 +55,52 @@ public class WriteParams {
         this.binary = builder.binary;
     }
 
+    /**
+     * Retrieve textContent value
+     *
+     * @return textContent value
+     * @author Frank Giordano
+     */
     public Optional<String> getTextContent() {
         return textContent;
     }
 
+    /**
+     * Retrieve binaryContent value
+     *
+     * @return binaryContent value
+     * @author Frank Giordano
+     */
     public Optional<byte[]> getBinaryContent() {
         return binaryContent;
     }
 
+    /**
+     * Retrieve fileEncoding value
+     *
+     * @return fileEncoding value
+     * @author Frank Giordano
+     */
     public Optional<String> getFileEncoding() {
         return fileEncoding;
     }
 
+    /**
+     * Retrieve crlf value
+     *
+     * @return crlf value
+     * @author Frank Giordano
+     */
     public boolean isCrlf() {
         return crlf;
     }
 
+    /**
+     * Retrieve binary value
+     *
+     * @return binary value
+     * @author Frank Giordano
+     */
     public boolean isBinary() {
         return binary;
     }
