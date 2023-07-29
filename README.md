@@ -5,8 +5,8 @@ SPDX-License-Identifier: EPL-2.0
 Copyright Contributors to the Zowe Project.
 
 # Zowe Java Client SDK
-
-![Zowe](https://github.com/zowe/zowe-client-java-sdk/blob/master/gif/zowe.gif)  
+ 
+![zowe.gif](gif%2Fzowe.gif)
   
 ![](https://img.shields.io/badge/license-EPL--2.0-blue)
 [![Maven Central](https://img.shields.io/maven-central/v/org.zowe.client.java.sdk/zowe-client-java-sdk.svg?label=Maven%20Central)](https://central.sonatype.com/search?q=org.zowe.client.java.sdk&smo=true)
