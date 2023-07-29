@@ -118,7 +118,7 @@ public class UssList {
                 response.getResponsePhrase().orElseThrow(() -> new Exception("error retrieving uss list"))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
-            for (Object jsonObj : jsonArray) {
+            for (final Object jsonObj : jsonArray) {
                 items.add(parseJsonUssListResponse((JSONObject) jsonObj));
             }
         }
@@ -152,7 +152,7 @@ public class UssList {
                 response.getResponsePhrase().orElseThrow(() -> new Exception("error retrieving uss zfs list"))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
-            for (Object jsonObj : jsonArray) {
+            for (final Object jsonObj : jsonArray) {
                 items.add(parseJsonUssZfsListResponse((JSONObject) jsonObj));
             }
         }

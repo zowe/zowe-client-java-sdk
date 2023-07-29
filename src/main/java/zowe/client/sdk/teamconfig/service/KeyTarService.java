@@ -63,7 +63,7 @@ public class KeyTarService {
     public KeyTarConfig getKeyTarConfig() throws Exception {
         List<KeyTarConfig> keyTarConfigs = new ArrayList<>();
         keyTar.setAccountName(ACCOUNT_NAME);
-        for (String serviceName : serviceNames) {
+        for (final String serviceName : serviceNames) {
             keyTar.setServiceName(serviceName);
             try {
                 keyTar.processKey();
