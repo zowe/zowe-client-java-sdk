@@ -14,7 +14,7 @@ import zowe.client.sdk.zosfiles.dsn.response.Dataset;
 import zowe.client.sdk.zosfiles.dsn.response.Member;
 
 /**
- * Utility Class for Dataset related static helper methods.
+ * Utility Class for dataset (DSN) related static helper methods.
  *
  * @author Nikunj Goyal
  * @version 2.0
