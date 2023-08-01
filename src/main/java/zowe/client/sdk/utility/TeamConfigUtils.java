@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TeamConfigUtils static class provides helper method(s).
+ * Utility Class for TEAM CONFIG related static helper methods. 
  *
  * @author Frank Giordano
  * @version 2.0
