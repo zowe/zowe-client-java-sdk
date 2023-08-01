@@ -17,7 +17,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
 import zowe.client.sdk.zosmfinfo.response.ZosmfPluginInfo;
 
 /**
- * Utility Class contains helper methods for z/OSMF related processing
+ * Utility Class contains helper methods for z/OSMF status related processing
  *
  * @author Frank Giordano
  * @version 2.0
