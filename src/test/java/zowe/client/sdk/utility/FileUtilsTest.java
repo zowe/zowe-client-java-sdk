@@ -30,9 +30,6 @@ public class FileUtilsTest {
         Utils.validateClass(FileUtils.class, privateConstructorExceptionMsg);
     }
 
-    /**
-     * Test a valid permission
-     */
     @Test
     public void tstValidatePermissionSuccess() {
         final String value = "rwxrwxrwx";
@@ -40,9 +37,6 @@ public class FileUtilsTest {
         assertEquals(result, value);
     }
 
-    /**
-     * Test an invalid permission specified with an invalid length
-     */
     @Test
     public void tstValidatePermissionLengthFailure() {
         final String value = "rwxrwxrwxx";
@@ -55,9 +49,6 @@ public class FileUtilsTest {
         assertEquals(errMsg, "specify 9 character permission");
     }
 
-    /**
-     * Test an invalid permission specified with invalid character
-     */
     @Test
     public void tstValidatePermissionInvalidFailure() {
         final String value = "rwxrwxrkk";
@@ -68,6 +59,17 @@ public class FileUtilsTest {
             errMsg = e.getMessage();
         }
         assertEquals(errMsg, "specify valid permission");
+    }
+
+    @Test
+    public void tstValidatePermissionNullFailure() {
+        String errMsg = "";
+        try {
+            FileUtils.validatePermission(null);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals(errMsg, "permission value is null");
     }
 
 }
