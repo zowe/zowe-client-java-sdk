@@ -102,7 +102,7 @@ public class UssCreateTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "specify 9 char permission");
+        assertEquals(errMsg, "specify 9 character permission");
     }
 
     @Test
