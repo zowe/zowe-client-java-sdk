@@ -57,6 +57,18 @@ public class UssWriteTest {
     }
 
     @Test
+    public void tstUssWriteTextEmptyFileNamePathWithSpacesFailure() {
+        UssWrite ussWrite = new UssWrite(connection);
+        String errMsg = "";
+        try {
+            ussWrite.writeText("    ", "content");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("file name path not specified", errMsg);
+    }
+
+    @Test
     public void tstUssWriteBinaryNullFileNamePathFailure() {
         UssWrite ussWrite = new UssWrite(connection);
         String errMsg = "";
@@ -81,6 +93,18 @@ public class UssWriteTest {
     }
 
     @Test
+    public void tstUssWriteBinaryEmptyFileNamePathWithSpacesFailure() {
+        UssWrite ussWrite = new UssWrite(connection);
+        String errMsg = "";
+        try {
+            ussWrite.writeBinary("   ", new byte[0]);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("file name path not specified", errMsg);
+    }
+
+    @Test
     public void tstUssWriteCommonNullFileNamePathFailure() {
         UssWrite ussWrite = new UssWrite(connection);
         String errMsg = "";
@@ -98,6 +122,18 @@ public class UssWriteTest {
         String errMsg = "";
         try {
             ussWrite.writeCommon("", new WriteParams.Builder().build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("file name path not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssWriteCommonEmptyFileNamePathWithSpacesFailure() {
+        UssWrite ussWrite = new UssWrite(connection);
+        String errMsg = "";
+        try {
+            ussWrite.writeCommon("  ", new WriteParams.Builder().build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
