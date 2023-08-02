@@ -97,7 +97,7 @@ public class ChangeModeParams {
 
         public ChangeModeParams.Builder mode(String mode) {
             ValidateUtils.checkNullParameter(mode == null, "mode is null");
-            ValidateUtils.checkIllegalParameter(mode.isEmpty(), "mode not specified");
+            ValidateUtils.checkIllegalParameter(mode.trim().isEmpty(), "mode not specified");
             this.mode = mode;
             return this;
         }
