@@ -9,9 +9,14 @@
  */
 package zowe.client.sdk.zosfiles;
 
+import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.JsonPutRequest;
+import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.MountParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssMount;
 import zowe.client.sdk.zosfiles.uss.types.MountActionType;
@@ -31,6 +36,18 @@ public class UssMountTest {
     @Before
     public void init() {
         connection = new ZosConnection("1", "1", "1", "1");
+    }
+
+    @Test
+    public void tstUssCreateSuccess() throws Exception {
+        JsonPutRequest jsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        UssMount ussMount = new UssMount(connection, jsonPutRequest);
+        Response response = ussMount.mount("name", "mountpoint", "fstype");
+        Assertions.assertEquals("{}", response.getResponsePhrase().get().toString());
+        Assertions.assertEquals("200", response.getStatusCode().get().toString());
+        Assertions.assertEquals("success", response.getStatusText().get().toString());
     }
 
     @Test
