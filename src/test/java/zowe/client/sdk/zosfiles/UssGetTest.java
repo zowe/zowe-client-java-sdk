@@ -11,7 +11,12 @@ package zowe.client.sdk.zosfiles;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.StreamGetRequest;
+import zowe.client.sdk.rest.TextGetRequest;
 import zowe.client.sdk.zosfiles.uss.methods.UssGet;
 
 import static org.junit.Assert.assertEquals;
@@ -32,6 +37,48 @@ public class UssGetTest {
     }
 
     @Test
+    public void tstGetTextFilePathSuccess() throws Exception {
+        TextGetRequest textGetRequest = Mockito.mock(TextGetRequest.class);
+        Mockito.when(textGetRequest.executeRequest()).thenReturn(
+                new Response("text", 200, "success"));
+        UssGet ussGet = new UssGet(connection, textGetRequest);
+        String response = ussGet.getText("/xxx/xx");
+        Assertions.assertEquals("text", response);
+    }
+
+    @Test
+    public void tstGetTextFilePathDefaultResponseSuccess() throws Exception {
+        TextGetRequest textGetRequest = Mockito.mock(TextGetRequest.class);
+        Mockito.when(textGetRequest.executeRequest()).thenReturn(
+                new Response(null, 200, "success"));
+        UssGet ussGet = new UssGet(connection, textGetRequest);
+        String response = ussGet.getText("/xxx/xx");
+        Assertions.assertEquals("", response);
+    }
+
+    @Test
+    public void tstGetBinaryFilePathSuccess() throws Exception {
+        StreamGetRequest streamGetRequest = Mockito.mock(StreamGetRequest.class);
+        byte[] data = "data".getBytes();
+        Mockito.when(streamGetRequest.executeRequest()).thenReturn(
+                new Response(data, 200, "success"));
+        UssGet ussGet = new UssGet(connection, streamGetRequest);
+        byte[] response = ussGet.getBinary("/xxx/xx");
+        Assertions.assertEquals(data, response);
+    }
+
+    @Test
+    public void tstGetBinaryFilePathDefaultResponseSuccess() throws Exception {
+        StreamGetRequest streamGetRequest = Mockito.mock(StreamGetRequest.class);
+        byte[] data = new byte[0];
+        Mockito.when(streamGetRequest.executeRequest()).thenReturn(
+                new Response(data, 200, "success"));
+        UssGet ussGet = new UssGet(connection, streamGetRequest);
+        byte[] response = ussGet.getBinary("/xxx/xx");
+        Assertions.assertEquals(data, response);
+    }
+
+    @Test
     public void tstUssGetTextFilePathNullNameFailure() {
         UssGet ussGet = new UssGet(connection);
         String errMsg = "";
@@ -49,6 +96,18 @@ public class UssGetTest {
         String errMsg = "";
         try {
             ussGet.getText("");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("file path name not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssGetTextFilePathEmptyNameWithSpacesFailure() {
+        UssGet ussGet = new UssGet(connection);
+        String errMsg = "";
+        try {
+            ussGet.getText("  ");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
