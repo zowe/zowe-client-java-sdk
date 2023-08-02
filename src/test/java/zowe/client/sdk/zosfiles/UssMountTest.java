@@ -42,7 +42,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "file system name is null");
+        assertEquals("file system name is null", errMsg);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "file system name not specified");
+        assertEquals("file system name not specified", errMsg);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "mountPoint is null");
+        assertEquals("mountPoint is null", errMsg);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "mountPoint not specified");
+        assertEquals("mountPoint not specified", errMsg);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "fsType is null");
+        assertEquals("fsType is null", errMsg);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "fsType not specified");
+        assertEquals("fsType not specified", errMsg);
     }
 
     @Test
@@ -115,7 +115,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "mountPoint not specified");
+        assertEquals("mountPoint not specified", errMsg);
     }
 
     @Test
@@ -128,7 +128,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "fsType not specified");
+        assertEquals("fsType not specified", errMsg);
     }
 
     @Test
@@ -141,7 +141,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "file system name is null");
+        assertEquals("file system name is null", errMsg);
     }
 
     @Test
@@ -154,7 +154,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "file system name not specified");
+        assertEquals("file system name not specified", errMsg);
     }
 
     @Test
@@ -166,7 +166,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "params is null");
+        assertEquals("params is null", errMsg);
     }
 
     @Test
@@ -178,7 +178,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "file system name is null");
+        assertEquals("file system name is null", errMsg);
     }
 
     @Test
@@ -190,7 +190,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "file system name not specified");
+        assertEquals("file system name not specified", errMsg);
     }
 
     @Test
@@ -202,7 +202,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "params action not specified");
+        assertEquals("params action not specified", errMsg);
     }
 
 }
