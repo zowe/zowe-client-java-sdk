@@ -11,7 +11,7 @@ package zowe.client.sdk.utility;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Class containing unit tests for ValidateUtils.
@@ -39,7 +39,7 @@ public class ValidateUtilsTest {
         } catch (Exception e) {
             isIllegalArgumentException = true;
         }
-        assertEquals(false, isIllegalArgumentException);
+        assertFalse(isIllegalArgumentException);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class ValidateUtilsTest {
         } catch (Exception e) {
             isIllegalArgumentException = true;
         }
-        assertEquals(true, isIllegalArgumentException);
+        assertTrue(isIllegalArgumentException);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ValidateUtilsTest {
         } catch (Exception e) {
             isNullException = true;
         }
-        assertEquals(false, isNullException);
+        assertFalse(isNullException);
     }
 
     @Test
@@ -75,7 +75,7 @@ public class ValidateUtilsTest {
         } catch (Exception e) {
             isNullException = true;
         }
-        assertEquals(true, isNullException);
+        assertTrue(isNullException);
     }
 
 }
