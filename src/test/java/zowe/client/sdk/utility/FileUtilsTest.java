@@ -46,7 +46,7 @@ public class FileUtilsTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals( "specify 9 character permission", errMsg);
+        assertEquals("specify 9 character permission", errMsg);
     }
 
     @Test
