@@ -86,6 +86,18 @@ public class UssChangeOwnerTest {
     }
 
     @Test
+    public void tstUssChangeOwnerEmptyPathWithSpacesFailure() {
+        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection);
+        String errMsg = "";
+        try {
+            ussChangeOwner.change("   ", "user");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("targetPath not specified", errMsg);
+    }
+
+    @Test
     public void tstUssChangeOwnerNullParamsFailure() {
         UssChangeOwner ussChangeOwner = new UssChangeOwner(connection);
         String errMsg = "";
@@ -132,5 +144,17 @@ public class UssChangeOwnerTest {
         }
         assertEquals("owner not specified", errMsg);
     }
+
+    @Test
+    public void tstUssChangeOwnerEmptyOwnerWithSpacesFailure() {
+        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection);
+        String errMsg = "";
+        try {
+            ussChangeOwner.change("/xxx/xx/xx", "  ");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("owner not specified", errMsg);
+    }    
 
 }
