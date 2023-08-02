@@ -34,71 +34,12 @@ public class UssMountTest {
     }
 
     @Test
-    public void tstUssMountNullFilSystemNameFailure() {
+    public void tstUssMountCommonCountActionWithNoFsTypeFailure() {
         UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
-            ussMount.mount(null, "mount", "hfs");
-        } catch (Exception e) {
-            errMsg = e.getMessage();
-        }
-        assertEquals("file system name is null", errMsg);
-    }
-
-    @Test
-    public void tstUssMountEmptyFilSystemNameFailure() {
-        UssMount ussMount = new UssMount(connection);
-        String errMsg = "";
-        try {
-            ussMount.mount("", "mount", "hfs");
-        } catch (Exception e) {
-            errMsg = e.getMessage();
-        }
-        assertEquals("file system name not specified", errMsg);
-    }
-
-    @Test
-    public void tstUssMountNullMountPointFailure() {
-        UssMount ussMount = new UssMount(connection);
-        String errMsg = "";
-        try {
-            ussMount.mount("name", null, "hfs");
-        } catch (Exception e) {
-            errMsg = e.getMessage();
-        }
-        assertEquals("mountPoint is null", errMsg);
-    }
-
-    @Test
-    public void tstUssMountEmptyMountPointFailure() {
-        UssMount ussMount = new UssMount(connection);
-        String errMsg = "";
-        try {
-            ussMount.mount("name", "", "hfs");
-        } catch (Exception e) {
-            errMsg = e.getMessage();
-        }
-        assertEquals("mountPoint not specified", errMsg);
-    }
-
-    @Test
-    public void tstUssMountNullFsTypeFailure() {
-        UssMount ussMount = new UssMount(connection);
-        String errMsg = "";
-        try {
-            ussMount.mount("name", "mount", null);
-        } catch (Exception e) {
-            errMsg = e.getMessage();
-        }
-        assertEquals("fsType is null", errMsg);
-    }
-
-    @Test
-    public void tstUssMountEmptyFsTypeFailure() {
-        UssMount ussMount = new UssMount(connection);
-        String errMsg = "";
-        try {
-            ussMount.mount("name", "mount", "");
+            ussMount.mountCommon("name",
+                    new MountParams.Builder().action(MountActionType.MOUNT).mountPoint("mountpoint").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -119,16 +60,16 @@ public class UssMountTest {
     }
 
     @Test
-    public void tstUssMountCommonCountActionWithNoFsTypeFailure() {
+    public void tstUssMountCommonEmptyFileSystemNameFailure() {
         UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
-            ussMount.mountCommon("name",
+            ussMount.mountCommon("",
                     new MountParams.Builder().action(MountActionType.MOUNT).mountPoint("mountpoint").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fsType not specified", errMsg);
+        assertEquals("file system name not specified", errMsg);
     }
 
     @Test
@@ -145,19 +86,6 @@ public class UssMountTest {
     }
 
     @Test
-    public void tstUssMountCommonEmptyFileSystemNameFailure() {
-        UssMount ussMount = new UssMount(connection);
-        String errMsg = "";
-        try {
-            ussMount.mountCommon("",
-                    new MountParams.Builder().action(MountActionType.MOUNT).mountPoint("mountpoint").build());
-        } catch (Exception e) {
-            errMsg = e.getMessage();
-        }
-        assertEquals("file system name not specified", errMsg);
-    }
-
-    @Test
     public void tstUssMountCommonNullParamsFailure() {
         UssMount ussMount = new UssMount(connection);
         String errMsg = "";
@@ -170,15 +98,123 @@ public class UssMountTest {
     }
 
     @Test
-    public void tstUssMountUnMountNullFileSystemNameFailure() {
+    public void tstUssMountEmptyActionFailure() {
         UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
-            ussMount.unmount(null);
+            ussMount.mountCommon("name", new MountParams.Builder().build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("params action not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssMountEmptyFilSystemNameFailure() {
+        UssMount ussMount = new UssMount(connection);
+        String errMsg = "";
+        try {
+            ussMount.mount("", "mount", "hfs");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("file system name not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssMountEmptyFilSystemNameWithSpacesFailure() {
+        UssMount ussMount = new UssMount(connection);
+        String errMsg = "";
+        try {
+            ussMount.mount("   ", "mount", "hfs");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("file system name not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssMountEmptyFsTypeFailure() {
+        UssMount ussMount = new UssMount(connection);
+        String errMsg = "";
+        try {
+            ussMount.mount("name", "mount", "");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fsType not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssMountEmptyFsTypeWithSpacesFailure() {
+        UssMount ussMount = new UssMount(connection);
+        String errMsg = "";
+        try {
+            ussMount.mount("name", "mount", "   ");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fsType not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssMountEmptyMountPointFailure() {
+        UssMount ussMount = new UssMount(connection);
+        String errMsg = "";
+        try {
+            ussMount.mount("name", "", "hfs");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("mountPoint not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssMountEmptyMountPointWithSpacesFailure() {
+        UssMount ussMount = new UssMount(connection);
+        String errMsg = "";
+        try {
+            ussMount.mount("name", "   ", "hfs");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("mountPoint not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssMountNullFilSystemNameFailure() {
+        UssMount ussMount = new UssMount(connection);
+        String errMsg = "";
+        try {
+            ussMount.mount(null, "mount", "hfs");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
         assertEquals("file system name is null", errMsg);
+    }
+
+    @Test
+    public void tstUssMountNullFsTypeFailure() {
+        UssMount ussMount = new UssMount(connection);
+        String errMsg = "";
+        try {
+            ussMount.mount("name", "mount", null);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fsType is null", errMsg);
+    }
+
+    @Test
+    public void tstUssMountNullMountPointFailure() {
+        UssMount ussMount = new UssMount(connection);
+        String errMsg = "";
+        try {
+            ussMount.mount("name", null, "hfs");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("mountPoint is null", errMsg);
     }
 
     @Test
@@ -194,15 +230,27 @@ public class UssMountTest {
     }
 
     @Test
-    public void tstUssMountEmptyActionFailure() {
+    public void tstUssMountUnMountEmptyFileSystemNameWithSpacesFailure() {
         UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
-            ussMount.mountCommon("name", new MountParams.Builder().build());
+            ussMount.unmount("  ");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("params action not specified", errMsg);
+        assertEquals("file system name not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssMountUnMountNullFileSystemNameFailure() {
+        UssMount ussMount = new UssMount(connection);
+        String errMsg = "";
+        try {
+            ussMount.unmount(null);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("file system name is null", errMsg);
     }
 
 }
