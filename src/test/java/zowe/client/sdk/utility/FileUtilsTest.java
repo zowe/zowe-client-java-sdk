@@ -32,17 +32,14 @@ public class FileUtilsTest {
 
     @Test
     public void tstValidatePermissionSuccess() {
-        final String value = "rwxrwxrwx";
-        final String result = FileUtils.validatePermission(value);
-        assertEquals(value, result);
+        assertEquals("rwxrwxrwx", FileUtils.validatePermission("rwxrwxrwx"));
     }
 
     @Test
     public void tstValidatePermissionLengthFailure() {
-        final String value = "rwxrwxrwxx";
         String errMsg = "";
         try {
-            FileUtils.validatePermission(value);
+            FileUtils.validatePermission("rwxrwxrwxx");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -51,10 +48,9 @@ public class FileUtilsTest {
 
     @Test
     public void tstValidatePermissionInvalidFailure() {
-        final String value = "rwxrwxrkk";
         String errMsg = "";
         try {
-            FileUtils.validatePermission(value);
+            FileUtils.validatePermission("rwxrwxrkk");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
