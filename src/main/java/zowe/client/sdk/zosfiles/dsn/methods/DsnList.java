@@ -174,7 +174,7 @@ public class DsnList {
     public java.util.List<Dataset> listDsn(String dataSetName, ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName.trim().isEmpty(), "dataSetName not specified");
 
         final Map<String, String> headers = new HashMap<>();
         final java.util.List<Dataset> datasets = new ArrayList<>();
@@ -205,7 +205,7 @@ public class DsnList {
     public java.util.List<Member> listDsnMembers(String dataSetName, ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName.trim().isEmpty(), "dataSetName not specified");
 
         final Map<String, String> headers = new HashMap<>();
         final java.util.List<Member> members = new ArrayList<>();

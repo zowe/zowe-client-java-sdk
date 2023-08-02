@@ -80,7 +80,7 @@ public class UssCreate {
      */
     public Response create(String name, CreateParams params) throws Exception {
         ValidateUtils.checkNullParameter(name == null, "name is null");
-        ValidateUtils.checkIllegalParameter(name.isEmpty(), "name not specified");
+        ValidateUtils.checkIllegalParameter(name.trim().isEmpty(), "name not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +

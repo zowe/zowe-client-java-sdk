@@ -93,7 +93,7 @@ public class UssCopy {
      */
     public Response copy(String targetPath, CopyParams params) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.isEmpty(), "targetPath not specified");
+        ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()

@@ -40,7 +40,7 @@ public final class EncodeUtils {
      */
     public static String encodeURIComponent(String str) {
         ValidateUtils.checkNullParameter(str == null, "str is null");
-        ValidateUtils.checkIllegalParameter(str.isEmpty(), "str not specified");
+        ValidateUtils.checkIllegalParameter(str.trim().isEmpty(), "str not specified");
         return URLEncoder.encode(str, StandardCharsets.UTF_8)
                 .replaceAll("\\+", "%20")
                 .replaceAll("\\%21", "!")

@@ -62,7 +62,7 @@ public class KeyTarImpl implements IKeyTar {
     @Override
     public List<KeyTarConfig> getKeyConfigs() throws Exception {
         ValidateUtils.checkNullParameter(keyString == null, "keyString is null, perform processKey first");
-        ValidateUtils.checkIllegalParameter(keyString.isEmpty(), "keyString is empty");
+        ValidateUtils.checkIllegalParameter(keyString.trim().isEmpty(), "keyString is empty");
         if (!keyTarConfigs.isEmpty()) {
             return keyTarConfigs;
         }
@@ -78,7 +78,7 @@ public class KeyTarImpl implements IKeyTar {
     @Override
     public String getKeyTarValue() {
         ValidateUtils.checkNullParameter(keyString == null, "keyString is null, perform processKey first");
-        ValidateUtils.checkIllegalParameter(keyString.isEmpty(), "keyString is empty");
+        ValidateUtils.checkIllegalParameter(keyString.trim().isEmpty(), "keyString is empty");
         return keyString;
     }
 
@@ -110,9 +110,9 @@ public class KeyTarImpl implements IKeyTar {
     @Override
     public void processKey() throws KeytarException {
         ValidateUtils.checkNullParameter(serviceName == null, "serviceName is null");
-        ValidateUtils.checkIllegalParameter(serviceName.isEmpty(), "serviceName is empty");
+        ValidateUtils.checkIllegalParameter(serviceName.trim().isEmpty(), "serviceName is empty");
         ValidateUtils.checkNullParameter(accountName == null, "accountName is null");
-        ValidateUtils.checkIllegalParameter(accountName.isEmpty(), "accountName is empty");
+        ValidateUtils.checkIllegalParameter(accountName.trim().isEmpty(), "accountName is empty");
         final Keytar instance = Keytar.getInstance();
         final String encodedString = instance.getPassword(serviceName, accountName);
         LOG.debug("KeyTar encodedString retrieved {}", encodedString);

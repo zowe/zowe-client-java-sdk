@@ -297,7 +297,7 @@ public class ListParams {
 
         public ListParams.Builder path(String path) {
             ValidateUtils.checkNullParameter(path == null, "path is null");
-            ValidateUtils.checkIllegalParameter(path.isEmpty(), "path not specified");
+            ValidateUtils.checkIllegalParameter(path.trim().isEmpty(), "path not specified");
             this.path = path;
             return this;
         }

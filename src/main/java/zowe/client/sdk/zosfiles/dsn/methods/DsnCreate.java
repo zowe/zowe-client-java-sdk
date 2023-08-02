@@ -79,7 +79,7 @@ public class DsnCreate {
     public Response create(String dataSetName, CreateParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName.trim().isEmpty(), "dataSetName not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(dataSetName);

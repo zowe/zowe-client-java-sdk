@@ -74,9 +74,9 @@ public class DsnWrite {
      */
     public Response write(String dataSetName, String memberName, String content) throws Exception {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName.trim().isEmpty(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
-        ValidateUtils.checkIllegalParameter(memberName.isEmpty(), "memberName not specified");
+        ValidateUtils.checkIllegalParameter(memberName.trim().isEmpty(), "memberName not specified");
         return write(String.format("%s(%s)", dataSetName, memberName), content);
     }
 
@@ -92,7 +92,7 @@ public class DsnWrite {
     public Response write(String dataSetName, String content) throws Exception {
         ValidateUtils.checkNullParameter(content == null, "content is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName.trim().isEmpty(), "dataSetName not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(dataSetName);

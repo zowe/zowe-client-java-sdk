@@ -90,7 +90,7 @@ public class JobSubmit {
     public Job submitJclCommon(SubmitJclParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJcl().isEmpty(), "jcl not specified");
-        ValidateUtils.checkIllegalParameter(params.getJcl().get().isEmpty(), "jcl not specified");
+        ValidateUtils.checkIllegalParameter(params.getJcl().get().trim().isEmpty(), "jcl not specified");
         String key, value;
         final Map<String, String> headers = new HashMap<>();
 
@@ -161,7 +161,7 @@ public class JobSubmit {
     public Job submitCommon(SubmitJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJobDataSet().isEmpty(), "jobDataSet not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobDataSet().get().isEmpty(), "jobDataSet not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobDataSet().get().trim().isEmpty(), "jobDataSet not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
 

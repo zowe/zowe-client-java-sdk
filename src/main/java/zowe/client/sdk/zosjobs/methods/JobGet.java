@@ -92,9 +92,9 @@ public class JobGet {
     public String getJclCommon(CommonJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobName().get().isEmpty(), "jobName not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobName().get().trim().isEmpty(), "jobName not specified");
         ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobId().get().trim().isEmpty(), "jobId not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() +
@@ -134,7 +134,7 @@ public class JobGet {
      */
     public Job getById(String jobId) throws Exception {
         ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
-        ValidateUtils.checkIllegalParameter(jobId.isEmpty(), "jobId not specified");
+        ValidateUtils.checkIllegalParameter(jobId.trim().isEmpty(), "jobId not specified");
 
         final List<Job> jobs = getCommon(new GetJobParams.Builder("*").jobId(jobId).build());
         if (jobs.isEmpty()) {
@@ -169,7 +169,7 @@ public class JobGet {
      */
     public List<Job> getByOwner(String owner) throws Exception {
         ValidateUtils.checkNullParameter(owner == null, "owner is null");
-        ValidateUtils.checkIllegalParameter(owner.isEmpty(), "owner not specified");
+        ValidateUtils.checkIllegalParameter(owner.trim().isEmpty(), "owner not specified");
         return getCommon(new GetJobParams.Builder(owner).build());
     }
 
@@ -186,9 +186,9 @@ public class JobGet {
      */
     public List<Job> getByOwnerAndPrefix(String owner, String prefix) throws Exception {
         ValidateUtils.checkNullParameter(owner == null, "owner is null");
-        ValidateUtils.checkIllegalParameter(owner.isEmpty(), "owner not specified");
+        ValidateUtils.checkIllegalParameter(owner.trim().trim().isEmpty(), "owner not specified");
         ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
-        ValidateUtils.checkIllegalParameter(prefix.isEmpty(), "prefix not specified");
+        ValidateUtils.checkIllegalParameter(prefix.trim().trim().isEmpty(), "prefix not specified");
         return getCommon(new GetJobParams.Builder(owner).prefix(prefix).build());
     }
 
@@ -202,7 +202,7 @@ public class JobGet {
      */
     public List<Job> getByPrefix(String prefix) throws Exception {
         ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
-        ValidateUtils.checkIllegalParameter(prefix.isEmpty(), "prefix not specified");
+        ValidateUtils.checkIllegalParameter(prefix.trim().isEmpty(), "prefix not specified");
         return getCommon(new GetJobParams.Builder("*").prefix(prefix).build());
     }
 
@@ -368,9 +368,9 @@ public class JobGet {
     public List<JobFile> getSpoolFilesCommon(CommonJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobId().get().trim().isEmpty(), "jobId not specified");
         ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobName().get().isEmpty(), "jobName not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobName().get().trim().isEmpty(), "jobName not specified");
 
         List<JobFile> files = new ArrayList<>();
 

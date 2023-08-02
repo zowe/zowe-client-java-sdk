@@ -73,9 +73,9 @@ public class DsnDelete {
      */
     public Response delete(String dataSetName, String memberName) throws Exception {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName.trim().isEmpty(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
-        ValidateUtils.checkIllegalParameter(memberName.isEmpty(), "memberName not specified");
+        ValidateUtils.checkIllegalParameter(memberName.trim().isEmpty(), "memberName not specified");
         return delete(String.format("%s(%s)", dataSetName, memberName));
     }
 
@@ -89,7 +89,7 @@ public class DsnDelete {
      */
     public Response delete(String dataSetName) throws Exception {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isEmpty(), "dataSetName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName.trim().isEmpty(), "dataSetName not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(dataSetName);

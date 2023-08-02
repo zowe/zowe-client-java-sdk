@@ -39,9 +39,9 @@ public final class JobUtils {
     public static void checkModifyJobParameters(ModifyJobParams params) {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), "job id not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobId().get().isEmpty(), "job id not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobId().get().trim().isEmpty(), "job id not specified");
         ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), "job name not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobName().get().isEmpty(), "job name not specified");
+        ValidateUtils.checkIllegalParameter(params.getJobName().get().trim().isEmpty(), "job name not specified");
     }
 
     /**
