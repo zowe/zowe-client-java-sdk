@@ -20,7 +20,8 @@ import static org.junit.Assert.fail;
 /**
  * Utility class for test package.
  *
- * @author Frank Giordano
+ * @author James Kostrewski
+ * @version 2.0
  */
 public final class Utils {
 
