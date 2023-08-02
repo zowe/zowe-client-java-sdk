@@ -42,8 +42,8 @@ public class UssChangeModeTest {
     public void tstUssChangeModeSuccess() throws Exception {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        UssChangeMode ussChMod = new UssChangeMode(connection, jsonPutRequest);
-        Response response = ussChMod.change("/xxx/xx/xx",
+        UssChangeMode ussChangeMode = new UssChangeMode(connection, jsonPutRequest);
+        Response response = ussChangeMode.change("/xxx/xx/xx",
                 new ChangeModeParams(new ChangeModeParams.Builder().mode("rwxrwxrwx")));
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
@@ -54,8 +54,8 @@ public class UssChangeModeTest {
     public void tstUssChangeModeRecursiveSuccess() throws Exception {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        UssChangeMode ussChMod = new UssChangeMode(connection, jsonPutRequest);
-        Response response = ussChMod.change("/xxx/xx/xx",
+        UssChangeMode ussChangeMode = new UssChangeMode(connection, jsonPutRequest);
+        Response response = ussChangeMode.change("/xxx/xx/xx",
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
@@ -64,10 +64,10 @@ public class UssChangeModeTest {
 
     @Test
     public void tstUssChangeModeNullTargetPathFailure() {
-        UssChangeMode ussChMod = new UssChangeMode(connection);
+        UssChangeMode ussChangeMode = new UssChangeMode(connection);
         String errMsg = "";
         try {
-            ussChMod.change(null, new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
+            ussChangeMode.change(null, new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -76,10 +76,10 @@ public class UssChangeModeTest {
 
     @Test
     public void tstUssChangeModeEmptyTargetPathFailure() {
-        UssChangeMode ussChMod = new UssChangeMode(connection);
+        UssChangeMode ussChangeMode = new UssChangeMode(connection);
         String errMsg = "";
         try {
-            ussChMod.change("", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
+            ussChangeMode.change("", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -88,10 +88,10 @@ public class UssChangeModeTest {
 
     @Test
     public void tstUssChangeModeEmptyWithSpacesTargetPathFailure() {
-        UssChangeMode ussChMod = new UssChangeMode(connection);
+        UssChangeMode ussChangeMode = new UssChangeMode(connection);
         String errMsg = "";
         try {
-            ussChMod.change("  ", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
+            ussChangeMode.change("  ", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -100,10 +100,10 @@ public class UssChangeModeTest {
 
     @Test
     public void tstUssChangeModeNullModeFailure() {
-        UssChangeMode ussChMod = new UssChangeMode(connection);
+        UssChangeMode ussChangeMode = new UssChangeMode(connection);
         String errMsg = "";
         try {
-            ussChMod.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode(null).build());
+            ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode(null).build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -112,10 +112,10 @@ public class UssChangeModeTest {
 
     @Test
     public void tstUssChangeModeEmptyModeFailure() {
-        UssChangeMode ussChMod = new UssChangeMode(connection);
+        UssChangeMode ussChangeMode = new UssChangeMode(connection);
         String errMsg = "";
         try {
-            ussChMod.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("").build());
+            ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -124,10 +124,10 @@ public class UssChangeModeTest {
 
     @Test
     public void tstUssChangeModeEmptyWithSpacesModeFailure() {
-        UssChangeMode ussChMod = new UssChangeMode(connection);
+        UssChangeMode ussChangeMode = new UssChangeMode(connection);
         String errMsg = "";
         try {
-            ussChMod.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("  ").build());
+            ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("  ").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
