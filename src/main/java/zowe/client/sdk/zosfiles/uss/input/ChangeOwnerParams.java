@@ -113,7 +113,7 @@ public class ChangeOwnerParams {
 
         public ChangeOwnerParams.Builder owner(String owner) {
             ValidateUtils.checkNullParameter(owner == null, "owner is null");
-            ValidateUtils.checkIllegalParameter(owner.isEmpty(), "owner not specified");
+            ValidateUtils.checkIllegalParameter(owner.trim().isEmpty(), "owner not specified");
             this.owner = owner;
             return this;
         }
