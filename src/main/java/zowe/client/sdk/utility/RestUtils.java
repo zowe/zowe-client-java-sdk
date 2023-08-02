@@ -17,7 +17,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
- * Utility Class for REST related static helper methods.
+ * Utility class for REST related static helper methods.
  *
  * @author Frank Giordano
  * @version 2.0
