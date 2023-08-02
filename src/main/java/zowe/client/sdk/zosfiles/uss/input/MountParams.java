@@ -124,14 +124,14 @@ public class MountParams {
 
         public MountParams.Builder mountPoint(String mountPoint) {
             ValidateUtils.checkNullParameter(mountPoint == null, "mountPoint is null");
-            ValidateUtils.checkIllegalParameter(mountPoint.isEmpty(), "mountPoint not specified");
+            ValidateUtils.checkIllegalParameter(mountPoint.trim().isEmpty(), "mountPoint not specified");
             this.mountPoint = mountPoint;
             return this;
         }
 
         public MountParams.Builder fsType(String fsType) {
             ValidateUtils.checkNullParameter(fsType == null, "fsType is null");
-            ValidateUtils.checkIllegalParameter(fsType.isEmpty(), "fsType not specified");
+            ValidateUtils.checkIllegalParameter(fsType.trim().isEmpty(), "fsType not specified");
             this.fsType = fsType;
             return this;
         }
