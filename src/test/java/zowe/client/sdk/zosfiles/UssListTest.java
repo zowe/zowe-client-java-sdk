@@ -58,6 +58,18 @@ public class UssListTest {
     }
 
     @Test
+    public void tstUssListFileListParamsPathEmptyWithSpacesFailure() {
+        UssList ussList = new UssList(connection);
+        String errMsg = "";
+        try {
+            ussList.fileList(new ListParams.Builder().path("    ").build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("path not specified", errMsg);
+    }
+
+    @Test
     public void tstUssListFileListParamsPathNullFailure() {
         UssList ussList = new UssList(connection);
         String errMsg = "";
@@ -94,6 +106,18 @@ public class UssListTest {
     }
 
     @Test
+    public void tstUssListZfsListParamsFsnameEmptyWithSpacesFailure() {
+        UssList ussList = new UssList(connection);
+        String errMsg = "";
+        try {
+            ussList.zfsList(new ListZfsParams.Builder().fsname("    ").build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fsname not specified", errMsg);
+    }
+
+    @Test
     public void tstUssListZfsListParamsFsnameNullFailure() {
         UssList ussList = new UssList(connection);
         String errMsg = "";
@@ -123,6 +147,18 @@ public class UssListTest {
         String errMsg = "";
         try {
             ussList.zfsList(new ListZfsParams.Builder().path("").build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("path not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssListZfsListParamsPathEmptyWithSpacesFailure() {
+        UssList ussList = new UssList(connection);
+        String errMsg = "";
+        try {
+            ussList.zfsList(new ListZfsParams.Builder().path("   ").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
