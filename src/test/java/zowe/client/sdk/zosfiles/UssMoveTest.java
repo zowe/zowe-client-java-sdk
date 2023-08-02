@@ -84,6 +84,18 @@ public class UssMoveTest {
     }
 
     @Test
+    public void tstUssMoveEmptyFromPathWithSpacesFailure() {
+        UssMove ussMove = new UssMove(connection);
+        String errMsg = "";
+        try {
+            ussMove.move("   ", "/xxx/xx/xx");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fromPath not specified", errMsg);
+    }
+
+    @Test
     public void tstUssMoveNullTargetPathFailure() {
         UssMove ussMove = new UssMove(connection);
         String errMsg = "";
@@ -101,6 +113,18 @@ public class UssMoveTest {
         String errMsg = "";
         try {
             ussMove.move("/xxx/xx/xx", "");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("targetPath not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssMoveEmptyTargetPathWithSpacesFailure() {
+        UssMove ussMove = new UssMove(connection);
+        String errMsg = "";
+        try {
+            ussMove.move("/xxx/xx/xx", "   ");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
