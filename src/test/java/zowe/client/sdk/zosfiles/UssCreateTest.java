@@ -9,9 +9,14 @@
  */
 package zowe.client.sdk.zosfiles;
 
+import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.JsonPostRequest;
+import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.CreateParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssCreate;
 import zowe.client.sdk.zosfiles.uss.types.CreateType;
@@ -26,11 +31,24 @@ import static org.junit.Assert.assertEquals;
  */
 public class UssCreateTest {
 
+    private JsonPostRequest jsonPostrequest;
     private ZosConnection connection;
 
     @Before
     public void init() {
+        jsonPostrequest = Mockito.mock(JsonPostRequest.class);
         connection = new ZosConnection("1", "1", "1", "1");
+    }
+
+    @Test
+    public void tstUssCreateSuccess() throws Exception {
+        Mockito.when(jsonPostrequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        UssCreate ussCreate = new UssCreate(connection, jsonPostrequest);
+        Response response = ussCreate.create("name", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+        Assertions.assertEquals("{}", response.getResponsePhrase().get().toString());
+        Assertions.assertEquals("200", response.getStatusCode().get().toString());
+        Assertions.assertEquals("success", response.getStatusText().get().toString());
     }
 
     @Test
@@ -67,7 +85,7 @@ public class UssCreateTest {
             errMsg = e.getMessage();
         }
         assertEquals("name not specified", errMsg);
-    }    
+    }
 
     @Test
     public void tstUssCreateNullParamsFailure() {
@@ -139,6 +157,6 @@ public class UssCreateTest {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid permission", errMsg);
-    }   
+    }
 
 }
