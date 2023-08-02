@@ -55,7 +55,7 @@ public class UssCopyTest {
                 new Response(new JSONObject(), 200, "success"));
         UssCopy ussCopy = new UssCopy(connection, jsonPutRequest);
         Response response = ussCopy.copy("/xxx/xx/xx",
-                new CopyParams(new CopyParams.Builder().from("/xxx/xx/xx").recursive(true)));
+                new CopyParams.Builder().from("/xxx/xx/xx").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get().toString());
@@ -67,7 +67,7 @@ public class UssCopyTest {
                 new Response(new JSONObject(), 200, "success"));
         UssCopy ussCopy = new UssCopy(connection, jsonPutRequest);
         Response response = ussCopy.copy("/xxx/xx/xx",
-                new CopyParams(new CopyParams.Builder().from("/xxx/xx/xx").overwrite(true)));
+                new CopyParams.Builder().from("/xxx/xx/xx").overwrite(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get().toString());
@@ -191,6 +191,6 @@ public class UssCopyTest {
             errMsg = e.getMessage();
         }
         assertEquals("from not specified", errMsg);
-    }    
+    }
 
 }
