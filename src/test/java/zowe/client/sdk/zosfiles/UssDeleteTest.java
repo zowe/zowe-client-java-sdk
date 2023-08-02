@@ -84,6 +84,18 @@ public class UssDeleteTest {
     }
 
     @Test
+    public void tstUssDeleteEmptyNameWithSpacesFailure() {
+        UssDelete ussDelete = new UssDelete(connection);
+        String errMsg = "";
+        try {
+            ussDelete.delete("   ");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("name not specified", errMsg);
+    }    
+
+    @Test
     public void tstUssDeleteNullNameRecursiveFailure() {
         UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
@@ -130,5 +142,17 @@ public class UssDeleteTest {
         }
         assertEquals("file system name not specified", errMsg);
     }
+
+    @Test
+    public void tstUssDeleteZfsEmptyFileSystemNameWithSpacesFailure() {
+        UssDelete ussDelete = new UssDelete(connection);
+        String errMsg = "";
+        try {
+            ussDelete.zfsDelete("   ");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("file system name not specified", errMsg);
+    }   
 
 }
