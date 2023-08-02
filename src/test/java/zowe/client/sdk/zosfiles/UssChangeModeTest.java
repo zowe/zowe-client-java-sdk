@@ -44,7 +44,7 @@ public class UssChangeModeTest {
                 new Response(new JSONObject(), 200, "success"));
         UssChangeMode ussChangeMode = new UssChangeMode(connection, jsonPutRequest);
         Response response = ussChangeMode.change("/xxx/xx/xx",
-                new ChangeModeParams(new ChangeModeParams.Builder().mode("rwxrwxrwx")));
+                new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get().toString());
