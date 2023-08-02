@@ -40,7 +40,7 @@ public class UssGetTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "file path name is null");
+        assertEquals("file path name is null", errMsg);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class UssGetTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "file path name not specified");
+        assertEquals("file path name not specified", errMsg);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class UssGetTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "file path name is null");
+        assertEquals("file path name is null", errMsg);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class UssGetTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "file path name not specified");
+        assertEquals("file path name not specified", errMsg);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class UssGetTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "params is null");
+        assertEquals("params is null", errMsg);
     }
 
 }
