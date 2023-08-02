@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Utility Class for Tso command related static helper methods.
+ * Utility Class contains helper methods for IssueTso processing
  *
  * @author Frank Giordano
  * @version 2.0

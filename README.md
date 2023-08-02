@@ -5,8 +5,8 @@ SPDX-License-Identifier: EPL-2.0
 Copyright Contributors to the Zowe Project.
 
 # Zowe Java Client SDK
- 
-![zowe.gif](gif%2Fzowe.gif)
+
+![zowe org_video_outro_gif_accessibility](https://github.com/zowe/zowe-client-java-sdk/assets/7764341/aaa26c45-6fb3-4857-8e6b-80fc85dad4cd)
   
 ![](https://img.shields.io/badge/license-EPL--2.0-blue)
 [![Maven Central](https://img.shields.io/maven-central/v/org.zowe.client.java.sdk/zowe-client-java-sdk.svg?label=Maven%20Central)](https://central.sonatype.com/search?q=org.zowe.client.java.sdk&smo=true)
@@ -43,9 +43,9 @@ zowe.client.sdk.zosfiles.dsn.methods
   
 zowe.client.sdk.zosfiles.uss.methods  
     
-    UssChgMode
-    UssChgOwner
-    UssChgTag
+    UssChangeMode
+    UssChangeOwner
+    UssChangeTag
     UssCopy
     UssCreate
     UssDelete

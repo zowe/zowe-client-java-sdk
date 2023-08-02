@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Utility Class for zosFiles related static helper methods.
+ * Utility Class for UNIX (USS) related static helper methods.
  *
  * @author Frank Giordano
  * @version 2.0

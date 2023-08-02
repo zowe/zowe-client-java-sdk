@@ -138,7 +138,7 @@ public class UssCopyTest {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
-            ussCopy.copy("/xxx/xx/xx", new CopyParams(new CopyParams.Builder().from(null)));
+            ussCopy.copy("/xxx/xx/xx", new CopyParams.Builder().from(null).build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -150,7 +150,7 @@ public class UssCopyTest {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
-            ussCopy.copy("/xxx/xx/xx", new CopyParams(new CopyParams.Builder().from("")));
+            ussCopy.copy("/xxx/xx/xx", new CopyParams.Builder().from("").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
