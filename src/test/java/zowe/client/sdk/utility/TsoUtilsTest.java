@@ -23,7 +23,8 @@ import static org.junit.Assert.*;
 /**
  * Class containing unit tests for TsoUtils.
  *
- * @author Frank Giordano
+ * @author James Kostrewski
+ * @version 2.0
  */
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class TsoUtilsTest {
