@@ -98,6 +98,18 @@ public class UssCopyTest {
     }
 
     @Test
+    public void tstUssCopyEmptyFromPathWithSpacesFailure() {
+        UssCopy ussCopy = new UssCopy(connection);
+        String errMsg = "";
+        try {
+            ussCopy.copy("   ", "/xxx/xx/xx");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("from not specified", errMsg);
+    }
+
+    @Test
     public void tstUssCopyNullTargetPathFailure() {
         UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
@@ -115,6 +127,18 @@ public class UssCopyTest {
         String errMsg = "";
         try {
             ussCopy.copy("/xxx/xx/xx", "");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("targetPath not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssCopyEmptyTargetPathWithSpacesFailure() {
+        UssCopy ussCopy = new UssCopy(connection);
+        String errMsg = "";
+        try {
+            ussCopy.copy("/xxx/xx/xx", "  ");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -156,5 +180,17 @@ public class UssCopyTest {
         }
         assertEquals("from not specified", errMsg);
     }
+
+    @Test
+    public void tstUssCopyEmptyFromInParamsWithSpacesFailure() {
+        UssCopy ussCopy = new UssCopy(connection);
+        String errMsg = "";
+        try {
+            ussCopy.copy("/xxx/xx/xx", new CopyParams.Builder().from("   ").build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("from not specified", errMsg);
+    }    
 
 }
