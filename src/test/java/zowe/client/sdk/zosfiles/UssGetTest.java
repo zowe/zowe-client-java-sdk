@@ -139,6 +139,18 @@ public class UssGetTest {
     }
 
     @Test
+    public void tstUssGetBinaryFilePathEmptyNameWithSpacesFailure() {
+        UssGet ussGet = new UssGet(connection);
+        String errMsg = "";
+        try {
+            ussGet.getBinary("   ");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("file path name not specified", errMsg);
+    }
+
+    @Test
     public void tstUssGetCommonNullParamsFailure() {
         UssGet ussGet = new UssGet(connection);
         String errMsg = "";
