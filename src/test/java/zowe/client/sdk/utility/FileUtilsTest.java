@@ -34,7 +34,7 @@ public class FileUtilsTest {
     public void tstValidatePermissionSuccess() {
         final String value = "rwxrwxrwx";
         final String result = FileUtils.validatePermission(value);
-        assertEquals(result, value);
+        assertEquals(value, result);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class FileUtilsTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "specify 9 character permission");
+        assertEquals( "specify 9 character permission", errMsg);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class FileUtilsTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "specify valid permission");
+        assertEquals("specify valid permission", errMsg);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class FileUtilsTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "permission value is null");
+        assertEquals("permission value is null", errMsg);
     }
 
 }
