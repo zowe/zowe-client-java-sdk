@@ -119,7 +119,7 @@ public class UssGetTest {
         UssGet ussGet = new UssGet(connection);
         String errMsg = "";
         try {
-            ussGet.getText(null);
+            ussGet.getBinary(null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -131,7 +131,7 @@ public class UssGetTest {
         UssGet ussGet = new UssGet(connection);
         String errMsg = "";
         try {
-            ussGet.getText("");
+            ussGet.getBinary("");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
