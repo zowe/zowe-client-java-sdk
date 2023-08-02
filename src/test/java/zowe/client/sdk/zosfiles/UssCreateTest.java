@@ -42,7 +42,7 @@ public class UssCreateTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "name is null");
+        assertEquals("name is null", errMsg);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class UssCreateTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "name not specified");
+        assertEquals("name not specified", errMsg);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class UssCreateTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "params is null");
+        assertEquals("params is null", errMsg);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class UssCreateTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "type is null");
+        assertEquals("type is null", errMsg);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class UssCreateTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "mode is null");
+        assertEquals("mode is null", errMsg);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class UssCreateTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "specify 9 character permission");
+        assertEquals("specify 9 character permission", errMsg);
     }
 
     @Test
@@ -114,7 +114,7 @@ public class UssCreateTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "specify valid permission");
+        assertEquals("specify valid permission", errMsg);
     }
 
 }
