@@ -9,13 +9,19 @@
  */
 package zowe.client.sdk.zosfiles;
 
+import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.StreamPutRequest;
+import zowe.client.sdk.rest.TextPutRequest;
 import zowe.client.sdk.zosfiles.uss.input.WriteParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssWrite;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Class containing unit tests for UssWrite.
@@ -30,6 +36,30 @@ public class UssWriteTest {
     @Before
     public void init() {
         connection = new ZosConnection("1", "1", "1", "1");
+    }
+
+    @Test
+    public void tstUssWriteTextSuccess() throws Exception {
+        TextPutRequest textPutRequest = Mockito.mock(TextPutRequest.class);
+        Mockito.when(textPutRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        UssWrite ussWrite = new UssWrite(connection, textPutRequest);
+        Response response = ussWrite.writeText("name", "text");
+        assertEquals("{}", response.getResponsePhrase().get().toString());
+        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals("success", response.getStatusText().get().toString());
+    }
+
+    @Test
+    public void tstUssWriteBinarySuccess() throws Exception {
+        StreamPutRequest streamPutRequest = Mockito.mock(StreamPutRequest.class);
+        Mockito.when(streamPutRequest.executeRequest()).thenReturn(
+                new Response(new byte[0], 200, "success"));
+        UssWrite ussWrite = new UssWrite(connection, streamPutRequest);
+        Response response = ussWrite.writeBinary("name", new byte[0]);
+        assertTrue(response.getResponsePhrase().get() instanceof byte[]);
+        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals("success", response.getStatusText().get().toString());
     }
 
     @Test
