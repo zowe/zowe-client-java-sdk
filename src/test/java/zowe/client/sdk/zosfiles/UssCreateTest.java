@@ -58,6 +58,18 @@ public class UssCreateTest {
     }
 
     @Test
+    public void tstUssCreateEmptyNameWithSpacesFailure() {
+        UssCreate ussCreate = new UssCreate(connection);
+        String errMsg = "";
+        try {
+            ussCreate.create("  ", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("name not specified", errMsg);
+    }    
+
+    @Test
     public void tstUssCreateNullParamsFailure() {
         UssCreate ussCreate = new UssCreate(connection);
         String errMsg = "";
@@ -116,5 +128,17 @@ public class UssCreateTest {
         }
         assertEquals("specify valid permission", errMsg);
     }
+
+    @Test
+    public void tstUssCreateInvalidModeParamsFailure() {
+        UssCreate ussCreate = new UssCreate(connection);
+        String errMsg = "";
+        try {
+            ussCreate.create("name", new CreateParams(CreateType.FILE, "rwxrwxrwf"));
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid permission", errMsg);
+    }   
 
 }
