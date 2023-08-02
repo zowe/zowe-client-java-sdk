@@ -170,15 +170,15 @@ public class ZosLog {
     /**
      * Validate given string in expected date/time string format.
      *
-     * @param str string representing a date/time
+     * @param value string representing a date/time
      * @return boolean value
      * @author Frank Giordano
      */
-    private static boolean isNotValidDate(String str) {
+    private static boolean isNotValidDate(String value) {
         //  pattern to match example: 2022-11-27T05:06:20Z
         final String patternStr = ".*[0-9]-.*[0-9]-.*[0-9][T].*[0-9][:]*[0-9][:]*[0-9][Z]";
         final Pattern pattern = Pattern.compile(patternStr);
-        final Matcher matcher = pattern.matcher(str);
+        final Matcher matcher = pattern.matcher(value);
         return !matcher.matches();
     }
 

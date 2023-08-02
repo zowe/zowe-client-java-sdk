@@ -34,14 +34,14 @@ public final class EncodeUtils {
      * Encodes the passed String as UTF-8 using an algorithm that's compatible
      * with JavaScript's encodeURIComponent function. Returns incoming string un-encoded if exception occurs.
      *
-     * @param str string to be encoded
+     * @param value string to be encoded
      * @return encoded String or original string
      * @author Frank Giordano
      */
-    public static String encodeURIComponent(String str) {
-        ValidateUtils.checkNullParameter(str == null, "str is null");
-        ValidateUtils.checkIllegalParameter(str.trim().isEmpty(), "str not specified");
-        return URLEncoder.encode(str, StandardCharsets.UTF_8)
+    public static String encodeURIComponent(String value) {
+        ValidateUtils.checkNullParameter(value == null, "str is null");
+        ValidateUtils.checkIllegalParameter(value.trim().isEmpty(), "str not specified");
+        return URLEncoder.encode(value, StandardCharsets.UTF_8)
                 .replaceAll("\\+", "%20")
                 .replaceAll("\\%21", "!")
                 .replaceAll("\\%27", "'")
