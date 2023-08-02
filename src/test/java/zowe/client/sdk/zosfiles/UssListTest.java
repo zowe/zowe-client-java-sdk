@@ -42,7 +42,7 @@ public class UssListTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "params is null");
+        assertEquals("params is null", errMsg);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class UssListTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "path not specified");
+        assertEquals("path not specified", errMsg);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class UssListTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "path is null");
+        assertEquals("path is null", errMsg);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class UssListTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "no path or fsname specified");
+        assertEquals("no path or fsname specified", errMsg);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class UssListTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "fsname not specified");
+        assertEquals("fsname not specified", errMsg);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class UssListTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "fsname is null");
+        assertEquals("fsname is null", errMsg);
     }
 
     @Test
@@ -114,7 +114,7 @@ public class UssListTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "cannot specify both path and fsname parameters");
+        assertEquals("cannot specify both path and fsname parameters", errMsg);
     }
 
     @Test
@@ -126,7 +126,7 @@ public class UssListTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "path not specified");
+        assertEquals("path not specified", errMsg);
     }
 
     @Test
@@ -138,7 +138,7 @@ public class UssListTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals(errMsg, "path is null");
+        assertEquals("path is null", errMsg);
     }
 
 }
