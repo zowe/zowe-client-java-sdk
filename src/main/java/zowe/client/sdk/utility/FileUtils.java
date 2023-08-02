@@ -42,7 +42,7 @@ public final class FileUtils {
      * @author Frank Giordano
      */
     public static String validatePermission(String value) {
-        ValidateUtils.checkIllegalParameter(value.length() != 9, "specify 9 char permission");
+        ValidateUtils.checkIllegalParameter(value.length() != 9, "specify 9 character permission");
         Pattern p = Pattern.compile("(rwx|rw-|r--|r-x|--x|-wx|-w-)+");
         Matcher m = p.matcher(value);
         if (!m.matches()) {
