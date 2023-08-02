@@ -14,7 +14,7 @@ import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
 
 /**
- * Utility Class contains helper methods for IssueConsole processing
+ * Utility class contains helper methods for IssueConsole processing
  *
  * @author Frank Giordano
  * @version 2.0
