@@ -87,6 +87,18 @@ public class UssChangeModeTest {
     }
 
     @Test
+    public void tstUssChangeModeEmptyWithSpacesTargetPathFailure() {
+        UssChangeMode ussChMod = new UssChangeMode(connection);
+        String errMsg = "";
+        try {
+            ussChMod.change("  ", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("targetPath not specified", errMsg);
+    }
+
+    @Test
     public void tstUssChangeModeNullModeFailure() {
         UssChangeMode ussChMod = new UssChangeMode(connection);
         String errMsg = "";
@@ -104,6 +116,18 @@ public class UssChangeModeTest {
         String errMsg = "";
         try {
             ussChMod.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("").build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("mode not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeModeEmptyWithSpacesModeFailure() {
+        UssChangeMode ussChMod = new UssChangeMode(connection);
+        String errMsg = "";
+        try {
+            ussChMod.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("  ").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
