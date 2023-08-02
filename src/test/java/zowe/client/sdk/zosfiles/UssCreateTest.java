@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosFiles;
+package zowe.client.sdk.zosfiles;
 
 import org.junit.Before;
 import org.junit.Test;
