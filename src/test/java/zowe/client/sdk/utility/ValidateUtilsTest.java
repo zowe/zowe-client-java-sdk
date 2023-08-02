@@ -30,9 +30,6 @@ public class ValidateUtilsTest {
         Utils.validateClass(ValidateUtils.class, privateConstructorExceptionMsg);
     }
 
-    /**
-     * Test validate utility method checkIllegalParameter validate false value correctly.
-     */
     @Test
     public void tstCheckIllegalParameterFalseSuccess() {
         final int input = 5;
@@ -45,9 +42,6 @@ public class ValidateUtilsTest {
         assertEquals(false, isIllegalArgumentException);
     }
 
-    /**
-     * Test validate utility method checkIllegalParameter validate true value correctly.
-     */
     @Test
     public void tstCheckIllegalParameterTrueSuccess() {
         final int input = 5;
@@ -60,9 +54,6 @@ public class ValidateUtilsTest {
         assertEquals(true, isIllegalArgumentException);
     }
 
-    /**
-     * Test validate utility method checkNullParameter validate false value correctly.
-     */
     @Test
     public void tstCheckNullParameterFalseSuccess() {
         String str = "";
@@ -75,9 +66,6 @@ public class ValidateUtilsTest {
         assertEquals(false, isNullException);
     }
 
-    /**
-     * Test validate utility method checkNullParameter validate true value correctly.
-     */
     @Test
     public void tstCheckNullParameterTrueSuccess() {
         String str = null;
