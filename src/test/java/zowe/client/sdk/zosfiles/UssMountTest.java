@@ -32,10 +32,12 @@ import static org.junit.Assert.assertEquals;
 public class UssMountTest {
 
     private ZosConnection connection;
+    private UssMount ussMount;
 
     @Before
     public void init() {
         connection = new ZosConnection("1", "1", "1", "1");
+        ussMount = new UssMount(connection);
     }
 
     @Test
@@ -52,7 +54,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountCommonCountActionWithNoFsTypeFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mountCommon("name",
@@ -65,7 +66,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountCommonCountActionWithNoMountPointFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mountCommon("name",
@@ -78,7 +78,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountCommonEmptyFileSystemNameFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mountCommon("",
@@ -91,7 +90,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountCommonNullFileSystemNameFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mountCommon(null,
@@ -104,7 +102,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountCommonNullParamsFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mountCommon("name", null);
@@ -116,7 +113,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountEmptyActionFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mountCommon("name", new MountParams.Builder().build());
@@ -128,7 +124,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountEmptyFilSystemNameFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mount("", "mount", "hfs");
@@ -140,7 +135,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountEmptyFilSystemNameWithSpacesFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mount("   ", "mount", "hfs");
@@ -152,7 +146,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountEmptyFsTypeFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mount("name", "mount", "");
@@ -164,7 +157,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountEmptyFsTypeWithSpacesFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mount("name", "mount", "   ");
@@ -176,7 +168,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountEmptyMountPointFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mount("name", "", "hfs");
@@ -188,7 +179,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountEmptyMountPointWithSpacesFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mount("name", "   ", "hfs");
@@ -200,7 +190,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountNullFilSystemNameFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mount(null, "mount", "hfs");
@@ -212,7 +201,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountNullFsTypeFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mount("name", "mount", null);
@@ -224,7 +212,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountNullMountPointFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.mount("name", null, "hfs");
@@ -236,7 +223,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountUnMountEmptyFileSystemNameFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.unmount("");
@@ -248,7 +234,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountUnMountEmptyFileSystemNameWithSpacesFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.unmount("  ");
@@ -260,7 +245,6 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountUnMountNullFileSystemNameFailure() {
-        UssMount ussMount = new UssMount(connection);
         String errMsg = "";
         try {
             ussMount.unmount(null);

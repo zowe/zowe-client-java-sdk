@@ -30,7 +30,7 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Frank Giordano
  * @version 2.0
-*/    
+ */
 public class IssueCommandTest {
 
     private JsonPutRequest jsonGetRequest;

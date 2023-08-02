@@ -27,15 +27,16 @@ import static org.junit.Assert.assertEquals;
 public class UssListTest {
 
     private ZosConnection connection;
+    private UssList ussList;
 
     @Before
     public void init() {
         connection = new ZosConnection("1", "1", "1", "1");
+        ussList = new UssList(connection);
     }
 
     @Test
     public void tstUssListFileListParamsNullFailure() {
-        UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
             ussList.fileList(null);
@@ -47,7 +48,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListParamsPathEmptyFailure() {
-        UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
             ussList.fileList(new ListParams.Builder().path("").build());
@@ -59,7 +59,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListParamsPathEmptyWithSpacesFailure() {
-        UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
             ussList.fileList(new ListParams.Builder().path("    ").build());
@@ -71,7 +70,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListParamsPathNullFailure() {
-        UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
             ussList.fileList(new ListParams.Builder().path(null).build());
@@ -83,7 +81,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListEmptyParamsFailure() {
-        UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
             ussList.zfsList(new ListZfsParams.Builder().build());
@@ -95,7 +92,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListParamsFsnameEmptyFailure() {
-        UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
             ussList.zfsList(new ListZfsParams.Builder().fsname("").build());
@@ -107,7 +103,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListParamsFsnameEmptyWithSpacesFailure() {
-        UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
             ussList.zfsList(new ListZfsParams.Builder().fsname("    ").build());
@@ -119,7 +114,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListParamsFsnameNullFailure() {
-        UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
             ussList.zfsList(new ListZfsParams.Builder().fsname(null).build());
@@ -131,7 +125,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListParamsPathAndFsnameFailure() {
-        UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
             ussList.zfsList(new ListZfsParams.Builder().path("p").fsname("p").build());
@@ -143,7 +136,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListParamsPathEmptyFailure() {
-        UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
             ussList.zfsList(new ListZfsParams.Builder().path("").build());
@@ -155,7 +147,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListParamsPathEmptyWithSpacesFailure() {
-        UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
             ussList.zfsList(new ListZfsParams.Builder().path("   ").build());
@@ -167,7 +158,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListParamsPathNullFailure() {
-        UssList ussList = new UssList(connection);
         String errMsg = "";
         try {
             ussList.zfsList(new ListZfsParams.Builder().path(null).build());

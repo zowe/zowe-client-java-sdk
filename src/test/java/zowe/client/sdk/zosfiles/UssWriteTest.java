@@ -32,10 +32,12 @@ import static org.junit.Assert.assertTrue;
 public class UssWriteTest {
 
     private ZosConnection connection;
+    private UssWrite ussWrite;
 
     @Before
     public void init() {
         connection = new ZosConnection("1", "1", "1", "1");
+        ussWrite = new UssWrite(connection);
     }
 
     @Test
@@ -64,7 +66,6 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteTextNullFileNamePathFailure() {
-        UssWrite ussWrite = new UssWrite(connection);
         String errMsg = "";
         try {
             ussWrite.writeText(null, "content");
@@ -76,7 +77,6 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteTextEmptyFileNamePathFailure() {
-        UssWrite ussWrite = new UssWrite(connection);
         String errMsg = "";
         try {
             ussWrite.writeText("", "content");
@@ -88,7 +88,6 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteTextEmptyFileNamePathWithSpacesFailure() {
-        UssWrite ussWrite = new UssWrite(connection);
         String errMsg = "";
         try {
             ussWrite.writeText("    ", "content");
@@ -100,7 +99,6 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteBinaryNullFileNamePathFailure() {
-        UssWrite ussWrite = new UssWrite(connection);
         String errMsg = "";
         try {
             ussWrite.writeBinary(null, new byte[0]);
@@ -112,7 +110,6 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteBinaryEmptyFileNamePathFailure() {
-        UssWrite ussWrite = new UssWrite(connection);
         String errMsg = "";
         try {
             ussWrite.writeBinary("", new byte[0]);
@@ -124,7 +121,6 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteBinaryEmptyFileNamePathWithSpacesFailure() {
-        UssWrite ussWrite = new UssWrite(connection);
         String errMsg = "";
         try {
             ussWrite.writeBinary("   ", new byte[0]);
@@ -136,7 +132,6 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteCommonNullFileNamePathFailure() {
-        UssWrite ussWrite = new UssWrite(connection);
         String errMsg = "";
         try {
             ussWrite.writeCommon(null, new WriteParams.Builder().build());
@@ -148,7 +143,6 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteCommonEmptyFileNamePathFailure() {
-        UssWrite ussWrite = new UssWrite(connection);
         String errMsg = "";
         try {
             ussWrite.writeCommon("", new WriteParams.Builder().build());
@@ -160,7 +154,6 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteCommonEmptyFileNamePathWithSpacesFailure() {
-        UssWrite ussWrite = new UssWrite(connection);
         String errMsg = "";
         try {
             ussWrite.writeCommon("  ", new WriteParams.Builder().build());
@@ -172,7 +165,6 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteCommonNullParamsFailure() {
-        UssWrite ussWrite = new UssWrite(connection);
         String errMsg = "";
         try {
             ussWrite.writeCommon("name", null);

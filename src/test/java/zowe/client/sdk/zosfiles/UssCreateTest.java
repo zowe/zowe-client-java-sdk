@@ -31,13 +31,15 @@ import static org.junit.Assert.assertEquals;
  */
 public class UssCreateTest {
 
-    private JsonPostRequest jsonPostrequest;
     private ZosConnection connection;
+    private JsonPostRequest jsonPostrequest;
+    private UssCreate ussCreate;
 
     @Before
     public void init() {
-        jsonPostrequest = Mockito.mock(JsonPostRequest.class);
         connection = new ZosConnection("1", "1", "1", "1");
+        jsonPostrequest = Mockito.mock(JsonPostRequest.class);
+        ussCreate = new UssCreate(connection);
     }
 
     @Test
@@ -53,7 +55,6 @@ public class UssCreateTest {
 
     @Test
     public void tstUssCreateNullNameFailure() {
-        UssCreate ussCreate = new UssCreate(connection);
         String errMsg = "";
         try {
             ussCreate.create(null, new CreateParams(CreateType.FILE, "rwxrwxrwx"));
@@ -65,7 +66,6 @@ public class UssCreateTest {
 
     @Test
     public void tstUssCreateEmptyNameFailure() {
-        UssCreate ussCreate = new UssCreate(connection);
         String errMsg = "";
         try {
             ussCreate.create("", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
@@ -77,7 +77,6 @@ public class UssCreateTest {
 
     @Test
     public void tstUssCreateEmptyNameWithSpacesFailure() {
-        UssCreate ussCreate = new UssCreate(connection);
         String errMsg = "";
         try {
             ussCreate.create("  ", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
@@ -89,7 +88,6 @@ public class UssCreateTest {
 
     @Test
     public void tstUssCreateNullParamsFailure() {
-        UssCreate ussCreate = new UssCreate(connection);
         String errMsg = "";
         try {
             ussCreate.create("name", null);
@@ -101,7 +99,6 @@ public class UssCreateTest {
 
     @Test
     public void tstUssCreateNullTypeParamsFailure() {
-        UssCreate ussCreate = new UssCreate(connection);
         String errMsg = "";
         try {
             ussCreate.create("name", new CreateParams(null, "rwxrwxrwx"));
@@ -113,7 +110,6 @@ public class UssCreateTest {
 
     @Test
     public void tstUssCreateNullModeParamsFailure() {
-        UssCreate ussCreate = new UssCreate(connection);
         String errMsg = "";
         try {
             ussCreate.create("name", new CreateParams(CreateType.FILE, null));
@@ -125,7 +121,6 @@ public class UssCreateTest {
 
     @Test
     public void tstUssCreateEmptyModeParamsFailure() {
-        UssCreate ussCreate = new UssCreate(connection);
         String errMsg = "";
         try {
             ussCreate.create("name", new CreateParams(CreateType.FILE, ""));
@@ -137,7 +132,6 @@ public class UssCreateTest {
 
     @Test
     public void tstUssCreateEmptyModeParamsWithSpacesFailure() {
-        UssCreate ussCreate = new UssCreate(connection);
         String errMsg = "";
         try {
             ussCreate.create("name", new CreateParams(CreateType.FILE, "  "));
@@ -149,7 +143,6 @@ public class UssCreateTest {
 
     @Test
     public void tstUssCreateInvalidModeParamsFailure() {
-        UssCreate ussCreate = new UssCreate(connection);
         String errMsg = "";
         try {
             ussCreate.create("name", new CreateParams(CreateType.FILE, "rwxrwxrwf"));

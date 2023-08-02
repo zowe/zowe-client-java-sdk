@@ -28,13 +28,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class UssMoveTest {
 
-    private JsonPutRequest jsonPutRequest;
     private ZosConnection connection;
+    private JsonPutRequest jsonPutRequest;
+    private UssMove ussMove;
 
     @Before
     public void init() {
-        jsonPutRequest = Mockito.mock(JsonPutRequest.class);
         connection = new ZosConnection("1", "1", "1", "1");
+        jsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        ussMove = new UssMove(connection);
     }
 
     @Test
@@ -61,7 +63,6 @@ public class UssMoveTest {
 
     @Test
     public void tstUssMoveNullFromPathFailure() {
-        UssMove ussMove = new UssMove(connection);
         String errMsg = "";
         try {
             ussMove.move(null, "/xxx/xx/xx");
@@ -73,7 +74,6 @@ public class UssMoveTest {
 
     @Test
     public void tstUssMoveEmptyFromPathFailure() {
-        UssMove ussMove = new UssMove(connection);
         String errMsg = "";
         try {
             ussMove.move("", "/xxx/xx/xx");
@@ -85,7 +85,6 @@ public class UssMoveTest {
 
     @Test
     public void tstUssMoveEmptyFromPathWithSpacesFailure() {
-        UssMove ussMove = new UssMove(connection);
         String errMsg = "";
         try {
             ussMove.move("   ", "/xxx/xx/xx");
@@ -97,7 +96,6 @@ public class UssMoveTest {
 
     @Test
     public void tstUssMoveNullTargetPathFailure() {
-        UssMove ussMove = new UssMove(connection);
         String errMsg = "";
         try {
             ussMove.move("/xxx/xx/xx", null);
@@ -109,7 +107,6 @@ public class UssMoveTest {
 
     @Test
     public void tstUssMoveEmptyTargetPathFailure() {
-        UssMove ussMove = new UssMove(connection);
         String errMsg = "";
         try {
             ussMove.move("/xxx/xx/xx", "");
@@ -121,7 +118,6 @@ public class UssMoveTest {
 
     @Test
     public void tstUssMoveEmptyTargetPathWithSpacesFailure() {
-        UssMove ussMove = new UssMove(connection);
         String errMsg = "";
         try {
             ussMove.move("/xxx/xx/xx", "   ");

@@ -28,13 +28,15 @@ import static org.junit.Assert.assertEquals;
  */
 public class UssDeleteTest {
 
-    private JsonDeleteRequest jsonDeleteRequest;
     private ZosConnection connection;
+    private JsonDeleteRequest jsonDeleteRequest;
+    private UssDelete ussDelete;
 
     @Before
     public void init() {
-        jsonDeleteRequest = Mockito.mock(JsonDeleteRequest.class);
         connection = new ZosConnection("1", "1", "1", "1");
+        jsonDeleteRequest = Mockito.mock(JsonDeleteRequest.class);
+        ussDelete = new UssDelete(connection);
     }
 
     @Test
@@ -61,7 +63,6 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteNullNameFailure() {
-        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.delete(null);
@@ -73,7 +74,6 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteEmptyNameFailure() {
-        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.delete("");
@@ -85,7 +85,6 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteEmptyNameWithSpacesFailure() {
-        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.delete("   ");
@@ -93,11 +92,10 @@ public class UssDeleteTest {
             errMsg = e.getMessage();
         }
         assertEquals("name not specified", errMsg);
-    }    
+    }
 
     @Test
     public void tstUssDeleteNullNameRecursiveFailure() {
-        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.delete(null, true);
@@ -109,7 +107,6 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteEmptyNameRecursiveFailure() {
-        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.delete("", true);
@@ -121,7 +118,6 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteZfsNullFileSystemNameFailure() {
-        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.zfsDelete(null);
@@ -133,7 +129,6 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteZfsEmptyFileSystemNameFailure() {
-        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.zfsDelete("");
@@ -145,7 +140,6 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteZfsEmptyFileSystemNameWithSpacesFailure() {
-        UssDelete ussDelete = new UssDelete(connection);
         String errMsg = "";
         try {
             ussDelete.zfsDelete("   ");
@@ -153,6 +147,6 @@ public class UssDeleteTest {
             errMsg = e.getMessage();
         }
         assertEquals("file system name not specified", errMsg);
-    }   
+    }
 
 }

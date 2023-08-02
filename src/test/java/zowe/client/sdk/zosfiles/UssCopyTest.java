@@ -29,13 +29,15 @@ import static org.junit.Assert.assertEquals;
  */
 public class UssCopyTest {
 
-    private JsonPutRequest jsonPutRequest;
     private ZosConnection connection;
+    private JsonPutRequest jsonPutRequest;
+    private UssCopy ussCopy;
 
     @Before
     public void init() {
-        jsonPutRequest = Mockito.mock(JsonPutRequest.class);
         connection = new ZosConnection("1", "1", "1", "1");
+        jsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        ussCopy = new UssCopy(connection);
     }
 
     @Test
@@ -75,7 +77,6 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyNullFromPathFailure() {
-        UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
             ussCopy.copy(null, "/xxx/xx/xx");
@@ -87,7 +88,6 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyEmptyFromPathFailure() {
-        UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
             ussCopy.copy("", "/xxx/xx/xx");
@@ -99,7 +99,6 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyEmptyFromPathWithSpacesFailure() {
-        UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
             ussCopy.copy("   ", "/xxx/xx/xx");
@@ -111,7 +110,6 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyNullTargetPathFailure() {
-        UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
             ussCopy.copy("/xxx/xx/xx", (String) null);
@@ -123,7 +121,6 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyEmptyTargetPathFailure() {
-        UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
             ussCopy.copy("/xxx/xx/xx", "");
@@ -135,7 +132,6 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyEmptyTargetPathWithSpacesFailure() {
-        UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
             ussCopy.copy("/xxx/xx/xx", "  ");
@@ -147,7 +143,6 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyNullParamsFailure() {
-        UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
             ussCopy.copy("/xxx/xx/xx", (CopyParams) null);
@@ -159,7 +154,6 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyNullFromInParamsFailure() {
-        UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
             ussCopy.copy("/xxx/xx/xx", new CopyParams.Builder().from(null).build());
@@ -171,7 +165,6 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyEmptyFromInParamsFailure() {
-        UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
             ussCopy.copy("/xxx/xx/xx", new CopyParams.Builder().from("").build());
@@ -183,7 +176,6 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyEmptyFromInParamsWithSpacesFailure() {
-        UssCopy ussCopy = new UssCopy(connection);
         String errMsg = "";
         try {
             ussCopy.copy("/xxx/xx/xx", new CopyParams.Builder().from("   ").build());

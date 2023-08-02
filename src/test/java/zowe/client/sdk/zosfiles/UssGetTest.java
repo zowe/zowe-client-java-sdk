@@ -30,10 +30,12 @@ import static org.junit.Assert.assertEquals;
 public class UssGetTest {
 
     private ZosConnection connection;
+    private UssGet ussGet;
 
     @Before
     public void init() {
         connection = new ZosConnection("1", "1", "1", "1");
+        ussGet = new UssGet(connection);
     }
 
     @Test
@@ -80,7 +82,6 @@ public class UssGetTest {
 
     @Test
     public void tstUssGetTextFilePathNullNameFailure() {
-        UssGet ussGet = new UssGet(connection);
         String errMsg = "";
         try {
             ussGet.getText(null);
@@ -92,7 +93,6 @@ public class UssGetTest {
 
     @Test
     public void tstUssGetTextFilePathEmptyNameFailure() {
-        UssGet ussGet = new UssGet(connection);
         String errMsg = "";
         try {
             ussGet.getText("");
@@ -104,7 +104,6 @@ public class UssGetTest {
 
     @Test
     public void tstUssGetTextFilePathEmptyNameWithSpacesFailure() {
-        UssGet ussGet = new UssGet(connection);
         String errMsg = "";
         try {
             ussGet.getText("  ");
@@ -116,7 +115,6 @@ public class UssGetTest {
 
     @Test
     public void tstUssGetBinaryFilePathNullNameFailure() {
-        UssGet ussGet = new UssGet(connection);
         String errMsg = "";
         try {
             ussGet.getBinary(null);
@@ -128,7 +126,6 @@ public class UssGetTest {
 
     @Test
     public void tstUssGetBinaryFilePathEmptyNameFailure() {
-        UssGet ussGet = new UssGet(connection);
         String errMsg = "";
         try {
             ussGet.getBinary("");
@@ -140,7 +137,6 @@ public class UssGetTest {
 
     @Test
     public void tstUssGetBinaryFilePathEmptyNameWithSpacesFailure() {
-        UssGet ussGet = new UssGet(connection);
         String errMsg = "";
         try {
             ussGet.getBinary("   ");
@@ -152,7 +148,6 @@ public class UssGetTest {
 
     @Test
     public void tstUssGetCommonNullParamsFailure() {
-        UssGet ussGet = new UssGet(connection);
         String errMsg = "";
         try {
             ussGet.getCommon("name", null);

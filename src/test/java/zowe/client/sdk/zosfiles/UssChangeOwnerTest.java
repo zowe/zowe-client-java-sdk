@@ -29,13 +29,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class UssChangeOwnerTest {
 
-    private JsonPutRequest jsonPutRequest;
     private ZosConnection connection;
+    private JsonPutRequest jsonPutRequest;
+    private UssChangeOwner ussChangeOwner;
 
     @Before
     public void init() {
-        jsonPutRequest = Mockito.mock(JsonPutRequest.class);
         connection = new ZosConnection("1", "1", "1", "1");
+        jsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        ussChangeOwner = new UssChangeOwner(connection);
     }
 
     @Test
@@ -63,7 +65,6 @@ public class UssChangeOwnerTest {
 
     @Test
     public void tstUssChangeOwnerNullPathFailure() {
-        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection);
         String errMsg = "";
         try {
             ussChangeOwner.change(null, "user");
@@ -75,7 +76,6 @@ public class UssChangeOwnerTest {
 
     @Test
     public void tstUssChangeOwnerEmptyPathFailure() {
-        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection);
         String errMsg = "";
         try {
             ussChangeOwner.change("", "user");
@@ -87,7 +87,6 @@ public class UssChangeOwnerTest {
 
     @Test
     public void tstUssChangeOwnerEmptyPathWithSpacesFailure() {
-        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection);
         String errMsg = "";
         try {
             ussChangeOwner.change("   ", "user");
@@ -99,7 +98,6 @@ public class UssChangeOwnerTest {
 
     @Test
     public void tstUssChangeOwnerNullParamsFailure() {
-        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection);
         String errMsg = "";
         try {
             ussChangeOwner.change("/xxx/xx/xx", (ChangeOwnerParams) null);
@@ -111,7 +109,6 @@ public class UssChangeOwnerTest {
 
     @Test
     public void tstUssChangeOwnerNoOwnerSpecifiedInParamsFailure() {
-        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection);
         String errMsg = "";
         try {
             ussChangeOwner.change("/xxx/xx/xx", new ChangeOwnerParams.Builder().build());
@@ -123,7 +120,6 @@ public class UssChangeOwnerTest {
 
     @Test
     public void tstUssChangeOwnerNullOwnerFailure() {
-        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection);
         String errMsg = "";
         try {
             ussChangeOwner.change("/xxx/xx/xx", (String) null);
@@ -135,7 +131,6 @@ public class UssChangeOwnerTest {
 
     @Test
     public void tstUssChangeOwnerEmptyOwnerFailure() {
-        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection);
         String errMsg = "";
         try {
             ussChangeOwner.change("/xxx/xx/xx", "");
@@ -147,7 +142,6 @@ public class UssChangeOwnerTest {
 
     @Test
     public void tstUssChangeOwnerEmptyOwnerWithSpacesFailure() {
-        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection);
         String errMsg = "";
         try {
             ussChangeOwner.change("/xxx/xx/xx", "  ");
@@ -155,6 +149,6 @@ public class UssChangeOwnerTest {
             errMsg = e.getMessage();
         }
         assertEquals("owner not specified", errMsg);
-    }    
+    }
 
 }

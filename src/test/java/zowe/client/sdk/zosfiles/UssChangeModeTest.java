@@ -29,13 +29,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class UssChangeModeTest {
 
-    private JsonPutRequest jsonPutRequest;
     private ZosConnection connection;
+    private JsonPutRequest jsonPutRequest;
+    private UssChangeMode ussChangeMode;
 
     @Before
     public void init() {
-        jsonPutRequest = Mockito.mock(JsonPutRequest.class);
         connection = new ZosConnection("1", "1", "1", "1");
+        jsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        ussChangeMode = new UssChangeMode(connection);
     }
 
     @Test
@@ -64,7 +66,6 @@ public class UssChangeModeTest {
 
     @Test
     public void tstUssChangeModeNullTargetPathFailure() {
-        UssChangeMode ussChangeMode = new UssChangeMode(connection);
         String errMsg = "";
         try {
             ussChangeMode.change(null, new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
@@ -76,7 +77,6 @@ public class UssChangeModeTest {
 
     @Test
     public void tstUssChangeModeEmptyTargetPathFailure() {
-        UssChangeMode ussChangeMode = new UssChangeMode(connection);
         String errMsg = "";
         try {
             ussChangeMode.change("", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
@@ -88,7 +88,6 @@ public class UssChangeModeTest {
 
     @Test
     public void tstUssChangeModeEmptyWithSpacesTargetPathFailure() {
-        UssChangeMode ussChangeMode = new UssChangeMode(connection);
         String errMsg = "";
         try {
             ussChangeMode.change("  ", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
@@ -100,7 +99,6 @@ public class UssChangeModeTest {
 
     @Test
     public void tstUssChangeModeNullModeFailure() {
-        UssChangeMode ussChangeMode = new UssChangeMode(connection);
         String errMsg = "";
         try {
             ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode(null).build());
@@ -112,7 +110,6 @@ public class UssChangeModeTest {
 
     @Test
     public void tstUssChangeModeEmptyModeFailure() {
-        UssChangeMode ussChangeMode = new UssChangeMode(connection);
         String errMsg = "";
         try {
             ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("").build());
@@ -124,7 +121,6 @@ public class UssChangeModeTest {
 
     @Test
     public void tstUssChangeModeEmptyWithSpacesModeFailure() {
-        UssChangeMode ussChangeMode = new UssChangeMode(connection);
         String errMsg = "";
         try {
             ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("  ").build());
