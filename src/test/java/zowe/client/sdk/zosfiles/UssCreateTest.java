@@ -118,15 +118,15 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstUssCreateInvalidModeParamsFailure() {
+    public void tstUssCreateEmptyModeParamsWithSpacesFailure() {
         UssCreate ussCreate = new UssCreate(connection);
         String errMsg = "";
         try {
-            ussCreate.create("name", new CreateParams(CreateType.FILE, "rwxrwxrwf"));
+            ussCreate.create("name", new CreateParams(CreateType.FILE, "  "));
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("specify valid permission", errMsg);
+        assertEquals("specify 9 character permission", errMsg);
     }
 
     @Test
