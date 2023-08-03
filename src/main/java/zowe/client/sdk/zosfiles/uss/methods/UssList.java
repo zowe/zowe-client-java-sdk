@@ -192,7 +192,7 @@ public class UssList {
                         if (size - 1 == i) {
                             modeStr.append(modeLst.get(i).toString());
                         } else {
-                            modeStr.append(modeLst.get(i).toString()).append(", ");
+                            modeStr.append(modeLst.get(i).toString()).append(",");
                         }
                     }
                 } catch (Exception ignored) {
