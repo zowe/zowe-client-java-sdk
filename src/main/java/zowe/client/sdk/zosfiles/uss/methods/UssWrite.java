@@ -94,20 +94,20 @@ public class UssWrite {
     /**
      * Perform UNIX write request driven by WriteParams settings
      *
-     * @param targetPath file name with path
-     * @param params     WriteParams parameters that specifies write action request
+     * @param fileNamePath file name with path
+     * @param params       parameters within a WriteParams object that drives the write action request
      * @return Response object
      * @throws Exception processing error
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response writeCommon(String targetPath, WriteParams params) throws Exception {
-        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
+    public Response writeCommon(String fileNamePath, WriteParams params) throws Exception {
+        ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
+        ValidateUtils.checkIllegalParameter(fileNamePath.trim().isEmpty(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(targetPath);
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(fileNamePath);
 
         final Map<String, String> headers = new HashMap<>();
         if (params.isBinary()) {
