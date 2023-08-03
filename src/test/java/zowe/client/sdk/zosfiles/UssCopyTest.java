@@ -76,10 +76,21 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopInvalidTargetPathPathFailure() {
+    public void tstUssCopyInvalidTargetPathPathFailure() {
         String errMsg = "";
         try {
             ussCopy.copy("/xxx/xx/xx", "name");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
+    public void tstUssCopyInvalidFromPathPathFailure() {
+        String errMsg = "";
+        try {
+            ussCopy.copy("name", "/xxx/xx/xx");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -201,6 +212,17 @@ public class UssCopyTest {
         String errMsg = "";
         try {
             ussCopy.copy("name", new CopyParams.Builder().from("/xxx/xx/xx").build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
+    public void tstUssCopyInvalidFromPathInParamsFailure() {
+        String errMsg = "";
+        try {
+            ussCopy.copy("/xxx/xx/xx", new CopyParams.Builder().from("name").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }

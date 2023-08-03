@@ -138,4 +138,37 @@ public class UssMoveTest {
         assertEquals("specify valid path", errMsg);
     }
 
+    @Test
+    public void tstUssMoveInvalidFromPathFailure() {
+        String errMsg = "";
+        try {
+            ussMove.move("name", "/xxx/xx/xx");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
+    public void tstUssMoveInvalidTargetPathWithOverWriteFailure() {
+        String errMsg = "";
+        try {
+            ussMove.move("/xxx/xx/xx", "name", true);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
+    public void tstUssMoveInvalidFromPathWithOverWriteFailure() {
+        String errMsg = "";
+        try {
+            ussMove.move("name", "/xxx/xx/xx", false);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
 }
