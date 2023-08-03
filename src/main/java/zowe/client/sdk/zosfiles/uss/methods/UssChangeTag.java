@@ -21,6 +21,7 @@ import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.ChangeTagParams;
+import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,11 +70,22 @@ public class UssChangeTag {
     /**
      * Change tag of a USS object
      *
+     * @param targetPath path to the target object
+     * @param action the file tag action
+     */
+    public Response change(String targetPath, ChangeTagAction action) throws Exception {
+        return change(targetPath, new ChangeTagParams.Builder().action(action).build());
+    }
+
+    /**
+     * Change tag of a USS object
+     *
+     * @param targetPath path to the target object
      * @param params parameters for the change tag request
      * @return response from the server
      * @throws Exception processing error
      */
-    public Response changeTag(String targetPath, ChangeTagParams params) throws Exception {
+    public Response change(String targetPath, ChangeTagParams params) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isEmpty(), "targetPath is empty");
         ValidateUtils.checkNullParameter(params == null, "params is null");

@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagType;
 
@@ -117,12 +118,15 @@ public class ChangeTagParams {
         private boolean recursive = false;
 
         /**
-         * Builder constructor
+         * Set action value
          *
          * @param action ChangeTagAction enum value
+         * @return Builder object
          */
-        public Builder(ChangeTagAction action) {
+        public ChangeTagParams.Builder action(ChangeTagAction action) {
+            ValidateUtils.checkNullParameter(action == null, "action is null");
             this.action = action;
+            return this;
         }
 
         /**
@@ -131,7 +135,7 @@ public class ChangeTagParams {
          * @param type ChangeTagType enum value
          * @return Builder object
          */
-        public ChangeTagParams.Builder setType(ChangeTagType type) {
+        public ChangeTagParams.Builder type(ChangeTagType type) {
             this.type = type;
             return this;
         }
@@ -142,7 +146,7 @@ public class ChangeTagParams {
          * @param codeset String value
          * @return Builder object
          */
-        public ChangeTagParams.Builder setCodeset(String codeset) {
+        public ChangeTagParams.Builder codeset(String codeset) {
             this.codeset = codeset;
             return this;
         }
@@ -153,7 +157,7 @@ public class ChangeTagParams {
          * @param recursive boolean value
          * @return Builder object
          */
-        public ChangeTagParams.Builder setRecursive(boolean recursive) {
+        public ChangeTagParams.Builder recursive(boolean recursive) {
             this.recursive = recursive;
             return this;
         }
