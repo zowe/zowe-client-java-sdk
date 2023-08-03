@@ -23,44 +23,44 @@ public class UssZfsItem {
     /**
      * zfs name
      */
-    public final Optional<String> name;
+    private final Optional<String> name;
     /**
      * Mount point name
      */
-    public final Optional<String> mountpoint;
+    private final Optional<String> mountpoint;
     /**
      * FST name
      */
-    public final Optional<String> fstname;
+    private final Optional<String> fstname;
     /**
      * Status value
      */
-    public final Optional<String> status;
+    private final Optional<String> status;
     /**
      * Mode values
      */
-    public final Optional<String> mode;
-    public final OptionalLong dev;
+    private final Optional<String> mode;
+    private final OptionalLong dev;
     /**
      * File system type
      */
-    public final OptionalLong fstype;
+    private final OptionalLong fstype;
     /**
      * Block size
      */
-    public final OptionalLong bsize;
+    private final OptionalLong bsize;
     /**
      * Blocks available
      */
-    public final OptionalLong bavail;
+    private final OptionalLong bavail;
     /**
      * Count of blocks in I/O operations
      */
-    public final OptionalLong blocks;
+    private final OptionalLong blocks;
     /**
      * Target system name
      */
-    public final Optional<String> sysname;
+    private final Optional<String> sysname;
     /**
      * Count of I/O operations
      */
@@ -72,20 +72,20 @@ public class UssZfsItem {
     /**
      * Count of I/O operations
      */
-    public final OptionalLong diribc;
+    private final OptionalLong diribc;
     /**
      * The number of filesystem items returned
      */
-    public final OptionalLong returnedRows;
+    private final OptionalLong returnedRows;
     /**
      * The total number of filesystems
      */
-    public final OptionalLong totalRows;
+    private final OptionalLong totalRows;
     /**
      * If more items than specified by X-IBM-Max-Items (or the default of 1000) match the request,
      * then moreRows will be true
      */
-    public final boolean moreRows;
+    private final boolean moreRows;
 
     public UssZfsItem(UssZfsItem.Builder builder) {
         this.name = Optional.ofNullable(builder.name);
