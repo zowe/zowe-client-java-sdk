@@ -79,7 +79,7 @@ public class UssList {
      * Perform list of UNIX files operation
      *
      * @param params ListParams object
-     * @return Response object
+     * @return list of UssItem objects
      * @throws Exception processing error
      * @author Frank Giordano
      */
@@ -111,15 +111,35 @@ public class UssList {
             url.append("&symlinks=report");
         }
 
-        final Response response = getResponse(url.toString(), params.getMaxLength().orElse(0));
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
+        }
+
+        request.setUrl(url.toString());
+        final int maxLength = params.getMaxLength().orElse(0);
+        if (maxLength > 0) {
+            request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
+        }
+
+        final Response response = RestUtils.getResponse(request);
 
         final List<UssItem> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
                 response.getResponsePhrase().orElseThrow(() -> new Exception("error retrieving uss list"))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
-            for (final Object jsonObj : jsonArray) {
-                items.add(parseJsonUssListResponse((JSONObject) jsonObj));
+            for (final Object obj : jsonArray) {
+                final JSONObject jsonObj = (JSONObject) obj;
+                items.add(new UssItem.Builder()
+                        .name(jsonObj.get("name") != null ? (String) jsonObj.get("name") : null)
+                        .mode(jsonObj.get("mode") != null ? (String) jsonObj.get("mode") : null)
+                        .size(jsonObj.get("size") != null ? (Long) jsonObj.get("size") : null)
+                        .uid(jsonObj.get("uid") != null ? (Long) jsonObj.get("uid") : null)
+                        .user(jsonObj.get("user") != null ? (String) jsonObj.get("user") : null)
+                        .gid(jsonObj.get("gid") != null ? (Long) jsonObj.get("gid") : null)
+                        .group(jsonObj.get("group") != null ? (String) jsonObj.get("group") : null)
+                        .mtime(jsonObj.get("mtime") != null ? (String) jsonObj.get("mtime") : null)
+                        .build());
             }
         }
 
@@ -145,102 +165,60 @@ public class UssList {
         params.getPath().ifPresent(path -> url.append("?path=").append(EncodeUtils.encodeURIComponent(path)));
         params.getFsname().ifPresent(fsname -> url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
 
-        final Response response = getResponse(url.toString(), params.getMaxLength().orElse(0));
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
+        }
+
+        request.setUrl(url.toString());
+        final int maxLength = params.getMaxLength().orElse(0);
+        if (maxLength > 0) {
+            request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
+        }
+
+        final Response response = RestUtils.getResponse(request);
 
         final List<UssZfsItem> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
                 response.getResponsePhrase().orElseThrow(() -> new Exception("error retrieving uss zfs list"))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
-            for (final Object jsonObj : jsonArray) {
-                items.add(parseJsonUssZfsListResponse((JSONObject) jsonObj));
+            for (final Object obj : jsonArray) {
+                final JSONObject jsonObj = (JSONObject) obj;
+                final StringBuilder modeStr = new StringBuilder();
+                try {
+                    final JSONArray modeLst = (JSONArray) jsonObj.get("mode");
+                    final int size = modeLst.size();
+                    for (int i = 0; i < size; i++) {
+                        if (size - 1 == i) {
+                            modeStr.append(modeLst.get(i).toString());
+                        } else {
+                            modeStr.append(modeLst.get(i).toString()).append(", ");
+                        }
+                    }
+                } catch (Exception ignored) {
+                }
+                items.add(new UssZfsItem.Builder()
+                        .name(jsonObj.get("name") != null ? (String) jsonObj.get("name") : null)
+                        .mountpoint(jsonObj.get("mountpoint") != null ? (String) jsonObj.get("mountpoint") : null)
+                        .fstname(jsonObj.get("fstname") != null ? (String) jsonObj.get("fstname") : null)
+                        .status(jsonObj.get("status") != null ? (String) jsonObj.get("status") : null)
+                        .mode(modeStr.toString())
+                        .dev(jsonObj.get("dev") != null ? (Long) jsonObj.get("dev") : null)
+                        .fstype(jsonObj.get("fstype") != null ? (Long) jsonObj.get("fstype") : null)
+                        .bsize(jsonObj.get("bsize") != null ? (Long) jsonObj.get("bsize") : null)
+                        .bavail(jsonObj.get("bavail") != null ? (Long) jsonObj.get("bavail") : null)
+                        .blocks(jsonObj.get("blocks") != null ? (Long) jsonObj.get("blocks") : null)
+                        .sysname(jsonObj.get("sysname") != null ? (String) jsonObj.get("sysname") : null)
+                        .readibc(jsonObj.get("readibc") != null ? (Long) jsonObj.get("readibc") : null)
+                        .writeibc(jsonObj.get("writeibc") != null ? (Long) jsonObj.get("writeibc") : null)
+                        .diribc(jsonObj.get("diribc") != null ? (Long) jsonObj.get("diribc") : null)
+                        .returnedRows(jsonObj.get("returnedRows") != null ? (Long) jsonObj.get("returnedRows") : null)
+                        .totalRows(jsonObj.get("totalRows") != null ? (Long) jsonObj.get("totalRows") : null)
+                        .moreRows(jsonObj.get("moreRows") != null ? (Boolean) jsonObj.get("moreRows") : false)
+                        .build());
             }
         }
         return items;
-    }
-
-    /**
-     * Perform zowe request and retrieve response
-     *
-     * @param url       string value
-     * @param maxLength length max request value
-     * @return Response object
-     * @throws Exception processing error
-     * @author Frank Giordano
-     */
-    private Response getResponse(String url, int maxLength) throws Exception {
-        if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
-        }
-
-        request.setUrl(url);
-        if (maxLength > 0) {
-            request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
-        }
-
-        return RestUtils.getResponse(request);
-    }
-
-    /**
-     * Transform JSON into UssItem object
-     *
-     * @param jsonObject JSON object
-     * @return ListItem object
-     * @author Frank Giordano
-     */
-    private UssItem parseJsonUssListResponse(JSONObject jsonObject) {
-        return new UssItem.Builder()
-                .name(jsonObject.get("name") != null ? (String) jsonObject.get("name") : null)
-                .mode(jsonObject.get("mode") != null ? (String) jsonObject.get("mode") : null)
-                .size(jsonObject.get("size") != null ? (Long) jsonObject.get("size") : null)
-                .uid(jsonObject.get("uid") != null ? (Long) jsonObject.get("uid") : null)
-                .user(jsonObject.get("user") != null ? (String) jsonObject.get("user") : null)
-                .gid(jsonObject.get("gid") != null ? (Long) jsonObject.get("gid") : null)
-                .group(jsonObject.get("group") != null ? (String) jsonObject.get("group") : null)
-                .mtime(jsonObject.get("mtime") != null ? (String) jsonObject.get("mtime") : null)
-                .build();
-    }
-
-    /**
-     * Transform JSON into UssZfsItem object
-     *
-     * @param jsonObject JSON object
-     * @return ListItem object
-     * @author Frank Giordano
-     */
-    private UssZfsItem parseJsonUssZfsListResponse(JSONObject jsonObject) {
-        final StringBuilder modeStr = new StringBuilder();
-        try {
-            final JSONArray modeLst = (JSONArray) jsonObject.get("mode");
-            final int size = modeLst.size();
-            for (int i = 0; i < size; i++) {
-                if (size - 1 == i) {
-                    modeStr.append(modeLst.get(i).toString());
-                } else {
-                    modeStr.append(modeLst.get(i).toString()).append(", ");
-                }
-            }
-        } catch (Exception ignored) {
-        }
-        return new UssZfsItem.Builder()
-                .name(jsonObject.get("name") != null ? (String) jsonObject.get("name") : null)
-                .mountpoint(jsonObject.get("mountpoint") != null ? (String) jsonObject.get("mountpoint") : null)
-                .fstname(jsonObject.get("fstname") != null ? (String) jsonObject.get("fstname") : null)
-                .status(jsonObject.get("status") != null ? (String) jsonObject.get("status") : null)
-                .mode(modeStr.toString())
-                .dev(jsonObject.get("dev") != null ? (Long) jsonObject.get("dev") : null)
-                .fstype(jsonObject.get("fstype") != null ? (Long) jsonObject.get("fstype") : null)
-                .bsize(jsonObject.get("bsize") != null ? (Long) jsonObject.get("bsize") : null)
-                .bavail(jsonObject.get("bavail") != null ? (Long) jsonObject.get("bavail") : null)
-                .blocks(jsonObject.get("blocks") != null ? (Long) jsonObject.get("blocks") : null)
-                .sysname(jsonObject.get("sysname") != null ? (String) jsonObject.get("sysname") : null)
-                .readibc(jsonObject.get("readibc") != null ? (Long) jsonObject.get("readibc") : null)
-                .writeibc(jsonObject.get("writeibc") != null ? (Long) jsonObject.get("writeibc") : null)
-                .diribc(jsonObject.get("diribc") != null ? (Long) jsonObject.get("diribc") : null)
-                .returnedRows(jsonObject.get("returnedRows") != null ? (Long) jsonObject.get("returnedRows") : null)
-                .totalRows(jsonObject.get("totalRows") != null ? (Long) jsonObject.get("totalRows") : null)
-                .moreRows(jsonObject.get("moreRows") != null ? (Boolean) jsonObject.get("moreRows") : false)
-                .build();
     }
 
 }
