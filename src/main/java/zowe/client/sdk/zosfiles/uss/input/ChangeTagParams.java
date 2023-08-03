@@ -29,7 +29,7 @@ public class ChangeTagParams {
      * If "remove", any existing file tag is removed.
      * If "list", the existing tag information will be returned in a JSON response document.
      */
-    private ChangeTagAction action;
+    private Optional<ChangeTagAction> action;
 
     /**
      * The default is "mixed"
@@ -55,7 +55,7 @@ public class ChangeTagParams {
      * @params CopyParams.Builder builder
      */
     public ChangeTagParams(ChangeTagParams.Builder builder) {
-        this.action = builder.action;
+        this.action = Optional.ofNullable(builder.action);
         this.type = Optional.ofNullable(builder.type);
         this.codeset = Optional.ofNullable(builder.codeset);
         this.recursive = builder.recursive;
@@ -66,7 +66,7 @@ public class ChangeTagParams {
      *
      * @return action value
      */
-    public ChangeTagAction getAction() {
+    public Optional<ChangeTagAction> getAction() {
         return action;
     }
 
@@ -124,7 +124,6 @@ public class ChangeTagParams {
          * @return Builder object
          */
         public ChangeTagParams.Builder action(ChangeTagAction action) {
-            ValidateUtils.checkNullParameter(action == null, "action is null");
             this.action = action;
             return this;
         }

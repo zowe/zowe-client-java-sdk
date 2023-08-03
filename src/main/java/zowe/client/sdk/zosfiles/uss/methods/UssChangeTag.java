@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Provides Unix System Services (USS) change tag functionality
+ * Provides Unix System Services (USS) chtag functionality
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
@@ -95,7 +95,7 @@ public class UssChangeTag {
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "chtag");
-        jsonMap.put("action", params.getAction());
+        jsonMap.put("action", params.getAction().orElseThrow(() -> new Exception("action not specified")));
         params.getType().ifPresent(type -> jsonMap.put("type", type));
         params.getCodeset().ifPresent(codeset -> jsonMap.put("codeset", codeset));
         if (!params.isRecursive()) {
@@ -103,7 +103,7 @@ public class UssChangeTag {
         }
 
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
         request.setBody(new JSONObject(jsonMap).toString());
