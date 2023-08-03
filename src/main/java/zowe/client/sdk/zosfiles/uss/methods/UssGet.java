@@ -66,50 +66,50 @@ public class UssGet {
     /**
      * Get the binary contents of a UNIX file
      *
-     * @param targetPath file name with path
+     * @param fileNamePath file name with path
      * @return the byte array contents of the file
      * @throws Exception processing error
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public byte[] getBinary(String targetPath) throws Exception {
+    public byte[] getBinary(String fileNamePath) throws Exception {
         GetParams params = new GetParams.Builder().binary(true).build();
-        Response response = getCommon(targetPath, params);
+        Response response = getCommon(fileNamePath, params);
         return (byte[]) response.getResponsePhrase().orElse(new byte[0]);
     }
 
     /**
      * Get the text contents of a UNIX file
      *
-     * @param targetPath file name with path
+     * @param fileNamePath file name with path
      * @return the text contents of file
      * @throws Exception processing error
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public String getText(String targetPath) throws Exception {
+    public String getText(String fileNamePath) throws Exception {
         GetParams params = new GetParams.Builder().build();
-        Response response = getCommon(targetPath, params);
+        Response response = getCommon(fileNamePath, params);
         return (String) response.getResponsePhrase().orElse("");
     }
 
     /**
      * Get the contents of a UNIX file driven by the GetParams object settings
      *
-     * @param targetPath file name with path
-     * @param params     GetParams object to drive the request
+     * @param fileNamePath file name with path
+     * @param params       GetParams object to drive the request
      * @return Response object
      * @throws Exception processing error
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public Response getCommon(String targetPath, GetParams params) throws Exception {
-        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
+    public Response getCommon(String fileNamePath, GetParams params) throws Exception {
+        ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
+        ValidateUtils.checkIllegalParameter(fileNamePath.trim().isEmpty(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(targetPath));
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(fileNamePath));
 
         params.getSearch().ifPresent(str -> url.append("?search=").append(EncodeUtils.encodeURIComponent(str)));
         params.getResearch().ifPresent(str -> url.append("?research=").append(EncodeUtils.encodeURIComponent(str)));
