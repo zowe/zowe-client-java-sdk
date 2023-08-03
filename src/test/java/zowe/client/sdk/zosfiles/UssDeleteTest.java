@@ -62,7 +62,29 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteNullNameFailure() {
+    public void tstUssDeleteInvalidTargetPathFailure() {
+        String errMsg = "";
+        try {
+            ussDelete.delete("name");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
+    public void tstUssDeleteInvalidTargetPathWithRecursiveFailure() {
+        String errMsg = "";
+        try {
+            ussDelete.delete("name", true);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
+    public void tstUssDeleteNullTargetPathFailure() {
         String errMsg = "";
         try {
             ussDelete.delete(null);
@@ -73,7 +95,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteEmptyNameFailure() {
+    public void tstUssDeleteEmptyTargetPathFailure() {
         String errMsg = "";
         try {
             ussDelete.delete("");
@@ -84,7 +106,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteEmptyNameWithSpacesFailure() {
+    public void tstUssDeleteEmptyTargetPathWithSpacesFailure() {
         String errMsg = "";
         try {
             ussDelete.delete("   ");
@@ -95,7 +117,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteNullNameRecursiveFailure() {
+    public void tstUssDeleteNullTargetPathWithRecursiveFailure() {
         String errMsg = "";
         try {
             ussDelete.delete(null, true);
@@ -106,7 +128,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteEmptyNameRecursiveFailure() {
+    public void tstUssDeleteEmptyTargetPathWithRecursiveFailure() {
         String errMsg = "";
         try {
             ussDelete.delete("", true);

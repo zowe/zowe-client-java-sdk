@@ -65,7 +65,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstUssCreateNullNameFailure() {
+    public void tstUssCreateNullTargetPathFailure() {
         String errMsg = "";
         try {
             ussCreate.create(null, new CreateParams(CreateType.FILE, "rwxrwxrwx"));
@@ -76,7 +76,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstUssCreateEmptyNameFailure() {
+    public void tstUssCreateEmptyTargetPathFailure() {
         String errMsg = "";
         try {
             ussCreate.create("", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
@@ -87,7 +87,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstUssCreateEmptyNameWithSpacesFailure() {
+    public void tstUssCreateEmptyTargetPathWithSpacesFailure() {
         String errMsg = "";
         try {
             ussCreate.create("  ", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
@@ -109,7 +109,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstUssCreateNullTypeParamsFailure() {
+    public void tstUssCreateNullTypeInParamsFailure() {
         String errMsg = "";
         try {
             ussCreate.create("/xx/xx/x", new CreateParams(null, "rwxrwxrwx"));
@@ -120,7 +120,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstUssCreateNullModeParamsFailure() {
+    public void tstUssCreateNullModeInParamsFailure() {
         String errMsg = "";
         try {
             ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, null));
@@ -131,7 +131,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstUssCreateEmptyModeParamsFailure() {
+    public void tstUssCreateEmptyModeInParamsFailure() {
         String errMsg = "";
         try {
             ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, ""));
@@ -142,7 +142,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstUssCreateEmptyModeParamsWithSpacesFailure() {
+    public void tstUssCreateEmptyModeInParamsWithSpacesFailure() {
         String errMsg = "";
         try {
             ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "  "));
@@ -153,7 +153,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstUssCreateInvalidModeParamsFailure() {
+    public void tstUssCreateInvalidModeWithParamsFailure() {
         String errMsg = "";
         try {
             ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwf"));

@@ -65,7 +65,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteTextNullFileNamePathFailure() {
+    public void tstUssWriteTextNullTargetPathFailure() {
         String errMsg = "";
         try {
             ussWrite.writeText(null, "content");
@@ -76,7 +76,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteTextEmptyFileNamePathFailure() {
+    public void tstUssWriteTextEmptyTargetPathFailure() {
         String errMsg = "";
         try {
             ussWrite.writeText("", "content");
@@ -87,7 +87,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteTextEmptyFileNamePathWithSpacesFailure() {
+    public void tstUssWriteTextEmptyTargetPathWithSpacesFailure() {
         String errMsg = "";
         try {
             ussWrite.writeText("    ", "content");
@@ -109,7 +109,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteBinaryNullFileNamePathFailure() {
+    public void tstUssWriteBinaryNullTargetPathFailure() {
         String errMsg = "";
         try {
             ussWrite.writeBinary(null, new byte[0]);
@@ -120,7 +120,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteBinaryEmptyFileNamePathFailure() {
+    public void tstUssWriteBinaryEmptyTargetPathFailure() {
         String errMsg = "";
         try {
             ussWrite.writeBinary("", new byte[0]);
@@ -131,7 +131,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteBinaryEmptyFileNamePathWithSpacesFailure() {
+    public void tstUssWriteBinaryEmptyTargetPathWithSpacesFailure() {
         String errMsg = "";
         try {
             ussWrite.writeBinary("   ", new byte[0]);
@@ -153,7 +153,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteCommonNullFileNamePathFailure() {
+    public void tstUssWriteCommonNullTargetPathWithParamsFailure() {
         String errMsg = "";
         try {
             ussWrite.writeCommon(null, new WriteParams.Builder().build());
@@ -164,7 +164,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteCommonEmptyFileNamePathFailure() {
+    public void tstUssWriteCommonEmptyTargetPathWithParamsFailure() {
         String errMsg = "";
         try {
             ussWrite.writeCommon("", new WriteParams.Builder().build());
@@ -175,7 +175,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteCommonEmptyFileNamePathWithSpacesFailure() {
+    public void tstUssWriteCommonEmptyTargetPathWithSpacesWithParamsFailure() {
         String errMsg = "";
         try {
             ussWrite.writeCommon("  ", new WriteParams.Builder().build());

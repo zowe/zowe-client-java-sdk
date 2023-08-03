@@ -127,4 +127,15 @@ public class UssMoveTest {
         assertEquals("targetPath not specified", errMsg);
     }
 
+    @Test
+    public void tstUssMoveInvalidTargetPathFailure() {
+        String errMsg = "";
+        try {
+            ussMove.move("/xxx/xx/xx", "name");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
 }

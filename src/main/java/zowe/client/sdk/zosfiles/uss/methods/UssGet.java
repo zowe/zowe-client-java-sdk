@@ -66,30 +66,30 @@ public class UssGet {
     /**
      * Get the binary contents of a UNIX file
      *
-     * @param fileNamePath file name with path
+     * @param targetPath file name with path
      * @return the byte array contents of the file
      * @throws Exception processing error
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public byte[] getBinary(String fileNamePath) throws Exception {
+    public byte[] getBinary(String targetPath) throws Exception {
         GetParams params = new GetParams.Builder().binary(true).build();
-        Response response = getCommon(fileNamePath, params);
+        Response response = getCommon(targetPath, params);
         return (byte[]) response.getResponsePhrase().orElse(new byte[0]);
     }
 
     /**
      * Get the text contents of a UNIX file
      *
-     * @param fileNamePath file name with path
+     * @param targetPath file name with path
      * @return the text contents of file
      * @throws Exception processing error
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public String getText(String fileNamePath) throws Exception {
+    public String getText(String targetPath) throws Exception {
         GetParams params = new GetParams.Builder().build();
-        Response response = getCommon(fileNamePath, params);
+        Response response = getCommon(targetPath, params);
         return (String) response.getResponsePhrase().orElse("");
     }
 

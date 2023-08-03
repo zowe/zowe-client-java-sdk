@@ -17,6 +17,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.StreamGetRequest;
 import zowe.client.sdk.rest.TextGetRequest;
+import zowe.client.sdk.zosfiles.uss.input.GetParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssGet;
 
 import static org.junit.Assert.assertEquals;
@@ -39,7 +40,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetTextFilePathSuccess() throws Exception {
+    public void tstGetTextFileTargetPathSuccess() throws Exception {
         TextGetRequest textGetRequest = Mockito.mock(TextGetRequest.class);
         Mockito.when(textGetRequest.executeRequest()).thenReturn(
                 new Response("text", 200, "success"));
@@ -49,7 +50,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetTextFilePathDefaultResponseSuccess() throws Exception {
+    public void tstGetTextFileTargetPathDefaultResponseSuccess() throws Exception {
         TextGetRequest textGetRequest = Mockito.mock(TextGetRequest.class);
         Mockito.when(textGetRequest.executeRequest()).thenReturn(
                 new Response(null, 200, "success"));
@@ -59,7 +60,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetBinaryFilePathSuccess() throws Exception {
+    public void tstGetBinaryFileTargetPathSuccess() throws Exception {
         StreamGetRequest streamGetRequest = Mockito.mock(StreamGetRequest.class);
         byte[] data = "data".getBytes();
         Mockito.when(streamGetRequest.executeRequest()).thenReturn(
@@ -70,7 +71,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetBinaryFilePathDefaultResponseSuccess() throws Exception {
+    public void tstGetBinaryFileTargetPathDefaultResponseSuccess() throws Exception {
         StreamGetRequest streamGetRequest = Mockito.mock(StreamGetRequest.class);
         byte[] data = new byte[0];
         Mockito.when(streamGetRequest.executeRequest()).thenReturn(
@@ -81,7 +82,18 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstUssGetTextFilePathNullNameFailure() {
+    public void tstUssGetTextFileInvalidPathFailure() {
+        String errMsg = "";
+        try {
+            ussGet.getText("name");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
+    public void tstUssGetTextFileNullTargetPathFailure() {
         String errMsg = "";
         try {
             ussGet.getText(null);
@@ -92,7 +104,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstUssGetTextFilePathEmptyNameFailure() {
+    public void tstUssGetTextFileEmptyTargetPathFailure() {
         String errMsg = "";
         try {
             ussGet.getText("");
@@ -103,7 +115,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstUssGetTextFilePathEmptyNameWithSpacesFailure() {
+    public void tstUssGetTextFileEmptyTargetPathWithSpacesFailure() {
         String errMsg = "";
         try {
             ussGet.getText("  ");
@@ -114,7 +126,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstUssGetBinaryFilePathNullNameFailure() {
+    public void tstUssGetBinaryFileNullTargetPathFailure() {
         String errMsg = "";
         try {
             ussGet.getBinary(null);
@@ -125,7 +137,18 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstUssGetBinaryFilePathEmptyNameFailure() {
+    public void tstUssGetBinaryFileInvalidTargetPathFailure() {
+        String errMsg = "";
+        try {
+            ussGet.getBinary("name");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
+    public void tstUssGetBinaryFileEmptyTargetPathFailure() {
         String errMsg = "";
         try {
             ussGet.getBinary("");
@@ -136,7 +159,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstUssGetBinaryFilePathEmptyNameWithSpacesFailure() {
+    public void tstUssGetBinaryFileEmptyTargetPathWithSpacesFailure() {
         String errMsg = "";
         try {
             ussGet.getBinary("   ");
@@ -150,11 +173,22 @@ public class UssGetTest {
     public void tstUssGetCommonNullParamsFailure() {
         String errMsg = "";
         try {
-            ussGet.getCommon("name", null);
+            ussGet.getCommon("/xxx/xx/x", null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
         assertEquals("params is null", errMsg);
+    }
+
+    @Test
+    public void tstUssGetCommonInvalidTargetPathWithParamsFailure() {
+        String errMsg = "";
+        try {
+            ussGet.getCommon("name", new GetParams.Builder().build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
     }
 
 }

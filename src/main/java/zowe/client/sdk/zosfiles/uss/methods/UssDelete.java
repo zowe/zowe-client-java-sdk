@@ -69,13 +69,13 @@ public class UssDelete {
     /**
      * Perform UNIX delete file or directory name request
      *
-     * @param name the name of the file or directory you are going to delete
+     * @param targetPath the name of the file or directory you are going to delete
      * @return Response object
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response delete(String name) throws Exception {
-        return delete(name, false);
+    public Response delete(String targetPath) throws Exception {
+        return delete(targetPath, false);
     }
 
     /**

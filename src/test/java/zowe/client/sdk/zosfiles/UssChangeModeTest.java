@@ -53,7 +53,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChangeModeRecursiveSuccess() throws Exception {
+    public void tstUssChangeModeWithRecursiveInParamsSuccess() throws Exception {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssChangeMode ussChangeMode = new UssChangeMode(connection, jsonPutRequest);
@@ -65,7 +65,18 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChangeModeNullTargetPathFailure() {
+    public void tstUssChangeModeInvalidTargetPathWithParamsFailure() {
+        String errMsg = "";
+        try {
+            ussChangeMode.change("name", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeModeNullTargetPathWithParamsFailure() {
         String errMsg = "";
         try {
             ussChangeMode.change(null, new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
@@ -76,7 +87,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChangeModeEmptyTargetPathFailure() {
+    public void tstUssChangeModeEmptyTargetPathWithParamsFailure() {
         String errMsg = "";
         try {
             ussChangeMode.change("", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
@@ -87,7 +98,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChangeModeEmptyWithSpacesTargetPathFailure() {
+    public void tstUssChangeModeEmptyTargetPathWithSpacesWithParamsFailure() {
         String errMsg = "";
         try {
             ussChangeMode.change("  ", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
@@ -98,7 +109,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChangeModeNullModeFailure() {
+    public void tstUssChangeModeNullModeInParamsFailure() {
         String errMsg = "";
         try {
             ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode(null).build());
@@ -109,7 +120,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChangeModeEmptyModeFailure() {
+    public void tstUssChangeModeEmptyModeInParamsFailure() {
         String errMsg = "";
         try {
             ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("").build());
@@ -120,7 +131,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChangeModeEmptyWithSpacesModeFailure() {
+    public void tstUssChangeModeEmptyModeInParamsWithSpacesFailure() {
         String errMsg = "";
         try {
             ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("  ").build());

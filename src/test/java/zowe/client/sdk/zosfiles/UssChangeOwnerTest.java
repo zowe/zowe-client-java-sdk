@@ -64,7 +64,18 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstUssChangeOwnerNullPathFailure() {
+    public void tstUssChangeOwnerInvalidTargetPathFailure() {
+        String errMsg = "";
+        try {
+            ussChangeOwner.change("name", "user");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeOwnerNullTargetPathFailure() {
         String errMsg = "";
         try {
             ussChangeOwner.change(null, "user");
@@ -75,7 +86,7 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstUssChangeOwnerEmptyPathFailure() {
+    public void tstUssChangeOwnerEmptyTargetPathFailure() {
         String errMsg = "";
         try {
             ussChangeOwner.change("", "user");
@@ -86,7 +97,7 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstUssChangeOwnerEmptyPathWithSpacesFailure() {
+    public void tstUssChangeOwnerEmptyTargetPathWithSpacesFailure() {
         String errMsg = "";
         try {
             ussChangeOwner.change("   ", "user");
@@ -116,6 +127,17 @@ public class UssChangeOwnerTest {
             errMsg = e.getMessage();
         }
         assertEquals("owner not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeOwnerInvalidTargetPathWithParamsFailure() {
+        String errMsg = "";
+        try {
+            ussChangeOwner.change("name", new ChangeOwnerParams.Builder().build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
     }
 
     @Test
