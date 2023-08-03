@@ -23,35 +23,35 @@ public class UssItem {
     /**
      * File, symbolic file or directory name
      */
-    public final Optional<String> name;
+    private final Optional<String> name;
     /**
      * Permission (mode) of returned name item
      */
-    public final Optional<String> mode;
+    private final Optional<String> mode;
     /**
      * size of returned name item
      */
-    public final OptionalLong size;
+    private final OptionalLong size;
     /**
      * uid of returned name item
      */
-    public final OptionalLong uid;
+    private final OptionalLong uid;
     /**
      * user of returned name item
      */
-    public final Optional<String> user;
+    private final Optional<String> user;
     /**
      * gid of returned name item
      */
-    public final OptionalLong gid;
+    private final OptionalLong gid;
     /**
      * group of returned name item
      */
-    public final Optional<String> group;
+    private final Optional<String> group;
     /**
      * mtime of returned name item
      */
-    public final Optional<String> mtime;
+    private final Optional<String> mtime;
 
     public UssItem(UssItem.Builder builder) {
         this.name = Optional.ofNullable(builder.name);
