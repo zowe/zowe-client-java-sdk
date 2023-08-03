@@ -163,7 +163,7 @@ public class UssListTest {
         assertEquals("OMVSGRP.USER.TNGFW.CA31", items.get(0).getName().get());
         assertEquals("/CA31/u/users/framewrk", items.get(0).getMountpoint().get());
         assertEquals("ZFS", items.get(0).getFstname().get());
-        assertEquals("noautomove, unmount, acl, synchonly", items.get(0).getMode().get());
+        assertEquals("noautomove,unmount,acl,synchonly", items.get(0).getMode().get());
         assertEquals(2718, items.get(0).getDev().getAsLong());
         assertEquals(1, items.get(0).getFstype().getAsLong());
         assertEquals(1024, items.get(0).getBsize().getAsLong());
