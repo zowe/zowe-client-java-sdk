@@ -198,6 +198,17 @@ public class UssListTest {
     }
 
     @Test
+    public void tstUssListFileListParamsInvalidPathFailure() {
+        String errMsg = "";
+        try {
+            ussList.fileList(new ListParams.Builder().path("hello").build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
     public void tstUssListFileListParamsPathEmptyWithSpacesFailure() {
         String errMsg = "";
         try {
@@ -283,6 +294,17 @@ public class UssListTest {
             errMsg = e.getMessage();
         }
         assertEquals("path not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssListZfsListParamsInvalidPathFailure() {
+        String errMsg = "";
+        try {
+            ussList.zfsList(new ListZfsParams.Builder().path("hello").build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
     }
 
     @Test
