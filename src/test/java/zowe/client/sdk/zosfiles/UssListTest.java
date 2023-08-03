@@ -157,7 +157,7 @@ public class UssListTest {
                 new Response(json, 200, "success"));
         UssList ussList = new UssList(connection, jsonGetRequest);
         List<UssZfsItem> items = ussList.zfsList(new ListZfsParams.Builder().path("/xxx/xx/x").build());
-        // should only contain two items
+        // should only contain one item
         assertEquals(1, items.size());
         // verify first item's data
         assertEquals("OMVSGRP.USER.TNGFW.CA31", items.get(0).getName().get());
