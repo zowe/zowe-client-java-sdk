@@ -32,6 +32,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
+ * @version 2.0
  */
 public class UssChangeTag {
     private final ZosConnection connection;
@@ -87,7 +88,7 @@ public class UssChangeTag {
      */
     public Response change(String targetPath, ChangeTagParams params) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.isEmpty(), "targetPath is empty");
+        ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +

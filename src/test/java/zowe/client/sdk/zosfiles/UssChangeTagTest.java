@@ -19,11 +19,15 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.ChangeTagParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssChangeTag;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
-import zowe.client.sdk.zosfiles.uss.types.ChangeTagType;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static zowe.client.sdk.zosfiles.uss.types.ChangeTagAction.SET;
 
+/**
+ * Class containing unit tests for UssChangeTag.
+ *
+ * @author James Kostrewski
+ * @version 2.0
+ */
 public class UssChangeTagTest {
     private ZosConnection connection;
     private JsonPutRequest jsonPutRequest;
@@ -41,7 +45,7 @@ public class UssChangeTagTest {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssChangeTag ussChangeTag = new UssChangeTag(connection, jsonPutRequest);
-        Response response = ussChangeTag.change("/xxx/xx/xx", SET);
+        Response response = ussChangeTag.change("/xxx/xx/xx", ChangeTagAction.SET);
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get().toString());
@@ -52,22 +56,65 @@ public class UssChangeTagTest {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssChangeTag ussChangeTag = new UssChangeTag(connection, jsonPutRequest);
-        Response response = ussChangeTag.change("/xxx/xx/xx", SET);
+        Response response = ussChangeTag.change("/xxx/xx/xx", ChangeTagAction.SET);
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get().toString());
     }
 
     @Test
-    public void tstUssChangeTagActionError() throws Exception {
+    public void tstUssChangeTagNullActionFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.change("/xxx/xx/xx", new ChangeTagParams.Builder().action(ChangeTagAction.SET).build());
+            ussChangeTag.change("/xxx/xx/xx", new ChangeTagParams.Builder().action(null).build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
+        assertEquals("action not specified", errMsg);
+    }
 
-        assertEquals("action is null", errMsg);
+    @Test
+    public void tstUssChangeTagNoActionFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.change("/xxx/xx/xx", new ChangeTagParams.Builder().build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("action not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagInvalidTargetPathFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.change("hello", new ChangeTagParams.Builder().build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagEmptyTargetPathFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.change("", new ChangeTagParams.Builder().build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("targetPath not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagEmptyTargetPathWithSpacesFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.change("  ", new ChangeTagParams.Builder().build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("targetPath not specified", errMsg);
     }
 
 }

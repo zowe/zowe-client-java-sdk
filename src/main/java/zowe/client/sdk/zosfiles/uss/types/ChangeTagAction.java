@@ -9,7 +9,14 @@
  */
 package zowe.client.sdk.zosfiles.uss.types;
 
+/**
+ * Enum for ChangeTagType
+ *
+ * @author James Kostrewski
+ * @version 2.0
+ */
 public enum ChangeTagAction {
+
     SET("set"),
     REMOVE("remove"),
     list("list");

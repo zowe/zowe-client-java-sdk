@@ -9,7 +9,14 @@
  */
 package zowe.client.sdk.zosfiles.uss.types;
 
+/**
+ * Enum for ChangeTagType
+ *
+ * @author James Kostrewski
+ * @version 2.0
+ */
 public enum ChangeTagType {
+
     BINARY("binary"),
     MIXED("mixed"),
     TEXT("text");
