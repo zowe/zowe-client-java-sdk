@@ -69,7 +69,7 @@ public class UssDeleteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("name is null", errMsg);
+        assertEquals("targetPath is null", errMsg);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class UssDeleteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("name not specified", errMsg);
+        assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class UssDeleteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("name not specified", errMsg);
+        assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class UssDeleteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("name is null", errMsg);
+        assertEquals("targetPath is null", errMsg);
     }
 
     @Test
@@ -113,7 +113,7 @@ public class UssDeleteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("name not specified", errMsg);
+        assertEquals("targetPath not specified", errMsg);
     }
 
     @Test

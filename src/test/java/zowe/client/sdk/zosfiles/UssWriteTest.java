@@ -46,7 +46,7 @@ public class UssWriteTest {
         Mockito.when(textPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssWrite ussWrite = new UssWrite(connection, textPutRequest);
-        Response response = ussWrite.writeText("name", "text");
+        Response response = ussWrite.writeText("/xx/xx/x", "text");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get().toString());
@@ -58,7 +58,7 @@ public class UssWriteTest {
         Mockito.when(streamPutRequest.executeRequest()).thenReturn(
                 new Response(new byte[0], 200, "success"));
         UssWrite ussWrite = new UssWrite(connection, streamPutRequest);
-        Response response = ussWrite.writeBinary("name", new byte[0]);
+        Response response = ussWrite.writeBinary("/xx/xx/x", new byte[0]);
         assertTrue(response.getResponsePhrase().get() instanceof byte[]);
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get().toString());
@@ -72,7 +72,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file name path is null", errMsg);
+        assertEquals("targetPath is null", errMsg);
     }
 
     @Test
@@ -83,7 +83,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file name path not specified", errMsg);
+        assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
@@ -94,7 +94,18 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file name path not specified", errMsg);
+        assertEquals("targetPath not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssWriteTextInvalidTargetPathFailure() {
+        String errMsg = "";
+        try {
+            ussWrite.writeText("name", "text");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
     }
 
     @Test
@@ -105,7 +116,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file name path is null", errMsg);
+        assertEquals("targetPath is null", errMsg);
     }
 
     @Test
@@ -116,7 +127,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file name path not specified", errMsg);
+        assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
@@ -127,7 +138,18 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file name path not specified", errMsg);
+        assertEquals("targetPath not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssWriteBinaryInvalidTargetPathFailure() {
+        String errMsg = "";
+        try {
+            ussWrite.writeBinary("name", new byte[0]);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
     }
 
     @Test
@@ -138,7 +160,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file name path is null", errMsg);
+        assertEquals("targetPath is null", errMsg);
     }
 
     @Test
@@ -149,7 +171,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file name path not specified", errMsg);
+        assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
@@ -160,18 +182,29 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file name path not specified", errMsg);
+        assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
     public void tstUssWriteCommonNullParamsFailure() {
         String errMsg = "";
         try {
-            ussWrite.writeCommon("name", null);
+            ussWrite.writeCommon("/xx/xx/x", null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
         assertEquals("params is null", errMsg);
+    }
+
+    @Test
+    public void tstUssWriteCommonInvalidTargetPathFailure() {
+        String errMsg = "";
+        try {
+            ussWrite.writeCommon("name", new WriteParams.Builder().build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
     }
 
 }

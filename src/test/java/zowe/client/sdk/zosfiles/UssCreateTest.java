@@ -47,10 +47,21 @@ public class UssCreateTest {
         Mockito.when(jsonPostrequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssCreate ussCreate = new UssCreate(connection, jsonPostrequest);
-        Response response = ussCreate.create("name", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+        Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
         Assertions.assertEquals("{}", response.getResponsePhrase().get().toString());
         Assertions.assertEquals("200", response.getStatusCode().get().toString());
         Assertions.assertEquals("success", response.getStatusText().get().toString());
+    }
+
+    @Test
+    public void tstUssCreateInvalidTargetPathFailure() {
+        String errMsg = "";
+        try {
+            ussCreate.create("name", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
     }
 
     @Test
@@ -61,7 +72,7 @@ public class UssCreateTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("name is null", errMsg);
+        assertEquals("targetPath is null", errMsg);
     }
 
     @Test
@@ -72,7 +83,7 @@ public class UssCreateTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("name not specified", errMsg);
+        assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
@@ -83,14 +94,14 @@ public class UssCreateTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("name not specified", errMsg);
+        assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
     public void tstUssCreateNullParamsFailure() {
         String errMsg = "";
         try {
-            ussCreate.create("name", null);
+            ussCreate.create("/xx/xx/x", null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -101,7 +112,7 @@ public class UssCreateTest {
     public void tstUssCreateNullTypeParamsFailure() {
         String errMsg = "";
         try {
-            ussCreate.create("name", new CreateParams(null, "rwxrwxrwx"));
+            ussCreate.create("/xx/xx/x", new CreateParams(null, "rwxrwxrwx"));
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -112,7 +123,7 @@ public class UssCreateTest {
     public void tstUssCreateNullModeParamsFailure() {
         String errMsg = "";
         try {
-            ussCreate.create("name", new CreateParams(CreateType.FILE, null));
+            ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, null));
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -123,7 +134,7 @@ public class UssCreateTest {
     public void tstUssCreateEmptyModeParamsFailure() {
         String errMsg = "";
         try {
-            ussCreate.create("name", new CreateParams(CreateType.FILE, ""));
+            ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, ""));
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -134,7 +145,7 @@ public class UssCreateTest {
     public void tstUssCreateEmptyModeParamsWithSpacesFailure() {
         String errMsg = "";
         try {
-            ussCreate.create("name", new CreateParams(CreateType.FILE, "  "));
+            ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "  "));
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -145,7 +156,7 @@ public class UssCreateTest {
     public void tstUssCreateInvalidModeParamsFailure() {
         String errMsg = "";
         try {
-            ussCreate.create("name", new CreateParams(CreateType.FILE, "rwxrwxrwf"));
+            ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwf"));
         } catch (Exception e) {
             errMsg = e.getMessage();
         }

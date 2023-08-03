@@ -15,6 +15,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
@@ -80,18 +81,18 @@ public class UssDelete {
     /**
      * Perform UNIX delete file or directory name request with recursive flag
      *
-     * @param name      the name of the file or directory you are going to delete
-     * @param recursive flag indicates if contents of directory should also be deleted
+     * @param targetPath the name of the file or directory you are going to delete
+     * @param recursive  flag indicates if contents of directory should also be deleted
      * @return Response object
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response delete(String name, boolean recursive) throws Exception {
-        ValidateUtils.checkNullParameter(name == null, "name is null");
-        ValidateUtils.checkIllegalParameter(name.trim().isEmpty(), "name not specified");
+    public Response delete(String targetPath, boolean recursive) throws Exception {
+        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
+        ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + name;
+                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(targetPath);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);

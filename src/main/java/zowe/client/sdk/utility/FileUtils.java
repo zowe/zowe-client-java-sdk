@@ -52,4 +52,21 @@ public final class FileUtils {
         return value;
     }
 
+    /**
+     * Validate permission i.e. /xxx/xx/x
+     *
+     * @param value path string
+     * @return same value string back to caller if valid
+     * @author Frank Giordano
+     */
+    public static String validatePath(String value) {
+        ValidateUtils.checkNullParameter(value == null, "path value is null");
+        Pattern p = Pattern.compile("\\/.*");
+        Matcher m = p.matcher(value);
+        if (!m.matches()) {
+            throw new IllegalStateException("specify valid path");
+        }
+        return value;
+    }
+
 }

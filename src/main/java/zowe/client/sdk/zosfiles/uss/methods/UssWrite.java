@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
@@ -93,20 +94,20 @@ public class UssWrite {
     /**
      * Perform UNIX write request driven by WriteParams settings
      *
-     * @param fileNamePath file name with path
-     * @param params       WriteParams parameters that specifies write action request
+     * @param targetPath file name with path
+     * @param params     WriteParams parameters that specifies write action request
      * @return Response object
      * @throws Exception processing error
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response writeCommon(String fileNamePath, WriteParams params) throws Exception {
-        ValidateUtils.checkNullParameter(fileNamePath == null, "file name path is null");
-        ValidateUtils.checkIllegalParameter(fileNamePath.trim().isEmpty(), "file name path not specified");
+    public Response writeCommon(String targetPath, WriteParams params) throws Exception {
+        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
+        ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + fileNamePath;
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(targetPath);
 
         final Map<String, String> headers = new HashMap<>();
         if (params.isBinary()) {

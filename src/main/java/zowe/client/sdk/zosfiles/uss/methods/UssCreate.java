@@ -16,6 +16,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
@@ -71,20 +72,20 @@ public class UssCreate {
     /**
      * Perform UNIX create file or directory name request driven by CreateParams object settings
      *
-     * @param name   the name of the file or directory you are going to create
-     * @param params create response parameters, see CreateParams object
+     * @param targetPath the name of the file or directory you are going to create
+     * @param params     create response parameters, see CreateParams object
      * @return Response object
      * @throws Exception error processing request
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response create(String name, CreateParams params) throws Exception {
-        ValidateUtils.checkNullParameter(name == null, "name is null");
-        ValidateUtils.checkIllegalParameter(name.trim().isEmpty(), "name not specified");
+    public Response create(String targetPath, CreateParams params) throws Exception {
+        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
+        ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + name;
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(targetPath);
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("type", params.getType().getValue());

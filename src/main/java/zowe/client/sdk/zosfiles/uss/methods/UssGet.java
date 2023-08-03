@@ -13,6 +13,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
@@ -95,20 +96,20 @@ public class UssGet {
     /**
      * Get the contents of a UNIX file driven by the GetParams object settings
      *
-     * @param filePathName file name with path
-     * @param params       GetParams object to drive the request
+     * @param targetPath file name with path
+     * @param params     GetParams object to drive the request
      * @return Response object
      * @throws Exception processing error
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public Response getCommon(String filePathName, GetParams params) throws Exception {
-        ValidateUtils.checkNullParameter(filePathName == null, "file path name is null");
-        ValidateUtils.checkIllegalParameter(filePathName.trim().isEmpty(), "file path name not specified");
+    public Response getCommon(String targetPath, GetParams params) throws Exception {
+        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
+        ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + filePathName);
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(targetPath));
 
         params.getSearch().ifPresent(str -> url.append("?search=").append(EncodeUtils.encodeURIComponent(str)));
         params.getResearch().ifPresent(str -> url.append("?research=").append(EncodeUtils.encodeURIComponent(str)));
