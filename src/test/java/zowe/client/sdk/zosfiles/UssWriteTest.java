@@ -72,7 +72,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath is null", errMsg);
+        assertEquals("fileNamePath is null", errMsg);
     }
 
     @Test
@@ -83,7 +83,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
@@ -94,7 +94,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath is null", errMsg);
+        assertEquals("fileNamePath is null", errMsg);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
@@ -138,7 +138,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
@@ -160,7 +160,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath is null", errMsg);
+        assertEquals("fileNamePath is null", errMsg);
     }
 
     @Test
@@ -171,7 +171,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
@@ -182,7 +182,7 @@ public class UssWriteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
