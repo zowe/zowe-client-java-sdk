@@ -117,7 +117,7 @@ public class UssMove {
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "move");
-        jsonMap.put("from", fromPath);
+        jsonMap.put("from", FileUtils.validatePath(fromPath));
         jsonMap.put("overwrite", overwrite);
 
         if (request == null) {
