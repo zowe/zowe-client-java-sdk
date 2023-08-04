@@ -94,6 +94,8 @@ public class UssChangeTag {
      * @author Frank Giordano
      */
     public Response changeToText(String fileNamePath, String codeSet) throws Exception {
+        ValidateUtils.checkNullParameter(codeSet == null, "codeSet is null");
+        ValidateUtils.checkIllegalParameter(codeSet.trim().isEmpty(), "codeSet not specified");
         return changeCommon(fileNamePath, new ChangeTagParams.Builder()
                 .action(ChangeTagAction.SET).type(ChangeTagType.TEXT).codeset(codeSet).build());
     }
