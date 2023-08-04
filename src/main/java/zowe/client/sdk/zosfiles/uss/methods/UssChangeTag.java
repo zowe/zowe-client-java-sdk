@@ -80,6 +80,7 @@ public class UssChangeTag {
      * @author James Kostrewski
      */
     public Response change(String fileNamePath, ChangeTagType type) throws Exception {
+        ValidateUtils.checkNullParameter(type == null, "type is null");
         return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.SET).type(type).build());
     }
 
