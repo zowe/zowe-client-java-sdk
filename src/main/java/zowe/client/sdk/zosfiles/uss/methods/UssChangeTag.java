@@ -22,6 +22,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.ChangeTagParams;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
+import zowe.client.sdk.zosfiles.uss.types.ChangeTagType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,13 +74,37 @@ public class UssChangeTag {
      * Change tag of a UNIX file
      *
      * @param fileNamePath file name with path
-     * @param action       the file tag action
+     * @param type         new file type, see enum ChangeTagType object
      * @return Response Object
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response change(String fileNamePath, ChangeTagAction action) throws Exception {
-        return change(fileNamePath, new ChangeTagParams.Builder().action(action).build());
+    public Response change(String fileNamePath, ChangeTagType type) throws Exception {
+        return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.SET).type(type).build());
+    }
+
+    /**
+     * Remove tag of a UNIX file
+     *
+     * @param fileNamePath file name with path
+     * @return Response Object
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
+    public Response remove(String fileNamePath) throws Exception {
+        return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.REMOVE).build());
+    }
+
+    /**
+     * Retrieve existing tag information
+     *
+     * @param fileNamePath file name with path
+     * @return Response Object
+     * @throws Exception
+     * @author Frank Giordano
+     */
+    public Response retrieve(String fileNamePath) throws Exception {
+        return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
     }
 
     /**
@@ -91,7 +116,7 @@ public class UssChangeTag {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response change(String fileNamePath, ChangeTagParams params) throws Exception {
+    public Response changeCommon(String fileNamePath, ChangeTagParams params) throws Exception {
         ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
         ValidateUtils.checkIllegalParameter(fileNamePath.trim().isEmpty(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
@@ -120,3 +145,4 @@ public class UssChangeTag {
     }
 
 }
+
