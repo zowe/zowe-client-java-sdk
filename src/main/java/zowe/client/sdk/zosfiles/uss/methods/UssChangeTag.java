@@ -64,7 +64,7 @@ public class UssChangeTag {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
-            throw new Exception("request type must be PUT");
+            throw new Exception("PUT_JSON request type required");
         }
         this.request = request;
     }
@@ -82,7 +82,7 @@ public class UssChangeTag {
     }
 
     /**
-     * Change tag of a UNIX file
+     * Change tag of a UNIX file request driven by ChangeTagParams object settings
      *
      * @param fileNamePath file name with path
      * @param params       parameters for the change tag request, see ChangeTagParams object
