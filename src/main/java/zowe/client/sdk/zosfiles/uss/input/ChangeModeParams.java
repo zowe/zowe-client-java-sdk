@@ -40,6 +40,12 @@ public class ChangeModeParams {
      */
     private final Optional<LinkType> linkType;
 
+    /**
+     * ChangeModeParams constructor
+     *
+     * @params ChangeModeParams.Builder builder
+     * @author James Kostrewski
+     */
     public ChangeModeParams(ChangeModeParams.Builder builder) {
         this.mode = Optional.of(builder.mode);
         this.recursive = builder.recursive;

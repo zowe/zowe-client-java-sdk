@@ -43,6 +43,12 @@ public class ChangeOwnerParams {
      */
     private final Optional<LinkType> linkType;
 
+    /**
+     * ChangeOwnerParams constructor
+     *
+     * @params ChangeOwnerParams.Builder builder
+     * @author James Kostrewski
+     */
     public ChangeOwnerParams(ChangeOwnerParams.Builder builder) {
         this.owner = Optional.ofNullable(builder.owner);
         this.group = Optional.ofNullable(builder.group);

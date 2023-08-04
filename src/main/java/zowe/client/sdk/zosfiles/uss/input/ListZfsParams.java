@@ -43,6 +43,12 @@ public class ListZfsParams {
      */
     private final Optional<String> fsname;
 
+    /**
+     * ListZfsParams constructor
+     *
+     * @params ListZfsParams.Builder builder
+     * @author Frank Giordano
+     */
     public ListZfsParams(ListZfsParams.Builder builder) {
         if (builder.maxLength == null) {
             this.maxLength = OptionalInt.empty();

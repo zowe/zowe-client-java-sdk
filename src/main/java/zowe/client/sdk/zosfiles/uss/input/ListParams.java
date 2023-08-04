@@ -111,6 +111,12 @@ public class ListParams {
      */
     public final boolean symlinks;
 
+    /**
+     * ListParams constructor
+     *
+     * @params ListParams.Builder builder
+     * @author Frank Giordano
+     */
     public ListParams(ListParams.Builder builder) {
         this.path = Optional.of(builder.path);
         if (builder.maxLength == null) {

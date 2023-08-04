@@ -49,6 +49,12 @@ public class MountParams {
     private final Optional<MountModeType> mode;
 
 
+    /**
+     * MountParams constructor
+     *
+     * @params MountParams.Builder builder
+     * @author Frank Giordano
+     */
     public MountParams(MountParams.Builder builder) {
         this.action = Optional.ofNullable(builder.action);
         this.mountPoint = Optional.ofNullable(builder.mountPoint);

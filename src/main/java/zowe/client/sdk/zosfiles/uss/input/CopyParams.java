@@ -37,6 +37,12 @@ public class CopyParams {
      */
     private final boolean recursive;
 
+    /**
+     * CopyParams constructor
+     *
+     * @params CopyParams.Builder builder
+     * @author James Kostrewski
+     */
     public CopyParams(CopyParams.Builder builder) {
         this.from = Optional.ofNullable(builder.from);
         this.overwrite = builder.overwrite;

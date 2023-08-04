@@ -47,6 +47,12 @@ public class WriteParams {
      */
     private final boolean binary;
 
+    /**
+     * WriteParams constructor
+     *
+     * @params WriteParams.Builder builder
+     * @author Frank Giordano
+     */
     public WriteParams(WriteParams.Builder builder) {
         this.textContent = Optional.ofNullable(builder.textContent);
         this.binaryContent = Optional.ofNullable(builder.binaryContent);

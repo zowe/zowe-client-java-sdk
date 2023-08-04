@@ -76,6 +76,12 @@ public class GetParams {
      */
     private final Optional<String> recordsRange;
 
+    /**
+     * GetParams constructor
+     *
+     * @params GetParams.Builder builder
+     * @author James Kostrewski
+     */
     public GetParams(GetParams.Builder builder) {
         this.search = Optional.ofNullable(builder.search);
         this.research = Optional.ofNullable(builder.research);

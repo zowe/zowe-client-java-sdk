@@ -62,7 +62,8 @@ public class ChangeTagParams {
     /**
      * ChangeTagParams constructor
      *
-     * @params CopyParams.Builder builder
+     * @params ChangeTagParams.Builder builder
+     * @author James Kostrewski
      */
     public ChangeTagParams(ChangeTagParams.Builder builder) {
         this.action = Optional.ofNullable(builder.action);
@@ -76,6 +77,7 @@ public class ChangeTagParams {
      * Retrieve action value
      *
      * @return action value
+     * @author James Kostrewski
      */
     public Optional<ChangeTagAction> getAction() {
         return action;
@@ -85,6 +87,7 @@ public class ChangeTagParams {
      * Retrieve type value
      *
      * @return type value
+     * @author James Kostrewski
      */
     public Optional<ChangeTagType> getType() {
         return type;
@@ -94,6 +97,7 @@ public class ChangeTagParams {
      * Retrieve codeset value
      *
      * @return codeset value
+     * @author James Kostrewski
      */
     public Optional<String> getCodeset() {
         return codeset;
@@ -103,6 +107,7 @@ public class ChangeTagParams {
      * Retrieve recursive value
      *
      * @return recursive value
+     * @author James Kostrewski
      */
     public boolean isRecursive() {
         return recursive;
@@ -112,6 +117,7 @@ public class ChangeTagParams {
      * Retrieve links value
      *
      * @return links value
+     * @author James Kostrewski
      */
     public Optional<LinkType> getLinks() {
         return links;
@@ -144,6 +150,7 @@ public class ChangeTagParams {
          *
          * @param action ChangeTagAction enum value
          * @return Builder object
+         * @author James Kostrewski
          */
         public ChangeTagParams.Builder action(ChangeTagAction action) {
             this.action = action;
@@ -155,6 +162,7 @@ public class ChangeTagParams {
          *
          * @param type ChangeTagType enum value
          * @return Builder object
+         * @author James Kostrewski
          */
         public ChangeTagParams.Builder type(ChangeTagType type) {
             this.type = type;
@@ -166,6 +174,7 @@ public class ChangeTagParams {
          *
          * @param codeset String value
          * @return Builder object
+         * @author James Kostrewski
          */
         public ChangeTagParams.Builder codeset(String codeset) {
             this.codeset = codeset;
@@ -177,6 +186,7 @@ public class ChangeTagParams {
          *
          * @param recursive boolean value
          * @return Builder object
+         * @author James Kostrewski
          */
         public ChangeTagParams.Builder recursive(boolean recursive) {
             this.recursive = recursive;
@@ -188,6 +198,7 @@ public class ChangeTagParams {
          *
          * @param links LinkType enum value
          * @return Builder object
+         * @author James Kostrewski
          */
         public ChangeTagParams.Builder links(LinkType links) {
             this.links = links;
@@ -198,6 +209,7 @@ public class ChangeTagParams {
          * Build CopyParams object
          *
          * @return CopyParams object
+         * @author James Kostrewski
          */
         public ChangeTagParams build() {
             return new ChangeTagParams(this);
