@@ -29,25 +29,25 @@ public class ChangeTagParams {
      * If "remove", any existing file tag is removed.
      * If "list", the existing tag information will be returned in a JSON response document.
      */
-    private Optional<ChangeTagAction> action;
+    private final Optional<ChangeTagAction> action;
 
     /**
      * The default is "mixed"
      * This option can be specified only when the action is "set".
      */
-    private Optional<ChangeTagType> type;
+    private final Optional<ChangeTagType> type;
 
     /**
      * Specifies the coded character set in which text data is encoded such as ASCII or EBCDIC.
      * For example, the code set for ASCII is ISO8859-1; the code set for EBCDIC is IBM-1047.
      */
-    private Optional<String> codeset;
+    private final Optional<String> codeset;
 
     /**
      * The default is false.
      * When 'true', tags all the files and subdirectorires in that directory (chtag -R).
      */
-    private boolean recursive;
+    private final boolean recursive;
 
     /**
      * The default is none
@@ -57,7 +57,7 @@ public class ChangeTagParams {
      * When 'all', preserves the modification and access times as well as the file mode,
      * file format, owner, and group owner (cp -p).
      */
-    private Optional<LinkType> links;
+    private final Optional<LinkType> links;
 
     /**
      * ChangeTagParams constructor
