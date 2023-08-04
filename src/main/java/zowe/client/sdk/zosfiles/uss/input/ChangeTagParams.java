@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
-import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagType;
 import zowe.client.sdk.zosfiles.uss.types.LinkType;
@@ -52,11 +51,11 @@ public class ChangeTagParams {
 
     /**
      * The default is none
-     *  sets the modification time of the destination file to the present.
-     *  When 'modtime', sets the modification and access time of each destination file to that of the corresponding
-     *  source file. (cp -m).
-     *  When 'all', preserves the modification and access times as well as the file mode,
-     *  file format, owner, and group owner (cp -p).
+     * sets the modification time of the destination file to the present.
+     * When 'modtime', sets the modification and access time of each destination file to that of the corresponding
+     * source file. (cp -m).
+     * When 'all', preserves the modification and access times as well as the file mode,
+     * file format, owner, and group owner (cp -p).
      */
     private Optional<LinkType> links;
 
@@ -183,6 +182,7 @@ public class ChangeTagParams {
             this.recursive = recursive;
             return this;
         }
+
         /**
          * Set links value
          *
