@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagType;
 import zowe.client.sdk.zosfiles.uss.types.LinkType;
@@ -151,6 +152,7 @@ public class ChangeTagParams {
          * @author James Kostrewski
          */
         public ChangeTagParams.Builder action(ChangeTagAction action) {
+            ValidateUtils.checkNullParameter(action == null, "action is null");
             this.action = action;
             return this;
         }

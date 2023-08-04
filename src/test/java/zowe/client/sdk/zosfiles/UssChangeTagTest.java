@@ -70,7 +70,7 @@ public class UssChangeTagTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("action not specified", errMsg);
+        assertEquals("action is null", errMsg);
     }
 
     @Test
