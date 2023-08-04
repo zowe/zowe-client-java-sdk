@@ -12,6 +12,7 @@ package zowe.client.sdk.zosfiles.uss.input;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagType;
+import zowe.client.sdk.zosfiles.uss.types.LinkType;
 
 import java.util.Optional;
 
@@ -50,6 +51,16 @@ public class ChangeTagParams {
     private boolean recursive;
 
     /**
+     * The default is none
+     *  sets the modification time of the destination file to the present.
+     *  When 'modtime', sets the modification and access time of each destination file to that of the corresponding
+     *  source file. (cp -m).
+     *  When 'all', preserves the modification and access times as well as the file mode,
+     *  file format, owner, and group owner (cp -p).
+     */
+    private Optional<LinkType> links;
+
+    /**
      * ChangeTagParams constructor
      *
      * @params CopyParams.Builder builder
@@ -59,6 +70,7 @@ public class ChangeTagParams {
         this.type = Optional.ofNullable(builder.type);
         this.codeset = Optional.ofNullable(builder.codeset);
         this.recursive = builder.recursive;
+        this.links = Optional.ofNullable(builder.links);
     }
 
     /**
@@ -97,6 +109,15 @@ public class ChangeTagParams {
         return recursive;
     }
 
+    /**
+     * Retrieve links value
+     *
+     * @return links value
+     */
+    public Optional<LinkType> getLinks() {
+        return links;
+    }
+
     @Override
     public String toString() {
         return "ChangeTagParams{" +
@@ -104,6 +125,7 @@ public class ChangeTagParams {
                 ", type='" + type + '\'' +
                 ", codeset='" + codeset + '\'' +
                 ", recursive='" + recursive + '\'' +
+                ", links='" + links + '\'' +
                 '}';
     }
 
@@ -116,6 +138,7 @@ public class ChangeTagParams {
         private ChangeTagType type;
         private String codeset;
         private boolean recursive = false;
+        private LinkType links;
 
         /**
          * Set action value
@@ -160,6 +183,16 @@ public class ChangeTagParams {
             this.recursive = recursive;
             return this;
         }
+        /**
+         * Set links value
+         *
+         * @param links LinkType enum value
+         * @return Builder object
+         */
+        public ChangeTagParams.Builder links(LinkType links) {
+            this.links = links;
+            return this;
+        }
 
         /**
          * Build CopyParams object
@@ -169,6 +202,7 @@ public class ChangeTagParams {
         public ChangeTagParams build() {
             return new ChangeTagParams(this);
         }
+
     }
 
 }

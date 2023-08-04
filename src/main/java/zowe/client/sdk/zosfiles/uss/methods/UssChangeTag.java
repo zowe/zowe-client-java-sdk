@@ -72,7 +72,7 @@ public class UssChangeTag {
      * Change tag of a USS object
      *
      * @param targetPath path to the target object
-     * @param action the file tag action
+     * @param action     the file tag action
      */
     public Response change(String targetPath, ChangeTagAction action) throws Exception {
         return change(targetPath, new ChangeTagParams.Builder().action(action).build());
@@ -82,7 +82,7 @@ public class UssChangeTag {
      * Change tag of a USS object
      *
      * @param targetPath path to the target object
-     * @param params parameters for the change tag request
+     * @param params     parameters for the change tag request
      * @return response from the server
      * @throws Exception processing error
      */
@@ -90,18 +90,20 @@ public class UssChangeTag {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "action not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(targetPath);
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "chtag");
-        jsonMap.put("action", params.getAction().orElseThrow(() -> new Exception("action not specified")));
-        params.getType().ifPresent(type -> jsonMap.put("type", type));
+        jsonMap.put("action", params.getAction().get().getValue());
+        params.getType().ifPresent(type -> jsonMap.put("type", type.getValue()));
         params.getCodeset().ifPresent(codeset -> jsonMap.put("codeset", codeset));
         if (!params.isRecursive()) {
             jsonMap.put("recursive", "false");
         }
+        params.getLinks().ifPresent(links -> jsonMap.put("links", links.getValue()));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
@@ -111,5 +113,5 @@ public class UssChangeTag {
 
         return RestUtils.getResponse(request);
     }
-    
+
 }

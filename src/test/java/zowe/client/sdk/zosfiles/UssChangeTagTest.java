@@ -88,7 +88,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagInvalidTargetPathFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.change("hello", new ChangeTagParams.Builder().build());
+            ussChangeTag.change("hello", new ChangeTagParams.Builder().action(ChangeTagAction.SET).build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
