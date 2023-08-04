@@ -94,8 +94,9 @@ public class UssChangeOwner {
         ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(targetPath);
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + 
+                EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "chown");
