@@ -85,7 +85,8 @@ public class UssCreate {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(targetPath);
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + 
+                EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("type", params.getType().getValue());
