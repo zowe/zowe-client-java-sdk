@@ -32,7 +32,7 @@ public class ChangeTagParams {
     private final Optional<ChangeTagAction> action;
 
     /**
-     * The default is "mixed"
+     * The default is "mixed".
      * This option can be specified only when the action is "set".
      */
     private final Optional<ChangeTagType> type;
@@ -50,12 +50,10 @@ public class ChangeTagParams {
     private final boolean recursive;
 
     /**
-     * The default is none
-     * sets the modification time of the destination file to the present.
-     * When 'modtime', sets the modification and access time of each destination file to that of the corresponding
-     * source file. (cp -m).
-     * When 'all', preserves the modification and access times as well as the file mode,
-     * file format, owner, and group owner (cp -p).
+     * The default is 'change' encountered links, applying a tag action to the file or directory pointed
+     * to by any encountered links.
+     *
+     * 'suppress' a tag action for the file or directory pointed to by any encountered
      */
     private final Optional<LinkType> links;
 
