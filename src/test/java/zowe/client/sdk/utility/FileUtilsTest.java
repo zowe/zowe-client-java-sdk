@@ -68,4 +68,59 @@ public class FileUtilsTest {
         assertEquals("permission value is null", errMsg);
     }
 
+    @Test
+    public void tstValidatePathInvalidPathFailure() {
+        String errMsg = "";
+        try {
+            FileUtils.validatePath("hello");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
+    public void tstValidatePathInvalidPathMissingStartingSlashFailure() {
+        String errMsg = "";
+        try {
+            FileUtils.validatePath("hello/def/file");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
+    public void tstValidatePathNullPathFailure() {
+        String errMsg = "";
+        try {
+            FileUtils.validatePath(null);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("path value is null", errMsg);
+    }
+
+    @Test
+    public void tstValidatePathSuccess() {
+        String errMsg = "";
+        try {
+            FileUtils.validatePath("/xxx/xx/x");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("", errMsg);
+    }
+
+    @Test
+    public void tstValidatePathWithSpacesSuccess() {
+        String errMsg = "";
+        try {
+            FileUtils.validatePath("/xxx/x  x/x");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("", errMsg);
+    }
+
 }
