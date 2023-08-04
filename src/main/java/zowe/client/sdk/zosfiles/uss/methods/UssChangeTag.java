@@ -117,7 +117,7 @@ public class UssChangeTag {
      *
      * @param fileNamePath file name with path
      * @return Response Object
-     * @throws Exception
+     * @throws Exception processing error
      * @author Frank Giordano
      */
     public Response retrieve(String fileNamePath) throws Exception {
