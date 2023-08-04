@@ -71,19 +71,32 @@ public class UssChangeTag {
     }
 
     /**
-     * Change tag of a UNIX file
+     * Change tag of a UNIX file to binary type
      *
      * @param fileNamePath file name with path
-     * @param type         new file type, see enum ChangeTagType object
      * @return Response Object
      * @throws Exception processing error
-     * @author James Kostrewski
+     * @author Frank Giordano
      */
-    public Response change(String fileNamePath, ChangeTagType type) throws Exception {
-        ValidateUtils.checkNullParameter(type == null, "type is null");
-        return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.SET).type(type).build());
+    public Response changeToBinary(String fileNamePath) throws Exception {
+        return changeCommon(fileNamePath, new ChangeTagParams.Builder()
+                .action(ChangeTagAction.SET).type(ChangeTagType.BINARY).build());
     }
 
+    /**
+     * Change tag of a UNIX file to text type
+     *
+     * @param fileNamePath file name with path
+     * @param codeSet      code set name. i.e. IBM-1047
+     * @return Response Object
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
+    public Response changeToText(String fileNamePath, String codeSet) throws Exception {
+        return changeCommon(fileNamePath, new ChangeTagParams.Builder()
+                .action(ChangeTagAction.SET).type(ChangeTagType.TEXT).codeset(codeSet).build());
+    }
+    
     /**
      * Remove tag of a UNIX file
      *
