@@ -125,7 +125,7 @@ public class UssMount {
         }
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" + 
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 
         final Map<String, Object> jsonMap = new HashMap<>();

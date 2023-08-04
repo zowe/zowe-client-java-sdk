@@ -93,7 +93,7 @@ public class UssDelete {
         ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + 
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
         if (request == null) {
@@ -121,7 +121,7 @@ public class UssDelete {
         ValidateUtils.checkIllegalParameter(fileSystemName.trim().isEmpty(), "file system name not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" + 
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 
         if (request == null) {

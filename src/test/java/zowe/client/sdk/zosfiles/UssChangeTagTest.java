@@ -19,7 +19,6 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.ChangeTagParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssChangeTag;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
-import zowe.client.sdk.zosfiles.uss.types.ChangeTagType;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

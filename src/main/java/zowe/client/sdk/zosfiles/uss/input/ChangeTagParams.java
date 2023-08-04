@@ -53,7 +53,7 @@ public class ChangeTagParams {
     /**
      * The default is 'change' encountered links, applying a tag action to the file or directory pointed
      * to by any encountered links.
-     *
+     * <p>
      * 'suppress' a tag action for the file or directory pointed to by any encountered
      */
     private final Optional<LinkType> links;
