@@ -42,22 +42,22 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeSuccess() throws Exception {
+    public void tstUssChangeTagChangeToBinarySuccess() throws Exception {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssChangeTag ussChangeTag = new UssChangeTag(connection, jsonPutRequest);
-        Response response = ussChangeTag.change("/xxx/xx/xx", ChangeTagType.BINARY);
+        Response response = ussChangeTag.changeToBinary("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());
     }
 
     @Test
-    public void tstUssChangeTagChangeRecursiveSuccess() throws Exception {
+    public void tstUssChangeTagChangeToTextSuccess() throws Exception {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssChangeTag ussChangeTag = new UssChangeTag(connection, jsonPutRequest);
-        Response response = ussChangeTag.change("/xxx/xx/xx", ChangeTagType.TEXT);
+        Response response = ussChangeTag.changeToText("/xxx/xx/xx", "IBM-1047");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());
@@ -121,10 +121,10 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeEmptyFileNamePathFailure() {
+    public void tstUssChangeTagChangeToBinaryEmptyFileNamePathFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.change("", ChangeTagType.TEXT);
+            ussChangeTag.changeToBinary("");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -132,10 +132,10 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeEmptyFileNamePathWithSpacesFailure() {
+    public void tstUssChangeTagChangeToBinaryEmptyFileNamePathWithSpacesFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.change("  ", ChangeTagType.TEXT);
+            ussChangeTag.changeToBinary("  ");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -143,10 +143,10 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeNullFileNamePathFailure() {
+    public void tstUssChangeTagChangeToBinaryNullFileNamePathFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.change(null, ChangeTagType.TEXT);
+            ussChangeTag.changeToBinary(null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -154,14 +154,69 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeNullTypeFailure() {
+    public void tstUssChangeTagChangeToTextEmptyFileNamePathFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.change("/xxx/xx/x", null);
+            ussChangeTag.changeToText("", "codeset");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("type is null", errMsg);
+        assertEquals("fileNamePath not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagChangeToTextEmptyFileNamePathWithSpacesFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.changeToText("  ", "codeset");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileNamePath not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagChangeToTextNullFileNamePathFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.changeToText(null, "codeset");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileNamePath is null", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagChangeToTextNullCodeSetFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.changeToText("/xx/xx/x", null);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("codeSet is null", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagChangeToTextEmptyCodeSetFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.changeToText(null, "");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("codeSet not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagChangeToTextEmptyCodeSetWithSpacesFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.changeToText(null, "  ");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("codeSet not specified", errMsg);
     }
 
     @Test
@@ -231,4 +286,3 @@ public class UssChangeTagTest {
     }
 
 }
-
