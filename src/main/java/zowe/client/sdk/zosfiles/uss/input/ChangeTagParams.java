@@ -62,7 +62,7 @@ public class ChangeTagParams {
     /**
      * ChangeTagParams constructor
      *
-     * @params ChangeTagParams.Builder builder
+     * @param builder ChangeTagParams.Builder builder
      * @author James Kostrewski
      */
     public ChangeTagParams(ChangeTagParams.Builder builder) {

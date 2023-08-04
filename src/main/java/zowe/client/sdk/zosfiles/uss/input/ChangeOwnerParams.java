@@ -46,7 +46,7 @@ public class ChangeOwnerParams {
     /**
      * ChangeOwnerParams constructor
      *
-     * @params ChangeOwnerParams.Builder builder
+     * @param builder ChangeOwnerParams.Builder builder
      * @author James Kostrewski
      */
     public ChangeOwnerParams(ChangeOwnerParams.Builder builder) {

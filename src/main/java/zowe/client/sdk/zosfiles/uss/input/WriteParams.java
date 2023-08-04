@@ -50,7 +50,7 @@ public class WriteParams {
     /**
      * WriteParams constructor
      *
-     * @params WriteParams.Builder builder
+     * @param builder WriteParams.Builder builder
      * @author Frank Giordano
      */
     public WriteParams(WriteParams.Builder builder) {

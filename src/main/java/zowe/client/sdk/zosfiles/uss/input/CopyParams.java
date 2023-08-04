@@ -40,7 +40,7 @@ public class CopyParams {
     /**
      * CopyParams constructor
      *
-     * @params CopyParams.Builder builder
+     * @param builder CopyParams.Builder builder
      * @author James Kostrewski
      */
     public CopyParams(CopyParams.Builder builder) {

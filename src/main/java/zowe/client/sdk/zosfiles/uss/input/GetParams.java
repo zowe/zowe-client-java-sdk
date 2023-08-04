@@ -79,7 +79,7 @@ public class GetParams {
     /**
      * GetParams constructor
      *
-     * @params GetParams.Builder builder
+     * @param builder GetParams.Builder builder
      * @author James Kostrewski
      */
     public GetParams(GetParams.Builder builder) {

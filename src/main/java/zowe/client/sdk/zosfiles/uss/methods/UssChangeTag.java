@@ -74,6 +74,7 @@ public class UssChangeTag {
      *
      * @param fileNamePath file name with path
      * @param action       the file tag action
+     * @return Response Object
      * @throws Exception processing error
      * @author James Kostrewski
      */
@@ -86,7 +87,7 @@ public class UssChangeTag {
      *
      * @param fileNamePath file name with path
      * @param params       parameters for the change tag request, see ChangeTagParams object
-     * @return response from the server
+     * @return Response Object
      * @throws Exception processing error
      * @author James Kostrewski
      */

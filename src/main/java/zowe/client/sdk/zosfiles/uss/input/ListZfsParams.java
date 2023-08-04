@@ -46,7 +46,7 @@ public class ListZfsParams {
     /**
      * ListZfsParams constructor
      *
-     * @params ListZfsParams.Builder builder
+     * @param builder ListZfsParams.Builder builder
      * @author Frank Giordano
      */
     public ListZfsParams(ListZfsParams.Builder builder) {

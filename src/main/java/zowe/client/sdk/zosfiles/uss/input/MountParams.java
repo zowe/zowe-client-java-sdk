@@ -48,11 +48,10 @@ public class MountParams {
      */
     private final Optional<MountModeType> mode;
 
-
     /**
      * MountParams constructor
      *
-     * @params MountParams.Builder builder
+     * @param builder MountParams.Builder builder
      * @author Frank Giordano
      */
     public MountParams(MountParams.Builder builder) {

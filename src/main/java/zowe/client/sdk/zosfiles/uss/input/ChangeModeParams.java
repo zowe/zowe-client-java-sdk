@@ -43,7 +43,7 @@ public class ChangeModeParams {
     /**
      * ChangeModeParams constructor
      *
-     * @params ChangeModeParams.Builder builder
+     * @param builder ChangeModeParams.Builder builder
      * @author James Kostrewski
      */
     public ChangeModeParams(ChangeModeParams.Builder builder) {

@@ -114,7 +114,7 @@ public class ListParams {
     /**
      * ListParams constructor
      *
-     * @params ListParams.Builder builder
+     * @param builder ListParams.Builder builder
      * @author Frank Giordano
      */
     public ListParams(ListParams.Builder builder) {
