@@ -35,6 +35,7 @@ import java.util.Map;
  * @version 2.0
  */
 public class UssChangeTag {
+
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -69,31 +70,34 @@ public class UssChangeTag {
     }
 
     /**
-     * Change tag of a USS object
+     * Change tag of a UNIX file
      *
-     * @param targetPath path to the target object
-     * @param action     the file tag action
+     * @param fileNamePath file name with path
+     * @param action       the file tag action
+     * @throws Exception processing error
+     * @author James Kostrewski
      */
-    public Response change(String targetPath, ChangeTagAction action) throws Exception {
-        return change(targetPath, new ChangeTagParams.Builder().action(action).build());
+    public Response change(String fileNamePath, ChangeTagAction action) throws Exception {
+        return change(fileNamePath, new ChangeTagParams.Builder().action(action).build());
     }
 
     /**
-     * Change tag of a USS object
+     * Change tag of a UNIX file
      *
-     * @param targetPath path to the target object
-     * @param params     parameters for the change tag request
+     * @param fileNamePath file name with path
+     * @param params       parameters for the change tag request, see ChangeTagParams object
      * @return response from the server
      * @throws Exception processing error
+     * @author James Kostrewski
      */
-    public Response change(String targetPath, ChangeTagParams params) throws Exception {
-        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
+    public Response change(String fileNamePath, ChangeTagParams params) throws Exception {
+        ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
+        ValidateUtils.checkIllegalParameter(fileNamePath.trim().isEmpty(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "action not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(targetPath);
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(fileNamePath);
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "chtag");

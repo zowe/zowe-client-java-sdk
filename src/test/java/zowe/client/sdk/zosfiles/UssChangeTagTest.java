@@ -103,7 +103,7 @@ public class UssChangeTagTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
@@ -114,7 +114,7 @@ public class UssChangeTagTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("fileNamePath not specified", errMsg);
     }
 
 }
