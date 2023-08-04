@@ -48,7 +48,7 @@ public class UssChangeOwnerTest {
         Response response = ussChangeOwner.change("/xxx/xx/xx", "user");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get().toString());
+        assertEquals("success", response.getStatusText().get());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class UssChangeOwnerTest {
                 new ChangeOwnerParams.Builder().owner("user").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get().toString());
+        assertEquals("success", response.getStatusText().get());
     }
 
     @Test

@@ -47,7 +47,7 @@ public class UssMoveTest {
         Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get().toString());
+        assertEquals("success", response.getStatusText().get());
     }
 
     @Test
@@ -58,7 +58,7 @@ public class UssMoveTest {
         Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx", true);
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get().toString());
+        assertEquals("success", response.getStatusText().get());
     }
 
     @Test

@@ -48,7 +48,7 @@ public class UssChangeTagTest {
         Response response = ussChangeTag.change("/xxx/xx/xx", ChangeTagAction.SET);
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get().toString());
+        assertEquals("success", response.getStatusText().get());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class UssChangeTagTest {
         Response response = ussChangeTag.change("/xxx/xx/xx", ChangeTagAction.SET);
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get().toString());
+        assertEquals("success", response.getStatusText().get());
     }
 
     @Test

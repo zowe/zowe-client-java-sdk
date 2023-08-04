@@ -49,7 +49,7 @@ public class UssMountTest {
         Response response = ussMount.mount("name", "mountpoint", "fstype");
         Assertions.assertEquals("{}", response.getResponsePhrase().get().toString());
         Assertions.assertEquals("200", response.getStatusCode().get().toString());
-        Assertions.assertEquals("success", response.getStatusText().get().toString());
+        Assertions.assertEquals("success", response.getStatusText().get());
     }
 
     @Test

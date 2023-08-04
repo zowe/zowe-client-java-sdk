@@ -48,7 +48,7 @@ public class UssCopyTest {
         Response response = ussCopy.copy("/xxx/xx/xx", "/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get().toString());
+        assertEquals("success", response.getStatusText().get());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class UssCopyTest {
                 new CopyParams.Builder().from("/xxx/xx/xx").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get().toString());
+        assertEquals("success", response.getStatusText().get());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class UssCopyTest {
                 new CopyParams.Builder().from("/xxx/xx/xx").overwrite(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get().toString());
+        assertEquals("success", response.getStatusText().get());
     }
 
     @Test

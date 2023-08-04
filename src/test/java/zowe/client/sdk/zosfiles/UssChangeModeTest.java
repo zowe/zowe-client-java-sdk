@@ -49,7 +49,7 @@ public class UssChangeModeTest {
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get().toString());
+        assertEquals("success", response.getStatusText().get());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class UssChangeModeTest {
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get().toString());
+        assertEquals("success", response.getStatusText().get());
     }
 
     @Test

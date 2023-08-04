@@ -50,7 +50,7 @@ public class UssCreateTest {
         Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
         Assertions.assertEquals("{}", response.getResponsePhrase().get().toString());
         Assertions.assertEquals("200", response.getStatusCode().get().toString());
-        Assertions.assertEquals("success", response.getStatusText().get().toString());
+        Assertions.assertEquals("success", response.getStatusText().get());
     }
 
     @Test
