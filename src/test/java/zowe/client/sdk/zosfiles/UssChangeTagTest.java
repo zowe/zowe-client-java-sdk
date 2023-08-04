@@ -19,6 +19,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.ChangeTagParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssChangeTag;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
+import zowe.client.sdk.zosfiles.uss.types.ChangeTagType;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -41,32 +42,33 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagSuccess() throws Exception {
+    public void tstUssChangeTagChangeSuccess() throws Exception {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssChangeTag ussChangeTag = new UssChangeTag(connection, jsonPutRequest);
-        Response response = ussChangeTag.change("/xxx/xx/xx", ChangeTagAction.SET);
+        Response response = ussChangeTag.change("/xxx/xx/xx", ChangeTagType.BINARY);
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());
     }
 
     @Test
-    public void tstUssChangeTagRecursiveSuccess() throws Exception {
+    public void tstUssChangeTagChangeRecursiveSuccess() throws Exception {
         Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         UssChangeTag ussChangeTag = new UssChangeTag(connection, jsonPutRequest);
-        Response response = ussChangeTag.change("/xxx/xx/xx", ChangeTagAction.SET);
+        Response response = ussChangeTag.change("/xxx/xx/xx", ChangeTagType.TEXT);
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());
     }
 
     @Test
-    public void tstUssChangeTagNullActionFailure() {
+    public void tstUssChangeTagChangeCommonNullActionInParamsFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.change("/xxx/xx/xx", new ChangeTagParams.Builder().action(null).build());
+            ussChangeTag.changeCommon("/xxx/xx/xx",
+                    new ChangeTagParams.Builder().action(null).build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -74,10 +76,10 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagNoActionFailure() {
+    public void tstUssChangeTagChangeCommonNoActionInParamsFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.change("/xxx/xx/xx", new ChangeTagParams.Builder().build());
+            ussChangeTag.changeCommon("/xxx/xx/xx", new ChangeTagParams.Builder().build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -85,10 +87,11 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagInvalidTargetPathFailure() {
+    public void tstUssChangeTagChangeCommonInvalidFileNamePathPathFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.change("hello", new ChangeTagParams.Builder().action(ChangeTagAction.SET).build());
+            ussChangeTag.changeCommon("hello",
+                    new ChangeTagParams.Builder().action(ChangeTagAction.SET).build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -96,10 +99,10 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagEmptyTargetPathFailure() {
+    public void tstUssChangeTagChangeCommonEmptyFileNamePathPathFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.change("", new ChangeTagParams.Builder().build());
+            ussChangeTag.changeCommon("", new ChangeTagParams.Builder().build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -107,14 +110,125 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagEmptyTargetPathWithSpacesFailure() {
+    public void tstUssChangeTagChangeCommonEmptyFileNamePathPathWithSpacesFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.change("  ", new ChangeTagParams.Builder().build());
+            ussChangeTag.changeCommon("  ", new ChangeTagParams.Builder().build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
+    @Test
+    public void tstUssChangeTagChangeEmptyFileNamePathFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.change("", ChangeTagType.TEXT);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileNamePath not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagChangeEmptyFileNamePathWithSpacesFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.change("  ", ChangeTagType.TEXT);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileNamePath not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagChangeNullFileNamePathFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.change(null, ChangeTagType.TEXT);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileNamePath is null", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagChangeNullTypeFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.change("/xxx/xx/x", null);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("type is null", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagRemoveEmptyFileNamePathFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.remove("");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileNamePath not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagRemoveEmptyFileNamePathWithSpacesFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.remove("  ");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileNamePath not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagRemoveNullFileNamePathFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.remove(null);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileNamePath is null", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagRetrieveEmptyFileNamePathFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.retrieve("");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileNamePath not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagRetrieveEmptyFileNamePathWithSpacesFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.retrieve("  ");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileNamePath not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssChangeTagRetrieveNullFileNamePathFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.retrieve(null);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileNamePath is null", errMsg);
+    }
+
 }
+
