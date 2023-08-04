@@ -21,7 +21,7 @@ public enum ChangeTagAction {
 
     SET("set"),
     REMOVE("remove"),
-    list("list");
+    LIST("list");
 
     private final String value;
 
