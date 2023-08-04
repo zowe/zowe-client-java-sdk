@@ -16,6 +16,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -96,7 +97,7 @@ public class UssChangeTag {
         return changeCommon(fileNamePath, new ChangeTagParams.Builder()
                 .action(ChangeTagAction.SET).type(ChangeTagType.TEXT).codeset(codeSet).build());
     }
-    
+
     /**
      * Remove tag of a UNIX file
      *
@@ -110,7 +111,7 @@ public class UssChangeTag {
     }
 
     /**
-     * Retrieve existing tag information
+     * Retrieve existing UNIX file tag information
      *
      * @param fileNamePath file name with path
      * @return Response Object
@@ -137,7 +138,8 @@ public class UssChangeTag {
         ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "action not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(fileNamePath);
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
+                EncodeUtils.encodeURIComponent(FileUtils.validatePath(fileNamePath));
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "chtag");
@@ -159,4 +161,3 @@ public class UssChangeTag {
     }
 
 }
-
