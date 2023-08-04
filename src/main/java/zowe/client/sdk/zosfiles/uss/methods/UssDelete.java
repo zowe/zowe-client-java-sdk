@@ -15,6 +15,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
