@@ -54,8 +54,8 @@ public class TeamConfigService {
         final List<Profile> profiles = new ArrayList<>();
         Map<String, String> properties = new HashMap<>();
         LOG.debug("Partition found name {} containing {}:", name, jsonObject);
-        for (final Object keyObj : keyObjs) {
-            final String keyVal = (String) keyObj;
+        for (final String keyObj : keyObjs) {
+            final String keyVal = keyObj;
             if (SectionType.PROFILES.getValue().equals(keyVal)) {
                 JSONObject jsonProfileObj = (JSONObject) jsonObject.get(SectionType.PROFILES.getValue());
                 @SuppressWarnings("unchecked")
