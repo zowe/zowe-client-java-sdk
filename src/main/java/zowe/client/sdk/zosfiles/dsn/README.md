@@ -499,7 +499,7 @@ public class ListDatasetsTst extends TstZosConnection {
         ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
         DsnList dsnList = new DsnList(connection);
         List<Dataset> datasets = dsnList.listDsn(dataSetName, params);
-        datasets.forEach(i -> System.out.println(i));
+        datasets.forEach(System.out::println);
     }
 
     /**
@@ -514,7 +514,7 @@ public class ListDatasetsTst extends TstZosConnection {
         ListParams params = new ListParams.Builder().attribute(AttributeType.VOL).build();
         DsnList dsnList = new DsnList(connection);
         List<Dataset> datasets = dsnList.listDsn(dataSetName, params);
-        datasets.forEach(i -> System.out.println(i));
+        datasets.forEach(System.out::println);
     }
 
 }
