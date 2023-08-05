@@ -126,7 +126,7 @@ public class UssList {
 
         final List<UssItem> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
-                response.getResponsePhrase().orElseThrow(() -> new Exception("error retrieving uss list"))));
+                response.getResponsePhrase().orElseThrow(() -> new Exception("null file list response"))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (final Object obj : jsonArray) {
