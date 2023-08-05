@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Class containing unit tests for UssChangeTag.
  *
  * @author James Kostrewski
+ * @author Frank Giordano
  * @version 2.0
  */
 public class UssChangeTagTest {
@@ -57,6 +58,28 @@ public class UssChangeTagTest {
                 new Response(new JSONObject(), 200, "success"));
         UssChangeTag ussChangeTag = new UssChangeTag(connection, jsonPutRequest);
         Response response = ussChangeTag.changeToText("/xxx/xx/xx", "IBM-1047");
+        assertEquals("{}", response.getResponsePhrase().get().toString());
+        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals("success", response.getStatusText().get());
+    }
+
+    @Test
+    public void tstUssChangeTagRemoveSuccess() throws Exception {
+        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        UssChangeTag ussChangeTag = new UssChangeTag(connection, jsonPutRequest);
+        Response response = ussChangeTag.remove("/xxx/xx/xx");
+        assertEquals("{}", response.getResponsePhrase().get().toString());
+        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals("success", response.getStatusText().get());
+    }
+
+    @Test
+    public void tstUssChangeTagRetrieveSuccess() throws Exception {
+        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        UssChangeTag ussChangeTag = new UssChangeTag(connection, jsonPutRequest);
+        Response response = ussChangeTag.retrieve("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());
