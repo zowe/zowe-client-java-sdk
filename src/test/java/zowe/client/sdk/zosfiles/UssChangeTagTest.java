@@ -31,21 +31,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class UssChangeTagTest {
     private ZosConnection connection;
-    private JsonPutRequest jsonPutRequest;
+    private JsonPutRequest mockJsonPutRequest;
     private UssChangeTag ussChangeTag;
 
     @Before
     public void init() {
         connection = new ZosConnection("1", "1", "1", "1");
-        jsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        mockJsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
         ussChangeTag = new UssChangeTag(connection);
     }
 
     @Test
     public void tstUssChangeTagChangeToBinarySuccess() throws Exception {
-        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssChangeTag ussChangeTag = new UssChangeTag(connection, jsonPutRequest);
+        UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         Response response = ussChangeTag.changeToBinary("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
@@ -54,9 +54,7 @@ public class UssChangeTagTest {
 
     @Test
     public void tstUssChangeTagChangeToTextSuccess() throws Exception {
-        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssChangeTag ussChangeTag = new UssChangeTag(connection, jsonPutRequest);
+        UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         Response response = ussChangeTag.changeToText("/xxx/xx/xx", "IBM-1047");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
@@ -65,9 +63,7 @@ public class UssChangeTagTest {
 
     @Test
     public void tstUssChangeTagRemoveSuccess() throws Exception {
-        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssChangeTag ussChangeTag = new UssChangeTag(connection, jsonPutRequest);
+        UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         Response response = ussChangeTag.remove("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
@@ -76,9 +72,7 @@ public class UssChangeTagTest {
 
     @Test
     public void tstUssChangeTagRetrieveSuccess() throws Exception {
-        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssChangeTag ussChangeTag = new UssChangeTag(connection, jsonPutRequest);
+        UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         Response response = ussChangeTag.retrieve("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());

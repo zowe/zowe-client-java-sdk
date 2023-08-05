@@ -32,21 +32,21 @@ import static org.junit.Assert.assertEquals;
 public class UssCreateTest {
 
     private ZosConnection connection;
-    private JsonPostRequest jsonPostrequest;
+    private JsonPostRequest mockJsonPostRequest;
     private UssCreate ussCreate;
 
     @Before
     public void init() {
         connection = new ZosConnection("1", "1", "1", "1");
-        jsonPostrequest = Mockito.mock(JsonPostRequest.class);
+        mockJsonPostRequest = Mockito.mock(JsonPostRequest.class);
         ussCreate = new UssCreate(connection);
     }
 
     @Test
     public void tstUssCreateSuccess() throws Exception {
-        Mockito.when(jsonPostrequest.executeRequest()).thenReturn(
+        Mockito.when(mockJsonPostRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        UssCreate ussCreate = new UssCreate(connection, jsonPostrequest);
+        UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequest);
         Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
         Assertions.assertEquals("{}", response.getResponsePhrase().get().toString());
         Assertions.assertEquals("200", response.getStatusCode().get().toString());

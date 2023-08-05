@@ -30,21 +30,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class UssChangeOwnerTest {
 
     private ZosConnection connection;
-    private JsonPutRequest jsonPutRequest;
+    private JsonPutRequest mockJsonPutRequest;
     private UssChangeOwner ussChangeOwner;
 
     @Before
     public void init() {
         connection = new ZosConnection("1", "1", "1", "1");
-        jsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        mockJsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
         ussChangeOwner = new UssChangeOwner(connection);
     }
 
     @Test
     public void tstUssChangeOwnerSuccess() throws Exception {
-        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, jsonPutRequest);
+        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequest);
         Response response = ussChangeOwner.change("/xxx/xx/xx", "user");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
@@ -53,9 +53,7 @@ public class UssChangeOwnerTest {
 
     @Test
     public void tstUssChangeOwnerRecursiveSuccess() throws Exception {
-        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, jsonPutRequest);
+        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequest);
         Response response = ussChangeOwner.change("/xxx/xx/xx",
                 new ChangeOwnerParams.Builder().owner("user").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());

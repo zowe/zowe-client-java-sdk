@@ -30,21 +30,21 @@ import static org.junit.Assert.assertEquals;
 public class UssCopyTest {
 
     private ZosConnection connection;
-    private JsonPutRequest jsonPutRequest;
+    private JsonPutRequest mockJsonPutRequest;
     private UssCopy ussCopy;
 
     @Before
     public void init() {
         connection = new ZosConnection("1", "1", "1", "1");
-        jsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        mockJsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
         ussCopy = new UssCopy(connection);
     }
 
     @Test
     public void tstUssCopySuccess() throws Exception {
-        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssCopy ussCopy = new UssCopy(connection, jsonPutRequest);
+        UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         Response response = ussCopy.copy("/xxx/xx/xx", "/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
@@ -53,9 +53,7 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyRecursiveSuccess() throws Exception {
-        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssCopy ussCopy = new UssCopy(connection, jsonPutRequest);
+        UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         Response response = ussCopy.copy("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
@@ -65,9 +63,7 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyOverwriteSuccess() throws Exception {
-        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssCopy ussCopy = new UssCopy(connection, jsonPutRequest);
+        UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         Response response = ussCopy.copy("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").overwrite(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());

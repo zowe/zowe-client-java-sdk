@@ -30,21 +30,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class UssChangeModeTest {
 
     private ZosConnection connection;
-    private JsonPutRequest jsonPutRequest;
+    private JsonPutRequest mockJsonPutRequest;
     private UssChangeMode ussChangeMode;
 
     @Before
     public void init() {
         connection = new ZosConnection("1", "1", "1", "1");
-        jsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        mockJsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
         ussChangeMode = new UssChangeMode(connection);
     }
 
     @Test
     public void tstUssChangeModeSuccess() throws Exception {
-        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssChangeMode ussChangeMode = new UssChangeMode(connection, jsonPutRequest);
+        UssChangeMode ussChangeMode = new UssChangeMode(connection, mockJsonPutRequest);
         Response response = ussChangeMode.change("/xxx/xx/xx",
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
@@ -54,9 +54,7 @@ public class UssChangeModeTest {
 
     @Test
     public void tstUssChangeModeWithRecursiveInParamsSuccess() throws Exception {
-        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssChangeMode ussChangeMode = new UssChangeMode(connection, jsonPutRequest);
+        UssChangeMode ussChangeMode = new UssChangeMode(connection, mockJsonPutRequest);
         Response response = ussChangeMode.change("/xxx/xx/xx",
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());

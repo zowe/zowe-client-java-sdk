@@ -29,21 +29,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class UssMoveTest {
 
     private ZosConnection connection;
-    private JsonPutRequest jsonPutRequest;
+    private JsonPutRequest mockJsonPutRequest;
     private UssMove ussMove;
 
     @Before
     public void init() {
         connection = new ZosConnection("1", "1", "1", "1");
-        jsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        mockJsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
         ussMove = new UssMove(connection);
     }
 
     @Test
     public void tstUssMoveSuccess() throws Exception {
-        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssMove ussMove = new UssMove(connection, jsonPutRequest);
+        UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
         Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
@@ -52,9 +52,7 @@ public class UssMoveTest {
 
     @Test
     public void tstUssMoveOverwriteSuccess() throws Exception {
-        Mockito.when(jsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssMove ussMove = new UssMove(connection, jsonPutRequest);
+        UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
         Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx", true);
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());

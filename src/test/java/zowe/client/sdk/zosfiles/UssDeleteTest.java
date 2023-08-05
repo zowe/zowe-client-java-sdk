@@ -29,21 +29,21 @@ import static org.junit.Assert.assertEquals;
 public class UssDeleteTest {
 
     private ZosConnection connection;
-    private JsonDeleteRequest jsonDeleteRequest;
+    private JsonDeleteRequest mockJsonDeleteRequest;
     private UssDelete ussDelete;
 
     @Before
     public void init() {
         connection = new ZosConnection("1", "1", "1", "1");
-        jsonDeleteRequest = Mockito.mock(JsonDeleteRequest.class);
+        mockJsonDeleteRequest = Mockito.mock(JsonDeleteRequest.class);
+        Mockito.when(mockJsonDeleteRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
         ussDelete = new UssDelete(connection);
     }
 
     @Test
     public void tstUssDeleteSuccess() throws Exception {
-        Mockito.when(jsonDeleteRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssDelete ussDelete = new UssDelete(connection, jsonDeleteRequest);
+        UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
         Response response = ussDelete.delete("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
@@ -52,9 +52,7 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteRecursiveSuccess() throws Exception {
-        Mockito.when(jsonDeleteRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        UssDelete ussDelete = new UssDelete(connection, jsonDeleteRequest);
+        UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
         Response response = ussDelete.delete("/xxx/xx/xx", true);
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
