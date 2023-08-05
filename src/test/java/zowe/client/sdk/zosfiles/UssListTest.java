@@ -100,6 +100,34 @@ public class UssListTest {
     }
 
     @Test
+    public void tstUssListFileListEmptyResponseSuccess() throws Exception {
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(dataForFileList);
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        UssList ussList = new UssList(connection, mockJsonGetRequest);
+        List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
+        // should only contain two items
+        assertEquals(0, items.size());
+    }
+
+    @Test
+    public void tstUssListFileListNullResponseFailure() throws Exception {
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(dataForFileList);
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response(null, 200, "success"));
+        UssList ussList = new UssList(connection, mockJsonGetRequest);
+        String msg = "";
+        try {
+            ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
+        } catch (Exception e) {
+            msg = e.getMessage();
+        }
+        assertEquals("null file list response", msg);
+    }
+
+    @Test
     public void tstUssListFileListSuccess() throws Exception {
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(dataForFileList);
