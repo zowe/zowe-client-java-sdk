@@ -101,8 +101,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListEmptyResponseSuccess() throws Exception {
-        JSONParser parser = new JSONParser();
-        JSONObject json = (JSONObject) parser.parse(dataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response("{}", 200, "success"));
         UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -113,8 +111,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListNullResponseFailure() throws Exception {
-        JSONParser parser = new JSONParser();
-        JSONObject json = (JSONObject) parser.parse(dataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(null, 200, "success"));
         UssList ussList = new UssList(connection, mockJsonGetRequest);
