@@ -125,7 +125,7 @@ public class JobGet {
     }
 
     /**
-     * Get a single job object from an input job id.
+     * Get a job by job id.
      *
      * @param jobId job ID for the job for which you want to get status
      * @return one job object, matching the given job ID, without step-data
@@ -277,7 +277,7 @@ public class JobGet {
     }
 
     /**
-     * Get spool content from a job (keeping naming convention patter with this duplication function).
+     * Get spool content from a job (keeping naming convention pattern with this duplication function).
      *
      * @param jobFile spool file for which you want to retrieve the content
      * @return spool content
@@ -289,7 +289,7 @@ public class JobGet {
     }
 
     /**
-     * Get spool content from a job using the job name, job ID, and spool ID number from z/OSMF.
+     * Get spool content from a job using the job name, job ID, and spool ID number.
      *
      * @param jobName job name for the job containing the spool content
      * @param jobId   job id for the job containing the spool content
