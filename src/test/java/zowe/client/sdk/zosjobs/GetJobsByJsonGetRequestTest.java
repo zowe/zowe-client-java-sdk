@@ -38,15 +38,15 @@ import static org.junit.Assert.assertEquals;
 public class GetJobsByJsonGetRequestTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
-    private JsonGetRequest request;
+    private JsonGetRequest mockJsonGetRequest;
     private JobGet getJobs;
     private JSONObject jobJson;
 
     @Before
     public void init() {
-        request = Mockito.mock(JsonGetRequest.class);
+        mockJsonGetRequest = Mockito.mock(JsonGetRequest.class);
         getJobs = new JobGet(connection);
-        Whitebox.setInternalState(getJobs, "request", request);
+        Whitebox.setInternalState(getJobs, "request", mockJsonGetRequest);
 
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("jobid", "jobid");
@@ -80,7 +80,7 @@ public class GetJobsByJsonGetRequestTest {
         final Map<String, String> jsonJob2 = new JSONObject(jsonJobMap2);
         jsonArray.add(jsonJob2);
 
-        Mockito.when(request.executeRequest()).thenReturn(
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(jsonArray, 200, "success"));
 
         String msgResult = null;
@@ -100,7 +100,7 @@ public class GetJobsByJsonGetRequestTest {
         final JSONArray jsonArray = new JSONArray();
         jsonArray.add(jobJson);
 
-        Mockito.when(request.executeRequest()).thenReturn(
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(jsonArray, 200, "success"));
 
         final Job job = getJobs.getById("1");
@@ -129,7 +129,7 @@ public class GetJobsByJsonGetRequestTest {
         final JSONObject jsonJob = new JSONObject(jsonJobMap);
         jsonArray.add(jsonJob);
 
-        Mockito.when(request.executeRequest()).thenReturn(
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(jsonArray, 200, "success"));
 
         final Job job = getJobs.getById("1");
@@ -194,7 +194,7 @@ public class GetJobsByJsonGetRequestTest {
 
     @Test
     public void tstGetStatusForJobSuccess() throws Exception {
-        Mockito.when(request.executeRequest()).thenReturn(
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(jobJson, 200, "success"));
 
         final Job job = getJobs.getStatusByJob(new Job.Builder().jobId("1").jobName("jobName").build());

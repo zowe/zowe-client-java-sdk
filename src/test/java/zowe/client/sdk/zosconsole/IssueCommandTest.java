@@ -34,11 +34,11 @@ import static org.junit.Assert.assertEquals;
 public class IssueCommandTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
-    private JsonPutRequest jsonGetRequest;
+    private JsonPutRequest mockJsonGetRequest;
 
     @Before
     public void init() {
-        jsonGetRequest = Mockito.mock(JsonPutRequest.class);
+        mockJsonGetRequest = Mockito.mock(JsonPutRequest.class);
     }
 
     @Test
@@ -46,9 +46,9 @@ public class IssueCommandTest {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "student");
         final JSONObject json = new JSONObject(jsonMap);
-        Mockito.when(jsonGetRequest.executeRequest()).thenReturn(
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
-        final IssueConsole issueCommand = new IssueConsole(connection, jsonGetRequest);
+        final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
         final IssueParams issueParams = new IssueParams();
         issueParams.setCommand("test");
         final ConsoleResponse response = issueCommand.issueCommand(issueParams);
@@ -64,9 +64,9 @@ public class IssueCommandTest {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response-url", "student");
         final JSONObject json = new JSONObject(jsonMap);
-        Mockito.when(jsonGetRequest.executeRequest()).thenReturn(
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
-        IssueConsole issueCommand = new IssueConsole(connection, jsonGetRequest);
+        IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
         IssueParams issueParams = new IssueParams();
         issueParams.setCommand("test");
         ConsoleResponse response = issueCommand.issueCommand(issueParams);
@@ -80,9 +80,9 @@ public class IssueCommandTest {
     @Test
     public void tstIssueCommandHttpErrorFailure() throws Exception {
         final String obj = "Unauthorized";
-        Mockito.when(jsonGetRequest.executeRequest()).thenReturn(
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(obj, 401, "Unauthorized"));
-        final IssueConsole issueCommand = new IssueConsole(connection, jsonGetRequest);
+        final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
         final IssueParams issueParams = new IssueParams();
         issueParams.setCommand("test");
         String errorMsg = "";

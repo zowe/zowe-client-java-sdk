@@ -29,19 +29,19 @@ import static org.junit.Assert.assertEquals;
 public class GetJobsByTextGetRequestTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
-    private TextGetRequest request;
+    private TextGetRequest mockTextGetRequest;
     private JobGet getJobs;
 
     @Before
     public void init() {
-        request = Mockito.mock(TextGetRequest.class);
+        mockTextGetRequest = Mockito.mock(TextGetRequest.class);
         getJobs = new JobGet(connection);
-        Whitebox.setInternalState(getJobs, "request", request);
+        Whitebox.setInternalState(getJobs, "request", mockTextGetRequest);
     }
 
     @Test
     public void tstGetSpoolContentByIdSuccess() throws Exception {
-        Mockito.when(request.executeRequest()).thenReturn(
+        Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response("1\n2\n3\n", 200, "success"));
 
         final String results = getJobs.getSpoolContent("jobName", "jobId", 1);
