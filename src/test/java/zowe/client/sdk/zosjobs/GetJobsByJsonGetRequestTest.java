@@ -68,7 +68,7 @@ public class GetJobsByJsonGetRequestTest {
     @SuppressWarnings("unchecked")
     public void tstGetJobFromMultipleJobsResultsExceptionFailure() {
         final String msg = "Expected 1 job returned but received 2 jobs.";
-        JSONArray jsonArray = new JSONArray();
+        final JSONArray jsonArray = new JSONArray();
 
         final Map<String, String> jsonJobMap1 = new HashMap<>();
         jsonJobMap1.put("jobid", "job1");

@@ -42,8 +42,8 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteSuccess() throws Exception {
-        UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
-        Response response = ussDelete.delete("/xxx/xx/xx");
+        final UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
+        final Response response = ussDelete.delete("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());
@@ -51,8 +51,8 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteRecursiveSuccess() throws Exception {
-        UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
-        Response response = ussDelete.delete("/xxx/xx/xx", true);
+        final UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
+        final Response response = ussDelete.delete("/xxx/xx/xx", true);
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());

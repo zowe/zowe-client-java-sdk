@@ -45,8 +45,8 @@ public class UssCreateTest {
     public void tstUssCreateSuccess() throws Exception {
         Mockito.when(mockJsonPostRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequest);
-        Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+        final UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequest);
+        final Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
         Assertions.assertEquals("{}", response.getResponsePhrase().get().toString());
         Assertions.assertEquals("200", response.getStatusCode().get().toString());
         Assertions.assertEquals("success", response.getStatusText().get());

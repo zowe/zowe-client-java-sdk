@@ -41,11 +41,11 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountSuccess() throws Exception {
-        JsonPutRequest mockJsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        final JsonPutRequest mockJsonPutRequest = Mockito.mock(JsonPutRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        UssMount ussMount = new UssMount(connection, mockJsonPutRequest);
-        Response response = ussMount.mount("name", "mountpoint", "fstype");
+        final UssMount ussMount = new UssMount(connection, mockJsonPutRequest);
+        final Response response = ussMount.mount("name", "mountpoint", "fstype");
         Assertions.assertEquals("{}", response.getResponsePhrase().get().toString());
         Assertions.assertEquals("200", response.getStatusCode().get().toString());
         Assertions.assertEquals("success", response.getStatusText().get());

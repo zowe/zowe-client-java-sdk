@@ -57,7 +57,7 @@ public class ValidateUtilsTest {
 
     @Test
     public void tstCheckNullParameterFalseSuccess() {
-        String str = "";
+        final String str = "";
         boolean isNullException = false;
         try {
             ValidateUtils.checkNullParameter(str == null, "error msg");
@@ -69,7 +69,7 @@ public class ValidateUtilsTest {
 
     @Test
     public void tstCheckNullParameterTrueSuccess() {
-        String str = null;
+        final String str = null;
         boolean isNullException = false;
         try {
             ValidateUtils.checkNullParameter(str == null, "error msg");

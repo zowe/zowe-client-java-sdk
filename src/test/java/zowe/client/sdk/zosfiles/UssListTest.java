@@ -102,8 +102,8 @@ public class UssListTest {
     public void tstUssListFileListEmptyResponseSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response("{}", 200, "success"));
-        UssList ussList = new UssList(connection, mockJsonGetRequest);
-        List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
         // should only contain two items
         assertEquals(0, items.size());
     }
@@ -112,7 +112,7 @@ public class UssListTest {
     public void tstUssListFileListNullResponseFailure() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(null, 200, "success"));
-        UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
         String msg = "";
         try {
             ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
@@ -124,12 +124,12 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListSuccess() throws Exception {
-        JSONParser parser = new JSONParser();
-        JSONObject json = (JSONObject) parser.parse(dataForFileList);
+        final JSONParser parser = new JSONParser();
+        final JSONObject json = (JSONObject) parser.parse(dataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
-        UssList ussList = new UssList(connection, mockJsonGetRequest);
-        List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
         // should only contain two items
         assertEquals(2, items.size());
         // verify first item's data
@@ -154,12 +154,12 @@ public class UssListTest {
 
     @Test
     public void tstUssListEmptyFileListSuccess() throws Exception {
-        JSONParser parser = new JSONParser();
-        JSONObject json = (JSONObject) parser.parse("{}");
+        final JSONParser parser = new JSONParser();
+        final JSONObject json = (JSONObject) parser.parse("{}");
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
-        UssList ussList = new UssList(connection, mockJsonGetRequest);
-        List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
         assertEquals(0, items.size());
     }
 
@@ -167,19 +167,19 @@ public class UssListTest {
     public void tstUssListEmptyFileListWithJsonObjectSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        UssList ussList = new UssList(connection, mockJsonGetRequest);
-        List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
         assertEquals(0, items.size());
     }
 
     @Test
     public void tstUssListZfsListSuccess() throws Exception {
-        JSONParser parser = new JSONParser();
-        JSONObject json = (JSONObject) parser.parse(dataForZfsList);
+        final JSONParser parser = new JSONParser();
+        final JSONObject json = (JSONObject) parser.parse(dataForZfsList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
-        UssList ussList = new UssList(connection, mockJsonGetRequest);
-        List<UssZfsItem> items = ussList.zfsList(new ListZfsParams.Builder().path("/xxx/xx/x").build());
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UssZfsItem> items = ussList.zfsList(new ListZfsParams.Builder().path("/xxx/xx/x").build());
         // should only contain one item
         assertEquals(1, items.size());
         // verify first item's data

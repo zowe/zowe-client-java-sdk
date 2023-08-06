@@ -41,11 +41,11 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteTextSuccess() throws Exception {
-        TextPutRequest mockTextPutRequest = Mockito.mock(TextPutRequest.class);
+        final TextPutRequest mockTextPutRequest = Mockito.mock(TextPutRequest.class);
         Mockito.when(mockTextPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        UssWrite ussWrite = new UssWrite(connection, mockTextPutRequest);
-        Response response = ussWrite.writeText("/xx/xx/x", "text");
+        final UssWrite ussWrite = new UssWrite(connection, mockTextPutRequest);
+        final Response response = ussWrite.writeText("/xx/xx/x", "text");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());
@@ -53,11 +53,11 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteBinarySuccess() throws Exception {
-        StreamPutRequest mockStreamPutRequest = Mockito.mock(StreamPutRequest.class);
+        final StreamPutRequest mockStreamPutRequest = Mockito.mock(StreamPutRequest.class);
         Mockito.when(mockStreamPutRequest.executeRequest()).thenReturn(
                 new Response(new byte[0], 200, "success"));
-        UssWrite ussWrite = new UssWrite(connection, mockStreamPutRequest);
-        Response response = ussWrite.writeBinary("/xx/xx/x", new byte[0]);
+        final UssWrite ussWrite = new UssWrite(connection, mockStreamPutRequest);
+        final Response response = ussWrite.writeBinary("/xx/xx/x", new byte[0]);
         assertTrue(response.getResponsePhrase().get() instanceof byte[]);
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());

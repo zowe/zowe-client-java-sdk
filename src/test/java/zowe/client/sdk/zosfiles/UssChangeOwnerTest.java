@@ -43,8 +43,8 @@ public class UssChangeOwnerTest {
 
     @Test
     public void tstUssChangeOwnerSuccess() throws Exception {
-        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequest);
-        Response response = ussChangeOwner.change("/xxx/xx/xx", "user");
+        final UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequest);
+        final Response response = ussChangeOwner.change("/xxx/xx/xx", "user");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());
@@ -52,8 +52,8 @@ public class UssChangeOwnerTest {
 
     @Test
     public void tstUssChangeOwnerRecursiveSuccess() throws Exception {
-        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequest);
-        Response response = ussChangeOwner.change("/xxx/xx/xx",
+        final UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequest);
+        final Response response = ussChangeOwner.change("/xxx/xx/xx",
                 new ChangeOwnerParams.Builder().owner("user").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());

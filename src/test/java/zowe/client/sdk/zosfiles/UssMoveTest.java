@@ -42,8 +42,8 @@ public class UssMoveTest {
 
     @Test
     public void tstUssMoveSuccess() throws Exception {
-        UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
-        Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx");
+        final UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
+        final Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());
@@ -51,8 +51,8 @@ public class UssMoveTest {
 
     @Test
     public void tstUssMoveOverwriteSuccess() throws Exception {
-        UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
-        Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx", true);
+        final UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
+        final Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx", true);
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());

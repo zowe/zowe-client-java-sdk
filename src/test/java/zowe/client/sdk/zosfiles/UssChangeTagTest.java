@@ -44,8 +44,8 @@ public class UssChangeTagTest {
 
     @Test
     public void tstUssChangeTagChangeToBinarySuccess() throws Exception {
-        UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
-        Response response = ussChangeTag.changeToBinary("/xxx/xx/xx");
+        final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
+        final Response response = ussChangeTag.changeToBinary("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());
@@ -53,8 +53,8 @@ public class UssChangeTagTest {
 
     @Test
     public void tstUssChangeTagChangeToTextSuccess() throws Exception {
-        UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
-        Response response = ussChangeTag.changeToText("/xxx/xx/xx", "IBM-1047");
+        final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
+        final Response response = ussChangeTag.changeToText("/xxx/xx/xx", "IBM-1047");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());
@@ -62,8 +62,8 @@ public class UssChangeTagTest {
 
     @Test
     public void tstUssChangeTagRemoveSuccess() throws Exception {
-        UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
-        Response response = ussChangeTag.remove("/xxx/xx/xx");
+        final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
+        final Response response = ussChangeTag.remove("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());
@@ -71,8 +71,8 @@ public class UssChangeTagTest {
 
     @Test
     public void tstUssChangeTagRetrieveSuccess() throws Exception {
-        UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
-        Response response = ussChangeTag.retrieve("/xxx/xx/xx");
+        final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
+        final Response response = ussChangeTag.retrieve("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());

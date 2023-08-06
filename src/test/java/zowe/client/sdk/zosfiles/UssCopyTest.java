@@ -43,8 +43,8 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopySuccess() throws Exception {
-        UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
-        Response response = ussCopy.copy("/xxx/xx/xx", "/xxx/xx/xx");
+        final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
+        final Response response = ussCopy.copy("/xxx/xx/xx", "/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
         assertEquals("success", response.getStatusText().get());
@@ -52,8 +52,8 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyRecursiveSuccess() throws Exception {
-        UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
-        Response response = ussCopy.copy("/xxx/xx/xx",
+        final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
+        final Response response = ussCopy.copy("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());
@@ -62,8 +62,8 @@ public class UssCopyTest {
 
     @Test
     public void tstUssCopyOverwriteSuccess() throws Exception {
-        UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
-        Response response = ussCopy.copy("/xxx/xx/xx",
+        final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
+        final Response response = ussCopy.copy("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").overwrite(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("200", response.getStatusCode().get().toString());

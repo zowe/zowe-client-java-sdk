@@ -40,43 +40,43 @@ public class UssGetTest {
 
     @Test
     public void tstGetTextFileTargetPathSuccess() throws Exception {
-        TextGetRequest mockTextGetRequest = Mockito.mock(TextGetRequest.class);
+        final TextGetRequest mockTextGetRequest = Mockito.mock(TextGetRequest.class);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response("text", 200, "success"));
-        UssGet ussGet = new UssGet(connection, mockTextGetRequest);
-        String response = ussGet.getText("/xxx/xx");
+        final UssGet ussGet = new UssGet(connection, mockTextGetRequest);
+        final String response = ussGet.getText("/xxx/xx");
         Assertions.assertEquals("text", response);
     }
 
     @Test
     public void tstGetTextFileTargetPathDefaultResponseSuccess() throws Exception {
-        TextGetRequest mockTextGetRequest = Mockito.mock(TextGetRequest.class);
+        final TextGetRequest mockTextGetRequest = Mockito.mock(TextGetRequest.class);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response(null, 200, "success"));
-        UssGet ussGet = new UssGet(connection, mockTextGetRequest);
-        String response = ussGet.getText("/xxx/xx");
+        final UssGet ussGet = new UssGet(connection, mockTextGetRequest);
+        final String response = ussGet.getText("/xxx/xx");
         Assertions.assertEquals("", response);
     }
 
     @Test
     public void tstGetBinaryFileTargetPathSuccess() throws Exception {
-        StreamGetRequest mockStreamGetRequest = Mockito.mock(StreamGetRequest.class);
-        byte[] data = "data".getBytes();
+        final StreamGetRequest mockStreamGetRequest = Mockito.mock(StreamGetRequest.class);
+        final byte[] data = "data".getBytes();
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(
                 new Response(data, 200, "success"));
-        UssGet ussGet = new UssGet(connection, mockStreamGetRequest);
-        byte[] response = ussGet.getBinary("/xxx/xx");
+        final UssGet ussGet = new UssGet(connection, mockStreamGetRequest);
+        final byte[] response = ussGet.getBinary("/xxx/xx");
         Assertions.assertEquals(data, response);
     }
 
     @Test
     public void tstGetBinaryFileTargetPathDefaultResponseSuccess() throws Exception {
-        StreamGetRequest mockStreamGetRequest = Mockito.mock(StreamGetRequest.class);
-        byte[] data = new byte[0];
+        final StreamGetRequest mockStreamGetRequest = Mockito.mock(StreamGetRequest.class);
+        final byte[] data = new byte[0];
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(
                 new Response(data, 200, "success"));
-        UssGet ussGet = new UssGet(connection, mockStreamGetRequest);
-        byte[] response = ussGet.getBinary("/xxx/xx");
+        final UssGet ussGet = new UssGet(connection, mockStreamGetRequest);
+        final byte[] response = ussGet.getBinary("/xxx/xx");
         Assertions.assertEquals(data, response);
     }
 
