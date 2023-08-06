@@ -79,6 +79,38 @@ public class UssChangeTagTest {
     }
 
     @Test
+    public void tstUssChangeTagChangeCommonSuccess() throws Exception {
+        final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
+        final Response response = ussChangeTag.changeCommon("/xxx/xx/xx",
+                new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
+        assertEquals("{}", response.getResponsePhrase().get().toString());
+        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals("success", response.getStatusText().get());
+    }
+
+    @Test
+    public void tstUssChangeTagChangeCommonWithSpacesInFileNamePathSuccess() throws Exception {
+        final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
+        final Response response = ussChangeTag.changeCommon("/xx x/x x/x x",
+                new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
+        assertEquals("{}", response.getResponsePhrase().get().toString());
+        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals("success", response.getStatusText().get());
+    }
+
+    @Test
+    public void tstUssChangeTagChangeCommonWithOutBeginningSlashInFileNamePathFailure() {
+        String errMsg = "";
+        try {
+            ussChangeTag.changeCommon("xxx/xx/xx",
+                    new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify valid path", errMsg);
+    }
+
+    @Test
     public void tstUssChangeTagChangeCommonNullActionInParamsFailure() {
         String errMsg = "";
         try {

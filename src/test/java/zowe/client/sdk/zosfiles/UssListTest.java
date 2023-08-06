@@ -26,6 +26,7 @@ import zowe.client.sdk.zosfiles.uss.response.UssZfsItem;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Class containing unit tests for UssList.
@@ -59,6 +60,19 @@ public class UssListTest {
             "         \"gid\": 8,\n" +
             "         \"group\": \"FRAMEWKG\",\n" +
             "         \"mtime\": \"2022-11-12T15:20:11\"\n" +
+            "      }\n" +
+            "   ],\n" +
+            "   \"returnedRows\": 7,\n" +
+            "   \"totalRows\": 7,\n" +
+            "   \"JSONversion\": 1\n" +
+            "}";
+    private final static String partialDataForFileList = "{\n" +
+            "   \"items\": [\n" +
+            "      {\n" +
+            "         \"size\": 0,\n" +
+            "      },\n" +
+            "      {\n" +
+            "         \"name\": \"test2\",\n" +
             "      }\n" +
             "   ],\n" +
             "   \"returnedRows\": 7,\n" +
@@ -150,6 +164,36 @@ public class UssListTest {
         assertEquals(8, items.get(1).getGid().getAsLong());
         assertEquals("FRAMEWKG", items.get(1).getGroup().get());
         assertEquals("2022-11-12T15:20:11", items.get(1).getMtime().get());
+    }
+
+    @Test
+    public void tstUssListFileListPartialSuccess() throws Exception {
+        final JSONParser parser = new JSONParser();
+        final JSONObject json = (JSONObject) parser.parse(partialDataForFileList);
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response(json, 200, "success"));
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
+        // should only contain two items
+        assertEquals(2, items.size());
+        // verify first item's data
+        assertTrue(items.get(0).getName().isEmpty());
+        assertTrue(items.get(0).getMode().isEmpty());
+        assertEquals(0, items.get(0).getSize().getAsLong());
+        assertTrue(items.get(0).getUid().isEmpty());
+        assertTrue(items.get(0).getUser().isEmpty());
+        assertTrue(items.get(0).getGid().isEmpty());
+        assertTrue(items.get(0).getGroup().isEmpty());
+        assertTrue(items.get(0).getMtime().isEmpty());
+        // verify second item's data
+        assertEquals("test2", items.get(1).getName().get());
+        assertTrue(items.get(0).getMode().isEmpty());
+        assertEquals(0, items.get(0).getSize().getAsLong());
+        assertTrue(items.get(0).getUid().isEmpty());
+        assertTrue(items.get(0).getUser().isEmpty());
+        assertTrue(items.get(0).getGid().isEmpty());
+        assertTrue(items.get(0).getGroup().isEmpty());
+        assertTrue(items.get(0).getMtime().isEmpty());
     }
 
     @Test
