@@ -82,6 +82,20 @@ public class JobGet {
     }
 
     /**
+     * Get JCL from a job.
+     * Alternate version of the API that accepts a Job object returned by
+     * other APIs such as SubmitJobs.
+     *
+     * @param job job for which you would like to retrieve JCL
+     * @return JCL content
+     * @throws Exception error on getting jcl content
+     * @author Frank Giordano
+     */
+    public String getJclByJob(Job job) throws Exception {
+        return getJclCommon(new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
+    }
+
+    /**
      * Get the JCL that was used to submit a job.
      *
      * @param params common job parameters, see CommonJobParams object
@@ -108,20 +122,6 @@ public class JobGet {
 
         final Response response = RestUtils.getResponse(request);
         return (String) response.getResponsePhrase().get();
-    }
-
-    /**
-     * Get JCL from a job.
-     * Alternate version of the API that accepts a Job object returned by
-     * other APIs such as SubmitJobs.
-     *
-     * @param job job for which you would like to retrieve JCL
-     * @return JCL content
-     * @throws Exception error on getting jcl content
-     * @author Frank Giordano
-     */
-    public String getJclByJob(Job job) throws Exception {
-        return getJclCommon(new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
     }
 
     /**
