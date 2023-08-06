@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class to handle obtaining of z/OS batch job information
+ * Class to handle obtaining job and started task information
  *
  * @author Frank Giordano
  * @version 2.0
@@ -92,7 +92,8 @@ public class JobGet {
      * @author Frank Giordano
      */
     public String getJclByJob(Job job) throws Exception {
-        return getJclCommon(new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
+        return getJclCommon(
+                new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
     }
 
     /**
