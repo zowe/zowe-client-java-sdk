@@ -40,18 +40,18 @@ public final class Utils {
     private static void assertUtilityClassWellDefined(final Class<?> clazz) throws NoSuchMethodException,
             InvocationTargetException, InstantiationException, IllegalAccessException {
 
-        boolean isFinal = Modifier.isFinal(clazz.getModifiers());
+        final boolean isFinal = Modifier.isFinal(clazz.getModifiers());
         if (!isFinal) {
             throw new IllegalStateException("class is not final");
         }
 
-        int numOfConstructors = clazz.getDeclaredConstructors().length;
+        final int numOfConstructors = clazz.getDeclaredConstructors().length;
         if (numOfConstructors > 1) {
             throw new IllegalStateException("more than one constructor defined");
         }
 
         final Constructor<?> constructor = clazz.getDeclaredConstructor();
-        boolean isPrivateConstructor = constructor.isAccessible() || Modifier.isPrivate(constructor.getModifiers());
+        final boolean isPrivateConstructor = constructor.isAccessible() || Modifier.isPrivate(constructor.getModifiers());
         if (!isPrivateConstructor) {
             throw new IllegalStateException("constructor is not private");
         }

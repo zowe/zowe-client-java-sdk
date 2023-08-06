@@ -94,11 +94,10 @@ public class TsoUtilsTest {
 
     @Test
     public void tstGetZosmfTsoResponseNullFail() {
-        Response response = null;
-        String msg = null;
+        String msg = "";
         try {
             //noinspection ConstantConditions
-            TsoUtils.getZosmfTsoResponse(response);
+            TsoUtils.getZosmfTsoResponse(null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -108,7 +107,7 @@ public class TsoUtilsTest {
     @Test
     public void tstGetZosmfTsoResponseResultsNullStatusCodeErrorFail() {
         Response response = new Response(null, 10, "fail");
-        String msg = null;
+        String msg = "";
         try {
             TsoUtils.getZosmfTsoResponse(response);
         } catch (Exception e) {
@@ -120,7 +119,7 @@ public class TsoUtilsTest {
     @Test
     public void tstGetZosmfTsoResponseResultsNullStatusCodeNonErrorFail() {
         Response response = new Response(null, 200, "success");
-        String msg = null;
+        String msg = "";
         try {
             TsoUtils.getZosmfTsoResponse(response);
         } catch (Exception e) {
@@ -200,17 +199,16 @@ public class TsoUtilsTest {
     public void tstGetZosmfTsoResponseStatusCodeFail() throws Exception {
         final Response response = new Response("error", 10, "fail");
         final ZosmfTsoResponse zosmfTsoResponse = TsoUtils.getZosmfTsoResponse(response);
-        String errorValue = zosmfTsoResponse.getMsgData().get(0).getMessageText().get();
+        final String errorValue = zosmfTsoResponse.getMsgData().get(0).getMessageText().get();
         assertEquals("error", errorValue);
     }
 
     @Test
     public void tstParseJsonStopResponseNullFail() {
-        JSONObject json = null;
-        String msg = null;
+        String msg = "";
         try {
             //noinspection ConstantConditions
-            TsoUtils.parseJsonStopResponse(json);
+            TsoUtils.parseJsonStopResponse(null);
         } catch (Exception e) {
             msg = e.getMessage();
         }

@@ -124,9 +124,9 @@ public class GetJobsByJsonGetRequestTest {
     public void tstGetJobWithJobIdOnlySuccess() throws Exception {
         final JSONArray jsonArray = new JSONArray();
 
-        final var jsonJobMap = new HashMap<String, String>();
+        final Map<String, String> jsonJobMap = new HashMap<>();
         jsonJobMap.put("jobid", "job");
-        final var jsonJob = new JSONObject(jsonJobMap);
+        final JSONObject jsonJob = new JSONObject(jsonJobMap);
         jsonArray.add(jsonJob);
 
         Mockito.when(request.executeRequest()).thenReturn(

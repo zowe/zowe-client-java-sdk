@@ -553,7 +553,7 @@ public class WriteDatasetTst extends TstZosConnection {
         String dataSetName = "xxx";
         String member = "xxx";
         connection = new ZosConnection(hostName, zosmfPort, userName, password);
-        var content = "NEW CONTENT\nTHE SECOND LINE UPDATED";
+        String content = "NEW CONTENT\nTHE SECOND LINE UPDATED";
         WriteDatasetTst.writeToDsnMember(dataSetName, member, content);
     }
 
