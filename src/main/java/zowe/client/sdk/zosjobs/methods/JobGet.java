@@ -186,9 +186,9 @@ public class JobGet {
      */
     public List<Job> getByOwnerAndPrefix(String owner, String prefix) throws Exception {
         ValidateUtils.checkNullParameter(owner == null, "owner is null");
-        ValidateUtils.checkIllegalParameter(owner.trim().trim().isEmpty(), "owner not specified");
+        ValidateUtils.checkIllegalParameter(owner.trim().isEmpty(), "owner not specified");
         ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
-        ValidateUtils.checkIllegalParameter(prefix.trim().trim().isEmpty(), "prefix not specified");
+        ValidateUtils.checkIllegalParameter(prefix.trim().isEmpty(), "prefix not specified");
         return getCommon(new GetJobParams.Builder(owner).prefix(prefix).build());
     }
 
