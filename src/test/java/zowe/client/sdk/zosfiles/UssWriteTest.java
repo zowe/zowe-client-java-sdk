@@ -31,12 +31,11 @@ import static org.junit.Assert.assertTrue;
  */
 public class UssWriteTest {
 
-    private ZosConnection connection;
+    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private UssWrite ussWrite;
 
     @Before
     public void init() {
-        connection = new ZosConnection("1", "1", "1", "1");
         ussWrite = new UssWrite(connection);
     }
 

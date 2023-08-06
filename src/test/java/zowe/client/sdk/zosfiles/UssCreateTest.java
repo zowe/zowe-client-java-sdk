@@ -31,13 +31,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class UssCreateTest {
 
-    private ZosConnection connection;
+    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private JsonPostRequest mockJsonPostRequest;
     private UssCreate ussCreate;
 
     @Before
     public void init() {
-        connection = new ZosConnection("1", "1", "1", "1");
         mockJsonPostRequest = Mockito.mock(JsonPostRequest.class);
         ussCreate = new UssCreate(connection);
     }

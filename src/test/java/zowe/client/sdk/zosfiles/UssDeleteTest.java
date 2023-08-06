@@ -28,13 +28,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class UssDeleteTest {
 
-    private ZosConnection connection;
+    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private JsonDeleteRequest mockJsonDeleteRequest;
     private UssDelete ussDelete;
 
     @Before
     public void init() {
-        connection = new ZosConnection("1", "1", "1", "1");
         mockJsonDeleteRequest = Mockito.mock(JsonDeleteRequest.class);
         Mockito.when(mockJsonDeleteRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));

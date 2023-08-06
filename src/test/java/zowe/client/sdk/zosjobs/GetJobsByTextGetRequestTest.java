@@ -28,21 +28,21 @@ import static org.junit.Assert.assertEquals;
  */
 public class GetJobsByTextGetRequestTest {
 
+    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private TextGetRequest request;
     private JobGet getJobs;
 
     @Before
     public void init() {
         request = Mockito.mock(TextGetRequest.class);
-        ZosConnection connection = new ZosConnection("1", "1", "1", "1");
         getJobs = new JobGet(connection);
         Whitebox.setInternalState(getJobs, "request", request);
     }
 
     @Test
     public void tstGetSpoolContentByIdSuccess() throws Exception {
-        Response response = new Response("1\n2\n3\n", 200, "success");
-        Mockito.when(request.executeRequest()).thenReturn(response);
+        Mockito.when(request.executeRequest()).thenReturn(
+                new Response("1\n2\n3\n", 200, "success"));
 
         String results = getJobs.getSpoolContent("jobName", "jobId", 1);
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());

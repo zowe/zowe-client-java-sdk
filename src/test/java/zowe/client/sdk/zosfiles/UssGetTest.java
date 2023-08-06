@@ -30,12 +30,11 @@ import static org.junit.Assert.assertEquals;
  */
 public class UssGetTest {
 
-    private ZosConnection connection;
+    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private UssGet ussGet;
 
     @Before
     public void init() {
-        connection = new ZosConnection("1", "1", "1", "1");
         ussGet = new UssGet(connection);
     }
 

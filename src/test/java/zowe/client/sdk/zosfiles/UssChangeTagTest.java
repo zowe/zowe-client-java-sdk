@@ -30,13 +30,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @version 2.0
  */
 public class UssChangeTagTest {
-    private ZosConnection connection;
+    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private JsonPutRequest mockJsonPutRequest;
     private UssChangeTag ussChangeTag;
 
     @Before
     public void init() {
-        connection = new ZosConnection("1", "1", "1", "1");
         mockJsonPutRequest = Mockito.mock(JsonPutRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));

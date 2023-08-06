@@ -29,13 +29,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class UssCopyTest {
 
-    private ZosConnection connection;
+    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private JsonPutRequest mockJsonPutRequest;
     private UssCopy ussCopy;
 
     @Before
     public void init() {
-        connection = new ZosConnection("1", "1", "1", "1");
         mockJsonPutRequest = Mockito.mock(JsonPutRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));

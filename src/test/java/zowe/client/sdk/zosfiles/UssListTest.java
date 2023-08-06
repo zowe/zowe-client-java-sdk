@@ -35,7 +35,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class UssListTest {
 
-    private ZosConnection connection;
+    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private JsonGetRequest mockJsonGetRequest;
     private UssList ussList;
     private final static String dataForFileList = "{\n" +
@@ -94,7 +94,6 @@ public class UssListTest {
 
     @Before
     public void init() {
-        connection = new ZosConnection("1", "1", "1", "1");
         mockJsonGetRequest = Mockito.mock(JsonGetRequest.class);
         ussList = new UssList(connection);
     }

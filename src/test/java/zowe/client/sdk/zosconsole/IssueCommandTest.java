@@ -33,13 +33,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class IssueCommandTest {
 
+    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private JsonPutRequest jsonGetRequest;
-    private ZosConnection connection;
 
     @Before
     public void init() {
         jsonGetRequest = Mockito.mock(JsonPutRequest.class);
-        connection = new ZosConnection("1", "1", "1", "1");
     }
 
     @Test

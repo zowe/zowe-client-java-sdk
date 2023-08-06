@@ -37,6 +37,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(MockitoJUnitRunner.class)
 public class GetJobsByJsonGetRequestTest {
 
+    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private JsonGetRequest request;
     private JobGet getJobs;
     private JSONObject jobJson;
@@ -44,7 +45,6 @@ public class GetJobsByJsonGetRequestTest {
     @Before
     public void init() {
         request = Mockito.mock(JsonGetRequest.class);
-        final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
         getJobs = new JobGet(connection);
         Whitebox.setInternalState(getJobs, "request", request);
 
