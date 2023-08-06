@@ -80,8 +80,8 @@ public class GetJobsByJsonGetRequestTest {
         final Map<String, String> jsonJob2 = new JSONObject(jsonJobMap2);
         jsonArray.add(jsonJob2);
 
-        Response response = new Response(jsonArray, 200, "success");
-        Mockito.when(request.executeRequest()).thenReturn(response);
+        Mockito.when(request.executeRequest()).thenReturn(
+                new Response(jsonArray, 200, "success"));
 
         String msgResult = null;
         try {
@@ -100,8 +100,8 @@ public class GetJobsByJsonGetRequestTest {
         final JSONArray jsonArray = new JSONArray();
         jsonArray.add(jobJson);
 
-        final Response response = new Response(jsonArray, 200, "success");
-        Mockito.when(request.executeRequest()).thenReturn(response);
+        Mockito.when(request.executeRequest()).thenReturn(
+                new Response(jsonArray, 200, "success"));
 
         final Job job = getJobs.getById("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
@@ -129,8 +129,8 @@ public class GetJobsByJsonGetRequestTest {
         final var jsonJob = new JSONObject(jsonJobMap);
         jsonArray.add(jsonJob);
 
-        final Response response = new Response(jsonArray, 200, "success");
-        Mockito.when(request.executeRequest()).thenReturn(response);
+        Mockito.when(request.executeRequest()).thenReturn(
+                new Response(jsonArray, 200, "success"));
 
         final Job job = getJobs.getById("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
@@ -194,8 +194,8 @@ public class GetJobsByJsonGetRequestTest {
 
     @Test
     public void tstGetStatusForJobSuccess() throws Exception {
-        final Response response = new Response(jobJson, 200, "success");
-        Mockito.when(request.executeRequest()).thenReturn(response);
+        Mockito.when(request.executeRequest()).thenReturn(
+                new Response(jobJson, 200, "success"));
 
         final Job job = getJobs.getStatusByJob(new Job.Builder().jobId("1").jobName("jobName").build());
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/1?step-data=Y", getJobs.getUrl());
