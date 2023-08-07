@@ -67,7 +67,7 @@ public class JsonDeleteRequest extends ZoweRequest {
      */
     @Override
     public void setStandardHeaders() {
-        headers.put("Authorization", "Basic " + EncodeUtils.getAuthEncoding(connection));
+        headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
         headers.put("Content-Type", "application/json");
         headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
