@@ -106,10 +106,6 @@ public class JobGet {
      */
     public String getJclCommon(CommonJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobName().get().trim().isEmpty(), "jobName not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobId().get().trim().isEmpty(), "jobId not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() +
@@ -134,9 +130,6 @@ public class JobGet {
      * @author Frank Giordano
      */
     public Job getById(String jobId) throws Exception {
-        ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
-        ValidateUtils.checkIllegalParameter(jobId.trim().isEmpty(), "jobId not specified");
-
         final List<Job> jobs = getCommon(new GetJobParams.Builder("*").jobId(jobId).build());
         if (jobs.isEmpty()) {
             throw new Exception("Job not found");
@@ -144,7 +137,6 @@ public class JobGet {
         if (jobs.size() > 1) {
             throw new Exception("Expected 1 job returned but received " + jobs.size() + " jobs.");
         }
-
         return jobs.get(0);
     }
 
@@ -169,8 +161,6 @@ public class JobGet {
      * @author Frank Giordano
      */
     public List<Job> getByOwner(String owner) throws Exception {
-        ValidateUtils.checkNullParameter(owner == null, "owner is null");
-        ValidateUtils.checkIllegalParameter(owner.trim().isEmpty(), "owner not specified");
         return getCommon(new GetJobParams.Builder(owner).build());
     }
 
@@ -186,10 +176,6 @@ public class JobGet {
      * @author Frank Giordano
      */
     public List<Job> getByOwnerAndPrefix(String owner, String prefix) throws Exception {
-        ValidateUtils.checkNullParameter(owner == null, "owner is null");
-        ValidateUtils.checkIllegalParameter(owner.trim().isEmpty(), "owner not specified");
-        ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
-        ValidateUtils.checkIllegalParameter(prefix.trim().isEmpty(), "prefix not specified");
         return getCommon(new GetJobParams.Builder(owner).prefix(prefix).build());
     }
 
@@ -202,8 +188,6 @@ public class JobGet {
      * @author Frank Giordano
      */
     public List<Job> getByPrefix(String prefix) throws Exception {
-        ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
-        ValidateUtils.checkIllegalParameter(prefix.trim().isEmpty(), "prefix not specified");
         return getCommon(new GetJobParams.Builder("*").prefix(prefix).build());
     }
 
@@ -300,13 +284,12 @@ public class JobGet {
      * @author Frank Giordano
      */
     public String getSpoolContent(String jobName, String jobId, int spoolId) throws Exception {
-        ValidateUtils.checkNullParameter(jobName == null, "jobName is null");
-        ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
-        ValidateUtils.checkIllegalParameter(spoolId <= 0, "spoolId not specified");
+        ValidateUtils.checkIllegalParameter(spoolId <= 0, "spool id not specified");
 
+        CommonJobParams params = new CommonJobParams(jobId, jobName);
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(jobName) + "/" + jobId + JobsConstants.RESOURCE_SPOOL_FILES + "/" +
-                spoolId + JobsConstants.RESOURCE_SPOOL_CONTENT;
+                EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() +
+                JobsConstants.RESOURCE_SPOOL_FILES + "/" + spoolId + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
@@ -368,10 +351,6 @@ public class JobGet {
     @SuppressWarnings("unchecked")
     public List<JobFile> getSpoolFilesCommon(CommonJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobId().get().trim().isEmpty(), "jobId not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobName().get().trim().isEmpty(), "jobName not specified");
 
         List<JobFile> files = new ArrayList<>();
 
@@ -428,9 +407,9 @@ public class JobGet {
      * @author Frank Giordano
      */
     public List<JobFile> getSpoolFilesByJob(Job job) throws Exception {
-        return getSpoolFilesCommon(
-                new CommonJobParams(job.getJobId().orElseThrow(() -> new Exception("job id not specified")),
-                        job.getJobName().orElseThrow(() -> new Exception("job name not specified"))));
+        ValidateUtils.checkNullParameter(job == null, "job is null");
+        return getSpoolFilesCommon(new CommonJobParams(job.getJobId().orElse(null),
+                job.getJobName().orElse(null)));
     }
 
     /**
@@ -443,8 +422,6 @@ public class JobGet {
      * @author Frank Giordano
      */
     public Job getStatus(String jobName, String jobId) throws Exception {
-        ValidateUtils.checkNullParameter(jobName == null, "jobName is null");
-        ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
         return getStatusCommon(new CommonJobParams(jobId, jobName, true));
     }
 
@@ -458,10 +435,6 @@ public class JobGet {
      */
     public Job getStatusCommon(CommonJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), "jobId not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobId().get().isEmpty(), "jobId not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), "jobName not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobName().get().isEmpty(), "jobName not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get();
@@ -508,10 +481,8 @@ public class JobGet {
      * @author Frank Giordano
      */
     public String getStatusValue(String jobName, String jobId) throws Exception {
-        ValidateUtils.checkNullParameter(jobName == null, "jobName is null");
-        ValidateUtils.checkNullParameter(jobId == null, "jobId is null");
         final Job job = getStatusCommon(new CommonJobParams(jobId, jobName));
-        return job.getStatus().orElseThrow(() -> new Exception("job status is missing"));
+        return job.getStatus().orElseThrow(() -> new Exception("job status not returned"));
     }
 
     /**
@@ -524,9 +495,9 @@ public class JobGet {
      */
     public String getStatusValueByJob(Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        final Job result = getStatusCommon(
-                new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
-        return result.getStatus().orElseThrow(() -> new Exception("job status is missing"));
+        final Job result = getStatusCommon(new CommonJobParams(job.getJobId().orElse(null),
+                job.getJobName().orElse(null)));
+        return result.getStatus().orElseThrow(() -> new Exception("job status not returned"));
     }
 
     /**

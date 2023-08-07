@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosjobs.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
 import java.util.Optional;
 
 /**
@@ -45,8 +47,12 @@ public class CommonJobParams {
      * @author Frank Giordano
      */
     public CommonJobParams(String jobId, String jobName) {
-        this.jobId = Optional.ofNullable(jobId);
-        this.jobName = Optional.ofNullable(jobName);
+        ValidateUtils.checkNullParameter(jobId == null, "job id is null");
+        ValidateUtils.checkIllegalParameter(jobId.trim().isEmpty(), "job id not specified");
+        ValidateUtils.checkNullParameter(jobName == null, "job name is null");
+        ValidateUtils.checkIllegalParameter(jobName.trim().isEmpty(), "job name not specified");
+        this.jobId = Optional.of(jobId);
+        this.jobName = Optional.of(jobName);
         this.stepData = false;
     }
 
@@ -59,8 +65,12 @@ public class CommonJobParams {
      * @author Frank Giordano
      */
     public CommonJobParams(String jobId, String jobName, Boolean stepData) {
-        this.jobId = Optional.ofNullable(jobId);
-        this.jobName = Optional.ofNullable(jobName);
+        ValidateUtils.checkNullParameter(jobId == null, "job id is null");
+        ValidateUtils.checkIllegalParameter(jobId.trim().isEmpty(), "job id not specified");
+        ValidateUtils.checkNullParameter(jobName == null, "job name is null");
+        ValidateUtils.checkIllegalParameter(jobName.trim().isEmpty(), "job name not specified");
+        this.jobId = Optional.of(jobId);
+        this.jobName = Optional.of(jobName);
         this.stepData = stepData;
     }
 

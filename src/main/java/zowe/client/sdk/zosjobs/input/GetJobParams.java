@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosjobs.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 
 import java.util.Optional;
@@ -116,6 +117,8 @@ public class GetJobParams {
         }
 
         public Builder(String owner) {
+            ValidateUtils.checkNullParameter(owner == null, "owner is null");
+            ValidateUtils.checkIllegalParameter(owner.trim().isEmpty(), "owner not specified");
             this.owner = owner;
         }
 
@@ -124,6 +127,8 @@ public class GetJobParams {
         }
 
         public Builder jobId(String jobId) {
+            ValidateUtils.checkNullParameter(jobId == null, "job id is null");
+            ValidateUtils.checkIllegalParameter(jobId.trim().isEmpty(), "job id not specified");
             this.jobId = jobId;
             return this;
         }
@@ -134,6 +139,8 @@ public class GetJobParams {
         }
 
         public Builder prefix(String prefix) {
+            ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
+            ValidateUtils.checkIllegalParameter(prefix.trim().isEmpty(), "prefix not specified");
             this.prefix = prefix;
             return this;
         }

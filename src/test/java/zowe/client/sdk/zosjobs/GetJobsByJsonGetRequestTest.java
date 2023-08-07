@@ -145,7 +145,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("jobId is null", errorMsg);
+        assertEquals("job id is null", errorMsg);
     }
 
     @Test
@@ -156,7 +156,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("jobName is null", errorMsg);
+        assertEquals("job name is null", errorMsg);
     }
 
     @Test
@@ -167,7 +167,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("spoolId not specified", errorMsg);
+        assertEquals("spool id not specified", errorMsg);
     }
 
     @Test
@@ -178,7 +178,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("spoolId not specified", errorMsg);
+        assertEquals("spool id not specified", errorMsg);
     }
 
     @Test
@@ -189,7 +189,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("jobId not specified", errorMsg);
+        assertEquals("job id is null", errorMsg);
     }
 
     @Test
@@ -221,7 +221,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("jobName not specified", errorMsg);
+        assertEquals("job name is null", errorMsg);
     }
 
     @Test
@@ -232,7 +232,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("jobId not specified", errorMsg);
+        assertEquals("job id is null", errorMsg);
     }
 
 }
