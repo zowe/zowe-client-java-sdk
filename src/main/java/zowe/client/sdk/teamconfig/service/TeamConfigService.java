@@ -123,6 +123,7 @@ public class TeamConfigService {
      * @throws Exception error processing
      * @author Frank Giordano
      */
+    @SuppressWarnings("unchecked")
     private ConfigContainer parseJson(JSONObject jsonObj) throws Exception {
         String schema = null;
         Boolean autoStore = null;
@@ -130,18 +131,15 @@ public class TeamConfigService {
         final Map<String, String> defaults = new HashMap<>();
         final List<Partition> partitions = new ArrayList<>();
 
-        @SuppressWarnings("unchecked")
         final Set<String> jsonSectionKeys = jsonObj.keySet();
         for (final String keySectionVal : jsonSectionKeys) {
             if (SectionType.$SCHEMA.getValue().equals(keySectionVal)) {
                 schema = (String) jsonObj.get(SectionType.$SCHEMA.getValue());
             } else if (SectionType.PROFILES.getValue().equals(keySectionVal)) {
                 final JSONObject jsonProfileObj = (JSONObject) jsonObj.get(SectionType.PROFILES.getValue());
-                @SuppressWarnings("unchecked")
                 final Set<String> jsonProfileKeys = jsonProfileObj.keySet();
                 for (final String profileKeyVal : jsonProfileKeys) {
                     JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
-                    @SuppressWarnings("unchecked")
                     final Set<String> isEmbeddedKeyProfile = profileTypeJsonObj.keySet();
                     if (isPartition(isEmbeddedKeyProfile)) {
                         partitions.add(getPartition(profileKeyVal, profileTypeJsonObj));
