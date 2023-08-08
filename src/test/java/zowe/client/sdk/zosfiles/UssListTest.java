@@ -20,8 +20,8 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.ListParams;
 import zowe.client.sdk.zosfiles.uss.input.ListZfsParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssList;
-import zowe.client.sdk.zosfiles.uss.response.UssItem;
-import zowe.client.sdk.zosfiles.uss.response.UssZfsItem;
+import zowe.client.sdk.zosfiles.uss.response.UnixFile;
+import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
 
 import java.util.List;
 
@@ -117,7 +117,7 @@ public class UssListTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response("{}", 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
+        final List<UnixFile> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
         // should only contain two items
         assertEquals(0, items.size());
     }
@@ -143,7 +143,7 @@ public class UssListTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
+        final List<UnixFile> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
         // should only contain two items
         assertEquals(2, items.size());
         // verify first item's data
@@ -173,7 +173,7 @@ public class UssListTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
+        final List<UnixFile> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
         // should only contain two items
         assertEquals(2, items.size());
         // verify first item's data
@@ -203,7 +203,7 @@ public class UssListTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
+        final List<UnixFile> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
         assertEquals(0, items.size());
     }
 
@@ -212,7 +212,7 @@ public class UssListTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UssItem> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
+        final List<UnixFile> items = ussList.fileList(new ListParams.Builder().path("/xxx/xx/x").build());
         assertEquals(0, items.size());
     }
 
@@ -223,7 +223,7 @@ public class UssListTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UssZfsItem> items = ussList.zfsList(new ListZfsParams.Builder().path("/xxx/xx/x").build());
+        final List<UnixZfs> items = ussList.zfsList(new ListZfsParams.Builder().path("/xxx/xx/x").build());
         // should only contain one item
         assertEquals(1, items.size());
         // verify first item's data

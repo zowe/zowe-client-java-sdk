@@ -18,7 +18,7 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 2.0
  */
-public class UssZfsItem {
+public class UnixZfs {
 
     /**
      * zfs name
@@ -87,7 +87,7 @@ public class UssZfsItem {
      */
     private final boolean moreRows;
 
-    public UssZfsItem(UssZfsItem.Builder builder) {
+    public UnixZfs(UnixZfs.Builder builder) {
         this.name = Optional.ofNullable(builder.name);
         this.mountpoint = Optional.ofNullable(builder.mountpoint);
         this.fstname = Optional.ofNullable(builder.fstname);
@@ -259,91 +259,91 @@ public class UssZfsItem {
         private Long totalRows;
         private boolean moreRows = false;
 
-        public UssZfsItem build() {
-            return new UssZfsItem(this);
+        public UnixZfs build() {
+            return new UnixZfs(this);
         }
 
-        public UssZfsItem.Builder name(String name) {
+        public UnixZfs.Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        public UssZfsItem.Builder mountpoint(String mountpoint) {
+        public UnixZfs.Builder mountpoint(String mountpoint) {
             this.mountpoint = mountpoint;
             return this;
         }
 
-        public UssZfsItem.Builder fstname(String fstname) {
+        public UnixZfs.Builder fstname(String fstname) {
             this.fstname = fstname;
             return this;
         }
 
-        public UssZfsItem.Builder status(String status) {
+        public UnixZfs.Builder status(String status) {
             this.status = status;
             return this;
         }
 
-        public UssZfsItem.Builder mode(String mode) {
+        public UnixZfs.Builder mode(String mode) {
             this.mode = mode;
             return this;
         }
 
-        public UssZfsItem.Builder dev(Long dev) {
+        public UnixZfs.Builder dev(Long dev) {
             this.dev = dev;
             return this;
         }
 
-        public UssZfsItem.Builder fstype(Long fstype) {
+        public UnixZfs.Builder fstype(Long fstype) {
             this.fstype = fstype;
             return this;
         }
 
-        public UssZfsItem.Builder bsize(Long bsize) {
+        public UnixZfs.Builder bsize(Long bsize) {
             this.bsize = bsize;
             return this;
         }
 
-        public UssZfsItem.Builder bavail(Long bavail) {
+        public UnixZfs.Builder bavail(Long bavail) {
             this.bavail = bavail;
             return this;
         }
 
-        public UssZfsItem.Builder blocks(Long blocks) {
+        public UnixZfs.Builder blocks(Long blocks) {
             this.blocks = blocks;
             return this;
         }
 
-        public UssZfsItem.Builder sysname(String sysname) {
+        public UnixZfs.Builder sysname(String sysname) {
             this.sysname = sysname;
             return this;
         }
 
-        public UssZfsItem.Builder readibc(Long readibc) {
+        public UnixZfs.Builder readibc(Long readibc) {
             this.readibc = readibc;
             return this;
         }
 
-        public UssZfsItem.Builder writeibc(Long writeibc) {
+        public UnixZfs.Builder writeibc(Long writeibc) {
             this.writeibc = writeibc;
             return this;
         }
 
-        public UssZfsItem.Builder diribc(Long diribc) {
+        public UnixZfs.Builder diribc(Long diribc) {
             this.diribc = diribc;
             return this;
         }
 
-        public UssZfsItem.Builder returnedRows(Long returnedRows) {
+        public UnixZfs.Builder returnedRows(Long returnedRows) {
             this.returnedRows = returnedRows;
             return this;
         }
 
-        public UssZfsItem.Builder totalRows(Long totalRows) {
+        public UnixZfs.Builder totalRows(Long totalRows) {
             this.totalRows = totalRows;
             return this;
         }
 
-        public UssZfsItem.Builder moreRows(boolean moreRows) {
+        public UnixZfs.Builder moreRows(boolean moreRows) {
             this.moreRows = moreRows;
             return this;
         }

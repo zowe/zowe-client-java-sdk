@@ -18,13 +18,13 @@ import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
-import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StartTsoParams;
 import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
 import zowe.client.sdk.zostso.response.CollectedResponses;
 import zowe.client.sdk.zostso.response.StartStopResponses;
+import zowe.client.sdk.zostso.service.TsoResponseService;
 
 /**
  * Start TSO address space and receive servlet key
@@ -161,7 +161,7 @@ public class StartTso {
         request.setUrl(url);
         request.setBody("");
 
-        return TsoUtils.getZosmfTsoResponse(RestUtils.getResponse(request));
+        return new TsoResponseService(RestUtils.getResponse(request)).getZosmfTsoResponse();
     }
 
 }

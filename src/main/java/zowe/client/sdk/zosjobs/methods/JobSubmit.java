@@ -14,10 +14,12 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.parse.JsonParseResponse;
+import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
@@ -133,9 +135,11 @@ public class JobSubmit {
         request.setBody(body);
         request.setHeaders(headers);
 
-        final Response response = RestUtils.getResponse(request);
-        return JobUtils.parseJsonJobResponse(
-                ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
+        final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
+                .orElseThrow(() -> new Exception("no job jcl submit response phase")).toString();
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
+        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.JOB);
+        return (Job) parser.parseResponse();
     }
 
     /**
@@ -179,9 +183,11 @@ public class JobSubmit {
             request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));
         }
 
-        final Response response = RestUtils.getResponse(request);
-        return JobUtils.parseJsonJobResponse(
-                ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
+        final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
+                .orElseThrow(() -> new Exception("no job submit response phase")).toString();
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
+        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.JOB);
+        return (Job) parser.parseResponse();
     }
 
     /**

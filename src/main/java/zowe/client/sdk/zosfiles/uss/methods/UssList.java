@@ -13,6 +13,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.UnixZfsParseResponse;
+import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.JsonGetRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -25,8 +28,8 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.ListParams;
 import zowe.client.sdk.zosfiles.uss.input.ListZfsParams;
-import zowe.client.sdk.zosfiles.uss.response.UssItem;
-import zowe.client.sdk.zosfiles.uss.response.UssZfsItem;
+import zowe.client.sdk.zosfiles.uss.response.UnixFile;
+import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +87,7 @@ public class UssList {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public List<UssItem> fileList(ListParams params) throws Exception {
+    public List<UnixFile> fileList(ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
@@ -124,23 +127,14 @@ public class UssList {
 
         final Response response = RestUtils.getResponse(request);
 
-        final List<UssItem> items = new ArrayList<>();
+        final List<UnixFile> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
                 response.getResponsePhrase().orElseThrow(() -> new Exception("null file list response"))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (final Object obj : jsonArray) {
-                final JSONObject jsonObj = (JSONObject) obj;
-                items.add(new UssItem.Builder()
-                        .name(jsonObj.get("name") != null ? (String) jsonObj.get("name") : null)
-                        .mode(jsonObj.get("mode") != null ? (String) jsonObj.get("mode") : null)
-                        .size(jsonObj.get("size") != null ? (Long) jsonObj.get("size") : null)
-                        .uid(jsonObj.get("uid") != null ? (Long) jsonObj.get("uid") : null)
-                        .user(jsonObj.get("user") != null ? (String) jsonObj.get("user") : null)
-                        .gid(jsonObj.get("gid") != null ? (Long) jsonObj.get("gid") : null)
-                        .group(jsonObj.get("group") != null ? (String) jsonObj.get("group") : null)
-                        .mtime(jsonObj.get("mtime") != null ? (String) jsonObj.get("mtime") : null)
-                        .build());
+                items.add((UnixFile) JsonParseResponseFactory
+                        .buildParser((JSONObject) obj, ParseType.UNIX_FILE).parseResponse());
             }
         }
 
@@ -155,7 +149,7 @@ public class UssList {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public List<UssZfsItem> zfsList(ListZfsParams params) throws Exception {
+    public List<UnixZfs> zfsList(ListZfsParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getPath().isEmpty() && params.getFsname().isEmpty(),
                 "no path or fsname specified");
@@ -179,7 +173,7 @@ public class UssList {
 
         final Response response = RestUtils.getResponse(request);
 
-        final List<UssZfsItem> items = new ArrayList<>();
+        final List<UnixZfs> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
                 response.getResponsePhrase().orElseThrow(() -> new Exception("error retrieving uss zfs list"))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
@@ -199,25 +193,10 @@ public class UssList {
                     }
                 } catch (Exception ignored) {
                 }
-                items.add(new UssZfsItem.Builder()
-                        .name(jsonObj.get("name") != null ? (String) jsonObj.get("name") : null)
-                        .mountpoint(jsonObj.get("mountpoint") != null ? (String) jsonObj.get("mountpoint") : null)
-                        .fstname(jsonObj.get("fstname") != null ? (String) jsonObj.get("fstname") : null)
-                        .status(jsonObj.get("status") != null ? (String) jsonObj.get("status") : null)
-                        .mode(modeStr.toString())
-                        .dev(jsonObj.get("dev") != null ? (Long) jsonObj.get("dev") : null)
-                        .fstype(jsonObj.get("fstype") != null ? (Long) jsonObj.get("fstype") : null)
-                        .bsize(jsonObj.get("bsize") != null ? (Long) jsonObj.get("bsize") : null)
-                        .bavail(jsonObj.get("bavail") != null ? (Long) jsonObj.get("bavail") : null)
-                        .blocks(jsonObj.get("blocks") != null ? (Long) jsonObj.get("blocks") : null)
-                        .sysname(jsonObj.get("sysname") != null ? (String) jsonObj.get("sysname") : null)
-                        .readibc(jsonObj.get("readibc") != null ? (Long) jsonObj.get("readibc") : null)
-                        .writeibc(jsonObj.get("writeibc") != null ? (Long) jsonObj.get("writeibc") : null)
-                        .diribc(jsonObj.get("diribc") != null ? (Long) jsonObj.get("diribc") : null)
-                        .returnedRows(jsonObj.get("returnedRows") != null ? (Long) jsonObj.get("returnedRows") : null)
-                        .totalRows(jsonObj.get("totalRows") != null ? (Long) jsonObj.get("totalRows") : null)
-                        .moreRows(jsonObj.get("moreRows") != null ? (Boolean) jsonObj.get("moreRows") : false)
-                        .build());
+                UnixZfsParseResponse parse = (UnixZfsParseResponse) JsonParseResponseFactory
+                        .buildParser(jsonObj, ParseType.UNIX_ZFS);
+                parse.setModeStr(modeStr.toString());
+                items.add(parse.parseResponse());
             }
         }
         return items;

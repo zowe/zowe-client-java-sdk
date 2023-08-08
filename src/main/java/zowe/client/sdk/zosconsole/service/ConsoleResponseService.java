@@ -7,58 +7,44 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.utility;
+package zowe.client.sdk.zosconsole.service;
 
-import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
 
 /**
- * Utility class contains helper methods for IssueConsole processing
+ * ConsoleResponseService class service.
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public final class ConsoleUtils {
+public final class ConsoleResponseService {
+
+    private final ZosmfIssueResponse zosmfResponse;
 
     /**
-     * Private constructor defined to avoid instantiation of class
-     */
-    private ConsoleUtils() {
-        throw new IllegalStateException("Utility class");
-    }
-
-    /**
-     * Transform JSON into ZosmfIssueResponse object
+     * ConsoleResponseService constructor
      *
-     * @param jsonObject JSON object
-     * @return ZosmfIssueResponse object
+     * @param zosmfResponse zosmf console response, see ZosmfIssueResponse object
      * @author Frank Giordano
      */
-    public static ZosmfIssueResponse parseJsonIssueCmdResponse(JSONObject jsonObject) {
-        ZosmfIssueResponse zosmfIssueResponse = new ZosmfIssueResponse();
-        zosmfIssueResponse.setCmdResponseKey((String) jsonObject.get("cmd-response-key"));
-        zosmfIssueResponse.setCmdResponseUrl((String) jsonObject.get("cmd-response-url"));
-        zosmfIssueResponse.setCmdResponseUri((String) jsonObject.get("cmd-response-uri"));
-        zosmfIssueResponse.setCmdResponse((String) jsonObject.get("cmd-response"));
-        zosmfIssueResponse.setSolKeyDetected((String) jsonObject.get("sol-key-detected"));
-        return zosmfIssueResponse;
+    public ConsoleResponseService(final ZosmfIssueResponse zosmfResponse) {
+        ValidateUtils.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
+        this.zosmfResponse = zosmfResponse;
     }
 
     /**
      * Populate the console response with the details returned from the z/OSMF console API.
-     * Method takes two parameters: response from z/OSMF command and response to be populated.
      * Method adds response to a collection of z/OSMF responses, mark response as "succeeded"
      * (response.success = true) and populate other fields of response with values from z/OSMF response.
      *
-     * @param zosmfResponse    zosmf console response, see ZosmfIssueResponse object
-     * @param response         console response to be populated, see ConsoleResponse object
      * @param processResponses boolean if set to true, append command response string to the console API response
+     * @return response         console response to be populated, see ConsoleResponse object
      * @author Frank Giordano
      */
-    public static void populate(ZosmfIssueResponse zosmfResponse, ConsoleResponse response, boolean processResponses) {
-        ValidateUtils.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
-        ValidateUtils.checkNullParameter(response == null, "response is null");
+    public ConsoleResponse setConsoleResponse(boolean processResponses) {
+        ConsoleResponse response = new ConsoleResponse();
         response.setZosmfResponse(zosmfResponse);
         response.setSuccess(true);
 
@@ -83,6 +69,7 @@ public final class ConsoleUtils {
 
         // Collect the response url.
         zosmfResponse.getCmdResponseUrl().ifPresent(response::setCmdResponseUrl);
+        return response;
     }
 
 }

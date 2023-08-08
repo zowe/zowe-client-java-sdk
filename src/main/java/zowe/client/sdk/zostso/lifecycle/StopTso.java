@@ -14,18 +14,21 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.parse.JsonParseResponse;
+import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.JsonDeleteRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
-import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StopTsoParams;
 import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
 import zowe.client.sdk.zostso.response.StartStopResponse;
+import zowe.client.sdk.zostso.service.TsoResponseService;
 
 /**
  * Stop active TSO address space using servlet key
@@ -85,7 +88,7 @@ public class StopTso {
         final ZosmfTsoResponse zosmfResponse = stopCommon(commandParams);
 
         // TODO
-        return TsoUtils.populateStartAndStop(zosmfResponse);
+        return new TsoResponseService(zosmfResponse).setStartStopResponse();
     }
 
     /**
@@ -111,8 +114,12 @@ public class StopTso {
         request.setUrl(url);
 
         final Response response = RestUtils.getResponse(request);
-        return TsoUtils.parseJsonStopResponse(
-                (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString()));
+
+        final String jsonStr = response.getResponsePhrase()
+                .orElseThrow(() -> new Exception("no tso stop response phase")).toString();
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
+        final JsonParseResponse jsonParseResponse = JsonParseResponseFactory.buildParser(jsonObject, ParseType.TSO_STOP);
+        return (ZosmfTsoResponse) jsonParseResponse.parseResponse();
     }
 
 }

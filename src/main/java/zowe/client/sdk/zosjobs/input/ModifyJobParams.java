@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosjobs.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
 import java.util.Optional;
 
 /**
@@ -91,6 +93,10 @@ public class ModifyJobParams {
         private String version;
 
         public Builder(String jobName, String jobId) {
+            ValidateUtils.checkNullParameter(jobName == null, "job name is null");
+            ValidateUtils.checkIllegalParameter(jobName.trim().isEmpty(), "job name not specified");
+            ValidateUtils.checkNullParameter(jobId == null, "job id is null");
+            ValidateUtils.checkIllegalParameter(jobId.trim().isEmpty(), "job id not specified");
             this.jobName = jobName;
             this.jobId = jobId;
         }

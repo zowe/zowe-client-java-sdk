@@ -18,7 +18,7 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 2.0
  */
-public class UssItem {
+public class UnixFile {
 
     /**
      * File, symbolic file or directory name
@@ -53,7 +53,7 @@ public class UssItem {
      */
     private final Optional<String> mtime;
 
-    public UssItem(UssItem.Builder builder) {
+    public UnixFile(UnixFile.Builder builder) {
         this.name = Optional.ofNullable(builder.name);
         this.mode = Optional.ofNullable(builder.mode);
         if (builder.size == null) {
@@ -133,46 +133,46 @@ public class UssItem {
         private String group;
         private String mtime;
 
-        public UssItem build() {
-            return new UssItem(this);
+        public UnixFile build() {
+            return new UnixFile(this);
         }
 
-        public UssItem.Builder name(String name) {
+        public UnixFile.Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        public UssItem.Builder mode(String mode) {
+        public UnixFile.Builder mode(String mode) {
             this.mode = mode;
             return this;
         }
 
-        public UssItem.Builder size(Long size) {
+        public UnixFile.Builder size(Long size) {
             this.size = size;
             return this;
         }
 
-        public UssItem.Builder uid(Long uid) {
+        public UnixFile.Builder uid(Long uid) {
             this.uid = uid;
             return this;
         }
 
-        public UssItem.Builder user(String user) {
+        public UnixFile.Builder user(String user) {
             this.user = user;
             return this;
         }
 
-        public UssItem.Builder gid(Long gid) {
+        public UnixFile.Builder gid(Long gid) {
             this.gid = gid;
             return this;
         }
 
-        public UssItem.Builder group(String group) {
+        public UnixFile.Builder group(String group) {
             this.group = group;
             return this;
         }
 
-        public UssItem.Builder mtime(String mtime) {
+        public UnixFile.Builder mtime(String mtime) {
             this.mtime = mtime;
             return this;
         }

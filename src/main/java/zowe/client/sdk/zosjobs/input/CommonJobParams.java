@@ -47,10 +47,7 @@ public class CommonJobParams {
      * @author Frank Giordano
      */
     public CommonJobParams(String jobId, String jobName) {
-        ValidateUtils.checkNullParameter(jobId == null, "job id is null");
-        ValidateUtils.checkIllegalParameter(jobId.trim().isEmpty(), "job id not specified");
-        ValidateUtils.checkNullParameter(jobName == null, "job name is null");
-        ValidateUtils.checkIllegalParameter(jobName.trim().isEmpty(), "job name not specified");
+        validateParameters(jobId, jobName);
         this.jobId = Optional.of(jobId);
         this.jobName = Optional.of(jobName);
         this.stepData = false;
@@ -65,10 +62,7 @@ public class CommonJobParams {
      * @author Frank Giordano
      */
     public CommonJobParams(String jobId, String jobName, Boolean stepData) {
-        ValidateUtils.checkNullParameter(jobId == null, "job id is null");
-        ValidateUtils.checkIllegalParameter(jobId.trim().isEmpty(), "job id not specified");
-        ValidateUtils.checkNullParameter(jobName == null, "job name is null");
-        ValidateUtils.checkIllegalParameter(jobName.trim().isEmpty(), "job name not specified");
+        validateParameters(jobId, jobName);
         this.jobId = Optional.of(jobId);
         this.jobName = Optional.of(jobName);
         this.stepData = stepData;
@@ -102,6 +96,13 @@ public class CommonJobParams {
      */
     public Boolean isStepData() {
         return stepData;
+    }
+
+    private void validateParameters(final String jobId, final String jobName) {
+        ValidateUtils.checkNullParameter(jobId == null, "job id is null");
+        ValidateUtils.checkIllegalParameter(jobId.trim().isEmpty(), "job id not specified");
+        ValidateUtils.checkNullParameter(jobName == null, "job name is null");
+        ValidateUtils.checkIllegalParameter(jobName.trim().isEmpty(), "job name not specified");
     }
 
     @Override

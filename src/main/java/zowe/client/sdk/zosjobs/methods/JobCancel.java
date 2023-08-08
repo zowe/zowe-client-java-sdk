@@ -18,7 +18,6 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
-import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
@@ -119,11 +118,14 @@ public class JobCancel {
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Response cancelCommon(ModifyJobParams params) throws Exception {
-        JobUtils.checkModifyJobParameters(params);
+        ValidateUtils.checkNullParameter(params == null, "params is null");
 
+        final String jobNameErrMsg = "job name not specified";
+        final String jobIdErrMsg = "job id not specified";
         // generate full url request
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
+                JobsConstants.FILE_DELIM + params.getJobName().orElseThrow(() -> new IllegalArgumentException(jobNameErrMsg)) +
+                JobsConstants.FILE_DELIM + params.getJobId().orElseThrow(() -> new IllegalArgumentException(jobIdErrMsg));
 
         // generate json string body for the request
         final String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
