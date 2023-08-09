@@ -47,6 +47,9 @@ public final class JsonParseResponseFactory {
             case JOB:
                 parseResponse = new JobParseResponse(data);
                 break;
+            case JOB_FILE:
+                parseResponse = new JobFileParseResponse(data);
+                break;
             case MEMBER:
                 parseResponse = new MemberParseResponse(data);
                 break;
