@@ -29,7 +29,7 @@ public final class ConsoleResponseService {
      * @param zosmfResponse zosmf console response, see ZosmfIssueResponse object
      * @author Frank Giordano
      */
-    public ConsoleResponseService(final ZosmfIssueResponse zosmfResponse) {
+    public ConsoleResponseService(ZosmfIssueResponse zosmfResponse) {
         ValidateUtils.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
         this.zosmfResponse = zosmfResponse;
     }

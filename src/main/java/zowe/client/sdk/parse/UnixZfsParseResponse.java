@@ -69,7 +69,7 @@ public class UnixZfsParseResponse extends JsonParseResponse {
      * @param modeStr mode premission(s) string value
      * @author Frank Giordano
      */
-    public void setModeStr(final String modeStr) {
+    public void setModeStr(String modeStr) {
         this.modeStr = modeStr;
     }
 

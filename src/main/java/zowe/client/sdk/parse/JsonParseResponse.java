@@ -21,7 +21,7 @@ public abstract class JsonParseResponse {
 
     protected final JSONObject data;
 
-    public JsonParseResponse(final JSONObject data) {
+    public JsonParseResponse(JSONObject data) {
         this.data = data;
     }
 

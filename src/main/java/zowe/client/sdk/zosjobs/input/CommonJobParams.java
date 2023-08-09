@@ -98,7 +98,7 @@ public class CommonJobParams {
         return stepData;
     }
 
-    private void validateParameters(final String jobId, final String jobName) {
+    private void validateParameters(String jobId, final String jobName) {
         ValidateUtils.checkNullParameter(jobId == null, "job id is null");
         ValidateUtils.checkIllegalParameter(jobId.trim().isEmpty(), "job id not specified");
         ValidateUtils.checkNullParameter(jobName == null, "job name is null");
