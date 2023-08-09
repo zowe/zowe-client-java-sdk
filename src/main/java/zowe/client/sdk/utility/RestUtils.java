@@ -12,9 +12,14 @@ package zowe.client.sdk.utility;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Utility class for REST related static helper methods.
@@ -42,20 +47,32 @@ public final class RestUtils {
     public static Response getResponse(ZoweRequest request) throws Exception {
         final Response response = request.executeRequest();
 
-        final int statusCode = response.getStatusCode()
-                .orElseThrow(() -> new Exception("no response status code returned"));
-
-        final String responsePhrase = String.valueOf((response.getResponsePhrase()
-                .orElse("n/a")));
+        final String statusCodeErrMsg = "no response status code returned";
+        final int statusCode = response.getStatusCode().orElseThrow(() -> new Exception(statusCodeErrMsg));
 
         if (RestUtils.isHttpError(statusCode)) {
-            final String statusText = response.getStatusText()
-                    .orElseThrow(() -> new Exception("no response status text returned"));
-            String msg = "http status error code: " + statusCode + ", status text: " + statusText;
-            if (!statusText.equalsIgnoreCase(responsePhrase)) {
-                msg += ", response phrase: " + responsePhrase;
+            final AtomicReference<Object> responsePhase = new AtomicReference<>();
+            response.getResponsePhrase().ifPresent(phrase -> responsePhase.set(phrase));
+            if (responsePhase.get() instanceof byte[]) {
+                final InputStreamReader inputStreamReader = new InputStreamReader(
+                        new ByteArrayInputStream((byte[]) responsePhase.get()), StandardCharsets.UTF_8);
+                final BufferedReader br = new BufferedReader(inputStreamReader);
+                String content = "";
+                String line;
+                while ((line = br.readLine()) != null) {
+                    content += line + "\n";
+                }
+                responsePhase.set(content.substring(0, content.length() - 1));
             }
-            throw new Exception(msg);
+
+            final String responsePhrase = String.valueOf((responsePhase.get()));
+            final String statusTextErrMsg = "no response status text returned";
+            final String statusText = response.getStatusText().orElseThrow(() -> new Exception(statusTextErrMsg));
+            String errMsg = "http status error code: " + statusCode + ", status text: " + statusText;
+            if (!statusText.equalsIgnoreCase(responsePhrase)) {
+                errMsg += ", response phrase: " + responsePhrase;
+            }
+            throw new Exception(errMsg);
         }
 
         return response;
@@ -75,7 +92,7 @@ public final class RestUtils {
     /**
      * Checks if url is a valid http or https url.
      *
-     * @param url value
+     * @param url string value
      * @return boolean value
      * @author Frank Giordano
      */
