@@ -19,7 +19,7 @@ import org.json.simple.JSONObject;
  */
 public abstract class JsonParseResponse {
 
-    protected JSONObject data;
+    protected final JSONObject data;
 
     public JsonParseResponse(final JSONObject data) {
         this.data = data;
