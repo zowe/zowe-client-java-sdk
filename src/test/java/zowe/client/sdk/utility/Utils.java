@@ -35,7 +35,7 @@ public final class Utils {
     /**
      * Verifies that a class defined as final and uses all static methods is well-defined.
      *
-     * @param clazz class to verify.
+     * @param clazz class object to verify
      */
     private static void assertUtilityClassWellDefined(final Class<?> clazz) throws NoSuchMethodException,
             InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -70,7 +70,7 @@ public final class Utils {
     /**
      * Assertion checks class conforms to being set as final, one private constructor, and with all static methods.
      *
-     * @param name class object name
+     * @param name class object
      */
     public static void validateClass(Class name, String privateConstructorMsg) {
         try {

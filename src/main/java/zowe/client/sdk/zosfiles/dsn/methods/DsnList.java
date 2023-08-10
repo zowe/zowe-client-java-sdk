@@ -15,9 +15,10 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
-import zowe.client.sdk.utility.DataSetUtils;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -146,14 +147,13 @@ public class DsnList {
         }
 
         final JSONArray items = (JSONArray) jsonObject.get(ZosFilesConstants.RESPONSE_ITEMS);
-        items.forEach(item -> {
-            JSONObject obj = (JSONObject) item;
+        for (final Object obj : items) {
             if (datasetLst == null) {
-                memberLst.add((T) DataSetUtils.parseJsonMemberResponse(obj));
+                memberLst.add((T) JsonParseResponseFactory.buildParser((JSONObject) obj, ParseType.MEMBER).parseResponse());
             } else {
-                datasetLst.add((T) DataSetUtils.parseJsonDSResponse(obj));
+                datasetLst.add((T) JsonParseResponseFactory.buildParser((JSONObject) obj, ParseType.DATASET).parseResponse());
             }
-        });
+        }
 
         if (datasetLst == null) {
             return memberLst;

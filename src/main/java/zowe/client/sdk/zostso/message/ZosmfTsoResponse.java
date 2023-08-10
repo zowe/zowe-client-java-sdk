@@ -71,8 +71,8 @@ public class ZosmfTsoResponse {
         this.servletKey = Optional.ofNullable(builder.servletKey);
         this.queueId = Optional.ofNullable(builder.queueId);
         this.ver = Optional.ofNullable(builder.ver);
-        this.reused = Optional.of(builder.reused);
-        this.timeout = Optional.of(builder.timeout);
+        this.reused = Optional.ofNullable(builder.reused);
+        this.timeout = Optional.ofNullable(builder.timeout);
         this.msgData = Objects.requireNonNullElse(builder.msgData, Collections.emptyList());
         this.sessionId = Optional.ofNullable(builder.sessionId);
         this.tsoData = Objects.requireNonNullElse(builder.tsoData, Collections.emptyList());
@@ -199,8 +199,8 @@ public class ZosmfTsoResponse {
         private String servletKey;
         private String queueId;
         private String ver;
-        private boolean reused;
-        private boolean timeout;
+        private Boolean reused;
+        private Boolean timeout;
         private List<ZosmfMessages> msgData;
         private String sessionId;
         private List<TsoMessages> tsoData;
@@ -221,12 +221,12 @@ public class ZosmfTsoResponse {
             return this;
         }
 
-        public ZosmfTsoResponse.Builder reused(boolean reused) {
+        public ZosmfTsoResponse.Builder reused(Boolean reused) {
             this.reused = reused;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder timeout(boolean timeout) {
+        public ZosmfTsoResponse.Builder timeout(Boolean timeout) {
             this.timeout = timeout;
             return this;
         }

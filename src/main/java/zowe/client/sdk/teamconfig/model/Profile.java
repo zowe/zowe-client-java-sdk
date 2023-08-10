@@ -11,7 +11,8 @@ package zowe.client.sdk.teamconfig.model;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import zowe.client.sdk.utility.TeamConfigUtils;
+import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.type.ParseType;
 
 import java.util.Map;
 
@@ -42,12 +43,14 @@ public class Profile {
      * @param name   profile name
      * @param obj    json object of property values within profile section from Zowe Global Team Configuration
      * @param secure jsonarray value of secure section
+     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Profile(String name, JSONObject obj, JSONArray secure) {
+    @SuppressWarnings("unchecked")
+    public Profile(String name, JSONObject obj, JSONArray secure) throws Exception {
         this.name = name;
         this.secure = secure;
-        properties = TeamConfigUtils.parseJsonPropsObj(obj);
+        properties = (Map<String, String>) JsonParseResponseFactory.buildParser(obj, ParseType.PROPS).parseResponse();
     }
 
     /**

@@ -13,12 +13,13 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.parse.JsonParseResponse;
+import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.JsonPutRequest;
-import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
-import zowe.client.sdk.utility.ConsoleUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
@@ -26,6 +27,7 @@ import zowe.client.sdk.zosconsole.input.IssueParams;
 import zowe.client.sdk.zosconsole.input.ZosmfIssueParams;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
+import zowe.client.sdk.zosconsole.service.ConsoleResponseService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -105,13 +107,9 @@ public class IssueConsole {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String consoleName = params.getConsoleName().orElse(ConsoleConstants.RES_DEF_CN);
-        final ZosmfIssueParams commandParams = buildZosmfConsoleApiParameters(params);
-        final ConsoleResponse response = new ConsoleResponse();
-
-        final ZosmfIssueResponse resp = issueCommonCommand(consoleName, commandParams);
-        ConsoleUtils.populate(resp, response, params.getProcessResponses().orElse(true));
-
-        return response;
+        final ZosmfIssueParams zosmfIssueParams = buildZosmfConsoleApiParameters(params);
+        final ZosmfIssueResponse zosmfIssueResponse = issueCommonCommand(consoleName, zosmfIssueParams);
+        return new ConsoleResponseService(zosmfIssueResponse).setConsoleResponse(params.getProcessResponses().orElse(true));
     }
 
     /**
@@ -141,9 +139,11 @@ public class IssueConsole {
         request.setUrl(url);
         request.setBody(new JSONObject(jsonMap).toString());
 
-        final Response response = RestUtils.getResponse(request);
-        return ConsoleUtils.parseJsonIssueCmdResponse(
-                (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString()));
+        final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
+                .orElseThrow(() -> new Exception("no issue console response phase")).toString();
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
+        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.MVS_CONSOLE);
+        return (ZosmfIssueResponse) parser.parseResponse();
     }
 
     /**

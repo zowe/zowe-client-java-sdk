@@ -15,10 +15,12 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.parse.JsonParseResponse;
+import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
@@ -92,6 +94,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     public String getJclByJob(Job job) throws Exception {
+        ValidateUtils.checkNullParameter(job == null, "job is null");
         return getJclCommon(
                 new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
     }
@@ -253,10 +256,9 @@ public class JobGet {
         }
 
         final JSONArray results = (JSONArray) new JSONParser().parse(response.getResponsePhrase().get().toString());
-        results.forEach(item -> {
-            JSONObject jobObj = (JSONObject) item;
-            jobs.add(JobUtils.parseJsonJobResponse(jobObj));
-        });
+        for (final Object obj : results) {
+            jobs.add((Job) JsonParseResponseFactory.buildParser((JSONObject) obj, ParseType.JOB).parseResponse());
+        }
 
         return jobs;
     }
@@ -374,24 +376,9 @@ public class JobGet {
         }
 
         final JSONArray results = (JSONArray) new JSONParser().parse(response.getResponsePhrase().get().toString());
-        results.forEach(item -> {
-            JSONObject fileObj = (JSONObject) item;
-            files.add(new JobFile.Builder().jobId((String) fileObj.get("jobid"))
-                    .jobName((String) fileObj.get("jobname"))
-                    .recfm((String) fileObj.get("recfm"))
-                    .byteCount((Long) fileObj.get("byteCount"))
-                    .recordCount((Long) fileObj.get("recordCount"))
-                    .jobCorrelator((String) fileObj.get("job-correlator"))
-                    .classs((String) fileObj.get("class"))
-                    .id((Long) fileObj.get("id"))
-                    .ddName((String) fileObj.get("ddname"))
-                    .recordsUrl((String) fileObj.get("records-url"))
-                    .lrecl((Long) fileObj.get("lrecl"))
-                    .subSystem((String) fileObj.get("subsystem"))
-                    .stepName((String) fileObj.get("stepname"))
-                    .procStep((String) fileObj.get("procstep"))
-                    .build());
-        });
+        for (final Object obj : results) {
+            files.add((JobFile) JsonParseResponseFactory.buildParser((JSONObject) obj, ParseType.JOB_FILE).parseResponse());
+        }
 
         return files;
     }
@@ -448,9 +435,11 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final Response response = RestUtils.getResponse(request);
-        return JobUtils.parseJsonJobResponse(
-                ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
+        final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
+                .orElseThrow(() -> new Exception("no job get response phase")).toString();
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
+        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.JOB);
+        return (Job) parser.parseResponse();
     }
 
     /**

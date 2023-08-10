@@ -15,12 +15,14 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zowe.client.sdk.parse.JsonParseResponse;
+import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
 import zowe.client.sdk.teamconfig.model.ConfigContainer;
 import zowe.client.sdk.teamconfig.model.Partition;
 import zowe.client.sdk.teamconfig.model.Profile;
 import zowe.client.sdk.teamconfig.types.SectionType;
-import zowe.client.sdk.utility.TeamConfigUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 import java.io.FileReader;
@@ -46,10 +48,11 @@ public class TeamConfigService {
      * @param name       Partition name
      * @param jsonObject JSONObject object
      * @return Partition object
+     * @throws Exception error processing
      * @author Frank Giordano
      */
-    private Partition getPartition(String name, JSONObject jsonObject) {
-        @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
+    private Partition getPartition(String name, JSONObject jsonObject) throws Exception {
         final Set<String> keyObjs = jsonObject.keySet();
         final List<Profile> profiles = new ArrayList<>();
         Map<String, String> properties = new HashMap<>();
@@ -58,7 +61,6 @@ public class TeamConfigService {
             final String keyVal = keyObj;
             if (SectionType.PROFILES.getValue().equals(keyVal)) {
                 JSONObject jsonProfileObj = (JSONObject) jsonObject.get(SectionType.PROFILES.getValue());
-                @SuppressWarnings("unchecked")
                 final Set<String> jsonProfileKeys = jsonProfileObj.keySet();
                 for (final String profileKeyVal : jsonProfileKeys) {
                     final JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
@@ -67,7 +69,9 @@ public class TeamConfigService {
                             (JSONArray) profileTypeJsonObj.get("secure")));
                 }
             } else if ("properties".equalsIgnoreCase(keyVal)) {
-                properties = TeamConfigUtils.parseJsonPropsObj((JSONObject) jsonObject.get(keyVal));
+                final JsonParseResponse parse = JsonParseResponseFactory.buildParser(
+                        (JSONObject) jsonObject.get(keyVal), ParseType.PROPS);
+                properties = (Map<String, String>) parse.parseResponse();
             }
         }
         return new Partition(name, properties, profiles);
@@ -119,6 +123,7 @@ public class TeamConfigService {
      * @throws Exception error processing
      * @author Frank Giordano
      */
+    @SuppressWarnings("unchecked")
     private ConfigContainer parseJson(JSONObject jsonObj) throws Exception {
         String schema = null;
         Boolean autoStore = null;
@@ -126,18 +131,15 @@ public class TeamConfigService {
         final Map<String, String> defaults = new HashMap<>();
         final List<Partition> partitions = new ArrayList<>();
 
-        @SuppressWarnings("unchecked")
         final Set<String> jsonSectionKeys = jsonObj.keySet();
         for (final String keySectionVal : jsonSectionKeys) {
             if (SectionType.$SCHEMA.getValue().equals(keySectionVal)) {
                 schema = (String) jsonObj.get(SectionType.$SCHEMA.getValue());
             } else if (SectionType.PROFILES.getValue().equals(keySectionVal)) {
                 final JSONObject jsonProfileObj = (JSONObject) jsonObj.get(SectionType.PROFILES.getValue());
-                @SuppressWarnings("unchecked")
                 final Set<String> jsonProfileKeys = jsonProfileObj.keySet();
                 for (final String profileKeyVal : jsonProfileKeys) {
                     JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
-                    @SuppressWarnings("unchecked")
                     final Set<String> isEmbeddedKeyProfile = profileTypeJsonObj.keySet();
                     if (isPartition(isEmbeddedKeyProfile)) {
                         partitions.add(getPartition(profileKeyVal, profileTypeJsonObj));

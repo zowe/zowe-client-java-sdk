@@ -12,14 +12,15 @@ package zowe.client.sdk.zosmfinfo.methods;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.parse.JsonParseResponse;
+import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.JsonGetRequest;
-import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.ZosmfUtils;
 import zowe.client.sdk.zosmfinfo.ZosmfConstants;
 import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
 
@@ -79,9 +80,11 @@ public class ZosmfSystems {
         }
         request.setUrl(url);
 
-        final Response response = RestUtils.getResponse(request);
-        return ZosmfUtils.parseListDefinedSystems(
-                ((JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString())));
+        final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
+                .orElseThrow(() -> new Exception("no z/osmf info response phase")).toString();
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
+        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.ZOSMF_DEFINED_SYSTEMS);
+        return (ZosmfListDefinedSystemsResponse) parser.parseResponse();
     }
 
 }

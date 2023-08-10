@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
-import zowe.client.sdk.utility.JobUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
@@ -91,10 +90,13 @@ public class JobDelete {
      * @author Frank Giordano
      */
     public Response deleteCommon(ModifyJobParams params) throws Exception {
-        JobUtils.checkModifyJobParameters(params);
+        ValidateUtils.checkNullParameter(params == null, "params is null");
 
+        final String jobNameErrMsg = "job name not specified";
+        final String jobIdErrMsg = "job id not specified";
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
+                JobsConstants.FILE_DELIM + params.getJobName().orElseThrow(() -> new IllegalArgumentException(jobNameErrMsg)) +
+                JobsConstants.FILE_DELIM + params.getJobId().orElseThrow(() -> new IllegalArgumentException(jobIdErrMsg));
 
         final Map<String, String> headers = new HashMap<>();
 

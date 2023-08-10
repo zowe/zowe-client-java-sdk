@@ -114,19 +114,19 @@ public class JobStepData {
 
         private String smfid;
         private String completion;
-        private boolean active;
+        private Boolean active;
         private Long stepNumber;
         private String procStepName;
         private String stepName;
         private String programName;
 
+        public JobStepData build() {
+            return new JobStepData(this);
+        }
+
         public JobStepData.Builder active(Boolean active) {
             this.active = active;
             return this;
-        }
-
-        public JobStepData build() {
-            return new JobStepData(this);
         }
 
         public JobStepData.Builder completion(String completion) {
