@@ -52,7 +52,7 @@ public class RestUtilsTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        String expectedErrMsg = "http status error code: 300, status text: error, response phrase: no response phrase returned";
+        String expectedErrMsg = "http status error code: 300, status text: error, response phrase: null";
         assertEquals(expectedErrMsg, errMsg);
     }
 
@@ -66,7 +66,7 @@ public class RestUtilsTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        String expectedErrMsg = "http status error code: 300, status text: error, response phrase: no response phrase returned";
+        String expectedErrMsg = "http status error code: 300, status text: error, response phrase: ";
         assertEquals(expectedErrMsg, errMsg);
     }
 
@@ -106,7 +106,21 @@ public class RestUtilsTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        String expectedErrMsg = "http status error code: 300, status text: no response status text returned, response phrase: {}";
+        String expectedErrMsg = "http status error code: 300, status text: , response phrase: {}";
+        assertEquals(expectedErrMsg, errMsg);
+    }
+
+    @Test
+    public void tstRestUtilsGetResponseWithNullStatusTextFailure() {
+        Mockito.when(mockRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 300, null));
+        String errMsg = "";
+        try {
+            RestUtils.getResponse(mockRequest);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        String expectedErrMsg = "http status error code: 300, status text: n\\a, response phrase: {}";
         assertEquals(expectedErrMsg, errMsg);
     }
 
@@ -129,7 +143,7 @@ public class RestUtilsTest {
                 new Response(new JSONObject(), 200, "success"));
         Response response = RestUtils.getResponse(mockRequest);
         assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("{}", response.getResponsePhrase().get());
+        assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("success", response.getStatusText().get().toString());
     }
 
