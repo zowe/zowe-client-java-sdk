@@ -79,7 +79,7 @@ public final class RestUtils {
     }
 
     /**
-     * Checks if statusCode is a valid http code or not
+     * Checks if statusCode is an error http code or not
      *
      * @param statusCode http code value
      * @return boolean value
