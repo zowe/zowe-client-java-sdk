@@ -66,7 +66,7 @@ public class UnixZfsParseResponse extends JsonParseResponse {
      * Value is parsed by parent calling and set here to be included in main parse object
      * done in parseResponse() method.
      *
-     * @param modeStr mode premission(s) string value
+     * @param modeStr mode permission(s) string value
      * @author Frank Giordano
      */
     public void setModeStr(String modeStr) {
