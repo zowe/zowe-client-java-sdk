@@ -65,9 +65,15 @@ public final class RestUtils {
                 responsePhase.set(content.substring(0, content.length() - 1));
             }
 
-            final String responsePhrase = String.valueOf((responsePhase.get()));
+            final Optional<String> responsePhaseStr = Optional.ofNullable(responsePhase.get().toString());
+            final String responsePhraseErrMsg = "no response phrase returned";
+            final String responsePhrase = String.valueOf((
+                    !responsePhaseStr.isEmpty() && !responsePhaseStr.get().trim().isEmpty() ?
+                            responsePhase.get() : responsePhraseErrMsg));
             final String statusTextErrMsg = "no response status text returned";
-            final String statusText = response.getStatusText().orElseThrow(() -> new Exception(statusTextErrMsg));
+            final String statusText =
+                    !response.getStatusText().isEmpty() && !response.getStatusText().get().trim().isEmpty()
+                    ? response.getStatusText().get() : statusTextErrMsg;
             String errMsg = "http status error code: " + statusCode + ", status text: " + statusText;
             if (!statusText.equalsIgnoreCase(responsePhrase)) {
                 errMsg += ", response phrase: " + responsePhrase;
