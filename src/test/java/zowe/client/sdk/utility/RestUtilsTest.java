@@ -9,7 +9,14 @@
  */
 package zowe.client.sdk.utility;
 
+import org.json.simple.JSONObject;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZoweRequest;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Class containing unit test for RestUtils.
@@ -19,6 +26,13 @@ import org.junit.Test;
  */
 public class RestUtilsTest {
 
+    private ZoweRequest mockRequest;
+
+    @Before
+    public void init() {
+        mockRequest = Mockito.mock(ZoweRequest.class);
+    }
+
     /**
      * Validate class structure
      */
@@ -26,6 +40,97 @@ public class RestUtilsTest {
     public void tstRestUtilsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Utility class";
         Utils.validateClass(RestUtils.class, privateConstructorExceptionMsg);
+    }
+
+    @Test
+    public void tstRestUtilsGetResponseWithNullPhraseFailure() {
+        Mockito.when(mockRequest.executeRequest()).thenReturn(
+                new Response(null, 300, "error"));
+        String errMsg = "";
+        try {
+            RestUtils.getResponse(mockRequest);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        String expectedErrMsg = "http status error code: 300, status text: error, response phrase: no response phrase returned";
+        assertEquals(expectedErrMsg, errMsg);
+    }
+
+    @Test
+    public void tstRestUtilsGetResponseWithEmptyPhraseFailure() {
+        Mockito.when(mockRequest.executeRequest()).thenReturn(
+                new Response("", 300, "error"));
+        String errMsg = "";
+        try {
+            RestUtils.getResponse(mockRequest);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        String expectedErrMsg = "http status error code: 300, status text: error, response phrase: no response phrase returned";
+        assertEquals(expectedErrMsg, errMsg);
+    }
+
+    @Test
+    public void tstRestUtilsGetResponseWithEmptyJsonPhraseFailure() {
+        Mockito.when(mockRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 300, "error"));
+        String errMsg = "";
+        try {
+            RestUtils.getResponse(mockRequest);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("http status error code: 300, status text: error, response phrase: {}", errMsg);
+    }
+
+    @Test
+    public void tstRestUtilsGetResponseWithStatusTextAndPhraseSameValueFailure() {
+        Mockito.when(mockRequest.executeRequest()).thenReturn(
+                new Response("error", 300, "error"));
+        String errMsg = "";
+        try {
+            RestUtils.getResponse(mockRequest);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("http status error code: 300, status text: error", errMsg);
+    }
+
+    @Test
+    public void tstRestUtilsGetResponseWithEmptyStatusTextFailure() {
+        Mockito.when(mockRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 300, ""));
+        String errMsg = "";
+        try {
+            RestUtils.getResponse(mockRequest);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        String expectedErrMsg = "http status error code: 300, status text: no response status text returned, response phrase: {}";
+        assertEquals(expectedErrMsg, errMsg);
+    }
+
+    @Test
+    public void tstRestUtilsGetResponseWithNullStatusCodeFailure() {
+        Mockito.when(mockRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), null, ""));
+        String errMsg = "";
+        try {
+            RestUtils.getResponse(mockRequest);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("no response status code returned", errMsg);
+    }
+
+    @Test
+    public void tstRestUtilsGetResponseSuccess() throws Exception {
+        Mockito.when(mockRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        Response response = RestUtils.getResponse(mockRequest);
+        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals("{}", response.getResponsePhrase().get());
+        assertEquals("success", response.getStatusText().get().toString());
     }
 
 }
