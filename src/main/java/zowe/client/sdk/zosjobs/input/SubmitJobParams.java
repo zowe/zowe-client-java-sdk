@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosjobs.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -51,7 +53,9 @@ public class SubmitJobParams {
      * @author Frank Giordano
      */
     public SubmitJobParams(String jobDataSet, Map<String, String> jclSymbols) {
-        this.jobDataSet = Optional.ofNullable(jobDataSet);
+        ValidateUtils.checkNullParameter(jobDataSet == null, "jobDataSet is null");
+        ValidateUtils.checkIllegalParameter(jobDataSet.isEmpty(), "jobDataSet not specified");
+        this.jobDataSet = Optional.of(jobDataSet);
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
 
