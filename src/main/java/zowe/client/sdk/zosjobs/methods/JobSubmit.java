@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class to handle submitting of z/OS batch jobs via z/OSMF
+ * Class to handle submitting of z/OS batch jobs and started tasks via z/OSMF
  *
  * @author Frank Giordano
  * @version 2.0
@@ -91,8 +91,7 @@ public class JobSubmit {
      */
     public Job submitJclCommon(SubmitJclParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getJcl().isEmpty(), "jcl not specified");
-        ValidateUtils.checkIllegalParameter(params.getJcl().get().trim().isEmpty(), "jcl not specified");
+
         String key, value;
         final Map<String, String> headers = new HashMap<>();
 
@@ -127,12 +126,11 @@ public class JobSubmit {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
 
-        final String body = params.getJcl().get();
         if (request == null || !(request instanceof TextPutRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
         }
         request.setUrl(url);
-        request.setBody(body);
+        request.setBody(params.getJcl().orElseThrow(() -> new Exception("jcl not specified")));
         request.setHeaders(headers);
 
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
@@ -164,12 +162,11 @@ public class JobSubmit {
      */
     public Job submitCommon(SubmitJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getJobDataSet().isEmpty(), "jobDataSet not specified");
-        ValidateUtils.checkIllegalParameter(params.getJobDataSet().get().trim().isEmpty(), "jobDataSet not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
 
-        final String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(params.getJobDataSet().get()) + "'";
+        final String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(
+                params.getJobDataSet().orElseThrow(() -> new Exception("jobDataSet not specified"))) + "'";
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("file", fullyQualifiedDataset);
 
