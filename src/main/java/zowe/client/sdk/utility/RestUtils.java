@@ -52,7 +52,7 @@ public final class RestUtils {
 
         if (RestUtils.isHttpError(statusCode)) {
             final AtomicReference<Object> responsePhrase = new AtomicReference<>();
-            response.getResponsePhrase().ifPresent(phrase -> responsePhrase.set(phrase));
+            response.getResponsePhrase().ifPresent(responsePhrase::set);
             if (responsePhrase.get() instanceof byte[]) {
                 final InputStreamReader inputStreamReader = new InputStreamReader(
                         new ByteArrayInputStream((byte[]) responsePhrase.get()), StandardCharsets.UTF_8);
