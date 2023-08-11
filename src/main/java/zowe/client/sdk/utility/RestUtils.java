@@ -66,7 +66,7 @@ public final class RestUtils {
             }
 
             final String responsePhraseStr = String.valueOf((responsePhrase.get()));
-            final String statusText = !response.getStatusText().isEmpty() ? response.getStatusText().get() : "n\\a";
+            final String statusText = response.getStatusText().isPresent() ? response.getStatusText().get() : "n\\a";
             String errMsg = "http status error code: " + statusCode + ", status text: " + statusText;
             if (!statusText.equalsIgnoreCase(responsePhraseStr)) {
                 errMsg += ", response phrase: " + responsePhraseStr;
