@@ -76,6 +76,7 @@ public class DsnDelete {
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
         ValidateUtils.checkIllegalParameter(memberName.isBlank(), "memberName not specified");
+
         return delete(String.format("%s(%s)", dataSetName, memberName));
     }
 
