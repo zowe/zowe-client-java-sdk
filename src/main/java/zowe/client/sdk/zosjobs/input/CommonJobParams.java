@@ -100,9 +100,9 @@ public class CommonJobParams {
 
     private void validateParameters(String jobId, final String jobName) {
         ValidateUtils.checkNullParameter(jobId == null, "job id is null");
-        ValidateUtils.checkIllegalParameter(jobId.trim().isEmpty(), "job id not specified");
+        ValidateUtils.checkIllegalParameter(jobId.isBlank(), "job id not specified");
         ValidateUtils.checkNullParameter(jobName == null, "job name is null");
-        ValidateUtils.checkIllegalParameter(jobName.trim().isEmpty(), "job name not specified");
+        ValidateUtils.checkIllegalParameter(jobName.isBlank(), "job name not specified");
     }
 
     @Override

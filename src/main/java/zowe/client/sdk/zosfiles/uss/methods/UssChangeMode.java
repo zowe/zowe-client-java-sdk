@@ -81,7 +81,7 @@ public class UssChangeMode {
      */
     public Response change(String targetPath, ChangeModeParams params) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
+        ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +

@@ -94,9 +94,9 @@ public class ModifyJobParams {
 
         public Builder(String jobName, String jobId) {
             ValidateUtils.checkNullParameter(jobName == null, "job name is null");
-            ValidateUtils.checkIllegalParameter(jobName.trim().isEmpty(), "job name not specified");
+            ValidateUtils.checkIllegalParameter(jobName.isBlank(), "job name not specified");
             ValidateUtils.checkNullParameter(jobId == null, "job id is null");
-            ValidateUtils.checkIllegalParameter(jobId.trim().isEmpty(), "job id not specified");
+            ValidateUtils.checkIllegalParameter(jobId.isBlank(), "job id not specified");
             this.jobName = jobName;
             this.jobId = jobId;
         }

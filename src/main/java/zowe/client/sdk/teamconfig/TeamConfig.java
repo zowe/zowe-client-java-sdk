@@ -106,7 +106,7 @@ public class TeamConfig {
      */
     public ProfileDao getDefaultProfileByName(String name) throws Exception {
         ValidateUtils.checkNullParameter(name == null, "name is null");
-        ValidateUtils.checkIllegalParameter(name.trim().isEmpty(), "name not specified");
+        ValidateUtils.checkIllegalParameter(name.isBlank(), "name not specified");
         final Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(name));
         final Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(name));
         final Optional<Profile> base = teamConfig.getProfiles().stream().filter(isBaseProfile).findFirst();
@@ -134,9 +134,9 @@ public class TeamConfig {
      */
     public ProfileDao getDefaultProfileFromPartitionByName(String profileName, String partitionName) throws Exception {
         ValidateUtils.checkNullParameter(profileName == null, "profileName is null");
-        ValidateUtils.checkIllegalParameter(profileName.trim().isEmpty(), "profileName not specified");
+        ValidateUtils.checkIllegalParameter(profileName.isBlank(), "profileName not specified");
         ValidateUtils.checkNullParameter(partitionName == null, "partitionName is null");
-        ValidateUtils.checkIllegalParameter(partitionName.trim().isEmpty(), "partitionName not specified");
+        ValidateUtils.checkIllegalParameter(partitionName.isBlank(), "partitionName not specified");
         final Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(profileName));
         final Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(profileName));
         final Predicate<Partition> isPartitionName = i -> i.getName().equals(partitionName);

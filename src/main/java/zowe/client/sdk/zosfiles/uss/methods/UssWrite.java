@@ -104,7 +104,7 @@ public class UssWrite {
      */
     public Response writeCommon(String fileNamePath, WriteParams params) throws Exception {
         ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
-        ValidateUtils.checkIllegalParameter(fileNamePath.trim().isEmpty(), "fileNamePath not specified");
+        ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +

@@ -83,7 +83,7 @@ public class DsnGet {
      */
     public Dataset getDsnInfo(String dataSetName) throws Exception {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.trim().isEmpty(), "dataSetName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         Dataset emptyDataSet = new Dataset.Builder().dsname(dataSetName).build();
 
         final String[] tokens = dataSetName.split("\\.");
@@ -122,7 +122,7 @@ public class DsnGet {
     public InputStream get(String dataSetName, DownloadParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.trim().isEmpty(), "dataSetName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";

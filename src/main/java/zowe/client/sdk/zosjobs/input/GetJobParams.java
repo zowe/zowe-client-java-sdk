@@ -118,7 +118,7 @@ public class GetJobParams {
 
         public Builder(String owner) {
             ValidateUtils.checkNullParameter(owner == null, "owner is null");
-            ValidateUtils.checkIllegalParameter(owner.trim().isEmpty(), "owner not specified");
+            ValidateUtils.checkIllegalParameter(owner.isBlank(), "owner not specified");
             this.owner = owner;
         }
 
@@ -128,7 +128,7 @@ public class GetJobParams {
 
         public Builder jobId(String jobId) {
             ValidateUtils.checkNullParameter(jobId == null, "job id is null");
-            ValidateUtils.checkIllegalParameter(jobId.trim().isEmpty(), "job id not specified");
+            ValidateUtils.checkIllegalParameter(jobId.isBlank(), "job id not specified");
             this.jobId = jobId;
             return this;
         }
@@ -140,7 +140,7 @@ public class GetJobParams {
 
         public Builder prefix(String prefix) {
             ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
-            ValidateUtils.checkIllegalParameter(prefix.trim().isEmpty(), "prefix not specified");
+            ValidateUtils.checkIllegalParameter(prefix.isBlank(), "prefix not specified");
             this.prefix = prefix;
             return this;
         }

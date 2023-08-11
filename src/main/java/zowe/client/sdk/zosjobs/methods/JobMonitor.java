@@ -337,9 +337,9 @@ public class JobMonitor {
     public boolean waitByMessage(Job job, String message) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         ValidateUtils.checkIllegalParameter(job.getJobName().isEmpty(), "job name not specified");
-        ValidateUtils.checkIllegalParameter(job.getJobName().get().trim().isEmpty(), "job name not specified");
+        ValidateUtils.checkIllegalParameter(job.getJobName().get().isBlank(), "job name not specified");
         ValidateUtils.checkIllegalParameter(job.getJobId().isEmpty(), "job id not specified");
-        ValidateUtils.checkIllegalParameter(job.getJobId().get().trim().isEmpty(), "job id not specified");
+        ValidateUtils.checkIllegalParameter(job.getJobId().get().isBlank(), "job id not specified");
         return waitMessageCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
                 .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build(), message);
     }
@@ -378,9 +378,9 @@ public class JobMonitor {
     public Job waitByOutputStatus(Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         ValidateUtils.checkIllegalParameter(job.getJobName().isEmpty(), "job name not specified");
-        ValidateUtils.checkIllegalParameter(job.getJobName().get().trim().isEmpty(), "job name not specified");
+        ValidateUtils.checkIllegalParameter(job.getJobName().get().isBlank(), "job name not specified");
         ValidateUtils.checkIllegalParameter(job.getJobId().isEmpty(), "job id not specified");
-        ValidateUtils.checkIllegalParameter(job.getJobId().get().trim().isEmpty(), "job id not specified");
+        ValidateUtils.checkIllegalParameter(job.getJobId().get().isBlank(), "job id not specified");
         return waitStatusCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
                 .jobStatus(JobStatus.Type.OUTPUT).attempts(attempts).watchDelay(watchDelay).build());
     }
@@ -419,9 +419,9 @@ public class JobMonitor {
     public Job waitByStatus(Job job, JobStatus.Type statusType) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         ValidateUtils.checkIllegalParameter(job.getJobName().isEmpty(), "job name not specified");
-        ValidateUtils.checkIllegalParameter(job.getJobName().get().trim().isEmpty(), "job name not specified");
+        ValidateUtils.checkIllegalParameter(job.getJobName().get().isBlank(), "job name not specified");
         ValidateUtils.checkIllegalParameter(job.getJobId().isEmpty(), "job id not specified");
-        ValidateUtils.checkIllegalParameter(job.getJobId().get().trim().isEmpty(), "job id not specified");
+        ValidateUtils.checkIllegalParameter(job.getJobId().get().isBlank(), "job id not specified");
         return waitStatusCommon(new MonitorJobWaitForParams.Builder(job.getJobName().get(), job.getJobId().get())
                 .jobStatus(statusType).attempts(attempts).watchDelay(watchDelay).build());
     }

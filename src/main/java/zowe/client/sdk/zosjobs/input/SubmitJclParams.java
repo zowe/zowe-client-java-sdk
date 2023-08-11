@@ -62,7 +62,7 @@ public class SubmitJclParams {
      */
     public SubmitJclParams(String jcl, String internalReaderRecfm, String internalReaderLrecl) {
         ValidateUtils.checkNullParameter(jcl == null, "jcl is null");
-        ValidateUtils.checkIllegalParameter(jcl.trim().isEmpty(), "jcl not specified");
+        ValidateUtils.checkIllegalParameter(jcl.isBlank(), "jcl not specified");
         this.jcl = Optional.of(jcl);
         this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
@@ -80,7 +80,7 @@ public class SubmitJclParams {
     public SubmitJclParams(String jcl, String internalReaderRecfm, String internalReaderLrecl,
                            Map<String, String> jclSymbols) {
         ValidateUtils.checkNullParameter(jcl == null, "jcl is null");
-        ValidateUtils.checkIllegalParameter(jcl.trim().isEmpty(), "jcl not specified");
+        ValidateUtils.checkIllegalParameter(jcl.isBlank(), "jcl not specified");
         this.jcl = Optional.of(jcl);
         this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);

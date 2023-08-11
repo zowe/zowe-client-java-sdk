@@ -109,9 +109,9 @@ public class UssMove {
      */
     private Response moveCommon(String fromPath, String targetPath, boolean overwrite) throws Exception {
         ValidateUtils.checkNullParameter(fromPath == null, "fromPath is null");
-        ValidateUtils.checkIllegalParameter(fromPath.trim().isEmpty(), "fromPath not specified");
+        ValidateUtils.checkIllegalParameter(fromPath.isBlank(), "fromPath not specified");
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
+        ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +

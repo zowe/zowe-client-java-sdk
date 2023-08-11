@@ -96,7 +96,7 @@ public class UssChangeTag {
      */
     public Response changeToText(String fileNamePath, String codeSet) throws Exception {
         ValidateUtils.checkNullParameter(codeSet == null, "codeSet is null");
-        ValidateUtils.checkIllegalParameter(codeSet.trim().isEmpty(), "codeSet not specified");
+        ValidateUtils.checkIllegalParameter(codeSet.isBlank(), "codeSet not specified");
         return changeCommon(fileNamePath, new ChangeTagParams.Builder()
                 .action(ChangeTagAction.SET).type(ChangeTagType.TEXT).codeset(codeSet).build());
     }
@@ -136,7 +136,7 @@ public class UssChangeTag {
      */
     public Response changeCommon(String fileNamePath, ChangeTagParams params) throws Exception {
         ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
-        ValidateUtils.checkIllegalParameter(fileNamePath.trim().isEmpty(), "fileNamePath not specified");
+        ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "action not specified");
 

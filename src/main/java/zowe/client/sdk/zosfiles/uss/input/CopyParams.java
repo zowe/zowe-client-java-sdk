@@ -100,7 +100,7 @@ public class CopyParams {
 
         public CopyParams.Builder from(String from) {
             ValidateUtils.checkNullParameter(from == null, "from is null");
-            ValidateUtils.checkIllegalParameter(from.trim().isEmpty(), "from not specified");
+            ValidateUtils.checkIllegalParameter(from.isBlank(), "from not specified");
             this.from = from;
             return this;
         }

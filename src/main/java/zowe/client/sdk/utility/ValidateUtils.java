@@ -39,8 +39,8 @@ public final class ValidateUtils {
     public static void checkConnection(ZosConnection connection) {
         if (connection == null || connection.getZosmfPort() == null || connection.getHost() == null ||
                 connection.getPassword() == null || connection.getUser() == null ||
-                connection.getZosmfPort().trim().isEmpty() || connection.getHost().trim().isEmpty() ||
-                connection.getPassword().trim().isEmpty() || connection.getUser().trim().isEmpty()) {
+                connection.getZosmfPort().isBlank() || connection.getHost().isBlank() ||
+                connection.getPassword().isBlank() || connection.getUser().isBlank()) {
             throw new IllegalStateException("Connection data not setup properly");
         }
     }
@@ -84,8 +84,8 @@ public final class ValidateUtils {
      */
     public static void checkSshConnection(SshConnection connection) {
         if (connection == null || connection.getHost() == null || connection.getPassword() == null ||
-                connection.getUser() == null || connection.getHost().trim().isEmpty() ||
-                connection.getPassword().trim().isEmpty() || connection.getUser().trim().isEmpty()) {
+                connection.getUser() == null || connection.getHost().isBlank() ||
+                connection.getPassword().isBlank() || connection.getUser().isBlank()) {
             throw new IllegalStateException("SSH connection data not setup properly");
         }
     }

@@ -105,7 +105,7 @@ public class UssGet {
      */
     public Response getCommon(String fileNamePath, GetParams params) throws Exception {
         ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
-        ValidateUtils.checkIllegalParameter(fileNamePath.trim().isEmpty(), "fileNamePath not specified");
+        ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +

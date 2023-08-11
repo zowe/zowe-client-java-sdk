@@ -123,7 +123,7 @@ public class IssueConsole {
      */
     public ZosmfIssueResponse issueCommonCommand(String consoleName, ZosmfIssueParams commandParams) throws Exception {
         ValidateUtils.checkNullParameter(consoleName == null, "consoleName is null");
-        ValidateUtils.checkIllegalParameter(consoleName.trim().isEmpty(), "consoleName not specified");
+        ValidateUtils.checkIllegalParameter(consoleName.isBlank(), "consoleName not specified");
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
         ValidateUtils.checkIllegalParameter(commandParams.getCmd().isEmpty(), "command not specified");
 
