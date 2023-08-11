@@ -70,6 +70,7 @@ public class ZosmfSystems {
      *
      * @return ZosmfListDefinedSystemsResponse object
      * @throws Exception problem with response
+     * @author Frank Giordano
      */
     public ZosmfListDefinedSystemsResponse get() throws Exception {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()

@@ -70,6 +70,7 @@ public class ZosmfStatus {
      *
      * @return ZosmfInfoResponse object
      * @throws Exception problem with response
+     * @author Frank Giordano
      */
     public ZosmfInfoResponse get() throws Exception {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
