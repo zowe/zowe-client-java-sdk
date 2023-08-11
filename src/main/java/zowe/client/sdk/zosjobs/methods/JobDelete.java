@@ -92,11 +92,11 @@ public class JobDelete {
     public Response deleteCommon(ModifyJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String jobNameErrMsg = "job name not specified";
-        final String jobIdErrMsg = "job id not specified";
+        final String jnErrMsg = "job name not specified";
+        final String jiErrMsg = "job id not specified";
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM + params.getJobName().orElseThrow(() -> new IllegalArgumentException(jobNameErrMsg)) +
-                JobsConstants.FILE_DELIM + params.getJobId().orElseThrow(() -> new IllegalArgumentException(jobIdErrMsg));
+                JobsConstants.FILE_DELIM + params.getJobName().orElseThrow(() -> new IllegalArgumentException(jnErrMsg)) +
+                JobsConstants.FILE_DELIM + params.getJobId().orElseThrow(() -> new IllegalArgumentException(jiErrMsg));
 
         final Map<String, String> headers = new HashMap<>();
 
