@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosjobs.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -59,7 +61,9 @@ public class SubmitJclParams {
      * @author Frank Giordano
      */
     public SubmitJclParams(String jcl, String internalReaderRecfm, String internalReaderLrecl) {
-        this.jcl = Optional.ofNullable(jcl);
+        ValidateUtils.checkNullParameter(jcl == null, "jcl is null");
+        ValidateUtils.checkIllegalParameter(jcl.trim().isEmpty(), "jcl not specified");
+        this.jcl = Optional.of(jcl);
         this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
     }
@@ -75,7 +79,9 @@ public class SubmitJclParams {
      */
     public SubmitJclParams(String jcl, String internalReaderRecfm, String internalReaderLrecl,
                            Map<String, String> jclSymbols) {
-        this.jcl = Optional.ofNullable(jcl);
+        ValidateUtils.checkNullParameter(jcl == null, "jcl is null");
+        ValidateUtils.checkIllegalParameter(jcl.trim().isEmpty(), "jcl not specified");
+        this.jcl = Optional.of(jcl);
         this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
         this.jclSymbols = Optional.ofNullable(jclSymbols);
