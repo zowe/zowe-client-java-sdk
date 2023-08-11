@@ -19,12 +19,25 @@ import org.json.simple.JSONObject;
  */
 public abstract class JsonParseResponse {
 
+    /**
+     * JSON data value to be parsed
+     */
     protected final JSONObject data;
 
+    /**
+     * JsonParseResponse constructor
+     * 
+     * @param data json data value to be parsed
+     */
     public JsonParseResponse(JSONObject data) {
         this.data = data;
     }
 
+    /**
+     * Parse the data json value given in constructor
+     * 
+     * @return Object value of parsed json data
+     */
     public abstract Object parseResponse();
 
 }
