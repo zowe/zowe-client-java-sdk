@@ -23,7 +23,11 @@ public class JobStatus {
      * Job statuses
      */
     public enum Type {
-        INPUT, ACTIVE, OUTPUT
+
+        INPUT,
+        ACTIVE,
+        OUTPUT
+
     }
 
     /**
