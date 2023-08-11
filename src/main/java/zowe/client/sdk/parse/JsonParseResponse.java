@@ -26,7 +26,7 @@ public abstract class JsonParseResponse {
 
     /**
      * JsonParseResponse constructor
-     * 
+     *
      * @param data json data value to be parsed
      */
     public JsonParseResponse(JSONObject data) {
@@ -35,9 +35,10 @@ public abstract class JsonParseResponse {
 
     /**
      * Parse the data json value given in constructor
-     * 
+     *
      * @return Object value of parsed json data
      */
     public abstract Object parseResponse();
 
 }
+
