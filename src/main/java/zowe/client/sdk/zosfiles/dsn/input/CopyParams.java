@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosfiles.dsn.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
 import java.util.Optional;
 
 /**
@@ -148,6 +150,8 @@ public class CopyParams {
         }
 
         public CopyParams.Builder fromDataSet(String dataSet) {
+            ValidateUtils.checkNullParameter(dataSet == null, "fromDataSet is null");
+            ValidateUtils.checkNullParameter(dataSet.isEmpty(), "fromDataSet not specified");
             this.fromDataSet = dataSet;
             return this;
         }
@@ -163,6 +167,8 @@ public class CopyParams {
         }
 
         public CopyParams.Builder toDataSet(String dataSet) {
+            ValidateUtils.checkNullParameter(dataSet == null, "toDataSet is null");
+            ValidateUtils.checkNullParameter(dataSet.isEmpty(), "toDataSet not specified");
             this.toDataSet = dataSet;
             return this;
         }
