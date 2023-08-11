@@ -104,7 +104,8 @@ public class DsnGet {
         final ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
         final List<Dataset> dsLst = dsnList.listDsn(dataSetSearchStr, params);
 
-        final Optional<Dataset> dataSet = dsLst.stream().filter(d -> d.getDsname().orElse("n/a").contains(dataSetName)).findFirst();
+        final Optional<Dataset> dataSet = dsLst.stream()
+                .filter(d -> d.getDsname().orElse("n/a").contains(dataSetName)).findFirst();
         return dataSet.orElse(emptyDataSet);
     }
 
@@ -123,8 +124,8 @@ public class DsnGet {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.trim().isEmpty(), "dataSetName not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
 
         if (params.getVolume().isPresent()) {
             url += "-(" + params.getVolume().get() + ")/";

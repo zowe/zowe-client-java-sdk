@@ -72,8 +72,8 @@ public class ZosmfStatus {
      * @throws Exception problem with response
      */
     public ZosmfInfoResponse get() throws Exception {
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosmfConstants.RESOURCE + ZosmfConstants.INFO;
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosmfConstants.RESOURCE + ZosmfConstants.INFO;
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);

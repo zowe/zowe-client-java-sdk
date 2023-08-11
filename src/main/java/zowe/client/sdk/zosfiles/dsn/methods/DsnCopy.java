@@ -152,8 +152,8 @@ public class DsnCopy {
         ValidateUtils.checkIllegalParameter(params.getFromDataSet().isEmpty(), "fromDataSetName not specified");
         ValidateUtils.checkIllegalParameter(params.getToDataSet().isEmpty(), "toDataSetName not specified");
 
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
 
         if (params.getToVolser().isPresent()) {
             url += "-(" + params.getToVolser().get() + ")/";
