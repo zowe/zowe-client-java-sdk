@@ -13,6 +13,7 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import zowe.client.sdk.core.SshConnection;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.utility.timer.WaitUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -34,6 +35,7 @@ public class IssueUss {
      * @param connection SSHConnection object
      */
     public IssueUss(SshConnection connection) {
+        ValidateUtils.checkSshConnection(connection);
         this.connection = connection;
     }
 

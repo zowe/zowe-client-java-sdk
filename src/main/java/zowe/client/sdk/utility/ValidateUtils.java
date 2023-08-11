@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.utility;
 
+import zowe.client.sdk.core.SshConnection;
 import zowe.client.sdk.core.ZosConnection;
 
 import java.util.Optional;
@@ -71,6 +72,21 @@ public final class ValidateUtils {
         Optional<String> message = Optional.ofNullable(msg);
         if (check) {
             throw new NullPointerException(message.orElse("empty message specified"));
+        }
+    }
+
+    /**
+     * Check SSH connection for validity.
+     *
+     * @param connection connection information, see SshConnection object
+     * @throws IllegalStateException with message "Connection data not setup properly"
+     * @author Frank Giordano
+     */
+    public static void checkSshConnection(SshConnection connection) {
+        if (connection == null || connection.getHost() == null || connection.getPassword() == null ||
+                connection.getUser() == null || connection.getHost().trim().isEmpty() ||
+                connection.getPassword().trim().isEmpty() || connection.getUser().trim().isEmpty()) {
+            throw new IllegalStateException("SSH connection data not setup properly");
         }
     }
 
