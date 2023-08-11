@@ -59,8 +59,8 @@ public final class EncodeUtils {
      */
     public static String encodeAuthComponent(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
-        return Base64.getEncoder().encodeToString((connection.getUser() + ":" + connection.getPassword())
-                .getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString((connection.getUser() + ":" +
+                connection.getPassword()).getBytes(StandardCharsets.UTF_8));
     }
 
 }
