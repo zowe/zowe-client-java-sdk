@@ -131,7 +131,7 @@ public class DsnCopy {
      */
     public Response copy(String fromDataSetName, String toDataSetName, boolean replace, boolean copyAllMembers)
             throws Exception {
-        return copy(new CopyParams.Builder()
+        return copyCommon(new CopyParams.Builder()
                 .fromDataSet(fromDataSetName)
                 .toDataSet(toDataSetName)
                 .replace(replace)
@@ -147,7 +147,7 @@ public class DsnCopy {
      * @throws Exception error processing copy request
      * @author Leonid Baranov
      */
-    public Response copy(CopyParams params) throws Exception {
+    public Response copyCommon(CopyParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
