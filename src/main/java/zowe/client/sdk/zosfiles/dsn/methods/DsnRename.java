@@ -69,30 +69,42 @@ public class DsnRename {
     /**
      * Change the existing dataset name (source) to new dataset name (destination)
      *
-     * @param source      existing dataset name
-     * @param destination new dataset name
+     * @param dataSetName    existing dataset name
+     * @param newDataSetName new dataset name
      * @return Response object
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response dataSetName(String source, String destination) throws Exception {
-        setUrl(destination);
-        return executeRequest(buildBody(source));
+    public Response dataSetName(String dataSetName, String newDataSetName) throws Exception {
+        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
+        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
+        ValidateUtils.checkNullParameter(newDataSetName == null, "newDataSetName is null");
+        ValidateUtils.checkIllegalParameter(newDataSetName.isBlank(), "newDataSetName not specified");
+
+        setUrl(newDataSetName);
+        return executeCommon(dataSetName);
     }
 
     /**
      * Change the existing member name (source) to new member name (destination) within a partition dataset
      *
-     * @param dsName      from dataset name
-     * @param source      existing member name
-     * @param destination new member name
+     * @param fromDataSetName from dataset name
+     * @param memberName      existing member name
+     * @param newMemberName   new member name
      * @return Response object
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response memberName(String dsName, String source, String destination) throws Exception {
-        setUrl(dsName, destination);
-        return executeRequest(buildBody(dsName, source));
+    public Response memberName(String fromDataSetName, String memberName, String newMemberName) throws Exception {
+        ValidateUtils.checkNullParameter(fromDataSetName == null, "fromDataSetName is null");
+        ValidateUtils.checkIllegalParameter(fromDataSetName.isBlank(), "fromDataSetName not specified");
+        ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
+        ValidateUtils.checkIllegalParameter(memberName.isBlank(), "memberName not specified");
+        ValidateUtils.checkNullParameter(newMemberName == null, "newMemberName is null");
+        ValidateUtils.checkIllegalParameter(newMemberName.isBlank(), "newMemberName not specified");
+
+        setUrl(fromDataSetName, newMemberName);
+        return executeCommon(fromDataSetName, memberName);
     }
 
     /**
@@ -110,31 +122,16 @@ public class DsnRename {
     }
 
     /**
-     * Execute the zowe http request
+     * Build and execute the request and return the response
      *
-     * @param body json string value
+     * @param args at most two string arguments:
+     *             one given source dataSet name to be renamed or
+     *             one given source dataSet name where the member to be renamed exists, second member name to rename
      * @return Response object
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    private Response executeRequest(String body) throws Exception {
-        if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
-        }
-        request.setUrl(url);
-        request.setBody(body);
-
-        return RestUtils.getResponse(request);
-    }
-
-    /**
-     * Build request body to handle the incoming request
-     *
-     * @param args from dataset name and/or member name
-     * @return json string value
-     * @author Frank Giordano
-     */
-    private String buildBody(String... args) {
+    private Response executeCommon(String... args) throws Exception {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "rename");
 
@@ -147,7 +144,13 @@ public class DsnRename {
         final JSONObject fromDataSetObj = new JSONObject(fromDataSetReq);
         jsonMap.put("from-dataset", fromDataSetObj);
 
-        return new JSONObject(jsonMap).toString();
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
+        }
+        request.setUrl(url);
+        request.setBody(new JSONObject(jsonMap).toString());
+
+        return RestUtils.getResponse(request);
     }
 
 }
