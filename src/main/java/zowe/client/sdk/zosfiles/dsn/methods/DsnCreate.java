@@ -85,25 +85,6 @@ public class DsnCreate {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
-        final String body = buildBody(params);
-
-        if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
-        }
-        request.setUrl(url);
-        request.setBody(body);
-
-        return RestUtils.getResponse(request);
-    }
-
-    /**
-     * Create the http body request
-     *
-     * @param params CreateParams parameters
-     * @return body string value for http request
-     * @author Leonid Baranov
-     */
-    private static String buildBody(CreateParams params) {
         final Map<String, Object> jsonMap = new HashMap<>();
         params.getVolser().ifPresent(v -> jsonMap.put("volser", v));
         params.getUnit().ifPresent(v -> jsonMap.put("unit", v));
@@ -121,7 +102,14 @@ public class DsnCreate {
         params.getMgntclass().ifPresent(v -> jsonMap.put("mgntclass", v));
         params.getDataclass().ifPresent(v -> jsonMap.put("dataclass", v));
         params.getDsntype().ifPresent(v -> jsonMap.put("dsntype", v));
-        return new JSONObject(jsonMap).toString();
+
+        if (request == null) {
+            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
+        }
+        request.setUrl(url);
+        request.setBody(new JSONObject(jsonMap).toString());
+
+        return RestUtils.getResponse(request);
     }
 
 }
