@@ -76,7 +76,7 @@ public class DsnCopy {
      * @author Leonid Baranov
      */
     private String buildBody(CopyParams params) throws Exception {
-        String fromDataSetName = params.getFromDataSet().orElseThrow(() -> new Exception("dataset not specified"));
+        String fromDataSetName = params.getFromDataSet().orElseThrow(() -> new Exception("fromDataSetName not specified"));
         final boolean isFullPartitionCopy = params.isCopyAllMembers();
 
         final Map<String, Object> jsonMap = new HashMap<>();
@@ -149,8 +149,6 @@ public class DsnCopy {
      */
     public Response copy(CopyParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getFromDataSet().isEmpty(), "fromDataSetName not specified");
-        ValidateUtils.checkIllegalParameter(params.getToDataSet().isEmpty(), "toDataSetName not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
@@ -159,7 +157,7 @@ public class DsnCopy {
             url += "-(" + params.getToVolser().get() + ")/";
         }
 
-        final String toDataSet = params.getToDataSet().get();
+        final String toDataSet = params.getToDataSet().orElseThrow(() -> new Exception("toDataSetName not specified"));
 
         url += EncodeUtils.encodeURIComponent(toDataSet);
 
