@@ -206,14 +206,14 @@ public class JobSubmit {
             if (value.chars().filter(ch -> ch == '"').count() % 2 != 0) {
                 throw new Exception("Encountered invalid key/value pair. Mismatched quotes.");
             }
-            if (value.length() == 0) {
+            if (value.isEmpty()) {
                 throw new Exception("Encountered invalid key/value pair. Must define a value for key/value pair.");
             }
         }
 
         for (String key : keyValues.keySet()) {
             final String value = keyValues.get(key);
-            if (key.length() == 0) {
+            if (key.isEmpty()) {
                 throw new Exception("Encountered invalid key/value pair. Must define a key for key/value pair.");
             }
             if (key.length() > 8) {
