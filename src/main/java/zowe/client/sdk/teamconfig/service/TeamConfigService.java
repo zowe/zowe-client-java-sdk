@@ -58,8 +58,7 @@ public class TeamConfigService {
         Map<String, String> properties = new HashMap<>();
         LOG.debug("Partition found name {} containing {}:", name, jsonObject);
         for (final String keyObj : keyObjs) {
-            final String keyVal = keyObj;
-            if (SectionType.PROFILES.getValue().equals(keyVal)) {
+            if (SectionType.PROFILES.getValue().equals(keyObj)) {
                 JSONObject jsonProfileObj = (JSONObject) jsonObject.get(SectionType.PROFILES.getValue());
                 final Set<String> jsonProfileKeys = jsonProfileObj.keySet();
                 for (final String profileKeyVal : jsonProfileKeys) {
@@ -68,9 +67,9 @@ public class TeamConfigService {
                             (JSONObject) profileTypeJsonObj.get("properties"),
                             (JSONArray) profileTypeJsonObj.get("secure")));
                 }
-            } else if ("properties".equalsIgnoreCase(keyVal)) {
+            } else if ("properties".equalsIgnoreCase(keyObj)) {
                 final JsonParseResponse parse = JsonParseResponseFactory.buildParser(
-                        (JSONObject) jsonObject.get(keyVal), ParseType.PROPS);
+                        (JSONObject) jsonObject.get(keyObj), ParseType.PROPS);
                 properties = (Map<String, String>) parse.parseResponse();
             }
         }
