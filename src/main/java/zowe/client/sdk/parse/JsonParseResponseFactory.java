@@ -72,7 +72,7 @@ public final class JsonParseResponseFactory {
                 parseResponse = new UnixZfsParseResponse(data);
                 break;
             case ZOS_LOG_ITEM:
-                parseResponse = new ZosLogParseResponse(data);
+                parseResponse = new ZosLogItemParseResponse(data);
                 break;
             case ZOS_LOG_REPLY:
                 parseResponse = new ZosLogReplyParseResponse(data);

@@ -15,7 +15,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseResponseFactory;
-import zowe.client.sdk.parse.ZosLogParseResponse;
+import zowe.client.sdk.parse.ZosLogItemParseResponse;
 import zowe.client.sdk.parse.ZosLogReplyParseResponse;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.JsonGetRequest;
@@ -123,7 +123,7 @@ public class ZosLog {
         final boolean isProcessResponse = params.isProcessResponses();
 
         for (Object itemJsonObj : jsonArray) {
-            final ZosLogParseResponse parser = (ZosLogParseResponse) JsonParseResponseFactory
+            final ZosLogItemParseResponse parser = (ZosLogItemParseResponse) JsonParseResponseFactory
                     .buildParser((JSONObject) itemJsonObj, ParseType.ZOS_LOG_ITEM);
             parser.setProcessResponse(isProcessResponse);
             zosLogItems.add(parser.parseResponse());

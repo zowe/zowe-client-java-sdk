@@ -13,12 +13,12 @@ import org.json.simple.JSONObject;
 import zowe.client.sdk.zoslogs.response.ZosLogItem;
 
 /**
- * Extract UNIX zfs from json response
+ * Extract ZosLogItem from json response
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public class ZosLogParseResponse extends JsonParseResponse {
+public class ZosLogItemParseResponse extends JsonParseResponse {
 
     private boolean isProcessResponse;
 
@@ -27,7 +27,7 @@ public class ZosLogParseResponse extends JsonParseResponse {
      *
      * @param data json data value to be parsed
      */
-    public ZosLogParseResponse(JSONObject data) {
+    public ZosLogItemParseResponse(JSONObject data) {
         super(data);
     }
 
