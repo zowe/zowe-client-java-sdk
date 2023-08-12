@@ -167,7 +167,8 @@ public class DsnGet {
         request.setUrl(url);
         request.setHeaders(headers);
 
-        return new ByteArrayInputStream((byte[]) RestUtils.getResponse(request).getResponsePhrase().get());
+        return new ByteArrayInputStream((byte[]) RestUtils.getResponse(request)
+                .getResponsePhrase().orElseThrow(() -> new Exception("no dsn get response phase")));
     }
 
 }

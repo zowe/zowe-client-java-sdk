@@ -121,7 +121,7 @@ public class JobGet {
         request.setUrl(url);
 
         final Response response = RestUtils.getResponse(request);
-        return (String) response.getResponsePhrase().get();
+        return (String) response.getResponsePhrase().orElseThrow(() -> new Exception("no job jcl response phase"));
     }
 
     /**
@@ -292,7 +292,8 @@ public class JobGet {
         request.setUrl(url);
 
         final Response response = RestUtils.getResponse(request);
-        return (String) response.getResponsePhrase().get();
+        final String spoolErrMsg = "no job spool content response phase";
+        return (String) response.getResponsePhrase().orElseThrow(() -> new Exception(spoolErrMsg));
     }
 
     /**
