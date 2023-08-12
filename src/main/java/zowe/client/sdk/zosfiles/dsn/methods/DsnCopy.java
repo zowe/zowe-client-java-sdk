@@ -154,7 +154,7 @@ public class DsnCopy {
      * Keys to be considered: dsn, member, and volser
      *
      * @param params CopyParams object
-     * @return map contains value for the from-dataset parent json value
+     * @return map containing key-value pairs for the from-dataset parent json value
      * @throws Exception processing error
      * @author Frank Giordano
      */
