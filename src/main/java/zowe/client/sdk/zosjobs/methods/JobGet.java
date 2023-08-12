@@ -244,20 +244,13 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        Response response;
-        try {
-            response = RestUtils.getResponse(request);
-        } catch (Exception e) {
-            LOG.debug("JobGet::getJobsCommon - {}", e.getMessage());
-            if (e.getMessage().contains("no response phrase returned")) {
-                return jobs;
-            }
-            throw e;
-        }
-
-        final JSONArray results = (JSONArray) new JSONParser().parse(response.getResponsePhrase().get().toString());
-        for (final Object obj : results) {
-            jobs.add((Job) JsonParseResponseFactory.buildParser((JSONObject) obj, ParseType.JOB).parseResponse());
+        final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
+                .orElseThrow(() -> new Exception("no get job response phase")).toString();
+        final JSONArray results = (JSONArray) new JSONParser().parse(jsonStr);
+        for (final Object itemJsonObj : results) {
+            final JsonParseResponse parser = JsonParseResponseFactory
+                    .buildParser((JSONObject) itemJsonObj, ParseType.JOB);
+            jobs.add((Job) parser.parseResponse());
         }
 
         return jobs;
