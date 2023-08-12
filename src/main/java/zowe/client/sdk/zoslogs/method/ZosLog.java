@@ -14,8 +14,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.ZosLogParseResponse;
+import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.JsonGetRequest;
-import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZoweRequest;
 import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.rest.type.ZoweRequestType;
@@ -108,8 +110,9 @@ public class ZosLog {
         }
         request.setUrl(url.toString());
 
-        final Response response = RestUtils.getResponse(request);
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString());
+        final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
+                .orElseThrow(() -> new Exception("no zos log response phase")).toString();
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         JSONArray jsonArray = new JSONArray();
         if (jsonObject.get("items") != null) {
             jsonArray = (JSONArray) jsonObject.get("items");
@@ -117,54 +120,20 @@ public class ZosLog {
 
         final List<ZosLogItem> zosLogItems = new ArrayList<>();
         final boolean isProcessResponse = params.isProcessResponses();
-        jsonArray.forEach(item -> {
-            final JSONObject itemObj = (JSONObject) item;
-            final String message = processMessage(itemObj, isProcessResponse);
-            final ZosLogItem.Builder zosLogItemBuilder = new ZosLogItem.Builder()
-                    .cart(itemObj.get("cart") != null ? (String) itemObj.get("cart") : null)
-                    .color(itemObj.get("color") != null ? (String) itemObj.get("color") : null)
-                    .jobName(itemObj.get("jobName") != null ? (String) itemObj.get("jobName") : null)
-                    .message(message)
-                    .messageId(itemObj.get("messageId") != null ? (String) itemObj.get("messageId") : null)
-                    .replyId(itemObj.get("replyId") != null ? (String) itemObj.get("replyId") : null)
-                    .system(itemObj.get("system") != null ? (String) itemObj.get("system") : null)
-                    .type(itemObj.get("type") != null ? (String) itemObj.get("type") : null)
-                    .subType(itemObj.get("subType") != null ? (String) itemObj.get("subType") : null)
-                    .time(itemObj.get("time") != null ? (String) itemObj.get("time") : null)
-                    .timeStamp(itemObj.get("timestamp") != null ? (Long) itemObj.get("timestamp") : 0);
-            zosLogItems.add(zosLogItemBuilder.build());
-        });
+
+        ZosLogParseResponse parser;
+        for (Object itemJsonObj : jsonArray) {
+            parser = (ZosLogParseResponse) JsonParseResponseFactory
+                    .buildParser((JSONObject) itemJsonObj, ParseType.ZOS_LOG);
+            parser.setProcessResponse(isProcessResponse);
+            zosLogItems.add(parser.parseResponse());
+        }
 
         return new ZosLogReply(jsonObject.get("timezone") != null ? (Long) jsonObject.get("timezone") : 0,
                 jsonObject.get("nextTimestamp") != null ? (Long) jsonObject.get("nextTimestamp") : 0,
                 jsonObject.get("source") != null ? (String) jsonObject.get("source") : null,
                 jsonObject.get("totalitems") != null ? (Long) jsonObject.get("totalitems") : null,
                 zosLogItems);
-    }
-
-    /**
-     * Process response message; message contains a log line statement.
-     * Perform special newline replacement if applicable.
-     *
-     * @param jsonObj JSONObject object
-     * @return string value of the message processed
-     * @author Frank Giordano
-     */
-    private static String processMessage(JSONObject jsonObj, boolean isProcessResponse) {
-        try {
-            String message = (String) jsonObj.get("message");
-            if (isProcessResponse) {
-                if (message.contains("\r")) {
-                    message = message.replace('\r', '\n');
-                }
-                if (message.contains("\n\n")) {
-                    message = message.replaceAll("\n\n", "\n");
-                }
-            }
-            return message;
-        } catch (Exception e) {
-            return null;
-        }
     }
 
     /**
