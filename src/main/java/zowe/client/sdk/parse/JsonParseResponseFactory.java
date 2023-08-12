@@ -72,7 +72,7 @@ public final class JsonParseResponseFactory {
                 parseResponse = new UnixZfsParseResponse(data);
                 break;
             case ZOSMF_DEFINED_SYSTEMS:
-                parseResponse = new DefinedSysParseResponse(data);
+                parseResponse = new SystemsParseResponse(data);
                 break;
             case ZOSMF_INFO:
                 parseResponse = new SystemInfoParseResponse(data);

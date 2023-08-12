@@ -22,7 +22,7 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfinfo.ZosmfConstants;
-import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
+import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
 
 /**
  * This class is used to list the systems defined to z/OSMF through the z/OSMF APIs.
@@ -72,7 +72,7 @@ public class ZosmfSystems {
      * @throws Exception problem with response
      * @author Frank Giordano
      */
-    public ZosmfListDefinedSystemsResponse get() throws Exception {
+    public ZosmfSystemsResponse get() throws Exception {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosmfConstants.RESOURCE + ZosmfConstants.TOPOLOGY + ZosmfConstants.SYSTEMS;
 
@@ -85,7 +85,7 @@ public class ZosmfSystems {
                 .orElseThrow(() -> new Exception("no z/osmf info response phase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.ZOSMF_DEFINED_SYSTEMS);
-        return (ZosmfListDefinedSystemsResponse) parser.parseResponse();
+        return (ZosmfSystemsResponse) parser.parseResponse();
     }
 
 }

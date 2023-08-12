@@ -12,7 +12,7 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.zosmfinfo.response.DefinedSystem;
-import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
+import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
 
 /**
  * Parse json response from z/OSMF defined systems request
@@ -20,7 +20,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfListDefinedSystemsResponse;
  * @author Frank Giordano
  * @version 2.0
  */
-public class DefinedSysParseResponse extends JsonParseResponse {
+public class SystemsParseResponse extends JsonParseResponse {
 
     /**
      * DefinedSysParseResponse constructor
@@ -28,7 +28,7 @@ public class DefinedSysParseResponse extends JsonParseResponse {
      * @param data json object
      * @author Frank Giordano
      */
-    public DefinedSysParseResponse(JSONObject data) {
+    public SystemsParseResponse(JSONObject data) {
         super(data);
     }
 
@@ -40,7 +40,7 @@ public class DefinedSysParseResponse extends JsonParseResponse {
      */
     @Override
     public Object parseResponse() {
-        ZosmfListDefinedSystemsResponse.Builder systemsResponse = new ZosmfListDefinedSystemsResponse.Builder()
+        ZosmfSystemsResponse.Builder systemsResponse = new ZosmfSystemsResponse.Builder()
                 .numRows((Long) data.get("numRows"));
 
         JSONArray items = (JSONArray) data.get("items");

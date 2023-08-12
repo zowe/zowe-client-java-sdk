@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 2.0
  */
-public class ZosmfListDefinedSystemsResponse {
+public class ZosmfSystemsResponse {
 
     /**
      * Total items returned.
@@ -35,7 +35,7 @@ public class ZosmfListDefinedSystemsResponse {
      * @param builder ZosmfListDefinedSystemsResponse.Builder Object
      * @author Frank Giordano
      */
-    private ZosmfListDefinedSystemsResponse(ZosmfListDefinedSystemsResponse.Builder builder) {
+    private ZosmfSystemsResponse(ZosmfSystemsResponse.Builder builder) {
         this.numRows = Optional.ofNullable(builder.numRows);
         this.definedSystems = Optional.ofNullable(builder.definedSystems);
     }
@@ -73,16 +73,16 @@ public class ZosmfListDefinedSystemsResponse {
         private Long numRows;
         private DefinedSystem[] definedSystems;
 
-        public ZosmfListDefinedSystemsResponse build() {
-            return new ZosmfListDefinedSystemsResponse(this);
+        public ZosmfSystemsResponse build() {
+            return new ZosmfSystemsResponse(this);
         }
 
-        public ZosmfListDefinedSystemsResponse.Builder definedSystems(DefinedSystem[] definedSystems) {
+        public ZosmfSystemsResponse.Builder definedSystems(DefinedSystem[] definedSystems) {
             this.definedSystems = definedSystems;
             return this;
         }
 
-        public ZosmfListDefinedSystemsResponse.Builder numRows(Long numRows) {
+        public ZosmfSystemsResponse.Builder numRows(Long numRows) {
             this.numRows = numRows;
             return this;
         }
