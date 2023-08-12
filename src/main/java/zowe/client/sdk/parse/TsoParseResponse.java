@@ -33,7 +33,7 @@ public class TsoParseResponse extends JsonParseResponse {
     /**
      * TsoParseResponse constructor
      *
-     * @param data json object
+     * @param data json data value to be parsed
      * @author Frank Giordano
      */
     public TsoParseResponse(JSONObject data) {

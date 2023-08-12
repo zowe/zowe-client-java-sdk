@@ -25,7 +25,7 @@ public class SystemsParseResponse extends JsonParseResponse {
     /**
      * DefinedSysParseResponse constructor
      *
-     * @param data json object
+     * @param data json data value to be parsed
      * @author Frank Giordano
      */
     public SystemsParseResponse(JSONObject data) {
@@ -33,7 +33,7 @@ public class SystemsParseResponse extends JsonParseResponse {
     }
 
     /**
-     * Transform json into ZosmfListDefinedSystemsResponse object
+     * Transform data into ZosmfListDefinedSystemsResponse object
      *
      * @return ZosmfListDefinedSystemsResponse object
      * @author Frank Giordano

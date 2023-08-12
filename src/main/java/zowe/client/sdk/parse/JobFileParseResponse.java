@@ -23,7 +23,7 @@ public class JobFileParseResponse extends JsonParseResponse {
     /**
      * JobFileParseResponse constructor
      *
-     * @param data json object
+     * @param data json data value to be parsed
      * @author Frank Giordano
      */
     public JobFileParseResponse(JSONObject data) {
@@ -31,7 +31,7 @@ public class JobFileParseResponse extends JsonParseResponse {
     }
 
     /**
-     * Transform json into JobFile object
+     * Transform data into JobFile object
      *
      * @return JobFile object
      * @author Frank Giordano

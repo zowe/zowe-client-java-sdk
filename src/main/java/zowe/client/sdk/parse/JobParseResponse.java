@@ -25,7 +25,7 @@ public class JobParseResponse extends JsonParseResponse {
     /**
      * JobParseResponse constructor
      *
-     * @param data json object
+     * @param data json data value to be parsed
      * @author Frank Giordano
      */
     public JobParseResponse(JSONObject data) {
@@ -33,7 +33,7 @@ public class JobParseResponse extends JsonParseResponse {
     }
 
     /**
-     * Transform Job json into Job object
+     * Transform data json into Job object
      *
      * @return Job object
      * @author Frank Giordano

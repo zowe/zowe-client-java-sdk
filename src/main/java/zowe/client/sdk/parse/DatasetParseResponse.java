@@ -23,7 +23,7 @@ public class DatasetParseResponse extends JsonParseResponse {
     /**
      * DatasetParseResponse constructor
      *
-     * @param data json object
+     * @param data json data value to be parsed
      * @author Frank Giordano
      */
     public DatasetParseResponse(JSONObject data) {
@@ -31,7 +31,7 @@ public class DatasetParseResponse extends JsonParseResponse {
     }
 
     /**
-     * Transform Dataset json into Dataset object
+     * Transform data into Dataset object
      *
      * @return Dataset object
      * @author Frank Giordano

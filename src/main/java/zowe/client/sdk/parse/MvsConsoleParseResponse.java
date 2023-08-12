@@ -23,7 +23,7 @@ public class MvsConsoleParseResponse extends JsonParseResponse {
     /**
      * MvsConsoleParseResponse constructor
      *
-     * @param data json object
+     * @param data json data value to be parsed
      * @author Frank Giordano
      */
     public MvsConsoleParseResponse(JSONObject data) {
@@ -31,7 +31,7 @@ public class MvsConsoleParseResponse extends JsonParseResponse {
     }
 
     /**
-     * Transform IssueConsole json into ZosmfIssueResponse object
+     * Transform data into ZosmfIssueResponse object
      *
      * @return ZosmfIssueResponse object
      * @author Frank Giordano

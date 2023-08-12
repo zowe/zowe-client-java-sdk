@@ -25,7 +25,7 @@ public class PropsParseResponse extends JsonParseResponse {
     /**
      * PropsParseResponse constructor
      *
-     * @param data json object
+     * @param data json data value to be parsed
      * @author Frank Giordano
      */
     public PropsParseResponse(JSONObject data) {

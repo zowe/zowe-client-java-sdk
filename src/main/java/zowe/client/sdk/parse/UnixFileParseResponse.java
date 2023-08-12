@@ -23,7 +23,7 @@ public class UnixFileParseResponse extends JsonParseResponse {
     /**
      * UnixFileParseResponse constructor
      *
-     * @param data json object
+     * @param data json data value to be parsed
      * @author Frank Giordano
      */
     public UnixFileParseResponse(JSONObject data) {
@@ -31,7 +31,7 @@ public class UnixFileParseResponse extends JsonParseResponse {
     }
 
     /**
-     * Transform UNIX file json into UssItem object
+     * Transform data into UnixFile object
      *
      * @return UssItem object
      * @author Frank Giordano

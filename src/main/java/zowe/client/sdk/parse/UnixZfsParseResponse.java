@@ -25,7 +25,7 @@ public class UnixZfsParseResponse extends JsonParseResponse {
     /**
      * UnixZfsParseResponse constructor
      *
-     * @param data json object
+     * @param data json data value to be parsed
      * @author Frank Giordano
      */
     public UnixZfsParseResponse(JSONObject data) {
@@ -33,7 +33,7 @@ public class UnixZfsParseResponse extends JsonParseResponse {
     }
 
     /**
-     * Transform UNIX zfs json into UssZfsItem object
+     * Transform data into UnixZfs object
      *
      * @return UssZfsItem object
      * @author Frank Giordano

@@ -23,7 +23,7 @@ public class MemberParseResponse extends JsonParseResponse {
     /**
      * MemberParseResponse constructor
      *
-     * @param data json object
+     * @param data json data value to be parsed
      * @author Frank Giordano
      */
     public MemberParseResponse(JSONObject data) {
@@ -31,7 +31,7 @@ public class MemberParseResponse extends JsonParseResponse {
     }
 
     /**
-     * Transform Member json into Member object
+     * Transform data into Member object
      *
      * @return Member object
      * @author Frank Giordano
