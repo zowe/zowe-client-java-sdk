@@ -120,10 +120,9 @@ public class ZosLog {
 
         final List<ZosLogItem> zosLogItems = new ArrayList<>();
         final boolean isProcessResponse = params.isProcessResponses();
-
-        ZosLogParseResponse parser;
+        
         for (Object itemJsonObj : jsonArray) {
-            parser = (ZosLogParseResponse) JsonParseResponseFactory
+            final ZosLogParseResponse parser = (ZosLogParseResponse) JsonParseResponseFactory
                     .buildParser((JSONObject) itemJsonObj, ParseType.ZOS_LOG);
             parser.setProcessResponse(isProcessResponse);
             zosLogItems.add(parser.parseResponse());
