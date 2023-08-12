@@ -16,6 +16,7 @@ import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseResponseFactory;
 import zowe.client.sdk.parse.ZosLogParseResponse;
+import zowe.client.sdk.parse.ZosLogReplyParseResponse;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.JsonGetRequest;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -128,11 +129,10 @@ public class ZosLog {
             zosLogItems.add(parser.parseResponse());
         }
 
-        return new ZosLogReply(jsonObject.get("timezone") != null ? (Long) jsonObject.get("timezone") : 0,
-                jsonObject.get("nextTimestamp") != null ? (Long) jsonObject.get("nextTimestamp") : 0,
-                jsonObject.get("source") != null ? (String) jsonObject.get("source") : null,
-                jsonObject.get("totalitems") != null ? (Long) jsonObject.get("totalitems") : null,
-                zosLogItems);
+        final ZosLogReplyParseResponse parser = (ZosLogReplyParseResponse) JsonParseResponseFactory
+                .buildParser(jsonObject, ParseType.ZOS_LOG_REPLY);
+        parser.setZosLogItems(zosLogItems);
+        return parser.parseResponse();
     }
 
     /**

@@ -28,6 +28,7 @@ public enum ParseType {
     UNIX_FILE,
     UNIX_ZFS,
     ZOS_LOG_ITEM,
+    ZOS_LOG_REPLY,
     ZOSMF_SYSTEMS,
     ZOSMF_INFO
 

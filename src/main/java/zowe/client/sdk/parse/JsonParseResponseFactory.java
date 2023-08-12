@@ -74,6 +74,9 @@ public final class JsonParseResponseFactory {
             case ZOS_LOG_ITEM:
                 parseResponse = new ZosLogParseResponse(data);
                 break;
+            case ZOS_LOG_REPLY:
+                parseResponse = new ZosLogReplyParseResponse(data);
+                break;
             case ZOSMF_SYSTEMS:
                 parseResponse = new SystemsParseResponse(data);
                 break;
