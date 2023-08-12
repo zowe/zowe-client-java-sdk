@@ -84,7 +84,7 @@ public class ZosmfSystems {
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
                 .orElseThrow(() -> new Exception("no z/osmf info response phase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.ZOSMF_DEFINED_SYSTEMS);
+        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.ZOSMF_SYSTEMS);
         return (ZosmfSystemsResponse) parser.parseResponse();
     }
 

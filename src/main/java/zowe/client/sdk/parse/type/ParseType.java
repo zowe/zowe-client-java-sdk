@@ -27,7 +27,7 @@ public enum ParseType {
     TSO_STOP,
     UNIX_FILE,
     UNIX_ZFS,
-    ZOSMF_DEFINED_SYSTEMS,
+    ZOSMF_SYSTEMS,
     ZOSMF_INFO
 
 }
