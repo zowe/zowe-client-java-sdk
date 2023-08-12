@@ -116,7 +116,6 @@ public class JobCancel {
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Response cancelCommon(ModifyJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
