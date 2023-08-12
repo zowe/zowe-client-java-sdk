@@ -77,6 +77,7 @@ public class DsnWrite {
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
         ValidateUtils.checkIllegalParameter(memberName.isBlank(), "memberName not specified");
+        
         return write(String.format("%s(%s)", dataSetName, memberName), content);
     }
 
