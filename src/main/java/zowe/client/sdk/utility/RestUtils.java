@@ -54,15 +54,16 @@ public final class RestUtils {
             final AtomicReference<Object> responsePhrase = new AtomicReference<>();
             response.getResponsePhrase().ifPresent(responsePhrase::set);
             if (responsePhrase.get() instanceof byte[]) {
-                final InputStreamReader inputStreamReader = new InputStreamReader(
-                        new ByteArrayInputStream((byte[]) responsePhrase.get()), StandardCharsets.UTF_8);
-                final BufferedReader br = new BufferedReader(inputStreamReader);
-                StringBuilder content = new StringBuilder();
-                String line;
-                while ((line = br.readLine()) != null) {
-                    content.append(line).append("\n");
+                try (final InputStreamReader inputStreamReader = new InputStreamReader(
+                        new ByteArrayInputStream((byte[]) responsePhrase.get()), StandardCharsets.UTF_8)) {
+                    final BufferedReader br = new BufferedReader(inputStreamReader);
+                    StringBuilder content = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        content.append(line).append("\n");
+                    }
+                    responsePhrase.set(content.substring(0, content.length() - 1));
                 }
-                responsePhrase.set(content.substring(0, content.length() - 1));
             }
 
             final String responsePhraseStr = String.valueOf((responsePhrase.get()));
