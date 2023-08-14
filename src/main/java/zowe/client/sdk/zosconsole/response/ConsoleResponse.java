@@ -22,7 +22,7 @@ public class ConsoleResponse {
     /**
      * True if the command was issued and the responses were collected.
      */
-    private Optional<Boolean> success = Optional.empty();
+    private boolean success = false;
 
     /**
      * The list of zOSMF console API responses. May issue multiple requests (because of user request) or
@@ -48,7 +48,7 @@ public class ConsoleResponse {
     /**
      * If the solicited keyword is specified, indicates that the keyword was detected.
      */
-    private Optional<Boolean> keywordDetected = Optional.empty();
+    private boolean keywordDetected = false;
 
     /**
      * The "follow-up" command response URL - you can paste this in the browser to do a "GET" using the command
@@ -122,7 +122,7 @@ public class ConsoleResponse {
      * @return keywordDetected true or false is keywordDetected seen
      * @author Frank Giordano
      */
-    public Optional<Boolean> getKeywordDetected() {
+    public boolean isKeywordDetected() {
         return keywordDetected;
     }
 
@@ -132,8 +132,8 @@ public class ConsoleResponse {
      * @param keywordDetected value
      * @author Frank Giordano
      */
-    public void setKeywordDetected(Boolean keywordDetected) {
-        this.keywordDetected = Optional.ofNullable(keywordDetected);
+    public void setKeywordDetected(boolean keywordDetected) {
+        this.keywordDetected = keywordDetected;
     }
 
     /**
@@ -162,7 +162,7 @@ public class ConsoleResponse {
      * @return boolean value
      * @author Frank Giordano
      */
-    public Optional<Boolean> getSuccess() {
+    public boolean isSuccess() {
         return success;
     }
 
@@ -172,8 +172,8 @@ public class ConsoleResponse {
      * @param success true or false is response seen
      * @author Frank Giordano
      */
-    public void setSuccess(Boolean success) {
-        this.success = Optional.ofNullable(success);
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     /**

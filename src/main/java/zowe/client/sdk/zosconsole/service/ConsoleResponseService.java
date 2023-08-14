@@ -52,17 +52,19 @@ public final class ConsoleResponseService {
             response.setKeywordDetected(true);
         }
 
-        String responseValue = zosmfResponse.getCmdResponse().orElse("");
         // Append the command response string to the console response.
-        if (!responseValue.isEmpty() && processResponses) {
-            // the IBM responses sometimes have \r and \r\n, we will process them here and return them with just \n.
-            responseValue = responseValue.replace('\r', '\n');
-            response.setCommandResponse(responseValue);
-            // If there are messages append a line-break to ensure that additional messages collected are displayed properly.
-            if (responseValue.indexOf("\n") != responseValue.length() - 1) {
-                response.setCommandResponse(responseValue + "\n");
+        zosmfResponse.getCmdResponse().ifPresent(zosmfResponse -> {
+            response.setCommandResponse(zosmfResponse);
+            if (processResponses) {
+                // the IBM responses sometimes have \r and \r\n, we will process them here and return them with just \n.
+                zosmfResponse = zosmfResponse.replace('\r', '\n');
+                response.setCommandResponse(zosmfResponse);
+                // If there are messages append a line-break to ensure that additional messages collected are displayed properly.
+                if (zosmfResponse.indexOf("\n") != zosmfResponse.length() - 1) {
+                    response.setCommandResponse(zosmfResponse + "\n");
+                }
             }
-        }
+        });
 
         // If the response key is present, set the last response key value in the response.
         zosmfResponse.getCmdResponseKey().ifPresent(response::setLastResponseKey);

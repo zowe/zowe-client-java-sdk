@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosconsole.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
 import java.util.Optional;
 
 /**
@@ -17,46 +19,31 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 2.0
  */
-public class ZosmfIssueParams {
+public class IssueConsoleParams {
 
     /**
      * The z/OS console command to issue.
      */
-    private Optional<String> cmd = Optional.empty();
-
+    private final Optional<String> cmd;
     /**
-     * The solicited keyword to look for.
+     * The solicited keyword to check for in the response. Causes the API to return immediately when the keyword
+     * is found, however, it may include solicited command response messages beyond the keyword itself.
      */
     private Optional<String> solKey = Optional.empty();
-
     /**
      * The system in the sysplex to route the command.
      */
     private Optional<String> system = Optional.empty();
-
     /**
-     * The method of issuing the command.
+     * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
+     * sequences with '\n', but there may be cases where that is not preferable. Specify false to prevent processing.
      */
-    private Optional<String> async = Optional.empty();
+    private boolean processResponse = false;
 
-    /**
-     * Retrieve async value
-     *
-     * @return async value
-     * @author Frank Giordano
-     */
-    public Optional<String> getAsync() {
-        return async;
-    }
-
-    /**
-     * Assign async value
-     *
-     * @param async value
-     * @author Frank Giordano
-     */
-    public void setAsync(String async) {
-        this.async = Optional.ofNullable(async);
+    public IssueConsoleParams(String command) {
+        ValidateUtils.checkNullParameter(command == null, "command is null");
+        ValidateUtils.checkIllegalParameter(command.isBlank(), "command not specified");
+        this.cmd = Optional.of(command);
     }
 
     /**
@@ -67,16 +54,6 @@ public class ZosmfIssueParams {
      */
     public Optional<String> getCmd() {
         return cmd;
-    }
-
-    /**
-     * Assign cmd value
-     *
-     * @param cmd value
-     * @author Frank Giordano
-     */
-    public void setCmd(String cmd) {
-        this.cmd = Optional.ofNullable(cmd);
     }
 
     /**
@@ -119,14 +96,12 @@ public class ZosmfIssueParams {
         this.system = Optional.ofNullable(system);
     }
 
-    @Override
-    public String toString() {
-        return "ZosmfIssueParams{" +
-                "cmd=" + cmd +
-                ", solKey=" + solKey +
-                ", system=" + system +
-                ", async=" + async +
-                '}';
+    public boolean isProcessResponse() {
+        return processResponse;
+    }
+
+    public void setProcessResponse(final boolean processResponse) {
+        this.processResponse = processResponse;
     }
 
 }
