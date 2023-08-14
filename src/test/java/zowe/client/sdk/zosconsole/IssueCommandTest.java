@@ -16,7 +16,7 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.zosconsole.input.IssueParams;
+import zowe.client.sdk.zosconsole.input.IssueConsoleParams;
 import zowe.client.sdk.zosconsole.method.IssueConsole;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 
@@ -49,9 +49,7 @@ public class IssueCommandTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
-        final IssueParams issueParams = new IssueParams();
-        issueParams.setCommand("test");
-        final ConsoleResponse response = issueCommand.issueCommand(issueParams);
+        final ConsoleResponse response = issueCommand.issueCommand("test");
         assertEquals("student",
                 response.getCommandResponse()
                         .orElse("n/a")
@@ -67,9 +65,7 @@ public class IssueCommandTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
-        IssueParams issueParams = new IssueParams();
-        issueParams.setCommand("test");
-        ConsoleResponse response = issueCommand.issueCommand(issueParams);
+        ConsoleResponse response = issueCommand.issueCommand("test");
         assertEquals("student",
                 response.getCmdResponseUrl()
                         .orElse("n/a")
@@ -83,11 +79,9 @@ public class IssueCommandTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(obj, 401, "Unauthorized"));
         final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
-        final IssueParams issueParams = new IssueParams();
-        issueParams.setCommand("test");
         String errorMsg = "";
         try {
-            issueCommand.issueCommand(issueParams);
+            issueCommand.issueCommand("test");
         } catch (Exception e) {
             errorMsg = String.valueOf(e);
         }
