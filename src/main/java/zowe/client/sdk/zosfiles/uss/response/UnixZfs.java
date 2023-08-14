@@ -24,63 +24,79 @@ public class UnixZfs {
      * zfs name
      */
     private final Optional<String> name;
+
     /**
      * Mount point name
      */
     private final Optional<String> mountpoint;
+
     /**
      * FST name
      */
     private final Optional<String> fstname;
+
     /**
      * Status value
      */
     private final Optional<String> status;
+
     /**
      * Mode values
      */
     private final Optional<String> mode;
+
     private final OptionalLong dev;
+
     /**
      * File system type
      */
     private final OptionalLong fstype;
+
     /**
      * Block size
      */
     private final OptionalLong bsize;
+
     /**
      * Blocks available
      */
     private final OptionalLong bavail;
+
     /**
      * Count of blocks in I/O operations
      */
     private final OptionalLong blocks;
+
     /**
      * Target system name
      */
     private final Optional<String> sysname;
+
     /**
      * Count of I/O operations
      */
     public final OptionalLong readibc;
+
     /**
      * Count of I/O operations
      */
     public final OptionalLong writeibc;
+
     /**
      * Count of I/O operations
      */
     private final OptionalLong diribc;
+
     /**
      * The number of filesystem items returned
      */
     private final OptionalLong returnedRows;
+
     /**
      * The total number of filesystems
      */
     private final OptionalLong totalRows;
+
     /**
      * If more items than specified by X-IBM-Max-Items (or the default of 1000) match the request,
      * then moreRows will be true
@@ -347,7 +363,6 @@ public class UnixZfs {
             this.moreRows = moreRows;
             return this;
         }
-
     }
 
 }

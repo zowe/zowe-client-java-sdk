@@ -24,30 +24,37 @@ public class UnixFile {
      * File, symbolic file or directory name
      */
     private final Optional<String> name;
+
     /**
      * Permission (mode) of returned name item
      */
     private final Optional<String> mode;
+
     /**
      * size of returned name item
      */
     private final OptionalLong size;
+
     /**
      * uid of returned name item
      */
     private final OptionalLong uid;
+
     /**
      * user of returned name item
      */
     private final Optional<String> user;
+
     /**
      * gid of returned name item
      */
     private final OptionalLong gid;
+
     /**
      * group of returned name item
      */
     private final Optional<String> group;
+
     /**
      * mtime of returned name item
      */
