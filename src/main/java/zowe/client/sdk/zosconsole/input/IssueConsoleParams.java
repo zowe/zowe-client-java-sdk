@@ -104,4 +104,14 @@ public class IssueConsoleParams {
         this.processResponse = processResponse;
     }
 
+    @Override
+    public String toString() {
+        return "IssueConsoleParams{" +
+                "cmd=" + cmd +
+                ", solKey=" + solKey +
+                ", system=" + system +
+                ", processResponse=" + processResponse +
+                '}';
+    }
+    
 }
