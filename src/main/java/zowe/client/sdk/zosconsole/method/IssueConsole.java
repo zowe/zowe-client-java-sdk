@@ -122,7 +122,7 @@ public class IssueConsole {
 
         final String consoleName = params.getConsoleName().orElse(ConsoleConstants.RES_DEF_CN);
         final ZosmfIssueParams zosmfIssueParams = buildZosmfConsoleApiParameters(params);
-        final ZosmfIssueResponse zosmfIssueResponse = issueCommonCommand(consoleName, zosmfIssueParams);
+        final ZosmfIssueResponse zosmfIssueResponse = issueCommandCommon(consoleName, zosmfIssueParams);
         return new ConsoleResponseService(zosmfIssueResponse).setConsoleResponse(params.getProcessResponses().orElse(true));
     }
 
@@ -135,7 +135,7 @@ public class IssueConsole {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ZosmfIssueResponse issueCommonCommand(String consoleName, ZosmfIssueParams commandParams) throws Exception {
+    public ZosmfIssueResponse issueCommandCommon(String consoleName, ZosmfIssueParams commandParams) throws Exception {
         ValidateUtils.checkNullParameter(consoleName == null, "consoleName is null");
         ValidateUtils.checkIllegalParameter(consoleName.isBlank(), "consoleName not specified");
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
@@ -169,7 +169,7 @@ public class IssueConsole {
      * @author Frank Giordano
      */
     public ZosmfIssueResponse issueDefConsoleCommon(ZosmfIssueParams commandParams) throws Exception {
-        final ZosmfIssueResponse resp = issueCommonCommand(ConsoleConstants.RES_DEF_CN, commandParams);
+        final ZosmfIssueResponse resp = issueCommandCommon(ConsoleConstants.RES_DEF_CN, commandParams);
         resp.setCmdResponse(StringEscapeUtils.escapeJava(resp.getCmdResponse().orElse("")));
         return resp;
     }
