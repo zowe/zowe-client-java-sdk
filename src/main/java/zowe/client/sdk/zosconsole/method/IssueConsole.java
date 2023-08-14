@@ -139,13 +139,13 @@ public class IssueConsole {
         ValidateUtils.checkNullParameter(consoleName == null, "consoleName is null");
         ValidateUtils.checkIllegalParameter(consoleName.isBlank(), "consoleName not specified");
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
-        ValidateUtils.checkIllegalParameter(commandParams.getCmd().isEmpty(), "command not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ConsoleConstants.RESOURCE + "/" + consoleName;
 
         final Map<String, String> jsonMap = new HashMap<>();
-        jsonMap.put("cmd", commandParams.getCmd().get());
+        jsonMap.put("cmd", commandParams.getCmd()
+                .orElseThrow(() -> new IllegalStateException("issue console command not specified")));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
