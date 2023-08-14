@@ -57,10 +57,10 @@ public final class RestUtils {
                 final InputStreamReader inputStreamReader = new InputStreamReader(
                         new ByteArrayInputStream((byte[]) responsePhrase.get()), StandardCharsets.UTF_8);
                 final BufferedReader br = new BufferedReader(inputStreamReader);
-                String content = "";
+                StringBuilder content = new StringBuilder();
                 String line;
                 while ((line = br.readLine()) != null) {
-                    content += line + "\n";
+                    content.append(line).append("\n");
                 }
                 responsePhrase.set(content.substring(0, content.length() - 1));
             }
