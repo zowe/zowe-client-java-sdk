@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosconsole.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
 import java.util.Optional;
 
 /**
@@ -78,7 +80,9 @@ public class IssueParams extends ConsoleParams {
      * @author Frank Giordano
      */
     public void setCommand(String command) {
-        this.command = Optional.ofNullable(command);
+        ValidateUtils.checkNullParameter(command == null, "issue console command is null");
+        ValidateUtils.checkIllegalParameter(command.isBlank(), "issue console command not specified");
+        this.command = Optional.of(command);
     }
 
     /**

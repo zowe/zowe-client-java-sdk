@@ -82,10 +82,10 @@ public class IssueConsole {
      */
     private ZosmfIssueParams buildZosmfConsoleApiParameters(IssueParams params) {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getCommand().isEmpty(), "command not specified");
 
         final ZosmfIssueParams zosmfParams = new ZosmfIssueParams();
-        zosmfParams.setCmd(params.getCommand().get());
+        zosmfParams.setCmd(params.getCommand()
+                .orElseThrow(() -> new IllegalStateException("issue console command not specified")));
 
         params.getSolicitedKeyword().ifPresent(zosmfParams::setSolKey);
         params.getSysplexSystem().ifPresent(zosmfParams::setSystem);
