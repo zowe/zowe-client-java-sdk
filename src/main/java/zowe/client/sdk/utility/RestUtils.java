@@ -37,7 +37,7 @@ public final class RestUtils {
     }
 
     /**
-     * Perform zowe rest request and retrieve its response
+     * Perform z/OSMF rest api request and retrieve its response
      *
      * @param request zowe request object
      * @return Response object
