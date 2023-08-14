@@ -51,12 +51,12 @@ public final class ConsoleResponseService {
         if (zosmfResponse.getSolKeyDetected().isPresent()) {
             response.setKeywordDetected(true);
         }
-
+        
+        String responseValue = zosmfResponse.getCmdResponse().orElse("");
         // Append the command response string to the console response.
-        if (zosmfResponse.getCmdResponse().isPresent() && !zosmfResponse.getCmdResponse().get().isEmpty()
-                && processResponses) {
+        if (!responseValue.isEmpty() && processResponses) {
             // the IBM responses sometimes have \r and \r\n, we will process them here and return them with just \n.
-            final String responseValue = zosmfResponse.getCmdResponse().get().replace('\r', '\n');
+            responseValue = responseValue.replace('\r', '\n');
             response.setCommandResponse(responseValue);
             // If there are messages append a line-break to ensure that additional messages collected are displayed properly.
             if (!responseValue.isEmpty() && (responseValue.indexOf("\n") != responseValue.length() - 1)) {
