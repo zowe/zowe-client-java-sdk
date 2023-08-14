@@ -85,7 +85,7 @@ public class IssueConsole {
 
         final ZosmfIssueParams zosmfParams = new ZosmfIssueParams();
         zosmfParams.setCmd(params.getCommand()
-                .orElseThrow(() -> new IllegalStateException("issue console command not specified")));
+                .orElseThrow(() -> new IllegalStateException("issue params console command not specified")));
 
         params.getSolicitedKeyword().ifPresent(zosmfParams::setSolKey);
         params.getSysplexSystem().ifPresent(zosmfParams::setSystem);
@@ -145,7 +145,7 @@ public class IssueConsole {
 
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd", commandParams.getCmd()
-                .orElseThrow(() -> new IllegalStateException("issue console command not specified")));
+                .orElseThrow(() -> new IllegalStateException("zosmf issue params console command not specified")));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
