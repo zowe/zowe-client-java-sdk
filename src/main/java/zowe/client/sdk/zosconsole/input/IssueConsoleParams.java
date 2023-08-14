@@ -25,21 +25,30 @@ public class IssueConsoleParams {
      * The z/OS console command to issue.
      */
     private final Optional<String> cmd;
+
     /**
      * The solicited keyword to check for in the response. Causes the API to return immediately when the keyword
      * is found, however, it may include solicited command response messages beyond the keyword itself.
      */
     private Optional<String> solKey = Optional.empty();
+
     /**
      * The system in the sysplex to route the command.
      */
     private Optional<String> system = Optional.empty();
+
     /**
      * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
      * sequences with '\n', but there may be cases where that is not preferable. Specify false to prevent processing.
      */
     private boolean processResponse = false;
 
+    /**
+     * IssueConsoleParams constructor, command value is required
+     *
+     * @param command console command to issue
+     * @author Frank Giordano
+     */
     public IssueConsoleParams(String command) {
         ValidateUtils.checkNullParameter(command == null, "command is null");
         ValidateUtils.checkIllegalParameter(command.isBlank(), "command not specified");
@@ -96,11 +105,23 @@ public class IssueConsoleParams {
         this.system = Optional.ofNullable(system);
     }
 
+    /**
+     * Retrieve processResponse value
+     *
+     * @return processResponse value
+     * @author Frank Giordano
+     */
     public boolean isProcessResponse() {
         return processResponse;
     }
 
-    public void setProcessResponse(final boolean processResponse) {
+    /**
+     * Assign system value
+     *
+     * @param processResponse value
+     * @author Frank Giordano
+     */
+    public void setProcessResponse(boolean processResponse) {
         this.processResponse = processResponse;
     }
 
@@ -113,5 +134,5 @@ public class IssueConsoleParams {
                 ", processResponse=" + processResponse +
                 '}';
     }
-    
+
 }
