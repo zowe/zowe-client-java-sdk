@@ -51,7 +51,7 @@ public final class ConsoleResponseService {
         if (zosmfResponse.getSolKeyDetected().isPresent()) {
             response.setKeywordDetected(true);
         }
-        
+
         String responseValue = zosmfResponse.getCmdResponse().orElse("");
         // Append the command response string to the console response.
         if (!responseValue.isEmpty() && processResponses) {
@@ -59,7 +59,7 @@ public final class ConsoleResponseService {
             responseValue = responseValue.replace('\r', '\n');
             response.setCommandResponse(responseValue);
             // If there are messages append a line-break to ensure that additional messages collected are displayed properly.
-            if (!responseValue.isEmpty() && (responseValue.indexOf("\n") != responseValue.length() - 1)) {
+            if (responseValue.indexOf("\n") != responseValue.length() - 1) {
                 response.setCommandResponse(responseValue + "\n");
             }
         }
