@@ -94,6 +94,20 @@ public class IssueConsole {
     }
 
     /**
+     * Issue console command method. Does not accept parameters, so all defaults on the z/OSMF API are taken.
+     *
+     * @param theCommand string command to issue
+     * @return command response on resolve, see ConsoleResponse object
+     * @throws Exception processing error
+     * @author Frank Giordano
+     */
+    public ConsoleResponse issueCommand(String theCommand) throws Exception {
+        final IssueParams params = new IssueParams();
+        params.setCommand(theCommand);
+        return issueCommand(params);
+    }
+
+    /**
      * Issue an MVS console command done synchronously - meaning solicited (direct command responses) are gathered
      * immediately after the command is issued. However, after (according to the z/OSMF REST API documentation)
      * approximately 3 seconds the response will be returned.
@@ -158,20 +172,6 @@ public class IssueConsole {
         final ZosmfIssueResponse resp = issueCommonCommand(ConsoleConstants.RES_DEF_CN, commandParams);
         resp.setCmdResponse(StringEscapeUtils.escapeJava(resp.getCmdResponse().orElse("")));
         return resp;
-    }
-
-    /**
-     * Issue console command method. Does not accept parameters, so all defaults on the z/OSMF API are taken.
-     *
-     * @param theCommand string command to issue
-     * @return command response on resolve, see ConsoleResponse object
-     * @throws Exception processing error
-     * @author Frank Giordano
-     */
-    public ConsoleResponse issueCommand(String theCommand) throws Exception {
-        final IssueParams params = new IssueParams();
-        params.setCommand(theCommand);
-        return issueCommand(params);
     }
 
 }
