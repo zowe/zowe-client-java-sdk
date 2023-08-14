@@ -29,14 +29,6 @@ public final class ConsoleConstants {
      */
     public static final String CLASS = "Consoles";
     /**
-     * Num of TSO prompt Attempts
-     */
-    public static final int DEFAULT_FOLLOWUP_ATTEMPTS = 1;
-    /**
-     * Default timeout
-     */
-    public static final int DEFAULT_TIMEOUT = 0;
-    /**
      * Base Resource for console
      */
     public static final String RESOURCE = "/zosmf/restconsoles/consoles";
@@ -45,10 +37,5 @@ public final class ConsoleConstants {
      * Resource authorization for console
      */
     public static final String RES_DEF_CN = "defcn";
-
-    /**
-     * Solmsgs url query part
-     */
-    public static final String SOL_MSGS = "/solmsgs";
 
 }
