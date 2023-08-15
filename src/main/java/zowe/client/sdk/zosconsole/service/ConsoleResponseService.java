@@ -24,8 +24,8 @@ public final class ConsoleResponseService {
     private static ConsoleResponseService INSTANCE;
 
     /**
-     * ConsoleResponseService private constructor
-     *
+     * Private constructor defined to avoid public instantiation of class
+     * 
      * @author Frank Giordano
      */
     private ConsoleResponseService() {
