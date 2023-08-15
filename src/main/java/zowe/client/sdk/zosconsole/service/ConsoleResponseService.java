@@ -29,7 +29,6 @@ public final class ConsoleResponseService {
      * @author Frank Giordano
      */
     private ConsoleResponseService() {
-        throw new IllegalStateException("singleton class");
     }
 
     /**
