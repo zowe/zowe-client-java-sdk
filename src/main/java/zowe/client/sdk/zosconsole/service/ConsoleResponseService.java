@@ -21,17 +21,27 @@ import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
  */
 public final class ConsoleResponseService {
 
-    private final ZosmfIssueResponse zosmfResponse;
+    private static ConsoleResponseService INSTANCE;
 
     /**
-     * ConsoleResponseService constructor
+     * ConsoleResponseService private constructor
      *
-     * @param zosmfResponse zosmf console response, see ZosmfIssueResponse object
      * @author Frank Giordano
      */
-    public ConsoleResponseService(ZosmfIssueResponse zosmfResponse) {
-        ValidateUtils.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
-        this.zosmfResponse = zosmfResponse;
+    private ConsoleResponseService() {
+    }
+
+    /**
+     * Get singleton instance
+     *
+     * @return ConsoleResponseService object
+     * @author Frank Giordano
+     */
+    public synchronized static ConsoleResponseService getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ConsoleResponseService();
+        }
+        return INSTANCE;
     }
 
     /**
@@ -43,35 +53,38 @@ public final class ConsoleResponseService {
      * @return response         console response to be populated, see ConsoleResponse object
      * @author Frank Giordano
      */
-    public ConsoleResponse setConsoleResponse(boolean processResponses) {
-        ConsoleResponse response = new ConsoleResponse();
-        response.setZosmfResponse(zosmfResponse);
-        response.setSuccess(true);
+    public ConsoleResponse buildConsoleResponse(ZosmfIssueResponse zosmfResponse, boolean processResponses) {
+        ValidateUtils.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
+        ConsoleResponse consoleResponse = new ConsoleResponse();
+        consoleResponse.setZosmfResponse(zosmfResponse);
+        consoleResponse.setSuccess(true);
 
         if (zosmfResponse.getSolKeyDetected().isPresent()) {
-            response.setKeywordDetected(true);
+            consoleResponse.setKeywordDetected(true);
         }
 
         // Append the command response string to the console response.
-        zosmfResponse.getCmdResponse().ifPresent(zosmfResponse -> {
-            response.setCommandResponse(zosmfResponse);
+        if (zosmfResponse.getCmdResponse().isPresent()) {
+            String responseStr = zosmfResponse.getCmdResponse().get();
+            consoleResponse.setCommandResponse(responseStr);
             if (processResponses) {
                 // the IBM responses sometimes have \r and \r\n, we will process them here and return them with just \n.
-                zosmfResponse = zosmfResponse.replace('\r', '\n');
-                response.setCommandResponse(zosmfResponse);
-                // If there are messages append a line-break to ensure that additional messages collected are displayed properly.
-                if (zosmfResponse.indexOf("\n") != zosmfResponse.length() - 1) {
-                    response.setCommandResponse(zosmfResponse + "\n");
+                responseStr = responseStr.replace('\r', '\n');
+                consoleResponse.setCommandResponse(responseStr);
+                // Append a line-break to ensure that additional messages collected are displayed properly.
+                if (responseStr.charAt(responseStr.length() - 1) != '\n') {
+                    consoleResponse.setCommandResponse(responseStr + "\n");
                 }
             }
-        });
+
+        }
 
         // If the response key is present, set the last response key value in the response.
-        zosmfResponse.getCmdResponseKey().ifPresent(response::setLastResponseKey);
+        zosmfResponse.getCmdResponseKey().ifPresent(consoleResponse::setLastResponseKey);
 
         // Collect the response url.
-        zosmfResponse.getCmdResponseUrl().ifPresent(response::setCmdResponseUrl);
-        return response;
+        zosmfResponse.getCmdResponseUrl().ifPresent(consoleResponse::setCmdResponseUrl);
+        return consoleResponse;
     }
 
 }

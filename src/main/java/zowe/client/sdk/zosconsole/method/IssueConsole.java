@@ -135,8 +135,8 @@ public class IssueConsole {
                 .orElseThrow(() -> new IllegalStateException("no issue console response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.MVS_CONSOLE);
-        ConsoleResponseService consoleResponseService = new ConsoleResponseService((ZosmfIssueResponse) parser.parseResponse());
-        return consoleResponseService.setConsoleResponse(params.isProcessResponse());
+        return ConsoleResponseService.getInstance()
+                .buildConsoleResponse((ZosmfIssueResponse) parser.parseResponse(), params.isProcessResponse());
     }
 
 }
