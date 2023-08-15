@@ -10,7 +10,10 @@
 package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.parse.type.ParseType;
+import zowe.client.sdk.rest.ZoweRequestFactory;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
@@ -20,6 +23,8 @@ import zowe.client.sdk.utility.ValidateUtils;
  * @version 2.0
  */
 public final class JsonParseResponseFactory {
+
+    private static final Logger LOG = LoggerFactory.getLogger(JsonParseResponseFactory.class);
 
     /**
      * Private constructor defined to avoid instantiation of class
@@ -38,6 +43,7 @@ public final class JsonParseResponseFactory {
      * @author Frank Giordano
      */
     public static JsonParseResponse buildParser(JSONObject data, ParseType type) throws Exception {
+        LOG.debug(type.name());
         ValidateUtils.checkNullParameter(data == null, "json data is null");
         JsonParseResponse parseResponse;
         switch (type) {
