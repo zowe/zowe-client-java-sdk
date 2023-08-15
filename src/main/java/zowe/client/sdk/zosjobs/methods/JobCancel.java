@@ -139,7 +139,7 @@ public class JobCancel {
         } else if ("2.0".equals(version)) {
             LOG.debug("version 2.0 specified which will result in synchronous processing for the request");
         } else {
-            throw new IllegalStateException("invalid version specified");
+            throw new IllegalArgumentException("invalid version specified");
         }
 
         final Map<String, String> jsonMap = new HashMap<>();
