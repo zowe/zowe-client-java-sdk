@@ -370,7 +370,7 @@ public class JobGet {
         try {
             response = RestUtils.getResponse(request);
         } catch (Exception e) {
-            LOG.debug("JobGet::getSpoolFilesCommon - {}", e.getMessage());
+            LOG.debug("error getting spool files - {}", e.getMessage());
             if (e.getMessage().contains("no response phrase returned")) {
                 return files;
             }

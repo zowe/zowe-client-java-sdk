@@ -217,7 +217,7 @@ public class JobSubmit {
                 throw new IllegalStateException("Encountered invalid key/value pair. Key must be 8 characters or less.");
             }
             key = ZosmfHeaders.HEADERS.get("X_IBM_JCL_SYMBOL_PARTIAL").get(0) + key;
-            LOG.debug("JCL Symbol Header: " + key + ":" + value);
+            LOG.debug("JCL symbol header: {}:{}", key, value);
             symbolMap.put(key, value);
         }
 

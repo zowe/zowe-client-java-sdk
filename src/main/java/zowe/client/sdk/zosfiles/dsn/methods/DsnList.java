@@ -106,7 +106,7 @@ public class DsnList {
     @SuppressWarnings("unchecked")
     private <T> java.util.List<T> getResult(Response response, List<T> datasetLst, List<T> memberLst) throws Exception {
         if (response.getStatusCode().isEmpty()) {
-            LOG.debug("DsnList::getResult - no status code returned");
+            LOG.debug("no dsn list status code returned");
             if (datasetLst == null) {
                 return memberLst;
             } else {
@@ -115,7 +115,7 @@ public class DsnList {
         }
 
         if (response.getResponsePhrase().isEmpty()) {
-            LOG.debug("DsnList::getResult - no response phrase returned");
+            LOG.debug("no dsn list response phrase returned");
             if (datasetLst == null) {
                 return memberLst;
             } else {
@@ -125,15 +125,15 @@ public class DsnList {
 
         if (RestUtils.isHttpError(response.getStatusCode().get())) {
             if (response.getStatusText().isEmpty()) {
-                LOG.debug("DsnList::getResult - no status text returned");
+                LOG.debug("no no dsn list status text returned");
                 if (datasetLst == null) {
                     return memberLst;
                 } else {
                     return datasetLst;
                 }
             }
-            LOG.debug("Rest status code {}", response.getStatusCode().get());
-            LOG.debug("Rest status text {}", response.getStatusText().get());
+            LOG.debug("rest status code {}", response.getStatusCode().get());
+            LOG.debug("rest status text {}", response.getStatusText().get());
             throw new Exception(response.getStatusCode().get() + " - " + response.getResponsePhrase().get());
         }
 
