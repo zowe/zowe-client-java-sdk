@@ -69,7 +69,7 @@ public final class ZoweRequestFactory {
                 request = new StreamPutRequest(connection);
                 break;
             default:
-                throw new IllegalStateException("no valid type specified");
+                throw new IllegalStateException("no valid ZoweRequestType type specified");
         }
         return request;
     }

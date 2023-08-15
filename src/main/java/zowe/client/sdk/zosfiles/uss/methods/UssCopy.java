@@ -105,7 +105,7 @@ public class UssCopy {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "copy");
         jsonMap.put("from", FileUtils.validatePath(params.getFrom()
-                .orElseThrow(() -> new IllegalStateException("from not specified"))));
+                .orElseThrow(() -> new IllegalStateException("uss copy /'from/' not specified"))));
         if (!params.isOverwrite()) {
             jsonMap.put("overwrite", "false");
         }

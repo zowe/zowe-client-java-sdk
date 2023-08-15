@@ -47,7 +47,7 @@ public final class FileUtils {
         Pattern p = Pattern.compile("(rwx|rw-|r--|r-x|--x|-wx|-w-)+");
         Matcher m = p.matcher(value);
         if (!m.matches()) {
-            throw new IllegalStateException("specify valid permission");
+            throw new IllegalStateException("specify valid permission value");
         }
         return value;
     }
@@ -64,7 +64,7 @@ public final class FileUtils {
         Pattern p = Pattern.compile("\\/.*");
         Matcher m = p.matcher(value);
         if (!m.matches()) {
-            throw new IllegalStateException("specify valid path");
+            throw new IllegalStateException("specify valid path value");
         }
         return value;
     }

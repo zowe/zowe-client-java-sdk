@@ -110,7 +110,7 @@ public class TeamConfigService {
             String keyVal = itr.next();
             return SectionType.PROFILES.getValue().equals(keyVal);
         } else {
-            throw new IllegalStateException("Profile type detail missing in profile section.");
+            throw new IllegalStateException("TeamConfig profile type detail missing in profile section.");
         }
     }
 

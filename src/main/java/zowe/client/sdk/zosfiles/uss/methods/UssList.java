@@ -129,7 +129,7 @@ public class UssList {
 
         final List<UnixFile> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
-                response.getResponsePhrase().orElseThrow(() -> new IllegalStateException("null file list response"))));
+                response.getResponsePhrase().orElseThrow(() -> new IllegalStateException("null uss file list response"))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (final Object obj : jsonArray) {

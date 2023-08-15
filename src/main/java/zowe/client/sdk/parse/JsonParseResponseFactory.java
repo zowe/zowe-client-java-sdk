@@ -84,7 +84,7 @@ public final class JsonParseResponseFactory {
                 parseResponse = new SystemInfoParseResponse(data);
                 break;
             default:
-                throw new IllegalStateException("no valid parse type specified");
+                throw new IllegalStateException("no valid ParseType type specified");
         }
         return parseResponse;
     }
