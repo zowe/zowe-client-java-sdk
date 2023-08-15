@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.rest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.type.ZoweRequestType;
 
@@ -19,6 +21,8 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
  * @version 2.0
  */
 public final class ZoweRequestFactory {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ZoweRequestFactory.class);
 
     /**
      * Private constructor defined to avoid instantiation of class
@@ -37,6 +41,7 @@ public final class ZoweRequestFactory {
      * @author Frank Giordano
      */
     public static ZoweRequest buildRequest(ZosConnection connection, ZoweRequestType type) throws Exception {
+        LOG.debug(type.name());
         ZoweRequest request;
         switch (type) {
             case GET_JSON:
