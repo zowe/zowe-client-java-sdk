@@ -74,7 +74,7 @@ public class UssList {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {
-            throw new Exception("GET_JSON request type required");
+            throw new IllegalStateException("GET_JSON request type required");
         }
         this.request = request;
     }
@@ -129,7 +129,7 @@ public class UssList {
 
         final List<UnixFile> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
-                response.getResponsePhrase().orElseThrow(() -> new Exception("null file list response"))));
+                response.getResponsePhrase().orElseThrow(() -> new IllegalStateException("null file list response"))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (final Object obj : jsonArray) {
@@ -173,9 +173,10 @@ public class UssList {
 
         final Response response = RestUtils.getResponse(request);
 
+        final String errMsg = "error retrieving uss zfs list";
         final List<UnixZfs> items = new ArrayList<>();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
-                response.getResponsePhrase().orElseThrow(() -> new Exception("error retrieving uss zfs list"))));
+                response.getResponsePhrase().orElseThrow(() -> new IllegalStateException(errMsg))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (final Object obj : jsonArray) {

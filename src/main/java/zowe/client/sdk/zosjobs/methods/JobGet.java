@@ -95,8 +95,7 @@ public class JobGet {
      */
     public String getJclByJob(Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        return getJclCommon(
-                new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
+        return getJclCommon(new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse("")));
     }
 
     /**
@@ -111,7 +110,9 @@ public class JobGet {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() +
+                EncodeUtils.encodeURIComponent(params.getJobName()
+                        .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
                 JobsConstants.RESOURCE_SPOOL_FILES + JobsConstants.RESOURCE_JCL_CONTENT +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
 
@@ -121,7 +122,8 @@ public class JobGet {
         request.setUrl(url);
 
         final Response response = RestUtils.getResponse(request);
-        return (String) response.getResponsePhrase().orElseThrow(() -> new Exception("no job jcl response phase"));
+        return (String) response.getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no job jcl response phrase"));
     }
 
     /**
@@ -135,10 +137,10 @@ public class JobGet {
     public Job getById(String jobId) throws Exception {
         final List<Job> jobs = getCommon(new GetJobParams.Builder("*").jobId(jobId).build());
         if (jobs.isEmpty()) {
-            throw new Exception("Job not found");
+            throw new IllegalStateException("job not found");
         }
         if (jobs.size() > 1) {
-            throw new Exception("Expected 1 job returned but received " + jobs.size() + " jobs.");
+            throw new IllegalStateException("expected 1 job returned but received " + jobs.size() + " jobs.");
         }
         return jobs.get(0);
     }
@@ -245,7 +247,7 @@ public class JobGet {
         request.setUrl(url);
 
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
-                .orElseThrow(() -> new Exception("no get job response phase")).toString();
+                .orElseThrow(() -> new IllegalStateException("no get job response phrase")).toString();
         final JSONArray results = (JSONArray) new JSONParser().parse(jsonStr);
         for (final Object itemJsonObj : results) {
             final JsonParseResponse parser = JsonParseResponseFactory
@@ -283,7 +285,9 @@ public class JobGet {
 
         CommonJobParams params = new CommonJobParams(jobId, jobName);
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() +
+                EncodeUtils.encodeURIComponent(params.getJobName()
+                        .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
                 JobsConstants.RESOURCE_SPOOL_FILES + "/" + spoolId + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         if (request == null || !(request instanceof TextGetRequest)) {
@@ -292,12 +296,12 @@ public class JobGet {
         request.setUrl(url);
 
         final Response response = RestUtils.getResponse(request);
-        final String spoolErrMsg = "no job spool content response phase";
-        return (String) response.getResponsePhrase().orElseThrow(() -> new Exception(spoolErrMsg));
+        final String spoolErrMsg = "no job spool content response phrase";
+        return (String) response.getResponsePhrase().orElseThrow(() -> new IllegalStateException(spoolErrMsg));
     }
 
     /**
-     * Get spool content from a job.
+     * Get spool file content from a job file definition.
      *
      * @param jobFile spool file for which you want to retrieve the content
      * @return spool content
@@ -307,13 +311,13 @@ public class JobGet {
     public String getSpoolContentCommon(JobFile jobFile) throws Exception {
         ValidateUtils.checkNullParameter(jobFile == null, "jobFile is null");
 
-        final String jnErrMsg = "job name not specified";
-        final String jiErrMsg = "job id not specified";
-        final String jfiErrMsg = "job file id not specified";
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(jobFile.getJobName().orElseThrow(() -> new Exception(jnErrMsg))) + "/" +
-                jobFile.getJobId().orElseThrow(() -> new Exception(jiErrMsg)) + JobsConstants.RESOURCE_SPOOL_FILES + "/" +
-                jobFile.getId().orElseThrow(() -> new Exception(jfiErrMsg)) + JobsConstants.RESOURCE_SPOOL_CONTENT;
+                EncodeUtils.encodeURIComponent(jobFile.getJobName()
+                        .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                jobFile.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
+                JobsConstants.RESOURCE_SPOOL_FILES + "/" +
+                jobFile.getId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_FILE_ID_ERROR_MSG)) +
+                JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         if (request == null || !(request instanceof TextGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
@@ -321,7 +325,8 @@ public class JobGet {
         request.setUrl(url);
 
         final Response response = RestUtils.getResponse(request);
-        return (String) response.getResponsePhrase().get();
+        final String spoolErrMsg = "no job spool file content response phrase";
+        return (String) response.getResponsePhrase().orElseThrow(() -> new IllegalStateException(spoolErrMsg));
     }
 
     /**
@@ -349,32 +354,30 @@ public class JobGet {
     public List<JobFile> getSpoolFilesCommon(CommonJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        List<JobFile> files = new ArrayList<>();
-
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() + "/files";
+                EncodeUtils.encodeURIComponent(params.getJobName()
+                        .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
+                "/files";
 
         if (request == null || !(request instanceof JsonGetRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
         }
         request.setUrl(url);
 
-        Response response;
-        try {
-            response = RestUtils.getResponse(request);
-        } catch (Exception e) {
-            LOG.debug("JobGet::getSpoolFilesCommon - {}", e.getMessage());
-            if (e.getMessage().contains("no response phrase returned")) {
-                return files;
-            }
-            throw e;
+        final Response response = RestUtils.getResponse(request);
+
+        final List<JobFile> files = new ArrayList<>();
+        final String jsonStr = response.getResponsePhrase().orElse("").toString();
+        if (jsonStr.isBlank()) {
+            return files;
         }
 
-        final String jpErrMsg = "no get job spool response phase";
-        final String jsonStr = response.getResponsePhrase().orElseThrow(() -> new Exception(jpErrMsg)).toString();
         final JSONArray results = (JSONArray) new JSONParser().parse(jsonStr);
         for (final Object obj : results) {
-            files.add((JobFile) JsonParseResponseFactory.buildParser((JSONObject) obj, ParseType.JOB_FILE).parseResponse());
+            final JSONObject jsonObj = (JSONObject) obj;
+            final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObj, ParseType.JOB_FILE);
+            files.add((JobFile) parser.parseResponse());
         }
 
         return files;
@@ -392,8 +395,7 @@ public class JobGet {
      */
     public List<JobFile> getSpoolFilesByJob(Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        return getSpoolFilesCommon(
-                new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
+        return getSpoolFilesCommon(new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse("")));
     }
 
     /**
@@ -421,7 +423,9 @@ public class JobGet {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get();
+                EncodeUtils.encodeURIComponent(params.getJobName()
+                        .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG));
 
         if (params.isStepData()) {
             url += JobsConstants.QUERY_ID + JobsConstants.STEP_DATA;
@@ -433,7 +437,7 @@ public class JobGet {
         request.setUrl(url);
 
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
-                .orElseThrow(() -> new Exception("no job get response phase")).toString();
+                .orElseThrow(() -> new IllegalStateException("no job get response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.JOB);
         return (Job) parser.parseResponse();
@@ -454,7 +458,7 @@ public class JobGet {
     public Job getStatusByJob(Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return getStatusCommon(
-                new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null), true));
+                new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse(""), true));
     }
 
     /**
@@ -468,7 +472,7 @@ public class JobGet {
      */
     public String getStatusValue(String jobName, String jobId) throws Exception {
         final Job job = getStatusCommon(new CommonJobParams(jobId, jobName));
-        return job.getStatus().orElseThrow(() -> new Exception("job status not returned"));
+        return job.getStatus().orElseThrow(() -> new IllegalStateException("job status not returned"));
     }
 
     /**
@@ -482,8 +486,8 @@ public class JobGet {
     public String getStatusValueByJob(Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         final Job result = getStatusCommon(
-                new CommonJobParams(job.getJobId().orElse(null), job.getJobName().orElse(null)));
-        return result.getStatus().orElseThrow(() -> new Exception("job status not returned"));
+                new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse("")));
+        return result.getStatus().orElseThrow(() -> new IllegalStateException("job status not returned"));
     }
 
     /**

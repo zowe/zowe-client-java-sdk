@@ -62,7 +62,7 @@ public class DsnCopy {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
-            throw new Exception("PUT_JSON request type required");
+            throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
@@ -137,7 +137,8 @@ public class DsnCopy {
      */
     private String setUrl(CopyParams params) throws Exception {
         final String toDataSetNameErrMsg = "toDataSetName not specified";
-        final String toDataSet = params.getToDataSet().orElseThrow(() -> new Exception(toDataSetNameErrMsg));
+        final String toDataSet = params.getToDataSet()
+                .orElseThrow(() -> new IllegalArgumentException(toDataSetNameErrMsg));
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
@@ -160,7 +161,8 @@ public class DsnCopy {
      */
     private Map<String, Object> setFromDataSetMapValues(CopyParams params) throws Exception {
         final String fromDataSetNameErrMsg = "fromDataSetName not specified";
-        String fromDataSetName = params.getFromDataSet().orElseThrow(() -> new Exception(fromDataSetNameErrMsg));
+        String fromDataSetName = params.getFromDataSet()
+                .orElseThrow(() -> new IllegalStateException(fromDataSetNameErrMsg));
 
         final Map<String, Object> fromDataSetReq = new HashMap<>();
         // is member name specified in DataSet value

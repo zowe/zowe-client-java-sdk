@@ -116,7 +116,7 @@ public class ZosFilesConstants {
      * The set of allocation unit choices for VSAM files
      */
     public static final String[] VSAM_ALCUNIT_CHOICES = new String[]{"CYL", "TRK", "MB", "KB", "REC"};
-    
+
     /**
      * The set of dataset organization choices for VSAM files
      */

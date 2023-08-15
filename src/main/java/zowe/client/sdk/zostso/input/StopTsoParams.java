@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zostso.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
 import java.util.Optional;
 
 /**
@@ -31,7 +33,9 @@ public class StopTsoParams {
      * @author Frank Giordano
      */
     public StopTsoParams(String servletKey) {
-        this.servletKey = Optional.ofNullable(servletKey);
+        ValidateUtils.checkNullParameter(servletKey == null, "servletKey is null");
+        ValidateUtils.checkIllegalParameter(servletKey.isBlank(), "servletKey not specified");
+        this.servletKey = Optional.of(servletKey);
     }
 
     /**

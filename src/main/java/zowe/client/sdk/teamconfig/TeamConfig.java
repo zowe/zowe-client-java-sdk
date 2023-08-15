@@ -113,7 +113,7 @@ public class TeamConfig {
 
         final Optional<Profile> target = teamConfig.getProfiles().stream().filter(isProfileName).findFirst();
         if (target.isEmpty()) {
-            throw new Exception("Profile " + name + " not found");
+            throw new IllegalStateException("Profile " + name + " not found");
         }
 
         merge(target, base);
@@ -144,12 +144,12 @@ public class TeamConfig {
 
         final Optional<Partition> partition = teamConfig.getPartitions().stream().filter(isPartitionName).findFirst();
         if (partition.isEmpty()) {
-            throw new Exception("Partition " + partitionName + " not found");
+            throw new IllegalStateException("Partition " + partitionName + " not found");
         }
 
         final Optional<Profile> target = partition.get().getProfiles().stream().filter(isProfileName).findFirst();
         if (target.isEmpty()) {
-            throw new Exception("Profile " + profileName + " within partition not found");
+            throw new IllegalStateException("Profile " + profileName + " within partition not found");
         }
 
         final Map<String, String> props = partition.get().getProperties();
@@ -186,6 +186,7 @@ public class TeamConfig {
     }
 
     private static class MergeProperties {
+
         private Optional<String> host = Optional.empty();
         private Optional<String> port = Optional.empty();
 
@@ -204,6 +205,7 @@ public class TeamConfig {
         public void setPort(String port) {
             this.port = Optional.ofNullable(port);
         }
+
     }
 
 }

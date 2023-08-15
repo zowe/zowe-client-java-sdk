@@ -65,7 +65,7 @@ public class JobCancel {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
-            throw new Exception("PUT_JSON request type required");
+            throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
@@ -103,8 +103,9 @@ public class JobCancel {
      */
     public Response cancelByJob(Job job, String version) throws Exception {
         return this.cancelCommon(
-                new ModifyJobParams.Builder(job.getJobName().orElse(null), job.getJobId().orElse(null))
-                        .version(version).build());
+                new ModifyJobParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
+                        .version(version)
+                        .build());
     }
 
     /**
@@ -119,12 +120,12 @@ public class JobCancel {
     public Response cancelCommon(ModifyJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String jnErrMsg = "job name not specified";
-        final String jiErrMsg = "job id not specified";
         // generate full url request
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM + params.getJobName().orElseThrow(() -> new IllegalArgumentException(jnErrMsg)) +
-                JobsConstants.FILE_DELIM + params.getJobId().orElseThrow(() -> new IllegalArgumentException(jiErrMsg));
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                JobsConstants.RESOURCE + JobsConstants.FILE_DELIM + params.getJobName()
+                .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG)) +
+                JobsConstants.FILE_DELIM + params.getJobId()
+                .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG));
 
         // generate json string body for the request
         final String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);

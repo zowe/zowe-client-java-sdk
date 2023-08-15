@@ -48,7 +48,7 @@ public final class RestUtils {
         final Response response = request.executeRequest();
 
         final String statusCodeErrMsg = "no response status code returned";
-        final int statusCode = response.getStatusCode().orElseThrow(() -> new Exception(statusCodeErrMsg));
+        final int statusCode = response.getStatusCode().orElseThrow(() -> new IllegalStateException(statusCodeErrMsg));
 
         if (RestUtils.isHttpError(statusCode)) {
             final AtomicReference<Object> responsePhrase = new AtomicReference<>();
@@ -67,7 +67,7 @@ public final class RestUtils {
             }
 
             final String responsePhraseStr = String.valueOf((responsePhrase.get()));
-            final String statusText = response.getStatusText().isPresent() ? response.getStatusText().get() : "n\\a";
+            final String statusText = response.getStatusText().orElse("n\\a");
             String errMsg = "http status error code: " + statusCode + ", status text: " + statusText;
             if (!statusText.equalsIgnoreCase(responsePhraseStr)) {
                 errMsg += ", response phrase: " + responsePhraseStr;

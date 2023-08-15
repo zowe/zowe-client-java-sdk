@@ -71,7 +71,7 @@ public class TsoResponseServiceTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        assertEquals("tsoCmdResponse is null", msg);
+        assertEquals("response is null", msg);
     }
 
     @Test

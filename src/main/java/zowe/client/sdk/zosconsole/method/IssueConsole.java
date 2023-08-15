@@ -67,7 +67,7 @@ public class IssueConsole {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
-            throw new Exception("PUT_JSON request type required");
+            throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
@@ -132,11 +132,11 @@ public class IssueConsole {
         request.setBody(new JSONObject(issueMap).toString());
 
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
-                .orElseThrow(() -> new Exception("no issue console response phrase")).toString();
+                .orElseThrow(() -> new IllegalStateException("no issue console response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.MVS_CONSOLE);
-        ConsoleResponseService consoleResponseService = new ConsoleResponseService((ZosmfIssueResponse) parser.parseResponse());
-        return consoleResponseService.setConsoleResponse(params.isProcessResponse());
+        return ConsoleResponseService.getInstance()
+                .buildConsoleResponse((ZosmfIssueResponse) parser.parseResponse(), params.isProcessResponse());
     }
 
 }

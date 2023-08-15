@@ -196,7 +196,7 @@ public class GetParams {
 
         public GetParams.Builder search(String search) throws Exception {
             if (this.research != null) {
-                throw new Exception("cannot specify both search and research parameters");
+                throw new IllegalStateException("cannot specify both search and research parameters");
             }
             this.search = search;
             queryCount++;
@@ -205,7 +205,7 @@ public class GetParams {
 
         public GetParams.Builder research(String research) throws Exception {
             if (this.search != null) {
-                throw new Exception("cannot specify both search and research parameters");
+                throw new IllegalStateException("cannot specify both search and research parameters");
             }
             this.research = research;
             queryCount++;

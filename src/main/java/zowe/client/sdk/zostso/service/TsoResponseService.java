@@ -13,7 +13,6 @@ import zowe.client.sdk.zostso.message.ZosmfMessages;
 import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
 import zowe.client.sdk.zostso.response.StartStopResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TsoResponseService {
@@ -23,38 +22,39 @@ public class TsoResponseService {
      */
     private Response tsoCmdResponse;
     /**
-     * z/OSMF response info contains either tso start or stop command phase, see zosmfResponse object
+     * z/OSMF response info contains either tso start or stop command phrase, see zosmfResponse object
      */
-    private ZosmfTsoResponse zosmfPhaseResponse;
+    private ZosmfTsoResponse zosmfPhraseResponse;
 
     public TsoResponseService(Response response) {
+        ValidateUtils.checkNullParameter(response == null, "response is null");
         this.tsoCmdResponse = response;
     }
 
     public TsoResponseService(ZosmfTsoResponse zosmfResponse) {
-        this.zosmfPhaseResponse = zosmfResponse;
+        ValidateUtils.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
+        this.zosmfPhraseResponse = zosmfResponse;
     }
 
     /**
-     * Retrieve Tso response
+     * Retrieve tso response
      *
      * @return ZosmfTsoResponse object
      * @throws Exception error processing response
      * @author Frank Giordano
      */
     public ZosmfTsoResponse getZosmfTsoResponse() throws Exception {
-        ValidateUtils.checkNullParameter(tsoCmdResponse == null, "tsoCmdResponse is null");
         ZosmfTsoResponse result;
-        final int statusCode = tsoCmdResponse.getStatusCode().get();
-        if (tsoCmdResponse.getStatusCode().isPresent() && RestUtils.isHttpError(statusCode)) {
-            final ZosmfMessages zosmfMsg = new ZosmfMessages((String) tsoCmdResponse.getResponsePhrase()
-                    .orElseThrow(() -> new Exception("no tsoCmdResponse phrase")), null, null);
-            final List<ZosmfMessages> zosmfMessages = new ArrayList<>();
-            zosmfMessages.add(zosmfMsg);
-            result = new ZosmfTsoResponse.Builder().msgData(zosmfMessages).build();
+        final int statusCode = tsoCmdResponse.getStatusCode()
+                .orElseThrow(() -> new IllegalStateException("status code not specified"));
+        if (RestUtils.isHttpError(statusCode)) {
+            final String tsoCmdResponsePhrase = (String) tsoCmdResponse.getResponsePhrase()
+                    .orElseThrow(() -> new IllegalStateException("no tsoCmdResponse phrase"));
+            final ZosmfMessages zosmfMsg = new ZosmfMessages(tsoCmdResponsePhrase, null, null);
+            result = new ZosmfTsoResponse.Builder().msgData(List.of(zosmfMsg)).build();
         } else {
             final String jsonStr = tsoCmdResponse.getResponsePhrase()
-                    .orElseThrow(() -> new Exception("no tsoCmdResponse phrase")).toString();
+                    .orElseThrow(() -> new IllegalStateException("no tsoCmdResponse phrase")).toString();
             final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
             final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.TSO_CONSOLE);
             result = (ZosmfTsoResponse) parser.parseResponse();
@@ -64,19 +64,18 @@ public class TsoResponseService {
     }
 
     /**
-     * Populate either a Tso start or stop command phase
+     * Populate either a Tso start or stop command phrase
      *
      * @return StartStopResponse object
      * @author Frank Giordano
      */
     public StartStopResponse setStartStopResponse() {
-        ValidateUtils.checkNullParameter(zosmfPhaseResponse == null, "zosmfPhaseResponse is null");
-        final StartStopResponse startStopResponse = new StartStopResponse(false, zosmfPhaseResponse,
-                zosmfPhaseResponse.getServletKey().orElse(""));
+        final StartStopResponse startStopResponse = new StartStopResponse(false, zosmfPhraseResponse,
+                zosmfPhraseResponse.getServletKey().orElse(""));
 
-        startStopResponse.setSuccess(zosmfPhaseResponse.getServletKey().isPresent());
-        if (!zosmfPhaseResponse.getMsgData().isEmpty()) {
-            final ZosmfMessages zosmfMsg = zosmfPhaseResponse.getMsgData().get(0);
+        startStopResponse.setSuccess(zosmfPhraseResponse.getServletKey().isPresent());
+        if (!zosmfPhraseResponse.getMsgData().isEmpty()) {
+            final ZosmfMessages zosmfMsg = zosmfPhraseResponse.getMsgData().get(0);
             final String msgText = zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR);
             startStopResponse.setFailureResponse(msgText);
         }

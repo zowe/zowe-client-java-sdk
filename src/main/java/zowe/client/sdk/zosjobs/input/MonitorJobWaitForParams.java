@@ -10,6 +10,8 @@
  */
 package zowe.client.sdk.zosjobs.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.types.JobStatus;
 
 import java.util.Optional;
@@ -197,6 +199,10 @@ public class MonitorJobWaitForParams {
         private OptionalInt lineLimit = OptionalInt.empty();
 
         public Builder(String jobName, String jobId) {
+            ValidateUtils.checkNullParameter(jobName == null, "job name is null");
+            ValidateUtils.checkIllegalParameter(jobName.isBlank(), JobsConstants.JOB_NAME_ERROR_MSG);
+            ValidateUtils.checkNullParameter(jobId == null, "job id is null");
+            ValidateUtils.checkIllegalParameter(jobId.isBlank(), JobsConstants.JOB_NAME_ERROR_MSG);
             this.jobName = jobName;
             this.jobId = jobId;
         }

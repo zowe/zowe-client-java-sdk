@@ -55,7 +55,6 @@ public class StartTsoParams {
     public Optional<String> rows = Optional.empty();
 
     public StartTsoParams() {
-
     }
 
     /**

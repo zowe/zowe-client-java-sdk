@@ -117,7 +117,7 @@ public class ListZfsParams {
             ValidateUtils.checkNullParameter(path == null, "path is null");
             ValidateUtils.checkIllegalParameter(path.isBlank(), "path not specified");
             if (this.fsname != null) {
-                throw new Exception("cannot specify both path and fsname parameters");
+                throw new IllegalStateException("cannot specify both path and fsname parameters");
             }
             this.path = path;
             return this;
@@ -127,7 +127,7 @@ public class ListZfsParams {
             ValidateUtils.checkNullParameter(fsname == null, "fsname is null");
             ValidateUtils.checkIllegalParameter(fsname.isBlank(), "fsname not specified");
             if (this.path != null) {
-                throw new Exception("cannot specify both path and fsname parameters");
+                throw new IllegalStateException("cannot specify both path and fsname parameters");
             }
             this.fsname = fsname;
             return this;

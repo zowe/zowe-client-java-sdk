@@ -64,7 +64,7 @@ public class UssCopy {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
-            throw new Exception("PUT_JSON request type required");
+            throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
@@ -104,8 +104,8 @@ public class UssCopy {
 
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("request", "copy");
-        jsonMap.put("from", FileUtils.validatePath(
-                params.getFrom().orElseThrow(() -> new Exception("from not specified"))));
+        jsonMap.put("from", FileUtils.validatePath(params.getFrom()
+                .orElseThrow(() -> new IllegalStateException("from not specified"))));
         if (!params.isOverwrite()) {
             jsonMap.put("overwrite", "false");
         }

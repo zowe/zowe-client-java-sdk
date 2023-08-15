@@ -72,7 +72,7 @@ public class ZosLog {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {
-            throw new Exception("GET_JSON request type required");
+            throw new IllegalStateException("GET_JSON request type required");
         }
         this.request = request;
     }
@@ -112,7 +112,7 @@ public class ZosLog {
         request.setUrl(url.toString());
 
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
-                .orElseThrow(() -> new Exception("no zos log response phase")).toString();
+                .orElseThrow(() -> new IllegalStateException("no zos log response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         JSONArray jsonArray = new JSONArray();
         if (jsonObject.get("items") != null) {

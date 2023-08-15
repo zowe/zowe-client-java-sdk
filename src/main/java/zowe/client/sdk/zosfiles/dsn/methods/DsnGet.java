@@ -68,7 +68,7 @@ public class DsnGet {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof StreamGetRequest)) {
-            throw new Exception("GET_STREAM request type required");
+            throw new IllegalStateException("GET_STREAM request type required");
         }
         this.request = request;
     }
@@ -168,7 +168,7 @@ public class DsnGet {
         request.setHeaders(headers);
 
         return new ByteArrayInputStream((byte[]) RestUtils.getResponse(request)
-                .getResponsePhrase().orElseThrow(() -> new Exception("no dsn get response phase")));
+                .getResponsePhrase().orElseThrow(() -> new IllegalStateException("no dsn get response phrase")));
     }
 
 }

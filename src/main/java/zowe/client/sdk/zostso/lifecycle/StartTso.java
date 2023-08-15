@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.zostso.lifecycle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPostRequest;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -34,7 +32,6 @@ import zowe.client.sdk.zostso.service.TsoResponseService;
  */
 public class StartTso {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StartTso.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -63,7 +60,7 @@ public class StartTso {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPostRequest)) {
-            throw new Exception("POST_JSON request type required");
+            throw new IllegalStateException("POST_JSON request type required");
         }
         this.request = request;
     }
@@ -75,11 +72,11 @@ public class StartTso {
      * @return generated url
      * @author Frank Giordano
      */
-    private String getResourcesQuery(StartTsoParams params) throws Exception {
+    private String getResourcesQuery(StartTsoParams params) {
         String query = "https://" + connection.getHost() + ":" + connection.getZosmfPort();
         query += TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "?";
-        query += TsoConstants.PARAM_ACCT + "=" +
-                params.account.orElseThrow(() -> new Exception("account num not specified")) + "&";
+        query += TsoConstants.PARAM_ACCT + "=" + params.account
+                .orElseThrow(() -> new IllegalStateException("account num not specified")) + "&";
         query += TsoConstants.PARAM_PROC + "=" + params.logonProcedure.orElse(TsoConstants.DEFAULT_PROC) + "&";
         query += TsoConstants.PARAM_CHSET + "=" + params.characterSet.orElse(TsoConstants.DEFAULT_CHSET) + "&";
         query += TsoConstants.PARAM_CPAGE + "=" + params.codePage.orElse(TsoConstants.DEFAULT_CPAGE) + "&";
@@ -153,7 +150,6 @@ public class StartTso {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
         final String url = getResourcesQuery(commandParams);
-        LOG.debug("StartTso::startCommon - url {}", url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);

@@ -130,11 +130,11 @@ public class JobSubmit {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
         }
         request.setUrl(url);
-        request.setBody(params.getJcl().orElseThrow(() -> new Exception("jcl not specified")));
+        request.setBody(params.getJcl().orElseThrow(() -> new IllegalArgumentException("jcl not specified")));
         request.setHeaders(headers);
 
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
-                .orElseThrow(() -> new Exception("no job jcl submit response phase")).toString();
+                .orElseThrow(() -> new IllegalStateException("no job jcl submit response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.JOB);
         return (Job) parser.parseResponse();
@@ -165,8 +165,8 @@ public class JobSubmit {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
 
-        final String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(
-                params.getJobDataSet().orElseThrow(() -> new Exception("jobDataSet not specified"))) + "'";
+        final String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(params.getJobDataSet()
+                .orElseThrow(() -> new IllegalArgumentException("jobDataSet not specified"))) + "'";
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("file", fullyQualifiedDataset);
 
@@ -181,7 +181,7 @@ public class JobSubmit {
         }
 
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
-                .orElseThrow(() -> new Exception("no job submit response phase")).toString();
+                .orElseThrow(() -> new IllegalStateException("no job submit response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.JOB);
         return (Job) parser.parseResponse();
@@ -201,23 +201,23 @@ public class JobSubmit {
         // Check for matching quotes
         for (final String value : keyValues.values()) {
             if (value.chars().filter(ch -> ch == '"').count() % 2 != 0) {
-                throw new Exception("Encountered invalid key/value pair. Mismatched quotes.");
+                throw new IllegalStateException("Encountered invalid key/value pair. Mismatched quotes.");
             }
             if (value.isEmpty()) {
-                throw new Exception("Encountered invalid key/value pair. Must define a value for key/value pair.");
+                throw new IllegalStateException("Encountered invalid key/value pair. Must define a value for key/value pair.");
             }
         }
 
         for (String key : keyValues.keySet()) {
             final String value = keyValues.get(key);
             if (key.isEmpty()) {
-                throw new Exception("Encountered invalid key/value pair. Must define a key for key/value pair.");
+                throw new IllegalStateException("Encountered invalid key/value pair. Must define a key for key/value pair.");
             }
             if (key.length() > 8) {
-                throw new Exception("Encountered invalid key/value pair. Key must be 8 characters or less.");
+                throw new IllegalStateException("Encountered invalid key/value pair. Key must be 8 characters or less.");
             }
             key = ZosmfHeaders.HEADERS.get("X_IBM_JCL_SYMBOL_PARTIAL").get(0) + key;
-            LOG.debug("JCL Symbol Header: " + key + ":" + value);
+            LOG.debug("JCL symbol header: {}:{}", key, value);
             symbolMap.put(key, value);
         }
 

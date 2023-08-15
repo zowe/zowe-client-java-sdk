@@ -22,12 +22,12 @@ import java.util.Optional;
 public class CommonJobParams {
 
     /**
-     * job id for a job
+     * Job id for a job
      */
     private final Optional<String> jobId;
 
     /**
-     * job name for a job
+     * Job name for a job
      */
     private final Optional<String> jobName;
 
@@ -98,6 +98,13 @@ public class CommonJobParams {
         return stepData;
     }
 
+    /**
+     * Helper method to validate constructor inputs
+     *
+     * @param jobId   job id value
+     * @param jobName job name value
+     * @author Frank Giordano
+     */
     private void validateParameters(String jobId, final String jobName) {
         ValidateUtils.checkNullParameter(jobId == null, "job id is null");
         ValidateUtils.checkIllegalParameter(jobId.isBlank(), "job id not specified");

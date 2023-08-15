@@ -65,7 +65,7 @@ public class UssCreate {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPostRequest)) {
-            throw new Exception("POST_JSON request type required");
+            throw new IllegalStateException("POST_JSON request type required");
         }
         this.request = request;
     }
