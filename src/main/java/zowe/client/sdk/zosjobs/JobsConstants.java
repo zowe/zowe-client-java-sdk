@@ -113,7 +113,7 @@ public final class JobsConstants {
      * URI endpoint for getting spool file content
      */
     public static final String RESOURCE_SPOOL_FILES = "/files";
-    
+
     /**
      * Step data query string
      */
