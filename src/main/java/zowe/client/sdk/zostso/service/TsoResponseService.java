@@ -24,7 +24,7 @@ public class TsoResponseService {
     /**
      * z/OSMF response info contains either tso start or stop command phrase, see zosmfResponse object
      */
-    private ZosmfTsoResponse zosmfPhaseResponse;
+    private ZosmfTsoResponse zosmfPhraseResponse;
 
     public TsoResponseService(Response response) {
         ValidateUtils.checkNullParameter(response == null, "response is null");
@@ -33,7 +33,7 @@ public class TsoResponseService {
 
     public TsoResponseService(ZosmfTsoResponse zosmfResponse) {
         ValidateUtils.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
-        this.zosmfPhaseResponse = zosmfResponse;
+        this.zosmfPhraseResponse = zosmfResponse;
     }
 
     /**
@@ -70,12 +70,12 @@ public class TsoResponseService {
      * @author Frank Giordano
      */
     public StartStopResponse setStartStopResponse() {
-        final StartStopResponse startStopResponse = new StartStopResponse(false, zosmfPhaseResponse,
-                zosmfPhaseResponse.getServletKey().orElse(""));
+        final StartStopResponse startStopResponse = new StartStopResponse(false, zosmfPhraseResponse,
+                zosmfPhraseResponse.getServletKey().orElse(""));
 
-        startStopResponse.setSuccess(zosmfPhaseResponse.getServletKey().isPresent());
-        if (!zosmfPhaseResponse.getMsgData().isEmpty()) {
-            final ZosmfMessages zosmfMsg = zosmfPhaseResponse.getMsgData().get(0);
+        startStopResponse.setSuccess(zosmfPhraseResponse.getServletKey().isPresent());
+        if (!zosmfPhraseResponse.getMsgData().isEmpty()) {
+            final ZosmfMessages zosmfMsg = zosmfPhraseResponse.getMsgData().get(0);
             final String msgText = zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR);
             startStopResponse.setFailureResponse(msgText);
         }
