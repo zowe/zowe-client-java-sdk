@@ -133,7 +133,7 @@ public class UssListTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        assertEquals("null file list response", msg);
+        assertEquals("null uss file list response", msg);
     }
 
     @Test
@@ -272,7 +272,7 @@ public class UssListTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("specify valid path", errMsg);
+        assertEquals("specify valid path value", errMsg);
     }
 
     @Test
@@ -371,7 +371,7 @@ public class UssListTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("specify valid path", errMsg);
+        assertEquals("specify valid path value", errMsg);
     }
 
     @Test

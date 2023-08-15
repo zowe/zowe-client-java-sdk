@@ -60,7 +60,7 @@ public class UssCreateTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("specify valid path", errMsg);
+        assertEquals("specify valid path value", errMsg);
     }
 
     @Test
@@ -159,7 +159,7 @@ public class UssCreateTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("specify valid permission", errMsg);
+        assertEquals("specify valid permission value", errMsg);
     }
 
 }

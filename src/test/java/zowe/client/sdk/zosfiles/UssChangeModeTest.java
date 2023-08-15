@@ -69,7 +69,7 @@ public class UssChangeModeTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("specify valid path", errMsg);
+        assertEquals("specify valid path value", errMsg);
     }
 
     @Test
