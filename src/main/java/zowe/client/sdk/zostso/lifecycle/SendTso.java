@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.zostso.lifecycle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -39,7 +37,6 @@ import java.util.List;
  */
 public class SendTso {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SendTso.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -68,7 +65,7 @@ public class SendTso {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
-            throw new Exception("PUT_JSON request type required");
+            throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
@@ -80,9 +77,9 @@ public class SendTso {
      * @return SendResponse, see SendResponse
      * @author Frank Giordano
      */
-    private static SendResponse createResponse(CollectedResponses responses) throws Exception {
-        return new SendResponse(true, responses.getTsos(),
-                responses.getMessages().orElseThrow(() -> new Exception("no responses messages exist")));
+    private static SendResponse createResponse(CollectedResponses responses) {
+        return new SendResponse(true, responses.getTsos(), responses.getMessages()
+                .orElseThrow(() -> new IllegalStateException("no responses tso messages exist")));
     }
 
     /**
@@ -121,7 +118,8 @@ public class SendTso {
                 }
             }
             if (!done) {
-                tso = getDataFromTSO(tso.getServletKey().orElseThrow((() -> new Exception("servlet key missing"))));
+                tso = getDataFromTSO(tso.getServletKey().orElseThrow((
+                        () -> new IllegalStateException("servlet key missing"))));
                 tsos.add(tso);
             }
         }
@@ -139,7 +137,6 @@ public class SendTso {
     private ZosmfTsoResponse getDataFromTSO(String servletKey) throws Exception {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
-        LOG.debug("SendTso::getDataFromTSO - url {}", url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
@@ -155,20 +152,16 @@ public class SendTso {
      *
      * @param tsoResponseMessage tso response message, see tsoResponseMessage
      * @return json representation of TSO RESPONSE
-     * @throws Exception error executing command
      * @author Frank Giordano
      */
-    private String getTsoResponseSendMessage(TsoResponseMessage tsoResponseMessage) throws Exception {
-        final String message = "{\"TSO RESPONSE\":{\"VERSION\":\"" +
-                tsoResponseMessage.getVersion().orElseThrow((() -> new Exception("response version missing")))
-                + "\",\"DATA\":\"" +
-                tsoResponseMessage.getData().orElseThrow((() -> new Exception("response data missing"))) + "\"}}";
-        LOG.debug("SendTso::getTsoResponseSendMessage - message {}", message);
-        return message;
+    private String getTsoResponseSendMessage(TsoResponseMessage tsoResponseMessage) {
+        return "{\"TSO RESPONSE\":{\"VERSION\":\"" + tsoResponseMessage.getVersion().orElse("")
+                + "\",\"DATA\":\"" + tsoResponseMessage.getData().orElse("") + "\"}}";
     }
 
     /**
-     * API method to send data to already started TSO address space, but will read TSO data until a PROMPT is reached.
+     * API method to send data to already started TSO address space,
+     * but will read TSO data until a PROMPT is reached.
      *
      * @param command    to send to the TSO address space.
      * @param servletKey returned from a successful start
@@ -177,10 +170,6 @@ public class SendTso {
      * @author Frank Giordano
      */
     public SendResponse sendDataToTSOCollect(String servletKey, String command) throws Exception {
-        ValidateUtils.checkNullParameter(servletKey == null, "servletKey is null");
-        ValidateUtils.checkNullParameter(command == null, "command is null");
-        ValidateUtils.checkIllegalParameter(servletKey.isBlank(), "servletKey not specified");
-        ValidateUtils.checkIllegalParameter(command.isBlank(), "command not specified");
         final ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParams(servletKey, command));
         final CollectedResponses responses = getAllResponses(putResponse);
         return createResponse(responses);
@@ -196,12 +185,9 @@ public class SendTso {
      */
     public ZosmfTsoResponse sendDataToTSOCommon(SendTsoParams commandParams) throws Exception {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
-        ValidateUtils.checkIllegalParameter(commandParams.getData().isBlank(), "commandParams data not specified");
-        ValidateUtils.checkIllegalParameter(commandParams.getServletKey().isBlank(), "commandParams servletKey not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;
-        LOG.debug("SendTso::sendDataToTSOCommon - url {}", url);
 
         final TsoResponseMessage tsoResponseMessage = new TsoResponseMessage("0100", commandParams.getData());
         final String jobObjBody = getTsoResponseSendMessage(tsoResponseMessage);

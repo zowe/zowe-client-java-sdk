@@ -59,10 +59,6 @@ public class StartStopResponses {
      * @author Frank Giordano
      */
     public StartStopResponses(ZosmfTsoResponse zosmfTsoResponse, CollectedResponses collectedResponses) throws Exception {
-        if (zosmfTsoResponse == null) {
-            throw new Exception("zosmfTsoResponse is null");
-        }
-
         this.zosmfTsoResponse = zosmfTsoResponse;
         if (!zosmfTsoResponse.getMsgData().isEmpty()) {
             // more data means more tso responses to come and as such tso command request has not ended in success yet
@@ -75,7 +71,8 @@ public class StartStopResponses {
             this.failureResponse = null;
         }
 
-        this.servletKey = zosmfTsoResponse.getServletKey().orElseThrow(() -> new Exception("servletKey is missing"));
+        this.servletKey = zosmfTsoResponse.getServletKey()
+                .orElseThrow(() -> new IllegalStateException("servletKey is missing"));
 
         final StringBuilder buildMessage = new StringBuilder();
         final List<TsoMessages> tsoMsgLst = zosmfTsoResponse.getTsoData();

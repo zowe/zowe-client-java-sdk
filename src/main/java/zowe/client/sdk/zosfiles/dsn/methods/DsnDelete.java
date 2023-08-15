@@ -57,7 +57,7 @@ public class DsnDelete {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonDeleteRequest)) {
-            throw new Exception("DELETE_JSON request type required");
+            throw new IllegalStateException("DELETE_JSON request type required");
         }
         this.request = request;
     }

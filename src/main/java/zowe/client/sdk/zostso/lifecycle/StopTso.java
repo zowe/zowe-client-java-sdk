@@ -11,8 +11,6 @@ package zowe.client.sdk.zostso.lifecycle;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseResponse;
 import zowe.client.sdk.parse.JsonParseResponseFactory;
@@ -38,7 +36,6 @@ import zowe.client.sdk.zostso.service.TsoResponseService;
  */
 public class StopTso {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StopTso.class);
     private final ZosConnection connection;
     private ZoweRequest request;
 
@@ -67,7 +64,7 @@ public class StopTso {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonDeleteRequest)) {
-            throw new Exception("DELETE_JSON request type required");
+            throw new IllegalStateException("DELETE_JSON request type required");
         }
         this.request = request;
     }
@@ -101,12 +98,9 @@ public class StopTso {
      */
     public ZosmfTsoResponse stopCommon(StopTsoParams commandParams) throws Exception {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
-        ValidateUtils.checkIllegalParameter(commandParams.getServletKey().isEmpty(), "servletKey not specified");
-        ValidateUtils.checkIllegalParameter(commandParams.getServletKey().get().isBlank(), "servletKey not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey().get();
-        LOG.debug("StopTso::stopCommon url {}", url);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
@@ -116,7 +110,7 @@ public class StopTso {
         final Response response = RestUtils.getResponse(request);
 
         final String jsonStr = response.getResponsePhrase()
-                .orElseThrow(() -> new Exception("no tso stop response phase")).toString();
+                .orElseThrow(() -> new IllegalStateException("no tso stop response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         final JsonParseResponse jsonParseResponse = JsonParseResponseFactory.buildParser(jsonObject, ParseType.TSO_STOP);
         return (ZosmfTsoResponse) jsonParseResponse.parseResponse();

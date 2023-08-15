@@ -61,7 +61,7 @@ public class JobDelete {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonDeleteRequest)) {
-            throw new Exception("DELETE_JSON request type required");
+            throw new IllegalStateException("DELETE_JSON request type required");
         }
         this.request = request;
     }
@@ -92,11 +92,11 @@ public class JobDelete {
     public Response deleteCommon(ModifyJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String jnErrMsg = "job name not specified";
-        final String jiErrMsg = "job id not specified";
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM + params.getJobName().orElseThrow(() -> new IllegalArgumentException(jnErrMsg)) +
-                JobsConstants.FILE_DELIM + params.getJobId().orElseThrow(() -> new IllegalArgumentException(jiErrMsg));
+                JobsConstants.FILE_DELIM + params.getJobName()
+                .orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_NAME_ERROR_MSG)) +
+                JobsConstants.FILE_DELIM + params.getJobId()
+                .orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_ID_ERROR_MSG));
 
         final Map<String, String> headers = new HashMap<>();
 
@@ -115,7 +115,7 @@ public class JobDelete {
             headers.put(ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(0),
                     ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(1));
         } else {
-            throw new IllegalArgumentException("invalid version specified");
+            throw new IllegalStateException("invalid version specified");
         }
 
         if (request == null) {
@@ -141,8 +141,9 @@ public class JobDelete {
      */
     public Response deleteByJob(Job job, String version) throws Exception {
         return this.deleteCommon(
-                new ModifyJobParams.Builder(job.getJobName().orElse(null), job.getJobId().orElse(null))
-                        .version(version).build());
+                new ModifyJobParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
+                        .version(version)
+                        .build());
     }
 
 }

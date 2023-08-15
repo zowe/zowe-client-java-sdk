@@ -27,25 +27,28 @@ public class ZosLogReply {
      * For example, "-3" means UTC-3 timezone.
      */
     private final OptionalLong timeZone;
+
     /**
      * The UNIX timestamp. This value could be used in a subsequent request to specify a starting timestamp.
      * Logs in the "nextTimestamp" are not returned to the current response.
      */
     private final OptionalLong nextTimeStamp;
+
     /**
      * Indicates the source of the log.
      * Value "OPERLOG" indicates the operations log.
      */
     private final Optional<String> source;
+
     /**
      * Total number of messages returned to the response.
      */
     private final OptionalLong totalItems;
+
     /**
      * JSON array of messages
      */
     private final List<ZosLogItem> items;
-
 
     /**
      * ZosLogReply constructor

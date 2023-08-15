@@ -81,11 +81,11 @@ public class IssueTso {
         final StartStopResponses startResponse = startTso.start(accountNumber, startParams);
 
         if (startResponse == null) {
-            throw new Exception("Severe failure getting started TSO address space.");
+            throw new IllegalStateException("Severe failure getting started TSO address space.");
         }
 
         if (!startResponse.isSuccess()) {
-            throw new Exception("TSO address space failed to start. Error: " +
+            throw new IllegalStateException("TSO address space failed to start. Error: " +
                     (startResponse.getFailureResponse().orElse("Unknown error")));
         }
 
@@ -94,10 +94,10 @@ public class IssueTso {
 
         final List<ZosmfTsoResponse> zosmfTsoResponses = new ArrayList<>();
         zosmfTsoResponses.add(startResponse.getZosmfTsoResponse()
-                .orElseThrow(() -> new Exception("no zosmf start tso response")));
+                .orElseThrow(() -> new IllegalStateException("no zosmf start tso response")));
 
         final String servletKey = startResponse.getServletKey()
-                .orElseThrow(() -> new Exception("no servletKey key value returned from startTso"));
+                .orElseThrow(() -> new IllegalStateException("no servletKey key value returned from startTso"));
 
         // second stage send command to tso servlet session created in first stage and collect all tso responses
         final SendTso sendTso = new SendTso(connection);
@@ -109,7 +109,7 @@ public class IssueTso {
 
         // lastly save the command response to our issueResponse reference
         issueResponse.setCommandResponses(sendResponse.getCommandResponse()
-                .orElseThrow(() -> new Exception("error getting command response")));
+                .orElseThrow(() -> new IllegalStateException("error getting tso command response")));
 
         // third stage here where the tso end session operation is performed
         final StopTso stopTso = new StopTso(connection);

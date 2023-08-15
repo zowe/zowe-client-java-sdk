@@ -76,7 +76,7 @@ public class KeyTarService {
             break;
         }
         if (keyTarConfigs.isEmpty()) {
-            throw new Exception("No OS credential store related to Zowe found.");
+            throw new IllegalStateException("No OS credential store related to Zowe found.");
         }
         if (keyTarConfigs.size() > 1) {
             LOG.debug("Multiple OS credential stores found related to Zowe. Returning the first one on list.");

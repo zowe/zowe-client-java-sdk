@@ -67,7 +67,7 @@ public class GetJobsByJsonGetRequestTest {
     @Test
     @SuppressWarnings("unchecked")
     public void tstGetJobFromMultipleJobsResultsExceptionFailure() {
-        final String msg = "Expected 1 job returned but received 2 jobs.";
+        final String msg = "expected 1 job returned but received 2 jobs.";
         final JSONArray jsonArray = new JSONArray();
 
         final Map<String, String> jsonJobMap1 = new HashMap<>();
@@ -189,7 +189,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("job id is null", errorMsg);
+        assertEquals("job id not specified", errorMsg);
     }
 
     @Test
@@ -221,7 +221,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("job name is null", errorMsg);
+        assertEquals(JobsConstants.JOB_NAME_ERROR_MSG, errorMsg);
     }
 
     @Test
@@ -232,7 +232,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (Exception e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("job id is null", errorMsg);
+        assertEquals(JobsConstants.JOB_ID_ERROR_MSG, errorMsg);
     }
 
 }

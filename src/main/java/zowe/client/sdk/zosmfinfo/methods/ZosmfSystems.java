@@ -60,7 +60,7 @@ public class ZosmfSystems {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {
-            throw new Exception("GET_JSON request type required");
+            throw new IllegalStateException("GET_JSON request type required");
         }
         this.request = request;
     }
@@ -82,7 +82,7 @@ public class ZosmfSystems {
         request.setUrl(url);
 
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
-                .orElseThrow(() -> new Exception("no z/osmf info response phase")).toString();
+                .orElseThrow(() -> new IllegalStateException("no z/osmf info response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.ZOSMF_SYSTEMS);
         return (ZosmfSystemsResponse) parser.parseResponse();

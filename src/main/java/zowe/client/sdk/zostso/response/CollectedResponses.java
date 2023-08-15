@@ -37,12 +37,12 @@ public class CollectedResponses {
     /**
      * CollectedResponses constructor
      *
-     * @param tsos     tso list of ZosmfTsoResponse objects
+     * @param tsoLst   tso list of ZosmfTsoResponse objects
      * @param messages tso messages
      * @author Frank Giordano
      */
-    public CollectedResponses(List<ZosmfTsoResponse> tsos, String messages) {
-        this.tsos = Objects.requireNonNullElse(tsos, Collections.emptyList());
+    public CollectedResponses(List<ZosmfTsoResponse> tsoLst, String messages) {
+        this.tsos = Objects.requireNonNullElse(tsoLst, Collections.emptyList());
         this.messages = Optional.ofNullable(messages);
     }
 

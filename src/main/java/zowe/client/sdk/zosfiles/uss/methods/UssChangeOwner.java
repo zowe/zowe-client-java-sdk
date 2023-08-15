@@ -62,7 +62,7 @@ public class UssChangeOwner {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
-            throw new Exception("PUT_JSON request type required");
+            throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
@@ -106,7 +106,7 @@ public class UssChangeOwner {
             jsonMap.put("recursive", "true");
         }
         params.getLinkType().ifPresent(type -> jsonMap.put("links", type.getValue()));
-        jsonMap.put("owner", params.getOwner().orElseThrow(() -> new Exception("owner not specified")));
+        jsonMap.put("owner", params.getOwner().orElseThrow(() -> new IllegalStateException("owner not specified")));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);

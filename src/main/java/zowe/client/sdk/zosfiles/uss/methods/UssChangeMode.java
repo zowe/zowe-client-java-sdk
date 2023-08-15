@@ -64,7 +64,7 @@ public class UssChangeMode {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonPutRequest)) {
-            throw new Exception("PUT_JSON request type required");
+            throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
@@ -94,7 +94,7 @@ public class UssChangeMode {
             jsonMap.put("recursive", "true");
         }
         params.getLinkType().ifPresent(type -> jsonMap.put("links", type.getValue()));
-        jsonMap.put("mode", params.getMode().orElseThrow(() -> new Exception("mode not specified")));
+        jsonMap.put("mode", params.getMode().orElseThrow(() -> new IllegalArgumentException("mode not specified")));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);

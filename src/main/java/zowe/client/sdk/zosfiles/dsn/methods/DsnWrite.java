@@ -56,7 +56,7 @@ public class DsnWrite {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof TextPutRequest)) {
-            throw new Exception("PUT_TEXT request type required");
+            throw new IllegalStateException("PUT_TEXT request type required");
         }
         this.request = request;
     }

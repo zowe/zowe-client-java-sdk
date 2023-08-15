@@ -67,7 +67,7 @@ public class DsnList {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {
-            throw new Exception("GET_JSON request type required");
+            throw new IllegalStateException("GET_JSON request type required");
         }
         this.request = request;
     }

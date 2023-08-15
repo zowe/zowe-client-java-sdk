@@ -25,42 +25,52 @@ public class ZosLogItem {
      * Eight character command and response token (CART).
      */
     private final Optional<String> cart;
+
     /**
      * The color of the message.
      */
     private final Optional<String> color;
+
     /**
      * The name of the job that generates the message.
      */
     private final Optional<String> jobName;
+
     /**
      * The content of the message.
      */
     private final Optional<String> message;
+
     /**
      * The message ID.
      */
     private final Optional<String> messageId;
+
     /**
      * Reply ID, in decimal.
      */
     private final Optional<String> replyId;
+
     /**
      * Original eight character system name.
      */
     private final Optional<String> system;
+
     /**
      * Type variable
      */
     private final Optional<String> type;
+
     /**
      * Indicate whether the message is a DOM, WTOR, or HOLD message.
      */
     private final Optional<String> subType;
+
     /**
      * For example, "Thu Feb 03 03:00 GMT 2021".
      */
     private final Optional<String> time;
+
     /**
      * UNIX timestamp. For example, 1621920830109.
      */

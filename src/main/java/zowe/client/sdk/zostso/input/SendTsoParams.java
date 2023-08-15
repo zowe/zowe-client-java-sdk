@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zostso.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
 /**
  * TSO issue command z/OSMF parameters
  *
@@ -35,6 +37,10 @@ public class SendTsoParams {
      * @author Frank Giordano
      */
     public SendTsoParams(String servletKey, String data) {
+        ValidateUtils.checkNullParameter(servletKey == null, "servletKey is null");
+        ValidateUtils.checkIllegalParameter(servletKey.isBlank(), "servletKey not specified");
+        ValidateUtils.checkNullParameter(data == null, "data is null");
+        ValidateUtils.checkIllegalParameter(data.isBlank(), "data not specified");
         this.servletKey = servletKey;
         this.data = data;
     }
