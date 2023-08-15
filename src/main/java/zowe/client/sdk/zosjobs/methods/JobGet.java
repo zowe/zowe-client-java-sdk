@@ -301,7 +301,7 @@ public class JobGet {
     }
 
     /**
-     * Get spool content from a job.
+     * Get spool file content from a job file definition.
      *
      * @param jobFile spool file for which you want to retrieve the content
      * @return spool content
@@ -325,7 +325,8 @@ public class JobGet {
         request.setUrl(url);
 
         final Response response = RestUtils.getResponse(request);
-        return (String) response.getResponsePhrase().get();
+        final String spoolErrMsg = "no job spool file content response phrase";
+        return (String) response.getResponsePhrase().orElseThrow(() -> new IllegalStateException(spoolErrMsg));
     }
 
     /**
@@ -353,8 +354,6 @@ public class JobGet {
     public List<JobFile> getSpoolFilesCommon(CommonJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        List<JobFile> files = new ArrayList<>();
-
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(params.getJobName()
                         .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
@@ -366,22 +365,18 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        Response response;
-        try {
-            response = RestUtils.getResponse(request);
-        } catch (Exception e) {
-            LOG.debug("error getting spool files - {}", e.getMessage());
-            if (e.getMessage().contains("no response phrase returned")) {
-                return files;
-            }
-            throw e;
+        final Response response = RestUtils.getResponse(request);
+
+        final List<JobFile> files = new ArrayList<>();
+        final String jsonStr = response.getResponsePhrase().orElse("").toString();
+        if (jsonStr.isBlank()) {
+            return files;
         }
 
-        final String errMsg = "no get job spool response phrase";
-        final String jsonStr = response.getResponsePhrase().orElseThrow(() -> new IllegalStateException(errMsg)).toString();
         final JSONArray results = (JSONArray) new JSONParser().parse(jsonStr);
         for (final Object obj : results) {
-            final JsonParseResponse parser = JsonParseResponseFactory.buildParser((JSONObject) obj, ParseType.JOB_FILE);
+            final JSONObject jsonObj = (JSONObject) obj;
+            final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObj, ParseType.JOB_FILE);
             files.add((JobFile) parser.parseResponse());
         }
 
