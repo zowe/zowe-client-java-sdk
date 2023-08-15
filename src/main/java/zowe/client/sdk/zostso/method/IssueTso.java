@@ -101,7 +101,7 @@ public class IssueTso {
 
         // second stage send command to tso servlet session created in first stage and collect all tso responses
         final SendTso sendTso = new SendTso(connection);
-        final SendResponse sendResponse = sendTso.sendDataToTSOCollect(servletKey, command);
+        final SendResponse sendResponse = sendTso.sendDataToTsoCollect(servletKey, command);
         issueResponse.setSuccess(sendResponse.getSuccess());
         zosmfTsoResponses.addAll(sendResponse.getZosmfResponses());
 

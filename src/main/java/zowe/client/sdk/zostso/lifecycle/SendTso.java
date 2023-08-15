@@ -118,7 +118,7 @@ public class SendTso {
                 }
             }
             if (!done) {
-                tso = getDataFromTSO(tso.getServletKey().orElseThrow((
+                tso = getDataFromTso(tso.getServletKey().orElseThrow((
                         () -> new IllegalStateException("servlet key missing"))));
                 tsos.add(tso);
             }
@@ -134,7 +134,7 @@ public class SendTso {
      * @throws Exception error executing command
      * @author Frank Giordano
      */
-    private ZosmfTsoResponse getDataFromTSO(String servletKey) throws Exception {
+    private ZosmfTsoResponse getDataFromTso(String servletKey) throws Exception {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
 
@@ -169,8 +169,8 @@ public class SendTso {
      * @throws Exception error executing command
      * @author Frank Giordano
      */
-    public SendResponse sendDataToTSOCollect(String servletKey, String command) throws Exception {
-        final ZosmfTsoResponse putResponse = sendDataToTSOCommon(new SendTsoParams(servletKey, command));
+    public SendResponse sendDataToTsoCollect(String servletKey, String command) throws Exception {
+        final ZosmfTsoResponse putResponse = sendDataToTsoCommon(new SendTsoParams(servletKey, command));
         final CollectedResponses responses = getAllResponses(putResponse);
         return createResponse(responses);
     }
@@ -183,7 +183,7 @@ public class SendTso {
      * @throws Exception error executing command
      * @author Frank Giordano
      */
-    public ZosmfTsoResponse sendDataToTSOCommon(SendTsoParams commandParams) throws Exception {
+    public ZosmfTsoResponse sendDataToTsoCommon(SendTsoParams commandParams) throws Exception {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
