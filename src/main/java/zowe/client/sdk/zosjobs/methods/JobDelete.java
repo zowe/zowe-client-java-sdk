@@ -115,7 +115,7 @@ public class JobDelete {
             headers.put(ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(0),
                     ZosmfHeaders.HEADERS.get("X_IBM_JOB_MODIFY_VERSION_2").get(1));
         } else {
-            throw new IllegalStateException("invalid version specified");
+            throw new IllegalArgumentException("invalid version specified");
         }
 
         if (request == null) {
