@@ -76,7 +76,6 @@ public final class ConsoleResponseService {
                     consoleResponse.setCommandResponse(responseStr + "\n");
                 }
             }
-
         }
 
         // If the response key is present, set the last response key value in the response.
