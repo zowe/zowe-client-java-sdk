@@ -14,7 +14,7 @@ import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
 
 /**
- * ConsoleResponseService class service.
+ * ConsoleResponseService singleton class service.
  *
  * @author Frank Giordano
  * @version 2.0
@@ -25,7 +25,7 @@ public final class ConsoleResponseService {
 
     /**
      * Private constructor defined to avoid public instantiation of class
-     * 
+     *
      * @author Frank Giordano
      */
     private ConsoleResponseService() {
