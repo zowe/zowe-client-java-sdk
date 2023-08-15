@@ -137,7 +137,8 @@ public class DsnList {
             throw new Exception(response.getStatusCode().get() + " - " + response.getResponsePhrase().get());
         }
 
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString());
+        final String jsonStr = response.getResponsePhrase().get().toString();
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         if (jsonObject.isEmpty()) {
             if (datasetLst == null) {
                 return memberLst;
