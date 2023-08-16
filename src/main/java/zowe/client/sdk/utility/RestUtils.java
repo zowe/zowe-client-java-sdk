@@ -63,6 +63,7 @@ public final class RestUtils {
                         content.append(line).append("\n");
                     }
                     responsePhrase.set(content.substring(0, content.length() - 1));
+                    br.close();
                 }
             }
 
