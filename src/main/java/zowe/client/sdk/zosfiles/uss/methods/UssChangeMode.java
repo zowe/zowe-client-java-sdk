@@ -88,19 +88,20 @@ public class UssChangeMode {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("request", "chmod");
+        final Map<String, Object> chamgeModeMap = new HashMap<>();
+        chamgeModeMap.put("request", "chmod");
         if (params.isRecursive()) {
-            jsonMap.put("recursive", "true");
+            chamgeModeMap.put("recursive", "true");
         }
-        params.getLinkType().ifPresent(type -> jsonMap.put("links", type.getValue()));
-        jsonMap.put("mode", params.getMode().orElseThrow(() -> new IllegalArgumentException("mode not specified")));
+        params.getLinkType().ifPresent(type -> chamgeModeMap.put("links", type.getValue()));
+        chamgeModeMap.put("mode", params.getMode()
+                .orElseThrow(() -> new IllegalArgumentException("mode not specified")));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(jsonMap).toString());
+        request.setBody(new JSONObject(chamgeModeMap).toString());
 
         return RestUtils.getResponse(request);
     }

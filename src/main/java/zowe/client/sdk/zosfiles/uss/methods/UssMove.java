@@ -117,16 +117,16 @@ public class UssMove {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("request", "move");
-        jsonMap.put("from", FileUtils.validatePath(fromPath));
-        jsonMap.put("overwrite", overwrite);
+        final Map<String, Object> moveMap = new HashMap<>();
+        moveMap.put("request", "move");
+        moveMap.put("from", FileUtils.validatePath(fromPath));
+        moveMap.put("overwrite", overwrite);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(jsonMap).toString());
+        request.setBody(new JSONObject(moveMap).toString());
 
         return RestUtils.getResponse(request);
     }

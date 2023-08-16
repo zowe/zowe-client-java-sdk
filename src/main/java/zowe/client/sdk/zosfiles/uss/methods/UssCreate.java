@@ -89,15 +89,15 @@ public class UssCreate {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("type", params.getType().getValue());
-        jsonMap.put("mode", params.getMode());
+        final Map<String, Object> createMap = new HashMap<>();
+        createMap.put("type", params.getType().getValue());
+        createMap.put("mode", params.getMode());
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(jsonMap).toString());
+        request.setBody(new JSONObject(createMap).toString());
 
         return RestUtils.getResponse(request);
     }

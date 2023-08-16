@@ -132,8 +132,8 @@ public class DsnRename {
      * @author Frank Giordano
      */
     private Response executeCommon(String... args) throws Exception {
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("request", "rename");
+        final Map<String, Object> renameMap = new HashMap<>();
+        renameMap.put("request", "rename");
 
         final Map<String, Object> fromDataSetReq = new HashMap<>();
         fromDataSetReq.put("dsn", args[0]);
@@ -142,13 +142,13 @@ public class DsnRename {
         }
 
         final JSONObject fromDataSetObj = new JSONObject(fromDataSetReq);
-        jsonMap.put("from-dataset", fromDataSetObj);
+        renameMap.put("from-dataset", fromDataSetObj);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(jsonMap).toString());
+        request.setBody(new JSONObject(renameMap).toString());
 
         return RestUtils.getResponse(request);
     }

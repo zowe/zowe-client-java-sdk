@@ -102,22 +102,22 @@ public class UssCopy {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("request", "copy");
-        jsonMap.put("from", FileUtils.validatePath(params.getFrom()
+        final Map<String, Object> copyMap = new HashMap<>();
+        copyMap.put("request", "copy");
+        copyMap.put("from", FileUtils.validatePath(params.getFrom()
                 .orElseThrow(() -> new IllegalStateException("uss copy /'from/' not specified"))));
         if (!params.isOverwrite()) {
-            jsonMap.put("overwrite", "false");
+            copyMap.put("overwrite", "false");
         }
         if (params.isRecursive()) {
-            jsonMap.put("recursive", "true");
+            copyMap.put("recursive", "true");
         }
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(jsonMap).toString());
+        request.setBody(new JSONObject(copyMap).toString());
 
         return RestUtils.getResponse(request);
     }

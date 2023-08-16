@@ -142,15 +142,15 @@ public class JobCancel {
             throw new IllegalArgumentException("invalid version specified");
         }
 
-        final Map<String, String> jsonMap = new HashMap<>();
-        jsonMap.put("request", JobsConstants.REQUEST_CANCEL);
-        jsonMap.put("version", version);
+        final Map<String, String> cancelMap = new HashMap<>();
+        cancelMap.put("request", JobsConstants.REQUEST_CANCEL);
+        cancelMap.put("version", version);
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(jsonMap).toString());
+        request.setBody(new JSONObject(cancelMap).toString());
 
         // if synchronously response should contain job document that was cancelled and http return code
         // if asynchronously response should only contain http return code

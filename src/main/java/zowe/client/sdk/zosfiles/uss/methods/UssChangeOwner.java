@@ -99,20 +99,21 @@ public class UssChangeOwner {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("request", "chown");
-        params.getGroup().ifPresent(group -> jsonMap.put("group", group));
+        final Map<String, Object> chamgeOnerMap = new HashMap<>();
+        chamgeOnerMap.put("request", "chown");
+        params.getGroup().ifPresent(group -> chamgeOnerMap.put("group", group));
         if (params.isRecursive()) {
-            jsonMap.put("recursive", "true");
+            chamgeOnerMap.put("recursive", "true");
         }
-        params.getLinkType().ifPresent(type -> jsonMap.put("links", type.getValue()));
-        jsonMap.put("owner", params.getOwner().orElseThrow(() -> new IllegalStateException("owner not specified")));
+        params.getLinkType().ifPresent(type -> chamgeOnerMap.put("links", type.getValue()));
+        chamgeOnerMap.put("owner", params.getOwner()
+                .orElseThrow(() -> new IllegalStateException("owner not specified")));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(jsonMap).toString());
+        request.setBody(new JSONObject(chamgeOnerMap).toString());
 
         return RestUtils.getResponse(request);
     }

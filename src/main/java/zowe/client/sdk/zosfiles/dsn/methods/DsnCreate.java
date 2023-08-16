@@ -85,29 +85,29 @@ public class DsnCreate {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
-        final Map<String, Object> jsonMap = new HashMap<>();
-        params.getVolser().ifPresent(v -> jsonMap.put("volser", v));
-        params.getUnit().ifPresent(v -> jsonMap.put("unit", v));
-        params.getDsorg().ifPresent(v -> jsonMap.put("dsorg", v));
-        params.getAlcunit().ifPresent(v -> jsonMap.put("alcunit", v));
-        params.getPrimary().ifPresent(v -> jsonMap.put("primary", v));
-        params.getSecondary().ifPresent(v -> jsonMap.put("secondary", v));
-        params.getDirblk().ifPresent(v -> jsonMap.put("dirblk", v));
-        params.getAvgblk().ifPresent(v -> jsonMap.put("avgblk", v));
-        params.getRecfm().ifPresent(v -> jsonMap.put("recfm", v));
-        params.getBlksize().ifPresent(v -> jsonMap.put("blksize", v));
-        params.getLrecl().ifPresent(v -> jsonMap.put("lrecl", v));
-        params.getStorclass().ifPresent(v -> jsonMap.put("storclass", v));
-        params.getStorclass().ifPresent(v -> jsonMap.put("mgntclass", v));
-        params.getMgntclass().ifPresent(v -> jsonMap.put("mgntclass", v));
-        params.getDataclass().ifPresent(v -> jsonMap.put("dataclass", v));
-        params.getDsntype().ifPresent(v -> jsonMap.put("dsntype", v));
+        final Map<String, Object> createMap = new HashMap<>();
+        params.getVolser().ifPresent(v -> createMap.put("volser", v));
+        params.getUnit().ifPresent(v -> createMap.put("unit", v));
+        params.getDsorg().ifPresent(v -> createMap.put("dsorg", v));
+        params.getAlcunit().ifPresent(v -> createMap.put("alcunit", v));
+        params.getPrimary().ifPresent(v -> createMap.put("primary", v));
+        params.getSecondary().ifPresent(v -> createMap.put("secondary", v));
+        params.getDirblk().ifPresent(v -> createMap.put("dirblk", v));
+        params.getAvgblk().ifPresent(v -> createMap.put("avgblk", v));
+        params.getRecfm().ifPresent(v -> createMap.put("recfm", v));
+        params.getBlksize().ifPresent(v -> createMap.put("blksize", v));
+        params.getLrecl().ifPresent(v -> createMap.put("lrecl", v));
+        params.getStorclass().ifPresent(v -> createMap.put("storclass", v));
+        params.getStorclass().ifPresent(v -> createMap.put("mgntclass", v));
+        params.getMgntclass().ifPresent(v -> createMap.put("mgntclass", v));
+        params.getDataclass().ifPresent(v -> createMap.put("dataclass", v));
+        params.getDsntype().ifPresent(v -> createMap.put("dsntype", v));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(jsonMap).toString());
+        request.setBody(new JSONObject(createMap).toString());
 
         return RestUtils.getResponse(request);
     }

@@ -145,21 +145,21 @@ public class UssChangeTag {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(fileNamePath));
 
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("request", "chtag");
-        jsonMap.put("action", params.getAction().get().getValue());
-        params.getType().ifPresent(type -> jsonMap.put("type", type.getValue()));
-        params.getCodeset().ifPresent(codeset -> jsonMap.put("codeset", codeset));
+        final Map<String, Object> changeTagMap = new HashMap<>();
+        changeTagMap.put("request", "chtag");
+        changeTagMap.put("action", params.getAction().get().getValue());
+        params.getType().ifPresent(type -> changeTagMap.put("type", type.getValue()));
+        params.getCodeset().ifPresent(codeset -> changeTagMap.put("codeset", codeset));
         if (!params.isRecursive()) {
-            jsonMap.put("recursive", "false");
+            changeTagMap.put("recursive", "false");
         }
-        params.getLinks().ifPresent(links -> jsonMap.put("links", links.getValue()));
+        params.getLinks().ifPresent(links -> changeTagMap.put("links", links.getValue()));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(jsonMap).toString());
+        request.setBody(new JSONObject(changeTagMap).toString());
 
         return RestUtils.getResponse(request);
     }

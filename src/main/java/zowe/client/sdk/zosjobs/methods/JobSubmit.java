@@ -167,14 +167,14 @@ public class JobSubmit {
 
         final String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(params.getJobDataSet()
                 .orElseThrow(() -> new IllegalArgumentException("jobDataSet not specified"))) + "'";
-        final Map<String, String> jsonMap = new HashMap<>();
-        jsonMap.put("file", fullyQualifiedDataset);
+        final Map<String, String> submitMap = new HashMap<>();
+        submitMap.put("file", fullyQualifiedDataset);
 
         if (request == null || !(request instanceof JsonPutRequest)) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(jsonMap).toString());
+        request.setBody(new JSONObject(submitMap).toString());
 
         if (params.getJclSymbols().isPresent()) {
             request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));

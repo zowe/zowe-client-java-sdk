@@ -128,17 +128,17 @@ public class UssMount {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 
-        final Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("action", action);
-        params.getMountPoint().ifPresent(str -> jsonMap.put("mount-point", str));
-        params.getFsType().ifPresent(str -> jsonMap.put("fs-type", str));
-        params.getMode().ifPresent(str -> jsonMap.put("mode", str.getValue()));
+        final Map<String, Object> mountMap = new HashMap<>();
+        mountMap.put("action", action);
+        params.getMountPoint().ifPresent(str -> mountMap.put("mount-point", str));
+        params.getFsType().ifPresent(str -> mountMap.put("fs-type", str));
+        params.getMode().ifPresent(str -> mountMap.put("mode", str.getValue()));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(jsonMap).toString());
+        request.setBody(new JSONObject(mountMap).toString());
 
         return RestUtils.getResponse(request);
     }
