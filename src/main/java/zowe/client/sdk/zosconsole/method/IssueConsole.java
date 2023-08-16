@@ -12,7 +12,6 @@ package zowe.client.sdk.zosconsole.method;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseResponse;
 import zowe.client.sdk.parse.JsonParseResponseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.JsonPutRequest;
@@ -134,9 +133,9 @@ public class IssueConsole {
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no issue console response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.MVS_CONSOLE);
         return ConsoleResponseService.getInstance()
-                .buildConsoleResponse((ZosmfIssueResponse) parser.parseResponse(), params.isProcessResponse());
+                .buildConsoleResponse((ZosmfIssueResponse) JsonParseResponseFactory.buildParser(ParseType.MVS_CONSOLE)
+                        .setJsonObject(jsonObject).parseResponse(), params.isProcessResponse());
     }
 
 }

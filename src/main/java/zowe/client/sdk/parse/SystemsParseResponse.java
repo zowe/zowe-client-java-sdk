@@ -11,6 +11,7 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfinfo.response.DefinedSystem;
 import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
 
@@ -20,16 +21,37 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
  * @author Frank Giordano
  * @version 2.0
  */
-public class SystemsParseResponse extends JsonParseResponse {
+public class SystemsParseResponse implements JsonParseResponse {
 
     /**
-     * DefinedSysParseResponse constructor
+     * Represents one singleton instance
+     */
+    private static JsonParseResponse INSTANCE;
+
+    /**
+     * JSON data value to be parsed
+     */
+    private JSONObject data;
+
+    /**
+     * Private constructor defined to avoid public instantiation of class
      *
-     * @param data json data value to be parsed
      * @author Frank Giordano
      */
-    public SystemsParseResponse(JSONObject data) {
-        super(data);
+    private SystemsParseResponse() {
+    }
+
+    /**
+     * Get singleton instance
+     *
+     * @return SystemsParseResponse object
+     * @author Frank Giordano
+     */
+    public synchronized static JsonParseResponse getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new SystemsParseResponse();
+        }
+        return INSTANCE;
     }
 
     /**
@@ -40,19 +62,20 @@ public class SystemsParseResponse extends JsonParseResponse {
      */
     @Override
     public Object parseResponse() {
-        ZosmfSystemsResponse.Builder systemsResponse = new ZosmfSystemsResponse.Builder()
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
+        final ZosmfSystemsResponse.Builder systemsResponse = new ZosmfSystemsResponse.Builder()
                 .numRows((Long) data.get("numRows"));
 
-        JSONArray items = (JSONArray) data.get("items");
+        final JSONArray items = (JSONArray) data.get("items");
         if (items != null) {
             int size = items.size();
-            DefinedSystem[] definedSystems = new DefinedSystem[size];
+            final DefinedSystem[] definedSystems = new DefinedSystem[size];
             for (int i = 0; i < size; i++) {
                 definedSystems[i] = parseDefinedSystem((JSONObject) items.get(i));
             }
             return systemsResponse.definedSystems(definedSystems).build();
         }
-
+        data = null;
         return systemsResponse.build();
     }
 
@@ -78,6 +101,20 @@ public class SystemsParseResponse extends JsonParseResponse {
                 .url(data.get("url") != null ? (String) data.get("url") : null)
                 .cpcName(data.get("cpcName") != null ? (String) data.get("cpcName") : null)
                 .build();
+    }
+
+    /**
+     * Set the data to be parsed
+     *
+     * @param data json data to parse
+     * @return JsonParseResponse this object
+     * @author Frank Giordano
+     */
+    @Override
+    public JsonParseResponse setJsonObject(final JSONObject data) {
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
+        this.data = data;
+        return this;
     }
 
 }

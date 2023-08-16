@@ -124,13 +124,13 @@ public class ZosLog {
 
         for (Object itemJsonObj : jsonArray) {
             final ZosLogItemParseResponse parser = (ZosLogItemParseResponse) JsonParseResponseFactory
-                    .buildParser((JSONObject) itemJsonObj, ParseType.ZOS_LOG_ITEM);
+                    .buildParser(ParseType.ZOS_LOG_ITEM).setJsonObject((JSONObject) itemJsonObj);
             parser.setProcessResponse(isProcessResponse);
             zosLogItems.add(parser.parseResponse());
         }
 
         final ZosLogReplyParseResponse parser = (ZosLogReplyParseResponse) JsonParseResponseFactory
-                .buildParser(jsonObject, ParseType.ZOS_LOG_REPLY);
+                .buildParser(ParseType.ZOS_LOG_REPLY).setJsonObject(jsonObject);
         parser.setZosLogItems(zosLogItems);
         return parser.parseResponse();
     }

@@ -15,7 +15,6 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseResponse;
 import zowe.client.sdk.parse.JsonParseResponseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
@@ -249,10 +248,9 @@ public class JobGet {
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no get job response phrase")).toString();
         final JSONArray results = (JSONArray) new JSONParser().parse(jsonStr);
-        for (final Object itemJsonObj : results) {
-            final JsonParseResponse parser = JsonParseResponseFactory
-                    .buildParser((JSONObject) itemJsonObj, ParseType.JOB);
-            jobs.add((Job) parser.parseResponse());
+        for (final Object jsonObj : results) {
+            jobs.add((Job) JsonParseResponseFactory.buildParser(ParseType.JOB)
+                    .setJsonObject((JSONObject) jsonObj).parseResponse());
         }
 
         return jobs;
@@ -376,8 +374,8 @@ public class JobGet {
         final JSONArray results = (JSONArray) new JSONParser().parse(jsonStr);
         for (final Object obj : results) {
             final JSONObject jsonObj = (JSONObject) obj;
-            final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObj, ParseType.JOB_FILE);
-            files.add((JobFile) parser.parseResponse());
+            files.add((JobFile) JsonParseResponseFactory.buildParser(ParseType.JOB_FILE).
+                    setJsonObject(jsonObj).parseResponse());
         }
 
         return files;
@@ -439,8 +437,7 @@ public class JobGet {
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job get response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.JOB);
-        return (Job) parser.parseResponse();
+        return (Job) JsonParseResponseFactory.buildParser(ParseType.JOB).setJsonObject(jsonObject).parseResponse();
     }
 
     /**

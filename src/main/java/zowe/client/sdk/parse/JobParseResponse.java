@@ -11,6 +11,7 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.response.Job;
 import zowe.client.sdk.zosjobs.response.JobStepData;
 
@@ -20,16 +21,37 @@ import zowe.client.sdk.zosjobs.response.JobStepData;
  * @author Frank Giordano
  * @version 2.0
  */
-public class JobParseResponse extends JsonParseResponse {
+public class JobParseResponse implements JsonParseResponse {
 
     /**
-     * JobParseResponse constructor
+     * Represents one singleton instance
+     */
+    private static JsonParseResponse INSTANCE;
+
+    /**
+     * JSON data value to be parsed
+     */
+    private JSONObject data;
+
+    /**
+     * Private constructor defined to avoid public instantiation of class
      *
-     * @param data json data value to be parsed
      * @author Frank Giordano
      */
-    public JobParseResponse(JSONObject data) {
-        super(data);
+    private JobParseResponse() {
+    }
+
+    /**
+     * Get singleton instance
+     *
+     * @return JobParseResponse object
+     * @author Frank Giordano
+     */
+    public synchronized static JsonParseResponse getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new JobParseResponse();
+        }
+        return INSTANCE;
     }
 
     /**
@@ -40,6 +62,7 @@ public class JobParseResponse extends JsonParseResponse {
      */
     @Override
     public Object parseResponse() {
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
         final Job.Builder job = new Job.Builder()
                 .jobId(data.get("jobid") != null ? (String) data.get("jobid") : null)
                 .jobName(data.get("jobname") != null ? (String) data.get("jobname") : null)
@@ -66,6 +89,7 @@ public class JobParseResponse extends JsonParseResponse {
             return job.stepData(jobStepDataArray).build();
         }
 
+        data = null;
         return job.build();
     }
 
@@ -85,6 +109,20 @@ public class JobParseResponse extends JsonParseResponse {
                 .stepName(data.get("step-name") != null ? (String) data.get("step-name") : null)
                 .procStepName(data.get("proc-step-name") != null ? (String) data.get("proc-step-name") : null)
                 .build();
+    }
+
+    /**
+     * Set the data to be parsed
+     *
+     * @param data json data to parse
+     * @return JsonParseResponse this object
+     * @author Frank Giordano
+     */
+    @Override
+    public JsonParseResponse setJsonObject(final JSONObject data) {
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
+        this.data = data;
+        return this;
     }
 
 }

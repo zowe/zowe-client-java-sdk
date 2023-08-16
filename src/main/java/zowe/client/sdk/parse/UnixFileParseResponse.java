@@ -10,6 +10,7 @@
 package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.response.UnixFile;
 
 /**
@@ -18,16 +19,37 @@ import zowe.client.sdk.zosfiles.uss.response.UnixFile;
  * @author Frank Giordano
  * @version 2.0
  */
-public class UnixFileParseResponse extends JsonParseResponse {
+public class UnixFileParseResponse implements JsonParseResponse {
 
     /**
-     * UnixFileParseResponse constructor
+     * Represents one singleton instance
+     */
+    private static JsonParseResponse INSTANCE;
+
+    /**
+     * JSON data value to be parsed
+     */
+    private JSONObject data;
+
+    /**
+     * Private constructor defined to avoid public instantiation of class
      *
-     * @param data json data value to be parsed
      * @author Frank Giordano
      */
-    public UnixFileParseResponse(JSONObject data) {
-        super(data);
+    private UnixFileParseResponse() {
+    }
+
+    /**
+     * Get singleton instance
+     *
+     * @return UnixFileParseResponse object
+     * @author Frank Giordano
+     */
+    public synchronized static JsonParseResponse getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new UnixFileParseResponse();
+        }
+        return INSTANCE;
     }
 
     /**
@@ -38,7 +60,8 @@ public class UnixFileParseResponse extends JsonParseResponse {
      */
     @Override
     public Object parseResponse() {
-        return new UnixFile.Builder()
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
+        UnixFile unixFile = new UnixFile.Builder()
                 .name(data.get("name") != null ? (String) data.get("name") : null)
                 .mode(data.get("mode") != null ? (String) data.get("mode") : null)
                 .size(data.get("size") != null ? (Long) data.get("size") : null)
@@ -48,6 +71,22 @@ public class UnixFileParseResponse extends JsonParseResponse {
                 .group(data.get("group") != null ? (String) data.get("group") : null)
                 .mtime(data.get("mtime") != null ? (String) data.get("mtime") : null)
                 .build();
+        data = null;
+        return unixFile;
+    }
+
+    /**
+     * Set the data to be parsed
+     *
+     * @param data json data to parse
+     * @return JsonParseResponse this object
+     * @author Frank Giordano
+     */
+    @Override
+    public JsonParseResponse setJsonObject(final JSONObject data) {
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
+        this.data = data;
+        return this;
     }
 
 }

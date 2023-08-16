@@ -10,6 +10,7 @@
 package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zoslogs.response.ZosLogItem;
 import zowe.client.sdk.zoslogs.response.ZosLogReply;
 
@@ -22,17 +23,39 @@ import java.util.List;
  * @author Frank Giordano
  * @version 2.0
  */
-public class ZosLogReplyParseResponse extends JsonParseResponse {
+public class ZosLogReplyParseResponse implements JsonParseResponse {
+
+    /**
+     * Represents one singleton instance
+     */
+    private static JsonParseResponse INSTANCE;
 
     private List<ZosLogItem> zosLogItems = new ArrayList<>();
 
     /**
-     * JsonParseResponse constructor
-     *
-     * @param data json data value to be parsed
+     * JSON data value to be parsed
      */
-    public ZosLogReplyParseResponse(JSONObject data) {
-        super(data);
+    private JSONObject data;
+
+    /**
+     * Private constructor defined to avoid public instantiation of class
+     *
+     * @author Frank Giordano
+     */
+    private ZosLogReplyParseResponse() {
+    }
+
+    /**
+     * Get singleton instance
+     *
+     * @return ZosLogReplyParseResponse object
+     * @author Frank Giordano
+     */
+    public synchronized static JsonParseResponse getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ZosLogReplyParseResponse();
+        }
+        return INSTANCE;
     }
 
     /**
@@ -43,12 +66,17 @@ public class ZosLogReplyParseResponse extends JsonParseResponse {
      */
     @Override
     public ZosLogReply parseResponse() {
-        return new ZosLogReply(
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
+        ValidateUtils.checkNullParameter(zosLogItems.isEmpty(), ParseConstants.REQUIRED_ACTION_ZOS_LOG_ITEMS_MSG);
+        final ZosLogReply zosLogReply = new ZosLogReply(
                 data.get("timezone") != null ? (Long) data.get("timezone") : 0,
                 data.get("nextTimestamp") != null ? (Long) data.get("nextTimestamp") : 0,
                 data.get("source") != null ? (String) data.get("source") : null,
                 data.get("totalitems") != null ? (Long) data.get("totalitems") : null,
                 zosLogItems);
+        data = null;
+        zosLogItems = new ArrayList<>();
+        return zosLogReply;
     }
 
     /**
@@ -58,7 +86,22 @@ public class ZosLogReplyParseResponse extends JsonParseResponse {
      * @author Frank Giordano
      */
     public void setZosLogItems(List<ZosLogItem> zosLogItems) {
+        ValidateUtils.checkNullParameter(zosLogItems == null, "zosLogItems is null");
         this.zosLogItems = zosLogItems;
+    }
+
+    /**
+     * Set the data to be parsed
+     *
+     * @param data json data to parse
+     * @return JsonParseResponse this object
+     * @author Frank Giordano
+     */
+    @Override
+    public JsonParseResponse setJsonObject(final JSONObject data) {
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
+        this.data = data;
+        return this;
     }
 
 }

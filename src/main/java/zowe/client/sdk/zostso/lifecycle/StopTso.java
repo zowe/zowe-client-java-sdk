@@ -12,7 +12,6 @@ package zowe.client.sdk.zostso.lifecycle;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseResponse;
 import zowe.client.sdk.parse.JsonParseResponseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.JsonDeleteRequest;
@@ -112,8 +111,8 @@ public class StopTso {
         final String jsonStr = response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no tso stop response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        final JsonParseResponse jsonParseResponse = JsonParseResponseFactory.buildParser(jsonObject, ParseType.TSO_STOP);
-        return (ZosmfTsoResponse) jsonParseResponse.parseResponse();
+        return (ZosmfTsoResponse) JsonParseResponseFactory.buildParser(ParseType.TSO_STOP)
+                .setJsonObject(jsonObject).parseResponse();
     }
 
 }

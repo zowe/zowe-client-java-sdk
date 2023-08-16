@@ -133,9 +133,9 @@ public class UssList {
                 response.getResponsePhrase().orElseThrow(() -> new IllegalStateException(errMsg))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
-            for (final Object obj : jsonArray) {
-                items.add((UnixFile) JsonParseResponseFactory
-                        .buildParser((JSONObject) obj, ParseType.UNIX_FILE).parseResponse());
+            for (final Object jsonObj : jsonArray) {
+                items.add((UnixFile) JsonParseResponseFactory.buildParser(ParseType.UNIX_FILE)
+                        .setJsonObject((JSONObject) jsonObj).parseResponse());
             }
         }
 
@@ -196,8 +196,9 @@ public class UssList {
                     }
                 } catch (Exception ignored) {
                 }
-                UnixZfsParseResponse parse = (UnixZfsParseResponse) JsonParseResponseFactory
-                        .buildParser(jsonObj, ParseType.UNIX_ZFS);
+
+                final UnixZfsParseResponse parse = (UnixZfsParseResponse) JsonParseResponseFactory
+                        .buildParser(ParseType.UNIX_ZFS).setJsonObject(jsonObj);
                 parse.setModeStr(modeStr.toString());
                 items.add(parse.parseResponse());
             }

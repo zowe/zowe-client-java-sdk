@@ -11,6 +11,7 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.message.TsoMessage;
 import zowe.client.sdk.zostso.message.TsoMessages;
@@ -28,16 +29,37 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 2.0
  */
-public class TsoParseResponse extends JsonParseResponse {
+public class TsoParseResponse implements JsonParseResponse {
 
     /**
-     * TsoParseResponse constructor
+     * Represents one singleton instance
+     */
+    private static JsonParseResponse INSTANCE;
+
+    /**
+     * JSON data value to be parsed
+     */
+    private JSONObject data;
+
+    /**
+     * Private constructor defined to avoid public instantiation of class
      *
-     * @param data json data value to be parsed
      * @author Frank Giordano
      */
-    public TsoParseResponse(JSONObject data) {
-        super(data);
+    private TsoParseResponse() {
+    }
+
+    /**
+     * Get singleton instance
+     *
+     * @return TsoParseResponse object
+     * @author Frank Giordano
+     */
+    public synchronized static JsonParseResponse getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new TsoParseResponse();
+        }
+        return INSTANCE;
     }
 
     /*
@@ -54,7 +76,8 @@ public class TsoParseResponse extends JsonParseResponse {
     @SuppressWarnings("unchecked")
     @Override
     public ZosmfTsoResponse parseResponse() {
-        ZosmfTsoResponse response = new ZosmfTsoResponse.Builder()
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
+        final ZosmfTsoResponse response = new ZosmfTsoResponse.Builder()
                 .queueId(data.get("queueID") != null ? (String) data.get("queueID") : null)
                 .ver(data.get("ver") != null ? (String) data.get("ver") : null)
                 .servletKey(data.get("servletKey") != null ? (String) data.get("servletKey") : null)
@@ -62,7 +85,7 @@ public class TsoParseResponse extends JsonParseResponse {
                 .timeout(data.get("timeout") != null ? (boolean) data.get("timeout") : null)
                 .build();
 
-        List<TsoMessages> tsoMessagesLst = new ArrayList<>();
+        final List<TsoMessages> tsoMessagesLst = new ArrayList<>();
         final Optional<JSONArray> tsoData = Optional.ofNullable((JSONArray) data.get("tsoData"));
 
         tsoData.ifPresent(data -> {
@@ -74,7 +97,7 @@ public class TsoParseResponse extends JsonParseResponse {
             });
             response.setTsoData(tsoMessagesLst);
         });
-
+        data = null;
         return response;
     }
 
@@ -112,6 +135,20 @@ public class TsoParseResponse extends JsonParseResponse {
             tsoMessages.setTsoPrompt(tsoPromptMessage);
             tsoMessagesLst.add(tsoMessages);
         }
+    }
+
+    /**
+     * Set the data to be parsed
+     *
+     * @param data json data to parse
+     * @return JsonParseResponse this object
+     * @author Frank Giordano
+     */
+    @Override
+    public JsonParseResponse setJsonObject(final JSONObject data) {
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
+        this.data = data;
+        return this;
     }
 
 }

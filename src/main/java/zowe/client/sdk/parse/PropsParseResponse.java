@@ -10,6 +10,7 @@
 package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.ValidateUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,16 +21,37 @@ import java.util.Map;
  * @author Frank Giordano
  * @version 2.0
  */
-public class PropsParseResponse extends JsonParseResponse {
+public class PropsParseResponse implements JsonParseResponse {
 
     /**
-     * PropsParseResponse constructor
+     * Represents one singleton instance
+     */
+    private static JsonParseResponse INSTANCE;
+
+    /**
+     * JSON data value to be parsed
+     */
+    private JSONObject data;
+
+    /**
+     * Private constructor defined to avoid public instantiation of class
      *
-     * @param data json data value to be parsed
      * @author Frank Giordano
      */
-    public PropsParseResponse(JSONObject data) {
-        super(data);
+    private PropsParseResponse() {
+    }
+
+    /**
+     * Get singleton instance
+     *
+     * @return PropsParseResponse object
+     * @author Frank Giordano
+     */
+    public synchronized static JsonParseResponse getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new PropsParseResponse();
+        }
+        return INSTANCE;
     }
 
     /**
@@ -41,6 +63,7 @@ public class PropsParseResponse extends JsonParseResponse {
     @SuppressWarnings("unchecked")
     @Override
     public Object parseResponse() {
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
         // i.e. properties='{"rejectUnauthorized":false,"host":"mvsxe47.lvn.company.net"}'
         final Map<String, String> props = new HashMap<>();
         data.keySet().forEach(key -> {
@@ -54,7 +77,22 @@ public class PropsParseResponse extends JsonParseResponse {
             }
             props.put((String) key, value);
         });
+        data = null;
         return props;
+    }
+
+    /**
+     * Set the data to be parsed
+     *
+     * @param data json data to parse
+     * @return JsonParseResponse this object
+     * @author Frank Giordano
+     */
+    @Override
+    public JsonParseResponse setJsonObject(final JSONObject data) {
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
+        this.data = data;
+        return this;
     }
 
 }

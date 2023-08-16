@@ -10,6 +10,7 @@
 package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
 
 /**
@@ -18,18 +19,39 @@ import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
  * @author Frank Giordano
  * @version 2.0
  */
-public class UnixZfsParseResponse extends JsonParseResponse {
-
-    private String modeStr;
+public class UnixZfsParseResponse implements JsonParseResponse {
 
     /**
-     * UnixZfsParseResponse constructor
+     * Represents one singleton instance
+     */
+    private static JsonParseResponse INSTANCE;
+
+    private String modeStr = "";
+
+    /**
+     * JSON data value to be parsed
+     */
+    private JSONObject data;
+
+    /**
+     * Private constructor defined to avoid public instantiation of class
      *
-     * @param data json data value to be parsed
      * @author Frank Giordano
      */
-    public UnixZfsParseResponse(JSONObject data) {
-        super(data);
+    private UnixZfsParseResponse() {
+    }
+
+    /**
+     * Get singleton instance
+     *
+     * @return UnixZfsParseResponse object
+     * @author Frank Giordano
+     */
+    public synchronized static JsonParseResponse getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new UnixZfsParseResponse();
+        }
+        return INSTANCE;
     }
 
     /**
@@ -40,7 +62,8 @@ public class UnixZfsParseResponse extends JsonParseResponse {
      */
     @Override
     public UnixZfs parseResponse() {
-        return new UnixZfs.Builder()
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
+        final UnixZfs unixZfs = new UnixZfs.Builder()
                 .name(data.get("name") != null ? (String) data.get("name") : null)
                 .mountpoint(data.get("mountpoint") != null ? (String) data.get("mountpoint") : null)
                 .fstname(data.get("fstname") != null ? (String) data.get("fstname") : null)
@@ -59,6 +82,9 @@ public class UnixZfsParseResponse extends JsonParseResponse {
                 .totalRows(data.get("totalRows") != null ? (Long) data.get("totalRows") : null)
                 .moreRows(data.get("moreRows") != null ? (Boolean) data.get("moreRows") : false)
                 .build();
+        data = null;
+        modeStr = "";
+        return unixZfs;
     }
 
     /**
@@ -70,7 +96,22 @@ public class UnixZfsParseResponse extends JsonParseResponse {
      * @author Frank Giordano
      */
     public void setModeStr(String modeStr) {
+        ValidateUtils.checkNullParameter(modeStr.isBlank(), ParseConstants.REQUIRED_ACTION_MODE_STR_MSG);
         this.modeStr = modeStr;
+    }
+
+    /**
+     * Set the data to be parsed
+     *
+     * @param data json data to parse
+     * @return JsonParseResponse this object
+     * @author Frank Giordano
+     */
+    @Override
+    public JsonParseResponse setJsonObject(final JSONObject data) {
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
+        this.data = data;
+        return this;
     }
 
 }

@@ -50,7 +50,8 @@ public class Profile {
     public Profile(String name, JSONObject obj, JSONArray secure) throws Exception {
         this.name = name;
         this.secure = secure;
-        properties = (Map<String, String>) JsonParseResponseFactory.buildParser(obj, ParseType.PROPS).parseResponse();
+        properties = (Map<String, String>) JsonParseResponseFactory.buildParser(ParseType.PROPS)
+                .setJsonObject(obj).parseResponse();
     }
 
     /**
