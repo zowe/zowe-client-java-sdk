@@ -106,8 +106,8 @@ public class UssChangeOwner {
             changeOnerMap.put("recursive", "true");
         }
         params.getLinkType().ifPresent(type -> changeOnerMap.put("links", type.getValue()));
-        changeOnerMap.put("owner", params.getOwner()
-                .orElseThrow(() -> new IllegalStateException("owner not specified")));
+        final String errMsg = "owner not specified";
+        changeOnerMap.put("owner", params.getOwner().orElseThrow(() -> new IllegalStateException(errMsg)));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);

@@ -47,9 +47,8 @@ public final class RestUtils {
     public static Response getResponse(ZoweRequest request) throws Exception {
         final Response response = request.executeRequest();
 
-        final String statusCodeErrMsg = "no response status code returned";
-        final int statusCode = response.getStatusCode()
-                .orElseThrow(() -> new IllegalStateException(statusCodeErrMsg));
+        final String errMsg = "no response status code returned";
+        final int statusCode = response.getStatusCode().orElseThrow(() -> new IllegalStateException(errMsg));
 
         if (RestUtils.isHttpError(statusCode)) {
             final AtomicReference<Object> responsePhrase = new AtomicReference<>();
@@ -69,11 +68,11 @@ public final class RestUtils {
 
             final String responsePhraseStr = String.valueOf((responsePhrase.get()));
             final String statusText = response.getStatusText().orElse("n\\a");
-            String errMsg = "http status error code: " + statusCode + ", status text: " + statusText;
+            String httpErrMsg = "http status error code: " + statusCode + ", status text: " + statusText;
             if (!statusText.equalsIgnoreCase(responsePhraseStr)) {
-                errMsg += ", response phrase: " + responsePhraseStr;
+                httpErrMsg += ", response phrase: " + responsePhraseStr;
             }
-            throw new Exception(errMsg);
+            throw new Exception(httpErrMsg);
         }
 
         return response;

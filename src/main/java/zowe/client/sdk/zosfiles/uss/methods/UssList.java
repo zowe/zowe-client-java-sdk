@@ -128,8 +128,9 @@ public class UssList {
         final Response response = RestUtils.getResponse(request);
 
         final List<UnixFile> items = new ArrayList<>();
+        final String errMsg = "null uss file list response";
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
-                response.getResponsePhrase().orElseThrow(() -> new IllegalStateException("null uss file list response"))));
+                response.getResponsePhrase().orElseThrow(() -> new IllegalStateException(errMsg))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (final Object obj : jsonArray) {
@@ -157,9 +158,10 @@ public class UssList {
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS);
 
-        params.getPath().ifPresent(path -> url.append("?path=")
-                .append(EncodeUtils.encodeURIComponent(FileUtils.validatePath(path))));
-        params.getFsname().ifPresent(fsname -> url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
+        params.getPath().ifPresent(path ->
+                url.append("?path=").append(EncodeUtils.encodeURIComponent(FileUtils.validatePath(path))));
+        params.getFsname().ifPresent(fsname ->
+                url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
