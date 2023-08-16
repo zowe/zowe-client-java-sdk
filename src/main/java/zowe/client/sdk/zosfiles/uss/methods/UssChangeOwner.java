@@ -99,21 +99,21 @@ public class UssChangeOwner {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-        final Map<String, Object> chamgeOnerMap = new HashMap<>();
-        chamgeOnerMap.put("request", "chown");
-        params.getGroup().ifPresent(group -> chamgeOnerMap.put("group", group));
+        final Map<String, Object> changeOnerMap = new HashMap<>();
+        changeOnerMap.put("request", "chown");
+        params.getGroup().ifPresent(group -> changeOnerMap.put("group", group));
         if (params.isRecursive()) {
-            chamgeOnerMap.put("recursive", "true");
+            changeOnerMap.put("recursive", "true");
         }
-        params.getLinkType().ifPresent(type -> chamgeOnerMap.put("links", type.getValue()));
-        chamgeOnerMap.put("owner", params.getOwner()
+        params.getLinkType().ifPresent(type -> changeOnerMap.put("links", type.getValue()));
+        changeOnerMap.put("owner", params.getOwner()
                 .orElseThrow(() -> new IllegalStateException("owner not specified")));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(chamgeOnerMap).toString());
+        request.setBody(new JSONObject(changeOnerMap).toString());
 
         return RestUtils.getResponse(request);
     }
