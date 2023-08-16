@@ -14,7 +14,6 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zoslogs.response.ZosLogItem;
 import zowe.client.sdk.zoslogs.response.ZosLogReply;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +29,7 @@ public class ZosLogReplyParseResponse implements JsonParseResponse {
      */
     private static JsonParseResponse INSTANCE;
 
-    private List<ZosLogItem> zosLogItems = new ArrayList<>();
+    private List<ZosLogItem> zosLogItems;
 
     /**
      * JSON data value to be parsed
@@ -67,15 +66,15 @@ public class ZosLogReplyParseResponse implements JsonParseResponse {
     @Override
     public ZosLogReply parseResponse() {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
-        ValidateUtils.checkNullParameter(zosLogItems.isEmpty(), ParseConstants.REQUIRED_ACTION_ZOS_LOG_ITEMS_MSG);
+        ValidateUtils.checkNullParameter(zosLogItems == null, ParseConstants.REQUIRED_ACTION_ZOS_LOG_ITEMS_MSG);
         final ZosLogReply zosLogReply = new ZosLogReply(
                 data.get("timezone") != null ? (Long) data.get("timezone") : 0,
                 data.get("nextTimestamp") != null ? (Long) data.get("nextTimestamp") : 0,
                 data.get("source") != null ? (String) data.get("source") : null,
-                data.get("totalitems") != null ? (Long) data.get("totalitems") : null,
+                data.get("totalitems") != null ? (Long) data.get("totalitems") : 0,
                 zosLogItems);
         data = null;
-        zosLogItems = new ArrayList<>();
+        zosLogItems = null;
         return zosLogReply;
     }
 

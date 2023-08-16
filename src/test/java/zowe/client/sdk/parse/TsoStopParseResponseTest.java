@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertSame;
 
 /**
  * Class containing unit tests for TsoStopParseResponse.

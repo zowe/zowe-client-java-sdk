@@ -63,6 +63,7 @@ public class UnixZfsParseResponse implements JsonParseResponse {
     @Override
     public UnixZfs parseResponse() {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
+        ValidateUtils.checkNullParameter(modeStr.isBlank(), ParseConstants.REQUIRED_ACTION_MODE_STR_MSG);
         final UnixZfs unixZfs = new UnixZfs.Builder()
                 .name(data.get("name") != null ? (String) data.get("name") : null)
                 .mountpoint(data.get("mountpoint") != null ? (String) data.get("mountpoint") : null)
@@ -96,7 +97,7 @@ public class UnixZfsParseResponse implements JsonParseResponse {
      * @author Frank Giordano
      */
     public void setModeStr(String modeStr) {
-        ValidateUtils.checkNullParameter(modeStr.isBlank(), ParseConstants.REQUIRED_ACTION_MODE_STR_MSG);
+        ValidateUtils.checkNullParameter(modeStr == null, "modeStr is null");
         this.modeStr = modeStr;
     }
 
