@@ -17,28 +17,22 @@ import org.json.simple.JSONObject;
  * @author Frank Giordano
  * @version 2.0
  */
-public abstract class JsonParseResponse {
-
-    /**
-     * JSON data value to be parsed
-     */
-    protected final JSONObject data;
-
-    /**
-     * JsonParseResponse constructor
-     *
-     * @param data json data value to be parsed
-     */
-    public JsonParseResponse(JSONObject data) {
-        this.data = data;
-    }
+public interface JsonParseResponse {
 
     /**
      * Parse the data json value given in constructor
      *
      * @return Object value of parsed json data
      */
-    public abstract Object parseResponse();
+    public Object parseResponse();
+
+    /**
+     * Set the data to be parsed
+     *
+     * @param data json data to parse
+     * @author Frank Giordano
+     */
+    public JsonParseResponse setJsonObject(final JSONObject data);
 
 }
 

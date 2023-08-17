@@ -30,7 +30,7 @@ public class TextGetRequest extends ZoweRequest {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public TextGetRequest(ZosConnection connection) {
+    public TextGetRequest(final ZosConnection connection) {
         super(connection);
     }
 

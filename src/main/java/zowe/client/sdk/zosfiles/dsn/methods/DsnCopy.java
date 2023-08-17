@@ -43,7 +43,7 @@ public class DsnCopy {
      * @param connection is a connection, see ZOSConnection object
      * @author Leonid Baranov
      */
-    public DsnCopy(ZosConnection connection) {
+    public DsnCopy(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -57,7 +57,7 @@ public class DsnCopy {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public DsnCopy(ZosConnection connection, ZoweRequest request) throws Exception {
+    public DsnCopy(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -88,8 +88,8 @@ public class DsnCopy {
      * @throws Exception error processing copy request
      * @author Leonid Baranov
      */
-    public Response copy(String fromDataSetName, String toDataSetName, boolean replace, boolean copyAllMembers)
-            throws Exception {
+    public Response copy(final String fromDataSetName, final String toDataSetName, final boolean replace,
+                         final boolean copyAllMembers) throws Exception {
         return copyCommon(new CopyParams.Builder()
                 .fromDataSet(fromDataSetName)
                 .toDataSet(toDataSetName)
@@ -107,7 +107,7 @@ public class DsnCopy {
      * @author Leonid Baranov
      * @author Frank Giordano
      */
-    public Response copyCommon(CopyParams params) throws Exception {
+    public Response copyCommon(final CopyParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = setUrl(params);
@@ -132,10 +132,9 @@ public class DsnCopy {
      *
      * @param params CopyParams object
      * @return url string value
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    private String setUrl(CopyParams params) throws Exception {
+    private String setUrl(final CopyParams params) {
         final String toDataSetNameErrMsg = "toDataSetName not specified";
         final String toDataSet = params.getToDataSet()
                 .orElseThrow(() -> new IllegalArgumentException(toDataSetNameErrMsg));
@@ -156,10 +155,9 @@ public class DsnCopy {
      *
      * @param params CopyParams object
      * @return map containing key-value pairs for the from-dataset parent json value
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    private Map<String, Object> setFromDataSetMapValues(CopyParams params) throws Exception {
+    private Map<String, Object> setFromDataSetMapValues(final CopyParams params) {
         final String fromDataSetNameErrMsg = "fromDataSetName not specified";
         String fromDataSetName = params.getFromDataSet()
                 .orElseThrow(() -> new IllegalStateException(fromDataSetNameErrMsg));
@@ -188,10 +186,10 @@ public class DsnCopy {
      * Is a member name included in fromDataSetName string value
      *
      * @param fromDataSetName string value representing a data set notation
-     * @return true or false boolean value
+     * @return boolean true or false
      * @author Frank Giordano
      */
-    private boolean isMemberNameIncluded(String fromDataSetName) {
+    private boolean isMemberNameIncluded(final String fromDataSetName) {
         return fromDataSetName.indexOf("(") > 0;
     }
 

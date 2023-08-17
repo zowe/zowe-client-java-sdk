@@ -12,6 +12,7 @@ package zowe.client.sdk.zosfiles;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonDeleteRequest;
@@ -44,18 +45,18 @@ public class UssDeleteTest {
     public void tstUssDeleteSuccess() throws Exception {
         final UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
         final Response response = ussDelete.delete("/xxx/xx/xx");
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get());
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test
     public void tstUssDeleteRecursiveSuccess() throws Exception {
         final UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
         final Response response = ussDelete.delete("/xxx/xx/xx", true);
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get());
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test

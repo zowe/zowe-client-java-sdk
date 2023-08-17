@@ -44,7 +44,7 @@ public final class RestUtils {
      * @throws Exception http error code
      * @author Frank Giordano
      */
-    public static Response getResponse(ZoweRequest request) throws Exception {
+    public static Response getResponse(final ZoweRequest request) throws Exception {
         final Response response = request.executeRequest();
 
         final String errMsg = "no response status code returned";
@@ -83,10 +83,10 @@ public final class RestUtils {
      * Checks if statusCode is an error http code or not
      *
      * @param statusCode http code value
-     * @return boolean value
+     * @return boolean true or false
      * @author Frank Giordano
      */
-    public static boolean isHttpError(int statusCode) {
+    public static boolean isHttpError(final int statusCode) {
         return !((statusCode >= 200 && statusCode <= 299) || (statusCode >= 100 && statusCode <= 199));
     }
 
@@ -94,10 +94,10 @@ public final class RestUtils {
      * Checks if url is a valid http or https url.
      *
      * @param url string value
-     * @return boolean value
+     * @return boolean true or false
      * @author Frank Giordano
      */
-    public static boolean isUrlNotValid(String url) {
+    public static boolean isUrlNotValid(final String url) {
         try {
             new URL(url).toURI();
             return false;

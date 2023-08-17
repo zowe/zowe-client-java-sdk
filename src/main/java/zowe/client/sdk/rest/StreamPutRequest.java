@@ -36,7 +36,7 @@ public class StreamPutRequest extends ZoweRequest {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public StreamPutRequest(ZosConnection connection) {
+    public StreamPutRequest(final ZosConnection connection) {
         super(connection);
     }
 
@@ -63,7 +63,7 @@ public class StreamPutRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     @Override
-    public void setBody(Object body) {
+    public void setBody(final Object body) {
         this.body = (byte[]) body;
     }
 

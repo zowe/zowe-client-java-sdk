@@ -38,7 +38,7 @@ public class DsnDelete {
      * @param connection connection information, see ZOSConnection object
      * @author Leonid Baranov
      */
-    public DsnDelete(ZosConnection connection) {
+    public DsnDelete(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -52,7 +52,7 @@ public class DsnDelete {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public DsnDelete(ZosConnection connection, ZoweRequest request) throws Exception {
+    public DsnDelete(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -71,7 +71,7 @@ public class DsnDelete {
      * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public Response delete(String dataSetName, String memberName) throws Exception {
+    public Response delete(final String dataSetName, final String memberName) throws Exception {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
@@ -88,7 +88,7 @@ public class DsnDelete {
      * @throws Exception error processing request
      * @author Leonid Baranov
      */
-    public Response delete(String dataSetName) throws Exception {
+    public Response delete(final String dataSetName) throws Exception {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
 

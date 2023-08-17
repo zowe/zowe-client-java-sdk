@@ -35,7 +35,7 @@ public class CheckJobStatus {
      * @param job         job used for status checking
      * @author Frank Giordano
      */
-    public CheckJobStatus(boolean statusFound, Job job) {
+    public CheckJobStatus(final boolean statusFound, final Job job) {
         this.statusFound = statusFound;
         this.job = job;
     }
@@ -51,9 +51,9 @@ public class CheckJobStatus {
     }
 
     /**
-     * Retrieve statusFound specified
+     * Retrieve is statusFound specified
      *
-     * @return true or false value
+     * @return boolean true or false
      * @author Frank Giordano
      */
     public boolean isStatusFound() {

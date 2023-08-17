@@ -25,7 +25,7 @@ public enum ChangeTagAction {
 
     private final String value;
 
-    ChangeTagAction(String value) {
+    ChangeTagAction(final String value) {
         this.value = value;
     }
 

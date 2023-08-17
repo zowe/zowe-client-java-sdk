@@ -69,8 +69,9 @@ public class StartTsoParams {
      * @param regionSize     region size for tso address space
      * @author Frank Giordano
      */
-    public StartTsoParams(String logonProcedure, String characterSet, String codePage, String rows, String columns,
-                          String accountNumber, String regionSize) {
+    public StartTsoParams(final String logonProcedure, final String characterSet, final String codePage,
+                          final String rows, final String columns, final String accountNumber,
+                          final String regionSize) {
         this.logonProcedure = Optional.ofNullable(logonProcedure);
         this.characterSet = Optional.ofNullable(characterSet);
         this.codePage = Optional.ofNullable(codePage);
@@ -96,7 +97,7 @@ public class StartTsoParams {
      * @param account user's z/OS permission account number
      * @author Frank Giordano
      */
-    public void setAccount(String account) {
+    public void setAccount(final String account) {
         this.account = Optional.ofNullable(account);
     }
 
@@ -116,7 +117,7 @@ public class StartTsoParams {
      * @param characterSet character set for address space
      * @author Frank Giordano
      */
-    public void setCharacterSet(String characterSet) {
+    public void setCharacterSet(final String characterSet) {
         this.characterSet = Optional.of(characterSet);
     }
 
@@ -136,7 +137,7 @@ public class StartTsoParams {
      * @param codePage code page for tso address space
      * @author Frank Giordano
      */
-    public void setCodePage(String codePage) {
+    public void setCodePage(final String codePage) {
         this.codePage = Optional.ofNullable(codePage);
     }
 
@@ -156,7 +157,7 @@ public class StartTsoParams {
      * @param columns number of columns
      * @author Frank Giordano
      */
-    public void setColumns(String columns) {
+    public void setColumns(final String columns) {
         this.columns = Optional.ofNullable(columns);
     }
 
@@ -176,7 +177,7 @@ public class StartTsoParams {
      * @param logonProcedure name of the logonProcedure for address space
      * @author Frank Giordano
      */
-    public void setLogonProcedure(String logonProcedure) {
+    public void setLogonProcedure(final String logonProcedure) {
         this.logonProcedure = Optional.of(logonProcedure);
     }
 
@@ -196,7 +197,7 @@ public class StartTsoParams {
      * @param regionSize region size for tso address space
      * @author Frank Giordano
      */
-    public void setRegionSize(String regionSize) {
+    public void setRegionSize(final String regionSize) {
         this.regionSize = Optional.of(regionSize);
     }
 

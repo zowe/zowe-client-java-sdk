@@ -15,7 +15,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.parse.JsonParseResponse;
 import zowe.client.sdk.parse.JsonParseResponseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
@@ -52,7 +51,7 @@ public class TeamConfigService {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    private Partition getPartition(String name, JSONObject jsonObject) throws Exception {
+    private Partition getPartition(final String name, final JSONObject jsonObject) throws Exception {
         final Set<String> keyObjs = jsonObject.keySet();
         final List<Profile> profiles = new ArrayList<>();
         Map<String, String> properties = new HashMap<>();
@@ -68,9 +67,8 @@ public class TeamConfigService {
                             (JSONArray) profileTypeJsonObj.get("secure")));
                 }
             } else if ("properties".equalsIgnoreCase(keyObj)) {
-                final JsonParseResponse parse = JsonParseResponseFactory.buildParser(
-                        (JSONObject) jsonObject.get(keyObj), ParseType.PROPS);
-                properties = (Map<String, String>) parse.parseResponse();
+                properties = (Map<String, String>) JsonParseResponseFactory.buildParser(ParseType.PROPS)
+                        .setJsonObject((JSONObject) jsonObject.get(keyObj)).parseResponse();
             }
         }
         return new Partition(name, properties, profiles);
@@ -84,7 +82,7 @@ public class TeamConfigService {
      * @throws Exception error processing
      * @author Frank Giordano
      */
-    public ConfigContainer getTeamConfig(KeyTarConfig config) throws Exception {
+    public ConfigContainer getTeamConfig(final KeyTarConfig config) throws Exception {
         ValidateUtils.checkNullParameter(config == null, "config is null");
         final JSONParser parser = new JSONParser();
         Object obj;
@@ -104,7 +102,7 @@ public class TeamConfigService {
      * @throws Exception error processing
      * @author Frank Giordano
      */
-    private boolean isPartition(Set<String> profileKeyObj) throws Exception {
+    private boolean isPartition(final Set<String> profileKeyObj) throws Exception {
         final Iterator<String> itr = profileKeyObj.iterator();
         if (itr.hasNext()) {
             String keyVal = itr.next();
@@ -123,7 +121,7 @@ public class TeamConfigService {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    private ConfigContainer parseJson(JSONObject jsonObj) throws Exception {
+    private ConfigContainer parseJson(final JSONObject jsonObj) throws Exception {
         String schema = null;
         Boolean autoStore = null;
         final List<Profile> profiles = new ArrayList<>();
@@ -156,7 +154,7 @@ public class TeamConfigService {
                     defaults.put(key, value);
                 }
             } else if (SectionType.AUTOSTORE.getValue().equals(keySectionVal)) {
-                autoStore = (Boolean) jsonObj.get(SectionType.AUTOSTORE.getValue());
+                autoStore = (boolean) jsonObj.get(SectionType.AUTOSTORE.getValue());
             }
         }
 

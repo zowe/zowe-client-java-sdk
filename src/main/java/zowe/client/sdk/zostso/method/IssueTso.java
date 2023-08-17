@@ -40,7 +40,7 @@ public class IssueTso {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public IssueTso(ZosConnection connection) {
+    public IssueTso(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -55,7 +55,7 @@ public class IssueTso {
      * @throws Exception error executing command
      * @author Frank Giordano
      */
-    public IssueResponse issueCommand(String accountNumber, String command) throws Exception {
+    public IssueResponse issueCommand(final String accountNumber, final String command) throws Exception {
         return issueCommand(accountNumber, command, null);
     }
 
@@ -70,8 +70,8 @@ public class IssueTso {
      * @throws Exception error executing command
      * @author Frank Giordano
      */
-    public IssueResponse issueCommand(String accountNumber, String command, StartTsoParams startParams)
-            throws Exception {
+    public IssueResponse issueCommand(final String accountNumber, final String command,
+                                      final StartTsoParams startParams) throws Exception {
         ValidateUtils.checkNullParameter(accountNumber == null, "accountNumber is null");
         ValidateUtils.checkNullParameter(command == null, "command is null");
         ValidateUtils.checkIllegalParameter(accountNumber.isBlank(), "accountNumber not specified");
@@ -102,7 +102,7 @@ public class IssueTso {
         // second stage send command to tso servlet session created in first stage and collect all tso responses
         final SendTso sendTso = new SendTso(connection);
         final SendResponse sendResponse = sendTso.sendDataToTsoCollect(servletKey, command);
-        issueResponse.setSuccess(sendResponse.getSuccess());
+        issueResponse.setSuccess(sendResponse.isSuccess());
         zosmfTsoResponses.addAll(sendResponse.getZosmfResponses());
 
         issueResponse.setZosmfResponses(zosmfTsoResponses);

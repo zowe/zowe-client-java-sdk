@@ -46,7 +46,7 @@ public class JobCancel {
      * @param connection connection information, see ZOSConnection object
      * @author Nikunj Goyal
      */
-    public JobCancel(ZosConnection connection) {
+    public JobCancel(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -60,7 +60,7 @@ public class JobCancel {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public JobCancel(ZosConnection connection, ZoweRequest request) throws Exception {
+    public JobCancel(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -84,7 +84,7 @@ public class JobCancel {
      * @throws Exception error canceling
      * @author Nikunj goyal
      */
-    public Response cancel(String jobName, String jobId, String version) throws Exception {
+    public Response cancel(final String jobName, final String jobId, final String version) throws Exception {
         return this.cancelCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
@@ -101,7 +101,7 @@ public class JobCancel {
      * @throws Exception error canceling
      * @author Frank Giordano
      */
-    public Response cancelByJob(Job job, String version) throws Exception {
+    public Response cancelByJob(final Job job, final String version) throws Exception {
         return this.cancelCommon(
                 new ModifyJobParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
                         .version(version)
@@ -117,7 +117,7 @@ public class JobCancel {
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
-    public Response cancelCommon(ModifyJobParams params) throws Exception {
+    public Response cancelCommon(final ModifyJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         // generate full url request

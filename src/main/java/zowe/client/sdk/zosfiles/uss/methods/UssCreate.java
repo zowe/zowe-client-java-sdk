@@ -45,7 +45,7 @@ public class UssCreate {
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssCreate(ZosConnection connection) {
+    public UssCreate(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -60,7 +60,7 @@ public class UssCreate {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public UssCreate(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssCreate(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -80,7 +80,7 @@ public class UssCreate {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response create(String targetPath, CreateParams params) throws Exception {
+    public Response create(final String targetPath, final CreateParams params) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

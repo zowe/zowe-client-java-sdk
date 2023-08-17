@@ -14,7 +14,6 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseResponse;
 import zowe.client.sdk.parse.JsonParseResponseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
@@ -48,7 +47,7 @@ public class JobSubmit {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public JobSubmit(ZosConnection connection) {
+    public JobSubmit(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -61,7 +60,7 @@ public class JobSubmit {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public JobSubmit(ZosConnection connection, ZoweRequest request) {
+    public JobSubmit(final ZosConnection connection, final ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
@@ -77,7 +76,8 @@ public class JobSubmit {
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
-    public Job submitByJcl(String jcl, String internalReaderRecfm, String internalReaderLrecl) throws Exception {
+    public Job submitByJcl(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl)
+            throws Exception {
         return this.submitJclCommon(new SubmitJclParams(jcl, internalReaderRecfm, internalReaderLrecl));
     }
 
@@ -89,7 +89,7 @@ public class JobSubmit {
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
-    public Job submitJclCommon(SubmitJclParams params) throws Exception {
+    public Job submitJclCommon(final SubmitJclParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         String key, value;
@@ -136,8 +136,7 @@ public class JobSubmit {
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job jcl submit response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.JOB);
-        return (Job) parser.parseResponse();
+        return (Job) JsonParseResponseFactory.buildParser(ParseType.JOB).setJsonObject(jsonObject).parseResponse();
     }
 
     /**
@@ -148,7 +147,7 @@ public class JobSubmit {
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
-    public Job submit(String jobDataSet) throws Exception {
+    public Job submit(final String jobDataSet) throws Exception {
         return this.submitCommon(new SubmitJobParams(jobDataSet));
     }
 
@@ -160,7 +159,7 @@ public class JobSubmit {
      * @throws Exception error on submitting
      * @author Frank Giordano
      */
-    public Job submitCommon(SubmitJobParams params) throws Exception {
+    public Job submitCommon(final SubmitJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
@@ -183,8 +182,7 @@ public class JobSubmit {
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job submit response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.JOB);
-        return (Job) parser.parseResponse();
+        return (Job) JsonParseResponseFactory.buildParser(ParseType.JOB).setJsonObject(jsonObject).parseResponse();
     }
 
     /**
@@ -192,10 +190,9 @@ public class JobSubmit {
      *
      * @param keyValues Map containing JCL substitution symbols e.g.: "{"SYMBOL","SYM"},{"SYMBOL2","SYM2"}
      * @return String Map containing all keys and values
-     * @throws Exception error on submitting
      * @author Corinne DeStefano
      */
-    private Map<String, String> getSubstitutionHeaders(Map<String, String> keyValues) throws Exception {
+    private Map<String, String> getSubstitutionHeaders(final Map<String, String> keyValues) {
         final Map<String, String> symbolMap = new HashMap<>();
 
         // Check for matching quotes

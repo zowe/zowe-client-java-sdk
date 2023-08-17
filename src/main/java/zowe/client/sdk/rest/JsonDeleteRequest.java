@@ -31,7 +31,7 @@ public class JsonDeleteRequest extends ZoweRequest {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public JsonDeleteRequest(ZosConnection connection) {
+    public JsonDeleteRequest(final ZosConnection connection) {
         super(connection);
     }
 

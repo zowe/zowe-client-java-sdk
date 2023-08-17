@@ -46,36 +46,36 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeToBinarySuccess() throws Exception {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.changeToBinary("/xxx/xx/xx");
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test
     public void tstUssChangeTagChangeToTextSuccess() throws Exception {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.changeToText("/xxx/xx/xx", "IBM-1047");
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test
     public void tstUssChangeTagRemoveSuccess() throws Exception {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.remove("/xxx/xx/xx");
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test
     public void tstUssChangeTagRetrieveSuccess() throws Exception {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.retrieve("/xxx/xx/xx");
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test
@@ -83,9 +83,9 @@ public class UssChangeTagTest {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.changeCommon("/xxx/xx/xx",
                 new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test
@@ -93,9 +93,9 @@ public class UssChangeTagTest {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.changeCommon("/xx x/x x/x x",
                 new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test

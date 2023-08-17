@@ -10,6 +10,7 @@
 package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.dsn.response.Dataset;
 
 /**
@@ -18,16 +19,37 @@ import zowe.client.sdk.zosfiles.dsn.response.Dataset;
  * @author Frank Giordano
  * @version 2.0
  */
-public class DatasetParseResponse extends JsonParseResponse {
+public final class DatasetParseResponse implements JsonParseResponse {
 
     /**
-     * DatasetParseResponse constructor
+     * Represents one singleton instance
+     */
+    private static JsonParseResponse INSTANCE;
+
+    /**
+     * JSON data value to be parsed
+     */
+    private JSONObject data;
+
+    /**
+     * Private constructor defined to avoid public instantiation of class
      *
-     * @param data json data value to be parsed
      * @author Frank Giordano
      */
-    public DatasetParseResponse(JSONObject data) {
-        super(data);
+    private DatasetParseResponse() {
+    }
+
+    /**
+     * Get singleton instance
+     *
+     * @return ConsoleResponseService object
+     * @author Frank Giordano
+     */
+    public synchronized static JsonParseResponse getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new DatasetParseResponse();
+        }
+        return INSTANCE;
     }
 
     /**
@@ -38,7 +60,8 @@ public class DatasetParseResponse extends JsonParseResponse {
      */
     @Override
     public Dataset parseResponse() {
-        return new Dataset.Builder()
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
+        final Dataset dataset = new Dataset.Builder()
                 .dsname(data.get("dsname") != null ? (String) data.get("dsname") : null)
                 .blksz(data.get("blksz") != null ? (String) data.get("blksz") : null)
                 .catnm(data.get("catnm") != null ? (String) data.get("catnm") : null)
@@ -59,6 +82,22 @@ public class DatasetParseResponse extends JsonParseResponse {
                 .used(data.get("used") != null ? (String) data.get("used") : null)
                 .vol(data.get("vol") != null ? (String) data.get("vol") : null)
                 .build();
+        data = null;
+        return dataset;
+    }
+
+    /**
+     * Set the data to be parsed
+     *
+     * @param data json data to parse
+     * @return JsonParseResponse this object
+     * @author Frank Giordano
+     */
+    @Override
+    public JsonParseResponse setJsonObject(final JSONObject data) {
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
+        this.data = data;
+        return this;
     }
 
 }

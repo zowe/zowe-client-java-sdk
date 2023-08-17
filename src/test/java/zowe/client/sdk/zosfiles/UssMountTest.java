@@ -46,9 +46,9 @@ public class UssMountTest {
                 new Response(new JSONObject(), 200, "success"));
         final UssMount ussMount = new UssMount(connection, mockJsonPutRequest);
         final Response response = ussMount.mount("name", "mountpoint", "fstype");
-        Assertions.assertEquals("{}", response.getResponsePhrase().get().toString());
-        Assertions.assertEquals("200", response.getStatusCode().get().toString());
-        Assertions.assertEquals("success", response.getStatusText().get());
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test

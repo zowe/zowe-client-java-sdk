@@ -12,6 +12,7 @@ package zowe.client.sdk.zosfiles;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
@@ -46,9 +47,9 @@ public class UssWriteTest {
                 new Response(new JSONObject(), 200, "success"));
         final UssWrite ussWrite = new UssWrite(connection, mockTextPutRequest);
         final Response response = ussWrite.writeText("/xx/xx/x", "text");
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get());
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test
@@ -58,9 +59,9 @@ public class UssWriteTest {
                 new Response(new byte[0], 200, "success"));
         final UssWrite ussWrite = new UssWrite(connection, mockStreamPutRequest);
         final Response response = ussWrite.writeBinary("/xx/xx/x", new byte[0]);
-        assertTrue(response.getResponsePhrase().get() instanceof byte[]);
-        assertEquals("200", response.getStatusCode().get().toString());
-        assertEquals("success", response.getStatusText().get());
+        assertTrue(response.getResponsePhrase().orElse(null) instanceof byte[]);
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test

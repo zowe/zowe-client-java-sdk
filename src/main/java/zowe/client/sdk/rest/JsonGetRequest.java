@@ -31,7 +31,7 @@ public class JsonGetRequest extends ZoweRequest {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public JsonGetRequest(ZosConnection connection) {
+    public JsonGetRequest(final ZosConnection connection) {
         super(connection);
     }
 

@@ -65,7 +65,7 @@ public class JobMonitor {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public JobMonitor(ZosConnection connection) {
+    public JobMonitor(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -77,7 +77,7 @@ public class JobMonitor {
      * @param attempts   number of attempts to get status
      * @author Frank Giordano
      */
-    public JobMonitor(ZosConnection connection, int attempts) {
+    public JobMonitor(final ZosConnection connection, final int attempts) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.attempts = attempts;
@@ -91,7 +91,7 @@ public class JobMonitor {
      * @param watchDelay delay time in milliseconds to wait each time requesting status
      * @author Frank Giordano
      */
-    public JobMonitor(ZosConnection connection, int attempts, int watchDelay) {
+    public JobMonitor(final ZosConnection connection, final int attempts, final int watchDelay) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.attempts = attempts;
@@ -107,7 +107,7 @@ public class JobMonitor {
      * @param lineLimit  number of line to inspect job output
      * @author Frank Giordano
      */
-    public JobMonitor(ZosConnection connection, int attempts, int watchDelay, int lineLimit) {
+    public JobMonitor(final ZosConnection connection, final int attempts, final int watchDelay, final int lineLimit) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.attempts = attempts;
@@ -124,7 +124,7 @@ public class JobMonitor {
      * @throws Exception error processing check request
      * @author Frank Giordano
      */
-    private boolean checkMessage(MonitorJobWaitForParams params, String message) throws Exception {
+    private boolean checkMessage(final MonitorJobWaitForParams params, final String message) throws Exception {
         final JobGet getJobs = new JobGet(connection);
         final GetJobParams filter =
                 new GetJobParams.Builder("*")
@@ -164,7 +164,7 @@ public class JobMonitor {
      * @throws Exception error processing check request
      * @author Frank Giordano
      */
-    private CheckJobStatus checkStatus(MonitorJobWaitForParams params) throws Exception {
+    private CheckJobStatus checkStatus(final MonitorJobWaitForParams params) throws Exception {
         return checkStatus(params, false);
     }
 
@@ -176,12 +176,13 @@ public class JobMonitor {
      * @throws Exception error processing check request
      * @author Frank Giordano
      */
-    private CheckJobStatus checkStatus(MonitorJobWaitForParams params, boolean getStepData) throws Exception {
+    private CheckJobStatus checkStatus(final MonitorJobWaitForParams params, final boolean isStepData)
+            throws Exception {
         final JobGet getJobs = new JobGet(connection);
         final String statusNameCheck = params.getJobStatus().orElse(DEFAULT_STATUS).toString();
 
         final Job job = getJobs.getStatusCommon(
-                new CommonJobParams(params.getJobId().orElse(""), params.getJobName().orElse(""), getStepData));
+                new CommonJobParams(params.getJobId().orElse(""), params.getJobName().orElse(""), isStepData));
 
         if (statusNameCheck.equals(job.getStatus().orElse(DEFAULT_STATUS.toString()))) {
             return new CheckJobStatus(true, job);
@@ -213,7 +214,7 @@ public class JobMonitor {
      * @return int index of status order or -1 if none found
      * @author Frank Giordano
      */
-    private int getOrderIndexOfStatus(String statusName) {
+    private int getOrderIndexOfStatus(final String statusName) {
         for (int i = 0; i < JobStatus.Order.length; i++) {
             if (statusName.equals(JobStatus.Order[i])) {
                 return i;
@@ -230,7 +231,7 @@ public class JobMonitor {
      * @throws Exception error processing running status check
      * @author Frank Giordano
      */
-    public boolean isRunning(MonitorJobWaitForParams params) throws Exception {
+    public boolean isRunning(final MonitorJobWaitForParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         final JobGet getJobs = new JobGet(connection);
         final String jobName = params.getJobName()
@@ -250,7 +251,7 @@ public class JobMonitor {
      * @throws Exception error processing poll check request
      * @author Frank Giordano
      */
-    private boolean pollByMessage(MonitorJobWaitForParams params, String message) throws Exception {
+    private boolean pollByMessage(final MonitorJobWaitForParams params, final String message) throws Exception {
         final int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
         boolean messageFound;  // no assigment boolean means by default it is false
         boolean shouldContinue;
@@ -286,7 +287,7 @@ public class JobMonitor {
      * @throws Exception error processing poll check request
      * @author Frank Giordano
      */
-    private Job pollByStatus(MonitorJobWaitForParams params) throws Exception {
+    private Job pollByStatus(final MonitorJobWaitForParams params) throws Exception {
         final int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
         boolean expectedStatus;  // no assigment boolean means by default it is false
         boolean shouldContinue;
@@ -338,7 +339,7 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public boolean waitByMessage(Job job, String message) throws Exception {
+    public boolean waitByMessage(final Job job, final String message) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return waitMessageCommon(
                 new MonitorJobWaitForParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
@@ -362,7 +363,7 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public boolean waitByMessage(String jobName, String jobId, String message) throws Exception {
+    public boolean waitByMessage(final String jobName, final String jobId, final String message) throws Exception {
         return waitMessageCommon(
                 new MonitorJobWaitForParams.Builder(jobName, jobId)
                         .jobStatus(JobStatus.Type.OUTPUT)
@@ -383,7 +384,7 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public Job waitByOutputStatus(Job job) throws Exception {
+    public Job waitByOutputStatus(final Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return waitStatusCommon(
                 new MonitorJobWaitForParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
@@ -406,7 +407,7 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public Job waitByOutputStatus(String jobName, String jobId) throws Exception {
+    public Job waitByOutputStatus(final String jobName, final String jobId) throws Exception {
         return waitStatusCommon(
                 new MonitorJobWaitForParams.Builder(jobName, jobId)
                         .jobStatus(JobStatus.Type.OUTPUT)
@@ -427,7 +428,7 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public Job waitByStatus(Job job, JobStatus.Type statusType) throws Exception {
+    public Job waitByStatus(final Job job, final JobStatus.Type statusType) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return waitStatusCommon(
                 new MonitorJobWaitForParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
@@ -451,7 +452,8 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public Job waitByStatus(String jobName, String jobId, JobStatus.Type statusType) throws Exception {
+    public Job waitByStatus(final String jobName, final String jobId, final JobStatus.Type statusType)
+            throws Exception {
         return waitStatusCommon(
                 new MonitorJobWaitForParams.Builder(jobName, jobId)
                         .jobStatus(statusType)
@@ -469,7 +471,7 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public boolean waitMessageCommon(MonitorJobWaitForParams params, String message) throws Exception {
+    public boolean waitMessageCommon(final MonitorJobWaitForParams params, final String message) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), JobsConstants.JOB_NAME_ERROR_MSG);
         ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), JobsConstants.JOB_ID_ERROR_MSG);
@@ -499,7 +501,7 @@ public class JobMonitor {
      * @throws Exception error processing wait check request
      * @author Frank Giordano
      */
-    public Job waitStatusCommon(MonitorJobWaitForParams params) throws Exception {
+    public Job waitStatusCommon(final MonitorJobWaitForParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), JobsConstants.JOB_NAME_ERROR_MSG);
         ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), JobsConstants.JOB_ID_ERROR_MSG);

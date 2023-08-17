@@ -68,7 +68,7 @@ public class MonitorJobWaitForParams {
      */
     private OptionalInt lineLimit;
 
-    private MonitorJobWaitForParams(MonitorJobWaitForParams.Builder builder) {
+    private MonitorJobWaitForParams(final MonitorJobWaitForParams.Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);
         this.watchDelay = builder.watchDelay;
@@ -93,7 +93,7 @@ public class MonitorJobWaitForParams {
      * @param attempts number of attempts to get status
      * @author Frank Giordano
      */
-    public void setAttempts(int attempts) {
+    public void setAttempts(final int attempts) {
         this.attempts = OptionalInt.of(attempts);
     }
 
@@ -133,7 +133,7 @@ public class MonitorJobWaitForParams {
      * @param jobStatus job status type, see JobStatus.Type object
      * @author Frank Giordano
      */
-    public void setJobStatus(JobStatus.Type jobStatus) {
+    public void setJobStatus(final JobStatus.Type jobStatus) {
         this.jobStatus = Optional.ofNullable(jobStatus);
     }
 
@@ -153,7 +153,7 @@ public class MonitorJobWaitForParams {
      * @param lineLimit number of lines to inspect
      * @author Frank Giordano
      */
-    public void setLineLimit(int lineLimit) {
+    public void setLineLimit(final int lineLimit) {
         this.lineLimit = OptionalInt.of(lineLimit);
     }
 
@@ -173,7 +173,7 @@ public class MonitorJobWaitForParams {
      * @param watchDelay delay of polling operation in milliseconds
      * @author Frank Giordano
      */
-    public void setWatchDelay(int watchDelay) {
+    public void setWatchDelay(final int watchDelay) {
         this.watchDelay = OptionalInt.of(watchDelay);
     }
 
@@ -198,7 +198,7 @@ public class MonitorJobWaitForParams {
         private OptionalInt attempts = OptionalInt.empty();
         private OptionalInt lineLimit = OptionalInt.empty();
 
-        public Builder(String jobName, String jobId) {
+        public Builder(final String jobName, final String jobId) {
             ValidateUtils.checkNullParameter(jobName == null, "job name is null");
             ValidateUtils.checkIllegalParameter(jobName.isBlank(), JobsConstants.JOB_NAME_ERROR_MSG);
             ValidateUtils.checkNullParameter(jobId == null, "job id is null");
@@ -207,7 +207,7 @@ public class MonitorJobWaitForParams {
             this.jobId = jobId;
         }
 
-        public MonitorJobWaitForParams.Builder attempts(int attempts) {
+        public MonitorJobWaitForParams.Builder attempts(final int attempts) {
             this.attempts = OptionalInt.of(attempts);
             return this;
         }
@@ -216,17 +216,17 @@ public class MonitorJobWaitForParams {
             return new MonitorJobWaitForParams(this);
         }
 
-        public MonitorJobWaitForParams.Builder jobStatus(JobStatus.Type jobStatus) {
+        public MonitorJobWaitForParams.Builder jobStatus(final JobStatus.Type jobStatus) {
             this.jobStatus = jobStatus;
             return this;
         }
 
-        public MonitorJobWaitForParams.Builder lineLimit(int lineLimit) {
+        public MonitorJobWaitForParams.Builder lineLimit(final int lineLimit) {
             this.lineLimit = OptionalInt.of(lineLimit);
             return this;
         }
 
-        public MonitorJobWaitForParams.Builder watchDelay(int watchDelay) {
+        public MonitorJobWaitForParams.Builder watchDelay(final int watchDelay) {
             this.watchDelay = OptionalInt.of(watchDelay);
             return this;
         }

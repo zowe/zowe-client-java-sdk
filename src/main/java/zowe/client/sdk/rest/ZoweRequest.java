@@ -43,7 +43,7 @@ public abstract class ZoweRequest {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public ZoweRequest(ZosConnection connection) {
+    public ZoweRequest(final ZosConnection connection) {
         this.connection = connection;
         this.setup();
     }
@@ -55,7 +55,7 @@ public abstract class ZoweRequest {
      * @return Response object
      * @author Frank Giordano
      */
-    protected static Response getJsonResponse(HttpResponse<JsonNode> reply) {
+    protected static Response getJsonResponse(final HttpResponse<JsonNode> reply) {
         if (reply.getBody().isArray()) {
             return new Response(reply.getBody().getArray(), reply.getStatus(), reply.getStatusText());
         }
@@ -88,7 +88,7 @@ public abstract class ZoweRequest {
      * @throws UnirestException error setting body
      * @author Frank Giordano
      */
-    public abstract void setBody(Object body) throws UnirestException;
+    public abstract void setBody(final Object body) throws UnirestException;
 
     /**
      * Set any headers needed for the http request
@@ -96,7 +96,7 @@ public abstract class ZoweRequest {
      * @param headers headers to add to the request
      * @author Frank Giordano
      */
-    public void setHeaders(Map<String, String> headers) {
+    public void setHeaders(final Map<String, String> headers) {
         this.headers.clear();
         this.setStandardHeaders();
         this.headers.putAll(headers);
@@ -116,7 +116,7 @@ public abstract class ZoweRequest {
      * @throws IllegalArgumentException error setting valid url string
      * @author Frank Giordano
      */
-    public void setUrl(String url) throws IllegalArgumentException {
+    public void setUrl(final String url) throws IllegalArgumentException {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         ValidateUtils.checkIllegalParameter(url.isBlank(), "url not specified");
         if (RestUtils.isUrlNotValid(url)) {

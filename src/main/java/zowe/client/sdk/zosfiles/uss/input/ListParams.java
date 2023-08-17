@@ -117,7 +117,7 @@ public class ListParams {
      * @param builder ListParams.Builder builder
      * @author Frank Giordano
      */
-    public ListParams(ListParams.Builder builder) {
+    public ListParams(final ListParams.Builder builder) {
         this.path = Optional.of(builder.path);
         if (builder.maxLength == null) {
             this.maxLength = OptionalInt.empty();
@@ -245,9 +245,9 @@ public class ListParams {
     }
 
     /**
-     * Retrieve filesys value
+     * Retrieve is filesys specified
      *
-     * @return filesys value
+     * @return boolean true or false
      * @author Frank Giordano
      */
     public boolean isFilesys() {
@@ -255,9 +255,9 @@ public class ListParams {
     }
 
     /**
-     * Retrieve symlinks value
+     * Retrieve is symlinks specified
      *
-     * @return symlinks value
+     * @return boolean true or false
      * @author Frank Giordano
      */
     public boolean isSymlinks() {
@@ -301,64 +301,64 @@ public class ListParams {
             return new ListParams(this);
         }
 
-        public ListParams.Builder path(String path) {
+        public ListParams.Builder path(final String path) {
             ValidateUtils.checkNullParameter(path == null, "path is null");
             ValidateUtils.checkIllegalParameter(path.isBlank(), "path not specified");
             this.path = path;
             return this;
         }
 
-        public ListParams.Builder maxLength(int maxLength) {
+        public ListParams.Builder maxLength(final int maxLength) {
             this.maxLength = maxLength;
             return this;
         }
 
-        public ListParams.Builder group(String group) {
+        public ListParams.Builder group(final String group) {
             this.group = group;
             return this;
         }
 
-        public ListParams.Builder user(String user) {
+        public ListParams.Builder user(final String user) {
             this.user = user;
             return this;
         }
 
-        public ListParams.Builder mtime(String mtime) {
+        public ListParams.Builder mtime(final String mtime) {
             this.mtime = mtime;
             return this;
         }
 
-        public ListParams.Builder size(int size) {
+        public ListParams.Builder size(final int size) {
             this.size = size;
             return this;
         }
 
-        public ListParams.Builder name(String name) {
+        public ListParams.Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public ListParams.Builder perm(String perm) {
+        public ListParams.Builder perm(final String perm) {
             this.perm = perm;
             return this;
         }
 
-        public ListParams.Builder type(ListFilterType type) {
+        public ListParams.Builder type(final ListFilterType type) {
             this.type = type;
             return this;
         }
 
-        public ListParams.Builder depth(int depth) {
+        public ListParams.Builder depth(final int depth) {
             this.depth = depth;
             return this;
         }
 
-        public ListParams.Builder filesys(boolean filesys) {
+        public ListParams.Builder filesys(final boolean filesys) {
             this.filesys = filesys;
             return this;
         }
 
-        public ListParams.Builder symlinks(boolean symlinks) {
+        public ListParams.Builder symlinks(final boolean symlinks) {
             this.symlinks = symlinks;
             return this;
         }

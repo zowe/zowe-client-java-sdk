@@ -39,7 +39,7 @@ public class TextPutRequest extends ZoweRequest {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public TextPutRequest(ZosConnection connection) {
+    public TextPutRequest(final ZosConnection connection) {
         super(connection);
     }
 
@@ -66,7 +66,7 @@ public class TextPutRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     @Override
-    public void setBody(Object body) {
+    public void setBody(final Object body) {
         this.body = (String) body;
         LOG.debug(this.body);
     }

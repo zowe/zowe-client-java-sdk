@@ -71,17 +71,17 @@ public class IssueResponse {
      * @param commandResponses command string responses
      * @author Frank Giordano
      */
-    public void setCommandResponses(String commandResponses) {
+    public void setCommandResponses(final String commandResponses) {
         this.commandResponses = Optional.ofNullable(commandResponses);
     }
 
     /**
-     * Retrieve startReady specified
+     * Retrieve is startReady specified
      *
-     * @return startReady value
+     * @return boolean true or false
      * @author Frank Giordano
      */
-    public boolean getStartReady() {
+    public boolean isStartReady() {
         return startReady;
     }
 
@@ -91,7 +91,7 @@ public class IssueResponse {
      * @param startReady true or false is start ready prompt seen or not
      * @author Frank Giordano
      */
-    public void setStartReady(boolean startReady) {
+    public void setStartReady(final boolean startReady) {
         this.startReady = startReady;
     }
 
@@ -111,7 +111,7 @@ public class IssueResponse {
      * @param startResponse tso response
      * @author Frank Giordano
      */
-    public void setStartResponse(StartStopResponses startResponse) {
+    public void setStartResponse(final StartStopResponses startResponse) {
         this.startResponse = Optional.ofNullable(startResponse);
     }
 
@@ -131,17 +131,17 @@ public class IssueResponse {
      * @param stopResponse tso response
      * @author Frank Giordano
      */
-    public void setStopResponse(StartStopResponse stopResponse) {
+    public void setStopResponse(final StartStopResponse stopResponse) {
         this.stopResponse = Optional.ofNullable(stopResponse);
     }
 
     /**
-     * Retrieve success specified
+     * Retrieve is success
      *
-     * @return boolean value
+     * @return boolean true or false
      * @author Frank Giordano
      */
-    public boolean getSuccess() {
+    public boolean isSuccess() {
         return success;
     }
 
@@ -151,7 +151,7 @@ public class IssueResponse {
      * @param success true or false is response seen
      * @author Frank Giordano
      */
-    public void setSuccess(boolean success) {
+    public void setSuccess(final boolean success) {
         this.success = success;
     }
 
@@ -171,7 +171,7 @@ public class IssueResponse {
      * @param zosmfResponses z/OSMF tso responses
      * @author Frank Giordano
      */
-    public void setZosmfResponses(List<ZosmfTsoResponse> zosmfResponses) {
+    public void setZosmfResponses(final List<ZosmfTsoResponse> zosmfResponses) {
         this.zosmfResponses = Objects.requireNonNullElse(zosmfResponses, Collections.emptyList());
     }
 

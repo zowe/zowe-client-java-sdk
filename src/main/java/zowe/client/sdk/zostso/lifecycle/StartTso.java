@@ -41,7 +41,7 @@ public class StartTso {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public StartTso(ZosConnection connection) {
+    public StartTso(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -55,7 +55,7 @@ public class StartTso {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public StartTso(ZosConnection connection, ZoweRequest request) throws Exception {
+    public StartTso(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -72,7 +72,7 @@ public class StartTso {
      * @return generated url
      * @author Frank Giordano
      */
-    private String getResourcesQuery(StartTsoParams params) {
+    private String getResourcesQuery(final StartTsoParams params) {
         String query = "https://" + connection.getHost() + ":" + connection.getZosmfPort();
         query += TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "?";
         query += TsoConstants.PARAM_ACCT + "=" + params.account
@@ -94,7 +94,7 @@ public class StartTso {
      * @return StartTsoParams object
      * @author Frank Giordano
      */
-    private StartTsoParams setDefaultAddressSpaceParams(StartTsoParams params, String accountNumber) {
+    private StartTsoParams setDefaultAddressSpaceParams(StartTsoParams params, final String accountNumber) {
         if (params == null) {
             params = new StartTsoParams();
         }
@@ -116,7 +116,7 @@ public class StartTso {
      * @throws Exception error executing command
      * @author Frank Giordano
      */
-    public StartStopResponses start(String accountNumber, StartTsoParams params) throws Exception {
+    public StartStopResponses start(final String accountNumber, final StartTsoParams params) throws Exception {
         ValidateUtils.checkNullParameter(accountNumber == null, "accountNumber is null");
         ValidateUtils.checkIllegalParameter(accountNumber.isBlank(), "accountNumber not specified");
 
@@ -146,7 +146,7 @@ public class StartTso {
      * @throws Exception error executing command
      * @author Frank Giordano
      */
-    public ZosmfTsoResponse startCommon(StartTsoParams commandParams) throws Exception {
+    public ZosmfTsoResponse startCommon(final StartTsoParams commandParams) throws Exception {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
         final String url = getResourcesQuery(commandParams);

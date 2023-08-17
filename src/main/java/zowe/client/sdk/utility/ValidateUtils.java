@@ -36,7 +36,7 @@ public final class ValidateUtils {
      * @throws IllegalStateException with message "Connection data not setup properly"
      * @author Frank Giordano
      */
-    public static void checkConnection(ZosConnection connection) {
+    public static void checkConnection(final ZosConnection connection) {
         if (connection == null || connection.getZosmfPort() == null || connection.getHost() == null ||
                 connection.getPassword() == null || connection.getUser() == null ||
                 connection.getZosmfPort().isBlank() || connection.getHost().isBlank() ||
@@ -53,7 +53,7 @@ public final class ValidateUtils {
      * @throws IllegalArgumentException with message
      * @author Frank Giordano
      */
-    public static void checkIllegalParameter(boolean check, String msg) {
+    public static void checkIllegalParameter(final boolean check, final String msg) {
         Optional<String> message = Optional.ofNullable(msg);
         if (check) {
             throw new IllegalArgumentException(message.orElse("empty message specified"));
@@ -68,7 +68,7 @@ public final class ValidateUtils {
      * @throws IllegalArgumentException with message
      * @author Frank Giordano
      */
-    public static void checkNullParameter(boolean check, String msg) {
+    public static void checkNullParameter(final boolean check, final String msg) {
         Optional<String> message = Optional.ofNullable(msg);
         if (check) {
             throw new NullPointerException(message.orElse("empty message specified"));
@@ -82,7 +82,7 @@ public final class ValidateUtils {
      * @throws IllegalStateException with message "Connection data not setup properly"
      * @author Frank Giordano
      */
-    public static void checkSshConnection(SshConnection connection) {
+    public static void checkSshConnection(final SshConnection connection) {
         if (connection == null || connection.getHost() == null || connection.getPassword() == null ||
                 connection.getUser() == null || connection.getHost().isBlank() ||
                 connection.getPassword().isBlank() || connection.getUser().isBlank()) {

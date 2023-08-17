@@ -10,6 +10,7 @@
 package zowe.client.sdk.zosmfinfo.response;
 
 import java.util.Optional;
+import java.util.OptionalLong;
 
 /**
  * API response for list systems defined to z/OSMF.
@@ -22,7 +23,7 @@ public class ZosmfSystemsResponse {
     /**
      * Total items returned.
      */
-    private final Optional<Long> numRows;
+    private final OptionalLong numRows;
 
     /**
      * Properties of each defined system.
@@ -35,8 +36,12 @@ public class ZosmfSystemsResponse {
      * @param builder ZosmfListDefinedSystemsResponse.Builder Object
      * @author Frank Giordano
      */
-    private ZosmfSystemsResponse(ZosmfSystemsResponse.Builder builder) {
-        this.numRows = Optional.ofNullable(builder.numRows);
+    private ZosmfSystemsResponse(final ZosmfSystemsResponse.Builder builder) {
+        if (builder.numRows == null) {
+            this.numRows = OptionalLong.empty();
+        } else {
+            this.numRows = OptionalLong.of(builder.numRows);
+        }
         this.definedSystems = Optional.ofNullable(builder.definedSystems);
     }
 
@@ -56,7 +61,7 @@ public class ZosmfSystemsResponse {
      * @return numRows value
      * @author Frank Giordano
      */
-    public Optional<Long> getNumRows() {
+    public OptionalLong getNumRows() {
         return numRows;
     }
 
@@ -77,12 +82,12 @@ public class ZosmfSystemsResponse {
             return new ZosmfSystemsResponse(this);
         }
 
-        public ZosmfSystemsResponse.Builder definedSystems(DefinedSystem[] definedSystems) {
+        public ZosmfSystemsResponse.Builder definedSystems(final DefinedSystem[] definedSystems) {
             this.definedSystems = definedSystems;
             return this;
         }
 
-        public ZosmfSystemsResponse.Builder numRows(Long numRows) {
+        public ZosmfSystemsResponse.Builder numRows(final Long numRows) {
             this.numRows = numRows;
             return this;
         }

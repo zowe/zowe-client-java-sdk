@@ -24,7 +24,7 @@ public enum CreateType {
 
     private final String value;
 
-    CreateType(String value) {
+    CreateType(final String value) {
         this.value = value;
     }
 

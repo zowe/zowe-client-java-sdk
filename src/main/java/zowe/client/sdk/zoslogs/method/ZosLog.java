@@ -54,7 +54,7 @@ public class ZosLog {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public ZosLog(ZosConnection connection) {
+    public ZosLog(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -68,7 +68,7 @@ public class ZosLog {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ZosLog(ZosConnection connection, ZoweRequest request) throws Exception {
+    public ZosLog(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof JsonGetRequest)) {
@@ -88,7 +88,7 @@ public class ZosLog {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    public ZosLogReply issueCommand(ZosLogParams params) throws Exception {
+    public ZosLogReply issueCommand(final ZosLogParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String defaultUrl = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + RESOURCE;
@@ -124,13 +124,13 @@ public class ZosLog {
 
         for (Object itemJsonObj : jsonArray) {
             final ZosLogItemParseResponse parser = (ZosLogItemParseResponse) JsonParseResponseFactory
-                    .buildParser((JSONObject) itemJsonObj, ParseType.ZOS_LOG_ITEM);
+                    .buildParser(ParseType.ZOS_LOG_ITEM).setJsonObject((JSONObject) itemJsonObj);
             parser.setProcessResponse(isProcessResponse);
             zosLogItems.add(parser.parseResponse());
         }
 
         final ZosLogReplyParseResponse parser = (ZosLogReplyParseResponse) JsonParseResponseFactory
-                .buildParser(jsonObject, ParseType.ZOS_LOG_REPLY);
+                .buildParser(ParseType.ZOS_LOG_REPLY).setJsonObject(jsonObject);
         parser.setZosLogItems(zosLogItems);
         return parser.parseResponse();
     }
@@ -139,10 +139,10 @@ public class ZosLog {
      * Validate given string in expected date/time string format.
      *
      * @param value string representing a date/time
-     * @return boolean value
+     * @return boolean true or false
      * @author Frank Giordano
      */
-    private static boolean isNotValidDate(String value) {
+    private static boolean isNotValidDate(final String value) {
         //  pattern to match example: 2022-11-27T05:06:20Z
         final String patternStr = ".*[0-9]-.*[0-9]-.*[0-9][T].*[0-9][:]*[0-9][:]*[0-9][Z]";
         final Pattern pattern = Pattern.compile(patternStr);

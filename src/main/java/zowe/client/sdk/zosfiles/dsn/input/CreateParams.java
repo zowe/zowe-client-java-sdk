@@ -101,7 +101,7 @@ public class CreateParams {
      * The indicator that we need to show the attributes
      * DO NOT SEND THIS TO ZOSMF
      */
-    private final Optional<Boolean> showAttributes;
+    private final boolean showAttributes;
 
     /**
      * The abstraction of Allocation unit and Primary Space
@@ -114,7 +114,7 @@ public class CreateParams {
      */
     private final Optional<String> responseTimeout;
 
-    private CreateParams(CreateParams.Builder builder) {
+    private CreateParams(final CreateParams.Builder builder) {
         this.volser = Optional.ofNullable(builder.volser);
         this.unit = Optional.ofNullable(builder.unit);
         this.dsorg = Optional.ofNullable(builder.dsorg);
@@ -154,7 +154,7 @@ public class CreateParams {
         this.mgntclass = Optional.ofNullable(builder.mgntclass);
         this.dataclass = Optional.ofNullable(builder.dataclass);
         this.dsntype = Optional.ofNullable(builder.dsntype);
-        this.showAttributes = Optional.ofNullable(builder.showAttributes);
+        this.showAttributes = builder.showAttributes;
         this.size = Optional.ofNullable(builder.size);
         this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
     }
@@ -290,12 +290,12 @@ public class CreateParams {
     }
 
     /**
-     * Retrieve showAttributes value
+     * Retrieve is showAttributes specified
      *
-     * @return showAttributes value
+     * @return boolean true or false
      * @author Leonid Baranov
      */
-    public Optional<Boolean> getShowAttributes() {
+    public boolean isShowAttributes() {
         return showAttributes;
     }
 
@@ -380,21 +380,21 @@ public class CreateParams {
         private String mgntclass;
         private String dataclass;
         private String dsntype;
-        private Boolean showAttributes;
+        private boolean showAttributes;
         private String size;
         private String responseTimeout;
 
-        public CreateParams.Builder alcunit(String alcunit) {
+        public CreateParams.Builder alcunit(final String alcunit) {
             this.alcunit = alcunit;
             return this;
         }
 
-        public CreateParams.Builder avgblk(Integer avgblk) {
+        public CreateParams.Builder avgblk(final Integer avgblk) {
             this.avgblk = avgblk;
             return this;
         }
 
-        public CreateParams.Builder blksize(Integer blksize) {
+        public CreateParams.Builder blksize(final Integer blksize) {
             this.blksize = blksize;
             return this;
         }
@@ -403,77 +403,77 @@ public class CreateParams {
             return new CreateParams(this);
         }
 
-        public CreateParams.Builder dataclass(String dataclass) {
+        public CreateParams.Builder dataclass(final String dataclass) {
             this.dataclass = dataclass;
             return this;
         }
 
-        public CreateParams.Builder dirblk(Integer dirblk) {
+        public CreateParams.Builder dirblk(final Integer dirblk) {
             this.dirblk = dirblk;
             return this;
         }
 
-        public CreateParams.Builder dsntype(String dsntype) {
+        public CreateParams.Builder dsntype(final String dsntype) {
             this.dsntype = dsntype;
             return this;
         }
 
-        public CreateParams.Builder dsorg(String dsorg) {
+        public CreateParams.Builder dsorg(final String dsorg) {
             this.dsorg = dsorg;
             return this;
         }
 
-        public CreateParams.Builder lrecl(Integer lrecl) {
+        public CreateParams.Builder lrecl(final Integer lrecl) {
             this.lrecl = lrecl;
             return this;
         }
 
-        public CreateParams.Builder mgntclass(String mgntclass) {
+        public CreateParams.Builder mgntclass(final String mgntclass) {
             this.mgntclass = mgntclass;
             return this;
         }
 
-        public CreateParams.Builder primary(Integer primary) {
+        public CreateParams.Builder primary(final Integer primary) {
             this.primary = primary;
             return this;
         }
 
-        public CreateParams.Builder recfm(String recfm) {
+        public CreateParams.Builder recfm(final String recfm) {
             this.recfm = recfm;
             return this;
         }
 
-        public CreateParams.Builder responseTimeout(String responseTimeout) {
+        public CreateParams.Builder responseTimeout(final String responseTimeout) {
             this.responseTimeout = responseTimeout;
             return this;
         }
 
-        public CreateParams.Builder secondary(Integer secondary) {
+        public CreateParams.Builder secondary(final Integer secondary) {
             this.secondary = secondary;
             return this;
         }
 
-        public CreateParams.Builder showAttributes(Boolean showAttributes) {
+        public CreateParams.Builder showAttributes(final boolean showAttributes) {
             this.showAttributes = showAttributes;
             return this;
         }
 
-        public CreateParams.Builder size(String size) {
+        public CreateParams.Builder size(final String size) {
             this.size = size;
             return this;
         }
 
-        public CreateParams.Builder storclass(String storclass) {
+        public CreateParams.Builder storclass(final String storclass) {
             this.storclass = storclass;
             return this;
         }
 
-        public CreateParams.Builder unit(String unit) {
+        public CreateParams.Builder unit(final String unit) {
             this.unit = unit;
             return this;
         }
 
-        public CreateParams.Builder volser(String volser) {
+        public CreateParams.Builder volser(final String volser) {
             this.volser = volser;
             return this;
         }

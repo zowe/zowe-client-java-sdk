@@ -42,7 +42,7 @@ public class JobDelete {
      * @param connection connection information, see ZOSConnection object
      * @author Nikunj Goyal
      */
-    public JobDelete(ZosConnection connection) {
+    public JobDelete(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -56,7 +56,7 @@ public class JobDelete {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public JobDelete(ZosConnection connection, ZoweRequest request) throws Exception {
+    public JobDelete(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -76,7 +76,7 @@ public class JobDelete {
      * @throws Exception error deleting
      * @author Nikunj goyal
      */
-    public Response delete(String jobName, String jobId, String version) throws Exception {
+    public Response delete(final String jobName, final String jobId, final String version) throws Exception {
         return deleteCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
@@ -89,7 +89,7 @@ public class JobDelete {
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
-    public Response deleteCommon(ModifyJobParams params) throws Exception {
+    public Response deleteCommon(final ModifyJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
@@ -139,7 +139,7 @@ public class JobDelete {
      * @throws Exception error deleting
      * @author Frank Giordano
      */
-    public Response deleteByJob(Job job, String version) throws Exception {
+    public Response deleteByJob(final Job job, final String version) throws Exception {
         return this.deleteCommon(
                 new ModifyJobParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
                         .version(version)

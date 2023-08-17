@@ -41,7 +41,7 @@ public class CollectedResponses {
      * @param messages tso messages
      * @author Frank Giordano
      */
-    public CollectedResponses(List<ZosmfTsoResponse> tsoLst, String messages) {
+    public CollectedResponses(final List<ZosmfTsoResponse> tsoLst, final String messages) {
         this.tsos = Objects.requireNonNullElse(tsoLst, Collections.emptyList());
         this.messages = Optional.ofNullable(messages);
     }

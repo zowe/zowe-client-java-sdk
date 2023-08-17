@@ -36,7 +36,7 @@ public class SendTsoParams {
      * @param data       to be sent to the active address space
      * @author Frank Giordano
      */
-    public SendTsoParams(String servletKey, String data) {
+    public SendTsoParams(final String servletKey, final String data) {
         ValidateUtils.checkNullParameter(servletKey == null, "servletKey is null");
         ValidateUtils.checkIllegalParameter(servletKey.isBlank(), "servletKey not specified");
         ValidateUtils.checkNullParameter(data == null, "data is null");

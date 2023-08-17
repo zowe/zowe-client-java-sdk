@@ -40,7 +40,8 @@ public final class ZoweRequestFactory {
      * @throws Exception error with type not found
      * @author Frank Giordano
      */
-    public static ZoweRequest buildRequest(ZosConnection connection, ZoweRequestType type) throws Exception {
+    public static ZoweRequest buildRequest(final ZosConnection connection, final ZoweRequestType type)
+            throws Exception {
         LOG.debug(type.name());
         ZoweRequest request;
         switch (type) {

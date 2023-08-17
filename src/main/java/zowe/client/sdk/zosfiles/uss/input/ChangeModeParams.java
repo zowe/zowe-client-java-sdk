@@ -46,7 +46,7 @@ public class ChangeModeParams {
      * @param builder ChangeModeParams.Builder builder
      * @author James Kostrewski
      */
-    public ChangeModeParams(ChangeModeParams.Builder builder) {
+    public ChangeModeParams(final ChangeModeParams.Builder builder) {
         this.mode = Optional.of(builder.mode);
         this.recursive = builder.recursive;
         this.linkType = Optional.ofNullable(builder.linkType);
@@ -63,9 +63,9 @@ public class ChangeModeParams {
     }
 
     /**
-     * Is recursive value true or false
+     * Is recursive specified
      *
-     * @return recursive value
+     * @return boolean true or false
      * @author James Kostrewski
      */
     public boolean isRecursive() {
@@ -101,19 +101,19 @@ public class ChangeModeParams {
             return new ChangeModeParams(this);
         }
 
-        public ChangeModeParams.Builder mode(String mode) {
+        public ChangeModeParams.Builder mode(final String mode) {
             ValidateUtils.checkNullParameter(mode == null, "mode is null");
             ValidateUtils.checkIllegalParameter(mode.isBlank(), "mode not specified");
             this.mode = mode;
             return this;
         }
 
-        public ChangeModeParams.Builder recursive(boolean recursive) {
+        public ChangeModeParams.Builder recursive(final boolean recursive) {
             this.recursive = recursive;
             return this;
         }
 
-        public ChangeModeParams.Builder linktype(LinkType type) {
+        public ChangeModeParams.Builder linktype(final LinkType type) {
             this.linkType = type;
             return this;
         }

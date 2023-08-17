@@ -54,7 +54,7 @@ public class MountParams {
      * @param builder MountParams.Builder builder
      * @author Frank Giordano
      */
-    public MountParams(MountParams.Builder builder) {
+    public MountParams(final MountParams.Builder builder) {
         this.action = Optional.ofNullable(builder.action);
         this.mountPoint = Optional.ofNullable(builder.mountPoint);
         this.fsType = Optional.ofNullable(builder.fsType);
@@ -122,26 +122,26 @@ public class MountParams {
             return new MountParams(this);
         }
 
-        public MountParams.Builder action(MountActionType action) {
+        public MountParams.Builder action(final MountActionType action) {
             this.action = action;
             return this;
         }
 
-        public MountParams.Builder mountPoint(String mountPoint) {
+        public MountParams.Builder mountPoint(final String mountPoint) {
             ValidateUtils.checkNullParameter(mountPoint == null, "mountPoint is null");
             ValidateUtils.checkIllegalParameter(mountPoint.isBlank(), "mountPoint not specified");
             this.mountPoint = mountPoint;
             return this;
         }
 
-        public MountParams.Builder fsType(String fsType) {
+        public MountParams.Builder fsType(final String fsType) {
             ValidateUtils.checkNullParameter(fsType == null, "fsType is null");
             ValidateUtils.checkIllegalParameter(fsType.isBlank(), "fsType not specified");
             this.fsType = fsType;
             return this;
         }
 
-        public MountParams.Builder mode(MountModeType mode) {
+        public MountParams.Builder mode(final MountModeType mode) {
             this.mode = mode;
             return this;
         }

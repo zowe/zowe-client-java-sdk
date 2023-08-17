@@ -57,7 +57,7 @@ public class ListParams {
      */
     private final Optional<String> responseTimeout;
 
-    private ListParams(ListParams.Builder builder) {
+    private ListParams(final ListParams.Builder builder) {
         this.volume = Optional.ofNullable(builder.volume);
         this.attribute = Optional.ofNullable(builder.attribute);
         this.maxLength = Optional.ofNullable(builder.maxLength);
@@ -160,7 +160,7 @@ public class ListParams {
         private String pattern;
         private String responseTimeout;
 
-        public ListParams.Builder attribute(AttributeType attribute) {
+        public ListParams.Builder attribute(final AttributeType attribute) {
             this.attribute = attribute;
             return this;
         }
@@ -169,32 +169,32 @@ public class ListParams {
             return new ListParams(this);
         }
 
-        public ListParams.Builder maxLength(String maxLength) {
+        public ListParams.Builder maxLength(final String maxLength) {
             this.maxLength = maxLength;
             return this;
         }
 
-        public ListParams.Builder pattern(String pattern) {
+        public ListParams.Builder pattern(final String pattern) {
             this.pattern = pattern;
             return this;
         }
 
-        public ListParams.Builder recall(String recall) {
+        public ListParams.Builder recall(final String recall) {
             this.recall = recall;
             return this;
         }
 
-        public ListParams.Builder responseTimeout(String responseTimeout) {
+        public ListParams.Builder responseTimeout(final String responseTimeout) {
             this.responseTimeout = responseTimeout;
             return this;
         }
 
-        public ListParams.Builder start(String start) {
+        public ListParams.Builder start(final String start) {
             this.start = start;
             return this;
         }
 
-        public ListParams.Builder volume(String volume) {
+        public ListParams.Builder volume(final String volume) {
             this.volume = volume;
             return this;
         }

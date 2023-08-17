@@ -58,7 +58,8 @@ public class StartStopResponses {
      * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public StartStopResponses(ZosmfTsoResponse zosmfTsoResponse, CollectedResponses collectedResponses) throws Exception {
+    public StartStopResponses(final ZosmfTsoResponse zosmfTsoResponse, final CollectedResponses collectedResponses)
+            throws Exception {
         this.zosmfTsoResponse = zosmfTsoResponse;
         if (!zosmfTsoResponse.getMsgData().isEmpty()) {
             // more data means more tso responses to come and as such tso command request has not ended in success yet
@@ -97,7 +98,7 @@ public class StartStopResponses {
      * @param collectedResponses list of ZosmfTsoResponse objects
      * @author Frank Giordano
      */
-    public void setCollectedResponses(List<ZosmfTsoResponse> collectedResponses) {
+    public void setCollectedResponses(final List<ZosmfTsoResponse> collectedResponses) {
         this.collectedResponses = collectedResponses;
     }
 
@@ -137,7 +138,7 @@ public class StartStopResponses {
      * @param servletKey key of tso address space
      * @author Frank Giordano
      */
-    public void setServletKey(String servletKey) {
+    public void setServletKey(final String servletKey) {
         this.servletKey = servletKey;
     }
 
@@ -152,9 +153,9 @@ public class StartStopResponses {
     }
 
     /**
-     * Retrieve success specified
+     * Retrieve is success
      *
-     * @return success value
+     * @return boolean true or false
      * @author Frank Giordano
      */
     public boolean isSuccess() {

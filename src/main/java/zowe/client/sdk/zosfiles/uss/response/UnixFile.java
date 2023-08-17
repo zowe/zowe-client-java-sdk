@@ -60,7 +60,7 @@ public class UnixFile {
      */
     private final Optional<String> mtime;
 
-    public UnixFile(UnixFile.Builder builder) {
+    public UnixFile(final UnixFile.Builder builder) {
         this.name = Optional.ofNullable(builder.name);
         this.mode = Optional.ofNullable(builder.mode);
         if (builder.size == null) {
@@ -144,42 +144,42 @@ public class UnixFile {
             return new UnixFile(this);
         }
 
-        public UnixFile.Builder name(String name) {
+        public UnixFile.Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public UnixFile.Builder mode(String mode) {
+        public UnixFile.Builder mode(final String mode) {
             this.mode = mode;
             return this;
         }
 
-        public UnixFile.Builder size(Long size) {
+        public UnixFile.Builder size(final Long size) {
             this.size = size;
             return this;
         }
 
-        public UnixFile.Builder uid(Long uid) {
+        public UnixFile.Builder uid(final Long uid) {
             this.uid = uid;
             return this;
         }
 
-        public UnixFile.Builder user(String user) {
+        public UnixFile.Builder user(final String user) {
             this.user = user;
             return this;
         }
 
-        public UnixFile.Builder gid(Long gid) {
+        public UnixFile.Builder gid(final Long gid) {
             this.gid = gid;
             return this;
         }
 
-        public UnixFile.Builder group(String group) {
+        public UnixFile.Builder group(final String group) {
             this.group = group;
             return this;
         }
 
-        public UnixFile.Builder mtime(String mtime) {
+        public UnixFile.Builder mtime(final String mtime) {
             this.mtime = mtime;
             return this;
         }

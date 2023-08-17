@@ -25,7 +25,7 @@ public enum ChangeTagType {
 
     private final String value;
 
-    ChangeTagType(String value) {
+    ChangeTagType(final String value) {
         this.value = value;
     }
 

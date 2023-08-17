@@ -12,7 +12,6 @@ package zowe.client.sdk.zosmfinfo.methods;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseResponse;
 import zowe.client.sdk.parse.JsonParseResponseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.JsonGetRequest;
@@ -41,7 +40,7 @@ public class ZosmfStatus {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public ZosmfStatus(ZosConnection connection) {
+    public ZosmfStatus(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -55,7 +54,7 @@ public class ZosmfStatus {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ZosmfStatus(ZosConnection connection, ZoweRequest request) throws Exception {
+    public ZosmfStatus(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -84,8 +83,8 @@ public class ZosmfStatus {
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no z/osmf status response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.ZOSMF_INFO);
-        return (ZosmfInfoResponse) parser.parseResponse();
+        return (ZosmfInfoResponse) JsonParseResponseFactory.buildParser(ParseType.ZOSMF_INFO)
+                .setJsonObject(jsonObject).parseResponse();
     }
 
 }

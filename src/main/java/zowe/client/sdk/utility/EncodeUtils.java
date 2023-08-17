@@ -38,7 +38,7 @@ public final class EncodeUtils {
      * @return encoded String or original string
      * @author Frank Giordano
      */
-    public static String encodeURIComponent(String value) {
+    public static String encodeURIComponent(final String value) {
         ValidateUtils.checkNullParameter(value == null, "str is null");
         ValidateUtils.checkIllegalParameter(value.isBlank(), "str not specified");
         return URLEncoder.encode(value, StandardCharsets.UTF_8)
@@ -57,7 +57,7 @@ public final class EncodeUtils {
      * @return encoded String
      * @author Frank Giordano
      */
-    public static String encodeAuthComponent(ZosConnection connection) {
+    public static String encodeAuthComponent(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         return Base64.getEncoder().encodeToString((connection.getUser() + ":" +
                 connection.getPassword()).getBytes(StandardCharsets.UTF_8));

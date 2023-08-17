@@ -72,7 +72,7 @@ public class ConsoleResponse {
      * @param cmdResponseUrl value
      * @author Frank Giordano
      */
-    public void setCmdResponseUrl(String cmdResponseUrl) {
+    public void setCmdResponseUrl(final String cmdResponseUrl) {
         this.cmdResponseUrl = Optional.ofNullable(cmdResponseUrl);
     }
 
@@ -92,7 +92,7 @@ public class ConsoleResponse {
      * @param commandResponse value
      * @author Frank Giordano
      */
-    public void setCommandResponse(String commandResponse) {
+    public void setCommandResponse(final String commandResponse) {
         this.commandResponse = Optional.ofNullable(commandResponse);
     }
 
@@ -112,12 +112,12 @@ public class ConsoleResponse {
      * @param failureResponse value
      * @author Frank Giordano
      */
-    public void setFailureResponse(String failureResponse) {
+    public void setFailureResponse(final String failureResponse) {
         this.failureResponse = Optional.ofNullable(failureResponse);
     }
 
     /**
-     * Retrieve keywordDetected specified
+     * Retrieve is keywordDetected specified
      *
      * @return keywordDetected true or false is keywordDetected seen
      * @author Frank Giordano
@@ -152,14 +152,14 @@ public class ConsoleResponse {
      * @param lastResponseKey value
      * @author Frank Giordano
      */
-    public void setLastResponseKey(String lastResponseKey) {
+    public void setLastResponseKey(final String lastResponseKey) {
         this.lastResponseKey = Optional.ofNullable(lastResponseKey);
     }
 
     /**
-     * Retrieve success specified
+     * Retrieve is success
      *
-     * @return boolean value
+     * @return boolean true or false
      * @author Frank Giordano
      */
     public boolean isSuccess() {
@@ -192,7 +192,7 @@ public class ConsoleResponse {
      * @param zosmfResponse value
      * @author Frank Giordano
      */
-    public void setZosmfResponse(ZosmfIssueResponse zosmfResponse) {
+    public void setZosmfResponse(final ZosmfIssueResponse zosmfResponse) {
         this.zosmfResponse = Optional.ofNullable(zosmfResponse);
     }
 

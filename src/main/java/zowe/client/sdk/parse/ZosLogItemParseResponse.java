@@ -10,6 +10,7 @@
 package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zoslogs.response.ZosLogItem;
 
 /**
@@ -18,17 +19,39 @@ import zowe.client.sdk.zoslogs.response.ZosLogItem;
  * @author Frank Giordano
  * @version 2.0
  */
-public class ZosLogItemParseResponse extends JsonParseResponse {
+public final class ZosLogItemParseResponse implements JsonParseResponse {
+
+    /**
+     * Represents one singleton instance
+     */
+    private static JsonParseResponse INSTANCE;
 
     private boolean isProcessResponse;
 
     /**
-     * JsonParseResponse constructor
+     * Private constructor defined to avoid public instantiation of class
      *
-     * @param data json data value to be parsed
+     * @author Frank Giordano
      */
-    public ZosLogItemParseResponse(JSONObject data) {
-        super(data);
+    private ZosLogItemParseResponse() {
+    }
+
+    /**
+     * JSON data value to be parsed
+     */
+    private JSONObject data;
+
+    /**
+     * Get singleton instance
+     *
+     * @return ZosLogItemParseResponse object
+     * @author Frank Giordano
+     */
+    public synchronized static JsonParseResponse getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ZosLogItemParseResponse();
+        }
+        return INSTANCE;
     }
 
     /**
@@ -39,8 +62,9 @@ public class ZosLogItemParseResponse extends JsonParseResponse {
      */
     @Override
     public ZosLogItem parseResponse() {
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
         final String message = processMessage(data, isProcessResponse);
-        return new ZosLogItem.Builder()
+        final ZosLogItem zosLogItem = new ZosLogItem.Builder()
                 .cart(data.get("cart") != null ? (String) data.get("cart") : null)
                 .color(data.get("color") != null ? (String) data.get("color") : null)
                 .jobName(data.get("jobName") != null ? (String) data.get("jobName") : null)
@@ -53,6 +77,8 @@ public class ZosLogItemParseResponse extends JsonParseResponse {
                 .time(data.get("time") != null ? (String) data.get("time") : null)
                 .timeStamp(data.get("timestamp") != null ? (Long) data.get("timestamp") : 0)
                 .build();
+        data = null;
+        return zosLogItem;
     }
 
     /**
@@ -63,7 +89,7 @@ public class ZosLogItemParseResponse extends JsonParseResponse {
      * @return string value of the message processed
      * @author Frank Giordano
      */
-    private static String processMessage(JSONObject data, boolean isProcessResponse) {
+    private static String processMessage(final JSONObject data, final boolean isProcessResponse) {
         try {
             String message = (String) data.get("message");
             if (isProcessResponse) {
@@ -86,8 +112,22 @@ public class ZosLogItemParseResponse extends JsonParseResponse {
      * @param processResponse boolean value
      * @author Frank Giordano
      */
-    public void setProcessResponse(boolean processResponse) {
+    public void setProcessResponse(final boolean processResponse) {
         isProcessResponse = processResponse;
+    }
+
+    /**
+     * Set the data to be parsed
+     *
+     * @param data json data to parse
+     * @return JsonParseResponse this object
+     * @author Frank Giordano
+     */
+    @Override
+    public JsonParseResponse setJsonObject(final JSONObject data) {
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
+        this.data = data;
+        return this;
     }
 
 }

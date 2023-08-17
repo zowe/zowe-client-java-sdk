@@ -52,8 +52,8 @@ public class ConfigContainer {
      * @param autoStore  autoStore value from Zowe Global Team Configuration
      * @author Frank Giordano
      */
-    public ConfigContainer(List<Partition> partitions, String schema, List<Profile> profiles,
-                           Map<String, String> defaults, Boolean autoStore) {
+    public ConfigContainer(final List<Partition> partitions, final String schema, final List<Profile> profiles,
+                           final Map<String, String> defaults, final Boolean autoStore) {
         this.partitions = partitions;
         this.schema = schema;
         this.profiles = profiles;
@@ -62,12 +62,12 @@ public class ConfigContainer {
     }
 
     /**
-     * Return autoStore
+     * Return is autoStore specified from reading and parsing Zowe Global Team Configuration
      *
-     * @return autoStore string value from reading and parsing Zowe Global Team Configuration
+     * @return boolean true or false
      * @author Frank Giordano
      */
-    public Boolean getAutoStore() {
+    public Boolean isAutoStore() {
         return autoStore;
     }
 

@@ -28,7 +28,7 @@ public enum ListFilterType {
 
     private final String value;
 
-    ListFilterType(String value) {
+    ListFilterType(final String value) {
         this.value = value;
     }
 

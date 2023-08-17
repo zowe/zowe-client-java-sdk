@@ -48,7 +48,7 @@ public class DsnList {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public DsnList(ZosConnection connection) {
+    public DsnList(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -62,7 +62,7 @@ public class DsnList {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public DsnList(ZosConnection connection, ZoweRequest request) throws Exception {
+    public DsnList(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -81,7 +81,8 @@ public class DsnList {
      * @return response object with http response info
      * @author Frank Giordano
      */
-    private Response getResponse(ListParams params, Map<String, String> headers, String url) throws Exception {
+    private Response getResponse(final ListParams params, final Map<String, String> headers, final String url)
+            throws Exception {
         setHeaders(params, headers);
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
@@ -104,7 +105,8 @@ public class DsnList {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    private <T> java.util.List<T> getResult(Response response, List<T> datasetLst, List<T> memberLst) throws Exception {
+    private <T> java.util.List<T> getResult(final Response response, final List<T> datasetLst, final List<T> memberLst)
+            throws Exception {
         if (response.getStatusCode().isEmpty()) {
             LOG.debug("no dsn list status code returned");
             if (datasetLst == null) {
@@ -123,7 +125,7 @@ public class DsnList {
             }
         }
 
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+        if (RestUtils.isHttpError(response.getStatusCode().getAsInt())) {
             if (response.getStatusText().isEmpty()) {
                 LOG.debug("no no dsn list status text returned");
                 if (datasetLst == null) {
@@ -132,9 +134,9 @@ public class DsnList {
                     return datasetLst;
                 }
             }
-            LOG.debug("rest status code {}", response.getStatusCode().get());
+            LOG.debug("rest status code {}", response.getStatusCode().getAsInt());
             LOG.debug("rest status text {}", response.getStatusText().get());
-            throw new Exception(response.getStatusCode().get() + " - " + response.getResponsePhrase().get());
+            throw new Exception(response.getStatusCode().getAsInt() + " - " + response.getResponsePhrase().get());
         }
 
         final String jsonStr = response.getResponsePhrase().get().toString();
@@ -150,9 +152,11 @@ public class DsnList {
         final JSONArray items = (JSONArray) jsonObject.get(ZosFilesConstants.RESPONSE_ITEMS);
         for (final Object obj : items) {
             if (datasetLst == null) {
-                memberLst.add((T) JsonParseResponseFactory.buildParser((JSONObject) obj, ParseType.MEMBER).parseResponse());
+                memberLst.add((T) JsonParseResponseFactory.buildParser(ParseType.MEMBER)
+                        .setJsonObject((JSONObject) obj).parseResponse());
             } else {
-                datasetLst.add((T) JsonParseResponseFactory.buildParser((JSONObject) obj, ParseType.DATASET).parseResponse());
+                datasetLst.add((T) JsonParseResponseFactory.buildParser(ParseType.DATASET)
+                        .setJsonObject((JSONObject) obj).parseResponse());
             }
         }
 
@@ -172,7 +176,7 @@ public class DsnList {
      * @throws Exception error processing request
      * @author Nikunj Goyal
      */
-    public java.util.List<Dataset> listDsn(String dataSetName, ListParams params) throws Exception {
+    public java.util.List<Dataset> listDsn(final String dataSetName, final ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
@@ -203,7 +207,7 @@ public class DsnList {
      * @throws Exception error processing request
      * @author Nikunj Goyal
      */
-    public java.util.List<Member> listDsnMembers(String dataSetName, ListParams params) throws Exception {
+    public java.util.List<Member> listDsnMembers(final String dataSetName, final ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
@@ -229,7 +233,7 @@ public class DsnList {
      * @param headers list of headers for http request
      * @author Nikunj Goyal
      */
-    private void setHeaders(ListParams params, Map<String, String> headers) {
+    private void setHeaders(final ListParams params, final Map<String, String> headers) {
         String key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
         String value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
         headers.put(key, value);

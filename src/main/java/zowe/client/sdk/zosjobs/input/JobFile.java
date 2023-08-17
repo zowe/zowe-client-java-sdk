@@ -10,6 +10,7 @@
 package zowe.client.sdk.zosjobs.input;
 
 import java.util.Optional;
+import java.util.OptionalLong;
 
 /**
  * Represents the name and details of an output (spool) DD for a z/OS batch job
@@ -37,12 +38,12 @@ public class JobFile {
     /**
      * Total bytes in the spool file
      */
-    private final Optional<Long> byteCount;
+    private final OptionalLong byteCount;
 
     /**
      * Total records (roughly equivalent to lines) in the spool file
      */
-    private final Optional<Long> recordCount;
+    private final OptionalLong recordCount;
 
     /**
      * Unique identifier of job (substitute of job name and job id)
@@ -57,7 +58,7 @@ public class JobFile {
     /**
      * Identifier for this spool file. Each JobFile for a single batch job will have a unique ID
      */
-    private final Optional<Long> id;
+    private final OptionalLong id;
 
     /**
      * DD name of job spool file
@@ -72,7 +73,7 @@ public class JobFile {
     /**
      * Job DD lrecl (logical record length - how many bytes each record is)
      */
-    private final Optional<Long> lrecl;
+    private final OptionalLong lrecl;
 
     /**
      * The primary or secondary JES subsystem. If this value is null, the job was processed by the primary subsystem.
@@ -89,18 +90,34 @@ public class JobFile {
      */
     private final Optional<String> procStep;
 
-    private JobFile(Builder builder) {
+    private JobFile(final Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);
         this.recfm = Optional.ofNullable(builder.recfm);
-        this.byteCount = Optional.ofNullable(builder.byteCount);
-        this.recordCount = Optional.ofNullable(builder.recordCount);
+        if (builder.byteCount == null) {
+            this.byteCount = OptionalLong.empty();
+        } else {
+            this.byteCount = OptionalLong.of(builder.byteCount);
+        }
+        if (builder.recordCount == null) {
+            this.recordCount = OptionalLong.empty();
+        } else {
+            this.recordCount = OptionalLong.of(builder.recordCount);
+        }
         this.jobCorrelator = Optional.ofNullable(builder.jobCorrelator);
         this.classs = Optional.ofNullable(builder.classs);
-        this.id = Optional.ofNullable(builder.id);
+        if (builder.id == null) {
+            this.id = OptionalLong.empty();
+        } else {
+            this.id = OptionalLong.of(builder.id);
+        }
         this.ddName = Optional.ofNullable(builder.ddName);
         this.recordsUrl = Optional.ofNullable(builder.recordsUrl);
-        this.lrecl = Optional.ofNullable(builder.lrecl);
+        if (builder.lrecl == null) {
+            this.lrecl = OptionalLong.empty();
+        } else {
+            this.lrecl = OptionalLong.of(builder.lrecl);
+        }
         this.subSystem = Optional.ofNullable(builder.subSystem);
         this.stepName = Optional.ofNullable(builder.stepName);
         this.procStep = Optional.ofNullable(builder.procStep);
@@ -112,7 +129,7 @@ public class JobFile {
      * @return byteCount value
      * @author Frank Giordano
      */
-    public Optional<Long> getByteCount() {
+    public OptionalLong getByteCount() {
         return byteCount;
     }
 
@@ -142,7 +159,7 @@ public class JobFile {
      * @return id value
      * @author Frank Giordano
      */
-    public Optional<Long> getId() {
+    public OptionalLong getId() {
         return id;
     }
 
@@ -182,7 +199,7 @@ public class JobFile {
      * @return lrecl value
      * @author Frank Giordano
      */
-    public Optional<Long> getLrecl() {
+    public OptionalLong getLrecl() {
         return lrecl;
     }
 
@@ -212,7 +229,7 @@ public class JobFile {
      * @return recordCount value
      * @author Frank Giordano
      */
-    public Optional<Long> getRecordCount() {
+    public OptionalLong getRecordCount() {
         return recordCount;
     }
 
@@ -287,72 +304,72 @@ public class JobFile {
             return new JobFile(this);
         }
 
-        public Builder byteCount(Long byteCount) {
+        public Builder byteCount(final Long byteCount) {
             this.byteCount = byteCount;
             return this;
         }
 
-        public Builder classs(String classs) {
+        public Builder classs(final String classs) {
             this.classs = classs;
             return this;
         }
 
-        public Builder ddName(String ddName) {
+        public Builder ddName(final String ddName) {
             this.ddName = ddName;
             return this;
         }
 
-        public Builder id(Long id) {
+        public Builder id(final Long id) {
             this.id = id;
             return this;
         }
 
-        public Builder jobCorrelator(String jobCorrelator) {
+        public Builder jobCorrelator(final String jobCorrelator) {
             this.jobCorrelator = jobCorrelator;
             return this;
         }
 
-        public Builder jobId(String jobId) {
+        public Builder jobId(final String jobId) {
             this.jobId = jobId;
             return this;
         }
 
-        public Builder jobName(String jobName) {
+        public Builder jobName(final String jobName) {
             this.jobName = jobName;
             return this;
         }
 
-        public Builder lrecl(Long lrecl) {
+        public Builder lrecl(final Long lrecl) {
             this.lrecl = lrecl;
             return this;
         }
 
-        public Builder procStep(String procStep) {
+        public Builder procStep(final String procStep) {
             this.procStep = procStep;
             return this;
         }
 
-        public Builder recfm(String recfm) {
+        public Builder recfm(final String recfm) {
             this.recfm = recfm;
             return this;
         }
 
-        public Builder recordCount(Long recordCount) {
+        public Builder recordCount(final Long recordCount) {
             this.recordCount = recordCount;
             return this;
         }
 
-        public Builder recordsUrl(String recordsUrl) {
+        public Builder recordsUrl(final String recordsUrl) {
             this.recordsUrl = recordsUrl;
             return this;
         }
 
-        public Builder stepName(String stepName) {
+        public Builder stepName(final String stepName) {
             this.stepName = stepName;
             return this;
         }
 
-        public Builder subSystem(String subSystem) {
+        public Builder subSystem(final String subSystem) {
             this.subSystem = subSystem;
             return this;
         }

@@ -32,7 +32,7 @@ public class StopTsoParams {
      * @param servletKey key of an active tso address space
      * @author Frank Giordano
      */
-    public StopTsoParams(String servletKey) {
+    public StopTsoParams(final String servletKey) {
         ValidateUtils.checkNullParameter(servletKey == null, "servletKey is null");
         ValidateUtils.checkIllegalParameter(servletKey.isBlank(), "servletKey not specified");
         this.servletKey = Optional.of(servletKey);

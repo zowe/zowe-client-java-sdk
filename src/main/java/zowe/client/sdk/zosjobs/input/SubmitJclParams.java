@@ -60,7 +60,7 @@ public class SubmitJclParams {
      * @param internalReaderLrecl internal reader LRECL
      * @author Frank Giordano
      */
-    public SubmitJclParams(String jcl, String internalReaderRecfm, String internalReaderLrecl) {
+    public SubmitJclParams(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl) {
         ValidateUtils.checkNullParameter(jcl == null, "jcl is null");
         ValidateUtils.checkIllegalParameter(jcl.isBlank(), "jcl not specified");
         this.jcl = Optional.of(jcl);
@@ -77,8 +77,8 @@ public class SubmitJclParams {
      * @param jclSymbols          Map of JCL symbolic substitution
      * @author Frank Giordano
      */
-    public SubmitJclParams(String jcl, String internalReaderRecfm, String internalReaderLrecl,
-                           Map<String, String> jclSymbols) {
+    public SubmitJclParams(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl,
+                           final Map<String, String> jclSymbols) {
         ValidateUtils.checkNullParameter(jcl == null, "jcl is null");
         ValidateUtils.checkIllegalParameter(jcl.isBlank(), "jcl not specified");
         this.jcl = Optional.of(jcl);
@@ -105,7 +105,7 @@ public class SubmitJclParams {
      *                            An integer value that specifies the internal reader logical record length (LRECL).
      * @author Frank Giordano
      */
-    public void setInternalReaderLrecl(String internalReaderLrecl) {
+    public void setInternalReaderLrecl(final String internalReaderLrecl) {
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
     }
 
@@ -127,7 +127,7 @@ public class SubmitJclParams {
      *                            A single character that specifies the internal reader record format: F or V.
      * @author Frank Giordano
      */
-    public void setInternalReaderRecfm(String internalReaderRecfm) {
+    public void setInternalReaderRecfm(final String internalReaderRecfm) {
         this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
     }
 
@@ -141,7 +141,7 @@ public class SubmitJclParams {
         return jcl;
     }
 
-    public void setJcl(String jcl) {
+    public void setJcl(final String jcl) {
         this.jcl = Optional.ofNullable(jcl);
     }
 
@@ -161,7 +161,7 @@ public class SubmitJclParams {
      * @param jclSymbols Map of JCL symbolic substitution
      * @author Frank Giordano
      */
-    public void setJclSymbols(Map<String, String> jclSymbols) {
+    public void setJclSymbols(final Map<String, String> jclSymbols) {
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
 

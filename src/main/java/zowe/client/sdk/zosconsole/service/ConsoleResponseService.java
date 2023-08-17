@@ -53,7 +53,7 @@ public final class ConsoleResponseService {
      * @return response         console response to be populated, see ConsoleResponse object
      * @author Frank Giordano
      */
-    public ConsoleResponse buildConsoleResponse(ZosmfIssueResponse zosmfResponse, boolean processResponses) {
+    public ConsoleResponse buildConsoleResponse(final ZosmfIssueResponse zosmfResponse, boolean processResponses) {
         ValidateUtils.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
         ConsoleResponse consoleResponse = new ConsoleResponse();
         consoleResponse.setZosmfResponse(zosmfResponse);

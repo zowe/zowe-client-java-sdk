@@ -104,7 +104,7 @@ public class TeamConfig {
      * @throws Exception error processing
      * @author Frank Giordano
      */
-    public ProfileDao getDefaultProfileByName(String name) throws Exception {
+    public ProfileDao getDefaultProfileByName(final String name) throws Exception {
         ValidateUtils.checkNullParameter(name == null, "name is null");
         ValidateUtils.checkIllegalParameter(name.isBlank(), "name not specified");
         final Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(name));
@@ -129,10 +129,9 @@ public class TeamConfig {
      * @param profileName   profile name
      * @param partitionName partition name
      * @return ProfileDao object
-     * @throws Exception error processing
      * @author Frank Giordano
      */
-    public ProfileDao getDefaultProfileFromPartitionByName(String profileName, String partitionName) throws Exception {
+    public ProfileDao getDefaultProfileFromPartitionByName(final String profileName, final String partitionName) {
         ValidateUtils.checkNullParameter(profileName == null, "profileName is null");
         ValidateUtils.checkIllegalParameter(profileName.isBlank(), "profileName not specified");
         ValidateUtils.checkNullParameter(partitionName == null, "partitionName is null");
@@ -168,7 +167,7 @@ public class TeamConfig {
      * @param base   profile object
      * @author Frank Giordano
      */
-    private void merge(Optional<Profile> target, Optional<Profile> base) {
+    private void merge(final Optional<Profile> target, final Optional<Profile> base) {
         final Optional<Map<String, String>> targetProps = Optional.ofNullable(target.get().getProperties());
         final Optional<Map<String, String>> baseProps = Optional.ofNullable(base.get().getProperties());
         if (mergeProperties.getHost().isEmpty() && targetProps.isPresent()) {
@@ -194,7 +193,7 @@ public class TeamConfig {
             return host;
         }
 
-        public void setHost(String host) {
+        public void setHost(final String host) {
             this.host = Optional.ofNullable(host);
         }
 
@@ -202,7 +201,7 @@ public class TeamConfig {
             return port;
         }
 
-        public void setPort(String port) {
+        public void setPort(final String port) {
             this.port = Optional.ofNullable(port);
         }
 

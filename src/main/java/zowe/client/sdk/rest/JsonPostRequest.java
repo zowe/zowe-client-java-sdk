@@ -40,7 +40,7 @@ public class JsonPostRequest extends ZoweRequest {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public JsonPostRequest(ZosConnection connection) {
+    public JsonPostRequest(final ZosConnection connection) {
         super(connection);
     }
 
@@ -67,7 +67,7 @@ public class JsonPostRequest extends ZoweRequest {
      * @author Frank Giordano
      */
     @Override
-    public void setBody(Object body) {
+    public void setBody(final Object body) {
         this.body = (String) body;
         LOG.debug(this.body);
     }

@@ -49,7 +49,7 @@ public class IssueConsoleParams {
      * @param command console command to issue
      * @author Frank Giordano
      */
-    public IssueConsoleParams(String command) {
+    public IssueConsoleParams(final String command) {
         ValidateUtils.checkNullParameter(command == null, "command is null");
         ValidateUtils.checkIllegalParameter(command.isBlank(), "command not specified");
         this.cmd = Optional.of(command);
@@ -81,7 +81,7 @@ public class IssueConsoleParams {
      * @param solKey value
      * @author Frank Giordano
      */
-    public void setSolKey(String solKey) {
+    public void setSolKey(final String solKey) {
         this.solKey = Optional.ofNullable(solKey);
     }
 
@@ -101,14 +101,14 @@ public class IssueConsoleParams {
      * @param system value
      * @author Frank Giordano
      */
-    public void setSystem(String system) {
+    public void setSystem(final String system) {
         this.system = Optional.ofNullable(system);
     }
 
     /**
-     * Retrieve processResponse value
+     * Retrieve is processResponse specified
      *
-     * @return processResponse value
+     * @return boolean true or false
      * @author Frank Giordano
      */
     public boolean isProcessResponse() {

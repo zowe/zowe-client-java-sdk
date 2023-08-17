@@ -82,7 +82,7 @@ public class GetParams {
      * @param builder GetParams.Builder builder
      * @author James Kostrewski
      */
-    public GetParams(GetParams.Builder builder) {
+    public GetParams(final GetParams.Builder builder) {
         this.search = Optional.ofNullable(builder.search);
         this.research = Optional.ofNullable(builder.research);
         this.insensitive = builder.insensitive;
@@ -117,9 +117,9 @@ public class GetParams {
     }
 
     /**
-     * Retrieve insensitive value
+     * Retrieve is insensitive specified
      *
-     * @return insensitive value
+     * @return boolean true or false
      * @author James Kostrewski
      */
     public boolean isInsensitive() {
@@ -147,9 +147,9 @@ public class GetParams {
     }
 
     /**
-     * Retrieve binary value
+     * Retrieve is binary specified
      *
-     * @return binary value
+     * @return boolean true or false
      * @author James Kostrewski
      */
     public boolean isBinary() {
@@ -157,9 +157,9 @@ public class GetParams {
     }
 
     /**
-     * Retrieve recordsRange value
+     * Retrieve is recordsRange specified
      *
-     * @return recordsRange value
+     * @return boolean true or false
      * @author James Kostrewski
      */
     public Optional<String> getRecordsRange() {
@@ -194,7 +194,7 @@ public class GetParams {
             return new GetParams(this);
         }
 
-        public GetParams.Builder search(String search) throws Exception {
+        public GetParams.Builder search(final String search) throws Exception {
             if (this.research != null) {
                 throw new IllegalStateException("cannot specify both search and research parameters");
             }
@@ -203,7 +203,7 @@ public class GetParams {
             return this;
         }
 
-        public GetParams.Builder research(String research) throws Exception {
+        public GetParams.Builder research(final String research) {
             if (this.search != null) {
                 throw new IllegalStateException("cannot specify both search and research parameters");
             }
@@ -212,24 +212,24 @@ public class GetParams {
             return this;
         }
 
-        public GetParams.Builder insensitive(boolean insensitive) {
+        public GetParams.Builder insensitive(final boolean insensitive) {
             this.insensitive = insensitive;
             queryCount++;
             return this;
         }
 
-        public GetParams.Builder maxreturnsize(int maxreturnsize) {
+        public GetParams.Builder maxreturnsize(final int maxreturnsize) {
             this.maxreturnsize = maxreturnsize;
             queryCount++;
             return this;
         }
 
-        public GetParams.Builder binary(boolean binary) {
+        public GetParams.Builder binary(final boolean binary) {
             this.binary = binary;
             return this;
         }
 
-        public GetParams.Builder recordsRange(String recordsRange) {
+        public GetParams.Builder recordsRange(final String recordsRange) {
             this.recordsRange = recordsRange;
             return this;
         }

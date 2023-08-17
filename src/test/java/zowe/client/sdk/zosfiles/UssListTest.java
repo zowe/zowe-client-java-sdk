@@ -147,23 +147,23 @@ public class UssListTest {
         // should only contain two items
         assertEquals(2, items.size());
         // verify first item's data
-        assertEquals("test", items.get(0).getName().get());
-        assertEquals("drwxr-xr-x", items.get(0).getMode().get());
-        assertEquals(0, items.get(0).getSize().getAsLong());
-        assertEquals(10000518, items.get(0).getUid().getAsLong());
-        assertEquals("user", items.get(0).getUser().get());
-        assertEquals(8, items.get(0).getGid().getAsLong());
-        assertEquals("FRAMEWKG", items.get(0).getGroup().get());
-        assertEquals("2022-11-03T10:48:32", items.get(0).getMtime().get());
+        assertEquals("test", items.get(0).getName().orElse("n\\a"));
+        assertEquals("drwxr-xr-x", items.get(0).getMode().orElse("n\\a"));
+        assertEquals(0, items.get(0).getSize().orElse(-1));
+        assertEquals(10000518, items.get(0).getUid().orElse(-1));
+        assertEquals("user", items.get(0).getUser().orElse("n\\a"));
+        assertEquals(8, items.get(0).getGid().orElse(-1));
+        assertEquals("FRAMEWKG", items.get(0).getGroup().orElse("n\\a"));
+        assertEquals("2022-11-03T10:48:32", items.get(0).getMtime().orElse("n\\a"));
         // verify second item's data
-        assertEquals("test2", items.get(1).getName().get());
-        assertEquals("-rwxr-xr-x", items.get(1).getMode().get());
-        assertEquals(13545, items.get(1).getSize().getAsLong());
-        assertEquals(10000518, items.get(1).getUid().getAsLong());
-        assertEquals("user2", items.get(1).getUser().get());
-        assertEquals(8, items.get(1).getGid().getAsLong());
-        assertEquals("FRAMEWKG", items.get(1).getGroup().get());
-        assertEquals("2022-11-12T15:20:11", items.get(1).getMtime().get());
+        assertEquals("test2", items.get(1).getName().orElse("n\\a"));
+        assertEquals("-rwxr-xr-x", items.get(1).getMode().orElse("n\\a"));
+        assertEquals(13545, items.get(1).getSize().orElse(-1));
+        assertEquals(10000518, items.get(1).getUid().orElse(-1));
+        assertEquals("user2", items.get(1).getUser().orElse("n\\a"));
+        assertEquals(8, items.get(1).getGid().orElse(-1));
+        assertEquals("FRAMEWKG", items.get(1).getGroup().orElse("n\\a"));
+        assertEquals("2022-11-12T15:20:11", items.get(1).getMtime().orElse("n\\a"));
     }
 
     @Test
@@ -179,16 +179,16 @@ public class UssListTest {
         // verify first item's data
         assertTrue(items.get(0).getName().isEmpty());
         assertTrue(items.get(0).getMode().isEmpty());
-        assertEquals(0, items.get(0).getSize().getAsLong());
+        assertEquals(0, items.get(0).getSize().orElse(-1));
         assertTrue(items.get(0).getUid().isEmpty());
         assertTrue(items.get(0).getUser().isEmpty());
         assertTrue(items.get(0).getGid().isEmpty());
         assertTrue(items.get(0).getGroup().isEmpty());
         assertTrue(items.get(0).getMtime().isEmpty());
         // verify second item's data
-        assertEquals("test2", items.get(1).getName().get());
+        assertEquals("test2", items.get(1).getName().orElse("n\\a"));
         assertTrue(items.get(0).getMode().isEmpty());
-        assertEquals(0, items.get(0).getSize().getAsLong());
+        assertEquals(0, items.get(0).getSize().orElse(-1));
         assertTrue(items.get(0).getUid().isEmpty());
         assertTrue(items.get(0).getUser().isEmpty());
         assertTrue(items.get(0).getGid().isEmpty());
@@ -227,19 +227,19 @@ public class UssListTest {
         // should only contain one item
         assertEquals(1, items.size());
         // verify first item's data
-        assertEquals("OMVSGRP.USER.TNGFW.CA31", items.get(0).getName().get());
-        assertEquals("/CA31/u/users/framewrk", items.get(0).getMountpoint().get());
-        assertEquals("ZFS", items.get(0).getFstname().get());
-        assertEquals("noautomove,unmount,acl,synchonly", items.get(0).getMode().get());
-        assertEquals(2718, items.get(0).getDev().getAsLong());
-        assertEquals(1, items.get(0).getFstype().getAsLong());
-        assertEquals(1024, items.get(0).getBsize().getAsLong());
-        assertEquals(269231, items.get(0).getBavail().getAsLong());
-        assertEquals(1382400, items.get(0).getBlocks().getAsLong());
-        assertEquals("CA31", items.get(0).getSysname().get());
-        assertEquals(907651, items.get(0).getReadibc().getAsLong());
-        assertEquals(42, items.get(0).getWriteibc().getAsLong());
-        assertEquals(453057, items.get(0).getDiribc().getAsLong());
+        assertEquals("OMVSGRP.USER.TNGFW.CA31", items.get(0).getName().orElse("n\\a"));
+        assertEquals("/CA31/u/users/framewrk", items.get(0).getMountpoint().orElse("n\\a"));
+        assertEquals("ZFS", items.get(0).getFstname().orElse("n\\a"));
+        assertEquals("noautomove,unmount,acl,synchonly", items.get(0).getMode().orElse("n\\a"));
+        assertEquals(2718, items.get(0).getDev().orElse(-1));
+        assertEquals(1, items.get(0).getFstype().orElse(-1));
+        assertEquals(1024, items.get(0).getBsize().orElse(-1));
+        assertEquals(269231, items.get(0).getBavail().orElse(-1));
+        assertEquals(1382400, items.get(0).getBlocks().orElse(-1));
+        assertEquals("CA31", items.get(0).getSysname().orElse("n\\a"));
+        assertEquals(907651, items.get(0).getReadibc().orElse(-1));
+        assertEquals(42, items.get(0).getWriteibc().orElse(-1));
+        assertEquals(453057, items.get(0).getDiribc().orElse(-1));
     }
 
     @Test

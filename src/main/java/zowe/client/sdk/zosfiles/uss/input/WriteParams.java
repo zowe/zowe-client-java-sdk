@@ -53,7 +53,7 @@ public class WriteParams {
      * @param builder WriteParams.Builder builder
      * @author Frank Giordano
      */
-    public WriteParams(WriteParams.Builder builder) {
+    public WriteParams(final WriteParams.Builder builder) {
         this.textContent = Optional.ofNullable(builder.textContent);
         this.binaryContent = Optional.ofNullable(builder.binaryContent);
         this.fileEncoding = Optional.ofNullable(builder.fileEncoding);
@@ -92,9 +92,9 @@ public class WriteParams {
     }
 
     /**
-     * Retrieve crlf value
+     * Retrieve is crlf specified
      *
-     * @return crlf value
+     * @return boolean true or false
      * @author Frank Giordano
      */
     public boolean isCrlf() {
@@ -102,9 +102,9 @@ public class WriteParams {
     }
 
     /**
-     * Retrieve binary value
+     * Retrieve is binary specified
      *
-     * @return binary value
+     * @return boolean true or false
      * @author Frank Giordano
      */
     public boolean isBinary() {
@@ -134,27 +134,27 @@ public class WriteParams {
             return new WriteParams(this);
         }
 
-        public WriteParams.Builder textContent(String textContent) {
+        public WriteParams.Builder textContent(final String textContent) {
             this.textContent = textContent;
             return this;
         }
 
-        public WriteParams.Builder binaryContent(byte[] binaryContent) {
+        public WriteParams.Builder binaryContent(final byte[] binaryContent) {
             this.binaryContent = binaryContent;
             return this;
         }
 
-        public WriteParams.Builder fileEncoding(String fileEncoding) {
+        public WriteParams.Builder fileEncoding(final String fileEncoding) {
             this.fileEncoding = fileEncoding;
             return this;
         }
 
-        public WriteParams.Builder crlf(boolean crlf) {
+        public WriteParams.Builder crlf(final boolean crlf) {
             this.crlf = crlf;
             return this;
         }
 
-        public WriteParams.Builder binary(boolean binary) {
+        public WriteParams.Builder binary(final boolean binary) {
             this.binary = binary;
             return this;
         }

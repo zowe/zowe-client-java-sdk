@@ -11,6 +11,7 @@ package zowe.client.sdk.zosfiles.dsn.input;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.OptionalLong;
 
 /**
  * This interface defines the options that can be sent into the download data set function
@@ -53,7 +54,7 @@ public class DownloadParams {
      * by making too many requests at once.
      * Default: 1
      */
-    private final Optional<Integer> maxConcurrentRequests;
+    private final OptionalLong maxConcurrentRequests;
 
     /**
      * The indicator to force return of ETag.
@@ -61,7 +62,7 @@ public class DownloadParams {
      * If it is not present, the default is to only send an Etag for data sets smaller than a system determined length,
      * which is at least 8 MB.
      */
-    private final Optional<Boolean> returnEtag;
+    private final boolean returnEtag;
 
     /**
      * Indicates if the created directories and files use the original letter case, which is for data sets always uppercase.
@@ -69,7 +70,7 @@ public class DownloadParams {
      * If the option "directory" or "file" is provided, this option doesn't have any effect.
      * This option has only effect on automatically generated directories and files.
      */
-    private final Optional<Boolean> preserveOriginalLetterCase;
+    private final boolean preserveOriginalLetterCase;
 
     /**
      * Indicates if a download operation for multiple files/data sets should fail as soon as the first failure happens.
@@ -77,17 +78,17 @@ public class DownloadParams {
      * If set to false, individual download failures will be reported after all other downloads have completed.
      * The default value is true for backward compatibility.
      */
-    private final Optional<Boolean> failFast;
+    private final boolean failFast;
 
     /**
      * The indicator to view the data set or USS file in binary mode
      */
-    private final Optional<Boolean> binary;
+    private final boolean binary;
 
     /**
      * Code page encoding
      */
-    private final Optional<Integer> encoding;
+    private final OptionalLong encoding;
 
     /**
      * The volume on which the data set is stored
@@ -104,30 +105,38 @@ public class DownloadParams {
      */
     private final Optional<String> responseTimeout;
 
-    private DownloadParams(DownloadParams.Builder builder) {
+    private DownloadParams(final DownloadParams.Builder builder) {
         this.file = Optional.ofNullable(builder.file);
         this.extension = Optional.ofNullable(builder.extension);
         this.directory = Optional.ofNullable(builder.directory);
         this.excludePatterns = Optional.ofNullable(builder.excludePatterns);
         this.extensionMap = Optional.ofNullable(builder.extensionMap);
-        this.maxConcurrentRequests = Optional.ofNullable(builder.maxConcurrentRequests);
-        this.returnEtag = Optional.ofNullable(builder.returnEtag);
-        this.preserveOriginalLetterCase = Optional.ofNullable(builder.preserveOriginalLetterCase);
-        this.failFast = Optional.ofNullable(builder.failFast);
-        this.binary = Optional.ofNullable(builder.binary);
-        this.encoding = Optional.ofNullable(builder.encoding);
+        if (builder.maxConcurrentRequests == null) {
+            this.maxConcurrentRequests = OptionalLong.empty();
+        } else {
+            this.maxConcurrentRequests = OptionalLong.of(builder.maxConcurrentRequests);
+        }
+        this.returnEtag = builder.returnEtag;
+        this.preserveOriginalLetterCase = builder.preserveOriginalLetterCase;
+        this.failFast = builder.failFast;
+        this.binary = builder.binary;
+        if (builder.encoding == null) {
+            this.encoding = OptionalLong.empty();
+        } else {
+            this.encoding = OptionalLong.of(builder.encoding);
+        }
         this.volume = Optional.ofNullable(builder.volume);
         this.task = Optional.ofNullable(builder.task);
         this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
     }
 
     /**
-     * Retrieve binary value
+     * Retrieve is binary specified
      *
-     * @return binary value
+     * @return boolean true or false
      * @author Nikunj Goyal
      */
-    public Optional<Boolean> getBinary() {
+    public boolean isBinary() {
         return binary;
     }
 
@@ -147,7 +156,7 @@ public class DownloadParams {
      * @return encoding value
      * @author Nikunj Goyal
      */
-    public Optional<Integer> getEncoding() {
+    public OptionalLong getEncoding() {
         return encoding;
     }
 
@@ -182,12 +191,12 @@ public class DownloadParams {
     }
 
     /**
-     * Retrieve failFast value
+     * Retrieve is failFast specified
      *
-     * @return failFast value
+     * @return boolean true or false
      * @author Nikunj Goyal
      */
-    public Optional<Boolean> getFailFast() {
+    public boolean isFailFast() {
         return failFast;
     }
 
@@ -207,17 +216,17 @@ public class DownloadParams {
      * @return maxConcurrentRequests value
      * @author Nikunj Goyal
      */
-    public Optional<Integer> getNaxConcurrentRequests() {
+    public OptionalLong getNaxConcurrentRequests() {
         return maxConcurrentRequests;
     }
 
     /**
-     * Retrieve preserveOriginalLetterCase value
+     * Retrieve is preserveOriginalLetterCase specified
      *
-     * @return preserveOriginalLetterCase value
+     * @return boolean true or false
      * @author Nikunj Goyal
      */
-    public Optional<Boolean> getPreserveOriginalLetterCase() {
+    public boolean isPreserveOriginalLetterCase() {
         return preserveOriginalLetterCase;
     }
 
@@ -232,12 +241,12 @@ public class DownloadParams {
     }
 
     /**
-     * Retrieve returnEtag value
+     * Retrieve is returnEtag specified
      *
-     * @return returnEtag value
+     * @return true or false
      * @author Nikunj Goyal
      */
-    public Optional<Boolean> getReturnEtag() {
+    public boolean isReturnEtag() {
         return returnEtag;
     }
 
@@ -288,17 +297,17 @@ public class DownloadParams {
         private String directory;
         private String[] excludePatterns;
         private HashMap<String, String> extensionMap;
-        private Integer maxConcurrentRequests;
-        private Boolean returnEtag;
-        private Boolean preserveOriginalLetterCase;
-        private Boolean failFast;
-        private Boolean binary;
-        private Integer encoding;
+        private Long maxConcurrentRequests;
+        private boolean returnEtag;
+        private boolean preserveOriginalLetterCase;
+        private boolean failFast;
+        private boolean binary;
+        private Long encoding;
         private String volume;
         private String task;
         private String responseTimeout;
 
-        public DownloadParams.Builder binary(Boolean binary) {
+        public DownloadParams.Builder binary(final boolean binary) {
             this.binary = binary;
             return this;
         }
@@ -307,67 +316,67 @@ public class DownloadParams {
             return new DownloadParams(this);
         }
 
-        public DownloadParams.Builder directory(String directory) {
+        public DownloadParams.Builder directory(final String directory) {
             this.directory = directory;
             return this;
         }
 
-        public DownloadParams.Builder encoding(Integer encoding) {
+        public DownloadParams.Builder encoding(final Long encoding) {
             this.encoding = encoding;
             return this;
         }
 
-        public DownloadParams.Builder excludePatterns(String[] excludePatterns) {
+        public DownloadParams.Builder excludePatterns(final String[] excludePatterns) {
             this.excludePatterns = excludePatterns;
             return this;
         }
 
-        public DownloadParams.Builder extension(String extension) {
+        public DownloadParams.Builder extension(final String extension) {
             this.extension = extension;
             return this;
         }
 
-        public DownloadParams.Builder extensionMap(HashMap<String, String> extensionMap) {
+        public DownloadParams.Builder extensionMap(final HashMap<String, String> extensionMap) {
             this.extensionMap = extensionMap;
             return this;
         }
 
-        public DownloadParams.Builder failFast(Boolean failFast) {
+        public DownloadParams.Builder failFast(final boolean failFast) {
             this.failFast = failFast;
             return this;
         }
 
-        public DownloadParams.Builder file(String file) {
+        public DownloadParams.Builder file(final String file) {
             this.file = file;
             return this;
         }
 
-        public DownloadParams.Builder maxConcurrentRequests(Integer maxConcurrentRequests) {
+        public DownloadParams.Builder maxConcurrentRequests(final Long maxConcurrentRequests) {
             this.maxConcurrentRequests = maxConcurrentRequests;
             return this;
         }
 
-        public DownloadParams.Builder preserveOriginalLetterCase(Boolean preserveOriginalLetterCase) {
+        public DownloadParams.Builder preserveOriginalLetterCase(final boolean preserveOriginalLetterCase) {
             this.preserveOriginalLetterCase = preserveOriginalLetterCase;
             return this;
         }
 
-        public DownloadParams.Builder responseTimeout(String responseTimeout) {
+        public DownloadParams.Builder responseTimeout(final String responseTimeout) {
             this.responseTimeout = responseTimeout;
             return this;
         }
 
-        public DownloadParams.Builder returnEtag(Boolean returnEtag) {
+        public DownloadParams.Builder returnEtag(final boolean returnEtag) {
             this.returnEtag = returnEtag;
             return this;
         }
 
-        public DownloadParams.Builder task(String task) {
+        public DownloadParams.Builder task(final String task) {
             this.task = task;
             return this;
         }
 
-        public DownloadParams.Builder volume(String volume) {
+        public DownloadParams.Builder volume(final String volume) {
             this.volume = volume;
             return this;
         }

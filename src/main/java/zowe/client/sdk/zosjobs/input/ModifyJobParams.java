@@ -41,7 +41,7 @@ public class ModifyJobParams {
      */
     private final Optional<String> version;
 
-    private ModifyJobParams(ModifyJobParams.Builder builder) {
+    private ModifyJobParams(final ModifyJobParams.Builder builder) {
         this.jobName = Optional.ofNullable(builder.jobName);
         this.jobId = Optional.ofNullable(builder.jobId);
         this.version = Optional.ofNullable(builder.version);
@@ -92,7 +92,7 @@ public class ModifyJobParams {
         private final String jobId;
         private String version;
 
-        public Builder(String jobName, String jobId) {
+        public Builder(final String jobName, final String jobId) {
             ValidateUtils.checkNullParameter(jobName == null, "job name is null");
             ValidateUtils.checkIllegalParameter(jobName.isBlank(), "job name not specified");
             ValidateUtils.checkNullParameter(jobId == null, "job id is null");
@@ -105,7 +105,7 @@ public class ModifyJobParams {
             return new ModifyJobParams(this);
         }
 
-        public ModifyJobParams.Builder version(String version) {
+        public ModifyJobParams.Builder version(final String version) {
             this.version = version;
             return this;
         }

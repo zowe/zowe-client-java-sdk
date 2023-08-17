@@ -49,7 +49,8 @@ public class ProfileDao {
      * @param port     port value from Zowe Global Team Configuration
      * @author Frank Giordano
      */
-    public ProfileDao(Profile profile, String user, String password, String host, String port) {
+    public ProfileDao(final Profile profile, final String user, final String password, final String host,
+                      final String port) {
         this.profile = profile;
         this.user = user;
         this.password = password;

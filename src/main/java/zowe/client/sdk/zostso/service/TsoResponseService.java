@@ -2,7 +2,6 @@ package zowe.client.sdk.zostso.service;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import zowe.client.sdk.parse.JsonParseResponse;
 import zowe.client.sdk.parse.JsonParseResponseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.Response;
@@ -26,12 +25,12 @@ public class TsoResponseService {
      */
     private ZosmfTsoResponse zosmfPhraseResponse;
 
-    public TsoResponseService(Response response) {
+    public TsoResponseService(final Response response) {
         ValidateUtils.checkNullParameter(response == null, "response is null");
         this.tsoCmdResponse = response;
     }
 
-    public TsoResponseService(ZosmfTsoResponse zosmfResponse) {
+    public TsoResponseService(final ZosmfTsoResponse zosmfResponse) {
         ValidateUtils.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
         this.zosmfPhraseResponse = zosmfResponse;
     }
@@ -56,8 +55,8 @@ public class TsoResponseService {
             final String jsonStr = tsoCmdResponse.getResponsePhrase()
                     .orElseThrow(() -> new IllegalStateException("no tsoCmdResponse phrase")).toString();
             final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-            final JsonParseResponse parser = JsonParseResponseFactory.buildParser(jsonObject, ParseType.TSO_CONSOLE);
-            result = (ZosmfTsoResponse) parser.parseResponse();
+            result = (ZosmfTsoResponse) JsonParseResponseFactory.buildParser(ParseType.TSO_CONSOLE)
+                    .setJsonObject(jsonObject).parseResponse();
         }
 
         return result;

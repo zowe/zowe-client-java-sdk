@@ -10,6 +10,7 @@
 package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.dsn.response.Member;
 
 /**
@@ -18,16 +19,37 @@ import zowe.client.sdk.zosfiles.dsn.response.Member;
  * @author Frank Giordano
  * @version 2.0
  */
-public class MemberParseResponse extends JsonParseResponse {
+public final class MemberParseResponse implements JsonParseResponse {
 
     /**
-     * MemberParseResponse constructor
+     * Represents one singleton instance
+     */
+    private static JsonParseResponse INSTANCE;
+
+    /**
+     * JSON data value to be parsed
+     */
+    private JSONObject data;
+
+    /**
+     * Private constructor defined to avoid public instantiation of class
      *
-     * @param data json data value to be parsed
      * @author Frank Giordano
      */
-    public MemberParseResponse(JSONObject data) {
-        super(data);
+    private MemberParseResponse() {
+    }
+
+    /**
+     * Get singleton instance
+     *
+     * @return MemberParseResponse object
+     * @author Frank Giordano
+     */
+    public synchronized static JsonParseResponse getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new MemberParseResponse();
+        }
+        return INSTANCE;
     }
 
     /**
@@ -38,7 +60,8 @@ public class MemberParseResponse extends JsonParseResponse {
      */
     @Override
     public Object parseResponse() {
-        return new Member.Builder()
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
+        final Member member = new Member.Builder()
                 .member(data.get("member") != null ? (String) data.get("member") : null)
                 .vers(data.get("vers") != null ? (Long) data.get("vers") : 0)
                 .mod(data.get("mod") != null ? (Long) data.get("mod") : 0)
@@ -52,6 +75,22 @@ public class MemberParseResponse extends JsonParseResponse {
                 .user(data.get("user") != null ? (String) data.get("user") : null)
                 .sclm(data.get("sclm") != null ? (String) data.get("sclm") : null)
                 .build();
+        data = null;
+        return member;
+    }
+
+    /**
+     * Set the data to be parsed
+     *
+     * @param data json data to parse
+     * @return JsonParseResponse this object
+     * @author Frank Giordano
+     */
+    @Override
+    public JsonParseResponse setJsonObject(final JSONObject data) {
+        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
+        this.data = data;
+        return this;
     }
 
 }
