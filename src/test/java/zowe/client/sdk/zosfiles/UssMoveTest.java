@@ -44,18 +44,18 @@ public class UssMoveTest {
     public void tstUssMoveSuccess() throws Exception {
         final UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
         final Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx");
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals(200, response.getStatusCode().getAsInt());
-        assertEquals("success", response.getStatusText().get());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test
     public void tstUssMoveOverwriteSuccess() throws Exception {
         final UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
         final Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx", true);
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals(200, response.getStatusCode().getAsInt());
-        assertEquals("success", response.getStatusText().get());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test

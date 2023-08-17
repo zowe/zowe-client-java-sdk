@@ -46,9 +46,9 @@ public class UssChangeModeTest {
         final UssChangeMode ussChangeMode = new UssChangeMode(connection, mockJsonPutRequest);
         final Response response = ussChangeMode.change("/xxx/xx/xx",
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals(200, response.getStatusCode().getAsInt());
-        assertEquals("success", response.getStatusText().get());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test
@@ -56,9 +56,9 @@ public class UssChangeModeTest {
         final UssChangeMode ussChangeMode = new UssChangeMode(connection, mockJsonPutRequest);
         final Response response = ussChangeMode.change("/xxx/xx/xx",
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").recursive(true).build());
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals(200, response.getStatusCode().getAsInt());
-        assertEquals("success", response.getStatusText().get());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test

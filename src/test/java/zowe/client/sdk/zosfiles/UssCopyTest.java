@@ -12,6 +12,7 @@ package zowe.client.sdk.zosfiles;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.JsonPutRequest;
@@ -45,9 +46,9 @@ public class UssCopyTest {
     public void tstUssCopySuccess() throws Exception {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copy("/xxx/xx/xx", "/xxx/xx/xx");
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals(200, response.getStatusCode().getAsInt());
-        assertEquals("success", response.getStatusText().get());
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test
@@ -55,9 +56,9 @@ public class UssCopyTest {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copy("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").recursive(true).build());
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals(200, response.getStatusCode().getAsInt());
-        assertEquals("success", response.getStatusText().get());
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test
@@ -65,9 +66,9 @@ public class UssCopyTest {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copy("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").overwrite(true).build());
-        assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals(200, response.getStatusCode().getAsInt());
-        assertEquals("success", response.getStatusText().get());
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
     }
 
     @Test
