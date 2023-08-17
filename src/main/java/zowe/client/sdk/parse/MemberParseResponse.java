@@ -19,7 +19,7 @@ import zowe.client.sdk.zosfiles.dsn.response.Member;
  * @author Frank Giordano
  * @version 2.0
  */
-public class MemberParseResponse implements JsonParseResponse {
+public final class MemberParseResponse implements JsonParseResponse {
 
     /**
      * Represents one singleton instance

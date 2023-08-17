@@ -19,7 +19,7 @@ import zowe.client.sdk.zoslogs.response.ZosLogItem;
  * @author Frank Giordano
  * @version 2.0
  */
-public class ZosLogItemParseResponse implements JsonParseResponse {
+public final class ZosLogItemParseResponse implements JsonParseResponse {
 
     /**
      * Represents one singleton instance

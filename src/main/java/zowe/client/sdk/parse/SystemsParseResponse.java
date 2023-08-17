@@ -21,7 +21,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
  * @author Frank Giordano
  * @version 2.0
  */
-public class SystemsParseResponse implements JsonParseResponse {
+public final class SystemsParseResponse implements JsonParseResponse {
 
     /**
      * Represents one singleton instance

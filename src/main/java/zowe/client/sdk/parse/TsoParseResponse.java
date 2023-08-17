@@ -29,7 +29,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 2.0
  */
-public class TsoParseResponse implements JsonParseResponse {
+public final class TsoParseResponse implements JsonParseResponse {
 
     /**
      * Represents one singleton instance

@@ -21,7 +21,7 @@ import java.util.Map;
  * @author Frank Giordano
  * @version 2.0
  */
-public class PropsParseResponse implements JsonParseResponse {
+public final class PropsParseResponse implements JsonParseResponse {
 
     /**
      * Represents one singleton instance

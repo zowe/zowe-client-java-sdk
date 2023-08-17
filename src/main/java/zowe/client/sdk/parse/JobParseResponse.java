@@ -21,7 +21,7 @@ import zowe.client.sdk.zosjobs.response.JobStepData;
  * @author Frank Giordano
  * @version 2.0
  */
-public class JobParseResponse implements JsonParseResponse {
+public final class JobParseResponse implements JsonParseResponse {
 
     /**
      * Represents one singleton instance

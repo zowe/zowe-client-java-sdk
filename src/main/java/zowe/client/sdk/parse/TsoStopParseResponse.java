@@ -19,7 +19,7 @@ import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
  * @author Frank Giordano
  * @version 2.0
  */
-public class TsoStopParseResponse implements JsonParseResponse {
+public final class TsoStopParseResponse implements JsonParseResponse {
 
     /**
      * Represents one singleton instance

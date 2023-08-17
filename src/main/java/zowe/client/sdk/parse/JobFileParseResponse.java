@@ -19,7 +19,7 @@ import zowe.client.sdk.zosjobs.input.JobFile;
  * @author Frank Giordano
  * @version 2.0
  */
-public class JobFileParseResponse implements JsonParseResponse {
+public final class JobFileParseResponse implements JsonParseResponse {
 
     /**
      * Represents one singleton instance

@@ -19,7 +19,7 @@ import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
  * @author Frank Giordano
  * @version 2.0
  */
-public class MvsConsoleParseResponse implements JsonParseResponse {
+public final class MvsConsoleParseResponse implements JsonParseResponse {
 
     /**
      * Represents one singleton instance

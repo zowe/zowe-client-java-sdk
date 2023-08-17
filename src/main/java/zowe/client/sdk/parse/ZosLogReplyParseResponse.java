@@ -22,7 +22,7 @@ import java.util.List;
  * @author Frank Giordano
  * @version 2.0
  */
-public class ZosLogReplyParseResponse implements JsonParseResponse {
+public final class ZosLogReplyParseResponse implements JsonParseResponse {
 
     /**
      * Represents one singleton instance

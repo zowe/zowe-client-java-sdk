@@ -19,7 +19,7 @@ import zowe.client.sdk.zosfiles.uss.response.UnixFile;
  * @author Frank Giordano
  * @version 2.0
  */
-public class UnixFileParseResponse implements JsonParseResponse {
+public final class UnixFileParseResponse implements JsonParseResponse {
 
     /**
      * Represents one singleton instance
