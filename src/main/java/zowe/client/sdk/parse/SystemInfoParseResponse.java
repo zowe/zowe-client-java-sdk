@@ -92,7 +92,7 @@ public final class SystemInfoParseResponse implements JsonParseResponse {
      * @return ZosmfPluginInfo object
      * @author Frank Giordano
      */
-    private static ZosmfPluginInfo parseZosmfPluginInfo(JSONObject data) {
+    private static ZosmfPluginInfo parseZosmfPluginInfo(final JSONObject data) {
         return new ZosmfPluginInfo.Builder()
                 .pluginVersion(data.get("pluginVersion") != null ? (String) data.get("pluginVersion") : null)
                 .pluginDefaultName(data.get("pluginDefaultName") != null ? (String) data.get("pluginDefaultName") : null)

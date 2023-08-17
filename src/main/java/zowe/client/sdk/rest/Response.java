@@ -43,7 +43,7 @@ public class Response {
      * @param statusText     http response status text
      * @author Frank Giordano
      */
-    public Response(Object responsePhrase, Integer statusCode, String statusText) {
+    public Response(final Object responsePhrase, final Integer statusCode, final String statusText) {
         this.responsePhrase = Optional.ofNullable(responsePhrase);
         if (statusCode == null) {
             this.statusCode = OptionalInt.empty();

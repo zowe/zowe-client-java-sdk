@@ -102,16 +102,16 @@ public class ZosLogParams {
     }
 
     /**
-     * Return process response boolean value.
+     * Is process response specified if so, handle json data differently
      *
-     * @return boolean value
+     * @return boolean true or false
      * @author Frank Giordano
      */
     public boolean isProcessResponses() {
         return processResponses;
     }
 
-    private ZosLogParams(ZosLogParams.Builder builder) {
+    private ZosLogParams(final ZosLogParams.Builder builder) {
         this.startTime = Optional.ofNullable(builder.startTime);
         this.hardCopy = Optional.ofNullable(builder.hardCopy);
         this.direction = Optional.ofNullable(builder.direction);
@@ -141,7 +141,7 @@ public class ZosLogParams {
          * @return ZosLogParams.Builder this object
          * @author Frank Giordano
          */
-        public ZosLogParams.Builder startTime(String startTime) {
+        public ZosLogParams.Builder startTime(final String startTime) {
             this.startTime = startTime;
             return this;
         }
@@ -157,7 +157,7 @@ public class ZosLogParams {
          * @return ZosLogParams.Builder this object
          * @author Frank Giordano
          */
-        public ZosLogParams.Builder hardCopy(HardCopyType hardCopy) {
+        public ZosLogParams.Builder hardCopy(final HardCopyType hardCopy) {
             this.hardCopy = hardCopy;
             return this;
         }
@@ -172,7 +172,7 @@ public class ZosLogParams {
          * @return ZosLogParams.Builder this object
          * @author Frank Giordano
          */
-        public ZosLogParams.Builder direction(DirectionType direction) {
+        public ZosLogParams.Builder direction(final DirectionType direction) {
             this.direction = direction;
             return this;
         }
@@ -188,7 +188,7 @@ public class ZosLogParams {
          * @return ZosLogParams.Builder this object
          * @author Frank Giordano
          */
-        public ZosLogParams.Builder timeRange(String timeRange) {
+        public ZosLogParams.Builder timeRange(final String timeRange) {
             this.timeRange = timeRange;
             return this;
         }
@@ -203,7 +203,7 @@ public class ZosLogParams {
          * @return ZosLogParams.Builder this object
          * @author Frank Giordano
          */
-        public ZosLogParams.Builder processResponses(boolean processResponses) {
+        public ZosLogParams.Builder processResponses(final boolean processResponses) {
             this.processResponses = processResponses;
             return this;
         }

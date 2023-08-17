@@ -40,12 +40,12 @@ public class ZosmfTsoResponse {
     /**
      * Reconnected indicator
      */
-    private final Optional<Boolean> reused;
+    private final boolean reused;
 
     /**
      * Timeout indicator
      */
-    private final Optional<Boolean> timeout;
+    private final boolean timeout;
 
     /**
      * z/OSMF messages
@@ -67,12 +67,12 @@ public class ZosmfTsoResponse {
      */
     private final Optional<String> appData;
 
-    private ZosmfTsoResponse(ZosmfTsoResponse.Builder builder) {
+    private ZosmfTsoResponse(final ZosmfTsoResponse.Builder builder) {
         this.servletKey = Optional.ofNullable(builder.servletKey);
         this.queueId = Optional.ofNullable(builder.queueId);
         this.ver = Optional.ofNullable(builder.ver);
-        this.reused = Optional.ofNullable(builder.reused);
-        this.timeout = Optional.ofNullable(builder.timeout);
+        this.reused = builder.reused;
+        this.timeout = builder.timeout;
         this.msgData = Objects.requireNonNullElse(builder.msgData, Collections.emptyList());
         this.sessionId = Optional.ofNullable(builder.sessionId);
         this.tsoData = Objects.requireNonNullElse(builder.tsoData, Collections.emptyList());
@@ -110,22 +110,22 @@ public class ZosmfTsoResponse {
     }
 
     /**
-     * Retrieve reused specified
+     * Retrieve is reused specified
      *
-     * @return reused value
+     * @return boolean true or false
      * @author Frank Giordano
      */
-    public Optional<Boolean> getReused() {
+    public boolean isReused() {
         return reused;
     }
 
     /**
-     * Retrieve timeout specified
+     * Retrieve is timeout specified
      *
-     * @return timeout value
+     * @return boolean true or false
      * @author Frank Giordano
      */
-    public Optional<Boolean> getTimeout() {
+    public boolean isTimeout() {
         return timeout;
     }
 
@@ -175,7 +175,7 @@ public class ZosmfTsoResponse {
      * @param tsoData message list
      * @author Frank Giordano
      */
-    public void setTsoData(List<TsoMessages> tsoData) {
+    public void setTsoData(final List<TsoMessages> tsoData) {
         this.tsoData = Objects.requireNonNullElse(tsoData, Collections.emptyList());
     }
 
@@ -199,54 +199,54 @@ public class ZosmfTsoResponse {
         private String servletKey;
         private String queueId;
         private String ver;
-        private Boolean reused;
-        private Boolean timeout;
+        private boolean reused;
+        private boolean timeout;
         private List<ZosmfMessages> msgData;
         private String sessionId;
         private List<TsoMessages> tsoData;
         private String appData;
 
-        public ZosmfTsoResponse.Builder servletKey(String servletKey) {
+        public ZosmfTsoResponse.Builder servletKey(final String servletKey) {
             this.servletKey = servletKey;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder queueId(String queueId) {
+        public ZosmfTsoResponse.Builder queueId(final String queueId) {
             this.queueId = queueId;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder ver(String ver) {
+        public ZosmfTsoResponse.Builder ver(final String ver) {
             this.ver = ver;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder reused(Boolean reused) {
+        public ZosmfTsoResponse.Builder reused(final boolean reused) {
             this.reused = reused;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder timeout(Boolean timeout) {
+        public ZosmfTsoResponse.Builder timeout(final boolean timeout) {
             this.timeout = timeout;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder msgData(List<ZosmfMessages> msgData) {
+        public ZosmfTsoResponse.Builder msgData(final List<ZosmfMessages> msgData) {
             this.msgData = msgData;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder sessionId(String sessionId) {
+        public ZosmfTsoResponse.Builder sessionId(final String sessionId) {
             this.sessionId = sessionId;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder tsoData(List<TsoMessages> tsoData) {
+        public ZosmfTsoResponse.Builder tsoData(final List<TsoMessages> tsoData) {
             this.tsoData = tsoData;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder tsoData(String appData) {
+        public ZosmfTsoResponse.Builder tsoData(final String appData) {
             this.appData = appData;
             return this;
         }

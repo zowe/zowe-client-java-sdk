@@ -45,7 +45,7 @@ public class UssCopy {
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssCopy(ZosConnection connection) {
+    public UssCopy(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -59,7 +59,7 @@ public class UssCopy {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssCopy(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssCopy(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -79,7 +79,7 @@ public class UssCopy {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response copy(String fromPath, String targetPath) throws Exception {
+    public Response copy(final String fromPath, final String targetPath) throws Exception {
         return copy(targetPath, new CopyParams.Builder().from(fromPath).build());
     }
 
@@ -93,7 +93,7 @@ public class UssCopy {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response copy(String targetPath, CopyParams params) throws Exception {
+    public Response copy(final String targetPath, final CopyParams params) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

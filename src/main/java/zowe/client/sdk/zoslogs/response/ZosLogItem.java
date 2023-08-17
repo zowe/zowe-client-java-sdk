@@ -192,7 +192,7 @@ public class ZosLogItem {
      * @param builder ZosLogItem.Builder Object
      * @author Frank Giordano
      */
-    private ZosLogItem(ZosLogItem.Builder builder) {
+    private ZosLogItem(final ZosLogItem.Builder builder) {
         this.cart = Optional.ofNullable(builder.cart);
         this.color = Optional.ofNullable(builder.color);
         this.jobName = Optional.ofNullable(builder.jobName);
@@ -235,7 +235,7 @@ public class ZosLogItem {
          * @return ZosLogItem.Builder object
          * @author Frank Giordano
          */
-        public ZosLogItem.Builder cart(String cart) {
+        public ZosLogItem.Builder cart(final String cart) {
             this.cart = cart;
             return this;
         }
@@ -247,7 +247,7 @@ public class ZosLogItem {
          * @return ZosLogItem.Builder object
          * @author Frank Giordano
          */
-        public ZosLogItem.Builder color(String color) {
+        public ZosLogItem.Builder color(final String color) {
             this.color = color;
             return this;
         }
@@ -259,7 +259,7 @@ public class ZosLogItem {
          * @return ZosLogItem.Builder object
          * @author Frank Giordano
          */
-        public ZosLogItem.Builder jobName(String jobName) {
+        public ZosLogItem.Builder jobName(final String jobName) {
             this.jobName = jobName;
             return this;
         }
@@ -271,7 +271,7 @@ public class ZosLogItem {
          * @return ZosLogItem.Builder object
          * @author Frank Giordano
          */
-        public ZosLogItem.Builder message(String message) {
+        public ZosLogItem.Builder message(final String message) {
             this.message = message;
             return this;
         }
@@ -283,7 +283,7 @@ public class ZosLogItem {
          * @return ZosLogItem.Builder object
          * @author Frank Giordano
          */
-        public ZosLogItem.Builder messageId(String messageId) {
+        public ZosLogItem.Builder messageId(final String messageId) {
             this.messageId = messageId;
             return this;
         }
@@ -295,7 +295,7 @@ public class ZosLogItem {
          * @return ZosLogItem.Builder object
          * @author Frank Giordano
          */
-        public ZosLogItem.Builder replyId(String replyId) {
+        public ZosLogItem.Builder replyId(final String replyId) {
             this.replyId = replyId;
             return this;
         }
@@ -307,7 +307,7 @@ public class ZosLogItem {
          * @return ZosLogItem.Builder object
          * @author Frank Giordano
          */
-        public ZosLogItem.Builder system(String system) {
+        public ZosLogItem.Builder system(final String system) {
             this.system = system;
             return this;
         }
@@ -319,7 +319,7 @@ public class ZosLogItem {
          * @return ZosLogItem.Builder object
          * @author Frank Giordano
          */
-        public ZosLogItem.Builder type(String type) {
+        public ZosLogItem.Builder type(final String type) {
             this.type = type;
             return this;
         }
@@ -331,7 +331,7 @@ public class ZosLogItem {
          * @return ZosLogItem.Builder object
          * @author Frank Giordano
          */
-        public ZosLogItem.Builder subType(String subType) {
+        public ZosLogItem.Builder subType(final String subType) {
             this.subType = subType;
             return this;
         }
@@ -343,7 +343,7 @@ public class ZosLogItem {
          * @return ZosLogItem.Builder object
          * @author Frank Giordano
          */
-        public ZosLogItem.Builder time(String time) {
+        public ZosLogItem.Builder time(final String time) {
             this.time = time;
             return this;
         }
@@ -355,7 +355,7 @@ public class ZosLogItem {
          * @return ZosLogItem.Builder object
          * @author Frank Giordano
          */
-        public ZosLogItem.Builder timeStamp(long timeStamp) {
+        public ZosLogItem.Builder timeStamp(final long timeStamp) {
             this.timeStamp = timeStamp;
             return this;
         }

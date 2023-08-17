@@ -38,7 +38,7 @@ public class DsnWrite {
      * @param connection connection information, see ZOSConnection object
      * @author Leonid Baranov
      */
-    public DsnWrite(ZosConnection connection) {
+    public DsnWrite(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -52,7 +52,7 @@ public class DsnWrite {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public DsnWrite(ZosConnection connection, ZoweRequest request) throws Exception {
+    public DsnWrite(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof TextPutRequest)) {
@@ -72,7 +72,7 @@ public class DsnWrite {
      * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public Response write(String dataSetName, String memberName, String content) throws Exception {
+    public Response write(final String dataSetName, final String memberName, final String content) throws Exception {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
@@ -90,7 +90,7 @@ public class DsnWrite {
      * @throws Exception error processing request
      * @author Leonid Baranov
      */
-    public Response write(String dataSetName, String content) throws Exception {
+    public Response write(final String dataSetName, final String content) throws Exception {
         ValidateUtils.checkNullParameter(content == null, "content is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");

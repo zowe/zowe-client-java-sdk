@@ -47,7 +47,7 @@ public class IssueConsole {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public IssueConsole(ZosConnection connection) {
+    public IssueConsole(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -61,7 +61,7 @@ public class IssueConsole {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public IssueConsole(ZosConnection connection, ZoweRequest request) throws Exception {
+    public IssueConsole(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -82,7 +82,7 @@ public class IssueConsole {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ConsoleResponse issueCommand(String command) throws Exception {
+    public ConsoleResponse issueCommand(final String command) throws Exception {
         return issueCommandCommon(ConsoleConstants.RES_DEF_CN, new IssueConsoleParams(command));
     }
 
@@ -98,7 +98,7 @@ public class IssueConsole {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ConsoleResponse issueCommand(String command, String consoleName) throws Exception {
+    public ConsoleResponse issueCommand(final String command, final String consoleName) throws Exception {
         return issueCommandCommon(consoleName, new IssueConsoleParams(command));
     }
 
@@ -110,7 +110,8 @@ public class IssueConsole {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ConsoleResponse issueCommandCommon(String consoleName, IssueConsoleParams params) throws Exception {
+    public ConsoleResponse issueCommandCommon(final String consoleName, final IssueConsoleParams params)
+            throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(consoleName == null, "consoleName is null");
         ValidateUtils.checkIllegalParameter(consoleName.isBlank(), "consoleName not specified");

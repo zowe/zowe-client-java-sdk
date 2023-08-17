@@ -46,7 +46,7 @@ public class SendTso {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public SendTso(ZosConnection connection) {
+    public SendTso(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -60,7 +60,7 @@ public class SendTso {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public SendTso(ZosConnection connection, ZoweRequest request) throws Exception {
+    public SendTso(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -77,7 +77,7 @@ public class SendTso {
      * @return SendResponse, see SendResponse
      * @author Frank Giordano
      */
-    private static SendResponse createResponse(CollectedResponses responses) {
+    private static SendResponse createResponse(final CollectedResponses responses) {
         return new SendResponse(true, responses.getTsos(), responses.getMessages()
                 .orElseThrow(() -> new IllegalStateException("no responses tso messages exist")));
     }
@@ -134,7 +134,7 @@ public class SendTso {
      * @throws Exception error executing command
      * @author Frank Giordano
      */
-    private ZosmfTsoResponse getDataFromTso(String servletKey) throws Exception {
+    private ZosmfTsoResponse getDataFromTso(final String servletKey) throws Exception {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
 
@@ -154,7 +154,7 @@ public class SendTso {
      * @return json representation of TSO RESPONSE
      * @author Frank Giordano
      */
-    private String getTsoResponseSendMessage(TsoResponseMessage tsoResponseMessage) {
+    private String getTsoResponseSendMessage(final TsoResponseMessage tsoResponseMessage) {
         return "{\"TSO RESPONSE\":{\"VERSION\":\"" + tsoResponseMessage.getVersion().orElse("")
                 + "\",\"DATA\":\"" + tsoResponseMessage.getData().orElse("") + "\"}}";
     }
@@ -169,7 +169,7 @@ public class SendTso {
      * @throws Exception error executing command
      * @author Frank Giordano
      */
-    public SendResponse sendDataToTsoCollect(String servletKey, String command) throws Exception {
+    public SendResponse sendDataToTsoCollect(final String servletKey, final String command) throws Exception {
         final ZosmfTsoResponse putResponse = sendDataToTsoCommon(new SendTsoParams(servletKey, command));
         final CollectedResponses responses = getAllResponses(putResponse);
         return createResponse(responses);
@@ -183,7 +183,7 @@ public class SendTso {
      * @throws Exception error executing command
      * @author Frank Giordano
      */
-    public ZosmfTsoResponse sendDataToTsoCommon(SendTsoParams commandParams) throws Exception {
+    public ZosmfTsoResponse sendDataToTsoCommon(final SendTsoParams commandParams) throws Exception {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +

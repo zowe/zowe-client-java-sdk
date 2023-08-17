@@ -41,7 +41,7 @@ public class SubmitJobParams {
      * @param jobDataSet z/OS data set which should contain syntactically correct JCL
      * @author Frank Giordano
      */
-    public SubmitJobParams(String jobDataSet) {
+    public SubmitJobParams(final String jobDataSet) {
         this.jobDataSet = Optional.ofNullable(jobDataSet);
     }
 
@@ -52,7 +52,7 @@ public class SubmitJobParams {
      * @param jclSymbols Map for JCL symbolic substitution
      * @author Frank Giordano
      */
-    public SubmitJobParams(String jobDataSet, Map<String, String> jclSymbols) {
+    public SubmitJobParams(final String jobDataSet, final Map<String, String> jclSymbols) {
         ValidateUtils.checkNullParameter(jobDataSet == null, "jobDataSet is null");
         ValidateUtils.checkIllegalParameter(jobDataSet.isEmpty(), "jobDataSet not specified");
         this.jobDataSet = Optional.of(jobDataSet);
@@ -75,7 +75,7 @@ public class SubmitJobParams {
      * @param jclSymbols Map for JCL symbolic substitution
      * @author Frank Giordano
      */
-    public void setJclSymbols(Map<String, String> jclSymbols) {
+    public void setJclSymbols(final Map<String, String> jclSymbols) {
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
 
@@ -95,7 +95,7 @@ public class SubmitJobParams {
      * @param jobDataSet z/OS data set which should contain syntactically correct JCL
      * @author Frank Giordano
      */
-    public void setJobDataSet(String jobDataSet) {
+    public void setJobDataSet(final String jobDataSet) {
         this.jobDataSet = Optional.ofNullable(jobDataSet);
     }
 

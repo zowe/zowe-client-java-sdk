@@ -43,7 +43,7 @@ public class UssGet {
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public UssGet(ZosConnection connection) {
+    public UssGet(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -57,7 +57,7 @@ public class UssGet {
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public UssGet(ZosConnection connection, ZoweRequest request) {
+    public UssGet(final ZosConnection connection, final ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
@@ -72,7 +72,7 @@ public class UssGet {
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public byte[] getBinary(String fileNamePath) throws Exception {
+    public byte[] getBinary(final String fileNamePath) throws Exception {
         GetParams params = new GetParams.Builder().binary(true).build();
         Response response = getCommon(fileNamePath, params);
         return (byte[]) response.getResponsePhrase().orElse(new byte[0]);
@@ -87,7 +87,7 @@ public class UssGet {
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public String getText(String fileNamePath) throws Exception {
+    public String getText(final String fileNamePath) throws Exception {
         GetParams params = new GetParams.Builder().build();
         Response response = getCommon(fileNamePath, params);
         return (String) response.getResponsePhrase().orElse("");
@@ -103,7 +103,7 @@ public class UssGet {
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public Response getCommon(String fileNamePath, GetParams params) throws Exception {
+    public Response getCommon(final String fileNamePath, final GetParams params) throws Exception {
         ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
         ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

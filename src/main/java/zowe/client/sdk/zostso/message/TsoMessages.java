@@ -50,7 +50,7 @@ public class TsoMessages {
      * @param tsoMessage tso message value
      * @author Frank Giordano
      */
-    public void setTsoMessage(TsoMessage tsoMessage) {
+    public void setTsoMessage(final TsoMessage tsoMessage) {
         this.tsoMessage = Optional.ofNullable(tsoMessage);
     }
 
@@ -70,7 +70,7 @@ public class TsoMessages {
      * @param tsoPrompt tso prompt value
      * @author Frank Giordano
      */
-    public void setTsoPrompt(TsoPromptMessage tsoPrompt) {
+    public void setTsoPrompt(final TsoPromptMessage tsoPrompt) {
         this.tsoPrompt = Optional.ofNullable(tsoPrompt);
     }
 
@@ -90,7 +90,7 @@ public class TsoMessages {
      * @param tsoResponse tso response value
      * @author Frank Giordano
      */
-    public void setTsoResponse(TsoResponseMessage tsoResponse) {
+    public void setTsoResponse(final TsoResponseMessage tsoResponse) {
         this.tsoResponse = Optional.ofNullable(tsoResponse);
     }
 

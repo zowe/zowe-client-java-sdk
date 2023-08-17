@@ -86,7 +86,7 @@ public final class SystemsParseResponse implements JsonParseResponse {
      * @return DefinedSystem object
      * @author Frank Giordano
      */
-    private static DefinedSystem parseDefinedSystem(JSONObject data) {
+    private static DefinedSystem parseDefinedSystem(final JSONObject data) {
         return new DefinedSystem.Builder()
                 .systemNickName(data.get("systemNickName") != null ? (String) data.get("systemNickName") : null)
                 .groupNames(data.get("groupNames") != null ? (String) data.get("groupNames") : null)

@@ -84,7 +84,7 @@ public final class ZosLogReplyParseResponse implements JsonParseResponse {
      * @param zosLogItems list of ZosLogItem objects
      * @author Frank Giordano
      */
-    public void setZosLogItems(List<ZosLogItem> zosLogItems) {
+    public void setZosLogItems(final List<ZosLogItem> zosLogItems) {
         ValidateUtils.checkNullParameter(zosLogItems == null, "zosLogItems is null");
         this.zosLogItems = zosLogItems;
     }

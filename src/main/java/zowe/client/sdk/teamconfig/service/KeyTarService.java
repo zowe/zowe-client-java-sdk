@@ -49,7 +49,7 @@ public class KeyTarService {
      * @param keyTar IKeyTar implementation Object
      * @author Frank Giordano
      */
-    public KeyTarService(IKeyTar keyTar) {
+    public KeyTarService(final IKeyTar keyTar) {
         this.keyTar = keyTar;
     }
 

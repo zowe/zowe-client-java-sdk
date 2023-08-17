@@ -80,7 +80,7 @@ public class Member {
      */
     private final Optional<String> sclm;
 
-    private Member(Member.Builder builder) {
+    private Member(final Member.Builder builder) {
         this.member = Optional.ofNullable(builder.member);
         if (builder.vers == null) {
             this.vers = OptionalLong.empty();
@@ -273,62 +273,62 @@ public class Member {
         private String user;
         private String sclm;
 
-        public Member.Builder member(String member) {
+        public Member.Builder member(final String member) {
             this.member = member;
             return this;
         }
 
-        public Member.Builder vers(Long vers) {
+        public Member.Builder vers(final Long vers) {
             this.vers = vers;
             return this;
         }
 
-        public Member.Builder mod(Long mod) {
+        public Member.Builder mod(final Long mod) {
             this.mod = mod;
             return this;
         }
 
-        public Member.Builder c4date(String c4date) {
+        public Member.Builder c4date(final String c4date) {
             this.c4date = c4date;
             return this;
         }
 
-        public Member.Builder m4date(String m4date) {
+        public Member.Builder m4date(final String m4date) {
             this.m4date = m4date;
             return this;
         }
 
-        public Member.Builder cnorc(Long cnorc) {
+        public Member.Builder cnorc(final Long cnorc) {
             this.cnorc = cnorc;
             return this;
         }
 
-        public Member.Builder inorc(Long inorc) {
+        public Member.Builder inorc(final Long inorc) {
             this.inorc = inorc;
             return this;
         }
 
-        public Member.Builder mnorc(Long mnorc) {
+        public Member.Builder mnorc(final Long mnorc) {
             this.mnorc = mnorc;
             return this;
         }
 
-        public Member.Builder mtime(String mtime) {
+        public Member.Builder mtime(final String mtime) {
             this.mtime = mtime;
             return this;
         }
 
-        public Member.Builder msec(String msec) {
+        public Member.Builder msec(final String msec) {
             this.msec = msec;
             return this;
         }
 
-        public Member.Builder user(String user) {
+        public Member.Builder user(final String user) {
             this.user = user;
             return this;
         }
 
-        public Member.Builder sclm(String sclm) {
+        public Member.Builder sclm(final String sclm) {
             this.sclm = sclm;
             return this;
         }

@@ -44,7 +44,7 @@ public class StopTso {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public StopTso(ZosConnection connection) {
+    public StopTso(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -58,7 +58,7 @@ public class StopTso {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public StopTso(ZosConnection connection, ZoweRequest request) throws Exception {
+    public StopTso(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -76,7 +76,7 @@ public class StopTso {
      * @throws Exception error on TSO sto command
      * @author Frank Giordano
      */
-    public StartStopResponse stop(String servletKey) throws Exception {
+    public StartStopResponse stop(final String servletKey) throws Exception {
         ValidateUtils.checkNullParameter(servletKey == null, "servletKey is null");
         ValidateUtils.checkIllegalParameter(servletKey.isBlank(), "servletKey not specified");
 
@@ -95,7 +95,7 @@ public class StopTso {
      * @throws Exception error on TSO sto command
      * @author Frank Giordano
      */
-    public ZosmfTsoResponse stopCommon(StopTsoParams commandParams) throws Exception {
+    public ZosmfTsoResponse stopCommon(final StopTsoParams commandParams) throws Exception {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +

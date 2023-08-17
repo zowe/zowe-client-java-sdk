@@ -81,7 +81,7 @@ public final class UnixZfsParseResponse implements JsonParseResponse {
                 .diribc(data.get("diribc") != null ? (Long) data.get("diribc") : null)
                 .returnedRows(data.get("returnedRows") != null ? (Long) data.get("returnedRows") : null)
                 .totalRows(data.get("totalRows") != null ? (Long) data.get("totalRows") : null)
-                .moreRows(data.get("moreRows") != null ? (Boolean) data.get("moreRows") : false)
+                .moreRows(data.get("moreRows") != null && (boolean) data.get("moreRows"))
                 .build();
         data = null;
         modeStr = "";
@@ -96,7 +96,7 @@ public final class UnixZfsParseResponse implements JsonParseResponse {
      * @param modeStr mode permission(s) string value
      * @author Frank Giordano
      */
-    public void setModeStr(String modeStr) {
+    public void setModeStr(final String modeStr) {
         ValidateUtils.checkNullParameter(modeStr == null, "modeStr is null");
         this.modeStr = modeStr;
     }

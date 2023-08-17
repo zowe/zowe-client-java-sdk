@@ -103,7 +103,7 @@ public class UnixZfs {
      */
     private final boolean moreRows;
 
-    public UnixZfs(UnixZfs.Builder builder) {
+    public UnixZfs(final UnixZfs.Builder builder) {
         this.name = Optional.ofNullable(builder.name);
         this.mountpoint = Optional.ofNullable(builder.mountpoint);
         this.fstname = Optional.ofNullable(builder.fstname);
@@ -279,87 +279,87 @@ public class UnixZfs {
             return new UnixZfs(this);
         }
 
-        public UnixZfs.Builder name(String name) {
+        public UnixZfs.Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public UnixZfs.Builder mountpoint(String mountpoint) {
+        public UnixZfs.Builder mountpoint(final String mountpoint) {
             this.mountpoint = mountpoint;
             return this;
         }
 
-        public UnixZfs.Builder fstname(String fstname) {
+        public UnixZfs.Builder fstname(final String fstname) {
             this.fstname = fstname;
             return this;
         }
 
-        public UnixZfs.Builder status(String status) {
+        public UnixZfs.Builder status(final String status) {
             this.status = status;
             return this;
         }
 
-        public UnixZfs.Builder mode(String mode) {
+        public UnixZfs.Builder mode(final String mode) {
             this.mode = mode;
             return this;
         }
 
-        public UnixZfs.Builder dev(Long dev) {
+        public UnixZfs.Builder dev(final Long dev) {
             this.dev = dev;
             return this;
         }
 
-        public UnixZfs.Builder fstype(Long fstype) {
+        public UnixZfs.Builder fstype(final Long fstype) {
             this.fstype = fstype;
             return this;
         }
 
-        public UnixZfs.Builder bsize(Long bsize) {
+        public UnixZfs.Builder bsize(final Long bsize) {
             this.bsize = bsize;
             return this;
         }
 
-        public UnixZfs.Builder bavail(Long bavail) {
+        public UnixZfs.Builder bavail(final Long bavail) {
             this.bavail = bavail;
             return this;
         }
 
-        public UnixZfs.Builder blocks(Long blocks) {
+        public UnixZfs.Builder blocks(final Long blocks) {
             this.blocks = blocks;
             return this;
         }
 
-        public UnixZfs.Builder sysname(String sysname) {
+        public UnixZfs.Builder sysname(final String sysname) {
             this.sysname = sysname;
             return this;
         }
 
-        public UnixZfs.Builder readibc(Long readibc) {
+        public UnixZfs.Builder readibc(final Long readibc) {
             this.readibc = readibc;
             return this;
         }
 
-        public UnixZfs.Builder writeibc(Long writeibc) {
+        public UnixZfs.Builder writeibc(final Long writeibc) {
             this.writeibc = writeibc;
             return this;
         }
 
-        public UnixZfs.Builder diribc(Long diribc) {
+        public UnixZfs.Builder diribc(final Long diribc) {
             this.diribc = diribc;
             return this;
         }
 
-        public UnixZfs.Builder returnedRows(Long returnedRows) {
+        public UnixZfs.Builder returnedRows(final Long returnedRows) {
             this.returnedRows = returnedRows;
             return this;
         }
 
-        public UnixZfs.Builder totalRows(Long totalRows) {
+        public UnixZfs.Builder totalRows(final Long totalRows) {
             this.totalRows = totalRows;
             return this;
         }
 
-        public UnixZfs.Builder moreRows(boolean moreRows) {
+        public UnixZfs.Builder moreRows(final boolean moreRows) {
             this.moreRows = moreRows;
             return this;
         }

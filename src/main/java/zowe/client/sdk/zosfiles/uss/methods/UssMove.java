@@ -44,7 +44,7 @@ public class UssMove {
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssMove(ZosConnection connection) {
+    public UssMove(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -58,7 +58,7 @@ public class UssMove {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssMove(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssMove(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -78,7 +78,7 @@ public class UssMove {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response move(String fromPath, String targetPath) throws Exception {
+    public Response move(final String fromPath, final String targetPath) throws Exception {
         return moveCommon(fromPath, targetPath, true);
     }
 
@@ -92,7 +92,7 @@ public class UssMove {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response move(String fromPath, String targetPath, boolean overwrite) throws Exception {
+    public Response move(final String fromPath, final String targetPath, final boolean overwrite) throws Exception {
         return moveCommon(fromPath, targetPath, overwrite);
     }
 
@@ -107,7 +107,8 @@ public class UssMove {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    private Response moveCommon(String fromPath, String targetPath, boolean overwrite) throws Exception {
+    private Response moveCommon(final String fromPath, final String targetPath, final boolean overwrite)
+            throws Exception {
         ValidateUtils.checkNullParameter(fromPath == null, "fromPath is null");
         ValidateUtils.checkIllegalParameter(fromPath.isBlank(), "fromPath not specified");
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");

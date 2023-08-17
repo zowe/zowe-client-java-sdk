@@ -46,7 +46,7 @@ public class ZosConnection {
      * @param password  machine host username's password with access to backend z/OS instance
      * @author Frank Giordano
      */
-    public ZosConnection(String host, String zosmfPort, String user, String password) {
+    public ZosConnection(final String host, final String zosmfPort, final String user, final String password) {
         this.host = host;
         this.zosmfPort = zosmfPort;
         this.user = user;

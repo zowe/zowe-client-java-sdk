@@ -46,7 +46,7 @@ public class SshConnection {
      * @param password machine host username's password with access to backend z/OS instance
      * @author Frank Giordano
      */
-    public SshConnection(String host, int port, String user, String password) {
+    public SshConnection(final String host, final int port, final String user, final String password) {
         this.host = host;
         this.port = port;
         this.user = user;

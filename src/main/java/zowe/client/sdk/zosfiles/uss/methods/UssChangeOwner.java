@@ -43,7 +43,7 @@ public class UssChangeOwner {
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssChangeOwner(ZosConnection connection) {
+    public UssChangeOwner(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -57,7 +57,7 @@ public class UssChangeOwner {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public UssChangeOwner(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssChangeOwner(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -76,7 +76,7 @@ public class UssChangeOwner {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response change(String targetPath, String owner) throws Exception {
+    public Response change(final String targetPath, final String owner) throws Exception {
         return change(targetPath, new ChangeOwnerParams.Builder().owner(owner).build());
     }
 
@@ -90,7 +90,7 @@ public class UssChangeOwner {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response change(String targetPath, ChangeOwnerParams params) throws Exception {
+    public Response change(final String targetPath, final ChangeOwnerParams params) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

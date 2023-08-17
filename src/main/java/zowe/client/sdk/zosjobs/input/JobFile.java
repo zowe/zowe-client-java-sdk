@@ -90,7 +90,7 @@ public class JobFile {
      */
     private final Optional<String> procStep;
 
-    private JobFile(Builder builder) {
+    private JobFile(final Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);
         this.recfm = Optional.ofNullable(builder.recfm);
@@ -304,72 +304,72 @@ public class JobFile {
             return new JobFile(this);
         }
 
-        public Builder byteCount(Long byteCount) {
+        public Builder byteCount(final Long byteCount) {
             this.byteCount = byteCount;
             return this;
         }
 
-        public Builder classs(String classs) {
+        public Builder classs(final String classs) {
             this.classs = classs;
             return this;
         }
 
-        public Builder ddName(String ddName) {
+        public Builder ddName(final String ddName) {
             this.ddName = ddName;
             return this;
         }
 
-        public Builder id(Long id) {
+        public Builder id(final Long id) {
             this.id = id;
             return this;
         }
 
-        public Builder jobCorrelator(String jobCorrelator) {
+        public Builder jobCorrelator(final String jobCorrelator) {
             this.jobCorrelator = jobCorrelator;
             return this;
         }
 
-        public Builder jobId(String jobId) {
+        public Builder jobId(final String jobId) {
             this.jobId = jobId;
             return this;
         }
 
-        public Builder jobName(String jobName) {
+        public Builder jobName(final String jobName) {
             this.jobName = jobName;
             return this;
         }
 
-        public Builder lrecl(Long lrecl) {
+        public Builder lrecl(final Long lrecl) {
             this.lrecl = lrecl;
             return this;
         }
 
-        public Builder procStep(String procStep) {
+        public Builder procStep(final String procStep) {
             this.procStep = procStep;
             return this;
         }
 
-        public Builder recfm(String recfm) {
+        public Builder recfm(final String recfm) {
             this.recfm = recfm;
             return this;
         }
 
-        public Builder recordCount(Long recordCount) {
+        public Builder recordCount(final Long recordCount) {
             this.recordCount = recordCount;
             return this;
         }
 
-        public Builder recordsUrl(String recordsUrl) {
+        public Builder recordsUrl(final String recordsUrl) {
             this.recordsUrl = recordsUrl;
             return this;
         }
 
-        public Builder stepName(String stepName) {
+        public Builder stepName(final String stepName) {
             this.stepName = stepName;
             return this;
         }
 
-        public Builder subSystem(String subSystem) {
+        public Builder subSystem(final String subSystem) {
             this.subSystem = subSystem;
             return this;
         }

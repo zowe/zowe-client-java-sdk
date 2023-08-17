@@ -48,7 +48,7 @@ public class UssChangeTag {
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssChangeTag(ZosConnection connection) {
+    public UssChangeTag(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -62,7 +62,7 @@ public class UssChangeTag {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssChangeTag(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssChangeTag(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -80,7 +80,7 @@ public class UssChangeTag {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response changeToBinary(String fileNamePath) throws Exception {
+    public Response changeToBinary(final String fileNamePath) throws Exception {
         return changeCommon(fileNamePath, new ChangeTagParams.Builder()
                 .action(ChangeTagAction.SET).type(ChangeTagType.BINARY).build());
     }
@@ -94,7 +94,7 @@ public class UssChangeTag {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response changeToText(String fileNamePath, String codeSet) throws Exception {
+    public Response changeToText(final String fileNamePath, final String codeSet) throws Exception {
         ValidateUtils.checkNullParameter(codeSet == null, "codeSet is null");
         ValidateUtils.checkIllegalParameter(codeSet.isBlank(), "codeSet not specified");
 
@@ -110,7 +110,7 @@ public class UssChangeTag {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response remove(String fileNamePath) throws Exception {
+    public Response remove(final String fileNamePath) throws Exception {
         return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.REMOVE).build());
     }
 
@@ -122,7 +122,7 @@ public class UssChangeTag {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response retrieve(String fileNamePath) throws Exception {
+    public Response retrieve(final String fileNamePath) throws Exception {
         return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
     }
 
@@ -135,7 +135,7 @@ public class UssChangeTag {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response changeCommon(String fileNamePath, ChangeTagParams params) throws Exception {
+    public Response changeCommon(final String fileNamePath, final ChangeTagParams params) throws Exception {
         ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
         ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

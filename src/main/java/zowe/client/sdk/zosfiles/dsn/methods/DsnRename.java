@@ -43,7 +43,7 @@ public class DsnRename {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public DsnRename(ZosConnection connection) {
+    public DsnRename(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -57,7 +57,7 @@ public class DsnRename {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public DsnRename(ZosConnection connection, ZoweRequest request) throws Exception {
+    public DsnRename(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -75,7 +75,7 @@ public class DsnRename {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response dataSetName(String dataSetName, String newDataSetName) throws Exception {
+    public Response dataSetName(final String dataSetName, final String newDataSetName) throws Exception {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(newDataSetName == null, "newDataSetName is null");
@@ -95,7 +95,8 @@ public class DsnRename {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response memberName(String fromDataSetName, String memberName, String newMemberName) throws Exception {
+    public Response memberName(final String fromDataSetName, final String memberName, final String newMemberName)
+            throws Exception {
         ValidateUtils.checkNullParameter(fromDataSetName == null, "fromDataSetName is null");
         ValidateUtils.checkIllegalParameter(fromDataSetName.isBlank(), "fromDataSetName not specified");
         ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
@@ -113,7 +114,7 @@ public class DsnRename {
      * @param args new or current dataset name and/or new member name
      * @author Frank Giordano
      */
-    private void setUrl(String... args) {
+    private void setUrl(final String... args) {
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(args[0]);
         if (args.length > 1) {
@@ -131,7 +132,7 @@ public class DsnRename {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    private Response executeCommon(String... args) throws Exception {
+    private Response executeCommon(final String... args) throws Exception {
         final Map<String, Object> renameMap = new HashMap<>();
         renameMap.put("request", "rename");
 

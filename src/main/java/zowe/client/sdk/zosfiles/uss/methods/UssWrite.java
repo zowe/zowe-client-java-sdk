@@ -45,7 +45,7 @@ public class UssWrite {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public UssWrite(ZosConnection connection) {
+    public UssWrite(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -58,7 +58,7 @@ public class UssWrite {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public UssWrite(ZosConnection connection, ZoweRequest request) {
+    public UssWrite(final ZosConnection connection, final ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
@@ -74,7 +74,7 @@ public class UssWrite {
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public Response writeText(String fileNamePath, String content) throws Exception {
+    public Response writeText(final String fileNamePath, final String content) throws Exception {
         return writeCommon(fileNamePath, new WriteParams.Builder().textContent(content).build());
     }
 
@@ -88,7 +88,7 @@ public class UssWrite {
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public Response writeBinary(String fileNamePath, byte[] content) throws Exception {
+    public Response writeBinary(final String fileNamePath, final byte[] content) throws Exception {
         return writeCommon(fileNamePath, new WriteParams.Builder().binaryContent(content).binary(true).build());
     }
 
@@ -102,7 +102,7 @@ public class UssWrite {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response writeCommon(String fileNamePath, WriteParams params) throws Exception {
+    public Response writeCommon(final String fileNamePath, final WriteParams params) throws Exception {
         ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
         ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

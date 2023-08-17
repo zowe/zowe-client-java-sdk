@@ -33,7 +33,7 @@ public class JobStepData {
     /**
      * Active
      */
-    private final Optional<Boolean> active;
+    private final boolean active;
 
     /**
      * Job relevant step
@@ -55,10 +55,10 @@ public class JobStepData {
      */
     private final Optional<String> programName;
 
-    private JobStepData(JobStepData.Builder builder) {
+    private JobStepData(final JobStepData.Builder builder) {
         this.smfid = Optional.ofNullable(builder.smfid);
         this.completion = Optional.ofNullable(builder.completion);
-        this.active = Optional.of(builder.active);
+        this.active = builder.active;
         if (builder.stepNumber == null) {
             this.stepNumber = OptionalLong.empty();
         } else {
@@ -69,7 +69,7 @@ public class JobStepData {
         this.programName = Optional.ofNullable(builder.programName);
     }
 
-    public Optional<Boolean> getActive() {
+    public boolean isActive() {
         return active;
     }
 
@@ -114,7 +114,7 @@ public class JobStepData {
 
         private String smfid;
         private String completion;
-        private Boolean active;
+        private boolean active;
         private Long stepNumber;
         private String procStepName;
         private String stepName;
@@ -124,37 +124,37 @@ public class JobStepData {
             return new JobStepData(this);
         }
 
-        public JobStepData.Builder active(Boolean active) {
+        public JobStepData.Builder active(final boolean active) {
             this.active = active;
             return this;
         }
 
-        public JobStepData.Builder completion(String completion) {
+        public JobStepData.Builder completion(final String completion) {
             this.completion = completion;
             return this;
         }
 
-        public JobStepData.Builder procStepName(String procStepName) {
+        public JobStepData.Builder procStepName(final String procStepName) {
             this.procStepName = procStepName;
             return this;
         }
 
-        public JobStepData.Builder programName(String programName) {
+        public JobStepData.Builder programName(final String programName) {
             this.programName = programName;
             return this;
         }
 
-        public JobStepData.Builder smfid(String smfid) {
+        public JobStepData.Builder smfid(final String smfid) {
             this.smfid = smfid;
             return this;
         }
 
-        public JobStepData.Builder stepName(String stepName) {
+        public JobStepData.Builder stepName(final String stepName) {
             this.stepName = stepName;
             return this;
         }
 
-        public JobStepData.Builder stepNumber(Long stepNumber) {
+        public JobStepData.Builder stepNumber(final Long stepNumber) {
             this.stepNumber = stepNumber;
             return this;
         }

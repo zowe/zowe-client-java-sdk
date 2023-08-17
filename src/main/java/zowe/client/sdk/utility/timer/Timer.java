@@ -34,7 +34,7 @@ public class Timer {
      * @param waitTime in milliseconds
      * @author Frank Giordano
      */
-    public Timer(int waitTime) {
+    public Timer(final int waitTime) {
         this.waitTime = waitTime;
         this.endTime = System.currentTimeMillis();
     }
@@ -46,7 +46,7 @@ public class Timer {
      * @author Frank Giordano
      */
     public Timer initialize() {
-        long currentTime = System.currentTimeMillis();
+        final long currentTime = System.currentTimeMillis();
         endTime = currentTime + waitTime;
         return this;
     }

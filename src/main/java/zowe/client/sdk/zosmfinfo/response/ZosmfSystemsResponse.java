@@ -36,7 +36,7 @@ public class ZosmfSystemsResponse {
      * @param builder ZosmfListDefinedSystemsResponse.Builder Object
      * @author Frank Giordano
      */
-    private ZosmfSystemsResponse(ZosmfSystemsResponse.Builder builder) {
+    private ZosmfSystemsResponse(final ZosmfSystemsResponse.Builder builder) {
         if (builder.numRows == null) {
             this.numRows = OptionalLong.empty();
         } else {
@@ -82,12 +82,12 @@ public class ZosmfSystemsResponse {
             return new ZosmfSystemsResponse(this);
         }
 
-        public ZosmfSystemsResponse.Builder definedSystems(DefinedSystem[] definedSystems) {
+        public ZosmfSystemsResponse.Builder definedSystems(final DefinedSystem[] definedSystems) {
             this.definedSystems = definedSystems;
             return this;
         }
 
-        public ZosmfSystemsResponse.Builder numRows(Long numRows) {
+        public ZosmfSystemsResponse.Builder numRows(final Long numRows) {
             this.numRows = numRows;
             return this;
         }

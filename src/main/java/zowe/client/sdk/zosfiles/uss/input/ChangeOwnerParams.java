@@ -49,7 +49,7 @@ public class ChangeOwnerParams {
      * @param builder ChangeOwnerParams.Builder builder
      * @author James Kostrewski
      */
-    public ChangeOwnerParams(ChangeOwnerParams.Builder builder) {
+    public ChangeOwnerParams(final ChangeOwnerParams.Builder builder) {
         this.owner = Optional.ofNullable(builder.owner);
         this.group = Optional.ofNullable(builder.group);
         this.recursive = builder.recursive;
@@ -77,9 +77,9 @@ public class ChangeOwnerParams {
     }
 
     /**
-     * Is recursive value true or false
+     * Is recursive specified
      *
-     * @return recursive value
+     * @return boolean true or false
      * @author James Kostrewski
      */
     public boolean isRecursive() {
@@ -117,24 +117,24 @@ public class ChangeOwnerParams {
             return new ChangeOwnerParams(this);
         }
 
-        public ChangeOwnerParams.Builder owner(String owner) {
+        public ChangeOwnerParams.Builder owner(final String owner) {
             ValidateUtils.checkNullParameter(owner == null, "owner is null");
             ValidateUtils.checkIllegalParameter(owner.isBlank(), "owner not specified");
             this.owner = owner;
             return this;
         }
 
-        public ChangeOwnerParams.Builder group(String group) {
+        public ChangeOwnerParams.Builder group(final String group) {
             this.group = group;
             return this;
         }
 
-        public ChangeOwnerParams.Builder recursive(boolean recursive) {
+        public ChangeOwnerParams.Builder recursive(final boolean recursive) {
             this.recursive = recursive;
             return this;
         }
 
-        public ChangeOwnerParams.Builder linktype(LinkType type) {
+        public ChangeOwnerParams.Builder linktype(final LinkType type) {
             this.linkType = type;
             return this;
         }

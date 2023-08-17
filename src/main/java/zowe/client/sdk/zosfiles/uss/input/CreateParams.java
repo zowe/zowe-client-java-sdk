@@ -56,7 +56,7 @@ public class CreateParams {
      * @param mode permission string value
      * @author James Kostrewski
      */
-    public CreateParams(CreateType type, String mode) {
+    public CreateParams(final CreateType type, final String mode) {
         ValidateUtils.checkNullParameter(type == null, "type is null");
         ValidateUtils.checkNullParameter(mode == null, "mode is null");
         this.type = type;

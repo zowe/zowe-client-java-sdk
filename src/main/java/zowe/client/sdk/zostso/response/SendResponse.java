@@ -48,7 +48,8 @@ public class SendResponse {
      * @param commandResponse   tso command response
      * @author Frank Giordano
      */
-    public SendResponse(boolean success, List<ZosmfTsoResponse> zosmfTsoResponses, String commandResponse) {
+    public SendResponse(final boolean success, final List<ZosmfTsoResponse> zosmfTsoResponses,
+                        final String commandResponse) {
         this.success = success;
         this.zosmfTsoResponses = Objects.requireNonNullElse(zosmfTsoResponses, Collections.emptyList());
         this.commandResponse = Optional.ofNullable(commandResponse);
@@ -65,12 +66,12 @@ public class SendResponse {
     }
 
     /**
-     * Retrieve success specified
+     * Retrieve is success
      *
-     * @return success value
+     * @return boolean true or false
      * @author Frank Giordano
      */
-    public boolean getSuccess() {
+    public boolean isSuccess() {
         return success;
     }
 

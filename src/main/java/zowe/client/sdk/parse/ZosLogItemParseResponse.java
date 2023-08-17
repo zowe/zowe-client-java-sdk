@@ -89,7 +89,7 @@ public final class ZosLogItemParseResponse implements JsonParseResponse {
      * @return string value of the message processed
      * @author Frank Giordano
      */
-    private static String processMessage(JSONObject data, boolean isProcessResponse) {
+    private static String processMessage(final JSONObject data, final boolean isProcessResponse) {
         try {
             String message = (String) data.get("message");
             if (isProcessResponse) {
@@ -112,7 +112,7 @@ public final class ZosLogItemParseResponse implements JsonParseResponse {
      * @param processResponse boolean value
      * @author Frank Giordano
      */
-    public void setProcessResponse(boolean processResponse) {
+    public void setProcessResponse(final boolean processResponse) {
         isProcessResponse = processResponse;
     }
 

@@ -81,8 +81,8 @@ public final class TsoParseResponse implements JsonParseResponse {
                 .queueId(data.get("queueID") != null ? (String) data.get("queueID") : null)
                 .ver(data.get("ver") != null ? (String) data.get("ver") : null)
                 .servletKey(data.get("servletKey") != null ? (String) data.get("servletKey") : null)
-                .reused(data.get("reused") != null ? (boolean) data.get("reused") : null)
-                .timeout(data.get("timeout") != null ? (boolean) data.get("timeout") : null)
+                .reused(data.get("reused") != null && (boolean) data.get("reused"))
+                .timeout(data.get("timeout") != null && (boolean) data.get("timeout"))
                 .build();
 
         final List<TsoMessages> tsoMessagesLst = new ArrayList<>();
@@ -102,7 +102,8 @@ public final class TsoParseResponse implements JsonParseResponse {
     }
 
     @SuppressWarnings("unchecked")
-    private static void parseJsonTsoMessage(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
+    private static void parseJsonTsoMessage(final List<TsoMessages> tsoMessagesLst, final JSONObject obj,
+                                            final TsoMessages tsoMessages) {
         final Map<String, String> tsoMessageMap = ((Map<String, String>) obj.get(TsoConstants.TSO_MESSAGE));
         if (tsoMessageMap != null) {
             final TsoMessage tsoMessage = new TsoMessage();
@@ -120,7 +121,8 @@ public final class TsoParseResponse implements JsonParseResponse {
     }
 
     @SuppressWarnings("unchecked")
-    private static void parseJsonTsoPrompt(List<TsoMessages> tsoMessagesLst, JSONObject obj, TsoMessages tsoMessages) {
+    private static void parseJsonTsoPrompt(final List<TsoMessages> tsoMessagesLst, final JSONObject obj,
+                                           final TsoMessages tsoMessages) {
         final Map<String, String> tsoPromptMap = ((Map<String, String>) obj.get(TsoConstants.TSO_PROMPT));
         if (tsoPromptMap != null) {
             TsoPromptMessage tsoPromptMessage = new TsoPromptMessage();

@@ -114,7 +114,7 @@ public class Dataset {
      */
     private final Optional<String> vol;
 
-    private Dataset(Dataset.Builder builder) {
+    private Dataset(final Dataset.Builder builder) {
         this.dsname = Optional.ofNullable(builder.dsname);
         this.blksz = Optional.ofNullable(builder.blksz);
         this.catnm = Optional.ofNullable(builder.catnm);
@@ -377,97 +377,97 @@ public class Dataset {
         private String used;
         private String vol;
 
-        public Dataset.Builder dsname(String dsname) {
+        public Dataset.Builder dsname(final String dsname) {
             this.dsname = dsname;
             return this;
         }
 
-        public Dataset.Builder blksz(String blksz) {
+        public Dataset.Builder blksz(final String blksz) {
             this.blksz = blksz;
             return this;
         }
 
-        public Dataset.Builder catnm(String catnm) {
+        public Dataset.Builder catnm(final String catnm) {
             this.catnm = catnm;
             return this;
         }
 
-        public Dataset.Builder cdate(String cdate) {
+        public Dataset.Builder cdate(final String cdate) {
             this.cdate = cdate;
             return this;
         }
 
-        public Dataset.Builder dev(String dev) {
+        public Dataset.Builder dev(final String dev) {
             this.dev = dev;
             return this;
         }
 
-        public Dataset.Builder dsntp(String dsntp) {
+        public Dataset.Builder dsntp(final String dsntp) {
             this.dsntp = dsntp;
             return this;
         }
 
-        public Dataset.Builder dsorg(String dsorg) {
+        public Dataset.Builder dsorg(final String dsorg) {
             this.dsorg = dsorg;
             return this;
         }
 
-        public Dataset.Builder edate(String edate) {
+        public Dataset.Builder edate(final String edate) {
             this.edate = edate;
             return this;
         }
 
-        public Dataset.Builder extx(String extx) {
+        public Dataset.Builder extx(final String extx) {
             this.extx = extx;
             return this;
         }
 
-        public Dataset.Builder lrectl(String lrectl) {
+        public Dataset.Builder lrectl(final String lrectl) {
             this.lrectl = lrectl;
             return this;
         }
 
-        public Dataset.Builder migr(String migr) {
+        public Dataset.Builder migr(final String migr) {
             this.migr = migr;
             return this;
         }
 
-        public Dataset.Builder mvol(String mvol) {
+        public Dataset.Builder mvol(final String mvol) {
             this.mvol = mvol;
             return this;
         }
 
-        public Dataset.Builder ovf(String ovf) {
+        public Dataset.Builder ovf(final String ovf) {
             this.ovf = ovf;
             return this;
         }
 
-        public Dataset.Builder rdate(String rdate) {
+        public Dataset.Builder rdate(final String rdate) {
             this.rdate = rdate;
             return this;
         }
 
-        public Dataset.Builder recfm(String recfm) {
+        public Dataset.Builder recfm(final String recfm) {
             this.recfm = recfm;
             return this;
         }
 
-        public Dataset.Builder sizex(String sizex) {
+        public Dataset.Builder sizex(final String sizex) {
             this.sizex = sizex;
             return this;
         }
 
-        public Dataset.Builder spacu(String spacu) {
+        public Dataset.Builder spacu(final String spacu) {
             this.spacu = spacu;
             return this;
         }
 
-        public Dataset.Builder used(String used) {
+        public Dataset.Builder used(final String used) {
             this.used = used;
             return this;
         }
 
-        public Dataset.Builder vol(String vol) {
+        public Dataset.Builder vol(final String vol) {
             this.vol = vol;
             return this;
         }

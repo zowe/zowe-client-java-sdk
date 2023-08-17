@@ -40,7 +40,7 @@ public class ZosmfSystems {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public ZosmfSystems(ZosConnection connection) {
+    public ZosmfSystems(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -54,7 +54,7 @@ public class ZosmfSystems {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public ZosmfSystems(ZosConnection connection, ZoweRequest request) throws Exception {
+    public ZosmfSystems(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;

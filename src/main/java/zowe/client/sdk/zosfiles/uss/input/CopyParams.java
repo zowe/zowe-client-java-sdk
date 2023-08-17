@@ -43,7 +43,7 @@ public class CopyParams {
      * @param builder CopyParams.Builder builder
      * @author James Kostrewski
      */
-    public CopyParams(CopyParams.Builder builder) {
+    public CopyParams(final CopyParams.Builder builder) {
         this.from = Optional.ofNullable(builder.from);
         this.overwrite = builder.overwrite;
         this.recursive = builder.recursive;
@@ -60,9 +60,9 @@ public class CopyParams {
     }
 
     /**
-     * Retrieve overwrite value
+     * Retrieve is overwrite specified
      *
-     * @return overwrite value
+     * @return boolean true or false
      * @author James Kostrewski
      */
     public boolean isOverwrite() {
@@ -70,9 +70,9 @@ public class CopyParams {
     }
 
     /**
-     * Is recursive value true or false
+     * Is recursive specified
      *
-     * @return recursive value
+     * @return boolean true or false
      * @author James Kostrewski
      */
     public boolean isRecursive() {
@@ -98,19 +98,19 @@ public class CopyParams {
             return new CopyParams(this);
         }
 
-        public CopyParams.Builder from(String from) {
+        public CopyParams.Builder from(final String from) {
             ValidateUtils.checkNullParameter(from == null, "from is null");
             ValidateUtils.checkIllegalParameter(from.isBlank(), "from not specified");
             this.from = from;
             return this;
         }
 
-        public CopyParams.Builder overwrite(boolean overwrite) {
+        public CopyParams.Builder overwrite(final boolean overwrite) {
             this.overwrite = overwrite;
             return this;
         }
 
-        public CopyParams.Builder recursive(boolean recursive) {
+        public CopyParams.Builder recursive(final boolean recursive) {
             this.recursive = recursive;
             return this;
         }

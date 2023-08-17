@@ -47,7 +47,7 @@ public class Profile {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    public Profile(String name, JSONObject obj, JSONArray secure) throws Exception {
+    public Profile(final String name, final JSONObject obj, final JSONArray secure) throws Exception {
         this.name = name;
         this.secure = secure;
         properties = (Map<String, String>) JsonParseResponseFactory.buildParser(ParseType.PROPS)

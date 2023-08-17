@@ -47,7 +47,7 @@ public class UssMount {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public UssMount(ZosConnection connection) {
+    public UssMount(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -61,7 +61,7 @@ public class UssMount {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public UssMount(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssMount(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -81,7 +81,7 @@ public class UssMount {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response mount(String fileSystemName, String mountPoint, String fsType) throws Exception {
+    public Response mount(final String fileSystemName, final String mountPoint, final String fsType) throws Exception {
         return mountCommon(fileSystemName,
                 new MountParams.Builder()
                         .action(MountActionType.MOUNT)
@@ -99,7 +99,7 @@ public class UssMount {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response unmount(String fileSystemName) throws Exception {
+    public Response unmount(final String fileSystemName) throws Exception {
         return mountCommon(fileSystemName, new MountParams.Builder().action(MountActionType.UNMOUNT).build());
     }
 
@@ -112,7 +112,7 @@ public class UssMount {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response mountCommon(String fileSystemName, MountParams params) throws Exception {
+    public Response mountCommon(final String fileSystemName, final MountParams params) throws Exception {
         ValidateUtils.checkNullParameter(fileSystemName == null, "file system name is null");
         ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "file system name not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

@@ -37,7 +37,7 @@ public class CommonJobParams {
      * Step data is an optional parameter that indicates whether the service returns information about each step in
      * the job that completed, such as the step name, step number, and completion code.
      */
-    private final Boolean stepData;
+    private final boolean stepData;
 
     /**
      * CommonJobParams constructor, no step data information included.
@@ -46,7 +46,7 @@ public class CommonJobParams {
      * @param jobName job name value
      * @author Frank Giordano
      */
-    public CommonJobParams(String jobId, String jobName) {
+    public CommonJobParams(final String jobId, final String jobName) {
         validateParameters(jobId, jobName);
         this.jobId = Optional.of(jobId);
         this.jobName = Optional.of(jobName);
@@ -61,7 +61,7 @@ public class CommonJobParams {
      * @param stepData determines whether step data is included in rest call
      * @author Frank Giordano
      */
-    public CommonJobParams(String jobId, String jobName, Boolean stepData) {
+    public CommonJobParams(final String jobId, final String jobName, final boolean stepData) {
         validateParameters(jobId, jobName);
         this.jobId = Optional.of(jobId);
         this.jobName = Optional.of(jobName);
@@ -91,10 +91,10 @@ public class CommonJobParams {
     /**
      * Determines whether step data is included in rest call
      *
-     * @return true or false
+     * @return boolean true or false
      * @author Frank Giordano
      */
-    public Boolean isStepData() {
+    public boolean isStepData() {
         return stepData;
     }
 
@@ -105,7 +105,7 @@ public class CommonJobParams {
      * @param jobName job name value
      * @author Frank Giordano
      */
-    private void validateParameters(String jobId, final String jobName) {
+    private void validateParameters(final String jobId, final String jobName) {
         ValidateUtils.checkNullParameter(jobId == null, "job id is null");
         ValidateUtils.checkIllegalParameter(jobId.isBlank(), "job id not specified");
         ValidateUtils.checkNullParameter(jobName == null, "job name is null");

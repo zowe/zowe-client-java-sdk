@@ -29,7 +29,7 @@ public enum DirectionType {
 
     private final String value;
 
-    DirectionType(String value) {
+    DirectionType(final String value) {
         this.value = value;
     }
 

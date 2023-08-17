@@ -43,7 +43,7 @@ public class DsnCreate {
      * @param connection connection information, see ZOSConnection object
      * @author Leonid Baranov
      */
-    public DsnCreate(ZosConnection connection) {
+    public DsnCreate(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -57,7 +57,7 @@ public class DsnCreate {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public DsnCreate(ZosConnection connection, ZoweRequest request) throws Exception {
+    public DsnCreate(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -76,7 +76,7 @@ public class DsnCreate {
      * @throws Exception error processing request
      * @author Leonid Baranov
      */
-    public Response create(String dataSetName, CreateParams params) throws Exception {
+    public Response create(final String dataSetName, final CreateParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");

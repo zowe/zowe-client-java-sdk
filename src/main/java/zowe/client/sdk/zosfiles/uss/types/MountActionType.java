@@ -24,7 +24,7 @@ public enum MountActionType {
 
     private final String value;
 
-    MountActionType(String value) {
+    MountActionType(final String value) {
         this.value = value;
     }
 

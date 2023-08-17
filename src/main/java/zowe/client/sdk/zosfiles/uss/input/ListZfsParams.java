@@ -49,7 +49,7 @@ public class ListZfsParams {
      * @param builder ListZfsParams.Builder builder
      * @author Frank Giordano
      */
-    public ListZfsParams(ListZfsParams.Builder builder) {
+    public ListZfsParams(final ListZfsParams.Builder builder) {
         if (builder.maxLength == null) {
             this.maxLength = OptionalInt.empty();
         } else {
@@ -108,12 +108,12 @@ public class ListZfsParams {
             return new ListZfsParams(this);
         }
 
-        public ListZfsParams.Builder maxLength(int maxLength) {
+        public ListZfsParams.Builder maxLength(final int maxLength) {
             this.maxLength = maxLength;
             return this;
         }
 
-        public ListZfsParams.Builder path(String path) throws Exception {
+        public ListZfsParams.Builder path(final String path) throws Exception {
             ValidateUtils.checkNullParameter(path == null, "path is null");
             ValidateUtils.checkIllegalParameter(path.isBlank(), "path not specified");
             if (this.fsname != null) {
@@ -123,7 +123,7 @@ public class ListZfsParams {
             return this;
         }
 
-        public ListZfsParams.Builder fsname(String fsname) throws Exception {
+        public ListZfsParams.Builder fsname(final String fsname) throws Exception {
             ValidateUtils.checkNullParameter(fsname == null, "fsname is null");
             ValidateUtils.checkIllegalParameter(fsname.isBlank(), "fsname not specified");
             if (this.path != null) {

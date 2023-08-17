@@ -38,7 +38,7 @@ public class KeyTarConfig {
      * @param password password specified from parsed KeyTar keyValue
      * @author Frank Giordano
      */
-    public KeyTarConfig(String location, String userName, String password) {
+    public KeyTarConfig(final String location, final String userName, final String password) {
         this.location = location;
         this.userName = userName;
         this.password = password;

@@ -64,7 +64,7 @@ public class ChangeTagParams {
      * @param builder ChangeTagParams.Builder builder
      * @author James Kostrewski
      */
-    public ChangeTagParams(ChangeTagParams.Builder builder) {
+    public ChangeTagParams(final ChangeTagParams.Builder builder) {
         this.action = Optional.ofNullable(builder.action);
         this.type = Optional.ofNullable(builder.type);
         this.codeset = Optional.ofNullable(builder.codeset);
@@ -103,9 +103,9 @@ public class ChangeTagParams {
     }
 
     /**
-     * Retrieve recursive value
+     * Retrieve is recursive specified
      *
-     * @return recursive value
+     * @return boolean true or false
      * @author James Kostrewski
      */
     public boolean isRecursive() {
@@ -151,7 +151,7 @@ public class ChangeTagParams {
          * @return Builder object
          * @author James Kostrewski
          */
-        public ChangeTagParams.Builder action(ChangeTagAction action) {
+        public ChangeTagParams.Builder action(final ChangeTagAction action) {
             ValidateUtils.checkNullParameter(action == null, "action is null");
             this.action = action;
             return this;
@@ -164,7 +164,7 @@ public class ChangeTagParams {
          * @return Builder object
          * @author James Kostrewski
          */
-        public ChangeTagParams.Builder type(ChangeTagType type) {
+        public ChangeTagParams.Builder type(final ChangeTagType type) {
             this.type = type;
             return this;
         }
@@ -176,7 +176,7 @@ public class ChangeTagParams {
          * @return Builder object
          * @author James Kostrewski
          */
-        public ChangeTagParams.Builder codeset(String codeset) {
+        public ChangeTagParams.Builder codeset(final String codeset) {
             this.codeset = codeset;
             return this;
         }
@@ -188,7 +188,7 @@ public class ChangeTagParams {
          * @return Builder object
          * @author James Kostrewski
          */
-        public ChangeTagParams.Builder recursive(boolean recursive) {
+        public ChangeTagParams.Builder recursive(final boolean recursive) {
             this.recursive = recursive;
             return this;
         }
@@ -200,7 +200,7 @@ public class ChangeTagParams {
          * @return Builder object
          * @author James Kostrewski
          */
-        public ChangeTagParams.Builder links(LinkType links) {
+        public ChangeTagParams.Builder links(final LinkType links) {
             this.links = links;
             return this;
         }

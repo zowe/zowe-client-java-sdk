@@ -51,7 +51,7 @@ public class CopyParams {
      */
     private final boolean copyAllMembers;
 
-    private CopyParams(CopyParams.Builder builder) {
+    private CopyParams(final CopyParams.Builder builder) {
         this.fromVolser = Optional.ofNullable(builder.fromVolser);
         this.fromDataSet = Optional.ofNullable(builder.fromDataSet);
         this.toVolser = Optional.ofNullable(builder.toVolser);
@@ -101,9 +101,9 @@ public class CopyParams {
     }
 
     /**
-     * Retrieve copyAllMembers value
+     * Retrieve is copyAllMembers specified
      *
-     * @return copyAllMembers value
+     * @return boolean true or false
      * @author Frank Giordano
      */
     public boolean isCopyAllMembers() {
@@ -111,9 +111,9 @@ public class CopyParams {
     }
 
     /**
-     * Retrieve replace value
+     * Retrieve is replace specified
      *
-     * @return replace value
+     * @return boolean true or false
      * @author Leonid Baranov
      */
     public boolean isReplace() {
@@ -144,36 +144,36 @@ public class CopyParams {
             return new CopyParams(this);
         }
 
-        public CopyParams.Builder copyAllMembers(boolean value) {
+        public CopyParams.Builder copyAllMembers(final boolean value) {
             this.copyAllMembers = value;
             return this;
         }
 
-        public CopyParams.Builder fromDataSet(String dataSet) {
+        public CopyParams.Builder fromDataSet(final String dataSet) {
             ValidateUtils.checkNullParameter(dataSet == null, "fromDataSet is null");
             ValidateUtils.checkNullParameter(dataSet.isEmpty(), "fromDataSet not specified");
             this.fromDataSet = dataSet;
             return this;
         }
 
-        public CopyParams.Builder fromVolser(String volser) {
+        public CopyParams.Builder fromVolser(final String volser) {
             this.fromVolser = volser;
             return this;
         }
 
-        public CopyParams.Builder replace(boolean replace) {
+        public CopyParams.Builder replace(final boolean replace) {
             this.replace = replace;
             return this;
         }
 
-        public CopyParams.Builder toDataSet(String dataSet) {
+        public CopyParams.Builder toDataSet(final String dataSet) {
             ValidateUtils.checkNullParameter(dataSet == null, "toDataSet is null");
             ValidateUtils.checkNullParameter(dataSet.isEmpty(), "toDataSet not specified");
             this.toDataSet = dataSet;
             return this;
         }
 
-        public CopyParams.Builder toVolser(String volser) {
+        public CopyParams.Builder toVolser(final String volser) {
             this.toVolser = volser;
             return this;
         }

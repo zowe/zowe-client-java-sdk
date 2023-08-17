@@ -91,7 +91,7 @@ public class Job {
      */
     private final Optional<String> phaseName;
 
-    private Job(Job.Builder builder) {
+    private Job(final Job.Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);
         this.subSystem = Optional.ofNullable(builder.subSystem);
@@ -293,72 +293,72 @@ public class Job {
             return new Job(this);
         }
 
-        public Builder classs(String classs) {
+        public Builder classs(final String classs) {
             this.classs = classs;
             return this;
         }
 
-        public Builder filesUrl(String filesUrl) {
+        public Builder filesUrl(final String filesUrl) {
             this.filesUrl = filesUrl;
             return this;
         }
 
-        public Builder jobCorrelator(String jobCorrelator) {
+        public Builder jobCorrelator(final String jobCorrelator) {
             this.jobCorrelator = jobCorrelator;
             return this;
         }
 
-        public Builder jobId(String jobId) {
+        public Builder jobId(final String jobId) {
             this.jobId = jobId;
             return this;
         }
 
-        public Builder jobName(String jobName) {
+        public Builder jobName(final String jobName) {
             this.jobName = jobName;
             return this;
         }
 
-        public Builder owner(String owner) {
+        public Builder owner(final String owner) {
             this.owner = owner;
             return this;
         }
 
-        public Builder phase(Long phase) {
+        public Builder phase(final Long phase) {
             this.phase = phase;
             return this;
         }
 
-        public Builder phaseName(String phaseName) {
+        public Builder phaseName(final String phaseName) {
             this.phaseName = phaseName;
             return this;
         }
 
-        public Builder retCode(String retCode) {
+        public Builder retCode(final String retCode) {
             this.retCode = retCode;
             return this;
         }
 
-        public Builder status(String status) {
+        public Builder status(final String status) {
             this.status = status;
             return this;
         }
 
-        public Builder stepData(JobStepData[] stepData) {
+        public Builder stepData(final JobStepData[] stepData) {
             this.stepData = stepData;
             return this;
         }
 
-        public Builder subSystem(String subSystem) {
+        public Builder subSystem(final String subSystem) {
             this.subSystem = subSystem;
             return this;
         }
 
-        public Builder type(String type) {
+        public Builder type(final String type) {
             this.type = type;
             return this;
         }
 
-        public Builder url(String url) {
+        public Builder url(final String url) {
             this.url = url;
             return this;
         }

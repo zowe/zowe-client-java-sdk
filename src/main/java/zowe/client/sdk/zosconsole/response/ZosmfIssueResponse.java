@@ -60,7 +60,7 @@ public class ZosmfIssueResponse {
      * @param cmdResponse value
      * @author Frank Giordano
      */
-    public void setCmdResponse(String cmdResponse) {
+    public void setCmdResponse(final String cmdResponse) {
         this.cmdResponse = Optional.ofNullable(cmdResponse);
     }
 
@@ -80,7 +80,7 @@ public class ZosmfIssueResponse {
      * @param cmdResponseKey value
      * @author Frank Giordano
      */
-    public void setCmdResponseKey(String cmdResponseKey) {
+    public void setCmdResponseKey(final String cmdResponseKey) {
         this.cmdResponseKey = Optional.ofNullable(cmdResponseKey);
     }
 
@@ -100,7 +100,7 @@ public class ZosmfIssueResponse {
      * @param cmdResponseUri value
      * @author Frank Giordano
      */
-    public void setCmdResponseUri(String cmdResponseUri) {
+    public void setCmdResponseUri(final String cmdResponseUri) {
         this.cmdResponseUri = Optional.ofNullable(cmdResponseUri);
     }
 
@@ -120,7 +120,7 @@ public class ZosmfIssueResponse {
      * @param cmdResponseUrl value
      * @author Frank Giordano
      */
-    public void setCmdResponseUrl(String cmdResponseUrl) {
+    public void setCmdResponseUrl(final String cmdResponseUrl) {
         this.cmdResponseUrl = Optional.ofNullable(cmdResponseUrl);
     }
 
@@ -140,7 +140,7 @@ public class ZosmfIssueResponse {
      * @param solKeyDetected value
      * @author Frank Giordano
      */
-    public void setSolKeyDetected(String solKeyDetected) {
+    public void setSolKeyDetected(final String solKeyDetected) {
         this.solKeyDetected = Optional.ofNullable(solKeyDetected);
     }
 

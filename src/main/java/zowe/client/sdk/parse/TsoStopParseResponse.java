@@ -64,8 +64,8 @@ public final class TsoStopParseResponse implements JsonParseResponse {
         final ZosmfTsoResponse zosmfTsoResponse = new ZosmfTsoResponse.Builder()
                 .ver(data.get("ver") != null ? (String) data.get("ver") : null)
                 .servletKey(data.get("servletKey") != null ? (String) data.get("servletKey") : null)
-                .reused(data.get("reused") != null ? (Boolean) data.get("reused") : null)
-                .timeout(data.get("timeout") != null ? (Boolean) data.get("timeout") : null)
+                .reused(data.get("reused") != null && (boolean) data.get("reused"))
+                .timeout(data.get("timeout") != null && (boolean) data.get("timeout"))
                 .build();
         data = null;
         return zosmfTsoResponse;

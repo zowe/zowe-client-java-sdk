@@ -42,7 +42,7 @@ public class ZosmfMessages {
      * @param stackTrace  error message stack trace value
      * @author Frank Giordano
      */
-    public ZosmfMessages(String messageText, String messageId, String stackTrace) {
+    public ZosmfMessages(final String messageText, final String messageId, final String stackTrace) {
         this.messageText = Optional.ofNullable(messageText);
         this.messageId = Optional.ofNullable(messageId);
         this.stackTrace = Optional.ofNullable(stackTrace);
@@ -64,7 +64,7 @@ public class ZosmfMessages {
      * @param messageText value
      * @author Frank Giordano
      */
-    public void setMessageText(String messageText) {
+    public void setMessageText(final String messageText) {
         this.messageText = Optional.ofNullable(messageText);
     }
 
@@ -84,7 +84,7 @@ public class ZosmfMessages {
      * @param messageId value
      * @author Frank Giordano
      */
-    public void setMessageId(String messageId) {
+    public void setMessageId(final String messageId) {
         this.messageId = Optional.ofNullable(messageId);
     }
 
@@ -104,7 +104,7 @@ public class ZosmfMessages {
      * @param stackTrace value
      * @author Frank Giordano
      */
-    public void setStackTrace(String stackTrace) {
+    public void setStackTrace(final String stackTrace) {
         this.stackTrace = Optional.ofNullable(stackTrace);
     }
 

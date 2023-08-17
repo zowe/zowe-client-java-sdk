@@ -45,7 +45,7 @@ public class UssChangeMode {
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssChangeMode(ZosConnection connection) {
+    public UssChangeMode(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -59,7 +59,7 @@ public class UssChangeMode {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssChangeMode(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssChangeMode(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -79,7 +79,7 @@ public class UssChangeMode {
      * @author James Kostrewsk
      * @author Frank Giordano
      */
-    public Response change(String targetPath, ChangeModeParams params) throws Exception {
+    public Response change(final String targetPath, final ChangeModeParams params) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

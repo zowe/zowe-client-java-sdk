@@ -36,7 +36,7 @@ public class StartStopResponse {
     /**
      * True if the command was issued and the responses were collected.
      */
-    public Optional<Boolean> success;
+    public boolean success;
 
     /**
      * StartStopResponse constructor
@@ -46,8 +46,8 @@ public class StartStopResponse {
      * @param servletKey       key value for tso address space
      * @author Frank Giordano
      */
-    public StartStopResponse(boolean success, ZosmfTsoResponse zosmfTsoResponse, String servletKey) {
-        this.success = Optional.of(success);
+    public StartStopResponse(final boolean success, final ZosmfTsoResponse zosmfTsoResponse, final String servletKey) {
+        this.success = success;
         this.zosmfTsoResponse = Optional.ofNullable(zosmfTsoResponse);
         this.servletKey = Optional.ofNullable(servletKey);
     }
@@ -68,7 +68,7 @@ public class StartStopResponse {
      * @param failureResponse failure response string
      * @author Frank Giordano
      */
-    public void setFailureResponse(String failureResponse) {
+    public void setFailureResponse(final String failureResponse) {
         this.failureResponse = Optional.ofNullable(failureResponse);
     }
 
@@ -83,12 +83,12 @@ public class StartStopResponse {
     }
 
     /**
-     * Retrieve success specified
+     * Retrieve is success
      *
-     * @return boolean value
+     * @return boolean true or false
      * @author Frank Giordano
      */
-    public Optional<Boolean> getSuccess() {
+    public boolean isSuccess() {
         return success;
     }
 
@@ -98,8 +98,8 @@ public class StartStopResponse {
      * @param success true or false is response seen
      * @author Frank Giordano
      */
-    public void setSuccess(boolean success) {
-        this.success = Optional.of(success);
+    public void setSuccess(final boolean success) {
+        this.success = success;
     }
 
     /**

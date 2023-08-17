@@ -87,8 +87,8 @@ public class TsoStopParseResponseTest {
                 .setJsonObject(json).parseResponse();
         assertEquals("ver", response.getVer().orElse("n\\a"));
         assertEquals("servletKey", response.getServletKey().orElse("n\\a"));
-        assertTrue(response.getReused().orElse(false));
-        assertTrue(response.getTimeout().orElse(false));
+        assertTrue(response.isReused());
+        assertTrue(response.isTimeout());
     }
 
 }

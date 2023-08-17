@@ -25,12 +25,12 @@ public class TsoResponseService {
      */
     private ZosmfTsoResponse zosmfPhraseResponse;
 
-    public TsoResponseService(Response response) {
+    public TsoResponseService(final Response response) {
         ValidateUtils.checkNullParameter(response == null, "response is null");
         this.tsoCmdResponse = response;
     }
 
-    public TsoResponseService(ZosmfTsoResponse zosmfResponse) {
+    public TsoResponseService(final ZosmfTsoResponse zosmfResponse) {
         ValidateUtils.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
         this.zosmfPhraseResponse = zosmfResponse;
     }

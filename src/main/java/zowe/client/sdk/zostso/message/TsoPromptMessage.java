@@ -44,7 +44,7 @@ public class TsoPromptMessage {
      * @param hidden  hidden value
      * @author Frank Giordano
      */
-    public TsoPromptMessage(String version, String hidden) {
+    public TsoPromptMessage(final String version, final String hidden) {
         this.version = Optional.ofNullable(version);
         this.hidden = Optional.ofNullable(hidden);
     }
@@ -65,7 +65,7 @@ public class TsoPromptMessage {
      * @param version JSON version for message format
      * @author Frank Giordano
      */
-    public void setVersion(String version) {
+    public void setVersion(final String version) {
         this.version = Optional.ofNullable(version);
     }
 
@@ -85,7 +85,7 @@ public class TsoPromptMessage {
      * @param hidden hidden value
      * @author Frank Giordano
      */
-    public void setHidden(String hidden) {
+    public void setHidden(final String hidden) {
         this.hidden = Optional.ofNullable(hidden);
     }
 

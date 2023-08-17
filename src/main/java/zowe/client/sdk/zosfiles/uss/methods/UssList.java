@@ -55,7 +55,7 @@ public class UssList {
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public UssList(ZosConnection connection) {
+    public UssList(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -69,7 +69,7 @@ public class UssList {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public UssList(ZosConnection connection, ZoweRequest request) throws Exception {
+    public UssList(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -87,7 +87,7 @@ public class UssList {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public List<UnixFile> fileList(ListParams params) throws Exception {
+    public List<UnixFile> fileList(final ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
@@ -150,7 +150,7 @@ public class UssList {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public List<UnixZfs> zfsList(ListZfsParams params) throws Exception {
+    public List<UnixZfs> zfsList(final ListZfsParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getPath().isEmpty() && params.getFsname().isEmpty(),
                 "no path or fsname specified");

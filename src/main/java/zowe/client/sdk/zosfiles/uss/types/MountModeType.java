@@ -24,7 +24,7 @@ public enum MountModeType {
 
     private final String value;
 
-    MountModeType(String value) {
+    MountModeType(final String value) {
         this.value = value;
     }
 

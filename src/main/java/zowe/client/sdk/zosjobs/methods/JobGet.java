@@ -50,7 +50,7 @@ public class JobGet {
      * @param connection connection information, see ZOSConnection object
      * @author Frank Giordano
      */
-    public JobGet(ZosConnection connection) {
+    public JobGet(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -63,7 +63,7 @@ public class JobGet {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public JobGet(ZosConnection connection, ZoweRequest request) {
+    public JobGet(final ZosConnection connection, final ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
@@ -78,7 +78,7 @@ public class JobGet {
      * @throws Exception error on getting jcl content
      * @author Frank Giordano
      */
-    public String getJcl(String jobName, String jobId) throws Exception {
+    public String getJcl(final String jobName, final String jobId) throws Exception {
         return getJclCommon(new CommonJobParams(jobId, jobName));
     }
 
@@ -92,7 +92,7 @@ public class JobGet {
      * @throws Exception error on getting jcl content
      * @author Frank Giordano
      */
-    public String getJclByJob(Job job) throws Exception {
+    public String getJclByJob(final Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return getJclCommon(new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse("")));
     }
@@ -105,7 +105,7 @@ public class JobGet {
      * @throws Exception error on getting jcl content
      * @author Frank Giordano
      */
-    public String getJclCommon(CommonJobParams params) throws Exception {
+    public String getJclCommon(final CommonJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
@@ -133,7 +133,7 @@ public class JobGet {
      * @throws Exception error on getting job
      * @author Frank Giordano
      */
-    public Job getById(String jobId) throws Exception {
+    public Job getById(final String jobId) throws Exception {
         final List<Job> jobs = getCommon(new GetJobParams.Builder("*").jobId(jobId).build());
         if (jobs.isEmpty()) {
             throw new IllegalStateException("job not found");
@@ -164,7 +164,7 @@ public class JobGet {
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
-    public List<Job> getByOwner(String owner) throws Exception {
+    public List<Job> getByOwner(final String owner) throws Exception {
         return getCommon(new GetJobParams.Builder(owner).build());
     }
 
@@ -179,7 +179,7 @@ public class JobGet {
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
-    public List<Job> getByOwnerAndPrefix(String owner, String prefix) throws Exception {
+    public List<Job> getByOwnerAndPrefix(final String owner, final String prefix) throws Exception {
         return getCommon(new GetJobParams.Builder(owner).prefix(prefix).build());
     }
 
@@ -191,7 +191,7 @@ public class JobGet {
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
-    public List<Job> getByPrefix(String prefix) throws Exception {
+    public List<Job> getByPrefix(final String prefix) throws Exception {
         return getCommon(new GetJobParams.Builder("*").prefix(prefix).build());
     }
 
@@ -204,7 +204,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    public List<Job> getCommon(GetJobParams params) throws Exception {
+    public List<Job> getCommon(final GetJobParams params) throws Exception {
         List<Job> jobs = new ArrayList<>();
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
@@ -264,7 +264,7 @@ public class JobGet {
      * @throws Exception error on getting spool content
      * @author Frank Giordano
      */
-    public String getSpoolContent(JobFile jobFile) throws Exception {
+    public String getSpoolContent(final JobFile jobFile) throws Exception {
         return getSpoolContentCommon(jobFile);
     }
 
@@ -278,7 +278,7 @@ public class JobGet {
      * @throws Exception error on getting spool content
      * @author Frank Giordano
      */
-    public String getSpoolContent(String jobName, String jobId, int spoolId) throws Exception {
+    public String getSpoolContent(final String jobName, final String jobId, final int spoolId) throws Exception {
         ValidateUtils.checkIllegalParameter(spoolId <= 0, "spool id not specified");
 
         CommonJobParams params = new CommonJobParams(jobId, jobName);
@@ -306,7 +306,7 @@ public class JobGet {
      * @throws Exception error on getting spool content
      * @author Frank Giordano
      */
-    public String getSpoolContentCommon(JobFile jobFile) throws Exception {
+    public String getSpoolContentCommon(final JobFile jobFile) throws Exception {
         ValidateUtils.checkNullParameter(jobFile == null, "jobFile is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
@@ -336,7 +336,7 @@ public class JobGet {
      * @throws Exception error on getting spool files info
      * @author Frank Giordano
      */
-    public List<JobFile> getSpoolFiles(String jobName, String jobId) throws Exception {
+    public List<JobFile> getSpoolFiles(final String jobName, final String jobId) throws Exception {
         return getSpoolFilesCommon(new CommonJobParams(jobId, jobName));
     }
 
@@ -349,7 +349,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    public List<JobFile> getSpoolFilesCommon(CommonJobParams params) throws Exception {
+    public List<JobFile> getSpoolFilesCommon(final CommonJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
@@ -391,9 +391,10 @@ public class JobGet {
      * @throws Exception error on getting spool files info
      * @author Frank Giordano
      */
-    public List<JobFile> getSpoolFilesByJob(Job job) throws Exception {
+    public List<JobFile> getSpoolFilesByJob(final Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        return getSpoolFilesCommon(new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse("")));
+        return getSpoolFilesCommon(new CommonJobParams(job.getJobId().orElse(""),
+                job.getJobName().orElse("")));
     }
 
     /**
@@ -405,7 +406,7 @@ public class JobGet {
      * @throws Exception error getting job status
      * @author Frank Giordano
      */
-    public Job getStatus(String jobName, String jobId) throws Exception {
+    public Job getStatus(final String jobName, final String jobId) throws Exception {
         return getStatusCommon(new CommonJobParams(jobId, jobName, true));
     }
 
@@ -417,7 +418,7 @@ public class JobGet {
      * @throws Exception error getting job status
      * @author Frank Giordano
      */
-    public Job getStatusCommon(CommonJobParams params) throws Exception {
+    public Job getStatusCommon(final CommonJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
@@ -452,10 +453,10 @@ public class JobGet {
      * @throws Exception error getting job status
      * @author Frank Giordano
      */
-    public Job getStatusByJob(Job job) throws Exception {
+    public Job getStatusByJob(final Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        return getStatusCommon(
-                new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse(""), true));
+        return getStatusCommon(new CommonJobParams(job.getJobId().orElse(""),
+                job.getJobName().orElse(""), true));
     }
 
     /**
@@ -467,7 +468,7 @@ public class JobGet {
      * @throws Exception error getting job status
      * @author Frank Giordano
      */
-    public String getStatusValue(String jobName, String jobId) throws Exception {
+    public String getStatusValue(final String jobName, final String jobId) throws Exception {
         final Job job = getStatusCommon(new CommonJobParams(jobId, jobName));
         return job.getStatus().orElseThrow(() -> new IllegalStateException("job status not returned"));
     }
@@ -480,10 +481,10 @@ public class JobGet {
      * @throws Exception error getting job status
      * @author Frank Giordano
      */
-    public String getStatusValueByJob(Job job) throws Exception {
+    public String getStatusValueByJob(final Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        final Job result = getStatusCommon(
-                new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse("")));
+        final Job result = getStatusCommon(new CommonJobParams(job.getJobId().orElse(""),
+                job.getJobName().orElse("")));
         return result.getStatus().orElseThrow(() -> new IllegalStateException("job status not returned"));
     }
 

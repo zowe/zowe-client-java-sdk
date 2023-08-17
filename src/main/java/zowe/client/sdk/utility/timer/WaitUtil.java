@@ -30,7 +30,7 @@ public final class WaitUtil {
      * @param time in milliseconds
      * @author Frank Giordano
      */
-    public static void wait(int time) {
+    public static void wait(final int time) {
         final Timer timer = new Timer(time).initialize();
         while (!timer.isEnded()) {
         }

@@ -60,7 +60,8 @@ public class ZosLogReply {
      * @param items         ZosLogItem object items returned from response
      * @author Frank Giordano
      */
-    public ZosLogReply(Long timeZone, Long nextTimeStamp, String source, Long totalItems, List<ZosLogItem> items) {
+    public ZosLogReply(final Long timeZone, final Long nextTimeStamp, final String source, final Long totalItems,
+                       final List<ZosLogItem> items) {
         if (timeZone == null) {
             this.timeZone = OptionalLong.empty();
         } else {

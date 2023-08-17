@@ -34,7 +34,7 @@ public class IssueUss {
      *
      * @param connection SSHConnection object
      */
-    public IssueUss(SshConnection connection) {
+    public IssueUss(final SshConnection connection) {
         ValidateUtils.checkSshConnection(connection);
         this.connection = connection;
     }
@@ -48,7 +48,7 @@ public class IssueUss {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public String issueCommand(String command, int timeout) throws Exception {
+    public String issueCommand(final String command, final int timeout) throws Exception {
         Session session = null;
         ChannelExec channel = null;
 

@@ -49,7 +49,7 @@ public class DsnGet {
      * @param connection connection information, see ZOSConnection object
      * @author Nikunj Goyal
      */
-    public DsnGet(ZosConnection connection) {
+    public DsnGet(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -63,7 +63,7 @@ public class DsnGet {
      * @throws Exception processing error
      * @author Frank Giordano
      */
-    public DsnGet(ZosConnection connection, ZoweRequest request) throws Exception {
+    public DsnGet(final ZosConnection connection, final ZoweRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -81,7 +81,7 @@ public class DsnGet {
      * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public Dataset getDsnInfo(String dataSetName) throws Exception {
+    public Dataset getDsnInfo(final String dataSetName) throws Exception {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         Dataset emptyDataSet = new Dataset.Builder().dsname(dataSetName).build();
@@ -119,7 +119,7 @@ public class DsnGet {
      * @throws Exception error processing request
      * @author Nikunj Goyal
      */
-    public InputStream get(String dataSetName, DownloadParams params) throws Exception {
+    public InputStream get(final String dataSetName, final DownloadParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
@@ -135,7 +135,7 @@ public class DsnGet {
         String key, value;
         final Map<String, String> headers = new HashMap<>();
 
-        if (params.getBinary().orElse(false)) {
+        if (params.isBinary()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(1);
             headers.put(key, value);
@@ -145,7 +145,7 @@ public class DsnGet {
             headers.put(key, value);
         }
 
-        if (params.getReturnEtag().orElse(false)) {
+        if (params.isReturnEtag()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(1);
             headers.put(key, value);

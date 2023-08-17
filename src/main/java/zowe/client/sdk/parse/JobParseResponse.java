@@ -99,13 +99,13 @@ public final class JobParseResponse implements JsonParseResponse {
      * @return JobStepData object
      * @author Frank Giordano
      */
-    private JobStepData parseStepDataResponse(JSONObject data) {
+    private JobStepData parseStepDataResponse(final JSONObject data) {
         return new JobStepData.Builder()
                 .smfid(data.get("smfid") != null ? (String) data.get("smfid") : null)
                 .completion(data.get("completion") != null ? (String) data.get("completion") : null)
                 .stepNumber(data.get("step-number") != null ? (Long) data.get("step-number") : null)
                 .programName(data.get("program-name") != null ? (String) data.get("program-name") : null)
-                .active(data.get("active") != null ? (Boolean) data.get("active") : null)
+                .active(data.get("active") != null && (boolean) data.get("active"))
                 .stepName(data.get("step-name") != null ? (String) data.get("step-name") : null)
                 .procStepName(data.get("proc-step-name") != null ? (String) data.get("proc-step-name") : null)
                 .build();

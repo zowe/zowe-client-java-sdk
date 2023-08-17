@@ -24,7 +24,7 @@ public enum SectionType {
 
     private final String value;
 
-    SectionType(String value) {
+    SectionType(final String value) {
         this.value = value;
     }
 

@@ -39,10 +39,10 @@ public class Partition {
      *
      * @param name       partition name
      * @param properties hashmap of property values
-     * @param profiles   list oof Profiles
+     * @param profiles   list of Profiles
      * @author Frank Giordano
      */
-    public Partition(String name, Map<String, String> properties, List<Profile> profiles) {
+    public Partition(final String name, final Map<String, String> properties, final List<Profile> profiles) {
         this.name = name;
         this.properties = properties;
         this.profiles = profiles;

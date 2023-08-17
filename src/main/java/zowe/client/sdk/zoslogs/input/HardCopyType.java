@@ -29,7 +29,7 @@ public enum HardCopyType {
 
     private final String value;
 
-    HardCopyType(String value) {
+    HardCopyType(final String value) {
         this.value = value;
     }
 
