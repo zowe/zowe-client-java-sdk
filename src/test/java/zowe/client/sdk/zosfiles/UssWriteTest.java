@@ -47,7 +47,7 @@ public class UssWriteTest {
         final UssWrite ussWrite = new UssWrite(connection, mockTextPutRequest);
         final Response response = ussWrite.writeText("/xx/xx/x", "text");
         assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals(200, response.getStatusCode().getAsInt());
         assertEquals("success", response.getStatusText().get());
     }
 
@@ -59,7 +59,7 @@ public class UssWriteTest {
         final UssWrite ussWrite = new UssWrite(connection, mockStreamPutRequest);
         final Response response = ussWrite.writeBinary("/xx/xx/x", new byte[0]);
         assertTrue(response.getResponsePhrase().get() instanceof byte[]);
-        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals(200, response.getStatusCode().getAsInt());
         assertEquals("success", response.getStatusText().get());
     }
 

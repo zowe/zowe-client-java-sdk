@@ -11,6 +11,7 @@ package zowe.client.sdk.zosfiles.dsn.input;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.OptionalLong;
 
 /**
  * This interface defines the options that can be sent into the download data set function
@@ -53,7 +54,7 @@ public class DownloadParams {
      * by making too many requests at once.
      * Default: 1
      */
-    private final Optional<Integer> maxConcurrentRequests;
+    private final OptionalLong maxConcurrentRequests;
 
     /**
      * The indicator to force return of ETag.
@@ -87,7 +88,7 @@ public class DownloadParams {
     /**
      * Code page encoding
      */
-    private final Optional<Integer> encoding;
+    private final OptionalLong encoding;
 
     /**
      * The volume on which the data set is stored
@@ -110,12 +111,20 @@ public class DownloadParams {
         this.directory = Optional.ofNullable(builder.directory);
         this.excludePatterns = Optional.ofNullable(builder.excludePatterns);
         this.extensionMap = Optional.ofNullable(builder.extensionMap);
-        this.maxConcurrentRequests = Optional.ofNullable(builder.maxConcurrentRequests);
+        if (builder.maxConcurrentRequests == null) {
+            this.maxConcurrentRequests = OptionalLong.empty();
+        } else {
+            this.maxConcurrentRequests = OptionalLong.of(builder.maxConcurrentRequests);
+        }
         this.returnEtag = Optional.ofNullable(builder.returnEtag);
         this.preserveOriginalLetterCase = Optional.ofNullable(builder.preserveOriginalLetterCase);
         this.failFast = Optional.ofNullable(builder.failFast);
         this.binary = Optional.ofNullable(builder.binary);
-        this.encoding = Optional.ofNullable(builder.encoding);
+        if (builder.encoding == null) {
+            this.encoding = OptionalLong.empty();
+        } else {
+            this.encoding = OptionalLong.of(builder.encoding);
+        }
         this.volume = Optional.ofNullable(builder.volume);
         this.task = Optional.ofNullable(builder.task);
         this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
@@ -147,7 +156,7 @@ public class DownloadParams {
      * @return encoding value
      * @author Nikunj Goyal
      */
-    public Optional<Integer> getEncoding() {
+    public OptionalLong getEncoding() {
         return encoding;
     }
 
@@ -207,7 +216,7 @@ public class DownloadParams {
      * @return maxConcurrentRequests value
      * @author Nikunj Goyal
      */
-    public Optional<Integer> getNaxConcurrentRequests() {
+    public OptionalLong getNaxConcurrentRequests() {
         return maxConcurrentRequests;
     }
 
@@ -288,12 +297,12 @@ public class DownloadParams {
         private String directory;
         private String[] excludePatterns;
         private HashMap<String, String> extensionMap;
-        private Integer maxConcurrentRequests;
+        private Long maxConcurrentRequests;
         private Boolean returnEtag;
         private Boolean preserveOriginalLetterCase;
         private Boolean failFast;
         private Boolean binary;
-        private Integer encoding;
+        private Long encoding;
         private String volume;
         private String task;
         private String responseTimeout;
@@ -312,7 +321,7 @@ public class DownloadParams {
             return this;
         }
 
-        public DownloadParams.Builder encoding(Integer encoding) {
+        public DownloadParams.Builder encoding(Long encoding) {
             this.encoding = encoding;
             return this;
         }
@@ -342,7 +351,7 @@ public class DownloadParams {
             return this;
         }
 
-        public DownloadParams.Builder maxConcurrentRequests(Integer maxConcurrentRequests) {
+        public DownloadParams.Builder maxConcurrentRequests(Long maxConcurrentRequests) {
             this.maxConcurrentRequests = maxConcurrentRequests;
             return this;
         }

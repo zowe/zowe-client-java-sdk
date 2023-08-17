@@ -10,6 +10,7 @@
 package zowe.client.sdk.rest;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Holds http response information
@@ -27,7 +28,7 @@ public class Response {
     /**
      * Holds http response status code
      */
-    private final Optional<Integer> statusCode;
+    private final OptionalInt statusCode;
 
     /**
      * Holds http response status text
@@ -44,7 +45,11 @@ public class Response {
      */
     public Response(Object responsePhrase, Integer statusCode, String statusText) {
         this.responsePhrase = Optional.ofNullable(responsePhrase);
-        this.statusCode = Optional.ofNullable(statusCode);
+        if (statusCode == null) {
+            this.statusCode = OptionalInt.empty();
+        } else {
+            this.statusCode = OptionalInt.of(statusCode);
+        }
         this.statusText = Optional.ofNullable(statusText);
     }
 
@@ -64,7 +69,7 @@ public class Response {
      * @return statusCode value
      * @author Frank Giordano
      */
-    public Optional<Integer> getStatusCode() {
+    public OptionalInt getStatusCode() {
         return statusCode;
     }
 

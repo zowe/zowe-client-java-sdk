@@ -45,7 +45,7 @@ public class UssDeleteTest {
         final UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
         final Response response = ussDelete.delete("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals(200, response.getStatusCode().getAsInt());
         assertEquals("success", response.getStatusText().get());
     }
 
@@ -54,7 +54,7 @@ public class UssDeleteTest {
         final UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
         final Response response = ussDelete.delete("/xxx/xx/xx", true);
         assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals(200, response.getStatusCode().getAsInt());
         assertEquals("success", response.getStatusText().get());
     }
 

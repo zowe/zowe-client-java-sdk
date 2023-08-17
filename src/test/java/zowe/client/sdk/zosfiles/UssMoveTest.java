@@ -45,7 +45,7 @@ public class UssMoveTest {
         final UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
         final Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals(200, response.getStatusCode().getAsInt());
         assertEquals("success", response.getStatusText().get());
     }
 
@@ -54,7 +54,7 @@ public class UssMoveTest {
         final UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
         final Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx", true);
         assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals(200, response.getStatusCode().getAsInt());
         assertEquals("success", response.getStatusText().get());
     }
 

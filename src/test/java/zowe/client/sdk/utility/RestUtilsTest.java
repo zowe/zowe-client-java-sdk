@@ -142,7 +142,7 @@ public class RestUtilsTest {
         Mockito.when(mockRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         Response response = RestUtils.getResponse(mockRequest);
-        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals(200, response.getStatusCode().getAsInt());
         assertEquals("{}", response.getResponsePhrase().get().toString());
         assertEquals("success", response.getStatusText().get().toString());
     }

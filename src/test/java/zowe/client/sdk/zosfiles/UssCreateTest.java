@@ -48,7 +48,7 @@ public class UssCreateTest {
         final UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequest);
         final Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
         Assertions.assertEquals("{}", response.getResponsePhrase().get().toString());
-        Assertions.assertEquals("200", response.getStatusCode().get().toString());
+        Assertions.assertEquals(200, response.getStatusCode().getAsInt());
         Assertions.assertEquals("success", response.getStatusText().get());
     }
 

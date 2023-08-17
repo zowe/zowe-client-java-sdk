@@ -123,7 +123,7 @@ public class DsnList {
             }
         }
 
-        if (RestUtils.isHttpError(response.getStatusCode().get())) {
+        if (RestUtils.isHttpError(response.getStatusCode().getAsInt())) {
             if (response.getStatusText().isEmpty()) {
                 LOG.debug("no no dsn list status text returned");
                 if (datasetLst == null) {
@@ -132,9 +132,9 @@ public class DsnList {
                     return datasetLst;
                 }
             }
-            LOG.debug("rest status code {}", response.getStatusCode().get());
+            LOG.debug("rest status code {}", response.getStatusCode().getAsInt());
             LOG.debug("rest status text {}", response.getStatusText().get());
-            throw new Exception(response.getStatusCode().get() + " - " + response.getResponsePhrase().get());
+            throw new Exception(response.getStatusCode().getAsInt() + " - " + response.getResponsePhrase().get());
         }
 
         final String jsonStr = response.getResponsePhrase().get().toString();

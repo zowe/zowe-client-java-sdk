@@ -47,7 +47,7 @@ public class UssChangeModeTest {
         final Response response = ussChangeMode.change("/xxx/xx/xx",
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals(200, response.getStatusCode().getAsInt());
         assertEquals("success", response.getStatusText().get());
     }
 
@@ -57,7 +57,7 @@ public class UssChangeModeTest {
         final Response response = ussChangeMode.change("/xxx/xx/xx",
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().get().toString());
-        assertEquals("200", response.getStatusCode().get().toString());
+        assertEquals(200, response.getStatusCode().getAsInt());
         assertEquals("success", response.getStatusText().get());
     }
 
