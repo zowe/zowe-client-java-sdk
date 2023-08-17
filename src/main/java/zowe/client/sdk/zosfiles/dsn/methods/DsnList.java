@@ -155,7 +155,7 @@ public class DsnList {
                 memberLst.add((T) JsonParseResponseFactory.buildParser(ParseType.MEMBER)
                         .setJsonObject((JSONObject) obj).parseResponse());
             } else {
-                datasetLst.add((T) JsonParseResponseFactory.buildParser(ParseType.MEMBER)
+                datasetLst.add((T) JsonParseResponseFactory.buildParser(ParseType.DATASET)
                         .setJsonObject((JSONObject) obj).parseResponse());
             }
         }
