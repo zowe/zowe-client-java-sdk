@@ -114,6 +114,12 @@ public class Dataset {
      */
     private final Optional<String> vol;
 
+    /**
+     * Dataset constructor
+     *
+     * @param builder Dataset.Builder object
+     * @author Nikunj Goyal
+     */
     private Dataset(final Dataset.Builder builder) {
         this.dsname = Optional.ofNullable(builder.dsname);
         this.blksz = Optional.ofNullable(builder.blksz);

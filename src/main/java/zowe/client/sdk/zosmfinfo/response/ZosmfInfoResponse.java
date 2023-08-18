@@ -60,7 +60,7 @@ public class ZosmfInfoResponse {
     private final Optional<ZosmfPluginInfo[]> zosmfPluginsInfo;
 
     /**
-     * ZosmfInfoResponse Constructor.
+     * ZosmfInfoResponse constructor
      *
      * @param builder ZosmfInfoResponse.Builder Object
      * @author Frank Giordano

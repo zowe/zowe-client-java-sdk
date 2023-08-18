@@ -51,6 +51,12 @@ public class CopyParams {
      */
     private final boolean copyAllMembers;
 
+    /**
+     * CopyParams constructor
+     *
+     * @param builder CopyParams.Builder object
+     * @author Leonid Baranov
+     */
     private CopyParams(final CopyParams.Builder builder) {
         this.fromVolser = Optional.ofNullable(builder.fromVolser);
         this.fromDataSet = Optional.ofNullable(builder.fromDataSet);

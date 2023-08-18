@@ -45,6 +45,12 @@ public class GetJobParams {
      */
     private final Optional<String> jobId;
 
+    /**
+     * GetJobParams constructor
+     *
+     * @param builder GetJobParams.Builder object
+     * @author Frank Giordano
+     */
     private GetJobParams(final Builder builder) {
         this.owner = Optional.ofNullable(builder.owner);
         this.prefix = Optional.ofNullable(builder.prefix);

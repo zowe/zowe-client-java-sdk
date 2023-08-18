@@ -31,7 +31,7 @@ public class ZosmfSystemsResponse {
     private final Optional<DefinedSystem[]> definedSystems;
 
     /**
-     * ZosmfListDefinedSystemsResponse Constructor.
+     * ZosmfListDefinedSystemsResponse constructor
      *
      * @param builder ZosmfListDefinedSystemsResponse.Builder Object
      * @author Frank Giordano

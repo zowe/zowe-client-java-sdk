@@ -77,7 +77,7 @@ public class ZosLogItem {
     private final OptionalLong timeStamp;
 
     /**
-     * ZosLogItem Constructor.
+     * ZosLogItem constructor
      *
      * @param builder ZosLogItem.Builder Object
      * @author Frank Giordano

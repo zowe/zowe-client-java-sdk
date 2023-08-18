@@ -57,6 +57,12 @@ public class ListParams {
      */
     private final Optional<String> responseTimeout;
 
+    /**
+     * ListParams constructor
+     *
+     * @param builder ListParams.Builder object
+     * @author Nikunj Goyal
+     */
     private ListParams(final ListParams.Builder builder) {
         this.volume = Optional.ofNullable(builder.volume);
         this.attribute = Optional.ofNullable(builder.attribute);

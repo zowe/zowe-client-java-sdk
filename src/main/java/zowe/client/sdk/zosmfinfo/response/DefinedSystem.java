@@ -83,7 +83,7 @@ public class DefinedSystem {
     private final Optional<String> cpcName;
 
     /**
-     * DefinedSystem Constructor.
+     * DefinedSystem constructor
      *
      * @param builder DefinedSystem.Builder Object
      * @author Frank Giordano

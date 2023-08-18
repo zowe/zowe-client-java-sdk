@@ -91,6 +91,12 @@ public class Job {
      */
     private final Optional<String> phaseName;
 
+    /**
+     * Job constructor
+     *
+     * @param builder Job.Builder object
+     * @author Frank Giordano
+     */
     private Job(final Job.Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);

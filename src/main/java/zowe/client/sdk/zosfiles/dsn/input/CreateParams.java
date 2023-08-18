@@ -114,6 +114,12 @@ public class CreateParams {
      */
     private final Optional<String> responseTimeout;
 
+    /**
+     * CreateParams constructor
+     *
+     * @param builder CreateParams.Builder object
+     * @author Leonid Baranov
+     */
     private CreateParams(final CreateParams.Builder builder) {
         this.volser = Optional.ofNullable(builder.volser);
         this.unit = Optional.ofNullable(builder.unit);

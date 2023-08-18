@@ -90,6 +90,12 @@ public class JobFile {
      */
     private final Optional<String> procStep;
 
+    /**
+     * JobFile constructor
+     *
+     * @param builder JobFile.Builder object
+     * @author Frank Giordano
+     */
     private JobFile(final Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);

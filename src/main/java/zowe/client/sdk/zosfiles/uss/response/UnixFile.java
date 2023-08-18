@@ -60,6 +60,12 @@ public class UnixFile {
      */
     private final Optional<String> mtime;
 
+    /**
+     * UnixFile constructor
+     *
+     * @param builder UnixFile.Builder object
+     * @author Frank Giordano
+     */
     public UnixFile(final UnixFile.Builder builder) {
         this.name = Optional.ofNullable(builder.name);
         this.mode = Optional.ofNullable(builder.mode);

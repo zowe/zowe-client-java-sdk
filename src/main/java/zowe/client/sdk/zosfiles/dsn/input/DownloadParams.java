@@ -105,6 +105,12 @@ public class DownloadParams {
      */
     private final Optional<String> responseTimeout;
 
+    /**
+     * DownloadParams constructor
+     *
+     * @param builder DownloadParams.Builder object
+     * @author Nikunj Goyal
+     */
     private DownloadParams(final DownloadParams.Builder builder) {
         this.file = Optional.ofNullable(builder.file);
         this.extension = Optional.ofNullable(builder.extension);

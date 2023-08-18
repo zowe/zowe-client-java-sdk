@@ -55,6 +55,12 @@ public class JobStepData {
      */
     private final Optional<String> programName;
 
+    /**
+     * JobStepData constructor
+     *
+     * @param builder JobStepData.Builder object
+     * @author Frank Giordano
+     */
     private JobStepData(final JobStepData.Builder builder) {
         this.smfid = Optional.ofNullable(builder.smfid);
         this.completion = Optional.ofNullable(builder.completion);

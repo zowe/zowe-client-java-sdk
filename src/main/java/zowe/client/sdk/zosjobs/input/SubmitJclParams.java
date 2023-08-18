@@ -69,7 +69,7 @@ public class SubmitJclParams {
     }
 
     /**
-     * SubmitJclParams constructor
+     * SubmitJclParams constructor with Jcl Symbols
      *
      * @param jcl                 syntactically correct JCL
      * @param internalReaderRecfm internal reader RECFM

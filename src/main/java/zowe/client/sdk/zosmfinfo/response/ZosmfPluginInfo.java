@@ -35,7 +35,7 @@ public class ZosmfPluginInfo {
     private final Optional<String> pluginStatus;
 
     /**
-     * ZosmfPluginInfo Constructor.
+     * ZosmfPluginInfo constructor
      *
      * @param builder ZosmfPluginInfo.Builder Object
      * @author Frank Giordano

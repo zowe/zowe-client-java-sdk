@@ -103,6 +103,12 @@ public class UnixZfs {
      */
     private final boolean moreRows;
 
+    /**
+     * UnixZfs constructor
+     *
+     * @param builder UnixZfs.Builder object
+     * @author Frank Giordano
+     */
     public UnixZfs(final UnixZfs.Builder builder) {
         this.name = Optional.ofNullable(builder.name);
         this.mountpoint = Optional.ofNullable(builder.mountpoint);

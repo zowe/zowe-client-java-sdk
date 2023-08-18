@@ -68,6 +68,12 @@ public class MonitorJobWaitForParams {
      */
     private OptionalInt lineLimit;
 
+    /**
+     * MonitorJobWaitForParams constructor
+     *
+     * @param builder MonitorJobWaitForParams.Builder object
+     * @author Frank Giordano
+     */
     private MonitorJobWaitForParams(final MonitorJobWaitForParams.Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);

@@ -64,6 +64,12 @@ public class ZosLogParams {
      */
     private final boolean processResponses;
 
+    /**
+     * ZosLogParams constructor
+     *
+     * @param builder ZosLogParams.Builder object
+     * @author Frank Giordano
+     */
     private ZosLogParams(final ZosLogParams.Builder builder) {
         this.startTime = Optional.ofNullable(builder.startTime);
         this.hardCopy = Optional.ofNullable(builder.hardCopy);

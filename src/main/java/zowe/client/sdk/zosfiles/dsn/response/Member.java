@@ -80,6 +80,12 @@ public class Member {
      */
     private final Optional<String> sclm;
 
+    /**
+     * Member constructor
+     *
+     * @param builder Member.Builder object
+     * @author Frank Giordano
+     */
     private Member(final Member.Builder builder) {
         this.member = Optional.ofNullable(builder.member);
         if (builder.vers == null) {

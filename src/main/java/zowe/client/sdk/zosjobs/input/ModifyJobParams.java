@@ -41,6 +41,12 @@ public class ModifyJobParams {
      */
     private final Optional<String> version;
 
+    /**
+     * ModifyJobParams constructor
+     *
+     * @param builder ModifyJobParams.Builder object
+     * @author Nikunj Goyal
+     */
     private ModifyJobParams(final ModifyJobParams.Builder builder) {
         this.jobName = Optional.ofNullable(builder.jobName);
         this.jobId = Optional.ofNullable(builder.jobId);
