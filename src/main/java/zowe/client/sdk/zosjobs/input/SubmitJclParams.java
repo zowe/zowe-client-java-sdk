@@ -158,6 +158,11 @@ public class SubmitJclParams {
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
 
+    /**
+     * Return string value representing SubmitJclParams object
+     *
+     * @return string representation of SubmitJclParams
+     */
     @Override
     public String toString() {
         return "SubmitJclParams{" +

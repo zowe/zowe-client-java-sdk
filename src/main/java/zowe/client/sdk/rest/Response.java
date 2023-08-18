@@ -80,6 +80,11 @@ public class Response {
         return statusText;
     }
 
+    /**
+     * Return string value representing Response object
+     *
+     * @return string representation of Response
+     */
     @Override
     public String toString() {
         return "Response{" +

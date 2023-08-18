@@ -95,6 +95,11 @@ public class SubmitJobParams {
         this.jobDataSet = Optional.ofNullable(jobDataSet);
     }
 
+    /**
+     * Return string value representing SubmitJobParams object
+     *
+     * @return string representation of SubmitJobParams
+     */
     @Override
     public String toString() {
         return "SubmitJobParams{" +

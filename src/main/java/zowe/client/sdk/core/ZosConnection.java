@@ -89,6 +89,11 @@ public class ZosConnection {
         return password;
     }
 
+    /**
+     * Return string value representing ZosConnection object
+     *
+     * @return string representation of ZosConnection
+     */
     @Override
     public String toString() {
         return "ZosConnection{" +

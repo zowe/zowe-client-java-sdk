@@ -252,6 +252,11 @@ public class ListParams {
         return symlinks;
     }
 
+    /**
+     * Return string value representing ListParams object
+     *
+     * @return string representation of ListParams
+     */
     @Override
     public String toString() {
         return "ListParams{" +

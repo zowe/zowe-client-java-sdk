@@ -58,6 +58,11 @@ public class CheckJobStatus {
         return statusFound;
     }
 
+    /**
+     * Return string value representing CheckJobStatus object
+     *
+     * @return string representation of CheckJobStatus
+     */
     @Override
     public String toString() {
         return "CheckJobStatus{" +

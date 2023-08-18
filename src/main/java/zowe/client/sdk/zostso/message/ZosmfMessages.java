@@ -102,6 +102,11 @@ public class ZosmfMessages {
         this.stackTrace = Optional.ofNullable(stackTrace);
     }
 
+    /**
+     * Return string value representing ZosmfMessages object
+     *
+     * @return string representation of ZosmfMessages
+     */
     @Override
     public String toString() {
         return "ZosmfMessages{" +

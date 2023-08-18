@@ -79,6 +79,11 @@ public class ChangeModeParams {
         return linkType;
     }
 
+    /**
+     * Return string value representing ChangeModeParams object
+     *
+     * @return string representation of ChangeModeParams
+     */
     @Override
     public String toString() {
         return "ChangeModeParams{" +

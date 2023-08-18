@@ -256,6 +256,11 @@ public class DownloadParams {
         return volume;
     }
 
+    /**
+     * Return string value representing DownloadOptions object
+     *
+     * @return string representation of DownloadOptions
+     */
     @Override
     public String toString() {
         return "DownloadOptions{" +

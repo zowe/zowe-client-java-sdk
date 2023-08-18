@@ -76,6 +76,11 @@ public class CopyParams {
         return recursive;
     }
 
+    /**
+     * Return string value representing CopyParams object
+     *
+     * @return string representation of CopyParams
+     */
     @Override
     public String toString() {
         return "CopyParams{" +

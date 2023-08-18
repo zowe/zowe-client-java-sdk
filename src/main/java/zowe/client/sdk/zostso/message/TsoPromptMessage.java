@@ -85,6 +85,11 @@ public class TsoPromptMessage {
         this.hidden = Optional.ofNullable(hidden);
     }
 
+    /**
+     * Return string value representing TsoPromptMessage object
+     *
+     * @return string representation of TsoPromptMessage
+     */
     @Override
     public String toString() {
         return "TsoPromptMessage{" +

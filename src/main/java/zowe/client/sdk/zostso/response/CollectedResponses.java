@@ -64,6 +64,11 @@ public class CollectedResponses {
         return tsos;
     }
 
+    /**
+     * Return string value representing CollectedResponses object
+     *
+     * @return string representation of CollectedResponses
+     */
     @Override
     public String toString() {
         return "CollectedResponses{" +

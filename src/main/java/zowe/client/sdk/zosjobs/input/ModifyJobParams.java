@@ -74,6 +74,11 @@ public class ModifyJobParams {
         return version;
     }
 
+    /**
+     * Return string value representing CancelJobParams object
+     *
+     * @return string representation of CancelJobParams
+     */
     @Override
     public String toString() {
         return "CancelJobParams{" +

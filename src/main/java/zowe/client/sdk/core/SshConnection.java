@@ -89,6 +89,11 @@ public class SshConnection {
         return password;
     }
 
+    /**
+     * Return string value representing SshConnection object
+     *
+     * @return string representation of SshConnection
+     */
     @Override
     public String toString() {
         return "SSHConnection{" +

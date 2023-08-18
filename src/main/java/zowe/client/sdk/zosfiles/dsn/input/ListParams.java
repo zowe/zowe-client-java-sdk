@@ -130,6 +130,11 @@ public class ListParams {
         return volume;
     }
 
+    /**
+     * Return string value representing ListParams object
+     *
+     * @return string representation of ListParams
+     */
     @Override
     public String toString() {
         return "ListParams{" +

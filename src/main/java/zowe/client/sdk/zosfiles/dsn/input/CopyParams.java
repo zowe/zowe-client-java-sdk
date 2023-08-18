@@ -114,6 +114,11 @@ public class CopyParams {
         return replace;
     }
 
+    /**
+     * Return string value representing CopyParams object
+     *
+     * @return string representation of CopyParams
+     */
     @Override
     public String toString() {
         return "CopyParams{" +

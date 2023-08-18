@@ -308,9 +308,9 @@ public class Dataset {
     }
 
     /**
-     * String representation of the Dataset object
+     * Return string value representing Dataset object
      *
-     * @return string value
+     * @return string representation of Dataset
      */
     @Override
     public String toString() {

@@ -83,6 +83,11 @@ public class Profile {
         return secure;
     }
 
+    /**
+     * Return string value representing Profile object
+     *
+     * @return string representation of Profile
+     */
     @Override
     public String toString() {
         return "Profile{" +

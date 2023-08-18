@@ -118,6 +118,11 @@ public class IssueConsoleParams {
         this.processResponse = processResponse;
     }
 
+    /**
+     * Return string value representing IssueConsoleParams object
+     *
+     * @return string representation of IssueConsoleParams
+     */
     @Override
     public String toString() {
         return "IssueConsoleParams{" +

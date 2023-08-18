@@ -92,6 +92,11 @@ public class ChangeOwnerParams {
         return linkType;
     }
 
+    /**
+     * Return string value representing ChangeOwnerParams object
+     *
+     * @return string representation of ChangeOwnerParams
+     */
     @Override
     public String toString() {
         return "ChangeOwnerParams{" +

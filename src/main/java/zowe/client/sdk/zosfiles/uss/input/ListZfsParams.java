@@ -86,6 +86,11 @@ public class ListZfsParams {
         return fsname;
     }
 
+    /**
+     * Return string value representing ListZfsParams object
+     *
+     * @return string representation of ListZfsParams
+     */
     @Override
     public String toString() {
         return "ListZfsParams{" +

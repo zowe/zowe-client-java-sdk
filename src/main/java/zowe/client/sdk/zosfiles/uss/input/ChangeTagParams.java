@@ -117,6 +117,11 @@ public class ChangeTagParams {
         return links;
     }
 
+    /**
+     * Return string value representing ChangeTagParams object
+     *
+     * @return string representation of ChangeTagParams
+     */
     @Override
     public String toString() {
         return "ChangeTagParams{" +

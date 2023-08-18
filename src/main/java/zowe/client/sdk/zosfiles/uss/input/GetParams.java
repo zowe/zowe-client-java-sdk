@@ -159,6 +159,11 @@ public class GetParams {
         return recordsRange;
     }
 
+    /**
+     * Return string value representing GetParams object
+     *
+     * @return string representation of GetParams
+     */
     @Override
     public String toString() {
         return "GetParams{" +

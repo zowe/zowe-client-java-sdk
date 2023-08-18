@@ -63,6 +63,11 @@ public class SendTsoParams {
         return servletKey;
     }
 
+    /**
+     * Return string value representing SendTsoParams object
+     *
+     * @return string representation of SendTsoParams
+     */
     @Override
     public String toString() {
         return "SendTsoParams{" +

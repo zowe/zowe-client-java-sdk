@@ -109,6 +109,11 @@ public class CommonJobParams {
         ValidateUtils.checkIllegalParameter(jobName.isBlank(), "job name not specified");
     }
 
+    /**
+     * Return string value representing CommonJobParams object
+     *
+     * @return string representation of CommonJobParams
+     */
     @Override
     public String toString() {
         return "CommonJobParams{" +

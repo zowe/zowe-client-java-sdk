@@ -92,6 +92,11 @@ public class GetJobParams {
         return prefix;
     }
 
+    /**
+     * Return string value representing GetJobParams object
+     *
+     * @return string representation of GetJobParams
+     */
     @Override
     public String toString() {
         return "GetJobParams{" +

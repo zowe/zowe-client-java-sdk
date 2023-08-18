@@ -81,6 +81,11 @@ public class CreateParams {
         return mode;
     }
 
+    /**
+     * Return string value representing CreateOptions object
+     *
+     * @return string representation of CreateOptions
+     */
     @Override
     public String toString() {
         return "CreateOptions{" +

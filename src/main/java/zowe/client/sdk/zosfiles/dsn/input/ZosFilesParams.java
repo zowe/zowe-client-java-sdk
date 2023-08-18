@@ -44,6 +44,11 @@ public class ZosFilesParams {
         return responseTimeout;
     }
 
+    /**
+     * Return string value representing ZosFilesParams object
+     *
+     * @return string representation of ZosFilesParams
+     */
     @Override
     public String toString() {
         return "ZosFilesParams{" +

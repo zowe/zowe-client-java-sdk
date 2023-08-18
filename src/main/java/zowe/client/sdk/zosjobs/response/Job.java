@@ -238,6 +238,11 @@ public class Job {
         return url;
     }
 
+    /**
+     * Return string value representing Job object
+     *
+     * @return string representation of Job
+     */
     @Override
     public String toString() {
         return "Job{" +

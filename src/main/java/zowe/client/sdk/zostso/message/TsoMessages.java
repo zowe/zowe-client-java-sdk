@@ -88,6 +88,11 @@ public class TsoMessages {
         this.tsoResponse = Optional.ofNullable(tsoResponse);
     }
 
+    /**
+     * Return string value representing TsoMessages object
+     *
+     * @return string representation of TsoMessages
+     */
     @Override
     public String toString() {
         return "TsoMessages{" +

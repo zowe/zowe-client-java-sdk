@@ -85,6 +85,11 @@ public class TsoResponseMessage {
         this.data = Optional.ofNullable(data);
     }
 
+    /**
+     * Return string value representing TsoResponseMessage object
+     *
+     * @return string representation of TsoResponseMessage
+     */
     @Override
     public String toString() {
         return "TsoResponseMessage{" +

@@ -82,6 +82,11 @@ public class SendResponse {
         return zosmfTsoResponses;
     }
 
+    /**
+     * Return string value representing SendResponse object
+     *
+     * @return string representation of SendResponse
+     */
     @Override
     public String toString() {
         return "SendResponse{" +

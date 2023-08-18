@@ -224,9 +224,9 @@ public class Member {
     }
 
     /**
-     * String representation of the member object
+     * Return string value representing Member object
      *
-     * @return string value
+     * @return string representation of Member
      */
     @Override
     public String toString() {

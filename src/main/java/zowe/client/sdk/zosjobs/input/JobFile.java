@@ -249,6 +249,11 @@ public class JobFile {
         return subSystem;
     }
 
+    /**
+     * Return string value representing JobFile object
+     *
+     * @return string representation of JobFile
+     */
     @Override
     public String toString() {
         return "JobFile{" +
