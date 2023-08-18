@@ -57,7 +57,6 @@ public class SshConnection {
      * Retrieve host specified
      *
      * @return host value
-     * @author Frank Giordano
      */
     public String getHost() {
         return host;
@@ -67,7 +66,6 @@ public class SshConnection {
      * Retrieve port number specified
      *
      * @return port value
-     * @author Frank Giordano
      */
     public int getPort() {
         return port;
@@ -77,7 +75,6 @@ public class SshConnection {
      * Retrieve username specified
      *
      * @return user value
-     * @author Frank Giordano
      */
     public String getUser() {
         return user;
@@ -87,7 +84,6 @@ public class SshConnection {
      * Retrieve password specified
      *
      * @return password value
-     * @author Frank Giordano
      */
     public String getPassword() {
         return password;

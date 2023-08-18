@@ -33,6 +33,7 @@ import zowe.client.sdk.zostso.service.TsoResponseService;
 public class StartTso {
 
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

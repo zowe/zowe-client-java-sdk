@@ -65,7 +65,6 @@ public class MountParams {
      * Retrieve action value
      *
      * @return action value
-     * @author Frank Giordano
      */
     public Optional<MountActionType> getAction() {
         return action;
@@ -75,7 +74,6 @@ public class MountParams {
      * Retrieve mountPoint value
      *
      * @return mountPoint value
-     * @author Frank Giordano
      */
     public Optional<String> getMountPoint() {
         return mountPoint;
@@ -85,7 +83,6 @@ public class MountParams {
      * Retrieve fsType value
      *
      * @return fsType value
-     * @author Frank Giordano
      */
     public Optional<String> getFsType() {
         return fsType;
@@ -95,7 +92,6 @@ public class MountParams {
      * Retrieve mode value
      *
      * @return mode value
-     * @author Frank Giordano
      */
     public Optional<MountModeType> getMode() {
         return mode;

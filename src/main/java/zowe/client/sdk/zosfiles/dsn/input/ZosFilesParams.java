@@ -39,7 +39,6 @@ public class ZosFilesParams {
      * Retrieve responseTimeout value
      *
      * @return responseTimeout value
-     * @author Leonid Baranov
      */
     public Optional<String> getResponseTimeout() {
         return responseTimeout;

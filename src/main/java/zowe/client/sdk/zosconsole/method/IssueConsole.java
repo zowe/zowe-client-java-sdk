@@ -39,6 +39,7 @@ import java.util.Map;
 public class IssueConsole {
 
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

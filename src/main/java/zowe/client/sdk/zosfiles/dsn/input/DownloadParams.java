@@ -134,7 +134,6 @@ public class DownloadParams {
      * Retrieve is binary specified
      *
      * @return boolean true or false
-     * @author Nikunj Goyal
      */
     public boolean isBinary() {
         return binary;
@@ -144,7 +143,6 @@ public class DownloadParams {
      * Retrieve directory value
      *
      * @return directory value
-     * @author Nikunj Goyal
      */
     public Optional<String> getDirectory() {
         return directory;
@@ -154,7 +152,6 @@ public class DownloadParams {
      * Retrieve encoding value
      *
      * @return encoding value
-     * @author Nikunj Goyal
      */
     public OptionalLong getEncoding() {
         return encoding;
@@ -164,7 +161,6 @@ public class DownloadParams {
      * Retrieve excludePatterns value
      *
      * @return excludePatterns value
-     * @author Nikunj Goyal
      */
     public Optional<String[]> getExcludePatterns() {
         return excludePatterns;
@@ -174,7 +170,6 @@ public class DownloadParams {
      * Retrieve extension value
      *
      * @return extension value
-     * @author Nikunj Goyal
      */
     public Optional<String> getExtension() {
         return extension;
@@ -184,7 +179,6 @@ public class DownloadParams {
      * Retrieve extensionMap value
      *
      * @return extensionMap value
-     * @author Nikunj Goyal
      */
     public Optional<HashMap<String, String>> getExtensionMap() {
         return extensionMap;
@@ -194,7 +188,6 @@ public class DownloadParams {
      * Retrieve is failFast specified
      *
      * @return boolean true or false
-     * @author Nikunj Goyal
      */
     public boolean isFailFast() {
         return failFast;
@@ -204,7 +197,6 @@ public class DownloadParams {
      * Retrieve file value
      *
      * @return file value
-     * @author Nikunj Goyal
      */
     public Optional<String> getFile() {
         return file;
@@ -214,7 +206,6 @@ public class DownloadParams {
      * Retrieve maxConcurrentRequests value
      *
      * @return maxConcurrentRequests value
-     * @author Nikunj Goyal
      */
     public OptionalLong getNaxConcurrentRequests() {
         return maxConcurrentRequests;
@@ -224,7 +215,6 @@ public class DownloadParams {
      * Retrieve is preserveOriginalLetterCase specified
      *
      * @return boolean true or false
-     * @author Nikunj Goyal
      */
     public boolean isPreserveOriginalLetterCase() {
         return preserveOriginalLetterCase;
@@ -234,7 +224,6 @@ public class DownloadParams {
      * Retrieve responseTimeout value
      *
      * @return responseTimeout value
-     * @author Nikunj Goyal
      */
     public Optional<String> getResponseTimeout() {
         return responseTimeout;
@@ -244,7 +233,6 @@ public class DownloadParams {
      * Retrieve is returnEtag specified
      *
      * @return true or false
-     * @author Nikunj Goyal
      */
     public boolean isReturnEtag() {
         return returnEtag;
@@ -254,7 +242,6 @@ public class DownloadParams {
      * Retrieve task value
      *
      * @return task value
-     * @author Nikunj Goyal
      */
     public Optional<String> getTask() {
         return task;
@@ -264,7 +251,6 @@ public class DownloadParams {
      * Retrieve volume value
      *
      * @return volume value
-     * @author Nikunj Goyal
      */
     public Optional<String> getVolume() {
         return volume;

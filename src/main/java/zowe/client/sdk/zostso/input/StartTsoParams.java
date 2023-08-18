@@ -85,7 +85,6 @@ public class StartTsoParams {
      * Retrieve account specified
      *
      * @return account user account value
-     * @author Frank Giordano
      */
     public Optional<String> getAccount() {
         return account;
@@ -95,7 +94,6 @@ public class StartTsoParams {
      * Assign account value
      *
      * @param account user's z/OS permission account number
-     * @author Frank Giordano
      */
     public void setAccount(final String account) {
         this.account = Optional.ofNullable(account);
@@ -105,7 +103,6 @@ public class StartTsoParams {
      * Retrieve characterSet specified
      *
      * @return characterSet character set value for address space
-     * @author Frank Giordano
      */
     public Optional<String> getCharacterSet() {
         return characterSet;
@@ -115,7 +112,6 @@ public class StartTsoParams {
      * Assign characterSet value
      *
      * @param characterSet character set for address space
-     * @author Frank Giordano
      */
     public void setCharacterSet(final String characterSet) {
         this.characterSet = Optional.of(characterSet);
@@ -125,7 +121,6 @@ public class StartTsoParams {
      * Retrieve codePage specified
      *
      * @return codePage name of the logonProcedure for address space
-     * @author Frank Giordano
      */
     public Optional<String> getCodePage() {
         return codePage;
@@ -135,7 +130,6 @@ public class StartTsoParams {
      * Assign codePage value
      *
      * @param codePage code page for tso address space
-     * @author Frank Giordano
      */
     public void setCodePage(final String codePage) {
         this.codePage = Optional.ofNullable(codePage);
@@ -145,7 +139,6 @@ public class StartTsoParams {
      * Retrieve columns specified
      *
      * @return columns number value of columns
-     * @author Frank Giordano
      */
     public Optional<String> getColumns() {
         return columns;
@@ -155,7 +148,6 @@ public class StartTsoParams {
      * Assign columns value
      *
      * @param columns number of columns
-     * @author Frank Giordano
      */
     public void setColumns(final String columns) {
         this.columns = Optional.ofNullable(columns);
@@ -165,7 +157,6 @@ public class StartTsoParams {
      * Retrieve logonProcedure specified
      *
      * @return logonProcedure name value of the logonProcedure for address space
-     * @author Frank Giordano
      */
     public Optional<String> getLogonProcedure() {
         return logonProcedure;
@@ -175,7 +166,6 @@ public class StartTsoParams {
      * Assign logonProcedure value
      *
      * @param logonProcedure name of the logonProcedure for address space
-     * @author Frank Giordano
      */
     public void setLogonProcedure(final String logonProcedure) {
         this.logonProcedure = Optional.of(logonProcedure);
@@ -185,7 +175,6 @@ public class StartTsoParams {
      * Retrieve regionSize specified
      *
      * @return regionSize region size value for tso address space
-     * @author Frank Giordano
      */
     public Optional<String> getRegionSize() {
         return regionSize;
@@ -195,7 +184,6 @@ public class StartTsoParams {
      * Assign regionSize value
      *
      * @param regionSize region size for tso address space
-     * @author Frank Giordano
      */
     public void setRegionSize(final String regionSize) {
         this.regionSize = Optional.of(regionSize);
@@ -205,7 +193,6 @@ public class StartTsoParams {
      * Retrieve rows specified
      *
      * @return rows number value of rows
-     * @author Frank Giordano
      */
     public Optional<String> getRows() {
         return rows;
@@ -215,7 +202,6 @@ public class StartTsoParams {
      * Assign rows value
      *
      * @param rows number of rows
-     * @author Frank Giordano
      */
     public void setRows(String rows) {
         this.rows = Optional.ofNullable(rows);

@@ -36,6 +36,7 @@ import zowe.client.sdk.zostso.service.TsoResponseService;
 public class StopTso {
 
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

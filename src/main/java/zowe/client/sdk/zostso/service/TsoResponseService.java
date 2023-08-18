@@ -20,6 +20,7 @@ public class TsoResponseService {
      * Tso command response
      */
     private Response tsoCmdResponse;
+
     /**
      * z/OSMF response info contains either tso start or stop command phrase, see zosmfResponse object
      */

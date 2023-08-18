@@ -48,7 +48,6 @@ public class ZosmfIssueResponse {
      * Retrieve cmdResponse value
      *
      * @return cmdResponse value
-     * @author Frank Giordano
      */
     public Optional<String> getCmdResponse() {
         return cmdResponse;
@@ -58,7 +57,6 @@ public class ZosmfIssueResponse {
      * Assign cmdResponse value
      *
      * @param cmdResponse value
-     * @author Frank Giordano
      */
     public void setCmdResponse(final String cmdResponse) {
         this.cmdResponse = Optional.ofNullable(cmdResponse);
@@ -68,7 +66,6 @@ public class ZosmfIssueResponse {
      * Retrieve cmdResponseKey value
      *
      * @return cmdResponseKey value
-     * @author Frank Giordano
      */
     public Optional<String> getCmdResponseKey() {
         return cmdResponseKey;
@@ -78,7 +75,6 @@ public class ZosmfIssueResponse {
      * Assign cmdResponseKey value
      *
      * @param cmdResponseKey value
-     * @author Frank Giordano
      */
     public void setCmdResponseKey(final String cmdResponseKey) {
         this.cmdResponseKey = Optional.ofNullable(cmdResponseKey);
@@ -88,7 +84,6 @@ public class ZosmfIssueResponse {
      * Retrieve cmdResponseUri value
      *
      * @return cmdResponseUri value
-     * @author Frank Giordano
      */
     public Optional<String> getCmdResponseUri() {
         return cmdResponseUri;
@@ -98,7 +93,6 @@ public class ZosmfIssueResponse {
      * Assign cmdResponseUri value
      *
      * @param cmdResponseUri value
-     * @author Frank Giordano
      */
     public void setCmdResponseUri(final String cmdResponseUri) {
         this.cmdResponseUri = Optional.ofNullable(cmdResponseUri);
@@ -108,7 +102,6 @@ public class ZosmfIssueResponse {
      * Retrieve cmdResponseUrl value
      *
      * @return cmdResponseUrl value
-     * @author Frank Giordano
      */
     public Optional<String> getCmdResponseUrl() {
         return cmdResponseUrl;
@@ -118,7 +111,6 @@ public class ZosmfIssueResponse {
      * Assign cmdResponseUrl value
      *
      * @param cmdResponseUrl value
-     * @author Frank Giordano
      */
     public void setCmdResponseUrl(final String cmdResponseUrl) {
         this.cmdResponseUrl = Optional.ofNullable(cmdResponseUrl);
@@ -128,7 +120,6 @@ public class ZosmfIssueResponse {
      * Retrieve solKeyDetected value
      *
      * @return solKeyDetected value
-     * @author Frank Giordano
      */
     public Optional<String> getSolKeyDetected() {
         return solKeyDetected;
@@ -138,7 +129,6 @@ public class ZosmfIssueResponse {
      * Assign solKeyDetected value
      *
      * @param solKeyDetected value
-     * @author Frank Giordano
      */
     public void setSolKeyDetected(final String solKeyDetected) {
         this.solKeyDetected = Optional.ofNullable(solKeyDetected);

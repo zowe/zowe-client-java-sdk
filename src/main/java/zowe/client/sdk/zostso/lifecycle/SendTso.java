@@ -38,6 +38,7 @@ import java.util.List;
 public class SendTso {
 
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

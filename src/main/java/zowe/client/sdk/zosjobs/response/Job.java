@@ -116,7 +116,6 @@ public class Job {
      * Retrieve classs specified
      *
      * @return classs value
-     * @author Frank Giordano
      */
     public Optional<String> getClasss() {
         return classs;
@@ -126,7 +125,6 @@ public class Job {
      * Retrieve filesUrl specified
      *
      * @return filesUrl value
-     * @author Frank Giordano
      */
     public Optional<String> getFilesUrl() {
         return filesUrl;
@@ -136,7 +134,6 @@ public class Job {
      * Retrieve jobCorrelator specified
      *
      * @return jobCorrelator value
-     * @author Frank Giordano
      */
     public Optional<String> getJobCorrelator() {
         return jobCorrelator;
@@ -146,7 +143,6 @@ public class Job {
      * Retrieve jobId specified
      *
      * @return jobId value
-     * @author Frank Giordano
      */
     public Optional<String> getJobId() {
         return jobId;
@@ -156,7 +152,6 @@ public class Job {
      * Retrieve jobName specified
      *
      * @return jobName value
-     * @author Frank Giordano
      */
     public Optional<String> getJobName() {
         return jobName;
@@ -166,7 +161,6 @@ public class Job {
      * Retrieve owner specified
      *
      * @return owner value
-     * @author Frank Giordano
      */
     public Optional<String> getOwner() {
         return owner;
@@ -176,7 +170,6 @@ public class Job {
      * Retrieve phase specified
      *
      * @return phase value
-     * @author Frank Giordano
      */
     public OptionalLong getPhase() {
         return phase;
@@ -186,7 +179,6 @@ public class Job {
      * Retrieve phaseName specified
      *
      * @return phaseName value
-     * @author Frank Giordano
      */
     public Optional<String> getPhaseName() {
         return phaseName;
@@ -196,7 +188,6 @@ public class Job {
      * Retrieve retCode specified
      *
      * @return retCode value
-     * @author Frank Giordano
      */
     public Optional<String> getRetCode() {
         return retCode;
@@ -206,7 +197,6 @@ public class Job {
      * Retrieve status specified
      *
      * @return status value
-     * @author Frank Giordano
      */
     public Optional<String> getStatus() {
         return status;
@@ -216,7 +206,6 @@ public class Job {
      * Retrieve stepData specified
      *
      * @return stepData value
-     * @author Frank Giordano
      */
     public Optional<JobStepData[]> getStepData() {
         return stepData;
@@ -226,7 +215,6 @@ public class Job {
      * Retrieve subSystem specified
      *
      * @return subSystem value
-     * @author Frank Giordano
      */
     public Optional<String> getSubSystem() {
         return subSystem;
@@ -236,7 +224,6 @@ public class Job {
      * Retrieve type specified
      *
      * @return type value
-     * @author Frank Giordano
      */
     public Optional<String> getType() {
         return type;
@@ -246,7 +233,6 @@ public class Job {
      * Retrieve url specified
      *
      * @return url value
-     * @author Frank Giordano
      */
     public Optional<String> getUrl() {
         return url;

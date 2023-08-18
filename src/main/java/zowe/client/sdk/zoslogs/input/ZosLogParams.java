@@ -61,11 +61,18 @@ public class ZosLogParams {
      */
     private final boolean processResponses;
 
+    private ZosLogParams(final ZosLogParams.Builder builder) {
+        this.startTime = Optional.ofNullable(builder.startTime);
+        this.hardCopy = Optional.ofNullable(builder.hardCopy);
+        this.direction = Optional.ofNullable(builder.direction);
+        this.timeRange = Optional.ofNullable(builder.timeRange);
+        this.processResponses = builder.processResponses;
+    }
+
     /**
      * Return start time string value.
      *
      * @return String value
-     * @author Frank Giordano
      */
     public Optional<String> getStartTime() {
         return startTime;
@@ -75,7 +82,6 @@ public class ZosLogParams {
      * Return hard copy enum type.
      *
      * @return HardCopyType enum value
-     * @author Frank Giordano
      */
     public Optional<HardCopyType> getHardCopy() {
         return hardCopy;
@@ -85,7 +91,6 @@ public class ZosLogParams {
      * Return direction type enum type.
      *
      * @return DirectionType enum type
-     * @author Frank Giordano
      */
     public Optional<DirectionType> getDirection() {
         return direction;
@@ -95,7 +100,6 @@ public class ZosLogParams {
      * Return time range string value.
      *
      * @return string value
-     * @author Frank Giordano
      */
     public Optional<String> getTimeRange() {
         return timeRange;
@@ -105,18 +109,9 @@ public class ZosLogParams {
      * Is process response specified if so, handle json data differently
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isProcessResponses() {
         return processResponses;
-    }
-
-    private ZosLogParams(final ZosLogParams.Builder builder) {
-        this.startTime = Optional.ofNullable(builder.startTime);
-        this.hardCopy = Optional.ofNullable(builder.hardCopy);
-        this.direction = Optional.ofNullable(builder.direction);
-        this.timeRange = Optional.ofNullable(builder.timeRange);
-        this.processResponses = builder.processResponses;
     }
 
     public static class Builder {
@@ -139,7 +134,6 @@ public class ZosLogParams {
          * @param startTime A String that represents either a DateTime in this format: YYYY-MM-DDTHH:MM:SSZ.
          *                  <pre>@see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a></pre>
          * @return ZosLogParams.Builder this object
-         * @author Frank Giordano
          */
         public ZosLogParams.Builder startTime(final String startTime) {
             this.startTime = startTime;
@@ -155,7 +149,6 @@ public class ZosLogParams {
          * @param hardCopy HardCopyType enum value.
          *                 <pre>@see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a></pre>
          * @return ZosLogParams.Builder this object
-         * @author Frank Giordano
          */
         public ZosLogParams.Builder hardCopy(final HardCopyType hardCopy) {
             this.hardCopy = hardCopy;
@@ -170,7 +163,6 @@ public class ZosLogParams {
          * @param direction DirectionType enum value.
          *                  <pre>@see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a></pre>
          * @return ZosLogParams.Builder this object
-         * @author Frank Giordano
          */
         public ZosLogParams.Builder direction(final DirectionType direction) {
             this.direction = direction;
@@ -186,7 +178,6 @@ public class ZosLogParams {
          *                  1s (one second), 10m (tem minutes), 24h (24 hours), etc.
          *                  <pre>@see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a></pre>
          * @return ZosLogParams.Builder this object
-         * @author Frank Giordano
          */
         public ZosLogParams.Builder timeRange(final String timeRange) {
             this.timeRange = timeRange;
@@ -201,7 +192,6 @@ public class ZosLogParams {
          *
          * @param processResponses true of false should message item be parsed for newline characters
          * @return ZosLogParams.Builder this object
-         * @author Frank Giordano
          */
         public ZosLogParams.Builder processResponses(final boolean processResponses) {
             this.processResponses = processResponses;

@@ -30,6 +30,7 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
 public class DsnWrite {
 
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

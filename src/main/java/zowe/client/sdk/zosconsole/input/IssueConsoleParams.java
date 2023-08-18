@@ -59,7 +59,6 @@ public class IssueConsoleParams {
      * Retrieve cmd value
      *
      * @return cmd value
-     * @author Frank Giordano
      */
     public Optional<String> getCmd() {
         return cmd;
@@ -69,7 +68,6 @@ public class IssueConsoleParams {
      * Retrieve solKey value
      *
      * @return solKey value
-     * @author Frank Giordano
      */
     public Optional<String> getSolKey() {
         return solKey;
@@ -79,7 +77,6 @@ public class IssueConsoleParams {
      * Assign solKey value
      *
      * @param solKey value
-     * @author Frank Giordano
      */
     public void setSolKey(final String solKey) {
         this.solKey = Optional.ofNullable(solKey);
@@ -89,7 +86,6 @@ public class IssueConsoleParams {
      * Retrieve system value
      *
      * @return system value
-     * @author Frank Giordano
      */
     public Optional<String> getSystem() {
         return system;
@@ -99,7 +95,6 @@ public class IssueConsoleParams {
      * Assign system value
      *
      * @param system value
-     * @author Frank Giordano
      */
     public void setSystem(final String system) {
         this.system = Optional.ofNullable(system);
@@ -109,7 +104,6 @@ public class IssueConsoleParams {
      * Retrieve is processResponse specified
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isProcessResponse() {
         return processResponse;
@@ -119,7 +113,6 @@ public class IssueConsoleParams {
      * Assign system value
      *
      * @param processResponse value
-     * @author Frank Giordano
      */
     public void setProcessResponse(boolean processResponse) {
         this.processResponse = processResponse;

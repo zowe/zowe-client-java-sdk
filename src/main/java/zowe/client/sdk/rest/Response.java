@@ -57,7 +57,6 @@ public class Response {
      * Retrieve responsePhrase value
      *
      * @return responsePhrase value
-     * @author Frank Giordano
      */
     public Optional<Object> getResponsePhrase() {
         return responsePhrase;
@@ -67,7 +66,6 @@ public class Response {
      * Retrieve statusCode value
      *
      * @return statusCode value
-     * @author Frank Giordano
      */
     public OptionalInt getStatusCode() {
         return statusCode;
@@ -77,7 +75,6 @@ public class Response {
      * Retrieve statusText value
      *
      * @return statusText value
-     * @author Frank Giordano
      */
     public Optional<String> getStatusText() {
         return statusText;

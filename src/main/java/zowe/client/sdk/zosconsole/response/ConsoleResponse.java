@@ -60,7 +60,6 @@ public class ConsoleResponse {
      * Retrieve cmdResponseUrl specified
      *
      * @return cmdResponseUrl value
-     * @author Frank Giordano
      */
     public Optional<String> getCmdResponseUrl() {
         return cmdResponseUrl;
@@ -70,7 +69,6 @@ public class ConsoleResponse {
      * Assign cmdResponseUrl value
      *
      * @param cmdResponseUrl value
-     * @author Frank Giordano
      */
     public void setCmdResponseUrl(final String cmdResponseUrl) {
         this.cmdResponseUrl = Optional.ofNullable(cmdResponseUrl);
@@ -80,7 +78,6 @@ public class ConsoleResponse {
      * Retrieve commandResponse specified
      *
      * @return commandResponse value
-     * @author Frank Giordano
      */
     public Optional<String> getCommandResponse() {
         return commandResponse;
@@ -90,7 +87,6 @@ public class ConsoleResponse {
      * Assign commandResponse value
      *
      * @param commandResponse value
-     * @author Frank Giordano
      */
     public void setCommandResponse(final String commandResponse) {
         this.commandResponse = Optional.ofNullable(commandResponse);
@@ -100,7 +96,6 @@ public class ConsoleResponse {
      * Retrieve failureResponse specified
      *
      * @return failureResponse value
-     * @author Frank Giordano
      */
     public Optional<String> getFailureResponse() {
         return failureResponse;
@@ -110,7 +105,6 @@ public class ConsoleResponse {
      * Assign failureResponse value
      *
      * @param failureResponse value
-     * @author Frank Giordano
      */
     public void setFailureResponse(final String failureResponse) {
         this.failureResponse = Optional.ofNullable(failureResponse);
@@ -120,7 +114,6 @@ public class ConsoleResponse {
      * Retrieve is keywordDetected specified
      *
      * @return keywordDetected true or false is keywordDetected seen
-     * @author Frank Giordano
      */
     public boolean isKeywordDetected() {
         return keywordDetected;
@@ -130,7 +123,6 @@ public class ConsoleResponse {
      * Assign keywordDetected value
      *
      * @param keywordDetected value
-     * @author Frank Giordano
      */
     public void setKeywordDetected(boolean keywordDetected) {
         this.keywordDetected = keywordDetected;
@@ -140,7 +132,6 @@ public class ConsoleResponse {
      * Retrieve lastResponseKey specified
      *
      * @return lastResponseKey value
-     * @author Frank Giordano
      */
     public Optional<String> getLastResponseKey() {
         return lastResponseKey;
@@ -150,7 +141,6 @@ public class ConsoleResponse {
      * Assign lastResponseKey value
      *
      * @param lastResponseKey value
-     * @author Frank Giordano
      */
     public void setLastResponseKey(final String lastResponseKey) {
         this.lastResponseKey = Optional.ofNullable(lastResponseKey);
@@ -160,7 +150,6 @@ public class ConsoleResponse {
      * Retrieve is success
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isSuccess() {
         return success;
@@ -170,7 +159,6 @@ public class ConsoleResponse {
      * Assign success value
      *
      * @param success true or false is response seen
-     * @author Frank Giordano
      */
     public void setSuccess(boolean success) {
         this.success = success;
@@ -180,7 +168,6 @@ public class ConsoleResponse {
      * Retrieve zosmfResponse specified
      *
      * @return zosmfResponse value
-     * @author Frank Giordano
      */
     public Optional<ZosmfIssueResponse> getZosmfResponse() {
         return zosmfResponse;
@@ -190,7 +177,6 @@ public class ConsoleResponse {
      * Assign zosmfResponse value
      *
      * @param zosmfResponse value
-     * @author Frank Giordano
      */
     public void setZosmfResponse(final ZosmfIssueResponse zosmfResponse) {
         this.zosmfResponse = Optional.ofNullable(zosmfResponse);

@@ -34,7 +34,9 @@ import java.util.Map;
 public class DsnRename {
 
     private final ZosConnection connection;
+
     private ZoweRequest request;
+
     private String url;
 
     /**

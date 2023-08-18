@@ -38,7 +38,9 @@ import java.util.Map;
 public class JobSubmit {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobSubmit.class);
+
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

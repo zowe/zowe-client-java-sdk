@@ -25,10 +25,12 @@ public class Partition {
      * Partition name
      */
     private final String name;
+
     /**
      * Partition property values
      */
     private final Map<String, String> properties;
+
     /**
      * Partition profiles
      */
@@ -52,7 +54,6 @@ public class Partition {
      * Return name
      *
      * @return partition string value
-     * @author Frank Giordano
      */
     public String getName() {
         return name;
@@ -62,7 +63,6 @@ public class Partition {
      * Return list of Profiles
      *
      * @return list of profiles
-     * @author Frank Giordano
      */
     public List<Profile> getProfiles() {
         return profiles;
@@ -72,7 +72,6 @@ public class Partition {
      * Return hashmap of property values
      *
      * @return partition property key/values pairs
-     * @author Frank Giordano
      */
     public Map<String, String> getProperties() {
         return properties;

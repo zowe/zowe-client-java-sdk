@@ -36,6 +36,7 @@ import java.util.Map;
 public class UssMove {
 
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

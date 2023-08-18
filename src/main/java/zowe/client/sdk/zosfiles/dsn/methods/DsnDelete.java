@@ -30,6 +30,7 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
 public class DsnDelete {
 
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

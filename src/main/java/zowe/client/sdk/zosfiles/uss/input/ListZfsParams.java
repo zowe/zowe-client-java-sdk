@@ -63,7 +63,6 @@ public class ListZfsParams {
      * Retrieve maxLength value
      *
      * @return maxLength value
-     * @author Frank Giordano
      */
     public OptionalInt getMaxLength() {
         return maxLength;
@@ -73,7 +72,6 @@ public class ListZfsParams {
      * Retrieve path value
      *
      * @return path value
-     * @author Frank Giordano
      */
     public Optional<String> getPath() {
         return path;
@@ -83,7 +81,6 @@ public class ListZfsParams {
      * Retrieve fsname value
      *
      * @return fsname value
-     * @author Frank Giordano
      */
     public Optional<String> getFsname() {
         return fsname;

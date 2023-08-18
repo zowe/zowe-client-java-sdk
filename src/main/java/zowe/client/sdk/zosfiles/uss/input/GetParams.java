@@ -100,7 +100,6 @@ public class GetParams {
      * Retrieve search value
      *
      * @return search value
-     * @author James Kostrewski
      */
     public Optional<String> getSearch() {
         return search;
@@ -110,7 +109,6 @@ public class GetParams {
      * Retrieve research value
      *
      * @return research value
-     * @author James Kostrewski
      */
     public Optional<String> getResearch() {
         return research;
@@ -120,7 +118,6 @@ public class GetParams {
      * Retrieve is insensitive specified
      *
      * @return boolean true or false
-     * @author James Kostrewski
      */
     public boolean isInsensitive() {
         return insensitive;
@@ -130,7 +127,6 @@ public class GetParams {
      * Retrieve maxreturnsize value
      *
      * @return maxreturnsize value
-     * @author James Kostrewski
      */
     public OptionalInt getMaxReturnSize() {
         return maxreturnsize;
@@ -140,7 +136,6 @@ public class GetParams {
      * Retrieve queryCount value
      *
      * @return queryCount value
-     * @author James Kostrewski
      */
     public int getQueryCount() {
         return queryCount;
@@ -150,7 +145,6 @@ public class GetParams {
      * Retrieve is binary specified
      *
      * @return boolean true or false
-     * @author James Kostrewski
      */
     public boolean isBinary() {
         return binary;
@@ -160,7 +154,6 @@ public class GetParams {
      * Retrieve is recordsRange specified
      *
      * @return boolean true or false
-     * @author James Kostrewski
      */
     public Optional<String> getRecordsRange() {
         return recordsRange;

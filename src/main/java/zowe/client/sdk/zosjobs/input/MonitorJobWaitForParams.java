@@ -81,7 +81,6 @@ public class MonitorJobWaitForParams {
      * Retrieve attempts
      *
      * @return attempts value
-     * @author Frank Giordano
      */
     public OptionalInt getAttempts() {
         return attempts;
@@ -91,7 +90,6 @@ public class MonitorJobWaitForParams {
      * Assign attempts
      *
      * @param attempts number of attempts to get status
-     * @author Frank Giordano
      */
     public void setAttempts(final int attempts) {
         this.attempts = OptionalInt.of(attempts);
@@ -101,7 +99,6 @@ public class MonitorJobWaitForParams {
      * Retrieve job id
      *
      * @return jobId value
-     * @author Frank Giordano
      */
     public Optional<String> getJobId() {
         return jobId;
@@ -111,7 +108,6 @@ public class MonitorJobWaitForParams {
      * Retrieve job name
      *
      * @return jobName value
-     * @author Frank Giordano
      */
     public Optional<String> getJobName() {
         return jobName;
@@ -121,7 +117,6 @@ public class MonitorJobWaitForParams {
      * Retrieve job status
      *
      * @return jobStatus value
-     * @author Frank Giordano
      */
     public Optional<JobStatus.Type> getJobStatus() {
         return jobStatus;
@@ -131,7 +126,6 @@ public class MonitorJobWaitForParams {
      * Assign job status
      *
      * @param jobStatus job status type, see JobStatus.Type object
-     * @author Frank Giordano
      */
     public void setJobStatus(final JobStatus.Type jobStatus) {
         this.jobStatus = Optional.ofNullable(jobStatus);
@@ -141,7 +135,6 @@ public class MonitorJobWaitForParams {
      * Retrieve line limit
      *
      * @return lineLimit value
-     * @author Frank Giordano
      */
     public OptionalInt getLineLimit() {
         return lineLimit;
@@ -151,7 +144,6 @@ public class MonitorJobWaitForParams {
      * Assign line limit
      *
      * @param lineLimit number of lines to inspect
-     * @author Frank Giordano
      */
     public void setLineLimit(final int lineLimit) {
         this.lineLimit = OptionalInt.of(lineLimit);
@@ -161,7 +153,6 @@ public class MonitorJobWaitForParams {
      * Retrieve watch delay
      *
      * @return watchDelay value
-     * @author Frank Giordano
      */
     public OptionalInt getWatchDelay() {
         return watchDelay;
@@ -171,7 +162,6 @@ public class MonitorJobWaitForParams {
      * Assign watch delay
      *
      * @param watchDelay delay of polling operation in milliseconds
-     * @author Frank Giordano
      */
     public void setWatchDelay(final int watchDelay) {
         this.watchDelay = OptionalInt.of(watchDelay);

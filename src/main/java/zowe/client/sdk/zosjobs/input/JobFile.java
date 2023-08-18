@@ -127,7 +127,6 @@ public class JobFile {
      * Retrieve byteCount specified
      *
      * @return byteCount value
-     * @author Frank Giordano
      */
     public OptionalLong getByteCount() {
         return byteCount;
@@ -137,7 +136,6 @@ public class JobFile {
      * Retrieve classs specified
      *
      * @return classs value
-     * @author Frank Giordano
      */
     public Optional<String> getClasss() {
         return classs;
@@ -147,7 +145,6 @@ public class JobFile {
      * Retrieve ddName specified
      *
      * @return ddName value
-     * @author Frank Giordano
      */
     public Optional<String> getDdName() {
         return ddName;
@@ -157,7 +154,6 @@ public class JobFile {
      * Retrieve id specified
      *
      * @return id value
-     * @author Frank Giordano
      */
     public OptionalLong getId() {
         return id;
@@ -167,7 +163,6 @@ public class JobFile {
      * Retrieve jobCorrelator specified
      *
      * @return jobCorrelator value
-     * @author Frank Giordano
      */
     public Optional<String> getJobCorrelator() {
         return jobCorrelator;
@@ -177,7 +172,6 @@ public class JobFile {
      * Retrieve jobId specified
      *
      * @return jobId value
-     * @author Frank Giordano
      */
     public Optional<String> getJobId() {
         return jobId;
@@ -187,7 +181,6 @@ public class JobFile {
      * Retrieve jobName specified
      *
      * @return jobName value
-     * @author Frank Giordano
      */
     public Optional<String> getJobName() {
         return jobName;
@@ -197,7 +190,6 @@ public class JobFile {
      * Retrieve lrecl specified
      *
      * @return lrecl value
-     * @author Frank Giordano
      */
     public OptionalLong getLrecl() {
         return lrecl;
@@ -207,7 +199,6 @@ public class JobFile {
      * Retrieve procStep specified
      *
      * @return procStep value
-     * @author Frank Giordano
      */
     public Optional<String> getProcStep() {
         return procStep;
@@ -217,7 +208,6 @@ public class JobFile {
      * Retrieve recfm specified
      *
      * @return recfm value
-     * @author Frank Giordano
      */
     public Optional<String> getRecfm() {
         return recfm;
@@ -227,7 +217,6 @@ public class JobFile {
      * Retrieve recordCount specified
      *
      * @return recordCount value
-     * @author Frank Giordano
      */
     public OptionalLong getRecordCount() {
         return recordCount;
@@ -237,7 +226,6 @@ public class JobFile {
      * Retrieve recordsUrl specified
      *
      * @return recordsUrl value
-     * @author Frank Giordano
      */
     public Optional<String> getRecordsUrl() {
         return recordsUrl;
@@ -247,7 +235,6 @@ public class JobFile {
      * Retrieve stepName specified
      *
      * @return stepName value
-     * @author Frank Giordano
      */
     public Optional<String> getStepName() {
         return stepName;
@@ -257,7 +244,6 @@ public class JobFile {
      * Retrieve subSystem specified
      *
      * @return subSystem value
-     * @author Frank Giordano
      */
     public Optional<String> getSubSystem() {
         return subSystem;

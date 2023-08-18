@@ -91,7 +91,6 @@ public class SubmitJclParams {
      * Retrieve internalReaderLrecl specified
      *
      * @return internalReaderLrecl value
-     * @author Frank Giordano
      */
     public Optional<String> getInternalReaderLrecl() {
         return internalReaderLrecl;
@@ -103,7 +102,6 @@ public class SubmitJclParams {
      * @param internalReaderLrecl specify internal reader LRECL and corresponding http(s) headers will
      *                            be appended to the request accordingly
      *                            An integer value that specifies the internal reader logical record length (LRECL).
-     * @author Frank Giordano
      */
     public void setInternalReaderLrecl(final String internalReaderLrecl) {
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
@@ -113,7 +111,6 @@ public class SubmitJclParams {
      * Retrieve internalReaderRecfm specified
      *
      * @return internalReaderRecfm value
-     * @author Frank Giordano
      */
     public Optional<String> getInternalReaderRecfm() {
         return internalReaderRecfm;
@@ -125,7 +122,6 @@ public class SubmitJclParams {
      * @param internalReaderRecfm specify internal reader RECFM and corresponding http(s) headers will
      *                            be appended to the request accordingly
      *                            A single character that specifies the internal reader record format: F or V.
-     * @author Frank Giordano
      */
     public void setInternalReaderRecfm(final String internalReaderRecfm) {
         this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
@@ -135,7 +131,6 @@ public class SubmitJclParams {
      * Retrieve jcl specified
      *
      * @return jcl value
-     * @author Frank Giordano
      */
     public Optional<String> getJcl() {
         return jcl;
@@ -149,7 +144,6 @@ public class SubmitJclParams {
      * Retrieve jclSymbols specified
      *
      * @return jclSymbols value
-     * @author Frank Giordano
      */
     public Optional<Map<String, String>> getJclSymbols() {
         return jclSymbols;
@@ -159,7 +153,6 @@ public class SubmitJclParams {
      * Assign JCL symbolic substitution value
      *
      * @param jclSymbols Map of JCL symbolic substitution
-     * @author Frank Giordano
      */
     public void setJclSymbols(final Map<String, String> jclSymbols) {
         this.jclSymbols = Optional.ofNullable(jclSymbols);

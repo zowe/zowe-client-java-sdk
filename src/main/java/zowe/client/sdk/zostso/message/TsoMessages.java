@@ -38,7 +38,6 @@ public class TsoMessages {
      * Retrieve tsoMessage specified
      *
      * @return tsoMessage value
-     * @author Frank Giordano
      */
     public Optional<TsoMessage> getTsoMessage() {
         return tsoMessage;
@@ -48,7 +47,6 @@ public class TsoMessages {
      * Assign tsoMessage value
      *
      * @param tsoMessage tso message value
-     * @author Frank Giordano
      */
     public void setTsoMessage(final TsoMessage tsoMessage) {
         this.tsoMessage = Optional.ofNullable(tsoMessage);
@@ -58,7 +56,6 @@ public class TsoMessages {
      * Retrieve tsoPrompt specified
      *
      * @return tsoPrompt value
-     * @author Frank Giordano
      */
     public Optional<TsoPromptMessage> getTsoPrompt() {
         return tsoPrompt;
@@ -68,7 +65,6 @@ public class TsoMessages {
      * Assign tsoPrompt value
      *
      * @param tsoPrompt tso prompt value
-     * @author Frank Giordano
      */
     public void setTsoPrompt(final TsoPromptMessage tsoPrompt) {
         this.tsoPrompt = Optional.ofNullable(tsoPrompt);
@@ -78,7 +74,6 @@ public class TsoMessages {
      * Retrieve tsoResponse specified
      *
      * @return tsoResponse value
-     * @author Frank Giordano
      */
     public Optional<TsoResponseMessage> getTsoResponse() {
         return tsoResponse;
@@ -88,7 +83,6 @@ public class TsoMessages {
      * Assign tsoResponse value
      *
      * @param tsoResponse tso response value
-     * @author Frank Giordano
      */
     public void setTsoResponse(final TsoResponseMessage tsoResponse) {
         this.tsoResponse = Optional.ofNullable(tsoResponse);

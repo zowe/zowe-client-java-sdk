@@ -12,8 +12,6 @@ package zowe.client.sdk.zosjobs.methods;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseResponseFactory;
 import zowe.client.sdk.parse.type.ParseType;
@@ -39,9 +37,10 @@ import java.util.List;
  */
 public class JobGet {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JobGet.class);
     private final ZosConnection connection;
+
     private ZoweRequest request;
+
     private String url;
 
     /**

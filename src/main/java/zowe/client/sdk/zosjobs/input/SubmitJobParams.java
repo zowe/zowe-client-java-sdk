@@ -63,7 +63,6 @@ public class SubmitJobParams {
      * Retrieve jclSymbols specified
      *
      * @return jclSymbols value
-     * @author Frank Giordano
      */
     public Optional<Map<String, String>> getJclSymbols() {
         return jclSymbols;
@@ -73,7 +72,6 @@ public class SubmitJobParams {
      * Assign jclSymbols value
      *
      * @param jclSymbols Map for JCL symbolic substitution
-     * @author Frank Giordano
      */
     public void setJclSymbols(final Map<String, String> jclSymbols) {
         this.jclSymbols = Optional.ofNullable(jclSymbols);
@@ -83,7 +81,6 @@ public class SubmitJobParams {
      * Retrieve dataset specified
      *
      * @return jobDataSet value
-     * @author Frank Giordano
      */
     public Optional<String> getJobDataSet() {
         return jobDataSet;
@@ -93,7 +90,6 @@ public class SubmitJobParams {
      * Assign dataset value
      *
      * @param jobDataSet z/OS data set which should contain syntactically correct JCL
-     * @author Frank Giordano
      */
     public void setJobDataSet(final String jobDataSet) {
         this.jobDataSet = Optional.ofNullable(jobDataSet);

@@ -56,7 +56,6 @@ public class ChangeModeParams {
      * Retrieve mode value
      *
      * @return mode value
-     * @author James Kostrewski
      */
     public Optional<String> getMode() {
         return mode;
@@ -66,7 +65,6 @@ public class ChangeModeParams {
      * Is recursive specified
      *
      * @return boolean true or false
-     * @author James Kostrewski
      */
     public boolean isRecursive() {
         return recursive;
@@ -76,7 +74,6 @@ public class ChangeModeParams {
      * Retrieve linkType value
      *
      * @return linkType value
-     * @author James Kostrewski
      */
     public Optional<LinkType> getLinkType() {
         return linkType;

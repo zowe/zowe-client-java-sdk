@@ -51,7 +51,6 @@ public class ModifyJobParams {
      * Retrieve jobId value
      *
      * @return jobId value
-     * @author Frank Giordano
      */
     public Optional<String> getJobId() {
         return jobId;
@@ -61,7 +60,6 @@ public class ModifyJobParams {
      * Retrieve jobName value
      *
      * @return jobName value
-     * @author Frank Giordano
      */
     public Optional<String> getJobName() {
         return jobName;
@@ -71,7 +69,6 @@ public class ModifyJobParams {
      * Retrieve version value
      *
      * @return version value
-     * @author Frank Giordano
      */
     public Optional<String> getVersion() {
         return version;

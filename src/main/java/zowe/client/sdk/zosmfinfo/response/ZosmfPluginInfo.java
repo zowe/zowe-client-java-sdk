@@ -50,7 +50,6 @@ public class ZosmfPluginInfo {
      * Retrieve pluginDefaultName specified
      *
      * @return pluginDefaultName value
-     * @author Frank Giordano
      */
     public Optional<String> getPluginDefaultName() {
         return pluginDefaultName;
@@ -60,7 +59,6 @@ public class ZosmfPluginInfo {
      * Retrieve pluginStatus specified
      *
      * @return pluginStatus value
-     * @author Frank Giordano
      */
     public Optional<String> getPluginStatus() {
         return pluginStatus;
@@ -70,7 +68,6 @@ public class ZosmfPluginInfo {
      * Retrieve pluginVersion specified
      *
      * @return pluginVersion value
-     * @author Frank Giordano
      */
     public Optional<String> getPluginVersion() {
         return pluginVersion;

@@ -72,7 +72,6 @@ public class CommonJobParams {
      * Retrieve jobId specified
      *
      * @return jobId value
-     * @author Frank Giordano
      */
     public Optional<String> getJobId() {
         return jobId;
@@ -82,7 +81,6 @@ public class CommonJobParams {
      * Retrieve jobName specified
      *
      * @return jobName value
-     * @author Frank Giordano
      */
     public Optional<String> getJobName() {
         return jobName;
@@ -92,7 +90,6 @@ public class CommonJobParams {
      * Determines whether step data is included in rest call
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isStepData() {
         return stepData;

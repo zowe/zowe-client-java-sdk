@@ -31,22 +31,23 @@ import java.util.Set;
  */
 public class KeyTarImpl implements IKeyTar {
 
-    /**
-     * Logger
-     */
     private static final Logger LOG = LoggerFactory.getLogger(KeyTarImpl.class);
+
     /**
      * List of KeyTarConfig objects - OS might contain multiple OS stores
      */
     private final List<KeyTarConfig> keyTarConfigs = new ArrayList<>();
+
     /**
      * Represents a string value used for KeyTar querying for OS credential store value
      */
     private String serviceName;
+
     /**
      * Represents a string value used for KeyTar querying for OS credential store value
      */
     private String accountName;
+
     /**
      * Represents a string value of the retrieved OS credential store
      */
@@ -57,7 +58,6 @@ public class KeyTarImpl implements IKeyTar {
      *
      * @return list of KeyTarConfig objects
      * @throws Exception error processing
-     * @author Frank Giordano
      */
     @Override
     public List<KeyTarConfig> getKeyConfigs() throws Exception {
@@ -73,7 +73,6 @@ public class KeyTarImpl implements IKeyTar {
      * Return keyString value after KeyTar has been fully processed.
      *
      * @return list of KeyTarConfig objects
-     * @author Frank Giordano
      */
     @Override
     public String getKeyTarValue() {

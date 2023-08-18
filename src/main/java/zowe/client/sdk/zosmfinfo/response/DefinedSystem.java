@@ -107,7 +107,6 @@ public class DefinedSystem {
      * Retrieve cpcName specified
      *
      * @return cpcName value
-     * @author Frank Giordano
      */
     public Optional<String> getCpcName() {
         return cpcName;
@@ -117,7 +116,6 @@ public class DefinedSystem {
      * Retrieve cpcSerial specified
      *
      * @return cpcSerial value
-     * @author Frank Giordano
      */
     public Optional<String> getCpcSerial() {
         return cpcSerial;
@@ -127,7 +125,6 @@ public class DefinedSystem {
      * Retrieve ftpDestinationName specified
      *
      * @return ftpDestinationName value
-     * @author Frank Giordano
      */
     public Optional<String> getFtpDestinationName() {
         return ftpDestinationName;
@@ -137,7 +134,6 @@ public class DefinedSystem {
      * Retrieve groupNames specified
      *
      * @return groupNames value
-     * @author Frank Giordano
      */
     public Optional<String> getGroupNames() {
         return groupNames;
@@ -147,7 +143,6 @@ public class DefinedSystem {
      * Retrieve httpProxyName specified
      *
      * @return httpProxyName value
-     * @author Frank Giordano
      */
     public Optional<String> getHttpProxyName() {
         return httpProxyName;
@@ -157,7 +152,6 @@ public class DefinedSystem {
      * Retrieve jesMemberName specified
      *
      * @return jesMemberName value
-     * @author Frank Giordano
      */
     public Optional<String> getJesMemberName() {
         return jesMemberName;
@@ -167,7 +161,6 @@ public class DefinedSystem {
      * Retrieve jesType specified
      *
      * @return jesType value
-     * @author Frank Giordano
      */
     public Optional<String> getJesType() {
         return jesType;
@@ -177,7 +170,6 @@ public class DefinedSystem {
      * Retrieve sysplexName specified
      *
      * @return sysplexName value
-     * @author Frank Giordano
      */
     public Optional<String> getSysplexName() {
         return sysplexName;
@@ -187,7 +179,6 @@ public class DefinedSystem {
      * Retrieve systemName specified
      *
      * @return systemName value
-     * @author Frank Giordano
      */
     public Optional<String> getSystemName() {
         return systemName;
@@ -197,7 +188,6 @@ public class DefinedSystem {
      * Retrieve systemNickName specified
      *
      * @return systemNickName value
-     * @author Frank Giordano
      */
     public Optional<String> getSystemNickName() {
         return systemNickName;
@@ -207,7 +197,6 @@ public class DefinedSystem {
      * Retrieve url specified
      *
      * @return url value
-     * @author Frank Giordano
      */
     public Optional<String> getUrl() {
         return url;
@@ -217,7 +206,6 @@ public class DefinedSystem {
      * Retrieve zosVR specified
      *
      * @return zosVR value
-     * @author Frank Giordano
      */
     public Optional<String> getZosVR() {
         return zosVR;

@@ -49,7 +49,6 @@ public class SendTsoParams {
      * Retrieve data specified
      *
      * @return data value being used to sent to active address space
-     * @author Frank Giordano
      */
     public String getData() {
         return data;
@@ -59,7 +58,6 @@ public class SendTsoParams {
      * Retrieve servletKey specified
      *
      * @return servletKey key value of an active address space
-     * @author Frank Giordano
      */
     public String getServletKey() {
         return servletKey;

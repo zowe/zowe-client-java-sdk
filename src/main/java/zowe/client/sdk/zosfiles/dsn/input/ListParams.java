@@ -71,7 +71,6 @@ public class ListParams {
      * Retrieve attributes value. The indicator that we want to show more attributes.
      *
      * @return attributes value
-     * @author Leonid Baranov
      */
     public Optional<AttributeType> getAttribute() {
         return attribute;
@@ -81,7 +80,6 @@ public class ListParams {
      * Retrieve maxLength value
      *
      * @return maxLength value
-     * @author Leonid Baranov
      */
     public Optional<String> getMaxLength() {
         return maxLength;
@@ -91,7 +89,6 @@ public class ListParams {
      * Retrieve pattern value
      *
      * @return pattern value
-     * @author Leonid Baranov
      */
     public Optional<String> getPattern() {
         return pattern;
@@ -101,7 +98,6 @@ public class ListParams {
      * Retrieve recall value
      *
      * @return recall value
-     * @author Leonid Baranov
      */
     public Optional<String> getRecall() {
         return recall;
@@ -111,7 +107,6 @@ public class ListParams {
      * Retrieve responseTimeout value
      *
      * @return responseTimeout value
-     * @author Leonid Baranov
      */
     public Optional<String> getResponseTimeout() {
         return responseTimeout;
@@ -121,7 +116,6 @@ public class ListParams {
      * Retrieve start value
      *
      * @return start value
-     * @author Leonid Baranov
      */
     public Optional<String> getStart() {
         return start;
@@ -131,7 +125,6 @@ public class ListParams {
      * Retrieve volume value
      *
      * @return volume value
-     * @author Leonid Baranov
      */
     public Optional<String> getVolume() {
         return volume;

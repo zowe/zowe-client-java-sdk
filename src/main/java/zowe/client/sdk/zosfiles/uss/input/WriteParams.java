@@ -65,7 +65,6 @@ public class WriteParams {
      * Retrieve textContent value
      *
      * @return textContent value
-     * @author Frank Giordano
      */
     public Optional<String> getTextContent() {
         return textContent;
@@ -75,7 +74,6 @@ public class WriteParams {
      * Retrieve binaryContent value
      *
      * @return binaryContent value
-     * @author Frank Giordano
      */
     public Optional<byte[]> getBinaryContent() {
         return binaryContent;
@@ -85,7 +83,6 @@ public class WriteParams {
      * Retrieve fileEncoding value
      *
      * @return fileEncoding value
-     * @author Frank Giordano
      */
     public Optional<String> getFileEncoding() {
         return fileEncoding;
@@ -95,7 +92,6 @@ public class WriteParams {
      * Retrieve is crlf specified
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isCrlf() {
         return crlf;
@@ -105,7 +101,6 @@ public class WriteParams {
      * Retrieve is binary specified
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isBinary() {
         return binary;

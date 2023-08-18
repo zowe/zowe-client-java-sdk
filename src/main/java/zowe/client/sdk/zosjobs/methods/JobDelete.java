@@ -32,7 +32,9 @@ import java.util.Map;
 public class JobDelete {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobDelete.class);
+
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

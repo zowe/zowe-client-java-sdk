@@ -29,22 +29,27 @@ public class StartStopResponses {
      * Response from z/OSMF to start rest call
      */
     private final ZosmfTsoResponse zosmfTsoResponse;
+
     /**
      * If an error occurs, returns the error which contains cause error.
      */
     private final String failureResponse;
+
     /**
      * Appended collected messages including READY prompt at the end.
      */
     private final String messages;
+
     /**
      * True if the command was issued and the responses were collected.
      */
     private final boolean success;
+
     /**
      * Collected responses from z/OSMF
      */
     private List<ZosmfTsoResponse> collectedResponses;
+
     /**
      * Servlet key from IZosmfTsoResponse
      */
@@ -84,7 +89,6 @@ public class StartStopResponses {
      * Retrieve collectedResponses specified
      *
      * @return ZosmfTsoResponse value
-     * @author Frank Giordano
      */
     public List<ZosmfTsoResponse> getCollectedResponses() {
         return collectedResponses;
@@ -94,7 +98,6 @@ public class StartStopResponses {
      * Assign collectedResponses value
      *
      * @param collectedResponses list of ZosmfTsoResponse objects
-     * @author Frank Giordano
      */
     public void setCollectedResponses(final List<ZosmfTsoResponse> collectedResponses) {
         this.collectedResponses = collectedResponses;
@@ -104,7 +107,6 @@ public class StartStopResponses {
      * Retrieve failureResponse specified
      *
      * @return failureResponse value
-     * @author Frank Giordano
      */
     public Optional<String> getFailureResponse() {
         return Optional.of(failureResponse);
@@ -114,7 +116,6 @@ public class StartStopResponses {
      * Retrieve messages specified
      *
      * @return messages value
-     * @author Frank Giordano
      */
     public Optional<String> getMessages() {
         return Optional.of(messages);
@@ -124,7 +125,6 @@ public class StartStopResponses {
      * Retrieve servletKey specified
      *
      * @return servletKey value
-     * @author Frank Giordano
      */
     public Optional<String> getServletKey() {
         return Optional.ofNullable(servletKey);
@@ -134,7 +134,6 @@ public class StartStopResponses {
      * Assign servletKey value
      *
      * @param servletKey key of tso address space
-     * @author Frank Giordano
      */
     public void setServletKey(final String servletKey) {
         this.servletKey = servletKey;
@@ -144,7 +143,6 @@ public class StartStopResponses {
      * Retrieve zosmfTsoResponse specified
      *
      * @return ZosmfTsoResponse value
-     * @author Frank Giordano
      */
     public Optional<ZosmfTsoResponse> getZosmfTsoResponse() {
         return Optional.of(zosmfTsoResponse);
@@ -154,7 +152,6 @@ public class StartStopResponses {
      * Retrieve is success
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isSuccess() {
         return success;

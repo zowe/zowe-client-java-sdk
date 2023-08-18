@@ -36,9 +36,6 @@ import java.util.*;
  */
 public class TeamConfigService {
 
-    /**
-     * Logger
-     */
     private static final Logger LOG = LoggerFactory.getLogger(TeamConfigService.class);
 
     /**

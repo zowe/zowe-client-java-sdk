@@ -53,7 +53,6 @@ public class CopyParams {
      * Retrieve from value
      *
      * @return from value
-     * @author James Kostrewski
      */
     public Optional<String> getFrom() {
         return from;
@@ -63,7 +62,6 @@ public class CopyParams {
      * Retrieve is overwrite specified
      *
      * @return boolean true or false
-     * @author James Kostrewski
      */
     public boolean isOverwrite() {
         return overwrite;
@@ -73,7 +71,6 @@ public class CopyParams {
      * Is recursive specified
      *
      * @return boolean true or false
-     * @author James Kostrewski
      */
     public boolean isRecursive() {
         return recursive;

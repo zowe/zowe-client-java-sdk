@@ -56,7 +56,6 @@ public class StartStopResponse {
      * Retrieve failureResponse specified
      *
      * @return failureResponse value
-     * @author Frank Giordano
      */
     public Optional<String> getFailureResponse() {
         return failureResponse;
@@ -66,7 +65,6 @@ public class StartStopResponse {
      * Assign failureResponse value
      *
      * @param failureResponse failure response string
-     * @author Frank Giordano
      */
     public void setFailureResponse(final String failureResponse) {
         this.failureResponse = Optional.ofNullable(failureResponse);
@@ -76,7 +74,6 @@ public class StartStopResponse {
      * Retrieve servletKey specified
      *
      * @return servletKey value
-     * @author Frank Giordano
      */
     public Optional<String> getServletKey() {
         return servletKey;
@@ -86,7 +83,6 @@ public class StartStopResponse {
      * Retrieve is success
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isSuccess() {
         return success;
@@ -96,7 +92,6 @@ public class StartStopResponse {
      * Assign success value
      *
      * @param success true or false is response seen
-     * @author Frank Giordano
      */
     public void setSuccess(final boolean success) {
         this.success = success;
@@ -105,8 +100,7 @@ public class StartStopResponse {
     /**
      * Retrieve zosmfTsoResponse specified
      *
-     * @return ZosmfTsoResponse value
-     * @author Frank Giordano
+     * @return ZosmfTsoResponse value=
      */
     public Optional<ZosmfTsoResponse> getZosmfTsoResponse() {
         return zosmfTsoResponse;

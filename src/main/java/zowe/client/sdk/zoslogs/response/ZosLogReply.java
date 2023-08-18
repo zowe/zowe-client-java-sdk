@@ -85,7 +85,6 @@ public class ZosLogReply {
      * Return timeZone OptionalLong value.
      *
      * @return OptionalLong value
-     * @author Frank Giordano
      */
     public OptionalLong getTimeZone() {
         return timeZone;
@@ -95,7 +94,6 @@ public class ZosLogReply {
      * Return nextTimeStamp OptionalLong value.
      *
      * @return OptionalLong value
-     * @author Frank Giordano
      */
     public OptionalLong getNextTimeStamp() {
         return nextTimeStamp;
@@ -105,7 +103,6 @@ public class ZosLogReply {
      * Return source Optional value.
      *
      * @return OptionalLong value
-     * @author Frank Giordano
      */
     public Optional<String> getSource() {
         return source;
@@ -115,7 +112,6 @@ public class ZosLogReply {
      * Return totalItems OptionalLong value.
      *
      * @return OptionalLong value
-     * @author Frank Giordano
      */
     public OptionalLong getTotalItems() {
         return totalItems;
@@ -125,7 +121,6 @@ public class ZosLogReply {
      * Return items value.
      *
      * @return OptionalLong value
-     * @author Frank Giordano
      */
     public List<ZosLogItem> getItemLst() {
         return items;

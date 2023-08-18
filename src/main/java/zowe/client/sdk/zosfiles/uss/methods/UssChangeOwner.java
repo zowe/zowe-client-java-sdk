@@ -35,6 +35,7 @@ import java.util.Map;
 public class UssChangeOwner {
 
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

@@ -44,7 +44,6 @@ public class CheckJobStatus {
      * Retrieve job specified
      *
      * @return job value
-     * @author Frank Giordano
      */
     public Job getJob() {
         return job;
@@ -54,7 +53,6 @@ public class CheckJobStatus {
      * Retrieve is statusFound specified
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isStatusFound() {
         return statusFound;

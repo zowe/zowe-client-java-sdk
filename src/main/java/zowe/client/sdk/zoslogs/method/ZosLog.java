@@ -45,7 +45,9 @@ import java.util.regex.Pattern;
 public class ZosLog {
 
     private static final String RESOURCE = "/zosmf/restconsoles/v1/log?";
+
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

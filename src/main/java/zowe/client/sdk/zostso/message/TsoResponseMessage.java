@@ -53,7 +53,6 @@ public class TsoResponseMessage {
      * Retrieve version specified
      *
      * @return version value
-     * @author Frank Giordano
      */
     public Optional<String> getVersion() {
         return version;
@@ -63,7 +62,6 @@ public class TsoResponseMessage {
      * Assign version value
      *
      * @param version JSON version for message format
-     * @author Frank Giordano
      */
     public void setVersion(final String version) {
         this.version = Optional.ofNullable(version);
@@ -73,7 +71,6 @@ public class TsoResponseMessage {
      * Retrieve data specified
      *
      * @return data value
-     * @author Frank Giordano
      */
     public Optional<String> getData() {
         return data;
@@ -83,7 +80,6 @@ public class TsoResponseMessage {
      * Assign version value
      *
      * @param data description os the data type
-     * @author Frank Giordano
      */
     public void setData(final String data) {
         this.data = Optional.ofNullable(data);

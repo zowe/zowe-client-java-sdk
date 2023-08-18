@@ -59,7 +59,6 @@ public class IssueResponse {
      * Retrieve zosmfResponse specified
      *
      * @return zosmfResponse z/OSMF response
-     * @author Frank Giordano
      */
     public Optional<String> getCommandResponses() {
         return commandResponses;
@@ -69,7 +68,6 @@ public class IssueResponse {
      * Assign commandResponses value
      *
      * @param commandResponses command string responses
-     * @author Frank Giordano
      */
     public void setCommandResponses(final String commandResponses) {
         this.commandResponses = Optional.ofNullable(commandResponses);
@@ -79,7 +77,6 @@ public class IssueResponse {
      * Retrieve is startReady specified
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isStartReady() {
         return startReady;
@@ -89,7 +86,6 @@ public class IssueResponse {
      * Assign startReady value
      *
      * @param startReady true or false is start ready prompt seen or not
-     * @author Frank Giordano
      */
     public void setStartReady(final boolean startReady) {
         this.startReady = startReady;
@@ -99,7 +95,6 @@ public class IssueResponse {
      * Retrieve startResponse specified
      *
      * @return startResponse value
-     * @author Frank Giordano
      */
     public Optional<StartStopResponses> getStartResponse() {
         return startResponse;
@@ -109,7 +104,6 @@ public class IssueResponse {
      * Assign startResponse value
      *
      * @param startResponse tso response
-     * @author Frank Giordano
      */
     public void setStartResponse(final StartStopResponses startResponse) {
         this.startResponse = Optional.ofNullable(startResponse);
@@ -119,7 +113,6 @@ public class IssueResponse {
      * Retrieve stopResponse specified
      *
      * @return stopResponse tso response
-     * @author Frank Giordano
      */
     public Optional<StartStopResponse> getStopResponse() {
         return stopResponse;
@@ -129,7 +122,6 @@ public class IssueResponse {
      * Assign stopResponse value
      *
      * @param stopResponse tso response
-     * @author Frank Giordano
      */
     public void setStopResponse(final StartStopResponse stopResponse) {
         this.stopResponse = Optional.ofNullable(stopResponse);
@@ -139,7 +131,6 @@ public class IssueResponse {
      * Retrieve is success
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isSuccess() {
         return success;
@@ -149,7 +140,6 @@ public class IssueResponse {
      * Assign success value
      *
      * @param success true or false is response seen
-     * @author Frank Giordano
      */
     public void setSuccess(final boolean success) {
         this.success = success;
@@ -159,7 +149,6 @@ public class IssueResponse {
      * Retrieve zosmfResponses specified
      *
      * @return zosmfResponses z/OSMF responses
-     * @author Frank Giordano
      */
     public List<ZosmfTsoResponse> getZosmfResponse() {
         return zosmfResponses;
@@ -169,7 +158,6 @@ public class IssueResponse {
      * Assign zosmfResponses value
      *
      * @param zosmfResponses z/OSMF tso responses
-     * @author Frank Giordano
      */
     public void setZosmfResponses(final List<ZosmfTsoResponse> zosmfResponses) {
         this.zosmfResponses = Objects.requireNonNullElse(zosmfResponses, Collections.emptyList());

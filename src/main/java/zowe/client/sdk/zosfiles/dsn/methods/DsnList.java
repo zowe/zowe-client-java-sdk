@@ -39,7 +39,9 @@ import java.util.*;
 public class DsnList {
 
     private static final Logger LOG = LoggerFactory.getLogger(DsnList.class);
+
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

@@ -60,7 +60,6 @@ public class GetJobParams {
      * Retrieve jobId specified
      *
      * @return jobId value
-     * @author Frank Giordano
      */
     public Optional<String> getJobId() {
         return jobId;
@@ -70,7 +69,6 @@ public class GetJobParams {
      * Retrieve maxJobs specified
      *
      * @return maxJobs value
-     * @author Frank Giordano
      */
     public OptionalInt getMaxJobs() {
         return maxJobs;
@@ -80,7 +78,6 @@ public class GetJobParams {
      * Retrieve owner specified
      *
      * @return owner value
-     * @author Frank Giordano
      */
     public Optional<String> getOwner() {
         return owner;
@@ -90,7 +87,6 @@ public class GetJobParams {
      * Retrieve prefix specified
      *
      * @return prefix value
-     * @author Frank Giordano
      */
     public Optional<String> getPrefix() {
         return prefix;

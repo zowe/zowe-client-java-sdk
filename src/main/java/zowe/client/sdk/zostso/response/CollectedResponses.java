@@ -50,7 +50,6 @@ public class CollectedResponses {
      * Retrieve messages specified
      *
      * @return messages
-     * @author Frank Giordano
      */
     public Optional<String> getMessages() {
         return messages;
@@ -60,7 +59,6 @@ public class CollectedResponses {
      * Retrieve tsos specified
      *
      * @return list of ZosmfTsoResponse objects
-     * @author Frank Giordano
      */
     public List<ZosmfTsoResponse> getTsos() {
         return tsos;

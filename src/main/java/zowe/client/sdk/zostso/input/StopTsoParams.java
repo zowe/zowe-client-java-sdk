@@ -42,7 +42,6 @@ public class StopTsoParams {
      * Retrieve servletKey specified
      *
      * @return servletKey key value of an active address space
-     * @author Frank Giordano
      */
     public Optional<String> getServletKey() {
         return servletKey;

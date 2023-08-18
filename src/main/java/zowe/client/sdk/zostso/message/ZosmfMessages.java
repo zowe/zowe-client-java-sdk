@@ -52,7 +52,6 @@ public class ZosmfMessages {
      * Retrieve messageText specified
      *
      * @return messageText value
-     * @author Frank Giordano
      */
     public Optional<String> getMessageText() {
         return messageText;
@@ -62,7 +61,6 @@ public class ZosmfMessages {
      * Assign messageText value
      *
      * @param messageText value
-     * @author Frank Giordano
      */
     public void setMessageText(final String messageText) {
         this.messageText = Optional.ofNullable(messageText);
@@ -72,7 +70,6 @@ public class ZosmfMessages {
      * Retrieve messageId specified
      *
      * @return messageId value
-     * @author Frank Giordano
      */
     public Optional<String> getMessageId() {
         return messageId;
@@ -82,7 +79,6 @@ public class ZosmfMessages {
      * Assign messageId value
      *
      * @param messageId value
-     * @author Frank Giordano
      */
     public void setMessageId(final String messageId) {
         this.messageId = Optional.ofNullable(messageId);
@@ -92,7 +88,6 @@ public class ZosmfMessages {
      * Retrieve stackTrace specified
      *
      * @return stackTrace value
-     * @author Frank Giordano
      */
     public Optional<String> getStackTrace() {
         return stackTrace;
@@ -102,7 +97,6 @@ public class ZosmfMessages {
      * Assign stackTrace value
      *
      * @param stackTrace value
-     * @author Frank Giordano
      */
     public void setStackTrace(final String stackTrace) {
         this.stackTrace = Optional.ofNullable(stackTrace);

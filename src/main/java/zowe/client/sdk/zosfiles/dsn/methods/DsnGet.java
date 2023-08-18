@@ -41,6 +41,7 @@ import java.util.Optional;
 public class DsnGet {
 
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

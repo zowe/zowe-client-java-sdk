@@ -163,7 +163,6 @@ public class CreateParams {
      * Retrieve alcunit value
      *
      * @return alcunit value
-     * @author Leonid Baranov
      */
     public Optional<String> getAlcunit() {
         return alcunit;
@@ -173,7 +172,6 @@ public class CreateParams {
      * Retrieve avgblk value
      *
      * @return avgblk value
-     * @author Leonid Baranov
      */
     public OptionalInt getAvgblk() {
         return avgblk;
@@ -183,7 +181,6 @@ public class CreateParams {
      * Retrieve blksize value
      *
      * @return blksize value
-     * @author Leonid Baranov
      */
     public OptionalInt getBlksize() {
         return blksize;
@@ -193,7 +190,6 @@ public class CreateParams {
      * Retrieve dataclass value
      *
      * @return dataclass value
-     * @author Leonid Baranov
      */
     public Optional<String> getDataclass() {
         return dataclass;
@@ -203,7 +199,6 @@ public class CreateParams {
      * Retrieve dirblk value
      *
      * @return dirblk value
-     * @author Leonid Baranov
      */
     public OptionalInt getDirblk() {
         return dirblk;
@@ -213,7 +208,6 @@ public class CreateParams {
      * Retrieve dsntype value
      *
      * @return dsntype value
-     * @author Leonid Baranov
      */
     public Optional<String> getDsntype() {
         return dsntype;
@@ -223,7 +217,6 @@ public class CreateParams {
      * Retrieve dsorg value
      *
      * @return dsorg value
-     * @author Leonid Baranov
      */
     public Optional<String> getDsorg() {
         return dsorg;
@@ -233,7 +226,6 @@ public class CreateParams {
      * Retrieve lrecl value
      *
      * @return lrecl value
-     * @author Leonid Baranov
      */
     public OptionalInt getLrecl() {
         return lrecl;
@@ -243,7 +235,6 @@ public class CreateParams {
      * Retrieve mgntclass value
      *
      * @return mgntclass value
-     * @author Leonid Baranov
      */
     public Optional<String> getMgntclass() {
         return mgntclass;
@@ -253,7 +244,6 @@ public class CreateParams {
      * Retrieve primary value
      *
      * @return primary value
-     * @author Leonid Baranov
      */
     public OptionalInt getPrimary() {
         return primary;
@@ -263,7 +253,6 @@ public class CreateParams {
      * Retrieve recfm value
      *
      * @return recfm value
-     * @author Leonid Baranov
      */
     public Optional<String> getRecfm() {
         return recfm;
@@ -273,7 +262,6 @@ public class CreateParams {
      * Retrieve responseTimeout value
      *
      * @return responseTimeout value
-     * @author Leonid Baranov
      */
     public Optional<String> getResponseTimeout() {
         return responseTimeout;
@@ -283,7 +271,6 @@ public class CreateParams {
      * Retrieve secondary value
      *
      * @return secondary value
-     * @author Leonid Baranov
      */
     public OptionalInt getSecondary() {
         return secondary;
@@ -293,7 +280,6 @@ public class CreateParams {
      * Retrieve is showAttributes specified
      *
      * @return boolean true or false
-     * @author Leonid Baranov
      */
     public boolean isShowAttributes() {
         return showAttributes;
@@ -303,7 +289,6 @@ public class CreateParams {
      * Retrieve size value
      *
      * @return size value
-     * @author Leonid Baranov
      */
     public Optional<String> getSize() {
         return size;
@@ -313,7 +298,6 @@ public class CreateParams {
      * Retrieve storclass value
      *
      * @return storclass value
-     * @author Leonid Baranov
      */
     public Optional<String> getStorclass() {
         return storclass;
@@ -323,7 +307,6 @@ public class CreateParams {
      * Retrieve unit value
      *
      * @return unit value
-     * @author Leonid Baranov
      */
     public Optional<String> getUnit() {
         return unit;
@@ -333,7 +316,6 @@ public class CreateParams {
      * Retrieve volser value
      *
      * @return volser value
-     * @author Leonid Baranov
      */
     public Optional<String> getVolser() {
         return volser;

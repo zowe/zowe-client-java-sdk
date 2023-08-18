@@ -83,7 +83,6 @@ public class ZosmfTsoResponse {
      * Retrieve servletKey specified
      *
      * @return servletKey value
-     * @author Frank Giordano
      */
     public Optional<String> getServletKey() {
         return servletKey;
@@ -93,7 +92,6 @@ public class ZosmfTsoResponse {
      * Retrieve queueId specified
      *
      * @return queueId value
-     * @author Frank Giordano
      */
     public Optional<String> getQueueId() {
         return queueId;
@@ -103,7 +101,6 @@ public class ZosmfTsoResponse {
      * Retrieve ver specified
      *
      * @return ver value
-     * @author Frank Giordano
      */
     public Optional<String> getVer() {
         return ver;
@@ -113,7 +110,6 @@ public class ZosmfTsoResponse {
      * Retrieve is reused specified
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isReused() {
         return reused;
@@ -123,7 +119,6 @@ public class ZosmfTsoResponse {
      * Retrieve is timeout specified
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isTimeout() {
         return timeout;
@@ -133,7 +128,6 @@ public class ZosmfTsoResponse {
      * Retrieve msgData specified
      *
      * @return msgData value
-     * @author Frank Giordano
      */
     public List<ZosmfMessages> getMsgData() {
         return msgData;
@@ -143,7 +137,6 @@ public class ZosmfTsoResponse {
      * Retrieve sessionId specified
      *
      * @return sessionId value
-     * @author Frank Giordano
      */
     public Optional<String> getSessionId() {
         return sessionId;
@@ -153,7 +146,6 @@ public class ZosmfTsoResponse {
      * Retrieve tsoData specified
      *
      * @return tsoData value
-     * @author Frank Giordano
      */
     public List<TsoMessages> getTsoData() {
         return tsoData;
@@ -163,7 +155,6 @@ public class ZosmfTsoResponse {
      * Retrieve appData specified
      *
      * @return appData value
-     * @author Frank Giordano
      */
     public Optional<String> getAppData() {
         return appData;
@@ -173,7 +164,6 @@ public class ZosmfTsoResponse {
      * Assign tsoData message list
      *
      * @param tsoData message list
-     * @author Frank Giordano
      */
     public void setTsoData(final List<TsoMessages> tsoData) {
         this.tsoData = Objects.requireNonNullElse(tsoData, Collections.emptyList());

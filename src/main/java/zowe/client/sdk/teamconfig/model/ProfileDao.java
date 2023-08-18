@@ -22,18 +22,22 @@ public class ProfileDao {
      * Profile object from Zowe Global Team Configuration
      */
     private final Profile profile;
+
     /**
      * Username from OS credential store
      */
     private final String user;
+
     /**
      * Password from OS credential store
      */
     private final String password;
+
     /**
      * Host value from properties section from Zowe Global Team Configuration
      */
     private final String host;
+
     /**
      * Port value from properties section from Zowe Global Team Configuration
      */
@@ -62,7 +66,6 @@ public class ProfileDao {
      * Return host name
      *
      * @return profile host string value
-     * @author Frank Giordano
      */
     public String getHost() {
         return host;
@@ -72,7 +75,6 @@ public class ProfileDao {
      * Return password
      *
      * @return profile password string value
-     * @author Frank Giordano
      */
     public String getPassword() {
         return password;
@@ -82,7 +84,6 @@ public class ProfileDao {
      * Return port number
      *
      * @return profile port string value
-     * @author Frank Giordano
      */
     public String getPort() {
         return port;
@@ -92,7 +93,6 @@ public class ProfileDao {
      * Return profile object
      *
      * @return profile object
-     * @author Frank Giordano
      */
     public Profile getProfile() {
         return profile;
@@ -102,7 +102,6 @@ public class ProfileDao {
      * Return username
      *
      * @return profile username string value
-     * @author Frank Giordano
      */
     public String getUser() {
         return user;

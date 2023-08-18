@@ -21,10 +21,12 @@ public class KeyTarConfig {
      * Represents a string value of Zowe Global Team Configuration file name and path location
      */
     private final String location;
+
     /**
      * Represents a string value of a username contained within the OS credential store
      */
     private final String userName;
+
     /**
      * Represents a string value of a password contained within the OS credential store
      */

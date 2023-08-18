@@ -49,7 +49,6 @@ public class ZosmfSystemsResponse {
      * Retrieve definedSystems specified
      *
      * @return definedSystems value
-     * @author Frank Giordano
      */
     public Optional<DefinedSystem[]> getDefinedSystems() {
         return definedSystems;
@@ -59,7 +58,6 @@ public class ZosmfSystemsResponse {
      * Retrieve numRows specified
      *
      * @return numRows value
-     * @author Frank Giordano
      */
     public OptionalLong getNumRows() {
         return numRows;

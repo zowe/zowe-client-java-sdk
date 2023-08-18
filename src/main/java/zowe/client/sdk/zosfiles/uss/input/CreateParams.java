@@ -67,7 +67,6 @@ public class CreateParams {
      * Retrieve CreateType enum type value
      *
      * @return type value
-     * @author James Kostrewski
      */
     public CreateType getType() {
         return type;
@@ -77,12 +76,10 @@ public class CreateParams {
      * Retrieve mode value
      *
      * @return mode value
-     * @author James Kostrewski
      */
     public String getMode() {
         return mode;
     }
-
 
     @Override
     public String toString() {

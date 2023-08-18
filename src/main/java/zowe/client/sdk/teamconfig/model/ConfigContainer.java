@@ -25,18 +25,22 @@ public class ConfigContainer {
      * individual LPAR instance.
      */
     private final List<Partition> partitions;
+
     /**
      * Schema section value from Zowe Global Team Configuration
      */
     private final String schema;
+
     /**
      * List of profiles - profile section from Zowe Global Team Configuration
      */
     private final List<Profile> profiles;
+
     /**
      * Defaults section property values from Zowe Global Team Configuration
      */
     private final Map<String, String> defaults;
+
     /**
      * AutoStore section value from Zowe Global Team Configuration
      */
@@ -65,7 +69,6 @@ public class ConfigContainer {
      * Return is autoStore specified from reading and parsing Zowe Global Team Configuration
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public Boolean isAutoStore() {
         return autoStore;
@@ -75,7 +78,6 @@ public class ConfigContainer {
      * Return hashmap of default values
      *
      * @return default property key/value pairs gathered from reading and parsing Zowe Global Team Configuration
-     * @author Frank Giordano
      */
     public Map<String, String> getDefaults() {
         return defaults;
@@ -85,7 +87,6 @@ public class ConfigContainer {
      * Return list of partitions
      *
      * @return list of partitions gathered from reading and parsing Zowe Global Team Configuration
-     * @author Frank Giordano
      */
     public List<Partition> getPartitions() {
         return partitions;
@@ -95,7 +96,6 @@ public class ConfigContainer {
      * Return list of profiles
      *
      * @return list of profiles gathered from reading and parsing Zowe Global Team Configuration
-     * @author Frank Giordano
      */
     public List<Profile> getProfiles() {
         return profiles;
@@ -105,7 +105,6 @@ public class ConfigContainer {
      * Return schema
      *
      * @return schema string value from reading and parsing Zowe Global Team Configuration
-     * @author Frank Giordano
      */
     public String getSchema() {
         return schema;

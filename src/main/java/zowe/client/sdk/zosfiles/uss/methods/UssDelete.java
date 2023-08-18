@@ -34,6 +34,7 @@ import java.util.Map;
 public class UssDelete {
 
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

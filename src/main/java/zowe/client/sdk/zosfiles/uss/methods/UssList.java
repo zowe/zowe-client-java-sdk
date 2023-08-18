@@ -47,6 +47,7 @@ import java.util.Map;
 public class UssList {
 
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

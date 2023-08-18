@@ -77,116 +77,6 @@ public class ZosLogItem {
     private final OptionalLong timeStamp;
 
     /**
-     * Retrieve cart optional value
-     *
-     * @return cart optional value
-     * @author Frank Giordano
-     */
-    public Optional<String> getCart() {
-        return cart;
-    }
-
-    /**
-     * Retrieve color optional value
-     *
-     * @return color optional value
-     * @author Frank Giordano
-     */
-    public Optional<String> getColor() {
-        return color;
-    }
-
-    /**
-     * Retrieve jobName optional value
-     *
-     * @return jobName optional value
-     * @author Frank Giordano
-     */
-    public Optional<String> getJobName() {
-        return jobName;
-    }
-
-    /**
-     * Retrieve message optional value
-     *
-     * @return message optional value
-     * @author Frank Giordano
-     */
-    public Optional<String> getMessage() {
-        return message;
-    }
-
-    /**
-     * Retrieve messageId optional value
-     *
-     * @return messageId optional value
-     * @author Frank Giordano
-     */
-    public Optional<String> getMessageId() {
-        return messageId;
-    }
-
-    /**
-     * Retrieve replyId optional value
-     *
-     * @return replyId optional value
-     * @author Frank Giordano
-     */
-    public Optional<String> getReplyId() {
-        return replyId;
-    }
-
-    /**
-     * Retrieve system optional value
-     *
-     * @return system optional value
-     * @author Frank Giordano
-     */
-    public Optional<String> getSystem() {
-        return system;
-    }
-
-    /**
-     * Retrieve type optional value
-     *
-     * @return type optional value
-     * @author Frank Giordano
-     */
-    public Optional<String> getType() {
-        return type;
-    }
-
-    /**
-     * Retrieve subType optional value
-     *
-     * @return subType optional value
-     * @author Frank Giordano
-     */
-    public Optional<String> getSubType() {
-        return subType;
-    }
-
-    /**
-     * Retrieve time optional value
-     *
-     * @return time optional value
-     * @author Frank Giordano
-     */
-    public Optional<String> getTime() {
-        return time;
-    }
-
-    /**
-     * Retrieve number optional value
-     *
-     * @return number optional value
-     * @author Frank Giordano
-     */
-    public OptionalLong getTimeStamp() {
-        return timeStamp;
-    }
-
-    /**
      * ZosLogItem Constructor.
      *
      * @param builder ZosLogItem.Builder Object
@@ -208,6 +98,105 @@ public class ZosLogItem {
         } else {
             this.timeStamp = OptionalLong.of(builder.timeStamp);
         }
+    }
+
+    /**
+     * Retrieve cart optional value
+     *
+     * @return cart optional value
+     */
+    public Optional<String> getCart() {
+        return cart;
+    }
+
+    /**
+     * Retrieve color optional value
+     *
+     * @return color optional value
+     */
+    public Optional<String> getColor() {
+        return color;
+    }
+
+    /**
+     * Retrieve jobName optional value
+     *
+     * @return jobName optional value
+     */
+    public Optional<String> getJobName() {
+        return jobName;
+    }
+
+    /**
+     * Retrieve message optional value
+     *
+     * @return message optional value
+     */
+    public Optional<String> getMessage() {
+        return message;
+    }
+
+    /**
+     * Retrieve messageId optional value
+     *
+     * @return messageId optional value
+     */
+    public Optional<String> getMessageId() {
+        return messageId;
+    }
+
+    /**
+     * Retrieve replyId optional value
+     *
+     * @return replyId optional value
+     */
+    public Optional<String> getReplyId() {
+        return replyId;
+    }
+
+    /**
+     * Retrieve system optional value
+     *
+     * @return system optional value
+     */
+    public Optional<String> getSystem() {
+        return system;
+    }
+
+    /**
+     * Retrieve type optional value
+     *
+     * @return type optional value
+     */
+    public Optional<String> getType() {
+        return type;
+    }
+
+    /**
+     * Retrieve subType optional value
+     *
+     * @return subType optional value
+     */
+    public Optional<String> getSubType() {
+        return subType;
+    }
+
+    /**
+     * Retrieve time optional value
+     *
+     * @return time optional value
+     */
+    public Optional<String> getTime() {
+        return time;
+    }
+
+    /**
+     * Retrieve number optional value
+     *
+     * @return number optional value
+     */
+    public OptionalLong getTimeStamp() {
+        return timeStamp;
     }
 
     public static class Builder {
@@ -233,7 +222,6 @@ public class ZosLogItem {
          *
          * @param cart string value
          * @return ZosLogItem.Builder object
-         * @author Frank Giordano
          */
         public ZosLogItem.Builder cart(final String cart) {
             this.cart = cart;
@@ -245,7 +233,6 @@ public class ZosLogItem {
          *
          * @param color string value
          * @return ZosLogItem.Builder object
-         * @author Frank Giordano
          */
         public ZosLogItem.Builder color(final String color) {
             this.color = color;
@@ -257,7 +244,6 @@ public class ZosLogItem {
          *
          * @param jobName string value
          * @return ZosLogItem.Builder object
-         * @author Frank Giordano
          */
         public ZosLogItem.Builder jobName(final String jobName) {
             this.jobName = jobName;
@@ -269,7 +255,6 @@ public class ZosLogItem {
          *
          * @param message string value
          * @return ZosLogItem.Builder object
-         * @author Frank Giordano
          */
         public ZosLogItem.Builder message(final String message) {
             this.message = message;
@@ -281,7 +266,6 @@ public class ZosLogItem {
          *
          * @param messageId string value
          * @return ZosLogItem.Builder object
-         * @author Frank Giordano
          */
         public ZosLogItem.Builder messageId(final String messageId) {
             this.messageId = messageId;
@@ -293,7 +277,6 @@ public class ZosLogItem {
          *
          * @param replyId string value
          * @return ZosLogItem.Builder object
-         * @author Frank Giordano
          */
         public ZosLogItem.Builder replyId(final String replyId) {
             this.replyId = replyId;
@@ -305,7 +288,6 @@ public class ZosLogItem {
          *
          * @param system string value
          * @return ZosLogItem.Builder object
-         * @author Frank Giordano
          */
         public ZosLogItem.Builder system(final String system) {
             this.system = system;
@@ -317,7 +299,6 @@ public class ZosLogItem {
          *
          * @param type string value
          * @return ZosLogItem.Builder object
-         * @author Frank Giordano
          */
         public ZosLogItem.Builder type(final String type) {
             this.type = type;
@@ -329,7 +310,6 @@ public class ZosLogItem {
          *
          * @param subType string value
          * @return ZosLogItem.Builder object
-         * @author Frank Giordano
          */
         public ZosLogItem.Builder subType(final String subType) {
             this.subType = subType;
@@ -341,7 +321,6 @@ public class ZosLogItem {
          *
          * @param time string value
          * @return ZosLogItem.Builder object
-         * @author Frank Giordano
          */
         public ZosLogItem.Builder time(final String time) {
             this.time = time;
@@ -353,7 +332,6 @@ public class ZosLogItem {
          *
          * @param timeStamp long value
          * @return ZosLogItem.Builder object
-         * @author Frank Giordano
          */
         public ZosLogItem.Builder timeStamp(final long timeStamp) {
             this.timeStamp = timeStamp;

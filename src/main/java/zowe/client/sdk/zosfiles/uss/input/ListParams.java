@@ -148,7 +148,6 @@ public class ListParams {
      * Retrieve path value
      *
      * @return path value
-     * @author Frank Giordano
      */
     public Optional<String> getPath() {
         return path;
@@ -158,7 +157,6 @@ public class ListParams {
      * Retrieve maxLength value
      *
      * @return maxLength value
-     * @author Frank Giordano
      */
     public OptionalInt getMaxLength() {
         return maxLength;
@@ -168,7 +166,6 @@ public class ListParams {
      * Retrieve group value
      *
      * @return group value
-     * @author Frank Giordano
      */
     public Optional<String> getGroup() {
         return group;
@@ -178,7 +175,6 @@ public class ListParams {
      * Retrieve user value
      *
      * @return user value
-     * @author Frank Giordano
      */
     public Optional<String> getUser() {
         return user;
@@ -188,7 +184,6 @@ public class ListParams {
      * Retrieve mtime value
      *
      * @return mtime value
-     * @author Frank Giordano
      */
     public Optional<String> getMtime() {
         return mtime;
@@ -198,7 +193,6 @@ public class ListParams {
      * Retrieve size value
      *
      * @return size value
-     * @author Frank Giordano
      */
     public OptionalInt getSize() {
         return size;
@@ -208,7 +202,6 @@ public class ListParams {
      * Retrieve name value
      *
      * @return name value
-     * @author Frank Giordano
      */
     public Optional<String> getName() {
         return name;
@@ -218,7 +211,6 @@ public class ListParams {
      * Retrieve perm value
      *
      * @return perm value
-     * @author Frank Giordano
      */
     public Optional<String> getPerm() {
         return perm;
@@ -228,7 +220,6 @@ public class ListParams {
      * Retrieve type value
      *
      * @return type value
-     * @author Frank Giordano
      */
     public Optional<ListFilterType> getType() {
         return type;
@@ -238,7 +229,6 @@ public class ListParams {
      * Retrieve depth value
      *
      * @return depth value
-     * @author Frank Giordano
      */
     public OptionalInt getDepth() {
         return depth;
@@ -248,7 +238,6 @@ public class ListParams {
      * Retrieve is filesys specified
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isFilesys() {
         return filesys;
@@ -258,7 +247,6 @@ public class ListParams {
      * Retrieve is symlinks specified
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isSymlinks() {
         return symlinks;

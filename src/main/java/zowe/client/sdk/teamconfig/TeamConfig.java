@@ -34,9 +34,6 @@ import java.util.function.Predicate;
  */
 public class TeamConfig {
 
-    /**
-     * Logger
-     */
     private static final Logger LOG = LoggerFactory.getLogger(TeamConfig.class);
     /**
      * TeamConfigService dependency

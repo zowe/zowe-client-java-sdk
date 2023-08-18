@@ -119,7 +119,6 @@ public class Member {
      * Retrieve name of the member
      *
      * @return Optional string value
-     * @author Frank Giordano
      */
     public Optional<String> getMember() {
         return member;
@@ -129,7 +128,6 @@ public class Member {
      * Retrieve version number of the member
      *
      * @return Optional long value
-     * @author Frank Giordano
      */
     public OptionalLong getVers() {
         return vers;
@@ -139,7 +137,6 @@ public class Member {
      * Retrieve modification number of the member
      *
      * @return Optional long value
-     * @author Frank Giordano
      */
     public OptionalLong getMod() {
         return mod;
@@ -149,7 +146,6 @@ public class Member {
      * Retrieve creation date of the member
      *
      * @return Optional string value
-     * @author Frank Giordano
      */
     public Optional<String> getC4date() {
         return c4date;
@@ -159,7 +155,6 @@ public class Member {
      * Retrieve modification date of the member
      *
      * @return Optional string value
-     * @author Frank Giordano
      */
     public Optional<String> getM4date() {
         return m4date;
@@ -169,7 +164,6 @@ public class Member {
      * Retrieve cnorc of the member
      *
      * @return Optional long value
-     * @author Frank Giordano
      */
     public OptionalLong getCnorc() {
         return cnorc;
@@ -179,7 +173,6 @@ public class Member {
      * Retrieve inorc of the member
      *
      * @return Optional long value
-     * @author Frank Giordano
      */
     public OptionalLong getInorc() {
         return inorc;
@@ -189,7 +182,6 @@ public class Member {
      * Retrieve mnorc of the member
      *
      * @return Optional long value
-     * @author Frank Giordano
      */
     public OptionalLong getMnorc() {
         return mnorc;
@@ -199,7 +191,6 @@ public class Member {
      * Retrieve mtime of the member
      *
      * @return Optional string value
-     * @author Frank Giordano
      */
     public Optional<String> getMtime() {
         return mtime;
@@ -209,7 +200,6 @@ public class Member {
      * Retrieve msec of the member
      *
      * @return Optional string value
-     * @author Frank Giordano
      */
     public Optional<String> getMsec() {
         return msec;
@@ -219,7 +209,6 @@ public class Member {
      * Retrieve user of the member
      *
      * @return Optional string value
-     * @author Frank Giordano
      */
     public Optional<String> getUser() {
         return user;
@@ -229,7 +218,6 @@ public class Member {
      * Retrieve sclm of the member
      *
      * @return Optional string value
-     * @author Frank Giordano
      */
     public Optional<String> getSclm() {
         return sclm;

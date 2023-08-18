@@ -37,7 +37,9 @@ import java.util.Map;
 public class JobCancel {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobCancel.class);
+
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**

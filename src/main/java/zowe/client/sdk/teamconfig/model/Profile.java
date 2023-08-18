@@ -28,10 +28,12 @@ public class Profile {
      * Profile name
      */
     private final String name;
+
     /**
      * Profile secure json object
      */
     private final JSONArray secure;
+
     /**
      * Profile property values
      */
@@ -58,7 +60,6 @@ public class Profile {
      * Return profile name
      *
      * @return profile name string value
-     * @author Frank Giordano
      */
     public String getName() {
         return name;
@@ -68,7 +69,6 @@ public class Profile {
      * Return hashmap of property values
      *
      * @return profile property key/value pairs
-     * @author Frank Giordano
      */
     public Map<String, String> getProperties() {
         return properties;
@@ -78,7 +78,6 @@ public class Profile {
      * Return secure value
      *
      * @return secure Json object
-     * @author Frank Giordano
      */
     public JSONArray getSecure() {
         return secure;

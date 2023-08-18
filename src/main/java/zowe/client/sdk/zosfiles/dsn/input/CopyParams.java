@@ -64,7 +64,6 @@ public class CopyParams {
      * Retrieve fromDataSet value
      *
      * @return fromDataSet value
-     * @author Leonid Baranov
      */
     public Optional<String> getFromDataSet() {
         return fromDataSet;
@@ -74,7 +73,6 @@ public class CopyParams {
      * Retrieve fromVolser value
      *
      * @return fromVolser value
-     * @author Leonid Baranov
      */
     public Optional<String> getFromVolser() {
         return fromVolser;
@@ -84,7 +82,6 @@ public class CopyParams {
      * Retrieve toDataSet value
      *
      * @return toDataSet value
-     * @author Leonid Baranov
      */
     public Optional<String> getToDataSet() {
         return toDataSet;
@@ -94,7 +91,6 @@ public class CopyParams {
      * Retrieve toVolser value
      *
      * @return toVolser value
-     * @author Leonid Baranov
      */
     public Optional<String> getToVolser() {
         return toVolser;
@@ -104,7 +100,6 @@ public class CopyParams {
      * Retrieve is copyAllMembers specified
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isCopyAllMembers() {
         return copyAllMembers;
@@ -114,7 +109,6 @@ public class CopyParams {
      * Retrieve is replace specified
      *
      * @return boolean true or false
-     * @author Leonid Baranov
      */
     public boolean isReplace() {
         return replace;

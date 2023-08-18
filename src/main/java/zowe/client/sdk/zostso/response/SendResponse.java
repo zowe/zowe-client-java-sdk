@@ -59,7 +59,6 @@ public class SendResponse {
      * Retrieve commandResponse specified
      *
      * @return commandResponse value
-     * @author Frank Giordano
      */
     public Optional<String> getCommandResponse() {
         return commandResponse;
@@ -69,7 +68,6 @@ public class SendResponse {
      * Retrieve is success
      *
      * @return boolean true or false
-     * @author Frank Giordano
      */
     public boolean isSuccess() {
         return success;
@@ -79,7 +77,6 @@ public class SendResponse {
      * Retrieve zosmfResponses specified
      *
      * @return zosmfTsoResponses value, see ZosmfTsoResponse object
-     * @author Frank Giordano
      */
     public List<ZosmfTsoResponse> getZosmfResponses() {
         return zosmfTsoResponses;

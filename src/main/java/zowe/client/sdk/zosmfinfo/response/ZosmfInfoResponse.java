@@ -80,7 +80,6 @@ public class ZosmfInfoResponse {
      * Retrieve apiVersion specified
      *
      * @return apiVersion value
-     * @author Frank Giordano
      */
     public Optional<String> getApiVersion() {
         return apiVersion;
@@ -90,7 +89,6 @@ public class ZosmfInfoResponse {
      * Retrieve zosVersion specified
      *
      * @return zosVersion value
-     * @author Frank Giordano
      */
     public Optional<String> getZosVersion() {
         return zosVersion;
@@ -100,7 +98,6 @@ public class ZosmfInfoResponse {
      * Retrieve zosmfFullVersion specified
      *
      * @return zosmfFullVersion value
-     * @author Frank Giordano
      */
     public Optional<String> getZosmfFullVersion() {
         return zosmfFullVersion;
@@ -110,7 +107,6 @@ public class ZosmfInfoResponse {
      * Retrieve zosmfHostName specified
      *
      * @return zosmfHostName value
-     * @author Frank Giordano
      */
     public Optional<String> getZosmfHostName() {
         return zosmfHostName;
@@ -120,7 +116,6 @@ public class ZosmfInfoResponse {
      * Retrieve zosmfPluginsInfo specified
      *
      * @return zosmfPluginsInfo value
-     * @author Frank Giordano
      */
     public Optional<ZosmfPluginInfo[]> getZosmfPluginsInfo() {
         return zosmfPluginsInfo;
@@ -130,7 +125,6 @@ public class ZosmfInfoResponse {
      * Retrieve zosmfPort specified
      *
      * @return zosmfPort value
-     * @author Frank Giordano
      */
     public Optional<String> getZosmfPort() {
         return zosmfPort;
@@ -140,7 +134,6 @@ public class ZosmfInfoResponse {
      * Retrieve zosmfSafRealm specified
      *
      * @return zosmfSafRealm value
-     * @author Frank Giordano
      */
     public Optional<String> getZosmfSafRealm() {
         return zosmfSafRealm;
@@ -150,7 +143,6 @@ public class ZosmfInfoResponse {
      * Retrieve zosmfVersion specified
      *
      * @return zosmfVersion value
-     * @author Frank Giordano
      */
     public Optional<String> getZosmfVersion() {
         return zosmfVersion;

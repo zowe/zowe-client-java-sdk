@@ -32,6 +32,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
 public class ZosmfStatus {
 
     private final ZosConnection connection;
+
     private ZoweRequest request;
 
     /**
