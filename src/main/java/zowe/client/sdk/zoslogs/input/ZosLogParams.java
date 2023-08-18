@@ -17,9 +17,8 @@ import java.util.Optional;
 
 /**
  * The z/OSMF log API parameters. See the z/OSMF REST API documentation for full details.
- * <pre>
- * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
- * </pre>
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
  *
  * @author Frank Giordano
  * @version 2.0
