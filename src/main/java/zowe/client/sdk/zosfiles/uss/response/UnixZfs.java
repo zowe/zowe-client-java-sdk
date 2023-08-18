@@ -238,9 +238,9 @@ public class UnixZfs {
     }
 
     /**
-     * Return string value representing UssZfs object
+     * Return string value representing UnixZfs object
      *
-     * @return string representation of UssZfs
+     * @return string representation of UnixZfs
      */
     @Override
     public String toString() {

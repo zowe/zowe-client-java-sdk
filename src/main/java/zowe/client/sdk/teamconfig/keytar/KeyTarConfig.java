@@ -76,6 +76,11 @@ public class KeyTarConfig {
         return userName;
     }
 
+    /**
+     * Return string value representing KeyTarConfig object
+     *
+     * @return string representation of KeyTarConfig
+     */
     @Override
     public String toString() {
         return "KeyTarConfig{" +

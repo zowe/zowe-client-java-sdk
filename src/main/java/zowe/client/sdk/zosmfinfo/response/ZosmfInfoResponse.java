@@ -148,6 +148,11 @@ public class ZosmfInfoResponse {
         return zosmfVersion;
     }
 
+    /**
+     * Return string value representing ZosmfInfoResponse object
+     *
+     * @return string representation of ZosmfInfoResponse
+     */
     @Override
     public String toString() {
         return "ZosmfInfoResponse{" +

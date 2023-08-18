@@ -73,6 +73,11 @@ public class ZosmfPluginInfo {
         return pluginVersion;
     }
 
+    /**
+     * Return string value representing ZosmfPluginInfo object
+     *
+     * @return string representation of ZosmfPluginInfo
+     */
     @Override
     public String toString() {
         return "ZosmfPluginInfo{" +

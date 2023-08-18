@@ -110,9 +110,14 @@ public class ConfigContainer {
         return schema;
     }
 
+    /**
+     * Return string value representing ConfigContainer object
+     *
+     * @return string representation of ConfigContainer
+     */
     @Override
     public String toString() {
-        return "ZoweTeamConfig{" +
+        return "ConfigContainer{" +
                 "partitions=" + partitions +
                 ", schema=" + schema +
                 ", profiles=" + profiles +

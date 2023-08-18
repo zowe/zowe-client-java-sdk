@@ -122,9 +122,9 @@ public class UnixFile {
     }
 
     /**
-     * Return string value representing UssFile object
+     * Return string value representing UnixFile object
      *
-     * @return string representation of UssFile
+     * @return string representation of UnixFile
      */
     @Override
     public String toString() {

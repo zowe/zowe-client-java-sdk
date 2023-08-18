@@ -77,6 +77,11 @@ public class Partition {
         return properties;
     }
 
+    /**
+     * Return string value representing Partition object
+     *
+     * @return string representation of Partition
+     */
     @Override
     public String toString() {
         return "Partition{" +

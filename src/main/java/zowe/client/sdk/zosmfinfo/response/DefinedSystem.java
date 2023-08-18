@@ -211,6 +211,11 @@ public class DefinedSystem {
         return zosVR;
     }
 
+    /**
+     * Return string value representing DefinedSystem object
+     *
+     * @return string representation of DefinedSystem
+     */
     @Override
     public String toString() {
         return "DefinedSystem{" +

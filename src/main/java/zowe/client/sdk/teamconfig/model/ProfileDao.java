@@ -107,6 +107,11 @@ public class ProfileDao {
         return user;
     }
 
+    /**
+     * Return string value representing ProfileDao object
+     *
+     * @return string representation of ProfileDao
+     */
     @Override
     public String toString() {
         return "ProfileDao{" +
