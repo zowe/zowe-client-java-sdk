@@ -105,7 +105,8 @@ public class IssueConsole {
     /**
      * Issue an MVS console command on given console name driven by IssueConsoleParams settings done synchronously
      *
-     * @param params synchronous console issue parameters, see ZosmfIssueParams object
+     * @param consoleName name of the console that is used to issue the command
+     * @param params      synchronous console issue parameters, see ZosmfIssueParams object
      * @return command response on resolve, see ZosmfIssueResponse object
      * @throws Exception processing error
      * @author Frank Giordano

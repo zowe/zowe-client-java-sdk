@@ -30,6 +30,7 @@ public interface JsonParseResponse {
      * Set the data to be parsed
      *
      * @param data json data to parse
+     * @return JsonParseResponse interface object
      * @author Frank Giordano
      */
     public JsonParseResponse setJsonObject(final JSONObject data);
