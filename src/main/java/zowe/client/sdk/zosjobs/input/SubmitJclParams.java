@@ -47,7 +47,7 @@ public class SubmitJclParams {
     /**
      * A Map for JCL symbolic substitution
      * <p>
-     * For example, this accepts a Map of key/value pairs: {"SYM","SYM"}, {"SYM2","\"SYM 2\""}, etc..
+     * For example, this accepts a Map of key/value pairs: {"SYM","SYM"}, {"SYM2","\"SYM 2\""}, etc...
      * Values with spaces should be enclosed in double quotes.
      */
     private Optional<Map<String, String>> jclSymbols = Optional.empty();
