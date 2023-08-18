@@ -134,6 +134,11 @@ public class ZosmfIssueResponse {
         this.solKeyDetected = Optional.ofNullable(solKeyDetected);
     }
 
+    /**
+     * Return string value representing ZosmfIssueResponse object
+     *
+     * @return string representation of ZosmfIssueResponse
+     */
     @Override
     public String toString() {
         return "ZosmfIssueResponse{" +

@@ -106,6 +106,11 @@ public class WriteParams {
         return binary;
     }
 
+    /**
+     * Return string value representing WriteParams object
+     *
+     * @return string representation of WriteParams
+     */
     @Override
     public String toString() {
         return "WriteParams{" +

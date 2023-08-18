@@ -182,6 +182,11 @@ public class ConsoleResponse {
         this.zosmfResponse = Optional.ofNullable(zosmfResponse);
     }
 
+    /**
+     * Return string value representing ConsoleResponse object
+     *
+     * @return string representation of ConsoleResponse
+     */
     @Override
     public String toString() {
         return "ConsoleResponse{" +
