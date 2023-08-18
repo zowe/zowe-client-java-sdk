@@ -145,6 +145,9 @@ public class ZosLogParams {
                 '}';
     }
 
+    /**
+     * Builder class for ZosLogParams
+     */
     public static class Builder {
 
         private String startTime;

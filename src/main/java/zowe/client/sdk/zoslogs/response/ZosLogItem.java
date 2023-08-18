@@ -199,6 +199,9 @@ public class ZosLogItem {
         return timeStamp;
     }
 
+    /**
+     * Builder class for ZosLogItem
+     */
     public static class Builder {
 
         private String cart;

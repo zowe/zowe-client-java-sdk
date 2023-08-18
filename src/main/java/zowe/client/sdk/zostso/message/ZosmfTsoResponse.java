@@ -189,6 +189,9 @@ public class ZosmfTsoResponse {
                 '}';
     }
 
+    /**
+     * Builder class for ZosmfTsoResponse
+     */
     public static class Builder {
 
         private String servletKey;
