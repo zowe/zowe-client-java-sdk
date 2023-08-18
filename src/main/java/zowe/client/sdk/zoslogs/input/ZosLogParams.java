@@ -10,6 +10,9 @@
  */
 package zowe.client.sdk.zoslogs.input;
 
+import zowe.client.sdk.zoslogs.types.DirectionType;
+import zowe.client.sdk.zoslogs.types.HardCopyType;
+
 import java.util.Optional;
 
 /**

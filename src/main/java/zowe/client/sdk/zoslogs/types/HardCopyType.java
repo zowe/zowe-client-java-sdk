@@ -8,28 +8,28 @@
  * Copyright Contributors to the Zowe Project.
  *
  */
-package zowe.client.sdk.zoslogs.input;
+package zowe.client.sdk.zoslogs.types;
 
 /**
- * Enum class representing direction to gather log data from.
+ * Enum class representing z/OS Log type to gather log data from.
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public enum DirectionType {
+public enum HardCopyType {
 
     /**
-     * Forward direction
+     * OPERLOG type
      */
-    FORWARD("forward"),
+    OPERLOG("operlog"),
     /**
-     * backward direction
+     * SYSLOG type
      */
-    BACKWARD("backward");
+    SYSLOG("syslog");
 
     private final String value;
 
-    DirectionType(final String value) {
+    HardCopyType(final String value) {
         this.value = value;
     }
 

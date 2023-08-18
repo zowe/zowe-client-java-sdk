@@ -15,8 +15,8 @@ package zowe.client.sdk.examples.zoslogs;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zoslogs.GetZosLog;
-import zowe.client.sdk.zoslogs.input.DirectionType;
-import zowe.client.sdk.zoslogs.input.HardCopyType;
+import zowe.client.sdk.zoslogs.types.DirectionType;
+import zowe.client.sdk.zoslogs.types.HardCopyType;
 import zowe.client.sdk.zoslogs.input.ZosLogParams;
 import zowe.client.sdk.zoslogs.response.ZosLogReply;
 
