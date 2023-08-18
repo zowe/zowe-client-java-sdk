@@ -203,7 +203,6 @@ public class JobGet {
      * @throws Exception error on getting a list of jobs
      * @author Frank Giordano
      */
-    @SuppressWarnings("unchecked")
     public List<Job> getCommon(final GetJobParams params) throws Exception {
         List<Job> jobs = new ArrayList<>();
 
@@ -348,7 +347,6 @@ public class JobGet {
      * @throws Exception error on getting spool files info
      * @author Frank Giordano
      */
-    @SuppressWarnings("unchecked")
     public List<JobFile> getSpoolFilesCommon(final CommonJobParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 

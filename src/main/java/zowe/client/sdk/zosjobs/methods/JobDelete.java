@@ -29,7 +29,6 @@ import java.util.Map;
  * @author Nikunj Goyal
  * @version 2.0
  */
-@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class JobDelete {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobDelete.class);
