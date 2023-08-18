@@ -123,6 +123,22 @@ public class ZosLogParams {
         return processResponses;
     }
 
+    /**
+     * Return string value representing ZosLogParams object
+     *
+     * @return string representation of ZosLogParams
+     */
+    @Override
+    public String toString() {
+        return "ZosLogParams{" +
+                "startTime=" + startTime +
+                ", hardCopy=" + hardCopy +
+                ", direction=" + direction +
+                ", timeRange=" + timeRange +
+                ", processResponses=" + processResponses +
+                '}';
+    }
+
     public static class Builder {
 
         private String startTime;

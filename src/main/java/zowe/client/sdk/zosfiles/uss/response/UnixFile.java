@@ -121,9 +121,14 @@ public class UnixFile {
         return mtime;
     }
 
+    /**
+     * Return string value representing UssFile object
+     *
+     * @return string representation of UssFile
+     */
     @Override
     public String toString() {
-        return "UssItem{" +
+        return "UssFile{" +
                 "name=" + name +
                 ", mode=" + mode +
                 ", size=" + size +

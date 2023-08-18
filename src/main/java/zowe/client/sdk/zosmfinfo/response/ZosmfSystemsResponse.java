@@ -63,9 +63,14 @@ public class ZosmfSystemsResponse {
         return numRows;
     }
 
+    /**
+     * Return string value representing ZosmfSystemsResponse object
+     *
+     * @return string representation of ZosmfSystemsResponse
+     */
     @Override
     public String toString() {
-        return "ZosmfListDefinedSystemsResponse{" +
+        return "ZosmfSystemsResponse{" +
                 "numRows=" + numRows +
                 ", definedSystems=" + definedSystems +
                 '}';

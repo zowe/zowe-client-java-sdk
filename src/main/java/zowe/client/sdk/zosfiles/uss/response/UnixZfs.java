@@ -237,9 +237,14 @@ public class UnixZfs {
         return moreRows;
     }
 
+    /**
+     * Return string value representing UssZfs object
+     *
+     * @return string representation of UssZfs
+     */
     @Override
     public String toString() {
-        return "UssZfsItem{" +
+        return "UssZfs{" +
                 "name=" + name +
                 ", mountpoint=" + mountpoint +
                 ", fstname=" + fstname +
