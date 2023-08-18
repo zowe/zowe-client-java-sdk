@@ -98,7 +98,8 @@ public class StopTso {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey().get();
+                TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" +
+                commandParams.getServletKey().orElseThrow(() -> new IllegalArgumentException("servletKey not specified"));
 
         if (request == null) {
             request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
