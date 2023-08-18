@@ -162,6 +162,9 @@ public class ZosmfInfoResponse {
                 '}';
     }
 
+    /**
+     * Builder class for ZosmfInfoResponse
+     */
     public static class Builder {
 
         private String zosVersion;

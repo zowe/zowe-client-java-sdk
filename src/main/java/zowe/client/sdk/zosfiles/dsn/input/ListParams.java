@@ -154,6 +154,9 @@ public class ListParams {
                 '}';
     }
 
+    /**
+     * Builder class for ListParams
+     */
     public static class Builder {
 
         private String volume;

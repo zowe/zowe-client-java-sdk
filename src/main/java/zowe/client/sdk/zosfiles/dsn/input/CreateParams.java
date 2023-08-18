@@ -356,6 +356,9 @@ public class CreateParams {
                 '}';
     }
 
+    /**
+     * Builder class for CreateParams
+     */
     public static class Builder {
 
         private String volser;

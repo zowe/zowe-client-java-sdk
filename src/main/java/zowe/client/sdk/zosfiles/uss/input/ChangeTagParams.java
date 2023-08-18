@@ -134,7 +134,7 @@ public class ChangeTagParams {
     }
 
     /**
-     * Builder class for CopyParams
+     * Builder class for ChangeTagParams
      */
     public static class Builder {
 

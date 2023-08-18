@@ -122,6 +122,9 @@ public class WriteParams {
                 '}';
     }
 
+    /**
+     * Builder class for WriteParams
+     */
     public static class Builder {
 
         private String textContent;

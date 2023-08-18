@@ -287,6 +287,9 @@ public class DownloadParams {
                 '}';
     }
 
+    /**
+     * Builder class for DownloadParams
+     */
     public static class Builder {
 
         private String file;

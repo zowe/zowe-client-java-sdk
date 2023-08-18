@@ -252,6 +252,9 @@ public class Member {
                 '}';
     }
 
+    /**
+     * Builder class for Member
+     */
     public static class Builder {
 
         private String member;

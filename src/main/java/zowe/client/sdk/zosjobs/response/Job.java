@@ -269,6 +269,9 @@ public class Job {
                 '}';
     }
 
+    /**
+     * Builder class for Job
+     */
     public static class Builder {
 
         private String jobId;

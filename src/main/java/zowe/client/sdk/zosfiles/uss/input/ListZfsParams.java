@@ -100,6 +100,9 @@ public class ListZfsParams {
                 '}';
     }
 
+    /**
+     * Builder class for ListZfsParams
+     */
     public static class Builder {
 
         private Integer maxLength;

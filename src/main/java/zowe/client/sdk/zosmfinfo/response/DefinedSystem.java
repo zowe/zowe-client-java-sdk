@@ -229,6 +229,9 @@ public class DefinedSystem {
                 '}';
     }
 
+    /**
+     * Builder class for DefinedSystem
+     */
     public static class Builder {
 
         private String systemNickName;

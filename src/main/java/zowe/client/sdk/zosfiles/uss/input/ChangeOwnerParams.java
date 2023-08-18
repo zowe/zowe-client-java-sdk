@@ -107,6 +107,9 @@ public class ChangeOwnerParams {
                 '}';
     }
 
+    /**
+     * Builder class for ChangeOwnerParams
+     */
     public static class Builder {
 
         private String owner;

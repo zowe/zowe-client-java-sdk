@@ -121,6 +121,9 @@ public class JobStepData {
                 '}';
     }
 
+    /**
+     * Builder class for JobStepData
+     */
     public static class Builder {
 
         private String smfid;

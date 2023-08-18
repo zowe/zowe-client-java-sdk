@@ -244,7 +244,7 @@ public class UnixZfs {
      */
     @Override
     public String toString() {
-        return "UssZfs{" +
+        return "UnixZfs{" +
                 "name=" + name +
                 ", mountpoint=" + mountpoint +
                 ", fstname=" + fstname +
@@ -265,13 +265,15 @@ public class UnixZfs {
                 '}';
     }
 
+    /**
+     * Builder class for UnixZfs
+     */
     public static class Builder {
 
         private String name;
         private String mountpoint;
         private String fstname;
         private String status;
-
         private String mode;
         private Long dev;
         private Long fstype;

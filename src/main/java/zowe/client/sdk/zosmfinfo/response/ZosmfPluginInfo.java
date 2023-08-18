@@ -82,6 +82,9 @@ public class ZosmfPluginInfo {
                 '}';
     }
 
+    /**
+     * Builder class for ZosmfPluginInfo
+     */
     public static class Builder {
 
         private String pluginVersion;

@@ -76,6 +76,9 @@ public class ZosmfSystemsResponse {
                 '}';
     }
 
+    /**
+     * Builder class for ZosmfSystemsResponse
+     */
     public static class Builder {
 
         private Long numRows;

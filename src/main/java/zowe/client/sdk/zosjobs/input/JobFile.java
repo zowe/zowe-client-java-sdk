@@ -280,6 +280,9 @@ public class JobFile {
                 '}';
     }
 
+    /**
+     * Builder class for JobFile
+     */
     public static class Builder {
 
         private String jobId;

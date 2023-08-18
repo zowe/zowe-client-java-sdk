@@ -128,7 +128,7 @@ public class UnixFile {
      */
     @Override
     public String toString() {
-        return "UssFile{" +
+        return "UnixFile{" +
                 "name=" + name +
                 ", mode=" + mode +
                 ", size=" + size +
@@ -140,6 +140,9 @@ public class UnixFile {
                 '}';
     }
 
+    /**
+     * Builder class for UnixFile
+     */
     public static class Builder {
 
         private String name;

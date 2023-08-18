@@ -136,6 +136,9 @@ public class CopyParams {
                 '}';
     }
 
+    /**
+     * Builder class for CopyParams
+     */
     public static class Builder {
 
         private String fromVolser;

@@ -343,6 +343,9 @@ public class Dataset {
                 '}';
     }
 
+    /**
+     * Builder class for Dataset
+     */
     public static class Builder {
 
         private String dsname;

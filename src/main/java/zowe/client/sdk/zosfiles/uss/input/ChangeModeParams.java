@@ -93,6 +93,9 @@ public class ChangeModeParams {
                 '}';
     }
 
+    /**
+     * Builder class for ChangeModeParams
+     */
     public static class Builder {
 
         private String mode;

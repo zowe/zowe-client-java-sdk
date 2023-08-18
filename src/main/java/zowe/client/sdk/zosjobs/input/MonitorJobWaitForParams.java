@@ -190,6 +190,9 @@ public class MonitorJobWaitForParams {
                 '}';
     }
 
+    /**
+     * Builder class for MonitorJobWaitForParams
+     */
     public static class Builder {
 
         private final String jobId;

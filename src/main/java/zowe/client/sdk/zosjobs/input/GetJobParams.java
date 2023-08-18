@@ -113,6 +113,9 @@ public class GetJobParams {
                 '}';
     }
 
+    /**
+     * Builder class for GetJobParams
+     */
     public static class Builder {
 
         private String owner = "*";

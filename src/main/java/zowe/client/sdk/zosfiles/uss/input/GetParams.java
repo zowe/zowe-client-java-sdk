@@ -178,6 +178,9 @@ public class GetParams {
                 '}';
     }
 
+    /**
+     * Builder class for GetParams
+     */
     public static class Builder {
 
         private String search;

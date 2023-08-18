@@ -87,13 +87,16 @@ public class ModifyJobParams {
      */
     @Override
     public String toString() {
-        return "CancelJobParams{" +
+        return "ModifyJobParams{" +
                 "jobId=" + jobId +
                 ", jobName=" + jobName +
                 ", version=" + version +
                 '}';
     }
 
+    /**
+     * Builder class for ModifyJobParams
+     */
     public static class Builder {
 
         private final String jobName;

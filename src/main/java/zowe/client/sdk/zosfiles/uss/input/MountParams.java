@@ -112,6 +112,9 @@ public class MountParams {
                 '}';
     }
 
+    /**
+     * Builder class for MountParams
+     */
     public static class Builder {
 
         private MountActionType action;

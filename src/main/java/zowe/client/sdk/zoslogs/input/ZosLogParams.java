@@ -27,34 +27,41 @@ import java.util.Optional;
 public class ZosLogParams {
 
     /**
-     * The z/OS log api time param. See "time" attribute from the following link:
-     * <pre>
-     * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
-     * </pre>
+     * The z/OS log api time parameter. This field is optional.
+     * <p>
+     * Specifies when z/OSMF starts to retrieve messages in the ISO 8601 JSON date and time format.
+     * For example, 2021-01-26T03:33:18.065Z.
+     * <p>
+     * The default value is the current UNIX timestamp on the server.
+     * This value is used if the timestamp parameter is not specified.
      */
     private final Optional<String> startTime;
 
     /**
-     * The z/OS log type to retrieve log data from. See "hardCopy" attribute from the following link:
-     * <pre>
-     * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
-     * </pre>
+     * Specify the source where the logs come from. This field is optional.
+     * <p>
+     * If the hardcopy parameter is not specified, the API tries OPERLOG first.
+     * If the OPERLOG is not enabled on the system, the API returns the SYSLOG to the user.
      */
     private final Optional<HardCopyType> hardCopy;
 
     /**
-     * The direction param. See "direction" attribute from the following link:
-     * <pre>
-     * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
-     * </pre>
+     * Specifies the direction (from a specified time) in which messages are retrieved. This field is optional.
+     * The options are 'forward' or 'backward'. These strings are case-insensitive.
+     * <p>
+     * The default is 'backward', meaning that messages are retrieved backward from the specified time.
      */
     private final Optional<DirectionType> direction;
 
     /**
-     * The timeRange param. See "timeRange" attribute from the following link:
-     * <pre>
-     * @see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
-     * </pre>
+     * Specifies the time range for which the log is to be retrieved. This field is optional.
+     * <p>
+     * Supported time units include s, m, and h for seconds, minutes, and hours.
+     * For example: 10s, 10m, 10h.
+     * The format is nnnu, where nnn is a number 1-999 and u is one of the time units "s", "m", or "h".
+     * For example, 999s of 20m.
+     * <p>
+     * The default is 10m.
      */
     private final Optional<String> timeRange;
 
@@ -157,7 +164,6 @@ public class ZosLogParams {
          * The default value is the current UNIX timestamp on the server.
          *
          * @param startTime A String that represents either a DateTime in this format: YYYY-MM-DDTHH:MM:SSZ.
-         *                  <pre>@see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a></pre>
          * @return ZosLogParams.Builder this object
          */
         public ZosLogParams.Builder startTime(final String startTime) {
@@ -172,7 +178,6 @@ public class ZosLogParams {
          * If the OPERLOG is not enabled on the system, the API returns the SYSLOG to the user.
          *
          * @param hardCopy HardCopyType enum value.
-         *                 <pre>@see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a></pre>
          * @return ZosLogParams.Builder this object
          */
         public ZosLogParams.Builder hardCopy(final HardCopyType hardCopy) {
@@ -181,12 +186,11 @@ public class ZosLogParams {
         }
 
         /**
-         * Direction enum representing either forward or backward direction to retrieve log data from.
+         * Direction enum representing either 'forward' or 'backward' direction to retrieve log data from.
          * <p>
-         * The default is "backward," meaning that messages are retrieved backward from the specified time.
+         * The default is 'backward', meaning that messages are retrieved backward from the specified time.
          *
          * @param direction DirectionType enum value.
-         *                  <pre>@see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a></pre>
          * @return ZosLogParams.Builder this object
          */
         public ZosLogParams.Builder direction(final DirectionType direction) {
@@ -201,7 +205,6 @@ public class ZosLogParams {
          *
          * @param timeRange range of log output to retrieve, the following are valid examples:
          *                  1s (one second), 10m (tem minutes), 24h (24 hours), etc.
-         *                  <pre>@see <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a></pre>
          * @return ZosLogParams.Builder this object
          */
         public ZosLogParams.Builder timeRange(final String timeRange) {
