@@ -35,10 +35,9 @@ public final class JsonParseResponseFactory {
      *
      * @param type ParseType type
      * @return JsonParseResponse abstract object
-     * @throws Exception invalid ParseType value
      * @author Frank Giordano
      */
-    public static JsonParseResponse buildParser(final ParseType type) throws Exception {
+    public static JsonParseResponse buildParser(final ParseType type) {
         LOG.debug(type.name());
         JsonParseResponse parseResponse;
         switch (type) {

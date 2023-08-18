@@ -99,10 +99,9 @@ public class TeamConfigService {
      *
      * @param profileKeyObj Partition name
      * @return boolean true or false
-     * @throws Exception error processing
      * @author Frank Giordano
      */
-    private boolean isPartition(final Set<String> profileKeyObj) throws Exception {
+    private boolean isPartition(final Set<String> profileKeyObj) {
         final Iterator<String> itr = profileKeyObj.iterator();
         if (itr.hasNext()) {
             String keyVal = itr.next();

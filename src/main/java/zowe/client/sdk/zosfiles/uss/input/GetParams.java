@@ -194,7 +194,7 @@ public class GetParams {
             return new GetParams(this);
         }
 
-        public GetParams.Builder search(final String search) throws Exception {
+        public GetParams.Builder search(final String search) {
             if (this.research != null) {
                 throw new IllegalStateException("cannot specify both search and research parameters");
             }

@@ -52,10 +52,9 @@ public class StartTso {
      *
      * @param connection connection information, see ZOSConnection object
      * @param request    any compatible ZoweRequest Interface object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public StartTso(final ZosConnection connection, final ZoweRequest request) throws Exception {
+    public StartTso(final ZosConnection connection, final ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;

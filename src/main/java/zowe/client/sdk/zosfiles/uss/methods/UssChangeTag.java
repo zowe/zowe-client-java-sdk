@@ -59,10 +59,9 @@ public class UssChangeTag {
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
-     * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssChangeTag(final ZosConnection connection, final ZoweRequest request) throws Exception {
+    public UssChangeTag(final ZosConnection connection, final ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;

@@ -101,10 +101,9 @@ public class TeamConfig {
      *
      * @param name profile name
      * @return ProfileDao object
-     * @throws Exception error processing
      * @author Frank Giordano
      */
-    public ProfileDao getDefaultProfileByName(final String name) throws Exception {
+    public ProfileDao getDefaultProfileByName(final String name) {
         ValidateUtils.checkNullParameter(name == null, "name is null");
         ValidateUtils.checkIllegalParameter(name.isBlank(), "name not specified");
         final Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(name));

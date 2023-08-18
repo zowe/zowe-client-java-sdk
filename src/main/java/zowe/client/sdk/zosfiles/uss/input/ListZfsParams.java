@@ -113,7 +113,7 @@ public class ListZfsParams {
             return this;
         }
 
-        public ListZfsParams.Builder path(final String path) throws Exception {
+        public ListZfsParams.Builder path(final String path) {
             ValidateUtils.checkNullParameter(path == null, "path is null");
             ValidateUtils.checkIllegalParameter(path.isBlank(), "path not specified");
             if (this.fsname != null) {
@@ -123,7 +123,7 @@ public class ListZfsParams {
             return this;
         }
 
-        public ListZfsParams.Builder fsname(final String fsname) throws Exception {
+        public ListZfsParams.Builder fsname(final String fsname) {
             ValidateUtils.checkNullParameter(fsname == null, "fsname is null");
             ValidateUtils.checkIllegalParameter(fsname.isBlank(), "fsname not specified");
             if (this.path != null) {

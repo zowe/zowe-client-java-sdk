@@ -49,10 +49,9 @@ public class DsnWrite {
      *
      * @param connection connection information, see ZOSConnection object
      * @param request    any compatible ZoweRequest Interface object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public DsnWrite(final ZosConnection connection, final ZoweRequest request) throws Exception {
+    public DsnWrite(final ZosConnection connection, final ZoweRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         if (!(request instanceof TextPutRequest)) {

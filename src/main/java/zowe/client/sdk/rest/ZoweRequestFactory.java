@@ -37,11 +37,9 @@ public final class ZoweRequestFactory {
      * @param connection connection information, see ZosConnection object
      * @param type       request http type, see ZoweRequestType object
      * @return ZoweRequest abstract object of ZoweRequestType value
-     * @throws Exception error with type not found
      * @author Frank Giordano
      */
-    public static ZoweRequest buildRequest(final ZosConnection connection, final ZoweRequestType type)
-            throws Exception {
+    public static ZoweRequest buildRequest(final ZosConnection connection, final ZoweRequestType type) {
         LOG.debug(type.name());
         ZoweRequest request;
         switch (type) {

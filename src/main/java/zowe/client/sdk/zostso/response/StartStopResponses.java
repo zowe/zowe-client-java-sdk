@@ -55,11 +55,9 @@ public class StartStopResponses {
      *
      * @param zosmfTsoResponse   tso response
      * @param collectedResponses collectedResponses
-     * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public StartStopResponses(final ZosmfTsoResponse zosmfTsoResponse, final CollectedResponses collectedResponses)
-            throws Exception {
+    public StartStopResponses(final ZosmfTsoResponse zosmfTsoResponse, final CollectedResponses collectedResponses) {
         this.zosmfTsoResponse = zosmfTsoResponse;
         if (!zosmfTsoResponse.getMsgData().isEmpty()) {
             // more data means more tso responses to come and as such tso command request has not ended in success yet
