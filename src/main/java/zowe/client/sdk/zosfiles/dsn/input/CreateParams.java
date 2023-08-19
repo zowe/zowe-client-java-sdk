@@ -361,115 +361,297 @@ public class CreateParams {
      */
     public static class Builder {
 
+        /**
+         * The volume serial
+         */
         private String volser;
+
+        /**
+         * The device type
+         */
         private String unit;
+
+        /**
+         * The data set organization
+         */
         private String dsorg;
+
+        /**
+         * The unit of space allocation
+         */
         private String alcunit;
+
+        /**
+         * The primary space allocation
+         */
         private Integer primary;
+
+        /**
+         * The secondary space allocation
+         */
         private Integer secondary;
+
+        /**
+         * The number of directory blocks
+         */
         private Integer dirblk;
+
+        /**
+         * The average block
+         */
         private Integer avgblk;
+
+        /**
+         * The record format
+         */
         private String recfm;
+
+        /**
+         * The block size
+         */
         private Integer blksize;
+
+        /**
+         * The record length
+         */
         private Integer lrecl;
+
+        /**
+         * The storage class
+         */
         private String storclass;
+
+        /**
+         * The management class
+         */
         private String mgntclass;
+
+        /**
+         * The data class
+         */
         private String dataclass;
+
+        /**
+         * The data set type
+         */
         private String dsntype;
+
+        /**
+         * The indicator that we need to show the attributes
+         * DO NOT SEND THIS TO ZOSMF
+         */
         private boolean showAttributes;
+
+        /**
+         * The abstraction of Allocation unit and Primary Space
+         * DO NOT SEND THIS TO ZOSMF
+         */
         private String size;
+
+        /**
+         * Response time out value
+         */
         private String responseTimeout;
 
+        /
         public CreateParams.Builder alcunit(final String alcunit) {
             this.alcunit = alcunit;
             return this;
         }
 
+        /**
+         * Specify avgblk int value
+         *
+         * @param avgblk int value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder avgblk(final Integer avgblk) {
             this.avgblk = avgblk;
             return this;
         }
 
+
+        /**
+         * Specify blksize int value
+         *
+         * @param blksize int value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder blksize(final Integer blksize) {
             this.blksize = blksize;
             return this;
         }
 
+        /**
+         * Specify dataclass string value
+         *
+         * @param dataclass string value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder dataclass(final String dataclass) {
             this.dataclass = dataclass;
             return this;
         }
 
+        /**
+         * Specify dirblk int value
+         *
+         * @param dirblk int value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder dirblk(final Integer dirblk) {
             this.dirblk = dirblk;
             return this;
         }
 
+        /**
+         * Specify dsntype string value
+         *
+         * @param dsntype string value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder dsntype(final String dsntype) {
             this.dsntype = dsntype;
             return this;
         }
 
+        /**
+         * Specify dsorg string value
+         *
+         * @param dsorg string value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder dsorg(final String dsorg) {
             this.dsorg = dsorg;
             return this;
         }
 
+        /**
+         *
+         *
+         * @param lrecl
+         * @return
+         */
         public CreateParams.Builder lrecl(final Integer lrecl) {
             this.lrecl = lrecl;
             return this;
         }
 
+        /**
+         * Specify mgntclass string value
+         *
+         * @param mgntclass string value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder mgntclass(final String mgntclass) {
             this.mgntclass = mgntclass;
             return this;
         }
 
+        /**
+         * Specify primary int value
+         *
+         * @param primary int value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder primary(final Integer primary) {
             this.primary = primary;
             return this;
         }
 
+        /**
+         * Specify recfm string value
+         *
+         * @param recfm string value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder recfm(final String recfm) {
             this.recfm = recfm;
             return this;
         }
 
+        /**
+         * Specify responseTimeout string value
+         *
+         * @param responseTimeout string value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder responseTimeout(final String responseTimeout) {
             this.responseTimeout = responseTimeout;
             return this;
         }
 
+        /**
+         * Specify secondary int value
+         *
+         * @param secondary int value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder secondary(final Integer secondary) {
             this.secondary = secondary;
             return this;
         }
 
+        /**
+         * Specify showAttributes boolean value
+         *
+         * @param showAttributes boolean true or false value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder showAttributes(final boolean showAttributes) {
             this.showAttributes = showAttributes;
             return this;
         }
 
+        /**
+         * Specify size string value
+         *
+         * @param size string value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder size(final String size) {
             this.size = size;
             return this;
         }
 
+        /**
+         * Specify storclass string value
+         *
+         * @param storclass string value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder storclass(final String storclass) {
             this.storclass = storclass;
             return this;
         }
 
+        /**
+         * Specify unit string value
+         *
+         * @param unit string value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder unit(final String unit) {
             this.unit = unit;
             return this;
         }
 
+        /**
+         * Specify volser string value
+         *
+         * @param volser string value
+         * @return CreateParams.Builder this object
+         */
         public CreateParams.Builder volser(final String volser) {
             this.volser = volser;
             return this;
         }
 
+        /**
+         * Return CreateParams object based on CreateParams.Builder this object
+         *
+         * @return CreateParams this object
+         */
         public CreateParams build() {
             return new CreateParams(this);
         }

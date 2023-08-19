@@ -377,6 +377,11 @@ public class DownloadParams {
             return this;
         }
 
+        /**
+         * Return DownloadParams object based on DownloadParams.Builder this object
+         *
+         * @return DownloadParams this object
+         */
         public DownloadParams build() {
             return new DownloadParams(this);
         }

@@ -47,7 +47,7 @@ public class CopyParams {
     private final boolean replace;
 
     /**
-     * Specified as true to indicate a copying of all members in partial dataset to another partial dataset request
+     * Specify as true to indicate a copying of all members in partial dataset to another partial dataset request
      */
     private final boolean copyAllMembers;
 
@@ -141,18 +141,53 @@ public class CopyParams {
      */
     public static class Builder {
 
+        /**
+         * The volume to copy from
+         */
         private String fromVolser;
+
+        /**
+         * The dataset to copy from
+         */
         private String fromDataSet;
+
+        /**
+         * The volume to copy too
+         */
         private String toVolser;
+
+        /**
+         * The dataset to copy too
+         */
         private String toDataSet;
+
+        /**
+         * Replace option
+         */
         private boolean replace = true;
+
+        /**
+         * Specify as true to indicate a copying of all members in partial dataset to another partial dataset request
+         */
         private boolean copyAllMembers = false;
 
+        /**
+         * Specify copyAllMembers boolean value
+         *
+         * @param value boolean true or false value
+         * @return ChangeTagParams.Builder this object
+         */
         public CopyParams.Builder copyAllMembers(final boolean value) {
             this.copyAllMembers = value;
             return this;
         }
 
+        /**
+         * Specify fromDataSet string value
+         *
+         * @param dataSet string value
+         * @return CopyParams.Builder this object
+         */
         public CopyParams.Builder fromDataSet(final String dataSet) {
             ValidateUtils.checkNullParameter(dataSet == null, "fromDataSet is null");
             ValidateUtils.checkNullParameter(dataSet.isEmpty(), "fromDataSet not specified");
@@ -160,16 +195,34 @@ public class CopyParams {
             return this;
         }
 
+        /**
+         * Specify fromVolser string value
+         *
+         * @param volser string value
+         * @return CopyParams.Builder this object
+         */
         public CopyParams.Builder fromVolser(final String volser) {
             this.fromVolser = volser;
             return this;
         }
 
+        /**
+         * Specify replace string value
+         *
+         * @param replace string value
+         * @return CopyParams.Builder this object
+         */
         public CopyParams.Builder replace(final boolean replace) {
             this.replace = replace;
             return this;
         }
 
+        /**
+         * Specify dataSet string value
+         *
+         * @param dataSet string value
+         * @return CopyParams.Builder this object
+         */
         public CopyParams.Builder toDataSet(final String dataSet) {
             ValidateUtils.checkNullParameter(dataSet == null, "toDataSet is null");
             ValidateUtils.checkNullParameter(dataSet.isEmpty(), "toDataSet not specified");
@@ -177,11 +230,22 @@ public class CopyParams {
             return this;
         }
 
+        /**
+         * Specify volser string value
+         *
+         * @param volser string value
+         * @return CopyParams.Builder this object
+         */
         public CopyParams.Builder toVolser(final String volser) {
             this.toVolser = volser;
             return this;
         }
 
+        /**
+         * Return CopyParams object based on CopyParams.Builder this object
+         *
+         * @return CopyParams this object
+         */
         public CopyParams build() {
             return new CopyParams(this);
         }

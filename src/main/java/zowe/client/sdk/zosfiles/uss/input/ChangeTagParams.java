@@ -231,7 +231,7 @@ public class ChangeTagParams {
         /**
          * Return ChangeTagParams object based on ChangeTagParams.Builder this object
          *
-         * @return ChangeTagParams.Builder this object
+         * @return ChangeTagParams this object
          */
         public ChangeTagParams build() {
             return new ChangeTagParams(this);

@@ -202,6 +202,11 @@ public class ListParams {
             return this;
         }
 
+        /**
+         * Return ListParams object based on ListParams.Builder this object
+         *
+         * @return ListParams this object
+         */
         public ListParams build() {
             return new ListParams(this);
         }
