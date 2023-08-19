@@ -2,7 +2,7 @@ package zowe.client.sdk.zostso.service;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.utility.RestUtils;
@@ -56,7 +56,7 @@ public class TsoResponseService {
             final String jsonStr = tsoCmdResponse.getResponsePhrase()
                     .orElseThrow(() -> new IllegalStateException("no tsoCmdResponse phrase")).toString();
             final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-            result = (ZosmfTsoResponse) JsonParseResponseFactory.buildParser(ParseType.TSO_CONSOLE)
+            result = (ZosmfTsoResponse) JsonParseFactory.buildParser(ParseType.TSO_CONSOLE)
                     .setJsonObject(jsonObject).parseResponse();
         }
 

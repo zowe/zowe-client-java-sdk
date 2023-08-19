@@ -21,12 +21,12 @@ import zowe.client.sdk.zosjobs.response.JobStepData;
  * @author Frank Giordano
  * @version 2.0
  */
-public final class JobParseResponse implements JsonParseResponse {
+public final class JobJsonParse implements JsonParse {
 
     /**
      * Represents one singleton instance
      */
-    private static JsonParseResponse INSTANCE;
+    private static JsonParse INSTANCE;
 
     /**
      * JSON data value to be parsed
@@ -38,7 +38,7 @@ public final class JobParseResponse implements JsonParseResponse {
      *
      * @author Frank Giordano
      */
-    private JobParseResponse() {
+    private JobJsonParse() {
     }
 
     /**
@@ -47,9 +47,9 @@ public final class JobParseResponse implements JsonParseResponse {
      * @return JobParseResponse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParseResponse getInstance() {
+    public synchronized static JsonParse getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new JobParseResponse();
+            INSTANCE = new JobJsonParse();
         }
         return INSTANCE;
     }
@@ -119,7 +119,7 @@ public final class JobParseResponse implements JsonParseResponse {
      * @author Frank Giordano
      */
     @Override
-    public JsonParseResponse setJsonObject(final JSONObject data) {
+    public JsonParse setJsonObject(final JSONObject data) {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
         this.data = data;
         return this;

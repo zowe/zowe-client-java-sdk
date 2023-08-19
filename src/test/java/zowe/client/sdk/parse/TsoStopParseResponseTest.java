@@ -31,7 +31,7 @@ public class TsoStopParseResponseTest {
     public void tstTsoStopParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseResponseFactory.buildParser(ParseType.TSO_STOP).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.TSO_STOP).setJsonObject(null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -40,17 +40,17 @@ public class TsoStopParseResponseTest {
 
     @Test
     public void tstTsoStopParseJsonStopResponseSingletonSuccess() throws Exception {
-        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(ParseType.TSO_STOP);
-        final JsonParseResponse parser2 = JsonParseResponseFactory.buildParser(ParseType.TSO_STOP);
+        final JsonParse parser = JsonParseFactory.buildParser(ParseType.TSO_STOP);
+        final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.TSO_STOP);
         assertSame(parser, parser2);
     }
 
     @Test
     public void tstTsoStopParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
-        final JsonParseResponse parser =
-                JsonParseResponseFactory.buildParser(ParseType.TSO_STOP).setJsonObject(new JSONObject());
-        final JsonParseResponse parser2 =
-                JsonParseResponseFactory.buildParser(ParseType.TSO_STOP).setJsonObject(new JSONObject());
+        final JsonParse parser =
+                JsonParseFactory.buildParser(ParseType.TSO_STOP).setJsonObject(new JSONObject());
+        final JsonParse parser2 =
+                JsonParseFactory.buildParser(ParseType.TSO_STOP).setJsonObject(new JSONObject());
         assertSame(parser, parser2);
     }
 
@@ -58,16 +58,16 @@ public class TsoStopParseResponseTest {
     public void tstTsoStopParseJsonStopResponseResetDataFail() {
         String msg = "";
         try {
-            JsonParseResponseFactory.buildParser(ParseType.TSO_STOP).setJsonObject(new JSONObject());
-            JsonParseResponseFactory.buildParser(ParseType.TSO_STOP).parseResponse();
-            JsonParseResponseFactory.buildParser(ParseType.TSO_STOP).parseResponse();
+            JsonParseFactory.buildParser(ParseType.TSO_STOP).setJsonObject(new JSONObject());
+            JsonParseFactory.buildParser(ParseType.TSO_STOP).parseResponse();
+            JsonParseFactory.buildParser(ParseType.TSO_STOP).parseResponse();
         } catch (Exception e) {
             msg = e.getMessage();
         }
         assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
         try {
-            JsonParseResponseFactory.buildParser(ParseType.TSO_STOP).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseResponseFactory.buildParser(ParseType.TSO_STOP).parseResponse();
+            JsonParseFactory.buildParser(ParseType.TSO_STOP).setJsonObject(new JSONObject()).parseResponse();
+            JsonParseFactory.buildParser(ParseType.TSO_STOP).parseResponse();
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -83,7 +83,7 @@ public class TsoStopParseResponseTest {
         jsonMap.put("timeout", true);
         final JSONObject json = new JSONObject(jsonMap);
 
-        final ZosmfTsoResponse response = (ZosmfTsoResponse) JsonParseResponseFactory.buildParser(ParseType.TSO_STOP)
+        final ZosmfTsoResponse response = (ZosmfTsoResponse) JsonParseFactory.buildParser(ParseType.TSO_STOP)
                 .setJsonObject(json).parseResponse();
         assertEquals("ver", response.getVer().orElse("n\\a"));
         assertEquals("servletKey", response.getServletKey().orElse("n\\a"));

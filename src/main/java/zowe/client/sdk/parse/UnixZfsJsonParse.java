@@ -19,12 +19,12 @@ import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
  * @author Frank Giordano
  * @version 2.0
  */
-public final class UnixZfsParseResponse implements JsonParseResponse {
+public final class UnixZfsJsonParse implements JsonParse {
 
     /**
      * Represents one singleton instance
      */
-    private static JsonParseResponse INSTANCE;
+    private static JsonParse INSTANCE;
 
     private String modeStr = "";
 
@@ -38,7 +38,7 @@ public final class UnixZfsParseResponse implements JsonParseResponse {
      *
      * @author Frank Giordano
      */
-    private UnixZfsParseResponse() {
+    private UnixZfsJsonParse() {
     }
 
     /**
@@ -47,9 +47,9 @@ public final class UnixZfsParseResponse implements JsonParseResponse {
      * @return UnixZfsParseResponse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParseResponse getInstance() {
+    public synchronized static JsonParse getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new UnixZfsParseResponse();
+            INSTANCE = new UnixZfsJsonParse();
         }
         return INSTANCE;
     }
@@ -109,7 +109,7 @@ public final class UnixZfsParseResponse implements JsonParseResponse {
      * @author Frank Giordano
      */
     @Override
-    public JsonParseResponse setJsonObject(final JSONObject data) {
+    public JsonParse setJsonObject(final JSONObject data) {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
         this.data = data;
         return this;

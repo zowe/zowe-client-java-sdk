@@ -13,8 +13,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseResponseFactory;
-import zowe.client.sdk.parse.UnixZfsParseResponse;
+import zowe.client.sdk.parse.JsonParseFactory;
+import zowe.client.sdk.parse.UnixZfsJsonParse;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.JsonGetRequest;
 import zowe.client.sdk.rest.Response;
@@ -135,7 +135,7 @@ public class UssList {
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (final Object jsonObj : jsonArray) {
-                items.add((UnixFile) JsonParseResponseFactory.buildParser(ParseType.UNIX_FILE)
+                items.add((UnixFile) JsonParseFactory.buildParser(ParseType.UNIX_FILE)
                         .setJsonObject((JSONObject) jsonObj).parseResponse());
             }
         }
@@ -198,7 +198,7 @@ public class UssList {
                 } catch (Exception ignored) {
                 }
 
-                final UnixZfsParseResponse parse = (UnixZfsParseResponse) JsonParseResponseFactory
+                final UnixZfsJsonParse parse = (UnixZfsJsonParse) JsonParseFactory
                         .buildParser(ParseType.UNIX_ZFS).setJsonObject(jsonObj);
                 parse.setModeStr(modeStr.toString());
                 items.add(parse.parseResponse());

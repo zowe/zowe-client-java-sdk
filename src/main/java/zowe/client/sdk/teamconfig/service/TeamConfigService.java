@@ -15,7 +15,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
 import zowe.client.sdk.teamconfig.model.ConfigContainer;
@@ -64,7 +64,7 @@ public class TeamConfigService {
                             (JSONArray) profileTypeJsonObj.get("secure")));
                 }
             } else if ("properties".equalsIgnoreCase(keyObj)) {
-                properties = (Map<String, String>) JsonParseResponseFactory.buildParser(ParseType.PROPS)
+                properties = (Map<String, String>) JsonParseFactory.buildParser(ParseType.PROPS)
                         .setJsonObject((JSONObject) jsonObject.get(keyObj)).parseResponse();
             }
         }

@@ -31,7 +31,7 @@ public class PropsParseResponseTest {
     public void tstPropsParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseResponseFactory.buildParser(ParseType.PROPS).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.PROPS).setJsonObject(null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -40,17 +40,17 @@ public class PropsParseResponseTest {
 
     @Test
     public void tstPropsParseJsonStopResponseSingletonSuccess() throws Exception {
-        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(ParseType.PROPS);
-        final JsonParseResponse parser2 = JsonParseResponseFactory.buildParser(ParseType.PROPS);
+        final JsonParse parser = JsonParseFactory.buildParser(ParseType.PROPS);
+        final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.PROPS);
         assertSame(parser, parser2);
     }
 
     @Test
     public void tstPropsParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
-        final JsonParseResponse parser =
-                JsonParseResponseFactory.buildParser(ParseType.PROPS).setJsonObject(new JSONObject());
-        final JsonParseResponse parser2 =
-                JsonParseResponseFactory.buildParser(ParseType.PROPS).setJsonObject(new JSONObject());
+        final JsonParse parser =
+                JsonParseFactory.buildParser(ParseType.PROPS).setJsonObject(new JSONObject());
+        final JsonParse parser2 =
+                JsonParseFactory.buildParser(ParseType.PROPS).setJsonObject(new JSONObject());
         assertSame(parser, parser2);
     }
 
@@ -58,16 +58,16 @@ public class PropsParseResponseTest {
     public void tstPropsParseJsonStopResponseResetDataFail() {
         String msg = "";
         try {
-            JsonParseResponseFactory.buildParser(ParseType.PROPS).setJsonObject(new JSONObject());
-            JsonParseResponseFactory.buildParser(ParseType.PROPS).parseResponse();
-            JsonParseResponseFactory.buildParser(ParseType.PROPS).parseResponse();
+            JsonParseFactory.buildParser(ParseType.PROPS).setJsonObject(new JSONObject());
+            JsonParseFactory.buildParser(ParseType.PROPS).parseResponse();
+            JsonParseFactory.buildParser(ParseType.PROPS).parseResponse();
         } catch (Exception e) {
             msg = e.getMessage();
         }
         assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
         try {
-            JsonParseResponseFactory.buildParser(ParseType.PROPS).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseResponseFactory.buildParser(ParseType.PROPS).parseResponse();
+            JsonParseFactory.buildParser(ParseType.PROPS).setJsonObject(new JSONObject()).parseResponse();
+            JsonParseFactory.buildParser(ParseType.PROPS).parseResponse();
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -80,7 +80,7 @@ public class PropsParseResponseTest {
         jsonMap.put("cmd-response", "ver");
         final JSONObject json = new JSONObject(jsonMap);
 
-        final Map<String, String> response = (Map<String, String>) JsonParseResponseFactory
+        final Map<String, String> response = (Map<String, String>) JsonParseFactory
                 .buildParser(ParseType.PROPS).setJsonObject(json).parseResponse();
         assertEquals("ver", response.get("cmd-response"));
     }

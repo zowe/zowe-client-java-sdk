@@ -11,20 +11,20 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
+import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
 
 /**
- * Parse json response from Tso Stop request
+ * Parse json response from MVS console request
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public final class TsoStopParseResponse implements JsonParseResponse {
+public final class MvsConsoleJsonParse implements JsonParse {
 
     /**
      * Represents one singleton instance
      */
-    private static JsonParseResponse INSTANCE;
+    private static JsonParse INSTANCE;
 
     /**
      * JSON data value to be parsed
@@ -36,39 +36,44 @@ public final class TsoStopParseResponse implements JsonParseResponse {
      *
      * @author Frank Giordano
      */
-    private TsoStopParseResponse() {
+    private MvsConsoleJsonParse() {
     }
 
     /**
      * Get singleton instance
      *
-     * @return TsoStopParseResponse object
+     * @return MvsConsoleParseResponse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParseResponse getInstance() {
+    public synchronized static JsonParse getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new TsoStopParseResponse();
+            INSTANCE = new MvsConsoleJsonParse();
         }
         return INSTANCE;
     }
 
     /**
-     * Retrieve parsed json Tso Stop Response
+     * Transform data into ZosmfIssueResponse object
      *
-     * @return populated console response, see ZosmfTsoResponse object
+     * @return ZosmfIssueResponse object
      * @author Frank Giordano
      */
     @Override
     public Object parseResponse() {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
-        final ZosmfTsoResponse zosmfTsoResponse = new ZosmfTsoResponse.Builder()
-                .ver(data.get("ver") != null ? (String) data.get("ver") : null)
-                .servletKey(data.get("servletKey") != null ? (String) data.get("servletKey") : null)
-                .reused(data.get("reused") != null && (boolean) data.get("reused"))
-                .timeout(data.get("timeout") != null && (boolean) data.get("timeout"))
-                .build();
+        final ZosmfIssueResponse zosmfIssueResponse = new ZosmfIssueResponse();
+        zosmfIssueResponse.setCmdResponseKey(
+                data.get("cmd-response-key") != null ? (String) data.get("cmd-response-key") : null);
+        zosmfIssueResponse.setCmdResponseUrl(
+                data.get("cmd-response-url") != null ? (String) data.get("cmd-response-url") : null);
+        zosmfIssueResponse.setCmdResponseUri(
+                data.get("cmd-response-uri") != null ? (String) data.get("cmd-response-uri") : null);
+        zosmfIssueResponse.setCmdResponse(
+                data.get("cmd-response") != null ? (String) data.get("cmd-response") : null);
+        zosmfIssueResponse.setSolKeyDetected(
+                data.get("sol-key-detected") != null ? (String) data.get("sol-key-detected") : null);
         data = null;
-        return zosmfTsoResponse;
+        return zosmfIssueResponse;
     }
 
     /**
@@ -79,7 +84,7 @@ public final class TsoStopParseResponse implements JsonParseResponse {
      * @author Frank Giordano
      */
     @Override
-    public JsonParseResponse setJsonObject(final JSONObject data) {
+    public JsonParse setJsonObject(final JSONObject data) {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
         this.data = data;
         return this;

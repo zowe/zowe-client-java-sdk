@@ -32,7 +32,7 @@ public class MemberParseResponseTest {
     public void tstMemberParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseResponseFactory.buildParser(ParseType.MEMBER).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.MEMBER).setJsonObject(null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -41,17 +41,17 @@ public class MemberParseResponseTest {
 
     @Test
     public void tstMemberParseJsonStopResponseSingletonSuccess() throws Exception {
-        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(ParseType.MEMBER);
-        final JsonParseResponse parser2 = JsonParseResponseFactory.buildParser(ParseType.MEMBER);
+        final JsonParse parser = JsonParseFactory.buildParser(ParseType.MEMBER);
+        final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.MEMBER);
         assertSame(parser, parser2);
     }
 
     @Test
     public void tstMemberParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
-        final JsonParseResponse parser =
-                JsonParseResponseFactory.buildParser(ParseType.MEMBER).setJsonObject(new JSONObject());
-        final JsonParseResponse parser2 =
-                JsonParseResponseFactory.buildParser(ParseType.MEMBER).setJsonObject(new JSONObject());
+        final JsonParse parser =
+                JsonParseFactory.buildParser(ParseType.MEMBER).setJsonObject(new JSONObject());
+        final JsonParse parser2 =
+                JsonParseFactory.buildParser(ParseType.MEMBER).setJsonObject(new JSONObject());
         assertSame(parser, parser2);
     }
 
@@ -59,16 +59,16 @@ public class MemberParseResponseTest {
     public void tstMemberParseJsonStopResponseResetDataFail() {
         String msg = "";
         try {
-            JsonParseResponseFactory.buildParser(ParseType.MEMBER).setJsonObject(new JSONObject());
-            JsonParseResponseFactory.buildParser(ParseType.MEMBER).parseResponse();
-            JsonParseResponseFactory.buildParser(ParseType.MEMBER).parseResponse();
+            JsonParseFactory.buildParser(ParseType.MEMBER).setJsonObject(new JSONObject());
+            JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse();
+            JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse();
         } catch (Exception e) {
             msg = e.getMessage();
         }
         assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
         try {
-            JsonParseResponseFactory.buildParser(ParseType.MEMBER).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseResponseFactory.buildParser(ParseType.MEMBER).parseResponse();
+            JsonParseFactory.buildParser(ParseType.MEMBER).setJsonObject(new JSONObject()).parseResponse();
+            JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse();
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -82,7 +82,7 @@ public class MemberParseResponseTest {
         jsonMap.put("vers", 0L);
         final JSONObject json = new JSONObject(jsonMap);
 
-        final Member response = (Member) JsonParseResponseFactory.buildParser(ParseType.MEMBER)
+        final Member response = (Member) JsonParseFactory.buildParser(ParseType.MEMBER)
                 .setJsonObject(json).parseResponse();
         assertEquals("ver", response.getMember().orElse("n\\a"));
         assertEquals(Long.parseLong("0"), response.getVers().orElse(-1L));

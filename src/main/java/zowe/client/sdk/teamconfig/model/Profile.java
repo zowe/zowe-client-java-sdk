@@ -11,7 +11,7 @@ package zowe.client.sdk.teamconfig.model;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 
 import java.util.Map;
@@ -52,7 +52,7 @@ public class Profile {
     public Profile(final String name, final JSONObject obj, final JSONArray secure) throws Exception {
         this.name = name;
         this.secure = secure;
-        properties = (Map<String, String>) JsonParseResponseFactory.buildParser(ParseType.PROPS)
+        properties = (Map<String, String>) JsonParseFactory.buildParser(ParseType.PROPS)
                 .setJsonObject(obj).parseResponse();
     }
 

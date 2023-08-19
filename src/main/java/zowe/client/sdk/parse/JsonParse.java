@@ -17,7 +17,7 @@ import org.json.simple.JSONObject;
  * @author Frank Giordano
  * @version 2.0
  */
-public interface JsonParseResponse {
+public interface JsonParse {
 
     /**
      * Parse the data json value given in constructor
@@ -33,7 +33,7 @@ public interface JsonParseResponse {
      * @return JsonParseResponse interface object
      * @author Frank Giordano
      */
-    public JsonParseResponse setJsonObject(final JSONObject data);
+    public JsonParse setJsonObject(final JSONObject data);
 
 }
 

@@ -12,7 +12,7 @@ package zowe.client.sdk.zosmfinfo.methods;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.JsonGetRequest;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -83,7 +83,7 @@ public class ZosmfSystems {
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no z/osmf info response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        return (ZosmfSystemsResponse) JsonParseResponseFactory.buildParser(ParseType.ZOSMF_SYSTEMS)
+        return (ZosmfSystemsResponse) JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS)
                 .setJsonObject(jsonObject).parseResponse();
     }
 

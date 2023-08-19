@@ -11,20 +11,22 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Parse json response from MVS console request
+ * Parse json response into property list
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public final class MvsConsoleParseResponse implements JsonParseResponse {
+public final class PropsJsonParse implements JsonParse {
 
     /**
      * Represents one singleton instance
      */
-    private static JsonParseResponse INSTANCE;
+    private static JsonParse INSTANCE;
 
     /**
      * JSON data value to be parsed
@@ -36,44 +38,47 @@ public final class MvsConsoleParseResponse implements JsonParseResponse {
      *
      * @author Frank Giordano
      */
-    private MvsConsoleParseResponse() {
+    private PropsJsonParse() {
     }
 
     /**
      * Get singleton instance
      *
-     * @return MvsConsoleParseResponse object
+     * @return PropsParseResponse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParseResponse getInstance() {
+    public synchronized static JsonParse getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new MvsConsoleParseResponse();
+            INSTANCE = new PropsJsonParse();
         }
         return INSTANCE;
     }
 
     /**
-     * Transform data into ZosmfIssueResponse object
+     * Parse team config's properties json representation into a Map object
      *
-     * @return ZosmfIssueResponse object
+     * @return hashmap of property values
      * @author Frank Giordano
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Object parseResponse() {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
-        final ZosmfIssueResponse zosmfIssueResponse = new ZosmfIssueResponse();
-        zosmfIssueResponse.setCmdResponseKey(
-                data.get("cmd-response-key") != null ? (String) data.get("cmd-response-key") : null);
-        zosmfIssueResponse.setCmdResponseUrl(
-                data.get("cmd-response-url") != null ? (String) data.get("cmd-response-url") : null);
-        zosmfIssueResponse.setCmdResponseUri(
-                data.get("cmd-response-uri") != null ? (String) data.get("cmd-response-uri") : null);
-        zosmfIssueResponse.setCmdResponse(
-                data.get("cmd-response") != null ? (String) data.get("cmd-response") : null);
-        zosmfIssueResponse.setSolKeyDetected(
-                data.get("sol-key-detected") != null ? (String) data.get("sol-key-detected") : null);
+        // i.e. properties='{"rejectUnauthorized":false,"host":"mvsxe47.lvn.company.net"}'
+        final Map<String, String> props = new HashMap<>();
+        data.keySet().forEach(key -> {
+            String value = null;
+            try {
+                value = (String) data.get(key);
+            } catch (Exception e) {
+                if (e.getMessage().contains("java.lang.Long")) {
+                    value = String.valueOf(data.get(key));
+                }
+            }
+            props.put((String) key, value);
+        });
         data = null;
-        return zosmfIssueResponse;
+        return props;
     }
 
     /**
@@ -84,7 +89,7 @@ public final class MvsConsoleParseResponse implements JsonParseResponse {
      * @author Frank Giordano
      */
     @Override
-    public JsonParseResponse setJsonObject(final JSONObject data) {
+    public JsonParse setJsonObject(final JSONObject data) {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
         this.data = data;
         return this;

@@ -19,12 +19,12 @@ import zowe.client.sdk.zosfiles.uss.response.UnixFile;
  * @author Frank Giordano
  * @version 2.0
  */
-public final class UnixFileParseResponse implements JsonParseResponse {
+public final class UnixFileJsonParse implements JsonParse {
 
     /**
      * Represents one singleton instance
      */
-    private static JsonParseResponse INSTANCE;
+    private static JsonParse INSTANCE;
 
     /**
      * JSON data value to be parsed
@@ -36,7 +36,7 @@ public final class UnixFileParseResponse implements JsonParseResponse {
      *
      * @author Frank Giordano
      */
-    private UnixFileParseResponse() {
+    private UnixFileJsonParse() {
     }
 
     /**
@@ -45,9 +45,9 @@ public final class UnixFileParseResponse implements JsonParseResponse {
      * @return UnixFileParseResponse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParseResponse getInstance() {
+    public synchronized static JsonParse getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new UnixFileParseResponse();
+            INSTANCE = new UnixFileJsonParse();
         }
         return INSTANCE;
     }
@@ -83,7 +83,7 @@ public final class UnixFileParseResponse implements JsonParseResponse {
      * @author Frank Giordano
      */
     @Override
-    public JsonParseResponse setJsonObject(final JSONObject data) {
+    public JsonParse setJsonObject(final JSONObject data) {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
         this.data = data;
         return this;

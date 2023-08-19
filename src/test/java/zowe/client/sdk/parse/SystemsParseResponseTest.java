@@ -30,7 +30,7 @@ public class SystemsParseResponseTest {
     public void tstZosmfSystemsParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseResponseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -39,17 +39,17 @@ public class SystemsParseResponseTest {
 
     @Test
     public void tstZosmfSystemsParseJsonStopResponseSingletonSuccess() throws Exception {
-        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(ParseType.ZOSMF_SYSTEMS);
-        final JsonParseResponse parser2 = JsonParseResponseFactory.buildParser(ParseType.ZOSMF_SYSTEMS);
+        final JsonParse parser = JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS);
+        final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS);
         assertSame(parser, parser2);
     }
 
     @Test
     public void tstZosmfSystemsParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
-        final JsonParseResponse parser =
-                JsonParseResponseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(new JSONObject());
-        final JsonParseResponse parser2 =
-                JsonParseResponseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(new JSONObject());
+        final JsonParse parser =
+                JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(new JSONObject());
+        final JsonParse parser2 =
+                JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(new JSONObject());
         assertSame(parser, parser2);
     }
 
@@ -57,16 +57,16 @@ public class SystemsParseResponseTest {
     public void tstZosmfSystemsParseJsonStopResponseResetDataFail() {
         String msg = "";
         try {
-            JsonParseResponseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(new JSONObject());
-            JsonParseResponseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse();
-            JsonParseResponseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse();
+            JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(new JSONObject());
+            JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse();
+            JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse();
         } catch (Exception e) {
             msg = e.getMessage();
         }
         assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
         try {
-            JsonParseResponseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseResponseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse();
+            JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(new JSONObject()).parseResponse();
+            JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse();
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -77,7 +77,7 @@ public class SystemsParseResponseTest {
     public void tstZosmfSystemsParseJsonStopResponseSuccess() throws Exception {
         final String data = "{\"items\":[{\"systemNickName\":\"test\",\"zosVR\":\"2.5\"}],\"numRows\":1}";
         final JSONObject json = new JSONObject((JSONObject) new JSONParser().parse(data));
-        final ZosmfSystemsResponse response = (ZosmfSystemsResponse) JsonParseResponseFactory
+        final ZosmfSystemsResponse response = (ZosmfSystemsResponse) JsonParseFactory
                 .buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(json).parseResponse();
         assertEquals(Long.parseLong("1"), response.getNumRows().orElse(-1L));
         assertEquals("test", response.getDefinedSystems().get()[0].getSystemNickName().get());

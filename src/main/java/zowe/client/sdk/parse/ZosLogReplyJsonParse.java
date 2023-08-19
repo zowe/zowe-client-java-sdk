@@ -22,12 +22,12 @@ import java.util.List;
  * @author Frank Giordano
  * @version 2.0
  */
-public final class ZosLogReplyParseResponse implements JsonParseResponse {
+public final class ZosLogReplyJsonParse implements JsonParse {
 
     /**
      * Represents one singleton instance
      */
-    private static JsonParseResponse INSTANCE;
+    private static JsonParse INSTANCE;
 
     private List<ZosLogItem> zosLogItems;
 
@@ -41,7 +41,7 @@ public final class ZosLogReplyParseResponse implements JsonParseResponse {
      *
      * @author Frank Giordano
      */
-    private ZosLogReplyParseResponse() {
+    private ZosLogReplyJsonParse() {
     }
 
     /**
@@ -50,9 +50,9 @@ public final class ZosLogReplyParseResponse implements JsonParseResponse {
      * @return ZosLogReplyParseResponse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParseResponse getInstance() {
+    public synchronized static JsonParse getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new ZosLogReplyParseResponse();
+            INSTANCE = new ZosLogReplyJsonParse();
         }
         return INSTANCE;
     }
@@ -97,7 +97,7 @@ public final class ZosLogReplyParseResponse implements JsonParseResponse {
      * @author Frank Giordano
      */
     @Override
-    public JsonParseResponse setJsonObject(final JSONObject data) {
+    public JsonParse setJsonObject(final JSONObject data) {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
         this.data = data;
         return this;

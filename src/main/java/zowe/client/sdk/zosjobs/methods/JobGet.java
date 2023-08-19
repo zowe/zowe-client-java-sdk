@@ -13,7 +13,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseResponseFactory;
+import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZoweRequestType;
@@ -247,7 +247,7 @@ public class JobGet {
                 .orElseThrow(() -> new IllegalStateException("no get job response phrase")).toString();
         final JSONArray results = (JSONArray) new JSONParser().parse(jsonStr);
         for (final Object jsonObj : results) {
-            jobs.add((Job) JsonParseResponseFactory.buildParser(ParseType.JOB)
+            jobs.add((Job) JsonParseFactory.buildParser(ParseType.JOB)
                     .setJsonObject((JSONObject) jsonObj).parseResponse());
         }
 
@@ -371,7 +371,7 @@ public class JobGet {
         final JSONArray results = (JSONArray) new JSONParser().parse(jsonStr);
         for (final Object obj : results) {
             final JSONObject jsonObj = (JSONObject) obj;
-            files.add((JobFile) JsonParseResponseFactory.buildParser(ParseType.JOB_FILE).
+            files.add((JobFile) JsonParseFactory.buildParser(ParseType.JOB_FILE).
                     setJsonObject(jsonObj).parseResponse());
         }
 
@@ -435,7 +435,7 @@ public class JobGet {
         final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job get response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        return (Job) JsonParseResponseFactory.buildParser(ParseType.JOB).setJsonObject(jsonObject).parseResponse();
+        return (Job) JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(jsonObject).parseResponse();
     }
 
     /**

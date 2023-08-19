@@ -11,22 +11,20 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-
-import java.util.HashMap;
-import java.util.Map;
+import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
 
 /**
- * Parse json response into property list
+ * Parse json response from Tso Stop request
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public final class PropsParseResponse implements JsonParseResponse {
+public final class TsoStopJsonParse implements JsonParse {
 
     /**
      * Represents one singleton instance
      */
-    private static JsonParseResponse INSTANCE;
+    private static JsonParse INSTANCE;
 
     /**
      * JSON data value to be parsed
@@ -38,47 +36,39 @@ public final class PropsParseResponse implements JsonParseResponse {
      *
      * @author Frank Giordano
      */
-    private PropsParseResponse() {
+    private TsoStopJsonParse() {
     }
 
     /**
      * Get singleton instance
      *
-     * @return PropsParseResponse object
+     * @return TsoStopParseResponse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParseResponse getInstance() {
+    public synchronized static JsonParse getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new PropsParseResponse();
+            INSTANCE = new TsoStopJsonParse();
         }
         return INSTANCE;
     }
 
     /**
-     * Parse team config's properties json representation into a Map object
+     * Retrieve parsed json Tso Stop Response
      *
-     * @return hashmap of property values
+     * @return populated console response, see ZosmfTsoResponse object
      * @author Frank Giordano
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Object parseResponse() {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
-        // i.e. properties='{"rejectUnauthorized":false,"host":"mvsxe47.lvn.company.net"}'
-        final Map<String, String> props = new HashMap<>();
-        data.keySet().forEach(key -> {
-            String value = null;
-            try {
-                value = (String) data.get(key);
-            } catch (Exception e) {
-                if (e.getMessage().contains("java.lang.Long")) {
-                    value = String.valueOf(data.get(key));
-                }
-            }
-            props.put((String) key, value);
-        });
+        final ZosmfTsoResponse zosmfTsoResponse = new ZosmfTsoResponse.Builder()
+                .ver(data.get("ver") != null ? (String) data.get("ver") : null)
+                .servletKey(data.get("servletKey") != null ? (String) data.get("servletKey") : null)
+                .reused(data.get("reused") != null && (boolean) data.get("reused"))
+                .timeout(data.get("timeout") != null && (boolean) data.get("timeout"))
+                .build();
         data = null;
-        return props;
+        return zosmfTsoResponse;
     }
 
     /**
@@ -89,7 +79,7 @@ public final class PropsParseResponse implements JsonParseResponse {
      * @author Frank Giordano
      */
     @Override
-    public JsonParseResponse setJsonObject(final JSONObject data) {
+    public JsonParse setJsonObject(final JSONObject data) {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
         this.data = data;
         return this;

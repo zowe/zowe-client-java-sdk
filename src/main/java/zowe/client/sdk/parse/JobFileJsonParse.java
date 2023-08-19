@@ -19,12 +19,12 @@ import zowe.client.sdk.zosjobs.input.JobFile;
  * @author Frank Giordano
  * @version 2.0
  */
-public final class JobFileParseResponse implements JsonParseResponse {
+public final class JobFileJsonParse implements JsonParse {
 
     /**
      * Represents one singleton instance
      */
-    private static JsonParseResponse INSTANCE;
+    private static JsonParse INSTANCE;
 
     /**
      * JSON data value to be parsed
@@ -36,7 +36,7 @@ public final class JobFileParseResponse implements JsonParseResponse {
      *
      * @author Frank Giordano
      */
-    private JobFileParseResponse() {
+    private JobFileJsonParse() {
     }
 
     /**
@@ -45,9 +45,9 @@ public final class JobFileParseResponse implements JsonParseResponse {
      * @return JobFileParseResponse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParseResponse getInstance() {
+    public synchronized static JsonParse getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new JobFileParseResponse();
+            INSTANCE = new JobFileJsonParse();
         }
         return INSTANCE;
     }
@@ -89,7 +89,7 @@ public final class JobFileParseResponse implements JsonParseResponse {
      * @author Frank Giordano
      */
     @Override
-    public JsonParseResponse setJsonObject(final JSONObject data) {
+    public JsonParse setJsonObject(final JSONObject data) {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
         this.data = data;
         return this;

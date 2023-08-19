@@ -19,14 +19,14 @@ import zowe.client.sdk.parse.type.ParseType;
  * @author Frank Giordano
  * @version 2.0
  */
-public final class JsonParseResponseFactory {
+public final class JsonParseFactory {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JsonParseResponseFactory.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JsonParseFactory.class);
 
     /**
      * Private constructor defined to avoid instantiation of class
      */
-    private JsonParseResponseFactory() {
+    private JsonParseFactory() {
         throw new IllegalStateException("Factory class");
     }
 
@@ -37,51 +37,51 @@ public final class JsonParseResponseFactory {
      * @return JsonParseResponse abstract object
      * @author Frank Giordano
      */
-    public static JsonParseResponse buildParser(final ParseType type) {
+    public static JsonParse buildParser(final ParseType type) {
         LOG.debug(type.name());
-        JsonParseResponse parseResponse;
+        JsonParse parseResponse;
         switch (type) {
             case DATASET:
-                parseResponse = DatasetParseResponse.getInstance();
+                parseResponse = DatasetJsonParse.getInstance();
                 break;
             case JOB:
-                parseResponse = JobParseResponse.getInstance();
+                parseResponse = JobJsonParse.getInstance();
                 break;
             case JOB_FILE:
-                parseResponse = JobFileParseResponse.getInstance();
+                parseResponse = JobFileJsonParse.getInstance();
                 break;
             case MEMBER:
-                parseResponse = MemberParseResponse.getInstance();
+                parseResponse = MemberJsonParse.getInstance();
                 break;
             case MVS_CONSOLE:
-                parseResponse = MvsConsoleParseResponse.getInstance();
+                parseResponse = MvsConsoleJsonParse.getInstance();
                 break;
             case PROPS:
-                parseResponse = PropsParseResponse.getInstance();
+                parseResponse = PropsJsonParse.getInstance();
                 break;
             case TSO_CONSOLE:
-                parseResponse = TsoParseResponse.getInstance();
+                parseResponse = TsoJsonParse.getInstance();
                 break;
             case TSO_STOP:
-                parseResponse = TsoStopParseResponse.getInstance();
+                parseResponse = TsoStopJsonParse.getInstance();
                 break;
             case UNIX_FILE:
-                parseResponse = UnixFileParseResponse.getInstance();
+                parseResponse = UnixFileJsonParse.getInstance();
                 break;
             case UNIX_ZFS:
-                parseResponse = UnixZfsParseResponse.getInstance();
+                parseResponse = UnixZfsJsonParse.getInstance();
                 break;
             case ZOS_LOG_ITEM:
-                parseResponse = ZosLogItemParseResponse.getInstance();
+                parseResponse = ZosLogItemJsonParse.getInstance();
                 break;
             case ZOS_LOG_REPLY:
-                parseResponse = ZosLogReplyParseResponse.getInstance();
+                parseResponse = ZosLogReplyJsonParse.getInstance();
                 break;
             case ZOSMF_SYSTEMS:
-                parseResponse = SystemsParseResponse.getInstance();
+                parseResponse = SystemsJsonParse.getInstance();
                 break;
             case ZOSMF_INFO:
-                parseResponse = SystemInfoParseResponse.getInstance();
+                parseResponse = SystemInfoJsonParse.getInstance();
                 break;
             default:
                 throw new IllegalStateException("no valid ParseType type specified");

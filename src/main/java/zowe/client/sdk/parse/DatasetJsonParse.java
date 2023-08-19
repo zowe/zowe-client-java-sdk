@@ -19,12 +19,12 @@ import zowe.client.sdk.zosfiles.dsn.response.Dataset;
  * @author Frank Giordano
  * @version 2.0
  */
-public final class DatasetParseResponse implements JsonParseResponse {
+public final class DatasetJsonParse implements JsonParse {
 
     /**
      * Represents one singleton instance
      */
-    private static JsonParseResponse INSTANCE;
+    private static JsonParse INSTANCE;
 
     /**
      * JSON data value to be parsed
@@ -36,7 +36,7 @@ public final class DatasetParseResponse implements JsonParseResponse {
      *
      * @author Frank Giordano
      */
-    private DatasetParseResponse() {
+    private DatasetJsonParse() {
     }
 
     /**
@@ -45,9 +45,9 @@ public final class DatasetParseResponse implements JsonParseResponse {
      * @return ConsoleResponseService object
      * @author Frank Giordano
      */
-    public synchronized static JsonParseResponse getInstance() {
+    public synchronized static JsonParse getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new DatasetParseResponse();
+            INSTANCE = new DatasetJsonParse();
         }
         return INSTANCE;
     }
@@ -94,7 +94,7 @@ public final class DatasetParseResponse implements JsonParseResponse {
      * @author Frank Giordano
      */
     @Override
-    public JsonParseResponse setJsonObject(final JSONObject data) {
+    public JsonParse setJsonObject(final JSONObject data) {
         ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
         this.data = data;
         return this;

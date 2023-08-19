@@ -14,9 +14,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseResponseFactory;
-import zowe.client.sdk.parse.ZosLogItemParseResponse;
-import zowe.client.sdk.parse.ZosLogReplyParseResponse;
+import zowe.client.sdk.parse.JsonParseFactory;
+import zowe.client.sdk.parse.ZosLogItemJsonParse;
+import zowe.client.sdk.parse.ZosLogReplyJsonParse;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.JsonGetRequest;
 import zowe.client.sdk.rest.ZoweRequest;
@@ -123,13 +123,13 @@ public class ZosLog {
         final boolean isProcessResponse = params.isProcessResponses();
 
         for (Object itemJsonObj : jsonArray) {
-            final ZosLogItemParseResponse parser = (ZosLogItemParseResponse) JsonParseResponseFactory
+            final ZosLogItemJsonParse parser = (ZosLogItemJsonParse) JsonParseFactory
                     .buildParser(ParseType.ZOS_LOG_ITEM).setJsonObject((JSONObject) itemJsonObj);
             parser.setProcessResponse(isProcessResponse);
             zosLogItems.add(parser.parseResponse());
         }
 
-        final ZosLogReplyParseResponse parser = (ZosLogReplyParseResponse) JsonParseResponseFactory
+        final ZosLogReplyJsonParse parser = (ZosLogReplyJsonParse) JsonParseFactory
                 .buildParser(ParseType.ZOS_LOG_REPLY).setJsonObject(jsonObject);
         parser.setZosLogItems(zosLogItems);
         return parser.parseResponse();

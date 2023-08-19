@@ -32,7 +32,7 @@ public class DatasetParseResponseTest {
     public void tstDatasetParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseResponseFactory.buildParser(ParseType.DATASET).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.DATASET).setJsonObject(null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -41,17 +41,17 @@ public class DatasetParseResponseTest {
 
     @Test
     public void tstDatasetParseJsonStopResponseSingletonSuccess() throws Exception {
-        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(ParseType.DATASET);
-        final JsonParseResponse parser2 = JsonParseResponseFactory.buildParser(ParseType.DATASET);
+        final JsonParse parser = JsonParseFactory.buildParser(ParseType.DATASET);
+        final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.DATASET);
         assertSame(parser, parser2);
     }
 
     @Test
     public void tstDatasetParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
-        final JsonParseResponse parser =
-                JsonParseResponseFactory.buildParser(ParseType.DATASET).setJsonObject(new JSONObject());
-        final JsonParseResponse parser2 =
-                JsonParseResponseFactory.buildParser(ParseType.DATASET).setJsonObject(new JSONObject());
+        final JsonParse parser =
+                JsonParseFactory.buildParser(ParseType.DATASET).setJsonObject(new JSONObject());
+        final JsonParse parser2 =
+                JsonParseFactory.buildParser(ParseType.DATASET).setJsonObject(new JSONObject());
         assertSame(parser, parser2);
     }
 
@@ -59,16 +59,16 @@ public class DatasetParseResponseTest {
     public void tstDatasetParseJsonStopResponseResetDataFail() {
         String msg = "";
         try {
-            JsonParseResponseFactory.buildParser(ParseType.DATASET).setJsonObject(new JSONObject());
-            JsonParseResponseFactory.buildParser(ParseType.DATASET).parseResponse();
-            JsonParseResponseFactory.buildParser(ParseType.DATASET).parseResponse();
+            JsonParseFactory.buildParser(ParseType.DATASET).setJsonObject(new JSONObject());
+            JsonParseFactory.buildParser(ParseType.DATASET).parseResponse();
+            JsonParseFactory.buildParser(ParseType.DATASET).parseResponse();
         } catch (Exception e) {
             msg = e.getMessage();
         }
         assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
         try {
-            JsonParseResponseFactory.buildParser(ParseType.DATASET).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseResponseFactory.buildParser(ParseType.DATASET).parseResponse();
+            JsonParseFactory.buildParser(ParseType.DATASET).setJsonObject(new JSONObject()).parseResponse();
+            JsonParseFactory.buildParser(ParseType.DATASET).parseResponse();
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -82,7 +82,7 @@ public class DatasetParseResponseTest {
         jsonMap.put("dev", "dev");
         final JSONObject json = new JSONObject(jsonMap);
 
-        final Dataset response = (Dataset) JsonParseResponseFactory.buildParser(ParseType.DATASET)
+        final Dataset response = (Dataset) JsonParseFactory.buildParser(ParseType.DATASET)
                 .setJsonObject(json).parseResponse();
         assertEquals("ver", response.getDsname().orElse("n\\a"));
         assertEquals("dev", response.getDev().orElse("n\\a"));

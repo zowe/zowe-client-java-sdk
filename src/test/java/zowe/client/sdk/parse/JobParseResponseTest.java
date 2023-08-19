@@ -32,7 +32,7 @@ public class JobParseResponseTest {
     public void tstJobParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseResponseFactory.buildParser(ParseType.JOB).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -41,17 +41,17 @@ public class JobParseResponseTest {
 
     @Test
     public void tstJobParseJsonStopResponseSingletonSuccess() throws Exception {
-        final JsonParseResponse parser = JsonParseResponseFactory.buildParser(ParseType.JOB);
-        final JsonParseResponse parser2 = JsonParseResponseFactory.buildParser(ParseType.JOB);
+        final JsonParse parser = JsonParseFactory.buildParser(ParseType.JOB);
+        final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.JOB);
         assertSame(parser, parser2);
     }
 
     @Test
     public void tstJobParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
-        final JsonParseResponse parser =
-                JsonParseResponseFactory.buildParser(ParseType.JOB).setJsonObject(new JSONObject());
-        final JsonParseResponse parser2 =
-                JsonParseResponseFactory.buildParser(ParseType.JOB).setJsonObject(new JSONObject());
+        final JsonParse parser =
+                JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(new JSONObject());
+        final JsonParse parser2 =
+                JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(new JSONObject());
         assertSame(parser, parser2);
     }
 
@@ -59,16 +59,16 @@ public class JobParseResponseTest {
     public void tstJobParseJsonStopResponseResetDataFail() {
         String msg = "";
         try {
-            JsonParseResponseFactory.buildParser(ParseType.JOB).setJsonObject(new JSONObject());
-            JsonParseResponseFactory.buildParser(ParseType.JOB).parseResponse();
-            JsonParseResponseFactory.buildParser(ParseType.JOB).parseResponse();
+            JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(new JSONObject());
+            JsonParseFactory.buildParser(ParseType.JOB).parseResponse();
+            JsonParseFactory.buildParser(ParseType.JOB).parseResponse();
         } catch (Exception e) {
             msg = e.getMessage();
         }
         assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
         try {
-            JsonParseResponseFactory.buildParser(ParseType.JOB).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseResponseFactory.buildParser(ParseType.JOB).parseResponse();
+            JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(new JSONObject()).parseResponse();
+            JsonParseFactory.buildParser(ParseType.JOB).parseResponse();
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -82,7 +82,7 @@ public class JobParseResponseTest {
         jsonMap.put("jobid", "dev");
         final JSONObject json = new JSONObject(jsonMap);
 
-        final Job response = (Job) JsonParseResponseFactory.buildParser(ParseType.JOB)
+        final Job response = (Job) JsonParseFactory.buildParser(ParseType.JOB)
                 .setJsonObject(json).parseResponse();
         assertEquals("ver", response.getJobName().orElse("n\\a"));
         assertEquals("dev", response.getJobId().orElse("n\\a"));
