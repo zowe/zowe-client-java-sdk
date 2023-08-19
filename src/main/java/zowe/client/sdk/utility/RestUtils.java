@@ -90,20 +90,4 @@ public final class RestUtils {
         return !((statusCode >= 200 && statusCode <= 299) || (statusCode >= 100 && statusCode <= 199));
     }
 
-    /**
-     * Checks if url is a valid http or https url.
-     *
-     * @param url string value
-     * @return boolean true or false
-     * @author Frank Giordano
-     */
-    public static boolean isUrlNotValid(final String url) {
-        try {
-            new URL(url).toURI();
-            return false;
-        } catch (URISyntaxException | MalformedURLException exception) {
-            return true;
-        }
-    }
-
 }

@@ -19,6 +19,9 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -119,11 +122,27 @@ public abstract class ZosmfRequest {
     public void setUrl(final String url) throws IllegalArgumentException {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         ValidateUtils.checkIllegalParameter(url.isBlank(), "url not specified");
-        if (RestUtils.isUrlNotValid(url)) {
+        if (isUrlNotValid(url)) {
             throw new IllegalArgumentException("url is invalid");
         }
         this.url = url;
         LOG.debug(this.url);
+    }
+
+    /**
+     * Checks if url is a valid http or https url.
+     *
+     * @param url string value
+     * @return boolean true or false
+     * @author Frank Giordano
+     */
+    public static boolean isUrlNotValid(final String url) {
+        try {
+            new URL(url).toURI();
+            return false;
+        } catch (URISyntaxException | MalformedURLException exception) {
+            return true;
+        }
     }
 
 }
