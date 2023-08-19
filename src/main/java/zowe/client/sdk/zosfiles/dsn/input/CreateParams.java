@@ -117,10 +117,10 @@ public class CreateParams {
     /**
      * CreateParams constructor
      *
-     * @param builder CreateParams.Builder object
+     * @param builder Builder object
      * @author Leonid Baranov
      */
-    private CreateParams(final CreateParams.Builder builder) {
+    private CreateParams(final Builder builder) {
         this.volser = Optional.ofNullable(builder.volser);
         this.unit = Optional.ofNullable(builder.unit);
         this.dsorg = Optional.ofNullable(builder.dsorg);
@@ -453,8 +453,19 @@ public class CreateParams {
          */
         private String responseTimeout;
 
-        /
-        public CreateParams.Builder alcunit(final String alcunit) {
+        /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
+         * Specify alcunit string value
+         *
+         * @param alcunit string value
+         * @return Builder this object
+         */
+        public Builder alcunit(final String alcunit) {
             this.alcunit = alcunit;
             return this;
         }
@@ -463,9 +474,9 @@ public class CreateParams {
          * Specify avgblk int value
          *
          * @param avgblk int value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder avgblk(final Integer avgblk) {
+        public Builder avgblk(final Integer avgblk) {
             this.avgblk = avgblk;
             return this;
         }
@@ -475,9 +486,9 @@ public class CreateParams {
          * Specify blksize int value
          *
          * @param blksize int value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder blksize(final Integer blksize) {
+        public Builder blksize(final Integer blksize) {
             this.blksize = blksize;
             return this;
         }
@@ -486,9 +497,9 @@ public class CreateParams {
          * Specify dataclass string value
          *
          * @param dataclass string value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder dataclass(final String dataclass) {
+        public Builder dataclass(final String dataclass) {
             this.dataclass = dataclass;
             return this;
         }
@@ -497,9 +508,9 @@ public class CreateParams {
          * Specify dirblk int value
          *
          * @param dirblk int value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder dirblk(final Integer dirblk) {
+        public Builder dirblk(final Integer dirblk) {
             this.dirblk = dirblk;
             return this;
         }
@@ -508,9 +519,9 @@ public class CreateParams {
          * Specify dsntype string value
          *
          * @param dsntype string value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder dsntype(final String dsntype) {
+        public Builder dsntype(final String dsntype) {
             this.dsntype = dsntype;
             return this;
         }
@@ -519,20 +530,20 @@ public class CreateParams {
          * Specify dsorg string value
          *
          * @param dsorg string value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder dsorg(final String dsorg) {
+        public Builder dsorg(final String dsorg) {
             this.dsorg = dsorg;
             return this;
         }
 
         /**
+         * Specify lrecl int value
          *
-         *
-         * @param lrecl
-         * @return
+         * @param lrecl int value
+         * @return Builder this object
          */
-        public CreateParams.Builder lrecl(final Integer lrecl) {
+        public Builder lrecl(final Integer lrecl) {
             this.lrecl = lrecl;
             return this;
         }
@@ -541,9 +552,9 @@ public class CreateParams {
          * Specify mgntclass string value
          *
          * @param mgntclass string value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder mgntclass(final String mgntclass) {
+        public Builder mgntclass(final String mgntclass) {
             this.mgntclass = mgntclass;
             return this;
         }
@@ -552,9 +563,9 @@ public class CreateParams {
          * Specify primary int value
          *
          * @param primary int value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder primary(final Integer primary) {
+        public Builder primary(final Integer primary) {
             this.primary = primary;
             return this;
         }
@@ -563,9 +574,9 @@ public class CreateParams {
          * Specify recfm string value
          *
          * @param recfm string value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder recfm(final String recfm) {
+        public Builder recfm(final String recfm) {
             this.recfm = recfm;
             return this;
         }
@@ -574,9 +585,9 @@ public class CreateParams {
          * Specify responseTimeout string value
          *
          * @param responseTimeout string value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder responseTimeout(final String responseTimeout) {
+        public Builder responseTimeout(final String responseTimeout) {
             this.responseTimeout = responseTimeout;
             return this;
         }
@@ -585,9 +596,9 @@ public class CreateParams {
          * Specify secondary int value
          *
          * @param secondary int value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder secondary(final Integer secondary) {
+        public Builder secondary(final Integer secondary) {
             this.secondary = secondary;
             return this;
         }
@@ -596,9 +607,9 @@ public class CreateParams {
          * Specify showAttributes boolean value
          *
          * @param showAttributes boolean true or false value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder showAttributes(final boolean showAttributes) {
+        public Builder showAttributes(final boolean showAttributes) {
             this.showAttributes = showAttributes;
             return this;
         }
@@ -607,9 +618,9 @@ public class CreateParams {
          * Specify size string value
          *
          * @param size string value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder size(final String size) {
+        public Builder size(final String size) {
             this.size = size;
             return this;
         }
@@ -618,9 +629,9 @@ public class CreateParams {
          * Specify storclass string value
          *
          * @param storclass string value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder storclass(final String storclass) {
+        public Builder storclass(final String storclass) {
             this.storclass = storclass;
             return this;
         }
@@ -629,9 +640,9 @@ public class CreateParams {
          * Specify unit string value
          *
          * @param unit string value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder unit(final String unit) {
+        public Builder unit(final String unit) {
             this.unit = unit;
             return this;
         }
@@ -640,15 +651,15 @@ public class CreateParams {
          * Specify volser string value
          *
          * @param volser string value
-         * @return CreateParams.Builder this object
+         * @return Builder this object
          */
-        public CreateParams.Builder volser(final String volser) {
+        public Builder volser(final String volser) {
             this.volser = volser;
             return this;
         }
 
         /**
-         * Return CreateParams object based on CreateParams.Builder this object
+         * Return CreateParams object based on Builder this object
          *
          * @return CreateParams this object
          */

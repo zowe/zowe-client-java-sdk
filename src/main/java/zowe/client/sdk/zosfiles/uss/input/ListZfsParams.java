@@ -125,12 +125,18 @@ public class ListZfsParams {
         private String fsname;
 
         /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
          * Specify maxLength int value
          *
          * @param maxLength the maxLength int value
-         * @return ListZfsParams.Builder this object
+         * @return Builder this object
          */
-        public ListZfsParams.Builder maxLength(final int maxLength) {
+        public Builder maxLength(final int maxLength) {
             this.maxLength = maxLength;
             return this;
         }
@@ -139,9 +145,9 @@ public class ListZfsParams {
          * Specify path value
          *
          * @param path string value
-         * @return ListZfsParams.Builder this object
+         * @return Builder this object
          */
-        public ListZfsParams.Builder path(final String path) {
+        public Builder path(final String path) {
             ValidateUtils.checkNullParameter(path == null, "path is null");
             ValidateUtils.checkIllegalParameter(path.isBlank(), "path not specified");
             if (this.fsname != null) {
@@ -155,9 +161,9 @@ public class ListZfsParams {
          * Specify fsname value
          *
          * @param fsname string value
-         * @return ListZfsParams.Builder this object
+         * @return Builder this object
          */
-        public ListZfsParams.Builder fsname(final String fsname) {
+        public Builder fsname(final String fsname) {
             ValidateUtils.checkNullParameter(fsname == null, "fsname is null");
             ValidateUtils.checkIllegalParameter(fsname.isBlank(), "fsname not specified");
             if (this.path != null) {
@@ -168,7 +174,7 @@ public class ListZfsParams {
         }
 
         /**
-         * Return ListZfsParams object based on ListZfsParams.Builder this object
+         * Return ListZfsParams object based on Builder this object
          *
          * @return ListZfsParams object
          */

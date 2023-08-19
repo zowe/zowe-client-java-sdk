@@ -159,46 +159,120 @@ public class ListParams {
      */
     public static class Builder {
 
+        /**
+         * The volume where the data set resides
+         */
         private String volume;
+
+        /**
+         * The indicator that we want to show more attributes
+         */
         private AttributeType attribute;
+
+        /**
+         * The indicator that we want to show less data sets or members
+         */
         private String maxLength;
+
+        /**
+         * An optional search parameter that specifies the first data set name to return to the response document
+         */
         private String start;
+
+        /**
+         * An optional parameter that specifies how to handle migrated data sets
+         */
         private String recall;
+
+        /**
+         * An optional pattern for restricting the response list
+         */
         private String pattern;
+
+        /**
+         * Response time out value
+         */
         private String responseTimeout;
 
+        /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
+         * The volume where the data set resides
+         *
+         * @param volume The volume where the data set resides
+         * @return ListParams.Builder this object
+         */
+        public ListParams.Builder volume(final String volume) {
+            this.volume = volume;
+            return this;
+        }
+
+        /**
+         * Specify indicator that we want to show more attributes
+         *
+         * @param attribute AttributeType value
+         */
         public ListParams.Builder attribute(final AttributeType attribute) {
             this.attribute = attribute;
             return this;
         }
 
+        /**
+         * The indicator that we want to show more attributes
+         *
+         * @param maxLength int value
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder maxLength(final String maxLength) {
             this.maxLength = maxLength;
             return this;
         }
 
-        public ListParams.Builder pattern(final String pattern) {
-            this.pattern = pattern;
-            return this;
-        }
-
-        public ListParams.Builder recall(final String recall) {
-            this.recall = recall;
-            return this;
-        }
-
-        public ListParams.Builder responseTimeout(final String responseTimeout) {
-            this.responseTimeout = responseTimeout;
-            return this;
-        }
-
+        /**
+         * An optional search parameter that specifies the first data set name to return to the response document
+         *
+         * @param start string value
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder start(final String start) {
             this.start = start;
             return this;
         }
 
-        public ListParams.Builder volume(final String volume) {
-            this.volume = volume;
+        /**
+         * An optional parameter that specifies how to handle migrated data sets
+         *
+         * @param recall string value
+         * @return ListParams.Builder this object
+         */
+        public ListParams.Builder recall(final String recall) {
+            this.recall = recall;
+            return this;
+        }
+
+        /**
+         * An optional pattern for restricting the response list
+         *
+         * @param pattern string value
+         * @return ListParams.Builder this object
+         */
+        public ListParams.Builder pattern(final String pattern) {
+            this.pattern = pattern;
+            return this;
+        }
+
+        /**
+         * Response time out value
+         *
+         * @param responseTimeout string value
+         * @return ListParams.Builder this object
+         */
+        public ListParams.Builder responseTimeout(final String responseTimeout) {
+            this.responseTimeout = responseTimeout;
             return this;
         }
 

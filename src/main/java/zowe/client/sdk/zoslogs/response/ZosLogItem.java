@@ -79,10 +79,10 @@ public class ZosLogItem {
     /**
      * ZosLogItem constructor
      *
-     * @param builder ZosLogItem.Builder Object
+     * @param builder Builder Object
      * @author Frank Giordano
      */
-    private ZosLogItem(final ZosLogItem.Builder builder) {
+    private ZosLogItem(final Builder builder) {
         this.cart = Optional.ofNullable(builder.cart);
         this.color = Optional.ofNullable(builder.color);
         this.jobName = Optional.ofNullable(builder.jobName);
@@ -204,25 +204,74 @@ public class ZosLogItem {
      */
     public static class Builder {
 
+        /**
+         * Eight character command and response token (CART).
+         */
         private String cart;
+
+        /**
+         * The color of the message.
+         */
         private String color;
+
+        /**
+         * The name of the job that generates the message.
+         */
         private String jobName;
+
+        /**
+         * The content of the message.
+         */
         private String message;
+
+        /**
+         * The message ID.
+         */
         private String messageId;
+
+        /**
+         * Reply ID, in decimal.
+         */
         private String replyId;
+
+        /**
+         * Original eight character system name.
+         */
         private String system;
+
+        /**
+         * Type variable
+         */
         private String type;
+
+        /**
+         * Indicate whether the message is a DOM, WTOR, or HOLD message.
+         */
         private String subType;
+
+        /**
+         * For example, "Thu Feb 03 03:00 GMT 2021".
+         */
         private String time;
+
+        /**
+         * UNIX timestamp. For example, 1621920830109.
+         */
         private Long timeStamp;
+
+        /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
 
         /**
          * Set cart string value from response
          *
          * @param cart string value
-         * @return ZosLogItem.Builder object
+         * @return Builder object
          */
-        public ZosLogItem.Builder cart(final String cart) {
+        public Builder cart(final String cart) {
             this.cart = cart;
             return this;
         }
@@ -231,9 +280,9 @@ public class ZosLogItem {
          * Set color string value from response
          *
          * @param color string value
-         * @return ZosLogItem.Builder object
+         * @return Builder object
          */
-        public ZosLogItem.Builder color(final String color) {
+        public Builder color(final String color) {
             this.color = color;
             return this;
         }
@@ -242,9 +291,9 @@ public class ZosLogItem {
          * Set jobName string value from response
          *
          * @param jobName string value
-         * @return ZosLogItem.Builder object
+         * @return Builder object
          */
-        public ZosLogItem.Builder jobName(final String jobName) {
+        public Builder jobName(final String jobName) {
             this.jobName = jobName;
             return this;
         }
@@ -253,9 +302,9 @@ public class ZosLogItem {
          * Set message string value from response
          *
          * @param message string value
-         * @return ZosLogItem.Builder object
+         * @return Builder object
          */
-        public ZosLogItem.Builder message(final String message) {
+        public Builder message(final String message) {
             this.message = message;
             return this;
         }
@@ -264,9 +313,9 @@ public class ZosLogItem {
          * Set messageId string value from response
          *
          * @param messageId string value
-         * @return ZosLogItem.Builder object
+         * @return Builder object
          */
-        public ZosLogItem.Builder messageId(final String messageId) {
+        public Builder messageId(final String messageId) {
             this.messageId = messageId;
             return this;
         }
@@ -275,9 +324,9 @@ public class ZosLogItem {
          * Set replyId string value from response
          *
          * @param replyId string value
-         * @return ZosLogItem.Builder object
+         * @return Builder object
          */
-        public ZosLogItem.Builder replyId(final String replyId) {
+        public Builder replyId(final String replyId) {
             this.replyId = replyId;
             return this;
         }
@@ -286,9 +335,9 @@ public class ZosLogItem {
          * Set system string value from response
          *
          * @param system string value
-         * @return ZosLogItem.Builder object
+         * @return Builder object
          */
-        public ZosLogItem.Builder system(final String system) {
+        public Builder system(final String system) {
             this.system = system;
             return this;
         }
@@ -297,9 +346,9 @@ public class ZosLogItem {
          * Set type string value from response
          *
          * @param type string value
-         * @return ZosLogItem.Builder object
+         * @return Builder object
          */
-        public ZosLogItem.Builder type(final String type) {
+        public Builder type(final String type) {
             this.type = type;
             return this;
         }
@@ -308,9 +357,9 @@ public class ZosLogItem {
          * Set subType string value from response
          *
          * @param subType string value
-         * @return ZosLogItem.Builder object
+         * @return Builder object
          */
-        public ZosLogItem.Builder subType(final String subType) {
+        public Builder subType(final String subType) {
             this.subType = subType;
             return this;
         }
@@ -319,9 +368,9 @@ public class ZosLogItem {
          * Set time string value from response
          *
          * @param time string value
-         * @return ZosLogItem.Builder object
+         * @return Builder object
          */
-        public ZosLogItem.Builder time(final String time) {
+        public Builder time(final String time) {
             this.time = time;
             return this;
         }
@@ -330,13 +379,18 @@ public class ZosLogItem {
          * Set timeStamp long value from response
          *
          * @param timeStamp long value
-         * @return ZosLogItem.Builder object
+         * @return Builder object
          */
-        public ZosLogItem.Builder timeStamp(final long timeStamp) {
+        public Builder timeStamp(final long timeStamp) {
             this.timeStamp = timeStamp;
             return this;
         }
 
+        /**
+         * Return ZosLogItem object based on Builder this object
+         *
+         * @return ZosLogItem this object
+         */
         public ZosLogItem build() {
             return new ZosLogItem(this);
         }

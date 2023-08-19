@@ -173,12 +173,18 @@ public class ChangeTagParams {
         private LinkType links;
 
         /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
          * Specify ChangeTagAction type value
          *
          * @param action ChangeTagAction type value
          * @return ChangeTagParams.Builder this object
          */
-        public ChangeTagParams.Builder action(final ChangeTagAction action) {
+        public Builder action(final ChangeTagAction action) {
             ValidateUtils.checkNullParameter(action == null, "action is null");
             this.action = action;
             return this;
@@ -190,7 +196,7 @@ public class ChangeTagParams {
          * @param type ChangeTagType enum value
          * @return ChangeTagParams.Builder this object
          */
-        public ChangeTagParams.Builder type(final ChangeTagType type) {
+        public Builder type(final ChangeTagType type) {
             this.type = type;
             return this;
         }
@@ -199,9 +205,9 @@ public class ChangeTagParams {
          * Specify codeset string value
          *
          * @param codeset string value
-         * @return ChangeTagParams.Builder this object
+         * @return Builder this object
          */
-        public ChangeTagParams.Builder codeset(final String codeset) {
+        public Builder codeset(final String codeset) {
             this.codeset = codeset;
             return this;
         }
@@ -210,9 +216,9 @@ public class ChangeTagParams {
          * Specify recursive boolean value
          *
          * @param recursive boolean true or false value
-         * @return ChangeTagParams.Builder this object
+         * @return Builder this object
          */
-        public ChangeTagParams.Builder recursive(final boolean recursive) {
+        public Builder recursive(final boolean recursive) {
             this.recursive = recursive;
             return this;
         }
@@ -221,15 +227,15 @@ public class ChangeTagParams {
          * Specify links LinkType value
          *
          * @param links LinkType type object
-         * @return ChangeTagParams.Builder this object
+         * @return Builder this object
          */
-        public ChangeTagParams.Builder links(final LinkType links) {
+        public Builder links(final LinkType links) {
             this.links = links;
             return this;
         }
 
         /**
-         * Return ChangeTagParams object based on ChangeTagParams.Builder this object
+         * Return ChangeTagParams object based on Builder this object
          *
          * @return ChangeTagParams this object
          */

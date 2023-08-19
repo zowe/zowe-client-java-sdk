@@ -118,20 +118,45 @@ public class GetJobParams {
      */
     public static class Builder {
 
+        /**
+         * Owner for which to obtain jobs for.
+         */
         private String owner = "*";
+
+        /**
+         * Prefix to filter when obtaining jobs.
+         * Default: *
+         */
         private String prefix = "*";
+
+        /**
+         * Max jobs to return in a list
+         * Default: JobsConstants.DEFAULT_MAX_JOBS
+         */
         private Integer maxJobs = JobsConstants.DEFAULT_MAX_JOBS;
+
+        /**
+         * job id for a job
+         */
         private String jobId;
 
-        public Builder() {
-        }
-
+        /**
+         * Builder constructor
+         *
+         * @param owner owner value, required value
+         */
         public Builder(final String owner) {
             ValidateUtils.checkNullParameter(owner == null, "owner is null");
             ValidateUtils.checkIllegalParameter(owner.isBlank(), "owner not specified");
             this.owner = owner;
         }
 
+        /**
+         * Set jobId string value
+         *
+         * @param jobId string value
+         * @return Builder this object
+         */
         public Builder jobId(final String jobId) {
             ValidateUtils.checkNullParameter(jobId == null, "job id is null");
             ValidateUtils.checkIllegalParameter(jobId.isBlank(), "job id not specified");
@@ -139,11 +164,23 @@ public class GetJobParams {
             return this;
         }
 
+        /**
+         * Set maxJobs int value
+         *
+         * @param maxJobs int value
+         * @return Builder this object
+         */
         public Builder maxJobs(final Integer maxJobs) {
             this.maxJobs = maxJobs;
             return this;
         }
 
+        /**
+         * Set prefix string value
+         *
+         * @param prefix string value
+         * @return Builder this object
+         */
         public Builder prefix(final String prefix) {
             ValidateUtils.checkNullParameter(prefix == null, "prefix is null");
             ValidateUtils.checkIllegalParameter(prefix.isBlank(), "prefix not specified");
@@ -151,6 +188,11 @@ public class GetJobParams {
             return this;
         }
 
+        /**
+         * Return GetJobParams object based on Builder this object
+         *
+         * @return GetJobParams this object
+         */
         public GetJobParams build() {
             return new GetJobParams(this);
         }

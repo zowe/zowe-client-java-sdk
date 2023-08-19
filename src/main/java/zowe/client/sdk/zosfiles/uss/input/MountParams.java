@@ -140,12 +140,18 @@ public class MountParams {
         private MountModeType mode;
 
         /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
          * Specify action type value
          *
          * @param action MountActionType type object
-         * @return MountParams.Builder this object
+         * @return Builder this object
          */
-        public MountParams.Builder action(final MountActionType action) {
+        public Builder action(final MountActionType action) {
             this.action = action;
             return this;
         }
@@ -154,9 +160,9 @@ public class MountParams {
          * Specify mountPoint string value
          *
          * @param mountPoint string value
-         * @return MountParams.Builder this object
+         * @return .Builder this object
          */
-        public MountParams.Builder mountPoint(final String mountPoint) {
+        public Builder mountPoint(final String mountPoint) {
             ValidateUtils.checkNullParameter(mountPoint == null, "mountPoint is null");
             ValidateUtils.checkIllegalParameter(mountPoint.isBlank(), "mountPoint not specified");
             this.mountPoint = mountPoint;
@@ -167,9 +173,9 @@ public class MountParams {
          * Specify fsType string value
          *
          * @param fsType string value
-         * @return MountParams.Builder this object
+         * @return Builder this object
          */
-        public MountParams.Builder fsType(final String fsType) {
+        public Builder fsType(final String fsType) {
             ValidateUtils.checkNullParameter(fsType == null, "fsType is null");
             ValidateUtils.checkIllegalParameter(fsType.isBlank(), "fsType not specified");
             this.fsType = fsType;
@@ -180,15 +186,15 @@ public class MountParams {
          * Specify mode type value
          *
          * @param mode MountModeType type object
-         * @return MountParams.Builder this object
+         * @return Builder this object
          */
-        public MountParams.Builder mode(final MountModeType mode) {
+        public Builder mode(final MountModeType mode) {
             this.mode = mode;
             return this;
         }
 
         /**
-         * Return MountParams object based on MountParams.Builder this object
+         * Return MountParams object based on Builder this object
          *
          * @return MountParams object
          */

@@ -368,12 +368,18 @@ public class ListParams {
         private boolean symlinks = false;
 
         /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
          * Specify path string value
          *
          * @param path string value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder path(final String path) {
+        public Builder path(final String path) {
             ValidateUtils.checkNullParameter(path == null, "path is null");
             ValidateUtils.checkIllegalParameter(path.isBlank(), "path not specified");
             this.path = path;
@@ -384,9 +390,9 @@ public class ListParams {
          * Specify maxLength int value
          *
          * @param maxLength int value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder maxLength(final int maxLength) {
+        public Builder maxLength(final int maxLength) {
             this.maxLength = maxLength;
             return this;
         }
@@ -395,9 +401,9 @@ public class ListParams {
          * Specify group string value
          *
          * @param group string value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder group(final String group) {
+        public Builder group(final String group) {
             this.group = group;
             return this;
         }
@@ -406,7 +412,7 @@ public class ListParams {
          * Specify user string value
          *
          * @param user string value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
         public ListParams.Builder user(final String user) {
             this.user = user;
@@ -417,9 +423,9 @@ public class ListParams {
          * Specify mtime string value
          *
          * @param mtime string value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder mtime(final String mtime) {
+        public Builder mtime(final String mtime) {
             this.mtime = mtime;
             return this;
         }
@@ -428,9 +434,9 @@ public class ListParams {
          * Specify size int value
          *
          * @param size int value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder size(final int size) {
+        public Builder size(final int size) {
             this.size = size;
             return this;
         }
@@ -439,9 +445,9 @@ public class ListParams {
          * Specify name string value
          *
          * @param name string value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder name(final String name) {
+        public Builder name(final String name) {
             this.name = name;
             return this;
         }
@@ -450,9 +456,9 @@ public class ListParams {
          * Specify perm string value
          *
          * @param perm string value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder perm(final String perm) {
+        public Builder perm(final String perm) {
             this.perm = perm;
             return this;
         }
@@ -461,9 +467,9 @@ public class ListParams {
          * Specify ListFilterType value
          *
          * @param type ListFilterType type object
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder type(final ListFilterType type) {
+        public Builder type(final ListFilterType type) {
             this.type = type;
             return this;
         }
@@ -472,9 +478,9 @@ public class ListParams {
          * Specify depth int value
          *
          * @param depth int value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder depth(final int depth) {
+        public Builder depth(final int depth) {
             this.depth = depth;
             return this;
         }
@@ -483,9 +489,9 @@ public class ListParams {
          * Specify filesys boolean value
          *
          * @param filesys boolean true or false value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder filesys(final boolean filesys) {
+        public Builder filesys(final boolean filesys) {
             this.filesys = filesys;
             return this;
         }
@@ -494,15 +500,15 @@ public class ListParams {
          * Specify symlinks boolean value
          *
          * @param symlinks boolean true or false value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder symlinks(final boolean symlinks) {
+        public Builder symlinks(final boolean symlinks) {
             this.symlinks = symlinks;
             return this;
         }
 
         /**
-         * Return ListParams object based on ListParams.Builder this object
+         * Return ListParams object based on Builder this object
          *
          * @return ListParams object
          */

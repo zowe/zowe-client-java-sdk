@@ -239,12 +239,18 @@ public class GetParams {
         private String recordsRange;
 
         /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
          * Specify search string value
          *
          * @param search string value
-         * @return GetParams.Builder this object
+         * @return Builder this object
          */
-        public GetParams.Builder search(final String search) {
+        public Builder search(final String search) {
             if (this.research != null) {
                 throw new IllegalStateException("cannot specify both search and research parameters");
             }
@@ -259,7 +265,7 @@ public class GetParams {
          * @param research string value
          * @return GetParams.Builder this object
          */
-        public GetParams.Builder research(final String research) {
+        public Builder research(final String research) {
             if (this.search != null) {
                 throw new IllegalStateException("cannot specify both search and research parameters");
             }
@@ -272,9 +278,9 @@ public class GetParams {
          * Specify insensitive boolean value
          *
          * @param insensitive boolean true or false value
-         * @return GetParams.Builder this object
+         * @return Builder this object
          */
-        public GetParams.Builder insensitive(final boolean insensitive) {
+        public Builder insensitive(final boolean insensitive) {
             this.insensitive = insensitive;
             queryCount++;
             return this;
@@ -284,9 +290,9 @@ public class GetParams {
          * Specify binary int value
          *
          * @param maxreturnsize int value
-         * @return GetParams.Builder this object
+         * @return Builder this object
          */
-        public GetParams.Builder maxreturnsize(final int maxreturnsize) {
+        public Builder maxreturnsize(final int maxreturnsize) {
             this.maxreturnsize = maxreturnsize;
             queryCount++;
             return this;
@@ -296,9 +302,9 @@ public class GetParams {
          * Specify binary boolean value
          *
          * @param binary boolean true or false value
-         * @return GetParams.Builder this object
+         * @return Builder this object
          */
-        public GetParams.Builder binary(final boolean binary) {
+        public Builder binary(final boolean binary) {
             this.binary = binary;
             return this;
         }
@@ -307,15 +313,15 @@ public class GetParams {
          * Specify recordsRange value
          *
          * @param recordsRange string value
-         * @return GetParams.Builder this object
+         * @return Builder this object
          */
-        public GetParams.Builder recordsRange(final String recordsRange) {
+        public Builder recordsRange(final String recordsRange) {
             this.recordsRange = recordsRange;
             return this;
         }
 
         /**
-         * Return GetParams object based on GetParams.Builder this object
+         * Return GetParams object based on Builder this object
          *
          * @return GetParams object
          */

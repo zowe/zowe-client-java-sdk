@@ -126,49 +126,129 @@ public class JobStepData {
      */
     public static class Builder {
 
+        /**
+         * SMFID
+         */
         private String smfid;
+
+        /**
+         * Completion
+         */
         private String completion;
+
+        /**
+         * Active
+         */
         private boolean active;
+
+        /**
+         * Job relevant step
+         */
         private Long stepNumber;
+
+        /**
+         * Job relevant proc
+         */
         private String procStepName;
+
+        /**
+         * Step for which job dd exists
+         */
         private String stepName;
+
+        /**
+         * Program EXEC=
+         */
         private String programName;
 
-        public JobStepData.Builder active(final boolean active) {
+        /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
+         * Set active boolean value
+         *
+         * @param active boolean true or false value
+         * @return Builder this object
+         */
+        public Builder active(final boolean active) {
             this.active = active;
             return this;
         }
 
-        public JobStepData.Builder completion(final String completion) {
+        /**
+         * Set completion string value
+         *
+         * @param completion string value
+         * @return Builder this object
+         */
+        public Builder completion(final String completion) {
             this.completion = completion;
             return this;
         }
 
-        public JobStepData.Builder procStepName(final String procStepName) {
+        /**
+         * Set procStepName string value
+         *
+         * @param procStepName string value
+         * @return Builder this object
+         */
+        public Builder procStepName(final String procStepName) {
             this.procStepName = procStepName;
             return this;
         }
 
-        public JobStepData.Builder programName(final String programName) {
+        /**
+         * Set programName string value
+         *
+         * @param programName string value
+         * @return Builder this object
+         */
+        public Builder programName(final String programName) {
             this.programName = programName;
             return this;
         }
 
-        public JobStepData.Builder smfid(final String smfid) {
+        /**
+         * Set smfid string value
+         *
+         * @param smfid string value
+         * @return Builder this object
+         */
+        public Builder smfid(final String smfid) {
             this.smfid = smfid;
             return this;
         }
 
-        public JobStepData.Builder stepName(final String stepName) {
+        /**
+         * Set stepName string value
+         *
+         * @param stepName string value
+         * @return Builder this object
+         */
+        public Builder stepName(final String stepName) {
             this.stepName = stepName;
             return this;
         }
 
-        public JobStepData.Builder stepNumber(final Long stepNumber) {
+        /**
+         * Set stepNumber long value
+         *
+         * @param stepNumber long value
+         * @return Builder this object
+         */
+        public Builder stepNumber(final Long stepNumber) {
             this.stepNumber = stepNumber;
             return this;
         }
 
+        /**
+         * Return JobStepData object based on Builder this object
+         *
+         * @return JobStepData this object
+         */
         public JobStepData build() {
             return new JobStepData(this);
         }

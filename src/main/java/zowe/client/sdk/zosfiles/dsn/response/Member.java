@@ -83,10 +83,10 @@ public class Member {
     /**
      * Member constructor
      *
-     * @param builder Member.Builder object
+     * @param builder Builder object
      * @author Frank Giordano
      */
-    private Member(final Member.Builder builder) {
+    private Member(final Builder builder) {
         this.member = Optional.ofNullable(builder.member);
         if (builder.vers == null) {
             this.vers = OptionalLong.empty();
@@ -257,79 +257,209 @@ public class Member {
      */
     public static class Builder {
 
+        /**
+         * The name of the member
+         */
         private String member;
+
+        /**
+         * The version of member
+         */
         private Long vers;
+
+        /**
+         * The number of modifications of member
+         */
         private Long mod;
+
+        /**
+         * The creation date of member
+         */
         private String c4date;
+
+        /**
+         * The modification date of member
+         */
         private String m4date;
+
+        /**
+         * The cnorc of member
+         */
         private Long cnorc;
+
+        /**
+         * The inorc of member
+         */
         private Long inorc;
+
+        /**
+         * The mnorc of member
+         */
         private Long mnorc;
+
+        /**
+         * The mtime of member
+         */
         private String mtime;
+
+        /**
+         * The msec of member
+         */
         private String msec;
+
+        /**
+         * The user of member
+         */
         private String user;
+
+        /**
+         * The sclm of member
+         */
         private String sclm;
 
-        public Member.Builder member(final String member) {
+        /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
+         * Specify member string value
+         *
+         * @param member string value
+         * @return Builder this object
+         */
+        public Builder member(final String member) {
             this.member = member;
             return this;
         }
 
-        public Member.Builder vers(final Long vers) {
+        /**
+         * Specify vers long value
+         *
+         * @param vers long value
+         * @return Builder this object
+         */
+        public Builder vers(final Long vers) {
             this.vers = vers;
             return this;
         }
 
-        public Member.Builder mod(final Long mod) {
+        /**
+         * Specify mod long value
+         *
+         * @param mod long value
+         * @return Builder this object
+         */
+        public Builder mod(final Long mod) {
             this.mod = mod;
             return this;
         }
 
-        public Member.Builder c4date(final String c4date) {
+        /**
+         * Specify c4date string value
+         *
+         * @param c4date string value
+         * @return Builder this object
+         */
+        public Builder c4date(final String c4date) {
             this.c4date = c4date;
             return this;
         }
 
-        public Member.Builder m4date(final String m4date) {
+        /**
+         * Specify m4date string value
+         *
+         * @param m4date string value
+         * @return Builder this object
+         */
+        public Builder m4date(final String m4date) {
             this.m4date = m4date;
             return this;
         }
 
-        public Member.Builder cnorc(final Long cnorc) {
+        /**
+         * Specify cnorc long value
+         *
+         * @param cnorc long value
+         * @return Builder this object
+         */
+        public Builder cnorc(final Long cnorc) {
             this.cnorc = cnorc;
             return this;
         }
 
-        public Member.Builder inorc(final Long inorc) {
+        /**
+         * Specify inorc long value
+         *
+         * @param inorc long value
+         * @return Builder this object
+         */
+        public Builder inorc(final Long inorc) {
             this.inorc = inorc;
             return this;
         }
 
-        public Member.Builder mnorc(final Long mnorc) {
+        /**
+         * Specify mnorc long value
+         *
+         * @param mnorc long value
+         * @return Builder this object
+         */
+        public Builder mnorc(final Long mnorc) {
             this.mnorc = mnorc;
             return this;
         }
 
-        public Member.Builder mtime(final String mtime) {
+        /**
+         * Specify mtime string value
+         *
+         * @param mtime string value
+         * @return Builder this object
+         */
+        public Builder mtime(final String mtime) {
             this.mtime = mtime;
             return this;
         }
 
-        public Member.Builder msec(final String msec) {
+        /**
+         * Specify msec string value
+         *
+         * @param msec string value
+         * @return Builder this object
+         */
+        public Builder msec(final String msec) {
             this.msec = msec;
             return this;
         }
 
-        public Member.Builder user(final String user) {
+        /**
+         * Specify user string value
+         *
+         * @param user string value
+         * @return Builder this object
+         */
+        public Builder user(final String user) {
             this.user = user;
             return this;
         }
 
-        public Member.Builder sclm(final String sclm) {
+        /**
+         * Specify sclm string value
+         *
+         * @param sclm string value
+         * @return Builder this object
+         */
+        public Builder sclm(final String sclm) {
             this.sclm = sclm;
             return this;
         }
 
+        /**
+         * Return Member object based on Builder this object
+         *
+         * @return Member object
+         */
         public Member build() {
             return new Member(this);
         }

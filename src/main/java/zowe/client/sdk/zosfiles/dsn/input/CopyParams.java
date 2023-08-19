@@ -172,10 +172,16 @@ public class CopyParams {
         private boolean copyAllMembers = false;
 
         /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
          * Specify copyAllMembers boolean value
          *
          * @param value boolean true or false value
-         * @return ChangeTagParams.Builder this object
+         * @return Builder this object
          */
         public CopyParams.Builder copyAllMembers(final boolean value) {
             this.copyAllMembers = value;

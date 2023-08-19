@@ -154,12 +154,18 @@ public class WriteParams {
         private boolean binary = false;
 
         /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
          * Specify textContent string value
          *
          * @param textContent string value
-         * @return WriteParams.Builder this object
+         * @return Builder this object
          */
-        public WriteParams.Builder textContent(final String textContent) {
+        public Builder textContent(final String textContent) {
             this.textContent = textContent;
             return this;
         }
@@ -168,9 +174,9 @@ public class WriteParams {
          * Specify binaryContent byte array value
          *
          * @param binaryContent byte array value
-         * @return WriteParams.Builder this object
+         * @return Builder this object
          */
-        public WriteParams.Builder binaryContent(final byte[] binaryContent) {
+        public Builder binaryContent(final byte[] binaryContent) {
             this.binaryContent = binaryContent;
             return this;
         }
@@ -179,9 +185,9 @@ public class WriteParams {
          * Specify fileEncoding string value
          *
          * @param fileEncoding string value
-         * @return WriteParams.Builder this object
+         * @return Builder this object
          */
-        public WriteParams.Builder fileEncoding(final String fileEncoding) {
+        public Builder fileEncoding(final String fileEncoding) {
             this.fileEncoding = fileEncoding;
             return this;
         }
@@ -190,9 +196,9 @@ public class WriteParams {
          * Specify crlf boolean value
          *
          * @param crlf boolean true or false value
-         * @return WriteParams.Builder this object
+         * @return Builder this object
          */
-        public WriteParams.Builder crlf(final boolean crlf) {
+        public Builder crlf(final boolean crlf) {
             this.crlf = crlf;
             return this;
         }
@@ -201,15 +207,15 @@ public class WriteParams {
          * Specify binary boolean value
          *
          * @param binary boolean true or false value
-         * @return WriteParams.Builder this object
+         * @return Builder this object
          */
-        public WriteParams.Builder binary(final boolean binary) {
+        public Builder binary(final boolean binary) {
             this.binary = binary;
             return this;
         }
 
         /**
-         * Return WriteParams object based on ChangeModeParams.Builder this object
+         * Return WriteParams object based on Builder this object
          *
          * @return WriteParams object
          */

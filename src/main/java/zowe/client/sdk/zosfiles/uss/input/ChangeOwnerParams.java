@@ -134,12 +134,18 @@ public class ChangeOwnerParams {
         private LinkType links;
 
         /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
          * Specify owner string value
          *
          * @param owner string value
-         * @return ChangeOwnerParams.Builder this object
+         * @return Builder this object
          */
-        public ChangeOwnerParams.Builder owner(final String owner) {
+        public Builder owner(final String owner) {
             ValidateUtils.checkNullParameter(owner == null, "owner is null");
             ValidateUtils.checkIllegalParameter(owner.isBlank(), "owner not specified");
             this.owner = owner;
@@ -150,9 +156,9 @@ public class ChangeOwnerParams {
          * Specify group string value
          *
          * @param group string value
-         * @return ChangeOwnerParams.Builder this object
+         * @return Builder this object
          */
-        public ChangeOwnerParams.Builder group(final String group) {
+        public Builder group(final String group) {
             this.group = group;
             return this;
         }
@@ -161,9 +167,9 @@ public class ChangeOwnerParams {
          * Specify recursive boolean value
          *
          * @param recursive boolean true or false value
-         * @return ChangeOwnerParams.Builder this object
+         * @return Builder this object
          */
-        public ChangeOwnerParams.Builder recursive(final boolean recursive) {
+        public Builder recursive(final boolean recursive) {
             this.recursive = recursive;
             return this;
         }
@@ -172,15 +178,15 @@ public class ChangeOwnerParams {
          * Specify links LinkType value
          *
          * @param type LinkType type object
-         * @return ChangeOwnerParams.Builder this object
+         * @return Builder this object
          */
-        public ChangeOwnerParams.Builder links(final LinkType type) {
+        public Builder links(final LinkType type) {
             this.links = type;
             return this;
         }
 
         /**
-         * Return ChangeOwnerParams object based on ChangeOwnerParams.Builder this object
+         * Return ChangeOwnerParams object based on Builder this object
          *
          * @return ChangeOwnerParams object
          */

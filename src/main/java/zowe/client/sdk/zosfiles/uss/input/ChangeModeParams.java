@@ -117,12 +117,18 @@ public class ChangeModeParams {
         private LinkType links;
 
         /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
          * Specify mode string value
          *
          * @param mode the mode value
-         * @return ChangeModeParams.Builder this object
+         * @return Builder this object
          */
-        public ChangeModeParams.Builder mode(final String mode) {
+        public Builder mode(final String mode) {
             ValidateUtils.checkNullParameter(mode == null, "mode is null");
             ValidateUtils.checkIllegalParameter(mode.isBlank(), "mode not specified");
             this.mode = mode;
@@ -133,9 +139,9 @@ public class ChangeModeParams {
          * Specify recursive boolean value
          *
          * @param recursive boolean true or false value
-         * @return ChangeModeParams.Builder this object
+         * @return Builder this object
          */
-        public ChangeModeParams.Builder recursive(final boolean recursive) {
+        public Builder recursive(final boolean recursive) {
             this.recursive = recursive;
             return this;
         }
@@ -144,15 +150,15 @@ public class ChangeModeParams {
          * Specify links LinkType value
          *
          * @param type LinkType type object
-         * @return ChangeModeParams.Builder this object
+         * @return Builder this object
          */
-        public ChangeModeParams.Builder links(final LinkType type) {
+        public Builder links(final LinkType type) {
             this.links = type;
             return this;
         }
 
         /**
-         * Return ChangeModeParams object based on ChangeModeParams.Builder this object
+         * Return ChangeModeParams object based on Builder this object
          *
          * @return ChangeModeParams object
          */

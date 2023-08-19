@@ -285,91 +285,241 @@ public class JobFile {
      */
     public static class Builder {
 
+        /**
+         * Job id for a job. Uniquely identifies a job on a z/OS system
+         */
         private String jobId;
+
+        /**
+         * Job Name for a job
+         */
         private String jobName;
+
+        /**
+         * Record format of the spool file (DD)
+         */
         private String recfm;
+
+        /**
+         * Total bytes in the spool file
+         */
         private Long byteCount;
+
+        /**
+         * Total records (roughly equivalent to lines) in the spool file
+         */
         private Long recordCount;
+
+        /**
+         * Unique identifier of job (substitute of job name and job id)
+         */
         private String jobCorrelator;
+
+        /**
+         * Job class for which job ran
+         */
         private String classs;
+
+        /**
+         * Identifier for this spool file. Each JobFile for a single batch job will have a unique ID
+         */
         private Long id;
+
+        /**
+         * DD name of job spool file
+         */
         private String ddName;
+
+        /**
+         * Direct access to job record content
+         */
         private String recordsUrl;
+
+        /**
+         * Job DD lrecl (logical record length - how many bytes each record is)
+         */
         private Long lrecl;
+
+        /**
+         * The primary or secondary JES subsystem. If this value is null, the job was processed by the primary subsystem.
+         */
         private String subSystem;
+
+        /**
+         * The name of the job step during which this spool file was produced
+         */
         private String stepName;
+
+        /**
+         * If this spool file was produced during a job procedure step, the name of the step will be here.
+         */
         private String procStep;
 
+        /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
+         * Specify byteCount long value
+         *
+         * @param byteCount long value
+         * @return Builder this object
+         */
         public Builder byteCount(final Long byteCount) {
             this.byteCount = byteCount;
             return this;
         }
 
+        /**
+         * Specify classs string value
+         *
+         * @param classs string value
+         * @return Builder this object
+         */
         public Builder classs(final String classs) {
             this.classs = classs;
             return this;
         }
 
+        /**
+         * Specify ddName string value
+         *
+         * @param ddName string value
+         * @return Builder this object
+         */
         public Builder ddName(final String ddName) {
             this.ddName = ddName;
             return this;
         }
 
+        /**
+         * Specify id long value
+         *
+         * @param id long value
+         * @return Builder this object
+         */
         public Builder id(final Long id) {
             this.id = id;
             return this;
         }
 
+        /**
+         * Specify jobCorrelator string value
+         *
+         * @param jobCorrelator string value
+         * @return Builder this object
+         */
         public Builder jobCorrelator(final String jobCorrelator) {
             this.jobCorrelator = jobCorrelator;
             return this;
         }
 
+        /**
+         * Specify jobId string value
+         *
+         * @param jobId string value
+         * @return Builder this object
+         */
         public Builder jobId(final String jobId) {
             this.jobId = jobId;
             return this;
         }
 
+        /**
+         * Specify jobName string value
+         *
+         * @param jobName string value
+         * @return Builder this object
+         */
         public Builder jobName(final String jobName) {
             this.jobName = jobName;
             return this;
         }
 
+        /**
+         * Specify lrecl long value
+         *
+         * @param lrecl long value
+         * @return Builder this object
+         */
         public Builder lrecl(final Long lrecl) {
             this.lrecl = lrecl;
             return this;
         }
 
+        /**
+         * Specify procStep string value
+         *
+         * @param procStep string value
+         * @return Builder this object
+         */
         public Builder procStep(final String procStep) {
             this.procStep = procStep;
             return this;
         }
 
+        /**
+         * Specify recfm string value
+         *
+         * @param recfm string value
+         * @return Builder this object
+         */
         public Builder recfm(final String recfm) {
             this.recfm = recfm;
             return this;
         }
 
+        /**
+         * Specify recordCount long value
+         *
+         * @param recordCount long value
+         * @return Builder this object
+         */
         public Builder recordCount(final Long recordCount) {
             this.recordCount = recordCount;
             return this;
         }
 
+        /**
+         * Specify recordsUrl string value
+         *
+         * @param recordsUrl string value
+         * @return Builder this object
+         */
         public Builder recordsUrl(final String recordsUrl) {
             this.recordsUrl = recordsUrl;
             return this;
         }
 
+        /**
+         * Specify stepName string value
+         *
+         * @param stepName string value
+         * @return Builder this object
+         */
         public Builder stepName(final String stepName) {
             this.stepName = stepName;
             return this;
         }
 
+        /**
+         * Specify subSystem string value
+         *
+         * @param subSystem string value
+         * @return Builder this object
+         */
         public Builder subSystem(final String subSystem) {
             this.subSystem = subSystem;
             return this;
         }
 
+        /**
+         * Return JobFile object based on Builder this object
+         *
+         * @return JobFile this object
+         */
         public JobFile build() {
             return new JobFile(this);
         }

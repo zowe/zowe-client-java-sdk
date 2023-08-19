@@ -117,10 +117,10 @@ public class Dataset {
     /**
      * Dataset constructor
      *
-     * @param builder Dataset.Builder object
+     * @param builder Builder object
      * @author Nikunj Goyal
      */
-    private Dataset(final Dataset.Builder builder) {
+    private Dataset(final Builder builder) {
         this.dsname = Optional.ofNullable(builder.dsname);
         this.blksz = Optional.ofNullable(builder.blksz);
         this.catnm = Optional.ofNullable(builder.catnm);
@@ -348,121 +348,321 @@ public class Dataset {
      */
     public static class Builder {
 
+        /**
+         * The name of the dataset
+         */
         private String dsname;
+
+        /**
+         * The block size of the dataset
+         */
         private String blksz;
+
+        /**
+         * The catalog in which the dataset entry is stored
+         */
         private String catnm;
+
+        /**
+         * The dataset creation date
+         */
         private String cdate;
+
+        /**
+         * The type of the device the dataset is stored on
+         */
         private String dev;
+
+        /**
+         * The type of the dataset
+         */
         private String dsntp;
+
+        /**
+         * The organization of the data set as physical sequential (PS), partitioned (PO), or direct (DA)
+         */
         private String dsorg;
+
+        /**
+         * The dataset expiration date
+         */
         private String edate;
+
+        /**
+         * The number of extensions the dataset has
+         */
         private String extx;
+
+        /**
+         * The length, in bytes, of each record in the data set
+         */
         private String lrectl;
+
+        /**
+         * Indicates if automatic migration to a lower level of storage is active for this dataset
+         */
         private String migr;
+
+        /**
+         * Indicates if the dataset is multi-volume
+         */
         private String mvol;
+
+        /**
+         * Open virtualization format
+         */
         private String ovf;
+
+        /**
+         * The date of the last time the dataset was referred to
+         */
         private String rdate;
+
+        /**
+         * The record format of the dataset
+         */
         private String recfm;
+
+        /**
+         * The size of the first extent in tracks
+         */
         private String sizex;
+
+        /**
+         * The type of space units measurement
+         */
         private String spacu;
+
+        /**
+         * The percentage of used space in the dataset
+         */
         private String used;
+
+        /**
+         * The volume name on which the dataset is stored
+         */
         private String vol;
 
-        public Dataset.Builder dsname(final String dsname) {
+        /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
+         * Specify name of the dataset
+         *
+         * @param dsname string value
+         * @return Builder this object
+         */
+        public Builder dsname(final String dsname) {
             this.dsname = dsname;
             return this;
         }
 
-        public Dataset.Builder blksz(final String blksz) {
+        /**
+         * Specify block size of the dataset
+         *
+         * @param blksz string value
+         * @return Builder this object
+         */
+        public Builder blksz(final String blksz) {
             this.blksz = blksz;
             return this;
         }
 
-        public Dataset.Builder catnm(final String catnm) {
+        /**
+         * Specify catnm of the dataset
+         *
+         * @param catnm string value
+         * @return Builder this object
+         */
+        public Builder catnm(final String catnm) {
             this.catnm = catnm;
             return this;
         }
 
-        public Dataset.Builder cdate(final String cdate) {
+        /**
+         * Specify cdate of the dataset
+         *
+         * @param cdate string value
+         * @return Builder this object
+         */
+        public Builder cdate(final String cdate) {
             this.cdate = cdate;
             return this;
         }
 
-        public Dataset.Builder dev(final String dev) {
+        /**
+         * Specify dev of the dataset
+         *
+         * @param dev string value
+         * @return Builder this object
+         */
+        public Builder dev(final String dev) {
             this.dev = dev;
             return this;
         }
 
-        public Dataset.Builder dsntp(final String dsntp) {
+        /**
+         * Specify dsntp of the dataset
+         *
+         * @param dsntp string value
+         * @return Builder this object
+         */
+        public Builder dsntp(final String dsntp) {
             this.dsntp = dsntp;
             return this;
         }
 
-        public Dataset.Builder dsorg(final String dsorg) {
+        /**
+         * Specify dsorg of the dataset
+         *
+         * @param dsorg string value
+         * @return Builder this object
+         */
+        public Builder dsorg(final String dsorg) {
             this.dsorg = dsorg;
             return this;
         }
 
-        public Dataset.Builder edate(final String edate) {
+        /**
+         * Specify edate of the dataset
+         *
+         * @param edate string value
+         * @return Builder this object
+         */
+        public Builder edate(final String edate) {
             this.edate = edate;
             return this;
         }
 
-        public Dataset.Builder extx(final String extx) {
+        /**
+         * Specify extx of the dataset
+         *
+         * @param extx string value
+         * @return Builder this object
+         */
+        public Builder extx(final String extx) {
             this.extx = extx;
             return this;
         }
 
-        public Dataset.Builder lrectl(final String lrectl) {
+        /**
+         * Specify lrectl of the dataset
+         *
+         * @param lrectl string value
+         * @return Builder this object
+         */
+        public Builder lrectl(final String lrectl) {
             this.lrectl = lrectl;
             return this;
         }
 
-        public Dataset.Builder migr(final String migr) {
+        /**
+         * Specify migr of the dataset
+         *
+         * @param migr string value
+         * @return Builder this object
+         */
+        public Builder migr(final String migr) {
             this.migr = migr;
             return this;
         }
 
-        public Dataset.Builder mvol(final String mvol) {
+        /**
+         * Specify mvol of the dataset
+         *
+         * @param mvol string value
+         * @return Builder this object
+         */
+        public Builder mvol(final String mvol) {
             this.mvol = mvol;
             return this;
         }
 
-        public Dataset.Builder ovf(final String ovf) {
+        /**
+         * Specify ovf of the dataset
+         *
+         * @param ovf string value
+         * @return Builder this object
+         */
+        public Builder ovf(final String ovf) {
             this.ovf = ovf;
             return this;
         }
 
-        public Dataset.Builder rdate(final String rdate) {
+        /**
+         * Specify rdate of the dataset
+         *
+         * @param rdate string value
+         * @return Builder this object
+         */
+        public Builder rdate(final String rdate) {
             this.rdate = rdate;
             return this;
         }
 
-        public Dataset.Builder recfm(final String recfm) {
+        /**
+         * Specify recfm of the dataset
+         *
+         * @param recfm string value
+         * @return Builder this object
+         */
+        public Builder recfm(final String recfm) {
             this.recfm = recfm;
             return this;
         }
 
-        public Dataset.Builder sizex(final String sizex) {
+        /**
+         * Specify sizex of the dataset
+         *
+         * @param sizex string value
+         * @return Builder this object
+         */
+        public Builder sizex(final String sizex) {
             this.sizex = sizex;
             return this;
         }
 
-        public Dataset.Builder spacu(final String spacu) {
+        /**
+         * Specify spacu of the dataset
+         *
+         * @param spacu string value
+         * @return Builder this object
+         */
+        public Builder spacu(final String spacu) {
             this.spacu = spacu;
             return this;
         }
 
-        public Dataset.Builder used(final String used) {
+        /**
+         * Specify used of the dataset
+         *
+         * @param used string value
+         * @return Builder this object
+         */
+        public Builder used(final String used) {
             this.used = used;
             return this;
         }
 
-        public Dataset.Builder vol(final String vol) {
+        /**
+         * Specify vol of the dataset
+         *
+         * @param vol string value
+         * @return Builder this object
+         */
+        public Builder vol(final String vol) {
             this.vol = vol;
             return this;
         }
 
+        /**
+         * Return Dataset object based on Builder this object
+         *
+         * @return Dataset object
+         */
         public Dataset build() {
             return new Dataset(this);
         }

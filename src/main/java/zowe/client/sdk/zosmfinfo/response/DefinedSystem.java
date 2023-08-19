@@ -85,10 +85,10 @@ public class DefinedSystem {
     /**
      * DefinedSystem constructor
      *
-     * @param builder DefinedSystem.Builder Object
+     * @param builder Builder Object
      * @author Frank Giordano
      */
-    private DefinedSystem(final DefinedSystem.Builder builder) {
+    private DefinedSystem(final Builder builder) {
         this.systemNickName = Optional.ofNullable(builder.systemNickName);
         this.groupNames = Optional.ofNullable(builder.groupNames);
         this.cpcSerial = Optional.ofNullable(builder.cpcSerial);
@@ -252,62 +252,62 @@ public class DefinedSystem {
         private String url;
         private String cpcName;
 
-        public DefinedSystem.Builder cpcName(final String cpcName) {
+        public Builder cpcName(final String cpcName) {
             this.cpcName = cpcName;
             return this;
         }
 
-        public DefinedSystem.Builder cpcSerial(final String cpcSerial) {
+        public Builder cpcSerial(final String cpcSerial) {
             this.cpcSerial = cpcSerial;
             return this;
         }
 
-        public DefinedSystem.Builder ftpDestinationName(final String ftpDestinationName) {
+        public Builder ftpDestinationName(final String ftpDestinationName) {
             this.ftpDestinationName = ftpDestinationName;
             return this;
         }
 
-        public DefinedSystem.Builder groupNames(final String groupNames) {
+        public Builder groupNames(final String groupNames) {
             this.groupNames = groupNames;
             return this;
         }
 
-        public DefinedSystem.Builder httpProxyName(final String httpProxyName) {
+        public Builder httpProxyName(final String httpProxyName) {
             this.httpProxyName = httpProxyName;
             return this;
         }
 
-        public DefinedSystem.Builder jesMemberName(final String jesMemberName) {
+        public Builder jesMemberName(final String jesMemberName) {
             this.jesMemberName = jesMemberName;
             return this;
         }
 
-        public DefinedSystem.Builder jesType(final String jesType) {
+        public Builder jesType(final String jesType) {
             this.jesType = jesType;
             return this;
         }
 
-        public DefinedSystem.Builder sysplexName(final String sysplexName) {
+        public Builder sysplexName(final String sysplexName) {
             this.sysplexName = sysplexName;
             return this;
         }
 
-        public DefinedSystem.Builder systemName(final String systemName) {
+        public Builder systemName(final String systemName) {
             this.systemName = systemName;
             return this;
         }
 
-        public DefinedSystem.Builder systemNickName(final String systemNickName) {
+        public Builder systemNickName(final String systemNickName) {
             this.systemNickName = systemNickName;
             return this;
         }
 
-        public DefinedSystem.Builder url(final String url) {
+        public Builder url(final String url) {
             this.url = url;
             return this;
         }
 
-        public DefinedSystem.Builder zosVR(final String zosVR) {
+        public Builder zosVR(final String zosVR) {
             this.zosVR = zosVR;
             return this;
         }

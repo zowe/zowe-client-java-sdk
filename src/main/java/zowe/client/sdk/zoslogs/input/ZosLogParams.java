@@ -73,10 +73,10 @@ public class ZosLogParams {
     /**
      * ZosLogParams constructor
      *
-     * @param builder ZosLogParams.Builder object
+     * @param builder Builder object
      * @author Frank Giordano
      */
-    private ZosLogParams(final ZosLogParams.Builder builder) {
+    private ZosLogParams(final Builder builder) {
         this.startTime = Optional.ofNullable(builder.startTime);
         this.hardCopy = Optional.ofNullable(builder.hardCopy);
         this.direction = Optional.ofNullable(builder.direction);
@@ -150,11 +150,56 @@ public class ZosLogParams {
      */
     public static class Builder {
 
+        /**
+         * The z/OS log api time parameter. This field is optional.
+         * <p>
+         * Specifies when z/OSMF starts to retrieve messages in the ISO 8601 JSON date and time format.
+         * For example, 2021-01-26T03:33:18.065Z.
+         * <p>
+         * The default value is the current UNIX timestamp on the server.
+         * This value is used if the timestamp parameter is not specified.
+         */
         private String startTime;
+
+        /**
+         * Specify the source where the logs come from. This field is optional.
+         * <p>
+         * If the hardcopy parameter is not specified, the API tries OPERLOG first.
+         * If the OPERLOG is not enabled on the system, the API returns the SYSLOG to the user.
+         */
         private HardCopyType hardCopy;
+
+        /**
+         * Specifies the direction (from a specified time) in which messages are retrieved. This field is optional.
+         * The options are 'forward' or 'backward'. These strings are case-insensitive.
+         * <p>
+         * The default is 'backward', meaning that messages are retrieved backward from the specified time.
+         */
         private DirectionType direction;
+
+        /**
+         * Specifies the time range for which the log is to be retrieved. This field is optional.
+         * <p>
+         * Supported time units include s, m, and h for seconds, minutes, and hours.
+         * For example: 10s, 10m, 10h.
+         * The format is nnnu, where nnn is a number 1-999 and u is one of the time units "s", "m", or "h".
+         * For example, 999s of 20m.
+         * <p>
+         * The default is 10m.
+         */
         private String timeRange;
+
+        /**
+         * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
+         * sequences with '\n', but there may be cases where that is not preferable. Specify false to prevent processing.
+         */
         private boolean processResponses;
+
+        /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
 
         /**
          * Set the start time to retrieve log output from.
@@ -162,9 +207,9 @@ public class ZosLogParams {
          * The default value is the current UNIX timestamp on the server.
          *
          * @param startTime A String that represents either a DateTime in this format: YYYY-MM-DDTHH:MM:SSZ.
-         * @return ZosLogParams.Builder this object
+         * @return Builder this object
          */
-        public ZosLogParams.Builder startTime(final String startTime) {
+        public Builder startTime(final String startTime) {
             this.startTime = startTime;
             return this;
         }
@@ -176,9 +221,9 @@ public class ZosLogParams {
          * If the OPERLOG is not enabled on the system, the API returns the SYSLOG to the user.
          *
          * @param hardCopy HardCopyType enum value.
-         * @return ZosLogParams.Builder this object
+         * @return Builder this object
          */
-        public ZosLogParams.Builder hardCopy(final HardCopyType hardCopy) {
+        public Builder hardCopy(final HardCopyType hardCopy) {
             this.hardCopy = hardCopy;
             return this;
         }
@@ -189,9 +234,9 @@ public class ZosLogParams {
          * The default is 'backward', meaning that messages are retrieved backward from the specified time.
          *
          * @param direction DirectionType enum value.
-         * @return ZosLogParams.Builder this object
+         * @return Builder this object
          */
-        public ZosLogParams.Builder direction(final DirectionType direction) {
+        public Builder direction(final DirectionType direction) {
             this.direction = direction;
             return this;
         }
@@ -203,9 +248,9 @@ public class ZosLogParams {
          *
          * @param timeRange range of log output to retrieve, the following are valid examples:
          *                  1s (one second), 10m (tem minutes), 24h (24 hours), etc.
-         * @return ZosLogParams.Builder this object
+         * @return Builder this object
          */
-        public ZosLogParams.Builder timeRange(final String timeRange) {
+        public Builder timeRange(final String timeRange) {
             this.timeRange = timeRange;
             return this;
         }
@@ -217,13 +262,18 @@ public class ZosLogParams {
          * Default is false.
          *
          * @param processResponses true of false should message item be parsed for newline characters
-         * @return ZosLogParams.Builder this object
+         * @return Builder this object
          */
-        public ZosLogParams.Builder processResponses(final boolean processResponses) {
+        public Builder processResponses(final boolean processResponses) {
             this.processResponses = processResponses;
             return this;
         }
 
+        /**
+         * Return ZosLogParams object based on Builder this object
+         *
+         * @return ZosLogParams this object
+         */
         public ZosLogParams build() {
             return new ZosLogParams(this);
         }

@@ -112,12 +112,19 @@ public class CopyParams {
         private boolean recursive = false;
 
         /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+
+        /**
          * Specify from string value
          *
          * @param from the 'from' string value
-         * @return CopyParams.Builder this object
+         * @return Builder this object
          */
-        public CopyParams.Builder from(final String from) {
+        public Builder from(final String from) {
             ValidateUtils.checkNullParameter(from == null, "from is null");
             ValidateUtils.checkIllegalParameter(from.isBlank(), "from not specified");
             this.from = from;
@@ -128,9 +135,9 @@ public class CopyParams {
          * Specify overwrite boolean value
          *
          * @param overwrite boolean true or false value
-         * @return CopyParams.Builder this object
+         * @return Builder this object
          */
-        public CopyParams.Builder overwrite(final boolean overwrite) {
+        public Builder overwrite(final boolean overwrite) {
             this.overwrite = overwrite;
             return this;
         }
@@ -139,15 +146,15 @@ public class CopyParams {
          * Specify recursive boolean value
          *
          * @param recursive boolean true or false value
-         * @return CopyParams.Builder this object
+         * @return Builder this object
          */
-        public CopyParams.Builder recursive(final boolean recursive) {
+        public Builder recursive(final boolean recursive) {
             this.recursive = recursive;
             return this;
         }
 
         /**
-         * Return CopyParams object based on CopyParams.Builder this object
+         * Return CopyParams object based on Builder this object
          *
          * @return CopyParams object
          */

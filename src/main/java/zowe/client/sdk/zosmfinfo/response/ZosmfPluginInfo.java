@@ -37,10 +37,10 @@ public class ZosmfPluginInfo {
     /**
      * ZosmfPluginInfo constructor
      *
-     * @param builder ZosmfPluginInfo.Builder Object
+     * @param builder Builder Object
      * @author Frank Giordano
      */
-    private ZosmfPluginInfo(final ZosmfPluginInfo.Builder builder) {
+    private ZosmfPluginInfo(final Builder builder) {
         this.pluginVersion = Optional.ofNullable(builder.pluginVersion);
         this.pluginDefaultName = Optional.ofNullable(builder.pluginDefaultName);
         this.pluginStatus = Optional.ofNullable(builder.pluginStatus);
@@ -96,17 +96,17 @@ public class ZosmfPluginInfo {
         private String pluginDefaultName;
         private String pluginStatus;
 
-        public ZosmfPluginInfo.Builder pluginDefaultName(final String pluginDefaultName) {
+        public Builder pluginDefaultName(final String pluginDefaultName) {
             this.pluginDefaultName = pluginDefaultName;
             return this;
         }
 
-        public ZosmfPluginInfo.Builder pluginStatus(final String pluginStatus) {
+        public Builder pluginStatus(final String pluginStatus) {
             this.pluginStatus = pluginStatus;
             return this;
         }
 
-        public ZosmfPluginInfo.Builder pluginVersion(final String pluginVersion) {
+        public Builder pluginVersion(final String pluginVersion) {
             this.pluginVersion = pluginVersion;
             return this;
         }

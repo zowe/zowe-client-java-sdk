@@ -169,70 +169,155 @@ public class UnixZfs {
         this.moreRows = builder.moreRows;
     }
 
+    /**
+     * Retrieve name value
+     *
+     * @return name value
+     */
     public Optional<String> getName() {
         return name;
     }
 
+    /**
+     * Retrieve mountpoint value
+     *
+     * @return mountpoint value
+     */
     public Optional<String> getMountpoint() {
         return mountpoint;
     }
 
+    /**
+     * Retrieve fstname value
+     *
+     * @return fstname value
+     */
     public Optional<String> getFstname() {
         return fstname;
     }
 
+    /**
+     * Retrieve status value
+     *
+     * @return status value
+     */
     public Optional<String> getStatus() {
         return status;
     }
 
+    /**
+     * Retrieve mode value
+     *
+     * @return mode value
+     */
     public Optional<String> getMode() {
         return mode;
     }
 
+    /**
+     * Retrieve dev value
+     *
+     * @return dev value
+     */
     public OptionalLong getDev() {
         return dev;
     }
 
+    /**
+     * Retrieve fstype value
+     *
+     * @return fstype value
+     */
     public OptionalLong getFstype() {
         return fstype;
     }
 
+    /**
+     * Retrieve bsize value
+     *
+     * @return bsize value
+     */
     public OptionalLong getBsize() {
         return bsize;
     }
 
+    /**
+     * Retrieve bavail value
+     *
+     * @return bavail value
+     */
     public OptionalLong getBavail() {
         return bavail;
     }
 
+    /**
+     * Retrieve blocks value
+     *
+     * @return blocks value
+     */
     public OptionalLong getBlocks() {
         return blocks;
     }
 
+    /**
+     * Retrieve sysname value
+     *
+     * @return sysname value
+     */
     public Optional<String> getSysname() {
         return sysname;
     }
 
+    /**
+     * Retrieve readibc value
+     *
+     * @return readibc value
+     */
     public OptionalLong getReadibc() {
         return readibc;
     }
 
+    /**
+     * Retrieve writeibc value
+     *
+     * @return writeibc value
+     */
     public OptionalLong getWriteibc() {
         return writeibc;
     }
 
+    /**
+     * Retrieve diribc value
+     *
+     * @return diribc value
+     */
     public OptionalLong getDiribc() {
         return diribc;
     }
 
+    /**
+     * Retrieve returnedRows value
+     *
+     * @return returnedRows value
+     */
     public OptionalLong getReturnedRows() {
         return returnedRows;
     }
 
+    /**
+     * Retrieve totalRows value
+     *
+     * @return totalRows value
+     */
     public OptionalLong getTotalRows() {
         return totalRows;
     }
 
+    /**
+     * Retrieve moreRows value
+     *
+     * @return moreRows value
+     */
     public boolean isMoreRows() {
         return moreRows;
     }
@@ -270,109 +355,284 @@ public class UnixZfs {
      */
     public static class Builder {
 
+        /**
+         * zfs name
+         */
         private String name;
+
+        /**
+         * Mount point name
+         */
         private String mountpoint;
+
+        /**
+         * FST name
+         */
         private String fstname;
+
+        /**
+         * Status value
+         */
         private String status;
+
+        /**
+         * Mode values
+         */
         private String mode;
+
+        /**
+         * dev value
+         */
         private Long dev;
+
+        /**
+         * File system type
+         */
         private Long fstype;
+
+        /**
+         * Block size
+         */
         private Long bsize;
+
+        /**
+         * Blocks available
+         */
         private Long bavail;
+
+        /**
+         * Count of blocks in I/O operations
+         */
         private Long blocks;
+
+        /**
+         * Target system name
+         */
         private String sysname;
+
+        /**
+         * Count of I/O operations
+         */
         private Long readibc;
+
+        /**
+         * Count of I/O operations
+         */
         private Long writeibc;
+
+        /**
+         * Count of I/O operations
+         */
         private Long diribc;
+
+        /**
+         * The number of filesystem items returned
+         */
         private Long returnedRows;
+
+        /**
+         * The total number of filesystems
+         */
         private Long totalRows;
+
+        /**
+         * If more items than specified by X-IBM-Max-Items (or the default of 1000) match the request,
+         * then moreRows will be true
+         */
         private boolean moreRows = false;
 
-        public UnixZfs.Builder name(final String name) {
+        /**
+         * Specify name string value
+         *
+         * @param name string value
+         * @return Builder this object
+         */
+        public Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public UnixZfs.Builder mountpoint(final String mountpoint) {
+        /**
+         * Specify mountpoint string value
+         *
+         * @param mountpoint string value
+         * @return Builder this object
+         */
+        public Builder mountpoint(final String mountpoint) {
             this.mountpoint = mountpoint;
             return this;
         }
 
-        public UnixZfs.Builder fstname(final String fstname) {
+        /**
+         * Specify fstname string value
+         *
+         * @param fstname string value
+         * @return Builder this object
+         */
+        public Builder fstname(final String fstname) {
             this.fstname = fstname;
             return this;
         }
 
-        public UnixZfs.Builder status(final String status) {
+        /**
+         * Specify status string value
+         *
+         * @param status string value
+         * @return Builder this object
+         */
+        public Builder status(final String status) {
             this.status = status;
             return this;
         }
 
-        public UnixZfs.Builder mode(final String mode) {
+        /**
+         * Specify mode string value
+         *
+         * @param mode string value
+         * @return Builder this object
+         */
+        public Builder mode(final String mode) {
             this.mode = mode;
             return this;
         }
 
-        public UnixZfs.Builder dev(final Long dev) {
+        /**
+         * Specify dev long value
+         *
+         * @param dev long value
+         * @return Builder this object
+         */
+        public Builder dev(final Long dev) {
             this.dev = dev;
             return this;
         }
 
-        public UnixZfs.Builder fstype(final Long fstype) {
+        /**
+         * Specify fstype long value
+         *
+         * @param fstype long value
+         * @return Builder this object
+         */
+        public Builder fstype(final Long fstype) {
             this.fstype = fstype;
             return this;
         }
 
-        public UnixZfs.Builder bsize(final Long bsize) {
+        /**
+         * Specify bsize long value
+         *
+         * @param bsize long value
+         * @return Builder this object
+         */
+        public Builder bsize(final Long bsize) {
             this.bsize = bsize;
             return this;
         }
 
-        public UnixZfs.Builder bavail(final Long bavail) {
+        /**
+         * Specify bavail long value
+         *
+         * @param bavail long value
+         * @return Builder this object
+         */
+        public Builder bavail(final Long bavail) {
             this.bavail = bavail;
             return this;
         }
 
-        public UnixZfs.Builder blocks(final Long blocks) {
+        /**
+         * Specify blocks long value
+         *
+         * @param blocks long value
+         * @return Builder this object
+         */
+        public Builder blocks(final Long blocks) {
             this.blocks = blocks;
             return this;
         }
 
-        public UnixZfs.Builder sysname(final String sysname) {
+        /**
+         * Specify sysname string value
+         *
+         * @param sysname string value
+         * @return Builder this object
+         */
+        public Builder sysname(final String sysname) {
             this.sysname = sysname;
             return this;
         }
 
-        public UnixZfs.Builder readibc(final Long readibc) {
+        /**
+         * Specify readibc long value
+         *
+         * @param readibc long value
+         * @return Builder this object
+         */
+        public Builder readibc(final Long readibc) {
             this.readibc = readibc;
             return this;
         }
 
-        public UnixZfs.Builder writeibc(final Long writeibc) {
+        /**
+         * Specify writeibc long value
+         *
+         * @param writeibc long value
+         * @return Builder this object
+         */
+        public Builder writeibc(final Long writeibc) {
             this.writeibc = writeibc;
             return this;
         }
 
-        public UnixZfs.Builder diribc(final Long diribc) {
+        /**
+         * Specify diribc long value
+         *
+         * @param diribc long value
+         * @return Builder this object
+         */
+        public Builder diribc(final Long diribc) {
             this.diribc = diribc;
             return this;
         }
 
-        public UnixZfs.Builder returnedRows(final Long returnedRows) {
+        /**
+         * Specify returnedRows long value
+         *
+         * @param returnedRows long value
+         * @return Builder this object
+         */
+        public Builder returnedRows(final Long returnedRows) {
             this.returnedRows = returnedRows;
             return this;
         }
 
-        public UnixZfs.Builder totalRows(final Long totalRows) {
+        /**
+         * Specify totalRows long value
+         *
+         * @param totalRows long value
+         * @return Builder this object
+         */
+        public Builder totalRows(final Long totalRows) {
             this.totalRows = totalRows;
             return this;
         }
 
-        public UnixZfs.Builder moreRows(final boolean moreRows) {
+        /**
+         * Specify moreRows boolean value
+         *
+         * @param moreRows boolean true or false value
+         * @return Builder this object
+         */
+        public Builder moreRows(final boolean moreRows) {
             this.moreRows = moreRows;
             return this;
         }
 
+        /**
+         * Return UnixZfs object based on Builder this object
+         *
+         * @return UnixZfs this object
+         */
         public UnixZfs build() {
             return new UnixZfs(this);
         }

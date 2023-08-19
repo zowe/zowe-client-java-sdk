@@ -274,91 +274,242 @@ public class Job {
      */
     public static class Builder {
 
+        /**
+         * Job id value specified for request
+         */
         private String jobId;
+
+        /**
+         * Job name value specified for request
+         */
         private String jobName;
+
+        /**
+         * The primary or secondary JES subsystem. If this value is null, the job was processed by the primary subsystem.
+         */
         private String subSystem;
+
+        /**
+         * Owner of the job
+         */
         private String owner;
+
+        /**
+         * Status of the job
+         */
         private String status;
+
+        /**
+         * Type of job
+         */
         private String type;
+
+        /**
+         * Job class
+         */
         private String classs;
+
+        /**
+         * Return code of the job
+         */
         private String retCode;
+
+        /**
+         * Detailed job step data
+         */
         private JobStepData[] stepData;
+
+        /**
+         * Url for direct reference of job info
+         */
         private String url;
+
+        /**
+         * Spool files url for direct reference
+         */
         private String filesUrl;
+
+        /**
+         * Unique identifier of job (substitute of job name and job id). If this value is null, the job was
+         * submitted to JES3.
+         */
         private String jobCorrelator;
+
+        /**
+         * Job phase
+         */
         private Long phase;
+
+        /**
+         * Job phase name
+         */
         private String phaseName;
 
+        /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
+         * Set filesUrl string value
+         *
+         * @param classs string value
+         * @return Builder this object
+         */
         public Builder classs(final String classs) {
             this.classs = classs;
             return this;
         }
 
+        /**
+         * Set filesUrl string value
+         *
+         * @param filesUrl string value
+         * @return Builder this object
+         */
         public Builder filesUrl(final String filesUrl) {
             this.filesUrl = filesUrl;
             return this;
         }
 
+        /**
+         * Set jobCorrelator string value
+         *
+         * @param jobCorrelator string value
+         * @return Builder this object
+         */
         public Builder jobCorrelator(final String jobCorrelator) {
             this.jobCorrelator = jobCorrelator;
             return this;
         }
 
+        /**
+         * Set jobId string value
+         *
+         * @param jobId string value
+         * @return Builder this object
+         */
         public Builder jobId(final String jobId) {
             this.jobId = jobId;
             return this;
         }
 
+        /**
+         * Set jobName string value
+         *
+         * @param jobName string value
+         * @return Builder this object
+         */
         public Builder jobName(final String jobName) {
             this.jobName = jobName;
             return this;
         }
 
+        /**
+         * Set owner string value
+         *
+         * @param owner string value
+         * @return Builder this object
+         */
         public Builder owner(final String owner) {
             this.owner = owner;
             return this;
         }
 
+        /**
+         * Set phase long value
+         *
+         * @param phase long value
+         * @return Builder this object
+         */
         public Builder phase(final Long phase) {
             this.phase = phase;
             return this;
         }
 
+        /**
+         * Set phaseName string value
+         *
+         * @param phaseName string value
+         * @return Builder this object
+         */
         public Builder phaseName(final String phaseName) {
             this.phaseName = phaseName;
             return this;
         }
 
+        /**
+         * Set retCode string value
+         *
+         * @param retCode string value
+         * @return Builder this object
+         */
         public Builder retCode(final String retCode) {
             this.retCode = retCode;
             return this;
         }
 
+        /**
+         * Set status string value
+         *
+         * @param status string value
+         * @return Builder this object
+         */
         public Builder status(final String status) {
             this.status = status;
             return this;
         }
 
+        /**
+         * Set stepData JobStepData array value
+         *
+         * @param stepData JobStepData array value
+         * @return Builder this object
+         */
         public Builder stepData(final JobStepData[] stepData) {
             this.stepData = stepData;
             return this;
         }
 
+        /**
+         * Set subSystem string value
+         *
+         * @param subSystem string value
+         * @return Builder this object
+         */
         public Builder subSystem(final String subSystem) {
             this.subSystem = subSystem;
             return this;
         }
 
+        /**
+         * Set type string value
+         *
+         * @param type string value
+         * @return Builder this object
+         */
         public Builder type(final String type) {
             this.type = type;
             return this;
         }
 
+        /**
+         * Set url string value
+         *
+         * @param url string value
+         * @return Builder this object
+         */
         public Builder url(final String url) {
             this.url = url;
             return this;
         }
 
+        /**
+         * Return Job object based on Builder this object
+         *
+         * @return Job this object
+         */
         public Job build() {
             return new Job(this);
         }

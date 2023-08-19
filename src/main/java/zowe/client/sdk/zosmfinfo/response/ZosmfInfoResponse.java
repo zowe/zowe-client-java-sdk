@@ -62,10 +62,10 @@ public class ZosmfInfoResponse {
     /**
      * ZosmfInfoResponse constructor
      *
-     * @param builder ZosmfInfoResponse.Builder Object
+     * @param builder Builder Object
      * @author Frank Giordano
      */
-    private ZosmfInfoResponse(final ZosmfInfoResponse.Builder builder) {
+    private ZosmfInfoResponse(final Builder builder) {
         this.zosVersion = Optional.ofNullable(builder.zosVersion);
         this.zosmfPort = Optional.ofNullable(builder.zosmfPort);
         this.zosmfVersion = Optional.ofNullable(builder.zosmfVersion);
@@ -181,42 +181,42 @@ public class ZosmfInfoResponse {
         private String apiVersion;
         private ZosmfPluginInfo[] zosmfPluginsInfo;
 
-        public ZosmfInfoResponse.Builder apiVersion(final String apiVersion) {
+        public Builder apiVersion(final String apiVersion) {
             this.apiVersion = apiVersion;
             return this;
         }
 
-        public ZosmfInfoResponse.Builder zosVersion(final String zosVersion) {
+        public Builder zosVersion(final String zosVersion) {
             this.zosVersion = zosVersion;
             return this;
         }
 
-        public ZosmfInfoResponse.Builder zosmfFullVersion(final String zosmfFullVersion) {
+        public Builder zosmfFullVersion(final String zosmfFullVersion) {
             this.zosmfFullVersion = zosmfFullVersion;
             return this;
         }
 
-        public ZosmfInfoResponse.Builder zosmfHostName(final String zosmfHostName) {
+        public Builder zosmfHostName(final String zosmfHostName) {
             this.zosmfHostName = zosmfHostName;
             return this;
         }
 
-        public ZosmfInfoResponse.Builder zosmfPluginsInfo(final ZosmfPluginInfo[] zosmfPluginsInfo) {
+        public Builder zosmfPluginsInfo(final ZosmfPluginInfo[] zosmfPluginsInfo) {
             this.zosmfPluginsInfo = zosmfPluginsInfo;
             return this;
         }
 
-        public ZosmfInfoResponse.Builder zosmfPort(final String zosmfPort) {
+        public Builder zosmfPort(final String zosmfPort) {
             this.zosmfPort = zosmfPort;
             return this;
         }
 
-        public ZosmfInfoResponse.Builder zosmfSafRealm(final String zosmfSafRealm) {
+        public Builder zosmfSafRealm(final String zosmfSafRealm) {
             this.zosmfSafRealm = zosmfSafRealm;
             return this;
         }
 
-        public ZosmfInfoResponse.Builder zosmfVersion(final String zosmfVersion) {
+        public Builder zosmfVersion(final String zosmfVersion) {
             this.zosmfVersion = zosmfVersion;
             return this;
         }
