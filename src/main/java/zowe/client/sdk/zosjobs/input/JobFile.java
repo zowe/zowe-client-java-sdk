@@ -300,10 +300,6 @@ public class JobFile {
         private String stepName;
         private String procStep;
 
-        public JobFile build() {
-            return new JobFile(this);
-        }
-
         public Builder byteCount(final Long byteCount) {
             this.byteCount = byteCount;
             return this;
@@ -372,6 +368,10 @@ public class JobFile {
         public Builder subSystem(final String subSystem) {
             this.subSystem = subSystem;
             return this;
+        }
+
+        public JobFile build() {
+            return new JobFile(this);
         }
 
     }

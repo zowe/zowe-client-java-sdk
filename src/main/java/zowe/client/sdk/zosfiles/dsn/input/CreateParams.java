@@ -395,10 +395,6 @@ public class CreateParams {
             return this;
         }
 
-        public CreateParams build() {
-            return new CreateParams(this);
-        }
-
         public CreateParams.Builder dataclass(final String dataclass) {
             this.dataclass = dataclass;
             return this;
@@ -472,6 +468,10 @@ public class CreateParams {
         public CreateParams.Builder volser(final String volser) {
             this.volser = volser;
             return this;
+        }
+
+        public CreateParams build() {
+            return new CreateParams(this);
         }
 
     }

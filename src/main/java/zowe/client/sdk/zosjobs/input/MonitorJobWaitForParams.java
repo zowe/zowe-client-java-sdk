@@ -216,10 +216,6 @@ public class MonitorJobWaitForParams {
             return this;
         }
 
-        public MonitorJobWaitForParams build() {
-            return new MonitorJobWaitForParams(this);
-        }
-
         public MonitorJobWaitForParams.Builder jobStatus(final JobStatus.Type jobStatus) {
             this.jobStatus = jobStatus;
             return this;
@@ -233,6 +229,10 @@ public class MonitorJobWaitForParams {
         public MonitorJobWaitForParams.Builder watchDelay(final int watchDelay) {
             this.watchDelay = OptionalInt.of(watchDelay);
             return this;
+        }
+
+        public MonitorJobWaitForParams build() {
+            return new MonitorJobWaitForParams(this);
         }
 
     }

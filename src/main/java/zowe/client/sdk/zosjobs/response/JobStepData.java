@@ -134,10 +134,6 @@ public class JobStepData {
         private String stepName;
         private String programName;
 
-        public JobStepData build() {
-            return new JobStepData(this);
-        }
-
         public JobStepData.Builder active(final boolean active) {
             this.active = active;
             return this;
@@ -171,6 +167,10 @@ public class JobStepData {
         public JobStepData.Builder stepNumber(final Long stepNumber) {
             this.stepNumber = stepNumber;
             return this;
+        }
+
+        public JobStepData build() {
+            return new JobStepData(this);
         }
 
     }

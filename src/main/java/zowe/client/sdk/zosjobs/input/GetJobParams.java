@@ -132,10 +132,6 @@ public class GetJobParams {
             this.owner = owner;
         }
 
-        public GetJobParams build() {
-            return new GetJobParams(this);
-        }
-
         public Builder jobId(final String jobId) {
             ValidateUtils.checkNullParameter(jobId == null, "job id is null");
             ValidateUtils.checkIllegalParameter(jobId.isBlank(), "job id not specified");
@@ -153,6 +149,10 @@ public class GetJobParams {
             ValidateUtils.checkIllegalParameter(prefix.isBlank(), "prefix not specified");
             this.prefix = prefix;
             return this;
+        }
+
+        public GetJobParams build() {
+            return new GetJobParams(this);
         }
 
     }

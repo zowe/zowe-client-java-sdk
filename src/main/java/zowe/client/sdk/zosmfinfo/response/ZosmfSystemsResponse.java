@@ -84,10 +84,6 @@ public class ZosmfSystemsResponse {
         private Long numRows;
         private DefinedSystem[] definedSystems;
 
-        public ZosmfSystemsResponse build() {
-            return new ZosmfSystemsResponse(this);
-        }
-
         public ZosmfSystemsResponse.Builder definedSystems(final DefinedSystem[] definedSystems) {
             this.definedSystems = definedSystems;
             return this;
@@ -96,6 +92,10 @@ public class ZosmfSystemsResponse {
         public ZosmfSystemsResponse.Builder numRows(final Long numRows) {
             this.numRows = numRows;
             return this;
+        }
+
+        public ZosmfSystemsResponse build() {
+            return new ZosmfSystemsResponse(this);
         }
 
     }

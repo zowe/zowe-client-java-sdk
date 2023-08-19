@@ -252,10 +252,6 @@ public class DefinedSystem {
         private String url;
         private String cpcName;
 
-        public DefinedSystem build() {
-            return new DefinedSystem(this);
-        }
-
         public DefinedSystem.Builder cpcName(final String cpcName) {
             this.cpcName = cpcName;
             return this;
@@ -314,6 +310,10 @@ public class DefinedSystem {
         public DefinedSystem.Builder zosVR(final String zosVR) {
             this.zosVR = zosVR;
             return this;
+        }
+
+        public DefinedSystem build() {
+            return new DefinedSystem(this);
         }
 
     }

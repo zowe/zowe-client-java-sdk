@@ -186,10 +186,6 @@ public class ZosmfInfoResponse {
             return this;
         }
 
-        public ZosmfInfoResponse build() {
-            return new ZosmfInfoResponse(this);
-        }
-
         public ZosmfInfoResponse.Builder zosVersion(final String zosVersion) {
             this.zosVersion = zosVersion;
             return this;
@@ -223,6 +219,10 @@ public class ZosmfInfoResponse {
         public ZosmfInfoResponse.Builder zosmfVersion(final String zosmfVersion) {
             this.zosmfVersion = zosmfVersion;
             return this;
+        }
+
+        public ZosmfInfoResponse build() {
+            return new ZosmfInfoResponse(this);
         }
 
     }

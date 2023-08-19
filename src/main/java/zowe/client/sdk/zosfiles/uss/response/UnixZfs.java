@@ -288,10 +288,6 @@ public class UnixZfs {
         private Long totalRows;
         private boolean moreRows = false;
 
-        public UnixZfs build() {
-            return new UnixZfs(this);
-        }
-
         public UnixZfs.Builder name(final String name) {
             this.name = name;
             return this;
@@ -376,6 +372,11 @@ public class UnixZfs {
             this.moreRows = moreRows;
             return this;
         }
+
+        public UnixZfs build() {
+            return new UnixZfs(this);
+        }
+
     }
 
 }

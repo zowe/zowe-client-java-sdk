@@ -216,10 +216,6 @@ public class ZosLogItem {
         private String time;
         private Long timeStamp;
 
-        public ZosLogItem build() {
-            return new ZosLogItem(this);
-        }
-
         /**
          * Set cart string value from response
          *
@@ -339,6 +335,10 @@ public class ZosLogItem {
         public ZosLogItem.Builder timeStamp(final long timeStamp) {
             this.timeStamp = timeStamp;
             return this;
+        }
+
+        public ZosLogItem build() {
+            return new ZosLogItem(this);
         }
 
     }

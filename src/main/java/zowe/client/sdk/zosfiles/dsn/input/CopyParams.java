@@ -148,10 +148,6 @@ public class CopyParams {
         private boolean replace = true;
         private boolean copyAllMembers = false;
 
-        public CopyParams build() {
-            return new CopyParams(this);
-        }
-
         public CopyParams.Builder copyAllMembers(final boolean value) {
             this.copyAllMembers = value;
             return this;
@@ -185,6 +181,11 @@ public class CopyParams {
             this.toVolser = volser;
             return this;
         }
+
+        public CopyParams build() {
+            return new CopyParams(this);
+        }
+
     }
 
 }

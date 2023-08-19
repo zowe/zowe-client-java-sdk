@@ -154,10 +154,6 @@ public class UnixFile {
         private String group;
         private String mtime;
 
-        public UnixFile build() {
-            return new UnixFile(this);
-        }
-
         public UnixFile.Builder name(final String name) {
             this.name = name;
             return this;
@@ -196,6 +192,10 @@ public class UnixFile {
         public UnixFile.Builder mtime(final String mtime) {
             this.mtime = mtime;
             return this;
+        }
+
+        public UnixFile build() {
+            return new UnixFile(this);
         }
 
     }

@@ -289,10 +289,6 @@ public class Job {
         private Long phase;
         private String phaseName;
 
-        public Job build() {
-            return new Job(this);
-        }
-
         public Builder classs(final String classs) {
             this.classs = classs;
             return this;
@@ -361,6 +357,10 @@ public class Job {
         public Builder url(final String url) {
             this.url = url;
             return this;
+        }
+
+        public Job build() {
+            return new Job(this);
         }
 
     }

@@ -156,10 +156,6 @@ public class ZosLogParams {
         private String timeRange;
         private boolean processResponses;
 
-        public ZosLogParams build() {
-            return new ZosLogParams(this);
-        }
-
         /**
          * Set the start time to retrieve log output from.
          * <p>
@@ -226,6 +222,10 @@ public class ZosLogParams {
         public ZosLogParams.Builder processResponses(final boolean processResponses) {
             this.processResponses = processResponses;
             return this;
+        }
+
+        public ZosLogParams build() {
+            return new ZosLogParams(this);
         }
 
     }

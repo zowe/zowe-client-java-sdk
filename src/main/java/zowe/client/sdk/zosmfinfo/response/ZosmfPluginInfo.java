@@ -96,10 +96,6 @@ public class ZosmfPluginInfo {
         private String pluginDefaultName;
         private String pluginStatus;
 
-        public ZosmfPluginInfo build() {
-            return new ZosmfPluginInfo(this);
-        }
-
         public ZosmfPluginInfo.Builder pluginDefaultName(final String pluginDefaultName) {
             this.pluginDefaultName = pluginDefaultName;
             return this;
@@ -113,6 +109,10 @@ public class ZosmfPluginInfo {
         public ZosmfPluginInfo.Builder pluginVersion(final String pluginVersion) {
             this.pluginVersion = pluginVersion;
             return this;
+        }
+
+        public ZosmfPluginInfo build() {
+            return new ZosmfPluginInfo(this);
         }
 
     }

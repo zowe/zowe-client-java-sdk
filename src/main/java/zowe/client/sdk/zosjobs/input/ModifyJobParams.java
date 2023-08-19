@@ -112,13 +112,13 @@ public class ModifyJobParams {
             this.jobId = jobId;
         }
 
-        public ModifyJobParams build() {
-            return new ModifyJobParams(this);
-        }
-
         public ModifyJobParams.Builder version(final String version) {
             this.version = version;
             return this;
+        }
+
+        public ModifyJobParams build() {
+            return new ModifyJobParams(this);
         }
 
     }

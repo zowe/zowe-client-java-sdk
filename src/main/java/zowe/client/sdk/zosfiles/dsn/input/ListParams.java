@@ -172,10 +172,6 @@ public class ListParams {
             return this;
         }
 
-        public ListParams build() {
-            return new ListParams(this);
-        }
-
         public ListParams.Builder maxLength(final String maxLength) {
             this.maxLength = maxLength;
             return this;
@@ -205,6 +201,11 @@ public class ListParams {
             this.volume = volume;
             return this;
         }
+
+        public ListParams build() {
+            return new ListParams(this);
+        }
+
     }
 
 }

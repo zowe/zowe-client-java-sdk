@@ -312,10 +312,6 @@ public class DownloadParams {
             return this;
         }
 
-        public DownloadParams build() {
-            return new DownloadParams(this);
-        }
-
         public DownloadParams.Builder directory(final String directory) {
             this.directory = directory;
             return this;
@@ -380,6 +376,11 @@ public class DownloadParams {
             this.volume = volume;
             return this;
         }
+
+        public DownloadParams build() {
+            return new DownloadParams(this);
+        }
+
     }
 
 }
