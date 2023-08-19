@@ -160,7 +160,7 @@ public class WriteParams {
         }
 
         /**
-         * Specify textContent string value
+         * Set textContent string value
          *
          * @param textContent string value
          * @return Builder this object
@@ -171,7 +171,7 @@ public class WriteParams {
         }
 
         /**
-         * Specify binaryContent byte array value
+         * Set binaryContent byte array value
          *
          * @param binaryContent byte array value
          * @return Builder this object
@@ -182,7 +182,7 @@ public class WriteParams {
         }
 
         /**
-         * Specify fileEncoding string value
+         * Set fileEncoding string value
          *
          * @param fileEncoding string value
          * @return Builder this object
@@ -193,7 +193,7 @@ public class WriteParams {
         }
 
         /**
-         * Specify crlf boolean value
+         * Set crlf boolean value
          *
          * @param crlf boolean true or false value
          * @return Builder this object
@@ -204,7 +204,7 @@ public class WriteParams {
         }
 
         /**
-         * Specify binary boolean value
+         * Set binary boolean value
          *
          * @param binary boolean true or false value
          * @return Builder this object

@@ -324,7 +324,7 @@ public class Member {
         }
 
         /**
-         * Specify member string value
+         * Set member string value
          *
          * @param member string value
          * @return Builder this object
@@ -335,7 +335,7 @@ public class Member {
         }
 
         /**
-         * Specify vers long value
+         * Set vers long value
          *
          * @param vers long value
          * @return Builder this object
@@ -346,7 +346,7 @@ public class Member {
         }
 
         /**
-         * Specify mod long value
+         * Set mod long value
          *
          * @param mod long value
          * @return Builder this object
@@ -357,7 +357,7 @@ public class Member {
         }
 
         /**
-         * Specify c4date string value
+         * Set c4date string value
          *
          * @param c4date string value
          * @return Builder this object
@@ -368,7 +368,7 @@ public class Member {
         }
 
         /**
-         * Specify m4date string value
+         * Set m4date string value
          *
          * @param m4date string value
          * @return Builder this object
@@ -379,7 +379,7 @@ public class Member {
         }
 
         /**
-         * Specify cnorc long value
+         * Set cnorc long value
          *
          * @param cnorc long value
          * @return Builder this object
@@ -390,7 +390,7 @@ public class Member {
         }
 
         /**
-         * Specify inorc long value
+         * Set inorc long value
          *
          * @param inorc long value
          * @return Builder this object
@@ -401,7 +401,7 @@ public class Member {
         }
 
         /**
-         * Specify mnorc long value
+         * Set mnorc long value
          *
          * @param mnorc long value
          * @return Builder this object
@@ -412,7 +412,7 @@ public class Member {
         }
 
         /**
-         * Specify mtime string value
+         * Set mtime string value
          *
          * @param mtime string value
          * @return Builder this object
@@ -423,7 +423,7 @@ public class Member {
         }
 
         /**
-         * Specify msec string value
+         * Set msec string value
          *
          * @param msec string value
          * @return Builder this object
@@ -434,7 +434,7 @@ public class Member {
         }
 
         /**
-         * Specify user string value
+         * Set user string value
          *
          * @param user string value
          * @return Builder this object
@@ -445,7 +445,7 @@ public class Member {
         }
 
         /**
-         * Specify sclm string value
+         * Set sclm string value
          *
          * @param sclm string value
          * @return Builder this object

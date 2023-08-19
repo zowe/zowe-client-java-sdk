@@ -117,9 +117,8 @@ public class CopyParams {
         public Builder() {
         }
 
-
         /**
-         * Specify from string value
+         * Set from string value
          *
          * @param from the 'from' string value
          * @return Builder this object
@@ -132,7 +131,7 @@ public class CopyParams {
         }
 
         /**
-         * Specify overwrite boolean value
+         * Set overwrite boolean value
          *
          * @param overwrite boolean true or false value
          * @return Builder this object
@@ -143,7 +142,7 @@ public class CopyParams {
         }
 
         /**
-         * Specify recursive boolean value
+         * Set recursive boolean value
          *
          * @param recursive boolean true or false value
          * @return Builder this object

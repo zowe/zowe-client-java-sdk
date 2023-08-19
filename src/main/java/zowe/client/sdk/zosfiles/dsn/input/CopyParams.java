@@ -178,7 +178,7 @@ public class CopyParams {
         }
 
         /**
-         * Specify copyAllMembers boolean value
+         * Set copyAllMembers boolean value
          *
          * @param value boolean true or false value
          * @return Builder this object
@@ -189,7 +189,7 @@ public class CopyParams {
         }
 
         /**
-         * Specify fromDataSet string value
+         * Set fromDataSet string value
          *
          * @param dataSet string value
          * @return Builder this object
@@ -202,7 +202,7 @@ public class CopyParams {
         }
 
         /**
-         * Specify fromVolser string value
+         * Set fromVolser string value
          *
          * @param volser string value
          * @return Builder this object
@@ -213,7 +213,7 @@ public class CopyParams {
         }
 
         /**
-         * Specify replace string value
+         * Set replace string value
          *
          * @param replace string value
          * @return Builder this object
@@ -224,7 +224,7 @@ public class CopyParams {
         }
 
         /**
-         * Specify dataSet string value
+         * Set dataSet string value
          *
          * @param dataSet string value
          * @return Builder this object
@@ -237,7 +237,7 @@ public class CopyParams {
         }
 
         /**
-         * Specify volser string value
+         * Set volser string value
          *
          * @param volser string value
          * @return Builder this object

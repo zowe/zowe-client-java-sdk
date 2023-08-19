@@ -374,7 +374,7 @@ public class ListParams {
         }
 
         /**
-         * Specify path string value
+         * Set path string value
          *
          * @param path string value
          * @return Builder this object
@@ -387,7 +387,7 @@ public class ListParams {
         }
 
         /**
-         * Specify maxLength int value
+         * Set maxLength int value
          *
          * @param maxLength int value
          * @return Builder this object
@@ -398,7 +398,7 @@ public class ListParams {
         }
 
         /**
-         * Specify group string value
+         * Set group string value
          *
          * @param group string value
          * @return Builder this object
@@ -409,7 +409,7 @@ public class ListParams {
         }
 
         /**
-         * Specify user string value
+         * Set user string value
          *
          * @param user string value
          * @return Builder this object
@@ -431,7 +431,7 @@ public class ListParams {
         }
 
         /**
-         * Specify size int value
+         * Set size int value
          *
          * @param size int value
          * @return Builder this object
@@ -442,7 +442,7 @@ public class ListParams {
         }
 
         /**
-         * Specify name string value
+         * Set name string value
          *
          * @param name string value
          * @return Builder this object
@@ -453,7 +453,7 @@ public class ListParams {
         }
 
         /**
-         * Specify perm string value
+         * Set perm string value
          *
          * @param perm string value
          * @return Builder this object
@@ -464,7 +464,7 @@ public class ListParams {
         }
 
         /**
-         * Specify ListFilterType value
+         * Set ListFilterType value
          *
          * @param type ListFilterType type object
          * @return Builder this object
@@ -475,7 +475,7 @@ public class ListParams {
         }
 
         /**
-         * Specify depth int value
+         * Set depth int value
          *
          * @param depth int value
          * @return Builder this object
@@ -486,7 +486,7 @@ public class ListParams {
         }
 
         /**
-         * Specify filesys boolean value
+         * Set filesys boolean value
          *
          * @param filesys boolean true or false value
          * @return Builder this object
@@ -497,7 +497,7 @@ public class ListParams {
         }
 
         /**
-         * Specify symlinks boolean value
+         * Set symlinks boolean value
          *
          * @param symlinks boolean true or false value
          * @return Builder this object

@@ -146,7 +146,7 @@ public class MountParams {
         }
 
         /**
-         * Specify action type value
+         * Set action type value
          *
          * @param action MountActionType type object
          * @return Builder this object
@@ -157,7 +157,7 @@ public class MountParams {
         }
 
         /**
-         * Specify mountPoint string value
+         * Set mountPoint string value
          *
          * @param mountPoint string value
          * @return .Builder this object
@@ -170,7 +170,7 @@ public class MountParams {
         }
 
         /**
-         * Specify fsType string value
+         * Set fsType string value
          *
          * @param fsType string value
          * @return Builder this object
@@ -183,7 +183,7 @@ public class MountParams {
         }
 
         /**
-         * Specify mode type value
+         * Set mode type value
          *
          * @param mode MountModeType type object
          * @return Builder this object

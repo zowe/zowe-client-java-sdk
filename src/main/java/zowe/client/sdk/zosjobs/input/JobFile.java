@@ -362,7 +362,7 @@ public class JobFile {
         }
 
         /**
-         * Specify byteCount long value
+         * Set byteCount long value
          *
          * @param byteCount long value
          * @return Builder this object
@@ -373,7 +373,7 @@ public class JobFile {
         }
 
         /**
-         * Specify classs string value
+         * Set classs string value
          *
          * @param classs string value
          * @return Builder this object
@@ -384,7 +384,7 @@ public class JobFile {
         }
 
         /**
-         * Specify ddName string value
+         * Set ddName string value
          *
          * @param ddName string value
          * @return Builder this object
@@ -395,7 +395,7 @@ public class JobFile {
         }
 
         /**
-         * Specify id long value
+         * Set id long value
          *
          * @param id long value
          * @return Builder this object
@@ -406,7 +406,7 @@ public class JobFile {
         }
 
         /**
-         * Specify jobCorrelator string value
+         * Set jobCorrelator string value
          *
          * @param jobCorrelator string value
          * @return Builder this object
@@ -417,7 +417,7 @@ public class JobFile {
         }
 
         /**
-         * Specify jobId string value
+         * Set jobId string value
          *
          * @param jobId string value
          * @return Builder this object
@@ -428,7 +428,7 @@ public class JobFile {
         }
 
         /**
-         * Specify jobName string value
+         * Set jobName string value
          *
          * @param jobName string value
          * @return Builder this object
@@ -439,7 +439,7 @@ public class JobFile {
         }
 
         /**
-         * Specify lrecl long value
+         * Set lrecl long value
          *
          * @param lrecl long value
          * @return Builder this object
@@ -450,7 +450,7 @@ public class JobFile {
         }
 
         /**
-         * Specify procStep string value
+         * Set procStep string value
          *
          * @param procStep string value
          * @return Builder this object
@@ -461,7 +461,7 @@ public class JobFile {
         }
 
         /**
-         * Specify recfm string value
+         * Set recfm string value
          *
          * @param recfm string value
          * @return Builder this object
@@ -472,7 +472,7 @@ public class JobFile {
         }
 
         /**
-         * Specify recordCount long value
+         * Set recordCount long value
          *
          * @param recordCount long value
          * @return Builder this object
@@ -483,7 +483,7 @@ public class JobFile {
         }
 
         /**
-         * Specify recordsUrl string value
+         * Set recordsUrl string value
          *
          * @param recordsUrl string value
          * @return Builder this object
@@ -494,7 +494,7 @@ public class JobFile {
         }
 
         /**
-         * Specify stepName string value
+         * Set stepName string value
          *
          * @param stepName string value
          * @return Builder this object
@@ -505,7 +505,7 @@ public class JobFile {
         }
 
         /**
-         * Specify subSystem string value
+         * Set subSystem string value
          *
          * @param subSystem string value
          * @return Builder this object

@@ -383,7 +383,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify binary boolean value
+         * Set binary boolean value
          *
          * @param binary boolean true or false value
          * @return Builder this object
@@ -394,7 +394,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify directory string value
+         * Set directory string value
          *
          * @param directory string value
          * @return Builder this object
@@ -405,7 +405,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify encoding long value
+         * Set encoding long value
          *
          * @param encoding long value
          * @return Builder this object
@@ -416,7 +416,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify excludePatterns string array value
+         * Set excludePatterns string array value
          *
          * @param excludePatterns string array value
          * @return Builder this object
@@ -427,7 +427,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify extension string value
+         * Set extension string value
          *
          * @param extension string value
          * @return Builder this object
@@ -438,7 +438,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify extensionMap HashMap value
+         * Set extensionMap HashMap value
          *
          * @param extensionMap HashMap value
          * @return Builder this object
@@ -449,7 +449,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify failFast boolean value
+         * Set failFast boolean value
          *
          * @param failFast boolean true or false value
          * @return Builder this object
@@ -460,7 +460,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify file string value
+         * Set file string value
          *
          * @param file string value
          * @return Builder this object
@@ -471,7 +471,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify maxConcurrentRequests long value
+         * Set maxConcurrentRequests long value
          *
          * @param maxConcurrentRequests long value
          * @return Builder this object
@@ -482,7 +482,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify preserveOriginalLetterCase boolean value
+         * Set preserveOriginalLetterCase boolean value
          *
          * @param preserveOriginalLetterCase boolean true or false value
          * @return Builder this object
@@ -493,7 +493,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify responseTimeout string value
+         * Set responseTimeout string value
          *
          * @param responseTimeout string value
          * @return Builder this object
@@ -504,7 +504,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify returnEtag boolean value
+         * Set returnEtag boolean value
          *
          * @param returnEtag boolean true or false value
          * @return Builder this object
@@ -515,7 +515,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify task string value
+         * Set task string value
          *
          * @param task string value
          * @return Builder this object
@@ -526,7 +526,7 @@ public class DownloadParams {
         }
 
         /**
-         * Specify volume string value
+         * Set volume string value
          *
          * @param volume string value
          * @return Builder this object

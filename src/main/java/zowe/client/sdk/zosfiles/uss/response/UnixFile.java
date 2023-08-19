@@ -226,7 +226,7 @@ public class UnixFile {
         private String mtime;
 
         /**
-         * Specify name string value
+         * Set name string value
          *
          * @param name string value
          * @return Builder this object
@@ -237,7 +237,7 @@ public class UnixFile {
         }
 
         /**
-         * Specify mode string value
+         * Set mode string value
          *
          * @param mode string value
          * @return Builder this object
@@ -248,7 +248,7 @@ public class UnixFile {
         }
 
         /**
-         * Specify size long value
+         * Set size long value
          *
          * @param size long value
          * @return Builder this object
@@ -259,7 +259,7 @@ public class UnixFile {
         }
 
         /**
-         * Specify uid long value
+         * Set uid long value
          *
          * @param uid long value
          * @return Builder this object
@@ -270,7 +270,7 @@ public class UnixFile {
         }
 
         /**
-         * Specify user string value
+         * Set user string value
          *
          * @param user string value
          * @return Builder this object
@@ -281,7 +281,7 @@ public class UnixFile {
         }
 
         /**
-         * Specify gid long value
+         * Set gid long value
          *
          * @param gid long value
          * @return Builder this object
@@ -292,7 +292,7 @@ public class UnixFile {
         }
 
         /**
-         * Specify group string value
+         * Set group string value
          *
          * @param group string value
          * @return .Builder this object
@@ -303,7 +303,7 @@ public class UnixFile {
         }
 
         /**
-         * Specify mtime string value
+         * Set mtime string value
          *
          * @param mtime string value
          * @return Builder this object

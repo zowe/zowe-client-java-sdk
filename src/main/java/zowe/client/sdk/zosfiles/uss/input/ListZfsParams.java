@@ -131,7 +131,7 @@ public class ListZfsParams {
         }
 
         /**
-         * Specify maxLength int value
+         * Set maxLength int value
          *
          * @param maxLength the maxLength int value
          * @return Builder this object
@@ -142,7 +142,7 @@ public class ListZfsParams {
         }
 
         /**
-         * Specify path value
+         * Set path value
          *
          * @param path string value
          * @return Builder this object
@@ -158,7 +158,7 @@ public class ListZfsParams {
         }
 
         /**
-         * Specify fsname value
+         * Set fsname value
          *
          * @param fsname string value
          * @return Builder this object

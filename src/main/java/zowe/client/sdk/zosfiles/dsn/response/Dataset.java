@@ -450,7 +450,7 @@ public class Dataset {
         }
 
         /**
-         * Specify name of the dataset
+         * Set name of the dataset
          *
          * @param dsname string value
          * @return Builder this object
@@ -461,7 +461,7 @@ public class Dataset {
         }
 
         /**
-         * Specify block size of the dataset
+         * Set block size of the dataset
          *
          * @param blksz string value
          * @return Builder this object
@@ -472,7 +472,7 @@ public class Dataset {
         }
 
         /**
-         * Specify catnm of the dataset
+         * Set catnm of the dataset
          *
          * @param catnm string value
          * @return Builder this object
@@ -483,7 +483,7 @@ public class Dataset {
         }
 
         /**
-         * Specify cdate of the dataset
+         * Set cdate of the dataset
          *
          * @param cdate string value
          * @return Builder this object
@@ -494,7 +494,7 @@ public class Dataset {
         }
 
         /**
-         * Specify dev of the dataset
+         * Set dev of the dataset
          *
          * @param dev string value
          * @return Builder this object
@@ -505,7 +505,7 @@ public class Dataset {
         }
 
         /**
-         * Specify dsntp of the dataset
+         * Set dsntp of the dataset
          *
          * @param dsntp string value
          * @return Builder this object
@@ -516,7 +516,7 @@ public class Dataset {
         }
 
         /**
-         * Specify dsorg of the dataset
+         * Set dsorg of the dataset
          *
          * @param dsorg string value
          * @return Builder this object
@@ -527,7 +527,7 @@ public class Dataset {
         }
 
         /**
-         * Specify edate of the dataset
+         * Set edate of the dataset
          *
          * @param edate string value
          * @return Builder this object
@@ -538,7 +538,7 @@ public class Dataset {
         }
 
         /**
-         * Specify extx of the dataset
+         * Set extx of the dataset
          *
          * @param extx string value
          * @return Builder this object
@@ -549,7 +549,7 @@ public class Dataset {
         }
 
         /**
-         * Specify lrectl of the dataset
+         * Set lrectl of the dataset
          *
          * @param lrectl string value
          * @return Builder this object
@@ -560,7 +560,7 @@ public class Dataset {
         }
 
         /**
-         * Specify migr of the dataset
+         * Set migr of the dataset
          *
          * @param migr string value
          * @return Builder this object
@@ -571,7 +571,7 @@ public class Dataset {
         }
 
         /**
-         * Specify mvol of the dataset
+         * Set mvol of the dataset
          *
          * @param mvol string value
          * @return Builder this object
@@ -582,7 +582,7 @@ public class Dataset {
         }
 
         /**
-         * Specify ovf of the dataset
+         * Set ovf of the dataset
          *
          * @param ovf string value
          * @return Builder this object
@@ -593,7 +593,7 @@ public class Dataset {
         }
 
         /**
-         * Specify rdate of the dataset
+         * Set rdate of the dataset
          *
          * @param rdate string value
          * @return Builder this object
@@ -604,7 +604,7 @@ public class Dataset {
         }
 
         /**
-         * Specify recfm of the dataset
+         * Set recfm of the dataset
          *
          * @param recfm string value
          * @return Builder this object
@@ -615,7 +615,7 @@ public class Dataset {
         }
 
         /**
-         * Specify sizex of the dataset
+         * Set sizex of the dataset
          *
          * @param sizex string value
          * @return Builder this object
@@ -626,7 +626,7 @@ public class Dataset {
         }
 
         /**
-         * Specify spacu of the dataset
+         * Set spacu of the dataset
          *
          * @param spacu string value
          * @return Builder this object
@@ -637,7 +637,7 @@ public class Dataset {
         }
 
         /**
-         * Specify used of the dataset
+         * Set used of the dataset
          *
          * @param used string value
          * @return Builder this object
@@ -648,7 +648,7 @@ public class Dataset {
         }
 
         /**
-         * Specify vol of the dataset
+         * Set vol of the dataset
          *
          * @param vol string value
          * @return Builder this object

@@ -245,7 +245,7 @@ public class GetParams {
         }
 
         /**
-         * Specify search string value
+         * Set search string value
          *
          * @param search string value
          * @return Builder this object
@@ -260,7 +260,7 @@ public class GetParams {
         }
 
         /**
-         * Specify research value
+         * Set research value
          *
          * @param research string value
          * @return GetParams.Builder this object
@@ -275,7 +275,7 @@ public class GetParams {
         }
 
         /**
-         * Specify insensitive boolean value
+         * Set insensitive boolean value
          *
          * @param insensitive boolean true or false value
          * @return Builder this object
@@ -287,7 +287,7 @@ public class GetParams {
         }
 
         /**
-         * Specify binary int value
+         * Set binary int value
          *
          * @param maxreturnsize int value
          * @return Builder this object
@@ -299,7 +299,7 @@ public class GetParams {
         }
 
         /**
-         * Specify binary boolean value
+         * Set binary boolean value
          *
          * @param binary boolean true or false value
          * @return Builder this object
@@ -310,7 +310,7 @@ public class GetParams {
         }
 
         /**
-         * Specify recordsRange value
+         * Set recordsRange value
          *
          * @param recordsRange string value
          * @return Builder this object

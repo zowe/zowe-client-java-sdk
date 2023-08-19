@@ -123,7 +123,7 @@ public class ChangeModeParams {
         }
 
         /**
-         * Specify mode string value
+         * Set mode string value
          *
          * @param mode the mode value
          * @return Builder this object
@@ -136,7 +136,7 @@ public class ChangeModeParams {
         }
 
         /**
-         * Specify recursive boolean value
+         * Set recursive boolean value
          *
          * @param recursive boolean true or false value
          * @return Builder this object
@@ -147,7 +147,7 @@ public class ChangeModeParams {
         }
 
         /**
-         * Specify links LinkType value
+         * Set links LinkType value
          *
          * @param type LinkType type object
          * @return Builder this object

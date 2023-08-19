@@ -460,7 +460,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify alcunit string value
+         * Set alcunit string value
          *
          * @param alcunit string value
          * @return Builder this object
@@ -471,7 +471,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify avgblk int value
+         * Set avgblk int value
          *
          * @param avgblk int value
          * @return Builder this object
@@ -483,7 +483,7 @@ public class CreateParams {
 
 
         /**
-         * Specify blksize int value
+         * Set blksize int value
          *
          * @param blksize int value
          * @return Builder this object
@@ -494,7 +494,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify dataclass string value
+         * Set dataclass string value
          *
          * @param dataclass string value
          * @return Builder this object
@@ -505,7 +505,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify dirblk int value
+         * Set dirblk int value
          *
          * @param dirblk int value
          * @return Builder this object
@@ -516,7 +516,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify dsntype string value
+         * Set dsntype string value
          *
          * @param dsntype string value
          * @return Builder this object
@@ -527,7 +527,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify dsorg string value
+         * Set dsorg string value
          *
          * @param dsorg string value
          * @return Builder this object
@@ -538,7 +538,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify lrecl int value
+         * Set lrecl int value
          *
          * @param lrecl int value
          * @return Builder this object
@@ -549,7 +549,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify mgntclass string value
+         * Set mgntclass string value
          *
          * @param mgntclass string value
          * @return Builder this object
@@ -560,7 +560,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify primary int value
+         * Set primary int value
          *
          * @param primary int value
          * @return Builder this object
@@ -571,7 +571,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify recfm string value
+         * Set recfm string value
          *
          * @param recfm string value
          * @return Builder this object
@@ -582,7 +582,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify responseTimeout string value
+         * Set responseTimeout string value
          *
          * @param responseTimeout string value
          * @return Builder this object
@@ -593,7 +593,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify secondary int value
+         * Set secondary int value
          *
          * @param secondary int value
          * @return Builder this object
@@ -604,7 +604,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify showAttributes boolean value
+         * Set showAttributes boolean value
          *
          * @param showAttributes boolean true or false value
          * @return Builder this object
@@ -615,7 +615,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify size string value
+         * Set size string value
          *
          * @param size string value
          * @return Builder this object
@@ -626,7 +626,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify storclass string value
+         * Set storclass string value
          *
          * @param storclass string value
          * @return Builder this object
@@ -637,7 +637,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify unit string value
+         * Set unit string value
          *
          * @param unit string value
          * @return Builder this object
@@ -648,7 +648,7 @@ public class CreateParams {
         }
 
         /**
-         * Specify volser string value
+         * Set volser string value
          *
          * @param volser string value
          * @return Builder this object

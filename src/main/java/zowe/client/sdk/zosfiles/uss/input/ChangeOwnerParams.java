@@ -140,7 +140,7 @@ public class ChangeOwnerParams {
         }
 
         /**
-         * Specify owner string value
+         * Set owner string value
          *
          * @param owner string value
          * @return Builder this object
@@ -153,7 +153,7 @@ public class ChangeOwnerParams {
         }
 
         /**
-         * Specify group string value
+         * Set group string value
          *
          * @param group string value
          * @return Builder this object
@@ -164,7 +164,7 @@ public class ChangeOwnerParams {
         }
 
         /**
-         * Specify recursive boolean value
+         * Set recursive boolean value
          *
          * @param recursive boolean true or false value
          * @return Builder this object
@@ -175,7 +175,7 @@ public class ChangeOwnerParams {
         }
 
         /**
-         * Specify links LinkType value
+         * Set links LinkType value
          *
          * @param type LinkType type object
          * @return Builder this object

@@ -442,7 +442,7 @@ public class UnixZfs {
         private boolean moreRows = false;
 
         /**
-         * Specify name string value
+         * Set name string value
          *
          * @param name string value
          * @return Builder this object
@@ -453,7 +453,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify mountpoint string value
+         * Set mountpoint string value
          *
          * @param mountpoint string value
          * @return Builder this object
@@ -464,7 +464,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify fstname string value
+         * Set fstname string value
          *
          * @param fstname string value
          * @return Builder this object
@@ -475,7 +475,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify status string value
+         * Set status string value
          *
          * @param status string value
          * @return Builder this object
@@ -486,7 +486,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify mode string value
+         * Set mode string value
          *
          * @param mode string value
          * @return Builder this object
@@ -497,7 +497,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify dev long value
+         * Set dev long value
          *
          * @param dev long value
          * @return Builder this object
@@ -508,7 +508,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify fstype long value
+         * Set fstype long value
          *
          * @param fstype long value
          * @return Builder this object
@@ -519,7 +519,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify bsize long value
+         * Set bsize long value
          *
          * @param bsize long value
          * @return Builder this object
@@ -530,7 +530,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify bavail long value
+         * Set bavail long value
          *
          * @param bavail long value
          * @return Builder this object
@@ -541,7 +541,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify blocks long value
+         * Set blocks long value
          *
          * @param blocks long value
          * @return Builder this object
@@ -552,7 +552,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify sysname string value
+         * Set sysname string value
          *
          * @param sysname string value
          * @return Builder this object
@@ -563,7 +563,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify readibc long value
+         * Set readibc long value
          *
          * @param readibc long value
          * @return Builder this object
@@ -574,7 +574,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify writeibc long value
+         * Set writeibc long value
          *
          * @param writeibc long value
          * @return Builder this object
@@ -585,7 +585,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify diribc long value
+         * Set diribc long value
          *
          * @param diribc long value
          * @return Builder this object
@@ -596,7 +596,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify returnedRows long value
+         * Set returnedRows long value
          *
          * @param returnedRows long value
          * @return Builder this object
@@ -607,7 +607,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify totalRows long value
+         * Set totalRows long value
          *
          * @param totalRows long value
          * @return Builder this object
@@ -618,7 +618,7 @@ public class UnixZfs {
         }
 
         /**
-         * Specify moreRows boolean value
+         * Set moreRows boolean value
          *
          * @param moreRows boolean true or false value
          * @return Builder this object

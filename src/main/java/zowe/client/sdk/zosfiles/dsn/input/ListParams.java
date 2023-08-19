@@ -212,7 +212,7 @@ public class ListParams {
         }
 
         /**
-         * Specify indicator that we want to show more attributes
+         * Set indicator that we want to show more attributes
          *
          * @param attribute AttributeType value
          * @return Builder this object

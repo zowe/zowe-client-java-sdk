@@ -179,7 +179,7 @@ public class ChangeTagParams {
         }
 
         /**
-         * Specify ChangeTagAction type value
+         * Set ChangeTagAction type value
          *
          * @param action ChangeTagAction type value
          * @return Builder this object
@@ -191,7 +191,7 @@ public class ChangeTagParams {
         }
 
         /**
-         * Specify ChangeTagType type value
+         * Set ChangeTagType type value
          *
          * @param type ChangeTagType enum value
          * @return Builder this object
@@ -202,7 +202,7 @@ public class ChangeTagParams {
         }
 
         /**
-         * Specify codeset string value
+         * Set codeset string value
          *
          * @param codeset string value
          * @return Builder this object
@@ -213,7 +213,7 @@ public class ChangeTagParams {
         }
 
         /**
-         * Specify recursive boolean value
+         * Set recursive boolean value
          *
          * @param recursive boolean true or false value
          * @return Builder this object
@@ -224,7 +224,7 @@ public class ChangeTagParams {
         }
 
         /**
-         * Specify links LinkType value
+         * Set links LinkType value
          *
          * @param links LinkType type object
          * @return Builder this object
