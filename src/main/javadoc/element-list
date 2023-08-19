@@ -32,6 +32,7 @@ zowe.client.sdk.zosjobs.types
 zowe.client.sdk.zoslogs.input
 zowe.client.sdk.zoslogs.method
 zowe.client.sdk.zoslogs.response
+zowe.client.sdk.zoslogs.types
 zowe.client.sdk.zosmfinfo
 zowe.client.sdk.zosmfinfo.methods
 zowe.client.sdk.zosmfinfo.response
