@@ -50,7 +50,7 @@ public final class RestUtils {
         final String errMsg = "no response status code returned";
         final int statusCode = response.getStatusCode().orElseThrow(() -> new IllegalStateException(errMsg));
 
-        if (RestUtils.isHttpError(statusCode)) {
+        if (!(statusCode >= 100 && statusCode <= 299)) {
             final AtomicReference<Object> responsePhrase = new AtomicReference<>();
             response.getResponsePhrase().ifPresent(responsePhrase::set);
             if (responsePhrase.get() instanceof byte[]) {
@@ -77,17 +77,6 @@ public final class RestUtils {
         }
 
         return response;
-    }
-
-    /**
-     * Checks if statusCode is an error http code or not
-     *
-     * @param statusCode http code value
-     * @return boolean true or false
-     * @author Frank Giordano
-     */
-    public static boolean isHttpError(final int statusCode) {
-        return !((statusCode >= 200 && statusCode <= 299) || (statusCode >= 100 && statusCode <= 199));
     }
 
 }

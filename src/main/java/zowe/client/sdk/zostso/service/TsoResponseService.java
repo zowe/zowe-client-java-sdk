@@ -47,7 +47,7 @@ public class TsoResponseService {
         ZosmfTsoResponse result;
         final int statusCode = tsoCmdResponse.getStatusCode()
                 .orElseThrow(() -> new IllegalStateException("status code not specified"));
-        if (RestUtils.isHttpError(statusCode)) {
+        if (!(statusCode >= 100 && statusCode <= 299)) {
             final String tsoCmdResponsePhrase = (String) tsoCmdResponse.getResponsePhrase()
                     .orElseThrow(() -> new IllegalStateException("no tsoCmdResponse phrase"));
             final ZosmfMessages zosmfMsg = new ZosmfMessages(tsoCmdResponsePhrase, null, null);

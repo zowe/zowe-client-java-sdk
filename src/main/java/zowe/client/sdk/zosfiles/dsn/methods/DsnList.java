@@ -126,7 +126,8 @@ public class DsnList {
             }
         }
 
-        if (RestUtils.isHttpError(response.getStatusCode().getAsInt())) {
+        final int statusCode = response.getStatusCode().getAsInt();
+        if (!(statusCode >= 100 && statusCode <= 299)) {
             if (response.getStatusText().isEmpty()) {
                 LOG.debug("no no dsn list status text returned");
                 if (datasetLst == null) {
