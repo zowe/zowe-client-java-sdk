@@ -85,5 +85,4 @@ public class PropsParseResponseTest {
         assertEquals("ver", response.get("cmd-response"));
     }
 
-
 }
