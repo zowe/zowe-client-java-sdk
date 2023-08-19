@@ -61,10 +61,10 @@ public class ChangeTagParams {
     /**
      * ChangeTagParams constructor
      *
-     * @param builder ChangeTagParams.Builder builder
+     * @param builder Builder builder
      * @author James Kostrewski
      */
-    public ChangeTagParams(final ChangeTagParams.Builder builder) {
+    public ChangeTagParams(final Builder builder) {
         this.action = Optional.ofNullable(builder.action);
         this.type = Optional.ofNullable(builder.type);
         this.codeset = Optional.ofNullable(builder.codeset);
@@ -182,7 +182,7 @@ public class ChangeTagParams {
          * Specify ChangeTagAction type value
          *
          * @param action ChangeTagAction type value
-         * @return ChangeTagParams.Builder this object
+         * @return Builder this object
          */
         public Builder action(final ChangeTagAction action) {
             ValidateUtils.checkNullParameter(action == null, "action is null");
@@ -194,7 +194,7 @@ public class ChangeTagParams {
          * Specify ChangeTagType type value
          *
          * @param type ChangeTagType enum value
-         * @return ChangeTagParams.Builder this object
+         * @return Builder this object
          */
         public Builder type(final ChangeTagType type) {
             this.type = type;

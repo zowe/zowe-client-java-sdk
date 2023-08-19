@@ -60,10 +60,10 @@ public class ListParams {
     /**
      * ListParams constructor
      *
-     * @param builder ListParams.Builder object
+     * @param builder Builder object
      * @author Nikunj Goyal
      */
-    private ListParams(final ListParams.Builder builder) {
+    private ListParams(final Builder builder) {
         this.volume = Optional.ofNullable(builder.volume);
         this.attribute = Optional.ofNullable(builder.attribute);
         this.maxLength = Optional.ofNullable(builder.maxLength);
@@ -204,9 +204,9 @@ public class ListParams {
          * The volume where the data set resides
          *
          * @param volume The volume where the data set resides
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder volume(final String volume) {
+        public Builder volume(final String volume) {
             this.volume = volume;
             return this;
         }
@@ -215,8 +215,9 @@ public class ListParams {
          * Specify indicator that we want to show more attributes
          *
          * @param attribute AttributeType value
+         * @return Builder this object
          */
-        public ListParams.Builder attribute(final AttributeType attribute) {
+        public Builder attribute(final AttributeType attribute) {
             this.attribute = attribute;
             return this;
         }
@@ -225,9 +226,9 @@ public class ListParams {
          * The indicator that we want to show more attributes
          *
          * @param maxLength int value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder maxLength(final String maxLength) {
+        public Builder maxLength(final String maxLength) {
             this.maxLength = maxLength;
             return this;
         }
@@ -236,9 +237,9 @@ public class ListParams {
          * An optional search parameter that specifies the first data set name to return to the response document
          *
          * @param start string value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder start(final String start) {
+        public Builder start(final String start) {
             this.start = start;
             return this;
         }
@@ -247,9 +248,9 @@ public class ListParams {
          * An optional parameter that specifies how to handle migrated data sets
          *
          * @param recall string value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder recall(final String recall) {
+        public Builder recall(final String recall) {
             this.recall = recall;
             return this;
         }
@@ -258,9 +259,9 @@ public class ListParams {
          * An optional pattern for restricting the response list
          *
          * @param pattern string value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder pattern(final String pattern) {
+        public Builder pattern(final String pattern) {
             this.pattern = pattern;
             return this;
         }
@@ -269,15 +270,15 @@ public class ListParams {
          * Response time out value
          *
          * @param responseTimeout string value
-         * @return ListParams.Builder this object
+         * @return Builder this object
          */
-        public ListParams.Builder responseTimeout(final String responseTimeout) {
+        public Builder responseTimeout(final String responseTimeout) {
             this.responseTimeout = responseTimeout;
             return this;
         }
 
         /**
-         * Return ListParams object based on ListParams.Builder this object
+         * Return ListParams object based on Builder this object
          *
          * @return ListParams this object
          */
