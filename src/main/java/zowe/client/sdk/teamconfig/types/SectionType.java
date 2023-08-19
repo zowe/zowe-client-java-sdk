@@ -28,6 +28,11 @@ public enum SectionType {
         this.value = value;
     }
 
+    /**
+     * Returns the value of the section type.
+     *
+     * @return the value of the section type
+     */
     public String getValue() {
         return value;
     }

@@ -13,6 +13,8 @@ package zowe.client.sdk.zosfiles.uss.types;
  * ChangeTagType class provides tag type representation of Unix System Services (USS) chtag operation
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
+ * <p>
+ * The default is "mixed" This option can be specified only when the action is "set".
  *
  * @author James Kostrewski
  * @version 2.0
@@ -29,6 +31,11 @@ public enum ChangeTagType {
         this.value = value;
     }
 
+    /**
+     * Returns the value of the change tag type.
+     *
+     * @return the value of the change tag type
+     */
     public String getValue() {
         return value;
     }

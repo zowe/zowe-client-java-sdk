@@ -33,6 +33,11 @@ public enum DirectionType {
         this.value = value;
     }
 
+    /**
+     * Returns the value of the direction type.
+     *
+     * @return the value of the direction type
+     */
     public String getValue() {
         return value;
     }

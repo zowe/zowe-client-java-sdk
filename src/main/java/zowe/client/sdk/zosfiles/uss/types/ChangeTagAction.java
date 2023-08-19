@@ -19,8 +19,19 @@ package zowe.client.sdk.zosfiles.uss.types;
  */
 public enum ChangeTagAction {
 
+    /**
+     * Set the tag the file is tagged as specified in the "type" keyword
+     */
     SET("set"),
+
+    /**
+     * Existing file tag is removed
+     */
     REMOVE("remove"),
+
+    /**
+     * Existing tag information will be returned
+     */
     LIST("list");
 
     private final String value;
@@ -29,6 +40,11 @@ public enum ChangeTagAction {
         this.value = value;
     }
 
+    /**
+     * Returns the value of the change tag action.
+     *
+     * @return the value of the change tag action
+     */
     public String getValue() {
         return value;
     }

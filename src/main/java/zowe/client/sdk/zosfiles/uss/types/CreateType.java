@@ -28,6 +28,11 @@ public enum CreateType {
         this.value = value;
     }
 
+    /**
+     * Returns the value of the create type.
+     *
+     * @return the value of the create type
+     */
     public String getValue() {
         return value;
     }

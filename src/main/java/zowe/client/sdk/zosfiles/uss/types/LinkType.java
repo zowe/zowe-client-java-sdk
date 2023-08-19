@@ -19,8 +19,20 @@ package zowe.client.sdk.zosfiles.uss.types;
  */
 public enum LinkType {
 
+    /**
+     * The default is 'follow' encountered links.
+     * This applies a mode change to the file or directory pointed to by any encountered links.
+     */
     FOLLOW("follow"),
+
+    /**
+     * 'suppress' is a mode change for the file or directory pointed to by any encountered symbolic links.
+     */
     SUPPRESS("suppress"),
+
+    /**
+     * 'change' does not follow the link, but instead changes the link itself (chown -h).
+     */
     CHANGE("change");
 
     private final String value;
@@ -29,6 +41,11 @@ public enum LinkType {
         this.value = value;
     }
 
+    /**
+     * Returns the value of the link type.
+     *
+     * @return the value of the link type
+     */
     public String getValue() {
         return value;
     }

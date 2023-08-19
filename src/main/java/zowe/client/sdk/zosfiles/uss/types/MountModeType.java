@@ -19,7 +19,14 @@ package zowe.client.sdk.zosfiles.uss.types;
  */
 public enum MountModeType {
 
+    /**
+     * The default is 'rdonly' which mounts the file system in read-only mode.
+     */
     READY_ONLY("rdonly"),
+
+    /**
+     * 'rdwr' mounts the file system in read-write mode.
+     */
     READ_WRITE("rdwr");
 
     private final String value;
@@ -28,6 +35,11 @@ public enum MountModeType {
         this.value = value;
     }
 
+    /**
+     * Returns the value of the mount mode type.
+     *
+     * @return the value of the mount mode type
+     */
     public String getValue() {
         return value;
     }

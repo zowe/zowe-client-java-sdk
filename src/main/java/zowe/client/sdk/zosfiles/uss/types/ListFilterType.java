@@ -19,11 +19,34 @@ package zowe.client.sdk.zosfiles.uss.types;
  */
 public enum ListFilterType {
 
+    /**
+     * Character special file
+     */
     CHAR_SPECIAL_FILE("c"),
+
+    /**
+     * Directory
+     */
     DIRECTORY("d"),
+
+    /**
+     * File
+     */
     FILE("f"),
+
+    /**
+     * Symbolic link
+     */
     SYMBOLIC_LINK("l"),
+
+    /**
+     * FIFO (named pipe)
+     */
     FIFO_NAMED_PIPE("p"),
+
+    /**
+     * Socket
+     */
     SOCKET("s");
 
     private final String value;
@@ -32,6 +55,11 @@ public enum ListFilterType {
         this.value = value;
     }
 
+    /**
+     * Returns the value of the list filter type.
+     *
+     * @return the value of the list filter type
+     */
     public String getValue() {
         return value;
     }

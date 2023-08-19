@@ -33,6 +33,11 @@ public enum HardCopyType {
         this.value = value;
     }
 
+    /**
+     * Returns the value of the log type.
+     *
+     * @return the value of the log type
+     */
     public String getValue() {
         return value;
     }

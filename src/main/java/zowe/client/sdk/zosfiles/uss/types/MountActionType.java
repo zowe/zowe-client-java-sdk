@@ -28,6 +28,11 @@ public enum MountActionType {
         this.value = value;
     }
 
+    /**
+     * Returns the value of the mount action type.
+     *
+     * @return the value of the mount action type
+     */
     public String getValue() {
         return value;
     }
