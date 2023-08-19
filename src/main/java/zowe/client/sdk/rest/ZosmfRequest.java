@@ -136,7 +136,7 @@ public abstract class ZosmfRequest {
      * @return boolean true or false
      * @author Frank Giordano
      */
-    public static boolean isUrlNotValid(final String url) {
+    private static boolean isUrlNotValid(final String url) {
         try {
             new URL(url).toURI();
             return false;
