@@ -105,19 +105,42 @@ public class ListZfsParams {
      */
     public static class Builder {
 
+        /**
+         * The indicator that we want to show less files
+         */
         private Integer maxLength;
+
+        /**
+         * This parameter identifies the UNIX directory that contains the files and directories to be listed.
+         * This parameter may not be specified if the 'fsname' parameter is specified. It can consist a directory or
+         * fully qualified path name in the UNIX file system structure. A fully qualified file name can be up to 1023
+         * bytes long. You cannot use wildcard characters for this parameter.
+         */
         private String path;
+
+        /**
+         * This parameter identifies the fully qualified filesystem name to be listed. For zFS filesystems, this is
+         * the data set name of the aggregate. This parameter may not be specified if the 'path' parameter is specified.
+         */
         private String fsname;
 
-        public ListZfsParams build() {
-            return new ListZfsParams(this);
-        }
-
+        /**
+         * Specify maxLength int value
+         *
+         * @param maxLength the maxLength int value
+         * @return ListZfsParams.Builder this object
+         */
         public ListZfsParams.Builder maxLength(final int maxLength) {
             this.maxLength = maxLength;
             return this;
         }
 
+        /**
+         * Specify path value
+         *
+         * @param path string value
+         * @return ListZfsParams.Builder this object
+         */
         public ListZfsParams.Builder path(final String path) {
             ValidateUtils.checkNullParameter(path == null, "path is null");
             ValidateUtils.checkIllegalParameter(path.isBlank(), "path not specified");
@@ -128,6 +151,12 @@ public class ListZfsParams {
             return this;
         }
 
+        /**
+         * Specify fsname value
+         *
+         * @param fsname string value
+         * @return ListZfsParams.Builder this object
+         */
         public ListZfsParams.Builder fsname(final String fsname) {
             ValidateUtils.checkNullParameter(fsname == null, "fsname is null");
             ValidateUtils.checkIllegalParameter(fsname.isBlank(), "fsname not specified");
@@ -136,6 +165,15 @@ public class ListZfsParams {
             }
             this.fsname = fsname;
             return this;
+        }
+
+        /**
+         * Return ListZfsParams object based on ListZfsParams.Builder this object
+         *
+         * @return ListZfsParams object
+         */
+        public ListZfsParams build() {
+            return new ListZfsParams(this);
         }
 
     }

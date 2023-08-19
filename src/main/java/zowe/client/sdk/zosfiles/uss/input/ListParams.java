@@ -280,23 +280,99 @@ public class ListParams {
      */
     public static class Builder {
 
+        /**
+         * This parameter identifies the UNIX directory that contains the files and directories to be listed.
+         * This parameter is required and can consist of one or more directories in the hierarchical file system structure,
+         * or a fully qualified file name. A fully qualified file name, which consists of the name of each directory in
+         * the path to a file plus the file name itself, can be up to 1023 bytes long. You cannot use wildcard characters
+         * for this parameter.
+         * <p>
+         * The following list contains sample file path names:
+         * /
+         * /bin
+         * /usr/lib/libSM.a
+         */
         private String path;
+
+        /**
+         * The indicator that we want to show less files
+         */
         private Integer maxLength;
+
+        /**
+         * The group owner or GID to filter
+         */
         private String group;
+
+
+        /**
+         * The username or UID to filter
+         */
         private String user;
+
+        /**
+         * The modification time to filter, in days
+         * Valid values are either an integer, or an integer with leading plus (+) or minus (-)
+         */
         private String mtime;
+
+        /**
+         * The size to filter
+         * Valid values are either an integer, and integer with a suffix (K, M, G),
+         * or an integer with leading plus (+) or minus (-)
+         */
         private Integer size;
+
+        /**
+         * Select entries that match pattern according to the rules of fnmatch().
+         * The supplied pattern is matched against the absolute path of the entry,
+         * with behavior similar to the find -name option.
+         */
         private String name;
+
+        /**
+         * The permission octal mask to use
+         * The type is a string because valid values are either an integer, or an integer with a leading minus (-)
+         */
         private String perm;
+
+        /**
+         * The type of file to filter for, see ListFilterType enum object
+         */
         private ListFilterType type;
+
+        /**
+         * The default value for this parameter is 0, which means that all subdirectories under path are listed,
+         * regardless of depth. When depth is greater than 1, subdirectories up to the specified depth are listed.
+         * depth is 1, only the files in the path are listed.
+         * <p>
+         * The name field in the returned JSON document contains the path of the entry,
+         * relative to the path query parameter.
+         */
         private Integer depth;
+
+        /**
+         * Whether to search all filesystems under the path, or just the same filesystem as the path
+         * <p>
+         * True means search all
+         * False means search same
+         */
         private boolean filesys = false;
+
+        /**
+         * Whether to follow symlinks, or report them
+         * <p>
+         * True means to report
+         * False means to follow
+         */
         private boolean symlinks = false;
 
-        public ListParams build() {
-            return new ListParams(this);
-        }
-
+        /**
+         * Specify path string value
+         *
+         * @param path string value
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder path(final String path) {
             ValidateUtils.checkNullParameter(path == null, "path is null");
             ValidateUtils.checkIllegalParameter(path.isBlank(), "path not specified");
@@ -304,59 +380,134 @@ public class ListParams {
             return this;
         }
 
+        /**
+         * Specify maxLength int value
+         *
+         * @param maxLength int value
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder maxLength(final int maxLength) {
             this.maxLength = maxLength;
             return this;
         }
 
+        /**
+         * Specify group string value
+         *
+         * @param group string value
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder group(final String group) {
             this.group = group;
             return this;
         }
 
+        /**
+         * Specify user string value
+         *
+         * @param user string value
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder user(final String user) {
             this.user = user;
             return this;
         }
 
+        /**
+         * Specify mtime string value
+         *
+         * @param mtime string value
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder mtime(final String mtime) {
             this.mtime = mtime;
             return this;
         }
 
+        /**
+         * Specify size int value
+         *
+         * @param size int value
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder size(final int size) {
             this.size = size;
             return this;
         }
 
+        /**
+         * Specify name string value
+         *
+         * @param name string value
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder name(final String name) {
             this.name = name;
             return this;
         }
 
+        /**
+         * Specify perm string value
+         *
+         * @param perm string value
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder perm(final String perm) {
             this.perm = perm;
             return this;
         }
 
+        /**
+         * Specify ListFilterType value
+         *
+         * @param type ListFilterType type object
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder type(final ListFilterType type) {
             this.type = type;
             return this;
         }
 
+        /**
+         * Specify depth int value
+         *
+         * @param depth int value
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder depth(final int depth) {
             this.depth = depth;
             return this;
         }
 
+        /**
+         * Specify filesys boolean value
+         *
+         * @param filesys boolean true or false value
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder filesys(final boolean filesys) {
             this.filesys = filesys;
             return this;
         }
 
+        /**
+         * Specify symlinks boolean value
+         *
+         * @param symlinks boolean true or false value
+         * @return ListParams.Builder this object
+         */
         public ListParams.Builder symlinks(final boolean symlinks) {
             this.symlinks = symlinks;
             return this;
+        }
+
+        /**
+         * Return ListParams object based on ListParams.Builder this object
+         *
+         * @return ListParams object
+         */
+        public ListParams build() {
+            return new ListParams(this);
         }
 
     }

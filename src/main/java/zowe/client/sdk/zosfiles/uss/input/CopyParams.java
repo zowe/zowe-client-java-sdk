@@ -95,14 +95,28 @@ public class CopyParams {
      */
     public static class Builder {
 
+        /**
+         * The file or directory to be copied. May not be specified with 'from-dataset'.
+         */
         private String from;
+
+        /**
+         * The default is true.
+         */
         private boolean overwrite = true;
+
+        /**
+         * The default is false.
+         * When 'true', copies all the files and subdirectories that are specified by source into a directory (cp -R).
+         */
         private boolean recursive = false;
 
-        public CopyParams build() {
-            return new CopyParams(this);
-        }
-
+        /**
+         * Specify from string value
+         *
+         * @param from the 'from' string value
+         * @return CopyParams.Builder this object
+         */
         public CopyParams.Builder from(final String from) {
             ValidateUtils.checkNullParameter(from == null, "from is null");
             ValidateUtils.checkIllegalParameter(from.isBlank(), "from not specified");
@@ -110,14 +124,35 @@ public class CopyParams {
             return this;
         }
 
+        /**
+         * Specify overwrite boolean value
+         *
+         * @param overwrite boolean true or false value
+         * @return CopyParams.Builder this object
+         */
         public CopyParams.Builder overwrite(final boolean overwrite) {
             this.overwrite = overwrite;
             return this;
         }
 
+        /**
+         * Specify recursive boolean value
+         *
+         * @param recursive boolean true or false value
+         * @return CopyParams.Builder this object
+         */
         public CopyParams.Builder recursive(final boolean recursive) {
             this.recursive = recursive;
             return this;
+        }
+
+        /**
+         * Return CopyParams object based on CopyParams.Builder this object
+         *
+         * @return CopyParams object
+         */
+        public CopyParams build() {
+            return new CopyParams(this);
         }
 
     }

@@ -117,20 +117,45 @@ public class MountParams {
      */
     public static class Builder {
 
+        /**
+         * Specifies the action mount to mount a UNIX file system.
+         */
         private MountActionType action;
+
+        /**
+         * Specifies the mount point to be used for mounting the UNIX file system.
+         */
         private String mountPoint;
+
+        /**
+         * Specifies the type of file system to be mounted. This value must match the TYPE operand on a FILESYSTYPE
+         * statement in the BPXPRMxx parmlib member for your system.
+         */
         private String fsType;
+
+        /**
+         * Specifies the mode in which the file system is mounted.
+         * If not specified, this value defaults to rdonly.
+         */
         private MountModeType mode;
 
-        public MountParams build() {
-            return new MountParams(this);
-        }
-
+        /**
+         * Specify action type value
+         *
+         * @param action MountActionType type object
+         * @return MountParams.Builder this object
+         */
         public MountParams.Builder action(final MountActionType action) {
             this.action = action;
             return this;
         }
 
+        /**
+         * Specify mountPoint string value
+         *
+         * @param mountPoint string value
+         * @return MountParams.Builder this object
+         */
         public MountParams.Builder mountPoint(final String mountPoint) {
             ValidateUtils.checkNullParameter(mountPoint == null, "mountPoint is null");
             ValidateUtils.checkIllegalParameter(mountPoint.isBlank(), "mountPoint not specified");
@@ -138,6 +163,12 @@ public class MountParams {
             return this;
         }
 
+        /**
+         * Specify fsType string value
+         *
+         * @param fsType string value
+         * @return MountParams.Builder this object
+         */
         public MountParams.Builder fsType(final String fsType) {
             ValidateUtils.checkNullParameter(fsType == null, "fsType is null");
             ValidateUtils.checkIllegalParameter(fsType.isBlank(), "fsType not specified");
@@ -145,9 +176,24 @@ public class MountParams {
             return this;
         }
 
+        /**
+         * Specify mode type value
+         *
+         * @param mode MountModeType type object
+         * @return MountParams.Builder this object
+         */
         public MountParams.Builder mode(final MountModeType mode) {
             this.mode = mode;
             return this;
+        }
+
+        /**
+         * Return MountParams object based on MountParams.Builder this object
+         *
+         * @return MountParams object
+         */
+        public MountParams build() {
+            return new MountParams(this);
         }
 
     }

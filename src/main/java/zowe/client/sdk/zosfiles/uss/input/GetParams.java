@@ -183,18 +183,67 @@ public class GetParams {
      */
     public static class Builder {
 
+        /**
+         * The file is searched for the first line that contains the string, without respect to case (by default).
+         * Optionally, insensitive=false may be specified for case-sensitive matching.
+         * This parameter may not be specified with the research parameter.
+         */
         private String search;
+
+        /**
+         * The file is searched for the first line that matches the given extended regular expression.
+         * This parameter may not be specified with the search parameter.
+         */
         private String research;
+
+        /**
+         * The default is 'true'. When 'true', searches (search and research) are case-insensitive.
+         * For case-sensitive searches, specify 'false'.
+         */
         private boolean insensitive = true;
+
+        /**
+         * This parameter may be specified only with search or research parameters.
+         * The value given is the maximum number of lines to return.
+         * The default, if not specified, is 100.
+         */
         private Integer maxreturnsize;
-        private boolean binary = false;
+
+        /**
+         * Internal use to count number of query parameters specified
+         */
         private int queryCount = 0;
+
+        /**
+         * If true perform binary read instead of text.
+         */
+        private boolean binary = false;
+
+        /**
+         * Specify a range of records (lines delimited by '\n') to retrieve from a file.
+         * <p>
+         * Specify the range as a string in the following format:
+         * <p>
+         * SSS-EEE
+         * <p>
+         * Where SSS identifies the start record and EEE identifies the end record to be retrieved.
+         * Both values are relative offsets (0-based). When EEE is set to 0, records through the end of the
+         * file are retrieved. When SSS is omitted (i.e. -EEE), the final EEE records of the file are retrieved.
+         * <p>
+         * SSS,NNN
+         * <p>
+         * Where SSS identifies the start record and NNN identifies the number of records to be retrieved.
+         * <p>
+         * Usage note: If zero bytes returned due to the range specified, status code 500 is returned.
+         */
         private String recordsRange;
 
-        public GetParams build() {
-            return new GetParams(this);
-        }
-
+        /**
+         * Specify search string value
+         *
+         * @param search string value
+         * @return GetParams.Builder this object
+         */
         public GetParams.Builder search(final String search) {
             if (this.research != null) {
                 throw new IllegalStateException("cannot specify both search and research parameters");
@@ -204,6 +253,12 @@ public class GetParams {
             return this;
         }
 
+        /**
+         * Specify research value
+         *
+         * @param research string value
+         * @return GetParams.Builder this object
+         */
         public GetParams.Builder research(final String research) {
             if (this.search != null) {
                 throw new IllegalStateException("cannot specify both search and research parameters");
@@ -213,26 +268,59 @@ public class GetParams {
             return this;
         }
 
+        /**
+         * Specify insensitive boolean value
+         *
+         * @param insensitive boolean true or false value
+         * @return GetParams.Builder this object
+         */
         public GetParams.Builder insensitive(final boolean insensitive) {
             this.insensitive = insensitive;
             queryCount++;
             return this;
         }
 
+        /**
+         * Specify binary int value
+         *
+         * @param maxreturnsize int value
+         * @return GetParams.Builder this object
+         */
         public GetParams.Builder maxreturnsize(final int maxreturnsize) {
             this.maxreturnsize = maxreturnsize;
             queryCount++;
             return this;
         }
 
+        /**
+         * Specify binary boolean value
+         *
+         * @param binary boolean true or false value
+         * @return GetParams.Builder this object
+         */
         public GetParams.Builder binary(final boolean binary) {
             this.binary = binary;
             return this;
         }
 
+        /**
+         * Specify recordsRange value
+         *
+         * @param recordsRange string value
+         * @return GetParams.Builder this object
+         */
         public GetParams.Builder recordsRange(final String recordsRange) {
             this.recordsRange = recordsRange;
             return this;
+        }
+
+        /**
+         * Return GetParams object based on GetParams.Builder this object
+         *
+         * @return GetParams object
+         */
+        public GetParams build() {
+            return new GetParams(this);
         }
 
     }

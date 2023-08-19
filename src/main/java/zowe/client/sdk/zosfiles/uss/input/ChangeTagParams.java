@@ -138,18 +138,45 @@ public class ChangeTagParams {
      */
     public static class Builder {
 
+        /**
+         * The file tag action.
+         * If "set", the file is tagged as specified in the "type" keyword.
+         * If "remove", any existing file tag is removed.
+         * If "list", the existing tag information will be returned in a JSON response document.
+         */
         private ChangeTagAction action;
+
+        /**
+         * The default is "mixed".
+         * This option can be specified only when the action is "set".
+         */
         private ChangeTagType type;
+
+        /**
+         * Specifies the coded character set in which text data is encoded such as ASCII or EBCDIC.
+         * For example, the code set for ASCII is ISO8859-1; the code set for EBCDIC is IBM-1047.
+         */
         private String codeset;
+
+        /**
+         * The default is false.
+         * When 'true', tags all the files and subdirectorires in that directory (chtag -R).
+         */
         private boolean recursive = false;
+
+        /**
+         * The default is 'change' encountered links, applying a tag action to the file or directory pointed
+         * to by any encountered links.
+         * <p>
+         * 'suppress' a tag action for the file or directory pointed to by any encountered
+         */
         private LinkType links;
 
         /**
-         * Set action value
+         * Specify ChangeTagAction type value
          *
-         * @param action ChangeTagAction enum value
-         * @return Builder object
-         * @author James Kostrewski
+         * @param action ChangeTagAction type value
+         * @return ChangeTagParams.Builder this object
          */
         public ChangeTagParams.Builder action(final ChangeTagAction action) {
             ValidateUtils.checkNullParameter(action == null, "action is null");
@@ -158,10 +185,10 @@ public class ChangeTagParams {
         }
 
         /**
-         * Set type value
+         * Specify ChangeTagType type value
          *
          * @param type ChangeTagType enum value
-         * @return Builder object
+         * @return ChangeTagParams.Builder this object
          */
         public ChangeTagParams.Builder type(final ChangeTagType type) {
             this.type = type;
@@ -169,10 +196,10 @@ public class ChangeTagParams {
         }
 
         /**
-         * Set codeset value
+         * Specify codeset string value
          *
-         * @param codeset String value
-         * @return Builder object
+         * @param codeset string value
+         * @return ChangeTagParams.Builder this object
          */
         public ChangeTagParams.Builder codeset(final String codeset) {
             this.codeset = codeset;
@@ -180,10 +207,10 @@ public class ChangeTagParams {
         }
 
         /**
-         * Set recursive value
+         * Specify recursive boolean value
          *
-         * @param recursive boolean value
-         * @return Builder object
+         * @param recursive boolean true or false value
+         * @return ChangeTagParams.Builder this object
          */
         public ChangeTagParams.Builder recursive(final boolean recursive) {
             this.recursive = recursive;
@@ -191,10 +218,10 @@ public class ChangeTagParams {
         }
 
         /**
-         * Set links value
+         * Specify LinkType type value
          *
-         * @param links LinkType enum value
-         * @return Builder object
+         * @param links LinkType type object
+         * @return ChangeTagParams.Builder this object
          */
         public ChangeTagParams.Builder links(final LinkType links) {
             this.links = links;
@@ -202,9 +229,9 @@ public class ChangeTagParams {
         }
 
         /**
-         * Build CopyParams object
+         * Return ChangeTagParams object based on ChangeTagParams.Builder this object
          *
-         * @return CopyParams object
+         * @return ChangeTagParams.Builder this object
          */
         public ChangeTagParams build() {
             return new ChangeTagParams(this);

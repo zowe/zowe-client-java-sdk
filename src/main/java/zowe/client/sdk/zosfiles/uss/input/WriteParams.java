@@ -127,39 +127,94 @@ public class WriteParams {
      */
     public static class Builder {
 
+        /**
+         * Text content for file write
+         */
         private String textContent;
+
+        /**
+         * Binary byte array content for file write
+         */
         private byte[] binaryContent;
+
+        /**
+         * Can be used to specify an alternate EBCDIC code page. The default code page is IBM-1047.
+         */
         private String fileEncoding;
+
+        /**
+         * Can be used to control whether each input text line is terminated with a carriage return line feed (CRLF),
+         * rather than a line feed (LF), which is the default. Set to true to turn off default.
+         */
         private boolean crlf = false;
+
+        /**
+         * If true perform binary write instead of text.
+         */
         private boolean binary = false;
 
-        public WriteParams build() {
-            return new WriteParams(this);
-        }
-
+        /**
+         * Specify textContent string value
+         *
+         * @param textContent string value
+         * @return WriteParams.Builder this object
+         */
         public WriteParams.Builder textContent(final String textContent) {
             this.textContent = textContent;
             return this;
         }
 
+        /**
+         * Specify binaryContent byte array value
+         *
+         * @param binaryContent byte array value
+         * @return WriteParams.Builder this object
+         */
         public WriteParams.Builder binaryContent(final byte[] binaryContent) {
             this.binaryContent = binaryContent;
             return this;
         }
 
+        /**
+         * Specify fileEncoding string value
+         *
+         * @param fileEncoding string value
+         * @return WriteParams.Builder this object
+         */
         public WriteParams.Builder fileEncoding(final String fileEncoding) {
             this.fileEncoding = fileEncoding;
             return this;
         }
 
+        /**
+         * Specify crlf boolean value
+         *
+         * @param crlf boolean true or false value
+         * @return WriteParams.Builder this object
+         */
         public WriteParams.Builder crlf(final boolean crlf) {
             this.crlf = crlf;
             return this;
         }
 
+        /**
+         * Specify binary boolean value
+         *
+         * @param binary boolean true or false value
+         * @return WriteParams.Builder this object
+         */
         public WriteParams.Builder binary(final boolean binary) {
             this.binary = binary;
             return this;
+        }
+
+        /**
+         * Return WriteParams object based on ChangeModeParams.Builder this object
+         *
+         * @return WriteParams object
+         */
+        public WriteParams build() {
+            return new WriteParams(this);
         }
 
     }

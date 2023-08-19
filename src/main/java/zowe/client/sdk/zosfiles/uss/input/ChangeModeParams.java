@@ -98,14 +98,30 @@ public class ChangeModeParams {
      */
     public static class Builder {
 
+        /**
+         * The mode value, which is specified as the POSIX symbolic form or octal value (as a JSON string).
+         */
         private String mode;
+
+        /**
+         * The default is false. When 'true', the file mode bits of the directory and all files in the
+         * file hierarchy below it are changed (chmod -R)
+         */
         private boolean recursive = false;
+
+        /**
+         * The default is 'follow' encountered links. This applies a mode change to the file or directory pointed
+         * to by any encountered links. 'suppress' is a mode change for the file or directory pointed to by any
+         * encountered symbolic links.
+         */
         private LinkType linkType;
 
-        public ChangeModeParams build() {
-            return new ChangeModeParams(this);
-        }
-
+        /**
+         * Specify mode string value
+         *
+         * @param mode the mode value
+         * @return ChangeModeParams.Builder this object
+         */
         public ChangeModeParams.Builder mode(final String mode) {
             ValidateUtils.checkNullParameter(mode == null, "mode is null");
             ValidateUtils.checkIllegalParameter(mode.isBlank(), "mode not specified");
@@ -113,14 +129,35 @@ public class ChangeModeParams {
             return this;
         }
 
+        /**
+         * Specify recursive boolean value
+         *
+         * @param recursive boolean true or false value
+         * @return ChangeModeParams.Builder this object
+         */
         public ChangeModeParams.Builder recursive(final boolean recursive) {
             this.recursive = recursive;
             return this;
         }
 
+        /**
+         * Specify LinkType value
+         *
+         * @param type LinkType type object
+         * @return ChangeModeParams.Builder this object
+         */
         public ChangeModeParams.Builder linktype(final LinkType type) {
             this.linkType = type;
             return this;
+        }
+
+        /**
+         * Return ChangeModeParams object based on ChangeModeParams.Builder this object
+         *
+         * @return ChangeModeParams object
+         */
+        public ChangeModeParams build() {
+            return new ChangeModeParams(this);
         }
 
     }

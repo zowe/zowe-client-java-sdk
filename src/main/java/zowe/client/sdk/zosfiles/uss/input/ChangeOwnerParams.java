@@ -112,15 +112,33 @@ public class ChangeOwnerParams {
      */
     public static class Builder {
 
+        /**
+         * The user ID or UID
+         */
         private String owner;
+
+        /**
+         * The group ID or GID
+         */
         private String group;
+
+        /**
+         * The default is false. When 'true', changes all the files and subdirectories in that directory to
+         * belong to the specified owner (and group, if :group is specified). (chown -R)
+         */
         private boolean recursive = false;
+
+        /**
+         * The default is 'follow'. 'change' does not follow the link, but instead changes the link itself (chown -h).
+         */
         private LinkType linkType;
 
-        public ChangeOwnerParams build() {
-            return new ChangeOwnerParams(this);
-        }
-
+        /**
+         * Specify owner string value
+         *
+         * @param owner string value
+         * @return ChangeOwnerParams.Builder this object
+         */
         public ChangeOwnerParams.Builder owner(final String owner) {
             ValidateUtils.checkNullParameter(owner == null, "owner is null");
             ValidateUtils.checkIllegalParameter(owner.isBlank(), "owner not specified");
@@ -128,19 +146,46 @@ public class ChangeOwnerParams {
             return this;
         }
 
+        /**
+         * Specify group string value
+         *
+         * @param group string value
+         * @return ChangeOwnerParams.Builder this object
+         */
         public ChangeOwnerParams.Builder group(final String group) {
             this.group = group;
             return this;
         }
 
+        /**
+         * Specify recursive boolean value
+         *
+         * @param recursive boolean true or false value
+         * @return ChangeOwnerParams.Builder this object
+         */
         public ChangeOwnerParams.Builder recursive(final boolean recursive) {
             this.recursive = recursive;
             return this;
         }
 
+        /**
+         * Specify LinkType value
+         *
+         * @param type LinkType type object
+         * @return ChangeOwnerParams.Builder this object
+         */
         public ChangeOwnerParams.Builder linktype(final LinkType type) {
             this.linkType = type;
             return this;
+        }
+
+        /**
+         * Return ChangeOwnerParams object based on ChangeOwnerParams.Builder this object
+         *
+         * @return ChangeOwnerParams object
+         */
+        public ChangeOwnerParams build() {
+            return new ChangeOwnerParams(this);
         }
 
     }
