@@ -92,25 +92,65 @@ public class ZosmfPluginInfo {
      */
     public static class Builder {
 
+        /**
+         * Plugin version
+         */
         private String pluginVersion;
+
+        /**
+         * Plugin default name
+         */
         private String pluginDefaultName;
+
+        /**
+         * Plugin status.
+         */
         private String pluginStatus;
 
+        /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
+         * Set pluginDefaultName string value
+         *
+         * @param pluginDefaultName string value
+         * @return Builder this object
+         */
         public Builder pluginDefaultName(final String pluginDefaultName) {
             this.pluginDefaultName = pluginDefaultName;
             return this;
         }
 
+        /**
+         * Set pluginStatus string value
+         *
+         * @param pluginStatus string value
+         * @return Builder this object
+         */
         public Builder pluginStatus(final String pluginStatus) {
             this.pluginStatus = pluginStatus;
             return this;
         }
 
+        /**
+         * Set pluginVersion string value
+         *
+         * @param pluginVersion string value
+         * @return Builder this object
+         */
         public Builder pluginVersion(final String pluginVersion) {
             this.pluginVersion = pluginVersion;
             return this;
         }
 
+        /**
+         * Return ZosmfPluginInfo object based on Builder this object
+         *
+         * @return ZosmfPluginInfo this object
+         */
         public ZosmfPluginInfo build() {
             return new ZosmfPluginInfo(this);
         }

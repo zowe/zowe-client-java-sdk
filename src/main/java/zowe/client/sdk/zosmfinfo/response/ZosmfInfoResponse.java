@@ -172,55 +172,145 @@ public class ZosmfInfoResponse {
      */
     public static class Builder {
 
+        /**
+         * z/OS version
+         */
         private String zosVersion;
+
+        /**
+         * Zosmf port number
+         */
         private String zosmfPort;
+
+        /**
+         * Zosmf version
+         */
         private String zosmfVersion;
+
+        /**
+         * Zosmf host name
+         */
         private String zosmfHostName;
+
+        /**
+         * Zosmf saf realm
+         */
         private String zosmfSafRealm;
+
+        /**
+         * Zosmf full version
+         */
         private String zosmfFullVersion;
+
+        /**
+         * Zosmf api version
+         */
         private String apiVersion;
+
+        /**
+         * Zosmf plugin information
+         */
         private ZosmfPluginInfo[] zosmfPluginsInfo;
 
+        /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
+         * Set apiVersion string value
+         *
+         * @param apiVersion string value
+         * @return Builder this object
+         */
         public Builder apiVersion(final String apiVersion) {
             this.apiVersion = apiVersion;
             return this;
         }
 
+        /**
+         * Set zosVersion string value
+         *
+         * @param zosVersion string value
+         * @return Builder this object
+         */
         public Builder zosVersion(final String zosVersion) {
             this.zosVersion = zosVersion;
             return this;
         }
 
+        /**
+         * Set zosmfFullVersion string value
+         *
+         * @param zosmfFullVersion string value
+         * @return Builder this object
+         */
         public Builder zosmfFullVersion(final String zosmfFullVersion) {
             this.zosmfFullVersion = zosmfFullVersion;
             return this;
         }
 
+        /**
+         * Set zosmfHostName string value
+         *
+         * @param zosmfHostName string value
+         * @return Builder this object
+         */
         public Builder zosmfHostName(final String zosmfHostName) {
             this.zosmfHostName = zosmfHostName;
             return this;
         }
 
+        /**
+         * Set zosmfPluginsInfo string value
+         *
+         * @param zosmfPluginsInfo string value
+         * @return Builder this object
+         */
         public Builder zosmfPluginsInfo(final ZosmfPluginInfo[] zosmfPluginsInfo) {
             this.zosmfPluginsInfo = zosmfPluginsInfo;
             return this;
         }
 
+        /**
+         * Set zosmfPort string value
+         *
+         * @param zosmfPort string value
+         * @return Builder this object
+         */
         public Builder zosmfPort(final String zosmfPort) {
             this.zosmfPort = zosmfPort;
             return this;
         }
 
+        /**
+         * Set zosmfSafRealm string value
+         *
+         * @param zosmfSafRealm string value
+         * @return Builder this object
+         */
         public Builder zosmfSafRealm(final String zosmfSafRealm) {
             this.zosmfSafRealm = zosmfSafRealm;
             return this;
         }
 
+        /**
+         * Set zosmfVersion string value
+         *
+         * @param zosmfVersion string value
+         * @return Builder this object
+         */
         public Builder zosmfVersion(final String zosmfVersion) {
             this.zosmfVersion = zosmfVersion;
             return this;
         }
 
+        /**
+         * Return ChangeTagParams object based on Builder this object
+         *
+         * @return ChangeTagParams this object
+         */
         public ZosmfInfoResponse build() {
             return new ZosmfInfoResponse(this);
         }

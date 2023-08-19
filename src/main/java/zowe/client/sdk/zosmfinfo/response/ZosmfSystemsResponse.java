@@ -81,19 +81,49 @@ public class ZosmfSystemsResponse {
      */
     public static class Builder {
 
+        /**
+         * Total items returned.
+         */
         private Long numRows;
+
+        /**
+         * Properties of each defined system.
+         */
         private DefinedSystem[] definedSystems;
 
+        /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
+         * Set definedSystems DefinedSystem[] value
+         *
+         * @param definedSystems DefinedSystem[] value
+         * @return Builder this object
+         */
         public Builder definedSystems(final DefinedSystem[] definedSystems) {
             this.definedSystems = definedSystems;
             return this;
         }
 
+        /**
+         * Set numRows long value
+         *
+         * @param numRows long value
+         * @return Builder this object
+         */
         public Builder numRows(final Long numRows) {
             this.numRows = numRows;
             return this;
         }
 
+        /**
+         * Return ZosmfSystemsResponse object based on Builder this object
+         *
+         * @return ZosmfSystemsResponse object
+         */
         public ZosmfSystemsResponse build() {
             return new ZosmfSystemsResponse(this);
         }

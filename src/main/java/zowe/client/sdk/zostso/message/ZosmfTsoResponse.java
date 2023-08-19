@@ -67,7 +67,7 @@ public class ZosmfTsoResponse {
      */
     private final Optional<String> appData;
 
-    private ZosmfTsoResponse(final ZosmfTsoResponse.Builder builder) {
+    private ZosmfTsoResponse(final Builder builder) {
         this.servletKey = Optional.ofNullable(builder.servletKey);
         this.queueId = Optional.ofNullable(builder.queueId);
         this.ver = Optional.ofNullable(builder.ver);
@@ -194,61 +194,155 @@ public class ZosmfTsoResponse {
      */
     public static class Builder {
 
+        /**
+         * Unique identifier for the servlet entry for tso session
+         */
         private String servletKey;
+
+        /**
+         * Message queue ID
+         */
         private String queueId;
+
+        /**
+         * Structure version
+         */
         private String ver;
+
+        /**
+         * Reconnected indicator
+         */
         private boolean reused;
+
+        /**
+         * Timeout indicator
+         */
         private boolean timeout;
+
+        /**
+         * z/OSMF messages
+         */
         private List<ZosmfMessages> msgData;
+
+        /**
+         * The id of the tso session
+         */
         private String sessionId;
+
+        /**
+         * TSO/E messages that were received during the request
+         */
         private List<TsoMessages> tsoData;
+
+        /**
+         * Application messages
+         */
         private String appData;
 
-        public ZosmfTsoResponse.Builder servletKey(final String servletKey) {
+        /**
+         * Builder constructor
+         */
+        public Builder() {
+        }
+
+        public Builder servletKey(final String servletKey) {
             this.servletKey = servletKey;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder queueId(final String queueId) {
+        /**
+         * Set queueId string value
+         *
+         * @param queueId string value
+         * @return Builder this object
+         */
+        public Builder queueId(final String queueId) {
             this.queueId = queueId;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder ver(final String ver) {
+        /**
+         * Set ver string value
+         *
+         * @param ver string value
+         * @return Builder this object
+         */
+        public Builder ver(final String ver) {
             this.ver = ver;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder reused(final boolean reused) {
+        /**
+         * Set reused boolean value
+         *
+         * @param reused boolean true or false value
+         * @return Builder this object
+         */
+        public Builder reused(final boolean reused) {
             this.reused = reused;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder timeout(final boolean timeout) {
+        /**
+         * Set timeout boolean value
+         *
+         * @param timeout boolean true or false value
+         * @return Builder this object
+         */
+        public Builder timeout(final boolean timeout) {
             this.timeout = timeout;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder msgData(final List<ZosmfMessages> msgData) {
+        /**
+         * Set msgData list of ZosmfMessages
+         *
+         * @param msgData list of ZosmfMessages
+         * @return Builder this object
+         */
+        public Builder msgData(final List<ZosmfMessages> msgData) {
             this.msgData = msgData;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder sessionId(final String sessionId) {
+        /**
+         * Set sessionId string value
+         *
+         * @param sessionId string value
+         * @return Builder this object
+         */
+        public Builder sessionId(final String sessionId) {
             this.sessionId = sessionId;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder tsoData(final List<TsoMessages> tsoData) {
+        /**
+         * Set tsoData list of TsoMessages
+         *
+         * @param tsoData list of TsoMessages
+         * @return Builder this object
+         */
+        public Builder tsoData(final List<TsoMessages> tsoData) {
             this.tsoData = tsoData;
             return this;
         }
 
-        public ZosmfTsoResponse.Builder tsoData(final String appData) {
+        /**
+         * Set appData string value
+         *
+         * @param appData string value
+         * @return Builder this object
+         */
+        public Builder tsoData(final String appData) {
             this.appData = appData;
             return this;
         }
 
+        /**
+         * Return ZosmfTsoResponse object based on Builder this object
+         *
+         * @return ZosmfTsoResponse this object
+         */
         public ZosmfTsoResponse build() {
             return new ZosmfTsoResponse(this);
         }
