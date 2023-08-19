@@ -17,20 +17,20 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Http get operation with text content type
+ * Http get stream operation with Json content type
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public class TextGetRequest extends ZoweRequest {
+public class GetStreamZosmfRequest extends ZosmfRequest {
 
     /**
-     * TextGetRequest constructor
+     * GetStreamZosmfRequest constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public TextGetRequest(final ZosConnection connection) {
+    public GetStreamZosmfRequest(ZosConnection connection) {
         super(connection);
     }
 
@@ -42,7 +42,7 @@ public class TextGetRequest extends ZoweRequest {
     @Override
     public Response executeRequest() throws UnirestException {
         ValidateUtils.checkNullParameter(url == null, "url is null");
-        HttpResponse<String> reply = Unirest.get(url).headers(headers).asString();
+        HttpResponse<byte[]> reply = Unirest.get(url).headers(headers).asBytes();
         if (reply.getStatusText().contains("No Content")) {
             return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
         }
@@ -67,7 +67,7 @@ public class TextGetRequest extends ZoweRequest {
     @Override
     public void setStandardHeaders() {
         headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
-        headers.put("Content-Type", "text/plain; charset=UTF-8");
+        headers.put("Content-Type", "application/json");
         headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
 

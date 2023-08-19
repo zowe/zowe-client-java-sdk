@@ -10,10 +10,10 @@
 package zowe.client.sdk.zostso.lifecycle;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.JsonPostRequest;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.PostJsonZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -34,7 +34,7 @@ public class StartTso {
 
     private final ZosConnection connection;
 
-    private ZoweRequest request;
+    private ZosmfRequest request;
 
     /**
      * StartTso constructor
@@ -55,11 +55,11 @@ public class StartTso {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public StartTso(final ZosConnection connection, final ZoweRequest request) {
+    public StartTso(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if (!(request instanceof JsonPostRequest)) {
+        if (!(request instanceof PostJsonZosmfRequest)) {
             throw new IllegalStateException("POST_JSON request type required");
         }
         this.request = request;
@@ -152,7 +152,7 @@ public class StartTso {
         final String url = getResourcesQuery(commandParams);
 
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
         request.setUrl(url);
         request.setBody("");

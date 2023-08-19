@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.RestUtils;
@@ -39,7 +39,7 @@ public class UssWrite {
 
     private final ZosConnection connection;
 
-    private ZoweRequest request;
+    private ZosmfRequest request;
 
     /**
      * UssWrite Constructor
@@ -60,7 +60,7 @@ public class UssWrite {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public UssWrite(final ZosConnection connection, final ZoweRequest request) {
+    public UssWrite(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
@@ -119,8 +119,8 @@ public class UssWrite {
             if (params.getBinaryContent().isEmpty()) {
                 LOG.debug("binaryContent is empty");
             }
-            if (request == null || !(request instanceof StreamPutRequest)) {
-                request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_STREAM);
+            if (request == null || !(request instanceof PutStreamZosmfRequest)) {
+                request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_STREAM);
             }
             request.setBody(params.getBinaryContent().orElse(new byte[0]));
         } else {
@@ -135,8 +135,8 @@ public class UssWrite {
             if (params.getTextContent().isEmpty()) {
                 LOG.debug("textContent is empty");
             }
-            if (request == null || !(request instanceof TextPutRequest)) {
-                request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
+            if (request == null || !(request instanceof PutTextZosmfRequest)) {
+                request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
             }
             request.setBody(params.getTextContent().orElse(""));
         }

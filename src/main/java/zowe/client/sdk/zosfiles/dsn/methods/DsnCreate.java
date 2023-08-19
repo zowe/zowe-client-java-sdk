@@ -11,11 +11,11 @@ package zowe.client.sdk.zosfiles.dsn.methods;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.JsonPostRequest;
+import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -36,7 +36,7 @@ public class DsnCreate {
 
     private final ZosConnection connection;
 
-    private ZoweRequest request;
+    private ZosmfRequest request;
 
     /**
      * DsnCreate Constructor
@@ -57,11 +57,11 @@ public class DsnCreate {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public DsnCreate(final ZosConnection connection, final ZoweRequest request) {
+    public DsnCreate(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if (!(request instanceof JsonPostRequest)) {
+        if (!(request instanceof PostJsonZosmfRequest)) {
             throw new IllegalStateException("POST_JSON request type required");
         }
         this.request = request;
@@ -104,7 +104,7 @@ public class DsnCreate {
         params.getDsntype().ifPresent(v -> createMap.put("dsntype", v));
 
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.POST_JSON);
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
         request.setUrl(url);
         request.setBody(new JSONObject(createMap).toString());

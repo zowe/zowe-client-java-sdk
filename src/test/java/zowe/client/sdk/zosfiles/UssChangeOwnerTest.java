@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.JsonPutRequest;
+import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.ChangeOwnerParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssChangeOwner;
@@ -30,12 +30,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class UssChangeOwnerTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
-    private JsonPutRequest mockJsonPutRequest;
+    private PutJsonZosmfRequest mockJsonPutRequest;
     private UssChangeOwner ussChangeOwner;
 
     @Before
     public void init() {
-        mockJsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         ussChangeOwner = new UssChangeOwner(connection);

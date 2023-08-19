@@ -18,10 +18,10 @@ import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.ZosLogItemJsonParse;
 import zowe.client.sdk.parse.ZosLogReplyJsonParse;
 import zowe.client.sdk.parse.type.ParseType;
-import zowe.client.sdk.rest.JsonGetRequest;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.GetJsonZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zoslogs.input.ZosLogParams;
@@ -48,7 +48,7 @@ public class ZosLog {
 
     private final ZosConnection connection;
 
-    private ZoweRequest request;
+    private ZosmfRequest request;
 
     /**
      * GetZosLog constructor
@@ -69,10 +69,10 @@ public class ZosLog {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public ZosLog(final ZosConnection connection, final ZoweRequest request) {
+    public ZosLog(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
-        if (!(request instanceof JsonGetRequest)) {
+        if (!(request instanceof GetJsonZosmfRequest)) {
             throw new IllegalStateException("GET_JSON request type required");
         }
         this.request = request;
@@ -107,7 +107,7 @@ public class ZosLog {
         params.getHardCopy().ifPresent(hardCopy -> url.append("&hardcopy=").append(hardCopy.getValue()));
 
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
         request.setUrl(url.toString());
 

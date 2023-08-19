@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
+import zowe.client.sdk.rest.ZosmfRequest;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,11 +27,11 @@ import static org.junit.Assert.assertEquals;
  */
 public class RestUtilsTest {
 
-    private ZoweRequest mockRequest;
+    private ZosmfRequest mockRequest;
 
     @Before
     public void init() {
-        mockRequest = Mockito.mock(ZoweRequest.class);
+        mockRequest = Mockito.mock(ZosmfRequest.class);
     }
 
     /**

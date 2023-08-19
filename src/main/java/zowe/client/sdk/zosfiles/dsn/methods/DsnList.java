@@ -18,7 +18,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -42,7 +42,7 @@ public class DsnList {
 
     private final ZosConnection connection;
 
-    private ZoweRequest request;
+    private ZosmfRequest request;
 
     /**
      * DsnList constructor
@@ -63,11 +63,11 @@ public class DsnList {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public DsnList(final ZosConnection connection, final ZoweRequest request) {
+    public DsnList(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if (!(request instanceof JsonGetRequest)) {
+        if (!(request instanceof GetJsonZosmfRequest)) {
             throw new IllegalStateException("GET_JSON request type required");
         }
         this.request = request;
@@ -86,7 +86,7 @@ public class DsnList {
             throws Exception {
         setHeaders(params, headers);
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
         request.setUrl(url);
         request.setHeaders(headers);

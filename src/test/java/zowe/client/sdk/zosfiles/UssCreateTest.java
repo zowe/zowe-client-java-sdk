@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.JsonPostRequest;
+import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.CreateParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssCreate;
@@ -32,12 +32,12 @@ import static org.junit.Assert.assertEquals;
 public class UssCreateTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
-    private JsonPostRequest mockJsonPostRequest;
+    private PostJsonZosmfRequest mockJsonPostRequest;
     private UssCreate ussCreate;
 
     @Before
     public void init() {
-        mockJsonPostRequest = Mockito.mock(JsonPostRequest.class);
+        mockJsonPostRequest = Mockito.mock(PostJsonZosmfRequest.class);
         ussCreate = new UssCreate(connection);
     }
 

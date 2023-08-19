@@ -10,11 +10,11 @@
 package zowe.client.sdk.zosfiles.dsn.methods;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.JsonDeleteRequest;
+import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -31,7 +31,7 @@ public class DsnDelete {
 
     private final ZosConnection connection;
 
-    private ZoweRequest request;
+    private ZosmfRequest request;
 
     /**
      * DsnDelete Constructor
@@ -52,11 +52,11 @@ public class DsnDelete {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public DsnDelete(final ZosConnection connection, final ZoweRequest request) {
+    public DsnDelete(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if (!(request instanceof JsonDeleteRequest)) {
+        if (!(request instanceof DeleteJsonZosmfRequest)) {
             throw new IllegalStateException("DELETE_JSON request type required");
         }
         this.request = request;
@@ -97,7 +97,7 @@ public class DsnDelete {
                 EncodeUtils.encodeURIComponent(dataSetName);
 
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
 

@@ -28,9 +28,9 @@ import java.util.Map;
  * @author Frank Giordano
  * @version 2.0
  */
-public abstract class ZoweRequest {
+public abstract class ZosmfRequest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ZoweRequest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ZosmfRequest.class);
     public static final String X_CSRF_ZOSMF_HEADER_KEY = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
     public static final String X_CSRF_ZOSMF_HEADER_VALUE = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
     protected final ZosConnection connection;
@@ -38,12 +38,12 @@ public abstract class ZoweRequest {
     protected String url;
 
     /**
-     * ZoweRequest constructor
+     * ZosmfRequest constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public ZoweRequest(final ZosConnection connection) {
+    public ZosmfRequest(final ZosConnection connection) {
         this.connection = connection;
         this.setup();
     }

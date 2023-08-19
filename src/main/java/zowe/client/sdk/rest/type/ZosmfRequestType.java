@@ -10,12 +10,12 @@
 package zowe.client.sdk.rest.type;
 
 /**
- * Zowe Request CRUD types
+ * Zosmf Request CRUD types
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public enum ZoweRequestType {
+public enum ZosmfRequestType {
 
     GET_JSON,
     GET_TEXT,

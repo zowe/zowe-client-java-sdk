@@ -16,7 +16,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -39,7 +39,7 @@ public class JobGet {
 
     private final ZosConnection connection;
 
-    private ZoweRequest request;
+    private ZosmfRequest request;
 
     private String url;
 
@@ -62,7 +62,7 @@ public class JobGet {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public JobGet(final ZosConnection connection, final ZoweRequest request) {
+    public JobGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
@@ -114,8 +114,8 @@ public class JobGet {
                 JobsConstants.RESOURCE_SPOOL_FILES + JobsConstants.RESOURCE_JCL_CONTENT +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
 
-        if (request == null || !(request instanceof TextGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
+        if (request == null || !(request instanceof GetTextZosmfRequest)) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
         }
         request.setUrl(url);
 
@@ -238,8 +238,8 @@ public class JobGet {
             url += JobsConstants.QUERY_OWNER + connection.getUser();
         }
 
-        if (request == null || !(request instanceof JsonGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
+        if (request == null || !(request instanceof GetJsonZosmfRequest)) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
         request.setUrl(url);
 
@@ -286,8 +286,8 @@ public class JobGet {
                 params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
                 JobsConstants.RESOURCE_SPOOL_FILES + "/" + spoolId + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
-        if (request == null || !(request instanceof TextGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
+        if (request == null || !(request instanceof GetTextZosmfRequest)) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
         }
         request.setUrl(url);
 
@@ -315,8 +315,8 @@ public class JobGet {
                 jobFile.getId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_FILE_ID_ERROR_MSG)) +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
 
-        if (request == null || !(request instanceof TextGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
+        if (request == null || !(request instanceof GetTextZosmfRequest)) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
         }
         request.setUrl(url);
 
@@ -355,8 +355,8 @@ public class JobGet {
                 params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
                 "/files";
 
-        if (request == null || !(request instanceof JsonGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
+        if (request == null || !(request instanceof GetJsonZosmfRequest)) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
         request.setUrl(url);
 
@@ -427,8 +427,8 @@ public class JobGet {
             url += JobsConstants.QUERY_ID + JobsConstants.STEP_DATA;
         }
 
-        if (request == null || !(request instanceof JsonGetRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_JSON);
+        if (request == null || !(request instanceof GetJsonZosmfRequest)) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
         request.setUrl(url);
 

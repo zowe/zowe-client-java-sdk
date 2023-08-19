@@ -12,7 +12,7 @@ package zowe.client.sdk.rest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 
 /**
  * Zowe request factory that generates the desire CRUD operation
@@ -20,14 +20,14 @@ import zowe.client.sdk.rest.type.ZoweRequestType;
  * @author Frank Giordano
  * @version 2.0
  */
-public final class ZoweRequestFactory {
+public final class ZosmfRequestFactory {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ZoweRequestFactory.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ZosmfRequestFactory.class);
 
     /**
      * Private constructor defined to avoid instantiation of class
      */
-    private ZoweRequestFactory() {
+    private ZosmfRequestFactory() {
         throw new IllegalStateException("Factory class");
     }
 
@@ -35,37 +35,37 @@ public final class ZoweRequestFactory {
      * Assign the request to the Http verb type request object
      *
      * @param connection connection information, see ZosConnection object
-     * @param type       request http type, see ZoweRequestType object
-     * @return ZoweRequest abstract object of ZoweRequestType value
+     * @param type       request http type, see ZosmfRequestType object
+     * @return ZosmfRequest abstract object of ZosmfRequestType value
      * @author Frank Giordano
      */
-    public static ZoweRequest buildRequest(final ZosConnection connection, final ZoweRequestType type) {
+    public static ZosmfRequest buildRequest(final ZosConnection connection, final ZosmfRequestType type) {
         LOG.debug(type.name());
-        ZoweRequest request;
+        ZosmfRequest request;
         switch (type) {
             case GET_JSON:
-                request = new JsonGetRequest(connection);
+                request = new GetJsonZosmfRequest(connection);
                 break;
             case PUT_JSON:
-                request = new JsonPutRequest(connection);
+                request = new PutJsonZosmfRequest(connection);
                 break;
             case POST_JSON:
-                request = new JsonPostRequest(connection);
+                request = new PostJsonZosmfRequest(connection);
                 break;
             case DELETE_JSON:
-                request = new JsonDeleteRequest(connection);
+                request = new DeleteJsonZosmfRequest(connection);
                 break;
             case GET_TEXT:
-                request = new TextGetRequest(connection);
+                request = new GetTextZosmfRequest(connection);
                 break;
             case PUT_TEXT:
-                request = new TextPutRequest(connection);
+                request = new PutTextZosmfRequest(connection);
                 break;
             case GET_STREAM:
-                request = new StreamGetRequest(connection);
+                request = new GetStreamZosmfRequest(connection);
                 break;
             case PUT_STREAM:
-                request = new StreamPutRequest(connection);
+                request = new PutStreamZosmfRequest(connection);
                 break;
             default:
                 throw new IllegalStateException("no valid ZoweRequestType type specified");

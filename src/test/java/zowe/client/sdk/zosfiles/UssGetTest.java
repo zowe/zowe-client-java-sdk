@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.StreamGetRequest;
-import zowe.client.sdk.rest.TextGetRequest;
+import zowe.client.sdk.rest.GetStreamZosmfRequest;
+import zowe.client.sdk.rest.GetTextZosmfRequest;
 import zowe.client.sdk.zosfiles.uss.input.GetParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssGet;
 
@@ -40,7 +40,7 @@ public class UssGetTest {
 
     @Test
     public void tstGetTextFileTargetPathSuccess() throws Exception {
-        final TextGetRequest mockTextGetRequest = Mockito.mock(TextGetRequest.class);
+        final GetTextZosmfRequest mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response("text", 200, "success"));
         final UssGet ussGet = new UssGet(connection, mockTextGetRequest);
@@ -50,7 +50,7 @@ public class UssGetTest {
 
     @Test
     public void tstGetTextFileTargetPathDefaultResponseSuccess() throws Exception {
-        final TextGetRequest mockTextGetRequest = Mockito.mock(TextGetRequest.class);
+        final GetTextZosmfRequest mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response(null, 200, "success"));
         final UssGet ussGet = new UssGet(connection, mockTextGetRequest);
@@ -60,7 +60,7 @@ public class UssGetTest {
 
     @Test
     public void tstGetBinaryFileTargetPathSuccess() throws Exception {
-        final StreamGetRequest mockStreamGetRequest = Mockito.mock(StreamGetRequest.class);
+        final GetStreamZosmfRequest mockStreamGetRequest = Mockito.mock(GetStreamZosmfRequest.class);
         final byte[] data = "data".getBytes();
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(
                 new Response(data, 200, "success"));
@@ -71,7 +71,7 @@ public class UssGetTest {
 
     @Test
     public void tstGetBinaryFileTargetPathDefaultResponseSuccess() throws Exception {
-        final StreamGetRequest mockStreamGetRequest = Mockito.mock(StreamGetRequest.class);
+        final GetStreamZosmfRequest mockStreamGetRequest = Mockito.mock(GetStreamZosmfRequest.class);
         final byte[] data = new byte[0];
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(
                 new Response(data, 200, "success"));

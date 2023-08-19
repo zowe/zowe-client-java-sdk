@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.JsonPutRequest;
+import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosconsole.method.IssueConsole;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
@@ -33,11 +33,11 @@ import static org.junit.Assert.assertEquals;
 public class IssueCommandTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
-    private JsonPutRequest mockJsonGetRequest;
+    private PutJsonZosmfRequest mockJsonGetRequest;
 
     @Before
     public void init() {
-        mockJsonGetRequest = Mockito.mock(JsonPutRequest.class);
+        mockJsonGetRequest = Mockito.mock(PutJsonZosmfRequest.class);
     }
 
     @Test

@@ -12,11 +12,11 @@ package zowe.client.sdk.zosfiles.dsn.methods;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.JsonPutRequest;
+import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -35,7 +35,7 @@ public class DsnRename {
 
     private final ZosConnection connection;
 
-    private ZoweRequest request;
+    private ZosmfRequest request;
 
     private String url;
 
@@ -58,11 +58,11 @@ public class DsnRename {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public DsnRename(final ZosConnection connection, final ZoweRequest request) {
+    public DsnRename(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if (!(request instanceof JsonPutRequest)) {
+        if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");
         }
     }
@@ -147,7 +147,7 @@ public class DsnRename {
         renameMap.put("from-dataset", fromDataSetObj);
 
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
         request.setBody(new JSONObject(renameMap).toString());

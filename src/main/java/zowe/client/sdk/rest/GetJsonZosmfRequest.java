@@ -13,34 +13,25 @@ import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Http put operation with Json content type
+ * Http get operation with Json content type
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public class JsonPutRequest extends ZoweRequest {
-
-    private static final Logger LOG = LoggerFactory.getLogger(JsonPutRequest.class);
+public class GetJsonZosmfRequest extends ZosmfRequest {
 
     /**
-     * JSON String representation
-     */
-    private String body;
-
-    /**
-     * JsonPutRequest constructor
+     * GetJsonZosmfRequest constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public JsonPutRequest(final ZosConnection connection) {
+    public GetJsonZosmfRequest(final ZosConnection connection) {
         super(connection);
     }
 
@@ -52,8 +43,7 @@ public class JsonPutRequest extends ZoweRequest {
     @Override
     public Response executeRequest() throws UnirestException {
         ValidateUtils.checkNullParameter(url == null, "url is null");
-        ValidateUtils.checkNullParameter(body == null, "body is null");
-        HttpResponse<JsonNode> reply = Unirest.put(url).headers(headers).body(body).asJson();
+        HttpResponse<JsonNode> reply = Unirest.get(url).headers(headers).asJson();
         if (reply.getStatusText().contains("No Content")) {
             return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
         }
@@ -61,15 +51,13 @@ public class JsonPutRequest extends ZoweRequest {
     }
 
     /**
-     * Set the body information for the http request
+     * Method to set the body information for the http request which is not used for this request.
      *
-     * @param body String value
      * @author Frank Giordano
      */
     @Override
-    public void setBody(final Object body) {
-        this.body = (String) body;
-        LOG.debug(this.body);
+    public void setBody(Object body) throws UnirestException {
+        throw new UnirestException("setting body for this request is invalid");
     }
 
     /**

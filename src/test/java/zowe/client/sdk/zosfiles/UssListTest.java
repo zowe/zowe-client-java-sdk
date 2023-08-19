@@ -15,7 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.JsonGetRequest;
+import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.ListParams;
 import zowe.client.sdk.zosfiles.uss.input.ListZfsParams;
@@ -37,7 +37,7 @@ import static org.junit.Assert.assertTrue;
 public class UssListTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
-    private JsonGetRequest mockJsonGetRequest;
+    private GetJsonZosmfRequest mockJsonGetRequest;
     private UssList ussList;
     private final static String dataForFileList = "{\n" +
             "   \"items\": [\n" +
@@ -108,7 +108,7 @@ public class UssListTest {
 
     @Before
     public void init() {
-        mockJsonGetRequest = Mockito.mock(JsonGetRequest.class);
+        mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
         ussList = new UssList(connection);
     }
 

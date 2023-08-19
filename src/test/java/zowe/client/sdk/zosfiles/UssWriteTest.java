@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.StreamPutRequest;
-import zowe.client.sdk.rest.TextPutRequest;
+import zowe.client.sdk.rest.PutStreamZosmfRequest;
+import zowe.client.sdk.rest.PutTextZosmfRequest;
 import zowe.client.sdk.zosfiles.uss.input.WriteParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssWrite;
 
@@ -42,7 +42,7 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteTextSuccess() throws Exception {
-        final TextPutRequest mockTextPutRequest = Mockito.mock(TextPutRequest.class);
+        final PutTextZosmfRequest mockTextPutRequest = Mockito.mock(PutTextZosmfRequest.class);
         Mockito.when(mockTextPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         final UssWrite ussWrite = new UssWrite(connection, mockTextPutRequest);
@@ -54,7 +54,7 @@ public class UssWriteTest {
 
     @Test
     public void tstUssWriteBinarySuccess() throws Exception {
-        final StreamPutRequest mockStreamPutRequest = Mockito.mock(StreamPutRequest.class);
+        final PutStreamZosmfRequest mockStreamPutRequest = Mockito.mock(PutStreamZosmfRequest.class);
         Mockito.when(mockStreamPutRequest.executeRequest()).thenReturn(
                 new Response(new byte[0], 200, "success"));
         final UssWrite ussWrite = new UssWrite(connection, mockStreamPutRequest);

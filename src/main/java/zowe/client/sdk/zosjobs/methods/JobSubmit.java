@@ -17,7 +17,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -41,7 +41,7 @@ public class JobSubmit {
 
     private final ZosConnection connection;
 
-    private ZoweRequest request;
+    private ZosmfRequest request;
 
     /**
      * SubmitJobs Constructor
@@ -62,7 +62,7 @@ public class JobSubmit {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public JobSubmit(final ZosConnection connection, final ZoweRequest request) {
+    public JobSubmit(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
@@ -128,8 +128,8 @@ public class JobSubmit {
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
 
-        if (request == null || !(request instanceof TextPutRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
+        if (request == null || !(request instanceof PutTextZosmfRequest)) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
         }
         request.setUrl(url);
         request.setBody(params.getJcl().orElseThrow(() -> new IllegalArgumentException("jcl not specified")));
@@ -171,8 +171,8 @@ public class JobSubmit {
         final Map<String, String> submitMap = new HashMap<>();
         submitMap.put("file", fullyQualifiedDataset);
 
-        if (request == null || !(request instanceof JsonPutRequest)) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_JSON);
+        if (request == null || !(request instanceof PutJsonZosmfRequest)) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
         request.setBody(new JSONObject(submitMap).toString());

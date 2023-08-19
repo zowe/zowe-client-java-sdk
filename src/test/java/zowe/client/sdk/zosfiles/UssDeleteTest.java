@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.JsonDeleteRequest;
+import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.methods.UssDelete;
 
@@ -30,12 +30,12 @@ import static org.junit.Assert.assertEquals;
 public class UssDeleteTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
-    private JsonDeleteRequest mockJsonDeleteRequest;
+    private DeleteJsonZosmfRequest mockJsonDeleteRequest;
     private UssDelete ussDelete;
 
     @Before
     public void init() {
-        mockJsonDeleteRequest = Mockito.mock(JsonDeleteRequest.class);
+        mockJsonDeleteRequest = Mockito.mock(DeleteJsonZosmfRequest.class);
         Mockito.when(mockJsonDeleteRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         ussDelete = new UssDelete(connection);

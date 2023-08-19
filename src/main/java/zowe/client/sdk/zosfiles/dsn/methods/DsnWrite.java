@@ -11,10 +11,10 @@ package zowe.client.sdk.zosfiles.dsn.methods;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.TextPutRequest;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.PutTextZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -31,7 +31,7 @@ public class DsnWrite {
 
     private final ZosConnection connection;
 
-    private ZoweRequest request;
+    private ZosmfRequest request;
 
     /**
      * DsnWrite Constructor
@@ -52,10 +52,10 @@ public class DsnWrite {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public DsnWrite(final ZosConnection connection, final ZoweRequest request) {
+    public DsnWrite(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
-        if (!(request instanceof TextPutRequest)) {
+        if (!(request instanceof PutTextZosmfRequest)) {
             throw new IllegalStateException("PUT_TEXT request type required");
         }
         this.request = request;
@@ -100,7 +100,7 @@ public class DsnWrite {
                 EncodeUtils.encodeURIComponent(dataSetName);
 
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.PUT_TEXT);
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
         }
         request.setUrl(url);
         request.setBody(content);

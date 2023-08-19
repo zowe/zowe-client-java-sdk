@@ -10,6 +10,7 @@
 package zowe.client.sdk.rest;
 
 import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
 import org.slf4j.Logger;
@@ -19,27 +20,27 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Http put operation with text content type
+ * Http put operation with Json content type
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public class TextPutRequest extends ZoweRequest {
+public class PutJsonZosmfRequest extends ZosmfRequest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TextPutRequest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PutJsonZosmfRequest.class);
 
     /**
-     * Text representation
+     * JSON String representation
      */
     private String body;
 
     /**
-     * TextPutRequest constructor
+     * PutJsonZosmfRequest constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public TextPutRequest(final ZosConnection connection) {
+    public PutJsonZosmfRequest(final ZosConnection connection) {
         super(connection);
     }
 
@@ -52,11 +53,11 @@ public class TextPutRequest extends ZoweRequest {
     public Response executeRequest() throws UnirestException {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         ValidateUtils.checkNullParameter(body == null, "body is null");
-        HttpResponse<String> reply = Unirest.put(url).headers(headers).body(body).asString();
+        HttpResponse<JsonNode> reply = Unirest.put(url).headers(headers).body(body).asJson();
         if (reply.getStatusText().contains("No Content")) {
             return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
         }
-        return new Response(reply.getBody(), reply.getStatus(), reply.getStatusText());
+        return getJsonResponse(reply);
     }
 
     /**
@@ -79,7 +80,7 @@ public class TextPutRequest extends ZoweRequest {
     @Override
     public void setStandardHeaders() {
         headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
-        headers.put("Content-Type", "text/plain; charset=UTF-8");
+        headers.put("Content-Type", "application/json");
         headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
 

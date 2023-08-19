@@ -26,7 +26,7 @@ public class ZoweRequestFactoryTest {
     @Test
     public void tstZoweRequestFactoryClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Factory class";
-        Utils.validateClass(ZoweRequestFactory.class, privateConstructorExceptionMsg);
+        Utils.validateClass(ZosmfRequestFactory.class, privateConstructorExceptionMsg);
     }
 
 }

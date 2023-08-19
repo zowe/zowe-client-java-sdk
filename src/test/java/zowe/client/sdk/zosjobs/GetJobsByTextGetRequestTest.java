@@ -15,7 +15,7 @@ import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.TextGetRequest;
+import zowe.client.sdk.rest.GetTextZosmfRequest;
 import zowe.client.sdk.zosjobs.methods.JobGet;
 
 import static org.junit.Assert.assertEquals;
@@ -29,12 +29,12 @@ import static org.junit.Assert.assertEquals;
 public class GetJobsByTextGetRequestTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
-    private TextGetRequest mockTextGetRequest;
+    private GetTextZosmfRequest mockTextGetRequest;
     private JobGet getJobs;
 
     @Before
     public void init() {
-        mockTextGetRequest = Mockito.mock(TextGetRequest.class);
+        mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
         getJobs = new JobGet(connection);
         Whitebox.setInternalState(getJobs, "request", mockTextGetRequest);
     }

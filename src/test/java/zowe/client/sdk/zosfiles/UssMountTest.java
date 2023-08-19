@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.JsonPutRequest;
+import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.MountParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssMount;
@@ -41,7 +41,7 @@ public class UssMountTest {
 
     @Test
     public void tstUssMountSuccess() throws Exception {
-        final JsonPutRequest mockJsonPutRequest = Mockito.mock(JsonPutRequest.class);
+        final PutJsonZosmfRequest mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         final UssMount ussMount = new UssMount(connection, mockJsonPutRequest);

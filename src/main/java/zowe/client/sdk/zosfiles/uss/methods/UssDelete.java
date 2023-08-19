@@ -10,11 +10,11 @@
 package zowe.client.sdk.zosfiles.uss.methods;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.JsonDeleteRequest;
+import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
-import zowe.client.sdk.rest.ZoweRequestFactory;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.RestUtils;
@@ -35,7 +35,7 @@ public class UssDelete {
 
     private final ZosConnection connection;
 
-    private ZoweRequest request;
+    private ZosmfRequest request;
 
     /**
      * UssDelete Constructor
@@ -57,11 +57,11 @@ public class UssDelete {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public UssDelete(final ZosConnection connection, final ZoweRequest request) {
+    public UssDelete(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if (!(request instanceof JsonDeleteRequest)) {
+        if (!(request instanceof DeleteJsonZosmfRequest)) {
             throw new IllegalStateException("DELETE_JSON request type required");
         }
         this.request = request;
@@ -97,7 +97,7 @@ public class UssDelete {
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
 
@@ -125,7 +125,7 @@ public class UssDelete {
                 EncodeUtils.encodeURIComponent(fileSystemName);
 
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
 

@@ -18,25 +18,20 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Http put stream operation with binary content type
+ * Http delete operation with Json content type
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public class StreamPutRequest extends ZoweRequest {
+public class DeleteJsonZosmfRequest extends ZosmfRequest {
 
     /**
-     * Binary data representation
-     */
-    private byte[] body;
-
-    /**
-     * ZoweRequest constructor
+     * DeleteJsonZosmfRequest constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public StreamPutRequest(final ZosConnection connection) {
+    public DeleteJsonZosmfRequest(final ZosConnection connection) {
         super(connection);
     }
 
@@ -48,8 +43,7 @@ public class StreamPutRequest extends ZoweRequest {
     @Override
     public Response executeRequest() throws UnirestException {
         ValidateUtils.checkNullParameter(url == null, "url is null");
-        ValidateUtils.checkNullParameter(body == null, "body is null");
-        HttpResponse<JsonNode> reply = Unirest.put(url).headers(headers).body(body).asJson();
+        HttpResponse<JsonNode> reply = Unirest.delete(url).headers(headers).asJson();
         if (reply.getStatusText().contains("No Content")) {
             return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
         }
@@ -57,14 +51,13 @@ public class StreamPutRequest extends ZoweRequest {
     }
 
     /**
-     * Set the body byte array value for request
+     * Method to set the body information for the http request which is not used for this request.
      *
-     * @param body byte array value
      * @author Frank Giordano
      */
     @Override
-    public void setBody(final Object body) {
-        this.body = (byte[]) body;
+    public void setBody(Object body) throws UnirestException {
+        throw new UnirestException("setting body for this request is invalid");
     }
 
     /**
@@ -75,7 +68,7 @@ public class StreamPutRequest extends ZoweRequest {
     @Override
     public void setStandardHeaders() {
         headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
-        headers.put("Content-Type", "binary");
+        headers.put("Content-Type", "application/json");
         headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
 

@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
@@ -35,7 +35,7 @@ public class JobDelete {
 
     private final ZosConnection connection;
 
-    private ZoweRequest request;
+    private ZosmfRequest request;
 
     /**
      * DeleteJobs constructor
@@ -56,11 +56,11 @@ public class JobDelete {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public JobDelete(final ZosConnection connection, final ZoweRequest request) {
+    public JobDelete(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if (!(request instanceof JsonDeleteRequest)) {
+        if (!(request instanceof DeleteJsonZosmfRequest)) {
             throw new IllegalStateException("DELETE_JSON request type required");
         }
         this.request = request;
@@ -119,7 +119,7 @@ public class JobDelete {
         }
 
         if (request == null) {
-            request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.DELETE_JSON);
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setHeaders(headers);
         request.setUrl(url);

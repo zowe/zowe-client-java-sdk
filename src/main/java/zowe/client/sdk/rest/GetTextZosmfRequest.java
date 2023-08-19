@@ -10,37 +10,27 @@
 package zowe.client.sdk.rest;
 
 import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Http post operation with Json content type
+ * Http get operation with text content type
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public class JsonPostRequest extends ZoweRequest {
-
-    private static final Logger LOG = LoggerFactory.getLogger(JsonPostRequest.class);
+public class GetTextZosmfRequest extends ZosmfRequest {
 
     /**
-     * JSON String representation
-     */
-    private String body;
-
-    /**
-     * JsonPostRequest constructor
+     * GetTextZosmfRequest constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public JsonPostRequest(final ZosConnection connection) {
+    public GetTextZosmfRequest(final ZosConnection connection) {
         super(connection);
     }
 
@@ -52,24 +42,21 @@ public class JsonPostRequest extends ZoweRequest {
     @Override
     public Response executeRequest() throws UnirestException {
         ValidateUtils.checkNullParameter(url == null, "url is null");
-        ValidateUtils.checkNullParameter(body == null, "body is null");
-        HttpResponse<JsonNode> reply = Unirest.post(url).headers(headers).body(body).asJson();
+        HttpResponse<String> reply = Unirest.get(url).headers(headers).asString();
         if (reply.getStatusText().contains("No Content")) {
             return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
         }
-        return getJsonResponse(reply);
+        return new Response(reply.getBody(), reply.getStatus(), reply.getStatusText());
     }
 
     /**
-     * Set the body information for the http request
+     * Method to set the body information for the http request which is not used for this request.
      *
-     * @param body String value
      * @author Frank Giordano
      */
     @Override
-    public void setBody(final Object body) {
-        this.body = (String) body;
-        LOG.debug(this.body);
+    public void setBody(Object body) throws UnirestException {
+        throw new UnirestException("setting body for this request is invalid");
     }
 
     /**
@@ -80,7 +67,7 @@ public class JsonPostRequest extends ZoweRequest {
     @Override
     public void setStandardHeaders() {
         headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
-        headers.put("Content-Type", "application/json");
+        headers.put("Content-Type", "text/plain; charset=UTF-8");
         headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
 

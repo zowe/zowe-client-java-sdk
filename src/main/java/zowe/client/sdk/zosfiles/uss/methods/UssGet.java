@@ -11,7 +11,7 @@ package zowe.client.sdk.zosfiles.uss.methods;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
-import zowe.client.sdk.rest.type.ZoweRequestType;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.RestUtils;
@@ -35,7 +35,7 @@ public class UssGet {
 
     private final ZosConnection connection;
 
-    private ZoweRequest request;
+    private ZosmfRequest request;
 
     /**
      * UssGet Constructor
@@ -58,7 +58,7 @@ public class UssGet {
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public UssGet(final ZosConnection connection, final ZoweRequest request) {
+    public UssGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
@@ -134,13 +134,13 @@ public class UssGet {
 
         if (params.isBinary()) {
             headers.put("X-IBM-Data-Type", "binary");
-            if (request == null || !(request instanceof StreamGetRequest)) {
-                request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_STREAM);
+            if (request == null || !(request instanceof GetStreamZosmfRequest)) {
+                request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_STREAM);
             }
         } else {
             headers.put("X-IBM-Data-Type", "text");
-            if (request == null || !(request instanceof TextGetRequest)) {
-                request = ZoweRequestFactory.buildRequest(connection, ZoweRequestType.GET_TEXT);
+            if (request == null || !(request instanceof GetTextZosmfRequest)) {
+                request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
             }
         }
         params.getRecordsRange().ifPresent(range -> headers.put("X-IBM-Record-Range", range));

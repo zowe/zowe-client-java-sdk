@@ -10,7 +10,7 @@
 package zowe.client.sdk.utility;
 
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZoweRequest;
+import zowe.client.sdk.rest.ZosmfRequest;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -44,7 +44,7 @@ public final class RestUtils {
      * @throws Exception http error code
      * @author Frank Giordano
      */
-    public static Response getResponse(final ZoweRequest request) throws Exception {
+    public static Response getResponse(final ZosmfRequest request) throws Exception {
         final Response response = request.executeRequest();
 
         final String errMsg = "no response status code returned";
