@@ -38,7 +38,7 @@ public class ChangeModeParams {
      * to by any encountered links. 'suppress' is a mode change for the file or directory pointed to by any
      * encountered symbolic links.
      */
-    private final Optional<LinkType> linkType;
+    private final Optional<LinkType> links;
 
     /**
      * ChangeModeParams constructor
@@ -49,7 +49,7 @@ public class ChangeModeParams {
     public ChangeModeParams(final ChangeModeParams.Builder builder) {
         this.mode = Optional.of(builder.mode);
         this.recursive = builder.recursive;
-        this.linkType = Optional.ofNullable(builder.linkType);
+        this.links = Optional.ofNullable(builder.links);
     }
 
     /**
@@ -75,8 +75,8 @@ public class ChangeModeParams {
      *
      * @return linkType value
      */
-    public Optional<LinkType> getLinkType() {
-        return linkType;
+    public Optional<LinkType> getLinks() {
+        return links;
     }
 
     /**
@@ -89,7 +89,7 @@ public class ChangeModeParams {
         return "ChangeModeParams{" +
                 "mode=" + mode +
                 ", recursive=" + recursive +
-                ", linkType=" + linkType +
+                ", links=" + links +
                 '}';
     }
 
@@ -114,7 +114,7 @@ public class ChangeModeParams {
          * to by any encountered links. 'suppress' is a mode change for the file or directory pointed to by any
          * encountered symbolic links.
          */
-        private LinkType linkType;
+        private LinkType links;
 
         /**
          * Specify mode string value
@@ -141,13 +141,13 @@ public class ChangeModeParams {
         }
 
         /**
-         * Specify LinkType value
+         * Specify links LinkType value
          *
          * @param type LinkType type object
          * @return ChangeModeParams.Builder this object
          */
-        public ChangeModeParams.Builder linktype(final LinkType type) {
-            this.linkType = type;
+        public ChangeModeParams.Builder links(final LinkType type) {
+            this.links = type;
             return this;
         }
 

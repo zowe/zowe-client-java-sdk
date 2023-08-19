@@ -93,7 +93,7 @@ public class UssChangeMode {
         if (params.isRecursive()) {
             chamgeModeMap.put("recursive", "true");
         }
-        params.getLinkType().ifPresent(type -> chamgeModeMap.put("links", type.getValue()));
+        params.getLinks().ifPresent(type -> chamgeModeMap.put("links", type.getValue()));
         chamgeModeMap.put("mode", params.getMode()
                 .orElseThrow(() -> new IllegalArgumentException("mode not specified")));
 

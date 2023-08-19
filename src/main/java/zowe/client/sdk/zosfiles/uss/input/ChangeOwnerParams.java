@@ -41,7 +41,7 @@ public class ChangeOwnerParams {
     /**
      * The default is 'follow'. 'change' does not follow the link, but instead changes the link itself (chown -h).
      */
-    private final Optional<LinkType> linkType;
+    private final Optional<LinkType> links;
 
     /**
      * ChangeOwnerParams constructor
@@ -53,7 +53,7 @@ public class ChangeOwnerParams {
         this.owner = Optional.ofNullable(builder.owner);
         this.group = Optional.ofNullable(builder.group);
         this.recursive = builder.recursive;
-        this.linkType = Optional.ofNullable(builder.linkType);
+        this.links = Optional.ofNullable(builder.links);
     }
 
     /**
@@ -88,8 +88,8 @@ public class ChangeOwnerParams {
      *
      * @return linkType value
      */
-    public Optional<LinkType> getLinkType() {
-        return linkType;
+    public Optional<LinkType> getLinks() {
+        return links;
     }
 
     /**
@@ -103,7 +103,7 @@ public class ChangeOwnerParams {
                 "owner='" + owner + '\'' +
                 ", group=" + group +
                 ", recursive=" + recursive +
-                ", linkType=" + linkType +
+                ", links=" + links +
                 '}';
     }
 
@@ -131,7 +131,7 @@ public class ChangeOwnerParams {
         /**
          * The default is 'follow'. 'change' does not follow the link, but instead changes the link itself (chown -h).
          */
-        private LinkType linkType;
+        private LinkType links;
 
         /**
          * Specify owner string value
@@ -169,13 +169,13 @@ public class ChangeOwnerParams {
         }
 
         /**
-         * Specify LinkType value
+         * Specify links LinkType value
          *
          * @param type LinkType type object
          * @return ChangeOwnerParams.Builder this object
          */
-        public ChangeOwnerParams.Builder linktype(final LinkType type) {
-            this.linkType = type;
+        public ChangeOwnerParams.Builder links(final LinkType type) {
+            this.links = type;
             return this;
         }
 

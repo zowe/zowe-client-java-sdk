@@ -105,7 +105,7 @@ public class UssChangeOwner {
         if (params.isRecursive()) {
             changeOnerMap.put("recursive", "true");
         }
-        params.getLinkType().ifPresent(type -> changeOnerMap.put("links", type.getValue()));
+        params.getLinks().ifPresent(type -> changeOnerMap.put("links", type.getValue()));
         final String errMsg = "owner not specified";
         changeOnerMap.put("owner", params.getOwner().orElseThrow(() -> new IllegalStateException(errMsg)));
 

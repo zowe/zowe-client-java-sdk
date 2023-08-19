@@ -218,7 +218,7 @@ public class ChangeTagParams {
         }
 
         /**
-         * Specify LinkType type value
+         * Specify links LinkType value
          *
          * @param links LinkType type object
          * @return ChangeTagParams.Builder this object
