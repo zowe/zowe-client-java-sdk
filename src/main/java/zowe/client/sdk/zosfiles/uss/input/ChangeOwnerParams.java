@@ -16,6 +16,8 @@ import java.util.Optional;
 
 /**
  * Parameter container class for Unix System Services (USS) chown operation
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
  * @version 2.0

@@ -17,7 +17,7 @@ import java.util.OptionalInt;
 /**
  * Parameter container class for Unix System Services (USS) list operation
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-list-files-directories-unix-file-path">z/OSMF REST API</a>
+ * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-list-zos-unix-filesystems">z/OSMF REST API zFS List</a>
  *
  * @author Frank Giordano
  * @version 2.0
