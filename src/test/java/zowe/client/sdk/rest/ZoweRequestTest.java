@@ -30,6 +30,7 @@ public class ZoweRequestTest {
     private HttpResponse<JsonNode> mockReply;
     private ZosConnection connection;
 
+    @SuppressWarnings("unchecked")
     @Before
     public void init() {
         mockReply = Mockito.mock(HttpResponse.class);
