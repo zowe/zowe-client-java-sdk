@@ -108,10 +108,9 @@ public class UssMount {
      * @param fileSystemName the file system name
      * @param params         MountParams object
      * @return Response object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response mountCommon(final String fileSystemName, final MountParams params) throws Exception {
+    public Response mountCommon(final String fileSystemName, final MountParams params) {
         ValidateUtils.checkNullParameter(fileSystemName == null, "file system name is null");
         ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "file system name not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

@@ -84,10 +84,9 @@ public class UssDelete {
      * @param targetPath the name of the file or directory you are going to delete
      * @param recursive  flag indicates if contents of directory should also be deleted
      * @return Response object
-     * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response delete(final String targetPath, final boolean recursive) throws Exception {
+    public Response delete(final String targetPath, final boolean recursive) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
 
@@ -112,10 +111,9 @@ public class UssDelete {
      *
      * @param fileSystemName file system name
      * @return Response object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response zfsDelete(final String fileSystemName) throws Exception {
+    public Response zfsDelete(final String fileSystemName) {
         ValidateUtils.checkNullParameter(fileSystemName == null, "file system name is null");
         ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "file system name not specified");
 

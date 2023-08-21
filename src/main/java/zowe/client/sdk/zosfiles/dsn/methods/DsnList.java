@@ -81,8 +81,7 @@ public class DsnList {
      * @return response object with http response info
      * @author Frank Giordano
      */
-    private Response getResponse(final ListParams params, final Map<String, String> headers, final String url)
-            throws Exception {
+    private Response getResponse(final ListParams params, final Map<String, String> headers, final String url) {
         setHeaders(params, headers);
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);

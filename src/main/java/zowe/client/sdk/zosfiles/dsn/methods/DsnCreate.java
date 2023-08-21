@@ -72,10 +72,9 @@ public class DsnCreate {
      * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
      * @param params      create dataset parameters, see CreateParams object
      * @return http response object
-     * @throws Exception error processing request
      * @author Leonid Baranov
      */
-    public Response create(final String dataSetName, final CreateParams params) throws Exception {
+    public Response create(final String dataSetName, final CreateParams params) {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");

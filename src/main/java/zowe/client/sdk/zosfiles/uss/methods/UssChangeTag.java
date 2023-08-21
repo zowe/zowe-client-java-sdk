@@ -131,10 +131,9 @@ public class UssChangeTag {
      * @param fileNamePath file name with path
      * @param params       parameters for the change tag request, see ChangeTagParams object
      * @return Response Object
-     * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response changeCommon(final String fileNamePath, final ChangeTagParams params) throws Exception {
+    public Response changeCommon(final String fileNamePath, final ChangeTagParams params) {
         ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
         ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

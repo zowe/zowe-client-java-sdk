@@ -99,11 +99,10 @@ public class UssWrite {
      * @param fileNamePath file name with path
      * @param params       parameters within a WriteParams object that drives the write action request
      * @return Response object
-     * @throws Exception processing error
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response writeCommon(final String fileNamePath, final WriteParams params) throws Exception {
+    public Response writeCommon(final String fileNamePath, final WriteParams params) {
         ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
         ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

@@ -75,11 +75,10 @@ public class UssCreate {
      * @param targetPath the name of the file or directory you are going to create
      * @param params     create response parameters, see CreateParams object
      * @return Response object
-     * @throws Exception error processing request
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response create(final String targetPath, final CreateParams params) throws Exception {
+    public Response create(final String targetPath, final CreateParams params) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

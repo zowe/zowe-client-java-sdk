@@ -99,11 +99,10 @@ public class UssGet {
      * @param fileNamePath file name with path
      * @param params       GetParams object to drive the request
      * @return Response object
-     * @throws Exception processing error
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public Response getCommon(final String fileNamePath, final GetParams params) throws Exception {
+    public Response getCommon(final String fileNamePath, final GetParams params) {
         ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
         ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

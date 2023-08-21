@@ -113,11 +113,10 @@ public class JobCancel {
      *
      * @param params cancel job parameters, see cancelJobsCommon object
      * @return job document with details about the submitted job
-     * @throws Exception error canceling
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
-    public Response cancelCommon(final ModifyJobParams params) throws Exception {
+    public Response cancelCommon(final ModifyJobParams params) {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         // generate full url request

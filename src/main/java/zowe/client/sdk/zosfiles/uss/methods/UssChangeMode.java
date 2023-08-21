@@ -74,11 +74,10 @@ public class UssChangeMode {
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
      * @param params     change mode response parameters, see ChangeModeParams object
      * @return Response object
-     * @throws Exception processing error
      * @author James Kostrewsk
      * @author Frank Giordano
      */
-    public Response change(final String targetPath, final ChangeModeParams params) throws Exception {
+    public Response change(final String targetPath, final ChangeModeParams params) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

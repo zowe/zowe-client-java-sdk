@@ -45,11 +45,10 @@ public class Profile {
      * @param name   profile name
      * @param obj    json object of property values within profile section from Zowe Global Team Configuration
      * @param secure jsonarray value of secure section
-     * @throws Exception processing error
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    public Profile(final String name, final JSONObject obj, final JSONArray secure) throws Exception {
+    public Profile(final String name, final JSONObject obj, final JSONArray secure) {
         this.name = name;
         this.secure = secure;
         properties = (Map<String, String>) JsonParseFactory.buildParser(ParseType.PROPS)

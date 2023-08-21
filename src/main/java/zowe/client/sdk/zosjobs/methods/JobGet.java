@@ -100,10 +100,9 @@ public class JobGet {
      *
      * @param params common job parameters, see CommonJobParams object
      * @return JCL content
-     * @throws Exception error on getting jcl content
      * @author Frank Giordano
      */
-    public String getJclCommon(final CommonJobParams params) throws Exception {
+    public String getJclCommon(final CommonJobParams params) {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
@@ -271,10 +270,9 @@ public class JobGet {
      * @param jobId   job id for the job containing the spool content
      * @param spoolId id number assigned by zosmf that identifies the particular job spool file (DD)
      * @return spool content
-     * @throws Exception error on getting spool content
      * @author Frank Giordano
      */
-    public String getSpoolContent(final String jobName, final String jobId, final int spoolId) throws Exception {
+    public String getSpoolContent(final String jobName, final String jobId, final int spoolId) {
         ValidateUtils.checkIllegalParameter(spoolId <= 0, "spool id not specified");
 
         CommonJobParams params = new CommonJobParams(jobId, jobName);
@@ -300,10 +298,9 @@ public class JobGet {
      *
      * @param jobFile spool file for which you want to retrieve the content
      * @return spool content
-     * @throws Exception error on getting spool content
      * @author Frank Giordano
      */
-    public String getSpoolContentCommon(final JobFile jobFile) throws Exception {
+    public String getSpoolContentCommon(final JobFile jobFile) {
         ValidateUtils.checkNullParameter(jobFile == null, "jobFile is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +

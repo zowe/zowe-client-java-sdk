@@ -84,11 +84,10 @@ public class JobDelete {
      *
      * @param params delete job parameters, see DeleteJobParams object
      * @return http response object
-     * @throws Exception error on deleting
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
-    public Response deleteCommon(final ModifyJobParams params) throws Exception {
+    public Response deleteCommon(final ModifyJobParams params) {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +

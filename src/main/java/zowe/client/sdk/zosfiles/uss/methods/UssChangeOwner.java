@@ -85,11 +85,10 @@ public class UssChangeOwner {
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
      * @param params     change owner response parameters, see ChangeOwnerParams object
      * @return Response object
-     * @throws Exception processing error
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response change(final String targetPath, final ChangeOwnerParams params) throws Exception {
+    public Response change(final String targetPath, final ChangeOwnerParams params) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

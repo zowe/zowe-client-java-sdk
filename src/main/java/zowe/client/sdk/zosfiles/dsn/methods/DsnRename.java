@@ -129,10 +129,9 @@ public class DsnRename {
      *             one given source dataSet name to be renamed or
      *             one given source dataSet name where the member to be renamed exists, second member name to rename
      * @return Response object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    private Response executeCommon(final String... args) throws Exception {
+    private Response executeCommon(final String... args) {
         final Map<String, Object> renameMap = new HashMap<>();
         renameMap.put("request", "rename");
 

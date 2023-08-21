@@ -102,12 +102,10 @@ public class UssMove {
      * @param targetPath the target path of where the file or directory will be moved too
      * @param overwrite  true if you want to override existing data at target path or false to not override
      * @return Response object
-     * @throws Exception processing error
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    private Response moveCommon(final String fromPath, final String targetPath, final boolean overwrite)
-            throws Exception {
+    private Response moveCommon(final String fromPath, final String targetPath, final boolean overwrite) {
         ValidateUtils.checkNullParameter(fromPath == null, "fromPath is null");
         ValidateUtils.checkIllegalParameter(fromPath.isBlank(), "fromPath not specified");
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");

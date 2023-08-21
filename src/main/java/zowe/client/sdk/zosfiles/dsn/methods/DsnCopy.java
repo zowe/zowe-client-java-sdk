@@ -102,11 +102,10 @@ public class DsnCopy {
      *
      * @param params contains copy dataset parameters
      * @return http response object
-     * @throws Exception error processing copy request
      * @author Leonid Baranov
      * @author Frank Giordano
      */
-    public Response copyCommon(final CopyParams params) throws Exception {
+    public Response copyCommon(final CopyParams params) {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = setUrl(params);

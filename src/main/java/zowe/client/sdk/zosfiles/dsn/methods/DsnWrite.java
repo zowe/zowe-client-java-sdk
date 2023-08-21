@@ -86,10 +86,9 @@ public class DsnWrite {
      * @param dataSetName sequential dataset (e.g. 'DATASET.LIB')
      * @param content     new content
      * @return http response object
-     * @throws Exception error processing request
      * @author Leonid Baranov
      */
-    public Response write(final String dataSetName, final String content) throws Exception {
+    public Response write(final String dataSetName, final String content) {
         ValidateUtils.checkNullParameter(content == null, "content is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");

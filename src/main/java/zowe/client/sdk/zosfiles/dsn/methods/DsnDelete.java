@@ -84,10 +84,9 @@ public class DsnDelete {
      *
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @return http response object
-     * @throws Exception error processing request
      * @author Leonid Baranov
      */
-    public Response delete(final String dataSetName) throws Exception {
+    public Response delete(final String dataSetName) {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
 

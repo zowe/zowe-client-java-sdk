@@ -123,7 +123,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListFileListNullResponseFailure() throws Exception {
+    public void tstUssListFileListNullResponseFailure() {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(null, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);

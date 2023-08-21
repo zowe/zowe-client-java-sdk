@@ -115,10 +115,9 @@ public class DsnGet {
      *                    or a dataset member e.g. DATASET.LIB(MEMBER))
      * @param params      download params parameters, see DownloadParams object
      * @return a content stream
-     * @throws Exception error processing request
      * @author Nikunj Goyal
      */
-    public InputStream get(final String dataSetName, final DownloadParams params) throws Exception {
+    public InputStream get(final String dataSetName, final DownloadParams params) {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");

@@ -88,11 +88,10 @@ public class UssCopy {
      * @param targetPath target path of where the file or directory will be copied too
      * @param params     CopyParams parameters that specifies copy action request
      * @return Response object
-     * @throws Exception processing error
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response copy(final String targetPath, final CopyParams params) throws Exception {
+    public Response copy(final String targetPath, final CopyParams params) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
