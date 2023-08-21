@@ -66,7 +66,6 @@ public class TsoResponseServiceTest {
     public void tstGetZosmfTsoResponseNullFail() {
         String msg = "";
         try {
-            //noinspection ConstantConditions
             new TsoResponseService((Response) null).getZosmfTsoResponse();
         } catch (Exception e) {
             msg = e.getMessage();
