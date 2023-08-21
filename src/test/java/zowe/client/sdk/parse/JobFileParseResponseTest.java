@@ -85,7 +85,7 @@ public class JobFileParseResponseTest {
                 .setJsonObject(json).parseResponse();
         assertEquals("ver", response.getJobName().orElse("n\\a"));
         assertEquals("dev", response.getJobId().orElse("n\\a"));
-        assertTrue(0 == response.getId().orElse(-1L));
+        assertEquals(0, response.getId().orElse(-1L));
     }
 
 }
