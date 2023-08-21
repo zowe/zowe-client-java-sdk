@@ -43,7 +43,7 @@ public class ZoweRequestTest {
         Mockito.when(mockReply.getStatus()).thenReturn(300);
         Mockito.when(mockReply.getBody()).thenReturn(null);
 
-        ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
 
         String errMsg = "";
         try {
@@ -51,7 +51,7 @@ public class ZoweRequestTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        String expectedErrMsg = "http status error code: 300, status text: error, response phrase: null";
+        final String expectedErrMsg = "http status error code: 300, status text: error, response phrase: null";
         assertEquals(expectedErrMsg, errMsg);
     }
 
@@ -61,7 +61,7 @@ public class ZoweRequestTest {
         Mockito.when(mockReply.getStatus()).thenReturn(300);
         Mockito.when(mockReply.getBody()).thenReturn(new JsonNode(""));
 
-        ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
 
         String errMsg = "";
         try {
@@ -69,7 +69,7 @@ public class ZoweRequestTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        String expectedErrMsg = "http status error code: 300, status text: error, response phrase: {}";
+        final String expectedErrMsg = "http status error code: 300, status text: error, response phrase: {}";
         assertEquals(expectedErrMsg, errMsg);
     }
 
@@ -79,7 +79,7 @@ public class ZoweRequestTest {
         Mockito.when(mockReply.getStatus()).thenReturn(300);
         Mockito.when(mockReply.getBody()).thenReturn(new JsonNode("{\"error\":\"error\"}"));
 
-        ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
 
         String errMsg = "";
         try {
@@ -96,7 +96,7 @@ public class ZoweRequestTest {
         Mockito.when(mockReply.getStatus()).thenReturn(300);
         Mockito.when(mockReply.getBody()).thenReturn(new JsonNode("{}"));
 
-        ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
 
         String errMsg = "";
         try {
@@ -104,7 +104,7 @@ public class ZoweRequestTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        String expectedErrMsg = "http status error code: 300, status text: , response phrase: {}";
+        final String expectedErrMsg = "http status error code: 300, status text: , response phrase: {}";
         assertEquals(expectedErrMsg, errMsg);
     }
 
@@ -114,7 +114,7 @@ public class ZoweRequestTest {
         Mockito.when(mockReply.getStatus()).thenReturn(300);
         Mockito.when(mockReply.getBody()).thenReturn(new JsonNode("{}"));
 
-        ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
 
         String errMsg = "";
         try {
@@ -122,7 +122,7 @@ public class ZoweRequestTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        String expectedErrMsg = "http status error code: 300, status text: n\\a, response phrase: {}";
+        final String expectedErrMsg = "http status error code: 300, status text: n\\a, response phrase: {}";
         assertEquals(expectedErrMsg, errMsg);
     }
 

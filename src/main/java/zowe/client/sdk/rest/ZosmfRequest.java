@@ -86,15 +86,15 @@ public abstract class ZosmfRequest {
         if (statusText.contains("No Content")) {
             response = new Response(statusText, statusCode, statusText);
         } else if (reply.getBody() instanceof JsonNode) {
-            HttpResponse<JsonNode> jsonReply = (HttpResponse<JsonNode>) reply;
+            final HttpResponse<JsonNode> jsonReply = (HttpResponse<JsonNode>) reply;
             response = jsonReply.getBody().isArray() ?
                     new Response(jsonReply.getBody().getArray(), statusCode, statusText) :
                     new Response(jsonReply.getBody().getObject(), statusCode, statusText);
         } else if (reply.getBody() instanceof String) {
-            HttpResponse<String> stringReply = (HttpResponse<String>) reply;
+            final HttpResponse<String> stringReply = (HttpResponse<String>) reply;
             response = new Response(stringReply.getBody(), statusCode, statusText);
         } else if (reply.getBody() instanceof byte[]) {
-            HttpResponse<byte[]> byteReply = (HttpResponse<byte[]>) reply;
+            final HttpResponse<byte[]> byteReply = (HttpResponse<byte[]>) reply;
             response = new Response(byteReply.getBody(), statusCode, statusText);
         } else {
             LOG.debug("no reply instanceof found");

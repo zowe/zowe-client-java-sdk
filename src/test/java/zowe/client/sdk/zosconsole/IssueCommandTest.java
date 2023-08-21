@@ -80,12 +80,12 @@ public class IssueCommandTest {
     @SuppressWarnings("unchecked")
     @Test
     public void tstIssueCommandHttpErrorFailure() {
-        HttpResponse<JsonNode> mockReply = Mockito.mock(HttpResponse.class);
+        final HttpResponse<JsonNode> mockReply = Mockito.mock(HttpResponse.class);
         Mockito.when(mockReply.getStatusText()).thenReturn("Unauthorized");
         Mockito.when(mockReply.getStatus()).thenReturn(401);
         Mockito.when(mockReply.getBody()).thenReturn(null);
 
-        ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
 
         String errorMsg = "";
         try {
