@@ -67,7 +67,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Build Response object from HttpResponse object
+     * Build Response object from given HttpResponse reply
      *
      * @param reply HttpResponse object
      * @return Response object
@@ -109,7 +109,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Return http error message
+     * Return custom http error message
      *
      * @param response   Response object
      * @param statusCode http status code

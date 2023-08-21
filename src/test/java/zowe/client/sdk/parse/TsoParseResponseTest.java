@@ -40,14 +40,14 @@ public class TsoParseResponseTest {
     }
 
     @Test
-    public void tstTsoParseJsonStopResponseSingletonSuccess() throws Exception {
+    public void tstTsoParseJsonStopResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.TSO_CONSOLE);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.TSO_CONSOLE);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstTsoParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
+    public void tstTsoParseJsonStopResponseSingletonWithDataSuccess() {
         final JsonParse parser =
                 JsonParseFactory.buildParser(ParseType.TSO_CONSOLE).setJsonObject(new JSONObject());
         final JsonParse parser2 =
@@ -76,7 +76,7 @@ public class TsoParseResponseTest {
     }
 
     @Test
-    public void tstTsoParseJsonStopResponseSuccess() throws Exception {
+    public void tstTsoParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("ver", "ver");
         jsonMap.put("servletKey", "key");

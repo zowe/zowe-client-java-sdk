@@ -40,14 +40,14 @@ public class DatasetParseResponseTest {
     }
 
     @Test
-    public void tstDatasetParseJsonStopResponseSingletonSuccess() throws Exception {
+    public void tstDatasetParseJsonStopResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.DATASET);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.DATASET);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstDatasetParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
+    public void tstDatasetParseJsonStopResponseSingletonWithDataSuccess() {
         final JsonParse parser =
                 JsonParseFactory.buildParser(ParseType.DATASET).setJsonObject(new JSONObject());
         final JsonParse parser2 =
@@ -76,7 +76,7 @@ public class DatasetParseResponseTest {
     }
 
     @Test
-    public void tstDatasetParseJsonStopResponseSuccess() throws Exception {
+    public void tstDatasetParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("dsname", "ver");
         jsonMap.put("dev", "dev");

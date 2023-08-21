@@ -40,14 +40,14 @@ public class UnixFileParseResponseTest {
     }
 
     @Test
-    public void tstUnixFileParseJsonStopResponseSingletonSuccess() throws Exception {
+    public void tstUnixFileParseJsonStopResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.UNIX_FILE);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.UNIX_FILE);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstUnixFileParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
+    public void tstUnixFileParseJsonStopResponseSingletonWithDataSuccess() {
         final JsonParse parser =
                 JsonParseFactory.buildParser(ParseType.UNIX_FILE).setJsonObject(new JSONObject());
         final JsonParse parser2 =
@@ -76,7 +76,7 @@ public class UnixFileParseResponseTest {
     }
 
     @Test
-    public void tstUnixFileParseJsonStopResponseSuccess() throws Exception {
+    public void tstUnixFileParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("name", "ver");
         jsonMap.put("mode", "mode");

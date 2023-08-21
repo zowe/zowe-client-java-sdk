@@ -38,14 +38,14 @@ public class SystemsParseResponseTest {
     }
 
     @Test
-    public void tstZosmfSystemsParseJsonStopResponseSingletonSuccess() throws Exception {
+    public void tstZosmfSystemsParseJsonStopResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstZosmfSystemsParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
+    public void tstZosmfSystemsParseJsonStopResponseSingletonWithDataSuccess() {
         final JsonParse parser =
                 JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(new JSONObject());
         final JsonParse parser2 =

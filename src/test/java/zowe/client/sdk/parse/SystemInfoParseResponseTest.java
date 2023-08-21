@@ -40,14 +40,14 @@ public class SystemInfoParseResponseTest {
     }
 
     @Test
-    public void tstZosmfInfoParseJsonStopResponseSingletonSuccess() throws Exception {
+    public void tstZosmfInfoParseJsonStopResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.ZOSMF_INFO);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.ZOSMF_INFO);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstZosmfInfoParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
+    public void tstZosmfInfoParseJsonStopResponseSingletonWithDataSuccess() {
         final JsonParse parser =
                 JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).setJsonObject(new JSONObject());
         final JsonParse parser2 =
@@ -76,7 +76,7 @@ public class SystemInfoParseResponseTest {
     }
 
     @Test
-    public void tstZosmfInfoParseJsonStopResponseSuccess() throws Exception {
+    public void tstZosmfInfoParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("api_version", "ver");
         jsonMap.put("zosmf_port", "dev");
