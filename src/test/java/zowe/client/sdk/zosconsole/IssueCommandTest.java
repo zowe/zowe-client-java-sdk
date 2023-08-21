@@ -77,6 +77,7 @@ public class IssueCommandTest {
                         .replaceAll("\\n", ""));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void tstIssueCommandHttpErrorFailure() {
         HttpResponse<JsonNode> mockReply = Mockito.mock(HttpResponse.class);

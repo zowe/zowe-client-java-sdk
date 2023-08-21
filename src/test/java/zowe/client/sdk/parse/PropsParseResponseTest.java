@@ -74,6 +74,7 @@ public class PropsParseResponseTest {
         assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void tstPropsParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
