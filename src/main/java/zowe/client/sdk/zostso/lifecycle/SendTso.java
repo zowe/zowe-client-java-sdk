@@ -14,7 +14,6 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.SendTsoParams;
@@ -144,7 +143,7 @@ public class SendTso {
         request.setUrl(url);
         request.setBody("");
 
-        return new TsoResponseService(RestUtils.getResponse(request)).getZosmfTsoResponse();
+        return new TsoResponseService(request.executeRequest()).getZosmfTsoResponse();
     }
 
     /**
@@ -198,7 +197,7 @@ public class SendTso {
         request.setUrl(url);
         request.setBody(jobObjBody);
 
-        return new TsoResponseService(RestUtils.getResponse(request)).getZosmfTsoResponse();
+        return new TsoResponseService(request.executeRequest()).getZosmfTsoResponse();
     }
 
 }

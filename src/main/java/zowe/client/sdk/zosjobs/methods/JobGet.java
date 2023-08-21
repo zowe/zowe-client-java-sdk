@@ -18,7 +18,6 @@ import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.CommonJobParams;
@@ -119,8 +118,7 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final Response response = RestUtils.getResponse(request);
-        return (String) response.getResponsePhrase()
+        return (String) request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job jcl response phrase"));
     }
 
@@ -243,7 +241,7 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
+        final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no get job response phrase")).toString();
         final JSONArray results = (JSONArray) new JSONParser().parse(jsonStr);
         for (final Object jsonObj : results) {
@@ -291,9 +289,10 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final Response response = RestUtils.getResponse(request);
+
         final String spoolErrMsg = "no job spool content response phrase";
-        return (String) response.getResponsePhrase().orElseThrow(() -> new IllegalStateException(spoolErrMsg));
+        return (String) request.executeRequest().getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(spoolErrMsg));
     }
 
     /**
@@ -320,9 +319,9 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final Response response = RestUtils.getResponse(request);
         final String spoolErrMsg = "no job spool file content response phrase";
-        return (String) response.getResponsePhrase().orElseThrow(() -> new IllegalStateException(spoolErrMsg));
+        return (String) request.executeRequest().getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(spoolErrMsg));
     }
 
     /**
@@ -360,10 +359,8 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final Response response = RestUtils.getResponse(request);
-
         final List<JobFile> files = new ArrayList<>();
-        final String jsonStr = response.getResponsePhrase().orElse("").toString();
+        final String jsonStr = request.executeRequest().getResponsePhrase().orElse("").toString();
         if (jsonStr.isBlank()) {
             return files;
         }
@@ -432,7 +429,7 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
+        final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job get response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         return (Job) JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(jsonObject).parseResponse();

@@ -15,11 +15,9 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StopTsoParams;
@@ -107,9 +105,7 @@ public class StopTso {
         }
         request.setUrl(url);
 
-        final Response response = RestUtils.getResponse(request);
-
-        final String jsonStr = response.getResponsePhrase()
+        final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no tso stop response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         return (ZosmfTsoResponse) JsonParseFactory.buildParser(ParseType.TSO_STOP)

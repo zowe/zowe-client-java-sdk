@@ -19,7 +19,6 @@ import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.SubmitJclParams;
@@ -135,7 +134,7 @@ public class JobSubmit {
         request.setBody(params.getJcl().orElseThrow(() -> new IllegalArgumentException("jcl not specified")));
         request.setHeaders(headers);
 
-        final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
+        final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job jcl submit response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         return (Job) JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(jsonObject).parseResponse();
@@ -181,7 +180,7 @@ public class JobSubmit {
             request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));
         }
 
-        final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
+        final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job submit response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         return (Job) JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(jsonObject).parseResponse();

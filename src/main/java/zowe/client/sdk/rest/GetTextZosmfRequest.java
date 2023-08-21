@@ -43,10 +43,7 @@ public class GetTextZosmfRequest extends ZosmfRequest {
     public Response executeRequest() throws UnirestException {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         HttpResponse<String> reply = Unirest.get(url).headers(headers).asString();
-        if (reply.getStatusText().contains("No Content")) {
-            return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
-        }
-        return new Response(reply.getBody(), reply.getStatus(), reply.getStatusText());
+        return buildResponse(reply);
     }
 
     /**

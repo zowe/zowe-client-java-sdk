@@ -40,14 +40,14 @@ public class JobParseResponseTest {
     }
 
     @Test
-    public void tstJobParseJsonStopResponseSingletonSuccess() throws Exception {
+    public void tstJobParseJsonStopResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.JOB);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.JOB);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstJobParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
+    public void tstJobParseJsonStopResponseSingletonWithDataSuccess() {
         final JsonParse parser =
                 JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(new JSONObject());
         final JsonParse parser2 =
@@ -76,7 +76,7 @@ public class JobParseResponseTest {
     }
 
     @Test
-    public void tstJobParseJsonStopResponseSuccess() throws Exception {
+    public void tstJobParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("jobname", "ver");
         jsonMap.put("jobid", "dev");

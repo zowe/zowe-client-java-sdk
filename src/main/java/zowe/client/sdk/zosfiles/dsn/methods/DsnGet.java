@@ -16,7 +16,6 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.dsn.input.DownloadParams;
@@ -167,8 +166,8 @@ public class DsnGet {
         request.setUrl(url);
         request.setHeaders(headers);
 
-        return new ByteArrayInputStream((byte[]) RestUtils.getResponse(request)
-                .getResponsePhrase().orElseThrow(() -> new IllegalStateException("no dsn get response phrase")));
+        return new ByteArrayInputStream((byte[]) request.executeRequest().getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no dsn get response phrase")));
     }
 
 }

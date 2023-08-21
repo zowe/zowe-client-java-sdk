@@ -40,14 +40,14 @@ public class MemberParseResponseTest {
     }
 
     @Test
-    public void tstMemberParseJsonStopResponseSingletonSuccess() throws Exception {
+    public void tstMemberParseJsonStopResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.MEMBER);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.MEMBER);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstMemberParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
+    public void tstMemberParseJsonStopResponseSingletonWithDataSuccess() {
         final JsonParse parser =
                 JsonParseFactory.buildParser(ParseType.MEMBER).setJsonObject(new JSONObject());
         final JsonParse parser2 =
@@ -76,7 +76,7 @@ public class MemberParseResponseTest {
     }
 
     @Test
-    public void tstMemberParseJsonStopResponseSuccess() throws Exception {
+    public void tstMemberParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("member", "ver");
         jsonMap.put("vers", 0L);

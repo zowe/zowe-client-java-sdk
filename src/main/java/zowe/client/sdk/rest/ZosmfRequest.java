@@ -16,14 +16,19 @@ import kong.unirest.UnirestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Base abstract class that conforms to Http CRUD operations
@@ -52,20 +57,6 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Retrieve the http response information
-     *
-     * @param reply json http response object
-     * @return Response object
-     * @author Frank Giordano
-     */
-    protected static Response getJsonResponse(final HttpResponse<JsonNode> reply) {
-        if (reply.getBody().isArray()) {
-            return new Response(reply.getBody().getArray(), reply.getStatus(), reply.getStatusText());
-        }
-        return new Response(reply.getBody().getObject(), reply.getStatus(), reply.getStatusText());
-    }
-
-    /**
      * Setup to be used first in setting up the http request
      *
      * @author Frank Giordano
@@ -73,6 +64,84 @@ public abstract class ZosmfRequest {
     private void setup() {
         Unirest.config().verifySsl(false);
         this.setStandardHeaders();
+    }
+
+    /**
+     * Build Response object from given HttpResponse reply
+     *
+     * @param reply HttpResponse object
+     * @return Response object
+     * @author Frank Giordano
+     */
+    @SuppressWarnings("unchecked")
+    public <T> Response buildResponse(HttpResponse<T> reply) {
+        final int statusCode = reply.getStatus();
+        if (statusCode == 0) {
+            throw new IllegalStateException("zero number status code return");
+        }
+
+        final String statusText = reply.getStatusText() != null ? reply.getStatusText() : "n\\a";
+
+        Response response;
+        if (statusText.contains("No Content")) {
+            response = new Response(statusText, statusCode, statusText);
+        } else if (reply.getBody() instanceof JsonNode) {
+            HttpResponse<JsonNode> jsonReply = (HttpResponse<JsonNode>) reply;
+            response = jsonReply.getBody().isArray() ?
+                    new Response(jsonReply.getBody().getArray(), statusCode, statusText) :
+                    new Response(jsonReply.getBody().getObject(), statusCode, statusText);
+        } else if (reply.getBody() instanceof String) {
+            HttpResponse<String> stringReply = (HttpResponse<String>) reply;
+            response = new Response(stringReply.getBody(), statusCode, statusText);
+        } else if (reply.getBody() instanceof byte[]) {
+            HttpResponse<byte[]> byteReply = (HttpResponse<byte[]>) reply;
+            response = new Response(byteReply.getBody(), statusCode, statusText);
+        } else {
+            LOG.debug("no reply instanceof found");
+            response = new Response(null, statusCode, statusText);
+        }
+
+        if (!(statusCode >= 100 && statusCode <= 299)) {
+            throw new IllegalStateException(httpErrorMsg(response, statusCode));
+        }
+
+        return response;
+    }
+
+    /**
+     * Return custom http error message
+     *
+     * @param response   Response object
+     * @param statusCode http status code
+     * @return String error message
+     * @author Frank Giordano
+     */
+    private String httpErrorMsg(final Response response, final int statusCode) {
+        final AtomicReference<Object> responsePhrase = new AtomicReference<>();
+        response.getResponsePhrase().ifPresent(responsePhrase::set);
+        if (responsePhrase.get() instanceof byte[]) {
+            try (final InputStreamReader inputStreamReader = new InputStreamReader(
+                    new ByteArrayInputStream((byte[]) responsePhrase.get()), StandardCharsets.UTF_8)) {
+                final BufferedReader br = new BufferedReader(inputStreamReader);
+                StringBuilder content = new StringBuilder();
+                String line;
+                while ((line = br.readLine()) != null) {
+                    content.append(line).append("\n");
+                }
+                responsePhrase.set(content.substring(0, content.length() - 1));
+                br.close();
+            } catch (IOException e) {
+                return e.getMessage();
+            }
+        }
+
+        final String responsePhraseStr = String.valueOf((responsePhrase.get()));
+        final String statusText = response.getStatusText().orElse("n\\a");
+        String httpErrMsg = "http status error code: " + statusCode + ", status text: " + statusText;
+        if (!statusText.equalsIgnoreCase(responsePhraseStr)) {
+            httpErrMsg += ", response phrase: " + responsePhraseStr;
+        }
+        return httpErrMsg;
     }
 
     /**

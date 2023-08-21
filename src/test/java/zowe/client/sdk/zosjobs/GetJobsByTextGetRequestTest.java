@@ -14,8 +14,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.GetTextZosmfRequest;
+import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosjobs.methods.JobGet;
 
 import static org.junit.Assert.assertEquals;

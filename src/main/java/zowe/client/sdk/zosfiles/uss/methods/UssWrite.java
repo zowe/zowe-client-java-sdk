@@ -16,7 +16,6 @@ import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.WriteParams;
@@ -144,7 +143,7 @@ public class UssWrite {
         request.setHeaders(headers);
         request.setUrl(url);
 
-        return RestUtils.getResponse(request);
+        return request.executeRequest();
     }
 
 }

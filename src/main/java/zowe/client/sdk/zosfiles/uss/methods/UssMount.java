@@ -17,7 +17,6 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.MountParams;
@@ -140,7 +139,7 @@ public class UssMount {
         request.setUrl(url);
         request.setBody(new JSONObject(mountMap).toString());
 
-        return RestUtils.getResponse(request);
+        return request.executeRequest();
     }
 
 }

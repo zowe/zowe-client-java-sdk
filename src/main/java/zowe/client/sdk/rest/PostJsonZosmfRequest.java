@@ -54,10 +54,7 @@ public class PostJsonZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         ValidateUtils.checkNullParameter(body == null, "body is null");
         HttpResponse<JsonNode> reply = Unirest.post(url).headers(headers).body(body).asJson();
-        if (reply.getStatusText().contains("No Content")) {
-            return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
-        }
-        return getJsonResponse(reply);
+        return buildResponse(reply);
     }
 
     /**

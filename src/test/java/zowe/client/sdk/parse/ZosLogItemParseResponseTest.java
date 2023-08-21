@@ -40,14 +40,14 @@ public class ZosLogItemParseResponseTest {
     }
 
     @Test
-    public void tstZosLogItemParseJsonStopResponseSingletonSuccess() throws Exception {
+    public void tstZosLogItemParseJsonStopResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstZosLogItemParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
+    public void tstZosLogItemParseJsonStopResponseSingletonWithDataSuccess() {
         final JsonParse parser =
                 JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM).setJsonObject(new JSONObject());
         final JsonParse parser2 =
@@ -76,7 +76,7 @@ public class ZosLogItemParseResponseTest {
     }
 
     @Test
-    public void tstZosLogItemParseJsonStopResponseSuccess() throws Exception {
+    public void tstZosLogItemParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("jobName", "ver");
         jsonMap.put("message", "message");

@@ -15,7 +15,6 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StartTsoParams;
@@ -157,7 +156,7 @@ public class StartTso {
         request.setUrl(url);
         request.setBody("");
 
-        return new TsoResponseService(RestUtils.getResponse(request)).getZosmfTsoResponse();
+        return new TsoResponseService(request.executeRequest()).getZosmfTsoResponse();
     }
 
 }

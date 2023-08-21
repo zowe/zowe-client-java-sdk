@@ -14,9 +14,9 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.GetStreamZosmfRequest;
 import zowe.client.sdk.rest.GetTextZosmfRequest;
+import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.GetParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssGet;
 

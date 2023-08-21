@@ -39,14 +39,14 @@ public class PropsParseResponseTest {
     }
 
     @Test
-    public void tstPropsParseJsonStopResponseSingletonSuccess() throws Exception {
+    public void tstPropsParseJsonStopResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.PROPS);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.PROPS);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstPropsParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
+    public void tstPropsParseJsonStopResponseSingletonWithDataSuccess() {
         final JsonParse parser =
                 JsonParseFactory.buildParser(ParseType.PROPS).setJsonObject(new JSONObject());
         final JsonParse parser2 =
@@ -75,7 +75,7 @@ public class PropsParseResponseTest {
     }
 
     @Test
-    public void tstPropsParseJsonStopResponseSuccess() throws Exception {
+    public void tstPropsParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "ver");
         final JSONObject json = new JSONObject(jsonMap);

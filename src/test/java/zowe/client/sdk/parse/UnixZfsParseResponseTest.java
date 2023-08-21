@@ -54,14 +54,14 @@ public class UnixZfsParseResponseTest {
     }
 
     @Test
-    public void tstUnixZfsParseJsonStopResponseSingletonSuccess() throws Exception {
+    public void tstUnixZfsParseJsonStopResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.UNIX_ZFS);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.UNIX_ZFS);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstUnixZfsParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
+    public void tstUnixZfsParseJsonStopResponseSingletonWithDataSuccess() {
         final JsonParse parser =
                 JsonParseFactory.buildParser(ParseType.UNIX_ZFS).setJsonObject(new JSONObject());
         final JsonParse parser2 =
@@ -93,7 +93,7 @@ public class UnixZfsParseResponseTest {
     }
 
     @Test
-    public void tstUnixZfsParseJsonStopResponseSuccess() throws Exception {
+    public void tstUnixZfsParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("name", "ver");
         jsonMap.put("mode", "mode");

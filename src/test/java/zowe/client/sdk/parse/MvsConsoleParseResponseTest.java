@@ -40,14 +40,14 @@ public class MvsConsoleParseResponseTest {
     }
 
     @Test
-    public void tstMvsConsoleParseJsonStopResponseSingletonSuccess() throws Exception {
+    public void tstMvsConsoleParseJsonStopResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.MVS_CONSOLE);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.MVS_CONSOLE);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstMvsConsoleParseJsonStopResponseSingletonWithDataSuccess() throws Exception {
+    public void tstMvsConsoleParseJsonStopResponseSingletonWithDataSuccess() {
         final JsonParse parser =
                 JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).setJsonObject(new JSONObject());
         final JsonParse parser2 =
@@ -76,7 +76,7 @@ public class MvsConsoleParseResponseTest {
     }
 
     @Test
-    public void tstMvsConsoleParseJsonStopResponseSuccess() throws Exception {
+    public void tstMvsConsoleParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "ver");
         final JSONObject json = new JSONObject(jsonMap);

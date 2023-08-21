@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.ModifyJobParams;
@@ -127,7 +126,7 @@ public class JobDelete {
         // if synchronously response should contain job document that was cancelled and http return code
         // if asynchronously response should only contain http return code
         // let the caller handle the response json parsing
-        return RestUtils.getResponse(request);
+        return request.executeRequest();
     }
 
     /**
