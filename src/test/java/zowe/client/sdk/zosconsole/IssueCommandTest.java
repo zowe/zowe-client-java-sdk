@@ -78,7 +78,7 @@ public class IssueCommandTest {
     }
 
     @Test
-    public void tstIssueCommandHttpErrorFailure() throws Exception {
+    public void tstIssueCommandHttpErrorFailure() {
         HttpResponse<JsonNode> mockReply = Mockito.mock(HttpResponse.class);
 
         Mockito.when(mockReply.getStatusText()).thenReturn("Unauthorized");
