@@ -44,10 +44,7 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
     public Response executeRequest() throws UnirestException {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         HttpResponse<JsonNode> reply = Unirest.delete(url).headers(headers).asJson();
-        if (reply.getStatusText().contains("No Content")) {
-            return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
-        }
-        return getJsonResponse(reply);
+        return buildResponse(reply);
     }
 
     /**

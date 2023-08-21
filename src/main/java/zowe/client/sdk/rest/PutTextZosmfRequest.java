@@ -53,10 +53,7 @@ public class PutTextZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         ValidateUtils.checkNullParameter(body == null, "body is null");
         HttpResponse<String> reply = Unirest.put(url).headers(headers).body(body).asString();
-        if (reply.getStatusText().contains("No Content")) {
-            return new Response(reply.getStatusText(), reply.getStatus(), reply.getStatusText());
-        }
-        return new Response(reply.getBody(), reply.getStatus(), reply.getStatusText());
+        return buildResponse(reply);
     }
 
     /**

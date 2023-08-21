@@ -10,13 +10,12 @@
 package zowe.client.sdk.zosfiles.dsn.methods;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.PutTextZosmfRequest;
+import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 
@@ -105,7 +104,7 @@ public class DsnWrite {
         request.setUrl(url);
         request.setBody(content);
 
-        return RestUtils.getResponse(request);
+        return request.executeRequest();
     }
 
 }

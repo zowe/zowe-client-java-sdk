@@ -19,7 +19,6 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.input.IssueConsoleParams;
@@ -132,7 +131,7 @@ public class IssueConsole {
         request.setUrl(url);
         request.setBody(new JSONObject(issueMap).toString());
 
-        final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
+        final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no issue console response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         return ConsoleResponseService.getInstance()

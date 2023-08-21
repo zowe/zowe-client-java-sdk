@@ -18,7 +18,6 @@ import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfinfo.ZosmfConstants;
 import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
@@ -80,7 +79,7 @@ public class ZosmfStatus {
         }
         request.setUrl(url);
 
-        final String jsonStr = RestUtils.getResponse(request).getResponsePhrase()
+        final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no z/osmf status response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         return (ZosmfInfoResponse) JsonParseFactory.buildParser(ParseType.ZOSMF_INFO)

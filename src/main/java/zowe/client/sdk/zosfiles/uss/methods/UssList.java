@@ -23,7 +23,6 @@ import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
-import zowe.client.sdk.utility.RestUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.ListParams;
@@ -126,7 +125,7 @@ public class UssList {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
 
-        final Response response = RestUtils.getResponse(request);
+        final Response response = request.executeRequest();
 
         final List<UnixFile> items = new ArrayList<>();
         final String errMsg = "null uss file list response";
@@ -174,7 +173,7 @@ public class UssList {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
 
-        final Response response = RestUtils.getResponse(request);
+        final Response response = request.executeRequest();
 
         final String errMsg = "error retrieving uss zfs list";
         final List<UnixZfs> items = new ArrayList<>();

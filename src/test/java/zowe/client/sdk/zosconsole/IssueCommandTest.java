@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosconsole;
 
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +18,9 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.zosconsole.method.IssueConsole;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 
@@ -74,17 +79,32 @@ public class IssueCommandTest {
 
     @Test
     public void tstIssueCommandHttpErrorFailure() throws Exception {
-        final String obj = "Unauthorized";
-        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(obj, 401, "Unauthorized"));
-        final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
+        HttpResponse<JsonNode> mockReply = Mockito.mock(HttpResponse.class);
+
+        Mockito.when(mockReply.getStatusText()).thenReturn("Unauthorized");
+        Mockito.when(mockReply.getStatus()).thenReturn(401);
+        Mockito.when(mockReply.getBody()).thenReturn(null);
+
+        ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+
         String errorMsg = "";
+        try {
+            request.buildResponse(mockReply);
+        } catch (Exception e) {
+            errorMsg = e.getMessage();
+        }
+
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenThrow(new IllegalStateException(errorMsg));
+
+        final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
         try {
             issueCommand.issueCommand("test");
         } catch (Exception e) {
             errorMsg = String.valueOf(e);
         }
-        assertEquals("java.lang.Exception: http status error code: 401, status text: Unauthorized", errorMsg);
+        final String expectedMsg = "java.lang.IllegalStateException: http status error code: 401, " +
+                "status text: Unauthorized, response phrase: null";
+        assertEquals(expectedMsg, errorMsg);
     }
 
 }
