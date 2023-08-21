@@ -141,9 +141,15 @@ public class GetJobParams {
         private String jobId;
 
         /**
+         * Default Builder constructor
+         */
+        public Builder() {
+        }
+
+        /**
          * Builder constructor
          *
-         * @param owner owner value, required value
+         * @param owner owner value
          */
         public Builder(final String owner) {
             ValidateUtils.checkNullParameter(owner == null, "owner is null");
