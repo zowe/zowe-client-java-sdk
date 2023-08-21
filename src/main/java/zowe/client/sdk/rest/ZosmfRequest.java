@@ -70,6 +70,7 @@ public abstract class ZosmfRequest {
      * Build Response object from given HttpResponse reply
      *
      * @param reply HttpResponse object
+     * @param <T>   either JsonNode, String or byte[] type
      * @return Response object
      * @author Frank Giordano
      */
