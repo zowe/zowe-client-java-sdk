@@ -139,19 +139,17 @@ public class UssCreate {
         params.getPerms().ifPresent(perms -> createZfsMap.put("perms", perms));
         createZfsMap.put("cylsPri", params.getCylsPri().orElseThrow(
                 () -> new IllegalArgumentException("cylsPri not specified")));
-        params.getCylsSec().ifPresent(cylsSec -> createZfsMap.put("cylsSec", cylsSec));
-        params.getStorageClass().ifPresent(storageClass -> createZfsMap.put("storageClass", storageClass));
-        params.getManagementClass().ifPresent(managementClass -> createZfsMap.put("managementClass", managementClass));
-        params.getDataClass().ifPresent(dataClass -> createZfsMap.put("dataClass", dataClass));
-        final StringBuilder volumesStr = new StringBuilder();
+        params.getCylsSec().ifPresent(cs -> createZfsMap.put("cylsSec", cs));
+        params.getStorageClass().ifPresent(sc -> createZfsMap.put("storageClass", sc));
+        params.getManagementClass().ifPresent(mc -> createZfsMap.put("managementClass", mc));
+        params.getDataClass().ifPresent(dc -> createZfsMap.put("dataClass", dc));
         if (params.getVolumes().size() == 1) {
-            volumesStr.append("[\"").append(params.getVolumes().get(0)).append("\"]");
-            createZfsMap.put("volumes", volumesStr);
+            createZfsMap.put("volumes", "[\"" + params.getVolumes().get(0) + "\"]");
         }
         if (params.getVolumes().size() > 1) {
+            final StringBuilder volumesStr = new StringBuilder();
             params.getVolumes().forEach(volume -> volumesStr.append("\"").append(volume).append("\","));
-            final String result = "[" + volumesStr.substring(0, volumesStr.length() - 1) + "]";
-            createZfsMap.put("volumes", result);
+            createZfsMap.put("volumes", "[" + volumesStr.substring(0, volumesStr.length() - 1) + "]");
         }
         createZfsMap.put("JSONversion", 1);
 
