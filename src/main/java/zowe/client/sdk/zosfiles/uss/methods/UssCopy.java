@@ -103,7 +103,7 @@ public class UssCopy {
         final Map<String, Object> copyMap = new HashMap<>();
         copyMap.put("request", "copy");
         copyMap.put("from", FileUtils.validatePath(params.getFrom()
-                .orElseThrow(() -> new IllegalStateException("uss copy /'from/' not specified"))));
+                .orElseThrow(() -> new IllegalStateException("copy /'from/' not specified"))));
         if (!params.isOverwrite()) {
             copyMap.put("overwrite", "false");
         }
