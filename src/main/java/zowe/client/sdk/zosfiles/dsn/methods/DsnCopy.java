@@ -165,7 +165,8 @@ public class DsnCopy {
         if (isMemberNameIncluded(fromDataSetName)) {
             // member exist extract it
             final int startMemberIndex = fromDataSetName.indexOf("(");
-            String member = fromDataSetName.substring(startMemberIndex + 1, fromDataSetName.length() - 1);
+            final String member = fromDataSetName
+                    .substring(startMemberIndex + 1, fromDataSetName.length() - 1);
             fromDataSetReq.put("member", member);
             // reassign fromDataSetName to dataSet value without member
             fromDataSetName = fromDataSetName.substring(0, startMemberIndex);
