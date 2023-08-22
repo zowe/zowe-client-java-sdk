@@ -107,7 +107,7 @@ public class DsnList {
     private <T> java.util.List<T> getResult(final Response response, final List<T> datasetLst,
                                             final List<T> memberLst) throws Exception {
         if (response.getStatusCode().isEmpty()) {
-            LOG.debug("no dsn list status code returned");
+            LOG.debug("status code not returned");
             if (datasetLst == null) {
                 return memberLst;
             } else {
@@ -116,7 +116,7 @@ public class DsnList {
         }
 
         if (response.getResponsePhrase().isEmpty()) {
-            LOG.debug("no dsn list response phrase returned");
+            LOG.debug("response phrase not returned");
             if (datasetLst == null) {
                 return memberLst;
             } else {
@@ -127,7 +127,7 @@ public class DsnList {
         final int statusCode = response.getStatusCode().getAsInt();
         if (!(statusCode >= 100 && statusCode <= 299)) {
             if (response.getStatusText().isEmpty()) {
-                LOG.debug("no no dsn list status text returned");
+                LOG.debug("status text not returned");
                 if (datasetLst == null) {
                     return memberLst;
                 } else {
@@ -136,7 +136,8 @@ public class DsnList {
             }
             LOG.debug("rest status code {}", response.getStatusCode().getAsInt());
             LOG.debug("rest status text {}", response.getStatusText().get());
-            final String errMsg = statusCode + " - " + response.getResponsePhrase().get();
+            final String errMsg = "http status error code: " + statusCode + ", status text: " +
+                    response.getStatusText().get()  + ", response phrase: " + response.getResponsePhrase().get();
             throw new IllegalStateException(errMsg);
         }
 
