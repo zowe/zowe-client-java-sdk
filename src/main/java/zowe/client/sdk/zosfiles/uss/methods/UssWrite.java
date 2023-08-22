@@ -71,11 +71,10 @@ public class UssWrite {
      * @param fileNamePath file name with path
      * @param content      string content to write to file
      * @return Response object
-     * @throws Exception processing error
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public Response writeText(final String fileNamePath, final String content) throws Exception {
+    public Response writeText(final String fileNamePath, final String content) {
         return writeCommon(fileNamePath, new WriteParams.Builder().textContent(content).build());
     }
 
@@ -85,11 +84,10 @@ public class UssWrite {
      * @param fileNamePath file name with path
      * @param content      binary content to write to file
      * @return Response object
-     * @throws Exception processing error
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public Response writeBinary(final String fileNamePath, final byte[] content) throws Exception {
+    public Response writeBinary(final String fileNamePath, final byte[] content) {
         return writeCommon(fileNamePath, new WriteParams.Builder().binaryContent(content).binary(true).build());
     }
 

@@ -76,10 +76,9 @@ public class UssChangeTag {
      *
      * @param fileNamePath file name with path
      * @return Response Object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response changeToBinary(final String fileNamePath) throws Exception {
+    public Response changeToBinary(final String fileNamePath) {
         return changeCommon(fileNamePath, new ChangeTagParams.Builder()
                 .action(ChangeTagAction.SET).type(ChangeTagType.BINARY).build());
     }
@@ -90,10 +89,9 @@ public class UssChangeTag {
      * @param fileNamePath file name with path
      * @param codeSet      code set name. i.e. IBM-1047
      * @return Response Object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response changeToText(final String fileNamePath, final String codeSet) throws Exception {
+    public Response changeToText(final String fileNamePath, final String codeSet) {
         ValidateUtils.checkNullParameter(codeSet == null, "codeSet is null");
         ValidateUtils.checkIllegalParameter(codeSet.isBlank(), "codeSet not specified");
 

@@ -68,11 +68,10 @@ public class UssGet {
      *
      * @param fileNamePath file name with path
      * @return the byte array contents of the file
-     * @throws Exception processing error
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public byte[] getBinary(final String fileNamePath) throws Exception {
+    public byte[] getBinary(final String fileNamePath) {
         GetParams params = new GetParams.Builder().binary(true).build();
         Response response = getCommon(fileNamePath, params);
         return (byte[]) response.getResponsePhrase().orElse(new byte[0]);
