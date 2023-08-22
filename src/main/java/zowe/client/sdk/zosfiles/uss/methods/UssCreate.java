@@ -130,7 +130,7 @@ public class UssCreate {
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +
-                EncodeUtils.encodeURIComponent(FileUtils.validatePath(fileSystemName)));
+                EncodeUtils.encodeURIComponent(fileSystemName));
         params.getTimeout().ifPresent(timeout -> url.append("?timeout=").append(timeout));
 
         final Map<String, Object> createZfsMap = new HashMap<>();
@@ -143,7 +143,17 @@ public class UssCreate {
         params.getStorageClass().ifPresent(storageClass -> createZfsMap.put("storageClass", storageClass));
         params.getManagementClass().ifPresent(managementClass -> createZfsMap.put("managementClass", managementClass));
         params.getDataClass().ifPresent(dataClass -> createZfsMap.put("dataClass", dataClass));
-        // set volumes
+        final StringBuilder volumesStr = new StringBuilder();
+        if (params.getVolumes().size() == 1) {
+            volumesStr.append("[\"").append(params.getVolumes().get(0)).append("\"]");
+            createZfsMap.put("volumes", volumesStr);
+        }
+        if (params.getVolumes().size() > 1) {
+            params.getVolumes().forEach(volume -> volumesStr.append("\"").append(volume).append("\","));
+            final String result = "[" + volumesStr.substring(0, volumesStr.length() - 1) + "]";
+            createZfsMap.put("volumes", result);
+        }
+        createZfsMap.put("JSONversion", 1);
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);

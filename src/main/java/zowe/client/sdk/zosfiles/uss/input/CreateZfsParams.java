@@ -406,17 +406,6 @@ public class CreateZfsParams {
         }
 
         /**
-         * Set cylsPri int value
-         *
-         * @param cylsPri int value
-         * @return Builder this object
-         */
-        public Builder cylsPri(final Integer cylsPri) {
-            this.cylsPri = cylsPri;
-            return this;
-        }
-
-        /**
          * Set cylsSec int value
          *
          * @param cylsSec int value
@@ -492,7 +481,6 @@ public class CreateZfsParams {
             this.system = system;
             return this;
         }
-
 
         /**
          * Return CreateZfsParams object based on Builder this object
