@@ -104,8 +104,8 @@ public class DsnList {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    private <T> java.util.List<T> getResult(final Response response, final List<T> datasetLst, final List<T> memberLst)
-            throws Exception {
+    private <T> java.util.List<T> getResult(final Response response, final List<T> datasetLst,
+                                            final List<T> memberLst) throws Exception {
         if (response.getStatusCode().isEmpty()) {
             LOG.debug("no dsn list status code returned");
             if (datasetLst == null) {
@@ -136,7 +136,8 @@ public class DsnList {
             }
             LOG.debug("rest status code {}", response.getStatusCode().getAsInt());
             LOG.debug("rest status text {}", response.getStatusText().get());
-            throw new Exception(response.getStatusCode().getAsInt() + " - " + response.getResponsePhrase().get());
+            final String errMsg = response.getStatusCode().getAsInt() + " - " + response.getResponsePhrase().get();
+            throw new IllegalStateException(errMsg);
         }
 
         final String jsonStr = response.getResponsePhrase().get().toString();
