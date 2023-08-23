@@ -54,7 +54,7 @@ public class UssCopyTest {
     @Test
     public void tstUssCopyRecursiveSuccess() throws Exception {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
-        final Response response = ussCopy.copy("/xxx/xx/xx",
+        final Response response = ussCopy.copyCommon("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").recursive(true).build());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
@@ -64,7 +64,7 @@ public class UssCopyTest {
     @Test
     public void tstUssCopyOverwriteSuccess() throws Exception {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
-        final Response response = ussCopy.copy("/xxx/xx/xx",
+        final Response response = ussCopy.copyCommon("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").overwrite(true).build());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
@@ -163,7 +163,7 @@ public class UssCopyTest {
     public void tstUssCopyNullParamsFailure() {
         String errMsg = "";
         try {
-            ussCopy.copy("/xxx/xx/xx", (CopyParams) null);
+            ussCopy.copyCommon("/xxx/xx/xx", (CopyParams) null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -174,7 +174,7 @@ public class UssCopyTest {
     public void tstUssCopyNullFromInParamsFailure() {
         String errMsg = "";
         try {
-            ussCopy.copy("/xxx/xx/xx", new CopyParams.Builder().from(null).build());
+            ussCopy.copyCommon("/xxx/xx/xx", new CopyParams.Builder().from(null).build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -185,7 +185,7 @@ public class UssCopyTest {
     public void tstUssCopyEmptyFromInParamsFailure() {
         String errMsg = "";
         try {
-            ussCopy.copy("/xxx/xx/xx", new CopyParams.Builder().from("").build());
+            ussCopy.copyCommon("/xxx/xx/xx", new CopyParams.Builder().from("").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -196,7 +196,7 @@ public class UssCopyTest {
     public void tstUssCopyEmptyFromInParamsWithSpacesFailure() {
         String errMsg = "";
         try {
-            ussCopy.copy("/xxx/xx/xx", new CopyParams.Builder().from("   ").build());
+            ussCopy.copyCommon("/xxx/xx/xx", new CopyParams.Builder().from("   ").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -207,7 +207,7 @@ public class UssCopyTest {
     public void tstUssCopyInvalidTargetPathWithParamsFailure() {
         String errMsg = "";
         try {
-            ussCopy.copy("name", new CopyParams.Builder().from("/xxx/xx/xx").build());
+            ussCopy.copyCommon("name", new CopyParams.Builder().from("/xxx/xx/xx").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -218,7 +218,7 @@ public class UssCopyTest {
     public void tstUssCopyInvalidFromPathInParamsFailure() {
         String errMsg = "";
         try {
-            ussCopy.copy("/xxx/xx/xx", new CopyParams.Builder().from("name").build());
+            ussCopy.copyCommon("/xxx/xx/xx", new CopyParams.Builder().from("name").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
