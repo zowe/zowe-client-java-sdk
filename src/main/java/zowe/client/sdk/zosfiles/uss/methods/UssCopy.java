@@ -79,7 +79,7 @@ public class UssCopy {
      * @author Frank Giordano
      */
     public Response copy(final String fromPath, final String targetPath) throws Exception {
-        return copy(targetPath, new CopyParams.Builder().from(fromPath).build());
+        return copyCommon(targetPath, new CopyParams.Builder().from(fromPath).build());
     }
 
     /**
@@ -91,7 +91,7 @@ public class UssCopy {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response copy(final String targetPath, final CopyParams params) {
+    public Response copyCommon(final String targetPath, final CopyParams params) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
