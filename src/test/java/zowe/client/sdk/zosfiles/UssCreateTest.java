@@ -43,7 +43,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstUssCreateSuccess() throws Exception {
+    public void tstUssCreateSuccess() {
         Mockito.when(mockJsonPostRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         final UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequest);
@@ -163,7 +163,7 @@ public class UssCreateTest {
         assertEquals("specify valid permission value", errMsg);
     }
 
-    
+
     @Test
     public void tstUssCreateZfsCommonNullCylsPriFailure() {
         String errMsg = "";

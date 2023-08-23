@@ -42,7 +42,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChangeModeSuccess() throws Exception {
+    public void tstUssChangeModeSuccess() {
         final UssChangeMode ussChangeMode = new UssChangeMode(connection, mockJsonPutRequest);
         final Response response = ussChangeMode.change("/xxx/xx/xx",
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
@@ -52,7 +52,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChangeModeWithRecursiveInParamsSuccess() throws Exception {
+    public void tstUssChangeModeWithRecursiveInParamsSuccess() {
         final UssChangeMode ussChangeMode = new UssChangeMode(connection, mockJsonPutRequest);
         final Response response = ussChangeMode.change("/xxx/xx/xx",
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").recursive(true).build());

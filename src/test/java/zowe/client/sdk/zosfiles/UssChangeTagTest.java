@@ -43,7 +43,7 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeToBinarySuccess() throws Exception {
+    public void tstUssChangeTagChangeToBinarySuccess() {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.changeToBinary("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -52,7 +52,7 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeToTextSuccess() throws Exception {
+    public void tstUssChangeTagChangeToTextSuccess() {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.changeToText("/xxx/xx/xx", "IBM-1047");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -79,7 +79,7 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeCommonSuccess() throws Exception {
+    public void tstUssChangeTagChangeCommonSuccess() {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.changeCommon("/xxx/xx/xx",
                 new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
@@ -89,7 +89,7 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeCommonWithSpacesInFileNamePathSuccess() throws Exception {
+    public void tstUssChangeTagChangeCommonWithSpacesInFileNamePathSuccess() {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.changeCommon("/xx x/x x/x x",
                 new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());

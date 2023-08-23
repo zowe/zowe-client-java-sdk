@@ -40,7 +40,7 @@ public class GetJobsByTextGetRequestTest {
     }
 
     @Test
-    public void tstGetSpoolContentByIdSuccess() throws Exception {
+    public void tstGetSpoolContentByIdSuccess() {
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response("1\n2\n3\n", 200, "success"));
 

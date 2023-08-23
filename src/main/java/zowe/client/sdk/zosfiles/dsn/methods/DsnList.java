@@ -137,7 +137,7 @@ public class DsnList {
             LOG.debug("rest status code {}", response.getStatusCode().getAsInt());
             LOG.debug("rest status text {}", response.getStatusText().get());
             final String errMsg = "http status error code: " + statusCode + ", status text: " +
-                    response.getStatusText().get()  + ", response phrase: " + response.getResponsePhrase().get();
+                    response.getStatusText().get() + ", response phrase: " + response.getResponsePhrase().get();
             throw new IllegalStateException(errMsg);
         }
 

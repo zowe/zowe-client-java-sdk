@@ -41,7 +41,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteTextSuccess() throws Exception {
+    public void tstUssWriteTextSuccess() {
         final PutTextZosmfRequest mockTextPutRequest = Mockito.mock(PutTextZosmfRequest.class);
         Mockito.when(mockTextPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
@@ -53,7 +53,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteBinarySuccess() throws Exception {
+    public void tstUssWriteBinarySuccess() {
         final PutStreamZosmfRequest mockStreamPutRequest = Mockito.mock(PutStreamZosmfRequest.class);
         Mockito.when(mockStreamPutRequest.executeRequest()).thenReturn(
                 new Response(new byte[0], 200, "success"));

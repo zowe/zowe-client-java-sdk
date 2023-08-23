@@ -59,7 +59,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetBinaryFileTargetPathSuccess() throws Exception {
+    public void tstGetBinaryFileTargetPathSuccess() {
         final GetStreamZosmfRequest mockStreamGetRequest = Mockito.mock(GetStreamZosmfRequest.class);
         final byte[] data = "data".getBytes();
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(
@@ -70,7 +70,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetBinaryFileTargetPathDefaultResponseSuccess() throws Exception {
+    public void tstGetBinaryFileTargetPathDefaultResponseSuccess() {
         final GetStreamZosmfRequest mockStreamGetRequest = Mockito.mock(GetStreamZosmfRequest.class);
         final byte[] data = new byte[0];
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(

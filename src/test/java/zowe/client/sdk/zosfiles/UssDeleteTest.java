@@ -51,7 +51,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteRecursiveSuccess() throws Exception {
+    public void tstUssDeleteRecursiveSuccess() {
         final UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
         final Response response = ussDelete.delete("/xxx/xx/xx", true);
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());

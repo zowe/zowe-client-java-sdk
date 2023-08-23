@@ -51,7 +51,7 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstUssChangeOwnerRecursiveSuccess() throws Exception {
+    public void tstUssChangeOwnerRecursiveSuccess() {
         final UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequest);
         final Response response = ussChangeOwner.changeCommon("/xxx/xx/xx",
                 new ChangeOwnerParams.Builder().owner("user").recursive(true).build());
@@ -108,7 +108,7 @@ public class UssChangeOwnerTest {
     public void tstUssChangeOwnerNullParamsFailure() {
         String errMsg = "";
         try {
-            ussChangeOwner.changeCommon("/xxx/xx/xx", (ChangeOwnerParams) null);
+            ussChangeOwner.changeCommon("/xxx/xx/xx", null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -141,7 +141,7 @@ public class UssChangeOwnerTest {
     public void tstUssChangeOwnerNullOwnerFailure() {
         String errMsg = "";
         try {
-            ussChangeOwner.change("/xxx/xx/xx", (String) null);
+            ussChangeOwner.change("/xxx/xx/xx", null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }

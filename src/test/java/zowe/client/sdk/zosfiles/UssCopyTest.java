@@ -52,7 +52,7 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyRecursiveSuccess() throws Exception {
+    public void tstUssCopyRecursiveSuccess() {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copyCommon("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").recursive(true).build());
@@ -62,7 +62,7 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyOverwriteSuccess() throws Exception {
+    public void tstUssCopyOverwriteSuccess() {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copyCommon("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").overwrite(true).build());
@@ -130,7 +130,7 @@ public class UssCopyTest {
     public void tstUssCopyNullTargetPathFailure() {
         String errMsg = "";
         try {
-            ussCopy.copy("/xxx/xx/xx", (String) null);
+            ussCopy.copy("/xxx/xx/xx", null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -163,7 +163,7 @@ public class UssCopyTest {
     public void tstUssCopyNullParamsFailure() {
         String errMsg = "";
         try {
-            ussCopy.copyCommon("/xxx/xx/xx", (CopyParams) null);
+            ussCopy.copyCommon("/xxx/xx/xx", null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
