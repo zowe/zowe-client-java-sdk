@@ -32,7 +32,10 @@ public final class WaitUtil {
      */
     public static void wait(final int time) {
         final Timer timer = new Timer(time).initialize();
-        while (!timer.isEnded()) {
+        while (true) {
+            if (timer.isEnded()) {
+                break;
+            }
         }
     }
 
