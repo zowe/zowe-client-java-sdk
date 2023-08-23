@@ -138,7 +138,7 @@ public class UssCreate {
         params.getGroup().ifPresent(group -> createZfsMap.put("group", group));
         params.getPerms().ifPresent(perms -> createZfsMap.put("perms", perms));
         createZfsMap.put("cylsPri", params.getCylsPri().orElseThrow(
-                () -> new IllegalArgumentException("cylsPri not specified")));
+                () -> new IllegalStateException("cylsPri not specified")));
         params.getCylsSec().ifPresent(cs -> createZfsMap.put("cylsSec", cs));
         params.getStorageClass().ifPresent(sc -> createZfsMap.put("storageClass", sc));
         params.getManagementClass().ifPresent(mc -> createZfsMap.put("managementClass", mc));
