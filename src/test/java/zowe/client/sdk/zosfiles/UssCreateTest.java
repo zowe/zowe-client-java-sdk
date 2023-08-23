@@ -162,4 +162,82 @@ public class UssCreateTest {
         assertEquals("specify valid permission value", errMsg);
     }
 
+    
+    @Test
+    public void tstUssCreateZfsCommonNullCylsPriFailure() {
+        String errMsg = "";
+        try {
+            ussCreate.createZfsCommon("xx.xx.x", new CreateZfsParams.Builder(null).build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("cylsPri is null", errMsg);
+    }
+
+    @Test
+    public void tstUssCreateZfsCommonZeroCylsPriFailure2() {
+        String errMsg = "";
+        try {
+            ussCreate.createZfsCommon("xx.xx.x", new CreateZfsParams.Builder(0).build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specify cylsPri greater than 0", errMsg);
+    }
+
+    @Test
+    public void tstUssCreateZfsCommonNullFileSystemNameFailure() {
+        String errMsg = "";
+        try {
+            ussCreate.createZfsCommon(null, new CreateZfsParams.Builder(2).build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileSystemName is null", errMsg);
+    }
+
+    @Test
+    public void tstUssCreateZfsCommonEmptyFileSystemNameFailure() {
+        String errMsg = "";
+        try {
+            ussCreate.createZfsCommon("", new CreateZfsParams.Builder(2).build());
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileSystemName not specified", errMsg);
+    }
+
+    @Test
+    public void tstUssCreateZfsCommonNullParamsFailure() {
+        String errMsg = "";
+        try {
+            ussCreate.createZfsCommon("xx.xx.x", null);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("params is null", errMsg);
+    }
+
+    @Test
+    public void tstUssCreateZfsNullFileSystemNameFailure() {
+        String errMsg = "";
+        try {
+            ussCreate.createZfs(null);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileSystemName is null", errMsg);
+    }
+
+    @Test
+    public void tstUssCreateZfEmptyFileSystemNameFailure() {
+        String errMsg = "";
+        try {
+            ussCreate.createZfs("");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("fileSystemName not specified", errMsg);
+    }
+
 }
