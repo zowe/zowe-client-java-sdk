@@ -112,7 +112,7 @@ public class UssCreate {
      * @author Frank Giordano
      */
     public Response createZfs(String fileSystemName) {
-        return createZfs(fileSystemName, new CreateZfsParams.Builder(10).cylsSec(2).timeout(20).build());
+        return createZfsCommon(fileSystemName, new CreateZfsParams.Builder(10).cylsSec(2).timeout(20).build());
     }
 
     /**
@@ -123,7 +123,7 @@ public class UssCreate {
      * @return Response object
      * @author Frank Giordano
      */
-    public Response createZfs(String fileSystemName, CreateZfsParams params) {
+    public Response createZfsCommon(String fileSystemName, CreateZfsParams params) {
         ValidateUtils.checkNullParameter(fileSystemName == null, "fileSystemName is null");
         ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "fileSystemName not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
