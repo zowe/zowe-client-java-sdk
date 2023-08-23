@@ -53,7 +53,7 @@ public class UssChangeOwnerTest {
     @Test
     public void tstUssChangeOwnerRecursiveSuccess() throws Exception {
         final UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequest);
-        final Response response = ussChangeOwner.change("/xxx/xx/xx",
+        final Response response = ussChangeOwner.changeCommon("/xxx/xx/xx",
                 new ChangeOwnerParams.Builder().owner("user").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
@@ -108,7 +108,7 @@ public class UssChangeOwnerTest {
     public void tstUssChangeOwnerNullParamsFailure() {
         String errMsg = "";
         try {
-            ussChangeOwner.change("/xxx/xx/xx", (ChangeOwnerParams) null);
+            ussChangeOwner.changeCommon("/xxx/xx/xx", (ChangeOwnerParams) null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -119,7 +119,7 @@ public class UssChangeOwnerTest {
     public void tstUssChangeOwnerNoOwnerSpecifiedInParamsFailure() {
         String errMsg = "";
         try {
-            ussChangeOwner.change("/xxx/xx/xx", new ChangeOwnerParams.Builder().build());
+            ussChangeOwner.changeCommon("/xxx/xx/xx", new ChangeOwnerParams.Builder().build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -130,7 +130,7 @@ public class UssChangeOwnerTest {
     public void tstUssChangeOwnerInvalidTargetPathWithParamsFailure() {
         String errMsg = "";
         try {
-            ussChangeOwner.change("name", new ChangeOwnerParams.Builder().build());
+            ussChangeOwner.changeCommon("name", new ChangeOwnerParams.Builder().build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
