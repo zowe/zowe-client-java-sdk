@@ -18,6 +18,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.CreateParams;
+import zowe.client.sdk.zosfiles.uss.input.CreateZfsParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssCreate;
 import zowe.client.sdk.zosfiles.uss.types.CreateType;
 
