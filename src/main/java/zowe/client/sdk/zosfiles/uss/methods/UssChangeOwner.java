@@ -76,7 +76,7 @@ public class UssChangeOwner {
      * @author James Kostrewski
      */
     public Response change(final String targetPath, final String owner) throws Exception {
-        return change(targetPath, new ChangeOwnerParams.Builder().owner(owner).build());
+        return changeCommon(targetPath, new ChangeOwnerParams.Builder().owner(owner).build());
     }
 
     /**
@@ -88,7 +88,7 @@ public class UssChangeOwner {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response change(final String targetPath, final ChangeOwnerParams params) {
+    public Response changeCommon(final String targetPath, final ChangeOwnerParams params) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
