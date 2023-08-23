@@ -87,10 +87,9 @@ public class JobGet {
      *
      * @param job job for which you would like to retrieve JCL
      * @return JCL content
-     * @throws Exception error on getting jcl content
      * @author Frank Giordano
      */
-    public String getJclByJob(final Job job) throws Exception {
+    public String getJclByJob(final Job job) {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return getJclCommon(new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse("")));
     }

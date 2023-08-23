@@ -33,10 +33,9 @@ public class ZosGetLogTst extends TstZosConnection {
      * z/OS SYSLOG retrieval functionality.
      *
      * @param args for main not used
-     * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         GetZosLog getZosLog = new GetZosLog(connection);
         ZosLogParams zosLogParams = new ZosLogParams.Builder()

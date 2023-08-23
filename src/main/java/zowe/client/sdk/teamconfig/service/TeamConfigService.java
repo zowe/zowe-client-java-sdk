@@ -44,11 +44,10 @@ public class TeamConfigService {
      * @param name       Partition name
      * @param jsonObject JSONObject object
      * @return Partition object
-     * @throws Exception error processing
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    private Partition getPartition(final String name, final JSONObject jsonObject) throws Exception {
+    private Partition getPartition(final String name, final JSONObject jsonObject) {
         final Set<String> keyObjs = jsonObject.keySet();
         final List<Profile> profiles = new ArrayList<>();
         Map<String, String> properties = new HashMap<>();
@@ -113,11 +112,10 @@ public class TeamConfigService {
      *
      * @param jsonObj JSONObject object
      * @return ConfigContainer object
-     * @throws Exception error processing
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    private ConfigContainer parseJson(final JSONObject jsonObj) throws Exception {
+    private ConfigContainer parseJson(final JSONObject jsonObj) {
         String schema = null;
         Boolean autoStore = null;
         final List<Profile> profiles = new ArrayList<>();

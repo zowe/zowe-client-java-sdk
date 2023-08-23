@@ -98,10 +98,9 @@ public class JobCancel {
      *                the system will attempt to process the request synchronously, if such processing is supported on
      *                the target JES2 subsystem.
      * @return job document with details about the submitted job
-     * @throws Exception error canceling
      * @author Frank Giordano
      */
-    public Response cancelByJob(final Job job, final String version) throws Exception {
+    public Response cancelByJob(final Job job, final String version) {
         return this.cancelCommon(
                 new ModifyJobParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
                         .version(version)

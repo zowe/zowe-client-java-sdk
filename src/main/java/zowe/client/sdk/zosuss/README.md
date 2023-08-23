@@ -24,10 +24,9 @@ public class USSCommand {
      * Main method defines SSH connection and showcases executing USS commands.
      *
      * @param args for main not used
-     * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         int portNum = 0; // replace with valid value
         SshConnection conn = new SshConnection("xxx", portNum, "xxx", "xxx");
         IssueUss shell = new IssueUss(conn);

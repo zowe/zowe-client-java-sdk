@@ -49,10 +49,9 @@ public class CreateDatasetTst extends TstZosConnection {
      * Create a new sequential dataset
      *
      * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
-     * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public static void createSequentialDataSet(String dataSetName) throws Exception {
+    public static void createSequentialDataSet(String dataSetName) {
         DsnCreate dsnCreate = new DsnCreate(connection);
         Response response = dsnCreate.create(dataSetName, sequential());
         System.out.println("http response code " + response.getStatusCode());
@@ -62,10 +61,9 @@ public class CreateDatasetTst extends TstZosConnection {
      * Create a new partition dataset
      *
      * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
-     * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public static void createPartitionDataSet(String dataSetName) throws Exception {
+    public static void createPartitionDataSet(String dataSetName) {
         DsnCreate dsnCreate = new DsnCreate(connection);
         Response response = dsnCreate.create(dataSetName, partitioned());
         System.out.println("http response code " + response.getStatusCode());
@@ -224,8 +222,7 @@ public class CopyDatasetTst extends TstZosConnection {
      * @throws Exception error processing copy request
      * @author Frank Giordano
      */
-    public static void copyDataset(ZosConnection connection, String fromDataSetName, String toDataSetName)
-            throws Exception {
+    public static void copyDataset(ZosConnection connection, String fromDataSetName, String toDataSetName) {
         DsnCopy dsnCopy = new DsnCopy(connection);
         Response response = dsnCopy.copy(fromDataSetName, toDataSetName, true, false);
         System.out.println("http response code " + response.getStatusCode());
@@ -250,7 +247,7 @@ public class CopyDatasetTst extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void copyDatasetByCopyParams(zowe.client.sdk.core.ZosConnection connection, String fromDataSetName,
-                                               String toDataSetName) throws Exception {
+                                               String toDataSetName) {
         DsnCopy dsnCopy = new DsnCopy(connection);
         // 'replace' builder variable here will be true by default if not specified in builder.
         // 'copyAllMembers' builder variable here will be false by default
@@ -270,11 +267,10 @@ public class CopyDatasetTst extends TstZosConnection {
      * @param connection      ZOSConnection
      * @param fromDataSetName source dataset (e.g. 'SOURCE.PARTITION.DATASET')
      * @param toDataSetName   destination dataset (e.g. 'TARGET.PARTITION.DATASET')
-     * @throws Exception error processing copy request
      * @author Frank Giordano
      */
     public static void copyFullPartitionDatasetByCopyParams(ZosConnection connection, String fromDataSetName,
-                                                            String toDataSetName) throws Exception {
+                                                            String toDataSetName) {
         DsnCopy dsnCopy = new DsnCopy(connection);
         // 'replace' here will be true by default if not specified in builder.
         CopyParams copyParams = new CopyParams.Builder()

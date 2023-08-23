@@ -134,10 +134,9 @@ public class JobDelete {
      * @param job     job document wanting to delete
      * @param version version number, see ModifyJobParams object for version options
      * @return http response object
-     * @throws Exception error deleting
      * @author Frank Giordano
      */
-    public Response deleteByJob(final Job job, final String version) throws Exception {
+    public Response deleteByJob(final Job job, final String version) {
         return this.deleteCommon(
                 new ModifyJobParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
                         .version(version)
