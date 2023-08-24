@@ -9,7 +9,9 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -27,6 +29,8 @@ import java.util.Map;
 
 /**
  * Provides Unix System Services (USS) getfacl functionality
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
  * @version 2.0
@@ -64,15 +68,37 @@ public class UssGetAcl {
             this.request = request;
         }
 
+        public String getAclWithCommas(String fileNamePath) throws Exception {
+            Response response = getAclCommon(fileNamePath, new GetAclParams.Builder().useCommas(true).build());
+            final JSONParser parser = new JSONParser();
+            final JSONObject json = (JSONObject) parser.parse(response.getResponsePhrase().get().toString());
+            JSONArray jsonArray = (JSONArray) json.get("stdout");
+            StringBuilder sb = new StringBuilder();
+            jsonArray.forEach(item -> sb.append(item.toString()));
+
+            return sb.toString();
+        }
+
+        public String getAcl(String fileNamePath) throws Exception {
+            Response response = getAclCommon(fileNamePath, new GetAclParams.Builder().build());
+            final JSONParser parser = new JSONParser();
+            final JSONObject json = (JSONObject) parser.parse(response.getResponsePhrase().get().toString());
+            JSONArray jsonArray = (JSONArray) json.get("stdout");
+            StringBuilder sb = new StringBuilder();
+            jsonArray.forEach(item -> sb.append(item.toString() + "\n"));
+
+            return sb.toString();
+        }
+
         /**
         * Get the ACL for a USS file or directory
         *
         * @param fileNamePath file name with path
          * @param params GetAclParams object to drive the request
-        * @return Response object
+        * @return String representation of facl response phrase
         * @throws Exception processing error
         */
-        public Response getAcl(String fileNamePath, GetAclParams params) throws Exception {
+        public Response getAclCommon(String fileNamePath, GetAclParams params) throws Exception {
             ValidateUtils.checkNullParameter(fileNamePath == null, "path is null");
             ValidateUtils.checkIllegalParameter(fileNamePath.trim().isBlank(), "path is empty");
             ValidateUtils.checkNullParameter(params == null, "params is null");
@@ -82,14 +108,15 @@ public class UssGetAcl {
                     EncodeUtils.encodeURIComponent(FileUtils.validatePath(fileNamePath));
 
             final Map<String, Object> getFaclMap = new HashMap<>();
+            getFaclMap.put("request", "getfacl");
             params.getType().ifPresent(type -> getFaclMap.put("type", type));
             params.getUser().ifPresent(user -> getFaclMap.put("user", user));
             if (params.getUseCommas())
-                getFaclMap.put("useCommas", params.getUseCommas());
+                getFaclMap.put("use-commas", params.getUseCommas());
             if (params.getSuppressHeader())
-                getFaclMap.put("suppressHeader", params.getSuppressHeader());
+                getFaclMap.put("suppress-header", params.getSuppressHeader());
             if (params.getSuppressBaseAcl())
-                getFaclMap.put("suppressBaseAcl", params.getSuppressBaseAcl());
+                getFaclMap.put("suppress-baseacl", params.getSuppressBaseAcl());
 
             if (request == null) {
                 request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -97,6 +124,12 @@ public class UssGetAcl {
             request.setUrl(url);
             request.setBody(new JSONObject(getFaclMap).toString());
 
-            return request.executeRequest();
+            Response response = request.executeRequest();
+
+            return response;
+
         }
+
+
+
 }
