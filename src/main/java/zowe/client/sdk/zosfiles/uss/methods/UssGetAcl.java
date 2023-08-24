@@ -94,7 +94,7 @@ public class UssGetAcl {
         if (commas) {
             jsonArray.forEach(item -> sb.append(item.toString()));
         } else {
-            jsonArray.forEach(item -> sb.append(item.toString() + "\n"));
+            jsonArray.forEach(item -> sb.append(item.toString()).append("\n"));
         }
         return sb.toString();
     }

@@ -80,7 +80,7 @@ public class UssExtAttr {
         final JSONObject json = (JSONObject) parser.parse(response.getResponsePhrase().get().toString());
         final JSONArray jsonArray = (JSONArray) json.get("stdout");
         final StringBuilder sb = new StringBuilder();
-        jsonArray.forEach(item -> sb.append(item.toString() + "\n"));
+        jsonArray.forEach(item -> sb.append(item.toString()).append("\n"));
         return sb.toString();
     }
 
