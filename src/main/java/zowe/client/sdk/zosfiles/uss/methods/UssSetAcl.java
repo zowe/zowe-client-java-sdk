@@ -78,7 +78,7 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     public Response set(String targetPath, String value) {
-        return common(targetPath, new SetAclParams.Builder().setSet(value).build());
+        return setAclCommon(targetPath, new SetAclParams.Builder().setSet(value).build());
     }
 
     /**
@@ -90,7 +90,7 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     public Response modify(String targetPath, String value) {
-        return common(targetPath, new SetAclParams.Builder().setModify(value).build());
+        return setAclCommon(targetPath, new SetAclParams.Builder().setModify(value).build());
     }
 
     /**
@@ -102,7 +102,7 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     public Response delete(String targetPath, String value) {
-        return common(targetPath, new SetAclParams.Builder().setDelete(value).build());
+        return setAclCommon(targetPath, new SetAclParams.Builder().setDelete(value).build());
     }
 
     /**
@@ -113,18 +113,18 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     public Response deleteByType(String targetPath, DeleteType deleteType) {
-        return common(targetPath, new SetAclParams.Builder().setDeleteType(deleteType).build());
+        return setAclCommon(targetPath, new SetAclParams.Builder().setDeleteType(deleteType).build());
     }
 
     /**
-     * Sets the ACL for a USS file or directory
+     * Sets the ACL for a USS file or directory request driven by SetAclParams object settings
      *
      * @param targetPath target path of the file or directory
-     * @param params     GetAclParams object to drive the request
+     * @param params     SetAclParams object to drive the request
      * @return Response object
      * @author James Kostrewski
      */
-    public Response common(String targetPath, SetAclParams params) {
+    public Response setAclCommon(String targetPath, SetAclParams params) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
