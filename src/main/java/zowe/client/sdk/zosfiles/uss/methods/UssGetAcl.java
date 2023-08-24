@@ -121,12 +121,15 @@ public class UssGetAcl {
         getFaclMap.put("request", "getfacl");
         params.getType().ifPresent(type -> getFaclMap.put("type", type));
         params.getUser().ifPresent(user -> getFaclMap.put("user", user));
-        if (params.getUseCommas())
+        if (params.getUseCommas()) {
             getFaclMap.put("use-commas", params.getUseCommas());
-        if (params.getSuppressHeader())
+        }
+        if (params.getSuppressHeader()) {
             getFaclMap.put("suppress-header", params.getSuppressHeader());
-        if (params.getSuppressBaseAcl())
+        }
+        if (params.getSuppressBaseAcl()) {
             getFaclMap.put("suppress-baseacl", params.getSuppressBaseAcl());
+        }
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
