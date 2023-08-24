@@ -23,36 +23,36 @@ import java.util.Optional;
 public class SetAclParams {
 
     /**
-     * 	The default is false. When true, aborts processing if an error or warning occurs.
-     * 	See the setfacl command documentation for complete documentation on the errors and warnings (setfacl -a).
+     * The default is false. When true, aborts processing if an error or warning occurs.
+     * See the setfacl command documentation for complete documentation on the errors and warnings (setfacl -a).
      */
     boolean abort;
     /**
      * The default is 'follow'. 'suppress' does not follow symbolic links.
      * Because ACLs are not associated with symbolic links,
      * nothing happens if a symbolic link is encountered (setfacl -h).
-     *
+     * <p>
      * Note:  At least one of the following four keywords must be specified.
      * 'modify' and 'delete' may both be specified, but not with 'delete-type' and 'set'.
      */
     Optional<LinkType> links;
     /**
      * Delete all extended ACL entries by type (setfacl -D type):
-     *
+     * <p>
      * access - Access ACL
      * dir    - Directory default ACL
      * file   - File default ACL
      * every  - Every extended ACL for all ACL types that are applicable for the current path name.
-     *
+     * <p>
      * Note: The 'delete-type' keyword cannot be specified with 'set', 'modify' or 'delete'.
      */
     Optional<DeleteType> deleteType;
     /**
-     * 	sets (replaces) all ACLs with 'entries'.
-     * 	'entries' represents a string of ACL entries.
-     * 	Refer to the setfacl command reference for the string format (setfacl -s entries).
-     *
-     * 	Note: The 'set' keyword cannot be specified with 'delete-type', 'modify' or 'delete'.
+     * sets (replaces) all ACLs with 'entries'.
+     * 'entries' represents a string of ACL entries.
+     * Refer to the setfacl command reference for the string format (setfacl -s entries).
+     * <p>
+     * Note: The 'set' keyword cannot be specified with 'delete-type', 'modify' or 'delete'.
      */
     Optional<String> set;
     /**
@@ -60,7 +60,7 @@ public class SetAclParams {
      * Refer to the setfacl command reference for the string format.
      * If an ACL entry does not exist for a user or group that is specified in 'entries', it is created.
      * If an ACL entry exists for a user or group that was specified in 'entries', it is replaced.
-     *
+     * <p>
      * Note: The 'modify' keyword cannot be specified with 'delete-type' or 'set'.
      */
     Optional<String> modify;
@@ -68,7 +68,7 @@ public class SetAclParams {
      * Deletes the extended ACL entries that are specified by 'entries'. 'entries' is a string of ACL entries.
      * Refer to the setfacl command reference for the string format.
      * If an ACL entry does not exist for the user or group specified, no error is issued.
-     *
+     * <p>
      * Note: The 'delete' keyword cannot be specified with 'delete-type' or 'set'.
      */
     Optional<String> delete;
@@ -154,36 +154,36 @@ public class SetAclParams {
     public static class Builder {
 
         /**
-         * 	The default is false. When true, aborts processing if an error or warning occurs.
-         * 	See the setfacl command documentation for complete documentation on the errors and warnings (setfacl -a).
+         * The default is false. When true, aborts processing if an error or warning occurs.
+         * See the setfacl command documentation for complete documentation on the errors and warnings (setfacl -a).
          */
         private boolean abort = false;
         /**
          * The default is 'follow'. 'suppress' does not follow symbolic links.
          * Because ACLs are not associated with symbolic links,
          * nothing happens if a symbolic link is encountered (setfacl -h).
-         *
+         * <p>
          * Note:  At least one of the following four keywords must be specified.
          * 'modify' and 'delete' may both be specified, but not with 'delete-type' and 'set'.
          */
         private LinkType links = LinkType.FOLLOW;
         /**
          * Delete all extended ACL entries by type (setfacl -D type):
-         *
+         * <p>
          * access - Access ACL
          * dir    - Directory default ACL
          * file   - File default ACL
          * every  - Every extended ACL for all ACL types that are applicable for the current path name.
-         *
+         * <p>
          * Note: The 'delete-type' keyword cannot be specified with 'set', 'modify' or 'delete'.
          */
         private DeleteType deleteType;
         /**
-         * 	sets (replaces) all ACLs with 'entries'.
-         * 	'entries' represents a string of ACL entries.
-         * 	Refer to the setfacl command reference for the string format (setfacl -s entries).
-         *
-         * 	Note: The 'set' keyword cannot be specified with 'delete-type', 'modify' or 'delete'.
+         * sets (replaces) all ACLs with 'entries'.
+         * 'entries' represents a string of ACL entries.
+         * Refer to the setfacl command reference for the string format (setfacl -s entries).
+         * <p>
+         * Note: The 'set' keyword cannot be specified with 'delete-type', 'modify' or 'delete'.
          */
         private String set;
         /**
@@ -191,7 +191,7 @@ public class SetAclParams {
          * Refer to the setfacl command reference for the string format.
          * If an ACL entry does not exist for a user or group that is specified in 'entries', it is created.
          * If an ACL entry exists for a user or group that was specified in 'entries', it is replaced.
-         *
+         * <p>
          * Note: The 'modify' keyword cannot be specified with 'delete-type' or 'set'.
          */
         private String modify;
@@ -199,7 +199,7 @@ public class SetAclParams {
          * Deletes the extended ACL entries that are specified by 'entries'. 'entries' is a string of ACL entries.
          * Refer to the setfacl command reference for the string format.
          * If an ACL entry does not exist for the user or group specified, no error is issued.
-         *
+         * <p>
          * Note: The 'delete' keyword cannot be specified with 'delete-type' or 'set'.
          */
         private String delete;
