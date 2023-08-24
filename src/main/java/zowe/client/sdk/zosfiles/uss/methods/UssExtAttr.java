@@ -40,7 +40,6 @@ public class UssExtAttr {
      * UssCopy Constructor
      *
      * @param connection connection information, see ZosConnection object
-     * @throws Exception processing error
      * @author James Kostrewski
      */
     public UssExtAttr(ZosConnection connection) {
