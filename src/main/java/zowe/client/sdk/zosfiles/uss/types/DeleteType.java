@@ -18,6 +18,7 @@ package zowe.client.sdk.zosfiles.uss.types;
  * @version 2.0
  */
 public enum DeleteType {
+
     ACCESS("access"),
     FILE("file"),
     DIR("dir"),
@@ -37,4 +38,5 @@ public enum DeleteType {
     public String getValue() {
         return value;
     }
+
 }
