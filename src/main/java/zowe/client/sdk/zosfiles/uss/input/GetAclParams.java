@@ -51,7 +51,12 @@ public class GetAclParams {
      */
     private final boolean suppressBaseAcl;
 
-    public GetAclParams(GetAclParams.Builder builder) {
+    /**
+     * GetAclParams constructor
+     *
+     * @param builder GetAclParams.Builder builder
+     */
+    public GetAclParams(final GetAclParams.Builder builder) {
         this.type = Optional.ofNullable(builder.type);
         this.user = Optional.ofNullable(builder.user);
         this.useCommas = builder.useCommas;
@@ -59,26 +64,55 @@ public class GetAclParams {
         this.suppressBaseAcl = builder.suppressBaseAcl;
     }
 
+    /**
+     * Retrieve type value
+     *
+     * @return type value
+     */
     public Optional<String> getType() {
         return type;
     }
 
+    /**
+     * Retrieve user value
+     *
+     * @return user value
+     */
     public Optional<String> getUser() {
         return user;
     }
 
+    /**
+     * Retrieve useCommas value
+     *
+     * @return useCommas value
+     */
     public boolean getUseCommas() {
         return useCommas;
     }
 
+    /**
+     * Retrieve suppressHeader value
+     *
+     * @return suppressHeader value
+     */
     public boolean getSuppressHeader() {
         return suppressHeader;
     }
 
+    /**
+     * Retrieve suppressBaseAcl value
+     *
+     * @return suppressBaseAcl value
+     */
     public boolean getSuppressBaseAcl() {
         return suppressBaseAcl;
     }
 
+    /**
+     * Return string value representing GetAclParams object
+     * @return string representation of GetAclParams
+     */
     @Override
     public String toString() {
         return "GetAclParams{" +
@@ -90,44 +124,106 @@ public class GetAclParams {
                 '}';
     }
 
+    /**
+     * Builder class for GetAclParams
+     */
     public static class Builder {
+        /**
+         * The default is 'access', displays the access ACL entries for a file or directory (getfacl -a).
+         * 'dir' displays the directory default ACL entries (getfacl -d).
+         * If the target is not a directory, a warning is issued.
+         */
         private String type;
+        /**
+         * The user ID or UID (as a JSON string),
+         * displays only the ACL entries for the specified types of access control lists (getfacl -a, -d, -f)
+         * which affects the specified user's access (getfacl -e user).
+         */
         private String user;
-        private boolean useCommas;
-        private boolean suppressHeader;
-        private boolean suppressBaseAcl;
+        /**
+         * 	The default is 'false'.
+         * 	When true, displays each ACL entry, using commas to separate the ACL entries instead of newlines.
+         */
+        private boolean useCommas = false;
+        /**
+         * The default is 'false'.
+         * When true, the comment header (the first three lines of each file's output) is not to be displayed
+         * (getfacl -m)
+         */
+        private boolean suppressHeader = false;
+        /**
+         * The default is 'false'.
+         * When true, displays only the extended ACL entries. Does not display the base ACL entries (getfacl -o).
+         */
+        private boolean suppressBaseAcl = false;
 
+        /**
+         * Builder constructor
+         */
         public Builder() {
         }
 
+        /**
+         * Set type value
+         *
+         * @param type String value representing type
+         * @return Builder this object
+         */
         public Builder type(String type) {
             this.type = type;
             return this;
         }
 
+        /**
+         * Set user value
+         *
+         * @param user String value representing user
+         * @return Builder this object
+         */
         public Builder user(String user) {
             this.user = user;
             return this;
         }
 
+        /**
+         * Set useCommas value
+         *
+         * @param useCommas boolean value representing useCommas
+         * @return Builder this object
+         */
         public Builder useCommas(boolean useCommas) {
             this.useCommas = useCommas;
             return this;
         }
 
+        /**
+         * Set suppressHeader value
+         *
+         * @param suppressHeader boolean value representing suppressHeader
+         * @return Builder this object
+         */
         public Builder suppressHeader(boolean suppressHeader) {
             this.suppressHeader = suppressHeader;
             return this;
         }
 
+        /**
+         * Set suppressBaseAcl value
+         *
+         * @param suppressBaseAcl boolean value representing suppressBaseAcl
+         * @return Builder this object
+         */
         public Builder suppressBaseAcl(boolean suppressBaseAcl) {
             this.suppressBaseAcl = suppressBaseAcl;
             return this;
         }
 
-        public GetAclParams build() {
-            return new GetAclParams(this);
-        }
+        /**
+         * Return GetAclParams object based on Builder this object
+         *
+         * @return GetAclParams object
+         */
+        public GetAclParams build() {return new GetAclParams(this);}
     }
 
 }
