@@ -35,13 +35,13 @@ public class UssExtAttr {
 
     private final ZosConnection connection;
     private ZosmfRequest request;
-    private Response response;
 
     /**
      * UssCopy Constructor
      *
      * @param connection connection information, see ZosConnection object
      * @throws Exception processing error
+     * @author James Kostrewski
      */
     public UssExtAttr(ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
@@ -55,6 +55,7 @@ public class UssExtAttr {
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @throws Exception processing error
+     * @author James Kostrewski
      */
     public UssExtAttr(ZosConnection connection, ZosmfRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
@@ -70,6 +71,7 @@ public class UssExtAttr {
      * Returns a response string documenting listing attributes
      *
      * @param targetPath path to the file or directory
+     * @author James Kostrewski
      */
     public String display(String targetPath) throws Exception {
         final Map<String, String> jsonMap = new HashMap<>();
@@ -88,6 +90,7 @@ public class UssExtAttr {
      *
      * @param targetPath path to the file or directory
      * @param value      one or more of the following: alps
+     * @author James Kostrewski
      */
     public Response set(String targetPath, String value) throws Exception {
         final Map<String, String> jsonMap = new HashMap<>();
@@ -101,6 +104,7 @@ public class UssExtAttr {
      *
      * @param targetPath path to the file or directory
      * @param value      one or more of the following: alps
+     * @author James Kostrewski
      */
     public Response reset(String targetPath, String value) throws Exception {
         final Map<String, String> jsonMap = new HashMap<>();
@@ -115,6 +119,7 @@ public class UssExtAttr {
      *
      * @param targetPath path to the file or directory
      * @param jsonMap    map representing request body
+     * @author James Kostrewski
      */
     private Response executeRequest(String targetPath, Map<String, String> jsonMap) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
