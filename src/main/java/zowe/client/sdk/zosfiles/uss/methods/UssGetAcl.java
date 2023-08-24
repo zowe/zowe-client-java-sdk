@@ -87,8 +87,7 @@ public class UssGetAcl {
         } else {
             response = getAclCommon(targetPath, new GetAclParams.Builder().build());
         }
-        final JSONParser parser = new JSONParser();
-        final JSONObject json = (JSONObject) parser.parse(response.getResponsePhrase().get().toString());
+        final JSONObject json = (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString());
         JSONArray jsonArray = (JSONArray) json.get("stdout");
         StringBuilder sb = new StringBuilder();
         if (commas) {
