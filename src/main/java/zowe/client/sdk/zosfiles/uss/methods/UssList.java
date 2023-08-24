@@ -128,7 +128,7 @@ public class UssList {
         final Response response = request.executeRequest();
 
         final List<UnixFile> items = new ArrayList<>();
-        final String errMsg = "null uss file list response";
+        final String errMsg = "error retrieving uss file list";
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
                 response.getResponsePhrase().orElseThrow(() -> new IllegalStateException(errMsg))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
