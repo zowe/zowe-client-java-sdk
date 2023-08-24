@@ -64,23 +64,54 @@ public class UssExtAttr {
     }
 
     /**
+     * Returns a response JSON documenting listing attributes
+     *
+     * @param targetPath path to the file or directory
+     */
+    public Response display(String targetPath) throws Exception {
+        return executeRequest(targetPath, null, null);
+    }
+
+    /**
+     * Extends the attributes of a file or directory using set
+     *
+     * @param targetPath path to the file or directory
+     * @param set   one or more of the following: alps
+     */
+    public Response set(String targetPath, String set) throws Exception {
+        return executeRequest(targetPath, set, null);
+    }
+
+    /**
+     * Extends the attributes of a file or directory using reset
+     *
+     * @param targetPath path to the file or directory
+     * @param reset one or more of the following: alps
+     */
+    public Response reset(String targetPath, String reset) throws Exception {
+        return executeRequest(targetPath, null, reset);
+    }
+
+
+    /**
      * Extends the attributes of a file or directory
      *
+     * @param targetPath path to the file or directory
      * @param set   one of more of the following: alps
      * @param reset one or more of the following: alps
      */
-    public Response extendAttributes(String targetPath, String set, String reset) throws Exception {
+    private Response executeRequest(String targetPath, String set, String reset) throws Exception {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.trim().isEmpty(), "targetPath not specified");
+        ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(targetPath);
 
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("request", "extattr");
-        if (set != null && !set.trim().isEmpty())
+        if (set != null)
             jsonMap.put("set", set);
-        if (reset != null && !reset.trim().isEmpty())
+        if (reset != null)
             jsonMap.put("reset", reset);
 
         if (request == null) {
