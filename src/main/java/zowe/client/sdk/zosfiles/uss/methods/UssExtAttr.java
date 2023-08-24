@@ -9,7 +9,9 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import kong.unirest.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -33,6 +35,7 @@ public class UssExtAttr {
 
     private final ZosConnection connection;
     private ZosmfRequest request;
+    private Response response;
 
     /**
      * UssCopy Constructor
@@ -64,55 +67,61 @@ public class UssExtAttr {
     }
 
     /**
-     * Returns a response JSON documenting listing attributes
+     * Returns a response string documenting listing attributes
      *
      * @param targetPath path to the file or directory
      */
-    public Response display(String targetPath) throws Exception {
-        return executeRequest(targetPath, null, null);
+    public String display(String targetPath) throws Exception {
+        final Map<String, String> jsonMap = new HashMap<>();
+        jsonMap.put("request", "extattr");
+        final Response response = executeRequest(targetPath, jsonMap);
+        final JSONParser parser = new JSONParser();
+        final JSONObject json = (JSONObject) parser.parse(response.getResponsePhrase().get().toString());
+        final JSONArray jsonArray = (JSONArray) json.get("stdout");
+        final StringBuilder sb = new StringBuilder();
+        jsonArray.forEach(item -> sb.append(item.toString() + "\n"));
+        return sb.toString();
     }
-
-    /**
-     * Extends the attributes of a file or directory using set
-     *
-     * @param targetPath path to the file or directory
-     * @param set   one or more of the following: alps
-     */
-    public Response set(String targetPath, String set) throws Exception {
-        return executeRequest(targetPath, set, null);
-    }
-
-    /**
-     * Extends the attributes of a file or directory using reset
-     *
-     * @param targetPath path to the file or directory
-     * @param reset one or more of the following: alps
-     */
-    public Response reset(String targetPath, String reset) throws Exception {
-        return executeRequest(targetPath, null, reset);
-    }
-
 
     /**
      * Extends the attributes of a file or directory
      *
      * @param targetPath path to the file or directory
-     * @param set   one of more of the following: alps
-     * @param reset one or more of the following: alps
+     * @param value      one or more of the following: alps
      */
-    private Response executeRequest(String targetPath, String set, String reset) throws Exception {
+    public Response set(String targetPath, String value) throws Exception {
+        final Map<String, String> jsonMap = new HashMap<>();
+        jsonMap.put("request", "extattr");
+        jsonMap.put("set", value);
+        return executeRequest(targetPath, jsonMap);
+    }
+
+    /**
+     * Resets the attributes of a file or directory
+     *
+     * @param targetPath path to the file or directory
+     * @param value      one or more of the following: alps
+     */
+    public Response reset(String targetPath, String value) throws Exception {
+        final Map<String, String> jsonMap = new HashMap<>();
+        jsonMap.put("request", "extattr");
+        jsonMap.put("reset", value);
+        return executeRequest(targetPath, jsonMap);
+    }
+
+
+    /**
+     * Execute request for given path and json map
+     *
+     * @param targetPath path to the file or directory
+     * @param jsonMap    map representing request body
+     */
+    private Response executeRequest(String targetPath, Map<String, String> jsonMap) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES + FileUtils.validatePath(targetPath);
-
-        final Map<String, String> jsonMap = new HashMap<>();
-        jsonMap.put("request", "extattr");
-        if (set != null)
-            jsonMap.put("set", set);
-        if (reset != null)
-            jsonMap.put("reset", reset);
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
