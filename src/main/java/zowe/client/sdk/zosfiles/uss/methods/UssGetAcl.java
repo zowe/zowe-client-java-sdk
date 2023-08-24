@@ -68,24 +68,24 @@ public class UssGetAcl {
             this.request = request;
         }
 
-        public String getAclWithCommas(String fileNamePath) throws Exception {
-            Response response = getAclCommon(fileNamePath, new GetAclParams.Builder().useCommas(true).build());
-            final JSONParser parser = new JSONParser();
-            final JSONObject json = (JSONObject) parser.parse(response.getResponsePhrase().get().toString());
-            JSONArray jsonArray = (JSONArray) json.get("stdout");
-            StringBuilder sb = new StringBuilder();
-            jsonArray.forEach(item -> sb.append(item.toString()));
-
-            return sb.toString();
-        }
-
-        public String getAcl(String fileNamePath) throws Exception {
+    /**
+     * Get the ACL for a USS file or directory
+     *
+     * @param fileNamePath file name with path
+     * @param commas true if commas are to be used in the output
+     * @return String representation of facl response phrase
+     * @throws Exception processing error
+     */
+    public String getAcl(String fileNamePath, boolean commas) throws Exception {
             Response response = getAclCommon(fileNamePath, new GetAclParams.Builder().build());
             final JSONParser parser = new JSONParser();
             final JSONObject json = (JSONObject) parser.parse(response.getResponsePhrase().get().toString());
             JSONArray jsonArray = (JSONArray) json.get("stdout");
             StringBuilder sb = new StringBuilder();
-            jsonArray.forEach(item -> sb.append(item.toString() + "\n"));
+            if (commas)
+                jsonArray.forEach(item -> sb.append(item.toString()));
+            else
+                jsonArray.forEach(item -> sb.append(item.toString() + "\n"));
 
             return sb.toString();
         }
@@ -95,7 +95,7 @@ public class UssGetAcl {
         *
         * @param fileNamePath file name with path
          * @param params GetAclParams object to drive the request
-        * @return String representation of facl response phrase
+        * @return Response object
         * @throws Exception processing error
         */
         public Response getAclCommon(String fileNamePath, GetAclParams params) throws Exception {
