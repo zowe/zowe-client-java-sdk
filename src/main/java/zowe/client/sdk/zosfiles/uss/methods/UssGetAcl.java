@@ -105,7 +105,6 @@ public class UssGetAcl {
      * @param targetPath file name with path
      * @param params     GetAclParams object to drive the request
      * @return Response object
-     * @throws Exception processing error
      * @author James Kostrewski
      */
     public Response getCommon(String targetPath, GetAclParams params) {
