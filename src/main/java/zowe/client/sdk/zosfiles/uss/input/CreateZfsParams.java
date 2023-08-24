@@ -138,11 +138,6 @@ public class CreateZfsParams {
         } else {
             this.cylsSec = OptionalInt.of(builder.cylsSec);
         }
-        if (builder.cylsPri == null) {
-            this.cylsPri = OptionalInt.empty();
-        } else {
-            this.cylsPri = OptionalInt.of(builder.cylsPri);
-        }
         this.storageClass = Optional.ofNullable(builder.storageClass);
         this.managementClass = Optional.ofNullable(builder.managementClass);
         this.dataClass = Optional.ofNullable(builder.dataClass);
