@@ -34,8 +34,8 @@ public class GetAclParams {
     private final Optional<String> user;
 
     /**
-     * 	The default is 'false'.
-     * 	When true, displays each ACL entry, using commas to separate the ACL entries instead of newlines.
+     * The default is 'false'.
+     * When true, displays each ACL entry, using commas to separate the ACL entries instead of newlines.
      */
     private final boolean useCommas;
 
@@ -55,6 +55,7 @@ public class GetAclParams {
      * GetAclParams constructor
      *
      * @param builder GetAclParams.Builder builder
+     * @author James Kostrewski
      */
     public GetAclParams(final GetAclParams.Builder builder) {
         this.type = Optional.ofNullable(builder.type);
@@ -111,6 +112,7 @@ public class GetAclParams {
 
     /**
      * Return string value representing GetAclParams object
+     *
      * @return string representation of GetAclParams
      */
     @Override
@@ -141,8 +143,8 @@ public class GetAclParams {
          */
         private String user;
         /**
-         * 	The default is 'false'.
-         * 	When true, displays each ACL entry, using commas to separate the ACL entries instead of newlines.
+         * The default is 'false'.
+         * When true, displays each ACL entry, using commas to separate the ACL entries instead of newlines.
          */
         private boolean useCommas = false;
         /**
@@ -223,7 +225,9 @@ public class GetAclParams {
          *
          * @return GetAclParams object
          */
-        public GetAclParams build() {return new GetAclParams(this);}
+        public GetAclParams build() {
+            return new GetAclParams(this);
+        }
     }
 
 }
