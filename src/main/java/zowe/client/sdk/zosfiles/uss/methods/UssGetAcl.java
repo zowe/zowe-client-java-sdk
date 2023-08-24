@@ -83,9 +83,9 @@ public class UssGetAcl {
     public String get(String targetPath, boolean commas) throws Exception {
         Response response;
         if (commas) {
-            response = getCommon(targetPath, new GetAclParams.Builder().useCommas(true).build());
+            response = getAclCommon(targetPath, new GetAclParams.Builder().useCommas(true).build());
         } else {
-            response = getCommon(targetPath, new GetAclParams.Builder().build());
+            response = getAclCommon(targetPath, new GetAclParams.Builder().build());
         }
         final JSONParser parser = new JSONParser();
         final JSONObject json = (JSONObject) parser.parse(response.getResponsePhrase().get().toString());
@@ -107,7 +107,7 @@ public class UssGetAcl {
      * @return Response object
      * @author James Kostrewski
      */
-    public Response getCommon(String targetPath, GetAclParams params) {
+    public Response getAclCommon(String targetPath, GetAclParams params) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "path is empty");
         ValidateUtils.checkNullParameter(params == null, "params is null");
