@@ -134,8 +134,7 @@ public class UssGetAcl {
         request.setUrl(url);
         request.setBody(new JSONObject(getFaclMap).toString());
 
-        Response response = request.executeRequest();
-        return response;
+        return request.executeRequest();
     }
 
 }
