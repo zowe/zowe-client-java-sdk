@@ -25,6 +25,7 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Provides Unix System Services (USS) extattr functionality
@@ -89,10 +90,12 @@ public class UssExtAttr {
      * Extends the attributes of a file or directory
      *
      * @param targetPath path to the file or directory
-     * @param value      one or more of the following: alps
+     * @param value      one or more of the following character: a,l,p,s
      * @author James Kostrewski
      */
     public Response set(final String targetPath, final String value) throws Exception {
+        ValidateUtils.checkIllegalParameter(!isValidAttributes(value),
+                "specified valid value character sequence");
         final Map<String, String> requestMap = new HashMap<>();
         requestMap.put("request", "extattr");
         requestMap.put("set", value);
@@ -103,10 +106,12 @@ public class UssExtAttr {
      * Resets the attributes of a file or directory
      *
      * @param targetPath path to the file or directory
-     * @param value      one or more of the following: alps
+     * @param value      one or more of the following character: a,l,p,s
      * @author James Kostrewski
      */
     public Response reset(final String targetPath, final String value) throws Exception {
+        ValidateUtils.checkIllegalParameter(!isValidAttributes(value),
+                "specified valid value character sequence");
         final Map<String, String> requestMap = new HashMap<>();
         requestMap.put("request", "extattr");
         requestMap.put("reset", value);
@@ -135,6 +140,16 @@ public class UssExtAttr {
         request.setBody(new JSONObject(jsonMap).toString());
 
         return request.executeRequest();
+    }
+
+    /**
+     * Validate that the given value is one or more of the following character: a,l,p,s
+     *
+     * @param value string
+     * @return boolean value
+     */
+    private boolean isValidAttributes(final String value) {
+        return Pattern.compile("^(?!.*(.).*\\1)[apls]+$").matcher(value).matches();
     }
 
 }
