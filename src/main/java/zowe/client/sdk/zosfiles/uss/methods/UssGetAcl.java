@@ -82,22 +82,18 @@ public class UssGetAcl {
      */
     @SuppressWarnings("unchecked")
     public String get(final String targetPath, final boolean useCommas) throws Exception {
-        Response response;
-        if (useCommas) {
-            response = getAclCommon(targetPath, new GetAclParams.Builder().useCommas(true).build());
-        } else {
-            response = getAclCommon(targetPath, new GetAclParams.Builder().build());
-        }
+        final Response response = useCommas ?
+                getAclCommon(targetPath, new GetAclParams.Builder().useCommas(true).build()) :
+                getAclCommon(targetPath, new GetAclParams.Builder().build());
         final JSONObject json = (JSONObject) new JSONParser().parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
-        JSONArray jsonArray = (JSONArray) json.get("stdout");
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder str = new StringBuilder();
         if (useCommas) {
-            jsonArray.forEach(item -> sb.append(item.toString()));
+            ((JSONArray) json.get("stdout")).forEach(item -> str.append(item.toString()));
         } else {
-            jsonArray.forEach(item -> sb.append(item.toString()).append("\n"));
+            ((JSONArray) json.get("stdout")).forEach(item -> str.append(item.toString()).append("\n"));
         }
-        return sb.toString();
+        return str.toString();
     }
 
     /**
