@@ -130,29 +130,34 @@ public class GetAclParams {
      * Builder class for GetAclParams
      */
     public static class Builder {
+
         /**
          * The default is 'access', displays the access ACL entries for a file or directory (getfacl -a).
          * 'dir' displays the directory default ACL entries (getfacl -d).
          * If the target is not a directory, a warning is issued.
          */
         private String type;
+
         /**
          * The user ID or UID (as a JSON string),
          * displays only the ACL entries for the specified types of access control lists (getfacl -a, -d, -f)
          * which affects the specified user's access (getfacl -e user).
          */
         private String user;
+
         /**
          * The default is 'false'.
          * When true, displays each ACL entry, using commas to separate the ACL entries instead of newlines.
          */
         private boolean useCommas = false;
+
         /**
          * The default is 'false'.
          * When true, the comment header (the first three lines of each file's output) is not to be displayed
          * (getfacl -m)
          */
         private boolean suppressHeader = false;
+
         /**
          * The default is 'false'.
          * When true, displays only the extended ACL entries. Does not display the base ACL entries (getfacl -o).
@@ -228,6 +233,7 @@ public class GetAclParams {
         public GetAclParams build() {
             return new GetAclParams(this);
         }
+
     }
 
 }

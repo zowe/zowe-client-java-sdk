@@ -26,7 +26,8 @@ public class SetAclParams {
      * The default is false. When true, aborts processing if an error or warning occurs.
      * See the setfacl command documentation for complete documentation on the errors and warnings (setfacl -a).
      */
-    boolean abort;
+    public boolean abort;
+
     /**
      * The default is 'follow'. 'suppress' does not follow symbolic links.
      * Because ACLs are not associated with symbolic links,
@@ -35,7 +36,8 @@ public class SetAclParams {
      * Note:  At least one of the following four keywords must be specified.
      * 'modify' and 'delete' may both be specified, but not with 'delete-type' and 'set'.
      */
-    Optional<LinkType> links;
+    public Optional<LinkType> links;
+
     /**
      * Delete all extended ACL entries by type (setfacl -D type):
      * <p>
@@ -46,7 +48,8 @@ public class SetAclParams {
      * <p>
      * Note: The 'delete-type' keyword cannot be specified with 'set', 'modify' or 'delete'.
      */
-    Optional<DeleteType> deleteType;
+    public Optional<DeleteType> deleteType;
+
     /**
      * sets (replaces) all ACLs with 'entries'.
      * 'entries' represents a string of ACL entries.
@@ -54,7 +57,8 @@ public class SetAclParams {
      * <p>
      * Note: The 'set' keyword cannot be specified with 'delete-type', 'modify' or 'delete'.
      */
-    Optional<String> set;
+    public Optional<String> set;
+
     /**
      * Modifies the ACL entries. 'entries' represents a string of ACL entries.
      * Refer to the setfacl command reference for the string format.
@@ -64,6 +68,7 @@ public class SetAclParams {
      * Note: The 'modify' keyword cannot be specified with 'delete-type' or 'set'.
      */
     Optional<String> modify;
+
     /**
      * Deletes the extended ACL entries that are specified by 'entries'. 'entries' is a string of ACL entries.
      * Refer to the setfacl command reference for the string format.
@@ -71,7 +76,7 @@ public class SetAclParams {
      * <p>
      * Note: The 'delete' keyword cannot be specified with 'delete-type' or 'set'.
      */
-    Optional<String> delete;
+    public Optional<String> delete;
 
     /**
      * SetAclParams constructor
@@ -158,6 +163,7 @@ public class SetAclParams {
          * See the setfacl command documentation for complete documentation on the errors and warnings (setfacl -a).
          */
         private boolean abort = false;
+
         /**
          * The default is 'follow'. 'suppress' does not follow symbolic links.
          * Because ACLs are not associated with symbolic links,
@@ -167,6 +173,7 @@ public class SetAclParams {
          * 'modify' and 'delete' may both be specified, but not with 'delete-type' and 'set'.
          */
         private LinkType links = LinkType.FOLLOW;
+
         /**
          * Delete all extended ACL entries by type (setfacl -D type):
          * <p>
@@ -178,6 +185,7 @@ public class SetAclParams {
          * Note: The 'delete-type' keyword cannot be specified with 'set', 'modify' or 'delete'.
          */
         private DeleteType deleteType;
+
         /**
          * sets (replaces) all ACLs with 'entries'.
          * 'entries' represents a string of ACL entries.
@@ -186,6 +194,7 @@ public class SetAclParams {
          * Note: The 'set' keyword cannot be specified with 'delete-type', 'modify' or 'delete'.
          */
         private String set;
+
         /**
          * Modifies the ACL entries. 'entries' represents a string of ACL entries.
          * Refer to the setfacl command reference for the string format.
@@ -195,6 +204,7 @@ public class SetAclParams {
          * Note: The 'modify' keyword cannot be specified with 'delete-type' or 'set'.
          */
         private String modify;
+
         /**
          * Deletes the extended ACL entries that are specified by 'entries'. 'entries' is a string of ACL entries.
          * Refer to the setfacl command reference for the string format.
@@ -278,5 +288,6 @@ public class SetAclParams {
         public SetAclParams build() {
             return new SetAclParams(this);
         }
+        
     }
 }
