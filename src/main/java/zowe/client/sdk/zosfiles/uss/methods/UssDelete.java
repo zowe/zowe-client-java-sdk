@@ -114,8 +114,8 @@ public class UssDelete {
      * @author Frank Giordano
      */
     public Response zfsDelete(final String fileSystemName) {
-        ValidateUtils.checkNullParameter(fileSystemName == null, "file system name is null");
-        ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "file system name not specified");
+        ValidateUtils.checkNullParameter(fileSystemName == null, "fileSystemName is null");
+        ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "fileSystemName not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +

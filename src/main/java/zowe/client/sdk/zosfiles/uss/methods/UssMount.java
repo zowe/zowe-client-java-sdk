@@ -111,8 +111,8 @@ public class UssMount {
      * @author Frank Giordano
      */
     public Response mountCommon(final String fileSystemName, final MountParams params) {
-        ValidateUtils.checkNullParameter(fileSystemName == null, "file system name is null");
-        ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "file system name not specified");
+        ValidateUtils.checkNullParameter(fileSystemName == null, "fileSystemName is null");
+        ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "fileSystemName not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "params action not specified");
 

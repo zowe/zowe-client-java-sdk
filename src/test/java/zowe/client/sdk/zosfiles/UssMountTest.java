@@ -84,7 +84,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file system name not specified", errMsg);
+        assertEquals("fileSystemName not specified", errMsg);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file system name is null", errMsg);
+        assertEquals("fileSystemName is null", errMsg);
     }
 
     @Test
@@ -129,7 +129,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file system name not specified", errMsg);
+        assertEquals("fileSystemName not specified", errMsg);
     }
 
     @Test
@@ -140,7 +140,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file system name not specified", errMsg);
+        assertEquals("fileSystemName not specified", errMsg);
     }
 
     @Test
@@ -195,7 +195,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file system name is null", errMsg);
+        assertEquals("fileSystemName is null", errMsg);
     }
 
     @Test
@@ -228,7 +228,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file system name not specified", errMsg);
+        assertEquals("fileSystemName not specified", errMsg);
     }
 
     @Test
@@ -239,7 +239,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file system name not specified", errMsg);
+        assertEquals("fileSystemName not specified", errMsg);
     }
 
     @Test
@@ -250,7 +250,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file system name is null", errMsg);
+        assertEquals("fileSystemName is null", errMsg);
     }
 
 }

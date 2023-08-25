@@ -144,7 +144,7 @@ public class UssDeleteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file system name is null", errMsg);
+        assertEquals("fileSystemName is null", errMsg);
     }
 
     @Test
@@ -155,7 +155,7 @@ public class UssDeleteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file system name not specified", errMsg);
+        assertEquals("fileSystemName not specified", errMsg);
     }
 
     @Test
@@ -166,7 +166,7 @@ public class UssDeleteTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("file system name not specified", errMsg);
+        assertEquals("fileSystemName not specified", errMsg);
     }
 
 }
