@@ -76,7 +76,7 @@ public class UssGetAcl {
      *
      * @param targetPath file name with path
      * @param useCommas  true if commas are to be used in the output
-     * @return String representation of response phrase
+     * @return string representation of response phrase
      * @throws Exception processing error
      * @author James Kostrewski
      */
