@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.DeleteType;
 import zowe.client.sdk.zosfiles.uss.types.LinkType;
 
@@ -245,6 +246,7 @@ public class SetAclParams {
          * @return SetAclParams.Builder
          */
         public SetAclParams.Builder setDeleteType(final DeleteType deleteType) {
+            ValidateUtils.checkNullParameter(deleteType == null, "deleteType is null");
             this.deleteType = deleteType;
             return this;
         }
@@ -256,6 +258,8 @@ public class SetAclParams {
          * @return SetAclParams.Builder
          */
         public SetAclParams.Builder setSet(final String set) {
+            ValidateUtils.checkNullParameter(set == null, "set is null");
+            ValidateUtils.checkIllegalParameter(set.isBlank(), "set not specified");
             this.set = set;
             return this;
         }
@@ -267,6 +271,8 @@ public class SetAclParams {
          * @return SetAclParams.Builder
          */
         public SetAclParams.Builder setModify(final String modify) {
+            ValidateUtils.checkNullParameter(modify == null, "modify is null");
+            ValidateUtils.checkIllegalParameter(modify.isBlank(), "modify not specified");
             this.modify = modify;
             return this;
         }
@@ -278,6 +284,8 @@ public class SetAclParams {
          * @return SetAclParams.Builder
          */
         public SetAclParams.Builder setDelete(final String delete) {
+            ValidateUtils.checkNullParameter(delete == null, "delete is null");
+            ValidateUtils.checkIllegalParameter(delete.isBlank(), "delete not specified");
             this.delete = delete;
             return this;
         }
