@@ -87,7 +87,8 @@ public class UssGetAcl {
         } else {
             response = getAclCommon(targetPath, new GetAclParams.Builder().build());
         }
-        final JSONObject json = (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString());
+        final JSONObject json = (JSONObject) new JSONParser().parse(response.getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
         JSONArray jsonArray = (JSONArray) json.get("stdout");
         StringBuilder sb = new StringBuilder();
         if (commas) {

@@ -128,9 +128,8 @@ public class UssList {
         final Response response = request.executeRequest();
 
         final List<UnixFile> items = new ArrayList<>();
-        final String errMsg = "error retrieving uss file list";
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
-                response.getResponsePhrase().orElseThrow(() -> new IllegalStateException(errMsg))));
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(response.getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (final Object jsonObj : jsonArray) {
@@ -175,10 +174,9 @@ public class UssList {
 
         final Response response = request.executeRequest();
 
-        final String errMsg = "error retrieving uss zfs list";
         final List<UnixZfs> items = new ArrayList<>();
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(
-                response.getResponsePhrase().orElseThrow(() -> new IllegalStateException(errMsg))));
+        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(response.getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (final Object obj : jsonArray) {

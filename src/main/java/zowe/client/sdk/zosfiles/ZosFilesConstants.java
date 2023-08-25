@@ -103,6 +103,11 @@ public class ZosFilesConstants {
     public static final String RES_PATH = "path";
 
     /**
+     * Error message when response phrase not returned
+     */
+    public static final String RESPONSE_PHRASE_ERROR = "response phrase not returned";
+
+    /**
      * Indicator of a USS File request
      */
     public static final String RES_USS_FILES = "/fs";

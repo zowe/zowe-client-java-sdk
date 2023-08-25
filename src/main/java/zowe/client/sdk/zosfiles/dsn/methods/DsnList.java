@@ -116,7 +116,7 @@ public class DsnList {
         }
 
         if (response.getResponsePhrase().isEmpty()) {
-            LOG.debug("response phrase not returned");
+            LOG.debug(ZosFilesConstants.RESPONSE_PHRASE_ERROR);
             if (datasetLst == null) {
                 return memberLst;
             } else {

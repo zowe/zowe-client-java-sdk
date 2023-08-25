@@ -133,7 +133,7 @@ public class UssListTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        assertEquals("null uss file list response", msg);
+        assertEquals(ZosFilesConstants.RESPONSE_PHRASE_ERROR, msg);
     }
 
     @Test

@@ -77,7 +77,8 @@ public class UssExtAttr {
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("request", "extattr");
         final Response response = executeRequest(targetPath, jsonMap);
-        final JSONObject json = (JSONObject) new JSONParser().parse(response.getResponsePhrase().get().toString());
+        final JSONObject json = (JSONObject) new JSONParser().parse(response.getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
         final JSONArray jsonArray = (JSONArray) json.get("stdout");
         final StringBuilder sb = new StringBuilder();
         jsonArray.forEach(item -> sb.append(item.toString()).append("\n"));
