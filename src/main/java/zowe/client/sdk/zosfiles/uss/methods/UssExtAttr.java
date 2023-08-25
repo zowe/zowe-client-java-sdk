@@ -73,6 +73,7 @@ public class UssExtAttr {
      * @param targetPath path to the file or directory
      * @author James Kostrewski
      */
+    @SuppressWarnings("unchecked")
     public String display(String targetPath) throws Exception {
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("request", "extattr");

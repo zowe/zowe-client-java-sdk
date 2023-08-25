@@ -80,6 +80,7 @@ public class UssGetAcl {
      * @throws Exception processing error
      * @author James Kostrewski
      */
+    @SuppressWarnings("unchecked")
     public String get(String targetPath, boolean commas) throws Exception {
         Response response;
         if (commas) {
