@@ -43,7 +43,7 @@ public class UssExtAttr {
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssExtAttr(ZosConnection connection) {
+    public UssExtAttr(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -57,7 +57,7 @@ public class UssExtAttr {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssExtAttr(ZosConnection connection, ZosmfRequest request) throws Exception {
+    public UssExtAttr(final ZosConnection connection, final ZosmfRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -74,7 +74,7 @@ public class UssExtAttr {
      * @author James Kostrewski
      */
     @SuppressWarnings("unchecked")
-    public String display(String targetPath) throws Exception {
+    public String display(final String targetPath) throws Exception {
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("request", "extattr");
         final Response response = executeRequest(targetPath, jsonMap);
@@ -93,7 +93,7 @@ public class UssExtAttr {
      * @param value      one or more of the following: alps
      * @author James Kostrewski
      */
-    public Response set(String targetPath, String value) throws Exception {
+    public Response set(final String targetPath, final String value) throws Exception {
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("request", "extattr");
         jsonMap.put("set", value);
@@ -107,7 +107,7 @@ public class UssExtAttr {
      * @param value      one or more of the following: alps
      * @author James Kostrewski
      */
-    public Response reset(String targetPath, String value) throws Exception {
+    public Response reset(final String targetPath, final String value) throws Exception {
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("request", "extattr");
         jsonMap.put("reset", value);
@@ -122,7 +122,7 @@ public class UssExtAttr {
      * @param jsonMap    map representing request body
      * @author James Kostrewski
      */
-    private Response executeRequest(String targetPath, Map<String, String> jsonMap) {
+    private Response executeRequest(final String targetPath, final Map<String, String> jsonMap) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
 

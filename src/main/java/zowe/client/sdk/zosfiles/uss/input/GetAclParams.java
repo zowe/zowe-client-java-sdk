@@ -178,7 +178,7 @@ public class GetAclParams {
          * @param type String value representing type
          * @return Builder this object
          */
-        public Builder type(String type) {
+        public Builder type(final String type) {
             this.type = type;
             return this;
         }
@@ -189,7 +189,7 @@ public class GetAclParams {
          * @param user String value representing user
          * @return Builder this object
          */
-        public Builder user(String user) {
+        public Builder user(final String user) {
             this.user = user;
             return this;
         }
@@ -200,7 +200,7 @@ public class GetAclParams {
          * @param useCommas boolean value representing useCommas
          * @return Builder this object
          */
-        public Builder useCommas(boolean useCommas) {
+        public Builder useCommas(final boolean useCommas) {
             this.useCommas = useCommas;
             return this;
         }
@@ -211,7 +211,7 @@ public class GetAclParams {
          * @param suppressHeader boolean value representing suppressHeader
          * @return Builder this object
          */
-        public Builder suppressHeader(boolean suppressHeader) {
+        public Builder suppressHeader(final boolean suppressHeader) {
             this.suppressHeader = suppressHeader;
             return this;
         }
@@ -222,7 +222,7 @@ public class GetAclParams {
          * @param suppressBaseAcl boolean value representing suppressBaseAcl
          * @return Builder this object
          */
-        public Builder suppressBaseAcl(boolean suppressBaseAcl) {
+        public Builder suppressBaseAcl(final boolean suppressBaseAcl) {
             this.suppressBaseAcl = suppressBaseAcl;
             return this;
         }

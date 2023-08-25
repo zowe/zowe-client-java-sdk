@@ -45,7 +45,7 @@ public class UssSetAcl {
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssSetAcl(ZosConnection connection) {
+    public UssSetAcl(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -59,7 +59,7 @@ public class UssSetAcl {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssSetAcl(ZosConnection connection, ZosmfRequest request) throws Exception {
+    public UssSetAcl(final ZosConnection connection, final ZosmfRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -77,7 +77,7 @@ public class UssSetAcl {
      * @return Response object
      * @author James Kostrewski
      */
-    public Response set(String targetPath, String value) {
+    public Response set(final String targetPath, final String value) {
         return setAclCommon(targetPath, new SetAclParams.Builder().setSet(value).build());
     }
 
@@ -89,7 +89,7 @@ public class UssSetAcl {
      * @return Response object
      * @author James Kostrewski
      */
-    public Response modify(String targetPath, String value) {
+    public Response modify(final String targetPath, final String value) {
         return setAclCommon(targetPath, new SetAclParams.Builder().setModify(value).build());
     }
 
@@ -101,7 +101,7 @@ public class UssSetAcl {
      * @return Response object
      * @author James Kostrewski
      */
-    public Response delete(String targetPath, String value) {
+    public Response delete(final String targetPath, final String value) {
         return setAclCommon(targetPath, new SetAclParams.Builder().setDelete(value).build());
     }
 
@@ -112,7 +112,7 @@ public class UssSetAcl {
      * @param deleteType deletes the extended ACL entries that are specified by type
      * @author James Kostrewski
      */
-    public Response deleteByType(String targetPath, DeleteType deleteType) {
+    public Response deleteByType(final String targetPath, final DeleteType deleteType) {
         return setAclCommon(targetPath, new SetAclParams.Builder().setDeleteType(deleteType).build());
     }
 
@@ -124,7 +124,7 @@ public class UssSetAcl {
      * @return Response object
      * @author James Kostrewski
      */
-    public Response setAclCommon(String targetPath, SetAclParams params) {
+    public Response setAclCommon(final String targetPath, final SetAclParams params) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

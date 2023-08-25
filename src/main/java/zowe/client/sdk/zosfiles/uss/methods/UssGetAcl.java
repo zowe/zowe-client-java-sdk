@@ -46,7 +46,7 @@ public class UssGetAcl {
      * @param connection connection information, see ZosConnection object
      * @author James Kostrewski
      */
-    public UssGetAcl(ZosConnection connection) {
+    public UssGetAcl(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -60,7 +60,7 @@ public class UssGetAcl {
      * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssGetAcl(ZosConnection connection, ZosmfRequest request) throws Exception {
+    public UssGetAcl(final ZosConnection connection, final ZosmfRequest request) throws Exception {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -81,7 +81,7 @@ public class UssGetAcl {
      * @author James Kostrewski
      */
     @SuppressWarnings("unchecked")
-    public String get(String targetPath, boolean useCommas) throws Exception {
+    public String get(final String targetPath, final boolean useCommas) throws Exception {
         Response response;
         if (useCommas) {
             response = getAclCommon(targetPath, new GetAclParams.Builder().useCommas(true).build());
@@ -108,7 +108,7 @@ public class UssGetAcl {
      * @return Response object
      * @author James Kostrewski
      */
-    public Response getAclCommon(String targetPath, GetAclParams params) {
+    public Response getAclCommon(final String targetPath, final GetAclParams params) {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "path is empty");
         ValidateUtils.checkNullParameter(params == null, "params is null");
