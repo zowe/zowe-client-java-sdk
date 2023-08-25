@@ -19,9 +19,24 @@ package zowe.client.sdk.zosfiles.uss.types;
  */
 public enum DeleteType {
 
+    /**
+     * Access ACL
+     */
     ACCESS("access"),
-    FILE("file"),
+
+    /**
+     * Directory default ACL
+     */
     DIR("dir"),
+
+    /**
+     * File default ACL
+     */
+    FILE("file"),
+    
+    /**
+     * Every extended ACL for all ACL types that are applicable for the current path name.
+     */
     EVERY("every");
 
     private final String value;
