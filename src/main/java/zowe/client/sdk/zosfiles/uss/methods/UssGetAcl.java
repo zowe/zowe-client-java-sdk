@@ -75,15 +75,15 @@ public class UssGetAcl {
      * Get the ACL for a USS file or directory
      *
      * @param targetPath file name with path
-     * @param commas     true if commas are to be used in the output
+     * @param useCommas  true if commas are to be used in the output
      * @return String representation of response phrase
      * @throws Exception processing error
      * @author James Kostrewski
      */
     @SuppressWarnings("unchecked")
-    public String get(String targetPath, boolean commas) throws Exception {
+    public String get(String targetPath, boolean useCommas) throws Exception {
         Response response;
-        if (commas) {
+        if (useCommas) {
             response = getAclCommon(targetPath, new GetAclParams.Builder().useCommas(true).build());
         } else {
             response = getAclCommon(targetPath, new GetAclParams.Builder().build());
@@ -92,7 +92,7 @@ public class UssGetAcl {
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
         JSONArray jsonArray = (JSONArray) json.get("stdout");
         StringBuilder sb = new StringBuilder();
-        if (commas) {
+        if (useCommas) {
             jsonArray.forEach(item -> sb.append(item.toString()));
         } else {
             jsonArray.forEach(item -> sb.append(item.toString()).append("\n"));
