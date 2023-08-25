@@ -28,7 +28,7 @@ public class SetAclParams {
      * The default is false. When true, aborts processing if an error or warning occurs.
      * See the setfacl command documentation for complete documentation on the errors and warnings (setfacl -a).
      */
-    public boolean abort;
+    private boolean abort;
 
     /**
      * The default is 'follow'. 'suppress' does not follow symbolic links.
@@ -38,7 +38,7 @@ public class SetAclParams {
      * Note:  At least one of the following four keywords must be specified.
      * 'modify' and 'delete' may both be specified, but not with 'delete-type' and 'set'.
      */
-    public Optional<LinkType> links;
+    private Optional<LinkType> links;
 
     /**
      * Delete all extended ACL entries by type (setfacl -D type):
@@ -50,7 +50,7 @@ public class SetAclParams {
      * <p>
      * Note: The 'delete-type' keyword cannot be specified with 'set', 'modify' or 'delete'.
      */
-    public Optional<DeleteType> deleteType;
+    private Optional<DeleteType> deleteType;
 
     /**
      * sets (replaces) all ACLs with 'entries'.
@@ -59,7 +59,7 @@ public class SetAclParams {
      * <p>
      * Note: The 'set' keyword cannot be specified with 'delete-type', 'modify' or 'delete'.
      */
-    public Optional<String> set;
+    private Optional<String> set;
 
     /**
      * Modifies the ACL entries. 'entries' represents a string of ACL entries.
@@ -69,7 +69,7 @@ public class SetAclParams {
      * <p>
      * Note: The 'modify' keyword cannot be specified with 'delete-type' or 'set'.
      */
-    Optional<String> modify;
+    private Optional<String> modify;
 
     /**
      * Deletes the extended ACL entries that are specified by 'entries'. 'entries' is a string of ACL entries.
@@ -78,7 +78,7 @@ public class SetAclParams {
      * <p>
      * Note: The 'delete' keyword cannot be specified with 'delete-type' or 'set'.
      */
-    public Optional<String> delete;
+    private Optional<String> delete;
 
     /**
      * SetAclParams constructor
