@@ -146,12 +146,12 @@ public class SetAclParams {
     @Override
     public String toString() {
         return "SetAclParams{" +
-                "abort=" + this.isAbort() +
-                ", links=" + this.getLinks() +
-                ", deleteType=" + this.getDeleteType().get() +
-                ", set=" + this.getSet().get() +
-                ", modify=" + this.getModify().get() +
-                ", delete=" + this.getDelete().get() +
+                "abort=" + abort +
+                ", links=" + links +
+                ", deleteType=" + deleteType +
+                ", set=" + set +
+                ", modify=" + modify +
+                ", delete=" + delete +
                 '}';
     }
 
@@ -292,5 +292,5 @@ public class SetAclParams {
         }
 
     }
-    
+
 }
