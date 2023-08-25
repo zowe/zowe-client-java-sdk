@@ -126,8 +126,8 @@ public class UssExtAttr {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
         if (request == null) {
