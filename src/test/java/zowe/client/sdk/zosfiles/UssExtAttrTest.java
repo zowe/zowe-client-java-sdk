@@ -26,7 +26,7 @@ public class UssExtAttrTest {
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
 
     @Test
-    public void tstUssExtAttrValueFailure1() {
+    public void tstUssExtAttrSetValueFailure1() {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
@@ -38,7 +38,7 @@ public class UssExtAttrTest {
     }
 
     @Test
-    public void tstUssExtAttrValueFailure2() {
+    public void tstUssExtAttrSetValueFailure2() {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
@@ -50,7 +50,7 @@ public class UssExtAttrTest {
     }
 
     @Test
-    public void tstUssExtAttrValueFailure3() {
+    public void tstUssExtAttrSetValueFailure3() {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
@@ -62,11 +62,59 @@ public class UssExtAttrTest {
     }
 
     @Test
-    public void tstUssExtAttrValueFailure4() {
+    public void tstUssExtAttrSetValueFailure4() {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.set("/xxx/xx/xx", "apap");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specified valid value character sequence", errMsg);
+    }
+
+    @Test
+    public void tstUssExtAttrResetValueFailure1() {
+        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
+        String errMsg = "";
+        try {
+            ussExtAttr.reset("/xxx/xx/xx", "pp");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specified valid value character sequence", errMsg);
+    }
+
+    @Test
+    public void tstUssExtAttrResetValueFailure2() {
+        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
+        String errMsg = "";
+        try {
+            ussExtAttr.reset("/xxx/xx/xx", "at");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specified valid value character sequence", errMsg);
+    }
+
+    @Test
+    public void tstUssExtAttrResetValueFailure3() {
+        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
+        String errMsg = "";
+        try {
+            ussExtAttr.reset("/xxx/xx/xx", "yu");
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("specified valid value character sequence", errMsg);
+    }
+
+    @Test
+    public void tstUssExtAttrResetValueFailure4() {
+        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
+        String errMsg = "";
+        try {
+            ussExtAttr.reset("/xxx/xx/xx", "apap");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
