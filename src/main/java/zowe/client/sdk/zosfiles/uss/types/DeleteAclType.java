@@ -17,7 +17,7 @@ package zowe.client.sdk.zosfiles.uss.types;
  * @author James Kostrewski
  * @version 2.0
  */
-public enum DeleteType {
+public enum DeleteAclType {
 
     /**
      * Access ACL
@@ -41,7 +41,7 @@ public enum DeleteType {
 
     private final String value;
 
-    DeleteType(final String value) {
+    DeleteAclType(final String value) {
         this.value = value;
     }
 

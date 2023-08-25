@@ -21,7 +21,7 @@ import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.SetAclParams;
-import zowe.client.sdk.zosfiles.uss.types.DeleteType;
+import zowe.client.sdk.zosfiles.uss.types.DeleteAclType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -112,7 +112,7 @@ public class UssSetAcl {
      * @param deleteType deletes the extended ACL entries that are specified by type
      * @author James Kostrewski
      */
-    public Response deleteByType(final String targetPath, final DeleteType deleteType) {
+    public Response deleteByType(final String targetPath, final DeleteAclType deleteType) {
         return setAclCommon(targetPath, new SetAclParams.Builder().setDeleteType(deleteType).build());
     }
 

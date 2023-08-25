@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.input;
 
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosfiles.uss.types.DeleteType;
+import zowe.client.sdk.zosfiles.uss.types.DeleteAclType;
 import zowe.client.sdk.zosfiles.uss.types.LinkType;
 
 import java.util.Optional;
@@ -51,7 +51,7 @@ public class SetAclParams {
      * <p>
      * Note: The 'delete-type' keyword cannot be specified with 'set', 'modify' or 'delete'.
      */
-    private Optional<DeleteType> deleteType;
+    private Optional<DeleteAclType> deleteType;
 
     /**
      * sets (replaces) all ACLs with 'entries'.
@@ -114,7 +114,7 @@ public class SetAclParams {
     /**
      * Retrieve deleteType value
      */
-    public Optional<DeleteType> getDeleteType() {
+    public Optional<DeleteAclType> getDeleteType() {
         return deleteType;
     }
 
@@ -187,7 +187,7 @@ public class SetAclParams {
          * <p>
          * Note: The 'delete-type' keyword cannot be specified with 'set', 'modify' or 'delete'.
          */
-        private DeleteType deleteType;
+        private DeleteAclType deleteType;
 
         /**
          * sets (replaces) all ACLs with 'entries'.
@@ -245,7 +245,7 @@ public class SetAclParams {
          * @param deleteType deleteType value
          * @return SetAclParams.Builder
          */
-        public SetAclParams.Builder setDeleteType(final DeleteType deleteType) {
+        public SetAclParams.Builder setDeleteType(final DeleteAclType deleteType) {
             ValidateUtils.checkNullParameter(deleteType == null, "deleteType is null");
             this.deleteType = deleteType;
             return this;
