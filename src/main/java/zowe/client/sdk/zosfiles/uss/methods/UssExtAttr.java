@@ -80,10 +80,9 @@ public class UssExtAttr {
         final Response response = executeRequest(targetPath, jsonMap);
         final JSONObject json = (JSONObject) new JSONParser().parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
-        final JSONArray jsonArray = (JSONArray) json.get("stdout");
-        final StringBuilder sb = new StringBuilder();
-        jsonArray.forEach(item -> sb.append(item.toString()).append("\n"));
-        return sb.toString();
+        final StringBuilder str = new StringBuilder();
+        ((JSONArray) json.get("stdout")).forEach(item -> str.append(item.toString()).append("\n"));
+        return str.toString();
     }
 
     /**
