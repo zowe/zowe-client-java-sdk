@@ -10,45 +10,40 @@
 package zowe.client.sdk.zosfiles.uss.types;
 
 /**
- * DeleteType class provides delete ACL type representation of Unix System Services (USS) objects
+ * GetAclType class provides ACL type representation of Unix System Services (USS) objects
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
- * @author James Kostrewski
+ * @author Frank Giordano
  * @version 2.0
  */
-public enum DeleteAclType {
+public enum GetAclType {
 
     /**
-     * Access ACL
+     * Displays the access ACL entries. This is the default if others not specified.
      */
     ACCESS("access"),
 
     /**
-     * Directory default ACL
+     * Displays the directory default ACL entries.
      */
     DIR("dir"),
 
     /**
-     * File default ACL
+     * Displays the file default ACL entries.
      */
-    FILE("file"),
-
-    /**
-     * Every extended ACL for all ACL types that are applicable for the current path name.
-     */
-    EVERY("every");
+    FILE("file");
 
     private final String value;
 
-    DeleteAclType(final String value) {
+    GetAclType(final String value) {
         this.value = value;
     }
 
     /**
-     * Returns the value of the DeleteAclType type.
+     * Returns the value of the GetAclType type.
      *
-     * @return the value of the DeleteAclType type
+     * @return the value of the GetAclType type
      */
     public String getValue() {
         return value;

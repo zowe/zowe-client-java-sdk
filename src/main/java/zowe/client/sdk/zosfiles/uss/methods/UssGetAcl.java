@@ -114,7 +114,7 @@ public class UssGetAcl {
 
         final Map<String, Object> getAclMap = new HashMap<>();
         getAclMap.put("request", "getfacl");
-        params.getType().ifPresent(type -> getAclMap.put("type", type));
+        params.getType().ifPresent(type -> getAclMap.put("type", type.getValue()));
         params.getUser().ifPresent(user -> getAclMap.put("user", user));
         if (params.getUseCommas()) {
             getAclMap.put("use-commas", params.getUseCommas());

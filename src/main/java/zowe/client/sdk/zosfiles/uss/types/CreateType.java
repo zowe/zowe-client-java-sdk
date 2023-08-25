@@ -29,9 +29,9 @@ public enum CreateType {
     }
 
     /**
-     * Returns the value of the create type.
+     * Returns the value of the CreateType type.
      *
-     * @return the value of the create type
+     * @return the value of the CreateType type
      */
     public String getValue() {
         return value;

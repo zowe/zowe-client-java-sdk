@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import zowe.client.sdk.zosfiles.uss.types.GetAclType;
+
 import java.util.Optional;
 
 /**
@@ -26,7 +28,7 @@ public class GetAclParams {
      * 'dir' displays the directory default ACL entries (getfacl -d).
      * If the target is not a directory, a warning is issued.
      */
-    private final Optional<String> type;
+    private final Optional<GetAclType> type;
 
     /**
      * The user ID or UID (as a JSON string),
@@ -72,7 +74,7 @@ public class GetAclParams {
      *
      * @return type value
      */
-    public Optional<String> getType() {
+    public Optional<GetAclType> getType() {
         return type;
     }
 
@@ -138,7 +140,7 @@ public class GetAclParams {
          * 'dir' displays the directory default ACL entries (getfacl -d).
          * If the target is not a directory, a warning is issued.
          */
-        private String type;
+        private GetAclType type;
 
         /**
          * The user ID or UID (as a JSON string),
@@ -178,7 +180,7 @@ public class GetAclParams {
          * @param type String value representing type
          * @return Builder this object
          */
-        public Builder type(final String type) {
+        public Builder type(final GetAclType type) {
             this.type = type;
             return this;
         }
