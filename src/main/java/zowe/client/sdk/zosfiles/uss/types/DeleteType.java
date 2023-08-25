@@ -33,7 +33,7 @@ public enum DeleteType {
      * File default ACL
      */
     FILE("file"),
-    
+
     /**
      * Every extended ACL for all ACL types that are applicable for the current path name.
      */
