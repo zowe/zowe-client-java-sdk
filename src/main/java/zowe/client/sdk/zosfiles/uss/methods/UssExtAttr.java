@@ -93,10 +93,10 @@ public class UssExtAttr {
      * @author James Kostrewski
      */
     public Response set(final String targetPath, final String value) throws Exception {
-        final Map<String, String> jsonMap = new HashMap<>();
-        jsonMap.put("request", "extattr");
-        jsonMap.put("set", value);
-        return executeRequest(targetPath, jsonMap);
+        final Map<String, String> requestMap = new HashMap<>();
+        requestMap.put("request", "extattr");
+        requestMap.put("set", value);
+        return executeRequest(targetPath, requestMap);
     }
 
     /**
@@ -107,12 +107,11 @@ public class UssExtAttr {
      * @author James Kostrewski
      */
     public Response reset(final String targetPath, final String value) throws Exception {
-        final Map<String, String> jsonMap = new HashMap<>();
-        jsonMap.put("request", "extattr");
-        jsonMap.put("reset", value);
-        return executeRequest(targetPath, jsonMap);
+        final Map<String, String> requestMap = new HashMap<>();
+        requestMap.put("request", "extattr");
+        requestMap.put("reset", value);
+        return executeRequest(targetPath, requestMap);
     }
-
 
     /**
      * Execute request for given path and json map

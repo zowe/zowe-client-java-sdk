@@ -70,7 +70,6 @@ public class UssGetAcl {
         this.request = request;
     }
 
-
     /**
      * Get the ACL for a USS file or directory
      *
@@ -113,25 +112,25 @@ public class UssGetAcl {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-        final Map<String, Object> getFaclMap = new HashMap<>();
-        getFaclMap.put("request", "getfacl");
-        params.getType().ifPresent(type -> getFaclMap.put("type", type));
-        params.getUser().ifPresent(user -> getFaclMap.put("user", user));
+        final Map<String, Object> getAclMap = new HashMap<>();
+        getAclMap.put("request", "getfacl");
+        params.getType().ifPresent(type -> getAclMap.put("type", type));
+        params.getUser().ifPresent(user -> getAclMap.put("user", user));
         if (params.getUseCommas()) {
-            getFaclMap.put("use-commas", params.getUseCommas());
+            getAclMap.put("use-commas", params.getUseCommas());
         }
         if (params.getSuppressHeader()) {
-            getFaclMap.put("suppress-header", params.getSuppressHeader());
+            getAclMap.put("suppress-header", params.getSuppressHeader());
         }
         if (params.getSuppressBaseAcl()) {
-            getFaclMap.put("suppress-baseacl", params.getSuppressBaseAcl());
+            getAclMap.put("suppress-baseacl", params.getSuppressBaseAcl());
         }
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(getFaclMap).toString());
+        request.setBody(new JSONObject(getAclMap).toString());
 
         return request.executeRequest();
     }

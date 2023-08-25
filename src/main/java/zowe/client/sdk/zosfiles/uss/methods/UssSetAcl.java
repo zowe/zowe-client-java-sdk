@@ -136,22 +136,22 @@ public class UssSetAcl {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-        final Map<String, Object> setMap = new HashMap<>();
-        setMap.put("request", "setfacl");
+        final Map<String, Object> setAclMap = new HashMap<>();
+        setAclMap.put("request", "setfacl");
         if (params.isAbort()) {
-            setMap.put("abort", params.isAbort());
+            setAclMap.put("abort", params.isAbort());
         }
-        params.getLinks().ifPresent(links -> setMap.put("links", links.getValue()));
-        params.getDeleteType().ifPresent(deleteType -> setMap.put("delete-type", deleteType.getValue()));
-        params.getSet().ifPresent(set -> setMap.put("set", set));
-        params.getModify().ifPresent(modify -> setMap.put("modify", modify));
-        params.getDelete().ifPresent(delete -> setMap.put("delete", delete));
+        params.getLinks().ifPresent(links -> setAclMap.put("links", links.getValue()));
+        params.getDeleteType().ifPresent(deleteType -> setAclMap.put("delete-type", deleteType.getValue()));
+        params.getSet().ifPresent(set -> setAclMap.put("set", set));
+        params.getModify().ifPresent(modify -> setAclMap.put("modify", modify));
+        params.getDelete().ifPresent(delete -> setAclMap.put("delete", delete));
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(setMap).toString());
+        request.setBody(new JSONObject(setAclMap).toString());
 
         return request.executeRequest();
     }
