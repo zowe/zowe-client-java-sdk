@@ -75,9 +75,9 @@ public class UssExtAttr {
      */
     @SuppressWarnings("unchecked")
     public String display(final String targetPath) throws Exception {
-        final Map<String, String> jsonMap = new HashMap<>();
-        jsonMap.put("request", "extattr");
-        final Response response = executeRequest(targetPath, jsonMap);
+        final Map<String, String> requestMap = new HashMap<>();
+        requestMap.put("request", "extattr");
+        final Response response = executeRequest(targetPath, requestMap);
         final JSONObject json = (JSONObject) new JSONParser().parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
         final StringBuilder str = new StringBuilder();
