@@ -147,6 +147,7 @@ public class UssExtAttr {
      *
      * @param value string
      * @return boolean value
+     * @author Frank Giordano
      */
     private boolean isValidAttributes(final String value) {
         return Pattern.compile("^(?!.*(.).*\\1)[apls]+$").matcher(value).matches();
