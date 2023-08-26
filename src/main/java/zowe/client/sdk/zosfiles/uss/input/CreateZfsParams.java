@@ -31,35 +31,35 @@ public class CreateZfsParams {
      * <p>
      * Defaults to 755. This property is not required.
      */
-    private OptionalInt owner;
+    private final OptionalInt owner;
 
     /**
      * The z/OS group ID or GID for the group of the ZFS root directory.
      * <p>
      * Defaults to 755. This property is not required.
      */
-    private OptionalInt group;
+    private final OptionalInt group;
 
     /**
      * The permissions code for the ZFS root directory.
      * <p>
      * Defaults to 755. This property is not required.
      */
-    private OptionalInt perms;
+    private final OptionalInt perms;
 
     /**
      * The number of primary cylinders to allocate for the ZFS.
      * <p>
      * Defaults to 0. This property is required.
      */
-    private OptionalInt cylsPri;
+    private final OptionalInt cylsPri;
 
     /**
      * The number of secondary cylinders to allocate for the ZFS.
      * <p>
      * Defaults to 0. This property is not required.
      */
-    private OptionalInt cylsSec;
+    private final OptionalInt cylsSec;
 
     /**
      * The SMS storage class to use for the allocation is a collection of performance goals
@@ -67,7 +67,7 @@ public class CreateZfsParams {
      * <p>
      * This property is not required.
      */
-    private Optional<String> storageClass;
+    private final Optional<String> storageClass;
 
     /**
      * The SMS management class to use for the allocation is a list of data set migration,
@@ -75,19 +75,19 @@ public class CreateZfsParams {
      * <p>
      * This property is not required.
      */
-    private Optional<String> managementClass;
+    private final Optional<String> managementClass;
 
     /**
      * The SMS data class to use for the allocation attributes and their values.
      * <p>
      * This property is not required.
      */
-    private Optional<String> dataClass;
+    private final Optional<String> dataClass;
 
     /**
      * List of volumes. This property is not required.
      */
-    private List<String> volumes;
+    private final List<String> volumes;
 
     /**
      * The number of seconds to wait for the underlying "zfsadm format" command to complete.
@@ -95,7 +95,7 @@ public class CreateZfsParams {
      * <p>
      * Default value: 20. This property is not required.
      */
-    private OptionalInt timeout;
+    private final OptionalInt timeout;
 
     /**
      * Indicates the target system name (nick name) for this request, where the system name (nick name)
@@ -104,7 +104,7 @@ public class CreateZfsParams {
      * provided for the target system. If the target system is the local system, this is ignored
      * and has no effect.
      */
-    private Optional<String> system;
+    private final Optional<String> system;
 
     /**
      * CreateZfsParams constructor
@@ -302,7 +302,7 @@ public class CreateZfsParams {
          * <p>
          * Defaults to 0. This property is required.
          */
-        private Integer cylsPri;
+        private final Integer cylsPri;
 
         /**
          * The number of secondary cylinders to allocate for the ZFS.
