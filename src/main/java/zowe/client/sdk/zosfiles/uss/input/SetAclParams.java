@@ -106,6 +106,8 @@ public class SetAclParams {
 
     /**
      * Retrieve links value
+     *
+     * @return links value
      */
     public Optional<LinkType> getLinks() {
         return links;
@@ -113,6 +115,8 @@ public class SetAclParams {
 
     /**
      * Retrieve deleteType value
+     *
+     * @return deleteType value
      */
     public Optional<DeleteAclType> getDeleteType() {
         return deleteType;
@@ -120,6 +124,8 @@ public class SetAclParams {
 
     /**
      * Retrieve set value
+     *
+     * @return set value
      */
     public Optional<String> getSet() {
         return set;
@@ -127,6 +133,8 @@ public class SetAclParams {
 
     /**
      * Retrieve modify value
+     *
+     * @return modify value
      */
     public Optional<String> getModify() {
         return modify;
@@ -134,6 +142,8 @@ public class SetAclParams {
 
     /**
      * Retrieve delete value
+     *
+     * @return delete value
      */
     public Optional<String> getDelete() {
         return delete;

@@ -72,6 +72,8 @@ public class UssExtAttr {
      * Returns a response string documenting listing attributes
      *
      * @param targetPath path to the file or directory
+     * @return string output
+     * @throws Exception processing error
      * @author James Kostrewski
      */
     @SuppressWarnings("unchecked")
@@ -91,6 +93,8 @@ public class UssExtAttr {
      *
      * @param targetPath path to the file or directory
      * @param value      one or more of the following character: a,l,p,s
+     * @return Response object
+     * @throws Exception invalid value character sequence specified
      * @author James Kostrewski
      */
     public Response set(final String targetPath, final String value) throws Exception {
@@ -107,6 +111,8 @@ public class UssExtAttr {
      *
      * @param targetPath path to the file or directory
      * @param value      one or more of the following character: a,l,p,s
+     * @return Response object
+     * @throws Exception invalid value character sequence specified
      * @author James Kostrewski
      */
     public Response reset(final String targetPath, final String value) throws Exception {

@@ -110,6 +110,7 @@ public class UssSetAcl {
      *
      * @param targetPath target path of the file or directory
      * @param deleteType deletes the extended ACL entries that are specified by type
+     * @return Response object
      * @author James Kostrewski
      */
     public Response deleteByType(final String targetPath, final DeleteAclType deleteType) {
