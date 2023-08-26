@@ -82,7 +82,7 @@ public class UssGetAcl {
     @SuppressWarnings("unchecked")
     public String get(final String targetPath, final boolean useCommas) throws Exception {
         final Response response = useCommas ?
-                getAclCommon(targetPath, new GetAclParams.Builder().useCommas(true).build()) :
+                getAclCommon(targetPath, new GetAclParams.Builder().usecommas(true).build()) :
                 getAclCommon(targetPath, new GetAclParams.Builder().build());
         final JSONObject json = (JSONObject) new JSONParser().parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());

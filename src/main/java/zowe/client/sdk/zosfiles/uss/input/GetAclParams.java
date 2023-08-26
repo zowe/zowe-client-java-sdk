@@ -64,9 +64,9 @@ public class GetAclParams {
     public GetAclParams(final GetAclParams.Builder builder) {
         this.type = Optional.ofNullable(builder.type);
         this.user = Optional.ofNullable(builder.user);
-        this.useCommas = builder.useCommas;
-        this.suppressHeader = builder.suppressHeader;
-        this.suppressBaseAcl = builder.suppressBaseAcl;
+        this.useCommas = builder.usecommas;
+        this.suppressHeader = builder.suppressheader;
+        this.suppressBaseAcl = builder.suppressbaseacl;
     }
 
     /**
@@ -153,20 +153,20 @@ public class GetAclParams {
          * The default is 'false'.
          * When true, displays each ACL entry, using commas to separate the ACL entries instead of newlines.
          */
-        private boolean useCommas = false;
+        private boolean usecommas = false;
 
         /**
          * The default is 'false'.
          * When true, the comment header (the first three lines of each file's output) is not to be displayed
          * (getfacl -m)
          */
-        private boolean suppressHeader = false;
+        private boolean suppressheader = false;
 
         /**
          * The default is 'false'.
          * When true, displays only the extended ACL entries. Does not display the base ACL entries (getfacl -o).
          */
-        private boolean suppressBaseAcl = false;
+        private boolean suppressbaseacl = false;
 
         /**
          * Builder constructor
@@ -197,35 +197,35 @@ public class GetAclParams {
         }
 
         /**
-         * Set useCommas value
+         * Set usecommas value
          *
-         * @param useCommas boolean value representing useCommas
+         * @param usecommas boolean value representing usecommas
          * @return Builder this object
          */
-        public Builder useCommas(final boolean useCommas) {
-            this.useCommas = useCommas;
+        public Builder usecommas(final boolean usecommas) {
+            this.usecommas = usecommas;
             return this;
         }
 
         /**
-         * Set suppressHeader value
+         * Set suppressheader value
          *
-         * @param suppressHeader boolean value representing suppressHeader
+         * @param suppressheader boolean value representing suppressheader
          * @return Builder this object
          */
-        public Builder suppressHeader(final boolean suppressHeader) {
-            this.suppressHeader = suppressHeader;
+        public Builder suppressheader(final boolean suppressheader) {
+            this.suppressheader = suppressheader;
             return this;
         }
 
         /**
-         * Set suppressBaseAcl value
+         * Set suppressbaseacl value
          *
-         * @param suppressBaseAcl boolean value representing suppressBaseAcl
+         * @param suppressbaseacl boolean value representing suppressbaseacl
          * @return Builder this object
          */
-        public Builder suppressBaseAcl(final boolean suppressBaseAcl) {
-            this.suppressBaseAcl = suppressBaseAcl;
+        public Builder suppressbaseacl(final boolean suppressbaseacl) {
+            this.suppressbaseacl = suppressbaseacl;
             return this;
         }
 
