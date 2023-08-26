@@ -72,10 +72,9 @@ public class UssChangeOwner {
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
      * @param owner      new owner of the file or directory
      * @return Response object
-     * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response change(final String targetPath, final String owner) throws Exception {
+    public Response change(final String targetPath, final String owner) {
         return changeCommon(targetPath, new ChangeOwnerParams.Builder().owner(owner).build());
     }
 

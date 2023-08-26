@@ -74,11 +74,10 @@ public class UssCopy {
      * @param fromPath   the source path of the file or directory to copy
      * @param targetPath target path of where the file or directory will be copied too
      * @return Response object
-     * @throws Exception processing error
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response copy(final String fromPath, final String targetPath) throws Exception {
+    public Response copy(final String fromPath, final String targetPath) {
         return copyCommon(targetPath, new CopyParams.Builder().from(fromPath).build());
     }
 

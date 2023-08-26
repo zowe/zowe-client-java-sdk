@@ -104,10 +104,9 @@ public class UssChangeTag {
      *
      * @param fileNamePath file name with path
      * @return Response Object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response remove(final String fileNamePath) throws Exception {
+    public Response remove(final String fileNamePath) {
         return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.REMOVE).build());
     }
 
@@ -116,10 +115,9 @@ public class UssChangeTag {
      *
      * @param fileNamePath file name with path
      * @return Response Object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response retrieve(final String fileNamePath) throws Exception {
+    public Response retrieve(final String fileNamePath) {
         return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
     }
 

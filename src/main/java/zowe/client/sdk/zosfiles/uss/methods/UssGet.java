@@ -82,11 +82,10 @@ public class UssGet {
      *
      * @param fileNamePath file name with path
      * @return the text contents of file
-     * @throws Exception processing error
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public String getText(final String fileNamePath) throws Exception {
+    public String getText(final String fileNamePath) {
         GetParams params = new GetParams.Builder().build();
         Response response = getCommon(fileNamePath, params);
         return (String) response.getResponsePhrase().orElse("");

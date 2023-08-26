@@ -73,10 +73,9 @@ public class JobGet {
      * @param jobName job name for the job for which you want to retrieve JCL
      * @param jobId   job ID for the job for which you want to retrieve JCL
      * @return job document on resolve
-     * @throws Exception error on getting jcl content
      * @author Frank Giordano
      */
-    public String getJcl(final String jobName, final String jobId) throws Exception {
+    public String getJcl(final String jobName, final String jobId) {
         return getJclCommon(new CommonJobParams(jobId, jobName));
     }
 
@@ -255,10 +254,9 @@ public class JobGet {
      *
      * @param jobFile spool file for which you want to retrieve the content
      * @return spool content
-     * @throws Exception error on getting spool content
      * @author Frank Giordano
      */
-    public String getSpoolContent(final JobFile jobFile) throws Exception {
+    public String getSpoolContent(final JobFile jobFile) {
         return getSpoolContentCommon(jobFile);
     }
 

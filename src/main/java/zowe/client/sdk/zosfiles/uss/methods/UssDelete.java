@@ -71,10 +71,9 @@ public class UssDelete {
      *
      * @param targetPath the name of the file or directory you are going to delete
      * @return Response object
-     * @throws Exception processing error
      * @author James Kostrewski
      */
-    public Response delete(final String targetPath) throws Exception {
+    public Response delete(final String targetPath) {
         return delete(targetPath, false);
     }
 

@@ -94,10 +94,9 @@ public class UssExtAttr {
      * @param targetPath path to the file or directory
      * @param value      one or more of the following character: a,l,p,s
      * @return Response object
-     * @throws Exception invalid value character sequence specified
      * @author James Kostrewski
      */
-    public Response set(final String targetPath, final String value) throws Exception {
+    public Response set(final String targetPath, final String value) {
         ValidateUtils.checkIllegalParameter(!isValidAttributes(value),
                 "specified valid value character sequence");
         final Map<String, String> requestMap = new HashMap<>();
@@ -112,10 +111,9 @@ public class UssExtAttr {
      * @param targetPath path to the file or directory
      * @param value      one or more of the following character: a,l,p,s
      * @return Response object
-     * @throws Exception invalid value character sequence specified
      * @author James Kostrewski
      */
-    public Response reset(final String targetPath, final String value) throws Exception {
+    public Response reset(final String targetPath, final String value) {
         ValidateUtils.checkIllegalParameter(!isValidAttributes(value),
                 "specified valid value character sequence");
         final Map<String, String> requestMap = new HashMap<>();

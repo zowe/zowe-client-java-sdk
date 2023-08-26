@@ -77,10 +77,9 @@ public class UssMount {
      * @param mountPoint     the mount point to be used for mounting the UNIX file system
      * @param fsType         the type of file system to be mounted.
      * @return Response object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response mount(final String fileSystemName, final String mountPoint, final String fsType) throws Exception {
+    public Response mount(final String fileSystemName, final String mountPoint, final String fsType) {
         return mountCommon(fileSystemName,
                 new MountParams.Builder()
                         .action(MountActionType.MOUNT)
@@ -95,10 +94,9 @@ public class UssMount {
      *
      * @param fileSystemName the file system name
      * @return Response object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response unmount(final String fileSystemName) throws Exception {
+    public Response unmount(final String fileSystemName) {
         return mountCommon(fileSystemName, new MountParams.Builder().action(MountActionType.UNMOUNT).build());
     }
 

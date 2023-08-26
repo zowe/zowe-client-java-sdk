@@ -72,10 +72,9 @@ public class JobDelete {
      * @param jobId   job id
      * @param version version number, see ModifyJobParams object for version options
      * @return http response object
-     * @throws Exception error deleting
      * @author Nikunj goyal
      */
-    public Response delete(final String jobName, final String jobId, final String version) throws Exception {
+    public Response delete(final String jobName, final String jobId, final String version) {
         return deleteCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 

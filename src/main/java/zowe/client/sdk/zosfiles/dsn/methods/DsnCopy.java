@@ -84,11 +84,10 @@ public class DsnCopy {
      * @param replace         if true members in the target dataset are replaced
      * @param copyAllMembers  if true copy all members in source partition dataset specified
      * @return http response object
-     * @throws Exception error processing copy request
      * @author Leonid Baranov
      */
     public Response copy(final String fromDataSetName, final String toDataSetName, final boolean replace,
-                         final boolean copyAllMembers) throws Exception {
+                         final boolean copyAllMembers) {
         return copyCommon(new CopyParams.Builder()
                 .fromDataSet(fromDataSetName)
                 .toDataSet(toDataSetName)

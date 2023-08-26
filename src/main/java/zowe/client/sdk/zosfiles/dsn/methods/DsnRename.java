@@ -72,10 +72,9 @@ public class DsnRename {
      * @param dataSetName    existing dataset name
      * @param newDataSetName new dataset name
      * @return Response object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response dataSetName(final String dataSetName, final String newDataSetName) throws Exception {
+    public Response dataSetName(final String dataSetName, final String newDataSetName) {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(newDataSetName == null, "newDataSetName is null");
@@ -92,11 +91,9 @@ public class DsnRename {
      * @param memberName      existing member name
      * @param newMemberName   new member name
      * @return Response object
-     * @throws Exception processing error
      * @author Frank Giordano
      */
-    public Response memberName(final String fromDataSetName, final String memberName, final String newMemberName)
-            throws Exception {
+    public Response memberName(final String fromDataSetName, final String memberName, final String newMemberName) {
         ValidateUtils.checkNullParameter(fromDataSetName == null, "fromDataSetName is null");
         ValidateUtils.checkIllegalParameter(fromDataSetName.isBlank(), "fromDataSetName not specified");
         ValidateUtils.checkNullParameter(memberName == null, "memberName is null");

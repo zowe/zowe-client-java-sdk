@@ -68,10 +68,9 @@ public class DsnWrite {
      * @param memberName  name of member to add new content
      * @param content     new content
      * @return http response object
-     * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public Response write(final String dataSetName, final String memberName, final String content) throws Exception {
+    public Response write(final String dataSetName, final String memberName, final String content) {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
