@@ -97,7 +97,7 @@ public class UssExtAttr {
      * @author James Kostrewski
      */
     public Response set(final String targetPath, final String value) {
-        ValidateUtils.checkIllegalParameter(!isValidAttributes(value),
+        ValidateUtils.checkIllegalParameter(isNotValidAttributes(value),
                 "specified valid value character sequence");
         final Map<String, String> requestMap = new HashMap<>();
         requestMap.put("request", "extattr");
@@ -114,7 +114,7 @@ public class UssExtAttr {
      * @author James Kostrewski
      */
     public Response reset(final String targetPath, final String value) {
-        ValidateUtils.checkIllegalParameter(!isValidAttributes(value),
+        ValidateUtils.checkIllegalParameter(isNotValidAttributes(value),
                 "specified valid value character sequence");
         final Map<String, String> requestMap = new HashMap<>();
         requestMap.put("request", "extattr");
@@ -153,8 +153,8 @@ public class UssExtAttr {
      * @return boolean value
      * @author Frank Giordano
      */
-    private boolean isValidAttributes(final String value) {
-        return Pattern.compile("^(?!.*(.).*\\1)[apls]+$").matcher(value).matches();
+    private boolean isNotValidAttributes(final String value) {
+        return !Pattern.compile("^(?!.*(.).*\\1)[apls]+$").matcher(value).matches();
     }
 
 }
