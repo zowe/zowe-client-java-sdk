@@ -71,7 +71,7 @@ public final class JobFileJsonParse implements JsonParse {
                 .classs(data.get("class") != null ? (String) data.get("class") : null)
                 .id(data.get("id") != null ? (Long) data.get("id") : 0)
                 .ddName(data.get("ddname") != null ? (String) data.get("ddname") : null)
-                .recordsUrl(data.get("records-url\"") != null ? (String) data.get("records-url") : null)
+                .recordsUrl(data.get("records-url") != null ? (String) data.get("records-url") : null)
                 .lrecl(data.get("lrecl") != null ? (Long) data.get("lrecl") : 0)
                 .subSystem(data.get("subsystem") != null ? (String) data.get("subsystem") : null)
                 .stepName(data.get("stepname") != null ? (String) data.get("stepname") : null)
