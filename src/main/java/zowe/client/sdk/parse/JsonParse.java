@@ -12,7 +12,7 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONObject;
 
 /**
- * Base abstract class that conforms to json parse operation
+ * Interface that conforms to json parse operation
  *
  * @author Frank Giordano
  * @version 2.0
