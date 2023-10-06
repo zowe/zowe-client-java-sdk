@@ -30,7 +30,7 @@ public class SystemsParseResponseTest {
     public void tstZosmfSystemsParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse((Object) null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -45,40 +45,11 @@ public class SystemsParseResponseTest {
     }
 
     @Test
-    public void tstZosmfSystemsParseJsonStopResponseSingletonWithDataSuccess() {
-        final JsonParse parser =
-                JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(new JSONObject());
-        final JsonParse parser2 =
-                JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(new JSONObject());
-        assertSame(parser, parser2);
-    }
-
-    @Test
-    public void tstZosmfSystemsParseJsonStopResponseResetDataFail() {
-        String msg = "";
-        try {
-            JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(new JSONObject());
-            JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse();
-            JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-        try {
-            JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-    }
-
-    @Test
     public void tstZosmfSystemsParseJsonStopResponseSuccess() throws Exception {
         final String data = "{\"items\":[{\"systemNickName\":\"test\",\"zosVR\":\"2.5\"}],\"numRows\":1}";
         final JSONObject json = new JSONObject((JSONObject) new JSONParser().parse(data));
         final ZosmfSystemsResponse response = (ZosmfSystemsResponse) JsonParseFactory
-                .buildParser(ParseType.ZOSMF_SYSTEMS).setJsonObject(json).parseResponse();
+                .buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse(json);
         assertEquals(Long.parseLong("1"), response.getNumRows().orElse(-1L));
         assertEquals("test", response.getDefinedSystems().get()[0].getSystemNickName().get());
     }

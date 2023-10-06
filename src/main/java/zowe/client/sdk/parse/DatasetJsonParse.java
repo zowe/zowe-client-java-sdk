@@ -21,15 +21,14 @@ import zowe.client.sdk.zosfiles.dsn.response.Dataset;
  */
 public final class DatasetJsonParse implements JsonParse {
 
-    /**
-     * Represents one singleton instance
-     */
-    private static JsonParse INSTANCE;
+    private static class Holder {
 
-    /**
-     * JSON data value to be parsed
-     */
-    private JSONObject data;
+        /**
+         * Represents one singleton instance
+         */
+        private static final DatasetJsonParse instance = new DatasetJsonParse();
+
+    }
 
     /**
      * Private constructor defined to avoid public instantiation of class
@@ -42,26 +41,25 @@ public final class DatasetJsonParse implements JsonParse {
     /**
      * Get singleton instance
      *
-     * @return ConsoleResponseService object
+     * @return DatasetJsonParse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParse getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new DatasetJsonParse();
-        }
-        return INSTANCE;
+    public static DatasetJsonParse getInstance() {
+        return DatasetJsonParse.Holder.instance;
     }
 
     /**
      * Transform data into Dataset object
      *
+     * @param args json data to parse
      * @return Dataset object
      * @author Frank Giordano
      */
     @Override
-    public Dataset parseResponse() {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
-        final Dataset dataset = new Dataset.Builder()
+    public synchronized Dataset parseResponse(final Object... args) {
+        ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
+        final JSONObject data = (JSONObject) args[0];
+        return new Dataset.Builder()
                 .dsname(data.get("dsname") != null ? (String) data.get("dsname") : null)
                 .blksz(data.get("blksz") != null ? (String) data.get("blksz") : null)
                 .catnm(data.get("catnm") != null ? (String) data.get("catnm") : null)
@@ -82,22 +80,6 @@ public final class DatasetJsonParse implements JsonParse {
                 .used(data.get("used") != null ? (String) data.get("used") : null)
                 .vol(data.get("vol") != null ? (String) data.get("vol") : null)
                 .build();
-        data = null;
-        return dataset;
-    }
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse this object
-     * @author Frank Giordano
-     */
-    @Override
-    public JsonParse setJsonObject(final JSONObject data) {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
-        this.data = data;
-        return this;
     }
 
 }

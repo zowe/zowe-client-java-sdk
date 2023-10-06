@@ -51,8 +51,7 @@ public class Profile {
     public Profile(final String name, final JSONObject obj, final JSONArray secure) {
         this.name = name;
         this.secure = secure;
-        properties = (Map<String, String>) JsonParseFactory.buildParser(ParseType.PROPS)
-                .setJsonObject(obj).parseResponse();
+        properties = (Map<String, String>) JsonParseFactory.buildParser(ParseType.PROPS).parseResponse(obj);
     }
 
     /**

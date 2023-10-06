@@ -21,15 +21,14 @@ import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
  */
 public final class TsoStopJsonParse implements JsonParse {
 
-    /**
-     * Represents one singleton instance
-     */
-    private static JsonParse INSTANCE;
+    private static class Holder {
 
-    /**
-     * JSON data value to be parsed
-     */
-    private JSONObject data;
+        /**
+         * Represents one singleton instance
+         */
+        private static final TsoStopJsonParse instance = new TsoStopJsonParse();
+
+    }
 
     /**
      * Private constructor defined to avoid public instantiation of class
@@ -42,47 +41,30 @@ public final class TsoStopJsonParse implements JsonParse {
     /**
      * Get singleton instance
      *
-     * @return TsoStopParseResponse object
+     * @return TsoStopJsonParse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParse getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new TsoStopJsonParse();
-        }
-        return INSTANCE;
+    public static TsoStopJsonParse getInstance() {
+        return TsoStopJsonParse.Holder.instance;
     }
 
     /**
-     * Retrieve parsed json Tso Stop Response
+     * Transform retrieved Tso Stop response into ZosmfTsoResponse
      *
+     * @param args json data to parse
      * @return populated console response, see ZosmfTsoResponse object
      * @author Frank Giordano
      */
     @Override
-    public Object parseResponse() {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
-        final ZosmfTsoResponse zosmfTsoResponse = new ZosmfTsoResponse.Builder()
+    public synchronized Object parseResponse(final Object... args) {
+        ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
+        final JSONObject data = (JSONObject) args[0];
+        return new ZosmfTsoResponse.Builder()
                 .ver(data.get("ver") != null ? (String) data.get("ver") : null)
                 .servletKey(data.get("servletKey") != null ? (String) data.get("servletKey") : null)
                 .reused(data.get("reused") != null && (boolean) data.get("reused"))
                 .timeout(data.get("timeout") != null && (boolean) data.get("timeout"))
                 .build();
-        data = null;
-        return zosmfTsoResponse;
-    }
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse this object
-     * @author Frank Giordano
-     */
-    @Override
-    public JsonParse setJsonObject(final JSONObject data) {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
-        this.data = data;
-        return this;
     }
 
 }

@@ -23,15 +23,14 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfPluginInfo;
  */
 public final class SystemInfoJsonParse implements JsonParse {
 
-    /**
-     * Represents one singleton instance
-     */
-    private static JsonParse INSTANCE;
+    private static class Holder {
 
-    /**
-     * JSON data value to be parsed
-     */
-    private JSONObject data;
+        /**
+         * Represents one singleton instance
+         */
+        private static final SystemInfoJsonParse instance = new SystemInfoJsonParse();
+
+    }
 
     /**
      * Private constructor defined to avoid public instantiation of class
@@ -44,25 +43,24 @@ public final class SystemInfoJsonParse implements JsonParse {
     /**
      * Get singleton instance
      *
-     * @return SystemInfoParseResponse object
+     * @return SystemInfoJsonParse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParse getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new SystemInfoJsonParse();
-        }
-        return INSTANCE;
+    public static SystemInfoJsonParse getInstance() {
+        return SystemInfoJsonParse.Holder.instance;
     }
 
     /**
      * Transform data into ZosmfInfoResponse object
      *
+     * @param args json data to parse
      * @return ZosmfInfoResponse object
      * @author Frank Giordano
      */
     @Override
-    public Object parseResponse() {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
+    public synchronized Object parseResponse(final Object... args) {
+        ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
+        final JSONObject data = (JSONObject) args[0];
         final ZosmfInfoResponse.Builder zosmfInfoResponse = new ZosmfInfoResponse.Builder()
                 .zosVersion(data.get("zos_version") != null ? (String) data.get("zos_version") : null)
                 .zosmfPort(data.get("zosmf_port") != null ? (String) data.get("zosmf_port") : null)
@@ -81,7 +79,6 @@ public final class SystemInfoJsonParse implements JsonParse {
             }
             return zosmfInfoResponse.zosmfPluginsInfo(zosmfPluginsInfo).build();
         }
-        data = null;
         return zosmfInfoResponse.build();
     }
 
@@ -98,20 +95,6 @@ public final class SystemInfoJsonParse implements JsonParse {
                 .pluginDefaultName(data.get("pluginDefaultName") != null ? (String) data.get("pluginDefaultName") : null)
                 .pluginStatus(data.get("pluginStatus") != null ? (String) data.get("pluginStatus") : null)
                 .build();
-    }
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse this object
-     * @author Frank Giordano
-     */
-    @Override
-    public JsonParse setJsonObject(final JSONObject data) {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
-        this.data = data;
-        return this;
     }
 
 }

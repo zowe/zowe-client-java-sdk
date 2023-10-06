@@ -133,8 +133,7 @@ public class UssList {
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (final Object jsonObj : jsonArray) {
-                items.add((UnixFile) JsonParseFactory.buildParser(ParseType.UNIX_FILE)
-                        .setJsonObject((JSONObject) jsonObj).parseResponse());
+                items.add((UnixFile) JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse((JSONObject) jsonObj));
             }
         }
 
@@ -195,10 +194,8 @@ public class UssList {
                 } catch (Exception ignored) {
                 }
 
-                final UnixZfsJsonParse parse = (UnixZfsJsonParse) JsonParseFactory
-                        .buildParser(ParseType.UNIX_ZFS).setJsonObject(jsonObj);
-                parse.setModeStr(modeStr.toString());
-                items.add(parse.parseResponse());
+                final UnixZfsJsonParse parse = (UnixZfsJsonParse) JsonParseFactory.buildParser(ParseType.UNIX_ZFS);
+                items.add(parse.parseResponse(jsonObj, modeStr.toString()));
             }
         }
         return items;

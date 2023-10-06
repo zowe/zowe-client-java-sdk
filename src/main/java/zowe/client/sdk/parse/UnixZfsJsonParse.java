@@ -21,17 +21,14 @@ import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
  */
 public final class UnixZfsJsonParse implements JsonParse {
 
-    /**
-     * Represents one singleton instance
-     */
-    private static JsonParse INSTANCE;
+    private static class Holder {
 
-    private String modeStr = "";
+        /**
+         * Represents one singleton instance
+         */
+        private static final UnixZfsJsonParse instance = new UnixZfsJsonParse();
 
-    /**
-     * JSON data value to be parsed
-     */
-    private JSONObject data;
+    }
 
     /**
      * Private constructor defined to avoid public instantiation of class
@@ -44,27 +41,28 @@ public final class UnixZfsJsonParse implements JsonParse {
     /**
      * Get singleton instance
      *
-     * @return UnixZfsParseResponse object
+     * @return UnixZfsJsonParse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParse getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new UnixZfsJsonParse();
-        }
-        return INSTANCE;
+    public static UnixZfsJsonParse getInstance() {
+        return UnixZfsJsonParse.Holder.instance;
     }
 
     /**
      * Transform data into UnixZfs object
      *
+     * @param args first arg json data to parse, second arg mode permission string value comma delimited
      * @return UssZfsItem object
      * @author Frank Giordano
      */
     @Override
-    public UnixZfs parseResponse() {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
-        ValidateUtils.checkNullParameter(modeStr.isBlank(), ParseConstants.REQUIRED_ACTION_MODE_STR_MSG);
-        final UnixZfs unixZfs = new UnixZfs.Builder()
+    public synchronized UnixZfs parseResponse(final Object... args) {
+        ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
+        ValidateUtils.checkNullParameter(args[1] == null, ParseConstants.MODE_NULL_STR_MSG);
+        final JSONObject data = (JSONObject) args[0];
+        final String modeStr = (String) args[1];
+        ValidateUtils.checkNullParameter(modeStr.isBlank(), ParseConstants.MODE_EMPTY_STR_MSG);
+        return new UnixZfs.Builder()
                 .name(data.get("name") != null ? (String) data.get("name") : null)
                 .mountpoint(data.get("mountpoint") != null ? (String) data.get("mountpoint") : null)
                 .fstname(data.get("fstname") != null ? (String) data.get("fstname") : null)
@@ -83,36 +81,6 @@ public final class UnixZfsJsonParse implements JsonParse {
                 .totalRows(data.get("totalRows") != null ? (Long) data.get("totalRows") : null)
                 .moreRows(data.get("moreRows") != null && (boolean) data.get("moreRows"))
                 .build();
-        data = null;
-        modeStr = "";
-        return unixZfs;
-    }
-
-    /**
-     * Special field that holds a String comma delimited with mode permission values.
-     * Value is parsed by parent calling and set here to be included in main parse object
-     * done in parseResponse() method.
-     *
-     * @param modeStr mode permission(s) string value
-     * @author Frank Giordano
-     */
-    public void setModeStr(final String modeStr) {
-        ValidateUtils.checkNullParameter(modeStr == null, "modeStr is null");
-        this.modeStr = modeStr;
-    }
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse this object
-     * @author Frank Giordano
-     */
-    @Override
-    public JsonParse setJsonObject(final JSONObject data) {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
-        this.data = data;
-        return this;
     }
 
 }

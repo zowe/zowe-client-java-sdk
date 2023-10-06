@@ -32,25 +32,11 @@ public class UnixZfsParseResponseTest {
     public void tstUnixZfsParseJsonStopResponseDataNullFail() {
         String msg = "";
         try {
-            JsonParseFactory.buildParser(ParseType.UNIX_ZFS).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.UNIX_ZFS).parseResponse((Object) null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
         assertEquals("data is null", msg);
-    }
-
-    @Test
-    public void tstUnixZfsParseJsonStopResponseModeNullFail() {
-        String msg = "";
-        try {
-            final UnixZfsJsonParse parser = (UnixZfsJsonParse)
-                    JsonParseFactory.buildParser(ParseType.UNIX_ZFS).setJsonObject(new JSONObject());
-            parser.setModeStr(null);
-            parser.parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals("modeStr is null", msg);
     }
 
     @Test
@@ -61,48 +47,14 @@ public class UnixZfsParseResponseTest {
     }
 
     @Test
-    public void tstUnixZfsParseJsonStopResponseSingletonWithDataSuccess() {
-        final JsonParse parser =
-                JsonParseFactory.buildParser(ParseType.UNIX_ZFS).setJsonObject(new JSONObject());
-        final JsonParse parser2 =
-                JsonParseFactory.buildParser(ParseType.UNIX_ZFS).setJsonObject(new JSONObject());
-        assertSame(parser, parser2);
-    }
-
-    @Test
-    public void tstUnixZfsParseJsonStopResponseResetDataModeFail() {
-        String msg = "";
-        try {
-            JsonParseFactory.buildParser(ParseType.UNIX_ZFS).setJsonObject(new JSONObject());
-            JsonParseFactory.buildParser(ParseType.UNIX_ZFS).parseResponse();
-            JsonParseFactory.buildParser(ParseType.UNIX_ZFS).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MODE_STR_MSG, msg);
-        try {
-            final UnixZfsJsonParse parser = (UnixZfsJsonParse)
-                    JsonParseFactory.buildParser(ParseType.UNIX_ZFS).setJsonObject(new JSONObject());
-            parser.setModeStr("sd");
-            parser.parseResponse();
-            parser.parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-    }
-
-    @Test
     public void tstUnixZfsParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("name", "ver");
         jsonMap.put("mode", "mode");
         final JSONObject json = new JSONObject(jsonMap);
 
-        final UnixZfsJsonParse parser = (UnixZfsJsonParse)
-                JsonParseFactory.buildParser(ParseType.UNIX_ZFS).setJsonObject(json);
-        parser.setModeStr("mode");
-        final UnixZfs response = parser.parseResponse();
+        final UnixZfsJsonParse parser = (UnixZfsJsonParse) JsonParseFactory.buildParser(ParseType.UNIX_ZFS);
+        final UnixZfs response = parser.parseResponse(json, "mode");
         assertEquals("ver", response.getName().orElse("n\\a"));
         assertEquals("mode", response.getMode().orElse("n\\a"));
     }

@@ -21,12 +21,14 @@ import zowe.client.sdk.zoslogs.response.ZosLogItem;
  */
 public final class ZosLogItemJsonParse implements JsonParse {
 
-    /**
-     * Represents one singleton instance
-     */
-    private static JsonParse INSTANCE;
+    private static class Holder {
 
-    private boolean isProcessResponse;
+        /**
+         * Represents one singleton instance
+         */
+        private static final ZosLogItemJsonParse instance = new ZosLogItemJsonParse();
+
+    }
 
     /**
      * Private constructor defined to avoid public instantiation of class
@@ -37,34 +39,29 @@ public final class ZosLogItemJsonParse implements JsonParse {
     }
 
     /**
-     * JSON data value to be parsed
-     */
-    private JSONObject data;
-
-    /**
      * Get singleton instance
      *
-     * @return ZosLogItemParseResponse object
+     * @return ZosLogItemJsonParse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParse getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new ZosLogItemJsonParse();
-        }
-        return INSTANCE;
+    public static ZosLogItemJsonParse getInstance() {
+        return ZosLogItemJsonParse.Holder.instance;
     }
 
     /**
      * Transform data into ZosLogItem object
      *
+     * @param args first arg json data to parse, second arg isProcessResponse boolean value
      * @return ZosLogItem object
      * @author Frank Giordano
      */
     @Override
-    public ZosLogItem parseResponse() {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
-        final String message = processMessage(data, isProcessResponse);
-        final ZosLogItem zosLogItem = new ZosLogItem.Builder()
+    public synchronized ZosLogItem parseResponse(final Object... args) {
+        ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
+        ValidateUtils.checkNullParameter(args[1] == null, ParseConstants.IS_PROCESS_RESPONSE_NULL_MSG);
+        final JSONObject data = (JSONObject) args[0];
+        final String message = processMessage(data, (boolean) args[1]);
+        return new ZosLogItem.Builder()
                 .cart(data.get("cart") != null ? (String) data.get("cart") : null)
                 .color(data.get("color") != null ? (String) data.get("color") : null)
                 .jobName(data.get("jobName") != null ? (String) data.get("jobName") : null)
@@ -77,8 +74,6 @@ public final class ZosLogItemJsonParse implements JsonParse {
                 .time(data.get("time") != null ? (String) data.get("time") : null)
                 .timeStamp(data.get("timestamp") != null ? (Long) data.get("timestamp") : 0)
                 .build();
-        data = null;
-        return zosLogItem;
     }
 
     /**
@@ -104,30 +99,6 @@ public final class ZosLogItemJsonParse implements JsonParse {
         } catch (Exception e) {
             return null;
         }
-    }
-
-    /**
-     * Set isProcessResponse boolean value
-     *
-     * @param processResponse boolean value
-     * @author Frank Giordano
-     */
-    public void setProcessResponse(final boolean processResponse) {
-        isProcessResponse = processResponse;
-    }
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse this object
-     * @author Frank Giordano
-     */
-    @Override
-    public JsonParse setJsonObject(final JSONObject data) {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
-        this.data = data;
-        return this;
     }
 
 }

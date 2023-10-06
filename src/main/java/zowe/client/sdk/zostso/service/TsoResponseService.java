@@ -55,8 +55,7 @@ public class TsoResponseService {
             final String jsonStr = tsoCmdResponse.getResponsePhrase()
                     .orElseThrow(() -> new IllegalStateException("no tsoCmdResponse phrase")).toString();
             final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-            result = (ZosmfTsoResponse) JsonParseFactory.buildParser(ParseType.TSO_CONSOLE)
-                    .setJsonObject(jsonObject).parseResponse();
+            result = (ZosmfTsoResponse) JsonParseFactory.buildParser(ParseType.TSO_CONSOLE).parseResponse(jsonObject);
         }
 
         return result;

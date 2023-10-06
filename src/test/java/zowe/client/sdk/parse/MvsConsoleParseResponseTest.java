@@ -32,7 +32,7 @@ public class MvsConsoleParseResponseTest {
     public void tstMvsConsoleParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).parseResponse((Object) null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -47,42 +47,13 @@ public class MvsConsoleParseResponseTest {
     }
 
     @Test
-    public void tstMvsConsoleParseJsonStopResponseSingletonWithDataSuccess() {
-        final JsonParse parser =
-                JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).setJsonObject(new JSONObject());
-        final JsonParse parser2 =
-                JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).setJsonObject(new JSONObject());
-        assertSame(parser, parser2);
-    }
-
-    @Test
-    public void tstMvsConsoleParseJsonStopResponseResetDataFail() {
-        String msg = "";
-        try {
-            JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).setJsonObject(new JSONObject());
-            JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).parseResponse();
-            JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-        try {
-            JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-    }
-
-    @Test
     public void tstMvsConsoleParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "ver");
         final JSONObject json = new JSONObject(jsonMap);
 
         final ZosmfIssueResponse response = (ZosmfIssueResponse) JsonParseFactory
-                .buildParser(ParseType.MVS_CONSOLE).setJsonObject(json).parseResponse();
+                .buildParser(ParseType.MVS_CONSOLE).parseResponse(json);
         assertEquals("ver", response.getCmdResponse().orElse("n\\a"));
     }
 

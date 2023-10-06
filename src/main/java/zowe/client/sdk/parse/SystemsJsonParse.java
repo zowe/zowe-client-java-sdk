@@ -23,15 +23,14 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
  */
 public final class SystemsJsonParse implements JsonParse {
 
-    /**
-     * Represents one singleton instance
-     */
-    private static JsonParse INSTANCE;
+    private static class Holder {
 
-    /**
-     * JSON data value to be parsed
-     */
-    private JSONObject data;
+        /**
+         * Represents one singleton instance
+         */
+        private static final SystemsJsonParse instance = new SystemsJsonParse();
+
+    }
 
     /**
      * Private constructor defined to avoid public instantiation of class
@@ -44,25 +43,24 @@ public final class SystemsJsonParse implements JsonParse {
     /**
      * Get singleton instance
      *
-     * @return SystemsParseResponse object
+     * @return SystemsJsonParse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParse getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new SystemsJsonParse();
-        }
-        return INSTANCE;
+    public static SystemsJsonParse getInstance() {
+        return SystemsJsonParse.Holder.instance;
     }
 
     /**
      * Transform data into ZosmfListDefinedSystemsResponse object
      *
+     * @param args json data to parse
      * @return ZosmfListDefinedSystemsResponse object
      * @author Frank Giordano
      */
     @Override
-    public Object parseResponse() {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
+    public synchronized Object parseResponse(final Object... args) {
+        ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
+        final JSONObject data = (JSONObject) args[0];
         final ZosmfSystemsResponse.Builder systemsResponse = new ZosmfSystemsResponse.Builder()
                 .numRows((Long) data.get("numRows"));
 
@@ -75,7 +73,6 @@ public final class SystemsJsonParse implements JsonParse {
             }
             return systemsResponse.definedSystems(definedSystems).build();
         }
-        data = null;
         return systemsResponse.build();
     }
 
@@ -101,20 +98,6 @@ public final class SystemsJsonParse implements JsonParse {
                 .url(data.get("url") != null ? (String) data.get("url") : null)
                 .cpcName(data.get("cpcName") != null ? (String) data.get("cpcName") : null)
                 .build();
-    }
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse this object
-     * @author Frank Giordano
-     */
-    @Override
-    public JsonParse setJsonObject(final JSONObject data) {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
-        this.data = data;
-        return this;
     }
 
 }

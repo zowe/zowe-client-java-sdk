@@ -21,15 +21,14 @@ import zowe.client.sdk.zosfiles.uss.response.UnixFile;
  */
 public final class UnixFileJsonParse implements JsonParse {
 
-    /**
-     * Represents one singleton instance
-     */
-    private static JsonParse INSTANCE;
+    private static class Holder {
 
-    /**
-     * JSON data value to be parsed
-     */
-    private JSONObject data;
+        /**
+         * Represents one singleton instance
+         */
+        private static final UnixFileJsonParse instance = new UnixFileJsonParse();
+
+    }
 
     /**
      * Private constructor defined to avoid public instantiation of class
@@ -42,26 +41,25 @@ public final class UnixFileJsonParse implements JsonParse {
     /**
      * Get singleton instance
      *
-     * @return UnixFileParseResponse object
+     * @return TsoStopJsonParse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParse getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new UnixFileJsonParse();
-        }
-        return INSTANCE;
+    public static UnixFileJsonParse getInstance() {
+        return UnixFileJsonParse.Holder.instance;
     }
 
     /**
      * Transform data into UnixFile object
      *
+     * @param args json data to parse
      * @return UssItem object
      * @author Frank Giordano
      */
     @Override
-    public Object parseResponse() {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
-        UnixFile unixFile = new UnixFile.Builder()
+    public synchronized Object parseResponse(final Object... args) {
+        ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
+        final JSONObject data = (JSONObject) args[0];
+        return new UnixFile.Builder()
                 .name(data.get("name") != null ? (String) data.get("name") : null)
                 .mode(data.get("mode") != null ? (String) data.get("mode") : null)
                 .size(data.get("size") != null ? (Long) data.get("size") : null)
@@ -71,22 +69,6 @@ public final class UnixFileJsonParse implements JsonParse {
                 .group(data.get("group") != null ? (String) data.get("group") : null)
                 .mtime(data.get("mtime") != null ? (String) data.get("mtime") : null)
                 .build();
-        data = null;
-        return unixFile;
-    }
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse this object
-     * @author Frank Giordano
-     */
-    @Override
-    public JsonParse setJsonObject(final JSONObject data) {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
-        this.data = data;
-        return this;
     }
 
 }

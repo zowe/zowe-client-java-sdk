@@ -32,7 +32,7 @@ public class JobParseResponseTest {
     public void tstJobParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.JOB).parseResponse((Object) null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -47,43 +47,13 @@ public class JobParseResponseTest {
     }
 
     @Test
-    public void tstJobParseJsonStopResponseSingletonWithDataSuccess() {
-        final JsonParse parser =
-                JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(new JSONObject());
-        final JsonParse parser2 =
-                JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(new JSONObject());
-        assertSame(parser, parser2);
-    }
-
-    @Test
-    public void tstJobParseJsonStopResponseResetDataFail() {
-        String msg = "";
-        try {
-            JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(new JSONObject());
-            JsonParseFactory.buildParser(ParseType.JOB).parseResponse();
-            JsonParseFactory.buildParser(ParseType.JOB).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-        try {
-            JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseFactory.buildParser(ParseType.JOB).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-    }
-
-    @Test
     public void tstJobParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("jobname", "ver");
         jsonMap.put("jobid", "dev");
         final JSONObject json = new JSONObject(jsonMap);
 
-        final Job response = (Job) JsonParseFactory.buildParser(ParseType.JOB)
-                .setJsonObject(json).parseResponse();
+        final Job response = (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(json);
         assertEquals("ver", response.getJobName().orElse("n\\a"));
         assertEquals("dev", response.getJobId().orElse("n\\a"));
     }

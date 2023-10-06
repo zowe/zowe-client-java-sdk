@@ -21,15 +21,14 @@ import zowe.client.sdk.zosfiles.dsn.response.Member;
  */
 public final class MemberJsonParse implements JsonParse {
 
-    /**
-     * Represents one singleton instance
-     */
-    private static JsonParse INSTANCE;
+    private static class Holder {
 
-    /**
-     * JSON data value to be parsed
-     */
-    private JSONObject data;
+        /**
+         * Represents one singleton instance
+         */
+        private static final MemberJsonParse instance = new MemberJsonParse();
+
+    }
 
     /**
      * Private constructor defined to avoid public instantiation of class
@@ -42,26 +41,25 @@ public final class MemberJsonParse implements JsonParse {
     /**
      * Get singleton instance
      *
-     * @return MemberParseResponse object
+     * @return MemberJsonParse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParse getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new MemberJsonParse();
-        }
-        return INSTANCE;
+    public static MemberJsonParse getInstance() {
+        return Holder.instance;
     }
 
     /**
      * Transform data into Member object
      *
+     * @param args json data to parse
      * @return Member object
      * @author Frank Giordano
      */
     @Override
-    public Object parseResponse() {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
-        final Member member = new Member.Builder()
+    public synchronized Object parseResponse(final Object... args) {
+        ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
+        final JSONObject data = (JSONObject) args[0];
+        return new Member.Builder()
                 .member(data.get("member") != null ? (String) data.get("member") : null)
                 .vers(data.get("vers") != null ? (Long) data.get("vers") : 0)
                 .mod(data.get("mod") != null ? (Long) data.get("mod") : 0)
@@ -75,22 +73,6 @@ public final class MemberJsonParse implements JsonParse {
                 .user(data.get("user") != null ? (String) data.get("user") : null)
                 .sclm(data.get("sclm") != null ? (String) data.get("sclm") : null)
                 .build();
-        data = null;
-        return member;
-    }
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse this object
-     * @author Frank Giordano
-     */
-    @Override
-    public JsonParse setJsonObject(final JSONObject data) {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
-        this.data = data;
-        return this;
     }
 
 }
