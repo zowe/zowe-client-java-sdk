@@ -6,6 +6,126 @@ APIs located in methods package.
 
 ## API Examples
 
+**Copy dataset and member**
+
+````java
+package zowe.client.sdk.examples.zosfiles;
+
+import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.zosfiles.dsn.methods.ZosDsnCopy;
+import zowe.client.sdk.zosfiles.dsn.input.CopyParams;
+
+/**
+ * Class example to showcase copy dataset and member functionality.
+ *
+ * @author Leonid Baranov
+ * @author Frank Giordano
+ * @version 2.0
+ */
+public class CopyDatasetTst extends TstZosConnection {
+
+    /**
+     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * DsnCopy functionality.
+     *
+     * @param args for main not used
+     * @throws Exception error processing examples
+     * @author Leonid Baranov
+     */
+    public static void main(String[] args) throws Exception {
+        String fromDataSetName = "xxx";
+        String toDataSetName = "xxx";
+        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        copyDataset(connection, fromDataSetName, toDataSetName);
+        copyDatasetByCopyParams(connection, fromDataSetName, toDataSetName);
+        fromDataSetName = "xxx";  // specify a partition dataset only no member
+        toDataSetName = "xxx"; // specify a partition dataset only no member
+        copyFullPartitionDatasetByCopyParams(connection, fromDataSetName, toDataSetName);
+    }
+
+    /**
+     * Example on how to call DsnCopy copy method.
+     * Copy method accepts a from and too strings for copying.
+     * <p>
+     * This copy method allows the following copy operations:
+     * <p>
+     * - sequential dataset to sequential dataset
+     * - sequential dataset to partition dataset member
+     * - partition dataset member to partition dataset member
+     * - partition dataset member to partition dataset non-existing member
+     * - partition dataset member to sequential dataset
+     * <p>
+     * This example sends false value for copyAllMembers parameter in copy method to indicate we
+     * are not copying all members in a partition dataset to another.
+     *
+     * @param connection      ZosConnection object
+     * @param fromDataSetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
+     * @param toDataSetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
+     * @throws Exception error processing copy request
+     * @author Frank Giordano
+     */
+    public static void copyDataset(ZosConnection connection, String fromDataSetName, String toDataSetName)
+            throws Exception {
+        DsnCopy dsnCopy = new DsnCopy(connection);
+        Response response = dsnCopy.copy(fromDataSetName, toDataSetName, true, false);
+        System.out.println("http response code " + response.getStatusCode());
+    }
+
+    /**
+     * Example on how to call DsnCopy copyCommon method.
+     * Copy method accepts a CopyParams object.
+     * <p>
+     * This copy method allows the following copy operations:
+     * <p>
+     * - sequential dataset to sequential dataset
+     * - sequential dataset to partition dataset member
+     * - partition dataset member to partition dataset member
+     * - partition dataset member to partition dataset non-existing member
+     * - partition dataset member to sequential dataset
+     *
+     * @param connection      ZosConnection object
+     * @param fromDataSetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
+     * @param toDataSetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
+     * @author Frank Giordano
+     */
+    public static void copyDatasetByCopyParams(ZosConnection connection, String fromDataSetName, String toDataSetName) {
+        DsnCopy dsnCopy = new DsnCopy(connection);
+        // 'replace' builder variable here will be true by default if not specified in builder.
+        // 'copyAllMembers' builder variable here will be false by default
+        CopyParams copyParams = new CopyParams.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).build();
+        Response response = dsnCopy.copyCommon(copyParams);
+        System.out.println("http response code " + response.getStatusCode());
+    }
+
+    /**
+     * Example on how to call DsnCopy copyCommon method.
+     * Copy method accepts a CopyParams object.
+     * <p>
+     * This copy method is different from the other two examples above as it
+     * sets the copyAllMember variable true to indicate that the copy operation will be performed
+     * on a partition dataset to another partition dataset copying all its members to the target.
+     *
+     * @param connection      ZosConnection object
+     * @param fromDataSetName source dataset (e.g. 'SOURCE.PARTITION.DATASET')
+     * @param toDataSetName   destination dataset (e.g. 'TARGET.PARTITION.DATASET')
+     * @author Frank Giordano
+     */
+    public static void copyFullPartitionDatasetByCopyParams(ZosConnection connection, String fromDataSetName,
+                                                            String toDataSetName) {
+        DsnCopy dsnCopy = new DsnCopy(connection);
+        // 'replace' here will be true by default if not specified in builder.
+        CopyParams copyParams = new CopyParams.Builder()
+                .fromDataSet(fromDataSetName).toDataSet(toDataSetName).copyAllMembers(true).build();
+        Response response = dsnCopy.copyCommon(copyParams);
+        System.out.println("http response code " + response.getStatusCode());
+    }
+
+}
+
+`````
+
 **Create a dataset**
 
 ````java
@@ -30,13 +150,12 @@ public class CreateDatasetTst extends TstZosConnection {
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * CreateDataset functionality. Calls CreateDataset example methods.
+     * DsnCreate functionality.
      *
      * @param args for main not used
-     * @throws Exception error in processing request
      * @author Leonid Baranov
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         String dataSetName = "xxx";
         connection = new ZosConnection(hostName, zosmfPort, userName, password);
         createPartitionDataSet(dataSetName);
@@ -46,7 +165,7 @@ public class CreateDatasetTst extends TstZosConnection {
     }
 
     /**
-     * Create a new sequential dataset
+     * Create a new sequential dataset.
      *
      * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
      * @author Frank Giordano
@@ -58,7 +177,7 @@ public class CreateDatasetTst extends TstZosConnection {
     }
 
     /**
-     * Create a new partition dataset
+     * Create a new partition dataset.
      *
      * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
      * @author Frank Giordano
@@ -162,139 +281,65 @@ public class CreateDatasetTst extends TstZosConnection {
 
 `````
 
-**Copy dataset and member**
+**Retrieve dataset information**
 
 ````java
 package zowe.client.sdk.examples.zosfiles;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.zosfiles.dsn.methods.ZosDsnCopy;
-import zowe.client.sdk.zosfiles.dsn.input.CopyParams;
+import zowe.client.sdk.zosfiles.dsn.methods.DsnGet;
+import zowe.client.sdk.zosfiles.dsn.response.Dataset;
 
 /**
- * Class example to showcase copy dataset and member functionality.
+ * Class example to showcase retrieve dataset information functionality.
  *
- * @author Leonid Baranov
  * @author Frank Giordano
  * @version 2.0
  */
-public class CopyDatasetTst extends TstZosConnection {
+public class DataSetInfoTst extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed
-     * to showcase a copy dataset and member functionality. Calls CopyDatasetTst example methods.
+     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * DsnGet functionality.
      *
      * @param args for main not used
-     * @throws Exception error processing examples
-     * @author Leonid Baranov
+     * @throws Exception error processing request
+     * @author Frank Giordano
      */
     public static void main(String[] args) throws Exception {
-        String fromDataSetName = "xxx";
-        String toDataSetName = "xxx";
+        String dataSetName = "xxx";
         ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
-        copyDataset(connection, fromDataSetName, toDataSetName);
-        copyDatasetByCopyParams(connection, fromDataSetName, toDataSetName);
-        fromDataSetName = "xxx";  // specify a partition dataset only no member
-        toDataSetName = "xxx"; // specify a partition dataset only no member
-        copyFullPartitionDatasetByCopyParams(connection, fromDataSetName, toDataSetName);
+        System.out.println(DataSetInfoTst.getDataSetInfo(connection, dataSetName));
     }
 
     /**
-     * Example on how to call DsnCopy copy method.
-     * Copy method accepts a from and too strings for copying.
-     * <p>
-     * This copy method allows the following copy operations:
-     * <p>
-     * - sequential dataset to sequential dataset
-     * - sequential dataset to partition dataset member
-     * - partition dataset member to partition dataset member
-     * - partition dataset member to partition dataset non-existing member
-     * - partition dataset member to sequential dataset
-     * <p>
-     * This example sends false value for copyAllMembers parameter in copy method to indicate we
-     * are not copying all members in a partition dataset to another.
+     * Retrieve dataset information.
      *
-     * @param connection      ZOSConnection
-     * @param fromDataSetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
-     * @param toDataSetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
-     * @throws Exception error processing copy request
+     * @param connection  ZosConnection object
+     * @param dataSetName name of a dataset
+     * @return Dataset object
+     * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public static void copyDataset(ZosConnection connection, String fromDataSetName, String toDataSetName) {
-        DsnCopy dsnCopy = new DsnCopy(connection);
-        Response response = dsnCopy.copy(fromDataSetName, toDataSetName, true, false);
-        System.out.println("http response code " + response.getStatusCode());
-    }
-
-    /**
-     * Example on how to call DsnCopy copy method.
-     * Copy method accepts a CopyParams object.
-     * <p>
-     * This copy method allows the following copy operations:
-     * <p>
-     * - sequential dataset to sequential dataset
-     * - sequential dataset to partition dataset member
-     * - partition dataset member to partition dataset member
-     * - partition dataset member to partition dataset non-existing member
-     * - partition dataset member to sequential dataset
-     *
-     * @param connection      ZOSConnection
-     * @param fromDataSetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
-     * @param toDataSetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
-     * @throws Exception error processing copy request
-     * @author Frank Giordano
-     */
-    public static void copyDatasetByCopyParams(zowe.client.sdk.core.ZosConnection connection, String fromDataSetName,
-                                               String toDataSetName) {
-        DsnCopy dsnCopy = new DsnCopy(connection);
-        // 'replace' builder variable here will be true by default if not specified in builder.
-        // 'copyAllMembers' builder variable here will be false by default
-        CopyParams copyParams = new CopyParams.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).build();
-        Response response = dsnCopy.copy(copyParams);
-        System.out.println("http response code " + response.getStatusCode());
-    }
-
-    /**
-     * Example on how to call DsnCopy copy method.
-     * Copy method accepts a CopyParams object.
-     * <p>
-     * This copy method is different from the other two examples above as it
-     * sets the copyAllMember variable true to indicate that the copy operation will be performed
-     * on a partition dataset to another partition dataset copying all its members to the target.
-     *
-     * @param connection      ZOSConnection
-     * @param fromDataSetName source dataset (e.g. 'SOURCE.PARTITION.DATASET')
-     * @param toDataSetName   destination dataset (e.g. 'TARGET.PARTITION.DATASET')
-     * @author Frank Giordano
-     */
-    public static void copyFullPartitionDatasetByCopyParams(ZosConnection connection, String fromDataSetName,
-                                                            String toDataSetName) {
-        DsnCopy dsnCopy = new DsnCopy(connection);
-        // 'replace' here will be true by default if not specified in builder.
-        CopyParams copyParams = new CopyParams.Builder()
-                .fromDataSet(fromDataSetName).toDataSet(toDataSetName).copyAllMembers(true).build();
-        Response response = dsnCopy.copy(copyParams);
-        System.out.println("http response code " + response.getStatusCode());
+    public static Dataset getDataSetInfo(ZosConnection connection, String dataSetName) throws Exception {
+        DsnGet dsnGet = new DsnGet(connection);
+        return dsnGet.getDsnInfo(dataSetName);
     }
 
 }
-
 `````
 
 **Delete dataset and member**
 
 ````java
-package zowe.client.sdk.examples.zosfiles;
-
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
-import zzowe.client.sdk.zosfiles.dsn.methods.DsnDelete;
+import zowe.client.sdk.zosfiles.dsn.methods.DsnDelete;
 
 /**
- * Class example to showcase delete dataset and member functionality.
+ * Class example to showcase DeleteDataset functionality via DsnDelete class.
  *
  * @author Leonid Baranov
  * @author Frank Giordano
@@ -321,20 +366,19 @@ public class DeleteDatasetTst extends TstZosConnection {
     }
 
     /**
-     * Example on how to delete dataset. 
+     * Delete a dataset
      *
      * @param dataSetName name of a dataset to delete (e.g. 'DATASET.LIB')
-     * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public static void deleteDataSet(String dataSetName) throws Exception {
-        DsnDelete dsnDelete = new ZosDsn(connection);
-        Response response = dsnDelete.delete(dataSetName);
+    public static void deleteDataSet(String dataSetName) {
+        DsnDelete zosDsn = new DsnDelete(connection);
+        Response response = zosDsn.delete(dataSetName);
         System.out.println("http response code " + response.getStatusCode());
     }
 
     /**
-     * Example on how to delete a member.
+     * Delete a partition dataset member
      *
      * @param dataSetName name of a dataset where member should be located (e.g. 'DATASET.LIB')
      * @param member      name of member to delete
@@ -342,8 +386,8 @@ public class DeleteDatasetTst extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void deleteMember(String dataSetName, String member) throws Exception {
-        DsnDelete dsnDelete = new ZosDsn(connection);
-        Response response = dsnDelete.delete(dataSetName, member);
+        DsnDelete zosDsn = new DsnDelete(connection);
+        Response response = zosDsn.delete(dataSetName, member);
         System.out.println("http response code " + response.getStatusCode());
     }
 
@@ -351,7 +395,7 @@ public class DeleteDatasetTst extends TstZosConnection {
 
 `````
 
-**Retrieve dataset content**
+**Retrieve dataset and member content**
 
 ````java
 package zowe.client.sdk.examples.zosfiles;
@@ -366,39 +410,66 @@ import java.io.InputStream;
 import java.io.StringWriter;
 
 /**
- * Class example to showcase retrieve dataset content functionality.
+ * Class example to showcase retrieve dataset and member content functionality DsnGet class.
  *
  * @author Leonid Baranov
  * @version 2.0
  */
-public class GetDatasetTst extends TstZosConnection {
+public class DownloadDatasetTst extends TstZosConnection {
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * DownloadDataset functionality. Calls DownloadDataset example methods.
+     * DsnGet class functionality.
      *
      * @param args for main not used
      * @throws Exception error in processing request
      * @author Leonid Baranov
      */
     public static void main(String[] args) throws Exception {
-        String datasetMember = "xxx";
+        String datasetName = "xxx";
+        String datasetSeqName = "xxx";
+        String memberName = "xxx";
         DownloadParams params = new DownloadParams.Builder().build();
         ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
-        DownloadDatasetTst.downloadDsnMember(connection, datasetMember, params);
+        DownloadDatasetTst.downloadDsnMember(connection, datasetName, memberName, params);
+        DownloadDatasetTst.downloadDsnSequential(connection, datasetSeqName, params);
     }
 
     /**
-     * Download dataset members
+     * Download a dataset member.
      *
-     * @param connection ZOSConnection object
-     * @param name       data set name
+     * @param connection ZosConnection object
+     * @param dsName     name of a dataset
+     * @param memName    member name that exists within the specified dataset name
      * @param params     download parameters object
      * @throws Exception error processing request
      * @author Leonid Baranov
      */
-    public static void downloadDsnMember(ZosConnection connection, String name, DownloadParams params) throws Exception {
-        try (InputStream inputStream = new DsnGet(connection).get(name, params)) {
+    public static void downloadDsnMember(ZosConnection connection, String dsName, String memName,
+                                         DownloadParams params) throws Exception {
+        try (InputStream inputStream = new DsnGet(connection)
+                .get(String.format("%s(%s)", dsName, memName), params)) {
+            if (inputStream != null) {
+                StringWriter writer = new StringWriter();
+                IOUtils.copy(inputStream, writer, "UTF8");
+                String content = writer.toString();
+                System.out.println(content);
+            }
+        }
+    }
+
+    /**
+     * Download a sequential dataset.
+     *
+     * @param connection ZosConnection object
+     * @param dsName     name of a sequential dataset
+     * @param params     download parameters object
+     * @throws Exception error processing request
+     * @author Frank Giordano
+     */
+    public static void downloadDsnSequential(ZosConnection connection, String dsName, DownloadParams params)
+            throws Exception {
+        try (InputStream inputStream = new DsnGet(connection).get(dsName, params)) {
             if (inputStream != null) {
                 StringWriter writer = new StringWriter();
                 IOUtils.copy(inputStream, writer, "UTF8");
@@ -437,7 +508,7 @@ public class ListDatasetsTst extends TstZosConnection {
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * ListDatasets functionality. Calls ListDatasets example methods.
+     * DsnList functionality.
      *
      * @param args for main not used
      * @throws Exception error processing request
@@ -456,8 +527,8 @@ public class ListDatasetsTst extends TstZosConnection {
     /**
      * List out all members and its attribute values of the given data set
      *
-     * @param connection  ZOSConnection object
-     * @param dataSetName data set name
+     * @param connection  ZosConnection object
+     * @param dataSetName name of a dataset
      * @throws Exception error processing request
      * @author Leonid Baranov
      */
@@ -471,8 +542,8 @@ public class ListDatasetsTst extends TstZosConnection {
     /**
      * List out all members of the given data set
      *
-     * @param connection  ZOSConnection object
-     * @param dataSetName data set name
+     * @param connection  ZosConnection object
+     * @param dataSetName name of a dataset
      * @throws Exception error processing request
      * @author Leonid Baranov
      */
@@ -486,8 +557,8 @@ public class ListDatasetsTst extends TstZosConnection {
     /**
      * List out all data sets of the given data set. Each dataset returned will contain all of its properties.
      *
-     * @param connection  ZOSConnection object
-     * @param dataSetName data set name
+     * @param connection  ZosConnection object
+     * @param dataSetName name of a dataset
      * @throws Exception error processing request
      * @author Leonid Baranov
      */
@@ -501,8 +572,8 @@ public class ListDatasetsTst extends TstZosConnection {
     /**
      * List out all data sets of the given data set. Each dataset returned will contain its volume property.
      *
-     * @param connection  ZOSConnection object
-     * @param dataSetName data set name
+     * @param connection  ZosConnection object
+     * @param dataSetName name of a dataset
      * @throws Exception error processing request
      * @author Frank Giordano
      */
@@ -539,7 +610,7 @@ public class WriteDatasetTst extends TstZosConnection {
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * WriteDataset functionality. Calls WriteDataset example methods.
+     * DsnWrite functionality.
      *
      * @param args for main not used
      * @throws Exception error in processing request
@@ -547,10 +618,12 @@ public class WriteDatasetTst extends TstZosConnection {
      */
     public static void main(String[] args) throws Exception {
         String dataSetName = "xxx";
+        String datasetSeqName = "xxx";
         String member = "xxx";
         connection = new ZosConnection(hostName, zosmfPort, userName, password);
-        String content = "NEW CONTENT\nTHE SECOND LINE UPDATED";
+        var content = "NEW CONTENT\nTHE SECOND LINE UPDATED";
         WriteDatasetTst.writeToDsnMember(dataSetName, member, content);
+        WriteDatasetTst.writeToDsnSequential(datasetSeqName, content);
     }
 
     /**
@@ -568,48 +641,21 @@ public class WriteDatasetTst extends TstZosConnection {
         System.out.println("http response code " + response.getStatusCode());
     }
 
-}
-
-`````
-
-**Retrieve dataset information**
-
-````java
-package zowe.client.sdk.examples.zosfiles;
-
-import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.zosfiles.dsn.methods.DsnGet;
-import zowe.client.sdk.zosfiles.dsn.response.Dataset;
-
-/**
- * Class example to showcase retrieve dataset information functionality.
- *
- * @author Frank Giordano
- * @version 2.0
- */
-public class DataSetInfoTst extends TstZosConnection {
-
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * ZosDsn getDataSetInfo functionality.
+     * Write to the given content to sequential dataset.
      *
-     * @param args for main not used
-     * @throws Exception error processing request
+     * @param dataSetName name of sequential dataset (e.g. 'DATASET.LIB')
+     * @param content     content for write
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws Exception {
-        String dataSetName = "xxx";
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
-        System.out.println(DataSetInfoTst.getDataSetInfo(connection, dataSetName));
-    }
-
-    private static Dataset getDataSetInfo(zowe.client.sdk.core.ZosConnection connection, String dataSetName) throws Exception {
-        DsnGet dsnGet = new DsnGet(connection);
-        return dsnGet.getDsnInfo(dataSetName);
+    public static void writeToDsnSequential(String dataSetName, String content) {
+        DsnWrite dsnWrite = new DsnWrite(connection);
+        Response response = dsnWrite.write(dataSetName, content);
+        System.out.println("http response code " + response.getStatusCode());
     }
 
 }
+
 `````
 
 ````java
