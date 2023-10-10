@@ -19,18 +19,17 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
 import java.util.Arrays;
 
 /**
- * Class example to showcase CheckStatus functionality.
+ * Class example to showcase ZosmfStatus class functionality.
  *
  * @author Frank Giordano
  * @version 2.0
  */
 public class CheckStatusTst extends TstZosConnection {
 
-    private static ZosmfStatus checkStatus;
-
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * CheckStatus functionality. Calls
+     * ZosmfStatus class functionality. This method perform API call to retrieve the status of the
+     * running z/OSMF instance on the z/OS backend.
      *
      * @param args for main not used
      * @throws Exception error in processing request
@@ -38,9 +37,8 @@ public class CheckStatusTst extends TstZosConnection {
      */
     public static void main(String[] args) throws Exception {
         ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
-
-        checkStatus = new ZosmfStatus(connection);
-        ZosmfInfoResponse zosmfInfoResponse = checkStatus.getZosmfInfo();
+        ZosmfStatus zosmfStatus = new ZosmfStatus(connection);
+        ZosmfInfoResponse zosmfInfoResponse = zosmfStatus.get();
         System.out.println(zosmfInfoResponse.toString());
         Arrays.stream(zosmfInfoResponse.getZosmfPluginsInfo().get()).forEach(i -> System.out.println(i.toString()));
     }
@@ -61,18 +59,17 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
 import java.util.Arrays;
 
 /**
- * Class example to showcase ListDefinedSystems functionality.
+ * Class example to showcase ZosmfSystems class functionality.
  *
  * @author Frank Giordano
  * @version 2.0
  */
 public class ZosmfDefinedSystemsTst extends TstZosConnection {
 
-    private static ZosmfSystems listDefinedSystems;
-
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * ListDefinedSystems functionality.
+     * ZosmfSystems class functionality. This method perform API call to retrieve the entire list of
+     * defined z/OSMF systems running on the z/OS backend.
      *
      * @param args for main not used
      * @throws Exception error in processing request
@@ -80,14 +77,15 @@ public class ZosmfDefinedSystemsTst extends TstZosConnection {
      */
     public static void main(String[] args) throws Exception {
         ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
-
-        listDefinedSystems = new ZosmfSystems(connection);
-        ZosmfSystemsResponse zosmfInfoResponse = listDefinedSystems.listDefinedSystems();
+        ZosmfSystems zosmfSystems = new ZosmfSystems(connection);
+        ZosmfSystemsResponse zosmfInfoResponse = zosmfSystems.get();
         System.out.println(zosmfInfoResponse.toString());
         Arrays.stream(zosmfInfoResponse.getDefinedSystems().get()).forEach(i -> System.out.println(i.toString()));
     }
+
 }
 `````
+**Connection setup**
 
 ````java
 package zowe.client.sdk.examples;
