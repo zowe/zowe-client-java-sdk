@@ -969,6 +969,7 @@ public class SubmitJobTst extends TstZosConnection {
 
 }
 `````
+**Connection setup**
 
 ````java
 package zowe.client.sdk.examples;
