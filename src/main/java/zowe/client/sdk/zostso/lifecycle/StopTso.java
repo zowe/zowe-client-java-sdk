@@ -108,8 +108,7 @@ public class StopTso {
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no tso stop response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        return (ZosmfTsoResponse) JsonParseFactory.buildParser(ParseType.TSO_STOP)
-                .setJsonObject(jsonObject).parseResponse();
+        return (ZosmfTsoResponse) JsonParseFactory.buildParser(ParseType.TSO_STOP).parseResponse(jsonObject);
     }
 
 }

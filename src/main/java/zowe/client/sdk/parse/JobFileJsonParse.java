@@ -21,15 +21,14 @@ import zowe.client.sdk.zosjobs.input.JobFile;
  */
 public final class JobFileJsonParse implements JsonParse {
 
-    /**
-     * Represents one singleton instance
-     */
-    private static JsonParse INSTANCE;
+    private static class Holder {
 
-    /**
-     * JSON data value to be parsed
-     */
-    private JSONObject data;
+        /**
+         * Represents one singleton instance
+         */
+        private static final JobFileJsonParse instance = new JobFileJsonParse();
+
+    }
 
     /**
      * Private constructor defined to avoid public instantiation of class
@@ -42,26 +41,25 @@ public final class JobFileJsonParse implements JsonParse {
     /**
      * Get singleton instance
      *
-     * @return JobFileParseResponse object
+     * @return JobFileJsonParse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParse getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new JobFileJsonParse();
-        }
-        return INSTANCE;
+    public static JobFileJsonParse getInstance() {
+        return JobFileJsonParse.Holder.instance;
     }
 
     /**
      * Transform data into JobFile object
      *
+     * @param args json data to parse
      * @return JobFile object
      * @author Frank Giordano
      */
     @Override
-    public Object parseResponse() {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
-        final JobFile jobFile = new JobFile.Builder()
+    public synchronized Object parseResponse(final Object... args) {
+        ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
+        final JSONObject data = (JSONObject) args[0];
+        return new JobFile.Builder()
                 .jobId(data.get("jobid") != null ? (String) data.get("jobid") : null)
                 .jobName(data.get("jobname") != null ? (String) data.get("jobname") : null)
                 .recfm(data.get("recfm") != null ? (String) data.get("recfm") : null)
@@ -77,22 +75,6 @@ public final class JobFileJsonParse implements JsonParse {
                 .stepName(data.get("stepname") != null ? (String) data.get("stepname") : null)
                 .procStep(data.get("procstep") != null ? (String) data.get("procstep") : null)
                 .build();
-        data = null;
-        return jobFile;
-    }
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse this object
-     * @author Frank Giordano
-     */
-    @Override
-    public JsonParse setJsonObject(final JSONObject data) {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
-        this.data = data;
-        return this;
     }
 
 }

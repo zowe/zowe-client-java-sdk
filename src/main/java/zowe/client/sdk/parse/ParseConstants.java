@@ -30,21 +30,23 @@ public final class ParseConstants {
     public static final String DATA_NULL_MSG = "data is null";
 
     /**
-     * Required action for parse processing message
+     * isProcessResponse is null message
      */
-    public static final String REQUIRED_ACTION_MSG =
-            "each parseResponse call requires data to be reset via setJsonObject first";
+    public static final String IS_PROCESS_RESPONSE_NULL_MSG = "isProcessResponse is null";
 
     /**
-     * Required action for parse processing message
+     * Mode is null message
      */
-    public static final String REQUIRED_ACTION_MODE_STR_MSG =
-            "each parseResponse call requires data to be reset via modeStr first";
+    public static final String MODE_NULL_STR_MSG = "mode is null";
 
     /**
-     * Required action for parse processing message
+     * Mode not specified message
      */
-    public static final String REQUIRED_ACTION_ZOS_LOG_ITEMS_MSG =
-            "each parseResponse call requires data to be reset via setZosLogItems first";
+    public static final String MODE_EMPTY_STR_MSG = "mode not specified";
+
+    /**
+     * List of ZosLogItem is null message
+     */
+    public static final String LIST_OF_ZOS_LOG_ITEM_NULL_MSG = "data is null";
 
 }

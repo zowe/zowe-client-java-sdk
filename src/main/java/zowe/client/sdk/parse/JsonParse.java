@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.parse;
 
-import org.json.simple.JSONObject;
-
 /**
  * Interface that conforms to json parse operation
  *
@@ -20,20 +18,13 @@ import org.json.simple.JSONObject;
 public interface JsonParse {
 
     /**
-     * Parse the data json value given in constructor
+     * Parse the given json data
      *
+     * @param args json data to parse
      * @return Object value of parsed json data
-     */
-    public Object parseResponse();
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse interface object
      * @author Frank Giordano
      */
-    public JsonParse setJsonObject(final JSONObject data);
+    public Object parseResponse(final Object... args);
 
 }
 

@@ -137,7 +137,7 @@ public class JobSubmit {
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job jcl submit response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        return (Job) JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(jsonObject).parseResponse();
+        return (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
     }
 
     /**
@@ -183,7 +183,7 @@ public class JobSubmit {
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job submit response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        return (Job) JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(jsonObject).parseResponse();
+        return (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
     }
 
     /**

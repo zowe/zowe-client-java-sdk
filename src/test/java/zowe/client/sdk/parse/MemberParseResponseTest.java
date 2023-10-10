@@ -32,7 +32,7 @@ public class MemberParseResponseTest {
     public void tstMemberParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseFactory.buildParser(ParseType.MEMBER).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse((Object) null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -47,43 +47,13 @@ public class MemberParseResponseTest {
     }
 
     @Test
-    public void tstMemberParseJsonStopResponseSingletonWithDataSuccess() {
-        final JsonParse parser =
-                JsonParseFactory.buildParser(ParseType.MEMBER).setJsonObject(new JSONObject());
-        final JsonParse parser2 =
-                JsonParseFactory.buildParser(ParseType.MEMBER).setJsonObject(new JSONObject());
-        assertSame(parser, parser2);
-    }
-
-    @Test
-    public void tstMemberParseJsonStopResponseResetDataFail() {
-        String msg = "";
-        try {
-            JsonParseFactory.buildParser(ParseType.MEMBER).setJsonObject(new JSONObject());
-            JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse();
-            JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-        try {
-            JsonParseFactory.buildParser(ParseType.MEMBER).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-    }
-
-    @Test
     public void tstMemberParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("member", "ver");
         jsonMap.put("vers", 0L);
         final JSONObject json = new JSONObject(jsonMap);
 
-        final Member response = (Member) JsonParseFactory.buildParser(ParseType.MEMBER)
-                .setJsonObject(json).parseResponse();
+        final Member response = (Member) JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse(json);
         assertEquals("ver", response.getMember().orElse("n\\a"));
         assertEquals(Long.parseLong("0"), response.getVers().orElse(-1L));
     }

@@ -154,11 +154,9 @@ public class DsnList {
         final JSONArray items = (JSONArray) jsonObject.get(ZosFilesConstants.RESPONSE_ITEMS);
         for (final Object obj : items) {
             if (datasetLst == null) {
-                memberLst.add((T) JsonParseFactory.buildParser(ParseType.MEMBER)
-                        .setJsonObject((JSONObject) obj).parseResponse());
+                memberLst.add((T) JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse((JSONObject) obj));
             } else {
-                datasetLst.add((T) JsonParseFactory.buildParser(ParseType.DATASET)
-                        .setJsonObject((JSONObject) obj).parseResponse());
+                datasetLst.add((T) JsonParseFactory.buildParser(ParseType.DATASET).parseResponse((JSONObject) obj));
             }
         }
 

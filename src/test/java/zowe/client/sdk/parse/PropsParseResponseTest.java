@@ -31,7 +31,7 @@ public class PropsParseResponseTest {
     public void tstPropsParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseFactory.buildParser(ParseType.PROPS).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.PROPS).parseResponse((Object) null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -45,35 +45,6 @@ public class PropsParseResponseTest {
         assertSame(parser, parser2);
     }
 
-    @Test
-    public void tstPropsParseJsonStopResponseSingletonWithDataSuccess() {
-        final JsonParse parser =
-                JsonParseFactory.buildParser(ParseType.PROPS).setJsonObject(new JSONObject());
-        final JsonParse parser2 =
-                JsonParseFactory.buildParser(ParseType.PROPS).setJsonObject(new JSONObject());
-        assertSame(parser, parser2);
-    }
-
-    @Test
-    public void tstPropsParseJsonStopResponseResetDataFail() {
-        String msg = "";
-        try {
-            JsonParseFactory.buildParser(ParseType.PROPS).setJsonObject(new JSONObject());
-            JsonParseFactory.buildParser(ParseType.PROPS).parseResponse();
-            JsonParseFactory.buildParser(ParseType.PROPS).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-        try {
-            JsonParseFactory.buildParser(ParseType.PROPS).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseFactory.buildParser(ParseType.PROPS).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-    }
-
     @SuppressWarnings("unchecked")
     @Test
     public void tstPropsParseJsonStopResponseSuccess() {
@@ -82,7 +53,7 @@ public class PropsParseResponseTest {
         final JSONObject json = new JSONObject(jsonMap);
 
         final Map<String, String> response = (Map<String, String>) JsonParseFactory
-                .buildParser(ParseType.PROPS).setJsonObject(json).parseResponse();
+                .buildParser(ParseType.PROPS).parseResponse(json);
         assertEquals("ver", response.get("cmd-response"));
     }
 

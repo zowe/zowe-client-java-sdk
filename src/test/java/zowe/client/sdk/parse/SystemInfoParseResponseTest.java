@@ -32,7 +32,7 @@ public class SystemInfoParseResponseTest {
     public void tstZosmfInfoParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).parseResponse((Object) null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -47,43 +47,14 @@ public class SystemInfoParseResponseTest {
     }
 
     @Test
-    public void tstZosmfInfoParseJsonStopResponseSingletonWithDataSuccess() {
-        final JsonParse parser =
-                JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).setJsonObject(new JSONObject());
-        final JsonParse parser2 =
-                JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).setJsonObject(new JSONObject());
-        assertSame(parser, parser2);
-    }
-
-    @Test
-    public void tstZosmfInfoParseJsonStopResponseResetDataFail() {
-        String msg = "";
-        try {
-            JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).setJsonObject(new JSONObject());
-            JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).parseResponse();
-            JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-        try {
-            JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-    }
-
-    @Test
     public void tstZosmfInfoParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("api_version", "ver");
         jsonMap.put("zosmf_port", "dev");
         final JSONObject json = new JSONObject(jsonMap);
 
-        final ZosmfInfoResponse response = (ZosmfInfoResponse) JsonParseFactory.buildParser(ParseType.ZOSMF_INFO)
-                .setJsonObject(json).parseResponse();
+        final ZosmfInfoResponse response = (ZosmfInfoResponse)
+                JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).parseResponse(json);
         assertEquals("ver", response.getApiVersion().orElse("n\\a"));
         assertEquals("dev", response.getZosmfPort().orElse("n\\a"));
         assertEquals("n\\a", response.getZosVersion().orElse("n\\a"));

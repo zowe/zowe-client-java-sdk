@@ -21,15 +21,14 @@ import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
  */
 public final class MvsConsoleJsonParse implements JsonParse {
 
-    /**
-     * Represents one singleton instance
-     */
-    private static JsonParse INSTANCE;
+    private static class Holder {
 
-    /**
-     * JSON data value to be parsed
-     */
-    private JSONObject data;
+        /**
+         * Represents one singleton instance
+         */
+        private static final MvsConsoleJsonParse instance = new MvsConsoleJsonParse();
+
+    }
 
     /**
      * Private constructor defined to avoid public instantiation of class
@@ -42,25 +41,24 @@ public final class MvsConsoleJsonParse implements JsonParse {
     /**
      * Get singleton instance
      *
-     * @return MvsConsoleParseResponse object
+     * @return MvsConsoleJsonParse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParse getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new MvsConsoleJsonParse();
-        }
-        return INSTANCE;
+    public static MvsConsoleJsonParse getInstance() {
+        return MvsConsoleJsonParse.Holder.instance;
     }
 
     /**
      * Transform data into ZosmfIssueResponse object
      *
+     * @param args json data to parse
      * @return ZosmfIssueResponse object
      * @author Frank Giordano
      */
     @Override
-    public Object parseResponse() {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
+    public synchronized Object parseResponse(final Object... args) {
+        ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
+        final JSONObject data = (JSONObject) args[0];
         final ZosmfIssueResponse zosmfIssueResponse = new ZosmfIssueResponse();
         zosmfIssueResponse.setCmdResponseKey(
                 data.get("cmd-response-key") != null ? (String) data.get("cmd-response-key") : null);
@@ -72,22 +70,7 @@ public final class MvsConsoleJsonParse implements JsonParse {
                 data.get("cmd-response") != null ? (String) data.get("cmd-response") : null);
         zosmfIssueResponse.setSolKeyDetected(
                 data.get("sol-key-detected") != null ? (String) data.get("sol-key-detected") : null);
-        data = null;
         return zosmfIssueResponse;
-    }
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse this object
-     * @author Frank Giordano
-     */
-    @Override
-    public JsonParse setJsonObject(final JSONObject data) {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
-        this.data = data;
-        return this;
     }
 
 }

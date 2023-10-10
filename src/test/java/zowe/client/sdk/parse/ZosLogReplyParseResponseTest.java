@@ -33,7 +33,7 @@ public class ZosLogReplyParseResponseTest {
     public void tstZosLogReplyParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY).parseResponse((Object) null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -48,38 +48,6 @@ public class ZosLogReplyParseResponseTest {
     }
 
     @Test
-    public void tstZosLogReplyParseJsonStopResponseSingletonWithDataSuccess() {
-        final JsonParse parser =
-                JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY).setJsonObject(new JSONObject());
-        final JsonParse parser2 =
-                JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY).setJsonObject(new JSONObject());
-        assertSame(parser, parser2);
-    }
-
-    @Test
-    public void tstUnixZfsParseJsonStopResponseResetDataModeFail() {
-        String msg = "";
-        try {
-            JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY).setJsonObject(new JSONObject());
-            JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY).parseResponse();
-            JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_ZOS_LOG_ITEMS_MSG, msg);
-        try {
-            final ZosLogReplyJsonParse parser = (ZosLogReplyJsonParse)
-                    JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY).setJsonObject(new JSONObject());
-            parser.setZosLogItems(new ArrayList<>());
-            parser.parseResponse();
-            parser.parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-    }
-
-    @Test
     public void tstZosLogReplyParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("totalitems", 1L);
@@ -87,10 +55,8 @@ public class ZosLogReplyParseResponseTest {
         final JSONObject json = new JSONObject(jsonMap);
 
         final ZosLogReplyJsonParse parser = (ZosLogReplyJsonParse)
-                JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY).setJsonObject(json);
-        parser.setZosLogItems(new ArrayList<>());
-
-        final ZosLogReply response = parser.parseResponse();
+                JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY);
+        final ZosLogReply response = parser.parseResponse(json, new ArrayList<>());
         assertEquals(Long.parseLong("1"), response.getTotalItems().orElse(-1L));
         assertEquals("dev", response.getSource().orElse("n\\a"));
     }

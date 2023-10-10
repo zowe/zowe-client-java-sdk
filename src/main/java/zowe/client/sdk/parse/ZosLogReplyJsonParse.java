@@ -24,17 +24,14 @@ import java.util.List;
  */
 public final class ZosLogReplyJsonParse implements JsonParse {
 
-    /**
-     * Represents one singleton instance
-     */
-    private static JsonParse INSTANCE;
+    private static class Holder {
 
-    private List<ZosLogItem> zosLogItems;
+        /**
+         * Represents one singleton instance
+         */
+        private static final ZosLogReplyJsonParse instance = new ZosLogReplyJsonParse();
 
-    /**
-     * JSON data value to be parsed
-     */
-    private JSONObject data;
+    }
 
     /**
      * Private constructor defined to avoid public instantiation of class
@@ -47,60 +44,32 @@ public final class ZosLogReplyJsonParse implements JsonParse {
     /**
      * Get singleton instance
      *
-     * @return ZosLogReplyParseResponse object
+     * @return ZosLogItemJsonParse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParse getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new ZosLogReplyJsonParse();
-        }
-        return INSTANCE;
+    public static ZosLogReplyJsonParse getInstance() {
+        return ZosLogReplyJsonParse.Holder.instance;
     }
 
     /**
      * Transform data into ZosLogReply object
      *
+     * @param args first arg json data to parse, second arg list of ZosLogItem objects
      * @return ZosLogReply object
      * @author Frank Giordano
      */
     @Override
-    public ZosLogReply parseResponse() {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
-        ValidateUtils.checkNullParameter(zosLogItems == null, ParseConstants.REQUIRED_ACTION_ZOS_LOG_ITEMS_MSG);
-        final ZosLogReply zosLogReply = new ZosLogReply(
+    public synchronized ZosLogReply parseResponse(final Object... args) {
+        ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
+        ValidateUtils.checkNullParameter(args[1] == null, ParseConstants.LIST_OF_ZOS_LOG_ITEM_NULL_MSG);
+        final JSONObject data = (JSONObject) args[0];
+        final List<ZosLogItem> zosLogItems = (List<ZosLogItem>) args[1];
+        return new ZosLogReply(
                 data.get("timezone") != null ? (Long) data.get("timezone") : 0,
                 data.get("nextTimestamp") != null ? (Long) data.get("nextTimestamp") : 0,
                 data.get("source") != null ? (String) data.get("source") : null,
                 data.get("totalitems") != null ? (Long) data.get("totalitems") : 0,
                 zosLogItems);
-        data = null;
-        zosLogItems = null;
-        return zosLogReply;
-    }
-
-    /**
-     * Set zosLogItems value
-     *
-     * @param zosLogItems list of ZosLogItem objects
-     * @author Frank Giordano
-     */
-    public void setZosLogItems(final List<ZosLogItem> zosLogItems) {
-        ValidateUtils.checkNullParameter(zosLogItems == null, "zosLogItems is null");
-        this.zosLogItems = zosLogItems;
-    }
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse this object
-     * @author Frank Giordano
-     */
-    @Override
-    public JsonParse setJsonObject(final JSONObject data) {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
-        this.data = data;
-        return this;
     }
 
 }

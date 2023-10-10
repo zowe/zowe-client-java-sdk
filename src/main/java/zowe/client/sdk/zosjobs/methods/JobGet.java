@@ -242,8 +242,7 @@ public class JobGet {
                 .orElseThrow(() -> new IllegalStateException("no get job response phrase")).toString();
         final JSONArray results = (JSONArray) new JSONParser().parse(jsonStr);
         for (final Object jsonObj : results) {
-            jobs.add((Job) JsonParseFactory.buildParser(ParseType.JOB)
-                    .setJsonObject((JSONObject) jsonObj).parseResponse());
+            jobs.add((Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse((JSONObject) jsonObj));
         }
 
         return jobs;
@@ -362,8 +361,7 @@ public class JobGet {
         final JSONArray results = (JSONArray) new JSONParser().parse(jsonStr);
         for (final Object obj : results) {
             final JSONObject jsonObj = (JSONObject) obj;
-            files.add((JobFile) JsonParseFactory.buildParser(ParseType.JOB_FILE).
-                    setJsonObject(jsonObj).parseResponse());
+            files.add((JobFile) JsonParseFactory.buildParser(ParseType.JOB_FILE).parseResponse(jsonObj));
         }
 
         return files;
@@ -426,7 +424,7 @@ public class JobGet {
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job get response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        return (Job) JsonParseFactory.buildParser(ParseType.JOB).setJsonObject(jsonObject).parseResponse();
+        return (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
     }
 
     /**

@@ -64,7 +64,7 @@ public class TeamConfigService {
                 }
             } else if ("properties".equalsIgnoreCase(keyObj)) {
                 properties = (Map<String, String>) JsonParseFactory.buildParser(ParseType.PROPS)
-                        .setJsonObject((JSONObject) jsonObject.get(keyObj)).parseResponse();
+                        .parseResponse((JSONObject) jsonObject.get(keyObj));
             }
         }
         return new Partition(name, properties, profiles);

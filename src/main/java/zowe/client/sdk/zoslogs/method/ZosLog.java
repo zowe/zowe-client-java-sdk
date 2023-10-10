@@ -122,16 +122,12 @@ public class ZosLog {
         final boolean isProcessResponse = params.isProcessResponses();
 
         for (Object itemJsonObj : jsonArray) {
-            final ZosLogItemJsonParse parser = (ZosLogItemJsonParse) JsonParseFactory
-                    .buildParser(ParseType.ZOS_LOG_ITEM).setJsonObject((JSONObject) itemJsonObj);
-            parser.setProcessResponse(isProcessResponse);
-            zosLogItems.add(parser.parseResponse());
+            final ZosLogItemJsonParse parser = (ZosLogItemJsonParse) JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM);
+            zosLogItems.add(parser.parseResponse(itemJsonObj, isProcessResponse));
         }
 
-        final ZosLogReplyJsonParse parser = (ZosLogReplyJsonParse) JsonParseFactory
-                .buildParser(ParseType.ZOS_LOG_REPLY).setJsonObject(jsonObject);
-        parser.setZosLogItems(zosLogItems);
-        return parser.parseResponse();
+        final ZosLogReplyJsonParse parser = (ZosLogReplyJsonParse) JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY);
+        return parser.parseResponse(jsonObject, zosLogItems);
     }
 
     /**

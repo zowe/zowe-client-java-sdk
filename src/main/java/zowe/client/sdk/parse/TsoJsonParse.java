@@ -31,15 +31,14 @@ import java.util.Optional;
  */
 public final class TsoJsonParse implements JsonParse {
 
-    /**
-     * Represents one singleton instance
-     */
-    private static JsonParse INSTANCE;
+    private static class Holder {
 
-    /**
-     * JSON data value to be parsed
-     */
-    private JSONObject data;
+        /**
+         * Represents one singleton instance
+         */
+        private static final TsoJsonParse instance = new TsoJsonParse();
+
+    }
 
     /**
      * Private constructor defined to avoid public instantiation of class
@@ -52,14 +51,11 @@ public final class TsoJsonParse implements JsonParse {
     /**
      * Get singleton instance
      *
-     * @return TsoParseResponse object
+     * @return TsoJsonParse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParse getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new TsoJsonParse();
-        }
-        return INSTANCE;
+    public static TsoJsonParse getInstance() {
+        return TsoJsonParse.Holder.instance;
     }
 
     /*
@@ -70,13 +66,15 @@ public final class TsoJsonParse implements JsonParse {
     /**
      * Parse a Tso command response into ZosmfTsoResponse object
      *
+     * @param args json data to parse
      * @return ZosmfTsoResponse object
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
     @Override
-    public ZosmfTsoResponse parseResponse() {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
+    public synchronized ZosmfTsoResponse parseResponse(final Object... args) {
+        ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
+        final JSONObject data = (JSONObject) args[0];
         final ZosmfTsoResponse response = new ZosmfTsoResponse.Builder()
                 .queueId(data.get("queueID") != null ? (String) data.get("queueID") : null)
                 .ver(data.get("ver") != null ? (String) data.get("ver") : null)
@@ -88,8 +86,8 @@ public final class TsoJsonParse implements JsonParse {
         final List<TsoMessages> tsoMessagesLst = new ArrayList<>();
         final Optional<JSONArray> tsoData = Optional.ofNullable((JSONArray) data.get("tsoData"));
 
-        tsoData.ifPresent(data -> {
-            data.forEach(item -> {
+        tsoData.ifPresent(d -> {
+            d.forEach(item -> {
                 final JSONObject obj = (JSONObject) item;
                 final TsoMessages tsoMessages = new TsoMessages();
                 parseJsonTsoMessage(tsoMessagesLst, obj, tsoMessages);
@@ -97,7 +95,6 @@ public final class TsoJsonParse implements JsonParse {
             });
             response.setTsoData(tsoMessagesLst);
         });
-        data = null;
         return response;
     }
 
@@ -137,20 +134,6 @@ public final class TsoJsonParse implements JsonParse {
             tsoMessages.setTsoPrompt(tsoPromptMessage);
             tsoMessagesLst.add(tsoMessages);
         }
-    }
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse this object
-     * @author Frank Giordano
-     */
-    @Override
-    public JsonParse setJsonObject(final JSONObject data) {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
-        this.data = data;
-        return this;
     }
 
 }

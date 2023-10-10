@@ -82,8 +82,7 @@ public class ZosmfStatus {
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no z/osmf status response phrase")).toString();
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
-        return (ZosmfInfoResponse) JsonParseFactory.buildParser(ParseType.ZOSMF_INFO)
-                .setJsonObject(jsonObject).parseResponse();
+        return (ZosmfInfoResponse) JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).parseResponse(jsonObject);
     }
 
 }

@@ -23,15 +23,14 @@ import java.util.Map;
  */
 public final class PropsJsonParse implements JsonParse {
 
-    /**
-     * Represents one singleton instance
-     */
-    private static JsonParse INSTANCE;
+    private static class Holder {
 
-    /**
-     * JSON data value to be parsed
-     */
-    private JSONObject data;
+        /**
+         * Represents one singleton instance
+         */
+        private static final PropsJsonParse instance = new PropsJsonParse();
+
+    }
 
     /**
      * Private constructor defined to avoid public instantiation of class
@@ -44,26 +43,25 @@ public final class PropsJsonParse implements JsonParse {
     /**
      * Get singleton instance
      *
-     * @return PropsParseResponse object
+     * @return PropsJsonParse object
      * @author Frank Giordano
      */
-    public synchronized static JsonParse getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new PropsJsonParse();
-        }
-        return INSTANCE;
+    public static PropsJsonParse getInstance() {
+        return PropsJsonParse.Holder.instance;
     }
 
     /**
      * Parse team config's properties json representation into a Map object
      *
+     * @param args json data to parse
      * @return hashmap of property values
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
     @Override
-    public Object parseResponse() {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.REQUIRED_ACTION_MSG);
+    public synchronized Object parseResponse(final Object... args) {
+        ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
+        final JSONObject data = (JSONObject) args[0];
         // i.e. properties='{"rejectUnauthorized":false,"host":"mvsxe47.lvn.company.net"}'
         final Map<String, String> props = new HashMap<>();
         data.keySet().forEach(key -> {
@@ -77,22 +75,7 @@ public final class PropsJsonParse implements JsonParse {
             }
             props.put((String) key, value);
         });
-        data = null;
         return props;
-    }
-
-    /**
-     * Set the data to be parsed
-     *
-     * @param data json data to parse
-     * @return JsonParseResponse this object
-     * @author Frank Giordano
-     */
-    @Override
-    public JsonParse setJsonObject(final JSONObject data) {
-        ValidateUtils.checkNullParameter(data == null, ParseConstants.DATA_NULL_MSG);
-        this.data = data;
-        return this;
     }
 
 }

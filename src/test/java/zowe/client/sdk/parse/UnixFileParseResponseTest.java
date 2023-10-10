@@ -32,7 +32,7 @@ public class UnixFileParseResponseTest {
     public void tstUnixFileParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseFactory.buildParser(ParseType.UNIX_FILE).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse((Object) null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -47,43 +47,13 @@ public class UnixFileParseResponseTest {
     }
 
     @Test
-    public void tstUnixFileParseJsonStopResponseSingletonWithDataSuccess() {
-        final JsonParse parser =
-                JsonParseFactory.buildParser(ParseType.UNIX_FILE).setJsonObject(new JSONObject());
-        final JsonParse parser2 =
-                JsonParseFactory.buildParser(ParseType.UNIX_FILE).setJsonObject(new JSONObject());
-        assertSame(parser, parser2);
-    }
-
-    @Test
-    public void tstUnixFileParseJsonStopResponseResetDataFail() {
-        String msg = "";
-        try {
-            JsonParseFactory.buildParser(ParseType.UNIX_FILE).setJsonObject(new JSONObject());
-            JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse();
-            JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-        try {
-            JsonParseFactory.buildParser(ParseType.UNIX_FILE).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-    }
-
-    @Test
     public void tstUnixFileParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("name", "ver");
         jsonMap.put("mode", "mode");
         final JSONObject json = new JSONObject(jsonMap);
 
-        final UnixFile response = (UnixFile) JsonParseFactory.buildParser(ParseType.UNIX_FILE)
-                .setJsonObject(json).parseResponse();
+        final UnixFile response = (UnixFile) JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse(json);
         assertEquals("ver", response.getName().orElse("n\\a"));
         assertEquals("mode", response.getMode().orElse("n\\a"));
     }

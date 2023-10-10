@@ -136,7 +136,7 @@ public class IssueConsole {
         final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
         return ConsoleResponseService.getInstance()
                 .buildConsoleResponse((ZosmfIssueResponse) JsonParseFactory.buildParser(ParseType.MVS_CONSOLE)
-                        .setJsonObject(jsonObject).parseResponse(), params.isProcessResponse());
+                        .parseResponse(jsonObject), params.isProcessResponse());
     }
 
 }

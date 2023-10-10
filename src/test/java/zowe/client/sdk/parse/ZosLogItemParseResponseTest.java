@@ -32,7 +32,7 @@ public class ZosLogItemParseResponseTest {
     public void tstZosLogItemParseJsonStopResponseNullFail() {
         String msg = "";
         try {
-            JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM).setJsonObject(null);
+            JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM).parseResponse((Object) null);
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -47,43 +47,14 @@ public class ZosLogItemParseResponseTest {
     }
 
     @Test
-    public void tstZosLogItemParseJsonStopResponseSingletonWithDataSuccess() {
-        final JsonParse parser =
-                JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM).setJsonObject(new JSONObject());
-        final JsonParse parser2 =
-                JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM).setJsonObject(new JSONObject());
-        assertSame(parser, parser2);
-    }
-
-    @Test
-    public void tstZosLogItemParseJsonStopResponseResetDataFail() {
-        String msg = "";
-        try {
-            JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM).setJsonObject(new JSONObject());
-            JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM).parseResponse();
-            JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-        try {
-            JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM).setJsonObject(new JSONObject()).parseResponse();
-            JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM).parseResponse();
-        } catch (Exception e) {
-            msg = e.getMessage();
-        }
-        assertEquals(ParseConstants.REQUIRED_ACTION_MSG, msg);
-    }
-
-    @Test
     public void tstZosLogItemParseJsonStopResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("jobName", "ver");
         jsonMap.put("message", "message");
         final JSONObject json = new JSONObject(jsonMap);
 
-        final ZosLogItem response = (ZosLogItem) JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM)
-                .setJsonObject(json).parseResponse();
+        final ZosLogItem response = (ZosLogItem)
+                JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM).parseResponse(json, false);
         assertEquals("ver", response.getJobName().orElse("n\\a"));
         assertEquals("message", response.getMessage().orElse("n\\a"));
     }
