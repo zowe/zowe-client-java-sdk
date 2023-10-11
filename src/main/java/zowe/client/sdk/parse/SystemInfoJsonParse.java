@@ -70,7 +70,11 @@ public final class SystemInfoJsonParse implements JsonParse {
                 .apiVersion(data.get("api_version") != null ? (String) data.get("api_version") : null)
                 .zosmfFullVersion(data.get("zosmf_full_version") != null ? (String) data.get("zosmf_full_version") : null);
 
-        JSONArray plugins = data.get("plugins") != null ? (JSONArray) data.get("plugins") : null;
+        JSONArray plugins = null;
+        try {
+            plugins = data.get("plugins") != null ? (JSONArray) data.get("plugins") : null;
+        } catch (Exception ignored) {
+        }
         if (plugins != null) {
             int size = plugins.size();
             ZosmfPluginInfo[] zosmfPluginsInfo = new ZosmfPluginInfo[size];
