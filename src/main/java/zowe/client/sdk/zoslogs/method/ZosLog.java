@@ -108,7 +108,7 @@ public class ZosLog {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
-        request.setUrl(url.toString());
+        request.setUrl(url.toString().replace("?&", "?"));
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no zos log response phrase")).toString();
