@@ -58,6 +58,7 @@ public final class ZosLogReplyJsonParse implements JsonParse {
      * @return ZosLogReply object
      * @author Frank Giordano
      */
+    @SuppressWarnings("unchecked")
     @Override
     public synchronized ZosLogReply parseResponse(final Object... args) {
         ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
