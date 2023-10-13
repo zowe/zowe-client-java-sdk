@@ -98,7 +98,7 @@ public class CreateZfsParams {
     private final OptionalInt timeout;
 
     /**
-     * Indicates the target system name (nick name) for this request, where the system name (nick name)
+     * Indicates the target system name (nickname) for this request, where the system name (nickname)
      * is defined in the local system Systems table. The target host system must support single-sign-on by
      * using either an LTPA token or a valid X-IBM-Target-System-User and X-IBM-Target-System-Password is
      * provided for the target system. If the target system is the local system, this is ignored
@@ -348,7 +348,7 @@ public class CreateZfsParams {
         private Integer timeout;
 
         /**
-         * Indicates the target system name (nick name) for this request, where the system name (nick name)
+         * Indicates the target system name (nickname) for this request, where the system name (nickname)
          * is defined in the local system Systems table. The target host system must support single-sign-on by
          * using either an LTPA token or a valid X-IBM-Target-System-User and X-IBM-Target-System-Password is
          * provided for the target system. If the target system is the local system, this is ignored
