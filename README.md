@@ -126,7 +126,9 @@ and the JSON error report document body response is:
 
 [ZosShell](https://github.com/frankgiordano/ZosShell)
     
-## Build
+## Build  
+
+Java 11 and above is required to compile JAR file. Maven is required to build JAR file.     
   
 The following maven command at the root prompt of the project will produce zowe-client-java-sdk.jar in the target directory:
   
@@ -147,4 +149,17 @@ https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk/latest/inde
 ## Maven Central Publication  
 
 https://mvnrepository.com/artifact/org.zowe.client.java.sdk/zowe-client-java-sdk  
+
+For maven project add SDK as a dependency by updating your pom.xml as follows: 
+
+    <dependency>
+        <groupId>org.zowe.client.java.sdk</groupId>
+        <artifactId>zowe-client-java-sdk</artifactId>
+        <version>2.0.0</version>
+    </dependency>  
+  
+For gradle project add SDK as a dependency by updating your build.gradle as follows:  
+
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '2.0.0'  
+  
   
