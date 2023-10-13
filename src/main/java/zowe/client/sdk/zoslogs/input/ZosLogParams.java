@@ -71,6 +71,11 @@ public class ZosLogParams {
     private final boolean processResponses;
 
     /**
+     * Internal use to count number of query parameters specified
+     */
+    private final int queryCount;
+
+    /**
      * ZosLogParams constructor
      *
      * @param builder Builder object
@@ -82,6 +87,7 @@ public class ZosLogParams {
         this.direction = Optional.ofNullable(builder.direction);
         this.timeRange = Optional.ofNullable(builder.timeRange);
         this.processResponses = builder.processResponses;
+        this.queryCount = builder.queryCount;
     }
 
     /**
@@ -127,6 +133,15 @@ public class ZosLogParams {
      */
     public boolean isProcessResponses() {
         return processResponses;
+    }
+
+    /**
+     * Retrieve queryCount value
+     *
+     * @return queryCount value
+     */
+    public int getQueryCount() {
+        return queryCount;
     }
 
     /**
@@ -196,6 +211,11 @@ public class ZosLogParams {
         private boolean processResponses;
 
         /**
+         * Internal use to count number of query parameters specified
+         */
+        private int queryCount = 0;
+
+        /**
          * Builder constructor
          */
         public Builder() {
@@ -211,6 +231,7 @@ public class ZosLogParams {
          */
         public Builder startTime(final String startTime) {
             this.startTime = startTime;
+            queryCount++;
             return this;
         }
 
@@ -225,6 +246,7 @@ public class ZosLogParams {
          */
         public Builder hardCopy(final HardCopyType hardCopy) {
             this.hardCopy = hardCopy;
+            queryCount++;
             return this;
         }
 
@@ -238,6 +260,7 @@ public class ZosLogParams {
          */
         public Builder direction(final DirectionType direction) {
             this.direction = direction;
+            queryCount++;
             return this;
         }
 
@@ -252,6 +275,7 @@ public class ZosLogParams {
          */
         public Builder timeRange(final String timeRange) {
             this.timeRange = timeRange;
+            queryCount++;
             return this;
         }
 
@@ -266,6 +290,7 @@ public class ZosLogParams {
          */
         public Builder processResponses(final boolean processResponses) {
             this.processResponses = processResponses;
+            queryCount++;
             return this;
         }
 

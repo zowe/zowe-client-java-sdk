@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
  */
 public class ZosLog {
 
-    private static final String RESOURCE = "/zosmf/restconsoles/v1/log?";
+    private static final String RESOURCE = "/zosmf/restconsoles/v1/log";
 
     private final ZosConnection connection;
 
@@ -99,11 +99,29 @@ public class ZosLog {
             }
             final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT.withZone(ZoneId.systemDefault());
             final ZonedDateTime zonedDateTime = ZonedDateTime.parse(time, formatter);
-            url.append("time=").append(zonedDateTime);
+            url.append("?time=").append(zonedDateTime);
         });
-        params.getTimeRange().ifPresent(timeRange -> url.append("&timeRange=").append(timeRange));
-        params.getDirection().ifPresent(direction -> url.append("&direction=").append(direction.getValue()));
-        params.getHardCopy().ifPresent(hardCopy -> url.append("&hardcopy=").append(hardCopy.getValue()));
+        params.getTimeRange().ifPresent(timeRange -> {
+            if (params.getQueryCount() > 1) {
+                url.append("&timeRange=").append(timeRange);
+            } else {
+                url.append("?timeRange=").append(timeRange);
+            }
+        });
+        params.getDirection().ifPresent(direction -> {
+            if (params.getQueryCount() > 1) {
+                url.append("&direction=").append(direction.getValue());
+            } else {
+                url.append("?direction=").append(direction.getValue());
+            }
+        });
+        params.getHardCopy().ifPresent(hardCopy -> {
+            if (params.getQueryCount() > 1) {
+                url.append("&hardcopy=").append(hardCopy.getValue());
+            } else {
+                url.append("?hardcopy=").append(hardCopy.getValue());
+            }
+        });
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
