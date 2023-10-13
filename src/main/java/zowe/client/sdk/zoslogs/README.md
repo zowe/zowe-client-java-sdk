@@ -62,6 +62,7 @@ public class ZosGetLogTst extends TstZosConnection {
 
 }
 `````
+
 **Connection setup**
 
 ````java
