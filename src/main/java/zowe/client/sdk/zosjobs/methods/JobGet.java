@@ -104,8 +104,8 @@ public class JobGet {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(params.getJobName()
-                        .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                EncodeUtils.encodeURIComponent(
+                params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
                 params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
                 JobsConstants.RESOURCE_SPOOL_FILES + JobsConstants.RESOURCE_JCL_CONTENT +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
@@ -273,8 +273,8 @@ public class JobGet {
 
         CommonJobParams params = new CommonJobParams(jobId, jobName);
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(params.getJobName()
-                        .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                EncodeUtils.encodeURIComponent(
+                params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
                 params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
                 JobsConstants.RESOURCE_SPOOL_FILES + "/" + spoolId + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
@@ -300,8 +300,8 @@ public class JobGet {
         ValidateUtils.checkNullParameter(jobFile == null, "jobFile is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(jobFile.getJobName()
-                        .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                EncodeUtils.encodeURIComponent(
+                jobFile.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
                 jobFile.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
                 JobsConstants.RESOURCE_SPOOL_FILES + "/" +
                 jobFile.getId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_FILE_ID_ERROR_MSG)) +
@@ -342,8 +342,8 @@ public class JobGet {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(params.getJobName()
-                        .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                EncodeUtils.encodeURIComponent(
+                params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
                 params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
                 "/files";
 
@@ -408,8 +408,8 @@ public class JobGet {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(params.getJobName()
-                        .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                EncodeUtils.encodeURIComponent(
+                params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
                 params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG));
 
         if (params.isStepData()) {
@@ -469,8 +469,8 @@ public class JobGet {
      */
     public String getStatusValueByJob(final Job job) throws Exception {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        final Job result = getStatusCommon(new CommonJobParams(job.getJobId().orElse(""),
-                job.getJobName().orElse("")));
+        final Job result = getStatusCommon(
+                new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse("")));
         return result.getStatus().orElseThrow(() -> new IllegalStateException("job status not returned"));
     }
 
