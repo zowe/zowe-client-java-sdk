@@ -234,10 +234,10 @@ public class JobMonitor {
     public boolean isRunning(final MonitorJobWaitForParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         final JobGet getJobs = new JobGet(connection);
-        final String jobName = params.getJobName()
-                .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG));
-        final String jobId = params.getJobId()
-                .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG));
+        final String jobName =
+                params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG));
+        final String jobId =
+                params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG));
         final String status = getJobs.getStatusValue(jobName, jobId);
         return !JobStatus.Type.INPUT.toString().equals(status) && !JobStatus.Type.OUTPUT.toString().equals(status);
     }
@@ -264,7 +264,6 @@ public class JobMonitor {
             numOfAttempts++;
 
             messageFound = checkMessage(params, message);
-
             shouldContinue = !messageFound && (maxAttempts > 0 && numOfAttempts < maxAttempts);
 
             if (shouldContinue) {

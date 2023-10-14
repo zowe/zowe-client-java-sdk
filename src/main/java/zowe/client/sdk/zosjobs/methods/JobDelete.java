@@ -90,10 +90,10 @@ public class JobDelete {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM + params.getJobName()
-                .orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_NAME_ERROR_MSG)) +
-                JobsConstants.FILE_DELIM + params.getJobId()
-                .orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_ID_ERROR_MSG));
+                JobsConstants.FILE_DELIM +
+                params.getJobName().orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_NAME_ERROR_MSG)) +
+                JobsConstants.FILE_DELIM +
+                params.getJobId().orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_ID_ERROR_MSG));
 
         final Map<String, String> headers = new HashMap<>();
 

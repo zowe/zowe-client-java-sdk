@@ -119,10 +119,10 @@ public class JobCancel {
 
         // generate full url request
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                JobsConstants.RESOURCE + JobsConstants.FILE_DELIM + params.getJobName()
-                .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG)) +
-                JobsConstants.FILE_DELIM + params.getJobId()
-                .orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG));
+                JobsConstants.RESOURCE + JobsConstants.FILE_DELIM +
+                params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG)) +
+                JobsConstants.FILE_DELIM +
+                params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG));
 
         // generate json string body for the request
         final String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
