@@ -156,8 +156,8 @@ public class DsnCopy {
      */
     private Map<String, Object> setFromDataSetMapValues(final CopyParams params) {
         final String fromDataSetNameErrMsg = "fromDataSetName not specified";
-        String fromDataSetName = params.getFromDataSet()
-                .orElseThrow(() -> new IllegalStateException(fromDataSetNameErrMsg));
+        String fromDataSetName =
+                params.getFromDataSet().orElseThrow(() -> new IllegalStateException(fromDataSetNameErrMsg));
 
         final Map<String, Object> fromDataSetReq = new HashMap<>();
         // is member name specified in DataSet value
