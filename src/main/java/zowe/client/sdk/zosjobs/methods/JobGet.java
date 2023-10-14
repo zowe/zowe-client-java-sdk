@@ -242,7 +242,7 @@ public class JobGet {
                 .orElseThrow(() -> new IllegalStateException("no get job response phrase")).toString();
         final JSONArray results = (JSONArray) new JSONParser().parse(jsonStr);
         for (final Object jsonObj : results) {
-            jobs.add((Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse((JSONObject) jsonObj));
+            jobs.add((Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObj));
         }
 
         return jobs;
