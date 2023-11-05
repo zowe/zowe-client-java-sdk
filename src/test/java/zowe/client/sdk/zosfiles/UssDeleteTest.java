@@ -140,7 +140,7 @@ public class UssDeleteTest {
     public void tstUssDeleteZfsNullFileSystemNameFailure() {
         String errMsg = "";
         try {
-            ussDelete.zfsDelete(null);
+            ussDelete.deleteZfs(null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -151,7 +151,7 @@ public class UssDeleteTest {
     public void tstUssDeleteZfsEmptyFileSystemNameFailure() {
         String errMsg = "";
         try {
-            ussDelete.zfsDelete("");
+            ussDelete.deleteZfs("");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -162,7 +162,7 @@ public class UssDeleteTest {
     public void tstUssDeleteZfsEmptyFileSystemNameWithSpacesFailure() {
         String errMsg = "";
         try {
-            ussDelete.zfsDelete("   ");
+            ussDelete.deleteZfs("   ");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }

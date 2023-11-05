@@ -78,7 +78,7 @@ public class ZosLog {
     }
 
     /**
-     * Issue a z/OSMF log command and return log data. 
+     * Issue a z/OSMF log command and return log data.
      * <p>
      * If API fails you may be missing APAR see PH35930 required for log operations.
      *

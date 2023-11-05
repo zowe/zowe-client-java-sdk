@@ -78,7 +78,7 @@ public class UssChangeTag {
      * @return Response Object
      * @author Frank Giordano
      */
-    public Response changeToBinary(final String fileNamePath) {
+    public Response binary(final String fileNamePath) {
         return changeCommon(fileNamePath, new ChangeTagParams.Builder()
                 .action(ChangeTagAction.SET).type(ChangeTagType.BINARY).build());
     }
@@ -91,7 +91,7 @@ public class UssChangeTag {
      * @return Response Object
      * @author Frank Giordano
      */
-    public Response changeToText(final String fileNamePath, final String codeSet) {
+    public Response text(final String fileNamePath, final String codeSet) {
         ValidateUtils.checkNullParameter(codeSet == null, "codeSet is null");
         ValidateUtils.checkIllegalParameter(codeSet.isBlank(), "codeSet not specified");
 
@@ -117,7 +117,7 @@ public class UssChangeTag {
      * @return Response Object
      * @author Frank Giordano
      */
-    public Response retrieve(final String fileNamePath) {
+    public Response get(final String fileNamePath) {
         return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
     }
 

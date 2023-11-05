@@ -45,7 +45,7 @@ public class UssChangeTagTest {
     @Test
     public void tstUssChangeTagChangeToBinarySuccess() {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
-        final Response response = ussChangeTag.changeToBinary("/xxx/xx/xx");
+        final Response response = ussChangeTag.binary("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
@@ -54,7 +54,7 @@ public class UssChangeTagTest {
     @Test
     public void tstUssChangeTagChangeToTextSuccess() {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
-        final Response response = ussChangeTag.changeToText("/xxx/xx/xx", "IBM-1047");
+        final Response response = ussChangeTag.text("/xxx/xx/xx", "IBM-1047");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
@@ -72,7 +72,7 @@ public class UssChangeTagTest {
     @Test
     public void tstUssChangeTagRetrieveSuccess() throws Exception {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
-        final Response response = ussChangeTag.retrieve("/xxx/xx/xx");
+        final Response response = ussChangeTag.get("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
@@ -171,7 +171,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeToBinaryEmptyFileNamePathFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.changeToBinary("");
+            ussChangeTag.binary("");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -182,7 +182,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeToBinaryEmptyFileNamePathWithSpacesFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.changeToBinary("  ");
+            ussChangeTag.binary("  ");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -193,7 +193,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeToBinaryNullFileNamePathFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.changeToBinary(null);
+            ussChangeTag.binary(null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -204,7 +204,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeToTextEmptyFileNamePathFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.changeToText("", "codeset");
+            ussChangeTag.text("", "codeset");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -215,7 +215,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeToTextEmptyFileNamePathWithSpacesFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.changeToText("  ", "codeset");
+            ussChangeTag.text("  ", "codeset");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -226,7 +226,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeToTextNullFileNamePathFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.changeToText(null, "codeset");
+            ussChangeTag.text(null, "codeset");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -237,7 +237,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeToTextNullCodeSetFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.changeToText("/xx/xx/x", null);
+            ussChangeTag.text("/xx/xx/x", null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -248,7 +248,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeToTextEmptyCodeSetFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.changeToText(null, "");
+            ussChangeTag.text(null, "");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -259,7 +259,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeToTextEmptyCodeSetWithSpacesFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.changeToText(null, "  ");
+            ussChangeTag.text(null, "  ");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -303,7 +303,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagRetrieveEmptyFileNamePathFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.retrieve("");
+            ussChangeTag.get("");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -314,7 +314,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagRetrieveEmptyFileNamePathWithSpacesFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.retrieve("  ");
+            ussChangeTag.get("  ");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -325,7 +325,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagRetrieveNullFileNamePathFailure() {
         String errMsg = "";
         try {
-            ussChangeTag.retrieve(null);
+            ussChangeTag.get(null);
         } catch (Exception e) {
             errMsg = e.getMessage();
         }

@@ -112,7 +112,7 @@ public class UssDelete {
      * @return Response object
      * @author Frank Giordano
      */
-    public Response zfsDelete(final String fileSystemName) {
+    public Response deleteZfs(final String fileSystemName) {
         ValidateUtils.checkNullParameter(fileSystemName == null, "fileSystemName is null");
         ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "fileSystemName not specified");
 
