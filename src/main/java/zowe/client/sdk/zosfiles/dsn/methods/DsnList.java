@@ -73,22 +73,62 @@ public class DsnList {
     }
 
     /**
-     * Perform the http request and return its response.
+     * Get a list of Dataset objects
      *
-     * @param params  list parameters
-     * @param headers list of headers for http request
-     * @param url     url for http request
-     * @return response object with http response info
-     * @author Frank Giordano
+     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
+     * @param params      list parameters, see ListParams object
+     * @return A String list of Dataset names
+     * @throws Exception error processing request
+     * @author Nikunj Goyal
      */
-    private Response getResponse(final ListParams params, final Map<String, String> headers, final String url) {
-        setHeaders(params, headers);
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
+    public java.util.List<Dataset> getDatasets(final String dataSetName, final ListParams params) throws Exception {
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
+        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
+
+        final Map<String, String> headers = new HashMap<>();
+        final java.util.List<Dataset> datasets = new ArrayList<>();
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_DS_LEVEL +
+                EncodeUtils.encodeURIComponent(dataSetName);
+
+        if (params.getVolume().isPresent()) {
+            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
+                    EncodeUtils.encodeURIComponent(params.getVolume().get());
         }
-        request.setUrl(url);
-        request.setHeaders(headers);
-        return request.executeRequest();
+        if (params.getStart().isPresent()) {
+            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + params.getStart().get();
+        }
+
+        return getResult(getResponse(params, headers, url), datasets, null);
+    }
+
+    /**
+     * Get a list of member objects from a partition Dataset
+     *
+     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
+     * @param params      list parameters, see ListParams object
+     * @return list of member objects
+     * @throws Exception error processing request
+     * @author Nikunj Goyal
+     */
+    public java.util.List<Member> getMembers(final String dataSetName, final ListParams params) throws Exception {
+        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
+        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
+
+        final Map<String, String> headers = new HashMap<>();
+        final java.util.List<Member> members = new ArrayList<>();
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
+                EncodeUtils.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
+
+        if (params.getPattern().isPresent()) {
+            url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN +
+                    EncodeUtils.encodeURIComponent(params.getPattern().get());
+        }
+
+        return getResult(getResponse(params, headers, url), null, members);
     }
 
     /**
@@ -168,62 +208,22 @@ public class DsnList {
     }
 
     /**
-     * Get a list of Dataset objects
+     * Perform the http request and return its response.
      *
-     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
-     * @param params      list parameters, see ListParams object
-     * @return A String list of Dataset names
-     * @throws Exception error processing request
-     * @author Nikunj Goyal
+     * @param params  list parameters
+     * @param headers list of headers for http request
+     * @param url     url for http request
+     * @return response object with http response info
+     * @author Frank Giordano
      */
-    public java.util.List<Dataset> getDatasets(final String dataSetName, final ListParams params) throws Exception {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
-
-        final Map<String, String> headers = new HashMap<>();
-        final java.util.List<Dataset> datasets = new ArrayList<>();
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_DS_LEVEL +
-                EncodeUtils.encodeURIComponent(dataSetName);
-
-        if (params.getVolume().isPresent()) {
-            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
-                    EncodeUtils.encodeURIComponent(params.getVolume().get());
+    private Response getResponse(final ListParams params, final Map<String, String> headers, final String url) {
+        setHeaders(params, headers);
+        if (request == null) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
-        if (params.getStart().isPresent()) {
-            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + params.getStart().get();
-        }
-
-        return getResult(getResponse(params, headers, url), datasets, null);
-    }
-
-    /**
-     * Get a list of member objects from a partition Dataset
-     *
-     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
-     * @param params      list parameters, see ListParams object
-     * @return list of member objects
-     * @throws Exception error processing request
-     * @author Nikunj Goyal
-     */
-    public java.util.List<Member> getMembers(final String dataSetName, final ListParams params) throws Exception {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
-
-        final Map<String, String> headers = new HashMap<>();
-        final java.util.List<Member> members = new ArrayList<>();
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
-                EncodeUtils.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
-
-        if (params.getPattern().isPresent()) {
-            url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN +
-                    EncodeUtils.encodeURIComponent(params.getPattern().get());
-        }
-
-        return getResult(getResponse(params, headers, url), null, members);
+        request.setUrl(url);
+        request.setHeaders(headers);
+        return request.executeRequest();
     }
 
     /**
