@@ -101,7 +101,7 @@ public class DsnGet {
         dataSetSearchStr = dataSetSearchStr.substring(0, str.length() - 1);
         final DsnList dsnList = new DsnList(connection);
         final ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
-        final List<Dataset> dsLst = dsnList.listDsn(dataSetSearchStr, params);
+        final List<Dataset> dsLst = dsnList.getDatasets(dataSetSearchStr, params);
 
         final Optional<Dataset> dataSet = dsLst.stream()
                 .filter(d -> d.getDsname().orElse("n/a").contains(dataSetName)).findFirst();

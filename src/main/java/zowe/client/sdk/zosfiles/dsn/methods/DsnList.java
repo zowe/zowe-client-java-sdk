@@ -168,7 +168,7 @@ public class DsnList {
     }
 
     /**
-     * Get a list of Dataset names
+     * Get a list of Dataset objects
      *
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param params      list parameters, see ListParams object
@@ -176,7 +176,7 @@ public class DsnList {
      * @throws Exception error processing request
      * @author Nikunj Goyal
      */
-    public java.util.List<Dataset> listDsn(final String dataSetName, final ListParams params) throws Exception {
+    public java.util.List<Dataset> getDatasets(final String dataSetName, final ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
@@ -207,7 +207,7 @@ public class DsnList {
      * @throws Exception error processing request
      * @author Nikunj Goyal
      */
-    public java.util.List<Member> listDsnMembers(final String dataSetName, final ListParams params) throws Exception {
+    public java.util.List<Member> getMembers(final String dataSetName, final ListParams params) throws Exception {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
