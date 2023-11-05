@@ -133,7 +133,7 @@ public class UssList {
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (final Object jsonObj : jsonArray) {
-                items.add((UnixFile) JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse((JSONObject) jsonObj));
+                items.add((UnixFile) JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse(jsonObj));
             }
         }
 
