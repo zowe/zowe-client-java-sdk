@@ -42,7 +42,7 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstUssChangeOwnerSuccess() throws Exception {
+    public void tstUssChangeOwnerSuccess() {
         final UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequest);
         final Response response = ussChangeOwner.change("/xxx/xx/xx", "user");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());

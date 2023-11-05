@@ -40,7 +40,7 @@ public class UssMountTest {
     }
 
     @Test
-    public void tstUssMountSuccess() throws Exception {
+    public void tstUssMountSuccess() {
         final PutJsonZosmfRequest mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));

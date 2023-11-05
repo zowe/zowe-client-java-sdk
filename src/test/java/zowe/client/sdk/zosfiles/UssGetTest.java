@@ -39,7 +39,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetTextFileTargetPathSuccess() throws Exception {
+    public void tstGetTextFileTargetPathSuccess() {
         final GetTextZosmfRequest mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response("text", 200, "success"));
@@ -49,7 +49,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetTextFileTargetPathDefaultResponseSuccess() throws Exception {
+    public void tstGetTextFileTargetPathDefaultResponseSuccess() {
         final GetTextZosmfRequest mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response(null, 200, "success"));

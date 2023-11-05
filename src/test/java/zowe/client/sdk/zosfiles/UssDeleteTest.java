@@ -42,7 +42,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteSuccess() throws Exception {
+    public void tstUssDeleteSuccess() {
         final UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
         final Response response = ussDelete.delete("/xxx/xx/xx");
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());

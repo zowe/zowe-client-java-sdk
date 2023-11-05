@@ -43,7 +43,7 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopySuccess() throws Exception {
+    public void tstUssCopySuccess() {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copy("/xxx/xx/xx", "/xxx/xx/xx");
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());

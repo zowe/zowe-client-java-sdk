@@ -61,7 +61,7 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagRemoveSuccess() throws Exception {
+    public void tstUssChangeTagRemoveSuccess() {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.remove("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -70,7 +70,7 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagRetrieveSuccess() throws Exception {
+    public void tstUssChangeTagRetrieveSuccess() {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.get("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());

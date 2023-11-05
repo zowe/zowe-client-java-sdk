@@ -41,7 +41,7 @@ public class UssMoveTest {
     }
 
     @Test
-    public void tstUssMoveSuccess() throws Exception {
+    public void tstUssMoveSuccess() {
         final UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
         final Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -50,7 +50,7 @@ public class UssMoveTest {
     }
 
     @Test
-    public void tstUssMoveOverwriteSuccess() throws Exception {
+    public void tstUssMoveOverwriteSuccess() {
         final UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
         final Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx", true);
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
