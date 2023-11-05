@@ -73,7 +73,7 @@ public class DsnGet {
     }
 
     /**
-     * Retrieve information about a Dataset.
+     * Retrieve dataset information.
      *
      * @param dataSetName sequential or partition dataset (e.g. 'DATASET.LIB')
      * @return dataset object
