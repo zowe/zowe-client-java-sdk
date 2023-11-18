@@ -155,11 +155,11 @@ For maven project add SDK as a dependency by updating your pom.xml as follows:
     <dependency>
         <groupId>org.zowe.client.java.sdk</groupId>
         <artifactId>zowe-client-java-sdk</artifactId>
-        <version>2.0.0</version>
+        <version>2.0.2</version>
     </dependency>  
   
 For gradle project add SDK as a dependency by updating your build.gradle as follows:  
 
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '2.0.0'  
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '2.0.2'  
   
   
