@@ -111,16 +111,16 @@ public class DsnGet {
     /**
      * Retrieve sequential dataset or dataset member content
      *
-     * @param dataSetName name of a sequential dataset e.g. DATASET.SEQ.DATA
-     *                    or a dataset member e.g. DATASET.LIB(MEMBER))
-     * @param params      download params parameters, see DownloadParams object
+     * @param targetName name of a sequential dataset e.g. DATASET.SEQ.DATA
+     *                   or a dataset member e.g. DATASET.LIB(MEMBER))
+     * @param params     download params parameters, see DownloadParams object
      * @return a content stream
      * @author Nikunj Goyal
      */
-    public InputStream get(final String dataSetName, final DownloadParams params) {
+    public InputStream get(final String targetName, final DownloadParams params) {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
+        ValidateUtils.checkNullParameter(targetName == null, "targetName is null");
+        ValidateUtils.checkIllegalParameter(targetName.isBlank(), "targetName not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
@@ -128,7 +128,7 @@ public class DsnGet {
         if (params.getVolume().isPresent()) {
             url += "-(" + params.getVolume().get() + ")/";
         }
-        url += EncodeUtils.encodeURIComponent(dataSetName);
+        url += EncodeUtils.encodeURIComponent(targetName);
 
         String key, value;
         final Map<String, String> headers = new HashMap<>();
