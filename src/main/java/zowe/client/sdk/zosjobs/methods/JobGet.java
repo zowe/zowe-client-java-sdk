@@ -271,7 +271,7 @@ public class JobGet {
     public String getSpoolContent(final String jobName, final String jobId, final int spoolId) {
         ValidateUtils.checkIllegalParameter(spoolId <= 0, "spool id not specified");
 
-        CommonJobParams params = new CommonJobParams(jobId, jobName);
+        final CommonJobParams params = new CommonJobParams(jobId, jobName);
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(
                 params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
