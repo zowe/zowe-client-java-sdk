@@ -120,11 +120,11 @@ public abstract class ZosmfRequest {
     private String httpErrorMsg(final Response response, final int statusCode) {
         final AtomicReference<Object> responsePhrase = new AtomicReference<>();
         response.getResponsePhrase().ifPresent(responsePhrase::set);
-        if (responsePhrase.get() instanceof byte[]) {
+        if (responsePhrase.get() instanceof byte[] && ((byte[]) responsePhrase.get()).length > 0) {
             try (final InputStreamReader inputStreamReader = new InputStreamReader(
                     new ByteArrayInputStream((byte[]) responsePhrase.get()), StandardCharsets.UTF_8)) {
                 final BufferedReader br = new BufferedReader(inputStreamReader);
-                StringBuilder content = new StringBuilder();
+                final StringBuilder content = new StringBuilder();
                 String line;
                 while ((line = br.readLine()) != null) {
                     content.append(line).append("\n");
