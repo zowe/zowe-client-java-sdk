@@ -158,10 +158,9 @@ public abstract class ZosmfRequest {
      * Set the body information for the http request
      *
      * @param body object value
-     * @throws UnirestException error setting body
      * @author Frank Giordano
      */
-    public abstract void setBody(final Object body) throws UnirestException;
+    public abstract void setBody(final Object body);
 
     /**
      * Set any headers needed for the http request
