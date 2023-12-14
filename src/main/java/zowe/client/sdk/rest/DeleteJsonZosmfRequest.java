@@ -50,11 +50,12 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
     /**
      * Method to set the body information for the http request which is not used for this request.
      *
+     * @param body object value
      * @author Frank Giordano
      */
     @Override
-    public void setBody(Object body) throws UnirestException {
-        throw new UnirestException("setting body for this request is invalid");
+    public void setBody(Object body) {
+        throw new IllegalStateException("setting body for this request is invalid");
     }
 
     /**
