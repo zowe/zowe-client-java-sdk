@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.methods.UssDelete;
 
 import static org.junit.Assert.assertEquals;
@@ -34,7 +35,7 @@ public class UssDeleteTest {
     private UssDelete ussDelete;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         mockJsonDeleteRequest = Mockito.mock(DeleteJsonZosmfRequest.class);
         Mockito.when(mockJsonDeleteRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
@@ -42,7 +43,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteSuccess() {
+    public void tstUssDeleteSuccess() throws ZosmfRequestException {
         final UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
         final Response response = ussDelete.delete("/xxx/xx/xx");
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -51,7 +52,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteRecursiveSuccess() {
+    public void tstUssDeleteRecursiveSuccess() throws ZosmfRequestException {
         final UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
         final Response response = ussDelete.delete("/xxx/xx/xx", true);
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());

@@ -15,6 +15,7 @@ import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -72,9 +73,10 @@ public class DsnCreate {
      * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
      * @param params      create dataset parameters, see CreateParams object
      * @return http response object
+     * @throws ZosmfRequestException http request failure
      * @author Leonid Baranov
      */
-    public Response create(final String dataSetName, final CreateParams params) {
+    public Response create(final String dataSetName, final CreateParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");

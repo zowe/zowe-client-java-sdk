@@ -12,12 +12,14 @@ package zowe.client.sdk.zosfiles.dsn.methods;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -78,10 +80,12 @@ public class DsnList {
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param params      list parameters, see ListParams object
      * @return A String list of Dataset names
-     * @throws Exception error processing request
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Nikunj Goyal
      */
-    public java.util.List<Dataset> getDatasets(final String dataSetName, final ListParams params) throws Exception {
+    public java.util.List<Dataset> getDatasets(final String dataSetName, final ListParams params)
+            throws ZosmfRequestException, ParseException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
@@ -140,12 +144,12 @@ public class DsnList {
      * @param memberLst  member arraylist object container
      * @param <T>        DataSet or Member object
      * @return one of the container filled with either member or datasets
-     * @throws Exception processing error
+     * @throws ParseException parse error of JSON response
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
     private <T> java.util.List<T> getResult(final Response response, final List<T> datasetLst,
-                                            final List<T> memberLst) throws Exception {
+                                            final List<T> memberLst) throws ParseException {
         if (response.getStatusCode().isEmpty()) {
             LOG.debug("status code not returned");
             if (datasetLst == null) {
@@ -214,9 +218,11 @@ public class DsnList {
      * @param headers list of headers for http request
      * @param url     url for http request
      * @return response object with http response info
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    private Response getResponse(final ListParams params, final Map<String, String> headers, final String url) {
+    private Response getResponse(final ListParams params, final Map<String, String> headers, final String url)
+            throws ZosmfRequestException {
         setHeaders(params, headers);
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);

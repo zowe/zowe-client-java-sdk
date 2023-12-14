@@ -12,10 +12,12 @@ package zowe.client.sdk.zosjobs.methods;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -73,9 +75,10 @@ public class JobGet {
      * @param jobName job name for the job for which you want to retrieve JCL
      * @param jobId   job ID for the job for which you want to retrieve JCL
      * @return job document on resolve
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public String getJcl(final String jobName, final String jobId) {
+    public String getJcl(final String jobName, final String jobId) throws ZosmfRequestException {
         return getJclCommon(new CommonJobParams(jobId, jobName));
     }
 
@@ -86,9 +89,10 @@ public class JobGet {
      *
      * @param job job for which you would like to retrieve JCL
      * @return JCL content
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public String getJclByJob(final Job job) {
+    public String getJclByJob(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return getJclCommon(new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse("")));
     }
@@ -98,14 +102,15 @@ public class JobGet {
      *
      * @param params common job parameters, see CommonJobParams object
      * @return JCL content
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public String getJclCommon(final CommonJobParams params) {
+    public String getJclCommon(final CommonJobParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(
-                params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                        params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
                 params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
                 JobsConstants.RESOURCE_SPOOL_FILES + JobsConstants.RESOURCE_JCL_CONTENT +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
@@ -124,10 +129,11 @@ public class JobGet {
      *
      * @param jobId job ID for the job for which you want to get status
      * @return one job object, matching the given job ID, without step-data
-     * @throws Exception error on getting job
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public Job getById(final String jobId) throws Exception {
+    public Job getById(final String jobId) throws ZosmfRequestException, ParseException {
         final List<Job> jobs = getCommon(new GetJobParams.Builder("*").jobId(jobId).build());
         if (jobs.isEmpty()) {
             throw new IllegalStateException("job not found");
@@ -142,10 +148,11 @@ public class JobGet {
      * Get jobs (defaults to the user ID of the session as owner).
      *
      * @return list of job objects (matching jobs), without step-data
-     * @throws Exception error on getting a list of jobs
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public List<Job> getAll() throws Exception {
+    public List<Job> getAll() throws ZosmfRequestException, ParseException {
         return getCommon(null);
     }
 
@@ -155,10 +162,11 @@ public class JobGet {
      * @param owner owner for which to get jobs. Supports wildcard e.g.
      *              IBMU* returns jobs owned by all users whose ID beings with "IBMU"
      * @return list of job objects (matching jobs), without step-data
-     * @throws Exception error on getting a list of jobs
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public List<Job> getByOwner(final String owner) throws Exception {
+    public List<Job> getByOwner(final String owner) throws ZosmfRequestException, ParseException {
         return getCommon(new GetJobParams.Builder(owner).build());
     }
 
@@ -170,10 +178,12 @@ public class JobGet {
      * @param prefix prefix for which to get jobs. Supports wildcard e.g.
      *               JOBNM* returns jobs with names starting with "JOBNM"
      * @return list of job objects (matching jobs), without step-data
-     * @throws Exception error on getting a list of jobs
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public List<Job> getByOwnerAndPrefix(final String owner, final String prefix) throws Exception {
+    public List<Job> getByOwnerAndPrefix(final String owner, final String prefix)
+            throws ZosmfRequestException, ParseException {
         return getCommon(new GetJobParams.Builder(owner).prefix(prefix).build());
     }
 
@@ -182,10 +192,11 @@ public class JobGet {
      *
      * @param prefix job name prefix for which to list jobs. Supports wildcard e.g. JOBNM*
      * @return list of job objects (matching jobs), without step-data
-     * @throws Exception error on getting a list of jobs
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public List<Job> getByPrefix(final String prefix) throws Exception {
+    public List<Job> getByPrefix(final String prefix) throws ZosmfRequestException, ParseException {
         return getCommon(new GetJobParams.Builder("*").prefix(prefix).build());
     }
 
@@ -194,10 +205,11 @@ public class JobGet {
      *
      * @param params get job parameters, see GetJobParams object
      * @return list of job objects (matching jobs), without step-data
-     * @throws Exception error on getting a list of jobs
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public List<Job> getCommon(final GetJobParams params) throws Exception {
+    public List<Job> getCommon(final GetJobParams params) throws ZosmfRequestException, ParseException {
         List<Job> jobs = new ArrayList<>();
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
@@ -253,9 +265,10 @@ public class JobGet {
      *
      * @param jobFile spool file for which you want to retrieve the content
      * @return spool content
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public String getSpoolContent(final JobFile jobFile) {
+    public String getSpoolContent(final JobFile jobFile) throws ZosmfRequestException {
         return getSpoolContentCommon(jobFile);
     }
 
@@ -266,15 +279,17 @@ public class JobGet {
      * @param jobId   job id for the job containing the spool content
      * @param spoolId id number assigned by zosmf that identifies the particular job spool file (DD)
      * @return spool content
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public String getSpoolContent(final String jobName, final String jobId, final int spoolId) {
+    public String getSpoolContent(final String jobName, final String jobId, final int spoolId)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(spoolId <= 0, "spool id not specified");
 
         final CommonJobParams params = new CommonJobParams(jobId, jobName);
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(
-                params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                        params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
                 params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
                 JobsConstants.RESOURCE_SPOOL_FILES + "/" + spoolId + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
@@ -294,14 +309,15 @@ public class JobGet {
      *
      * @param jobFile spool file for which you want to retrieve the content
      * @return spool content
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public String getSpoolContentCommon(final JobFile jobFile) {
+    public String getSpoolContentCommon(final JobFile jobFile) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(jobFile == null, "jobFile is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(
-                jobFile.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                        jobFile.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
                 jobFile.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
                 JobsConstants.RESOURCE_SPOOL_FILES + "/" +
                 jobFile.getId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_FILE_ID_ERROR_MSG)) +
@@ -323,10 +339,12 @@ public class JobGet {
      * @param jobName job name for the job for which you want to get a list of spool files
      * @param jobId   job ID for the job for which you want to get a list of spool files
      * @return list of JobFile objects
-     * @throws Exception error on getting spool files info
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public List<JobFile> getSpoolFiles(final String jobName, final String jobId) throws Exception {
+    public List<JobFile> getSpoolFiles(final String jobName, final String jobId)
+            throws ZosmfRequestException, ParseException {
         return getSpoolFilesCommon(new CommonJobParams(jobId, jobName));
     }
 
@@ -335,15 +353,16 @@ public class JobGet {
      *
      * @param params common job parameters, see CommonJobParams object
      * @return list of JobFile objects
-     * @throws Exception error on getting spool files info
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public List<JobFile> getSpoolFilesCommon(final CommonJobParams params) throws Exception {
+    public List<JobFile> getSpoolFilesCommon(final CommonJobParams params) throws ZosmfRequestException, ParseException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(
-                params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                        params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
                 params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
                 "/files";
 
@@ -374,10 +393,11 @@ public class JobGet {
      *
      * @param job job for which you would like to get a list of job spool files
      * @return list of JobFile objects
-     * @throws Exception error on getting spool files info
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public List<JobFile> getSpoolFilesByJob(final Job job) throws Exception {
+    public List<JobFile> getSpoolFilesByJob(final Job job) throws ZosmfRequestException, ParseException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return getSpoolFilesCommon(new CommonJobParams(job.getJobId().orElse(""),
                 job.getJobName().orElse("")));
@@ -389,10 +409,11 @@ public class JobGet {
      * @param jobName job name for the job for which you want to get status
      * @param jobId   job ID for the job for which you want to get status
      * @return job document (matching job)
-     * @throws Exception error getting job status
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public Job getStatus(final String jobName, final String jobId) throws Exception {
+    public Job getStatus(final String jobName, final String jobId) throws ZosmfRequestException, ParseException {
         return getStatusCommon(new CommonJobParams(jobId, jobName, true));
     }
 
@@ -401,15 +422,16 @@ public class JobGet {
      *
      * @param params common job parameters, see CommonJobParams object
      * @return job document (matching job)
-     * @throws Exception error getting job status
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public Job getStatusCommon(final CommonJobParams params) throws Exception {
+    public Job getStatusCommon(final CommonJobParams params) throws ZosmfRequestException, ParseException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(
-                params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
+                        params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
                 params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG));
 
         if (params.isStepData()) {
@@ -436,10 +458,11 @@ public class JobGet {
      *
      * @param job job document
      * @return job document (matching job)
-     * @throws Exception error getting job status
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public Job getStatusByJob(final Job job) throws Exception {
+    public Job getStatusByJob(final Job job) throws ZosmfRequestException, ParseException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return getStatusCommon(new CommonJobParams(job.getJobId().orElse(""),
                 job.getJobName().orElse(""), true));
@@ -451,10 +474,11 @@ public class JobGet {
      * @param jobName job name for the job for which you want to get status
      * @param jobId   job ID for the job for which you want to get status
      * @return status value
-     * @throws Exception error getting job status
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public String getStatusValue(final String jobName, final String jobId) throws Exception {
+    public String getStatusValue(final String jobName, final String jobId) throws ZosmfRequestException, ParseException {
         final Job job = getStatusCommon(new CommonJobParams(jobId, jobName));
         return job.getStatus().orElseThrow(() -> new IllegalStateException("job status not returned"));
     }
@@ -464,10 +488,11 @@ public class JobGet {
      *
      * @param job job document
      * @return status value
-     * @throws Exception error getting job status
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public String getStatusValueByJob(final Job job) throws Exception {
+    public String getStatusValueByJob(final Job job) throws ZosmfRequestException, ParseException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         final Job result = getStatusCommon(
                 new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse("")));

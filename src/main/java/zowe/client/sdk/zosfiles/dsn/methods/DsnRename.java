@@ -16,6 +16,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -72,9 +73,10 @@ public class DsnRename {
      * @param dataSetName    existing dataset name
      * @param newDataSetName new dataset name
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public Response dataSetName(final String dataSetName, final String newDataSetName) {
+    public Response dataSetName(final String dataSetName, final String newDataSetName) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(newDataSetName == null, "newDataSetName is null");
@@ -91,9 +93,11 @@ public class DsnRename {
      * @param memberName      existing member name
      * @param newMemberName   new member name
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public Response memberName(final String fromDataSetName, final String memberName, final String newMemberName) {
+    public Response memberName(final String fromDataSetName, final String memberName, final String newMemberName)
+            throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(fromDataSetName == null, "fromDataSetName is null");
         ValidateUtils.checkIllegalParameter(fromDataSetName.isBlank(), "fromDataSetName not specified");
         ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
@@ -126,9 +130,10 @@ public class DsnRename {
      *             one given source dataSet name to be renamed or
      *             one given source dataSet name where the member to be renamed exists, second member name to rename
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    private Response executeCommon(final String... args) {
+    private Response executeCommon(final String... args) throws ZosmfRequestException {
         final Map<String, Object> renameMap = new HashMap<>();
         renameMap.put("request", "rename");
 

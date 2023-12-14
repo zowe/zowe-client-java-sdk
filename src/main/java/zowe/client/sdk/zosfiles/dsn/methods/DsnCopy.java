@@ -15,6 +15,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -84,10 +85,11 @@ public class DsnCopy {
      * @param replace         if true members in the target dataset are replaced
      * @param copyAllMembers  if true copy all members in source partition dataset specified
      * @return http response object
+     * @throws ZosmfRequestException http request failure
      * @author Leonid Baranov
      */
     public Response copy(final String fromDataSetName, final String toDataSetName, final boolean replace,
-                         final boolean copyAllMembers) {
+                         final boolean copyAllMembers) throws ZosmfRequestException {
         return copyCommon(new CopyParams.Builder()
                 .fromDataSet(fromDataSetName)
                 .toDataSet(toDataSetName)
@@ -101,10 +103,11 @@ public class DsnCopy {
      *
      * @param params contains copy dataset parameters
      * @return http response object
+     * @throws ZosmfRequestException http request failure
      * @author Leonid Baranov
      * @author Frank Giordano
      */
-    public Response copyCommon(final CopyParams params) {
+    public Response copyCommon(final CopyParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = setUrl(params);

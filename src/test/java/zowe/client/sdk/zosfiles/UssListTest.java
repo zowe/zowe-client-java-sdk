@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.ListParams;
 import zowe.client.sdk.zosfiles.uss.input.ListZfsParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssList;
@@ -123,7 +124,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListFileListNullResponseFailure() {
+    public void tstUssListFileListNullResponseFailure() throws ZosmfRequestException {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(null, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);

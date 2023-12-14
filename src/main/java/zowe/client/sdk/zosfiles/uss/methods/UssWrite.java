@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
@@ -62,6 +63,7 @@ public class UssWrite {
     public UssWrite(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
+        // request type check deferred
         this.request = request;
     }
 
@@ -71,10 +73,11 @@ public class UssWrite {
      * @param fileNamePath file name with path
      * @param content      string content to write to file
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public Response writeText(final String fileNamePath, final String content) {
+    public Response writeText(final String fileNamePath, final String content) throws ZosmfRequestException {
         return writeCommon(fileNamePath, new WriteParams.Builder().textContent(content).build());
     }
 
@@ -84,10 +87,11 @@ public class UssWrite {
      * @param fileNamePath file name with path
      * @param content      binary content to write to file
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public Response writeBinary(final String fileNamePath, final byte[] content) {
+    public Response writeBinary(final String fileNamePath, final byte[] content) throws ZosmfRequestException {
         return writeCommon(fileNamePath, new WriteParams.Builder().binaryContent(content).binary(true).build());
     }
 
@@ -97,10 +101,11 @@ public class UssWrite {
      * @param fileNamePath file name with path
      * @param params       parameters within a WriteParams object that drives the write action request
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response writeCommon(final String fileNamePath, final WriteParams params) {
+    public Response writeCommon(final String fileNamePath, final WriteParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
         ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

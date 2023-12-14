@@ -15,6 +15,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
@@ -74,10 +75,11 @@ public class UssChangeMode {
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
      * @param params     change mode response parameters, see ChangeModeParams object
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author James Kostrewsk
      * @author Frank Giordano
      */
-    public Response change(final String targetPath, final ChangeModeParams params) {
+    public Response change(final String targetPath, final ChangeModeParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

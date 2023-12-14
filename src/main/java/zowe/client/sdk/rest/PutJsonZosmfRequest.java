@@ -12,10 +12,10 @@ package zowe.client.sdk.rest;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
-import kong.unirest.UnirestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
@@ -45,12 +45,15 @@ public class PutJsonZosmfRequest extends ZosmfRequest {
     }
 
     /**
+     * /**
      * Perform the http rest request
      *
+     * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
     @Override
-    public Response executeRequest() throws UnirestException {
+    public Response executeRequest() throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         ValidateUtils.checkNullParameter(body == null, "body is null");
         HttpResponse<JsonNode> reply = Unirest.put(url).headers(headers).body(body).asJson();

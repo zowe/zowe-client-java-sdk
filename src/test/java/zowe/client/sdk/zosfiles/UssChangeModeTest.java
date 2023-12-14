@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.ChangeModeParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssChangeMode;
 
@@ -34,7 +35,7 @@ public class UssChangeModeTest {
     private UssChangeMode ussChangeMode;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
@@ -42,7 +43,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChangeModeSuccess() {
+    public void tstUssChangeModeSuccess() throws ZosmfRequestException {
         final UssChangeMode ussChangeMode = new UssChangeMode(connection, mockJsonPutRequest);
         final Response response = ussChangeMode.change("/xxx/xx/xx",
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
@@ -52,7 +53,7 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChangeModeWithRecursiveInParamsSuccess() {
+    public void tstUssChangeModeWithRecursiveInParamsSuccess() throws ZosmfRequestException {
         final UssChangeMode ussChangeMode = new UssChangeMode(connection, mockJsonPutRequest);
         final Response response = ussChangeMode.change("/xxx/xx/xx",
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").recursive(true).build());

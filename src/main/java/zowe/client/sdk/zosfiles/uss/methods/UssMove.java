@@ -15,6 +15,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
@@ -73,10 +74,11 @@ public class UssMove {
      * @param fromPath   the source path of the file or directory to move
      * @param targetPath the target path of where the file or directory will be moved too
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response move(final String fromPath, final String targetPath) {
+    public Response move(final String fromPath, final String targetPath) throws ZosmfRequestException {
         return moveCommon(fromPath, targetPath, true);
     }
 
@@ -87,9 +89,11 @@ public class UssMove {
      * @param targetPath the target path of where the file or directory will be moved too
      * @param overwrite  true if you want to override existing data at target path or false to not override
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public Response move(final String fromPath, final String targetPath, final boolean overwrite) {
+    public Response move(final String fromPath, final String targetPath, final boolean overwrite)
+            throws ZosmfRequestException {
         return moveCommon(fromPath, targetPath, overwrite);
     }
 
@@ -100,10 +104,12 @@ public class UssMove {
      * @param targetPath the target path of where the file or directory will be moved too
      * @param overwrite  true if you want to override existing data at target path or false to not override
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    private Response moveCommon(final String fromPath, final String targetPath, final boolean overwrite) {
+    private Response moveCommon(final String fromPath, final String targetPath, final boolean overwrite)
+            throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(fromPath == null, "fromPath is null");
         ValidateUtils.checkIllegalParameter(fromPath.isBlank(), "fromPath not specified");
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");

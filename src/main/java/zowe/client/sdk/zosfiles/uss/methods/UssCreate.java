@@ -15,6 +15,7 @@ import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
@@ -78,10 +79,11 @@ public class UssCreate {
      * @param targetPath the name of the file or directory you are going to create
      * @param params     create response parameters, see CreateParams object
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response create(final String targetPath, final CreateParams params) {
+    public Response create(final String targetPath, final CreateParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
@@ -109,9 +111,10 @@ public class UssCreate {
      *
      * @param fileSystemName ZFS file system name
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public Response createZfs(String fileSystemName) {
+    public Response createZfs(String fileSystemName) throws ZosmfRequestException {
         return createZfsCommon(fileSystemName, new CreateZfsParams.Builder(10).cylsSec(2).timeout(20).build());
     }
 
@@ -121,9 +124,10 @@ public class UssCreate {
      * @param fileSystemName ZFS file system name
      * @param params         create ZFS response parameters, see CreateZfsParams object
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public Response createZfsCommon(String fileSystemName, CreateZfsParams params) {
+    public Response createZfsCommon(String fileSystemName, CreateZfsParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(fileSystemName == null, "fileSystemName is null");
         ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "fileSystemName not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

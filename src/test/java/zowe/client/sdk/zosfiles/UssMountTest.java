@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.MountParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssMount;
 import zowe.client.sdk.zosfiles.uss.types.MountActionType;
@@ -40,7 +41,7 @@ public class UssMountTest {
     }
 
     @Test
-    public void tstUssMountSuccess() {
+    public void tstUssMountSuccess() throws ZosmfRequestException {
         final PutJsonZosmfRequest mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));

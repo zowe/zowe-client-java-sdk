@@ -12,10 +12,10 @@ package zowe.client.sdk.rest;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
-import kong.unirest.UnirestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ValidateUtils;
 
 import java.io.BufferedReader;
@@ -75,7 +75,7 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    public <T> Response buildResponse(HttpResponse<T> reply) {
+    public <T> Response buildResponse(HttpResponse<T> reply) throws ZosmfRequestException {
         final int statusCode = reply.getStatus();
         if (statusCode == 0) {
             throw new IllegalStateException("zero number status code return");
@@ -103,7 +103,7 @@ public abstract class ZosmfRequest {
         }
 
         if (!(statusCode >= 100 && statusCode <= 299)) {
-            throw new IllegalStateException(httpErrorMsg(response, statusCode));
+            throw new ZosmfRequestException(httpErrorMsg(response, statusCode));
         }
 
         return response;
@@ -149,10 +149,10 @@ public abstract class ZosmfRequest {
      * Perform the http rest request
      *
      * @return Response object
-     * @throws UnirestException processing request error
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public abstract Response executeRequest() throws UnirestException;
+    public abstract Response executeRequest() throws ZosmfRequestException;
 
     /**
      * Set the body information for the http request

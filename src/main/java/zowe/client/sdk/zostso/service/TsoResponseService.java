@@ -2,6 +2,7 @@ package zowe.client.sdk.zostso.service;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.Response;
@@ -39,10 +40,10 @@ public class TsoResponseService {
      * Retrieve tso response
      *
      * @return ZosmfTsoResponse object
-     * @throws Exception error processing response
+     * @throws ParseException parse error of JSON response
      * @author Frank Giordano
      */
-    public ZosmfTsoResponse getZosmfTsoResponse() throws Exception {
+    public ZosmfTsoResponse getZosmfTsoResponse() throws ParseException {
         ZosmfTsoResponse result;
         final int statusCode = tsoCmdResponse.getStatusCode()
                 .orElseThrow(() -> new IllegalStateException("status code not specified"));

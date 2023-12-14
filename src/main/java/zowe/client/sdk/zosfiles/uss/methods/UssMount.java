@@ -15,6 +15,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -79,7 +80,8 @@ public class UssMount {
      * @return Response object
      * @author Frank Giordano
      */
-    public Response mount(final String fileSystemName, final String mountPoint, final String fsType) {
+    public Response mount(final String fileSystemName, final String mountPoint, final String fsType)
+            throws ZosmfRequestException {
         return mountCommon(fileSystemName,
                 new MountParams.Builder()
                         .action(MountActionType.MOUNT)
@@ -96,7 +98,7 @@ public class UssMount {
      * @return Response object
      * @author Frank Giordano
      */
-    public Response unmount(final String fileSystemName) {
+    public Response unmount(final String fileSystemName) throws ZosmfRequestException {
         return mountCommon(fileSystemName, new MountParams.Builder().action(MountActionType.UNMOUNT).build());
     }
 
@@ -108,7 +110,7 @@ public class UssMount {
      * @return Response object
      * @author Frank Giordano
      */
-    public Response mountCommon(final String fileSystemName, final MountParams params) {
+    public Response mountCommon(final String fileSystemName, final MountParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(fileSystemName == null, "fileSystemName is null");
         ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "fileSystemName not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

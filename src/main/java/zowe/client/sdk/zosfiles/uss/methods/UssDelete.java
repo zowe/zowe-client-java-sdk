@@ -14,6 +14,7 @@ import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
@@ -71,9 +72,10 @@ public class UssDelete {
      *
      * @param targetPath the name of the file or directory you are going to delete
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author James Kostrewski
      */
-    public Response delete(final String targetPath) {
+    public Response delete(final String targetPath) throws ZosmfRequestException {
         return delete(targetPath, false);
     }
 
@@ -83,9 +85,10 @@ public class UssDelete {
      * @param targetPath the name of the file or directory you are going to delete
      * @param recursive  flag indicates if contents of directory should also be deleted
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author James Kostrewski
      */
-    public Response delete(final String targetPath, final boolean recursive) {
+    public Response delete(final String targetPath, final boolean recursive) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
 
@@ -110,9 +113,10 @@ public class UssDelete {
      *
      * @param fileSystemName file system name
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public Response deleteZfs(final String fileSystemName) {
+    public Response deleteZfs(final String fileSystemName) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(fileSystemName == null, "fileSystemName is null");
         ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "fileSystemName not specified");
 

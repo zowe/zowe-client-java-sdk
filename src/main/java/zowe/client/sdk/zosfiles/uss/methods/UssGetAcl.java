@@ -12,11 +12,13 @@ package zowe.client.sdk.zosfiles.uss.methods;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
@@ -57,15 +59,14 @@ public class UssGetAcl {
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
-     * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssGetAcl(final ZosConnection connection, final ZosmfRequest request) throws Exception {
+    public UssGetAcl(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
-            throw new Exception("PUT_JSON request type required");
+            throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
@@ -76,11 +77,12 @@ public class UssGetAcl {
      * @param targetPath file name with path
      * @param useCommas  true if commas are to be used in the output
      * @return string representation of response phrase
-     * @throws Exception processing error
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author James Kostrewski
      */
     @SuppressWarnings("unchecked")
-    public String get(final String targetPath, final boolean useCommas) throws Exception {
+    public String get(final String targetPath, final boolean useCommas) throws ZosmfRequestException, ParseException {
         final Response response = useCommas ?
                 getAclCommon(targetPath, new GetAclParams.Builder().usecommas(true).build()) :
                 getAclCommon(targetPath, new GetAclParams.Builder().build());
@@ -101,9 +103,10 @@ public class UssGetAcl {
      * @param targetPath file name with path
      * @param params     GetAclParams object to drive the request
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author James Kostrewski
      */
-    public Response getAclCommon(final String targetPath, final GetAclParams params) {
+    public Response getAclCommon(final String targetPath, final GetAclParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "path is empty");
         ValidateUtils.checkNullParameter(params == null, "params is null");

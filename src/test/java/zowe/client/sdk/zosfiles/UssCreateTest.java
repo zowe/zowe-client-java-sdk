@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.CreateParams;
 import zowe.client.sdk.zosfiles.uss.input.CreateZfsParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssCreate;
@@ -43,7 +44,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstUssCreateSuccess() {
+    public void tstUssCreateSuccess() throws ZosmfRequestException {
         Mockito.when(mockJsonPostRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         final UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequest);

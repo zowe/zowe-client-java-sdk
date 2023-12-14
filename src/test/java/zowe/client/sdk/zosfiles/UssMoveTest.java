@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.methods.UssMove;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,7 +34,7 @@ public class UssMoveTest {
     private UssMove ussMove;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
@@ -41,7 +42,7 @@ public class UssMoveTest {
     }
 
     @Test
-    public void tstUssMoveSuccess() {
+    public void tstUssMoveSuccess() throws ZosmfRequestException {
         final UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
         final Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -50,7 +51,7 @@ public class UssMoveTest {
     }
 
     @Test
-    public void tstUssMoveOverwriteSuccess() {
+    public void tstUssMoveOverwriteSuccess() throws ZosmfRequestException {
         final UssMove ussMove = new UssMove(connection, mockJsonPutRequest);
         final Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx", true);
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());

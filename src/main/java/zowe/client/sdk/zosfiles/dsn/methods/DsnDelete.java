@@ -14,6 +14,7 @@ import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -67,9 +68,10 @@ public class DsnDelete {
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param memberName  name of member to delete
      * @return http response object
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public Response delete(final String dataSetName, final String memberName) {
+    public Response delete(final String dataSetName, final String memberName) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
@@ -83,9 +85,10 @@ public class DsnDelete {
      *
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @return http response object
+     * @throws ZosmfRequestException http request failure
      * @author Leonid Baranov
      */
-    public Response delete(final String dataSetName) {
+    public Response delete(final String dataSetName) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
 

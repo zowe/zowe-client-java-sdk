@@ -15,6 +15,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
@@ -74,10 +75,11 @@ public class UssCopy {
      * @param fromPath   the source path of the file or directory to copy
      * @param targetPath target path of where the file or directory will be copied too
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response copy(final String fromPath, final String targetPath) {
+    public Response copy(final String fromPath, final String targetPath) throws ZosmfRequestException {
         return copyCommon(targetPath, new CopyParams.Builder().from(fromPath).build());
     }
 
@@ -87,10 +89,11 @@ public class UssCopy {
      * @param targetPath target path of where the file or directory will be copied too
      * @param params     CopyParams parameters that specifies copy action request
      * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response copyCommon(final String targetPath, final CopyParams params) {
+    public Response copyCommon(final String targetPath, final CopyParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

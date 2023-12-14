@@ -14,6 +14,7 @@ import zowe.client.sdk.rest.PutTextZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -68,9 +69,11 @@ public class DsnWrite {
      * @param memberName  name of member to add new content
      * @param content     new content
      * @return http response object
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
-    public Response write(final String dataSetName, final String memberName, final String content) {
+    public Response write(final String dataSetName, final String memberName, final String content)
+            throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
@@ -85,9 +88,10 @@ public class DsnWrite {
      * @param dataSetName sequential dataset (e.g. 'DATASET.LIB')
      * @param content     new content
      * @return http response object
+     * @throws ZosmfRequestException http request failure
      * @author Leonid Baranov
      */
-    public Response write(final String dataSetName, final String content) {
+    public Response write(final String dataSetName, final String content) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(content == null, "content is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");

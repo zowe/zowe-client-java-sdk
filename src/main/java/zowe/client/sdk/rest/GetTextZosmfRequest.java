@@ -11,8 +11,8 @@ package zowe.client.sdk.rest;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
-import kong.unirest.UnirestException;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
@@ -37,10 +37,12 @@ public class GetTextZosmfRequest extends ZosmfRequest {
     /**
      * Perform the http rest request
      *
+     * @return Response object
+     * @throws ZosmfRequestException http request failure
      * @author Frank Giordano
      */
     @Override
-    public Response executeRequest() throws UnirestException {
+    public Response executeRequest() throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         HttpResponse<String> reply = Unirest.get(url).headers(headers).asString();
         return buildResponse(reply);

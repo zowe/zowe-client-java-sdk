@@ -11,12 +11,14 @@ package zowe.client.sdk.zosconsole.method;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -78,10 +80,11 @@ public class IssueConsole {
      *
      * @param command string value that represents command to issue
      * @return ConsoleResponse object
-     * @throws Exception processing error
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public ConsoleResponse issueCommand(final String command) throws Exception {
+    public ConsoleResponse issueCommand(final String command) throws ZosmfRequestException, ParseException {
         return issueCommandCommon(ConsoleConstants.RES_DEF_CN, new IssueConsoleParams(command));
     }
 
@@ -94,10 +97,12 @@ public class IssueConsole {
      * @param command     string value representing console command to issue
      * @param consoleName name of the console that is used to issue the command
      * @return ConsoleResponse object
-     * @throws Exception processing error
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public ConsoleResponse issueCommand(final String command, final String consoleName) throws Exception {
+    public ConsoleResponse issueCommand(final String command, final String consoleName)
+            throws ZosmfRequestException, ParseException {
         return issueCommandCommon(consoleName, new IssueConsoleParams(command));
     }
 
@@ -107,11 +112,12 @@ public class IssueConsole {
      * @param consoleName name of the console that is used to issue the command
      * @param params      synchronous console issue parameters, see ZosmfIssueParams object
      * @return command response on resolve, see ZosmfIssueResponse object
-     * @throws Exception processing error
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
     public ConsoleResponse issueCommandCommon(final String consoleName, final IssueConsoleParams params)
-            throws Exception {
+            throws ZosmfRequestException, ParseException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(consoleName == null, "consoleName is null");
         ValidateUtils.checkIllegalParameter(consoleName.isBlank(), "consoleName not specified");
