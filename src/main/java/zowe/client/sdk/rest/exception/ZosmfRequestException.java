@@ -20,17 +20,7 @@ import java.util.Optional;
  */
 public class ZosmfRequestException extends Exception {
 
-    private Optional<Response> response = Optional.empty();
-
-    /**
-     * ZosmfRequestException constructor
-     *
-     * @param message error message
-     * @author Frank Giordano
-     */
-    public ZosmfRequestException(final String message) {
-        super(message);
-    }
+    final private Optional<Response> response;
 
     /**
      * ZosmfRequestException constructor
