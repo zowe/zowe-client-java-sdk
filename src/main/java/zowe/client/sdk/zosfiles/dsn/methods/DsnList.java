@@ -113,10 +113,12 @@ public class DsnList {
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param params      list parameters, see ListParams object
      * @return list of member objects
-     * @throws Exception error processing request
+     * @throws ZosmfRequestException http request failure
+     * @throws ParseException        parse error of JSON response
      * @author Nikunj Goyal
      */
-    public java.util.List<Member> getMembers(final String dataSetName, final ListParams params) throws Exception {
+    public java.util.List<Member> getMembers(final String dataSetName, final ListParams params)
+            throws ZosmfRequestException, ParseException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");

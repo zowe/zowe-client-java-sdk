@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
+import org.json.simple.parser.ParseException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetStreamZosmfRequest;
 import zowe.client.sdk.rest.ZosmfHeaders;
@@ -78,10 +79,9 @@ public class DsnGet {
      *
      * @param dataSetName sequential or partition dataset (e.g. 'DATASET.LIB')
      * @return dataset object
-     * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public Dataset getDsnInfo(final String dataSetName) throws Exception {
+    public Dataset getDsnInfo(final String dataSetName) throws ZosmfRequestException, ParseException {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         Dataset emptyDataSet = new Dataset.Builder().dsname(dataSetName).build();
