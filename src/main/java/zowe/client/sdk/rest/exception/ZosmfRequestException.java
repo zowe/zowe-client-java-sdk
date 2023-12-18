@@ -9,6 +9,10 @@
  */
 package zowe.client.sdk.rest.exception;
 
+import zowe.client.sdk.rest.Response;
+
+import java.util.Optional;
+
 /**
  * Custom exception to represent z/OSMF http error state
  *
@@ -16,13 +20,37 @@ package zowe.client.sdk.rest.exception;
  */
 public class ZosmfRequestException extends Exception {
 
+    private Optional<Response> response = Optional.empty();
+
     /**
      * ZosmfRequestException constructor
      *
      * @param message error message
+     * @author Frank Giordano
      */
-    public ZosmfRequestException(String message) {
+    public ZosmfRequestException(final String message) {
         super(message);
+    }
+
+    /**
+     * ZosmfRequestException constructor
+     *
+     * @param message error message
+     * @param response Response object
+     * @author Frank Giordano
+     */
+    public ZosmfRequestException(final String message, final Response response) {
+        super(message);
+        this.response = Optional.ofNullable(response);
+    }
+
+    /**
+     * Getter for response object
+     *
+     * @return Response optional object
+     */
+    public Optional<Response> getResponse() {
+        return response;
     }
 
 }

@@ -103,7 +103,7 @@ public abstract class ZosmfRequest {
         }
 
         if (!(statusCode >= 100 && statusCode <= 299)) {
-            throw new ZosmfRequestException(httpErrorMsg(response, statusCode));
+            throw new ZosmfRequestException(httpErrorMsg(response, statusCode), response);
         }
 
         return response;
