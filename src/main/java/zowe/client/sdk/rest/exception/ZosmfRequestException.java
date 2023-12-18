@@ -14,7 +14,7 @@ import zowe.client.sdk.rest.Response;
 import java.util.Optional;
 
 /**
- * Custom exception to represent z/OSMF http error state
+ * Custom exception to represent z/OSMF request error state
  *
  * @author Frank Giordano
  */
