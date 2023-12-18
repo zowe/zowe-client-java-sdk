@@ -57,7 +57,6 @@ public class UssSetAcl {
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
-     * @throws Exception processing error
      * @author James Kostrewski
      */
     public UssSetAcl(final ZosConnection connection, final ZosmfRequest request) {
