@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zostso.lifecycle;
 
-import org.json.simple.parser.ParseException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -114,12 +113,11 @@ public class StartTso {
      * @param accountNumber this key of StartTsoParams required, because it cannot be default.
      * @param params        optional object with required parameters, see StartTsoParams
      * @return command response on resolve, @see IStartStopResponses
-     * @throws ZosmfRequestException http request failure
-     * @throws ParseException        parse error of JSON response
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public StartStopResponses start(final String accountNumber, final StartTsoParams params)
-            throws ZosmfRequestException, ParseException {
+            throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(accountNumber == null, "accountNumber is null");
         ValidateUtils.checkIllegalParameter(accountNumber.isBlank(), "accountNumber not specified");
 
@@ -146,12 +144,10 @@ public class StartTso {
      *
      * @param commandParams object with required parameters, see StartTsoParams
      * @return z/OSMF response object, see ZosmfTsoResponse
-     * @throws ZosmfRequestException http request failure
-     * @throws ParseException        parse error of JSON response
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ZosmfTsoResponse startCommon(final StartTsoParams commandParams)
-            throws ZosmfRequestException, ParseException {
+    public ZosmfTsoResponse startCommon(final StartTsoParams commandParams) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
         final String url = getResourcesQuery(commandParams);

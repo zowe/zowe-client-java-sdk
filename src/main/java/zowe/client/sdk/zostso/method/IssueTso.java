@@ -10,6 +10,7 @@
 package zowe.client.sdk.zostso.method;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.input.StartTsoParams;
 import zowe.client.sdk.zostso.lifecycle.SendTso;
@@ -52,10 +53,10 @@ public class IssueTso {
      * @param accountNumber accounting info for Jobs
      * @param command       command text to issue to the TSO address space.
      * @return issue tso response, see IssueResponse object
-     * @throws Exception error executing command
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public IssueResponse issueCommand(final String accountNumber, final String command) throws Exception {
+    public IssueResponse issueCommand(final String accountNumber, final String command) throws ZosmfRequestException {
         return issueCommand(accountNumber, command, null);
     }
 
@@ -67,11 +68,11 @@ public class IssueTso {
      * @param command       command text to issue to the TSO address space.
      * @param startParams   start tso parameters, see startParams object
      * @return issue tso response, see IssueResponse object
-     * @throws Exception error executing command
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public IssueResponse issueCommand(final String accountNumber, final String command,
-                                      final StartTsoParams startParams) throws Exception {
+                                      final StartTsoParams startParams) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(accountNumber == null, "accountNumber is null");
         ValidateUtils.checkNullParameter(command == null, "command is null");
         ValidateUtils.checkIllegalParameter(accountNumber.isBlank(), "accountNumber not specified");

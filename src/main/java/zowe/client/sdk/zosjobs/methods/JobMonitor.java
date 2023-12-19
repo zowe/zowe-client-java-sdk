@@ -13,6 +13,7 @@ package zowe.client.sdk.zosjobs.methods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.utility.timer.WaitUtil;
 import zowe.client.sdk.zosjobs.JobsConstants;
@@ -121,10 +122,10 @@ public class JobMonitor {
      * @param params  monitor jobs params, see MonitorJobWaitForParams
      * @param message message string
      * @return boolean message found status
-     * @throws Exception error processing check request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private boolean checkMessage(final MonitorJobWaitForParams params, final String message) throws Exception {
+    private boolean checkMessage(final MonitorJobWaitForParams params, final String message) throws ZosmfRequestException {
         final JobGet getJobs = new JobGet(connection);
         final GetJobParams filter =
                 new GetJobParams.Builder("*")
@@ -161,10 +162,10 @@ public class JobMonitor {
      *
      * @param params monitor jobs params, see MonitorJobWaitForParams
      * @return boolean true when the job status is obtained
-     * @throws Exception error processing check request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private CheckJobStatus checkStatus(final MonitorJobWaitForParams params) throws Exception {
+    private CheckJobStatus checkStatus(final MonitorJobWaitForParams params) throws ZosmfRequestException {
         return checkStatus(params, false);
     }
 
@@ -173,16 +174,16 @@ public class JobMonitor {
      *
      * @param params monitor jobs params, see MonitorJobWaitForParams
      * @return boolean true when the job status is obtained
-     * @throws Exception error processing check request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     private CheckJobStatus checkStatus(final MonitorJobWaitForParams params, final boolean isStepData)
-            throws Exception {
+            throws ZosmfRequestException {
         final JobGet getJobs = new JobGet(connection);
         final String statusNameCheck = params.getJobStatus().orElse(DEFAULT_STATUS).toString();
 
-        final Job job = getJobs.getStatusCommon(
-                new CommonJobParams(params.getJobId().orElse(""), params.getJobName().orElse(""), isStepData));
+        final Job job = getJobs.getStatusCommon(new CommonJobParams(
+                params.getJobId().orElse(""), params.getJobName().orElse(""), isStepData));
 
         if (statusNameCheck.equals(job.getStatus().orElse(DEFAULT_STATUS.toString()))) {
             return new CheckJobStatus(true, job);
@@ -228,16 +229,14 @@ public class JobMonitor {
      *
      * @param params monitor jobs params, see MonitorJobWaitForParams
      * @return true if in running state
-     * @throws Exception error processing running status check
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public boolean isRunning(final MonitorJobWaitForParams params) throws Exception {
+    public boolean isRunning(final MonitorJobWaitForParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         final JobGet getJobs = new JobGet(connection);
-        final String jobName =
-                params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG));
-        final String jobId =
-                params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG));
+        final String jobName = params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG));
+        final String jobId = params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG));
         final String status = getJobs.getStatusValue(jobName, jobId);
         return !JobStatus.Type.INPUT.toString().equals(status) && !JobStatus.Type.OUTPUT.toString().equals(status);
     }
@@ -248,10 +247,11 @@ public class JobMonitor {
      * @param params  monitor jobs params, see MonitorJobWaitForParams
      * @param message message string
      * @return boolean message found status
-     * @throws Exception error processing poll check request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private boolean pollByMessage(final MonitorJobWaitForParams params, final String message) throws Exception {
+    private boolean pollByMessage(final MonitorJobWaitForParams params, final String message)
+            throws ZosmfRequestException {
         final int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
         boolean messageFound;  // no assigment boolean means by default it is false
         boolean shouldContinue;
@@ -283,10 +283,10 @@ public class JobMonitor {
      *
      * @param params monitor jobs params, see MonitorJobWaitForParams
      * @return job document
-     * @throws Exception error processing poll check request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private Job pollByStatus(final MonitorJobWaitForParams params) throws Exception {
+    private Job pollByStatus(final MonitorJobWaitForParams params) throws ZosmfRequestException {
         final int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
         boolean expectedStatus;  // no assigment boolean means by default it is false
         boolean shouldContinue;
@@ -335,10 +335,10 @@ public class JobMonitor {
      * @param job     document of the z/OS job to wait for (see z/OSMF Jobs APIs for details)
      * @param message message string
      * @return job document
-     * @throws Exception error processing wait check request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public boolean waitByMessage(final Job job, final String message) throws Exception {
+    public boolean waitByMessage(final Job job, final String message) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return waitMessageCommon(
                 new MonitorJobWaitForParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
@@ -359,10 +359,11 @@ public class JobMonitor {
      * @param jobId   the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
      * @param message message string
      * @return job document
-     * @throws Exception error processing wait check request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public boolean waitByMessage(final String jobName, final String jobId, final String message) throws Exception {
+    public boolean waitByMessage(final String jobName, final String jobId, final String message)
+            throws ZosmfRequestException {
         return waitMessageCommon(
                 new MonitorJobWaitForParams.Builder(jobName, jobId)
                         .jobStatus(JobStatus.Type.OUTPUT)
@@ -380,10 +381,10 @@ public class JobMonitor {
      *
      * @param job document of the z/OS job to wait for (see z/OSMF Jobs APIs for details)
      * @return job document
-     * @throws Exception error processing wait check request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Job waitByOutputStatus(final Job job) throws Exception {
+    public Job waitByOutputStatus(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return waitStatusCommon(
                 new MonitorJobWaitForParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
@@ -403,10 +404,10 @@ public class JobMonitor {
      * @param jobName the z/OS jobname of the job to wait for output status (see z/OSMF Jobs APIs for details)
      * @param jobId   the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
      * @return job document
-     * @throws Exception error processing wait check request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Job waitByOutputStatus(final String jobName, final String jobId) throws Exception {
+    public Job waitByOutputStatus(final String jobName, final String jobId) throws ZosmfRequestException {
         return waitStatusCommon(
                 new MonitorJobWaitForParams.Builder(jobName, jobId)
                         .jobStatus(JobStatus.Type.OUTPUT)
@@ -424,10 +425,10 @@ public class JobMonitor {
      * @param job        document of the z/OS job to wait for (see z/OSMF Jobs APIs for details)
      * @param statusType status type, see JobStatus.Type object
      * @return job document
-     * @throws Exception error processing wait check request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Job waitByStatus(final Job job, final JobStatus.Type statusType) throws Exception {
+    public Job waitByStatus(final Job job, final JobStatus.Type statusType) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return waitStatusCommon(
                 new MonitorJobWaitForParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
@@ -448,11 +449,11 @@ public class JobMonitor {
      * @param jobId      the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
      * @param statusType status type, see JobStatus.Type object
      * @return job document
-     * @throws Exception error processing wait check request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Job waitByStatus(final String jobName, final String jobId, final JobStatus.Type statusType)
-            throws Exception {
+            throws ZosmfRequestException {
         return waitStatusCommon(
                 new MonitorJobWaitForParams.Builder(jobName, jobId)
                         .jobStatus(statusType)
@@ -467,10 +468,11 @@ public class JobMonitor {
      * @param params  monitor jobs parameters, see MonitorJobWaitForParams object
      * @param message message string
      * @return job document
-     * @throws Exception error processing wait check request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public boolean waitMessageCommon(final MonitorJobWaitForParams params, final String message) throws Exception {
+    public boolean waitMessageCommon(final MonitorJobWaitForParams params, final String message)
+            throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), JobsConstants.JOB_NAME_ERROR_MSG);
         ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), JobsConstants.JOB_ID_ERROR_MSG);
@@ -497,10 +499,10 @@ public class JobMonitor {
      *
      * @param params monitor jobs parameters, see MonitorJobWaitForParams object
      * @return job document
-     * @throws Exception error processing wait check request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Job waitStatusCommon(final MonitorJobWaitForParams params) throws Exception {
+    public Job waitStatusCommon(final MonitorJobWaitForParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), JobsConstants.JOB_NAME_ERROR_MSG);
         ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), JobsConstants.JOB_ID_ERROR_MSG);

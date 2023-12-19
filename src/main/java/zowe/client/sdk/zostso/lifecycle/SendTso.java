@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zostso.lifecycle;
 
-import org.json.simple.parser.ParseException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -88,11 +87,10 @@ public class SendTso {
      *
      * @param tso object from first Tso response from witch responses are needed, see ZosmfTsoResponse
      * @return CollectedResponses response object, see CollectedResponses
-     * @throws ZosmfRequestException http request failure
-     * @throws ParseException        parse error of JSON response
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public CollectedResponses getAllResponses(ZosmfTsoResponse tso) throws ZosmfRequestException, ParseException {
+    public CollectedResponses getAllResponses(ZosmfTsoResponse tso) throws ZosmfRequestException {
         boolean done = false;
         final StringBuilder messages = new StringBuilder();
         final List<ZosmfTsoResponse> tsos = new ArrayList<>();
@@ -133,11 +131,10 @@ public class SendTso {
      *
      * @param servletKey key of tso address space
      * @return z/OSMF tso response, see ZosmfTsoResponse
-     * @throws ZosmfRequestException http request failure
-     * @throws ParseException        parse error of JSON response
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private ZosmfTsoResponse getDataFromTso(final String servletKey) throws ZosmfRequestException, ParseException {
+    private ZosmfTsoResponse getDataFromTso(final String servletKey) throws ZosmfRequestException {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
 
@@ -169,12 +166,10 @@ public class SendTso {
      * @param command    to send to the TSO address space.
      * @param servletKey returned from a successful start
      * @return SendResponse object
-     * @throws ZosmfRequestException http request failure
-     * @throws ParseException        parse error of JSON response
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public SendResponse sendDataToTsoCollect(final String servletKey, final String command)
-            throws ZosmfRequestException, ParseException {
+    public SendResponse sendDataToTsoCollect(final String servletKey, final String command) throws ZosmfRequestException {
         final ZosmfTsoResponse putResponse = sendDataToTsoCommon(new SendTsoParams(servletKey, command));
         final CollectedResponses responses = getAllResponses(putResponse);
         return createResponse(responses);
@@ -185,12 +180,10 @@ public class SendTso {
      *
      * @param commandParams object with required parameters, see SendTsoParams object
      * @return ZosmfTsoResponse object
-     * @throws ZosmfRequestException http request failure
-     * @throws ParseException        parse error of JSON response
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ZosmfTsoResponse sendDataToTsoCommon(final SendTsoParams commandParams)
-            throws ZosmfRequestException, ParseException {
+    public ZosmfTsoResponse sendDataToTsoCommon(final SendTsoParams commandParams) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
