@@ -74,7 +74,7 @@ public class UssMove {
      * @param fromPath   the source path of the file or directory to move
      * @param targetPath the target path of where the file or directory will be moved too
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      * @author Frank Giordano
      */
@@ -89,7 +89,7 @@ public class UssMove {
      * @param targetPath the target path of where the file or directory will be moved too
      * @param overwrite  true if you want to override existing data at target path or false to not override
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response move(final String fromPath, final String targetPath, final boolean overwrite)
@@ -104,7 +104,7 @@ public class UssMove {
      * @param targetPath the target path of where the file or directory will be moved too
      * @param overwrite  true if you want to override existing data at target path or false to not override
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      * @author Frank Giordano
      */

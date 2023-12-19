@@ -75,7 +75,7 @@ public class UssSetAcl {
      * @param targetPath target path of the file or directory
      * @param value      sets the extended ACL entries that are specified by 'entries'
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     public Response set(final String targetPath, final String value) throws ZosmfRequestException {
@@ -88,7 +88,7 @@ public class UssSetAcl {
      * @param targetPath target path of the file or directory
      * @param value      modifies the extended ACL entries that are specified by 'entries'
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     public Response modify(final String targetPath, final String value) throws ZosmfRequestException {
@@ -101,7 +101,7 @@ public class UssSetAcl {
      * @param targetPath target path of the file or directory
      * @param value      deletes the extended ACL entries that are specified by 'entries'
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     public Response delete(final String targetPath, final String value) throws ZosmfRequestException {
@@ -114,7 +114,7 @@ public class UssSetAcl {
      * @param targetPath target path of the file or directory
      * @param deleteType deletes the extended ACL entries that are specified by type
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     public Response deleteByType(final String targetPath, final DeleteAclType deleteType) throws ZosmfRequestException {
@@ -127,7 +127,7 @@ public class UssSetAcl {
      * @param targetPath target path of the file or directory
      * @param params     SetAclParams object to drive the request
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     public Response setAclCommon(final String targetPath, final SetAclParams params) throws ZosmfRequestException {

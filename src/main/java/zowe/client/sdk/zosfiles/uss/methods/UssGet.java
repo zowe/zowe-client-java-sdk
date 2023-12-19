@@ -70,7 +70,7 @@ public class UssGet {
      *
      * @param fileNamePath file name with path
      * @return the byte array contents of the file
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      * @author James Kostrewski
      */
@@ -85,7 +85,7 @@ public class UssGet {
      *
      * @param fileNamePath file name with path
      * @return the text contents of file
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      * @author James Kostrewski
      */
@@ -101,7 +101,7 @@ public class UssGet {
      * @param fileNamePath file name with path
      * @param params       GetParams object to drive the request
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      * @author James Kostrewski
      */

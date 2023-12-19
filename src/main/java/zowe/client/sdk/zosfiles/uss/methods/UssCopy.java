@@ -75,7 +75,7 @@ public class UssCopy {
      * @param fromPath   the source path of the file or directory to copy
      * @param targetPath target path of where the file or directory will be copied too
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      * @author Frank Giordano
      */
@@ -89,7 +89,7 @@ public class UssCopy {
      * @param targetPath target path of where the file or directory will be copied too
      * @param params     CopyParams parameters that specifies copy action request
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      * @author Frank Giordano
      */

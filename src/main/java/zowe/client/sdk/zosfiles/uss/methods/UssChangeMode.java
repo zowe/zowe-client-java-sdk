@@ -75,7 +75,7 @@ public class UssChangeMode {
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
      * @param params     change mode response parameters, see ChangeModeParams object
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewsk
      * @author Frank Giordano
      */

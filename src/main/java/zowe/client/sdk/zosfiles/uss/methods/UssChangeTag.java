@@ -77,7 +77,7 @@ public class UssChangeTag {
      *
      * @param fileNamePath file name with path
      * @return Response Object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response binary(final String fileNamePath) throws ZosmfRequestException {
@@ -91,7 +91,7 @@ public class UssChangeTag {
      * @param fileNamePath file name with path
      * @param codeSet      code set name. i.e. IBM-1047
      * @return Response Object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response text(final String fileNamePath, final String codeSet) throws ZosmfRequestException {
@@ -107,7 +107,7 @@ public class UssChangeTag {
      *
      * @param fileNamePath file name with path
      * @return Response Object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response remove(final String fileNamePath) throws ZosmfRequestException {
@@ -119,7 +119,7 @@ public class UssChangeTag {
      *
      * @param fileNamePath file name with path
      * @return Response Object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response get(final String fileNamePath) throws ZosmfRequestException {
@@ -132,7 +132,7 @@ public class UssChangeTag {
      * @param fileNamePath file name with path
      * @param params       parameters for the change tag request, see ChangeTagParams object
      * @return Response Object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     public Response changeCommon(final String fileNamePath, final ChangeTagParams params) throws ZosmfRequestException {

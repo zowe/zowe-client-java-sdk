@@ -73,7 +73,7 @@ public class JobDelete {
      * @param jobId   job id
      * @param version version number, see ModifyJobParams object for version options
      * @return http response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Nikunj goyal
      */
     public Response delete(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
@@ -85,7 +85,7 @@ public class JobDelete {
      *
      * @param params delete job parameters, see DeleteJobParams object
      * @return http response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
@@ -136,7 +136,7 @@ public class JobDelete {
      * @param job     job document wanting to delete
      * @param version version number, see ModifyJobParams object for version options
      * @return http response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response deleteByJob(final Job job, final String version) throws ZosmfRequestException {

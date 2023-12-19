@@ -82,7 +82,7 @@ public class JobCancel {
      *                the system will attempt to process the request synchronously, if such processing is supported on
      *                the target JES2 subsystem.
      * @return job document with details about the submitted job
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Nikunj goyal
      */
     public Response cancel(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
@@ -99,7 +99,7 @@ public class JobCancel {
      *                the system will attempt to process the request synchronously, if such processing is supported on
      *                the target JES2 subsystem.
      * @return job document with details about the submitted job
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response cancelByJob(final Job job, final String version) throws ZosmfRequestException {
@@ -114,7 +114,7 @@ public class JobCancel {
      *
      * @param params cancel job parameters, see cancelJobsCommon object
      * @return job document with details about the submitted job
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      * @author Frank Giordano
      */

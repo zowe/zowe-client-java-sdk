@@ -73,7 +73,7 @@ public class DsnRename {
      * @param dataSetName    existing dataset name
      * @param newDataSetName new dataset name
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response dataSetName(final String dataSetName, final String newDataSetName) throws ZosmfRequestException {
@@ -93,7 +93,7 @@ public class DsnRename {
      * @param memberName      existing member name
      * @param newMemberName   new member name
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response memberName(final String fromDataSetName, final String memberName, final String newMemberName)
@@ -130,7 +130,7 @@ public class DsnRename {
      *             one given source dataSet name to be renamed or
      *             one given source dataSet name where the member to be renamed exists, second member name to rename
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     private Response executeCommon(final String... args) throws ZosmfRequestException {

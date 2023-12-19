@@ -79,7 +79,7 @@ public class UssCreate {
      * @param targetPath the name of the file or directory you are going to create
      * @param params     create response parameters, see CreateParams object
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      * @author Frank Giordano
      */
@@ -111,7 +111,7 @@ public class UssCreate {
      *
      * @param fileSystemName ZFS file system name
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response createZfs(String fileSystemName) throws ZosmfRequestException {
@@ -124,7 +124,7 @@ public class UssCreate {
      * @param fileSystemName ZFS file system name
      * @param params         create ZFS response parameters, see CreateZfsParams object
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response createZfsCommon(String fileSystemName, CreateZfsParams params) throws ZosmfRequestException {

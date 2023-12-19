@@ -85,7 +85,7 @@ public class DsnCopy {
      * @param replace         if true members in the target dataset are replaced
      * @param copyAllMembers  if true copy all members in source partition dataset specified
      * @return http response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
      */
     public Response copy(final String fromDataSetName, final String toDataSetName, final boolean replace,
@@ -103,7 +103,7 @@ public class DsnCopy {
      *
      * @param params contains copy dataset parameters
      * @return http response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
      * @author Frank Giordano
      */

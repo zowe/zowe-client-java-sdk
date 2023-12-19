@@ -68,7 +68,7 @@ public class DsnDelete {
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param memberName  name of member to delete
      * @return http response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response delete(final String dataSetName, final String memberName) throws ZosmfRequestException {
@@ -85,7 +85,7 @@ public class DsnDelete {
      *
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @return http response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
      */
     public Response delete(final String dataSetName) throws ZosmfRequestException {

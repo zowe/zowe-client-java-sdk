@@ -72,7 +72,7 @@ public class UssDelete {
      *
      * @param targetPath the name of the file or directory you are going to delete
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     public Response delete(final String targetPath) throws ZosmfRequestException {
@@ -85,7 +85,7 @@ public class UssDelete {
      * @param targetPath the name of the file or directory you are going to delete
      * @param recursive  flag indicates if contents of directory should also be deleted
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     public Response delete(final String targetPath, final boolean recursive) throws ZosmfRequestException {
@@ -113,7 +113,7 @@ public class UssDelete {
      *
      * @param fileSystemName file system name
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response deleteZfs(final String fileSystemName) throws ZosmfRequestException {

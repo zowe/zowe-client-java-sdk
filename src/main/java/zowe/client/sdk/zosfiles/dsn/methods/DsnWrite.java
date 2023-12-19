@@ -69,7 +69,7 @@ public class DsnWrite {
      * @param memberName  name of member to add new content
      * @param content     new content
      * @return http response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response write(final String dataSetName, final String memberName, final String content)
@@ -88,7 +88,7 @@ public class DsnWrite {
      * @param dataSetName sequential dataset (e.g. 'DATASET.LIB')
      * @param content     new content
      * @return http response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
      */
     public Response write(final String dataSetName, final String content) throws ZosmfRequestException {

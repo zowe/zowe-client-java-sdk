@@ -116,7 +116,7 @@ public class DsnGet {
      *                   or a dataset member e.g. DATASET.LIB(MEMBER))
      * @param params     download params parameters, see DownloadParams object
      * @return a content stream
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
     public InputStream get(final String targetName, final DownloadParams params) throws ZosmfRequestException {

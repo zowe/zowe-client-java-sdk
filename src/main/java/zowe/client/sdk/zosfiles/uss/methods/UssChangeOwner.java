@@ -73,7 +73,7 @@ public class UssChangeOwner {
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
      * @param owner      new owner of the file or directory
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     public Response change(final String targetPath, final String owner) throws ZosmfRequestException {
@@ -86,7 +86,7 @@ public class UssChangeOwner {
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
      * @param params     change owner response parameters, see ChangeOwnerParams object
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      * @author Frank Giordano
      */

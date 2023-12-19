@@ -73,7 +73,7 @@ public class UssWrite {
      * @param fileNamePath file name with path
      * @param content      string content to write to file
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      * @author James Kostrewski
      */
@@ -87,7 +87,7 @@ public class UssWrite {
      * @param fileNamePath file name with path
      * @param content      binary content to write to file
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      * @author James Kostrewski
      */
@@ -101,7 +101,7 @@ public class UssWrite {
      * @param fileNamePath file name with path
      * @param params       parameters within a WriteParams object that drives the write action request
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      * @author Frank Giordano
      */
