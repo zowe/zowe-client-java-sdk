@@ -23,7 +23,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
  * @author Frank Giordano
  * @version 2.0
  */
-public class JsonParserUtil {
+public final class JsonParserUtil {
 
     private static final Logger LOG = LoggerFactory.getLogger(JsonParserUtil.class);
 
@@ -42,7 +42,7 @@ public class JsonParserUtil {
      * @return JSONObject object
      * @throws ZosmfRequestException indicates the json item from z/OSMF request is invalid for parsing
      */
-    public static JSONObject parse(String item) throws ZosmfRequestException {
+    public static JSONObject parse(final String item) throws ZosmfRequestException {
         try {
             return (JSONObject) new JSONParser().parse(item);
         } catch (ParseException e) {
@@ -59,7 +59,7 @@ public class JsonParserUtil {
      * @return JSONArray object
      * @throws ZosmfRequestException indicates the json item from z/OSMF request is invalid for parsing
      */
-    public static JSONArray parseArray(String item) throws ZosmfRequestException {
+    public static JSONArray parseArray(final String item) throws ZosmfRequestException {
         try {
             return (JSONArray) new JSONParser().parse(item);
         } catch (ParseException e) {
