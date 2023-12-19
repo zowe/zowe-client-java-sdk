@@ -17,15 +17,25 @@ import java.util.Optional;
  * Custom exception to represent z/OSMF request error state
  *
  * @author Frank Giordano
+ * @version 2.0
  */
 public class ZosmfRequestException extends Exception {
 
-    final private Optional<Response> response;
+    private Optional<Response> response = Optional.empty();
 
     /**
-     * ZosmfRequestException constructor
+     * ZosmfRequestException constructor for message value
      *
-     * @param message error message
+     * @param message  error message
+     */
+    public ZosmfRequestException(final String message) {
+        super(message);
+    }
+
+    /**
+     * ZosmfRequestException constructor for message and response values
+     *
+     * @param message  error message
      * @param response Response object
      * @author Frank Giordano
      */
