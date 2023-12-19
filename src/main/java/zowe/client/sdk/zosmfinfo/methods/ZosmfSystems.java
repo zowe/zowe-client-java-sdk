@@ -10,14 +10,15 @@
 package zowe.client.sdk.zosmfinfo.methods;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfinfo.ZosmfConstants;
 import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
@@ -67,10 +68,10 @@ public class ZosmfSystems {
      * List systems defined to z/OSMF
      *
      * @return ZosmfListDefinedSystemsResponse object
-     * @throws Exception problem with response
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ZosmfSystemsResponse get() throws Exception {
+    public ZosmfSystemsResponse get() throws ZosmfRequestException {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
                 + ZosmfConstants.RESOURCE + ZosmfConstants.TOPOLOGY + ZosmfConstants.SYSTEMS;
 
@@ -81,7 +82,7 @@ public class ZosmfSystems {
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no z/osmf info response phrase")).toString();
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
+        final JSONObject jsonObject = JsonParserUtil.parse(jsonStr);
         return (ZosmfSystemsResponse) JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse(jsonObject);
     }
 

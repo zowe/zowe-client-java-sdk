@@ -11,7 +11,6 @@ package zowe.client.sdk.zosfiles.uss.methods;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
@@ -22,6 +21,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
+import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.GetAclParams;
@@ -77,16 +77,16 @@ public class UssGetAcl {
      * @param targetPath file name with path
      * @param useCommas  true if commas are to be used in the output
      * @return string representation of response phrase
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @throws ParseException        parse error of JSON response
      * @author James Kostrewski
      */
     @SuppressWarnings("unchecked")
-    public String get(final String targetPath, final boolean useCommas) throws ZosmfRequestException, ParseException {
+    public String get(final String targetPath, final boolean useCommas) throws ZosmfRequestException {
         final Response response = useCommas ?
                 getAclCommon(targetPath, new GetAclParams.Builder().usecommas(true).build()) :
                 getAclCommon(targetPath, new GetAclParams.Builder().build());
-        final JSONObject json = (JSONObject) new JSONParser().parse(response.getResponsePhrase()
+        final JSONObject json = JsonParserUtil.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
         final StringBuilder str = new StringBuilder();
         if (useCommas) {
@@ -103,7 +103,7 @@ public class UssGetAcl {
      * @param targetPath file name with path
      * @param params     GetAclParams object to drive the request
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     public Response getAclCommon(final String targetPath, final GetAclParams params) throws ZosmfRequestException {

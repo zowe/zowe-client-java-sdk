@@ -11,8 +11,6 @@ package zowe.client.sdk.zosfiles.uss.methods;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -22,6 +20,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
+import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 
@@ -74,16 +73,15 @@ public class UssExtAttr {
      *
      * @param targetPath path to the file or directory
      * @return string output
-     * @throws ZosmfRequestException http request failure
-     * @throws ParseException        parse error of JSON response
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     @SuppressWarnings("unchecked")
-    public String display(final String targetPath) throws ZosmfRequestException, ParseException {
+    public String display(final String targetPath) throws ZosmfRequestException {
         final Map<String, String> requestMap = new HashMap<>();
         requestMap.put("request", "extattr");
         final Response response = executeRequest(targetPath, requestMap);
-        final JSONObject json = (JSONObject) new JSONParser().parse(response.getResponsePhrase()
+        final JSONObject json = JsonParserUtil.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
         final StringBuilder str = new StringBuilder();
         ((JSONArray) json.get("stdout")).forEach(item -> str.append(item.toString()).append("\n"));
@@ -96,7 +94,7 @@ public class UssExtAttr {
      * @param targetPath path to the file or directory
      * @param value      one or more of the following character: a,l,p,s
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     public Response set(final String targetPath, final String value) throws ZosmfRequestException {
@@ -114,7 +112,7 @@ public class UssExtAttr {
      * @param targetPath path to the file or directory
      * @param value      one or more of the following character: a,l,p,s
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     public Response reset(final String targetPath, final String value) throws ZosmfRequestException {
@@ -132,7 +130,7 @@ public class UssExtAttr {
      * @param targetPath path to the file or directory
      * @param jsonMap    map representing request body
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     private Response executeRequest(final String targetPath, final Map<String, String> jsonMap)

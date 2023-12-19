@@ -11,7 +11,6 @@ package zowe.client.sdk.zosfiles.dsn.methods;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +21,7 @@ import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.dsn.input.ListParams;
@@ -80,7 +80,7 @@ public class DsnList {
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param params      list parameters, see ListParams object
      * @return A String list of Dataset names
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @throws ParseException        parse error of JSON response
      * @author Nikunj Goyal
      */
@@ -113,7 +113,7 @@ public class DsnList {
      * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
      * @param params      list parameters, see ListParams object
      * @return list of member objects
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @throws ParseException        parse error of JSON response
      * @author Nikunj Goyal
      */
@@ -151,7 +151,7 @@ public class DsnList {
      */
     @SuppressWarnings("unchecked")
     private <T> java.util.List<T> getResult(final Response response, final List<T> datasetLst,
-                                            final List<T> memberLst) throws ParseException {
+                                            final List<T> memberLst) throws ZosmfRequestException {
         if (response.getStatusCode().isEmpty()) {
             LOG.debug("status code not returned");
             if (datasetLst == null) {
@@ -188,7 +188,7 @@ public class DsnList {
         }
 
         final String jsonStr = response.getResponsePhrase().get().toString();
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
+        final JSONObject jsonObject = JsonParserUtil.parse(jsonStr);
         if (jsonObject.isEmpty()) {
             if (datasetLst == null) {
                 return memberLst;
@@ -220,7 +220,7 @@ public class DsnList {
      * @param headers list of headers for http request
      * @param url     url for http request
      * @return response object with http response info
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     private Response getResponse(final ListParams params, final Map<String, String> headers, final String url)

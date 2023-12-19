@@ -11,8 +11,6 @@ package zowe.client.sdk.zosfiles.uss.methods;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.UnixZfsJsonParse;
@@ -25,6 +23,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
+import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.ListParams;
@@ -85,11 +84,10 @@ public class UssList {
      *
      * @param params ListParams object
      * @return list of UssItem objects
-     * @throws ZosmfRequestException http request failure
-     * @throws ParseException        parse error of JSON response
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public List<UnixFile> getFiles(final ListParams params) throws ZosmfRequestException, ParseException {
+    public List<UnixFile> getFiles(final ListParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
@@ -131,7 +129,7 @@ public class UssList {
         final Response response = request.executeRequest();
 
         final List<UnixFile> items = new ArrayList<>();
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(response.getResponsePhrase()
+        final JSONObject jsonObject = JsonParserUtil.parse(String.valueOf(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
@@ -148,11 +146,10 @@ public class UssList {
      *
      * @param params ListZfsParams parameter object
      * @return list of UssZfsItem objects
-     * @throws ZosmfRequestException http request failure
-     * @throws ParseException        parse error of JSON response
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public List<UnixZfs> getZfsSystems(final ListZfsParams params) throws ZosmfRequestException, ParseException {
+    public List<UnixZfs> getZfsSystems(final ListZfsParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getPath().isEmpty() && params.getFsname().isEmpty(),
                 "no path or fsname specified");
@@ -178,7 +175,7 @@ public class UssList {
         final Response response = request.executeRequest();
 
         final List<UnixZfs> items = new ArrayList<>();
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(String.valueOf(response.getResponsePhrase()
+        final JSONObject jsonObject = JsonParserUtil.parse(String.valueOf(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
