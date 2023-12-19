@@ -47,7 +47,7 @@ public class IssueCommandTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseAttributeSuccess() throws Exception {
+    public void tstIssueCommandCmdResponseAttributeSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "student");
         final JSONObject json = new JSONObject(jsonMap);
@@ -63,7 +63,7 @@ public class IssueCommandTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseUrlAttributeSuccess() throws Exception {
+    public void tstIssueCommandCmdResponseUrlAttributeSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response-url", "student");
         final JSONObject json = new JSONObject(jsonMap);
