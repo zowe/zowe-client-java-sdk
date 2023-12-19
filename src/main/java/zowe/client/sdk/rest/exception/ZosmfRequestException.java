@@ -26,7 +26,7 @@ public class ZosmfRequestException extends Exception {
     /**
      * ZosmfRequestException constructor for message value
      *
-     * @param message  error message
+     * @param message error message
      */
     public ZosmfRequestException(final String message) {
         super(message);
