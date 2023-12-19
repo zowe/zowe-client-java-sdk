@@ -11,10 +11,6 @@ package zowe.client.sdk.zosjobs.methods;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
@@ -40,8 +36,6 @@ import java.util.List;
  * @version 2.0
  */
 public class JobGet {
-
-    private static final Logger LOG = LoggerFactory.getLogger(JobGet.class);
 
     private final ZosConnection connection;
 
@@ -250,13 +244,7 @@ public class JobGet {
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no get job response phrase")).toString();
-        final JSONArray results;
-        try {
-            results = (JSONArray) new JSONParser().parse(jsonStr);
-        } catch (ParseException e) {
-            LOG.debug("error here", e);
-            throw new ZosmfRequestException(e.getMessage());
-        }
+        final JSONArray results = JsonParserUtil.parseArray(jsonStr);
         for (final Object jsonObj : results) {
             jobs.add((Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObj));
         }
@@ -378,13 +366,7 @@ public class JobGet {
             return files;
         }
 
-        final JSONArray results;
-        try {
-            results = (JSONArray) new JSONParser().parse(jsonStr);
-        } catch (ParseException e) {
-            LOG.debug("error here", e);
-            throw new ZosmfRequestException(e.getMessage());
-        }
+        final JSONArray results = JsonParserUtil.parseArray(jsonStr);
         for (final Object obj : results) {
             final JSONObject jsonObj = (JSONObject) obj;
             files.add((JobFile) JsonParseFactory.buildParser(ParseType.JOB_FILE).parseResponse(jsonObj));

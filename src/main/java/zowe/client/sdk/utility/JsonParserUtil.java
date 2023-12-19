@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.utility;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -34,7 +35,7 @@ public class JsonParserUtil {
     }
 
     /**
-     * This method is a wrapper for new JSONParser().parse() call to parse z/OSMF response
+     * This method is a wrapper for JSONParser().parse() call to parse z/OSMF response
      * which may return ZosmfRequestException.
      *
      * @param item json string representation
@@ -44,6 +45,23 @@ public class JsonParserUtil {
     public static JSONObject parse(String item) throws ZosmfRequestException {
         try {
             return (JSONObject) new JSONParser().parse(item);
+        } catch (ParseException e) {
+            LOG.debug("parse error", e);
+            throw new ZosmfRequestException(e.getMessage());
+        }
+    }
+
+    /**
+     * This method is a wrapper for JSONParser().parse() call to parse z/OSMF response
+     * which may return ZosmfRequestException.
+     *
+     * @param item json array representation
+     * @return JSONArray object
+     * @throws ZosmfRequestException indicates the json item from z/OSMF request is invalid for parsing
+     */
+    public static JSONArray parseArray(String item) throws ZosmfRequestException {
+        try {
+            return (JSONArray) new JSONParser().parse(item);
         } catch (ParseException e) {
             LOG.debug("parse error", e);
             throw new ZosmfRequestException(e.getMessage());
