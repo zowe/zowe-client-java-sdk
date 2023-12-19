@@ -38,7 +38,7 @@ public class GetStreamZosmfRequest extends ZosmfRequest {
      * Perform the http rest request
      *
      * @return Response object
-     * @throws ZosmfRequestException http request failure
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     @Override
