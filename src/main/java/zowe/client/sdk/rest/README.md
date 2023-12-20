@@ -2,7 +2,7 @@
 
 Http functionality used by the SDK via Unirest for Java.
 
-Unirest library provides the ability to retrieve IBM's z/OSMF JSON error document.
+Unirest's library provides the ability to retrieve IBM's z/OSMF JSON error document.
 
 For example, the following http GET request will result in an HTTP 500 error:
 
