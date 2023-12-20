@@ -149,10 +149,9 @@ public class JobSubmit {
      * @param jobDataSet job dataset to be translated into SubmitJobParams object
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
-     * @throws ParseException        parse error of JSON response
      * @author Frank Giordano
      */
-    public Job submit(final String jobDataSet) throws ZosmfRequestException, ParseException {
+    public Job submit(final String jobDataSet) throws ZosmfRequestException {
         return this.submitCommon(new SubmitJobParams(jobDataSet));
     }
 
