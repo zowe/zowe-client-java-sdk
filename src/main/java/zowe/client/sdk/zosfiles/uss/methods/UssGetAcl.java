@@ -78,7 +78,6 @@ public class UssGetAcl {
      * @param useCommas  true if commas are to be used in the output
      * @return string representation of response phrase
      * @throws ZosmfRequestException request error state
-     * @throws ParseException        parse error of JSON response
      * @author James Kostrewski
      */
     @SuppressWarnings("unchecked")

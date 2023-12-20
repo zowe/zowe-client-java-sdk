@@ -144,7 +144,6 @@ public class DsnList {
      * @param memberLst  member arraylist object container
      * @param <T>        DataSet or Member object
      * @return one of the container filled with either member or datasets
-     * @throws ParseException parse error of JSON response
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
