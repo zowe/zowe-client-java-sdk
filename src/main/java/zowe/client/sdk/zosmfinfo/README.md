@@ -12,6 +12,7 @@ APIs located in methods package.
 package zowe.client.sdk.examples.zosmfInfo;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zosmfinfo.methods.ZosmfStatus;
 import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
@@ -32,10 +33,10 @@ public class CheckStatusTst extends TstZosConnection {
      * running z/OSMF instance on the z/OS backend.
      *
      * @param args for main not used
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ZosmfRequestException {
         ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         ZosmfStatus zosmfStatus = new ZosmfStatus(connection);
         ZosmfInfoResponse zosmfInfoResponse = zosmfStatus.get();
@@ -52,6 +53,7 @@ public class CheckStatusTst extends TstZosConnection {
 package zowe.client.sdk.examples.zosmfInfo;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zosmfinfo.methods.ZosmfSystems;
 import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
@@ -72,10 +74,10 @@ public class ZosmfDefinedSystemsTst extends TstZosConnection {
      * defined z/OSMF systems running on the z/OS backend.
      *
      * @param args for main not used
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ZosmfRequestException {
         ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         ZosmfSystems zosmfSystems = new ZosmfSystems(connection);
         ZosmfSystemsResponse zosmfInfoResponse = zosmfSystems.get();

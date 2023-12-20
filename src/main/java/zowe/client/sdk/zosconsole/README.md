@@ -53,7 +53,7 @@ public class IssueCommandTst extends TstZosConnection {
         try {
             response = issueConsole.issueCommand(cmd);
             System.out.println(response.getCommandResponse().orElse(""));
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -71,7 +71,7 @@ public class IssueCommandTst extends TstZosConnection {
         try {
             response = issueConsole.issueCommandCommon(ConsoleConstants.RES_DEF_CN, new IssueConsoleParams(cmd));
             System.out.println(response.getCommandResponse().orElse(""));
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             System.out.println(e.getMessage());
         }
     }
