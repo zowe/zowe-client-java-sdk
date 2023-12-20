@@ -27,6 +27,8 @@ public final class JsonParserUtil {
 
     private static final Logger LOG = LoggerFactory.getLogger(JsonParserUtil.class);
 
+    private static final String PARSE_ERROR_MSG = "json response parse error";
+
     /**
      * Private constructor defined to avoid instantiation of class
      */
@@ -46,7 +48,7 @@ public final class JsonParserUtil {
         try {
             return (JSONObject) new JSONParser().parse(item);
         } catch (ParseException e) {
-            LOG.debug("parse error", e);
+            LOG.debug(PARSE_ERROR_MSG, e);
             throw new ZosmfRequestException(e.getMessage());
         }
     }
@@ -63,7 +65,7 @@ public final class JsonParserUtil {
         try {
             return (JSONArray) new JSONParser().parse(item);
         } catch (ParseException e) {
-            LOG.debug("parse error", e);
+            LOG.debug(PARSE_ERROR_MSG, e);
             throw new ZosmfRequestException(e.getMessage());
         }
     }
