@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
-import org.json.simple.parser.ParseException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetStreamZosmfRequest;
 import zowe.client.sdk.rest.ZosmfHeaders;

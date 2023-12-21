@@ -93,7 +93,7 @@ public class CopyDatasetTst extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void copyDatasetByCopyParams(ZosConnection connection, String fromDataSetName, String toDataSetName)
-                    throws ZosmfRequestException {
+            throws ZosmfRequestException {
         DsnCopy dsnCopy = new DsnCopy(connection);
         // 'replace' builder variable here will be true by default if not specified in builder.
         // 'copyAllMembers' builder variable here will be false by default
@@ -546,7 +546,7 @@ public class ListDatasetsTst extends TstZosConnection {
      * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
      */
-    public static void listMembersWithAllAttributes(ZosConnection connection, String dataSetName) 
+    public static void listMembersWithAllAttributes(ZosConnection connection, String dataSetName)
             throws ZosmfRequestException {
         ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
         DsnList dsnList = new DsnList(connection);

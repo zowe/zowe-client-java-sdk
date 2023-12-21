@@ -499,7 +499,7 @@ public class GetJobTst extends TstZosConnection {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getSpoolFilesForJob(String prefix)throws ZosmfRequestException {
+    public static void getSpoolFilesForJob(String prefix) throws ZosmfRequestException {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJob.getCommon(params);
         List<JobFile> files = getJob.getSpoolFilesByJob(jobs.get(0));
@@ -762,7 +762,7 @@ public class SubmitJobsTst extends TstZosConnection {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static Job submitJob(zowe.client.sdk.core.ZosConnection connection, String dsMember) 
+    public static Job submitJob(zowe.client.sdk.core.ZosConnection connection, String dsMember)
             throws ZosmfRequestException {
         JobSubmit submitJobs = new JobSubmit(connection);
         return submitJobs.submit(dsMember);
