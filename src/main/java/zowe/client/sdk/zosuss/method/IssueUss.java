@@ -11,21 +11,28 @@ package zowe.client.sdk.zosuss.method;
 
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.SshConnection;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.utility.timer.WaitUtil;
+import zowe.client.sdk.zosuss.exception.IssueUssException;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Shell Class provides a way to execute USS commands via SSH connection
+ * IssueUss Class provides a way to execute USS commands via SSH connection
  *
  * @author Frank Giordano
  * @version 2.0
  */
 public class IssueUss {
+
+    private static final Logger LOG = LoggerFactory.getLogger(IssueUss.class);
 
     private final SshConnection connection;
 
@@ -45,10 +52,10 @@ public class IssueUss {
      * @param command string value contain one or more USS commands
      * @param timeout int value in milliseconds for timeout duration on session connection
      * @return string output value
-     * @throws Exception processing error
+     * @throws IssueUssException SSH Unix System Services error request
      * @author Frank Giordano
      */
-    public String issueCommand(final String command, final int timeout) throws Exception {
+    public String issueCommand(final String command, final int timeout) throws IssueUssException {
         Session session = null;
         ChannelExec channel = null;
 
@@ -71,6 +78,12 @@ public class IssueUss {
             }
 
             return responseStream.toString();
+        } catch (IOException e) {
+            LOG.debug("IOException error " + e);
+            throw new IssueUssException(e.getMessage());
+        } catch (JSchException e) {
+            LOG.debug("JSchException error " + e);
+            throw new IssueUssException(e.getMessage());
         } finally {
             if (session != null) {
                 session.disconnect();
