@@ -81,7 +81,7 @@ public class DsnGet {
      * @return dataset object
      * @author Frank Giordano
      */
-    public Dataset getDsnInfo(final String dataSetName) throws ZosmfRequestException, ParseException {
+    public Dataset getDsnInfo(final String dataSetName) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         Dataset emptyDataSet = new Dataset.Builder().dsname(dataSetName).build();
