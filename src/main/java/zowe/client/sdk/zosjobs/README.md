@@ -13,6 +13,7 @@ package zowe.client.sdk.examples.zosjobs;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosjobs.input.ModifyJobParams;
 import zowe.client.sdk.zosjobs.methods.JobCancel;
@@ -36,10 +37,10 @@ public class CancelJobTst extends TstZosConnection {
      * JobCancel functionality.
      *
      * @param args for main not used
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ZosmfRequestException {
         connection = new ZosConnection(hostName, zosmfPort, userName, password);
         System.out.println(cancelCommonWithVersion("2.0"));
         System.out.println(cancelCommon());
@@ -55,9 +56,10 @@ public class CancelJobTst extends TstZosConnection {
      *
      * @param version version value
      * @return response http Response object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static Response cancelCommonWithVersion(String version) {
+    public static Response cancelCommonWithVersion(String version) throws ZosmfRequestException {
         jobId = "xxx";
         jobName = "xxx";
         ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).version(version).build();
@@ -70,9 +72,10 @@ public class CancelJobTst extends TstZosConnection {
      * to cancel a given job.
      *
      * @return response http Response object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static Response cancelCommon() {
+    public static Response cancelCommon() throws ZosmfRequestException {
         jobId = "xxx";
         jobName = "xxx";
         ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).build();
@@ -84,9 +87,10 @@ public class CancelJobTst extends TstZosConnection {
      * The cancelByJob method accepts a jobName and jobId values which will be used to cancel its job.
      *
      * @return response http Response object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static Response cancelByJob() {
+    public static Response cancelByJob() throws ZosmfRequestException {
         jobId = "xxx";
         jobName = "xxx";
         return new JobCancel(connection).cancelByJob(
@@ -98,10 +102,10 @@ public class CancelJobTst extends TstZosConnection {
      * The cancel method accepts a jobName and jobId values which will be used to cancel its job.
      *
      * @return response http Response object
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static Response cancel() throws Exception {
+    public static Response cancel() throws ZosmfRequestException {
         jobId = "xxx";
         jobName = "xxx";
         return new JobCancel(connection).cancel(jobName, jobId, null);
@@ -118,6 +122,7 @@ package zowe.client.sdk.examples.zosjobs;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosjobs.input.ModifyJobParams;
 import zowe.client.sdk.zosjobs.methods.JobDelete;
 import zowe.client.sdk.zosjobs.response.Job;
@@ -140,10 +145,10 @@ public class DeleteJobTst extends TstZosConnection {
      * JobDelete functionality.
      *
      * @param args for main not used
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ZosmfRequestException {
         connection = new ZosConnection(hostName, zosmfPort, userName, password);
         System.out.println(deleteCommonWithVersion("2.0"));
         System.out.println(deleteCommon());
@@ -159,9 +164,10 @@ public class DeleteJobTst extends TstZosConnection {
      *
      * @param version value to indicate sync or async request processing
      * @return response http response object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static Response deleteCommonWithVersion(String version) {
+    public static Response deleteCommonWithVersion(String version) throws ZosmfRequestException {
         jobId = "xxx";
         jobName = "xxx";
         ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).version(version).build();
@@ -174,9 +180,10 @@ public class DeleteJobTst extends TstZosConnection {
      * filled needed to delete a given job.
      *
      * @return response http response object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static Response deleteCommon() {
+    public static Response deleteCommon() throws ZosmfRequestException {
         jobId = "xxx";
         jobName = "xxx";
         ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).build();
@@ -190,7 +197,7 @@ public class DeleteJobTst extends TstZosConnection {
      * @return response http response object
      * @author Frank Giordano
      */
-    public static Response deleteByJob() {
+    public static Response deleteByJob() throws ZosmfRequestException {
         jobId = "xxx";
         jobName = "xxx";
         return new JobDelete(connection).deleteByJob(
@@ -202,10 +209,10 @@ public class DeleteJobTst extends TstZosConnection {
      * The delete method accepts a jobName and jobId values which will be used to delete its job.
      *
      * @return response http response object
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static Response deleteJob() throws Exception {
+    public static Response deleteJob() throws ZosmfRequestException {
         jobId = "xxx";
         jobName = "xxx";
         return new JobDelete(connection).delete(jobName, jobId, null);
@@ -221,6 +228,7 @@ package zowe.client.sdk.examples.zosjobs;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosjobs.input.CommonJobParams;
 import zowe.client.sdk.zosjobs.input.GetJobParams;
 import zowe.client.sdk.zosjobs.input.JobFile;
@@ -245,10 +253,10 @@ public class GetJobTst extends TstZosConnection {
      * JobGet class functionality.
      *
      * @param args for main not used
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ZosmfRequestException {
         String prefix = "xxx";
         String owner = "xxx";
         String jobId = "xxx";
@@ -280,10 +288,10 @@ public class GetJobTst extends TstZosConnection {
      * use for retrieval of its JCL content.
      *
      * @param prefix partial or full job name to use for searching
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getJclCommon(String prefix) throws Exception {
+    public static void getJclCommon(String prefix) throws ZosmfRequestException {
         List<Job> jobs = getJob.getByPrefix(prefix);
         System.out.println(getJob.getJclCommon(
                 new CommonJobParams(jobs.get(0).getJobId().orElseThrow(() -> new Exception("job id not specified")),
@@ -295,10 +303,10 @@ public class GetJobTst extends TstZosConnection {
      * The getJclByJob method is given a job object to use for retrieval of its JCL content.
      *
      * @param prefix partial or full job name to use for searching
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getJclByJob(String prefix) throws Exception {
+    public static void getJclByJob(String prefix) throws ZosmfRequestException {
         List<Job> jobs = getJob.getByPrefix(prefix);
         System.out.println(getJob.getJclByJob(jobs.get(0)));
     }
@@ -308,10 +316,10 @@ public class GetJobTst extends TstZosConnection {
      * The getJcl method is given a jobName and jobId values to use for retrieval of its JCL content.
      *
      * @param prefix partial or full job name to use for searching
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getJcl(String prefix) throws Exception {
+    public static void getJcl(String prefix) throws ZosmfRequestException {
         List<Job> jobs = getJob.getByPrefix(prefix);
         System.out.println(
                 getJob.getJcl(jobs.get(0).getJobName().orElseThrow(() -> new Exception("job name not specified")),
@@ -323,15 +331,15 @@ public class GetJobTst extends TstZosConnection {
      * The getStatusByJob method is given a job object to use for retrieval of its status.
      *
      * @param prefix partial or full job name to use for searching
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getStatusByJob(String prefix) throws Exception {
+    public static void getStatusByJob(String prefix) throws ZosmfRequestException {
         List<Job> jobs = getJob.getByPrefix(prefix);
         try {
             Job job = getJob.getStatusByJob(jobs.get(0));
             System.out.println(job);
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             e.printStackTrace();
         }
     }
@@ -342,10 +350,10 @@ public class GetJobTst extends TstZosConnection {
      * of its status with StepData flag set to true.
      *
      * @param prefix partial or full job name to use for searching
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getStatusCommon(String prefix) throws Exception {
+    public static void getStatusCommon(String prefix) throws ZosmfRequestException {
         List<Job> jobs = getJob.getByPrefix(prefix);
         try {
             Job job = getJob.getStatusCommon(
@@ -353,7 +361,7 @@ public class GetJobTst extends TstZosConnection {
                             jobs.get(0).getJobName().orElseThrow(() -> new Exception("job name not specified")), true));
             System.out.println(job.toString());
             Arrays.stream(job.getStepData().orElseThrow(() -> new Exception("no step data found"))).forEach(i -> System.out.println(i.toString()));
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             e.printStackTrace();
         }
     }
@@ -363,17 +371,17 @@ public class GetJobTst extends TstZosConnection {
      * The getStatus method is given a jobName and jobId value to use for retrieval of its status.
      *
      * @param prefix partial or full job name to use for searching
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getStatus(String prefix) throws Exception {
+    public static void getStatus(String prefix) throws ZosmfRequestException {
         List<Job> jobs = getJob.getByPrefix(prefix);
         try {
             Job job = getJob.getStatus(
                     jobs.get(0).getJobName().orElseThrow(() -> new Exception("job name not specified")),
                     jobs.get(0).getJobId().orElseThrow(() -> new Exception("job id not specified")));
             System.out.println(job.toString());
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             e.printStackTrace();
         }
     }
@@ -388,7 +396,7 @@ public class GetJobTst extends TstZosConnection {
     public static void nonExistentGetJob(String jobId) {
         try {
             getJob.getById(jobId);
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -398,16 +406,15 @@ public class GetJobTst extends TstZosConnection {
      * The getById method is given a jobId value which will return a job document/object.
      *
      * @param prefix partial or full job name to use for searching
-     * @throws Exception error in processing request
      * @author Frank Giordano
      */
-    public static void getById(String prefix) throws Exception {
+    public static void getById(String prefix) {
         List<Job> jobs = getJob.getByPrefix(prefix);
         String jobId = jobs.get(0).getJobId().orElseThrow(() -> new Exception("job id not specified"));
         try {
             Job job = getJob.getById(jobId);
             System.out.println(job.toString());
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -419,10 +426,10 @@ public class GetJobTst extends TstZosConnection {
      *
      * @param owner  owner value
      * @param prefix partial or full job name to use for searching
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getByOwnerAndPrefix(String owner, String prefix) throws Exception {
+    public static void getByOwnerAndPrefix(String owner, String prefix) throws ZosmfRequestException {
         List<Job> jobs = getJob.getByOwnerAndPrefix(owner, prefix);
         jobs.forEach(i -> System.out.println(i.toString()));
     }
@@ -432,10 +439,10 @@ public class GetJobTst extends TstZosConnection {
      * The getByPrefix method is given a prefix value which will return a list of common job document/object.
      *
      * @param prefix partial or full job name to use for searching
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getByPrefix(String prefix) throws Exception {
+    public static void getByPrefix(String prefix) throws ZosmfRequestException {
         List<Job> jobs = getJob.getByPrefix(prefix);
         jobs.forEach(i -> System.out.println(i.toString()));
     }
@@ -444,10 +451,10 @@ public class GetJobTst extends TstZosConnection {
      * Example on how to call JobGet getAll method.
      * The getAll method returns a list of all jobs available for the logged-in user.
      *
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getAll() throws Exception {
+    public static void getAll() throws ZosmfRequestException {
         // get any jobs out there for the logged-in user
         List<Job> jobs = getJob.getAll();
         jobs.forEach(i -> System.out.println(i.toString()));
@@ -458,10 +465,10 @@ public class GetJobTst extends TstZosConnection {
      * The getSpoolContent method is given a job spool file name to retrieve its content.
      *
      * @param prefix partial or full job name to use for searching
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getSpoolContent(String prefix) throws Exception {
+    public static void getSpoolContent(String prefix) throws ZosmfRequestException {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJob.getCommon(params);
         List<JobFile> files = getJob.getSpoolFilesByJob(jobs.get(0));
@@ -476,10 +483,10 @@ public class GetJobTst extends TstZosConnection {
      * The getByOwner method is given an owner value to use retrieve a list of its available jobs.
      *
      * @param owner owner value
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getByOwner(String owner) throws Exception {
+    public static void getByOwner(String owner) throws ZosmfRequestException {
         List<Job> jobs = getJob.getByOwner(owner);
         jobs.forEach(i -> System.out.println(i.toString()));
     }
@@ -489,10 +496,10 @@ public class GetJobTst extends TstZosConnection {
      * The getSpoolFilesByJob method is given a job document/object retrieve a list of all its spool names.
      *
      * @param prefix partial or full job name to use for searching
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getSpoolFilesForJob(String prefix) throws Exception {
+    public static void getSpoolFilesForJob(String prefix)throws ZosmfRequestException {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJob.getCommon(params);
         List<JobFile> files = getJob.getSpoolFilesByJob(jobs.get(0));
@@ -504,10 +511,10 @@ public class GetJobTst extends TstZosConnection {
      * The getSpoolFiles method is given a jobName and jobId values to retrieve a list of all its spool file names.
      *
      * @param prefix partial or full job name to use for searching
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getSpoolFiles(String prefix) throws Exception {
+    public static void getSpoolFiles(String prefix) throws ZosmfRequestException {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJob.getCommon(params);
         List<JobFile> files =
@@ -523,10 +530,10 @@ public class GetJobTst extends TstZosConnection {
      * retrieve a list of all jobs.
      *
      * @param prefix partial or full job name to use for searching
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void getCommon(String prefix) throws Exception {
+    public static void getCommon(String prefix) throws ZosmfRequestException {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
         List<Job> jobs = getJob.getCommon(params);
         jobs.forEach(i -> System.out.println(i.toString()));
@@ -542,6 +549,7 @@ package zowe.client.sdk.examples.zosjobs;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosjobs.methods.JobSubmit;
 import zowe.client.sdk.zosjobs.methods.SubmitJobs;
 import zowe.client.sdk.zosjobs.input.MonitorJobWaitForParams;
@@ -564,10 +572,10 @@ public class MonitorJobsTst extends TstZosConnection {
      * MonitorJobs functionality. Calls MonitorJobs example methods.
      *
      * @param args for main not used
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ZosmfRequestException {
         connection = new ZosConnection(hostName, zosmfPort, userName, password);
         submitJobs = new JobSubmit(connection);
         MonitorJobsTst.monitorJobsForOutputStatusByJobObject();
@@ -582,13 +590,13 @@ public class MonitorJobsTst extends TstZosConnection {
      * Example on how to call MonitorJobs isJobRunning method.
      * isJobRunning accepts a MonitorJobWaitForParams object
      *
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void monitorIsJobRunning() throws Exception {
+    public static void monitorIsJobRunning() throws ZosmfRequestException {
         zowe.client.sdk.zosjobs.methods.JobMonitor monitorJobs = new zowe.client.sdk.zosjobs.methods.JobMonitor(connection);
         MonitorJobWaitForParams monitorParams = new MonitorJobWaitForParams.Builder("XXX", "XXX").build();
-        System.out.println(monitorJobs.isJobRunning(monitorParams));
+        System.out.println(monitorJobs.isRunning(monitorParams));
     }
 
     /**
@@ -596,14 +604,14 @@ public class MonitorJobsTst extends TstZosConnection {
      * waitForJobOutputStatus accepts a job object which will monitor the job status
      * until it reaches OUTPUT status or times out if not reached.
      *
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void monitorJobsForOutputStatusByJobObject() throws Exception {
+    public static void monitorJobsForOutputStatusByJobObject() throws ZosmfRequestException {
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
         Job job = submitJobs.submitJcl(jclString, null, null);
         zowe.client.sdk.zosjobs.methods.JobMonitor monitorJobs = new zowe.client.sdk.zosjobs.methods.JobMonitor(connection);
-        job = monitorJobs.waitForJobOutputStatus(job);
+        job = monitorJobs.waitByOutputStatus(job);
         System.out.println("Job status for Job " + job.getJobName().orElse("n/a") + ":" +
                 job.getJobId().orElse("n/a") + " is " + job.getStatus().orElse("n/a"));
     }
@@ -613,14 +621,14 @@ public class MonitorJobsTst extends TstZosConnection {
      * waitForJobOutputStatus accepts a jobName and jobId values which will
      * monitor the job status until it reaches OUTPUT status or times out if not reached.
      *
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void monitorJobsForOutputStatusByJobNameAndId() throws Exception {
+    public static void monitorJobsForOutputStatusByJobNameAndId() throws ZosmfRequestException {
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
         Job job = submitJobs.submitJcl(jclString, null, null);
         zowe.client.sdk.zosjobs.methods.JobMonitor monitorJobs = new zowe.client.sdk.zosjobs.methods.JobMonitor(connection);
-        job = monitorJobs.waitForJobOutputStatus(
+        job = monitorJobs.waitByOutputStatus(
                 job.getJobName().orElseThrow(() -> new Exception("job name not specified")),
                 job.getJobId().orElseThrow(() -> new Exception("job id not specified")));
         System.out.println("Job status for Job " + job.getJobName().orElse("n/a") + ":" +
@@ -633,14 +641,14 @@ public class MonitorJobsTst extends TstZosConnection {
      * job status until it reaches the given status value or times out if not reached.
      *
      * @param statusType given status type to use for monitoring
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void monitorJobsForStatusByJobObject(JobStatus.Type statusType) throws Exception {
+    public static void monitorJobsForStatusByJobObject(JobStatus.Type statusType) throws ZosmfRequestException {
         // determine an existing job in your system that is in execute queue and make a Job for it
         Job job = new Job.Builder().jobName("xxx").jobId("xxx").build();
         zowe.client.sdk.zosjobs.methods.JobMonitor monitorJobs = new zowe.client.sdk.zosjobs.methods.JobMonitor(connection);
-        job = monitorJobs.waitForJobStatus(job, statusType);
+        job = monitorJobs.waitByStatus(job, statusType);
         System.out.println("Job status for Job " + job.getJobName().orElse("n/a") + ":" +
                 job.getJobId().orElse("n/a") + " is " + job.getStatus().orElse("n/a"));
     }
@@ -651,14 +659,14 @@ public class MonitorJobsTst extends TstZosConnection {
      * job status until it reaches the given status value or times out if not reached.
      *
      * @param statusType given status type to use for monitoring
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void monitorJobsForStatusByJobNameAndId(JobStatus.Type statusType) throws Exception {
+    public static void monitorJobsForStatusByJobNameAndId(JobStatus.Type statusType) throws ZosmfRequestException {
         // determine an existing job in your system that is in execute queue and make a Job for it
         Job job = new Job.Builder().jobName("xxx").jobId("xxx").build();
         zowe.client.sdk.zosjobs.methods.JobMonitor monitorJobs = new zowe.client.sdk.zosjobs.methods.JobMonitor(connection);
-        job = monitorJobs.waitForJobStatus(
+        job = monitorJobs.waitByStatus(
                 job.getJobName().orElseThrow(() -> new Exception("job name not specified")),
                 job.getJobId().orElseThrow(() -> new Exception("job id not specified")), statusType);
         System.out.println("Job status for Job " + job.getJobName().orElse("n/a") + ":" +
@@ -671,14 +679,14 @@ public class MonitorJobsTst extends TstZosConnection {
      * job output until the message is seen or times out if not seen.
      *
      * @param message given message text to monitor job output
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void monitorWaitForJobMessage(String message) throws Exception {
+    public static void monitorWaitForJobMessage(String message) throws ZosmfRequestException {
         // determine an existing job in your system that is in execute queue and make a Job for it
         Job job = new Job.Builder().jobName("xxx").jobId("xxx").build();
         zowe.client.sdk.zosjobs.methods.JobMonitor monitorJobs = new zowe.client.sdk.zosjobs.methods.JobMonitor(connection);
-        System.out.println("Found message = " + monitorJobs.waitForJobMessage(job, message));
+        System.out.println("Found message = " + monitorJobs.waitByMessage(job, message));
     }
 
 }
@@ -691,6 +699,7 @@ package zowe.client.sdk.examples.zosjobs;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosjobs.methods.JobMonitor;
 import zowe.client.sdk.zosjobs.methods.JobSubmit;
 import zowe.client.sdk.zosjobs.methods.MonitorJobs;
@@ -710,10 +719,10 @@ public class SubmitJobsTst extends TstZosConnection {
      * SubmitJobs functionality. Calls SubmitJobs example methods.
      *
      * @param args for main not used
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ZosmfRequestException {
         ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         System.out.println(SubmitJobsTst.submitJob(connection, "xxx.xxx.xxx.xxx(xxx)"));
 
@@ -721,7 +730,7 @@ public class SubmitJobsTst extends TstZosConnection {
         Job submitJobsTest = SubmitJobsTst.submitJclJob(connection, jclString);
         // Wait for the job to complete
         JobMonitor monitorJobs = new JobMonitor(connection);
-        submitJobsTest = monitorJobs.waitForJobStatus(submitJobsTest, JobStatus.Type.OUTPUT);
+        submitJobsTest = monitorJobs.waitByStatus(submitJobsTest, JobStatus.Type.OUTPUT);
         System.out.println(submitJobsTest);
         // Get the return code
         String retCode = submitJobsTest.getRetCode().orElse("n/a");
@@ -735,12 +744,12 @@ public class SubmitJobsTst extends TstZosConnection {
      * @param connection ZOSConnection object
      * @param jclString  jcl formatted string
      * @return job document
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static Job submitJclJob(zowe.client.sdk.core.ZosConnection connection, String jclString) throws Exception {
+    public static Job submitJclJob(ZosConnection connection, String jclString) throws ZosmfRequestException {
         JobSubmit submitJobs = new JobSubmit(connection);
-        return submitJobs.submitJcl(jclString, null, null);
+        return submitJobs.submitByJcl(jclString, null, null);
     }
 
     /**
@@ -750,12 +759,13 @@ public class SubmitJobsTst extends TstZosConnection {
      * @param connection ZOSConnection object
      * @param dsMember   dataset member value
      * @return job document
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static Job submitJob(zowe.client.sdk.core.ZosConnection connection, String dsMember) throws Exception {
+    public static Job submitJob(zowe.client.sdk.core.ZosConnection connection, String dsMember) 
+            throws ZosmfRequestException {
         JobSubmit submitJobs = new JobSubmit(connection);
-        return submitJobs.submitJob(dsMember);
+        return submitJobs.submit(dsMember);
     }
 
 }

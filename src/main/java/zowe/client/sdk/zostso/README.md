@@ -11,6 +11,7 @@ package zowe.client.sdk.examples.zostso;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zostso.method.IssueTso;
 import zowe.client.sdk.zostso.response.IssueResponse;
 
@@ -30,10 +31,10 @@ public class IssueTsoCommandTst extends TstZosConnection {
      * Main method defines z/OSMF host and user connection, and tso command parameters used for the example test.
      *
      * @param args for main not used
-     * @throws Exception error processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ZosmfRequestException {
         String command = "xxx";
         String accountNumber = "xxx";
 
@@ -49,10 +50,10 @@ public class IssueTsoCommandTst extends TstZosConnection {
      * @param accountNumber user's z/OSMF permission account number
      * @param cmd           tso command to execute
      * @return issue response object
-     * @throws Exception error processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static IssueResponse issueCommand(String accountNumber, String cmd) throws Exception {
+    public static IssueResponse issueCommand(String accountNumber, String cmd) throws ZosmfRequestException {
         IssueTso issueTso = new IssueTso(connection);
         return issueTso.issueCommand(accountNumber, cmd);
     }
