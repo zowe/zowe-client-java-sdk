@@ -14,6 +14,7 @@ import zowe.client.sdk.rest.GetStreamZosmfRequest;
 import zowe.client.sdk.rest.ZosmfHeaders;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -77,10 +78,9 @@ public class DsnGet {
      *
      * @param dataSetName sequential or partition dataset (e.g. 'DATASET.LIB')
      * @return dataset object
-     * @throws Exception error processing request
      * @author Frank Giordano
      */
-    public Dataset getDsnInfo(final String dataSetName) throws Exception {
+    public Dataset getDsnInfo(final String dataSetName) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
         Dataset emptyDataSet = new Dataset.Builder().dsname(dataSetName).build();
@@ -115,9 +115,10 @@ public class DsnGet {
      *                   or a dataset member e.g. DATASET.LIB(MEMBER))
      * @param params     download params parameters, see DownloadParams object
      * @return a content stream
+     * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public InputStream get(final String targetName, final DownloadParams params) {
+    public InputStream get(final String targetName, final DownloadParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(targetName == null, "targetName is null");
         ValidateUtils.checkIllegalParameter(targetName.isBlank(), "targetName not specified");

@@ -12,7 +12,6 @@ package zowe.client.sdk.zoslogs.method;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.ZosLogItemJsonParse;
@@ -21,7 +20,9 @@ import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zoslogs.input.ZosLogParams;
 import zowe.client.sdk.zoslogs.response.ZosLogItem;
@@ -84,10 +85,10 @@ public class ZosLog {
      *
      * @param params ZosLogParams object
      * @return ZosLogReply object with log messages/items
-     * @throws Exception processing error
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ZosLogReply issueCommand(final ZosLogParams params) throws Exception {
+    public ZosLogReply issueCommand(final ZosLogParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String defaultUrl = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + RESOURCE;
@@ -130,7 +131,7 @@ public class ZosLog {
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no zos log response phrase")).toString();
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
+        final JSONObject jsonObject = JsonParserUtil.parse(jsonStr);
         JSONArray jsonArray = new JSONArray();
         if (jsonObject.get("items") != null) {
             jsonArray = (JSONArray) jsonObject.get("items");

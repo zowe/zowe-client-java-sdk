@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
@@ -72,9 +73,10 @@ public class JobDelete {
      * @param jobId   job id
      * @param version version number, see ModifyJobParams object for version options
      * @return http response object
+     * @throws ZosmfRequestException request error state
      * @author Nikunj goyal
      */
-    public Response delete(final String jobName, final String jobId, final String version) {
+    public Response delete(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
         return deleteCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
@@ -83,10 +85,11 @@ public class JobDelete {
      *
      * @param params delete job parameters, see DeleteJobParams object
      * @return http response object
+     * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
-    public Response deleteCommon(final ModifyJobParams params) {
+    public Response deleteCommon(final ModifyJobParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
@@ -133,9 +136,10 @@ public class JobDelete {
      * @param job     job document wanting to delete
      * @param version version number, see ModifyJobParams object for version options
      * @return http response object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response deleteByJob(final Job job, final String version) {
+    public Response deleteByJob(final Job job, final String version) throws ZosmfRequestException {
         return this.deleteCommon(
                 new ModifyJobParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
                         .version(version)

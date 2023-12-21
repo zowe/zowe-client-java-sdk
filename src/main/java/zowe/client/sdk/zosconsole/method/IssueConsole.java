@@ -10,15 +10,16 @@
 package zowe.client.sdk.zosconsole.method;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.input.IssueConsoleParams;
@@ -78,10 +79,10 @@ public class IssueConsole {
      *
      * @param command string value that represents command to issue
      * @return ConsoleResponse object
-     * @throws Exception processing error
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ConsoleResponse issueCommand(final String command) throws Exception {
+    public ConsoleResponse issueCommand(final String command) throws ZosmfRequestException {
         return issueCommandCommon(ConsoleConstants.RES_DEF_CN, new IssueConsoleParams(command));
     }
 
@@ -94,10 +95,10 @@ public class IssueConsole {
      * @param command     string value representing console command to issue
      * @param consoleName name of the console that is used to issue the command
      * @return ConsoleResponse object
-     * @throws Exception processing error
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ConsoleResponse issueCommand(final String command, final String consoleName) throws Exception {
+    public ConsoleResponse issueCommand(final String command, final String consoleName) throws ZosmfRequestException {
         return issueCommandCommon(consoleName, new IssueConsoleParams(command));
     }
 
@@ -107,11 +108,11 @@ public class IssueConsole {
      * @param consoleName name of the console that is used to issue the command
      * @param params      synchronous console issue parameters, see ZosmfIssueParams object
      * @return command response on resolve, see ZosmfIssueResponse object
-     * @throws Exception processing error
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public ConsoleResponse issueCommandCommon(final String consoleName, final IssueConsoleParams params)
-            throws Exception {
+            throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(consoleName == null, "consoleName is null");
         ValidateUtils.checkIllegalParameter(consoleName.isBlank(), "consoleName not specified");
@@ -133,7 +134,7 @@ public class IssueConsole {
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no issue console response phrase")).toString();
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
+        final JSONObject jsonObject = JsonParserUtil.parse(jsonStr);
         return ConsoleResponseService.getInstance()
                 .buildConsoleResponse((ZosmfIssueResponse) JsonParseFactory.buildParser(ParseType.MVS_CONSOLE)
                         .parseResponse(jsonObject), params.isProcessResponse());

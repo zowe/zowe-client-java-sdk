@@ -1,10 +1,11 @@
 package zowe.client.sdk.zostso.service;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.message.ZosmfMessages;
@@ -39,10 +40,10 @@ public class TsoResponseService {
      * Retrieve tso response
      *
      * @return ZosmfTsoResponse object
-     * @throws Exception error processing response
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ZosmfTsoResponse getZosmfTsoResponse() throws Exception {
+    public ZosmfTsoResponse getZosmfTsoResponse() throws ZosmfRequestException {
         ZosmfTsoResponse result;
         final int statusCode = tsoCmdResponse.getStatusCode()
                 .orElseThrow(() -> new IllegalStateException("status code not specified"));
@@ -54,7 +55,7 @@ public class TsoResponseService {
         } else {
             final String jsonStr = tsoCmdResponse.getResponsePhrase()
                     .orElseThrow(() -> new IllegalStateException("no tsoCmdResponse phrase")).toString();
-            final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
+            final JSONObject jsonObject = JsonParserUtil.parse(jsonStr);
             result = (ZosmfTsoResponse) JsonParseFactory.buildParser(ParseType.TSO_CONSOLE).parseResponse(jsonObject);
         }
 

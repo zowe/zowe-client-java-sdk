@@ -12,6 +12,7 @@ APIs located in methods package.
 package zowe.client.sdk.examples.zosfiles;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.CreateParams;
@@ -50,9 +51,10 @@ public class CreateUssTst extends TstZosConnection {
      *
      * @param value directory name with path to create
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private static Response CreateDirectory(String value) {
+    private static Response CreateDirectory(String value) throws ZosmfRequestException {
         UssCreate ussCreate = new UssCreate(connection);
         CreateParams params = new CreateParams(CreateType.DIR, "-wx-wx-wx");
         return ussCreate.create(value, params);
@@ -63,9 +65,10 @@ public class CreateUssTst extends TstZosConnection {
      *
      * @param value file name with path to create
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private static Response CreateFile(String value) {
+    private static Response CreateFile(String value) throws ZosmfRequestException {
         UssCreate ussCreate = new UssCreate(connection);
         CreateParams params = new CreateParams(CreateType.FILE, "-wx-wx-wx");
         return ussCreate.create(value, params);
@@ -80,6 +83,7 @@ public class CreateUssTst extends TstZosConnection {
 package zowe.client.sdk.examples.zosfiles;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.methods.UssDelete;
@@ -98,10 +102,10 @@ public class DeleteUssTst extends TstZosConnection {
      * Main method performs setup and method calls to test UssDelete
      *
      * @param args for main not used
-     * @throws Exception error processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ZosmfRequestException {
         String fileNamePath = "/xxx/xx/xx";
         String dirNamePath = "/xxx/xx/xx";
 
@@ -118,10 +122,10 @@ public class DeleteUssTst extends TstZosConnection {
      *
      * @param value file name with path to delete
      * @return Response object
-     * @throws Exception processing error
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private static Response DeleteFile(String value) throws Exception {
+    private static Response DeleteFile(String value) throws ZosmfRequestException {
         return ussDelete.delete(value);
     }
 
@@ -145,6 +149,7 @@ public class DeleteUssTst extends TstZosConnection {
 package zowe.client.sdk.examples.zosfiles;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.zosfiles.uss.input.CreateParams;
@@ -168,10 +173,10 @@ public class GetUssTst extends TstZosConnection {
      * Main method performs setup and method calls to test UssGet
      *
      * @param args for main not used
-     * @throws Exception error processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ZosmfRequestException {
         String fileNamePath = "/xx/xx/xxx";  // where xxx is a file name the rest a directory path...
 
         connection = new ZosConnection(hostName, zosmfPort, userName, password);
@@ -190,13 +195,14 @@ public class GetUssTst extends TstZosConnection {
      * For this case, no search result is returned due to case-sensitive search.
      *
      * @param fileNamePath file name with path
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private static void getFileTextContentWithSearchFilterNoResults(String fileNamePath) {
+    private static void getFileTextContentWithSearchFilterNoResults(String fileNamePath) throws ZosmfRequestException {
         UssCreate ussCreate = new UssCreate(connection);
         try {
             ussCreate.create(fileNamePath, new CreateParams(CreateType.FILE, "rwxr--r--"));
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             final String msg = "The specified file already exists";
             if (!e.getMessage().contains(msg)) {
                 throw new RuntimeException(e);
@@ -217,9 +223,10 @@ public class GetUssTst extends TstZosConnection {
      * It returns data from the file from the starting point of the search value.
      *
      * @param fileNamePath file name with path
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private static void getFileTextContentWithSearchFilter(String fileNamePath) {
+    private static void getFileTextContentWithSearchFilter(String fileNamePath) throws ZosmfRequestException {
         UssGet ussGet = new UssGet(connection);
         GetParams params = new GetParams.Builder().insensitive(false).search("Apple").build();
         Response response = ussGet.getCommon(fileNamePath, params);
@@ -230,10 +237,10 @@ public class GetUssTst extends TstZosConnection {
      * This method returns the entire text content of the fileNamePath value.
      *
      * @param fileNamePath file name with path
-     * @throws Exception processing error
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private static void getFileTextContent(String fileNamePath) throws Exception {
+    private static void getFileTextContent(String fileNamePath) throws ZosmfRequestException {
         UssGet ussGet = new UssGet(connection);
         System.out.println(ussGet.getText(fileNamePath));
     }
@@ -261,6 +268,7 @@ public class GetUssTst extends TstZosConnection {
 package zowe.client.sdk.examples.zosfiles;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zosfiles.uss.input.ListParams;
 import zowe.client.sdk.zosfiles.uss.input.ListZfsParams;
@@ -284,10 +292,10 @@ public class ListUssTst extends TstZosConnection {
      * Main method performs setup and method calls to test UssList
      *
      * @param args for main not used
-     * @throws Exception error processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ZosmfRequestException {
         String fileNamePath = "/xxx/xx/xx";
         String dirNamePath = "/xxx/xx/xx";
 
@@ -300,13 +308,13 @@ public class ListUssTst extends TstZosConnection {
      * Perform a UNIX zFS list
      *
      * @param value file name with path
-     * @throws Exception processing error
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private static void zfsList(String value) throws Exception {
+    private static void zfsList(String value) throws ZosmfRequestException {
         UssList ussList = new UssList(connection);
         ListZfsParams params = new ListZfsParams.Builder().path(value).build();
-        List<UnixZfs> items = ussList.zfsList(params);
+        List<UnixZfs> items = ussList.getZfsSystems(params);
         items.forEach(System.out::println);
     }
 
@@ -314,13 +322,13 @@ public class ListUssTst extends TstZosConnection {
      * Perform a UNIX file list
      *
      * @param value file name with path
-     * @throws Exception processing error
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private static void fileList(String value) throws Exception {
+    private static void fileList(String value) throws ZosmfRequestException {
         UssList ussList = new UssList(connection);
         ListParams params = new ListParams.Builder().path(value).build();
-        List<UnixFile> items = ussList.fileList(params);
+        List<UnixFile> items = ussList.getFiles(params);
         items.forEach(System.out::println);
     }
 

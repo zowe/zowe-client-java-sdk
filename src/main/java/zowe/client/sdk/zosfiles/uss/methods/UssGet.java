@@ -11,6 +11,7 @@ package zowe.client.sdk.zosfiles.uss.methods;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
@@ -60,6 +61,7 @@ public class UssGet {
     public UssGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
+        // request type check deferred 
         this.request = request;
     }
 
@@ -68,10 +70,11 @@ public class UssGet {
      *
      * @param fileNamePath file name with path
      * @return the byte array contents of the file
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public byte[] getBinary(final String fileNamePath) {
+    public byte[] getBinary(final String fileNamePath) throws ZosmfRequestException {
         GetParams params = new GetParams.Builder().binary(true).build();
         Response response = getCommon(fileNamePath, params);
         return (byte[]) response.getResponsePhrase().orElse(new byte[0]);
@@ -82,10 +85,11 @@ public class UssGet {
      *
      * @param fileNamePath file name with path
      * @return the text contents of file
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public String getText(final String fileNamePath) {
+    public String getText(final String fileNamePath) throws ZosmfRequestException {
         GetParams params = new GetParams.Builder().build();
         Response response = getCommon(fileNamePath, params);
         return (String) response.getResponsePhrase().orElse("");
@@ -97,10 +101,11 @@ public class UssGet {
      * @param fileNamePath file name with path
      * @param params       GetParams object to drive the request
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public Response getCommon(final String fileNamePath, final GetParams params) {
+    public Response getCommon(final String fileNamePath, final GetParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
         ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

@@ -10,15 +10,16 @@
 package zowe.client.sdk.zosjobs.methods;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.SubmitJclParams;
@@ -64,6 +65,7 @@ public class JobSubmit {
     public JobSubmit(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
+        // request type check deferred
         this.request = request;
     }
 
@@ -74,11 +76,11 @@ public class JobSubmit {
      * @param internalReaderRecfm record format of the jcl you want to submit. "F" (fixed) or "V" (variable)
      * @param internalReaderLrecl logical record length of the jcl you want to submit
      * @return job document with details about the submitted job
-     * @throws Exception error on submitting
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Job submitByJcl(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl)
-            throws Exception {
+            throws ZosmfRequestException {
         return this.submitJclCommon(new SubmitJclParams(jcl, internalReaderRecfm, internalReaderLrecl));
     }
 
@@ -87,10 +89,10 @@ public class JobSubmit {
      *
      * @param params submit jcl parameters, see SubmitJclParams object
      * @return job document with details about the submitted job
-     * @throws Exception error on submitting
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Job submitJclCommon(final SubmitJclParams params) throws Exception {
+    public Job submitJclCommon(final SubmitJclParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         String key, value;
@@ -136,7 +138,7 @@ public class JobSubmit {
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job jcl submit response phrase")).toString();
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
+        final JSONObject jsonObject = JsonParserUtil.parse(jsonStr);
         return (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
     }
 
@@ -145,10 +147,10 @@ public class JobSubmit {
      *
      * @param jobDataSet job dataset to be translated into SubmitJobParams object
      * @return job document with details about the submitted job
-     * @throws Exception error on submitting
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Job submit(final String jobDataSet) throws Exception {
+    public Job submit(final String jobDataSet) throws ZosmfRequestException {
         return this.submitCommon(new SubmitJobParams(jobDataSet));
     }
 
@@ -157,10 +159,10 @@ public class JobSubmit {
      *
      * @param params submit job parameters, see SubmitJobParams object
      * @return job document with details about the submitted job
-     * @throws Exception error on submitting
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Job submitCommon(final SubmitJobParams params) throws Exception {
+    public Job submitCommon(final SubmitJobParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
@@ -182,7 +184,7 @@ public class JobSubmit {
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job submit response phrase")).toString();
-        final JSONObject jsonObject = (JSONObject) new JSONParser().parse(jsonStr);
+        final JSONObject jsonObject = JsonParserUtil.parse(jsonStr);
         return (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
     }
 

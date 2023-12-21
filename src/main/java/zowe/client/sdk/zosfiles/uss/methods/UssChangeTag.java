@@ -15,6 +15,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
@@ -76,9 +77,10 @@ public class UssChangeTag {
      *
      * @param fileNamePath file name with path
      * @return Response Object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response binary(final String fileNamePath) {
+    public Response binary(final String fileNamePath) throws ZosmfRequestException {
         return changeCommon(fileNamePath, new ChangeTagParams.Builder()
                 .action(ChangeTagAction.SET).type(ChangeTagType.BINARY).build());
     }
@@ -89,9 +91,10 @@ public class UssChangeTag {
      * @param fileNamePath file name with path
      * @param codeSet      code set name. i.e. IBM-1047
      * @return Response Object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response text(final String fileNamePath, final String codeSet) {
+    public Response text(final String fileNamePath, final String codeSet) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(codeSet == null, "codeSet is null");
         ValidateUtils.checkIllegalParameter(codeSet.isBlank(), "codeSet not specified");
 
@@ -104,9 +107,10 @@ public class UssChangeTag {
      *
      * @param fileNamePath file name with path
      * @return Response Object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response remove(final String fileNamePath) {
+    public Response remove(final String fileNamePath) throws ZosmfRequestException {
         return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.REMOVE).build());
     }
 
@@ -115,9 +119,10 @@ public class UssChangeTag {
      *
      * @param fileNamePath file name with path
      * @return Response Object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response get(final String fileNamePath) {
+    public Response get(final String fileNamePath) throws ZosmfRequestException {
         return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
     }
 
@@ -127,9 +132,10 @@ public class UssChangeTag {
      * @param fileNamePath file name with path
      * @param params       parameters for the change tag request, see ChangeTagParams object
      * @return Response Object
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response changeCommon(final String fileNamePath, final ChangeTagParams params) {
+    public Response changeCommon(final String fileNamePath, final ChangeTagParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
         ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

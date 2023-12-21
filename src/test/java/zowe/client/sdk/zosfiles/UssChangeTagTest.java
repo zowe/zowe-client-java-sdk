@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.ChangeTagParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssChangeTag;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
@@ -35,7 +36,7 @@ public class UssChangeTagTest {
     private UssChangeTag ussChangeTag;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
@@ -43,7 +44,7 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeToBinarySuccess() {
+    public void tstUssChangeTagChangeToBinarySuccess() throws ZosmfRequestException {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.binary("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -52,7 +53,7 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeToTextSuccess() {
+    public void tstUssChangeTagChangeToTextSuccess() throws ZosmfRequestException {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.text("/xxx/xx/xx", "IBM-1047");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -61,7 +62,7 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagRemoveSuccess() {
+    public void tstUssChangeTagRemoveSuccess() throws ZosmfRequestException {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.remove("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -70,7 +71,7 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagRetrieveSuccess() {
+    public void tstUssChangeTagRetrieveSuccess() throws ZosmfRequestException {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.get("/xxx/xx/xx");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -79,7 +80,7 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeCommonSuccess() {
+    public void tstUssChangeTagChangeCommonSuccess() throws ZosmfRequestException {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.changeCommon("/xxx/xx/xx",
                 new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
@@ -89,7 +90,7 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeCommonWithSpacesInFileNamePathSuccess() {
+    public void tstUssChangeTagChangeCommonWithSpacesInFileNamePathSuccess() throws ZosmfRequestException {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.changeCommon("/xx x/x x/x x",
                 new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());

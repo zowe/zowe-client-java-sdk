@@ -16,6 +16,7 @@ import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetTextZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosjobs.methods.JobGet;
 
 import static org.junit.Assert.assertEquals;
@@ -40,7 +41,7 @@ public class GetJobsByTextGetRequestTest {
     }
 
     @Test
-    public void tstGetSpoolContentByIdSuccess() {
+    public void tstGetSpoolContentByIdSuccess() throws ZosmfRequestException {
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response("1\n2\n3\n", 200, "success"));
 

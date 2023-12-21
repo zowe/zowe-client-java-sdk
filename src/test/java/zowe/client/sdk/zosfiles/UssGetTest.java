@@ -17,6 +17,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetStreamZosmfRequest;
 import zowe.client.sdk.rest.GetTextZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.GetParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssGet;
 
@@ -39,7 +40,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetTextFileTargetPathSuccess() {
+    public void tstGetTextFileTargetPathSuccess() throws ZosmfRequestException {
         final GetTextZosmfRequest mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response("text", 200, "success"));
@@ -49,7 +50,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetTextFileTargetPathDefaultResponseSuccess() {
+    public void tstGetTextFileTargetPathDefaultResponseSuccess() throws ZosmfRequestException {
         final GetTextZosmfRequest mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response(null, 200, "success"));
@@ -59,7 +60,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetBinaryFileTargetPathSuccess() {
+    public void tstGetBinaryFileTargetPathSuccess() throws ZosmfRequestException {
         final GetStreamZosmfRequest mockStreamGetRequest = Mockito.mock(GetStreamZosmfRequest.class);
         final byte[] data = "data".getBytes();
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(
@@ -70,7 +71,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetBinaryFileTargetPathDefaultResponseSuccess() {
+    public void tstGetBinaryFileTargetPathDefaultResponseSuccess() throws ZosmfRequestException {
         final GetStreamZosmfRequest mockStreamGetRequest = Mockito.mock(GetStreamZosmfRequest.class);
         final byte[] data = new byte[0];
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(

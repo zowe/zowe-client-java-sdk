@@ -18,6 +18,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutStreamZosmfRequest;
 import zowe.client.sdk.rest.PutTextZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.WriteParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssWrite;
 
@@ -41,7 +42,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteTextSuccess() {
+    public void tstUssWriteTextSuccess() throws ZosmfRequestException {
         final PutTextZosmfRequest mockTextPutRequest = Mockito.mock(PutTextZosmfRequest.class);
         Mockito.when(mockTextPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
@@ -53,7 +54,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteBinarySuccess() {
+    public void tstUssWriteBinarySuccess() throws ZosmfRequestException {
         final PutStreamZosmfRequest mockStreamPutRequest = Mockito.mock(PutStreamZosmfRequest.class);
         Mockito.when(mockStreamPutRequest.executeRequest()).thenReturn(
                 new Response(new byte[0], 200, "success"));

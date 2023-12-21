@@ -15,6 +15,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
@@ -72,9 +73,10 @@ public class UssChangeOwner {
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
      * @param owner      new owner of the file or directory
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response change(final String targetPath, final String owner) {
+    public Response change(final String targetPath, final String owner) throws ZosmfRequestException {
         return changeCommon(targetPath, new ChangeOwnerParams.Builder().owner(owner).build());
     }
 
@@ -84,10 +86,11 @@ public class UssChangeOwner {
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
      * @param params     change owner response parameters, see ChangeOwnerParams object
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response changeCommon(final String targetPath, final ChangeOwnerParams params) {
+    public Response changeCommon(final String targetPath, final ChangeOwnerParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

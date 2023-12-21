@@ -15,6 +15,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
@@ -56,15 +57,14 @@ public class UssSetAcl {
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
-     * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssSetAcl(final ZosConnection connection, final ZosmfRequest request) throws Exception {
+    public UssSetAcl(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
-            throw new Exception("PUT_JSON request type required");
+            throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
@@ -75,9 +75,10 @@ public class UssSetAcl {
      * @param targetPath target path of the file or directory
      * @param value      sets the extended ACL entries that are specified by 'entries'
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response set(final String targetPath, final String value) {
+    public Response set(final String targetPath, final String value) throws ZosmfRequestException {
         return setAclCommon(targetPath, new SetAclParams.Builder().setSet(value).build());
     }
 
@@ -87,9 +88,10 @@ public class UssSetAcl {
      * @param targetPath target path of the file or directory
      * @param value      modifies the extended ACL entries that are specified by 'entries'
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response modify(final String targetPath, final String value) {
+    public Response modify(final String targetPath, final String value) throws ZosmfRequestException {
         return setAclCommon(targetPath, new SetAclParams.Builder().setModify(value).build());
     }
 
@@ -99,9 +101,10 @@ public class UssSetAcl {
      * @param targetPath target path of the file or directory
      * @param value      deletes the extended ACL entries that are specified by 'entries'
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response delete(final String targetPath, final String value) {
+    public Response delete(final String targetPath, final String value) throws ZosmfRequestException {
         return setAclCommon(targetPath, new SetAclParams.Builder().setDelete(value).build());
     }
 
@@ -111,9 +114,10 @@ public class UssSetAcl {
      * @param targetPath target path of the file or directory
      * @param deleteType deletes the extended ACL entries that are specified by type
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response deleteByType(final String targetPath, final DeleteAclType deleteType) {
+    public Response deleteByType(final String targetPath, final DeleteAclType deleteType) throws ZosmfRequestException {
         return setAclCommon(targetPath, new SetAclParams.Builder().setDeleteType(deleteType).build());
     }
 
@@ -123,9 +127,10 @@ public class UssSetAcl {
      * @param targetPath target path of the file or directory
      * @param params     SetAclParams object to drive the request
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response setAclCommon(final String targetPath, final SetAclParams params) {
+    public Response setAclCommon(final String targetPath, final SetAclParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");

@@ -11,15 +11,16 @@ package zowe.client.sdk.zosfiles.uss.methods;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
+import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 
@@ -55,15 +56,14 @@ public class UssExtAttr {
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
-     * @throws Exception processing error
      * @author James Kostrewski
      */
-    public UssExtAttr(final ZosConnection connection, final ZosmfRequest request) throws Exception {
+    public UssExtAttr(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
-            throw new Exception("PUT_JSON request type required");
+            throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
@@ -73,15 +73,15 @@ public class UssExtAttr {
      *
      * @param targetPath path to the file or directory
      * @return string output
-     * @throws Exception processing error
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     @SuppressWarnings("unchecked")
-    public String display(final String targetPath) throws Exception {
+    public String display(final String targetPath) throws ZosmfRequestException {
         final Map<String, String> requestMap = new HashMap<>();
         requestMap.put("request", "extattr");
         final Response response = executeRequest(targetPath, requestMap);
-        final JSONObject json = (JSONObject) new JSONParser().parse(response.getResponsePhrase()
+        final JSONObject json = JsonParserUtil.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
         final StringBuilder str = new StringBuilder();
         ((JSONArray) json.get("stdout")).forEach(item -> str.append(item.toString()).append("\n"));
@@ -94,9 +94,10 @@ public class UssExtAttr {
      * @param targetPath path to the file or directory
      * @param value      one or more of the following character: a,l,p,s
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response set(final String targetPath, final String value) {
+    public Response set(final String targetPath, final String value) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(isNotValidAttributes(value),
                 "specified valid value character sequence");
         final Map<String, String> requestMap = new HashMap<>();
@@ -111,9 +112,10 @@ public class UssExtAttr {
      * @param targetPath path to the file or directory
      * @param value      one or more of the following character: a,l,p,s
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response reset(final String targetPath, final String value) {
+    public Response reset(final String targetPath, final String value) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(isNotValidAttributes(value),
                 "specified valid value character sequence");
         final Map<String, String> requestMap = new HashMap<>();
@@ -127,9 +129,12 @@ public class UssExtAttr {
      *
      * @param targetPath path to the file or directory
      * @param jsonMap    map representing request body
+     * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    private Response executeRequest(final String targetPath, final Map<String, String> jsonMap) {
+    private Response executeRequest(final String targetPath, final Map<String, String> jsonMap)
+            throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
 

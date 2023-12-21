@@ -17,6 +17,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
@@ -81,9 +82,10 @@ public class JobCancel {
      *                the system will attempt to process the request synchronously, if such processing is supported on
      *                the target JES2 subsystem.
      * @return job document with details about the submitted job
+     * @throws ZosmfRequestException request error state
      * @author Nikunj goyal
      */
-    public Response cancel(final String jobName, final String jobId, final String version) {
+    public Response cancel(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
         return this.cancelCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
@@ -97,9 +99,10 @@ public class JobCancel {
      *                the system will attempt to process the request synchronously, if such processing is supported on
      *                the target JES2 subsystem.
      * @return job document with details about the submitted job
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response cancelByJob(final Job job, final String version) {
+    public Response cancelByJob(final Job job, final String version) throws ZosmfRequestException {
         return this.cancelCommon(
                 new ModifyJobParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
                         .version(version)
@@ -111,10 +114,11 @@ public class JobCancel {
      *
      * @param params cancel job parameters, see cancelJobsCommon object
      * @return job document with details about the submitted job
+     * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
-    public Response cancelCommon(final ModifyJobParams params) {
+    public Response cancelCommon(final ModifyJobParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         // generate full url request

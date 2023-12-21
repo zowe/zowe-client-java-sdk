@@ -20,6 +20,7 @@ import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosjobs.methods.JobGet;
 import zowe.client.sdk.zosjobs.response.Job;
 
@@ -66,7 +67,7 @@ public class GetJobsByJsonGetRequestTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void tstGetJobFromMultipleJobsResultsExceptionFailure() {
+    public void tstGetJobFromMultipleJobsResultsExceptionFailure() throws ZosmfRequestException {
         final String msg = "expected 1 job returned but received 2 jobs.";
         final JSONArray jsonArray = new JSONArray();
 
@@ -96,7 +97,7 @@ public class GetJobsByJsonGetRequestTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void tstGetJobWithAllJobMembersSuccess() throws Exception {
+    public void tstGetJobWithAllJobMembersSuccess() throws ZosmfRequestException {
         final JSONArray jsonArray = new JSONArray();
         jsonArray.add(jobJson);
 
@@ -121,7 +122,7 @@ public class GetJobsByJsonGetRequestTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void tstGetJobWithJobIdOnlySuccess() throws Exception {
+    public void tstGetJobWithJobIdOnlySuccess() throws ZosmfRequestException {
         final JSONArray jsonArray = new JSONArray();
 
         final Map<String, String> jsonJobMap = new HashMap<>();
@@ -193,7 +194,7 @@ public class GetJobsByJsonGetRequestTest {
     }
 
     @Test
-    public void tstGetStatusForJobSuccess() throws Exception {
+    public void tstGetStatusForJobSuccess() throws ZosmfRequestException {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(jobJson, 200, "success"));
 

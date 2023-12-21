@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.ChangeOwnerParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssChangeOwner;
 
@@ -34,7 +35,7 @@ public class UssChangeOwnerTest {
     private UssChangeOwner ussChangeOwner;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
@@ -42,7 +43,7 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstUssChangeOwnerSuccess() {
+    public void tstUssChangeOwnerSuccess() throws ZosmfRequestException {
         final UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequest);
         final Response response = ussChangeOwner.change("/xxx/xx/xx", "user");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -51,7 +52,7 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstUssChangeOwnerRecursiveSuccess() {
+    public void tstUssChangeOwnerRecursiveSuccess() throws ZosmfRequestException {
         final UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequest);
         final Response response = ussChangeOwner.changeCommon("/xxx/xx/xx",
                 new ChangeOwnerParams.Builder().owner("user").recursive(true).build());

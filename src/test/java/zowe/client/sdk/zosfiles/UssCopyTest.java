@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.CopyParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssCopy;
 
@@ -35,7 +36,7 @@ public class UssCopyTest {
     private UssCopy ussCopy;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
@@ -43,7 +44,7 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopySuccess() {
+    public void tstUssCopySuccess() throws ZosmfRequestException {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copy("/xxx/xx/xx", "/xxx/xx/xx");
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -52,7 +53,7 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyRecursiveSuccess() {
+    public void tstUssCopyRecursiveSuccess() throws ZosmfRequestException {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copyCommon("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").recursive(true).build());
@@ -62,7 +63,7 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyOverwriteSuccess() {
+    public void tstUssCopyOverwriteSuccess() throws ZosmfRequestException {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copyCommon("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").overwrite(true).build());

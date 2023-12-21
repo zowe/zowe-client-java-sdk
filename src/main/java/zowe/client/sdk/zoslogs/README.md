@@ -13,6 +13,7 @@ API located in method package.
 package zowe.client.sdk.examples.zoslogs;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.zoslogs.input.ZosLogParams;
 import zowe.client.sdk.zoslogs.method.ZosLog;
@@ -33,10 +34,10 @@ public class ZosGetLogTst extends TstZosConnection {
      * z/OS SYSLOG retrieval functionality via ZosLog class.
      *
      * @param args for main not used
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ZosmfRequestException {
         ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         ZosLog zosLog = new ZosLog(connection);
         ZosLogParams zosLogParams = new ZosLogParams.Builder()

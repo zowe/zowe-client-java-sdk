@@ -20,6 +20,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.zosconsole.method.IssueConsole;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
@@ -46,7 +47,7 @@ public class IssueCommandTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseAttributeSuccess() throws Exception {
+    public void tstIssueCommandCmdResponseAttributeSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "student");
         final JSONObject json = new JSONObject(jsonMap);
@@ -62,7 +63,7 @@ public class IssueCommandTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseUrlAttributeSuccess() throws Exception {
+    public void tstIssueCommandCmdResponseUrlAttributeSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response-url", "student");
         final JSONObject json = new JSONObject(jsonMap);
@@ -79,7 +80,7 @@ public class IssueCommandTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void tstIssueCommandHttpErrorFailure() {
+    public void tstIssueCommandHttpErrorFailure() throws ZosmfRequestException {
         final HttpResponse<JsonNode> mockReply = Mockito.mock(HttpResponse.class);
         Mockito.when(mockReply.getStatusText()).thenReturn("Unauthorized");
         Mockito.when(mockReply.getStatus()).thenReturn(401);
