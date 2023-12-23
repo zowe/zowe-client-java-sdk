@@ -2,6 +2,7 @@ zowe.client.sdk.core
 zowe.client.sdk.parse
 zowe.client.sdk.parse.type
 zowe.client.sdk.rest
+zowe.client.sdk.rest.exception
 zowe.client.sdk.rest.type
 zowe.client.sdk.teamconfig
 zowe.client.sdk.teamconfig.keytar
@@ -43,4 +44,5 @@ zowe.client.sdk.zostso.message
 zowe.client.sdk.zostso.method
 zowe.client.sdk.zostso.response
 zowe.client.sdk.zostso.service
+zowe.client.sdk.zosuss.exception
 zowe.client.sdk.zosuss.method
