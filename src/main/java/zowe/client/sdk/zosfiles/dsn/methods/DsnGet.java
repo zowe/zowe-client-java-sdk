@@ -78,6 +78,7 @@ public class DsnGet {
      *
      * @param dataSetName sequential or partition dataset (e.g. 'DATASET.LIB')
      * @return dataset object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Dataset getDsnInfo(final String dataSetName) throws ZosmfRequestException {

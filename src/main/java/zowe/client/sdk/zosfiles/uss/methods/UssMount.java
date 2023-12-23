@@ -78,6 +78,7 @@ public class UssMount {
      * @param mountPoint     the mount point to be used for mounting the UNIX file system
      * @param fsType         the type of file system to be mounted.
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response mount(final String fileSystemName, final String mountPoint, final String fsType)
@@ -96,6 +97,7 @@ public class UssMount {
      *
      * @param fileSystemName the file system name
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response unmount(final String fileSystemName) throws ZosmfRequestException {
@@ -108,6 +110,7 @@ public class UssMount {
      * @param fileSystemName the file system name
      * @param params         MountParams object
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public Response mountCommon(final String fileSystemName, final MountParams params) throws ZosmfRequestException {

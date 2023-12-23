@@ -72,6 +72,7 @@ public abstract class ZosmfRequest {
      * @param reply HttpResponse object
      * @param <T>   either JsonNode, String or byte[] type
      * @return Response object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
