@@ -32,7 +32,7 @@ public class ZosmfRequestException extends Exception {
     }
 
     /**
-     * ZosmfRequestException constructor for message value
+     * ZosmfRequestException constructor for message and throwable values
      *
      * @param message error message
      * @param err     original throwable exception
@@ -43,7 +43,7 @@ public class ZosmfRequestException extends Exception {
     }
 
     /**
-     * ZosmfRequestException constructor for message and response values
+     * ZosmfRequestException constructor for message, response and throwable values
      *
      * @param message  error message
      * @param response Response object
