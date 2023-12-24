@@ -80,10 +80,10 @@ public class IssueUss {
             return responseStream.toString();
         } catch (IOException e) {
             LOG.debug("IOException error " + e);
-            throw new IssueUssException(e.getMessage());
+            throw new IssueUssException(e.getMessage(), e);
         } catch (JSchException e) {
             LOG.debug("JSchException error " + e);
-            throw new IssueUssException(e.getMessage());
+            throw new IssueUssException(e.getMessage(), e);
         } finally {
             if (session != null) {
                 session.disconnect();

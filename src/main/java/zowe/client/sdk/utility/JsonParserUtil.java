@@ -49,7 +49,7 @@ public final class JsonParserUtil {
             return (JSONObject) new JSONParser().parse(item);
         } catch (ParseException e) {
             LOG.debug(PARSE_ERROR_MSG, e);
-            throw new ZosmfRequestException(e.getMessage());
+            throw new ZosmfRequestException(e.getMessage(), e);
         }
     }
 
@@ -66,7 +66,7 @@ public final class JsonParserUtil {
             return (JSONArray) new JSONParser().parse(item);
         } catch (ParseException e) {
             LOG.debug(PARSE_ERROR_MSG, e);
-            throw new ZosmfRequestException(e.getMessage());
+            throw new ZosmfRequestException(e.getMessage(), e);
         }
     }
 

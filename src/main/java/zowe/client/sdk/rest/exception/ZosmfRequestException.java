@@ -11,8 +11,6 @@ package zowe.client.sdk.rest.exception;
 
 import zowe.client.sdk.rest.Response;
 
-import java.util.Optional;
-
 /**
  * Custom exception to represent z/OSMF request error state
  *
@@ -27,10 +25,11 @@ public class ZosmfRequestException extends Exception {
      * ZosmfRequestException constructor for message value
      *
      * @param message error message
+     * @param err     original throwable exception
      * @author Frank Giordano
      */
-    public ZosmfRequestException(final String message) {
-        super(message);
+    public ZosmfRequestException(final String message, Throwable err) {
+        super(message, err);
     }
 
     /**

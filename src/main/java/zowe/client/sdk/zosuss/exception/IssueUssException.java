@@ -21,10 +21,11 @@ public class IssueUssException extends Exception {
      * IssueCommandException constructor for message value
      *
      * @param message error message
+     * @param err     original throwable exception
      * @author Frank Giordano
      */
-    public IssueUssException(final String message) {
-        super(message);
+    public IssueUssException(final String message, Throwable err) {
+        super(message, err);
     }
 
 }
