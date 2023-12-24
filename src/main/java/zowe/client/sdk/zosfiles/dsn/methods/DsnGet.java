@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 /**
  * Provides retrieve dataset and member functionality
@@ -93,10 +94,7 @@ public class DsnGet {
         }
 
         final StringBuilder str = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            str.append(tokens[i]);
-            str.append(".");
-        }
+        IntStream.of(0, length).forEach(i -> str.append(tokens[i]).append("."));
 
         String dataSetSearchStr = str.toString();
         dataSetSearchStr = dataSetSearchStr.substring(0, str.length() - 1);
