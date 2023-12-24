@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zostso;
 
-import org.json.simple.parser.JSONParser;
 import org.junit.Test;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
