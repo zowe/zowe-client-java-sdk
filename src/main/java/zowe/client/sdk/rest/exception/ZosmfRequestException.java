@@ -21,7 +21,7 @@ import java.util.Optional;
  */
 public class ZosmfRequestException extends Exception {
 
-    private Optional<Response> response = Optional.empty();
+    private Response response;
 
     /**
      * ZosmfRequestException constructor for message value
@@ -41,15 +41,15 @@ public class ZosmfRequestException extends Exception {
      */
     public ZosmfRequestException(final String message, final Response response) {
         super(message);
-        this.response = Optional.ofNullable(response);
+        this.response = response;
     }
 
     /**
      * Getter for response object
      *
-     * @return Response optional object
+     * @return Response object
      */
-    public Optional<Response> getResponse() {
+    public Response getResponse() {
         return response;
     }
 
