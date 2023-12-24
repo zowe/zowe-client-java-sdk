@@ -59,7 +59,7 @@ public class ZosmfRequestException extends Exception {
      *
      * @param message  error message
      * @param response Response object
-     * @param err     original throwable exception
+     * @param err      original throwable exception
      * @author Frank Giordano
      */
     public ZosmfRequestException(final String message, final Response response, Throwable err) {
