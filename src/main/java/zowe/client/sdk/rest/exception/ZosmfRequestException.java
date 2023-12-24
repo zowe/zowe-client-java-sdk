@@ -43,7 +43,7 @@ public class ZosmfRequestException extends Exception {
     }
 
     /**
-     * ZosmfRequestException constructor for message, response and throwable values
+     * ZosmfRequestException constructor for message and response values
      *
      * @param message  error message
      * @param response Response object
@@ -51,6 +51,19 @@ public class ZosmfRequestException extends Exception {
      */
     public ZosmfRequestException(final String message, final Response response) {
         super(message);
+        this.response = response;
+    }
+
+    /**
+     * ZosmfRequestException constructor for message, response and throwable values
+     *
+     * @param message  error message
+     * @param response Response object
+     * @param err     original throwable exception
+     * @author Frank Giordano
+     */
+    public ZosmfRequestException(final String message, final Response response, Throwable err) {
+        super(message, err);
         this.response = response;
     }
 
