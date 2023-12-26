@@ -13,21 +13,23 @@ package zowe.client.sdk.examples.zosconsole;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.examples.utility.Util;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosconsole.ConsoleConstants;
+import zowe.client.sdk.zosconsole.input.IssueConsoleParams;
 import zowe.client.sdk.zosconsole.method.IssueConsole;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
-import zowe.client.sdk.zosconsole.input.IssueConsoleParams;
-import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
 
 /**
- * Class example to showcase mvs console command functionality.
+ * Class example to showcase mvs console command functionality via IssueConsole class.
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public class IssueCommandTst extends TstZosConnection {
+public class IssueConsoleExp extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection, and mvs command used for the example test.
+     * Main method defines z/OSMF host and user connection, and mvs command used for the example tests.
      *
      * @param args for main not used
      * @author Frank Giordano
@@ -35,8 +37,8 @@ public class IssueCommandTst extends TstZosConnection {
     public static void main(String[] args) {
         String command = "D IPLINFO";
         ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
-        IssueCommandTst.issueCommand(connection, command);
-        IssueCommandTst.issueCommandCommon(connection, command);
+        IssueConsoleExp.issueCommand(connection, command);
+        IssueConsoleExp.issueCommandCommon(connection, command);
     }
 
     /**
@@ -48,14 +50,16 @@ public class IssueCommandTst extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void issueCommand(ZosConnection connection, String cmd) {
-        IssueConsole issueConsole = new IssueConsole(connection);
         ConsoleResponse response;
         try {
+            IssueConsole issueConsole = new IssueConsole(connection);
             response = issueConsole.issueCommand(cmd);
-            System.out.println(response.getCommandResponse().orElse(""));
         } catch (ZosmfRequestException e) {
-            System.out.println(e.getMessage());
+            final String errMsg = Util.getResponsePhrase(e.getResponse());
+            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
         }
+
+        System.out.println(response.getCommandResponse().orElse("no command response"));
     }
 
     /**
@@ -66,14 +70,46 @@ public class IssueCommandTst extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void issueCommandCommon(ZosConnection connection, String cmd) {
-        IssueConsole issueConsole = new IssueConsole(connection);
         ConsoleResponse response;
         try {
+            IssueConsole issueConsole = new IssueConsole(connection);
             response = issueConsole.issueCommandCommon(ConsoleConstants.RES_DEF_CN, new IssueConsoleParams(cmd));
-            System.out.println(response.getCommandResponse().orElse(""));
         } catch (ZosmfRequestException e) {
-            System.out.println(e.getMessage());
+            final String errMsg = Util.getResponsePhrase(e.getResponse());
+            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
         }
+
+        System.out.println(response.getCommandResponse().orElse("no command response"));
+    }
+
+}
+`````
+
+````java
+package zowe.client.sdk.examples.utility;
+
+import zowe.client.sdk.rest.Response;
+
+/**
+ * Utility class containing helper method(s).
+ *
+ * @author Frank Giordano
+ * @version 2.0
+ */
+public class Util {
+
+    /**
+     * Extract response phrase string value if any from Response object.
+     *
+     * @param response object
+     * @return string value
+     * @author Frank Giordano
+     */
+    public static String getResponsePhrase(Response response) {
+        if (response == null || response.getResponsePhrase().isEmpty()) {
+            return null;
+        }
+        return response.getResponsePhrase().get().toString();
     }
 
 }
