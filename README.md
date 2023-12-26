@@ -104,7 +104,7 @@ SDK release version 2 and above uses Unirest for Java for Http functionality.
    
 Unirest's library provides the ability to retrieve IBM z/OSMF JSON error document.  
   
-For example, the following http GET request will result in an HTTP 500 error:  
+For example, the following http GET request will result in a HTTP 500 error:  
   
     https://xxxxxxx.xxxxx.net:xxxx/zosmf/restfiles/ds?
   
@@ -125,7 +125,23 @@ and the JSON error report document body response is:
 ## Demo App  
 
 [ZosShell](https://github.com/frankgiordano/ZosShell)
-    
+
+## Examples  
+
+  See the following GITHUB [Zowe-Java-SDK](https://github.com/Zowe-Java-SDK) location for code examples and applications.  
+
+In the project, you will find code examples located in each package's README.MD file. See:  
+
+  [teamconfig](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/teamconfig/README.md)  
+  [zosconsole](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosconsole/README.md)  
+  [zosfiles-dsn](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosfiles/dsn/README.md)  
+  [zosfiles-uss](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosfiles/uss/README.md)  
+  [zosjobs](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosjobs/README.md)  
+  [zoslogs](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zoslogs/README.md)  
+  [zosinfo](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfinfo/README.md)  
+  [zostso](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zostso/README.md)  
+  [zosuss](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosuss/README.md)  
+      
 ## Build  
 
 Java 11 and above is required to compile JAR file. Maven is required to build JAR file.     
