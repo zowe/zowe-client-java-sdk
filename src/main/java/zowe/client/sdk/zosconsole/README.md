@@ -116,6 +116,8 @@ public class Util {
 
 `````
 
+**Connection setup**
+
 ````java
 package zowe.client.sdk.examples;
 
