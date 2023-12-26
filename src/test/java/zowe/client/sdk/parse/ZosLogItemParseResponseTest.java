@@ -33,7 +33,7 @@ public class ZosLogItemParseResponseTest {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM).parseResponse((Object) null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             msg = e.getMessage();
         }
         assertEquals("data is null", msg);

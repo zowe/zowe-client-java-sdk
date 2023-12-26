@@ -33,7 +33,7 @@ public class JobFileParseResponseTest {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.JOB_FILE).parseResponse((Object) null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             msg = e.getMessage();
         }
         assertEquals("data is null", msg);

@@ -36,7 +36,7 @@ public class UssMountTest {
     private UssMount ussMount;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         ussMount = new UssMount(connection);
     }
 
@@ -53,31 +53,31 @@ public class UssMountTest {
     }
 
     @Test
-    public void tstUssMountCommonCountActionWithNoFsTypeFailure() {
+    public void tstUssMountCommonCountActionWithNoFsTypeFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mountCommon("name",
                     new MountParams.Builder().action(MountActionType.MOUNT).mountPoint("mountpoint").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fsType not specified", errMsg);
     }
 
     @Test
-    public void tstUssMountCommonCountActionWithNoMountPointFailure() {
+    public void tstUssMountCommonCountActionWithNoMountPointFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mountCommon("name",
                     new MountParams.Builder().action(MountActionType.MOUNT).fsType("fstype").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("mountPoint not specified", errMsg);
     }
 
     @Test
-    public void tstUssMountCommonEmptyFileSystemNameFailure() {
+    public void tstUssMountCommonEmptyFileSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mountCommon("",
@@ -89,166 +89,166 @@ public class UssMountTest {
     }
 
     @Test
-    public void tstUssMountCommonNullFileSystemNameFailure() {
+    public void tstUssMountCommonNullFileSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mountCommon(null,
                     new MountParams.Builder().action(MountActionType.MOUNT).mountPoint("mountpoint").build());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName is null", errMsg);
     }
 
     @Test
-    public void tstUssMountCommonNullParamsFailure() {
+    public void tstUssMountCommonNullParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mountCommon("name", null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("params is null", errMsg);
     }
 
     @Test
-    public void tstUssMountEmptyActionFailure() {
+    public void tstUssMountEmptyActionFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mountCommon("name", new MountParams.Builder().build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("params action not specified", errMsg);
     }
 
     @Test
-    public void tstUssMountEmptyFilSystemNameFailure() {
+    public void tstUssMountEmptyFilSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mount("", "mount", "hfs");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName not specified", errMsg);
     }
 
     @Test
-    public void tstUssMountEmptyFilSystemNameWithSpacesFailure() {
+    public void tstUssMountEmptyFilSystemNameWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mount("   ", "mount", "hfs");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName not specified", errMsg);
     }
 
     @Test
-    public void tstUssMountEmptyFsTypeFailure() {
+    public void tstUssMountEmptyFsTypeFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mount("name", "mount", "");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fsType not specified", errMsg);
     }
 
     @Test
-    public void tstUssMountEmptyFsTypeWithSpacesFailure() {
+    public void tstUssMountEmptyFsTypeWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mount("name", "mount", "   ");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fsType not specified", errMsg);
     }
 
     @Test
-    public void tstUssMountEmptyMountPointFailure() {
+    public void tstUssMountEmptyMountPointFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mount("name", "", "hfs");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("mountPoint not specified", errMsg);
     }
 
     @Test
-    public void tstUssMountEmptyMountPointWithSpacesFailure() {
+    public void tstUssMountEmptyMountPointWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mount("name", "   ", "hfs");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("mountPoint not specified", errMsg);
     }
 
     @Test
-    public void tstUssMountNullFilSystemNameFailure() {
+    public void tstUssMountNullFilSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mount(null, "mount", "hfs");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName is null", errMsg);
     }
 
     @Test
-    public void tstUssMountNullFsTypeFailure() {
+    public void tstUssMountNullFsTypeFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mount("name", "mount", null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fsType is null", errMsg);
     }
 
     @Test
-    public void tstUssMountNullMountPointFailure() {
+    public void tstUssMountNullMountPointFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.mount("name", null, "hfs");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("mountPoint is null", errMsg);
     }
 
     @Test
-    public void tstUssMountUnMountEmptyFileSystemNameFailure() {
+    public void tstUssMountUnMountEmptyFileSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.unmount("");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName not specified", errMsg);
     }
 
     @Test
-    public void tstUssMountUnMountEmptyFileSystemNameWithSpacesFailure() {
+    public void tstUssMountUnMountEmptyFileSystemNameWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.unmount("  ");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName not specified", errMsg);
     }
 
     @Test
-    public void tstUssMountUnMountNullFileSystemNameFailure() {
+    public void tstUssMountUnMountNullFileSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMount.unmount(null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName is null", errMsg);

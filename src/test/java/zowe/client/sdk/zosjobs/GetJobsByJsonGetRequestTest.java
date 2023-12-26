@@ -44,7 +44,7 @@ public class GetJobsByJsonGetRequestTest {
     private JSONObject jobJson;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
         getJobs = new JobGet(connection);
         Whitebox.setInternalState(getJobs, "request", mockJsonGetRequest);
@@ -139,55 +139,55 @@ public class GetJobsByJsonGetRequestTest {
     }
 
     @Test
-    public void tstGetSpoolContentByIdJobIdNullExceptionFailure() {
+    public void tstGetSpoolContentByIdJobIdNullExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getSpoolContent("jobName", null, 1);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errorMsg = e.getMessage();
         }
         assertEquals("job id is null", errorMsg);
     }
 
     @Test
-    public void tstGetSpoolContentByIdJobNameNullExceptionFailure() {
+    public void tstGetSpoolContentByIdJobNameNullExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getSpoolContent(null, "1", 1);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errorMsg = e.getMessage();
         }
         assertEquals("job name is null", errorMsg);
     }
 
     @Test
-    public void tstGetSpoolContentByIdSpoolIdNegativeNumberExceptionFailure() {
+    public void tstGetSpoolContentByIdSpoolIdNegativeNumberExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getSpoolContent("jobName", "1", -11);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
         assertEquals("spool id not specified", errorMsg);
     }
 
     @Test
-    public void tstGetSpoolContentByIdSpoolIdZeroExceptionFailure() {
+    public void tstGetSpoolContentByIdSpoolIdZeroExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getSpoolContent("jobName", "1", 0);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
         assertEquals("spool id not specified", errorMsg);
     }
 
     @Test
-    public void tstGetStatusForJobNoParamsExceptionFailure() {
+    public void tstGetStatusForJobNoParamsExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getStatusByJob(new Job.Builder().build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
         assertEquals("job id not specified", errorMsg);
@@ -215,22 +215,22 @@ public class GetJobsByJsonGetRequestTest {
     }
 
     @Test
-    public void tstGetStatusForJobWithJobIdOnlyExceptionFailure() {
+    public void tstGetStatusForJobWithJobIdOnlyExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getStatusByJob(new Job.Builder().jobId("1").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
         assertEquals(JobsConstants.JOB_NAME_ERROR_MSG, errorMsg);
     }
 
     @Test
-    public void tstGetStatusForJobWithJobNameOnlyExceptionFailure() {
+    public void tstGetStatusForJobWithJobNameOnlyExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getStatusByJob(new Job.Builder().jobName("jobName").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
         assertEquals(JobsConstants.JOB_ID_ERROR_MSG, errorMsg);

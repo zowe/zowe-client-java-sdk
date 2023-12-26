@@ -31,7 +31,7 @@ public class SystemsParseResponseTest {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse((Object) null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             msg = e.getMessage();
         }
         assertEquals("data is null", msg);

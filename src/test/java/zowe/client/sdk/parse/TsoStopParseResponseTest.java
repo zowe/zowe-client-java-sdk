@@ -32,7 +32,7 @@ public class TsoStopParseResponseTest {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.TSO_STOP).parseResponse((Object) null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             msg = e.getMessage();
         }
         assertEquals("data is null", msg);

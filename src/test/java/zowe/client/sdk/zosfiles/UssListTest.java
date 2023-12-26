@@ -109,7 +109,7 @@ public class UssListTest {
             "}";
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
         ussList = new UssList(connection);
     }
@@ -245,154 +245,154 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListFileListParamsNullFailure() {
+    public void tstUssListFileListParamsNullFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getFiles(null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("params is null", errMsg);
     }
 
     @Test
-    public void tstUssListFileListParamsPathEmptyFailure() {
+    public void tstUssListFileListParamsPathEmptyFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getFiles(new ListParams.Builder().path("").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("path not specified", errMsg);
     }
 
     @Test
-    public void tstUssListFileListParamsInvalidPathFailure() {
+    public void tstUssListFileListParamsInvalidPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getFiles(new ListParams.Builder().path("hello").build());
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssListFileListParamsPathEmptyWithSpacesFailure() {
+    public void tstUssListFileListParamsPathEmptyWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getFiles(new ListParams.Builder().path("    ").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("path not specified", errMsg);
     }
 
     @Test
-    public void tstUssListFileListParamsPathNullFailure() {
+    public void tstUssListFileListParamsPathNullFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getFiles(new ListParams.Builder().path(null).build());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("path is null", errMsg);
     }
 
     @Test
-    public void tstUssListZfsListEmptyParamsFailure() {
+    public void tstUssListZfsListEmptyParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getZfsSystems(new ListZfsParams.Builder().build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("no path or fsname specified", errMsg);
     }
 
     @Test
-    public void tstUssListZfsListParamsFsnameEmptyFailure() {
+    public void tstUssListZfsListParamsFsnameEmptyFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getZfsSystems(new ListZfsParams.Builder().fsname("").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fsname not specified", errMsg);
     }
 
     @Test
-    public void tstUssListZfsListParamsFsnameEmptyWithSpacesFailure() {
+    public void tstUssListZfsListParamsFsnameEmptyWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getZfsSystems(new ListZfsParams.Builder().fsname("    ").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fsname not specified", errMsg);
     }
 
     @Test
-    public void tstUssListZfsListParamsFsnameNullFailure() {
+    public void tstUssListZfsListParamsFsnameNullFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getZfsSystems(new ListZfsParams.Builder().fsname(null).build());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fsname is null", errMsg);
     }
 
     @Test
-    public void tstUssListZfsListParamsPathAndFsnameFailure() {
+    public void tstUssListZfsListParamsPathAndFsnameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getZfsSystems(new ListZfsParams.Builder().path("p").fsname("p").build());
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("cannot specify both path and fsname parameters", errMsg);
     }
 
     @Test
-    public void tstUssListZfsListParamsPathEmptyFailure() {
+    public void tstUssListZfsListParamsPathEmptyFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getZfsSystems(new ListZfsParams.Builder().path("").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("path not specified", errMsg);
     }
 
     @Test
-    public void tstUssListZfsListParamsInvalidPathFailure() {
+    public void tstUssListZfsListParamsInvalidPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getZfsSystems(new ListZfsParams.Builder().path("hello").build());
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssListZfsListParamsPathEmptyWithSpacesFailure() {
+    public void tstUssListZfsListParamsPathEmptyWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getZfsSystems(new ListZfsParams.Builder().path("   ").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("path not specified", errMsg);
     }
 
     @Test
-    public void tstUssListZfsListParamsPathNullFailure() {
+    public void tstUssListZfsListParamsPathNullFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussList.getZfsSystems(new ListZfsParams.Builder().path(null).build());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("path is null", errMsg);

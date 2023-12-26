@@ -60,110 +60,110 @@ public class UssMoveTest {
     }
 
     @Test
-    public void tstUssMoveNullFromPathFailure() {
+    public void tstUssMoveNullFromPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMove.move(null, "/xxx/xx/xx");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fromPath is null", errMsg);
     }
 
     @Test
-    public void tstUssMoveEmptyFromPathFailure() {
+    public void tstUssMoveEmptyFromPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMove.move("", "/xxx/xx/xx");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fromPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssMoveEmptyFromPathWithSpacesFailure() {
+    public void tstUssMoveEmptyFromPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMove.move("   ", "/xxx/xx/xx");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fromPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssMoveNullTargetPathFailure() {
+    public void tstUssMoveNullTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMove.move("/xxx/xx/xx", null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath is null", errMsg);
     }
 
     @Test
-    public void tstUssMoveEmptyTargetPathFailure() {
+    public void tstUssMoveEmptyTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMove.move("/xxx/xx/xx", "");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssMoveEmptyTargetPathWithSpacesFailure() {
+    public void tstUssMoveEmptyTargetPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMove.move("/xxx/xx/xx", "   ");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssMoveInvalidTargetPathFailure() {
+    public void tstUssMoveInvalidTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMove.move("/xxx/xx/xx", "name");
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssMoveInvalidFromPathFailure() {
+    public void tstUssMoveInvalidFromPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMove.move("name", "/xxx/xx/xx");
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssMoveInvalidTargetPathWithOverWriteFailure() {
+    public void tstUssMoveInvalidTargetPathWithOverWriteFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMove.move("/xxx/xx/xx", "name", true);
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssMoveInvalidFromPathWithOverWriteFailure() {
+    public void tstUssMoveInvalidFromPathWithOverWriteFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussMove.move("name", "/xxx/xx/xx", false);
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);

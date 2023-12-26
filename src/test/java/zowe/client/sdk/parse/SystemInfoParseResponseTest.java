@@ -33,7 +33,7 @@ public class SystemInfoParseResponseTest {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).parseResponse((Object) null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             msg = e.getMessage();
         }
         assertEquals("data is null", msg);

@@ -33,7 +33,7 @@ public class MvsConsoleParseResponseTest {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).parseResponse((Object) null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             msg = e.getMessage();
         }
         assertEquals("data is null", msg);

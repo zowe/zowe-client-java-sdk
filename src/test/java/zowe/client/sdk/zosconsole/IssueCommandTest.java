@@ -100,7 +100,7 @@ public class IssueCommandTest {
         final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
         try {
             issueCommand.issueCommand("test");
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errorMsg = String.valueOf(e);
         }
         final String expectedMsg = "java.lang.IllegalStateException: http status error code: 401, " +

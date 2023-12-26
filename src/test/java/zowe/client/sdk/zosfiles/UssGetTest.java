@@ -35,7 +35,7 @@ public class UssGetTest {
     private UssGet ussGet;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         ussGet = new UssGet(connection);
     }
 
@@ -82,110 +82,110 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstUssGetTextFileInvalidPathFailure() {
+    public void tstUssGetTextFileInvalidPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussGet.getText("name");
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssGetTextFileNullTargetPathFailure() {
+    public void tstUssGetTextFileNullTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussGet.getText(null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath is null", errMsg);
     }
 
     @Test
-    public void tstUssGetTextFileEmptyTargetPathFailure() {
+    public void tstUssGetTextFileEmptyTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussGet.getText("");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssGetTextFileEmptyTargetPathWithSpacesFailure() {
+    public void tstUssGetTextFileEmptyTargetPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussGet.getText("  ");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssGetBinaryFileNullTargetPathFailure() {
+    public void tstUssGetBinaryFileNullTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussGet.getBinary(null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath is null", errMsg);
     }
 
     @Test
-    public void tstUssGetBinaryFileInvalidTargetPathFailure() {
+    public void tstUssGetBinaryFileInvalidTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussGet.getBinary("name");
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssGetBinaryFileEmptyTargetPathFailure() {
+    public void tstUssGetBinaryFileEmptyTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussGet.getBinary("");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssGetBinaryFileEmptyTargetPathWithSpacesFailure() {
+    public void tstUssGetBinaryFileEmptyTargetPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussGet.getBinary("   ");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssGetCommonNullParamsFailure() {
+    public void tstUssGetCommonNullParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussGet.getCommon("/xxx/xx/x", null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("params is null", errMsg);
     }
 
     @Test
-    public void tstUssGetCommonInvalidTargetPathWithParamsFailure() {
+    public void tstUssGetCommonInvalidTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussGet.getCommon("name", new GetParams.Builder().build());
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);

@@ -100,234 +100,234 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagChangeCommonWithOutBeginningSlashInFileNamePathFailure() {
+    public void tstUssChangeTagChangeCommonWithOutBeginningSlashInFileNamePathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.changeCommon("xxx/xx/xx",
                     new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeCommonNullActionInParamsFailure() {
+    public void tstUssChangeTagChangeCommonNullActionInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.changeCommon("/xxx/xx/xx",
                     new ChangeTagParams.Builder().action(null).build());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("action is null", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeCommonNoActionInParamsFailure() {
+    public void tstUssChangeTagChangeCommonNoActionInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.changeCommon("/xxx/xx/xx", new ChangeTagParams.Builder().build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("action not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeCommonInvalidFileNamePathPathFailure() {
+    public void tstUssChangeTagChangeCommonInvalidFileNamePathPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.changeCommon("hello",
                     new ChangeTagParams.Builder().action(ChangeTagAction.SET).build());
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeCommonEmptyFileNamePathPathFailure() {
+    public void tstUssChangeTagChangeCommonEmptyFileNamePathPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.changeCommon("", new ChangeTagParams.Builder().build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeCommonEmptyFileNamePathPathWithSpacesFailure() {
+    public void tstUssChangeTagChangeCommonEmptyFileNamePathPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.changeCommon("  ", new ChangeTagParams.Builder().build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeToBinaryEmptyFileNamePathFailure() {
+    public void tstUssChangeTagChangeToBinaryEmptyFileNamePathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.binary("");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeToBinaryEmptyFileNamePathWithSpacesFailure() {
+    public void tstUssChangeTagChangeToBinaryEmptyFileNamePathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.binary("  ");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeToBinaryNullFileNamePathFailure() {
+    public void tstUssChangeTagChangeToBinaryNullFileNamePathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.binary(null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath is null", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeToTextEmptyFileNamePathFailure() {
+    public void tstUssChangeTagChangeToTextEmptyFileNamePathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.text("", "codeset");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeToTextEmptyFileNamePathWithSpacesFailure() {
+    public void tstUssChangeTagChangeToTextEmptyFileNamePathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.text("  ", "codeset");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeToTextNullFileNamePathFailure() {
+    public void tstUssChangeTagChangeToTextNullFileNamePathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.text(null, "codeset");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath is null", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeToTextNullCodeSetFailure() {
+    public void tstUssChangeTagChangeToTextNullCodeSetFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.text("/xx/xx/x", null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("codeSet is null", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeToTextEmptyCodeSetFailure() {
+    public void tstUssChangeTagChangeToTextEmptyCodeSetFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.text(null, "");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("codeSet not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagChangeToTextEmptyCodeSetWithSpacesFailure() {
+    public void tstUssChangeTagChangeToTextEmptyCodeSetWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.text(null, "  ");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("codeSet not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagRemoveEmptyFileNamePathFailure() {
+    public void tstUssChangeTagRemoveEmptyFileNamePathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.remove("");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagRemoveEmptyFileNamePathWithSpacesFailure() {
+    public void tstUssChangeTagRemoveEmptyFileNamePathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.remove("  ");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagRemoveNullFileNamePathFailure() {
+    public void tstUssChangeTagRemoveNullFileNamePathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.remove(null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath is null", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagRetrieveEmptyFileNamePathFailure() {
+    public void tstUssChangeTagRetrieveEmptyFileNamePathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.get("");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagRetrieveEmptyFileNamePathWithSpacesFailure() {
+    public void tstUssChangeTagRetrieveEmptyFileNamePathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.get("  ");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeTagRetrieveNullFileNamePathFailure() {
+    public void tstUssChangeTagRetrieveNullFileNamePathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeTag.get(null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath is null", errMsg);

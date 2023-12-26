@@ -33,7 +33,7 @@ public class MemberParseResponseTest {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse((Object) null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             msg = e.getMessage();
         }
         assertEquals("data is null", msg);

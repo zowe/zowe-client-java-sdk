@@ -73,154 +73,154 @@ public class UssCopyTest {
     }
 
     @Test
-    public void tstUssCopyInvalidTargetPathPathFailure() {
+    public void tstUssCopyInvalidTargetPathPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copy("/xxx/xx/xx", "name");
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssCopyInvalidFromPathPathFailure() {
+    public void tstUssCopyInvalidFromPathPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copy("name", "/xxx/xx/xx");
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssCopyNullFromPathFailure() {
+    public void tstUssCopyNullFromPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copy(null, "/xxx/xx/xx");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("from is null", errMsg);
     }
 
     @Test
-    public void tstUssCopyEmptyFromPathFailure() {
+    public void tstUssCopyEmptyFromPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copy("", "/xxx/xx/xx");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("from not specified", errMsg);
     }
 
     @Test
-    public void tstUssCopyEmptyFromPathWithSpacesFailure() {
+    public void tstUssCopyEmptyFromPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copy("   ", "/xxx/xx/xx");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("from not specified", errMsg);
     }
 
     @Test
-    public void tstUssCopyNullTargetPathFailure() {
+    public void tstUssCopyNullTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copy("/xxx/xx/xx", null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath is null", errMsg);
     }
 
     @Test
-    public void tstUssCopyEmptyTargetPathFailure() {
+    public void tstUssCopyEmptyTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copy("/xxx/xx/xx", "");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssCopyEmptyTargetPathWithSpacesFailure() {
+    public void tstUssCopyEmptyTargetPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copy("/xxx/xx/xx", "  ");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssCopyNullParamsFailure() {
+    public void tstUssCopyNullParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copyCommon("/xxx/xx/xx", null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("params is null", errMsg);
     }
 
     @Test
-    public void tstUssCopyNullFromInParamsFailure() {
+    public void tstUssCopyNullFromInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copyCommon("/xxx/xx/xx", new CopyParams.Builder().from(null).build());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("from is null", errMsg);
     }
 
     @Test
-    public void tstUssCopyEmptyFromInParamsFailure() {
+    public void tstUssCopyEmptyFromInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copyCommon("/xxx/xx/xx", new CopyParams.Builder().from("").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("from not specified", errMsg);
     }
 
     @Test
-    public void tstUssCopyEmptyFromInParamsWithSpacesFailure() {
+    public void tstUssCopyEmptyFromInParamsWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copyCommon("/xxx/xx/xx", new CopyParams.Builder().from("   ").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("from not specified", errMsg);
     }
 
     @Test
-    public void tstUssCopyInvalidTargetPathWithParamsFailure() {
+    public void tstUssCopyInvalidTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copyCommon("name", new CopyParams.Builder().from("/xxx/xx/xx").build());
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssCopyInvalidFromPathInParamsFailure() {
+    public void tstUssCopyInvalidFromPathInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCopy.copyCommon("/xxx/xx/xx", new CopyParams.Builder().from("name").build());
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);

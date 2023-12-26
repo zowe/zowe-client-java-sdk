@@ -37,7 +37,7 @@ public class UssWriteTest {
     private UssWrite ussWrite;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         ussWrite = new UssWrite(connection);
     }
 
@@ -66,143 +66,143 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteTextNullTargetPathFailure() {
+    public void tstUssWriteTextNullTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussWrite.writeText(null, "content");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath is null", errMsg);
     }
 
     @Test
-    public void tstUssWriteTextEmptyTargetPathFailure() {
+    public void tstUssWriteTextEmptyTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussWrite.writeText("", "content");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssWriteTextEmptyTargetPathWithSpacesFailure() {
+    public void tstUssWriteTextEmptyTargetPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussWrite.writeText("    ", "content");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssWriteTextInvalidTargetPathFailure() {
+    public void tstUssWriteTextInvalidTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussWrite.writeText("name", "text");
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssWriteBinaryNullTargetPathFailure() {
+    public void tstUssWriteBinaryNullTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussWrite.writeBinary(null, new byte[0]);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath is null", errMsg);
     }
 
     @Test
-    public void tstUssWriteBinaryEmptyTargetPathFailure() {
+    public void tstUssWriteBinaryEmptyTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussWrite.writeBinary("", new byte[0]);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssWriteBinaryEmptyTargetPathWithSpacesFailure() {
+    public void tstUssWriteBinaryEmptyTargetPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussWrite.writeBinary("   ", new byte[0]);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssWriteBinaryInvalidTargetPathFailure() {
+    public void tstUssWriteBinaryInvalidTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussWrite.writeBinary("name", new byte[0]);
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssWriteCommonNullTargetPathWithParamsFailure() {
+    public void tstUssWriteCommonNullTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussWrite.writeCommon(null, new WriteParams.Builder().build());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath is null", errMsg);
     }
 
     @Test
-    public void tstUssWriteCommonEmptyTargetPathWithParamsFailure() {
+    public void tstUssWriteCommonEmptyTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussWrite.writeCommon("", new WriteParams.Builder().build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssWriteCommonEmptyTargetPathWithSpacesWithParamsFailure() {
+    public void tstUssWriteCommonEmptyTargetPathWithSpacesWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussWrite.writeCommon("  ", new WriteParams.Builder().build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileNamePath not specified", errMsg);
     }
 
     @Test
-    public void tstUssWriteCommonNullParamsFailure() {
+    public void tstUssWriteCommonNullParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussWrite.writeCommon("/xx/xx/x", null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("params is null", errMsg);
     }
 
     @Test
-    public void tstUssWriteCommonInvalidTargetPathFailure() {
+    public void tstUssWriteCommonInvalidTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussWrite.writeCommon("name", new WriteParams.Builder().build());
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);

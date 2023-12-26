@@ -63,77 +63,77 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChangeModeInvalidTargetPathWithParamsFailure() {
+    public void tstUssChangeModeInvalidTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeMode.change("name", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssChangeModeNullTargetPathWithParamsFailure() {
+    public void tstUssChangeModeNullTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeMode.change(null, new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath is null", errMsg);
     }
 
     @Test
-    public void tstUssChangeModeEmptyTargetPathWithParamsFailure() {
+    public void tstUssChangeModeEmptyTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeMode.change("", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeModeEmptyTargetPathWithSpacesWithParamsFailure() {
+    public void tstUssChangeModeEmptyTargetPathWithSpacesWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeMode.change("  ", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeModeNullModeInParamsFailure() {
+    public void tstUssChangeModeNullModeInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode(null).build());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("mode is null", errMsg);
     }
 
     @Test
-    public void tstUssChangeModeEmptyModeInParamsFailure() {
+    public void tstUssChangeModeEmptyModeInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("mode not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeModeEmptyModeInParamsWithSpacesFailure() {
+    public void tstUssChangeModeEmptyModeInParamsWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("  ").build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("mode not specified", errMsg);

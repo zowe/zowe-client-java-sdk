@@ -62,110 +62,110 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstUssChangeOwnerInvalidTargetPathFailure() {
+    public void tstUssChangeOwnerInvalidTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeOwner.change("name", "user");
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssChangeOwnerNullTargetPathFailure() {
+    public void tstUssChangeOwnerNullTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeOwner.change(null, "user");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath is null", errMsg);
     }
 
     @Test
-    public void tstUssChangeOwnerEmptyTargetPathFailure() {
+    public void tstUssChangeOwnerEmptyTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeOwner.change("", "user");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeOwnerEmptyTargetPathWithSpacesFailure() {
+    public void tstUssChangeOwnerEmptyTargetPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeOwner.change("   ", "user");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeOwnerNullParamsFailure() {
+    public void tstUssChangeOwnerNullParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeOwner.changeCommon("/xxx/xx/xx", null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("params is null", errMsg);
     }
 
     @Test
-    public void tstUssChangeOwnerNoOwnerSpecifiedInParamsFailure() {
+    public void tstUssChangeOwnerNoOwnerSpecifiedInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeOwner.changeCommon("/xxx/xx/xx", new ChangeOwnerParams.Builder().build());
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("owner not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeOwnerInvalidTargetPathWithParamsFailure() {
+    public void tstUssChangeOwnerInvalidTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeOwner.changeCommon("name", new ChangeOwnerParams.Builder().build());
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssChangeOwnerNullOwnerFailure() {
+    public void tstUssChangeOwnerNullOwnerFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeOwner.change("/xxx/xx/xx", null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("owner is null", errMsg);
     }
 
     @Test
-    public void tstUssChangeOwnerEmptyOwnerFailure() {
+    public void tstUssChangeOwnerEmptyOwnerFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeOwner.change("/xxx/xx/xx", "");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("owner not specified", errMsg);
     }
 
     @Test
-    public void tstUssChangeOwnerEmptyOwnerWithSpacesFailure() {
+    public void tstUssChangeOwnerEmptyOwnerWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussChangeOwner.change("/xxx/xx/xx", "  ");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("owner not specified", errMsg);

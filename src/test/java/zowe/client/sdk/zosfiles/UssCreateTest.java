@@ -38,7 +38,7 @@ public class UssCreateTest {
     private UssCreate ussCreate;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         mockJsonPostRequest = Mockito.mock(PostJsonZosmfRequest.class);
         ussCreate = new UssCreate(connection);
     }
@@ -55,110 +55,110 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstUssCreateInvalidTargetPathFailure() {
+    public void tstUssCreateInvalidTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.create("name", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssCreateNullTargetPathFailure() {
+    public void tstUssCreateNullTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.create(null, new CreateParams(CreateType.FILE, "rwxrwxrwx"));
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath is null", errMsg);
     }
 
     @Test
-    public void tstUssCreateEmptyTargetPathFailure() {
+    public void tstUssCreateEmptyTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.create("", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssCreateEmptyTargetPathWithSpacesFailure() {
+    public void tstUssCreateEmptyTargetPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.create("  ", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssCreateNullParamsFailure() {
+    public void tstUssCreateNullParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.create("/xx/xx/x", null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("params is null", errMsg);
     }
 
     @Test
-    public void tstUssCreateNullTypeInParamsFailure() {
+    public void tstUssCreateNullTypeInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.create("/xx/xx/x", new CreateParams(null, "rwxrwxrwx"));
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("type is null", errMsg);
     }
 
     @Test
-    public void tstUssCreateNullModeInParamsFailure() {
+    public void tstUssCreateNullModeInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, null));
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("mode is null", errMsg);
     }
 
     @Test
-    public void tstUssCreateEmptyModeInParamsFailure() {
+    public void tstUssCreateEmptyModeInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, ""));
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify 9 character permission", errMsg);
     }
 
     @Test
-    public void tstUssCreateEmptyModeInParamsWithSpacesFailure() {
+    public void tstUssCreateEmptyModeInParamsWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "  "));
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify 9 character permission", errMsg);
     }
 
     @Test
-    public void tstUssCreateInvalidModeWithParamsFailure() {
+    public void tstUssCreateInvalidModeWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwf"));
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid permission value", errMsg);
@@ -166,77 +166,77 @@ public class UssCreateTest {
 
 
     @Test
-    public void tstUssCreateZfsCommonNullCylsPriFailure() {
+    public void tstUssCreateZfsCommonNullCylsPriFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.createZfsCommon("xx.xx.x", new CreateZfsParams.Builder(null).build());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("cylsPri is null", errMsg);
     }
 
     @Test
-    public void tstUssCreateZfsCommonZeroCylsPriFailure2() {
+    public void tstUssCreateZfsCommonZeroCylsPriFailure2() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.createZfsCommon("xx.xx.x", new CreateZfsParams.Builder(0).build());
-        } catch (Exception e) {
+        } catch (Exception e) { //TODO catching wrong exception
             errMsg = e.getMessage();
         }
         assertEquals("specify cylsPri greater than 0", errMsg);
     }
 
     @Test
-    public void tstUssCreateZfsCommonNullFileSystemNameFailure() {
+    public void tstUssCreateZfsCommonNullFileSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.createZfsCommon(null, new CreateZfsParams.Builder(2).build());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName is null", errMsg);
     }
 
     @Test
-    public void tstUssCreateZfsCommonEmptyFileSystemNameFailure() {
+    public void tstUssCreateZfsCommonEmptyFileSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.createZfsCommon("", new CreateZfsParams.Builder(2).build());
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName not specified", errMsg);
     }
 
     @Test
-    public void tstUssCreateZfsCommonNullParamsFailure() {
+    public void tstUssCreateZfsCommonNullParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.createZfsCommon("xx.xx.x", null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("params is null", errMsg);
     }
 
     @Test
-    public void tstUssCreateZfsNullFileSystemNameFailure() {
+    public void tstUssCreateZfsNullFileSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.createZfs(null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName is null", errMsg);
     }
 
     @Test
-    public void tstUssCreateZfEmptyFileSystemNameFailure() {
+    public void tstUssCreateZfEmptyFileSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussCreate.createZfs("");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName not specified", errMsg);

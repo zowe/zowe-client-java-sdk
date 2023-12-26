@@ -61,110 +61,110 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteInvalidTargetPathFailure() {
+    public void tstUssDeleteInvalidTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussDelete.delete("name");
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssDeleteInvalidTargetPathWithRecursiveFailure() {
+    public void tstUssDeleteInvalidTargetPathWithRecursiveFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussDelete.delete("name", true);
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify valid path value", errMsg);
     }
 
     @Test
-    public void tstUssDeleteNullTargetPathFailure() {
+    public void tstUssDeleteNullTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussDelete.delete(null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath is null", errMsg);
     }
 
     @Test
-    public void tstUssDeleteEmptyTargetPathFailure() {
+    public void tstUssDeleteEmptyTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussDelete.delete("");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssDeleteEmptyTargetPathWithSpacesFailure() {
+    public void tstUssDeleteEmptyTargetPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussDelete.delete("   ");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssDeleteNullTargetPathWithRecursiveFailure() {
+    public void tstUssDeleteNullTargetPathWithRecursiveFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussDelete.delete(null, true);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath is null", errMsg);
     }
 
     @Test
-    public void tstUssDeleteEmptyTargetPathWithRecursiveFailure() {
+    public void tstUssDeleteEmptyTargetPathWithRecursiveFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussDelete.delete("", true);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("targetPath not specified", errMsg);
     }
 
     @Test
-    public void tstUssDeleteZfsNullFileSystemNameFailure() {
+    public void tstUssDeleteZfsNullFileSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussDelete.deleteZfs(null);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName is null", errMsg);
     }
 
     @Test
-    public void tstUssDeleteZfsEmptyFileSystemNameFailure() {
+    public void tstUssDeleteZfsEmptyFileSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussDelete.deleteZfs("");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName not specified", errMsg);
     }
 
     @Test
-    public void tstUssDeleteZfsEmptyFileSystemNameWithSpacesFailure() {
+    public void tstUssDeleteZfsEmptyFileSystemNameWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
             ussDelete.deleteZfs("   ");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("fileSystemName not specified", errMsg);

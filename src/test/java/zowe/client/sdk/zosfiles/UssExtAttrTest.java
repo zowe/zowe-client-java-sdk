@@ -11,6 +11,7 @@ package zowe.client.sdk.zosfiles;
 
 import org.junit.Test;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.methods.UssExtAttr;
 
 import static org.junit.Assert.assertEquals;
@@ -26,96 +27,96 @@ public class UssExtAttrTest {
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
 
     @Test
-    public void tstUssExtAttrSetValueFailure1() {
+    public void tstUssExtAttrSetValueFailure1() throws ZosmfRequestException {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.set("/xxx/xx/xx", "pp");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specified valid value character sequence", errMsg);
     }
 
     @Test
-    public void tstUssExtAttrSetValueFailure2() {
+    public void tstUssExtAttrSetValueFailure2() throws ZosmfRequestException {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.set("/xxx/xx/xx", "at");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specified valid value character sequence", errMsg);
     }
 
     @Test
-    public void tstUssExtAttrSetValueFailure3() {
+    public void tstUssExtAttrSetValueFailure3() throws ZosmfRequestException {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.set("/xxx/xx/xx", "yu");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specified valid value character sequence", errMsg);
     }
 
     @Test
-    public void tstUssExtAttrSetValueFailure4() {
+    public void tstUssExtAttrSetValueFailure4() throws ZosmfRequestException {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.set("/xxx/xx/xx", "apap");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specified valid value character sequence", errMsg);
     }
 
     @Test
-    public void tstUssExtAttrResetValueFailure1() {
+    public void tstUssExtAttrResetValueFailure1() throws ZosmfRequestException {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.reset("/xxx/xx/xx", "pp");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specified valid value character sequence", errMsg);
     }
 
     @Test
-    public void tstUssExtAttrResetValueFailure2() {
+    public void tstUssExtAttrResetValueFailure2() throws ZosmfRequestException {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.reset("/xxx/xx/xx", "at");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specified valid value character sequence", errMsg);
     }
 
     @Test
-    public void tstUssExtAttrResetValueFailure3() {
+    public void tstUssExtAttrResetValueFailure3() throws ZosmfRequestException {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.reset("/xxx/xx/xx", "yu");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specified valid value character sequence", errMsg);
     }
 
     @Test
-    public void tstUssExtAttrResetValueFailure4() {
+    public void tstUssExtAttrResetValueFailure4() throws ZosmfRequestException {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.reset("/xxx/xx/xx", "apap");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specified valid value character sequence", errMsg);
