@@ -363,7 +363,7 @@ public class CreateZfsParams {
          */
         public Builder(final Integer cylsPri) {
             ValidateUtils.checkNullParameter(cylsPri == null, "cylsPri is null");
-            ValidateUtils.checkNullParameter(cylsPri <= 0, "specify cylsPri greater than 0");
+            ValidateUtils.checkIllegalParameter(cylsPri <= 0, "specify cylsPri greater than 0");
             this.cylsPri = cylsPri;
         }
 
