@@ -11,6 +11,7 @@ package zowe.client.sdk.examples.zostso;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zostso.method.IssueTso;
 import zowe.client.sdk.zostso.response.IssueResponse;
@@ -23,7 +24,7 @@ import java.util.Arrays;
  * @author Frank Giordano
  * @version 2.0
  */
-public class IssueTsoCommandTst extends TstZosConnection {
+public class IssueTsoExp extends TstZosConnection {
 
     private static ZosConnection connection;
 
@@ -31,15 +32,14 @@ public class IssueTsoCommandTst extends TstZosConnection {
      * Main method defines z/OSMF host and user connection, and tso command parameters used for the example test.
      *
      * @param args for main not used
-     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws ZosmfRequestException {
+    public static void main(String[] args) {
         String command = "xxx";
         String accountNumber = "xxx";
 
         connection = new ZosConnection(hostName, zosmfPort, userName, password);
-        IssueResponse response = IssueTsoCommandTst.issueCommand(accountNumber, command);
+        IssueResponse response = IssueTsoExp.issueCommand(accountNumber, command);
         String[] results = response.getCommandResponses().orElse("").split("\n");
         Arrays.stream(results).sequential().forEach(System.out::println);
     }
@@ -50,12 +50,46 @@ public class IssueTsoCommandTst extends TstZosConnection {
      * @param accountNumber user's z/OSMF permission account number
      * @param cmd           tso command to execute
      * @return issue response object
-     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static IssueResponse issueCommand(String accountNumber, String cmd) throws ZosmfRequestException {
+    public static IssueResponse issueCommand(String accountNumber, String cmd) {
         IssueTso issueTso = new IssueTso(connection);
-        return issueTso.issueCommand(accountNumber, cmd);
+        try {
+            return issueTso.issueCommand(accountNumber, cmd);
+        } catch (ZosmfRequestException e) {
+            final String errMsg = Util.getResponsePhrase(e.getResponse());
+            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+        }
+    }
+
+}
+`````
+
+````java
+package zowe.client.sdk.examples.utility;
+
+import zowe.client.sdk.rest.Response;
+
+/**
+ * Utility class containing helper method(s).
+ *
+ * @author Frank Giordano
+ * @version 2.0
+ */
+public class Util {
+
+    /**
+     * Extract response phrase string value if any from Response object.
+     *
+     * @param response object
+     * @return string value
+     * @author Frank Giordano
+     */
+    public static String getResponsePhrase(Response response) {
+        if (response == null || response.getResponsePhrase().isEmpty()) {
+            return null;
+        }
+        return response.getResponsePhrase().get().toString();
     }
 
 }
