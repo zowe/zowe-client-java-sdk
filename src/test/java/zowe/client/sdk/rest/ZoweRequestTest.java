@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 
 import static org.junit.Assert.assertEquals;
@@ -48,7 +49,7 @@ public class ZoweRequestTest {
         String errMsg = "";
         try {
             request.buildResponse(mockReply);
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             errMsg = e.getMessage();
         }
         final String expectedErrMsg = "http status error code: 300, status text: error, response phrase: null";
@@ -66,7 +67,7 @@ public class ZoweRequestTest {
         String errMsg = "";
         try {
             request.buildResponse(mockReply);
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             errMsg = e.getMessage();
         }
         final String expectedErrMsg = "http status error code: 300, status text: error, response phrase: {}";
@@ -84,7 +85,7 @@ public class ZoweRequestTest {
         String errMsg = "";
         try {
             request.buildResponse(mockReply);
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             errMsg = e.getMessage();
         }
         assertEquals("http status error code: 300, status text: " + "{\"error\":\"error\"}", errMsg);
@@ -101,7 +102,7 @@ public class ZoweRequestTest {
         String errMsg = "";
         try {
             request.buildResponse(mockReply);
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             errMsg = e.getMessage();
         }
         final String expectedErrMsg = "http status error code: 300, status text: , response phrase: {}";
@@ -119,7 +120,7 @@ public class ZoweRequestTest {
         String errMsg = "";
         try {
             request.buildResponse(mockReply);
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             errMsg = e.getMessage();
         }
         final String expectedErrMsg = "http status error code: 300, status text: n\\a, response phrase: {}";

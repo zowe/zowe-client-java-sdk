@@ -91,7 +91,7 @@ public class IssueCommandTest {
         String errorMsg = "";
         try {
             request.buildResponse(mockReply);
-        } catch (Exception e) {
+        } catch (ZosmfRequestException e) {
             errorMsg = e.getMessage();
         }
 
