@@ -181,7 +181,7 @@ public class UssCreateTest {
         String errMsg = "";
         try {
             ussCreate.createZfsCommon("xx.xx.x", new CreateZfsParams.Builder(0).build());
-        } catch (IllegalArgumentException e) { 
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
         assertEquals("specify cylsPri greater than 0", errMsg);
