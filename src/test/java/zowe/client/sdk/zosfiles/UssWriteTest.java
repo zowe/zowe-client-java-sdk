@@ -37,7 +37,7 @@ public class UssWriteTest {
     private UssWrite ussWrite;
 
     @Before
-    public void init() throws ZosmfRequestException {
+    public void init() {
         ussWrite = new UssWrite(connection);
     }
 

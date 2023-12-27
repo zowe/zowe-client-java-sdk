@@ -38,7 +38,7 @@ public class UssCreateTest {
     private UssCreate ussCreate;
 
     @Before
-    public void init() throws ZosmfRequestException {
+    public void init() {
         mockJsonPostRequest = Mockito.mock(PostJsonZosmfRequest.class);
         ussCreate = new UssCreate(connection);
     }

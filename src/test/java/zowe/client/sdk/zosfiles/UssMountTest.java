@@ -36,7 +36,7 @@ public class UssMountTest {
     private UssMount ussMount;
 
     @Before
-    public void init() throws ZosmfRequestException {
+    public void init() {
         ussMount = new UssMount(connection);
     }
 
@@ -77,7 +77,7 @@ public class UssMountTest {
     }
 
     @Test
-    public void tstUssMountCommonEmptyFileSystemNameFailure() throws ZosmfRequestException {
+    public void tstUssMountCommonEmptyFileSystemNameFailure() {
         String errMsg = "";
         try {
             ussMount.mountCommon("",

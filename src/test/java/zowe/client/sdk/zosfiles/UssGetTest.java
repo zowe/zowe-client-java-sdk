@@ -35,7 +35,7 @@ public class UssGetTest {
     private UssGet ussGet;
 
     @Before
-    public void init() throws ZosmfRequestException {
+    public void init() {
         ussGet = new UssGet(connection);
     }
 

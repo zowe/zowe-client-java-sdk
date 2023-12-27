@@ -109,7 +109,7 @@ public class UssListTest {
             "}";
 
     @Before
-    public void init() throws ZosmfRequestException {
+    public void init() {
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
         ussList = new UssList(connection);
     }

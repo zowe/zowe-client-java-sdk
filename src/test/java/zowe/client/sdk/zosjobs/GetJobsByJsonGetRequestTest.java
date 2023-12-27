@@ -44,7 +44,7 @@ public class GetJobsByJsonGetRequestTest {
     private JSONObject jobJson;
 
     @Before
-    public void init() throws ZosmfRequestException {
+    public void init() {
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
         getJobs = new JobGet(connection);
         Whitebox.setInternalState(getJobs, "request", mockJsonGetRequest);
