@@ -34,11 +34,6 @@ public class KeyTarService {
     private final List<String> serviceNames = List.of("Zowe", "Zowe-Plugin");
 
     /**
-     * Account name used for KeyTar querying of OS credential store
-     */
-    private final String ACCOUNT_NAME = "secure_config_props";
-
-    /**
      * IKeyTar implementation holder
      */
     private final IKeyTar keyTar;
@@ -62,6 +57,10 @@ public class KeyTarService {
      */
     public KeyTarConfig getKeyTarConfig() throws Exception {
         List<KeyTarConfig> keyTarConfigs = new ArrayList<>();
+        /**
+         * Account name used for KeyTar querying of OS credential store
+         */
+        String ACCOUNT_NAME = "secure_config_props";
         keyTar.setAccountName(ACCOUNT_NAME);
         for (final String serviceName : serviceNames) {
             keyTar.setServiceName(serviceName);
