@@ -298,7 +298,7 @@ public class DownloadParams {
         private String file;
 
         /**
-         * The extension you want to use for the file, e.g. .txt, .c
+         * The extension you want to use for the file, e.g. extensions: .txt, .c
          */
         private String extension;
 
