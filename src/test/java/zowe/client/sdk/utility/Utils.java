@@ -9,6 +9,10 @@
  */
 package zowe.client.sdk.utility;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import zowe.client.sdk.teamconfig.TeamConfig;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -24,6 +28,8 @@ import static org.junit.Assert.fail;
  * @version 2.0
  */
 public final class Utils {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Utils.class);
 
     /**
      * Private constructor defined to avoid instantiation of class
@@ -76,13 +82,13 @@ public final class Utils {
         try {
             Utils.assertUtilityClassWellDefined(name);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalStateException e) {
-            e.printStackTrace();
+            LOG.error("error " + e);
             fail();
         } catch (InvocationTargetException e) {
             if (e.getTargetException() instanceof IllegalStateException) {
                 assertEquals(privateConstructorMsg, e.getTargetException().getMessage());
             } else {
-                e.printStackTrace();
+                LOG.error("error " + e);
                 fail();
             }
         }
