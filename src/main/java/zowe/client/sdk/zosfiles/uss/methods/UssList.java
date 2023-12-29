@@ -87,6 +87,7 @@ public class UssList {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
+    @SuppressWarnings("DuplicatedCode")
     public List<UnixFile> getFiles(final ListParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
@@ -149,6 +150,7 @@ public class UssList {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
+    @SuppressWarnings("DuplicatedCode")
     public List<UnixZfs> getZfsSystems(final ListZfsParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getPath().isEmpty() && params.getFsname().isEmpty(),

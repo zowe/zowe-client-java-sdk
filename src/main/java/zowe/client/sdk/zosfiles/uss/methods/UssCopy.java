@@ -93,6 +93,7 @@ public class UssCopy {
      * @author James Kostrewski
      * @author Frank Giordano
      */
+    @SuppressWarnings("DuplicatedCode")
     public Response copyCommon(final String targetPath, final CopyParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");

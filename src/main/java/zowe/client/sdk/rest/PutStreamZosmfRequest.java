@@ -48,6 +48,7 @@ public class PutStreamZosmfRequest extends ZosmfRequest {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public Response executeRequest() throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(url == null, "url is null");

@@ -90,6 +90,7 @@ public class UssChangeOwner {
      * @author James Kostrewski
      * @author Frank Giordano
      */
+    @SuppressWarnings("DuplicatedCode")
     public Response changeCommon(final String targetPath, final ChangeOwnerParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");

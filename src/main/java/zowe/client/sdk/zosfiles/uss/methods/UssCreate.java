@@ -83,6 +83,7 @@ public class UssCreate {
      * @author James Kostrewski
      * @author Frank Giordano
      */
+    @SuppressWarnings("DuplicatedCode")
     public Response create(final String targetPath, final CreateParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");

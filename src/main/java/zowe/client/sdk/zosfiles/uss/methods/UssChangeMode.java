@@ -79,6 +79,7 @@ public class UssChangeMode {
      * @author James Kostrewsk
      * @author Frank Giordano
      */
+    @SuppressWarnings("DuplicatedCode")
     public Response change(final String targetPath, final ChangeModeParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
