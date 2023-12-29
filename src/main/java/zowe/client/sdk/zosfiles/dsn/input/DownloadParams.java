@@ -27,7 +27,7 @@ public class DownloadParams {
     private final Optional<String> file;
 
     /**
-     * The extension you want to use for the file, e.g. .txt, .c
+     * The extension you want to use for the file, e.g. extensions: .txt, .c
      */
     private final Optional<String> extension;
 
