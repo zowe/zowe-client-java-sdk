@@ -157,10 +157,9 @@ public class UssList {
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS);
 
-        params.getPath().ifPresent(path ->
-                url.append("?path=").append(EncodeUtils.encodeURIComponent(FileUtils.validatePath(path))));
-        params.getFsname().ifPresent(fsname ->
-                url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
+        params.getPath().ifPresent(path -> url.append("?path=").append(
+                EncodeUtils.encodeURIComponent(FileUtils.validatePath(path))));
+        params.getFsname().ifPresent(fsname -> url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
