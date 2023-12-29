@@ -11,7 +11,6 @@ package zowe.client.sdk.utility;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.teamconfig.TeamConfig;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
