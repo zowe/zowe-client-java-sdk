@@ -28,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author James Kostrewski
  * @version 2.0
  */
+@SuppressWarnings("DataFlowIssue")
 public class UssChangeModeTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");

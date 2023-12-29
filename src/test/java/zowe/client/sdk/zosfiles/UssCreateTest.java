@@ -31,6 +31,7 @@ import static org.junit.Assert.assertEquals;
  * @author Frank Giordano
  * @version 2.0
  */
+@SuppressWarnings("ALL")
 public class UssCreateTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");

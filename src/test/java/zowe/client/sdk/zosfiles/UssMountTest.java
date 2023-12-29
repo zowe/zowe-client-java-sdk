@@ -30,6 +30,7 @@ import static org.junit.Assert.assertEquals;
  * @author Frank Giordano
  * @version 2.0
  */
+@SuppressWarnings("DataFlowIssue")
 public class UssMountTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");

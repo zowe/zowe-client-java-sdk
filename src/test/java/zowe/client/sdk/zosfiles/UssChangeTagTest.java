@@ -30,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Frank Giordano
  * @version 2.0
  */
+@SuppressWarnings("DataFlowIssue")
 public class UssChangeTagTest {
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private PutJsonZosmfRequest mockJsonPutRequest;

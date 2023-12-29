@@ -36,6 +36,7 @@ import static org.junit.Assert.assertTrue;
  * @author Frank Giordano
  * @version 2.0
  */
+@SuppressWarnings("DataFlowIssue")
 public class UssListTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
