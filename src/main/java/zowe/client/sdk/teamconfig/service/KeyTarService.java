@@ -57,9 +57,7 @@ public class KeyTarService {
      */
     public KeyTarConfig getKeyTarConfig() throws Exception {
         List<KeyTarConfig> keyTarConfigs = new ArrayList<>();
-        /**
-         * Account name used for KeyTar querying of OS credential store
-         */
+        // Account name used for KeyTar querying of OS credential store
         String ACCOUNT_NAME = "secure_config_props";
         keyTar.setAccountName(ACCOUNT_NAME);
         for (final String serviceName : serviceNames) {
