@@ -44,14 +44,14 @@ public interface IKeyTar {
     void processKey() throws KeytarException;
 
     /**
-     * set required service name used for OS credential store querying
+     * Set required service name used for OS credential store querying
      *
      * @param accountName string value used for OS credential store querying
      */
     void setAccountName(String accountName);
 
     /**
-     * set required account name used for OS credential store querying
+     * Set required account name used for OS credential store querying
      *
      * @param serviceName string value used for OS credential store querying
      */
