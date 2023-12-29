@@ -262,7 +262,7 @@ public class SetAclParams {
         }
 
         /**
-         * Set SET value
+         * Set the SET value
          *
          * @param set set value
          * @return SetAclParams.Builder
