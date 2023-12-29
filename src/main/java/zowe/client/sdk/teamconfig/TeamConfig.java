@@ -72,7 +72,7 @@ public class TeamConfig {
      * @throws Exception error processing
      * @author Frank Giordano
      */
-    public TeamConfig(KeyTarService keyTarService, TeamConfigService teamConfigService) throws Exception {
+    public TeamConfig(final KeyTarService keyTarService, final TeamConfigService teamConfigService) throws Exception {
         this.keyTarService = keyTarService;
         this.teamConfigService = teamConfigService;
         config();
