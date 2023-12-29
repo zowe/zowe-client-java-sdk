@@ -24,7 +24,7 @@ public interface JsonParse {
      * @return Object value of parsed json data
      * @author Frank Giordano
      */
-    public Object parseResponse(final Object... args);
+    Object parseResponse(final Object... args);
 
 }
 
