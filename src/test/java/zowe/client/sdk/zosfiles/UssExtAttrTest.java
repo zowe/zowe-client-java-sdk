@@ -122,4 +122,40 @@ public class UssExtAttrTest {
         assertEquals("specified valid value character sequence", errMsg);
     }
 
+    @Test
+    public void tstUssExtAttrResetNullTargetPathFailure4() throws ZosmfRequestException {
+        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
+        String errMsg = "";
+        try {
+            ussExtAttr.reset(null, "a");
+        } catch (NullPointerException e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("targetPath is null", errMsg);
+    }
+
+    @Test
+    public void tstUssExtAttrSetNullTargetPathFailure4() throws ZosmfRequestException {
+        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
+        String errMsg = "";
+        try {
+            ussExtAttr.set(null, "a");
+        } catch (NullPointerException e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("targetPath is null", errMsg);
+    }
+
+    @Test
+    public void tstUssExtAttrDisplayNullTargetPathFailure4() throws ZosmfRequestException {
+        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
+        String errMsg = "";
+        try {
+            ussExtAttr.display(null);
+        } catch (NullPointerException e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("targetPath is null", errMsg);
+    }
+
 }
