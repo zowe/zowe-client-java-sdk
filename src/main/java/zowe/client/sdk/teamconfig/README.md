@@ -11,8 +11,6 @@ username and password.
 username and password and retrieve a list of members from the dataset input string.**
 
 ````java
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
@@ -23,28 +21,32 @@ import zowe.client.sdk.teamconfig.service.KeyTarService;
 import zowe.client.sdk.teamconfig.service.TeamConfigService;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnList;
 import zowe.client.sdk.zosfiles.dsn.input.ListParams;
+import zowe.client.sdk.zosfiles.dsn.response.Member;
 
 import java.util.List;
 
 public class TeamConfigExp {
-
-    private static final Logger LOG = LoggerFactory.getLogger(TeamConfigExp.class);
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
      * TeamConfig functionality. Calls TeamConfigExp.listMembers example method.
      *
      * @param args for main not used
-     * @throws TeamConfigException error processing team configuration
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws TeamConfigException {
+    public static void main(String[] args) throws ZosmfRequestException {
         String dataSetName = "CCSQA.ASM.JCL";
 
-        TeamConfig teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
+        TeamConfig teamConfig;
+        try {
+            teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
+        } catch (TeamConfigException e) {
+            throw new RuntimeException(e.getMessage());
+        }
         ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
-        ZosConnection connection = new ZosConnection(
-                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword());
+        ZosConnection connection = new ZosConnection(profile.getHost(), profile.getPort(),
+                profile.getUser(), profile.getPassword());
 
         TeamConfigExp.listMembers(connection, dataSetName);
     }
@@ -60,8 +62,8 @@ public class TeamConfigExp {
     public static void listMembers(ZosConnection connection, String dataSetName) throws ZosmfRequestException {
         ListParams params = new ListParams.Builder().build();
         DsnList dsnList = new DsnList(connection);
-        List<String> datasets = dsnList.getMembers(dataSetName, params);
-        datasets.forEach(LOG::info);
+        List<Member> datasets = dsnList.getMembers(dataSetName, params);
+        datasets.forEach(System.out::println);
     }
 
 }
