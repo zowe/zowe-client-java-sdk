@@ -18,22 +18,22 @@ package zowe.client.sdk.core;
 public class SshConnection {
 
     /**
-     * machine host pointing to backend z/OS instance
+     * Host name pointing to backend z/OS instance
      */
     private final String host;
 
     /**
-     * machine host port number pointing to backend z/OS instance
+     * Host port number pointing to backend z/OS instance
      */
     private final int port;
 
     /**
-     * machine host username with access to backend z/OS instance
+     * Host username with access to backend z/OS instance
      */
     private final String user;
 
     /**
-     * machine host username's password with access to backend z/OS instance
+     * Host username's password with access to backend z/OS instance
      */
     private final String password;
 
