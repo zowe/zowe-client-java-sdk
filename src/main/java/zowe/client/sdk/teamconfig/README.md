@@ -13,14 +13,14 @@ username and password and retrieve a list of members from the dataset input stri
 ````java
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.TeamConfig;
+import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
 import zowe.client.sdk.teamconfig.service.KeyTarService;
 import zowe.client.sdk.teamconfig.service.TeamConfigService;
-import zowe.client.sdk.zosfiles.dsn.methods.DsnList;
 import zowe.client.sdk.zosfiles.dsn.input.ListParams;
+import zowe.client.sdk.zosfiles.dsn.methods.DsnList;
 import zowe.client.sdk.zosfiles.dsn.response.Member;
 
 import java.util.List;
@@ -28,8 +28,15 @@ import java.util.List;
 public class TeamConfigExp {
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * TeamConfig functionality. Calls TeamConfigExp.listMembers example method.
+     * Main method defines TeamConfig object and operation to retrieve the default
+     * zosmf profile from Zowe Team Configuration.
+     * <p>
+     * Zowe Team Configuration contains the connection information for z/OSMF REST API.
+     * <p>
+     * Moreover, the retrieval of the zosmf profile will retrieve secure Zowe V2 credentials
+     * (username/password) entered via the Zowe Global Team Configuration command.
+     * <p>
+     * Calls TeamConfigExp.listMembers example method.
      *
      * @param args for main not used
      * @throws ZosmfRequestException request error state
