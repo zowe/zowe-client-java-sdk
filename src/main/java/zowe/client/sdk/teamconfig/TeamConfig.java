@@ -159,8 +159,8 @@ public class TeamConfig {
     /**
      * Take two profile objects and determine if they have host and port values to be merged.
      *
-     * @param target profile object
-     * @param base   profile object
+     * @param target Optional Profile object
+     * @param base   Optional Profile object
      * @author Frank Giordano
      */
     private void merge(final Optional<Profile> target, final Optional<Profile> base) {
