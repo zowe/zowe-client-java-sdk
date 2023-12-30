@@ -26,13 +26,13 @@ import zowe.client.sdk.zosfiles.dsn.input.ListParams;
 
 import java.util.List;
 
-public class ListDatasets {
+public class TeamConfigExp {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ListDatasets.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TeamConfigExp.class);
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * ListDatasets functionality. Calls ListDatasets example methods.
+     * TeamConfig functionality. Calls TeamConfigExp.listMembers example method.
      *
      * @param args for main not used
      * @throws TeamConfigException error processing team configuration
@@ -45,7 +45,7 @@ public class ListDatasets {
         ZosConnection connection = new ZosConnection(
                 profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword());
 
-        ListDatasets.listMembers(connection, dataSetName);
+        TeamConfigExp.listMembers(connection, dataSetName);
     }
 
     /**
