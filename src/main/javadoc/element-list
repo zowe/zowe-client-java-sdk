@@ -5,6 +5,7 @@ zowe.client.sdk.rest
 zowe.client.sdk.rest.exception
 zowe.client.sdk.rest.type
 zowe.client.sdk.teamconfig
+zowe.client.sdk.teamconfig.exception
 zowe.client.sdk.teamconfig.keytar
 zowe.client.sdk.teamconfig.model
 zowe.client.sdk.teamconfig.service
