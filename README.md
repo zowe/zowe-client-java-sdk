@@ -151,13 +151,11 @@ The following maven command at the root prompt of the project will produce zowe-
     mvn clean package  
   
 ## Logger 
+    
+For logging, you will need to implement SLF4J binding and logging framework dependencies. 
+    
+The SDK does not provide SLF4J or any logging dependency included in its FATJAR.   
   
-SLF4J is in place for logging APIs within this SDK.   
-  
-SLF4J stands for Simple Logging Facade for Java. It provides a simple abstraction of all the logging frameworks.   
-  
-To enable SDK logging within your project, implement a logging framework which wraps around SLF4j, for instance logging frameworks such as Log4j2, Logback, JUL (java. util. logging), etc.
-
 ## Documentation  
 
 https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk/latest/index.html  
