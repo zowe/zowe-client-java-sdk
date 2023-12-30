@@ -1,4 +1,4 @@
 /**
  * Custom exception package
  */
-package zowe.client.sdk.rest.exception;
+package zowe.client.sdk.teamconfig.exception;
