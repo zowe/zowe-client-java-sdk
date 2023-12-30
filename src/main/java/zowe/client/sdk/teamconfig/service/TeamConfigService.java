@@ -41,7 +41,7 @@ public class TeamConfigService {
     /**
      * Parse a JSON representation of a Zowe Global Team Configuration partition section.
      *
-     * @param name       Partition name
+     * @param name       partition name
      * @param jsonObject JSONObject object
      * @return Partition object
      * @author Frank Giordano
@@ -93,7 +93,7 @@ public class TeamConfigService {
     /**
      * Determine if JSON contains a partition section next.
      *
-     * @param profileKeyObj Partition name
+     * @param profileKeyObj partition name
      * @return boolean true or false
      * @author Frank Giordano
      */

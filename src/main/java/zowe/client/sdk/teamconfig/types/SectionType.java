@@ -24,6 +24,12 @@ public enum SectionType {
 
     private final String value;
 
+    /**
+     * SectionType constructor
+     *
+     * @param value string value
+     * @author Frank Giordano
+     */
     SectionType(final String value) {
         this.value = value;
     }

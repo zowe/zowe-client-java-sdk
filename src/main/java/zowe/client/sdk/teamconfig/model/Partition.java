@@ -37,7 +37,7 @@ public class Partition {
     private final List<Profile> profiles;
 
     /**
-     * Partition constructor.
+     * Partition constructor
      *
      * @param name       partition name
      * @param properties hashmap of property values

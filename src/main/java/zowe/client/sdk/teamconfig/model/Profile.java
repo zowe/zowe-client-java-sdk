@@ -40,7 +40,7 @@ public class Profile {
     private final Map<String, String> properties;
 
     /**
-     * Partition constructor.
+     * Partition constructor
      *
      * @param name   profile name
      * @param obj    json object of property values within profile section from Zowe Global Team Configuration

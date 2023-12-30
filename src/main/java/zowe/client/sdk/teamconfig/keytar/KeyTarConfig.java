@@ -33,7 +33,7 @@ public class KeyTarConfig {
     private final String password;
 
     /**
-     * KeyTarConfig constructor.
+     * KeyTarConfig constructor
      *
      * @param location location of the Zowe Global Team Configuration filename and path
      * @param userName userName specified from parsed KeyTar keyValue

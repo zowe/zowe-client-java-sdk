@@ -47,7 +47,7 @@ public class ConfigContainer {
     private final Boolean autoStore;
 
     /**
-     * ConfigContainer constructor.
+     * ConfigContainer constructor
      *
      * @param partitions list of parsed partitions from Zowe Global Team Configuration
      * @param schema     schema value from Zowe Global Team Configuration
