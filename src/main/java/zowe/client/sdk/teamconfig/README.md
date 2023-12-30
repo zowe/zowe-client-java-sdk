@@ -36,6 +36,7 @@ public class TeamConfigExp {
      *
      * @param args for main not used
      * @throws TeamConfigException error processing team configuration
+     * @author Frank Giordano
      */
     public static void main(String[] args) throws TeamConfigException {
         String dataSetName = "CCSQA.ASM.JCL";
@@ -54,6 +55,7 @@ public class TeamConfigExp {
      * @param connection  ZOSConnection object
      * @param dataSetName data set name
      * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
      */
     public static void listMembers(ZosConnection connection, String dataSetName) throws ZosmfRequestException {
         ListParams params = new ListParams.Builder().build();
