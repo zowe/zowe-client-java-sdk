@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
+import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
 import zowe.client.sdk.teamconfig.model.ConfigContainer;
 import zowe.client.sdk.teamconfig.model.Partition;
@@ -75,17 +76,17 @@ public class TeamConfigService {
      *
      * @param config KeyTarConfig object
      * @return ConfigContainer object
-     * @throws Exception error processing
+     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
-    public ConfigContainer getTeamConfig(final KeyTarConfig config) throws Exception {
+    public ConfigContainer getTeamConfig(final KeyTarConfig config) throws TeamConfigException {
         ValidateUtils.checkNullParameter(config == null, "config is null");
         final JSONParser parser = new JSONParser();
         Object obj;
         try {
             obj = parser.parse(new FileReader(config.getLocation()));
         } catch (IOException | ParseException e) {
-            throw new Exception("Error reading zowe global team configuration file");
+            throw new TeamConfigException("Error reading zowe global team configuration file", e);
         }
         return parseJson((JSONObject) obj);
     }

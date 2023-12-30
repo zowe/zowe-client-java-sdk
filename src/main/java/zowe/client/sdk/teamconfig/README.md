@@ -14,12 +14,14 @@ username and password and retrieve a list of members from the dataset input stri
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
 import zowe.client.sdk.teamconfig.service.KeyTarService;
 import zowe.client.sdk.teamconfig.service.TeamConfigService;
-import zowe.client.sdk.zosfiles.ZosDsnList;
+import zowe.client.sdk.zosfiles.dsn.methods.DsnList;
 import zowe.client.sdk.zosfiles.dsn.input.ListParams;
 
 import java.util.List;
@@ -33,9 +35,9 @@ public class ListDatasets {
      * ListDatasets functionality. Calls ListDatasets example methods.
      *
      * @param args for main not used
-     * @throws Exception error processing request
+     * @throws TeamConfigException error processing team configuration
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws TeamConfigException {
         String dataSetName = "CCSQA.ASM.JCL";
 
         TeamConfig teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
@@ -47,16 +49,16 @@ public class ListDatasets {
     }
 
     /**
-     * List out all members of the given data set
+     * List out all members of the given dataset
      *
      * @param connection  ZOSConnection object
      * @param dataSetName data set name
-     * @throws Exception error processing request
+     * @throws ZosmfRequestException request error state
      */
-    public static void listMembers(ZosConnection connection, String dataSetName) throws Exception {
+    public static void listMembers(ZosConnection connection, String dataSetName) throws ZosmfRequestException {
         ListParams params = new ListParams.Builder().build();
-        ZosDsnList zosDsnList = new ZosDsnList(connection);
-        List<String> datasets = zosDsnList.listDsnMembers(dataSetName, params);
+        DsnList dsnList = new DsnList(connection);
+        List<String> datasets = dsnList.getMembers(dataSetName, params);
         datasets.forEach(LOG::info);
     }
 

@@ -11,6 +11,7 @@ package zowe.client.sdk.teamconfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
 import zowe.client.sdk.teamconfig.model.ConfigContainer;
 import zowe.client.sdk.teamconfig.model.Partition;
@@ -69,10 +70,11 @@ public class TeamConfig {
      *
      * @param keyTarService     required KeyTarService dependency
      * @param teamConfigService required TeamConfigService dependency
-     * @throws Exception error processing
+     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
-    public TeamConfig(final KeyTarService keyTarService, final TeamConfigService teamConfigService) throws Exception {
+    public TeamConfig(final KeyTarService keyTarService, final TeamConfigService teamConfigService)
+            throws TeamConfigException {
         this.keyTarService = keyTarService;
         this.teamConfigService = teamConfigService;
         config();
@@ -81,10 +83,10 @@ public class TeamConfig {
     /**
      * Initialize dependency objects
      *
-     * @throws Exception error processing
+     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
-    private void config() throws Exception {
+    private void config() throws TeamConfigException {
         keyTarConfig = keyTarService.getKeyTarConfig();
         teamConfig = teamConfigService.getTeamConfig(keyTarConfig);
         LOG.debug("keyTarConfig {}", keyTarConfig);
