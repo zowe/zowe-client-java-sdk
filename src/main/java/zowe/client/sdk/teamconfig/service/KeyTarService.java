@@ -11,6 +11,7 @@ package zowe.client.sdk.teamconfig.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.keytar.IKeyTar;
 import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
 
@@ -52,10 +53,10 @@ public class KeyTarService {
      * Return KeyTarConfig containing team config location and OS credential information.
      *
      * @return KeyTarConfig object
-     * @throws Exception error processing
+     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
-    public KeyTarConfig getKeyTarConfig() throws Exception {
+    public KeyTarConfig getKeyTarConfig() throws TeamConfigException {
         List<KeyTarConfig> keyTarConfigs = new ArrayList<>();
         // Account name used for KeyTar querying of OS credential store
         String ACCOUNT_NAME = "secure_config_props";
@@ -64,7 +65,7 @@ public class KeyTarService {
             keyTar.setServiceName(serviceName);
             try {
                 keyTar.processKey();
-            } catch (Exception e) {
+            } catch (TeamConfigException e) {
                 LOG.debug(e.getMessage());
                 continue;
             }

@@ -16,6 +16,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.utility.ValidateUtils;
 
 import java.util.ArrayList;
@@ -57,10 +58,10 @@ public class KeyTarImpl implements IKeyTar {
      * Return keyString json value parsed into a KeyTarConfig object.
      *
      * @return list of KeyTarConfig objects
-     * @throws Exception error processing
+     * @throws TeamConfigException error processing team configuration
      */
     @Override
-    public List<KeyTarConfig> getKeyConfigs() throws Exception {
+    public List<KeyTarConfig> getKeyConfigs() throws TeamConfigException {
         ValidateUtils.checkNullParameter(keyString == null, "keyString is null, perform processKey first");
         ValidateUtils.checkIllegalParameter(keyString.isBlank(), "keyString is empty");
         if (!keyTarConfigs.isEmpty()) {
@@ -85,12 +86,17 @@ public class KeyTarImpl implements IKeyTar {
      * Parse KeyTar json string returned when querying the OS credential store.
      *
      * @return list of KeyTarConfig objects
-     * @throws ParseException error processing
+     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    private List<KeyTarConfig> parseJson() throws ParseException {
-        final JSONObject jsonKeyTar = (JSONObject) new JSONParser().parse(keyString);
+    private List<KeyTarConfig> parseJson() throws TeamConfigException {
+        final JSONObject jsonKeyTar;
+        try {
+            jsonKeyTar = (JSONObject) new JSONParser().parse(keyString);
+        } catch (ParseException e) {
+            throw new TeamConfigException("Error parsing KeyTar string.", e);
+        }
 
         final Set<String> keyTarKeys = jsonKeyTar.keySet();
         for (final String keyVal : keyTarKeys) {
@@ -105,20 +111,25 @@ public class KeyTarImpl implements IKeyTar {
     /**
      * Retrieve the OS credential store by querying the OS with service and account name. Assign the value to keyString.
      *
-     * @throws KeytarException error processing
+     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
     @Override
-    public void processKey() throws KeytarException {
+    public void processKey() throws TeamConfigException {
         ValidateUtils.checkNullParameter(serviceName == null, "serviceName is null");
         ValidateUtils.checkIllegalParameter(serviceName.isBlank(), "serviceName is empty");
         ValidateUtils.checkNullParameter(accountName == null, "accountName is null");
         ValidateUtils.checkIllegalParameter(accountName.isBlank(), "accountName is empty");
         final Keytar instance = Keytar.getInstance();
-        final String encodedString = instance.getPassword(serviceName, accountName);
+        final String encodedString;
+        try {
+            encodedString = instance.getPassword(serviceName, accountName);
+        } catch (KeytarException e) {
+            throw new TeamConfigException("Error retrieving KeyTar password", e);
+        }
         LOG.debug("KeyTar encodedString retrieved {}", encodedString);
         if (encodedString == null) {
-            throw new NullPointerException("Unknown service name or account name");
+            throw new TeamConfigException("Unknown service name or account name");
         }
         final byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
         this.keyString = new String(decodedBytes);

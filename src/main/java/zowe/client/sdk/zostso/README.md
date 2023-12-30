@@ -102,6 +102,7 @@ package zowe.client.sdk.examples;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.teamconfig.TeamConfig;
+import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
 import zowe.client.sdk.teamconfig.service.KeyTarService;
@@ -124,7 +125,7 @@ public class TstZosConnection {
 
     // or use the following method to retrieve Zowe OS credential store for your
     // secure Zowe V2 credentials you entered when you initially set up Zowe Global Team Configuration.
-    public static ZosConnection getSecureZosConnection() throws Exception {
+    public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
         ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
         return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));

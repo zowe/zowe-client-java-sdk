@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.teamconfig.keytar;
 
-import com.starxg.keytar.KeytarException;
+import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 
 import java.util.List;
 
@@ -25,9 +25,9 @@ public interface IKeyTar {
      * Describes the method that will retrieve KeyTar key information
      *
      * @return list of KeyTarConfig objects
-     * @throws Exception error processing
+     * @throws TeamConfigException error processing team configuration
      */
-    List<KeyTarConfig> getKeyConfigs() throws Exception;
+    List<KeyTarConfig> getKeyConfigs() throws TeamConfigException;
 
     /**
      * Describes the method that will return KeyTar value from KeyTar processing done
@@ -39,9 +39,9 @@ public interface IKeyTar {
     /**
      * Describes the method that will extract KeyTar key information
      *
-     * @throws KeytarException error processing
+     * @throws TeamConfigException error processing team configuration
      */
-    void processKey() throws KeytarException;
+    void processKey() throws TeamConfigException;
 
     /**
      * Set required service name used for OS credential store querying
