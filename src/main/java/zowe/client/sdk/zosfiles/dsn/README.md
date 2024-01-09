@@ -464,11 +464,11 @@ package zowe.client.sdk.examples.zosfiles.dsn;
 import org.apache.commons.io.IOUtils;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.dsn.input.DownloadParams;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnGet;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -487,10 +487,10 @@ public class DsnGetExp extends TstZosConnection {
      * DsnGet class functionality.
      *
      * @param args for main not used
-     * @throws Exception error in processing request
+     * @throws ZosmfRequestException error in processing zosmf request
      * @author Leonid Baranov
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ZosmfRequestException {
         String datasetName = "xxx";
         String datasetSeqName = "xxx";
         String memberName = "xxx";
@@ -509,18 +509,12 @@ public class DsnGetExp extends TstZosConnection {
      * @param params     download parameters object
      * @author Leonid Baranov
      */
-    public static void downloadDsnMember(ZosConnection connection, String dsName, String memName, DownloadParams params) {
-        try (InputStream inputStream = new DsnGet(connection)
-                .get(String.format("%s(%s)", dsName, memName), params)) {
-            if (inputStream != null) {
-                StringWriter writer = new StringWriter();
-                IOUtils.copy(inputStream, writer, "UTF8");
-                String content = writer.toString();
-                System.out.println(content);
-            }
+    public static void downloadDsnMember(ZosConnection connection, String dsName, String memName,
+                                         DownloadParams params) {
+        try (InputStream inputStream = new DsnGet(connection).get(String.format("%s(%s)", dsName, memName), params)) {
+            System.out.println(getTextStreamData(inputStream));
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            throw new RuntimeException(getByteResponseStatus(e));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -536,18 +530,34 @@ public class DsnGetExp extends TstZosConnection {
      */
     public static void downloadDsnSequential(ZosConnection connection, String dsName, DownloadParams params) {
         try (InputStream inputStream = new DsnGet(connection).get(dsName, params)) {
-            if (inputStream != null) {
-                StringWriter writer = new StringWriter();
-                IOUtils.copy(inputStream, writer, "UTF8");
-                String content = writer.toString();
-                System.out.println(content);
-            }
+            System.out.println(getTextStreamData(inputStream));
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            throw new RuntimeException(getByteResponseStatus(e));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String getByteResponseStatus(ZosmfRequestException e) {
+        final var byteMsg = (byte[]) e.getResponse().getResponsePhrase().get();
+        final var errorStream = new ByteArrayInputStream(byteMsg);
+        String errMsg;
+        try {
+            errMsg = getTextStreamData(errorStream);
+        } catch (IOException ex) {
+            errMsg = "error processing response";
+        }
+        return errMsg;
+    }
+
+    public static String getTextStreamData(final InputStream inputStream) throws IOException {
+        if (inputStream != null) {
+            final var writer = new StringWriter();
+            IOUtils.copy(inputStream, writer, "UTF8");
+            inputStream.close();
+            return writer.toString();
+        }
+        return null;
     }
 
 }
