@@ -537,9 +537,16 @@ public class DsnGetExp extends TstZosConnection {
         }
     }
 
+    /**
+     * Convert exception message's byte stream of data into a string
+     *
+     * @param e ZosmfRequestException object
+     * @return string value
+     * @author Frank Giordano
+     */
     public static String getByteResponseStatus(ZosmfRequestException e) {
-        final var byteMsg = (byte[]) e.getResponse().getResponsePhrase().get();
-        final var errorStream = new ByteArrayInputStream(byteMsg);
+        byte[] byteMsg = (byte[]) e.getResponse().getResponsePhrase().get();
+        ByteArrayInputStream errorStream = new ByteArrayInputStream(byteMsg);
         String errMsg;
         try {
             errMsg = getTextStreamData(errorStream);
@@ -549,9 +556,17 @@ public class DsnGetExp extends TstZosConnection {
         return errMsg;
     }
 
+    /**
+     * Convert a byte stream of data into a string
+     *
+     * @param inputStream byte stream od data
+     * @return string value
+     * @throws IOException error processing byte stream
+     * @author Frank Giordano
+     */
     public static String getTextStreamData(final InputStream inputStream) throws IOException {
         if (inputStream != null) {
-            final var writer = new StringWriter();
+            StringWriter writer = new StringWriter();
             IOUtils.copy(inputStream, writer, "UTF8");
             inputStream.close();
             return writer.toString();
