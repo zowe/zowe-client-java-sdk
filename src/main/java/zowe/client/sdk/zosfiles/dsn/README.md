@@ -458,7 +458,7 @@ public class DsnDeleteExp extends TstZosConnection {
 
 **Retrieve dataset and member content**
 
-````java
+```java
 package zowe.client.sdk.examples.zosfiles.dsn;
 
 import org.apache.commons.io.IOUtils;
@@ -487,10 +487,9 @@ public class DsnGetExp extends TstZosConnection {
      * DsnGet class functionality.
      *
      * @param args for main not used
-     * @throws ZosmfRequestException error in processing zosmf request
      * @author Leonid Baranov
      */
-    public static void main(String[] args) throws ZosmfRequestException {
+    public static void main(String[] args) {
         String datasetName = "xxx";
         String datasetSeqName = "xxx";
         String memberName = "xxx";
@@ -561,7 +560,7 @@ public class DsnGetExp extends TstZosConnection {
     }
 
 }
-`````
+```
 
 **Retrieve dataset list**
 
