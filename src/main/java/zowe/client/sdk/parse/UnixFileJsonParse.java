@@ -68,6 +68,7 @@ public final class UnixFileJsonParse implements JsonParse {
                 .gid(data.get("gid") != null ? (Long) data.get("gid") : null)
                 .group(data.get("group") != null ? (String) data.get("group") : null)
                 .mtime(data.get("mtime") != null ? (String) data.get("mtime") : null)
+                .target(data.get("target") != null ? (String) data.get("target") : null)
                 .build();
     }
 

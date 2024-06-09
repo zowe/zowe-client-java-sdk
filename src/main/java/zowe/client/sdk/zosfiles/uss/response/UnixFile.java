@@ -59,6 +59,10 @@ public class UnixFile {
      * mtime of returned name item
      */
     private final Optional<String> mtime;
+    /**
+     * target of returned name item
+     */
+    private final Optional<String> target;
 
     /**
      * UnixFile constructor
@@ -87,6 +91,7 @@ public class UnixFile {
         }
         this.group = Optional.ofNullable(builder.group);
         this.mtime = Optional.ofNullable(builder.mtime);
+        this.target = Optional.ofNullable(builder.target);
     }
 
     /**
@@ -162,6 +167,15 @@ public class UnixFile {
     }
 
     /**
+     * Retrieve target value
+     *
+     * @return target value
+     */
+    public Optional<String> getTarget() {
+        return target;
+    }
+
+    /**
      * Return string value representing UnixFile object
      *
      * @return string representation of UnixFile
@@ -177,6 +191,7 @@ public class UnixFile {
                 ", gid=" + gid +
                 ", group=" + group +
                 ", mtime=" + mtime +
+                ", target=" + target +
                 '}';
     }
 
@@ -225,6 +240,11 @@ public class UnixFile {
          */
         private String mtime;
 
+        /**
+         * target of returned name item
+         */
+        private String target;
+        
         /**
          * Set name string value
          *
@@ -310,6 +330,17 @@ public class UnixFile {
          */
         public Builder mtime(final String mtime) {
             this.mtime = mtime;
+            return this;
+        }
+
+        /**
+         * Set target string value
+         *
+         * @param target string value
+         * @return Builder this object
+         */
+        public Builder target(final String target) {
+            this.target = target;
             return this;
         }
 
