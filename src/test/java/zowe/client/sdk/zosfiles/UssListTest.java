@@ -26,6 +26,7 @@ import zowe.client.sdk.zosfiles.uss.response.UnixFile;
 import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
 
 import java.util.List;
+import java.util.OptionalLong;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -192,15 +193,17 @@ public class  UssListTest {
         assertTrue(items.get(0).getGid().isEmpty());
         assertTrue(items.get(0).getGroup().isEmpty());
         assertTrue(items.get(0).getMtime().isEmpty());
+        assertTrue(items.get(0).getTarget().isEmpty());
         // verify second item's data
         assertEquals("test2", items.get(1).getName().orElse("n\\a"));
-        assertTrue(items.get(0).getMode().isEmpty());
-        assertEquals(0, items.get(0).getSize().orElse(-1));
-        assertTrue(items.get(0).getUid().isEmpty());
-        assertTrue(items.get(0).getUser().isEmpty());
-        assertTrue(items.get(0).getGid().isEmpty());
-        assertTrue(items.get(0).getGroup().isEmpty());
-        assertTrue(items.get(0).getMtime().isEmpty());
+        assertTrue(items.get(1).getMode().isEmpty());
+        assertEquals(-1, items.get(1).getSize().orElse(-1));
+        assertTrue(items.get(1).getUid().isEmpty());
+        assertTrue(items.get(1).getUser().isEmpty());
+        assertTrue(items.get(1).getGid().isEmpty());
+        assertTrue(items.get(1).getGroup().isEmpty());
+        assertTrue(items.get(1).getMtime().isEmpty());
+        assertTrue(items.get(1).getTarget().isEmpty());
     }
 
     @Test
