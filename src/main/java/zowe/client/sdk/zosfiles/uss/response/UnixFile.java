@@ -244,7 +244,7 @@ public class UnixFile {
          * target of returned name item
          */
         private String target;
-        
+
         /**
          * Set name string value
          *

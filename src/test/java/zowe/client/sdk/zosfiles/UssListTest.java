@@ -26,7 +26,6 @@ import zowe.client.sdk.zosfiles.uss.response.UnixFile;
 import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
 
 import java.util.List;
-import java.util.OptionalLong;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -38,7 +37,7 @@ import static org.junit.Assert.assertTrue;
  * @version 2.0
  */
 @SuppressWarnings("DataFlowIssue")
-public class  UssListTest {
+public class UssListTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private GetJsonZosmfRequest mockJsonGetRequest;
