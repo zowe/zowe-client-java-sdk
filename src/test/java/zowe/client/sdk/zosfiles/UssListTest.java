@@ -37,7 +37,7 @@ import static org.junit.Assert.assertTrue;
  * @version 2.0
  */
 @SuppressWarnings("DataFlowIssue")
-public class UssListTest {
+public class  UssListTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private GetJsonZosmfRequest mockJsonGetRequest;
@@ -53,6 +53,7 @@ public class UssListTest {
             "         \"gid\": 8,\n" +
             "         \"group\": \"FRAMEWKG\",\n" +
             "         \"mtime\": \"2022-11-03T10:48:32\"\n" +
+            "         \"target\": \"target\"\n" +
             "      },\n" +
             "      {\n" +
             "         \"name\": \"test2\",\n" +
@@ -63,6 +64,7 @@ public class UssListTest {
             "         \"gid\": 8,\n" +
             "         \"group\": \"FRAMEWKG\",\n" +
             "         \"mtime\": \"2022-11-12T15:20:11\"\n" +
+            "         \"target\": \"target\"\n" +
             "      }\n" +
             "   ],\n" +
             "   \"returnedRows\": 7,\n" +
@@ -158,6 +160,7 @@ public class UssListTest {
         assertEquals(8, items.get(0).getGid().orElse(-1));
         assertEquals("FRAMEWKG", items.get(0).getGroup().orElse("n\\a"));
         assertEquals("2022-11-03T10:48:32", items.get(0).getMtime().orElse("n\\a"));
+        assertEquals("target", items.get(0).getTarget().orElse("n\\a"));
         // verify second item's data
         assertEquals("test2", items.get(1).getName().orElse("n\\a"));
         assertEquals("-rwxr-xr-x", items.get(1).getMode().orElse("n\\a"));
@@ -167,6 +170,7 @@ public class UssListTest {
         assertEquals(8, items.get(1).getGid().orElse(-1));
         assertEquals("FRAMEWKG", items.get(1).getGroup().orElse("n\\a"));
         assertEquals("2022-11-12T15:20:11", items.get(1).getMtime().orElse("n\\a"));
+        assertEquals("target", items.get(1).getTarget().orElse("n\\a"));
     }
 
     @Test
