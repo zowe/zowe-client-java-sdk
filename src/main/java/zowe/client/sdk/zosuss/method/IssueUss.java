@@ -39,7 +39,7 @@ public class IssueUss {
     /**
      * Shell constructor
      *
-     * @param connection SSHConnection object
+     * @param connection SshConnection object
      */
     public IssueUss(final SshConnection connection) {
         ValidateUtils.checkSshConnection(connection);

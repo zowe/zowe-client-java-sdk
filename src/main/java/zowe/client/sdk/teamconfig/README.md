@@ -61,7 +61,7 @@ public class TeamConfigExp {
     /**
      * List out all members of the given dataset
      *
-     * @param connection  ZOSConnection object
+     * @param connection  ZosConnection object
      * @param dataSetName data set name
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano

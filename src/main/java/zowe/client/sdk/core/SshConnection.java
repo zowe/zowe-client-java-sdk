@@ -38,7 +38,7 @@ public class SshConnection {
     private final String password;
 
     /**
-     * ZOSConnection constructor
+     * SshConnection constructor
      *
      * @param host     machine host pointing to backend z/OS instance
      * @param port     machine host port number pointing to backend z/OS instance
@@ -96,7 +96,7 @@ public class SshConnection {
      */
     @Override
     public String toString() {
-        return "SSHConnection{" +
+        return "SshConnection{" +
                 "host='" + host + '\'' +
                 ", port='" + port + '\'' +
                 ", user='" + user + '\'' +

@@ -27,7 +27,7 @@ import java.util.function.Predicate;
 
 /**
  * TeamConfig class provides API method(s) to retrieve a profile section from Zowe Global Team Configuration with
- * keytar information to help perform ZOSConnection processing without hard coding username and password. This class only
+ * keytar information to help perform ZosConnection processing without hard coding username and password. This class only
  * supports Zowe Global Team Configuration provided by Zowe V2.
  *
  * @author Frank Giordano

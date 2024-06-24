@@ -44,7 +44,7 @@ public class SendTso {
     /**
      * SendTso constructor
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public SendTso(final ZosConnection connection) {
@@ -56,7 +56,7 @@ public class SendTso {
      * Alternative SendTso constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */

@@ -41,7 +41,7 @@ public class DsnCreate {
     /**
      * DsnCreate Constructor
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @author Leonid Baranov
      */
     public DsnCreate(final ZosConnection connection) {
@@ -53,7 +53,7 @@ public class DsnCreate {
      * Alternative DsnCreate constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZOSConnection object
+     * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
