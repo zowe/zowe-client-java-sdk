@@ -164,16 +164,20 @@ https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk/latest/inde
 
 https://mvnrepository.com/artifact/org.zowe.client.java.sdk/zowe-client-java-sdk  
 
-For maven project add SDK as a dependency by updating your pom.xml as follows: 
+## Install Java SDK from an online registry
+
+To install this library in your project, use a build tool such as Maven, Gradle or Ant. Use the following link to get the necessary artifact:
+
+https://mvnrepository.com/artifact/org.zowe.client.java.sdk/zowe-client-java-sdk
+
+For a Maven project add the SDK as a dependency by updating your `pom.xml` as follows:
 
     <dependency>
         <groupId>org.zowe.client.java.sdk</groupId>
         <artifactId>zowe-client-java-sdk</artifactId>
         <version>2.2.0</version>
-    </dependency>  
-  
-For gradle project add SDK as a dependency by updating your build.gradle as follows:  
+    </dependency>
+
+For a Gradle project add the SDK as a dependency by updating your `build.gradle` as follows:
 
     implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '2.2.0'  
-  
-  
