@@ -117,7 +117,7 @@ public class JobMonitor {
     }
 
     /**
-     * Checks if the given message is within the job output within line limit.
+     * Check if the given message is within the job output line limit.
      *
      * @param params  monitor jobs params, see MonitorJobWaitForParams
      * @param message message string
@@ -158,7 +158,7 @@ public class JobMonitor {
     }
 
     /**
-     * Checks the status of the job for the expected status (OR that the job has progressed passed the expected status).
+     * Check the status of the job for the expected status or that the job has progressed and passed the expected status.
      *
      * @param params monitor jobs params, see MonitorJobWaitForParams
      * @return boolean true when the job status is obtained
@@ -170,7 +170,7 @@ public class JobMonitor {
     }
 
     /**
-     * Checks the status of the job for the expected status (OR that the job has progressed passed the expected status).
+     * Check the status of the job for the expected status or that the job has progressed and passed the expected status.
      *
      * @param params monitor jobs params, see MonitorJobWaitForParams
      * @return boolean true when the job status is obtained
@@ -209,7 +209,7 @@ public class JobMonitor {
     }
 
     /**
-     * Checks the status order of the given status name.
+     * Check the status order of the given status name.
      *
      * @param statusName status name
      * @return int index of status order or -1 if none found
@@ -326,7 +326,7 @@ public class JobMonitor {
     }
 
     /**
-     * Given a Job document (has jobname/jobid), waits for the given message from the job. This API will poll for
+     * Given a Job document (has jobname/jobid), wait for the given message from the job. This API will poll for
      * the given message once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
      * sufficient, use "waitForMessageCommon" method to adjust.
      * <p>
@@ -463,7 +463,7 @@ public class JobMonitor {
     }
 
     /**
-     * Given jobname/jobid, checks for the desired message continuously (based on the interval and attempts specified).
+     * Given jobname/jobid, check for the desired message continuously (based on the interval and attempts specified).
      *
      * @param params  monitor jobs parameters, see MonitorJobWaitForParams object
      * @param message message string
@@ -490,7 +490,7 @@ public class JobMonitor {
     }
 
     /**
-     * Given jobname/jobid, checks for the desired "status" (default is "OUTPUT") continuously (based on the interval
+     * Given jobname/jobid, check for the desired "status" (default is "OUTPUT") continuously (based on the interval
      * and attempts specified).
      * <p>
      * The "order" of natural job status is: INPUT ACTIVE OUTPUT. If the requested status is earlier in the sequence
