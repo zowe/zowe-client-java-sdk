@@ -143,7 +143,7 @@ public class JobSubmit {
     }
 
     /**
-     * Submit a job that resides in a z/OS dataset.
+     * Submit a job on z/OS.
      *
      * @param jobDataSet job dataset to be translated into SubmitJobParams object
      * @return job document with details about the submitted job
@@ -155,7 +155,7 @@ public class JobSubmit {
     }
 
     /**
-     * Submit a job that resides in a z/OS dataset.
+     * Submit a job on z/OS.
      *
      * @param params submit job parameters, see SubmitJobParams object
      * @return job document with details about the submitted job

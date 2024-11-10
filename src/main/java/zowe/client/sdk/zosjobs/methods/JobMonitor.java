@@ -209,7 +209,7 @@ public class JobMonitor {
     }
 
     /**
-     * Checks the status order of the given status name
+     * Checks the status order of the given status name.
      *
      * @param statusName status name
      * @return int index of status order or -1 if none found
@@ -349,7 +349,7 @@ public class JobMonitor {
     }
 
     /**
-     * Given the jobname/jobid, waits for the given message from the job. This API will poll for
+     * Given the jobname/jobid, wait for the given message from the job. This API will poll for
      * the given message once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
      * sufficient, use "waitForMessageCommon" method to adjust.
      * <p>
@@ -373,7 +373,7 @@ public class JobMonitor {
     }
 
     /**
-     * Given a Job document (has jobname/jobid), waits for the status of the job to be "OUTPUT". This API will poll for
+     * Given a Job document (has jobname/jobid), wait for the status of the job to be "OUTPUT". This API will poll for
      * the OUTPUT status once every 3 seconds indefinitely. If the polling interval/duration is NOT sufficient, use
      * "waitForStatusCommon" to adjust.
      * <p>
@@ -395,7 +395,7 @@ public class JobMonitor {
     }
 
     /**
-     * Given the jobname/jobid, waits for the status of the job to be "OUTPUT". This API will poll for the OUTPUT status
+     * Given the jobname/jobid, wait for the status of the job to be "OUTPUT". This API will poll for the OUTPUT status
      * once every 3 seconds indefinitely. If the polling interval/duration is NOT sufficient, use
      * "waitForStatusCommon" to adjust.
      * <p>
@@ -416,7 +416,7 @@ public class JobMonitor {
     }
 
     /**
-     * Given a Job document (has jobname/jobid), waits for the given status of the job. This API will poll for
+     * Given a Job document (has jobname/jobid), wait for the given status of the job. This API will poll for
      * the given status once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
      * sufficient, use "waitForStatusCommon" method to adjust.
      * <p>
@@ -439,7 +439,7 @@ public class JobMonitor {
     }
 
     /**
-     * Given the jobname/jobid, waits for the given status of the job. This API will poll for the given status once
+     * Given the jobname/jobid, wait for the given status of the job. This API will poll for the given status once
      * every 3 seconds for at least 1000 times. If the polling interval/duration is NOT sufficient, use
      * "waitForStatusCommon" method to adjust.
      * <p>
@@ -493,7 +493,7 @@ public class JobMonitor {
      * Given jobname/jobid, checks for the desired "status" (default is "OUTPUT") continuously (based on the interval
      * and attempts specified).
      * <p>
-     * The "order" of natural job status is INPUT ACTIVE OUTPUT. If the requested status is earlier in the sequence
+     * The "order" of natural job status is: INPUT ACTIVE OUTPUT. If the requested status is earlier in the sequence
      * than the current status of the job, then the method returns immediately (since the job will never enter the
      * requested status) with the current status of the job.
      *

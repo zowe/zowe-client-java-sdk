@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * CancelJobs class to handle Job cancel
+ * CancelJobs class to handle Job cancel on z/OS
  *
  * @author Nikunj Goyal
  * @author Frank Giordano
@@ -72,7 +72,7 @@ public class JobCancel {
     }
 
     /**
-     * Cancel a job that resides in a z/OS data set.
+     * Cancel a job on z/OS.
      *
      * @param jobName name of job to cancel
      * @param jobId   job id
@@ -90,7 +90,7 @@ public class JobCancel {
     }
 
     /**
-     * Cancel a job that resides in a z/OS data set.
+     * Cancel a job on z/OS.
      *
      * @param job     job document wanting to cancel
      * @param version version number - 1.0 or 2.0
@@ -110,7 +110,7 @@ public class JobCancel {
     }
 
     /**
-     * Cancel a job that resides in a z/OS data set.
+     * Cancel a job on z/OS.
      *
      * @param params cancel job parameters, see cancelJobsCommon object
      * @return job document with details about the submitted job
@@ -132,7 +132,7 @@ public class JobCancel {
         final String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
 
         // To request asynchronous processing for this service (the default), set the "version" property to 1.0
-        // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
+        // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If 2.0,
         // the system will attempt to process the request synchronously, if such processing is supported on
         // the target JES2 subsystem.
         if ("1.0".equals(version)) {

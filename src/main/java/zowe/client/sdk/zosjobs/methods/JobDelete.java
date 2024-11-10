@@ -81,7 +81,7 @@ public class JobDelete {
     }
 
     /**
-     * Delete a job that resides in a z/OS data set.
+     * Delete a job on z/OS.
      *
      * @param params delete job parameters, see DeleteJobParams object
      * @return http response object
@@ -103,7 +103,7 @@ public class JobDelete {
         final String version = params.getVersion().orElse(JobsConstants.DEFAULT_DELETE_VERSION);
 
         // To request asynchronous processing for this service (the default), set the "version" property to 1.0
-        // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
+        // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If 2.0,
         // the system will attempt to process the request synchronously, if such processing is supported on
         // the target JES2 subsystem.
         if ("1.0".equals(version)) {
