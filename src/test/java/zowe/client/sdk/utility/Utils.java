@@ -56,7 +56,7 @@ public final class Utils {
         }
 
         final Constructor<?> constructor = clazz.getDeclaredConstructor();
-        final boolean isPrivateConstructor = constructor.isAccessible() || Modifier.isPrivate(constructor.getModifiers());
+        final boolean isPrivateConstructor = Modifier.isPrivate(constructor.getModifiers());
         if (!isPrivateConstructor) {
             throw new IllegalStateException("constructor is not private");
         }
