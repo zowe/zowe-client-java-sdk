@@ -68,7 +68,7 @@ public final class ConsoleResponseService {
         if (zosmfResponse.getCmdResponse().isPresent()) {
             String responseStr = zosmfResponse.getCmdResponse().get();
             consoleResponse.setCommandResponse(responseStr);
-            if (processResponses) {
+            if (processResponses && !responseStr.isBlank()) {
                 // the IBM responses sometimes have \r and \r\n, we will process them here and return them with just \n.
                 responseStr = responseStr.replace('\r', '\n');
                 consoleResponse.setCommandResponse(responseStr);

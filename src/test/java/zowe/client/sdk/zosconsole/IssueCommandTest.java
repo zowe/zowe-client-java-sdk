@@ -22,6 +22,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.zosconsole.input.IssueConsoleParams;
 import zowe.client.sdk.zosconsole.method.IssueConsole;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 
@@ -47,14 +48,14 @@ public class IssueCommandTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseAttributeSuccess() throws ZosmfRequestException {
+    public void tstIssueCommandCmdResponseSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "student");
         final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
-        final ConsoleResponse response = issueCommand.issueCommand("test");
+        final ConsoleResponse response = issueCommand.issueCommand("command");
         assertEquals("student",
                 response.getCommandResponse()
                         .orElse("n/a")
@@ -63,14 +64,40 @@ public class IssueCommandTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseUrlAttributeSuccess() throws ZosmfRequestException {
+    public void tstIssueCommandCmdResponseWithEmptyStringSuccess() throws ZosmfRequestException {
+        final Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("cmd-response", "");
+        final JSONObject json = new JSONObject(jsonMap);
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response(json, 200, "success"));
+        final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
+        final ConsoleResponse response = issueCommand.issueCommand("command");
+        assertEquals("", response.getCommandResponse().orElse("n/a"));
+    }
+
+    @Test
+    public void tstIssueCommandCmdResponseWithEmptyStringAndIsProcessRequestSuccess() throws ZosmfRequestException {
+        final Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("cmd-response", "");
+        final JSONObject json = new JSONObject(jsonMap);
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response(json, 200, "success"));
+        final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
+        final IssueConsoleParams issueConsoleParams = new IssueConsoleParams("command");
+        issueConsoleParams.setProcessResponse(true);
+        final ConsoleResponse response = issueCommand.issueCommandCommon("consolename", issueConsoleParams);
+        assertEquals("", response.getCommandResponse().orElse("n/a"));
+    }
+
+    @Test
+    public void tstIssueCommandCmdResponseUrlSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response-url", "student");
         final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
-        ConsoleResponse response = issueCommand.issueCommand("test");
+        ConsoleResponse response = issueCommand.issueCommand("command");
         assertEquals("student",
                 response.getCmdResponseUrl()
                         .orElse("n/a")
