@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.core;
 
+import java.util.Objects;
+
 /**
  * SSH Connection information placeholder
  *
@@ -102,6 +104,35 @@ public class SshConnection {
                 ", user='" + user + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    /**
+     * Equals method. Use all members for equality.
+     *
+     * @param obj object
+     * @return true or false
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        SshConnection other = (SshConnection) obj;
+        return Objects.equals(host, other.host) && port == other.port &&
+                Objects.equals(user, other.user) && Objects.equals(password, other.password);
+    }
+
+    /**
+     * Hashcode method. Use all members for hashing.
+     *
+     * @return int value
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(host, port, user, password);
     }
 
 }
