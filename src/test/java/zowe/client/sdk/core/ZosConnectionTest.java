@@ -11,6 +11,8 @@ package zowe.client.sdk.core;
 
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 /**
  * Class containing unit tests for ZosConnection.
  *
@@ -19,5 +21,32 @@ import org.junit.Test;
  */
 public class ZosConnectionTest {
 
+    @Test
+    public void tstReferenceNotEqualsSuccess() {
+        ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
+        assertNotSame(zc1, zc2);
+    }
+
+    @Test
+    public void tstReferenceEqualsSuccess() {
+        ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        ZosConnection zc2 = zc1;
+        assertEquals(zc1, zc2);
+    }
+
+    @Test
+    public void tstEqualsSuccess() {
+        ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
+        assertEquals(zc1, zc2);
+    }
+
+    @Test
+    public void tstNotEqualsSuccess() {
+        ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        ZosConnection zc2 = new ZosConnection("test2", "zosmfPort", "user", "password");
+        assertNotEquals(zc1, zc2);
+    }
 
 }

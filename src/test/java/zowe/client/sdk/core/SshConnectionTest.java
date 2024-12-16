@@ -9,6 +9,10 @@
  */
 package zowe.client.sdk.core;
 
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
 /**
  * Class containing unit tests for SshConnection.
  *
@@ -16,5 +20,33 @@ package zowe.client.sdk.core;
  * @version 2.0
  */
 public class SshConnectionTest {
+
+    @Test
+    public void tstReferenceNotEqualsSuccess() {
+        SshConnection sc1 = new SshConnection("test", 1, "user", "password");
+        SshConnection sc2 = new SshConnection("test", 1, "user", "password");
+        assertNotSame(sc1, sc2);
+    }
+
+    @Test
+    public void tstReferenceEqualsSuccess() {
+        SshConnection sc1 = new SshConnection("test", 1, "user", "password");
+        SshConnection sc2 = sc1;
+        assertEquals(sc1, sc2);
+    }
+
+    @Test
+    public void tstEqualsSuccess() {
+        SshConnection sc1 = new SshConnection("test", 1, "user", "password");
+        SshConnection sc2 = new SshConnection("test", 1, "user", "password");
+        assertEquals(sc1, sc2);
+    }
+
+    @Test
+    public void tstNotEqualsSuccess() {
+        SshConnection sc1 = new SshConnection("test", 1, "user", "password");
+        SshConnection sc2 = new SshConnection("test2", 1, "user", "password");
+        assertNotEquals(sc1, sc2);
+    }
 
 }
