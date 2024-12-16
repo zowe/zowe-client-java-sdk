@@ -9,12 +9,15 @@
  */
 package zowe.client.sdk.core;
 
+import org.junit.Test;
+
 /**
- * Class containing unit tests for SshConnection.
+ * Class containing unit tests for ZosConnection.
  *
  * @author Frank Giordano
  * @version 2.0
  */
-public class SshConnection {
+public class ZosConnectionTest {
+
 
 }
