@@ -126,7 +126,7 @@ public class SshConnection {
     }
 
     /**
-     * Hashcode method. use all members for hashing.
+     * Hashcode method. Use all members for hashing.
      *
      * @return int value
      */
