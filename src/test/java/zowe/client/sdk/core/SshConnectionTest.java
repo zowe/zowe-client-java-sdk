@@ -11,6 +11,8 @@ package zowe.client.sdk.core;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
 /**
@@ -47,6 +49,56 @@ public class SshConnectionTest {
         SshConnection sc1 = new SshConnection("test", 1, "user", "password");
         SshConnection sc2 = new SshConnection("test2", 1, "user", "password");
         assertNotEquals(sc1, sc2);
+    }
+
+    @Test
+    public void tstHashCodeMapWithSecondHostDifferentSuccess() {
+        SshConnection sc1 = new SshConnection("test", 1, "user", "password");
+        SshConnection sc2 = new SshConnection("test2", 1, "user", "password");
+        var zcs = new HashMap<SshConnection, Integer>();
+        zcs.put(sc1, 1);
+        zcs.put(sc2, 2);
+        assertEquals(zcs.size(), 2);
+    }
+
+    @Test
+    public void tstHashCodeMapWithSecondPortDifferentSuccess() {
+        SshConnection sc1 = new SshConnection("test", 1, "user", "password");
+        SshConnection sc2 = new SshConnection("test", 2, "user", "password");
+        var zcs = new HashMap<SshConnection, Integer>();
+        zcs.put(sc1, 1);
+        zcs.put(sc2, 2);
+        assertEquals(zcs.size(), 2);
+    }
+
+    @Test
+    public void tstHashCodeMapWithSecondUserDifferentSuccess() {
+        SshConnection sc1 = new SshConnection("test", 1, "user", "password");
+        SshConnection sc2 = new SshConnection("test", 1, "user2", "password");
+        var zcs = new HashMap<SshConnection, Integer>();
+        zcs.put(sc1, 1);
+        zcs.put(sc2, 2);
+        assertEquals(zcs.size(), 2);
+    }
+
+    @Test
+    public void tstHashCodeMapWithSecondPasswordDifferentSuccess() {
+        SshConnection sc1 = new SshConnection("test", 1, "user", "password");
+        SshConnection sc2 = new SshConnection("test", 1, "user", "password2");
+        var zcs = new HashMap<SshConnection, Integer>();
+        zcs.put(sc1, 1);
+        zcs.put(sc2, 2);
+        assertEquals(zcs.size(), 2);
+    }
+
+    @Test
+    public void tstHashCodeMapNoDuplicateSuccess() {
+        SshConnection sc1 = new SshConnection("test", 1, "user", "password");
+        SshConnection sc2 = new SshConnection("test", 1, "user", "password");
+        var zcs = new HashMap<SshConnection, Integer>();
+        zcs.put(sc1, 1);
+        zcs.put(sc2, 2);
+        assertEquals(zcs.size(), 1);
     }
 
 }

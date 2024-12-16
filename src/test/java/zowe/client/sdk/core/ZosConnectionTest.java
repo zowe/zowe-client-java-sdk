@@ -11,6 +11,8 @@ package zowe.client.sdk.core;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
 /**
@@ -47,6 +49,56 @@ public class ZosConnectionTest {
         ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
         ZosConnection zc2 = new ZosConnection("test2", "zosmfPort", "user", "password");
         assertNotEquals(zc1, zc2);
+    }
+
+    @Test
+    public void tstHashCodeMapWithSecondHostDifferentSuccess() {
+        ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        ZosConnection zc2 = new ZosConnection("test2", "zosmfPort", "user", "password");
+        var zcs = new HashMap<ZosConnection, Integer>();
+        zcs.put(zc1, 1);
+        zcs.put(zc2, 2);
+        assertEquals(zcs.size(), 2);
+    }
+
+    @Test
+    public void tstHashCodeMapWithSecondZosmfPortDifferentSuccess() {
+        ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        ZosConnection zc2 = new ZosConnection("test", "zosmfPort2", "user", "password");
+        var zcs = new HashMap<ZosConnection, Integer>();
+        zcs.put(zc1, 1);
+        zcs.put(zc2, 2);
+        assertEquals(zcs.size(), 2);
+    }
+
+    @Test
+    public void tstHashCodeMapWithSecondUserDifferentSuccess() {
+        ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user2", "password");
+        var zcs = new HashMap<ZosConnection, Integer>();
+        zcs.put(zc1, 1);
+        zcs.put(zc2, 2);
+        assertEquals(zcs.size(), 2);
+    }
+
+    @Test
+    public void tstHashCodeMapWithSecondPasswordDifferentSuccess() {
+        ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password2");
+        var zcs = new HashMap<ZosConnection, Integer>();
+        zcs.put(zc1, 1);
+        zcs.put(zc2, 2);
+        assertEquals(zcs.size(), 2);
+    }
+
+    @Test
+    public void tstHashCodeMapNoDuplicateSuccess() {
+        ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
+        var zcs = new HashMap<ZosConnection, Integer>();
+        zcs.put(zc1, 1);
+        zcs.put(zc2, 2);
+        assertEquals(zcs.size(), 1);
     }
 
 }
