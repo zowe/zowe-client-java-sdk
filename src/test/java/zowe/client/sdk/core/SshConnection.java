@@ -9,5 +9,12 @@
  */
 package zowe.client.sdk.core;
 
+/**
+ * Class containing unit tests for SshConnection.
+ *
+ * @author Frank Giordano
+ * @version 2.0
+ */
 public class SshConnection {
+
 }
