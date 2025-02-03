@@ -73,7 +73,6 @@ public class Logout {
      */
     @SuppressWarnings("DuplicatedCode")
     public Response logout() throws ZosmfRequestException {
-
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosmfAuthConstant.RESOURCE;
 
