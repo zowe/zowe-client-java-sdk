@@ -17,6 +17,7 @@ import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosmfauth.ZosmfAuthConstant;
 
 /**
  * Provides z/OSMF authentication logout service
@@ -72,8 +73,9 @@ public class Logout {
      */
     @SuppressWarnings("DuplicatedCode")
     public Response logout() throws ZosmfRequestException {
+
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                "/zosmf/services/authenticate";
+                ZosmfAuthConstant.RESOURCE;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);

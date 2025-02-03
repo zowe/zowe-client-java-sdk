@@ -17,6 +17,7 @@ import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosmfauth.ZosmfAuthConstant;
 import zowe.client.sdk.zosmfauth.response.LoginResponse;
 
 /**
@@ -73,8 +74,9 @@ public class Login {
      */
     @SuppressWarnings("DuplicatedCode")
     public LoginResponse login() throws ZosmfRequestException {
+
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                "/zosmf/services/authenticate";
+                ZosmfAuthConstant.RESOURCE;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
