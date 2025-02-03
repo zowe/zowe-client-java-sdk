@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Provides Unix System Services (USS) log in function
+ * Provides Unix System Services (USS) log out function
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=services-log-in-zosmf-server">z/OSMF REST API </a>
  * 
@@ -27,32 +27,32 @@ import zowe.client.sdk.utility.ValidateUtils;
  * @author Frank Giordano
  * @version 2.0
  */
-public class LogIn {
+public class LogOut {
 
     private final ZosConnection connection;
 
     private ZosmfRequest request;
 
     /**
-     * LogIn constructor
+     * LogOut constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author Esteban Sandoval
      */
-    public LogIn(final ZosConnection connection) {
+    public LogOut(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
     /**
-     * Alternative LogIn constructor with ZosmfRequest object. This is mainly used for internal code
+     * Alternative LogOut constructor with ZosmfRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      * 
      * @param connection connection information, see ZosConnection object
      * @param request any compatible ZoweRequest Interface object
      * @author Esteban Sandoval
      */
-    public LogIn(final ZosConnection connection, final ZosmfRequest request){
+    public LogOut(final ZosConnection connection, final ZosmfRequest request){
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -61,9 +61,9 @@ public class LogIn {
         }
         this.request = request;
     }
-    
-    /**
-     * Request to log into server and obtain authentication tokens
+
+     /**
+     * Request to log out of server and delete authentication tokens
      * 
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -71,16 +71,18 @@ public class LogIn {
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response requestLogIn() throws ZosmfRequestException{
+    public Response requestLogOut() throws ZosmfRequestException{
         final String url = "https://" + connection.getHost() +  ":" + connection.getZosmfPort() + 
-                "POST /zosmf/services/authenticate";
+                "DELETE /zosmf/services/authenticate";
         
         if (request == null){
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
 
         return request.executeRequest();
     }
+
+
     
 }
