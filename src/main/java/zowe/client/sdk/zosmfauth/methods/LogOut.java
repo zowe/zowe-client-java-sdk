@@ -22,7 +22,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * Provides Unix System Services (USS) log out function
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=services-log-in-zosmf-server">z/OSMF REST API </a>
- * 
+ *
  * @author Esteban Sandoval
  * @author Frank Giordano
  * @version 2.0
@@ -47,35 +47,35 @@ public class LogOut {
     /**
      * Alternative LogOut constructor with ZosmfRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
-     * 
+     *
      * @param connection connection information, see ZosConnection object
-     * @param request any compatible ZoweRequest Interface object
+     * @param request    any compatible ZoweRequest Interface object
      * @author Esteban Sandoval
      */
-    public LogOut(final ZosConnection connection, final ZosmfRequest request){
+    public LogOut(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if(!(request instanceof PutJsonZosmfRequest)){
+        if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
 
-     /**
+    /**
      * Request to log out of server and delete authentication tokens
-     * 
+     *
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Esteban Sandoval
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response requestLogOut() throws ZosmfRequestException{
-        final String url = "https://" + connection.getHost() +  ":" + connection.getZosmfPort() + 
+    public Response requestLogOut() throws ZosmfRequestException {
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 "DELETE /zosmf/services/authenticate";
-        
-        if (request == null){
+
+        if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
@@ -84,5 +84,4 @@ public class LogOut {
     }
 
 
-    
 }
