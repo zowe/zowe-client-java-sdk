@@ -81,6 +81,7 @@ public class ZosmfLogin {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
         request.setUrl(url);
+        request.setBody("");
 
         final Response response = request.executeRequest();
         return new ZosmfLoginResponse(response, response.getCookies());
