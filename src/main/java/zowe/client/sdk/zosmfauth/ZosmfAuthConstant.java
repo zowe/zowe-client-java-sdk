@@ -25,7 +25,7 @@ public class ZosmfAuthConstant {
     }
 
     /**
-     * Specifies the z/OS data set and file REST interface
+     * Specifies the z/OSMF authenticate resource
      */
     public static final String RESOURCE = "/zosmf/services/authenticate";
 
