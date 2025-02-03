@@ -28,20 +28,20 @@ public class LoginResponse {
     private final Response response;
 
     /**
-     * Holds cookie information
+     * Holds cookies information
      */
-    private final Optional<String> cookie;
+    private final Optional<String> cookies;
 
     /**
      * LoginResponse constructor
      *
      * @param response Response object
-     * @param cookie   Cookies object
+     * @param cookies   Cookies object
      * @author Frank Giordano
      */
-    public LoginResponse(final Response response, final Cookies cookie) {
+    public LoginResponse(final Response response, final Cookies cookies) {
         this.response = response;
-        this.cookie = Optional.ofNullable(cookie.toString());
+        this.cookies = Optional.ofNullable(cookies.toString());
     }
 
     /**
@@ -54,12 +54,12 @@ public class LoginResponse {
     }
 
     /**
-     * Retrieve cookie
+     * Retrieve cookies
      *
-     * @return cookie Optional String value
+     * @return cookies Optional String value
      */
-    public Optional<String> getCookie() {
-        return cookie;
+    public Optional<String> getCookies() {
+        return cookies;
     }
 
     /**
@@ -71,7 +71,7 @@ public class LoginResponse {
     public String toString() {
         return "LoginResponse{" +
                 "response=" + response +
-                ", cookie=" + cookie +
+                ", cookies=" + cookies +
                 '}';
     }
 
