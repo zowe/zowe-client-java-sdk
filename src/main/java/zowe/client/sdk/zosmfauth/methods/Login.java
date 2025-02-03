@@ -72,7 +72,7 @@ public class Login {
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response login() throws ZosmfRequestException {
+    public LoginResponse login() throws ZosmfRequestException {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 "/zosmf/services/authenticate";
 
@@ -81,10 +81,8 @@ public class Login {
         }
         request.setUrl(url);
 
-        Response response = request.executeRequest();
-        LoginResponse loginResponse = new LoginResponse(response, response.getRawReply().getCookies());
-
-        return request.executeRequest();
+        final Response response = request.executeRequest();
+        return new LoginResponse(response, response.getRawReply().getCookies());
     }
 
 }
