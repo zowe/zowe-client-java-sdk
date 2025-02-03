@@ -27,32 +27,32 @@ import zowe.client.sdk.utility.ValidateUtils;
  * @author Frank Giordano
  * @version 2.0
  */
-public class LogIn {
+public class Login {
 
     private final ZosConnection connection;
 
     private ZosmfRequest request;
 
     /**
-     * LogIn constructor
+     * Authenticate constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author Esteban Sandoval
      */
-    public LogIn(final ZosConnection connection) {
+    public Login(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
     /**
-     * Alternative LogIn constructor with ZosmfRequest object. This is mainly used for internal code
+     * Alternative Authenticate constructor with ZosmfRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Esteban Sandoval
      */
-    public LogIn(final ZosConnection connection, final ZosmfRequest request) {
+    public Login(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -63,7 +63,7 @@ public class LogIn {
     }
 
     /**
-     * Request to log into server and obtain authentication tokens
+     * Request to log into server and obtain authentication token
      *
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -71,9 +71,9 @@ public class LogIn {
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response requestLogIn() throws ZosmfRequestException {
+    public Response login() throws ZosmfRequestException {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                "POST /zosmf/services/authenticate";
+                "/zosmf/services/authenticate";
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);

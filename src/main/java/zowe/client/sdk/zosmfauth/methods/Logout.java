@@ -10,10 +10,7 @@
 package zowe.client.sdk.zosmfauth.methods;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.PutJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -27,7 +24,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * @author Frank Giordano
  * @version 2.0
  */
-public class LogOut {
+public class Logout {
 
     private final ZosConnection connection;
 
@@ -39,7 +36,7 @@ public class LogOut {
      * @param connection connection information, see ZosConnection object
      * @author Esteban Sandoval
      */
-    public LogOut(final ZosConnection connection) {
+    public Logout(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -52,12 +49,12 @@ public class LogOut {
      * @param request    any compatible ZoweRequest Interface object
      * @author Esteban Sandoval
      */
-    public LogOut(final ZosConnection connection, final ZosmfRequest request) {
+    public Logout(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if (!(request instanceof PutJsonZosmfRequest)) {
-            throw new IllegalStateException("PUT_JSON request type required");
+        if (!(request instanceof DeleteJsonZosmfRequest)) {
+            throw new IllegalStateException("DELETE_JSON request type required");
         }
         this.request = request;
     }
@@ -71,9 +68,9 @@ public class LogOut {
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response requestLogOut() throws ZosmfRequestException {
+    public Response logout() throws ZosmfRequestException {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                "DELETE /zosmf/services/authenticate";
+                "/zosmf/services/authenticate";
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
