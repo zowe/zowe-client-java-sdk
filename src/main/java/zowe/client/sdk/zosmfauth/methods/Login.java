@@ -66,7 +66,7 @@ public class Login {
     /**
      * Request to log into server and obtain authentication token
      *
-     * @return Response object
+     * @return LoginResponse object
      * @throws ZosmfRequestException request error state
      * @author Esteban Sandoval
      * @author Frank Giordano
