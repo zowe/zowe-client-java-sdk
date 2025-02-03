@@ -19,9 +19,9 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Provides Unix System Services (USS) log out function
+ * Provides z/OSMF authentication logout service
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=services-log-in-zosmf-server">z/OSMF REST API </a>
+ * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=services-log-out-zosmf-server">z/OSMF REST API </a>
  *
  * @author Esteban Sandoval
  * @author Frank Giordano
@@ -34,7 +34,7 @@ public class Logout {
     private ZosmfRequest request;
 
     /**
-     * LogOut constructor
+     * Logout constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author Esteban Sandoval
@@ -45,7 +45,7 @@ public class Logout {
     }
 
     /**
-     * Alternative LogOut constructor with ZosmfRequest object. This is mainly used for internal code
+     * Alternative Logout constructor with ZosmfRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZosConnection object
@@ -63,7 +63,7 @@ public class Logout {
     }
 
     /**
-     * Request to log out of server and delete authentication tokens
+     * Request to log out of server and delete authentication token
      *
      * @return Response object
      * @throws ZosmfRequestException request error state

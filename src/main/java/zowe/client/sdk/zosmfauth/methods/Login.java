@@ -20,7 +20,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfauth.response.LoginResponse;
 
 /**
- * Provides Unix System Services (USS) log in function
+ * Provides z/OSMF authentication login and token service
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=services-log-in-zosmf-server">z/OSMF REST API </a>
  *
@@ -35,7 +35,7 @@ public class Login {
     private ZosmfRequest request;
 
     /**
-     * Authenticate constructor
+     * Login constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author Esteban Sandoval
@@ -46,7 +46,7 @@ public class Login {
     }
 
     /**
-     * Alternative Authenticate constructor with ZosmfRequest object. This is mainly used for internal code
+     * Alternative Login constructor with ZosmfRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection connection information, see ZosConnection object
