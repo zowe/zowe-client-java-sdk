@@ -17,6 +17,7 @@ import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosmfauth.response.LoginResponse;
 
 /**
  * Provides Unix System Services (USS) log in function
@@ -79,6 +80,9 @@ public class Login {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
         request.setUrl(url);
+
+        Response response = request.executeRequest();
+        LoginResponse loginResponse = new LoginResponse(response, response.getRawReply().getCookies());
 
         return request.executeRequest();
     }

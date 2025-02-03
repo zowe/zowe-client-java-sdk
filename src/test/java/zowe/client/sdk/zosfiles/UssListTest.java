@@ -120,7 +120,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListEmptyResponseSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response("{}", 200, "success"));
+                new Response("{}", 200, "success", null));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
         // should only contain two items
@@ -130,7 +130,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListNullResponseFailure() throws ZosmfRequestException {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(null, 200, "success"));
+                new Response(null, 200, "success", null));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         String msg = "";
         try {
@@ -146,7 +146,7 @@ public class UssListTest {
         final JSONParser parser = new JSONParser();
         final JSONObject json = JsonParserUtil.parse(dataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "success"));
+                new Response(json, 200, "success", null));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
         // should only contain two items
@@ -178,7 +178,7 @@ public class UssListTest {
         final JSONParser parser = new JSONParser();
         final JSONObject json = JsonParserUtil.parse(partialDataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "success"));
+                new Response(json, 200, "success", null));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
         // should only contain two items
@@ -210,7 +210,7 @@ public class UssListTest {
         final JSONParser parser = new JSONParser();
         final JSONObject json = JsonParserUtil.parse("{}");
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "success"));
+                new Response(json, 200, "success", null));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
         assertEquals(0, items.size());
@@ -219,7 +219,7 @@ public class UssListTest {
     @Test
     public void tstUssListEmptyFileListWithJsonObjectSuccess() throws ZosmfRequestException {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response(new JSONObject(), 200, "success", null));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
         assertEquals(0, items.size());
@@ -230,7 +230,7 @@ public class UssListTest {
         final JSONParser parser = new JSONParser();
         final JSONObject json = JsonParserUtil.parse(dataForZfsList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "success"));
+                new Response(json, 200, "success", null));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixZfs> items = ussList.getZfsSystems(new ListZfsParams.Builder().path("/xxx/xx/x").build());
         // should only contain one item

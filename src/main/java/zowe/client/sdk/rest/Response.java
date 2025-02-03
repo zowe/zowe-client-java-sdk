@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.rest;
 
+import kong.unirest.HttpResponse;
+
 import java.util.Optional;
 import java.util.OptionalInt;
 
@@ -36,14 +38,21 @@ public class Response {
     private final Optional<String> statusText;
 
     /**
+     * Store raw reply
+     */
+    private final HttpResponse rawReply;
+
+    /**
      * Response constructor
      *
      * @param responsePhrase http response information
      * @param statusCode     http response status code
      * @param statusText     http response status text
+     * @param rawReply       raw http response
      * @author Frank Giordano
      */
-    public Response(final Object responsePhrase, final Integer statusCode, final String statusText) {
+    public Response(final Object responsePhrase, final Integer statusCode, final String statusText,
+                    final HttpResponse rawReply) {
         this.responsePhrase = Optional.ofNullable(responsePhrase);
         if (statusCode == null) {
             this.statusCode = OptionalInt.empty();
@@ -51,12 +60,13 @@ public class Response {
             this.statusCode = OptionalInt.of(statusCode);
         }
         this.statusText = Optional.ofNullable(statusText);
+        this.rawReply = rawReply;
     }
 
     /**
      * Retrieve responsePhrase value
      *
-     * @return responsePhrase value
+     * @return responsePhrase Optional object value
      */
     public Optional<Object> getResponsePhrase() {
         return responsePhrase;
@@ -65,7 +75,7 @@ public class Response {
     /**
      * Retrieve statusCode value
      *
-     * @return statusCode value
+     * @return statusCode Optional int value
      */
     public OptionalInt getStatusCode() {
         return statusCode;
@@ -74,10 +84,19 @@ public class Response {
     /**
      * Retrieve statusText value
      *
-     * @return statusText value
+     * @return statusText Optional String value
      */
     public Optional<String> getStatusText() {
         return statusText;
+    }
+
+    /**
+     * Retrieve rawReply value
+     *
+     * @return rawReply HttpResponse
+     */
+    public HttpResponse getRawReply() {
+        return rawReply;
     }
 
     /**

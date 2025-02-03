@@ -43,7 +43,7 @@ public class GetJobsByTextGetRequestTest {
     @Test
     public void tstGetSpoolContentByIdSuccess() throws ZosmfRequestException {
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
-                new Response("1\n2\n3\n", 200, "success"));
+                new Response("1\n2\n3\n", 200, "success", null));
 
         final String results = getJobs.getSpoolContent("jobName", "jobId", 1);
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());

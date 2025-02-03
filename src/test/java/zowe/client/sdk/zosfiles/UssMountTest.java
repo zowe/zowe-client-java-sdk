@@ -45,7 +45,7 @@ public class UssMountTest {
     public void tstUssMountSuccess() throws ZosmfRequestException {
         final PutJsonZosmfRequest mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response(new JSONObject(), 200, "success", null));
         final UssMount ussMount = new UssMount(connection, mockJsonPutRequest);
         final Response response = ussMount.mount("name", "mountpoint", "fstype");
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());

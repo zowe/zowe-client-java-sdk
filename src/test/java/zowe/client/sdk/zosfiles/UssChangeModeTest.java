@@ -39,7 +39,7 @@ public class UssChangeModeTest {
     public void init() throws ZosmfRequestException {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response(new JSONObject(), 200, "success", null));
         ussChangeMode = new UssChangeMode(connection);
     }
 

@@ -82,7 +82,7 @@ public class GetJobsByJsonGetRequestTest {
         jsonArray.add(jsonJob2);
 
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(jsonArray, 200, "success"));
+                new Response(jsonArray, 200, "success", null));
 
         String msgResult = null;
         try {
@@ -102,7 +102,7 @@ public class GetJobsByJsonGetRequestTest {
         jsonArray.add(jobJson);
 
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(jsonArray, 200, "success"));
+                new Response(jsonArray, 200, "success", null));
 
         final Job job = getJobs.getById("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
@@ -131,7 +131,7 @@ public class GetJobsByJsonGetRequestTest {
         jsonArray.add(jsonJob);
 
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(jsonArray, 200, "success"));
+                new Response(jsonArray, 200, "success", null));
 
         final Job job = getJobs.getById("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
@@ -196,7 +196,7 @@ public class GetJobsByJsonGetRequestTest {
     @Test
     public void tstGetStatusForJobSuccess() throws ZosmfRequestException {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(jobJson, 200, "success"));
+                new Response(jobJson, 200, "success", null));
 
         final Job job = getJobs.getStatusByJob(new Job.Builder().jobId("1").jobName("jobName").build());
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/1?step-data=Y", getJobs.getUrl());
