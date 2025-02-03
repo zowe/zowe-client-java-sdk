@@ -86,21 +86,35 @@ public abstract class ZosmfRequest {
 
         Response response;
         if (statusText.contains("No Content")) {
-            response = new Response(statusText, statusCode, statusText, reply);
+            response = reply.getCookies() != null ?
+                    new Response(statusText, statusCode, statusText, reply.getCookies()) :
+                    new Response(statusText, statusCode, statusText);
         } else if (reply.getBody() instanceof JsonNode) {
             final HttpResponse<JsonNode> jsonReply = (HttpResponse<JsonNode>) reply;
-            response = jsonReply.getBody().isArray() ?
-                    new Response(jsonReply.getBody().getArray(), statusCode, statusText, reply) :
-                    new Response(jsonReply.getBody().getObject(), statusCode, statusText, reply);
+            if (reply.getCookies() != null) {
+                response = jsonReply.getBody().isArray() ?
+                        new Response(jsonReply.getBody().getArray(), statusCode, statusText, reply.getCookies()) :
+                        new Response(jsonReply.getBody().getObject(), statusCode, statusText, reply.getCookies());
+            } else {
+                response = jsonReply.getBody().isArray() ?
+                        new Response(jsonReply.getBody().getArray(), statusCode, statusText) :
+                        new Response(jsonReply.getBody().getObject(), statusCode, statusText);
+            }
         } else if (reply.getBody() instanceof String) {
             final HttpResponse<String> stringReply = (HttpResponse<String>) reply;
-            response = new Response(stringReply.getBody(), statusCode, statusText, reply);
+            response = reply.getCookies() != null ?
+                    new Response(stringReply.getBody(), statusCode, statusText, reply.getCookies()) :
+                    new Response(stringReply.getBody(), statusCode, statusText);
         } else if (reply.getBody() instanceof byte[]) {
             final HttpResponse<byte[]> byteReply = (HttpResponse<byte[]>) reply;
-            response = new Response(byteReply.getBody(), statusCode, statusText, reply);
+            response = reply.getCookies() != null ?
+                    new Response(byteReply.getBody(), statusCode, statusText, reply.getCookies()) :
+                    new Response(byteReply.getBody(), statusCode, statusText);
         } else {
             LOG.debug("no reply instanceof found");
-            response = new Response(null, statusCode, statusText, reply);
+            response = reply.getCookies() != null ?
+                    new Response(null, statusCode, statusText, reply.getCookies()) :
+                    new Response(null, statusCode, statusText);
         }
 
         if (!(statusCode >= 100 && statusCode <= 299)) {

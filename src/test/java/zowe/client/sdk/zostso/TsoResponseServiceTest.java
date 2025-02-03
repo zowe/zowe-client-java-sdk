@@ -31,7 +31,7 @@ public class TsoResponseServiceTest {
     public void tstGetZosmfTsoResponseMissingQueueIDJsonFieldFail() throws ZosmfRequestException {
         final String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"tsoData\":" +
                 "[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":\"--> LOGON proc version = 04/28/2011\"}}]}";
-        final Response mockResponse = new Response(JsonParserUtil.parse(json), 200, "success", null);
+        final Response mockResponse = new Response(JsonParserUtil.parse(json), 200, "success");
         final ZosmfTsoResponse zosmfTsoResponse = new TsoResponseService(mockResponse).getZosmfTsoResponse();
         assertTrue(zosmfTsoResponse.getQueueId().isEmpty());
     }
@@ -40,7 +40,7 @@ public class TsoResponseServiceTest {
     public void tstGetZosmfTsoResponseMissingServletKeyJsonFieldFail() throws ZosmfRequestException {
         final String json = "{\"ver\":\"0100\",\"queueID\":\"0100\",\"tsoData\":\n" +
                 "[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":\"--> LOGON proc version = 04/28/2011\"}}]}";
-        final Response mockResponse = new Response(JsonParserUtil.parse(json), 200, "success", null);
+        final Response mockResponse = new Response(JsonParserUtil.parse(json), 200, "success");
         final ZosmfTsoResponse zosmfTsoResponse = new TsoResponseService(mockResponse).getZosmfTsoResponse();
         assertTrue(zosmfTsoResponse.getServletKey().isEmpty());
     }
@@ -49,7 +49,7 @@ public class TsoResponseServiceTest {
     public void tstGetZosmfTsoResponseMissingTsoDataJsonFieldFailWithEmptyResults() throws ZosmfRequestException {
         final String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"queueID\":\"0100\"," +
                 "\"reused\":true,\"timeout\":true}";
-        final Response mockResponse = new Response(JsonParserUtil.parse(json), 200, "success", null);
+        final Response mockResponse = new Response(JsonParserUtil.parse(json), 200, "success");
         final ZosmfTsoResponse zosmfTsoResponse = new TsoResponseService(mockResponse).getZosmfTsoResponse();
         assertTrue(zosmfTsoResponse.getTsoData().isEmpty());
     }
@@ -58,7 +58,7 @@ public class TsoResponseServiceTest {
     public void tstGetZosmfTsoResponseMissingVerJsonFieldFail() throws ZosmfRequestException {
         final String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"queueID\":\"0100\",\"tsoData\":" +
                 "[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":\"--> LOGON proc version = 04/28/2011\"}}]}";
-        final Response mockResponse = new Response(JsonParserUtil.parse(json), 200, "success", null);
+        final Response mockResponse = new Response(JsonParserUtil.parse(json), 200, "success");
         final ZosmfTsoResponse response = new TsoResponseService(mockResponse).getZosmfTsoResponse();
         assertTrue(response.getVer().isEmpty());
     }
@@ -76,7 +76,7 @@ public class TsoResponseServiceTest {
 
     @Test
     public void tstGetZosmfTsoResponseResultsNullStatusCodeErrorFail() {
-        Response response = new Response(null, 10, "fail", null);
+        Response response = new Response(null, 10, "fail");
         String msg = "";
         try {
             new TsoResponseService(response).getZosmfTsoResponse();
@@ -88,7 +88,7 @@ public class TsoResponseServiceTest {
 
     @Test
     public void tstGetZosmfTsoResponseResultsNullStatusCodeNonErrorFail() {
-        Response response = new Response(null, 200, "success", null);
+        Response response = new Response(null, 200, "success");
         String msg = "";
         try {
             new TsoResponseService(response).getZosmfTsoResponse();
@@ -104,7 +104,7 @@ public class TsoResponseServiceTest {
                 "\"reused\":true,\"timeout\":true,\"tsoData\":[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":" +
                 "\"--> LOGON proc version = 04/28/2011\"}},{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":" +
                 "\"hidden\"}}]}";
-        final Response response = new Response(JsonParserUtil.parse(json), 200, "success", null);
+        final Response response = new Response(JsonParserUtil.parse(json), 200, "success");
         final ZosmfTsoResponse zosmfTsoResponse = new TsoResponseService(response).getZosmfTsoResponse();
         assertFalse(zosmfTsoResponse.getTsoData().isEmpty());
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty());
@@ -130,7 +130,7 @@ public class TsoResponseServiceTest {
         final String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"queueID\":\"0100\"," +
                 "\"reused\":true,\"timeout\":true,\"tsoData\":[{\"TSO MESSAGE\":{\"VERSION\":\"0100\",\"DATA\":" +
                 "\"--> LOGON proc version = 04/28/2011\"}}]}";
-        final Response response = new Response(JsonParserUtil.parse(json), 200, "success", null);
+        final Response response = new Response(JsonParserUtil.parse(json), 200, "success");
         final ZosmfTsoResponse zosmfTsoResponse = new TsoResponseService(response).getZosmfTsoResponse();
         assertFalse(zosmfTsoResponse.getTsoData().isEmpty());
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty());
@@ -151,7 +151,7 @@ public class TsoResponseServiceTest {
         final String json = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"queueID\":\"0100\"," +
                 "\"reused\":true,\"timeout\":true,\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":" +
                 "\"--> LOGON proc version = 04/28/2011\"}}]}";
-        final Response response = new Response(JsonParserUtil.parse(json), 200, "success", null);
+        final Response response = new Response(JsonParserUtil.parse(json), 200, "success");
         final ZosmfTsoResponse zosmfTsoResponse = new TsoResponseService(response).getZosmfTsoResponse();
         assertFalse(zosmfTsoResponse.getTsoData().isEmpty());
         assertTrue(zosmfTsoResponse.getMsgData().isEmpty());
@@ -169,7 +169,7 @@ public class TsoResponseServiceTest {
 
     @Test
     public void tstGetZosmfTsoResponseStatusCodeFail() throws ZosmfRequestException {
-        final Response response = new Response("error", 10, "fail", null);
+        final Response response = new Response("error", 10, "fail");
         final ZosmfTsoResponse zosmfTsoResponse = new TsoResponseService(response).getZosmfTsoResponse();
         final String errorValue = zosmfTsoResponse.getMsgData().get(0).getMessageText().get();
         assertEquals("error", errorValue);

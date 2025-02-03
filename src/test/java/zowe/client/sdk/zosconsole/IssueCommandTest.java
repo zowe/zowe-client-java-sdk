@@ -53,7 +53,7 @@ public class IssueCommandTest {
         jsonMap.put("cmd-response", "student");
         final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "success", null));
+                new Response(json, 200, "success"));
         final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
         final ConsoleResponse response = issueCommand.issueCommand("command");
         assertEquals("student",
@@ -69,7 +69,7 @@ public class IssueCommandTest {
         jsonMap.put("cmd-response", "");
         final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "success", null));
+                new Response(json, 200, "success"));
         final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
         final ConsoleResponse response = issueCommand.issueCommand("command");
         assertEquals("", response.getCommandResponse().orElse("n/a"));
@@ -81,7 +81,7 @@ public class IssueCommandTest {
         jsonMap.put("cmd-response", "");
         final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "success", null));
+                new Response(json, 200, "success"));
         final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
         final IssueConsoleParams issueConsoleParams = new IssueConsoleParams("command");
         issueConsoleParams.setProcessResponse(true);
@@ -95,7 +95,7 @@ public class IssueCommandTest {
         jsonMap.put("cmd-response-url", "student");
         final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "success", null));
+                new Response(json, 200, "success"));
         IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
         ConsoleResponse response = issueCommand.issueCommand("command");
         assertEquals("student",

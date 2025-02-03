@@ -40,7 +40,7 @@ public class UssCopyTest {
     public void init() throws ZosmfRequestException {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success", null));
+                new Response(new JSONObject(), 200, "success"));
         ussCopy = new UssCopy(connection);
     }
 

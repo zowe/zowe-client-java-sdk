@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.rest;
 
-import kong.unirest.HttpResponse;
+import kong.unirest.Cookies;
 
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -40,7 +40,7 @@ public class Response {
     /**
      * Store raw reply
      */
-    private final HttpResponse rawReply;
+    private final Optional<Cookies> cookies;
 
     /**
      * Response constructor
@@ -48,11 +48,9 @@ public class Response {
      * @param responsePhrase http response information
      * @param statusCode     http response status code
      * @param statusText     http response status text
-     * @param rawReply       raw http response
      * @author Frank Giordano
      */
-    public Response(final Object responsePhrase, final Integer statusCode, final String statusText,
-                    final HttpResponse rawReply) {
+    public Response(final Object responsePhrase, final Integer statusCode, final String statusText) {
         this.responsePhrase = Optional.ofNullable(responsePhrase);
         if (statusCode == null) {
             this.statusCode = OptionalInt.empty();
@@ -60,7 +58,28 @@ public class Response {
             this.statusCode = OptionalInt.of(statusCode);
         }
         this.statusText = Optional.ofNullable(statusText);
-        this.rawReply = rawReply;
+        this.cookies = Optional.empty();
+    }
+
+    /**
+     * Response constructor
+     *
+     * @param responsePhrase http response information
+     * @param statusCode     http response status code
+     * @param statusText     http response status text
+     * @param cookies        http response cookies
+     * @author Frank Giordano
+     */
+    public Response(final Object responsePhrase, final Integer statusCode, final String statusText,
+                    final Cookies cookies) {
+        this.responsePhrase = Optional.ofNullable(responsePhrase);
+        if (statusCode == null) {
+            this.statusCode = OptionalInt.empty();
+        } else {
+            this.statusCode = OptionalInt.of(statusCode);
+        }
+        this.statusText = Optional.ofNullable(statusText);
+        this.cookies = Optional.ofNullable(cookies);
     }
 
     /**
@@ -91,12 +110,12 @@ public class Response {
     }
 
     /**
-     * Retrieve rawReply value
+     * Retrieve cookies value
      *
-     * @return rawReply HttpResponse
+     * @return cookies Cookies object
      */
-    public HttpResponse getRawReply() {
-        return rawReply;
+    public Cookies getCookies() {
+        return cookies.orElse(null);
     }
 
     /**

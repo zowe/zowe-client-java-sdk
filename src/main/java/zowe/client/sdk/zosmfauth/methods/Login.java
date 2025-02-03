@@ -83,7 +83,7 @@ public class Login {
         request.setUrl(url);
 
         final Response response = request.executeRequest();
-        return new LoginResponse(response, response.getRawReply().getCookies());
+        return new LoginResponse(response, response.getCookies());
     }
 
 }

@@ -46,7 +46,7 @@ public class UssWriteTest {
     public void tstUssWriteTextSuccess() throws ZosmfRequestException {
         final PutTextZosmfRequest mockTextPutRequest = Mockito.mock(PutTextZosmfRequest.class);
         Mockito.when(mockTextPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success", null));
+                new Response(new JSONObject(), 200, "success"));
         final UssWrite ussWrite = new UssWrite(connection, mockTextPutRequest);
         final Response response = ussWrite.writeText("/xx/xx/x", "text");
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -58,7 +58,7 @@ public class UssWriteTest {
     public void tstUssWriteBinarySuccess() throws ZosmfRequestException {
         final PutStreamZosmfRequest mockStreamPutRequest = Mockito.mock(PutStreamZosmfRequest.class);
         Mockito.when(mockStreamPutRequest.executeRequest()).thenReturn(
-                new Response(new byte[0], 200, "success", null));
+                new Response(new byte[0], 200, "success"));
         final UssWrite ussWrite = new UssWrite(connection, mockStreamPutRequest);
         final Response response = ussWrite.writeBinary("/xx/xx/x", new byte[0]);
         assertTrue(response.getResponsePhrase().orElse(null) instanceof byte[]);

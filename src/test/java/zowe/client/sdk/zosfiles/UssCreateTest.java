@@ -47,7 +47,7 @@ public class UssCreateTest {
     @Test
     public void tstUssCreateSuccess() throws ZosmfRequestException {
         Mockito.when(mockJsonPostRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success", null));
+                new Response(new JSONObject(), 200, "success"));
         final UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequest);
         final Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());

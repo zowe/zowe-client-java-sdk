@@ -39,7 +39,7 @@ public class UssDeleteTest {
     public void init() throws ZosmfRequestException {
         mockJsonDeleteRequest = Mockito.mock(DeleteJsonZosmfRequest.class);
         Mockito.when(mockJsonDeleteRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success", null));
+                new Response(new JSONObject(), 200, "success"));
         ussDelete = new UssDelete(connection);
     }
 

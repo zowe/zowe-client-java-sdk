@@ -44,7 +44,7 @@ public class UssGetTest {
     public void tstGetTextFileTargetPathSuccess() throws ZosmfRequestException {
         final GetTextZosmfRequest mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
-                new Response("text", 200, "success", null));
+                new Response("text", 200, "success"));
         final UssGet ussGet = new UssGet(connection, mockTextGetRequest);
         final String response = ussGet.getText("/xxx/xx");
         Assertions.assertEquals("text", response);
@@ -54,7 +54,7 @@ public class UssGetTest {
     public void tstGetTextFileTargetPathDefaultResponseSuccess() throws ZosmfRequestException {
         final GetTextZosmfRequest mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
-                new Response(null, 200, "success", null));
+                new Response(null, 200, "success"));
         final UssGet ussGet = new UssGet(connection, mockTextGetRequest);
         final String response = ussGet.getText("/xxx/xx");
         Assertions.assertEquals("", response);
@@ -65,7 +65,7 @@ public class UssGetTest {
         final GetStreamZosmfRequest mockStreamGetRequest = Mockito.mock(GetStreamZosmfRequest.class);
         final byte[] data = "data".getBytes();
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(
-                new Response(data, 200, "success", null));
+                new Response(data, 200, "success"));
         final UssGet ussGet = new UssGet(connection, mockStreamGetRequest);
         final byte[] response = ussGet.getBinary("/xxx/xx");
         Assertions.assertEquals(data, response);
@@ -76,7 +76,7 @@ public class UssGetTest {
         final GetStreamZosmfRequest mockStreamGetRequest = Mockito.mock(GetStreamZosmfRequest.class);
         final byte[] data = new byte[0];
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(
-                new Response(data, 200, "success", null));
+                new Response(data, 200, "success"));
         final UssGet ussGet = new UssGet(connection, mockStreamGetRequest);
         final byte[] response = ussGet.getBinary("/xxx/xx");
         Assertions.assertEquals(data, response);
