@@ -17,8 +17,8 @@ import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosmfauth.ZosmfAuthConstant;
-import zowe.client.sdk.zosmfauth.response.LoginResponse;
+import zowe.client.sdk.zosmfauth.ZosmfAuthConstants;
+import zowe.client.sdk.zosmfauth.response.ZosmfLoginResponse;
 
 /**
  * Provides z/OSMF authentication login and token service
@@ -29,7 +29,7 @@ import zowe.client.sdk.zosmfauth.response.LoginResponse;
  * @author Frank Giordano
  * @version 2.0
  */
-public class Login {
+public class ZosmfLogin {
 
     private final ZosConnection connection;
 
@@ -41,7 +41,7 @@ public class Login {
      * @param connection connection information, see ZosConnection object
      * @author Esteban Sandoval
      */
-    public Login(final ZosConnection connection) {
+    public ZosmfLogin(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
@@ -54,7 +54,7 @@ public class Login {
      * @param request    any compatible ZoweRequest Interface object
      * @author Esteban Sandoval
      */
-    public Login(final ZosConnection connection, final ZosmfRequest request) {
+    public ZosmfLogin(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -73,9 +73,9 @@ public class Login {
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public LoginResponse login() throws ZosmfRequestException {
+    public ZosmfLoginResponse login() throws ZosmfRequestException {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosmfAuthConstant.RESOURCE;
+                ZosmfAuthConstants.RESOURCE;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
@@ -83,7 +83,7 @@ public class Login {
         request.setUrl(url);
 
         final Response response = request.executeRequest();
-        return new LoginResponse(response, response.getCookies());
+        return new ZosmfLoginResponse(response, response.getCookies());
     }
 
 }

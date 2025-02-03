@@ -20,7 +20,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 2.0
  */
-public class LoginResponse {
+public class ZosmfLoginResponse {
 
     /**
      * Holds Response object
@@ -39,7 +39,7 @@ public class LoginResponse {
      * @param cookies   Cookies object
      * @author Frank Giordano
      */
-    public LoginResponse(final Response response, final Cookies cookies) {
+    public ZosmfLoginResponse(final Response response, final Cookies cookies) {
         this.response = response;
         this.cookies = Optional.ofNullable(cookies.toString());
     }

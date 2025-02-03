@@ -15,12 +15,12 @@ package zowe.client.sdk.zosmfauth;
  * @author Frank Giordano
  * @version 2.0
  */
-public class ZosmfAuthConstant {
+public class ZosmfAuthConstants {
 
     /**
      * Private constructor defined to avoid instantiation of class
      */
-    private ZosmfAuthConstant() {
+    private ZosmfAuthConstants() {
         throw new IllegalStateException("Constants class");
     }
 

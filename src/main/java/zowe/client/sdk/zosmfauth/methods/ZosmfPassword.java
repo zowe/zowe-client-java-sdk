@@ -9,6 +9,6 @@
  */
 package zowe.client.sdk.zosmfauth.methods;
 
-public class Password {
+public class ZosmfPassword {
 
 }
