@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosmfauth.methods;
 
+import kong.unirest.core.Cookies;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -18,6 +19,8 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfauth.ZosmfAuthConstants;
+
+import java.util.Map;
 
 /**
  * Provides z/OSMF authentication logout service
@@ -66,13 +69,15 @@ public class ZosmfLogout {
     /**
      * Request to log out of server and delete authentication token
      *
+     * @param cookies Cookies Object
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Esteban Sandoval
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response logout() throws ZosmfRequestException {
+    public Response logout(Cookies cookies) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(cookies == null, "cookies is null");
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosmfAuthConstants.RESOURCE;
 
@@ -80,9 +85,9 @@ public class ZosmfLogout {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
+        request.setHeaders(Map.of("cookie:", cookies.get(0).toString()));
 
         return request.executeRequest();
     }
-
 
 }
