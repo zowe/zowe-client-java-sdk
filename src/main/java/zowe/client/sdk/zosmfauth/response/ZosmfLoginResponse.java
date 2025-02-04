@@ -9,10 +9,8 @@
  */
 package zowe.client.sdk.zosmfauth.response;
 
-import kong.unirest.Cookies;
+import kong.unirest.core.Cookies;
 import zowe.client.sdk.rest.Response;
-
-import java.util.Optional;
 
 /**
  * Holds Login response information
@@ -30,18 +28,18 @@ public class ZosmfLoginResponse {
     /**
      * Holds cookies information
      */
-    private final Optional<String> cookies;
+    private final Cookies cookies;
 
     /**
      * LoginResponse constructor
      *
      * @param response Response object
-     * @param cookies   Cookies object
+     * @param cookies  Cookies object
      * @author Frank Giordano
      */
     public ZosmfLoginResponse(final Response response, final Cookies cookies) {
         this.response = response;
-        this.cookies = Optional.ofNullable(cookies.toString());
+        this.cookies = cookies;
     }
 
     /**
@@ -56,9 +54,9 @@ public class ZosmfLoginResponse {
     /**
      * Retrieve cookies
      *
-     * @return cookies Optional String value
+     * @return cookies object
      */
-    public Optional<String> getCookies() {
+    public Cookies getCookies() {
         return cookies;
     }
 

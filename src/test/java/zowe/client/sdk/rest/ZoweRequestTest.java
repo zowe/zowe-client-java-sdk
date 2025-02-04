@@ -9,8 +9,8 @@
  */
 package zowe.client.sdk.rest;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.JsonNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

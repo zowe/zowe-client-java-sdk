@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosfiles;
 
-import kong.unirest.json.JSONObject;
+import kong.unirest.core.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

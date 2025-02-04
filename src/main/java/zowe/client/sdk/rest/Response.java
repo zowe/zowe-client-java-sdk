@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.rest;
 
-import kong.unirest.Cookies;
+import kong.unirest.core.Cookies;
 
 import java.util.Optional;
 import java.util.OptionalInt;
