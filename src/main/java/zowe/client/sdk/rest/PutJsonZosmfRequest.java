@@ -94,6 +94,12 @@ public class PutJsonZosmfRequest extends ZosmfRequest {
         headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }
 
+    /**
+     * Set a cookie for this request. This is optional for most requests and not needed.
+     *
+     * @param cookie object
+     * @author Frank Giordano
+     */
     @Override
     public void setCookie(final Cookie cookie) {
         this.cookie = cookie;

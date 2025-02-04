@@ -215,8 +215,9 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Set the optional cookie for http request
+     * Set a cookie for this request. This is optional for most requests and not needed.
      *
+     * @param cookie object
      * @author Frank Giordano
      */
     public abstract void setCookie(final Cookie cookie);
