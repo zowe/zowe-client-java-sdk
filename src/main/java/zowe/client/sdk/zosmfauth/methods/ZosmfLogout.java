@@ -20,8 +20,6 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfauth.ZosmfAuthConstants;
 
-import java.util.Map;
-
 /**
  * Provides z/OSMF authentication logout service
  * <p>
@@ -85,7 +83,7 @@ public class ZosmfLogout {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
-        request.setHeaders(Map.of("cookie:", cookies.get(0).toString()));
+        request.setCookie(cookies.get(0));
 
         return request.executeRequest();
     }

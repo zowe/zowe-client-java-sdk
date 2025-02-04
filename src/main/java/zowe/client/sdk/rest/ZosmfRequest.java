@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.rest;
 
+import kong.unirest.core.Cookie;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
 import kong.unirest.core.Unirest;
@@ -212,6 +213,13 @@ public abstract class ZosmfRequest {
         this.url = url;
         LOG.debug(this.url);
     }
+
+    /**
+     * Set the optional cookie for http request
+     *
+     * @author Frank Giordano
+     */
+    public abstract void setCookie(final Cookie cookie);
 
     /**
      * Check if url is a valid http or https url.
