@@ -191,7 +191,7 @@ public class JobSubmit {
     /**
      * Parse input string for JCL substitution
      *
-     * @param keyValues Map containing JCL substitution symbols e.g.: "{"SYMBOL","SYM"},{"SYMBOL2","SYM2"}
+     * @param keyValues Map containing JCL substitution symbols e.g.: {"SYMBOL","SYM"},{"SYMBOL2","SYM2"}
      * @return String Map containing all keys and values
      * @author Corinne DeStefano
      */
