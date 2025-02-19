@@ -73,7 +73,6 @@ public class ZosmfLogout {
      * @author Esteban Sandoval
      * @author Frank Giordano
      */
-    @SuppressWarnings("DuplicatedCode")
     public Response logout(Cookies cookies) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(cookies == null, "cookies is null");
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +

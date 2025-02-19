@@ -72,7 +72,6 @@ public class ZosmfLogin {
      * @author Esteban Sandoval
      * @author Frank Giordano
      */
-    @SuppressWarnings("DuplicatedCode")
     public ZosmfLoginResponse login() throws ZosmfRequestException {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosmfAuthConstants.RESOURCE;
