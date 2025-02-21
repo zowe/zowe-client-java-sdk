@@ -23,26 +23,40 @@ import zowe.client.sdk.zosmfauth.input.PasswordParams;
 
 import java.util.HashMap;
 import java.util.Map;
-// define class userid old pass new pass
 
-
+/**
+ * Provides z/OSMF change user password or passphrase service
+ * <p>
+ * <a> href="https://www.ibm.com/docs/en/zos/3.1.0?topic=services-change-user-password-passphrase">z/OSMF REST API </a>
+ *
+ * @author Esteban Sandoval
+ * @author Frank Giordano
+ * @version 2.0
+ */
 public class ZosmfPassword {
 
     private final ZosConnection connection;
 
     private ZosmfRequest request;
 
-    /*
-    basic constructor
+    /**
+     * ZosmfPassword constructor
+     *
+     * @param connection connection information, see ZosConnection object
+     * @author Esteban Sandoval
      */
     public ZosmfPassword(final ZosConnection connection) {
         ValidateUtils.checkConnection(connection);
         this.connection = connection;
-
     }
 
-    /*
-    alternative constructor
+    /**
+     * Alternative ZosmfPassword constructor with ZosmfRequest object. This is mainly used for internal code
+     * unit testing with mockito, and it is not recommended to be used by the larger community.
+     *
+     * @param connection connection information, see ZosConnection object
+     * @param request    any compatible ZoweRequest Interface object
+     * @author Esteban Sandoval
      */
     public ZosmfPassword(ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkConnection(connection);
@@ -53,17 +67,16 @@ public class ZosmfPassword {
         }
         this.request = request;
     }
-    /*
-    method to change password
+
+    /**
+     * Change password or passphrase for a specified User ID driven by PasswordParams object settings
+     *
+     * @param params Password response parameters, see PasswordParams object
+     * @return Response object
+     * @throws ZosmfRequestException request error state
+     * @author Esteban Sandoval
      */
     public Response changePassword(final PasswordParams params) throws ZosmfRequestException {
-
-        //talking point
-
-//        ValidateUtils.checkNullParameter(params.getNewPwd()==null, "newPwd is null");
-//        ValidateUtils.checkNullParameter(params.getOldPwd()==null, "oldPwd is null");
-//        ValidateUtils.checkNullParameter(params.getNewPwd()==null, "newPwd is null");
-
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
@@ -81,12 +94,7 @@ public class ZosmfPassword {
         request.setUrl(url);
         request.setBody(new JSONObject(passwordMap).toJSONString());
 
-
-        final Response response = request.executeRequest();
-        return response;
-
-
-
+        return request.executeRequest();
     }
 
 }

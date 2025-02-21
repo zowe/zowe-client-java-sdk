@@ -9,25 +9,91 @@
  */
 package zowe.client.sdk.zosmfauth.input;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
+/**
+ * Parameter container for the z/OSMF authentication service change user password or passphrase
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.1.0?topic=services-change-user-password-passphrase">z/OSMF REST API </a>
+ *
+ * @author Esteban Sandoval
+ * @version 2.0
+ */
 public class PasswordParams {
+
+    /**
+     * The user ID value for the password or passphrase change
+     */
     private final String userId;
+
+    /**
+     * The old password that will be updated
+     */
     private final String oldPwd;
+
+    /**
+     * The new password that will replace the old password
+     */
     private final String newPwd;
 
-    public PasswordParams(String userId, String oldPwd, String newPwd) {
+    /**
+     * PasswordParams constructor
+     *
+     * @param userId user ID value
+     * @param oldPwd old password value
+     * @param newPwd new password value
+     * @author Esteban Sandoval
+     */
+    public PasswordParams(final String userId, final String oldPwd, final String newPwd) {
+
+        ValidateUtils.checkNullParameter(userId == null, "userId is null");
+        ValidateUtils.checkNullParameter(oldPwd == null, "oldPwd is null");
+        ValidateUtils.checkNullParameter(newPwd == null, "newPwd is null");
+
+        if (userId.isBlank()) {
+            throw new IllegalArgumentException("User ID or old password or new password is blank");
+        }
+
+        if (oldPwd.isBlank()) {
+            throw new IllegalArgumentException("Old password is blank");
+        }
+
+        if (newPwd.isBlank()) {
+            throw new IllegalArgumentException("New password is blank");
+        }
+
+        if (oldPwd.equals(newPwd)) {
+            throw new IllegalArgumentException("New password must be different from old password");
+        }
+
         this.userId = userId;
         this.oldPwd = oldPwd;
         this.newPwd = newPwd;
     }
 
+    /**
+     * Retrieve userID specified
+     *
+     * @return userID value
+     */
     public String getUserId() {
         return userId;
     }
 
+    /**
+     * Retrieve oldPwd specified
+     *
+     * @return oldPwd value
+     */
     public String getOldPwd() {
         return oldPwd;
     }
 
+    /**
+     * Retrieve newPwd specified
+     *
+     * @return newPwd value
+     */
     public String getNewPwd() {
         return newPwd;
     }
