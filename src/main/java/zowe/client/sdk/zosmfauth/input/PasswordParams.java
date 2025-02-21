@@ -10,4 +10,25 @@
 package zowe.client.sdk.zosmfauth.input;
 
 public class PasswordParams {
+    private final String userId;
+    private final String oldPwd;
+    private final String newPwd;
+
+    public PasswordParams(String userId, String oldPwd, String newPwd) {
+        this.userId = userId;
+        this.oldPwd = oldPwd;
+        this.newPwd = newPwd;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getOldPwd() {
+        return oldPwd;
+    }
+
+    public String getNewPwd() {
+        return newPwd;
+    }
 }
