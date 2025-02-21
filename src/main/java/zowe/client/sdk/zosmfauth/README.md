@@ -1,14 +1,15 @@
-# z/OSMF AUTH Package  
-  
-The z/OSMF authentication services API is provided for z/OSMF tasks and vendor applications.  
+# z/OSMF AUTH Package
 
-This API is used to obtain or delete authentication tokens (a JSON Web Token and an LTPA token) on the user's authentication request when logging in to or out of z/OSMF.   
-  
-This API can also be used to change a z/OSMF user’s password.    
-    
-API located in methods package.  
-  
-## API Examples  
+The z/OSMF authentication services API is provided for z/OSMF tasks and vendor applications.
+
+This API is used to obtain or delete authentication tokens (a JSON Web Token and an LTPA token) on the user's
+authentication request when logging in to or out of z/OSMF.
+
+This API can also be used to change a z/OSMF user’s password.
+
+API located in methods package.
+
+## API Examples
 
 **Submit a z/OSMF log in request and retrieve tokens**
 
@@ -17,12 +18,9 @@ package zowe.client.sdk.examples.zosmfauth;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
+import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosconsole.ConsoleConstants;
-import zowe.client.sdk.zosconsole.input.IssueConsoleParams;
-import zowe.client.sdk.zosconsole.method.IssueConsole;
-import zowe.client.sdk.zosconsole.response.ConsoleResponse;
+import zowe.client.sdk.zosmfauth.response.ZosmfLoginResponse;
 
 /**
  * Class example to showcase z/OSMF AUTH APIs functionality.
@@ -38,7 +36,7 @@ public class ZosmfLoginExp extends TstZosConnection {
      * @param args for main not used
      * @author Frank Giordano
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ZosmfRequestException {
         ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         ZosmfLogin login = new ZosmfLogin(connection);
 
