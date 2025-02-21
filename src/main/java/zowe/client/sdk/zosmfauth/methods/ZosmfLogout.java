@@ -36,7 +36,7 @@ public class ZosmfLogout {
     private ZosmfRequest request;
 
     /**
-     * Logout constructor
+     * ZosmfLogout constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author Esteban Sandoval

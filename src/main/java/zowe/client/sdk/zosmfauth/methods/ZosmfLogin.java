@@ -36,7 +36,7 @@ public class ZosmfLogin {
     private ZosmfRequest request;
 
     /**
-     * Login constructor
+     * ZosmfLogin constructor
      *
      * @param connection connection information, see ZosConnection object
      * @author Esteban Sandoval

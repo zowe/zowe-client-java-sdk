@@ -31,7 +31,7 @@ public class ZosmfLoginResponse {
     private final Cookies cookies;
 
     /**
-     * LoginResponse constructor
+     * ZosmfLoginResponse constructor
      *
      * @param response Response object
      * @param cookies  Cookies object
