@@ -45,27 +45,12 @@ public class PasswordParams {
      * @author Esteban Sandoval
      */
     public PasswordParams(final String userId, final String oldPwd, final String newPwd) {
-
         ValidateUtils.checkNullParameter(userId == null, "userId is null");
+        ValidateUtils.checkIllegalParameter(userId.isBlank(), "userId is empty");
         ValidateUtils.checkNullParameter(oldPwd == null, "oldPwd is null");
+        ValidateUtils.checkIllegalParameter(oldPwd.isBlank(), "oldPwd is empty");
         ValidateUtils.checkNullParameter(newPwd == null, "newPwd is null");
-
-        if (userId.isBlank()) {
-            throw new IllegalArgumentException("User ID or old password or new password is blank");
-        }
-
-        if (oldPwd.isBlank()) {
-            throw new IllegalArgumentException("Old password is blank");
-        }
-
-        if (newPwd.isBlank()) {
-            throw new IllegalArgumentException("New password is blank");
-        }
-
-        if (oldPwd.equals(newPwd)) {
-            throw new IllegalArgumentException("New password must be different from old password");
-        }
-
+        ValidateUtils.checkIllegalParameter(newPwd.isBlank(), "newPwd is empty");
         this.userId = userId;
         this.oldPwd = oldPwd;
         this.newPwd = newPwd;
@@ -97,4 +82,5 @@ public class PasswordParams {
     public String getNewPwd() {
         return newPwd;
     }
+
 }
