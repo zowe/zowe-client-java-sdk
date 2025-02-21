@@ -69,10 +69,16 @@ zowe.client.sdk.zoslogs.method
   
     ZosLog  
 
+zowe.client.sdk.zosmfauth.methods  
+  
+    ZosmfLogin
+    ZosmfLogout  
+    ZosmfPassword  
+    
 zowe.client.sdk.zosmfinfo.methods  
   
-    ZosmfStatus
-    ZosmfSystems 
+    ZosmfStatus  
+    ZosmfSystems   
 
 zowe.client.sdk.zostso.method  
   
