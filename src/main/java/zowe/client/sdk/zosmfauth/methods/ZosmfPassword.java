@@ -62,7 +62,7 @@ public class ZosmfPassword {
         ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if(!(request instanceof PutJsonZosmfRequest)){
+        if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalArgumentException("PUT_JSON request type required");
         }
         this.request = request;
@@ -80,14 +80,14 @@ public class ZosmfPassword {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-            ZosFilesConstants.RESOURCE;
+                ZosFilesConstants.RESOURCE;
 
         final Map<String, Object> passwordMap = new HashMap<>();
         passwordMap.put("userId", params.getUserId());
         passwordMap.put("oldPassword", params.getOldPwd());
         passwordMap.put("newPassword", params.getNewPwd());
 
-        if(request == null){
+        if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
 

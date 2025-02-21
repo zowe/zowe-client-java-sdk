@@ -52,7 +52,7 @@ public class ZosmfLoginExp extends TstZosConnection {
         // request to log out of server and delete authentication tokens
         ZosmfLogout logout = new ZosmfLogout(connection);
         Response response = logout.logout(cookies);
-        
+
         // display response
         System.out.println(response);
     }
