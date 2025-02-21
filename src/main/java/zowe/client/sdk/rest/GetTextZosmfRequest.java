@@ -9,9 +9,10 @@
  */
 package zowe.client.sdk.rest;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
-import kong.unirest.UnirestException;
+import kong.unirest.core.Cookie;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.Unirest;
+import kong.unirest.core.UnirestException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -24,6 +25,11 @@ import zowe.client.sdk.utility.ValidateUtils;
  * @version 2.0
  */
 public class GetTextZosmfRequest extends ZosmfRequest {
+
+    /**
+     * Optional Cookie object
+     */
+    private Cookie cookie;
 
     /**
      * GetTextZosmfRequest constructor
@@ -47,7 +53,8 @@ public class GetTextZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         HttpResponse<String> reply;
         try {
-            reply = Unirest.get(url).headers(headers).asString();
+            reply = cookie != null ? Unirest.get(url).cookie(cookie).headers(headers).asString() :
+                    Unirest.get(url).headers(headers).asString();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
         }
@@ -75,6 +82,17 @@ public class GetTextZosmfRequest extends ZosmfRequest {
         headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
         headers.put("Content-Type", "text/plain; charset=UTF-8");
         headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
+    }
+
+    /**
+     * Set a cookie for this request. This is optional for most requests and not needed.
+     *
+     * @param cookie object
+     * @author Frank Giordano
+     */
+    @Override
+    public void setCookie(final Cookie cookie) {
+        this.cookie = cookie;
     }
 
 }
