@@ -51,7 +51,7 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
         HttpResponse<JsonNode> reply;
         try {
             reply = cookie != null ? Unirest.delete(url).cookie(cookie).headers(headers).asJson() :
-                    Unirest.get(url).headers(headers).asJson();
+                    Unirest.delete(url).headers(headers).asJson();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
         }
