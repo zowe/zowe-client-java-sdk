@@ -83,4 +83,18 @@ public class PasswordParams {
         return newPwd;
     }
 
+    /**
+     * Return string value representing PasswordParams object
+     *
+     * @return string representation of PasswordParams
+     */
+    @Override
+    public String toString() {
+        return "PasswordParams{" +
+                "userId='" + userId + '\'' +
+                ", oldPwd='" + oldPwd + '\'' +
+                ", newPwd='" + newPwd + '\'' +
+                '}';
+    }
+
 }
