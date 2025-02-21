@@ -136,7 +136,6 @@
             <groupId>com.konghq</groupId>
             <artifactId>unirest-java-core</artifactId>
             <version>4.4.5</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.konghq</groupId>
