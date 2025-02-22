@@ -9,10 +9,7 @@
  */
 package zowe.client.sdk.rest;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
-import kong.unirest.UnirestException;
+import kong.unirest.core.*;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -25,6 +22,11 @@ import zowe.client.sdk.utility.ValidateUtils;
  * @version 2.0
  */
 public class DeleteJsonZosmfRequest extends ZosmfRequest {
+
+    /**
+     * Optional Cookie object
+     */
+    private Cookie cookie;
 
     /**
      * DeleteJsonZosmfRequest constructor
@@ -48,7 +50,8 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         HttpResponse<JsonNode> reply;
         try {
-            reply = Unirest.delete(url).headers(headers).asJson();
+            reply = cookie != null ? Unirest.delete(url).cookie(cookie).headers(headers).asJson() :
+                    Unirest.delete(url).headers(headers).asJson();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
         }
@@ -76,6 +79,17 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
         headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
         headers.put("Content-Type", "application/json");
         headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
+    }
+
+    /**
+     * Set a cookie for this request. This is optional for most requests and not needed.
+     *
+     * @param cookie object
+     * @author Frank Giordano
+     */
+    @Override
+    public void setCookie(final Cookie cookie) {
+        this.cookie = cookie;
     }
 
 }

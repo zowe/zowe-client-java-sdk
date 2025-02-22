@@ -9,9 +9,10 @@
  */
 package zowe.client.sdk.rest;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
+import kong.unirest.core.Cookie;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.JsonNode;
+import kong.unirest.core.Unirest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -62,6 +63,8 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setup() {
+        Unirest.config().reset();
+        Unirest.config().enableCookieManagement(false);
         Unirest.config().verifySsl(false);
         this.setStandardHeaders();
     }
@@ -86,21 +89,35 @@ public abstract class ZosmfRequest {
 
         Response response;
         if (statusText.contains("No Content")) {
-            response = new Response(statusText, statusCode, statusText);
+            response = reply.getCookies() != null ?
+                    new Response(statusText, statusCode, statusText, reply.getCookies()) :
+                    new Response(statusText, statusCode, statusText);
         } else if (reply.getBody() instanceof JsonNode) {
             final HttpResponse<JsonNode> jsonReply = (HttpResponse<JsonNode>) reply;
-            response = jsonReply.getBody().isArray() ?
-                    new Response(jsonReply.getBody().getArray(), statusCode, statusText) :
-                    new Response(jsonReply.getBody().getObject(), statusCode, statusText);
+            if (reply.getCookies() != null) {
+                response = jsonReply.getBody().isArray() ?
+                        new Response(jsonReply.getBody().getArray(), statusCode, statusText, reply.getCookies()) :
+                        new Response(jsonReply.getBody().getObject(), statusCode, statusText, reply.getCookies());
+            } else {
+                response = jsonReply.getBody().isArray() ?
+                        new Response(jsonReply.getBody().getArray(), statusCode, statusText) :
+                        new Response(jsonReply.getBody().getObject(), statusCode, statusText);
+            }
         } else if (reply.getBody() instanceof String) {
             final HttpResponse<String> stringReply = (HttpResponse<String>) reply;
-            response = new Response(stringReply.getBody(), statusCode, statusText);
+            response = reply.getCookies() != null ?
+                    new Response(stringReply.getBody(), statusCode, statusText, reply.getCookies()) :
+                    new Response(stringReply.getBody(), statusCode, statusText);
         } else if (reply.getBody() instanceof byte[]) {
             final HttpResponse<byte[]> byteReply = (HttpResponse<byte[]>) reply;
-            response = new Response(byteReply.getBody(), statusCode, statusText);
+            response = reply.getCookies() != null ?
+                    new Response(byteReply.getBody(), statusCode, statusText, reply.getCookies()) :
+                    new Response(byteReply.getBody(), statusCode, statusText);
         } else {
             LOG.debug("no reply instanceof found");
-            response = new Response(null, statusCode, statusText);
+            response = reply.getCookies() != null ?
+                    new Response(null, statusCode, statusText, reply.getCookies()) :
+                    new Response(null, statusCode, statusText);
         }
 
         if (!(statusCode >= 100 && statusCode <= 299)) {
@@ -198,6 +215,14 @@ public abstract class ZosmfRequest {
         this.url = url;
         LOG.debug(this.url);
     }
+
+    /**
+     * Set a cookie for this request. This is optional for most requests and not needed.
+     *
+     * @param cookie object
+     * @author Frank Giordano
+     */
+    public abstract void setCookie(final Cookie cookie);
 
     /**
      * Check if url is a valid http or https url.
