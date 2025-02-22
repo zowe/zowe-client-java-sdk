@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosmfauth.methods;
 
-import kong.unirest.core.Cookies;
+import kong.unirest.core.Cookie;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -67,14 +67,14 @@ public class ZosmfLogout {
     /**
      * Request to log out of server and delete authentication tokens
      *
-     * @param cookies Cookies Object
+     * @param cookie Cookie Object
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Esteban Sandoval
      * @author Frank Giordano
      */
-    public Response logout(Cookies cookies) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(cookies == null, "cookies is null");
+    public Response logout(Cookie cookie) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(cookie == null, "cookie is null");
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosmfAuthConstants.RESOURCE;
 
@@ -82,7 +82,7 @@ public class ZosmfLogout {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
-        request.setCookie(cookies.get(0));
+        request.setCookie(cookie);
 
         return request.executeRequest();
     }
