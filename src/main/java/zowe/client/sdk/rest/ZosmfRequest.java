@@ -63,6 +63,8 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setup() {
+        Unirest.config().reset();
+        Unirest.config().enableCookieManagement(false);
         Unirest.config().verifySsl(false);
         this.setStandardHeaders();
     }
