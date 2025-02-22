@@ -65,7 +65,7 @@ public class ZosmfLogout {
     }
 
     /**
-     * Request to log out of server and delete authentication tokens
+     * Request to log out of server and delete authentication cookie token
      *
      * @param cookie Cookie Object
      * @return Response object
