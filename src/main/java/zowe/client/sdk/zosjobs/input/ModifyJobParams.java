@@ -17,7 +17,7 @@ import java.util.Optional;
  * ModifyJobParams APIs parameters interface for delete and cancel job operations
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class ModifyJobParams {
 

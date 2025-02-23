@@ -18,7 +18,7 @@ import java.util.Optional;
  * Submit job parameters
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class SubmitJobParams {
 

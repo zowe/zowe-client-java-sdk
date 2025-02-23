@@ -13,7 +13,7 @@ package zowe.client.sdk.parse.type;
  * Represents json parse operation type
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public enum ParseType {
 

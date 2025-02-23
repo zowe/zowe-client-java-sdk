@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
  * Class containing unit tests for UssExtAttr.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class UssExtAttrTest {
 

@@ -17,7 +17,7 @@ import zowe.client.sdk.zosfiles.uss.response.UnixFile;
  * Extract UNIX file from json response
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public final class UnixFileJsonParse implements JsonParse {
 

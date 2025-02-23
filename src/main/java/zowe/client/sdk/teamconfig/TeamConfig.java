@@ -31,7 +31,7 @@ import java.util.function.Predicate;
  * supports Zowe Global Team Configuration provided by Zowe V2.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class TeamConfig {
 

@@ -17,7 +17,7 @@ import zowe.client.sdk.zosuss.method.IssueUss;
  * Class example to test uss command functionality via IssueUss class.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class IssueUssExp {
 

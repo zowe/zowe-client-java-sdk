@@ -15,7 +15,7 @@ import java.util.Objects;
  * SSH Connection information placeholder
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class SshConnection {
 

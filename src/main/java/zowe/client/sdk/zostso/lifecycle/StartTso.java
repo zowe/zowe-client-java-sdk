@@ -28,7 +28,7 @@ import zowe.client.sdk.zostso.service.TsoResponseService;
  * Start TSO address space and receive servlet key
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class StartTso {
 

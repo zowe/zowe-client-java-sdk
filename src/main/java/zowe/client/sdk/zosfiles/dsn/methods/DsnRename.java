@@ -29,7 +29,7 @@ import java.util.Map;
  * Provides rename dataset and member functionality
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnRename {
 

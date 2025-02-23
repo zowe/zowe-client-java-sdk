@@ -18,7 +18,7 @@ import java.util.Optional;
  * Utility class contains helper methods for validation processing
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public final class ValidateUtils {
 

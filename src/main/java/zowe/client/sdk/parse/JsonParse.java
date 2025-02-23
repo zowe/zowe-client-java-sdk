@@ -13,7 +13,7 @@ package zowe.client.sdk.parse;
  * Interface that conforms to json parse operation
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public interface JsonParse {
 

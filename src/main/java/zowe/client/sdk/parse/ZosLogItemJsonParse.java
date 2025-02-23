@@ -17,7 +17,7 @@ import zowe.client.sdk.zoslogs.response.ZosLogItem;
  * Extract ZosLogItem from json response
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public final class ZosLogItemJsonParse implements JsonParse {
 
