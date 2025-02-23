@@ -82,6 +82,7 @@ public class ZosmfLogout {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setCookie(cookie);
 
         return request.executeRequest();

@@ -92,6 +92,7 @@ public class ZosmfPassword {
         }
 
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(passwordMap).toJSONString());
 
         return request.executeRequest();

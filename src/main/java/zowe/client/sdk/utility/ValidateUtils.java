@@ -33,15 +33,25 @@ public final class ValidateUtils {
      * Check connection for validity.
      *
      * @param connection connection information, see ZosConnection object
-     * @throws IllegalStateException with message "Connection data not setup properly"
+     * @throws IllegalStateException with invalid connection object message
      * @author Frank Giordano
      */
     public static void checkConnection(final ZosConnection connection) {
-        if (connection == null || connection.getZosmfPort() == null || connection.getHost() == null ||
-                connection.getPassword() == null || connection.getUser() == null ||
-                connection.getZosmfPort().isBlank() || connection.getHost().isBlank() ||
-                connection.getPassword().isBlank() || connection.getUser().isBlank()) {
-            throw new IllegalStateException("Connection data not setup properly");
+        if (connection == null) {
+            throw new IllegalStateException("connection is null");
+        }
+        if (connection.getCookie().isEmpty()) {
+            if (connection.getZosmfPort() == null || connection.getHost() == null ||
+                    connection.getPassword() == null || connection.getUser() == null ||
+                    connection.getZosmfPort().isBlank() || connection.getHost().isBlank() ||
+                    connection.getPassword().isBlank() || connection.getUser().isBlank()) {
+                throw new IllegalStateException("one or more connection attribute not defined properly");
+            }
+        } else {
+            if (connection.getZosmfPort() == null || connection.getHost() == null ||
+                    connection.getZosmfPort().isBlank() || connection.getHost().isBlank()) {
+                throw new IllegalStateException("hostname or port connection attribute not defined properly");
+            }
         }
     }
 

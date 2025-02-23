@@ -157,6 +157,7 @@ public class UssSetAcl {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(setAclMap).toString());
 
         return request.executeRequest();

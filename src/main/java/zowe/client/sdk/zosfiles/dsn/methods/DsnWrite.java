@@ -104,6 +104,7 @@ public class DsnWrite {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(content);
 
         return request.executeRequest();

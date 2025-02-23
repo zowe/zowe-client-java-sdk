@@ -9,7 +9,10 @@
  */
 package zowe.client.sdk.core;
 
+import kong.unirest.core.Cookie;
+
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Z/OSMF Connection information placeholder
@@ -40,6 +43,11 @@ public class ZosConnection {
     private final String password;
 
     /**
+     * Cookie value set to use as authentication token for http call
+     */
+    private Optional<Cookie> cookie;
+
+    /**
      * ZosConnection constructor
      *
      * @param host      machine host pointing to backend z/OS instance
@@ -53,6 +61,7 @@ public class ZosConnection {
         this.zosmfPort = zosmfPort;
         this.user = user;
         this.password = password;
+        this.cookie = Optional.empty();
     }
 
     /**
@@ -92,6 +101,24 @@ public class ZosConnection {
     }
 
     /**
+     * Retrieve cookie object
+     *
+     * @return cookie object
+     */
+    public Optional<Cookie> getCookie() {
+        return cookie;
+    }
+
+    /**
+     * Set a cookie token for this request. This is optional for most requests and not needed.
+     * Setting the cookie will remove the HTTP header authentication.
+     * Seeing the cookie value as null will enable the HTTP header authentication.
+     */
+    public void setCookie(final Cookie cookie) {
+        this.cookie = Optional.ofNullable(cookie);
+    }
+
+    /**
      * Return string value representing ZosConnection object
      *
      * @return string representation of ZosConnection
@@ -103,6 +130,7 @@ public class ZosConnection {
                 ", zosmfPort='" + zosmfPort + '\'' +
                 ", user='" + user + '\'' +
                 ", password='" + password + '\'' +
+                ", cookie=" + cookie +
                 '}';
     }
 

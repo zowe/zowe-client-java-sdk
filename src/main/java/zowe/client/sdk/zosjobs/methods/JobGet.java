@@ -118,6 +118,7 @@ public class JobGet {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         return (String) request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job jcl response phrase"));
@@ -241,6 +242,7 @@ public class JobGet {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no get job response phrase")).toString();
@@ -289,6 +291,7 @@ public class JobGet {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
 
         final String spoolErrMsg = "no job spool content response phrase";
@@ -319,6 +322,7 @@ public class JobGet {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         final String spoolErrMsg = "no job spool file content response phrase";
         return (String) request.executeRequest().getResponsePhrase()
@@ -359,6 +363,7 @@ public class JobGet {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         final List<JobFile> files = new ArrayList<>();
         final String jsonStr = request.executeRequest().getResponsePhrase().orElse("").toString();
@@ -428,6 +433,7 @@ public class JobGet {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job get response phrase")).toString();

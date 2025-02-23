@@ -163,6 +163,7 @@ public class DsnGet {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_STREAM);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setHeaders(headers);
 
         return new ByteArrayInputStream((byte[]) request.executeRequest().getResponsePhrase()

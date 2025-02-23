@@ -100,6 +100,7 @@ public class UssDelete {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         if (recursive) {
             request.setHeaders(Map.of("X-IBM-Option", "recursive"));
@@ -128,6 +129,7 @@ public class UssDelete {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         return request.executeRequest();
     }

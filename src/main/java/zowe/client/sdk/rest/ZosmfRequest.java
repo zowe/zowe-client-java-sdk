@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 import java.io.BufferedReader;
@@ -45,6 +46,7 @@ public abstract class ZosmfRequest {
     protected final ZosConnection connection;
     protected final Map<String, String> headers = new HashMap<>();
     protected String url;
+    protected Cookie cookie;
 
     /**
      * ZosmfRequest constructor
@@ -217,14 +219,6 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Set a cookie for this request. This is optional for most requests and not needed.
-     *
-     * @param cookie object
-     * @author Frank Giordano
-     */
-    public abstract void setCookie(final Cookie cookie);
-
-    /**
      * Check if url is a valid http or https url.
      *
      * @param url string value
@@ -237,6 +231,23 @@ public abstract class ZosmfRequest {
             return false;
         } catch (URISyntaxException | MalformedURLException exception) {
             return true;
+        }
+    }
+
+    /**
+     * Set a cookie token for this request. This is optional for most requests and not needed.
+     * Setting the cookie will remove the HTTP header authentication.
+     * Seeing the cookie value as null will enable the HTTP header authentication.
+     *
+     * @param cookie object
+     * @author Frank Giordano
+     */
+    public void setCookie(final Cookie cookie) {
+        this.cookie = cookie;
+        if (this.cookie == null) {
+            headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
+        } else {
+            headers.remove("Authorization");
         }
     }
 
