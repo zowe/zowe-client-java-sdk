@@ -191,6 +191,7 @@ public abstract class ZosmfRequest {
     public void setHeaders(final Map<String, String> headers) {
         this.headers.clear();
         this.setStandardHeaders();
+        RemoveBasicAuth();
         this.headers.putAll(headers);
     }
 
@@ -245,6 +246,17 @@ public abstract class ZosmfRequest {
      */
     public void setCookie(final Cookie cookie) {
         this.cookie = cookie;
+        RemoveBasicAuth();
+    }
+
+    /**
+     * Remove basic authorization header with username and password encoded.
+     * Removal will occur when authentication token is specified within cookie setting
+     * for the request.
+     *
+     * @author Frank Giordano
+     */
+    private void RemoveBasicAuth() {
         if (this.cookie == null) {
             headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
         } else {
