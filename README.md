@@ -106,9 +106,9 @@ zowe.client.sdk.teamconfig
   
 ## Http Rest Processing
   
-SDK release version 2 uses Unirest 3.x for Java for Http functionality.  
+SDK release version 2 uses Unirest 3.x Http functionality.  
   
-SDK release version 3 and above uses Unirest 4.x which removes the dependency on Apache Commons and provides cookie processing.  
+SDK release version 3 and above uses Unirest 4.x which removes the dependency on Apache Commons and provides cookie processing for Web token authentication.   
    
 Unirest's library provides the ability to retrieve IBM z/OSMF JSON error document.  
   
