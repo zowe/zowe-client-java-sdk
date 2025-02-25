@@ -105,8 +105,10 @@ zowe.client.sdk.teamconfig
     TeamConfig
   
 ## Http Rest Processing
-   
-SDK release version 2 and above uses Unirest for Java for Http functionality.  
+  
+SDK release version 2 uses Unirest 3.x for Java for Http functionality.  
+  
+SDK release version 3 and above uses Unirest 4.x which removes the dependency on Apache Commons and provides cookie processing.  
    
 Unirest's library provides the ability to retrieve IBM z/OSMF JSON error document.  
   
@@ -117,6 +119,24 @@ For example, the following http GET request will result in a HTTP 500 error:
 and the JSON error report document body response is:  
   
     {"rc":4,"reason":13,"category":1,"message":"query parm dslevel= or volser= must be specified"} 
+
+## Authenticating to z/OSMF
+  
+Since the release of the SDK, the authentication of each REST API call is done with Basic authentication.
+  
+SDK release version 3 adds the option to perform authentication with Web token authentication.
+  
+Basic authentication means that the client program provides a z/OS user ID and password in the header of the initial request. User ID and password is defined by the end user within the ZosConnection object.  
+  
+SDK release version 3 introduces zosmfauth package. ZosmfAuth provides APIs to obtain authentication tokens (a JSON Web Token and an LTPA token) on the user's authentication request. This API can also be used to delete the current store of JSON Web Tokens and LPTA tokens. This API is provided for z/OSMF tasks and vendor applications.
+  
+Web token support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web Token support in IBM z/OS Management Facility Configuration Guide.
+  
+To enable Web token authentication, you need to set a token value within the ZosConnection class "cookie" member. Each request is performed with the token value within the cookie http payload. Basic authentication is disabled.
+  
+To enabled Basic authentication after setting a cookie, you will need to set the cookie value as null.
+   
+See README.md in zosmfauth package for further details.  
   
 ## Requirements  
     
