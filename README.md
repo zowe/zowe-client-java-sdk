@@ -128,7 +128,7 @@ SDK release version 3 adds the option to perform authentication with Web token a
   
 Basic authentication means that the client program provides a z/OS user ID and password in the header of the initial request. User ID and password is defined by the end user within the ZosConnection object.  
   
-SDK release version 3 introduces zosmfauth package. ZosmfAuth provides APIs to obtain authentication tokens (a JSON Web Token and an LTPA token) on the user's authentication request. This API can also be used to delete the current store of JSON Web Tokens and LPTA tokens. This API is provided for z/OSMF tasks and vendor applications.
+SDK release version 3 introduces zosmfauth package. ZosmfAuth provides APIs to obtain authentication tokens (a JSON Web Token and an LTPA token) on the user's authentication request. This API can also be used to delete the current store of JSON Web Tokens and LPTA tokens.  
   
 Web token support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web Token support in IBM z/OS Management Facility Configuration Guide.
   
