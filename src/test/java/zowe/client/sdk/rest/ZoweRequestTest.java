@@ -77,7 +77,7 @@ public class ZoweRequestTest {
     @Test
     public void tstZoweRequestBuildResponseWithStatusTextAndPhraseSameValueFailure() {
         Mockito.when(mockReply.getStatusText()).thenReturn("{\"error\":\"error\"}");
-        Mockito.when(mockReply.getStatus()).thenReturn(300);
+        Mockito.when(mockReply.getStatus()).thenReturn(600);
         Mockito.when(mockReply.getBody()).thenReturn(new JsonNode("{\"error\":\"error\"}"));
 
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -88,13 +88,13 @@ public class ZoweRequestTest {
         } catch (ZosmfRequestException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("http status error code: 300, status text: " + "{\"error\":\"error\"}", errMsg);
+        assertEquals("http status error code: 600, status text: " + "{\"error\":\"error\"}", errMsg);
     }
 
     @Test
     public void tstZoweRequestBuildResponseWithEmptyStatusTextFailure() {
         Mockito.when(mockReply.getStatusText()).thenReturn("");
-        Mockito.when(mockReply.getStatus()).thenReturn(300);
+        Mockito.when(mockReply.getStatus()).thenReturn(600);
         Mockito.when(mockReply.getBody()).thenReturn(new JsonNode("{}"));
 
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -105,14 +105,14 @@ public class ZoweRequestTest {
         } catch (ZosmfRequestException e) {
             errMsg = e.getMessage();
         }
-        final String expectedErrMsg = "http status error code: 300, status text: , response phrase: {}";
+        final String expectedErrMsg = "http status error code: 600, status text: n\\a, response phrase: {}";
         assertEquals(expectedErrMsg, errMsg);
     }
 
     @Test
     public void tstZoweRequestBuildResponseWithNullStatusTextFailure() {
         Mockito.when(mockReply.getStatusText()).thenReturn(null);
-        Mockito.when(mockReply.getStatus()).thenReturn(300);
+        Mockito.when(mockReply.getStatus()).thenReturn(600);
         Mockito.when(mockReply.getBody()).thenReturn(new JsonNode("{}"));
 
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -123,7 +123,7 @@ public class ZoweRequestTest {
         } catch (ZosmfRequestException e) {
             errMsg = e.getMessage();
         }
-        final String expectedErrMsg = "http status error code: 300, status text: n\\a, response phrase: {}";
+        final String expectedErrMsg = "http status error code: 600, status text: n\\a, response phrase: {}";
         assertEquals(expectedErrMsg, errMsg);
     }
 

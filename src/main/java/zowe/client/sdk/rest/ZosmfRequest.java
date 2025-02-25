@@ -87,7 +87,15 @@ public abstract class ZosmfRequest {
             throw new IllegalStateException("zero number status code return");
         }
 
-        final String statusText = reply.getStatusText() != null ? reply.getStatusText() : "n\\a";
+        String statusText;
+        if (reply.getStatusText() == null || reply.getStatusText().isBlank()) {
+            statusText = RestConstant.HTTP_STATUS.get(reply.getStatus());
+        } else {
+            statusText = reply.getStatusText();
+        }
+        if (statusText == null) {
+            statusText = "n\\a";
+        }
 
         Response response;
         if (statusText.toLowerCase().contains("no content")) {
