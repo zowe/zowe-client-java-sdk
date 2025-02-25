@@ -198,7 +198,6 @@ public class SendTso {
         }
         request.setUrl(url);
         connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
-        ;
         request.setBody(jobObjBody);
 
         return new TsoResponseService(request.executeRequest()).getZosmfTsoResponse();
