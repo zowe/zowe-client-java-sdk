@@ -90,7 +90,7 @@ public abstract class ZosmfRequest {
         final String statusText = reply.getStatusText() != null ? reply.getStatusText() : "n\\a";
 
         Response response;
-        if (statusText.contains("No Content")) {
+        if (statusText.toLowerCase().contains("no content")) {
             response = reply.getCookies() != null ?
                     new Response(statusText, statusCode, statusText, reply.getCookies()) :
                     new Response(statusText, statusCode, statusText);
