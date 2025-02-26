@@ -9,7 +9,7 @@ This API can also be used to change a z/OSMF user’s password.
 
 API located in methods package.
   
-With the token retrieved it can be used for authentication in place of basic authentication. See detail exanple below.  
+With the token retrieved it can be used for authentication in place of basic authentication. See detail example below.  
   
 ## API Examples
 
