@@ -266,8 +266,10 @@ public abstract class ZosmfRequest {
      */
     private void RemoveBasicAuth() {
         if (this.cookie == null) {
+            LOG.debug("enable basic authorization");
             headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
         } else {
+            LOG.debug("disable basic authorization");
             headers.remove("Authorization");
         }
     }
