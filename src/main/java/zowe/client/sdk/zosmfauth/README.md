@@ -8,9 +8,9 @@ authentication request when logging in to or out of z/OSMF.
 This API can also be used to change a z/OSMF user’s password.
 
 API located in methods package.
-  
-With the token retrieved it can be used for authentication in place of basic authentication. See detail example below.  
-  
+
+With the token retrieved it can be used for authentication in place of basic authentication. See detail example below.
+
 ## API Examples
 
 **Submit a z/OSMF log in request and retrieve tokens**
