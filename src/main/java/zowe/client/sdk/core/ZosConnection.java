@@ -114,6 +114,8 @@ public class ZosConnection {
      * Setting the cookie will remove the HTTP header authentication.
      * Setting the cookie value as null after giving it a value will revert/enable
      * the HTTP header authentication for future requests.
+     *
+     * @param cookie Cookie object containing a token value
      */
     public void setCookie(final Cookie cookie) {
         this.cookie = Optional.ofNullable(cookie);
