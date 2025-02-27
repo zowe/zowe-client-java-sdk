@@ -79,10 +79,10 @@ public class IssueUss {
 
             return responseStream.toString();
         } catch (IOException e) {
-            LOG.debug("IOException error " + e);
+            LOG.debug("IOException error {}", String.valueOf(e));
             throw new IssueUssException(e.getMessage(), e);
         } catch (JSchException e) {
-            LOG.debug("JSchException error " + e);
+            LOG.debug("JSchException error {}", String.valueOf(e));
             throw new IssueUssException(e.getMessage(), e);
         } finally {
             if (session != null) {
