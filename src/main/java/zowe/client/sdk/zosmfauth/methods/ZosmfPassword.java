@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Provides z/OSMF change user password or passphrase service
  * <p>
- * <a> href="https://www.ibm.com/docs/en/zos/3.1.0?topic=services-change-user-password-passphrase">z/OSMF REST API </a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.1.0?topic=services-change-user-password-passphrase">z/OSMF REST API </a>
  *
  * @author Esteban Sandoval
  * @author Frank Giordano
