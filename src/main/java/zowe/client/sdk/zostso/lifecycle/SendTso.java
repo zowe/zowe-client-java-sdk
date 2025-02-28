@@ -110,7 +110,8 @@ public class SendTso {
                             final String msg = messages.toString();
                             final int startIndex = msg.indexOf("IKJ56602I");
                             messages.delete(startIndex, startIndex + IKJ56602I.length() + "\nREADY".length());
-                        } else if (messages.length() > 0 && messages.toString().contains("READY")) {
+                        } else if (messages.length() > 0 && (messages.toString().contains("READY") ||
+                                messages.toString().contains("REENTER"))) {
                             done = true;
                         }
                         // TSO PROMPT reached without getting any data, retrying
