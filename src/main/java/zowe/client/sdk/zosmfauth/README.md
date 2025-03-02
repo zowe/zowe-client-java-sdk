@@ -15,7 +15,7 @@ With the token retrieved it can be used for authentication in place of basic aut
 
 **Submit a z/OSMF log in request and retrieve tokens**
 
-````java
+```java
 package zowe.client.sdk.examples.zosmfauth;
 
 import kong.unirest.core.Cookie;
@@ -45,7 +45,11 @@ import java.io.StringWriter;
 public class ZosmfLoginExp extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection, and performs a login and logout API call.
+     * Main method defines z/OSMF host and user connection and showcases examples calling
+     * the zosmfauth APIs.
+     * <p>
+     * In addition, the examples showcases the usage of token authentication rather than
+     * basic authentication. 
      *
      * @param args for main not used
      * @author Frank Giordano
@@ -67,25 +71,23 @@ public class ZosmfLoginExp extends TstZosConnection {
         // display LtpaToken
         System.out.println(ltpaToken);
 
-        // Perform a API call with token authentication used
+        // Perform an API call with token authentication used
         String datasetName = "CCSQA.ASM.JCL.INSTHELP";
         String memberName = "APPLY";
         DownloadParams params = new DownloadParams.Builder().build();
 
         // redefine connection object with no username and password specified
         connection = new ZosConnection(hostName, zosmfPort, "", "");
-        // set the token in connection cookie field
-        connection.setCookie(jwtToken);
 
-        // use jwtToken as cookie authentication
+        // use jwtToken as cookie token authentication
         downloadDsnMemberWithToken(connection, jwtToken, datasetName, memberName, params);
-        // now use LtpaToken as cookie authentication
+        // now use LtpaToken as cookie token authentication
         downloadDsnMemberWithToken(connection, ltpaToken, datasetName, memberName, params);
 
         // redefine connection object with username and password specified
         connection = new ZosConnection(hostName, zosmfPort, userName, password);
 
-        // perform the same request without token
+        // perform the same request without token authentication using the default basic authentication instead
         downloadDsnMember(connection, datasetName, memberName, params);
 
         // set the token in connection cookie field
@@ -147,6 +149,7 @@ public class ZosmfLoginExp extends TstZosConnection {
      */
     private static void downloadDsnMemberWithToken(ZosConnection connection, Cookie cookie, String dsName, String memName,
                                                    DownloadParams params) {
+        // set the token in connection cookie field
         connection.setCookie(cookie);
         try (InputStream inputStream = new DsnGet(connection).get(String.format("%s(%s)", dsName, memName), params)) {
             System.out.println(getTextStreamData(inputStream));
@@ -198,7 +201,7 @@ public class ZosmfLoginExp extends TstZosConnection {
     }
 
 }
-`````
+```
 
 **Connection setup**
 
