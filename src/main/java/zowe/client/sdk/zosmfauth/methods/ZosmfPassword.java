@@ -75,6 +75,7 @@ public class ZosmfPassword {
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Esteban Sandoval
+     * @author Frank Giordano
      */
     public Response changePassword(final PasswordParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
