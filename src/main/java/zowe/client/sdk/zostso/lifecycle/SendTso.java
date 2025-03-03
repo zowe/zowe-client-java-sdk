@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zostso.lifecycle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -36,6 +38,8 @@ import java.util.List;
  * @version 3.0
  */
 public class SendTso {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SendTso.class);
 
     private final ZosConnection connection;
 
@@ -97,6 +101,7 @@ public class SendTso {
         tsos.add(tso);
         while (!done) {
             if (!tso.getTsoData().isEmpty()) {
+                LOG.debug(tso.getTsoData().toString());
                 for (TsoMessages tsoDatum : tso.getTsoData()) {
                     if (tsoDatum.getTsoMessage().isPresent()) {
                         final TsoMessage tsoMsg = tsoDatum.getTsoMessage().get();
