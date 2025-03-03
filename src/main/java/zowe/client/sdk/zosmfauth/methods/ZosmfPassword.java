@@ -18,7 +18,6 @@ import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosmfauth.ZosmfAuthConstants;
 import zowe.client.sdk.zosmfauth.input.PasswordParams;
 
