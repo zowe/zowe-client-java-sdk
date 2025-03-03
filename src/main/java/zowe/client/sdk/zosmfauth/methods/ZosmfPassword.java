@@ -19,6 +19,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
+import zowe.client.sdk.zosmfauth.ZosmfAuthConstants;
 import zowe.client.sdk.zosmfauth.input.PasswordParams;
 
 import java.util.HashMap;
@@ -80,10 +81,10 @@ public class ZosmfPassword {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                ZosFilesConstants.RESOURCE;
+                ZosmfAuthConstants.RESOURCE;
 
         final Map<String, Object> passwordMap = new HashMap<>();
-        passwordMap.put("userId", params.getUserId());
+        passwordMap.put("userID", params.getUserId());
         passwordMap.put("oldPassword", params.getOldPwd());
         passwordMap.put("newPassword", params.getNewPwd());
 
