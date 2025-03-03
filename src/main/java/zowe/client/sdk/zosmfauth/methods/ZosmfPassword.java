@@ -85,8 +85,8 @@ public class ZosmfPassword {
 
         final Map<String, Object> passwordMap = new HashMap<>();
         passwordMap.put("userID", params.getUserId());
-        passwordMap.put("oldPassword", params.getOldPwd());
-        passwordMap.put("newPassword", params.getNewPwd());
+        passwordMap.put("oldPwd", params.getOldPwd());
+        passwordMap.put("newPwd", params.getNewPwd());
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
