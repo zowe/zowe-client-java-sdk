@@ -13,8 +13,6 @@ With the token retrieved it can be used for authentication in place of basic aut
 
 ## API Examples
 
-**Submit a z/OSMF log in request and retrieve tokens**
-
 ```java
 package zowe.client.sdk.examples.zosmfauth;
 
@@ -40,7 +38,7 @@ import java.io.StringWriter;
  * Class example to showcase z/OSMF AUTH APIs functionality.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class ZosmfLoginExp extends TstZosConnection {
 
@@ -72,8 +70,8 @@ public class ZosmfLoginExp extends TstZosConnection {
         System.out.println(ltpaToken);
 
         // Perform an API call with token authentication used
-        String datasetName = "CCSQA.ASM.JCL.INSTHELP";
-        String memberName = "APPLY";
+        String datasetName = "xxx.xxx.xxx";
+        String memberName = "xxx";
         DownloadParams params = new DownloadParams.Builder().build();
 
         // redefine connection object with no username and password specified
@@ -115,7 +113,20 @@ public class ZosmfLoginExp extends TstZosConnection {
         // use deleted token for authentication for next request
         connection.setCookie(jwtToken);
         // this request should fail
-        downloadDsnMemberWithToken(connection, jwtToken, datasetName, memberName, params);
+        try {
+            downloadDsnMemberWithToken(connection, jwtToken, datasetName, memberName, params);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        // disable token authentication for the next API call.
+        connection.setCookie(null);
+        // change z/OSMF user's password
+        ZosmfPassword zosmfPassword = new ZosmfPassword(connection);
+        PasswordParams passwordParams =
+                new PasswordParams(connection.getUser(), connection.getPassword(), "xxx");
+        response = zosmfPassword.changePassword(passwordParams);
+        System.out.println(response);
     }
 
     /**
