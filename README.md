@@ -126,17 +126,17 @@ Since the release of the SDK, the authentication of each REST API call is done w
   
 SDK release version 3 adds the option to perform authentication with Web token authentication.
   
-Basic authentication means that the client program provides a z/OS user ID and password in the header of the initial request. User ID and password is defined by the end user within the ZosConnection object.  
+Basic authentication means that the client program provides a z/OS user ID and password in the header of the initial request. User ID and password are defined by the end user within the ZosConnection object and the SDK takes care of performing basic authentication with each request.     
   
-SDK release version 3 introduces zosmfauth package. ZosmfAuth provides APIs to obtain authentication tokens (a JSON Web Token and an LTPA token) on the user's authentication request. This API can also be used to delete the current store of JSON Web Tokens and LPTA tokens.  
+SDK release version 3 introduces zosmfauth package. ZosmfAuth provides APIs to obtain authentication tokens (a JSON Web and an LTPA token) on the user's authentication request. This API can also be used to delete the current store of JSON Web and LPTA token(s).      
   
-Web token support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web Token support in IBM z/OS Management Facility Configuration Guide.
+Web token support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web Token support in IBM z/OS Management Facility Configuration Guide.  
   
-To enable Web token authentication, you need to set a token value within the ZosConnection class "cookie" member. Each request is performed with the token value within the cookie http payload. Basic authentication is disabled.
+To enable Web token authentication, you need to set a token value within the ZosConnection class "cookie" member. Once set, each request is performed with the token value within the cookie http payload. At this point, Basic authentication is disabled.  
   
-To enabled Basic authentication after setting a cookie, you will need to set the cookie value as null.
-   
-See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.  
+To enable Basic authentication after setting a cookie, you will need to set the cookie value as null.  
+     
+See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
   
 ## Requirements  
     
