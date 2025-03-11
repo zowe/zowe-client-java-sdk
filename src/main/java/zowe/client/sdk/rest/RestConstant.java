@@ -22,7 +22,7 @@ public final class RestConstant {
             new AbstractMap.SimpleEntry<>(206, "partial content"),
             new AbstractMap.SimpleEntry<>(207, "multi status"),
             new AbstractMap.SimpleEntry<>(208, "already reported"),
-            new AbstractMap.SimpleEntry<>(226, "IM_USED"),
+            new AbstractMap.SimpleEntry<>(226, "im used"),
             new AbstractMap.SimpleEntry<>(300, "multiple choice"),
             new AbstractMap.SimpleEntry<>(301, "moved permanently"),
             new AbstractMap.SimpleEntry<>(302, "found"),
