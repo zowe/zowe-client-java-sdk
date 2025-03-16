@@ -27,7 +27,7 @@ import zowe.client.sdk.zosmfauth.ZosmfAuthConstants;
  *
  * @author Esteban Sandoval
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class ZosmfLogout {
 

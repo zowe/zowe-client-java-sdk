@@ -34,7 +34,7 @@ import static org.junit.Assert.assertTrue;
  * Class containing unit tests for UssList.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 @SuppressWarnings("DataFlowIssue")
 public class UssListTest {

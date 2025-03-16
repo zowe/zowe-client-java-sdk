@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Class containing unit tests for UssChMod.
  *
  * @author James Kostrewski
- * @version 2.0
+ * @version 3.0
  */
 @SuppressWarnings("DataFlowIssue")
 public class UssChangeModeTest {

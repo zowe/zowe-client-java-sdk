@@ -33,7 +33,7 @@ import static org.junit.Assert.assertEquals;
  * Class containing unit tests for JobGet.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 @RunWith(MockitoJUnitRunner.class)
 public class GetJobsByJsonGetRequestTest {

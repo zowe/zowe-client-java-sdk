@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
  * Class containing unit tests for UssGet.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 @SuppressWarnings("DataFlowIssue")
 public class UssGetTest {
