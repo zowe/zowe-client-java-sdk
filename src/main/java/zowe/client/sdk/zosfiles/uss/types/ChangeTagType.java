@@ -17,7 +17,7 @@ package zowe.client.sdk.zosfiles.uss.types;
  * The default is "mixed" This option can be specified only when the action is "set".
  *
  * @author James Kostrewski
- * @version 2.0
+ * @version 3.0
  */
 public enum ChangeTagType {
 

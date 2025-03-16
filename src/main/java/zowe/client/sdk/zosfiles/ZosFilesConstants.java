@@ -13,7 +13,7 @@ package zowe.client.sdk.zosfiles;
  * Constants for various zos files related info
  *
  * @author Leonid Baranov
- * @version 2.0
+ * @version 3.0
  */
 public class ZosFilesConstants {
 

@@ -32,7 +32,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
- * @version 2.0
+ * @version 3.0
  */
 public class UssChangeMode {
 
