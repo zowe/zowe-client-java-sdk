@@ -33,7 +33,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
- * @version 2.0
+ * @version 3.0
  */
 public class UssSetAcl {
 
@@ -157,6 +157,7 @@ public class UssSetAcl {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(setAclMap).toString());
 
         return request.executeRequest();

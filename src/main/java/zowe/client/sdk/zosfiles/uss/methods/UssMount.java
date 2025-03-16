@@ -34,7 +34,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-unmount-unix-file-system">z/OSMF REST UNMOUNT API</a>
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class UssMount {
 
@@ -139,6 +139,7 @@ public class UssMount {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(mountMap).toString());
 
         return request.executeRequest();

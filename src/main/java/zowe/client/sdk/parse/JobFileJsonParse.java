@@ -17,7 +17,7 @@ import zowe.client.sdk.zosjobs.input.JobFile;
  * Parse json response for job file
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public final class JobFileJsonParse implements JsonParse {
 

@@ -13,7 +13,7 @@ package zowe.client.sdk.zosjobs;
  * Constants for various job related info
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public final class JobsConstants {
 

@@ -29,7 +29,7 @@ import static org.junit.Assert.assertTrue;
  * Class containing unit tests for UssWrite.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 @SuppressWarnings("DataFlowIssue")
 public class UssWriteTest {

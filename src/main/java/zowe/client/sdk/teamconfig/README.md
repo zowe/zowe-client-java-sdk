@@ -25,6 +25,12 @@ import zowe.client.sdk.zosfiles.dsn.response.Member;
 
 import java.util.List;
 
+/**
+ * Class example to showcase team config functionality via TeamConfig class.
+ *
+ * @author Frank Giordano
+ * @version 3.0
+ */
 public class TeamConfigExp {
 
     /**

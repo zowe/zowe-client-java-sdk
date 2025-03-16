@@ -32,7 +32,7 @@ import zowe.client.sdk.zostso.service.TsoResponseService;
  * Stop active TSO address space using servlet key
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class StopTso {
 
@@ -109,6 +109,7 @@ public class StopTso {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no tso stop response phrase")).toString();

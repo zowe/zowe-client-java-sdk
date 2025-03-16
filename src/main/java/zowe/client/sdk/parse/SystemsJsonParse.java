@@ -19,7 +19,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
  * Parse json response from z/OSMF defined systems request
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public final class SystemsJsonParse implements JsonParse {
 

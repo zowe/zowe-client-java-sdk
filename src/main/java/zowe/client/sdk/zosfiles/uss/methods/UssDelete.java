@@ -29,7 +29,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-delete-unix-file-directory">z/OSMF REST API</a>
  *
  * @author James Kostrewski
- * @version 2.0
+ * @version 3.0
  */
 public class UssDelete {
 
@@ -100,6 +100,7 @@ public class UssDelete {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         if (recursive) {
             request.setHeaders(Map.of("X-IBM-Option", "recursive"));
@@ -128,6 +129,7 @@ public class UssDelete {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         return request.executeRequest();
     }

@@ -9,9 +9,9 @@
  */
 package zowe.client.sdk.rest;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
-import kong.unirest.UnirestException;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.Unirest;
+import kong.unirest.core.UnirestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -23,7 +23,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * Http put operation with text content type
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class PutTextZosmfRequest extends ZosmfRequest {
 
@@ -57,7 +57,8 @@ public class PutTextZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(body == null, "body is null");
         HttpResponse<String> reply;
         try {
-            reply = Unirest.put(url).headers(headers).body(body).asString();
+            reply = cookie != null ? Unirest.put(url).cookie(cookie).headers(headers).body(body).asString() :
+                    Unirest.put(url).headers(headers).body(body).asString();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
         }

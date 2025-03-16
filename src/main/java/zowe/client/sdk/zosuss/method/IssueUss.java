@@ -28,7 +28,7 @@ import java.util.Properties;
  * IssueUss Class provides a way to execute USS commands via SSH connection
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class IssueUss {
 
@@ -79,10 +79,10 @@ public class IssueUss {
 
             return responseStream.toString();
         } catch (IOException e) {
-            LOG.debug("IOException error " + e);
+            LOG.debug("IOException error {}", String.valueOf(e));
             throw new IssueUssException(e.getMessage(), e);
         } catch (JSchException e) {
-            LOG.debug("JSchException error " + e);
+            LOG.debug("JSchException error {}", String.valueOf(e));
             throw new IssueUssException(e.getMessage(), e);
         } finally {
             if (session != null) {

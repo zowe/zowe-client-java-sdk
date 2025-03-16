@@ -37,7 +37,7 @@ import java.util.stream.IntStream;
  *
  * @author Nikunj Goyal
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnGet {
 
@@ -163,6 +163,7 @@ public class DsnGet {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_STREAM);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setHeaders(headers);
 
         return new ByteArrayInputStream((byte[]) request.executeRequest().getResponsePhrase()

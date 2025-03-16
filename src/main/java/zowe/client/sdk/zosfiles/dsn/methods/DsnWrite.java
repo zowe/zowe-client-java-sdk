@@ -25,7 +25,7 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnWrite {
 
@@ -104,6 +104,7 @@ public class DsnWrite {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(content);
 
         return request.executeRequest();

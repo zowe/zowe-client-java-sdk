@@ -21,7 +21,7 @@ import java.util.OptionalInt;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-list-files-directories-unix-file-path">z/OSMF REST API</a>
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class ListParams {
 

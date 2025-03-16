@@ -13,7 +13,7 @@ package zowe.client.sdk.parse;
  * Constants definitions for parse package
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public final class ParseConstants {
 

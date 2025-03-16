@@ -17,7 +17,7 @@ import java.util.List;
  * Interface that describes the contract for KeyTar processing
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public interface IKeyTar {
 

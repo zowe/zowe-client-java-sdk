@@ -15,7 +15,7 @@ import java.util.Optional;
  * z/OSMF synchronous console command response messages. See the z/OSMF REST API publication for complete details.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class ZosmfIssueResponse {
 

@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  * Utility class for UNIX (USS) related static helper methods.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public final class FileUtils {
 

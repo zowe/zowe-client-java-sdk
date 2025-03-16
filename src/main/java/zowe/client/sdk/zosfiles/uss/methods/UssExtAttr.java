@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
  * Provides Unix System Services (USS) extattr functionality
  *
  * @author James Kostrewski
- * @version 2.0
+ * @version 3.0
  */
 public class UssExtAttr {
 
@@ -146,6 +146,7 @@ public class UssExtAttr {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(jsonMap).toString());
 
         return request.executeRequest();

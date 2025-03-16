@@ -17,7 +17,7 @@ import zowe.client.sdk.zosfiles.dsn.response.Dataset;
  * Extract Dataset from json response
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public final class DatasetJsonParse implements JsonParse {
 

@@ -30,7 +30,7 @@ import java.util.Map;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnCopy {
 
@@ -122,6 +122,7 @@ public class DsnCopy {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(copyMap).toString());
 
         return request.executeRequest();

@@ -17,7 +17,7 @@ import java.util.OptionalLong;
  * This interface defines the options that can be sent into the download data set function
  *
  * @author Nikunj Goyal
- * @version 2.0
+ * @version 3.0
  */
 public class DownloadParams {
 

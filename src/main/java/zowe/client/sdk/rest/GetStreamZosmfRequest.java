@@ -9,9 +9,9 @@
  */
 package zowe.client.sdk.rest;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
-import kong.unirest.UnirestException;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.Unirest;
+import kong.unirest.core.UnirestException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -21,7 +21,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * Http get stream operation with Json content type
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class GetStreamZosmfRequest extends ZosmfRequest {
 
@@ -47,7 +47,8 @@ public class GetStreamZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         HttpResponse<byte[]> reply;
         try {
-            reply = Unirest.get(url).headers(headers).asBytes();
+            reply = cookie != null ? Unirest.get(url).cookie(cookie).headers(headers).asBytes() :
+                    Unirest.get(url).headers(headers).asBytes();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
         }

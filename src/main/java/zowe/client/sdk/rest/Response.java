@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.rest;
 
+import kong.unirest.core.Cookies;
+
 import java.util.Optional;
 import java.util.OptionalInt;
 
@@ -16,7 +18,7 @@ import java.util.OptionalInt;
  * Holds http response information
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class Response {
 
@@ -36,6 +38,11 @@ public class Response {
     private final Optional<String> statusText;
 
     /**
+     * Store raw reply
+     */
+    private final Optional<Cookies> cookies;
+
+    /**
      * Response constructor
      *
      * @param responsePhrase http response information
@@ -51,12 +58,34 @@ public class Response {
             this.statusCode = OptionalInt.of(statusCode);
         }
         this.statusText = Optional.ofNullable(statusText);
+        this.cookies = Optional.empty();
+    }
+
+    /**
+     * Response constructor
+     *
+     * @param responsePhrase http response information
+     * @param statusCode     http response status code
+     * @param statusText     http response status text
+     * @param cookies        http response cookies
+     * @author Frank Giordano
+     */
+    public Response(final Object responsePhrase, final Integer statusCode, final String statusText,
+                    final Cookies cookies) {
+        this.responsePhrase = Optional.ofNullable(responsePhrase);
+        if (statusCode == null) {
+            this.statusCode = OptionalInt.empty();
+        } else {
+            this.statusCode = OptionalInt.of(statusCode);
+        }
+        this.statusText = Optional.ofNullable(statusText);
+        this.cookies = Optional.ofNullable(cookies);
     }
 
     /**
      * Retrieve responsePhrase value
      *
-     * @return responsePhrase value
+     * @return responsePhrase Optional object value
      */
     public Optional<Object> getResponsePhrase() {
         return responsePhrase;
@@ -65,7 +94,7 @@ public class Response {
     /**
      * Retrieve statusCode value
      *
-     * @return statusCode value
+     * @return statusCode Optional int value
      */
     public OptionalInt getStatusCode() {
         return statusCode;
@@ -74,10 +103,19 @@ public class Response {
     /**
      * Retrieve statusText value
      *
-     * @return statusText value
+     * @return statusText Optional String value
      */
     public Optional<String> getStatusText() {
         return statusText;
+    }
+
+    /**
+     * Retrieve cookies value
+     *
+     * @return cookies Cookies object
+     */
+    public Cookies getCookies() {
+        return cookies.orElse(null);
     }
 
     /**

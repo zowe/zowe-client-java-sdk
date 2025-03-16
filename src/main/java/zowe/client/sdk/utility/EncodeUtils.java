@@ -19,7 +19,7 @@ import java.util.Base64;
  * Utility class contains helper methods for encoding processing
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public final class EncodeUtils {
 
@@ -58,9 +58,9 @@ public final class EncodeUtils {
      * @author Frank Giordano
      */
     public static String encodeAuthComponent(final ZosConnection connection) {
-        ValidateUtils.checkConnection(connection);
-        return Base64.getEncoder().encodeToString((connection.getUser() + ":" +
-                connection.getPassword()).getBytes(StandardCharsets.UTF_8));
+        final String user = connection.getUser() != null && !connection.getUser().isEmpty() ? connection.getUser() : "";
+        final String pwd = connection.getPassword() != null && !connection.getPassword().isEmpty() ? connection.getPassword() : "";
+        return Base64.getEncoder().encodeToString((user + ":" + pwd).getBytes(StandardCharsets.UTF_8));
     }
 
 }

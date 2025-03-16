@@ -34,7 +34,7 @@ import java.util.Map;
  * Issue MVS Console commands by using a system console
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class IssueConsole {
 
@@ -130,6 +130,7 @@ public class IssueConsole {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(issueMap).toString());
 
         final String jsonStr = request.executeRequest().getResponsePhrase()

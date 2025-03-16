@@ -30,7 +30,7 @@ import java.util.Map;
  * Parameter container class for Unix System Services (USS) chown operation
  *
  * @author James Kostrewski
- * @version 2.0
+ * @version 3.0
  */
 public class UssChangeOwner {
 
@@ -114,6 +114,7 @@ public class UssChangeOwner {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(changeOnerMap).toString());
 
         return request.executeRequest();

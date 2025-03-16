@@ -28,7 +28,7 @@ import zowe.client.sdk.zostso.service.TsoResponseService;
  * Start TSO address space and receive servlet key
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class StartTso {
 
@@ -156,6 +156,7 @@ public class StartTso {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody("");
 
         return new TsoResponseService(request.executeRequest()).getZosmfTsoResponse();

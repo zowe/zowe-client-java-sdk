@@ -25,7 +25,7 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnDelete {
 
@@ -100,6 +100,7 @@ public class DsnDelete {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         return request.executeRequest();
     }

@@ -23,7 +23,7 @@ import static org.junit.Assert.assertSame;
  * Class containing unit tests for PropsParseResponse.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class PropsParseResponseTest {
 

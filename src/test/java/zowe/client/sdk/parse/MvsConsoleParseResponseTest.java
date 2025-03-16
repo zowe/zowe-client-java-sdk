@@ -24,7 +24,7 @@ import static org.junit.Assert.assertSame;
  * Class containing unit tests for MvsConsoleParseResponse.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class MvsConsoleParseResponseTest {
 

@@ -29,7 +29,7 @@ import java.util.Map;
  * Provides rename dataset and member functionality
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnRename {
 
@@ -150,6 +150,7 @@ public class DsnRename {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(renameMap).toString());
 
         return request.executeRequest();

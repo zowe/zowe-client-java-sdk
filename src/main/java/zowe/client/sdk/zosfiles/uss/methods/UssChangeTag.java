@@ -35,7 +35,7 @@ import java.util.Map;
  *
  * @author James Kostrewski
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class UssChangeTag {
 
@@ -159,6 +159,7 @@ public class UssChangeTag {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(changeTagMap).toString());
 
         return request.executeRequest();

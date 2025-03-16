@@ -23,7 +23,7 @@ The Java SDK joins an existing community of other language-specific SDKs. It pro
 This SDK may differ from some others with the JobMonitor class adding prebuilt functionality for automation tasks.  
   
 Issues worked on documenting main feature set provided can be viewed within the following MVP issues:  
-[#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219) [#3](https://github.com/zowe/zowe-client-java-sdk/issues/281)
+[#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219) [#3](https://github.com/zowe/zowe-client-java-sdk/issues/281) [#4](https://github.com/zowe/zowe-client-java-sdk/issues/338)  
   
 Prebuilt API services located in the following packages/classes:  
 
@@ -69,10 +69,16 @@ zowe.client.sdk.zoslogs.method
   
     ZosLog  
 
+zowe.client.sdk.zosmfauth.methods  
+  
+    ZosmfLogin
+    ZosmfLogout  
+    ZosmfPassword  
+    
 zowe.client.sdk.zosmfinfo.methods  
   
-    ZosmfStatus
-    ZosmfSystems 
+    ZosmfStatus  
+    ZosmfSystems   
 
 zowe.client.sdk.zostso.method  
   
@@ -99,8 +105,10 @@ zowe.client.sdk.teamconfig
     TeamConfig
   
 ## Http Rest Processing
-   
-SDK release version 2 and above uses Unirest for Java for Http functionality.  
+  
+SDK release version 2 uses Unirest 3.x Http functionality.  
+  
+SDK release version 3 and above uses Unirest 4.x which removes the dependency on Apache Commons and provides cookie processing for Web token authentication.   
    
 Unirest's library provides the ability to retrieve IBM z/OSMF JSON error document.  
   
@@ -111,6 +119,24 @@ For example, the following http GET request will result in a HTTP 500 error:
 and the JSON error report document body response is:  
   
     {"rc":4,"reason":13,"category":1,"message":"query parm dslevel= or volser= must be specified"} 
+
+## Authenticating to z/OSMF
+  
+Since the release of the SDK, the authentication of each REST API call is done with Basic authentication.
+  
+SDK release version 3 adds the option to perform authentication with Web token authentication.
+  
+Basic authentication means that the client program provides a z/OS user ID and password in the header of the initial request. User ID and password are defined by the end user within the ZosConnection object and the SDK takes care of performing basic authentication with each request.     
+  
+SDK release version 3 introduces zosmfauth package. ZosmfAuth provides APIs to obtain authentication tokens (a JSON Web and an LTPA token) on the user's authentication request. This API can also be used to delete the current store of JSON Web and LPTA token(s).      
+  
+Web token support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web Token support in IBM z/OS Management Facility Configuration Guide.  
+  
+To enable Web token authentication, you need to set a token value within the ZosConnection class "cookie" member. Once set, each request is performed with the token value within the cookie http payload. At this point, Basic authentication is disabled.  
+  
+To enable Basic authentication after setting a cookie, you will need to set the cookie value as null.  
+     
+See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
   
 ## Requirements  
     
@@ -138,8 +164,9 @@ In the project, you will find code examples located in each package's README.MD 
   [zosfiles-uss](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosfiles/uss/README.md)  
   [zosjobs](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosjobs/README.md)  
   [zoslogs](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zoslogs/README.md)  
-  [zosinfo](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfinfo/README.md)  
-  [zostso](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zostso/README.md)  
+  [zosmfauth](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md)  
+  [zosmfinfo](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfinfo/README.md)  
+  [zostso](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zostso/README.md)    
   [zosuss](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosuss/README.md)  
       
 ## Build  
@@ -175,9 +202,9 @@ For a Maven project add the SDK as a dependency by updating your `pom.xml` as fo
     <dependency>
         <groupId>org.zowe.client.java.sdk</groupId>
         <artifactId>zowe-client-java-sdk</artifactId>
-        <version>2.2.1</version>
+        <version>3.0.0</version>
     </dependency>
 
 For a Gradle project add the SDK as a dependency by updating your `build.gradle` as follows:
 
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '2.2.1'  
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '3.0.0'  

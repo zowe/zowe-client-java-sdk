@@ -9,10 +9,10 @@
  */
 package zowe.client.sdk.rest;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
-import kong.unirest.UnirestException;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.JsonNode;
+import kong.unirest.core.Unirest;
+import kong.unirest.core.UnirestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -24,7 +24,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * Http post operation with Json content type
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class PostJsonZosmfRequest extends ZosmfRequest {
 
@@ -58,7 +58,8 @@ public class PostJsonZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(body == null, "body is null");
         HttpResponse<JsonNode> reply;
         try {
-            reply = Unirest.post(url).headers(headers).body(body).asJson();
+            reply = cookie != null ? Unirest.post(url).cookie(cookie).headers(headers).body(body).asJson() :
+                    Unirest.post(url).headers(headers).body(body).asJson();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
         }

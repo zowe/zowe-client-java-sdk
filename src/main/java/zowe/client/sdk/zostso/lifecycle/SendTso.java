@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zostso.lifecycle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -33,9 +35,11 @@ import java.util.List;
  * Class to handle sending data to TSO
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class SendTso {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SendTso.class);
 
     private final ZosConnection connection;
 
@@ -97,6 +101,7 @@ public class SendTso {
         tsos.add(tso);
         while (!done) {
             if (!tso.getTsoData().isEmpty()) {
+                LOG.debug(tso.getTsoData().toString());
                 for (TsoMessages tsoDatum : tso.getTsoData()) {
                     if (tsoDatum.getTsoMessage().isPresent()) {
                         final TsoMessage tsoMsg = tsoDatum.getTsoMessage().get();
@@ -110,7 +115,8 @@ public class SendTso {
                             final String msg = messages.toString();
                             final int startIndex = msg.indexOf("IKJ56602I");
                             messages.delete(startIndex, startIndex + IKJ56602I.length() + "\nREADY".length());
-                        } else if (messages.length() > 0 && messages.toString().contains("READY")) {
+                        } else if (messages.length() > 0 && (messages.toString().contains("READY") ||
+                                messages.toString().contains("REENTER"))) {
                             done = true;
                         }
                         // TSO PROMPT reached without getting any data, retrying
@@ -142,6 +148,7 @@ public class SendTso {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody("");
 
         return new TsoResponseService(request.executeRequest()).getZosmfTsoResponse();
@@ -196,6 +203,7 @@ public class SendTso {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(jobObjBody);
 
         return new TsoResponseService(request.executeRequest()).getZosmfTsoResponse();

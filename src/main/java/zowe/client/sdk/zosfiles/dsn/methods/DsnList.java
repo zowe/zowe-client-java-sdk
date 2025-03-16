@@ -34,7 +34,7 @@ import java.util.*;
  * Provides list dataset and member functionality
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnList {
 
@@ -226,6 +226,7 @@ public class DsnList {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setHeaders(headers);
         return request.executeRequest();
     }

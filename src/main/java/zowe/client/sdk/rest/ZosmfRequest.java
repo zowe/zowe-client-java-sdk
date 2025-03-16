@@ -9,13 +9,15 @@
  */
 package zowe.client.sdk.rest;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
+import kong.unirest.core.Cookie;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.JsonNode;
+import kong.unirest.core.Unirest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 import java.io.BufferedReader;
@@ -34,7 +36,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Base abstract class that conforms to Http CRUD operations
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public abstract class ZosmfRequest {
 
@@ -44,6 +46,7 @@ public abstract class ZosmfRequest {
     protected final ZosConnection connection;
     protected final Map<String, String> headers = new HashMap<>();
     protected String url;
+    protected Cookie cookie;
 
     /**
      * ZosmfRequest constructor
@@ -62,6 +65,8 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setup() {
+        Unirest.config().reset();
+        Unirest.config().enableCookieManagement(false);
         Unirest.config().verifySsl(false);
         this.setStandardHeaders();
     }
@@ -82,25 +87,47 @@ public abstract class ZosmfRequest {
             throw new IllegalStateException("zero number status code return");
         }
 
-        final String statusText = reply.getStatusText() != null ? reply.getStatusText() : "n\\a";
+        String statusText;
+        if (reply.getStatusText() == null || reply.getStatusText().isBlank()) {
+            statusText = RestConstant.HTTP_STATUS.get(reply.getStatus());
+        } else {
+            statusText = reply.getStatusText();
+        }
+        if (statusText == null) {
+            statusText = "n\\a";
+        }
 
         Response response;
-        if (statusText.contains("No Content")) {
-            response = new Response(statusText, statusCode, statusText);
+        if (statusText.toLowerCase().contains("no content")) {
+            response = reply.getCookies() != null ?
+                    new Response(statusText, statusCode, statusText, reply.getCookies()) :
+                    new Response(statusText, statusCode, statusText);
         } else if (reply.getBody() instanceof JsonNode) {
             final HttpResponse<JsonNode> jsonReply = (HttpResponse<JsonNode>) reply;
-            response = jsonReply.getBody().isArray() ?
-                    new Response(jsonReply.getBody().getArray(), statusCode, statusText) :
-                    new Response(jsonReply.getBody().getObject(), statusCode, statusText);
+            if (reply.getCookies() != null) {
+                response = jsonReply.getBody().isArray() ?
+                        new Response(jsonReply.getBody().getArray(), statusCode, statusText, reply.getCookies()) :
+                        new Response(jsonReply.getBody().getObject(), statusCode, statusText, reply.getCookies());
+            } else {
+                response = jsonReply.getBody().isArray() ?
+                        new Response(jsonReply.getBody().getArray(), statusCode, statusText) :
+                        new Response(jsonReply.getBody().getObject(), statusCode, statusText);
+            }
         } else if (reply.getBody() instanceof String) {
             final HttpResponse<String> stringReply = (HttpResponse<String>) reply;
-            response = new Response(stringReply.getBody(), statusCode, statusText);
+            response = reply.getCookies() != null ?
+                    new Response(stringReply.getBody(), statusCode, statusText, reply.getCookies()) :
+                    new Response(stringReply.getBody(), statusCode, statusText);
         } else if (reply.getBody() instanceof byte[]) {
             final HttpResponse<byte[]> byteReply = (HttpResponse<byte[]>) reply;
-            response = new Response(byteReply.getBody(), statusCode, statusText);
+            response = reply.getCookies() != null ?
+                    new Response(byteReply.getBody(), statusCode, statusText, reply.getCookies()) :
+                    new Response(byteReply.getBody(), statusCode, statusText);
         } else {
             LOG.debug("no reply instanceof found");
-            response = new Response(null, statusCode, statusText);
+            response = reply.getCookies() != null ?
+                    new Response(null, statusCode, statusText, reply.getCookies()) :
+                    new Response(null, statusCode, statusText);
         }
 
         if (!(statusCode >= 100 && statusCode <= 299)) {
@@ -172,6 +199,7 @@ public abstract class ZosmfRequest {
     public void setHeaders(final Map<String, String> headers) {
         this.headers.clear();
         this.setStandardHeaders();
+        RemoveBasicAuth();
         this.headers.putAll(headers);
     }
 
@@ -212,6 +240,37 @@ public abstract class ZosmfRequest {
             return false;
         } catch (URISyntaxException | MalformedURLException exception) {
             return true;
+        }
+    }
+
+    /**
+     * Set a cookie token for this request. This is optional for most requests and not needed.
+     * Setting the cookie will remove the HTTP header authentication.
+     * Setting the cookie value as null after giving it a value will revert/enable
+     * the HTTP header authentication for future requests.
+     *
+     * @param cookie object
+     * @author Frank Giordano
+     */
+    public void setCookie(final Cookie cookie) {
+        this.cookie = cookie;
+        RemoveBasicAuth();
+    }
+
+    /**
+     * Remove basic authorization header with username and password encoded.
+     * Removal will occur when authentication token is specified within cookie setting
+     * for the request.
+     *
+     * @author Frank Giordano
+     */
+    private void RemoveBasicAuth() {
+        if (this.cookie == null) {
+            LOG.debug("enable basic authorization");
+            headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
+        } else {
+            LOG.debug("disable basic authorization");
+            headers.remove("Authorization");
         }
     }
 

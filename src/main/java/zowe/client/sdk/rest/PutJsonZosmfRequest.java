@@ -9,10 +9,7 @@
  */
 package zowe.client.sdk.rest;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
-import kong.unirest.UnirestException;
+import kong.unirest.core.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -24,11 +21,16 @@ import zowe.client.sdk.utility.ValidateUtils;
  * Http put operation with Json content type
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class PutJsonZosmfRequest extends ZosmfRequest {
 
     private static final Logger LOG = LoggerFactory.getLogger(PutJsonZosmfRequest.class);
+
+    /**
+     * Optional Cookie object
+     */
+    private Cookie cookie;
 
     /**
      * JSON String representation
@@ -60,7 +62,8 @@ public class PutJsonZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(body == null, "body is null");
         HttpResponse<JsonNode> reply;
         try {
-            reply = Unirest.put(url).headers(headers).body(body).asJson();
+            reply = cookie != null ? Unirest.put(url).cookie(cookie).headers(headers).body(body).asJson() :
+                    Unirest.put(url).headers(headers).body(body).asJson();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
         }

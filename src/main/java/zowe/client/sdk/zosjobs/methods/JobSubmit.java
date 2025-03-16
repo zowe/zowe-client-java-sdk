@@ -33,7 +33,7 @@ import java.util.Map;
  * Class to handle submitting of z/OS batch jobs and started tasks via z/OSMF
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class JobSubmit {
 
@@ -133,6 +133,7 @@ public class JobSubmit {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(params.getJcl().orElseThrow(() -> new IllegalArgumentException("jcl not specified")));
         request.setHeaders(headers);
 
@@ -176,6 +177,7 @@ public class JobSubmit {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(submitMap).toString());
 
         if (params.getJclSymbols().isPresent()) {

@@ -9,8 +9,8 @@
  */
 package zowe.client.sdk.zosconsole;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.JsonNode;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +35,7 @@ import static org.junit.Assert.assertEquals;
  * Class containing unit tests for IssueCommand.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class IssueCommandTest {
 

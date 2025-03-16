@@ -24,7 +24,7 @@ import zowe.client.sdk.zosfiles.dsn.methods.DsnCopy;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnCopyExp extends TstZosConnection {
 
@@ -167,7 +167,7 @@ import zowe.client.sdk.zosfiles.dsn.methods.DsnCreate;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnCreateExp extends TstZosConnection {
 
@@ -336,7 +336,7 @@ import zowe.client.sdk.zosfiles.dsn.response.Dataset;
  * Class example to showcase retrieval of dataset information functionality via DsnGet class.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnGetInfoExp extends TstZosConnection {
 
@@ -391,7 +391,7 @@ import zowe.client.sdk.zosfiles.dsn.methods.DsnDelete;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnDeleteExp extends TstZosConnection {
 
@@ -478,7 +478,7 @@ import java.io.StringWriter;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnGetExp extends TstZosConnection {
 
@@ -599,7 +599,7 @@ import java.util.List;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnListExp extends TstZosConnection {
 
@@ -720,7 +720,7 @@ import zowe.client.sdk.zosfiles.dsn.methods.DsnWrite;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnWriteExp extends TstZosConnection {
 
@@ -798,7 +798,7 @@ import zowe.client.sdk.rest.Response;
  * Utility class containing helper method(s).
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class Util {
 
@@ -838,7 +838,7 @@ import zowe.client.sdk.teamconfig.service.TeamConfigService;
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class TstZosConnection {
 

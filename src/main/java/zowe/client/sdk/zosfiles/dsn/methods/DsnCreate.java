@@ -30,7 +30,7 @@ import java.util.Map;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 2.0
+ * @version 3.0
  */
 public class DsnCreate {
 
@@ -107,6 +107,7 @@ public class DsnCreate {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(createMap).toString());
 
         return request.executeRequest();

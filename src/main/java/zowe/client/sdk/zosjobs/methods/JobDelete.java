@@ -27,7 +27,7 @@ import java.util.Map;
  * DeleteJobs class to handle Job delete
  *
  * @author Nikunj Goyal
- * @version 2.0
+ * @version 3.0
  */
 public class JobDelete {
 
@@ -123,6 +123,7 @@ public class JobDelete {
         }
         request.setHeaders(headers);
         request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         // if synchronously response should contain job document that was cancelled and http return code
         // if asynchronously response should only contain http return code
