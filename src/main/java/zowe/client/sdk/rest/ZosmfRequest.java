@@ -93,7 +93,7 @@ public abstract class ZosmfRequest {
         } else {
             statusText = reply.getStatusText();
         }
-        if (statusText == null) {
+        if (statusText == null || statusText.isBlank()) {
             statusText = "n\\a";
         }
 
