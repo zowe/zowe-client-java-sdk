@@ -82,14 +82,14 @@ public class DsnList {
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public java.util.List<Dataset> getDatasets(final String dataSetName, final ListParams params)
+    public List<Dataset> getDatasets(final String dataSetName, final ListParams params)
             throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
 
         final Map<String, String> headers = new HashMap<>();
-        final java.util.List<Dataset> datasets = new ArrayList<>();
+        final List<Dataset> datasets = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_DS_LEVEL +
                 EncodeUtils.encodeURIComponent(dataSetName);
@@ -114,14 +114,14 @@ public class DsnList {
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public java.util.List<Member> getMembers(final String dataSetName, final ListParams params)
+    public List<Member> getMembers(final String dataSetName, final ListParams params)
             throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
 
         final Map<String, String> headers = new HashMap<>();
-        final java.util.List<Member> members = new ArrayList<>();
+        final List<Member> members = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
@@ -146,8 +146,8 @@ public class DsnList {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    private <T> java.util.List<T> getResult(final Response response, final List<T> datasetLst,
-                                            final List<T> memberLst) throws ZosmfRequestException {
+    private <T> List<T> getResult(final Response response, final List<T> datasetLst,
+                                  final List<T> memberLst) throws ZosmfRequestException {
         if (response.getStatusCode().isEmpty()) {
             LOG.debug("status code not returned");
             if (datasetLst == null) {
