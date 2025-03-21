@@ -262,7 +262,6 @@ public class JobMonitor {
 
         do {
             numOfAttempts++;
-
             messageFound = checkMessage(params, message);
             shouldContinue = !messageFound && (maxAttempts > 0 && numOfAttempts < maxAttempts);
 
@@ -299,10 +298,8 @@ public class JobMonitor {
         CheckJobStatus checkJobStatus;
         do {
             numOfAttempts++;
-
             checkJobStatus = checkStatus(params);
             expectedStatus = checkJobStatus.isStatusFound();
-
             shouldContinue = !expectedStatus && (maxAttempts > 0 && numOfAttempts < maxAttempts);
 
             if (shouldContinue) {
@@ -344,8 +341,7 @@ public class JobMonitor {
                 new MonitorJobWaitForParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
                         .jobStatus(JobStatus.Type.OUTPUT)
                         .attempts(attempts)
-                        .watchDelay(watchDelay).build(),
-                message);
+                        .watchDelay(watchDelay).build(), message);
     }
 
     /**
@@ -368,8 +364,7 @@ public class JobMonitor {
                 new MonitorJobWaitForParams.Builder(jobName, jobId)
                         .jobStatus(JobStatus.Type.OUTPUT)
                         .attempts(attempts).watchDelay(watchDelay)
-                        .build(),
-                message);
+                        .build(), message);
     }
 
     /**
@@ -476,16 +471,17 @@ public class JobMonitor {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), JobsConstants.JOB_NAME_ERROR_MSG);
         ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), JobsConstants.JOB_ID_ERROR_MSG);
+
         if (params.getAttempts().isEmpty()) {
             params.setAttempts(attempts);
         }
-
         if (params.getWatchDelay().isEmpty()) {
             params.setWatchDelay(watchDelay);
         }
         if (params.getLineLimit().isEmpty()) {
             params.setLineLimit(lineLimit);
         }
+
         return pollByMessage(params, message);
     }
 
@@ -506,16 +502,17 @@ public class JobMonitor {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), JobsConstants.JOB_NAME_ERROR_MSG);
         ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), JobsConstants.JOB_ID_ERROR_MSG);
+
         if (params.getJobStatus().isEmpty()) {
             params.setJobStatus(DEFAULT_STATUS);
         }
-
         if (params.getAttempts().isEmpty()) {
             params.setAttempts(attempts);
         }
         if (params.getWatchDelay().isEmpty()) {
             params.setWatchDelay(watchDelay);
         }
+
         return pollByStatus(params);
     }
 
