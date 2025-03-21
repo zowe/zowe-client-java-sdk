@@ -371,8 +371,8 @@ public class JobMonitor {
 
     /**
      * Given a Job document (has jobname/jobid), wait for the status of the job to be "OUTPUT". This API will poll for
-     * the OUTPUT status once every 3 seconds indefinitely. If the polling interval/duration is NOT sufficient, use
-     * "waitForStatusCommon" to adjust.
+     * the OUTPUT status once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
+     * sufficient, use "waitForStatusCommon" to adjust.
      * <p>
      * See JSDoc for "waitForStatusCommon" for full details on polling and other logic.
      *
@@ -393,7 +393,7 @@ public class JobMonitor {
 
     /**
      * Given the jobname/jobid, wait for the status of the job to be "OUTPUT". This API will poll for the OUTPUT status
-     * once every 3 seconds indefinitely. If the polling interval/duration is NOT sufficient, use
+     * once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT sufficient, use
      * "waitForStatusCommon" to adjust.
      * <p>
      * See JavaDoc for "waitForStatusCommon" for full details on polling and other logic.
