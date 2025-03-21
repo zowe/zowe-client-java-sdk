@@ -341,7 +341,8 @@ public class JobMonitor {
                 new MonitorJobWaitForParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
                         .jobStatus(JobStatus.Type.OUTPUT)
                         .attempts(attempts)
-                        .watchDelay(watchDelay).build(), message);
+                        .watchDelay(watchDelay)
+                        .build(), message);
     }
 
     /**
@@ -363,7 +364,8 @@ public class JobMonitor {
         return waitMessageCommon(
                 new MonitorJobWaitForParams.Builder(jobName, jobId)
                         .jobStatus(JobStatus.Type.OUTPUT)
-                        .attempts(attempts).watchDelay(watchDelay)
+                        .attempts(attempts)
+                        .watchDelay(watchDelay)
                         .build(), message);
     }
 
@@ -406,7 +408,8 @@ public class JobMonitor {
         return waitStatusCommon(
                 new MonitorJobWaitForParams.Builder(jobName, jobId)
                         .jobStatus(JobStatus.Type.OUTPUT)
-                        .attempts(attempts).watchDelay(watchDelay)
+                        .attempts(attempts)
+                        .watchDelay(watchDelay)
                         .build());
     }
 
