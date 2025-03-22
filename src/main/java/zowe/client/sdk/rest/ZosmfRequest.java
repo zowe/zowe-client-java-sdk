@@ -123,6 +123,12 @@ public abstract class ZosmfRequest {
             response = reply.getCookies() != null ?
                     new Response(byteReply.getBody(), statusCode, statusText, reply.getCookies()) :
                     new Response(byteReply.getBody(), statusCode, statusText);
+        } else if (reply.getParsingError().isPresent()) {
+            final HttpResponse<JsonNode> jsonReply = (HttpResponse<JsonNode>) reply;
+            final String originalBody = jsonReply.getParsingError().get().getOriginalBody();
+            response = reply.getCookies() != null ?
+                    new Response(originalBody, statusCode, statusText, reply.getCookies()) :
+                    new Response(originalBody, statusCode, statusText);
         } else {
             LOG.debug("no reply instanceof found");
             response = reply.getCookies() != null ?
