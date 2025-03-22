@@ -126,6 +126,7 @@ public abstract class ZosmfRequest {
         } else if (reply.getParsingError().isPresent()) {
             final HttpResponse<JsonNode> jsonReply = (HttpResponse<JsonNode>) reply;
             final String originalBody = jsonReply.getParsingError().get().getOriginalBody();
+            LOG.debug("Unirest parsing error: {}", originalBody);
             response = reply.getCookies() != null ?
                     new Response(originalBody, statusCode, statusText, reply.getCookies()) :
                     new Response(originalBody, statusCode, statusText);
