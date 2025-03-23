@@ -256,7 +256,7 @@ public class JobDeleteExp extends TstZosConnection {
 
 **Get a job**
 
-`````java
+```java
 package zowe.client.sdk.examples.zosjobs;
 
 import zowe.client.sdk.core.ZosConnection;
@@ -554,7 +554,7 @@ public class JobGetExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void getByOwner(String owner) {
-        List<Job> jobs = null;
+        List<Job> jobs;
         try {
             jobs = getJob.getByOwner(owner);
         } catch (ZosmfRequestException e) {
@@ -627,11 +627,11 @@ public class JobGetExp extends TstZosConnection {
     }
 
 }
-`````
+```
 
 **Monitor a job**
 
-`````java
+```java
 package zowe.client.sdk.examples.zosjobs;
 
 import zowe.client.sdk.core.ZosConnection;
@@ -699,7 +699,7 @@ public class JobMonitorExp extends TstZosConnection {
      */
     public static void monitorJobForOutputStatusByJobObject() {
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
-        Job job = null;
+        Job job;
         try {
             job = submitJob.submitByJcl(jclString, null, null);
             JobMonitor jobMonitor = new JobMonitor(connection);
@@ -803,7 +803,7 @@ public class JobMonitorExp extends TstZosConnection {
     }
 
 }
-`````
+```
 
 **Submit a job**
 

@@ -55,7 +55,7 @@ public class ZosmfStatusExp extends TstZosConnection {
 
 **List the systems defined to z/OSMF through the z/OSMF APIs**
 
-`````java
+```java
 package zowe.client.sdk.examples.zosmfInfo;
 
 import zowe.client.sdk.core.ZosConnection;
@@ -86,7 +86,7 @@ public class ZosmfSystemsExp extends TstZosConnection {
     public static void main(String[] args) {
         ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
         ZosmfSystems zosmfSystems = new ZosmfSystems(connection);
-        ZosmfSystemsResponse zosmfInfoResponse = null;
+        ZosmfSystemsResponse zosmfInfoResponse;
         try {
             zosmfInfoResponse = zosmfSystems.get();
         } catch (ZosmfRequestException e) {
@@ -98,7 +98,7 @@ public class ZosmfSystemsExp extends TstZosConnection {
     }
 
 }
-`````
+```
 
 ````java
 package zowe.client.sdk.examples.utility;
