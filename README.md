@@ -124,13 +124,13 @@ and the JSON error report document body response is:
   
 Since the release of the SDK, the authentication of each REST API call is done with Basic authentication.
   
-SDK release version 3 adds the option to perform authentication with Web token authentication.
+With SDK release version 3, it adds the option to perform authentication with Web token authentication.  
   
-Basic authentication means that the client program provides a z/OS user ID and password in the header of the initial request. User ID and password are defined by the end user within the ZosConnection object and the SDK takes care of performing basic authentication with each request.     
+Basic authentication means that the client program provides a z/OS user ID and password in the header of a request. User ID and password are defined by the end user within the ZosConnection object and the SDK takes care of performing basic authentication with each request.       
   
-SDK release version 3 introduces zosmfauth package. ZosmfAuth provides APIs to obtain authentication tokens (a JSON Web and an LTPA token) on the user's authentication request. This API can also be used to delete the current store of JSON Web and LPTA token(s).      
+With SDK release version 3, it introduces the zosmfauth package. ZosmfAuth provides an API (zosmfLogin) to obtain authentication tokens (a JSON Web and an LTPA token) on the user's authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA token(s).      
   
-Web token support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web Token support in IBM z/OS Management Facility Configuration Guide.  
+Web token support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web Token support in the IBM z/OS Management Facility Configuration Guide.  
   
 To enable Web token authentication, you need to set a token value within the ZosConnection class "cookie" member. Once set, each request is performed with the token value within the cookie http payload. At this point, Basic authentication is disabled.  
   
