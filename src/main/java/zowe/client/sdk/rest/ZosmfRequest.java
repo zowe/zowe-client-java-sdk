@@ -266,9 +266,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Remove basic authorization header with username and password encoded.
-     * Removal will occur when authentication token is specified within cookie setting
-     * for the request.
+     * Determine authentication type and switch accordingly.
      *
      * @author Frank Giordano
      */
