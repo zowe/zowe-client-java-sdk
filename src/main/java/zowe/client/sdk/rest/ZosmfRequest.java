@@ -207,7 +207,7 @@ public abstract class ZosmfRequest {
     public void setHeaders(final Map<String, String> headers) {
         this.headers.clear();
         this.setStandardHeaders();
-        RemoveBasicAuth();
+        this.RemoveBasicAuth();
         this.headers.putAll(headers);
     }
 
@@ -262,7 +262,7 @@ public abstract class ZosmfRequest {
      */
     public void setCookie(final Cookie cookie) {
         this.cookie = cookie;
-        RemoveBasicAuth();
+        this.RemoveBasicAuth();
     }
 
     /**
