@@ -207,7 +207,6 @@ public abstract class ZosmfRequest {
     public void setHeaders(final Map<String, String> headers) {
         this.headers.clear();
         this.setStandardHeaders();
-        this.toggleAuthenticationType();
         this.headers.putAll(headers);
     }
 
