@@ -132,10 +132,10 @@ public class JobSubmit {
         if (request == null || !(request instanceof PutTextZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
         }
+        request.setHeaders(headers);
         request.setUrl(url);
         connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(params.getJcl().orElseThrow(() -> new IllegalArgumentException("jcl not specified")));
-        request.setHeaders(headers);
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job jcl submit response phrase")).toString();
@@ -176,13 +176,12 @@ public class JobSubmit {
         if (request == null || !(request instanceof PutJsonZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
-        request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
-        request.setBody(new JSONObject(submitMap).toString());
-
         if (params.getJclSymbols().isPresent()) {
             request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));
         }
+        request.setUrl(url);
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
+        request.setBody(new JSONObject(submitMap).toString());
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job submit response phrase")).toString();

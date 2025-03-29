@@ -225,9 +225,9 @@ public class DsnList {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
+        request.setHeaders(headers);
         request.setUrl(url);
         connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
-        request.setHeaders(headers);
         return request.executeRequest();
     }
 
