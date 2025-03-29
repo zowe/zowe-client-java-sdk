@@ -207,7 +207,7 @@ public abstract class ZosmfRequest {
     public void setHeaders(final Map<String, String> headers) {
         this.headers.clear();
         this.setStandardHeaders();
-        this.RemoveBasicAuth();
+        this.toggleAuthenticationType();
         this.headers.putAll(headers);
     }
 
@@ -262,7 +262,7 @@ public abstract class ZosmfRequest {
      */
     public void setCookie(final Cookie cookie) {
         this.cookie = cookie;
-        this.RemoveBasicAuth();
+        this.toggleAuthenticationType();
     }
 
     /**
@@ -272,7 +272,7 @@ public abstract class ZosmfRequest {
      *
      * @author Frank Giordano
      */
-    private void RemoveBasicAuth() {
+    private void toggleAuthenticationType() {
         if (this.cookie == null) {
             LOG.debug("enable basic authorization");
             headers.put("Authorization", "Basic " +
