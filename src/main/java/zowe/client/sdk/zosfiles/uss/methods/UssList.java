@@ -121,11 +121,12 @@ public class UssList {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
 
-        request.setUrl(url.toString());
         final int maxLength = params.getMaxLength().orElse(0);
         if (maxLength > 0) {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
+        request.setUrl(url.toString());
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         final Response response = request.executeRequest();
 
@@ -167,11 +168,12 @@ public class UssList {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
 
-        request.setUrl(url.toString());
         final int maxLength = params.getMaxLength().orElse(0);
         if (maxLength > 0) {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
+        request.setUrl(url.toString());
+        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         final Response response = request.executeRequest();
 

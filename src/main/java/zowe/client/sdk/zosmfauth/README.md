@@ -1,15 +1,17 @@
 # z/OSMF AUTH Package
 
-The z/OSMF authentication API services is provided for z/OSMF tasks and vendor applications.  
-  
-These services are used to obtain or delete authentication tokens (a JSON Web Token and an LTPA token) on the user's authentication request when logging in to or out of z/OSMF. Services also include an API to change a z/OSMF user’s password.
-  
+The z/OSMF authentication API services is provided for z/OSMF tasks and vendor applications.
+
+These services are used to obtain or delete authentication tokens (a JSON Web Token and an LTPA token) on the user's
+authentication request when logging in to or out of z/OSMF. Services also include an API to change a z/OSMF user’s
+password.
+
 Each API is located in the methods package.
-  
-With the token retrieved, it can be used for authentication in place of basic authentication.   
-  
-See detailed examples below.  
-  
+
+With the token retrieved, it can be used for authentication in place of basic authentication.
+
+See detailed examples below.
+
 ## API Examples
 
 ```java
