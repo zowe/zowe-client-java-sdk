@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles;
 
+import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,10 +18,17 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosfiles.uss.input.ChangeModeParams;
 import zowe.client.sdk.zosfiles.uss.input.ChangeOwnerParams;
+import zowe.client.sdk.zosfiles.uss.methods.UssChangeMode;
 import zowe.client.sdk.zosfiles.uss.methods.UssChangeOwner;
 
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.withSettings;
 
 /**
  * Class containing unit tests for UssChangeOwner.
@@ -33,6 +41,7 @@ public class UssChangeOwnerTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private PutJsonZosmfRequest mockJsonPutRequest;
+    private PutJsonZosmfRequest mockJsonPutRequestAuth;
     private UssChangeOwner ussChangeOwner;
 
     @Before
@@ -40,6 +49,16 @@ public class UssChangeOwnerTest {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
+
+        mockJsonPutRequestAuth = Mockito.mock(PutJsonZosmfRequest.class, withSettings().useConstructor(connection));
+        Mockito.when(mockJsonPutRequestAuth.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonPutRequestAuth).setHeaders(any(Map.class));
+        doCallRealMethod().when(mockJsonPutRequestAuth).setStandardHeaders();
+        doCallRealMethod().when(mockJsonPutRequestAuth).setUrl(any());
+        doCallRealMethod().when(mockJsonPutRequestAuth).setCookie(any());
+        doCallRealMethod().when(mockJsonPutRequestAuth).getHeaders();
+
         ussChangeOwner = new UssChangeOwner(connection);
     }
 
@@ -47,6 +66,27 @@ public class UssChangeOwnerTest {
     public void tstUssChangeOwnerSuccess() throws ZosmfRequestException {
         final UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequest);
         final Response response = ussChangeOwner.change("/xxx/xx/xx", "user");
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+    }
+
+    @Test
+    public void tstUssChangeModeToggleAuthSuccess() throws ZosmfRequestException {
+        final UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequestAuth);
+
+        connection.setCookie(new Cookie("hello=hello"));
+        Response response = ussChangeOwner.change("/xxx/xx/xx", "user");
+        assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+                mockJsonPutRequestAuth.getHeaders().toString());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+
+        connection.setCookie(null);
+        response = ussChangeOwner.change("/xxx/xx/xx", "user");
+        assertEquals("{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+                mockJsonPutRequestAuth.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
