@@ -72,7 +72,7 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstUssChangeModeToggleAuthSuccess() throws ZosmfRequestException {
+    public void tstUssChangeOwnerToggleAuthSuccess() throws ZosmfRequestException {
         final UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequestAuth);
 
         connection.setCookie(new Cookie("hello=hello"));
