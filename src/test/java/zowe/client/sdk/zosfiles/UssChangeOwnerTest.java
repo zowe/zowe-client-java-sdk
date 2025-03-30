@@ -27,6 +27,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.withSettings;
 
@@ -53,7 +54,7 @@ public class UssChangeOwnerTest {
         mockJsonPutRequestAuth = Mockito.mock(PutJsonZosmfRequest.class, withSettings().useConstructor(connection));
         Mockito.when(mockJsonPutRequestAuth.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockJsonPutRequestAuth).setHeaders(any(Map.class));
+        doCallRealMethod().when(mockJsonPutRequestAuth).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonPutRequestAuth).setStandardHeaders();
         doCallRealMethod().when(mockJsonPutRequestAuth).setUrl(any());
         doCallRealMethod().when(mockJsonPutRequestAuth).setCookie(any());
