@@ -18,13 +18,9 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.uss.input.ChangeModeParams;
 import zowe.client.sdk.zosfiles.uss.input.ChangeTagParams;
-import zowe.client.sdk.zosfiles.uss.methods.UssChangeMode;
 import zowe.client.sdk.zosfiles.uss.methods.UssChangeTag;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
-
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
