@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles;
 
+import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +25,10 @@ import zowe.client.sdk.zosfiles.uss.methods.UssCreate;
 import zowe.client.sdk.zosfiles.uss.types.CreateType;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.withSettings;
 
 /**
  * Class containing unit tests for UssCreate.
@@ -36,6 +41,7 @@ public class UssCreateTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private PostJsonZosmfRequest mockJsonPostRequest;
+    private PostJsonZosmfRequest mockJsonPostRequestAuth;
     private UssCreate ussCreate;
 
     @Before
@@ -50,6 +56,35 @@ public class UssCreateTest {
                 new Response(new JSONObject(), 200, "success"));
         final UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequest);
         final Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+    }
+
+    @Test
+    public void tstUssCreateToggleAuthSuccess() throws ZosmfRequestException {
+        mockJsonPostRequestAuth = Mockito.mock(PostJsonZosmfRequest.class, withSettings().useConstructor(connection));
+        Mockito.when(mockJsonPostRequestAuth.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonPostRequestAuth).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonPostRequestAuth).setStandardHeaders();
+        doCallRealMethod().when(mockJsonPostRequestAuth).setUrl(any());
+        doCallRealMethod().when(mockJsonPostRequestAuth).setCookie(any());
+        doCallRealMethod().when(mockJsonPostRequestAuth).getHeaders();
+        final UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequestAuth);
+
+        connection.setCookie(new Cookie("hello=hello"));
+        Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+        Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+                mockJsonPostRequestAuth.getHeaders().toString());
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+
+        connection.setCookie(null);
+        response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+        final String expectedResp = "{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}";
+        Assertions.assertEquals(expectedResp, mockJsonPostRequestAuth.getHeaders().toString());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
         Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));

@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles;
 
+import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,10 @@ import zowe.client.sdk.zosfiles.uss.input.CopyParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssCopy;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.withSettings;
 
 /**
  * Class containing unit tests for UssCopy.
@@ -34,6 +39,7 @@ public class UssCopyTest {
 
     private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
     private PutJsonZosmfRequest mockJsonPutRequest;
+    private PutJsonZosmfRequest mockJsonPutRequestAuth;
     private UssCopy ussCopy;
 
     @Before
@@ -41,6 +47,16 @@ public class UssCopyTest {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
+
+        mockJsonPutRequestAuth = Mockito.mock(PutJsonZosmfRequest.class, withSettings().useConstructor(connection));
+        Mockito.when(mockJsonPutRequestAuth.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonPutRequestAuth).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonPutRequestAuth).setStandardHeaders();
+        doCallRealMethod().when(mockJsonPutRequestAuth).setUrl(any());
+        doCallRealMethod().when(mockJsonPutRequestAuth).setCookie(any());
+        doCallRealMethod().when(mockJsonPutRequestAuth).getHeaders();
+
         ussCopy = new UssCopy(connection);
     }
 
@@ -48,6 +64,27 @@ public class UssCopyTest {
     public void tstUssCopySuccess() throws ZosmfRequestException {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copy("/xxx/xx/xx", "/xxx/xx/xx");
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+    }
+
+    @Test
+    public void tstUssCopyToggleAuthSuccess() throws ZosmfRequestException {
+        final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequestAuth);
+
+        connection.setCookie(new Cookie("hello=hello"));
+        Response response = ussCopy.copy("/xxx/xx/xx", "/xxx/xx/xx");
+        Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+                mockJsonPutRequestAuth.getHeaders().toString());
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+
+        connection.setCookie(null);
+        response = ussCopy.copy("/xxx/xx/xx", "/xxx/xx/xx");
+        final String expectedResp = "{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}";
+        Assertions.assertEquals(expectedResp, mockJsonPutRequestAuth.getHeaders().toString());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
         Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));

@@ -153,7 +153,9 @@ public class ZosConnection {
         }
         ZosConnection other = (ZosConnection) obj;
         return Objects.equals(host, other.host) && Objects.equals(zosmfPort, other.zosmfPort)
-                && Objects.equals(user, other.user) && Objects.equals(password, other.password);
+                && Objects.equals(user, other.user) && Objects.equals(password, other.password)
+                && Objects.equals(cookie.orElse(new Cookie("")).getValue(),
+                other.cookie.orElse(new Cookie("")).getValue());
     }
 
     /**
@@ -163,7 +165,7 @@ public class ZosConnection {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(host, zosmfPort, user, password);
+        return Objects.hash(host, zosmfPort, user, password, cookie);
     }
 
 }

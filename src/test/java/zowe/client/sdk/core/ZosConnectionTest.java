@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.core;
 
+import kong.unirest.core.Cookie;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -31,8 +32,34 @@ public class ZosConnectionTest {
     }
 
     @Test
+    public void tstReferenceNotEqualsWithAuthSuccess() {
+        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        zc1.setCookie(new Cookie("hello", "world"));
+        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
+        zc2.setCookie(new Cookie("hello", "world"));
+        assertNotSame(zc1, zc2);
+    }
+
+    @Test
+    public void tstReferenceNotEqualsWithNullAuthSuccess() {
+        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        zc1.setCookie(null);
+        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
+        zc2.setCookie(null);
+        assertNotSame(zc1, zc2);
+    }
+
+    @Test
     public void tstReferenceEqualsSuccess() {
         final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        final ZosConnection zc2 = zc1;
+        assertEquals(zc1, zc2);
+    }
+
+    @Test
+    public void tstReferenceEqualsWithAuthSuccess() {
+        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        zc1.setCookie(new Cookie("hello", "world"));
         final ZosConnection zc2 = zc1;
         assertEquals(zc1, zc2);
     }
@@ -45,9 +72,45 @@ public class ZosConnectionTest {
     }
 
     @Test
+    public void tstEqualsWithAuthSuccess() {
+        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        zc1.setCookie(new Cookie("hello", "world"));
+        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
+        zc2.setCookie(new Cookie("hello", "world"));
+        assertEquals(zc1, zc2);
+    }
+
+    @Test
+    public void tstEqualsWithNullAuthSuccess() {
+        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        zc1.setCookie(null);
+        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
+        zc2.setCookie(null);
+        assertEquals(zc1, zc2);
+    }
+
+    @Test
     public void tstNotEqualsSuccess() {
         final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
         final ZosConnection zc2 = new ZosConnection("test2", "zosmfPort", "user", "password");
+        assertNotEquals(zc1, zc2);
+    }
+
+    @Test
+    public void tstNotEqualsWithAuthSuccess() {
+        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        zc1.setCookie(new Cookie("hello", "world1"));
+        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
+        zc2.setCookie(new Cookie("hello", "world"));
+        assertNotEquals(zc1, zc2);
+    }
+
+    @Test
+    public void tstNotEqualsWithNullAuthSuccess() {
+        final ZosConnection zc1 = new ZosConnection("test1", "zosmfPort", "user", "password");
+        zc1.setCookie(null);
+        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
+        zc2.setCookie(null);
         assertNotEquals(zc1, zc2);
     }
 
