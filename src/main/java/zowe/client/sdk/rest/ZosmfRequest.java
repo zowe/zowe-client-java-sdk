@@ -265,7 +265,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Determine authentication type and switch accordingly.
+     * Determine authentication type (basic or token) and switch accordingly.
      *
      * @author Frank Giordano
      */
@@ -281,7 +281,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Get current http header values for request
+     * Get current http header value(s) for request
      *
      * @return map of header value(s)
      * @author Frank Giordano
