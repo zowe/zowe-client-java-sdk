@@ -9,10 +9,12 @@
  */
 package zowe.client.sdk.zosfiles;
 
+import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
@@ -29,6 +31,10 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.withSettings;
 
 /**
  * Class containing unit tests for UssList.
@@ -123,6 +129,26 @@ public class UssListTest {
                 new Response("{}", 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
+        // should only contain two items
+        assertEquals(0, items.size());
+    }
+
+    @Test
+    public void tstUssListFileListEmptyResponseToggleAuthSuccess() throws Exception {
+        GetJsonZosmfRequest mockJsonGetRequestAuth = Mockito.mock(GetJsonZosmfRequest.class, withSettings().useConstructor(connection));
+        Mockito.when(mockJsonGetRequestAuth.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequestAuth).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonGetRequestAuth).setStandardHeaders();
+        doCallRealMethod().when(mockJsonGetRequestAuth).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequestAuth).setCookie(any());
+        doCallRealMethod().when(mockJsonGetRequestAuth).getHeaders();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequestAuth);
+        connection.setCookie(new Cookie("hello=hello"));
+        final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
+        Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+                mockJsonGetRequestAuth.getHeaders().toString());
         // should only contain two items
         assertEquals(0, items.size());
     }
