@@ -135,7 +135,8 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListEmptyResponseToggleAuthSuccess() throws Exception {
-        GetJsonZosmfRequest mockJsonGetRequestAuth = Mockito.mock(GetJsonZosmfRequest.class, withSettings().useConstructor(connection));
+        GetJsonZosmfRequest mockJsonGetRequestAuth = Mockito.mock(GetJsonZosmfRequest.class,
+                withSettings().useConstructor(connection));
         Mockito.when(mockJsonGetRequestAuth.executeRequest()).thenReturn(
                 new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestAuth).setHeaders(anyMap());
@@ -154,8 +155,8 @@ public class UssListTest {
 
         connection.setCookie(null);
         items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
-        Assertions.assertEquals("{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonGetRequestAuth.getHeaders().toString());
+        final String expectedResp = "{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}";
+        Assertions.assertEquals(expectedResp, mockJsonGetRequestAuth.getHeaders().toString());
         // should only contain two items
         assertEquals(0, items.size());
     }

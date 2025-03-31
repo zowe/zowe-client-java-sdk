@@ -82,8 +82,8 @@ public class UssDeleteTest {
 
         connection.setCookie(null);
         response = ussDelete.delete("/xxx/xx/xx");
-        Assertions.assertEquals("{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonDeleteRequestAuth.getHeaders().toString());
+        final String expectedResp = "{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}";
+        Assertions.assertEquals(expectedResp, mockJsonDeleteRequestAuth.getHeaders().toString());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
         Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));

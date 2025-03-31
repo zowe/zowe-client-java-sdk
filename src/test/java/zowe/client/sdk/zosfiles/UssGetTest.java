@@ -70,16 +70,16 @@ public class UssGetTest {
         final UssGet ussGet = new UssGet(connection, mockTextGetRequestAuth);
         connection.setCookie(new Cookie("hello=hello"));
         String response = ussGet.getText("/xxx/xx");
-        String expectedResponse = "{X-IBM-Data-Type=text, X-CSRF-ZOSMF-HEADER=true, " +
+        String expectedResp = "{X-IBM-Data-Type=text, X-CSRF-ZOSMF-HEADER=true, " +
                 "Content-Type=text/plain; charset=UTF-8}";
-        Assertions.assertEquals(expectedResponse, mockTextGetRequestAuth.getHeaders().toString());
+        Assertions.assertEquals(expectedResp, mockTextGetRequestAuth.getHeaders().toString());
         Assertions.assertEquals("text", response);
 
         connection.setCookie(null);
         response = ussGet.getText("/xxx/xx");
-        expectedResponse = "{Authorization=Basic MTox, X-IBM-Data-Type=text, X-CSRF-ZOSMF-HEADER=true, " +
+        expectedResp = "{Authorization=Basic MTox, X-IBM-Data-Type=text, X-CSRF-ZOSMF-HEADER=true, " +
                 "Content-Type=text/plain; charset=UTF-8}";
-        Assertions.assertEquals(expectedResponse, mockTextGetRequestAuth.getHeaders().toString());
+        Assertions.assertEquals(expectedResp, mockTextGetRequestAuth.getHeaders().toString());
         Assertions.assertEquals("text", response);
     }
 

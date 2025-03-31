@@ -83,8 +83,8 @@ public class UssCreateTest {
 
         connection.setCookie(null);
         response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
-        Assertions.assertEquals("{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonPostRequestAuth.getHeaders().toString());
+        final String expectedResp = "{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}";
+        Assertions.assertEquals(expectedResp, mockJsonPostRequestAuth.getHeaders().toString());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
         Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
