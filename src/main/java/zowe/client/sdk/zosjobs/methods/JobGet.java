@@ -292,7 +292,7 @@ public class JobGet {
         }
         request.setUrl(url);
         connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
-        
+
         final String spoolErrMsg = "no job spool content response phrase";
         return (String) request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(spoolErrMsg));
