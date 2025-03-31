@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles;
 
+import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +25,10 @@ import zowe.client.sdk.zosfiles.uss.methods.UssWrite;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.withSettings;
 
 /**
  * Class containing unit tests for UssWrite.
@@ -49,6 +54,37 @@ public class UssWriteTest {
                 new Response(new JSONObject(), 200, "success"));
         final UssWrite ussWrite = new UssWrite(connection, mockTextPutRequest);
         final Response response = ussWrite.writeText("/xx/xx/x", "text");
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+    }
+
+    @Test
+    public void tstUssWriteTextToggleAuthSuccess() throws ZosmfRequestException {
+        PutTextZosmfRequest mockJsonPutRequestAuth = Mockito.mock(PutTextZosmfRequest.class,
+                withSettings().useConstructor(connection));
+        Mockito.when(mockJsonPutRequestAuth.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonPutRequestAuth).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonPutRequestAuth).setStandardHeaders();
+        doCallRealMethod().when(mockJsonPutRequestAuth).setUrl(any());
+        doCallRealMethod().when(mockJsonPutRequestAuth).setCookie(any());
+        doCallRealMethod().when(mockJsonPutRequestAuth).getHeaders();
+        final UssWrite ussWrite = new UssWrite(connection, mockJsonPutRequestAuth);
+
+        connection.setCookie(new Cookie("hello=hello"));
+        Response response = ussWrite.writeText("/xx/xx/x", "text");
+        String expectedResp = "{X-IBM-Data-Type=text;, X-CSRF-ZOSMF-HEADER=true, Content-Type=text/plain; charset=UTF-8}";
+        Assertions.assertEquals(expectedResp, mockJsonPutRequestAuth.getHeaders().toString());
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+
+        connection.setCookie(null);
+        response = ussWrite.writeText("/xx/xx/x", "text");
+        expectedResp = "{Authorization=Basic MTox, X-IBM-Data-Type=text;, X-CSRF-ZOSMF-HEADER=true, " +
+                "Content-Type=text/plain; charset=UTF-8}";
+        Assertions.assertEquals(expectedResp, mockJsonPutRequestAuth.getHeaders().toString());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
         Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
