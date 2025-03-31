@@ -283,6 +283,7 @@ public abstract class ZosmfRequest {
     /**
      * Get current http header values for request
      *
+     * @return map of header value(s)
      * @author Frank Giordano
      */
     public Map<String, String> getHeaders() {
