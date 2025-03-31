@@ -146,8 +146,15 @@ public class UssListTest {
 
         final UssList ussList = new UssList(connection, mockJsonGetRequestAuth);
         connection.setCookie(new Cookie("hello=hello"));
-        final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
+        List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+                mockJsonGetRequestAuth.getHeaders().toString());
+        // should only contain two items
+        assertEquals(0, items.size());
+
+        connection.setCookie(null);
+        items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
+        Assertions.assertEquals("{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestAuth.getHeaders().toString());
         // should only contain two items
         assertEquals(0, items.size());
