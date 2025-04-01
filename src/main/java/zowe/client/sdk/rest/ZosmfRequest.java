@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Base abstract class that conforms to Http CRUD operations
+ * Base abstract class that conforms to http CRUD operations
  *
  * @author Frank Giordano
  * @version 3.0
@@ -235,7 +235,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Check if url is a valid http or https url.
+     * Check if url is a valid http(s) url.
      *
      * @param url string value
      * @return boolean true or false
@@ -252,9 +252,10 @@ public abstract class ZosmfRequest {
 
     /**
      * Set a cookie token for this request. This is optional for most requests and not needed.
-     * Setting the cookie will remove the HTTP header authentication.
-     * Setting the cookie value as null after giving it a value will revert/enable
-     * the HTTP header authentication for future requests.
+     * Setting the cookie with a non-null value will remove the HTTP Authorization request header.
+     * <p>
+     * Setting the cookie value as null afterward will revert/enable HTTP Authorization request header
+     * for future requests.
      *
      * @param cookie object
      * @author Frank Giordano
@@ -265,7 +266,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Determine authentication type (basic or token) and switch accordingly.
+     * Determine authentication type (basic or token authorization) and switch accordingly.
      *
      * @author Frank Giordano
      */
