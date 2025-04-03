@@ -103,10 +103,9 @@ public class JobCancel {
      * @author Frank Giordano
      */
     public Response cancelByJob(final Job job, final String version) throws ZosmfRequestException {
-        return this.cancelCommon(
-                new ModifyJobParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
-                        .version(version)
-                        .build());
+        final String jobName = job.getJobName().orElse("");
+        final String jobId = job.getJobId().orElse("");
+        return this.cancelCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
     /**
@@ -118,15 +117,13 @@ public class JobCancel {
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in ModifyJobParams
     public Response cancelCommon(final ModifyJobParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         // generate full url request
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                JobsConstants.RESOURCE + JobsConstants.FILE_DELIM +
-                params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG)) +
-                JobsConstants.FILE_DELIM +
-                params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG));
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
+                JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
 
         // generate json string body for the request
         final String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);

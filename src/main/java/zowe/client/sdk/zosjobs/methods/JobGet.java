@@ -104,15 +104,13 @@ public class JobGet {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobParams
     public String getJclCommon(final CommonJobParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(
-                        params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
-                params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
-                JobsConstants.RESOURCE_SPOOL_FILES + JobsConstants.RESOURCE_JCL_CONTENT +
-                JobsConstants.RESOURCE_SPOOL_CONTENT;
+                EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() +
+                JobsConstants.RESOURCE_SPOOL_FILES + JobsConstants.RESOURCE_JCL_CONTENT + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         if (request == null || !(request instanceof GetTextZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
@@ -276,15 +274,15 @@ public class JobGet {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobParams
     public String getSpoolContent(final String jobName, final String jobId, final int spoolId)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(spoolId <= 0, "spool id not specified");
 
+        // use CommonJobParams container class that does all the ValidateUtils checks
         final CommonJobParams params = new CommonJobParams(jobId, jobName);
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(
-                        params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
-                params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
+                EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() +
                 JobsConstants.RESOURCE_SPOOL_FILES + "/" + spoolId + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         if (request == null || !(request instanceof GetTextZosmfRequest)) {
@@ -308,13 +306,13 @@ public class JobGet {
      */
     public String getSpoolContentCommon(final JobFile jobFile) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(jobFile == null, "jobFile is null");
+        ValidateUtils.checkIllegalParameter(jobFile.getJobName().isEmpty(), "jobFile.jobName not specified");
+        ValidateUtils.checkIllegalParameter(jobFile.getJobId().isEmpty(), "jobFile.jobId not specified");
+        ValidateUtils.checkIllegalParameter(jobFile.getId().isPresent(), "jobFile.id not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(
-                        jobFile.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
-                jobFile.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
-                JobsConstants.RESOURCE_SPOOL_FILES + "/" +
-                jobFile.getId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_FILE_ID_ERROR_MSG)) +
+                EncodeUtils.encodeURIComponent(jobFile.getJobName().get()) + "/" + jobFile.getJobId().get() +
+                JobsConstants.RESOURCE_SPOOL_FILES + "/" + jobFile.getId().getAsLong() +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         if (request == null || !(request instanceof GetTextZosmfRequest)) {
@@ -349,14 +347,12 @@ public class JobGet {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobParams
     public List<JobFile> getSpoolFilesCommon(final CommonJobParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(
-                        params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
-                params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG)) +
-                "/files";
+                EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() + "/files";
 
         if (request == null || !(request instanceof GetJsonZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
@@ -391,8 +387,7 @@ public class JobGet {
      */
     public List<JobFile> getSpoolFilesByJob(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        return getSpoolFilesCommon(new CommonJobParams(job.getJobId().orElse(""),
-                job.getJobName().orElse("")));
+        return getSpoolFilesCommon(new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse("")));
     }
 
     /**
@@ -416,13 +411,12 @@ public class JobGet {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobParams
     public Job getStatusCommon(final CommonJobParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(
-                        params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG))) + "/" +
-                params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG));
+                EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get();
 
         if (params.isStepData()) {
             url += JobsConstants.QUERY_ID + JobsConstants.STEP_DATA;
@@ -454,8 +448,7 @@ public class JobGet {
      */
     public Job getStatusByJob(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        return getStatusCommon(new CommonJobParams(job.getJobId().orElse(""),
-                job.getJobName().orElse(""), true));
+        return getStatusCommon(new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse(""), true));
     }
 
     /**
@@ -482,8 +475,7 @@ public class JobGet {
      */
     public String getStatusValueByJob(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        final Job result = getStatusCommon(new CommonJobParams(
-                job.getJobId().orElse(""), job.getJobName().orElse("")));
+        final Job result = getStatusCommon(new CommonJobParams(job.getJobId().orElse(""), job.getJobName().orElse("")));
         return result.getStatus().orElseThrow(() -> new IllegalStateException("job status not returned"));
     }
 
