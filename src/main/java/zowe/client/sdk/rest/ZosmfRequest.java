@@ -159,14 +159,14 @@ public abstract class ZosmfRequest {
         if (responsePhrase.get() instanceof byte[] && ((byte[]) responsePhrase.get()).length > 0) {
             try (final InputStreamReader inputStreamReader = new InputStreamReader(
                     new ByteArrayInputStream((byte[]) responsePhrase.get()), StandardCharsets.UTF_8)) {
-                final BufferedReader br = new BufferedReader(inputStreamReader);
-                final StringBuilder content = new StringBuilder();
-                String line;
-                while ((line = br.readLine()) != null) {
-                    content.append(line).append("\n");
+                try (final BufferedReader br = new BufferedReader(inputStreamReader)) {
+                    final StringBuilder content = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        content.append(line).append("\n");
+                    }
+                    responsePhrase.set(content.substring(0, content.length() - 1));
                 }
-                responsePhrase.set(content.substring(0, content.length() - 1));
-                br.close();
             } catch (IOException e) {
                 return e.getMessage();
             }
