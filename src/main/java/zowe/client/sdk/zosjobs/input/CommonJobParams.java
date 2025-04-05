@@ -104,10 +104,10 @@ public class CommonJobParams {
      * @author Frank Giordano
      */
     private void validateParameters(final String jobId, final String jobName) {
-        ValidateUtils.checkNullParameter(jobId == null, "job id is null");
-        ValidateUtils.checkIllegalParameter(jobId.isBlank(), JobsConstants.JOB_ID_ERROR_MSG);
-        ValidateUtils.checkNullParameter(jobName == null, "job name is null");
-        ValidateUtils.checkIllegalParameter(jobName.isBlank(), JobsConstants.JOB_NAME_ERROR_MSG);
+        ValidateUtils.checkNullParameter(jobId == null, JobsConstants.JOB_ID_NULL_MSG);
+        ValidateUtils.checkIllegalParameter(jobId.isBlank(), JobsConstants.JOB_ID_ILLEGAL_MSG);
+        ValidateUtils.checkNullParameter(jobName == null, JobsConstants.JOB_NAME_NULL_MSG);
+        ValidateUtils.checkIllegalParameter(jobName.isBlank(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
     }
 
     /**

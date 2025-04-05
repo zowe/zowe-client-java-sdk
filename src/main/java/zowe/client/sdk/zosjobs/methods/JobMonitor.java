@@ -235,8 +235,8 @@ public class JobMonitor {
     public boolean isRunning(final MonitorJobWaitForParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         final JobGet getJobs = new JobGet(connection);
-        final String jobName = params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ERROR_MSG));
-        final String jobId = params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ERROR_MSG));
+        final String jobName = params.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG));
+        final String jobId = params.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG));
         final String status = getJobs.getStatusValue(jobName, jobId);
         return !JobStatus.Type.INPUT.toString().equals(status) && !JobStatus.Type.OUTPUT.toString().equals(status);
     }
@@ -472,8 +472,8 @@ public class JobMonitor {
     public boolean waitMessageCommon(final MonitorJobWaitForParams params, final String message)
             throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), JobsConstants.JOB_NAME_ERROR_MSG);
-        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), JobsConstants.JOB_ID_ERROR_MSG);
+        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), JobsConstants.JOB_NAME_NULL_MSG);
+        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 
         if (params.getAttempts().isEmpty()) {
             params.setAttempts(attempts);
@@ -503,8 +503,8 @@ public class JobMonitor {
      */
     public Job waitStatusCommon(final MonitorJobWaitForParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), JobsConstants.JOB_NAME_ERROR_MSG);
-        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), JobsConstants.JOB_ID_ERROR_MSG);
+        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
+        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 
         if (params.getJobStatus().isEmpty()) {
             params.setJobStatus(DEFAULT_STATUS);
