@@ -50,14 +50,24 @@ public final class JobsConstants {
     public static final String FILE_DELIM = "/";
 
     /**
-     * Use for error message
+     * Use for illegal exception error message
      */
-    public static final String JOB_NAME_ERROR_MSG = "job name not specified";
+    public static final String JOB_NAME_ILLEGAL_MSG = "job name not specified";
 
     /**
-     * Use for error message
+     * Use for illegal exception error message
      */
-    public static final String JOB_ID_ERROR_MSG = "job id not specified";
+    public static final String JOB_ID_ILLEGAL_MSG = "job id not specified";
+
+    /**
+     * Use for null exception error message
+     */
+    public static final String JOB_NAME_NULL_MSG = "job name not specified";
+
+    /**
+     * Use for null exception error message
+     */
+    public static final String JOB_ID_NULL_MSG = "job id not specified";
 
     /**
      * Use for error message

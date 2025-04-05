@@ -163,13 +163,13 @@ public class JobSubmit {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in SubmitJobParams
     public Job submitCommon(final SubmitJobParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
 
-        final String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(params.getJobDataSet()
-                .orElseThrow(() -> new IllegalArgumentException("jobDataSet not specified"))) + "'";
+        final String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(params.getJobDataSet().get()) + "'";
         final Map<String, String> submitMap = new HashMap<>();
         submitMap.put("file", fullyQualifiedDataset);
 

@@ -146,7 +146,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (NullPointerException e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("job id is null", errorMsg);
+        assertEquals(JobsConstants.JOB_ID_NULL_MSG, errorMsg);
     }
 
     @Test
@@ -157,7 +157,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (NullPointerException e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("job name is null", errorMsg);
+        assertEquals(JobsConstants.JOB_NAME_NULL_MSG, errorMsg);
     }
 
     @Test
@@ -190,7 +190,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
-        assertEquals("job id not specified", errorMsg);
+        assertEquals(JobsConstants.JOB_ID_ILLEGAL_MSG, errorMsg);
     }
 
     @Test
@@ -222,7 +222,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
-        assertEquals(JobsConstants.JOB_NAME_ERROR_MSG, errorMsg);
+        assertEquals(JobsConstants.JOB_NAME_ILLEGAL_MSG, errorMsg);
     }
 
     @Test
@@ -233,7 +233,7 @@ public class GetJobsByJsonGetRequestTest {
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
-        assertEquals(JobsConstants.JOB_ID_ERROR_MSG, errorMsg);
+        assertEquals(JobsConstants.JOB_ID_ILLEGAL_MSG, errorMsg);
     }
 
 }

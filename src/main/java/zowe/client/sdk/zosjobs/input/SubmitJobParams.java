@@ -54,7 +54,7 @@ public class SubmitJobParams {
      */
     public SubmitJobParams(final String jobDataSet, final Map<String, String> jclSymbols) {
         ValidateUtils.checkNullParameter(jobDataSet == null, "jobDataSet is null");
-        ValidateUtils.checkIllegalParameter(jobDataSet.isEmpty(), "jobDataSet not specified");
+        ValidateUtils.checkIllegalParameter(jobDataSet.isBlank(), "jobDataSet not specified");
         this.jobDataSet = Optional.of(jobDataSet);
         this.jclSymbols = Optional.ofNullable(jclSymbols);
     }
