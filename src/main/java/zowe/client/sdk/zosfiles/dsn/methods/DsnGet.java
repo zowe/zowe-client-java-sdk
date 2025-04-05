@@ -111,7 +111,7 @@ public class DsnGet {
      * Retrieve sequential dataset or dataset member content
      *
      * @param targetName name of a sequential dataset e.g. DATASET.SEQ.DATA
-     *                   or a dataset member e.g. DATASET.LIB(MEMBER))
+     *                   or a dataset member e.g. DATASET.LIB(MEMBER)
      * @param params     download params parameters, see DownloadParams object
      * @return a content stream
      * @throws ZosmfRequestException request error state
