@@ -308,7 +308,7 @@ public class JobGet {
         ValidateUtils.checkNullParameter(jobFile == null, "jobFile is null");
         ValidateUtils.checkIllegalParameter(jobFile.getJobName().isEmpty(), "jobFile.jobName not specified");
         ValidateUtils.checkIllegalParameter(jobFile.getJobId().isEmpty(), "jobFile.jobId not specified");
-        ValidateUtils.checkIllegalParameter(jobFile.getId().isPresent(), "jobFile.id not specified");
+        ValidateUtils.checkIllegalParameter(jobFile.getId().isEmpty(), "jobFile.id not specified");
 
         url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(jobFile.getJobName().get()) + "/" + jobFile.getJobId().get() +
