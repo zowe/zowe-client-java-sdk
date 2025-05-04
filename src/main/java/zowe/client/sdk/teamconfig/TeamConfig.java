@@ -168,6 +168,9 @@ public class TeamConfig {
      * @author Frank Giordano
      */
     private void merge(final Optional<Profile> target, final Optional<Profile> base) {
+        if (target.isEmpty() || base.isEmpty()) {
+            return;
+        }
         final Optional<Map<String, String>> targetProps = Optional.ofNullable(target.get().getProperties());
         final Optional<Map<String, String>> baseProps = Optional.ofNullable(base.get().getProperties());
         if (mergeProperties.getHost().isEmpty() && targetProps.isPresent()) {
