@@ -111,12 +111,14 @@ public class TeamConfig {
 
         final Optional<Profile> target = teamConfig.getProfiles().stream().filter(isProfileName).findFirst();
         if (target.isEmpty()) {
-            throw new IllegalStateException("TeamConfig profile " + name + " not found");
+            throw new IllegalStateException("No TeamConfig default profile for " + name + " is found.");
+        } else if (!target.get().getType().equalsIgnoreCase(name)) {
+            throw new IllegalStateException("No TeamConfig default profile for type " + name + " is found.");
+        } else {
+            merge(target, base);
+            return new ProfileDao(target.get(), keyTarConfig.getUserName(), keyTarConfig.getPassword(),
+                    mergeProperties.getHost().orElse(null), mergeProperties.getPort().orElse(null));
         }
-
-        merge(target, base);
-        return new ProfileDao(target.get(), keyTarConfig.getUserName(), keyTarConfig.getPassword(),
-                mergeProperties.getHost().orElse(null), mergeProperties.getPort().orElse(null));
     }
 
     /**
@@ -166,6 +168,9 @@ public class TeamConfig {
      * @author Frank Giordano
      */
     private void merge(final Optional<Profile> target, final Optional<Profile> base) {
+        if (target.isEmpty() || base.isEmpty()) {
+            return;
+        }
         final Optional<Map<String, String>> targetProps = Optional.ofNullable(target.get().getProperties());
         final Optional<Map<String, String>> baseProps = Optional.ofNullable(base.get().getProperties());
         if (mergeProperties.getHost().isEmpty() && targetProps.isPresent()) {

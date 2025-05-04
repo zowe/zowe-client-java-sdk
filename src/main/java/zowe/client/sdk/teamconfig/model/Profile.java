@@ -30,6 +30,11 @@ public class Profile {
     private final String name;
 
     /**
+     * Profile type
+     */
+    private final String type;
+
+    /**
      * Profile secure json object
      */
     private final JSONArray secure;
@@ -43,13 +48,15 @@ public class Profile {
      * Partition constructor
      *
      * @param name   profile name
+     * @param type   profile type
      * @param obj    json object of property values within profile section from Zowe Global Team Configuration
      * @param secure jsonarray value of secure section
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    public Profile(final String name, final JSONObject obj, final JSONArray secure) {
+    public Profile(final String name, final String type, final JSONObject obj, final JSONArray secure) {
         this.name = name;
+        this.type = type;
         this.secure = secure;
         properties = (Map<String, String>) JsonParseFactory.buildParser(ParseType.PROPS).parseResponse(obj);
     }
@@ -61,6 +68,15 @@ public class Profile {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Return profile type
+     *
+     * @return profile type string value
+     */
+    public String getType() {
+        return type;
     }
 
     /**
@@ -90,6 +106,7 @@ public class Profile {
     public String toString() {
         return "Profile{" +
                 "name='" + name + '\'' +
+                ", type='" + type + '\'' +
                 ", secure=" + secure +
                 ", properties=" + properties +
                 '}';

@@ -59,7 +59,8 @@ public class TeamConfigService {
                 final Set<String> jsonProfileKeys = jsonProfileObj.keySet();
                 for (final String profileKeyVal : jsonProfileKeys) {
                     final JSONObject profileTypeJsonObj = (JSONObject) jsonProfileObj.get(profileKeyVal);
-                    profiles.add(new Profile((String) profileTypeJsonObj.get("type"),
+                    profiles.add(new Profile(profileKeyVal,
+                            (String) profileTypeJsonObj.get("type"),
                             (JSONObject) profileTypeJsonObj.get("properties"),
                             (JSONArray) profileTypeJsonObj.get("secure")));
                 }
@@ -136,7 +137,8 @@ public class TeamConfigService {
                     if (isPartition(isEmbeddedKeyProfile)) {
                         partitions.add(getPartition(profileKeyVal, profileTypeJsonObj));
                     } else {
-                        profiles.add(new Profile((String) profileTypeJsonObj.get("type"),
+                        profiles.add(new Profile(profileKeyVal,
+                                (String) profileTypeJsonObj.get("type"),
                                 (JSONObject) profileTypeJsonObj.get("properties"),
                                 (JSONArray) profileTypeJsonObj.get("secure")));
                     }
