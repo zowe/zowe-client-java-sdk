@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
-import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
+import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
 import zowe.client.sdk.teamconfig.model.ConfigContainer;
 import zowe.client.sdk.teamconfig.model.Profile;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
@@ -36,10 +36,12 @@ import static org.mockito.ArgumentMatchers.any;
 public class TeamConfigTest {
 
     private TeamConfigService teamConfigServiceMock;
+    private KeyTarService keyTarServiceMock;
 
     @Before
     public void init() {
         teamConfigServiceMock = Mockito.mock(TeamConfigService.class);
+        keyTarServiceMock = Mockito.mock(KeyTarService.class);
     }
 
     @Test
@@ -49,10 +51,12 @@ public class TeamConfigTest {
         Map<String, String> defaults = Map.of("zosmf", "frank");
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(null, null, profiles, defaults, null));
+        Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
+                new KeyTarConfig("", "", ""));
 
         TeamConfig teamConfig;
         try {
-            teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), teamConfigServiceMock);
+            teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         } catch (TeamConfigException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -72,10 +76,12 @@ public class TeamConfigTest {
         Map<String, String> defaults = Map.of("zosmf", "frank");
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(null, null, profiles, defaults, null));
+        Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
+                new KeyTarConfig("", "", ""));
 
         TeamConfig teamConfig;
         try {
-            teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), teamConfigServiceMock);
+            teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         } catch (TeamConfigException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -95,10 +101,12 @@ public class TeamConfigTest {
         Map<String, String> defaults = Map.of("zosmf", "frank");
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(null, null, profiles, defaults, null));
+        Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
+                new KeyTarConfig("", "", ""));
 
         TeamConfig teamConfig;
         try {
-            teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), teamConfigServiceMock);
+            teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         } catch (TeamConfigException e) {
             throw new RuntimeException(e.getMessage());
         }
