@@ -115,7 +115,7 @@ public class TeamConfig {
         } else if (!target.get().getType().equalsIgnoreCase(name)) {
             throw new IllegalStateException("No TeamConfig default profile for type " + name + " is found.");
         } else {
-            merge(target, base);
+            merge(target.orElse(null), base.orElse(null));
             return new ProfileDao(target.get(), keyTarConfig.getUserName(), keyTarConfig.getPassword(),
                     mergeProperties.getHost().orElse(null), mergeProperties.getPort().orElse(null));
         }
@@ -155,7 +155,7 @@ public class TeamConfig {
         mergeProperties.setHost(props.get("host"));
         mergeProperties.setPort(props.get("port"));
 
-        merge(target, base);
+        merge(target.orElse(null), base.orElse(null));
         return new ProfileDao(target.get(), keyTarConfig.getUserName(), keyTarConfig.getPassword(),
                 mergeProperties.getHost().orElse(null), mergeProperties.getPort().orElse(null));
     }
@@ -167,12 +167,12 @@ public class TeamConfig {
      * @param base   Optional Profile object
      * @author Frank Giordano
      */
-    private void merge(final Optional<Profile> target, final Optional<Profile> base) {
-        if (target.isEmpty() || base.isEmpty()) {
+    private void merge(final Profile target, final Profile base) {
+        if (target == null || base == null) {
             return;
         }
-        final Optional<Map<String, String>> targetProps = Optional.ofNullable(target.get().getProperties());
-        final Optional<Map<String, String>> baseProps = Optional.ofNullable(base.get().getProperties());
+        final Optional<Map<String, String>> targetProps = Optional.ofNullable(target.getProperties());
+        final Optional<Map<String, String>> baseProps = Optional.ofNullable(base.getProperties());
         if (mergeProperties.getHost().isEmpty() && targetProps.isPresent()) {
             mergeProperties.setHost(targetProps.get().get("host"));
         }
@@ -189,23 +189,23 @@ public class TeamConfig {
 
     private static class MergeProperties {
 
-        private Optional<String> host = Optional.empty();
-        private Optional<String> port = Optional.empty();
+        private String host;
+        private String port;
 
         public Optional<String> getHost() {
-            return host;
+            return Optional.ofNullable(host);
         }
 
         public void setHost(final String host) {
-            this.host = Optional.ofNullable(host);
+            this.host = host;
         }
 
         public Optional<String> getPort() {
-            return port;
+            return Optional.ofNullable(port);
         }
 
         public void setPort(final String port) {
-            this.port = Optional.ofNullable(port);
+            this.port = port;
         }
 
     }
