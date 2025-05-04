@@ -111,5 +111,5 @@ public class Profile {
                 ", properties=" + properties +
                 '}';
     }
-    
+
 }
