@@ -28,7 +28,7 @@ To retrieve the profile name "frank" with the credentials from the credential st
 
 ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
 
-This should return the profile named "frank" with its attributes and credentials. 
+This should return the profile named "frank" with its attributes and credentials.
 
 ## API Example
 

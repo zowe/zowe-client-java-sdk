@@ -68,6 +68,8 @@ public class TeamConfig {
 
     /**
      * Default TeamConfig constructor without arguments.
+     *
+     * @throws TeamConfigException error processing team configuration
      */
     public TeamConfig() throws TeamConfigException {
         this.keyTarService = new KeyTarService(new KeyTarImpl());
