@@ -138,7 +138,7 @@ public class TeamConfigTest {
     }
 
     @Test
-    public void tstGetDefaultProfileByNameNonBaseHostValueSuccess() throws TeamConfigException {
+    public void tstGetDefaultProfileByNameMergeNonBaseHostValueSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433", "host", "host"));
         final JSONObject baseProps = new JSONObject(Map.of("port", "433", "host", "host1"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null),
@@ -155,7 +155,7 @@ public class TeamConfigTest {
     }
 
     @Test
-    public void tstGetDefaultProfileByNameBaseHostValueSuccess() throws TeamConfigException {
+    public void tstGetDefaultProfileByNameMergeBaseHostValueSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433"));
         final JSONObject baseProps = new JSONObject(Map.of("port", "433", "host", "host1"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null),
