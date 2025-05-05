@@ -118,6 +118,7 @@ public class TeamConfigTest {
             errMsg = e.getMessage();
         }
         assertEquals("", errMsg);
+        assert (profileDao != null);
         assertEquals("frank", profileDao.getProfile().getName());
     }
 
