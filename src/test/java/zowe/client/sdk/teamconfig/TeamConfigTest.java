@@ -95,7 +95,7 @@ public class TeamConfigTest {
     }
 
     @Test
-    public void tstGetDefaultProfileByNamSuccess() throws TeamConfigException {
+    public void tstGetDefaultProfileByNameSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null));
         final Map<String, String> defaults = Map.of("zosmf", "frank");
