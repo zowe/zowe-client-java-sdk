@@ -180,11 +180,14 @@ public class TeamConfig {
      * @author Frank Giordano
      */
     private void merge(final Profile target, final Profile base) {
-        if (target == null || base == null) {
-            return;
+        Optional<Map<String, String>> targetProps = Optional.empty();
+        Optional<Map<String, String>> baseProps = Optional.empty();
+        if (target != null) {
+            targetProps = Optional.ofNullable(target.getProperties());
         }
-        final Optional<Map<String, String>> targetProps = Optional.ofNullable(target.getProperties());
-        final Optional<Map<String, String>> baseProps = Optional.ofNullable(base.getProperties());
+        if (base != null) {
+            baseProps = Optional.ofNullable(base.getProperties());
+        }
         if (mergeProperties.getHost().isEmpty() && targetProps.isPresent()) {
             mergeProperties.setHost(targetProps.get().get("host"));
         }

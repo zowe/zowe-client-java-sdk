@@ -122,4 +122,52 @@ public class TeamConfigTest {
         assertEquals("frank", profileDao.getProfile().getName());
     }
 
+    @Test
+    public void tstGetDefaultProfileByNameHostAndPostValuesSuccess() throws TeamConfigException {
+        final JSONObject props = new JSONObject(Map.of("port", "433", "host", "host"));
+        final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null));
+        final Map<String, String> defaults = Map.of("zosmf", "frank");
+        Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
+                new ConfigContainer(null, null, profiles, defaults, null));
+        Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
+                new KeyTarConfig("", "username", "pwd"));
+
+        final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
+        ProfileDao profileDao = teamConfig.getDefaultProfileByName("zosmf");
+        assertEquals("host", profileDao.getHost());
+    }
+
+    @Test
+    public void tstGetDefaultProfileByNameBaseHostValueSuccess() throws TeamConfigException {
+        final JSONObject props = new JSONObject(Map.of("port", "433"));
+        final JSONObject baseProps = new JSONObject(Map.of("port", "433", "host", "host1"));
+        final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null),
+                new Profile("base", "base", baseProps, null));
+        final Map<String, String> defaults = Map.of("zosmf", "frank");
+        Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
+                new ConfigContainer(null, null, profiles, defaults, null));
+        Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
+                new KeyTarConfig("", "username", "pwd"));
+
+        final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
+        ProfileDao profileDao = teamConfig.getDefaultProfileByName("zosmf");
+        assertEquals("host1", profileDao.getHost());
+    }
+
+    @Test
+    public void tstGetDefaultProfileByNameUserNameAndPasswordValuesSuccess() throws TeamConfigException {
+        final JSONObject props = new JSONObject(Map.of("port", "433"));
+        final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null));
+        final Map<String, String> defaults = Map.of("zosmf", "frank");
+        Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
+                new ConfigContainer(null, null, profiles, defaults, null));
+        Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
+                new KeyTarConfig("", "username", "pwd"));
+
+        final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
+        final ProfileDao profileDao = teamConfig.getDefaultProfileByName("zosmf");
+        assertEquals("username", profileDao.getUser());
+        assertEquals("pwd", profileDao.getPassword());
+    }
+
 }
