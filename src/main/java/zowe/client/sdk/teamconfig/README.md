@@ -3,12 +3,12 @@
 The TeamConfig package provides API method(s) to retrieve a profile section from Zowe Global Team Configuration with
 keytar information to help perform connection processing without hard coding username and password. Keytar represents
 credentials stored securely on your computer when performing the Zowe global initialize command which prompts you for
-username and password.  
+username and password.
 
 ## Description of retrieving a profile.
-  
+
 With the following team configuration:
-  
+
     "$schema": "./zowe.schema.json",
         "profiles": {
             "frank": {
@@ -23,18 +23,18 @@ With the following team configuration:
             "zosmf": "frank"
         }
     }  
-  
+
 To retrieve the profile name "frank" with the credentials from the credential store, perform the following:
-  
+
 ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
-  
+
 This should return the profile named "frank" with its attributes.
-  
+
 ## API Example
 
 **Retrieve the default "zosmf" profile from team config. Use it to create a ZOSConnection object without hard coding
-username and password and retrieve a list of members from the dataset input string.**  
-  
+username and password and retrieve a list of members from the dataset input string.**
+
 ````java
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -78,7 +78,7 @@ public class TeamConfigExp {
 
         TeamConfig teamConfig;
         try {
-            teamConfig = new TeamConfig(new KeyTarService(new KeyTarImpl()), new TeamConfigService());
+            teamConfig = new TeamConfig();
         } catch (TeamConfigException e) {
             throw new RuntimeException(e.getMessage());
         }
