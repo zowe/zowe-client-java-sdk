@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
+import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ConfigContainer;
 import zowe.client.sdk.teamconfig.model.Partition;
 import zowe.client.sdk.teamconfig.model.Profile;
@@ -66,7 +67,16 @@ public class TeamConfig {
     private ConfigContainer teamConfig;
 
     /**
-     * TeamConfig constructor
+     * Default TeamConfig constructor without arguments.
+     */
+    public TeamConfig() throws TeamConfigException {
+        this.keyTarService = new KeyTarService(new KeyTarImpl());
+        this.teamConfigService = new TeamConfigService();
+        config();
+    }
+
+    /**
+     * TeamConfig constructor. This is mainly used for internal code unit testing with mockito.
      *
      * @param keyTarService     required KeyTarService dependency
      * @param teamConfigService required TeamConfigService dependency
