@@ -123,7 +123,7 @@ public class TeamConfigTest {
     }
 
     @Test
-    public void tstGetDefaultProfileByNameHostAndPostValuesSuccess() throws TeamConfigException {
+    public void tstGetDefaultProfileByNameHostAndPortValuesSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433", "host", "host"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null));
         final Map<String, String> defaults = Map.of("zosmf", "frank");
@@ -135,6 +135,7 @@ public class TeamConfigTest {
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         ProfileDao profileDao = teamConfig.getDefaultProfileByName("zosmf");
         assertEquals("host", profileDao.getHost());
+        assertEquals("433", profileDao.getPort());
     }
 
     @Test
