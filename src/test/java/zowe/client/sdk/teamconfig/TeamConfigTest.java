@@ -46,9 +46,9 @@ public class TeamConfigTest {
 
     @Test
     public void tstGetDefaultProfileByNameFailure() throws TeamConfigException {
-        JSONObject props = new JSONObject(Map.of("port", "433"));
-        List<Profile> profiles = List.of(new Profile("frank1", "zosmf", props, null));
-        Map<String, String> defaults = Map.of("zosmf", "frank");
+        final JSONObject props = new JSONObject(Map.of("port", "433"));
+        final List<Profile> profiles = List.of(new Profile("frank1", "zosmf", props, null));
+        final Map<String, String> defaults = Map.of("zosmf", "frank");
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(null, null, profiles, defaults, null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
@@ -71,9 +71,9 @@ public class TeamConfigTest {
 
     @Test
     public void tstGetDefaultProfileByNameTypeNotFoundFailure() throws TeamConfigException {
-        JSONObject props = new JSONObject(Map.of("port", "433"));
-        List<Profile> profiles = List.of(new Profile("frank", "zosmf1", props, null));
-        Map<String, String> defaults = Map.of("zosmf", "frank");
+        final JSONObject props = new JSONObject(Map.of("port", "433"));
+        final List<Profile> profiles = List.of(new Profile("frank", "zosmf1", props, null));
+        final Map<String, String> defaults = Map.of("zosmf", "frank");
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(null, null, profiles, defaults, null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
@@ -96,9 +96,9 @@ public class TeamConfigTest {
 
     @Test
     public void tstGetDefaultProfileByNamSuccess() throws TeamConfigException {
-        JSONObject props = new JSONObject(Map.of("port", "433"));
-        List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null));
-        Map<String, String> defaults = Map.of("zosmf", "frank");
+        final JSONObject props = new JSONObject(Map.of("port", "433"));
+        final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null));
+        final Map<String, String> defaults = Map.of("zosmf", "frank");
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(null, null, profiles, defaults, null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
