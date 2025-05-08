@@ -45,7 +45,7 @@ public class TeamConfigTest {
     }
 
     @Test
-    public void tstGetDefaultProfileByNameFailure() throws TeamConfigException {
+    public void tstGetDefaultProfileFailure() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433"));
         final List<Profile> profiles = List.of(new Profile("frank1", "zosmf", props, null));
         final Map<String, String> defaults = Map.of("zosmf", "frank");
@@ -62,15 +62,15 @@ public class TeamConfigTest {
         }
         String errMsg = "";
         try {
-            teamConfig.getDefaultProfileByName("zosmf");
+            teamConfig.getDefaultProfile("zosmf");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("No TeamConfig default profile for zosmf is found.", errMsg);
+        assertEquals("Found no profile of type zosmf in Zowe client configuration.", errMsg);
     }
 
     @Test
-    public void tstGetDefaultProfileByNameTypeNotFoundFailure() throws TeamConfigException {
+    public void tstGetDefaultProfileTypeNotFoundFailure() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf1", props, null));
         final Map<String, String> defaults = Map.of("zosmf", "frank");
@@ -87,15 +87,15 @@ public class TeamConfigTest {
         }
         String errMsg = "";
         try {
-            teamConfig.getDefaultProfileByName("zosmf");
+            teamConfig.getDefaultProfile("zosmf");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("No TeamConfig default profile for type zosmf is found.", errMsg);
+        assertEquals("Found no profile of type zosmf in Zowe client configuration.", errMsg);
     }
 
     @Test
-    public void tstGetDefaultProfileByNameSuccess() throws TeamConfigException {
+    public void tstGetDefaultProfileSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null));
         final Map<String, String> defaults = Map.of("zosmf", "frank");
@@ -113,7 +113,7 @@ public class TeamConfigTest {
         String errMsg = "";
         ProfileDao profileDao = null;
         try {
-            profileDao = teamConfig.getDefaultProfileByName("zosmf");
+            profileDao = teamConfig.getDefaultProfile("zosmf");
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -123,7 +123,7 @@ public class TeamConfigTest {
     }
 
     @Test
-    public void tstGetDefaultProfileByNameHostAndPortValuesSuccess() throws TeamConfigException {
+    public void tstGetDefaultProfileHostAndPortValuesSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433", "host", "host"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null));
         final Map<String, String> defaults = Map.of("zosmf", "frank");
@@ -133,13 +133,13 @@ public class TeamConfigTest {
                 new KeyTarConfig("", "username", "pwd"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
-        ProfileDao profileDao = teamConfig.getDefaultProfileByName("zosmf");
+        ProfileDao profileDao = teamConfig.getDefaultProfile("zosmf");
         assertEquals("host", profileDao.getHost());
         assertEquals("433", profileDao.getPort());
     }
 
     @Test
-    public void tstGetDefaultProfileByNameMergeNonBaseHostValueSuccess() throws TeamConfigException {
+    public void tstGetDefaultProfileMergeNonBaseHostValueSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433", "host", "host"));
         final JSONObject baseProps = new JSONObject(Map.of("port", "433", "host", "host1"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null),
@@ -151,12 +151,12 @@ public class TeamConfigTest {
                 new KeyTarConfig("", "username", "pwd"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
-        ProfileDao profileDao = teamConfig.getDefaultProfileByName("zosmf");
+        ProfileDao profileDao = teamConfig.getDefaultProfile("zosmf");
         assertEquals("host", profileDao.getHost());
     }
 
     @Test
-    public void tstGetDefaultProfileByNameMergeBaseHostValueSuccess() throws TeamConfigException {
+    public void tstGetDefaultProfileMergeBaseHostValueSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433"));
         final JSONObject baseProps = new JSONObject(Map.of("port", "433", "host", "host1"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null),
@@ -168,12 +168,12 @@ public class TeamConfigTest {
                 new KeyTarConfig("", "username", "pwd"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
-        ProfileDao profileDao = teamConfig.getDefaultProfileByName("zosmf");
+        ProfileDao profileDao = teamConfig.getDefaultProfile("zosmf");
         assertEquals("host1", profileDao.getHost());
     }
 
     @Test
-    public void tstGetDefaultProfileByNameUserNameAndPasswordValuesSuccess() throws TeamConfigException {
+    public void tstGetDefaultProfileUserNameAndPasswordValuesSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null));
         final Map<String, String> defaults = Map.of("zosmf", "frank");
@@ -183,7 +183,7 @@ public class TeamConfigTest {
                 new KeyTarConfig("", "username", "pwd"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
-        final ProfileDao profileDao = teamConfig.getDefaultProfileByName("zosmf");
+        final ProfileDao profileDao = teamConfig.getDefaultProfile("zosmf");
         assertEquals("username", profileDao.getUser());
         assertEquals("pwd", profileDao.getPassword());
     }
