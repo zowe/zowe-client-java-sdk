@@ -106,26 +106,24 @@ public class TeamConfig {
     }
 
     /**
-     * Retrieve default profile by profile name given from Zowe Global Team Configuration.
+     * Retrieve default profile for the specified profile type from Zowe Global Team Configuration.
      * Merge properties accordingly if needed due to absence of important properties from default profile with
      * base profile. Credential store information is also retrieved and piggybacked on returned ProfileDao object.
      *
-     * @param name profile name
+     * @param profileType profile type
      * @return ProfileDao object
      * @author Frank Giordano
      */
-    public ProfileDao getDefaultProfileByName(final String name) {
-        ValidateUtils.checkNullParameter(name == null, "name is null");
-        ValidateUtils.checkIllegalParameter(name.isBlank(), "name not specified");
-        final Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(name));
-        final Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(name));
+    public ProfileDao getDefaultProfile(final String profileType) {
+        ValidateUtils.checkNullParameter(profileType == null, "profileType is null");
+        ValidateUtils.checkIllegalParameter(profileType.isBlank(), "profileType not specified");
+        final Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(profileType));
+        final Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(profileType));
         final Optional<Profile> base = teamConfig.getProfiles().stream().filter(isBaseProfile).findFirst();
 
         final Optional<Profile> target = teamConfig.getProfiles().stream().filter(isProfileName).findFirst();
-        if (target.isEmpty()) {
-            throw new IllegalStateException("No TeamConfig default profile for " + name + " is found.");
-        } else if (!target.get().getType().equalsIgnoreCase(name)) {
-            throw new IllegalStateException("No TeamConfig default profile for type " + name + " is found.");
+        if (target.isEmpty() || !target.get().getType().equalsIgnoreCase(profileType)) {
+            throw new IllegalStateException("Found no profile of type " + profileType + " in Zowe client configuration.");
         } else {
             merge(target.orElse(null), base.orElse(null));
             return new ProfileDao(target.get(), keyTarConfig.getUserName(), keyTarConfig.getPassword(),
@@ -143,7 +141,7 @@ public class TeamConfig {
      * @return ProfileDao object
      * @author Frank Giordano
      */
-    public ProfileDao getDefaultProfileFromPartitionByName(final String profileName, final String partitionName) {
+    public ProfileDao getDefaultProfileFromPartition(final String profileName, final String partitionName) {
         ValidateUtils.checkNullParameter(profileName == null, "profileName is null");
         ValidateUtils.checkIllegalParameter(profileName.isBlank(), "profileName not specified");
         ValidateUtils.checkNullParameter(partitionName == null, "partitionName is null");
@@ -155,12 +153,12 @@ public class TeamConfig {
 
         final Optional<Partition> partition = teamConfig.getPartitions().stream().filter(isPartitionName).findFirst();
         if (partition.isEmpty()) {
-            throw new IllegalStateException("TeamConfig partition " + partitionName + " not found");
+            throw new IllegalStateException("Found no " + partitionName + " in Zowe client configuration.");
         }
 
         final Optional<Profile> target = partition.get().getProfiles().stream().filter(isProfileName).findFirst();
         if (target.isEmpty()) {
-            throw new IllegalStateException("TeamConfig profile " + profileName + " within partition not found");
+            throw new IllegalStateException("Found no " + profileName + " within Zowe client configuration partition");
         }
 
         final Map<String, String> props = partition.get().getProperties();

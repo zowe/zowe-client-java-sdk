@@ -24,9 +24,9 @@ With the following team configuration:
         }
     }  
 
-To retrieve the profile name "frank" with the credentials from the credential store, perform the following:
+To retrieve the default profile of type "zosmf" with the credentials from the credential store, perform the following:
 
-ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
+ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
 
 This should return the profile named "frank" with its attributes and credentials.
 
@@ -82,7 +82,7 @@ public class TeamConfigExp {
         } catch (TeamConfigException e) {
             throw new RuntimeException(e.getMessage());
         }
-        ProfileDao profile = teamConfig.getDefaultProfileByName("zosmf");
+        ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
         ZosConnection connection = new ZosConnection(profile.getHost(), profile.getPort(),
                 profile.getUser(), profile.getPassword());
 
