@@ -103,6 +103,9 @@ See following package/class:
 zowe.client.sdk.teamconfig  
     
     TeamConfig
+    
+NOTE:  
+Whenever you encounter a JSON parse error for reading the Zowe Team Configuration file, make sure to include double quotes around keys and its values.  
   
 ## Http Rest Processing
   

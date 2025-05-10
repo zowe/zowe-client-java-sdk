@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.teamconfig;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
@@ -23,8 +24,11 @@ import zowe.client.sdk.teamconfig.service.TeamConfigService;
 import zowe.client.sdk.utility.ValidateUtils;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * TeamConfig class provides API method(s) to retrieve a profile section from Zowe Global Team Configuration with
@@ -53,10 +57,6 @@ public class TeamConfig {
      * Is Base profile predicate
      */
     private final Predicate<Profile> isBaseProfile = i -> i.getName().equals(BASE_PROFILE_NAME);
-    /**
-     * Properties object for merging properties between profile types
-     */
-    private final MergeProperties mergeProperties = new MergeProperties();
     /**
      * KeyTarConfig dependency
      */
@@ -121,13 +121,13 @@ public class TeamConfig {
         final Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(profileType));
         final Optional<Profile> base = teamConfig.getProfiles().stream().filter(isBaseProfile).findFirst();
 
-        final Optional<Profile> target = teamConfig.getProfiles().stream().filter(isProfileName).findFirst();
+        Optional<Profile> target = teamConfig.getProfiles().stream().filter(isProfileName).findFirst();
         if (target.isEmpty() || !target.get().getType().equalsIgnoreCase(profileType)) {
             throw new IllegalStateException("Found no profile of type " + profileType + " in Zowe client configuration.");
         } else {
-            merge(target.orElse(null), base.orElse(null));
+            target = Optional.of(merge(target.orElse(null), base.orElse(null)));
             return new ProfileDao(target.get(), keyTarConfig.getUserName(), keyTarConfig.getPassword(),
-                    mergeProperties.getHost().orElse(null), mergeProperties.getPort().orElse(null));
+                    target.get().getProperties().get("host"), target.get().getProperties().get("port"));
         }
     }
 
@@ -156,28 +156,24 @@ public class TeamConfig {
             throw new IllegalStateException("Found no " + partitionName + " in Zowe client configuration.");
         }
 
-        final Optional<Profile> target = partition.get().getProfiles().stream().filter(isProfileName).findFirst();
+        Optional<Profile> target = partition.get().getProfiles().stream().filter(isProfileName).findFirst();
         if (target.isEmpty()) {
             throw new IllegalStateException("Found no " + profileName + " within Zowe client configuration partition");
         }
 
-        final Map<String, String> props = partition.get().getProperties();
-        mergeProperties.setHost(props.get("host"));
-        mergeProperties.setPort(props.get("port"));
-
-        merge(target.orElse(null), base.orElse(null));
+        target = Optional.of(merge(target.orElse(null), base.orElse(null)));
         return new ProfileDao(target.get(), keyTarConfig.getUserName(), keyTarConfig.getPassword(),
-                mergeProperties.getHost().orElse(null), mergeProperties.getPort().orElse(null));
+                target.get().getProperties().get("host"), target.get().getProperties().get("port"));
     }
 
     /**
-     * Take two profile objects and determine if they have host and port values to be merged.
+     * Take two profile objects and merge all non-duplicate properties into target.
      *
-     * @param target Optional Profile object
-     * @param base   Optional Profile object
+     * @param target Profile object
+     * @param base   Profile object
      * @author Frank Giordano
      */
-    private void merge(final Profile target, final Profile base) {
+    private Profile merge(Profile target, final Profile base) {
         Optional<Map<String, String>> targetProps = Optional.empty();
         Optional<Map<String, String>> baseProps = Optional.empty();
         if (target != null) {
@@ -186,41 +182,20 @@ public class TeamConfig {
         if (base != null) {
             baseProps = Optional.ofNullable(base.getProperties());
         }
-        if (mergeProperties.getHost().isEmpty() && targetProps.isPresent()) {
-            mergeProperties.setHost(targetProps.get().get("host"));
-        }
-        if (mergeProperties.getPort().isEmpty() && targetProps.isPresent()) {
-            mergeProperties.setPort(targetProps.get().get("port"));
-        }
-        if (mergeProperties.getHost().isEmpty() && baseProps.isPresent()) {
-            mergeProperties.setHost(baseProps.get().get("host"));
-        }
-        if (mergeProperties.getPort().isEmpty() && baseProps.isPresent()) {
-            mergeProperties.setPort(baseProps.get().get("port"));
-        }
-    }
-
-    private static class MergeProperties {
-
-        private String host;
-        private String port;
-
-        public Optional<String> getHost() {
-            return Optional.ofNullable(host);
+        if (targetProps.isPresent() && baseProps.isPresent()) {
+            // If duplicate key, keep the old value
+            Map<String, String> mergedMap =
+                    Stream.concat(targetProps.get().entrySet().stream().filter(Objects::nonNull),
+                                    baseProps.get().entrySet().stream().filter(Objects::nonNull))
+                            .filter(entry -> entry.getValue() != null)
+                            .collect(Collectors.toMap(
+                                    Map.Entry::getKey,
+                                    Map.Entry::getValue,
+                                    (oldValue, newValue) -> oldValue));
+            return new Profile(target.getName(), target.getType(), new JSONObject(mergedMap), target.getSecure());
         }
 
-        public void setHost(final String host) {
-            this.host = host;
-        }
-
-        public Optional<String> getPort() {
-            return Optional.ofNullable(port);
-        }
-
-        public void setPort(final String port) {
-            this.port = port;
-        }
-
+        return target;
     }
 
 }
