@@ -25,7 +25,7 @@ public class ConsoleResponse {
     private boolean success = false;
 
     /**
-     * The list of zOSMF console API responses. May issue multiple requests (because of user request) or
+     * The list of zOSMF console API responses. May issue multiple requests (because of a user request) or
      * to ensure that all messages are collected. Each individual response is placed here.
      */
     private Optional<ZosmfIssueResponse> zosmfResponse = Optional.empty();
@@ -41,7 +41,7 @@ public class ConsoleResponse {
     private Optional<String> commandResponse = Optional.empty();
 
     /**
-     * The final command response key - used to "follow-up" and check for additional response messages for the command.
+     * The final command response key - used to "follow up" and check for additional response messages for the command.
      */
     private Optional<String> lastResponseKey = Optional.empty();
 

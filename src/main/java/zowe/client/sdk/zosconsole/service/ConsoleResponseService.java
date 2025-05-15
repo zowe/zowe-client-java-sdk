@@ -46,11 +46,11 @@ public final class ConsoleResponseService {
 
     /**
      * Populate the console response with the details returned from the z/OSMF console API.
-     * Method adds response to a collection of z/OSMF responses, mark response as "succeeded"
-     * (response.success = true) and populate other fields of response with values from z/OSMF response.
+     * Method adds a response to a collection of z/OSMF responses, marks the response as "succeeded"
+     * (response.success = true) and populates other fields of the response with values from z/OSMF response.
      *
      * @param zosmfResponse    zosmf request response object
-     * @param processResponses boolean if set to true, append command response string to the console API response
+     * @param processResponses boolean if set to true, append a command response string to the console API response
      * @return response         console response to be populated, see ConsoleResponse object
      * @author Frank Giordano
      */
