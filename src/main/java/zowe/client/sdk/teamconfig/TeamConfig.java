@@ -171,6 +171,7 @@ public class TeamConfig {
      *
      * @param target Profile object
      * @param base   Profile object
+     * @return target profile object
      * @author Frank Giordano
      */
     private Profile merge(Profile target, final Profile base) {
