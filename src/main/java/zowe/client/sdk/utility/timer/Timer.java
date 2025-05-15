@@ -19,7 +19,7 @@ package zowe.client.sdk.utility.timer;
 public class Timer {
 
     /**
-     * Wait by time specified in milliseconds.
+     * Wait by the time specified in milliseconds.
      */
     private final int waitTime;
 
@@ -52,7 +52,7 @@ public class Timer {
     }
 
     /**
-     * Has the current time range ended yet.
+     * Has the current time range ended yet?
      *
      * @return boolean true if time range reached
      * @author Frank Giordano

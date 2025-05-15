@@ -40,7 +40,7 @@ public final class JsonParserUtil {
      * This method is a wrapper for JSONParser().parse() call to parse z/OSMF response
      * which may return ZosmfRequestException.
      *
-     * @param item json string representation
+     * @param item JSON string representation
      * @return JSONObject object
      * @throws ZosmfRequestException indicates the json item from z/OSMF request is invalid for parsing
      */
@@ -57,7 +57,7 @@ public final class JsonParserUtil {
      * This method is a wrapper for JSONParser().parse() call to parse z/OSMF response
      * which may return ZosmfRequestException.
      *
-     * @param item json array representation
+     * @param item JSON array representation
      * @return JSONArray object
      * @throws ZosmfRequestException indicates the json item from z/OSMF request is invalid for parsing
      */

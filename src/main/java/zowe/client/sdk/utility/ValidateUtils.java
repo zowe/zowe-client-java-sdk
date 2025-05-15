@@ -89,7 +89,7 @@ public final class ValidateUtils {
      * Check SSH connection for validity.
      *
      * @param connection connection information, see SshConnection object
-     * @throws IllegalStateException with message "Connection data not setup properly"
+     * @throws IllegalStateException with the message "Connection data not setup properly"
      * @author Frank Giordano
      */
     public static void checkSshConnection(final SshConnection connection) {
