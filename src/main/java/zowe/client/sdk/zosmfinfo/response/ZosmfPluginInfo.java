@@ -12,7 +12,7 @@ package zowe.client.sdk.zosmfinfo.response;
 import java.util.Optional;
 
 /**
- * The plugin information structure for plugin property of the z/OSMF info response
+ * The plugin information structure for the plugin property of the z/OSMF info response
  *
  * @author Frank Giordano
  * @version 3.0
