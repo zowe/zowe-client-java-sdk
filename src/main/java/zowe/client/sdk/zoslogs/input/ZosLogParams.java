@@ -56,7 +56,7 @@ public class ZosLogParams {
      * Specifies the time range for which the log is to be retrieved. This field is optional.
      * <p>
      * Supported time units include s, m, and h for seconds, minutes, and hours.
-     * For example: 10s, 10m, 10h.
+     * For example, 10s, 10m, 10h.
      * The format is nnnu, where nnn is a number 1-999 and u is one of the time units "s", "m", or "h".
      * For example, 999s of 20m.
      * <p>
@@ -71,7 +71,7 @@ public class ZosLogParams {
     private final boolean processResponses;
 
     /**
-     * Internal use to count number of query parameters specified
+     * Internal use to count the number of query parameters specified
      */
     private final int queryCount;
 
@@ -196,7 +196,7 @@ public class ZosLogParams {
          * Specifies the time range for which the log is to be retrieved. This field is optional.
          * <p>
          * Supported time units include s, m, and h for seconds, minutes, and hours.
-         * For example: 10s, 10m, 10h.
+         * For example, 10s, 10m, 10h.
          * The format is nnnu, where nnn is a number 1-999 and u is one of the time units "s", "m", or "h".
          * For example, 999s of 20m.
          * <p>
@@ -211,7 +211,7 @@ public class ZosLogParams {
         private boolean processResponses;
 
         /**
-         * Internal use to count number of query parameters specified
+         * Internal use to count the number of query parameters specified
          */
         private int queryCount = 0;
 

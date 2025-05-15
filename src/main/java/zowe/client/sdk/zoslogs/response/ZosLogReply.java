@@ -29,7 +29,7 @@ public class ZosLogReply {
     private final OptionalLong timeZone;
 
     /**
-     * The UNIX timestamp. This value could be used in a subsequent request to specify a starting timestamp.
+     * The UNIX timestamp. This value could be used in a later request to specify a starting timestamp.
      * Logs in the "nextTimestamp" are not returned to the current response.
      */
     private final OptionalLong nextTimeStamp;

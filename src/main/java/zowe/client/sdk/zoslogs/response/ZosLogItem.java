@@ -52,7 +52,7 @@ public class ZosLogItem {
     private final Optional<String> replyId;
 
     /**
-     * Original eight character system name.
+     * Original eight-character system name.
      */
     private final Optional<String> system;
 
@@ -205,7 +205,7 @@ public class ZosLogItem {
     public static class Builder {
 
         /**
-         * Eight character command and response token (CART).
+         * Eight-character command and response token (CART).
          */
         private String cart;
 
@@ -235,7 +235,7 @@ public class ZosLogItem {
         private String replyId;
 
         /**
-         * Original eight character system name.
+         * Original eight-character system name.
          */
         private String system;
 
@@ -277,7 +277,7 @@ public class ZosLogItem {
         }
 
         /**
-         * Set color string value from response
+         * Set a color string value from response
          *
          * @param color string value
          * @return Builder object
@@ -299,7 +299,7 @@ public class ZosLogItem {
         }
 
         /**
-         * Set message string value from response
+         * Set a message string value from response
          *
          * @param message string value
          * @return Builder object
