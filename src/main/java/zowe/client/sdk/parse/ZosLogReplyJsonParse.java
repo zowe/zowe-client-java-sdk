@@ -42,7 +42,7 @@ public final class ZosLogReplyJsonParse implements JsonParse {
     }
 
     /**
-     * Get singleton instance
+     * Get a singleton instance
      *
      * @return ZosLogItemJsonParse object
      * @author Frank Giordano
@@ -54,7 +54,7 @@ public final class ZosLogReplyJsonParse implements JsonParse {
     /**
      * Transform data into ZosLogReply object
      *
-     * @param args first arg json data to parse, second arg list of ZosLogItem objects
+     * @param args first arg JSON data to parse, second arg list of ZosLogItem objects
      * @return ZosLogReply object
      * @author Frank Giordano
      */

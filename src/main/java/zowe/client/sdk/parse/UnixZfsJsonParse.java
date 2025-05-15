@@ -39,7 +39,7 @@ public final class UnixZfsJsonParse implements JsonParse {
     }
 
     /**
-     * Get singleton instance
+     * Get a singleton instance
      *
      * @return UnixZfsJsonParse object
      * @author Frank Giordano

@@ -39,7 +39,7 @@ public final class JobFileJsonParse implements JsonParse {
     }
 
     /**
-     * Get singleton instance
+     * Get a singleton instance
      *
      * @return JobFileJsonParse object
      * @author Frank Giordano

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.parse.type.ParseType;
 
 /**
- * Parse factory that generates the desire json parse operation
+ * Parse factory that generates the desire JSON parse operation
  *
  * @author Frank Giordano
  * @version 3.0

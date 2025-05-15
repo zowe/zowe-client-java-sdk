@@ -39,7 +39,7 @@ public final class DatasetJsonParse implements JsonParse {
     }
 
     /**
-     * Get singleton instance
+     * Get a singleton instance
      *
      * @return DatasetJsonParse object
      * @author Frank Giordano

@@ -49,7 +49,7 @@ public final class TsoJsonParse implements JsonParse {
     }
 
     /**
-     * Get singleton instance
+     * Get a singleton instance
      *
      * @return TsoJsonParse object
      * @author Frank Giordano
@@ -59,7 +59,7 @@ public final class TsoJsonParse implements JsonParse {
     }
 
     /*
-    following json parsing is being constructed to conform to the following format:
+    The following JSON parsing is being constructed to conform to the following format:
     https://www.ibm.com/docs/en/zos/2.1.0?topic=services-tsoe-address-space
     */
 

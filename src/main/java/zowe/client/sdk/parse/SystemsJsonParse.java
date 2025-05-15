@@ -41,7 +41,7 @@ public final class SystemsJsonParse implements JsonParse {
     }
 
     /**
-     * Get singleton instance
+     * Get a singleton instance
      *
      * @return SystemsJsonParse object
      * @author Frank Giordano

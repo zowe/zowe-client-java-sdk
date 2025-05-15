@@ -39,7 +39,7 @@ public final class MemberJsonParse implements JsonParse {
     }
 
     /**
-     * Get singleton instance
+     * Get a singleton instance
      *
      * @return MemberJsonParse object
      * @author Frank Giordano
@@ -49,7 +49,7 @@ public final class MemberJsonParse implements JsonParse {
     }
 
     /**
-     * Transform data into Member object
+     * Transform data into a Member object
      *
      * @param args json data to parse
      * @return Member object

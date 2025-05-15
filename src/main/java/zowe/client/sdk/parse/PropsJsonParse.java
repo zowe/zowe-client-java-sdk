@@ -41,7 +41,7 @@ public final class PropsJsonParse implements JsonParse {
     }
 
     /**
-     * Get singleton instance
+     * Get a singleton instance
      *
      * @return PropsJsonParse object
      * @author Frank Giordano
@@ -51,7 +51,7 @@ public final class PropsJsonParse implements JsonParse {
     }
 
     /**
-     * Parse team config's properties json representation into a Map object
+     * Parse team config's properties JSON representation into a Map object
      *
      * @param args json data to parse
      * @return hashmap of property values

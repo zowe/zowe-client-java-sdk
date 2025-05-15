@@ -39,7 +39,7 @@ public final class TsoStopJsonParse implements JsonParse {
     }
 
     /**
-     * Get singleton instance
+     * Get a singleton instance
      *
      * @return TsoStopJsonParse object
      * @author Frank Giordano

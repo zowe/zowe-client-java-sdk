@@ -39,7 +39,7 @@ public final class MvsConsoleJsonParse implements JsonParse {
     }
 
     /**
-     * Get singleton instance
+     * Get a singleton instance
      *
      * @return MvsConsoleJsonParse object
      * @author Frank Giordano
