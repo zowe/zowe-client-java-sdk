@@ -254,8 +254,8 @@ public abstract class ZosmfRequest {
      * Set a cookie token for this request. This is optional for most requests and not needed.
      * Setting the cookie with a non-null value will remove the HTTP Authorization request header.
      * <p>
-     * Setting the cookie value as null afterward will revert/enable HTTP Authorization request header
-     * for future requests.
+     * Setting the cookie value as null afterward will revert/enable the HTTP Authorization
+     * request header for future requests.
      *
      * @param cookie object
      * @author Frank Giordano
@@ -266,7 +266,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Determine authentication type (basic or token authorization) and switch accordingly.
+     * Determine the authentication type (basic or token authorization) and switch accordingly.
      *
      * @author Frank Giordano
      */
