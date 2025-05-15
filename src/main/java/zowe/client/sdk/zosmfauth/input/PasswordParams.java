@@ -12,7 +12,7 @@ package zowe.client.sdk.zosmfauth.input;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Parameter container for the z/OSMF authentication service change user password or passphrase
+ * Parameter container for the z/OSMF authentication service changes user password or passphrase
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.1.0?topic=services-change-user-password-passphrase">z/OSMF REST API </a>
  *

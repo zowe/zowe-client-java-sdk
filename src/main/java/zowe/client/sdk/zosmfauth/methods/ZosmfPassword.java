@@ -69,7 +69,7 @@ public class ZosmfPassword {
     }
 
     /**
-     * Change password or passphrase for a specified User ID driven by PasswordParams object settings
+     * Change the password or passphrase for a specified User ID driven by PasswordParams object settings
      *
      * @param params Password response parameters, see PasswordParams object
      * @return Response object

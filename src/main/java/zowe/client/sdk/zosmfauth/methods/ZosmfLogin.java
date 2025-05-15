@@ -65,7 +65,7 @@ public class ZosmfLogin {
     }
 
     /**
-     * Request to log into server and obtain authentication tokens
+     * Request to log into the server and obtain authentication tokens
      *
      * @return ZosmfLoginResponse object
      * @throws ZosmfRequestException request error state
