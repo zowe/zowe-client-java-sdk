@@ -13,8 +13,8 @@ package zowe.client.sdk.zosfiles.dsn.types;
  * Attribute enum for querying a dataset(s) and member(s) and how its returned data will be retrieved with what properties.
  * <p>
  * Member request that only member names be returned. If you omit this header, it is set to "member".
- * BASE return all properties of a dataset and its values.
- * VOL return volume and dataset name properties and its values only.
+ * BASE returns all properties of a dataset and its values.
+ * VOL returns volume and dataset name properties and its values only.
  *
  * @author Frank Giordano
  * @version 3.0

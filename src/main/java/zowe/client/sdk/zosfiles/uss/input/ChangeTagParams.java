@@ -41,7 +41,7 @@ public class ChangeTagParams {
     private final Optional<ChangeTagType> type;
 
     /**
-     * Specifies the coded character set in which text data is encoded such as ASCII or EBCDIC.
+     * Specifies the coded character set in which text data is encoded, such as ASCII or EBCDIC.
      * For example, the code set for ASCII is ISO8859-1; the code set for EBCDIC is IBM-1047.
      */
     private final Optional<String> codeset;
@@ -155,7 +155,7 @@ public class ChangeTagParams {
         private ChangeTagType type;
 
         /**
-         * Specifies the coded character set in which text data is encoded such as ASCII or EBCDIC.
+         * Specifies the coded character set in which text data is encoded, such as ASCII or EBCDIC.
          * For example, the code set for ASCII is ISO8859-1; the code set for EBCDIC is IBM-1047.
          */
         private String codeset;

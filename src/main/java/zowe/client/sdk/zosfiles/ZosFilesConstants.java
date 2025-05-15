@@ -83,7 +83,7 @@ public class ZosFilesConstants {
     public static final String RES_DS_FILES = "/ds";
 
     /**
-     * Indicator of a members request
+     * Indicator of a member request
      */
     public static final String RES_DS_MEMBERS = "/member";
 

@@ -45,7 +45,7 @@ public class ZosFilesParams {
     }
 
     /**
-     * Return string value representing ZosFilesParams object
+     * Return string value representing a ZosFilesParams object
      *
      * @return string representation of ZosFilesParams
      */

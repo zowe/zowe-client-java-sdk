@@ -560,7 +560,7 @@ public class CreateParams {
         }
 
         /**
-         * Set primary int value
+         * Set a primary int value
          *
          * @param primary int value
          * @return Builder this object

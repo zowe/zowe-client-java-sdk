@@ -47,7 +47,7 @@ public class CopyParams {
     private final boolean replace;
 
     /**
-     * Specify as true to indicate a copying of all members in partial dataset to another partial dataset request
+     * Specify as true to indicate a copying of all members in a partial dataset to another partial dataset request
      */
     private final boolean copyAllMembers;
 
@@ -167,7 +167,7 @@ public class CopyParams {
         private boolean replace = true;
 
         /**
-         * Specify as true to indicate a copying of all members in partial dataset to another partial dataset request
+         * Specify as true to indicate a copying of all members in a partial dataset to another partial dataset request
          */
         private boolean copyAllMembers = false;
 

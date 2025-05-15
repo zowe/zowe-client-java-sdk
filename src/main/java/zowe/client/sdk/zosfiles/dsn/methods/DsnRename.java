@@ -68,7 +68,7 @@ public class DsnRename {
     }
 
     /**
-     * Change the existing dataset name (source) to new dataset name (destination)
+     * Change the existing dataset name (source) to a new dataset name (destination)
      *
      * @param dataSetName    existing dataset name
      * @param newDataSetName new dataset name
@@ -87,7 +87,7 @@ public class DsnRename {
     }
 
     /**
-     * Change the existing member name (source) to new member name (destination) within a partition dataset
+     * Change the existing member name (source) to a new member name (destination) within a partition dataset
      *
      * @param fromDataSetName from dataset name
      * @param memberName      existing member name

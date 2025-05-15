@@ -135,7 +135,7 @@ public class DsnList {
     }
 
     /**
-     * Retrieve list result of either members or datasets from rest api response.
+     * Retrieve a list result of either members or datasets from rest api response.
      * Use null of either datasetLst or memberLst to denote the list object being processed.
      *
      * @param response   Response object containing rest api result

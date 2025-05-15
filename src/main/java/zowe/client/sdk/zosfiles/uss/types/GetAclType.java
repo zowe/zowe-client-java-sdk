@@ -20,7 +20,7 @@ package zowe.client.sdk.zosfiles.uss.types;
 public enum GetAclType {
 
     /**
-     * Displays the access ACL entries. This is the default if others not specified.
+     * Displays the access ACL entries. This is the default if others are not specified.
      */
     ACCESS("access"),
 

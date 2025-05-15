@@ -273,7 +273,7 @@ public class Member {
         private Long mod;
 
         /**
-         * The creation date of member
+         * The creation date of a member
          */
         private String c4date;
 

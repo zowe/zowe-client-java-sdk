@@ -36,7 +36,7 @@ public class ChangeOwnerParams {
 
     /**
      * The default is false. When 'true', changes all the files and subdirectories in that directory to
-     * belong to the specified owner (and group, if :group is specified). (chown -R)
+     * belong to the specified owner (and group if :group is specified). (chown -R)
      */
     private final boolean recursive;
 
@@ -126,7 +126,7 @@ public class ChangeOwnerParams {
 
         /**
          * The default is false. When 'true', changes all the files and subdirectories in that directory to
-         * belong to the specified owner (and group, if :group is specified). (chown -R)
+         * belong to the specified owner (and group if :group is specified). (chown -R)
          */
         private boolean recursive = false;
 

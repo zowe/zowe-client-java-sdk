@@ -68,7 +68,7 @@ public class UssGet {
     /**
      * Get the binary contents of a UNIX file
      *
-     * @param fileNamePath file name with path
+     * @param fileNamePath file name with a path
      * @return the byte array contents of the file
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
@@ -83,8 +83,8 @@ public class UssGet {
     /**
      * Get the text contents of a UNIX file
      *
-     * @param fileNamePath file name with path
-     * @return the text contents of file
+     * @param fileNamePath file name with a path
+     * @return the text contents of a file
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      * @author James Kostrewski
@@ -98,7 +98,7 @@ public class UssGet {
     /**
      * Get the contents of a UNIX file driven by the GetParams object settings
      *
-     * @param fileNamePath file name with path
+     * @param fileNamePath file name with a path
      * @param params       GetParams object to drive the request
      * @return Response object
      * @throws ZosmfRequestException request error state

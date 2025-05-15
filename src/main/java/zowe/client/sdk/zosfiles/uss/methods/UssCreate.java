@@ -74,7 +74,7 @@ public class UssCreate {
     }
 
     /**
-     * Perform UNIX create file or directory name request driven by CreateParams object settings.
+     * Perform UNIX create a file or directory name request driven by CreateParams object settings.
      *
      * @param targetPath the name of the file or directory you are going to create
      * @param params     create response parameters, see CreateParams object

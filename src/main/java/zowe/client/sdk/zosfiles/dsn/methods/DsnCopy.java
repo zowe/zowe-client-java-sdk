@@ -76,14 +76,14 @@ public class DsnCopy {
      * - partition dataset member to partition dataset non-existing member
      * - partition dataset member to sequential dataset
      * <p>
-     * If copyAllMembers parameter value sent as true it will perform a copy of all members in
-     * source partition dataset to the target partition dataset if no member name included in the
+     * If copyAllMembers parameter value sent as true, it will perform a copy of all members in
+     * the source partition dataset to the target partition dataset if no member name included in the
      * source partition dataset value (fromDataSetName).
      *
      * @param fromDataSetName is a name of source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
      * @param toDataSetName   is a name of target dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
      * @param replace         if true members in the target dataset are replaced
-     * @param copyAllMembers  if true copy all members in source partition dataset specified
+     * @param copyAllMembers  if true copy all members in the source partition dataset specified
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Leonid Baranov

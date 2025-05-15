@@ -87,7 +87,7 @@ public class UssCopy {
      * Copy a Unix file or directory to another location request driven by CopyParams object settings
      *
      * @param targetPath target path of where the file or directory will be copied too
-     * @param params     CopyParams parameters that specifies copy action request
+     * @param params     CopyParams parameters that specify copy action request
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski

@@ -73,7 +73,7 @@ public class UssGetAcl {
     /**
      * Get the ACL for a USS file or directory
      *
-     * @param targetPath file name with path
+     * @param targetPath file name with a path
      * @param useCommas  true if commas are to be used in the output
      * @return string representation of response phrase
      * @throws ZosmfRequestException request error state
@@ -98,7 +98,7 @@ public class UssGetAcl {
     /**
      * Get the ACL for a USS file or directory
      *
-     * @param targetPath file name with path
+     * @param targetPath file name with a path
      * @param params     GetAclParams object to drive the request
      * @return Response object
      * @throws ZosmfRequestException request error state

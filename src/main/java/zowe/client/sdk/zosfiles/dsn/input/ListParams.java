@@ -170,7 +170,7 @@ public class ListParams {
         private AttributeType attribute;
 
         /**
-         * The indicator that we want to show less data sets or members
+         * The indicator that we want to show fewer data sets or members
          */
         private String maxLength;
 

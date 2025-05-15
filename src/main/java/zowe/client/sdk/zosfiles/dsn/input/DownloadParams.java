@@ -49,7 +49,7 @@ public class DownloadParams {
 
     /**
      * The maximum REST requests to perform at once
-     * Increasing this value results in faster downloads but increases resource consumption
+     * Increasing this value result in faster downloads but increase resource consumption
      * on z/OS and risks encountering an error caused
      * by making too many requests at once.
      * Default: 1
@@ -57,7 +57,7 @@ public class DownloadParams {
     private final OptionalLong maxConcurrentRequests;
 
     /**
-     * The indicator to force return of ETag.
+     * The indicator to force the return of ETag.
      * If set to 'true' it forces the response to include an "ETag" header, regardless of the size of the response data.
      * If it is not present, the default is to only send an Etag for data sets smaller than a system determined length,
      * which is at least 8 MB.
@@ -68,7 +68,7 @@ public class DownloadParams {
      * Indicates if the created directories and files use the original letter case, which is for data sets always uppercase.
      * The default value is false for backward compatibility.
      * If the option "directory" or "file" is provided, this option doesn't have any effect.
-     * This option has only effect on automatically generated directories and files.
+     * This option has only an effect on automatically generated directories and files.
      */
     private final boolean preserveOriginalLetterCase;
 
@@ -328,7 +328,7 @@ public class DownloadParams {
         private Long maxConcurrentRequests;
 
         /**
-         * The indicator to force return of ETag.
+         * The indicator to force the return of ETag.
          * If set to 'true' it forces the response to include an "ETag" header, regardless of the size of the response data.
          * If it is not present, the default is to only send an Etag for data sets smaller than a system determined length,
          * which is at least 8 MB.
@@ -339,7 +339,7 @@ public class DownloadParams {
          * Indicates if the created directories and files use the original letter case, which is for data sets always uppercase.
          * The default value is false for backward compatibility.
          * If the option "directory" or "file" is provided, this option doesn't have any effect.
-         * This option has only effect on automatically generated directories and files.
+         * This option has only an effect on automatically generated directories and files.
          */
         private boolean preserveOriginalLetterCase;
 

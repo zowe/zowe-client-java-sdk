@@ -81,7 +81,7 @@ public class UssChangeOwner {
     }
 
     /**
-     * Perform chown operation on UNIX file or directory request driven by ChangeOwnerParams object settings
+     * Perform chown operation on a UNIX file or directory request driven by ChangeOwnerParams object settings
      *
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
      * @param params     change owner response parameters, see ChangeOwnerParams object

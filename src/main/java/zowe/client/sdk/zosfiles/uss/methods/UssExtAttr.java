@@ -92,7 +92,7 @@ public class UssExtAttr {
      * Extends the attributes of a file or directory
      *
      * @param targetPath path to the file or directory
-     * @param value      one or more of the following character: a,l,p,s
+     * @param value      one or more of the following characters: a,l,p,s
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
@@ -110,7 +110,7 @@ public class UssExtAttr {
      * Resets the attributes of a file or directory
      *
      * @param targetPath path to the file or directory
-     * @param value      one or more of the following character: a,l,p,s
+     * @param value      one or more of the following characters: a,l,p,s
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
@@ -125,7 +125,7 @@ public class UssExtAttr {
     }
 
     /**
-     * Execute request for given path and json map
+     * Execute request for given path and JSON map
      *
      * @param targetPath path to the file or directory
      * @param jsonMap    map representing request body
@@ -153,7 +153,7 @@ public class UssExtAttr {
     }
 
     /**
-     * Validate that the given value is one or more of the following character: a,l,p,s
+     * Validate that the given value is one or more of the following characters: a,l,p,s
      *
      * @param value string
      * @return boolean value

@@ -64,7 +64,7 @@ public class ChangeModeParams {
     }
 
     /**
-     * Is recursive specified
+     * Is recursive specified?
      *
      * @return boolean true or false
      */
