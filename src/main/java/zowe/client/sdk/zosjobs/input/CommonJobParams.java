@@ -55,11 +55,11 @@ public class CommonJobParams {
     }
 
     /**
-     * CommonJobParams constructor with step data flag
+     * CommonJobParams constructor with a step data flag
      *
      * @param jobId    job id value
      * @param jobName  job name value
-     * @param stepData determines whether step data is included in rest call
+     * @param stepData determines whether step data is included in the rest call
      * @author Frank Giordano
      */
     public CommonJobParams(final String jobId, final String jobName, final boolean stepData) {

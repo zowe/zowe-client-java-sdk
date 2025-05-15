@@ -99,7 +99,7 @@ public class GetJobParams {
     }
 
     /**
-     * Return string value representing GetJobParams object
+     * Return string value representing a GetJobParams object
      *
      * @return string representation of GetJobParams
      */

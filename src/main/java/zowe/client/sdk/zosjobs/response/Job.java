@@ -76,7 +76,7 @@ public class Job {
     private final Optional<String> filesUrl;
 
     /**
-     * Unique identifier of job (substitute of job name and job id). If this value is null, the job was
+     * Unique identifier of a job (substitute of job name and job id). If this value is null, the job was
      * submitted to JES3.
      */
     private final Optional<String> jobCorrelator;
@@ -280,7 +280,7 @@ public class Job {
         private String jobId;
 
         /**
-         * Job name value specified for request
+         * Job name value specified for the request
          */
         private String jobName;
 

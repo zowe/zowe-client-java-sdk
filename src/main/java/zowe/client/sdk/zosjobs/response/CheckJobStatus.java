@@ -19,7 +19,7 @@ package zowe.client.sdk.zosjobs.response;
 public class CheckJobStatus {
 
     /**
-     * Has the desired job status was seen, true or false
+     * Has the desired job status been seen, true or false?
      */
     private final boolean statusFound;
 

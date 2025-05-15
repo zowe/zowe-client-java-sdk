@@ -152,7 +152,7 @@ public class JobStepData {
         private String procStepName;
 
         /**
-         * Step for which job dd exists
+         * Step for which a job dd exists
          */
         private String stepName;
 
@@ -168,7 +168,7 @@ public class JobStepData {
         }
 
         /**
-         * Set active boolean value
+         * Set an active boolean value
          *
          * @param active boolean true or false value
          * @return Builder this object

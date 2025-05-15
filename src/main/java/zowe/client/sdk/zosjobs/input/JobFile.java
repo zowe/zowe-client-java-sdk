@@ -311,12 +311,12 @@ public class JobFile {
         private Long recordCount;
 
         /**
-         * Unique identifier of job (substitute of job name and job id)
+         * Unique identifier of a job (substitute of job name and job id)
          */
         private String jobCorrelator;
 
         /**
-         * Job class for which job ran
+         * Job class for which a job ran
          */
         private String classs;
 

@@ -33,11 +33,11 @@ public class ModifyJobParams {
     private final Optional<String> jobId;
 
     /**
-     * Version value specified for request.
+     * Version value specified for the request.
      * <p>
      * To request asynchronous processing for this service (the default), set the "version" property to 1.0
      * or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
-     * the system will attempt to process the request synchronously, if such processing is supported on
+     * the system will attempt to process the request synchronously if such processing is supported on
      * the target JES2 subsystem.
      */
     private final Optional<String> version;
@@ -111,11 +111,11 @@ public class ModifyJobParams {
         private final String jobId;
 
         /**
-         * Version value specified for request.
+         * Version value specified for the request.
          * <p>
          * To request asynchronous processing for this service (the default), set the "version" property to 1.0
          * or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
-         * the system will attempt to process the request synchronously, if such processing is supported on
+         * the system will attempt to process the request synchronously if such processing is supported on
          * the target JES2 subsystem.
          */
         private String version;
