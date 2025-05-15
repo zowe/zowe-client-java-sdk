@@ -79,7 +79,7 @@ public class JobCancel {
      * @param version version number - 1.0 or 2.0
      *                To request asynchronous processing for this service (the default), set the "version" property to 1.0
      *                or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
-     *                the system will attempt to process the request synchronously, if such processing is supported on
+     *                the system will attempt to process the request synchronously if such processing is supported on
      *                the target JES2 subsystem.
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
@@ -96,7 +96,7 @@ public class JobCancel {
      * @param version version number - 1.0 or 2.0
      *                To request asynchronous processing for this service (the default), set the "version" property to 1.0
      *                or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
-     *                the system will attempt to process the request synchronously, if such processing is supported on
+     *                the system will attempt to process the request synchronously if such processing is supported on
      *                the target JES2 subsystem.
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
@@ -130,7 +130,7 @@ public class JobCancel {
 
         // To request asynchronous processing for this service (the default), set the "version" property to 1.0
         // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If 2.0,
-        // the system will attempt to process the request synchronously, if such processing is supported on
+        // the system will attempt to process the request synchronously if such processing is supported on
         // the target JES2 subsystem.
         if ("1.0".equals(version)) {
             LOG.debug("version 1.0 specified which will result in asynchronous processing for the request");
@@ -151,9 +151,8 @@ public class JobCancel {
         connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(cancelMap).toString());
 
-        // if synchronously response should contain job document that was cancelled and http return code
-        // if asynchronously response should only contain http return code
-        // let the caller handle the response json parsing
+        // if synchronously response should contain a job document that was canceled and http return code
+        // if asynchronously response should only contain http return code, let the caller handle the response JSON parsing
         return request.executeRequest();
     }
 

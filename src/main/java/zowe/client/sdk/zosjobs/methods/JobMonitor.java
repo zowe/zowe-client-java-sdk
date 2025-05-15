@@ -105,7 +105,7 @@ public class JobMonitor {
      * @param connection connection information, see ZosConnection object
      * @param attempts   number of attempts to get status
      * @param watchDelay delay time in milliseconds to wait each time requesting status
-     * @param lineLimit  number of line to inspect job output
+     * @param lineLimit  number of lines to inspect job output
      * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection, final int attempts, final int watchDelay, final int lineLimit) {
@@ -158,7 +158,7 @@ public class JobMonitor {
     }
 
     /**
-     * Check the status of the job for the expected status or that the job has progressed and passed the expected status.
+     * Check the status of the job for the expected status, or that the job has progressed and passed the expected status.
      *
      * @param params monitor jobs params, see MonitorJobWaitForParams
      * @return boolean true when the job status is obtained
@@ -228,7 +228,7 @@ public class JobMonitor {
      * Determines if a given job is in a running state or not.
      *
      * @param params monitor jobs params, see MonitorJobWaitForParams
-     * @return true if in running state
+     * @return true if in a running state
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
@@ -325,9 +325,9 @@ public class JobMonitor {
     /**
      * Given a Job document (has jobname/jobid), wait for the given message from the job. This API will poll for
      * the given message once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
-     * sufficient, use "waitForMessageCommon" method to adjust.
+     * enough, use the "waitForMessageCommon" method to adjust.
      * <p>
-     * See JavaDoc for "waitForMessageCommon" for full details on polling and other logic.
+     * See Javadoc for "waitForMessageCommon" for full details on polling and other logic.
      *
      * @param job     document of the z/OS job to wait for (see z/OSMF Jobs APIs for details)
      * @param message message string
@@ -348,9 +348,9 @@ public class JobMonitor {
     /**
      * Given the jobname/jobid, wait for the given message from the job. This API will poll for
      * the given message once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
-     * sufficient, use "waitForMessageCommon" method to adjust.
+     * enough, use the "waitForMessageCommon" method to adjust.
      * <p>
-     * See JavaDoc for "waitForMessageCommon" for full details on polling and other logic.
+     * See Javadoc for "waitForMessageCommon" for full details on polling and other logic.
      *
      * @param jobName the z/OS jobname of the job to wait for output status (see z/OSMF Jobs APIs for details)
      * @param jobId   the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
@@ -372,7 +372,7 @@ public class JobMonitor {
     /**
      * Given a Job document (has jobname/jobid), wait for the status of the job to be "OUTPUT". This API will poll for
      * the OUTPUT status once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
-     * sufficient, use "waitForStatusCommon" to adjust.
+     * enough, use "waitForStatusCommon" to adjust.
      * <p>
      * See JSDoc for "waitForStatusCommon" for full details on polling and other logic.
      *
@@ -393,10 +393,10 @@ public class JobMonitor {
 
     /**
      * Given the jobname/jobid, wait for the status of the job to be "OUTPUT". This API will poll for the OUTPUT status
-     * once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT sufficient, use
+     * once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT enough, use
      * "waitForStatusCommon" to adjust.
      * <p>
-     * See JavaDoc for "waitForStatusCommon" for full details on polling and other logic.
+     * See Javadoc for "waitForStatusCommon" for full details on polling and other logic.
      *
      * @param jobName the z/OS jobname of the job to wait for output status (see z/OSMF Jobs APIs for details)
      * @param jobId   the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
@@ -416,9 +416,9 @@ public class JobMonitor {
     /**
      * Given a Job document (has jobname/jobid), wait for the given status of the job. This API will poll for
      * the given status once every 3 seconds for at least 1000 times. If the polling interval/duration is NOT
-     * sufficient, use "waitForStatusCommon" method to adjust.
+     * enough, use the "waitForStatusCommon" method to adjust.
      * <p>
-     * See JavaDoc for "waitForStatusCommon" for full details on polling and other logic.
+     * See Javadoc for "waitForStatusCommon" for full details on polling and other logic.
      *
      * @param job        document of the z/OS job to wait for (see z/OSMF Jobs APIs for details)
      * @param statusType status type, see JobStatus.Type object
@@ -438,10 +438,10 @@ public class JobMonitor {
 
     /**
      * Given the jobname/jobid, wait for the given status of the job. This API will poll for the given status once
-     * every 3 seconds for at least 1000 times. If the polling interval/duration is NOT sufficient, use
-     * "waitForStatusCommon" method to adjust.
+     * every 3 seconds for at least 1000 times. If the polling interval/duration is NOT enough, use
+     *  the "waitForStatusCommon" method to adjust.
      * <p>
-     * See JavaDoc for "waitForStatusCommon" for full details on polling and other logic.
+     * See Javadoc for "waitForStatusCommon" for full details on polling and other logic.
      *
      * @param jobName    the z/OS jobname of the job to wait for output status (see z/OSMF Jobs APIs for details)
      * @param jobId      the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)

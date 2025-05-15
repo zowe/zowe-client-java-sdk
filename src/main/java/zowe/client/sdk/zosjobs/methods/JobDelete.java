@@ -102,7 +102,7 @@ public class JobDelete {
 
         // To request asynchronous processing for this service (the default), set the "version" property to 1.0
         // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If 2.0,
-        // the system will attempt to process the request synchronously, if such processing is supported on
+        // the system will attempt to process the request synchronously if such processing is supported on
         // the target JES2 subsystem.
         if ("1.0".equals(version)) {
             LOG.debug("version 1.0 specified which will result in asynchronous processing for the request");
@@ -123,14 +123,13 @@ public class JobDelete {
         request.setUrl(url);
         connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
-        // if synchronously response should contain job document that was cancelled and http return code
-        // if asynchronously response should only contain http return code
-        // let the caller handle the response json parsing
+        // if synchronously response should contain a job document that was canceled and http return code
+        // if asynchronously response should only contain http return code, let the caller handle the response JSON parsing
         return request.executeRequest();
     }
 
     /**
-     * Cancel and purge job from spool.
+     * Cancel and purge a job from spool.
      *
      * @param job     job document wanting to delete
      * @param version version number, see ModifyJobParams object for version options

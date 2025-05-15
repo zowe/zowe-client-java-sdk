@@ -155,7 +155,7 @@ public class JobGet {
     /**
      * Get jobs that are owned by a certain user or pattern of users.
      *
-     * @param owner owner for which to get jobs. Supports wildcard e.g.
+     * @param owner owner for which to get jobs. Supports wildcard e.g.,
      *              IBMU* returns jobs owned by all users whose ID beings with "IBMU"
      * @return list of job objects (matching jobs), without step-data
      * @throws ZosmfRequestException request error state
@@ -168,9 +168,9 @@ public class JobGet {
     /**
      * Get a list of jobs that match an owner and prefix.
      *
-     * @param owner  owner for which to get jobs. Supports wildcard e.g.
+     * @param owner  owner for which to get jobs. Supports wildcard e.g.,
      *               IBMU* returns jobs owned by all users whose ID beings with "IBMU"
-     * @param prefix prefix for which to get jobs. Supports wildcard e.g.
+     * @param prefix prefix for which to get jobs. Supports wildcard e.g.,
      *               JOBNM* returns jobs with names starting with "JOBNM"
      * @return list of job objects (matching jobs), without step-data
      * @throws ZosmfRequestException request error state
@@ -183,7 +183,7 @@ public class JobGet {
     /**
      * Get jobs that match a job name by prefix. Defaults to job(s) owned by the user ID in the session.
      *
-     * @param prefix job name prefix for which to list jobs. Supports wildcard e.g. JOBNM*
+     * @param prefix job name prefix for which to list jobs. Supports wildcard e.g., JOBNM*
      * @return list of job objects (matching jobs), without step-data
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
@@ -404,7 +404,7 @@ public class JobGet {
     }
 
     /**
-     * Get the status and other details (e.g. owner, return code) for a job, including step-data.
+     * Get the status and other details (e.g., owner, return code) for a job, including step-data.
      *
      * @param params common job parameters, see CommonJobParams object
      * @return job document (matching job)
@@ -435,7 +435,7 @@ public class JobGet {
     }
 
     /**
-     * Get the status and other details (e.g. owner, return code) for a job, including step-data.
+     * Get the status and other details (e.g., owner, return code) for a job, including step-data.
      * Alternate version of the API that accepts a Job object returned by
      * other APIs such as SubmitJobs. Even though the parameter and return
      * value are of the same type, the Job object returned will have the
