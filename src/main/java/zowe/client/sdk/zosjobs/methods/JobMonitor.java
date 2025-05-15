@@ -439,7 +439,7 @@ public class JobMonitor {
     /**
      * Given the jobname/jobid, wait for the given status of the job. This API will poll for the given status once
      * every 3 seconds for at least 1000 times. If the polling interval/duration is NOT enough, use
-     *  the "waitForStatusCommon" method to adjust.
+     * the "waitForStatusCommon" method to adjust.
      * <p>
      * See Javadoc for "waitForStatusCommon" for full details on polling and other logic.
      *
