@@ -49,7 +49,7 @@ public class IssueUss {
     /**
      * Executes USS command(s) specified within a string value
      *
-     * @param command string value contain one or more USS commands
+     * @param command string value contains one or more USS commands
      * @param timeout int value in milliseconds for timeout duration on session connection
      * @return string output value
      * @throws IssueUssException SSH Unix System Services error request
