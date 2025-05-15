@@ -106,9 +106,9 @@ public class TeamConfig {
     }
 
     /**
-     * Retrieve default profile for the specified profile type from Zowe Global Team Configuration.
-     * Merge properties accordingly if needed due to absence of important properties from default profile with
-     * base profile. Credential store information is also retrieved and piggybacked on returned ProfileDao object.
+     * Retrieve the default profile for the specified profile type from Zowe Global Team Configuration.
+     * Merge properties accordingly with the base profile. Credential store information is also retrieved and
+     * piggybacked on a returned ProfileDao object.
      *
      * @param profileType profile type
      * @return ProfileDao object
@@ -132,9 +132,9 @@ public class TeamConfig {
     }
 
     /**
-     * Retrieve default profile from partition by profile and partition names given from Zowe Global Team Configuration.
-     * Merge properties accordingly if needed due to absence of important properties from default profile with
-     * base profile. Credential store information is also retrieved and piggybacked on returned ProfileDao object.
+     * Retrieve the default profile from partition by profile and partition names given from Zowe Global Team Configuration.
+     * Merge properties with base profile. Credential store information is also retrieved and piggybacked on
+     * a returned ProfileDao object.
      *
      * @param profileName   profile name
      * @param partitionName partition name
@@ -167,7 +167,7 @@ public class TeamConfig {
     }
 
     /**
-     * Take two profile objects and merge all non-duplicate properties into target.
+     * Take two profile objects and merge all non-duplicate properties into the target.
      *
      * @param target Profile object
      * @param base   Profile object
