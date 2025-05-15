@@ -62,7 +62,7 @@ public class IssueTso {
 
     /**
      * API method to start a TSO address space with provided parameters, issue a command,
-     * collect responses until prompt is reached, and terminate the address space.
+     * collect responses until the prompt is reached, and terminate the address space.
      *
      * @param accountNumber accounting info for Jobs
      * @param command       command text to issue to the TSO address space.

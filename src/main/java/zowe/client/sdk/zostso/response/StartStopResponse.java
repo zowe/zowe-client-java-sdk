@@ -91,7 +91,7 @@ public class StartStopResponse {
     /**
      * Assign success value
      *
-     * @param success true or false is response seen
+     * @param success true or false is the response seen
      */
     public void setSuccess(final boolean success) {
         this.success = success;

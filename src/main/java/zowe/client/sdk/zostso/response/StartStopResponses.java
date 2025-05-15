@@ -31,7 +31,7 @@ public class StartStopResponses {
     private final ZosmfTsoResponse zosmfTsoResponse;
 
     /**
-     * If an error occurs, returns the error which contains cause error.
+     * If an error occurs, returns the error which contains the cause error.
      */
     private final String failureResponse;
 
@@ -65,12 +65,12 @@ public class StartStopResponses {
     public StartStopResponses(final ZosmfTsoResponse zosmfTsoResponse, final CollectedResponses collectedResponses) {
         this.zosmfTsoResponse = zosmfTsoResponse;
         if (!zosmfTsoResponse.getMsgData().isEmpty()) {
-            // more data means more tso responses to come and as such tso command request has not ended in success yet
+            // more data means more tso responses to come, and as such tso command request has not ended in success yet
             this.success = false;
             final ZosmfMessages zosmfMsg = zosmfTsoResponse.getMsgData().get(0);
             this.failureResponse = zosmfMsg.getMessageText().orElse(TsoConstants.ZOSMF_UNKNOWN_ERROR);
         } else {
-            // no data means no more tso responses to come and as such tso command request has ended successfully 
+            // no data means no more tso responses to come, and an as such tso command request has ended successfully
             this.success = true;
             this.failureResponse = null;
         }

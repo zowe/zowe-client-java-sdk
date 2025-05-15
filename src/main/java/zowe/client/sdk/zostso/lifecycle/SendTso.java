@@ -89,7 +89,7 @@ public class SendTso {
     /**
      * Collects responses from address space until it reaches prompt
      *
-     * @param tso object from first Tso response from witch responses are needed, see ZosmfTsoResponse
+     * @param tso object from the first Tso response from witch responses are needed, see ZosmfTsoResponse
      * @return CollectedResponses response object, see CollectedResponses
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
@@ -155,7 +155,7 @@ public class SendTso {
     }
 
     /**
-     * Generate TSO Response message in json format
+     * Generate a TSO Response message in JSON format
      *
      * @param tsoResponseMessage tso response message, see tsoResponseMessage
      * @return json representation of TSO RESPONSE
@@ -170,7 +170,7 @@ public class SendTso {
      * API method to send data to already started TSO address space,
      * but will read TSO data until a PROMPT is reached.
      *
-     * @param command    to send to the TSO address space.
+     * @param command    to send it to the TSO address space.
      * @param servletKey returned from a successful start
      * @return SendResponse object
      * @throws ZosmfRequestException request error state

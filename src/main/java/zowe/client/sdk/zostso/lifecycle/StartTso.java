@@ -110,7 +110,7 @@ public class StartTso {
     /**
      * Start TSO address space with provided parameters.
      *
-     * @param accountNumber this key of StartTsoParams required, because it cannot be default.
+     * @param accountNumber this key of StartTsoParams required because it cannot be default.
      * @param params        optional object with required parameters, see StartTsoParams
      * @return command response on resolve, @see IStartStopResponses
      * @throws ZosmfRequestException request error state

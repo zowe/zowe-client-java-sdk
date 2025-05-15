@@ -30,7 +30,7 @@ public final class TsoConstants {
     public static final String DEFAULT_CHSET = "697";
 
     /**
-     * Default number of columns value
+     * Default amount of columns value
      */
     public static final String DEFAULT_COLS = "80";
 
