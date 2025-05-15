@@ -23,17 +23,17 @@ import java.util.Optional;
 public class ZosConnection {
 
     /**
-     * Host name pointing to backend z/OS instance
+     * Host name pointing to the backend z / OS instance
      */
     private final String host;
 
     /**
-     * Host z/OSMF port number pointing to backend z/OS instance
+     * Host z/OSMF port number pointing to the backend z / OS instance
      */
     private final String zosmfPort;
 
     /**
-     * Host username with access to backend z/OS instance
+     * Host username with access to a backend z / OS instance
      */
     private final String user;
 

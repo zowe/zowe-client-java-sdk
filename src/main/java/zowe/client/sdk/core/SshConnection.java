@@ -20,17 +20,17 @@ import java.util.Objects;
 public class SshConnection {
 
     /**
-     * Host name pointing to backend z/OS instance
+     * Host name pointing to the backend z / OS instance
      */
     private final String host;
 
     /**
-     * Host port number pointing to backend z/OS instance
+     * Host port number pointing to the backend z / OS instance
      */
     private final int port;
 
     /**
-     * Host username with access to backend z/OS instance
+     * Host username with access to a backend z / OS instance
      */
     private final String user;
 
