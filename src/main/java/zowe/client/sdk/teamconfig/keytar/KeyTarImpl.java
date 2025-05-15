@@ -83,7 +83,7 @@ public class KeyTarImpl implements IKeyTar {
     }
 
     /**
-     * Parse KeyTar json string returned when querying the OS credential store.
+     * Parse KeyTar JSON string returned when querying the OS credential store.
      *
      * @return list of KeyTarConfig objects
      * @throws TeamConfigException error processing team configuration

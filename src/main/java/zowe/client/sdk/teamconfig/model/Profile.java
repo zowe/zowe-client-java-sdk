@@ -49,8 +49,8 @@ public class Profile {
      *
      * @param name   profile name
      * @param type   profile type
-     * @param obj    json object of property values within profile section from Zowe Global Team Configuration
-     * @param secure jsonarray value of secure section
+     * @param obj    JSON object of property values within a profile section from Zowe Global Team Configuration
+     * @param secure jsonarray value of a secure section
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")

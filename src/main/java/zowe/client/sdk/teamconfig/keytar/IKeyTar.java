@@ -32,7 +32,7 @@ public interface IKeyTar {
     /**
      * Describes the method that will return KeyTar value from KeyTar processing done
      *
-     * @return keyValue string containing KeyTar Json representation
+     * @return keyValue string containing KeyTar JSON representation
      */
     String getKeyTarValue();
 
@@ -51,7 +51,7 @@ public interface IKeyTar {
     void setAccountName(String accountName);
 
     /**
-     * Set required account name used for OS credential store querying
+     * Set the required account name used for OS credential store querying
      *
      * @param serviceName string value used for OS credential store querying
      */

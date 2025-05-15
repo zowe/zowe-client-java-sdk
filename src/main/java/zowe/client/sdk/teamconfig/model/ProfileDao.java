@@ -11,7 +11,7 @@ package zowe.client.sdk.teamconfig.model;
 
 /**
  * ProfileDao POJO to act as a container for a parsed Zowe Global Team Configuration file representing a profile section
- * with merged properties from other profiles i.e. base, and KeyTarConfig details (containing credential information).
+ * with merged properties from other profiles i.e., base, and KeyTarConfig details (containing credential information).
  *
  * @author Frank Giordano
  * @version 3.0
@@ -34,12 +34,12 @@ public class ProfileDao {
     private final String password;
 
     /**
-     * Host value from properties section from Zowe Global Team Configuration
+     * Host value from a properties section from Zowe Global Team Configuration
      */
     private final String host;
 
     /**
-     * Port value from properties section from Zowe Global Team Configuration
+     * Port value from a properties section from Zowe Global Team Configuration
      */
     private final String port;
 
