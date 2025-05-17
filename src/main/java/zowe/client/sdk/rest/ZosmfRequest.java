@@ -235,7 +235,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Check if url is a valid http(s) url.
+     * Check if the url is a valid http(s) url.
      *
      * @param url string value
      * @return boolean true or false
