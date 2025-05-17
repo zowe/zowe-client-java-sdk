@@ -133,7 +133,7 @@ public class TeamConfig {
 
     /**
      * Retrieve the default profile from partition by profile and partition names given from Zowe Global Team Configuration.
-     * Merge properties with base profile. Credential store information is also retrieved and piggybacked on
+     * Merge properties accordingly with the base profile. Credential store information is also retrieved and piggybacked on
      * a returned ProfileDao object.
      *
      * @param profileName   profile name
