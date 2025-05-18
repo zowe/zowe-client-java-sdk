@@ -24,12 +24,12 @@ import java.util.OptionalInt;
 public class GetJobParams {
 
     /**
-     * Owner for which to obtain jobs for.
+     * Owner for which to get jobs for.
      */
     private final Optional<String> owner;
 
     /**
-     * Prefix to filter when obtaining jobs.
+     * Prefix to filter when getting jobs.
      * Default: *
      */
     private final Optional<String> prefix;
@@ -124,7 +124,7 @@ public class GetJobParams {
         private String owner = "*";
 
         /**
-         * Prefix to filter when obtaining jobs.
+         * Prefix to filter when getting jobs.
          * Default: *
          */
         private String prefix = "*";

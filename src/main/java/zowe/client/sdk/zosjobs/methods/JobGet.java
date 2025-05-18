@@ -142,7 +142,7 @@ public class JobGet {
     }
 
     /**
-     * Get jobs (defaults to the user ID of the session as owner).
+     * Get jobs (defaults to the user ID of the session as an owner).
      *
      * @return list of job objects (matching jobs), without step-data
      * @throws ZosmfRequestException request error state

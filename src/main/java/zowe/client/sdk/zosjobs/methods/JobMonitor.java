@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * APIs for monitoring the status of a job. Use these APIs to wait for a job to enter the specified status. All APIs
- * in MonitorJobs invoke z/OSMF jobs REST endpoints to obtain job status information.
+ * in MonitorJobs invoke z/OSMF jobs REST endpoints to collect job status information.
  *
  * @author Frank Giordano
  * @version 3.0
@@ -170,7 +170,7 @@ public class JobMonitor {
     }
 
     /**
-     * Check the status of the job for the expected status or that the job has progressed and passed the expected status.
+     * Check the status of the job for the expected status, or that the job has progressed and passed the expected status.
      *
      * @param params monitor jobs params, see MonitorJobWaitForParams
      * @return boolean true when the job status is obtained
@@ -253,7 +253,7 @@ public class JobMonitor {
     private boolean pollByMessage(final MonitorJobWaitForParams params, final String message)
             throws ZosmfRequestException {
         final int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
-        boolean messageFound;  // no assigment boolean means by default it is false
+        boolean messageFound;  // no assigment boolean means, by default, it is false
         boolean shouldContinue;
         int numOfAttempts = 0;
         final int maxAttempts = params.getAttempts().orElse(DEFAULT_ATTEMPTS);

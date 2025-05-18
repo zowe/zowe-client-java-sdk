@@ -265,7 +265,7 @@ public class MonitorJobWaitForParams {
         }
 
         /**
-         * Set job status type
+         * Set a job status type
          *
          * @param jobStatus job status type, see JobStatus.Type object
          * @return Builder object
