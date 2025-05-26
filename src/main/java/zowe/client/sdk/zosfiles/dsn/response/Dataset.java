@@ -314,7 +314,7 @@ public class Dataset {
     }
 
     /**
-     * Return string value representing Dataset object
+     * Return string value representing a Dataset object
      *
      * @return string representation of Dataset
      */
