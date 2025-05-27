@@ -94,7 +94,7 @@ public class DsnGet {
         }
 
         final StringBuilder str = new StringBuilder();
-        IntStream.of(0, length).forEach(i -> str.append(tokens[i]).append("."));
+        IntStream.range(0, length).forEach(i -> str.append(tokens[i]).append("."));
 
         String dataSetSearchStr = str.toString();
         dataSetSearchStr = dataSetSearchStr.substring(0, str.length() - 1);
