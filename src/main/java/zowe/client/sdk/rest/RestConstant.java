@@ -3,6 +3,12 @@ package zowe.client.sdk.rest;
 import java.util.AbstractMap;
 import java.util.Map;
 
+/**
+ * Constants variables for REST package
+ *
+ * @author Frank Giordano
+ * @version 3.0
+ */
 public final class RestConstant {
 
     /**
@@ -12,6 +18,9 @@ public final class RestConstant {
         throw new IllegalStateException("Utility class");
     }
 
+    /**
+     * Map of HTTP code values
+     */
     public static final Map<Integer, String> HTTP_STATUS = Map.<Integer, String>ofEntries(
             new AbstractMap.SimpleEntry<>(200, "ok"),
             new AbstractMap.SimpleEntry<>(201, "created"),

@@ -136,6 +136,11 @@ public class SubmitJclParams {
         return jcl;
     }
 
+    /**
+     * set the jcl value
+     *
+     * @param jcl string representing jcl content
+     */
     public void setJcl(final String jcl) {
         this.jcl = Optional.ofNullable(jcl);
     }

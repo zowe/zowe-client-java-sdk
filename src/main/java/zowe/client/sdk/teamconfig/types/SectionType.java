@@ -17,9 +17,21 @@ package zowe.client.sdk.teamconfig.types;
  */
 public enum SectionType {
 
+    /**
+     * $schema section type
+     */
     $SCHEMA("$schema"),
+    /**
+     * profiles section type
+     */
     PROFILES("profiles"),
+    /**
+     * defaults section type
+     */
     DEFAULTS("defaults"),
+    /**
+     * autoStore section type
+     */
     AUTOSTORE("autoStore");
 
     private final String value;

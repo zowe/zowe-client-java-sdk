@@ -17,11 +17,29 @@ package zowe.client.sdk.zosfiles.dsn.types;
  */
 public enum OperationType {
 
+    /**
+     * create type
+     */
     CREATE,
+    /**
+     * read type
+     */
     READ,
+    /**
+     * copy type
+     */
     COPY,
+    /**
+     * delete type
+     */
     DELETE,
+    /**
+     * write type
+     */
     WRITE,
+    /**
+     * download type
+     */
     DOWNLOAD
 
 }

@@ -17,19 +17,61 @@ package zowe.client.sdk.parse.type;
  */
 public enum ParseType {
 
+    /**
+     * dataset type
+     */
     DATASET,
+    /**
+     * job type
+     */
     JOB,
+    /**
+     * job file type
+     */
     JOB_FILE,
+    /**
+     * member type
+     */
     MEMBER,
+    /**
+     * mvs console type
+     */
     MVS_CONSOLE,
+    /**
+     * properties type
+     */
     PROPS,
+    /**
+     * tso console type
+     */
     TSO_CONSOLE,
+    /**
+     * tso stop type
+     */
     TSO_STOP,
+    /**
+     * unix file type
+     */
     UNIX_FILE,
+    /**
+     * unix zfs type
+     */
     UNIX_ZFS,
+    /**
+     * zos log item type
+     */
     ZOS_LOG_ITEM,
+    /**
+     * zos log reply item
+     */
     ZOS_LOG_REPLY,
+    /**
+     * zosmf systems type
+     */
     ZOSMF_SYSTEMS,
+    /**
+     * zosmf info type
+     */
     ZOSMF_INFO
 
 }

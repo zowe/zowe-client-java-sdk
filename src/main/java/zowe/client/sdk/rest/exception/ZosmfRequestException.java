@@ -19,6 +19,9 @@ import zowe.client.sdk.rest.Response;
  */
 public class ZosmfRequestException extends Exception {
 
+    /**
+     * Response object
+     */
     private Response response;
 
     /**

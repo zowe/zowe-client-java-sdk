@@ -41,11 +41,29 @@ import java.util.concurrent.atomic.AtomicReference;
 public abstract class ZosmfRequest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZosmfRequest.class);
+    /**
+     * X_CSRF_ZOSMF_HEADER_KEY header info
+     */
     public static final String X_CSRF_ZOSMF_HEADER_KEY = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(0);
+    /**
+     * X_CSRF_ZOSMF_HEADER_VALUE header info
+     */
     public static final String X_CSRF_ZOSMF_HEADER_VALUE = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
+    /**
+     * ZosConnection object
+     */
     protected final ZosConnection connection;
+    /**
+     * Map of HTTP headers
+     */
     protected final Map<String, String> headers = new HashMap<>();
+    /**
+     * URL string
+     */
     protected String url;
+    /**
+     * Cookie object
+     */
     protected Cookie cookie;
 
     /**

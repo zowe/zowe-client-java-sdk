@@ -245,6 +245,12 @@ public class ZosmfTsoResponse {
         public Builder() {
         }
 
+        /**
+         * Set servletKey value
+         *
+         * @param servletKey string value
+         * @return Builder this object
+         */
         public Builder servletKey(final String servletKey) {
             this.servletKey = servletKey;
             return this;

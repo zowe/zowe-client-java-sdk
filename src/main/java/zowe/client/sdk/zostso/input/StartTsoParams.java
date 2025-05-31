@@ -54,6 +54,9 @@ public class StartTsoParams {
      */
     public Optional<String> rows = Optional.empty();
 
+    /**
+     * StartTsoParams default constructor
+     */
     public StartTsoParams() {
     }
 

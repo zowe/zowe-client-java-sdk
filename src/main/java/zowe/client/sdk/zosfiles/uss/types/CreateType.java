@@ -19,7 +19,13 @@ package zowe.client.sdk.zosfiles.uss.types;
  */
 public enum CreateType {
 
+    /**
+     * file mode
+     */
     FILE("file"),
+    /**
+     * dir mode
+     */
     DIR("dir");
 
     private final String value;

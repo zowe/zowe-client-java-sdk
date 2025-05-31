@@ -24,8 +24,17 @@ public class JobStatus {
      */
     public enum Type {
 
+        /**
+         * input status
+         */
         INPUT,
+        /**
+         * active status
+         */
         ACTIVE,
+        /**
+         * output status
+         */
         OUTPUT
 
     }

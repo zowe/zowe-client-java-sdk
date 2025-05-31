@@ -19,7 +19,13 @@ package zowe.client.sdk.zosfiles.uss.types;
  */
 public enum MountActionType {
 
+    /**
+     * mount type
+     */
     MOUNT("mount"),
+    /**
+     * unmount type
+     */
     UNMOUNT("unmount");
 
     private final String value;

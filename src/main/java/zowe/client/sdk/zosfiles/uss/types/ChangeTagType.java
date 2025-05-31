@@ -21,8 +21,17 @@ package zowe.client.sdk.zosfiles.uss.types;
  */
 public enum ChangeTagType {
 
+    /**
+     * binary mode
+     */
     BINARY("binary"),
+    /**
+     * mixed mode
+     */
     MIXED("mixed"),
+    /**
+     * text mode
+     */
     TEXT("text");
 
     private final String value;

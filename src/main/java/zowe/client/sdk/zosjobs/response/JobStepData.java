@@ -75,30 +75,65 @@ public class JobStepData {
         this.programName = Optional.ofNullable(builder.programName);
     }
 
+    /**
+     * Retrieve active boolean value
+     *
+     * @return boolean value
+     */
     public boolean isActive() {
         return active;
     }
 
+    /**
+     * Retrieve completion optional string
+     *
+     * @return optional string
+     */
     public Optional<String> getCompletion() {
         return completion;
     }
 
+    /**
+     * Retrieve procStepName optional string
+     *
+     * @return optional string
+     */
     public Optional<String> getProcStepName() {
         return procStepName;
     }
 
+    /**
+     * Retrieve programName optional string
+     *
+     * @return optional string
+     */
     public Optional<String> getProgramName() {
         return programName;
     }
 
+    /**
+     * Retrieve smfid optional string
+     *
+     * @return optional string
+     */
     public Optional<String> getSmfid() {
         return smfid;
     }
 
+    /**
+     * Retrieve stepName optional string
+     *
+     * @return optional string
+     */
     public Optional<String> getStepName() {
         return stepName;
     }
 
+    /**
+     * Retrieve stepNumber optional string
+     *
+     * @return optional long
+     */
     public OptionalLong getStepNumber() {
         return stepNumber;
     }

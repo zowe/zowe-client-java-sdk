@@ -17,15 +17,45 @@ package zowe.client.sdk.rest.type;
  */
 public enum ZosmfRequestType {
 
+    /**
+     * Get JSON type
+     */
     GET_JSON,
+    /**
+     * Get TEXT type
+     */
     GET_TEXT,
+    /**
+     * Put JSON type
+     */
     PUT_JSON,
+    /**
+     * Put TEXT type
+     */
     PUT_TEXT,
+    /**
+     * Delete JSON type
+     */
     DELETE_JSON,
+    /**
+     * Delete TEXT type
+     */
     DELETE_TEXT,
+    /**
+     * Post JSON type
+     */
     POST_JSON,
+    /**
+     * Post TEXT type
+     */
     POST_TEXT,
+    /**
+     * Get STREAM type
+     */
     GET_STREAM,
+    /**
+     * Put STREAM type
+     */
     PUT_STREAM
 
 }

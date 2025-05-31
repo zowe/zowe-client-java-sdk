@@ -14,6 +14,12 @@ import zowe.client.sdk.zostso.response.StartStopResponse;
 
 import java.util.List;
 
+/**
+ * TSO response service class
+ *
+ * @author Frank Giordano
+ * @version 3.0
+ */
 public class TsoResponseService {
 
     /**
@@ -26,11 +32,21 @@ public class TsoResponseService {
      */
     private ZosmfTsoResponse zosmfPhraseResponse;
 
+    /**
+     * TsoResponseService constructor with Response object
+     *
+     * @param response Response object
+     */
     public TsoResponseService(final Response response) {
         ValidateUtils.checkNullParameter(response == null, "response is null");
         this.tsoCmdResponse = response;
     }
 
+    /**
+     * TsoResponseService constructor with ZosmfTsoResponse object
+     *
+     * @param zosmfResponse ZosmfTsoResponse object
+     */
     public TsoResponseService(final ZosmfTsoResponse zosmfResponse) {
         ValidateUtils.checkNullParameter(zosmfResponse == null, "zosmfResponse is null");
         this.zosmfPhraseResponse = zosmfResponse;
