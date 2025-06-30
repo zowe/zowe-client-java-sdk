@@ -43,7 +43,7 @@ public class ZosConnection {
     private final String password;
 
     /**
-     * Cookie value set to use as authentication token for http call
+     * Cookie value set to use as an authentication token for http call
      */
     private Optional<Cookie> cookie;
 
