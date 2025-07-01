@@ -13,21 +13,21 @@ import kong.unirest.core.Cookie;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
 import kong.unirest.core.Unirest;
+import kong.unirest.core.java.SSLContextBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import javax.net.ssl.SSLContext;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.*;
+import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -74,7 +74,7 @@ public abstract class ZosmfRequest {
      */
     public ZosmfRequest(final ZosConnection connection) {
         this.connection = connection;
-        this.setup();
+        this.initialize();
     }
 
     /**
@@ -82,11 +82,51 @@ public abstract class ZosmfRequest {
      *
      * @author Frank Giordano
      */
-    private void setup() {
+    private void initialize() {
         Unirest.config().reset();
         Unirest.config().enableCookieManagement(false);
-        Unirest.config().verifySsl(false);
         this.setStandardHeaders();
+        switch (connection.getAuthType()) {
+            case CLASSIC:
+                setupClassic();
+                break;
+            case COOKIE:
+                setupCookie();
+                break;
+            case SSL:
+                setupSsl();
+                break;
+            default:
+
+        }
+    }
+
+    private static void setupClassic() {
+        Unirest.config().verifySsl(false);
+    }
+
+    private void setupCookie() {
+        Unirest.config().verifySsl(false);
+        this.cookie = connection.getCookie();
+        headers.remove("Authorization");
+    }
+
+    private void setupSsl() {
+        var filePath = connection.getCertFilePath();
+        var certPassword = connection.getCertPassword();
+        SSLContext sslContext;
+        try {
+            var clientStore = KeyStore.getInstance("PKCS12");
+            clientStore.load(new FileInputStream(filePath), certPassword.toCharArray());
+            sslContext = SSLContextBuilder.create().loadKeyMaterial(clientStore, certPassword.toCharArray()).build();
+        } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException |
+                 KeyManagementException | UnrecoverableKeyException e) {
+            throw new IllegalStateException(e);
+        }
+        Unirest.config().verifySsl(true);
+        Unirest.config().sslContext(sslContext);
+        headers.remove("Authorization");
+        this.cookie = null;
     }
 
     /**
@@ -225,6 +265,9 @@ public abstract class ZosmfRequest {
     public void setHeaders(final Map<String, String> headers) {
         this.headers.clear();
         this.setStandardHeaders();
+        if (!connection.getAuthType().name().equals("CLASSIC")) {
+            this.headers.remove("Authorization");
+        }
         this.headers.putAll(headers);
     }
 
@@ -265,37 +308,6 @@ public abstract class ZosmfRequest {
             return false;
         } catch (URISyntaxException | MalformedURLException exception) {
             return true;
-        }
-    }
-
-    /**
-     * Set a cookie token for this request. This is optional for most requests and not needed.
-     * Setting the cookie with a non-null value will remove the HTTP Authorization request header.
-     * <p>
-     * Setting the cookie value as null afterward will revert/enable the HTTP Authorization
-     * request header for future requests.
-     *
-     * @param cookie object
-     * @author Frank Giordano
-     */
-    public void setCookie(final Cookie cookie) {
-        this.cookie = cookie;
-        this.toggleAuthenticationType();
-    }
-
-    /**
-     * Determine the authentication type (basic or token authorization) and switch accordingly.
-     *
-     * @author Frank Giordano
-     */
-    private void toggleAuthenticationType() {
-        if (this.cookie == null) {
-            LOG.debug("enable basic authorization");
-            headers.put("Authorization", "Basic " +
-                    EncodeUtils.encodeAuthComponent(connection));
-        } else {
-            LOG.debug("disable basic authorization");
-            headers.remove("Authorization");
         }
     }
 

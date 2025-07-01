@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
+import zowe.client.sdk.core.AuthenicationType;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutStreamZosmfRequest;
 import zowe.client.sdk.rest.PutTextZosmfRequest;
@@ -39,7 +40,10 @@ import static org.mockito.Mockito.withSettings;
 @SuppressWarnings("DataFlowIssue")
 public class UssWriteTest {
 
-    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
+    private final ZosConnection connection = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+            .host("1").password("1").user("1").zosmfPort("1").build();
+    private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthenicationType.COOKIE)
+            .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
     private UssWrite ussWrite;
 
     @Before
@@ -62,28 +66,17 @@ public class UssWriteTest {
     @Test
     public void tstUssWriteTextToggleAuthSuccess() throws ZosmfRequestException {
         PutTextZosmfRequest mockJsonPutRequestAuth = Mockito.mock(PutTextZosmfRequest.class,
-                withSettings().useConstructor(connection));
+                withSettings().useConstructor(cookieConnection));
         Mockito.when(mockJsonPutRequestAuth.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         doCallRealMethod().when(mockJsonPutRequestAuth).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonPutRequestAuth).setStandardHeaders();
         doCallRealMethod().when(mockJsonPutRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonPutRequestAuth).setCookie(any());
         doCallRealMethod().when(mockJsonPutRequestAuth).getHeaders();
         final UssWrite ussWrite = new UssWrite(connection, mockJsonPutRequestAuth);
 
-        connection.setCookie(new Cookie("hello=hello"));
         Response response = ussWrite.writeText("/xx/xx/x", "text");
         String expectedResp = "{X-IBM-Data-Type=text;, X-CSRF-ZOSMF-HEADER=true, Content-Type=text/plain; charset=UTF-8}";
-        Assertions.assertEquals(expectedResp, mockJsonPutRequestAuth.getHeaders().toString());
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
-
-        connection.setCookie(null);
-        response = ussWrite.writeText("/xx/xx/x", "text");
-        expectedResp = "{Authorization=Basic MTox, X-IBM-Data-Type=text;, X-CSRF-ZOSMF-HEADER=true, " +
-                "Content-Type=text/plain; charset=UTF-8}";
         Assertions.assertEquals(expectedResp, mockJsonPutRequestAuth.getHeaders().toString());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));

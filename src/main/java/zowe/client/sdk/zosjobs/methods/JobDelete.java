@@ -121,7 +121,6 @@ public class JobDelete {
         }
         request.setHeaders(headers);
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         // if synchronously response should contain a job document that was canceled and http return code
         // if asynchronously response should only contain http return code, let the caller handle the response JSON parsing

@@ -12,7 +12,6 @@ package zowe.client.sdk.core;
 import kong.unirest.core.Cookie;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Z/OSMF Connection information placeholder
@@ -43,98 +42,71 @@ public class ZosConnection {
     private final String password;
 
     /**
+     * The certificate password for SSL authentication
+     */
+    private final String certPassword;
+
+    /**
      * Cookie value set to use as an authentication token for http call
      */
-    private Optional<Cookie> cookie;
+    private final Cookie cookie;
 
     /**
-     * ZosConnection constructor
-     *
-     * @param host      machine host pointing to backend z/OS instance
-     * @param zosmfPort machine host z/OSMF port number pointing to backend z/OS instance
-     * @param user      machine host username with access to backend z/OS instance
-     * @param password  machine host username's password with access to backend z/OS instance
-     * @author Frank Giordano
+     * Path with filename denoting the certificate for SSL authentication usage
      */
-    public ZosConnection(final String host, final String zosmfPort, final String user, final String password) {
-        this.host = host;
-        this.zosmfPort = zosmfPort;
-        this.user = user;
-        this.password = password;
-        this.cookie = Optional.empty();
+    private final String certFilePath;
+
+    /**
+     * Authentication type: CLASSIC, COOKIE or SSL
+     */
+    private final AuthenicationType authType;
+
+    /**
+     * Private constructor used by the Builder
+     *
+     * @param builder Builder instance containing configuration
+     */
+    private ZosConnection(ZosConnection.Builder builder) {
+        this.host = builder.host;
+        this.zosmfPort = builder.zosmfPort;
+        this.user = builder.user;
+        this.password = builder.password;
+        this.certPassword = builder.certPassword;
+        this.cookie = builder.cookie;
+        this.certFilePath = builder.certFilePath;
+        this.authType = builder.authType;
     }
 
-    /**
-     * Retrieve host specified
-     *
-     * @return host value
-     */
-    public String getHost() {
-        return host;
+    public AuthenicationType getAuthType() {
+        return authType;
     }
 
-    /**
-     * Retrieve z/OSMF port number specified
-     *
-     * @return port value
-     */
-    public String getZosmfPort() {
-        return zosmfPort;
+    public String getCertFilePath() {
+        return certFilePath;
     }
 
-    /**
-     * Retrieve username specified
-     *
-     * @return user value
-     */
-    public String getUser() {
-        return user;
+    public Cookie getCookie() {
+        return cookie;
     }
 
-    /**
-     * Retrieve password specified
-     *
-     * @return password value
-     */
     public String getPassword() {
         return password;
     }
 
-    /**
-     * Retrieve cookie object
-     *
-     * @return cookie object
-     */
-    public Optional<Cookie> getCookie() {
-        return cookie;
+    public String getCertPassword() {
+        return certPassword;
     }
 
-    /**
-     * Set a cookie token for this request. This is optional for most requests and not needed.
-     * Setting the cookie will remove the HTTP header authentication.
-     * Setting the cookie value as null after giving it a value will revert/enable
-     * the HTTP header authentication for future requests.
-     *
-     * @param cookie Cookie object containing a token value
-     */
-    public void setCookie(final Cookie cookie) {
-        this.cookie = Optional.ofNullable(cookie);
+    public String getUser() {
+        return user;
     }
 
-    /**
-     * Return string value representing ZosConnection object
-     *
-     * @return string representation of ZosConnection
-     */
-    @Override
-    public String toString() {
-        return "ZosConnection{" +
-                "host='" + host + '\'' +
-                ", zosmfPort='" + zosmfPort + '\'' +
-                ", user='" + user + '\'' +
-                ", password='" + password + '\'' +
-                ", cookie=" + cookie +
-                '}';
+    public String getZosmfPort() {
+        return zosmfPort;
+    }
+
+    public String getHost() {
+        return host;
     }
 
     /**
@@ -152,10 +124,10 @@ public class ZosConnection {
             return false;
         }
         ZosConnection other = (ZosConnection) obj;
-        return Objects.equals(host, other.host) && Objects.equals(zosmfPort, other.zosmfPort)
-                && Objects.equals(user, other.user) && Objects.equals(password, other.password)
-                && Objects.equals(cookie.orElse(new Cookie("")).getValue(),
-                other.cookie.orElse(new Cookie("")).getValue());
+        return Objects.equals(host, other.host) && Objects.equals(zosmfPort, other.zosmfPort) &&
+                Objects.equals(user, other.user) && Objects.equals(password, other.password) &&
+                Objects.equals(certPassword, other.certPassword) && Objects.equals(cookie, other.cookie) &&
+                Objects.equals(certFilePath, other.certFilePath) && Objects.equals(authType, other.authType);
     }
 
     /**
@@ -165,7 +137,116 @@ public class ZosConnection {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(host, zosmfPort, user, password, cookie);
+        return Objects.hash(host, zosmfPort, user, password, certPassword, cookie, certFilePath, authType);
+    }
+
+    /**
+     * Builder class for ZosConnection
+     */
+    public static class Builder {
+        private String host;
+        private String zosmfPort;
+        private String user;
+        private String password;
+        private String certPassword;
+        private Cookie cookie;
+        private String certFilePath;
+        private final AuthenicationType authType;
+
+        /**
+         * Constructor with setting the required authentication type
+         *
+         * @param authType AuthenticationType
+         */
+        public Builder(AuthenicationType authType) {
+            this.authType = authType;
+        }
+
+        /**
+         * Set the host
+         *
+         * @param host machine host pointing to backend z/OS instance
+         * @return Builder instance
+         */
+        public ZosConnection.Builder host(String host) {
+            this.host = host;
+            return this;
+        }
+
+        /**
+         * Set the z/OSMF port
+         *
+         * @param zosmfPort machine host z/OSMF port number pointing to backend z/OS instance
+         * @return Builder instance
+         */
+        public ZosConnection.Builder zosmfPort(String zosmfPort) {
+            this.zosmfPort = zosmfPort;
+            return this;
+        }
+
+        /**
+         * Set the user
+         *
+         * @param user machine host username with access to backend z/OS instance
+         * @return Builder instance
+         */
+        public ZosConnection.Builder user(String user) {
+            this.user = user;
+            return this;
+        }
+
+        /**
+         * Set the password
+         *
+         * @param password machine host username's password with access to backend z/OS instance
+         * @return Builder instance
+         */
+        public ZosConnection.Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        /**
+         * Set the certificate password for SSL authentication
+         *
+         * @param certPassword certificate password
+         * @return Builder instance
+         */
+        public ZosConnection.Builder certPassword(String certPassword) {
+            this.certPassword = certPassword;
+            return this;
+        }
+
+        /**
+         * Set the cookie
+         *
+         * @param cookie Cookie object containing a token value
+         * @return Builder instance
+         */
+        public ZosConnection.Builder cookie(Cookie cookie) {
+            this.cookie = cookie;
+            return this;
+        }
+
+        /**
+         * Set the certificate file path
+         *
+         * @param certFilePath path to the certificate file
+         * @return Builder instance
+         */
+        public ZosConnection.Builder certFilePath(String certFilePath) {
+            this.certFilePath = certFilePath;
+            return this;
+        }
+
+        /**
+         * Build the ZosConnection instance
+         *
+         * @return new ZosConnection instance
+         */
+        public ZosConnection build() {
+            return new ZosConnection(this);
+        }
     }
 
 }

@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
+import zowe.client.sdk.core.AuthenicationType;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -45,7 +46,10 @@ import static org.mockito.Mockito.withSettings;
  */
 public class IssueCommandTest {
 
-    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
+    private final ZosConnection connection = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+            .host("1").password("1").user("1").zosmfPort("1").build();
+    private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthenicationType.COOKIE)
+            .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
     private PutJsonZosmfRequest mockJsonGetRequest;
 
     @Before
@@ -76,31 +80,19 @@ public class IssueCommandTest {
         final JSONObject json = new JSONObject(jsonMap);
 
         PutJsonZosmfRequest mockJsonGetRequestAuth = Mockito.mock(PutJsonZosmfRequest.class,
-                withSettings().useConstructor(connection));
+                withSettings().useConstructor(cookieConnection));
         Mockito.when(mockJsonGetRequestAuth.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestAuth).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonGetRequestAuth).setStandardHeaders();
         doCallRealMethod().when(mockJsonGetRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonGetRequestAuth).setCookie(any());
         doCallRealMethod().when(mockJsonGetRequestAuth).getHeaders();
 
-        final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequestAuth);
+        final IssueConsole issueCommand = new IssueConsole(cookieConnection, mockJsonGetRequestAuth);
 
-        connection.setCookie(new Cookie("hello=hello"));
         ConsoleResponse response = issueCommand.issueCommand("command");
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestAuth.getHeaders().toString());
-        assertEquals("student",
-                response.getCommandResponse()
-                        .orElse("n/a")
-                        .replaceAll("\\r", "")
-                        .replaceAll("\\n", ""));
-
-        connection.setCookie(null);
-        response = issueCommand.issueCommand("command");
-        final String expectedResp = "{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}";
-        Assertions.assertEquals(expectedResp, mockJsonGetRequestAuth.getHeaders().toString());
         assertEquals("student",
                 response.getCommandResponse()
                         .orElse("n/a")

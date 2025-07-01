@@ -9,7 +9,9 @@
  */
 package zowe.client.sdk.zosfiles;
 
+import kong.unirest.core.Cookie;
 import org.junit.Test;
+import zowe.client.sdk.core.AuthenicationType;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.methods.UssExtAttr;
@@ -24,7 +26,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class UssExtAttrTest {
 
-    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
+    private final ZosConnection connection = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+            .host("1").password("1").user("1").zosmfPort("1").build();
 
     @Test
     public void tstUssExtAttrSetValueFailure1() throws ZosmfRequestException {

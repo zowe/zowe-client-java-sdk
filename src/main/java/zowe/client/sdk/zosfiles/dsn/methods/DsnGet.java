@@ -164,7 +164,6 @@ public class DsnGet {
         }
         request.setHeaders(headers);
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         return new ByteArrayInputStream((byte[]) request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no dsn get response phrase")));

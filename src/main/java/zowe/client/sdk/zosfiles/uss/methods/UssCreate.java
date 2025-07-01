@@ -101,7 +101,6 @@ public class UssCreate {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(createMap).toString());
 
         return request.executeRequest();
@@ -167,7 +166,6 @@ public class UssCreate {
 
         request.setHeaders(headers);
         request.setUrl(url.toString());
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(createZfsMap).toString());
 
         return request.executeRequest();

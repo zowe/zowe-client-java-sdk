@@ -14,6 +14,7 @@ import kong.unirest.core.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import zowe.client.sdk.core.AuthenicationType;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -37,7 +38,10 @@ import static org.mockito.Mockito.withSettings;
  */
 @SuppressWarnings("DataFlowIssue")
 public class UssChangeTagTest {
-    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
+    private final ZosConnection connection = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+            .host("1").password("1").user("1").zosmfPort("1").build();
+    private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthenicationType.COOKIE)
+            .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
     private PutJsonZosmfRequest mockJsonPutRequest;
     private PutJsonZosmfRequest mockJsonPutRequestAuth;
     private UssChangeTag ussChangeTag;
@@ -48,13 +52,12 @@ public class UssChangeTagTest {
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
 
-        mockJsonPutRequestAuth = Mockito.mock(PutJsonZosmfRequest.class, withSettings().useConstructor(connection));
+        mockJsonPutRequestAuth = Mockito.mock(PutJsonZosmfRequest.class, withSettings().useConstructor(cookieConnection));
         Mockito.when(mockJsonPutRequestAuth.executeRequest()).thenReturn(
                 new Response(new org.json.simple.JSONObject(), 200, "success"));
         doCallRealMethod().when(mockJsonPutRequestAuth).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonPutRequestAuth).setStandardHeaders();
         doCallRealMethod().when(mockJsonPutRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonPutRequestAuth).setCookie(any());
         doCallRealMethod().when(mockJsonPutRequestAuth).getHeaders();
 
         ussChangeTag = new UssChangeTag(connection);
@@ -71,19 +74,9 @@ public class UssChangeTagTest {
 
     @Test
     public void tstUssChangeTagToggleAuthSuccess() throws ZosmfRequestException {
-        final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequestAuth);
-
-        connection.setCookie(new Cookie("hello=hello"));
+        final UssChangeTag ussChangeTag = new UssChangeTag(cookieConnection, mockJsonPutRequestAuth);
         Response response = ussChangeTag.binary("/xxx/xx/xx");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonPutRequestAuth.getHeaders().toString());
-        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        assertEquals(200, response.getStatusCode().orElse(-1));
-        assertEquals("success", response.getStatusText().orElse("n\\a"));
-
-        connection.setCookie(null);
-        response = ussChangeTag.binary("/xxx/xx/xx");
-        assertEquals("{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonPutRequestAuth.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));

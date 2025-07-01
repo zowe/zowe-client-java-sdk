@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
+import zowe.client.sdk.core.AuthenicationType;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -45,7 +46,10 @@ import static org.mockito.Mockito.withSettings;
 @SuppressWarnings("DataFlowIssue")
 public class UssListTest {
 
-    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
+    private final ZosConnection connection = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+            .host("1").password("1").user("1").zosmfPort("1").build();
+    private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthenicationType.COOKIE)
+            .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
     private GetJsonZosmfRequest mockJsonGetRequest;
     private UssList ussList;
     private final static String dataForFileList = "{\n" +
@@ -136,27 +140,18 @@ public class UssListTest {
     @Test
     public void tstUssListFileListEmptyResponseToggleAuthSuccess() throws Exception {
         GetJsonZosmfRequest mockJsonGetRequestAuth = Mockito.mock(GetJsonZosmfRequest.class,
-                withSettings().useConstructor(connection));
+                withSettings().useConstructor(cookieConnection));
         Mockito.when(mockJsonGetRequestAuth.executeRequest()).thenReturn(
                 new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestAuth).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonGetRequestAuth).setStandardHeaders();
         doCallRealMethod().when(mockJsonGetRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonGetRequestAuth).setCookie(any());
         doCallRealMethod().when(mockJsonGetRequestAuth).getHeaders();
 
-        final UssList ussList = new UssList(connection, mockJsonGetRequestAuth);
-        connection.setCookie(new Cookie("hello=hello"));
+        final UssList ussList = new UssList(cookieConnection, mockJsonGetRequestAuth);
         List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestAuth.getHeaders().toString());
-        // should only contain two items
-        assertEquals(0, items.size());
-
-        connection.setCookie(null);
-        items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
-        final String expectedResp = "{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}";
-        Assertions.assertEquals(expectedResp, mockJsonGetRequestAuth.getHeaders().toString());
         // should only contain two items
         assertEquals(0, items.size());
     }

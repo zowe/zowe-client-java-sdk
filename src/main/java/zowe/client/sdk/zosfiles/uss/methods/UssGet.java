@@ -148,7 +148,6 @@ public class UssGet {
 
         request.setHeaders(headers);
         request.setUrl(url.toString());
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         return request.executeRequest();
     }

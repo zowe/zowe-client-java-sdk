@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import zowe.client.sdk.core.AuthenicationType;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -34,7 +35,10 @@ import static org.mockito.Mockito.*;
 @SuppressWarnings("DataFlowIssue")
 public class UssChangeModeTest {
 
-    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
+    private final ZosConnection connection = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+            .host("1").password("1").user("1").zosmfPort("1").build();
+    private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthenicationType.COOKIE)
+            .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
     private PutJsonZosmfRequest mockJsonPutRequest;
     private PutJsonZosmfRequest mockJsonPutRequestAuth;
     private UssChangeMode ussChangeMode;
@@ -45,13 +49,12 @@ public class UssChangeModeTest {
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
 
-        mockJsonPutRequestAuth = Mockito.mock(PutJsonZosmfRequest.class, withSettings().useConstructor(connection));
+        mockJsonPutRequestAuth = Mockito.mock(PutJsonZosmfRequest.class, withSettings().useConstructor(cookieConnection));
         Mockito.when(mockJsonPutRequestAuth.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         doCallRealMethod().when(mockJsonPutRequestAuth).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonPutRequestAuth).setStandardHeaders();
         doCallRealMethod().when(mockJsonPutRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonPutRequestAuth).setCookie(any());
         doCallRealMethod().when(mockJsonPutRequestAuth).getHeaders();
 
         ussChangeMode = new UssChangeMode(connection);
@@ -68,22 +71,11 @@ public class UssChangeModeTest {
     }
 
     @Test
-    public void tstUssChangeModeToggleAuthSuccess() throws ZosmfRequestException {
-        final UssChangeMode ussChangeMode = new UssChangeMode(connection, mockJsonPutRequestAuth);
-
-        connection.setCookie(new Cookie("hello=hello"));
+    public void tstUssChangeModeToggleCookieSuccess() throws ZosmfRequestException {
+        final UssChangeMode ussChangeMode = new UssChangeMode(cookieConnection, mockJsonPutRequestAuth);
         Response response = ussChangeMode.change("/xxx/xx/xx",
                 new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonPutRequestAuth.getHeaders().toString());
-        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        assertEquals(200, response.getStatusCode().orElse(-1));
-        assertEquals("success", response.getStatusText().orElse("n\\a"));
-
-        connection.setCookie(null);
-        response = ussChangeMode.change("/xxx/xx/xx",
-                new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
-        assertEquals("{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonPutRequestAuth.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));

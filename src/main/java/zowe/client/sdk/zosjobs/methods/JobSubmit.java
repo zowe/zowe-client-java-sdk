@@ -134,7 +134,6 @@ public class JobSubmit {
         }
         request.setHeaders(headers);
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(params.getJcl().orElseThrow(() -> new IllegalArgumentException("jcl not specified")));
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
@@ -180,7 +179,6 @@ public class JobSubmit {
             request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(submitMap).toString());
 
         final String jsonStr = request.executeRequest().getResponsePhrase()

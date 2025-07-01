@@ -26,98 +26,86 @@ public class ZosConnectionTest {
 
     @Test
     public void tstReferenceNotEqualsSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
+        final ZosConnection zc1 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
+        final ZosConnection zc2 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
         assertNotSame(zc1, zc2);
     }
 
     @Test
-    public void tstReferenceNotEqualsWithAuthSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        zc1.setCookie(new Cookie("hello", "world"));
-        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
-        zc2.setCookie(new Cookie("hello", "world"));
-        assertNotSame(zc1, zc2);
-    }
-
-    @Test
-    public void tstReferenceNotEqualsWithNullAuthSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        zc1.setCookie(null);
-        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
-        zc2.setCookie(null);
+    public void tstReferenceNotEqualsWithCookieSuccess() {
+        final ZosConnection zc1 = new ZosConnection.Builder(AuthenicationType.COOKIE)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort")
+                .cookie(new Cookie("hello", "world")).build();
+        final ZosConnection zc2 = new ZosConnection.Builder(AuthenicationType.COOKIE)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
         assertNotSame(zc1, zc2);
     }
 
     @Test
     public void tstReferenceEqualsSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
+        final ZosConnection zc1 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
         final ZosConnection zc2 = zc1;
         assertEquals(zc1, zc2);
     }
 
     @Test
-    public void tstReferenceEqualsWithAuthSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        zc1.setCookie(new Cookie("hello", "world"));
+    public void tstReferenceEqualsWithCookieSuccess() {
+        final ZosConnection zc1 = new ZosConnection.Builder(AuthenicationType.COOKIE)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort")
+                .cookie(new Cookie("hello", "world")).build();
         final ZosConnection zc2 = zc1;
         assertEquals(zc1, zc2);
     }
 
     @Test
     public void tstEqualsSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
+        final ZosConnection zc1 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
+        final ZosConnection zc2 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
         assertEquals(zc1, zc2);
     }
 
     @Test
-    public void tstEqualsWithAuthSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        zc1.setCookie(new Cookie("hello", "world"));
-        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
-        zc2.setCookie(new Cookie("hello", "world"));
-        assertEquals(zc1, zc2);
-    }
-
-    @Test
-    public void tstEqualsWithNullAuthSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        zc1.setCookie(null);
-        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
-        zc2.setCookie(null);
+    public void tstEqualsWithCookieSuccess() {
+        final ZosConnection zc1 = new ZosConnection.Builder(AuthenicationType.COOKIE)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort")
+                .cookie(new Cookie("hello", "world")).build();
+        final ZosConnection zc2 = new ZosConnection.Builder(AuthenicationType.COOKIE)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort")
+                .cookie(new Cookie("hello", "world")).build();
         assertEquals(zc1, zc2);
     }
 
     @Test
     public void tstNotEqualsSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        final ZosConnection zc2 = new ZosConnection("test2", "zosmfPort", "user", "password");
+        final ZosConnection zc1 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
+        final ZosConnection zc2 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test2").password("password").user("user").zosmfPort("zosmfPort").build();
         assertNotEquals(zc1, zc2);
     }
 
     @Test
-    public void tstNotEqualsWithAuthSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        zc1.setCookie(new Cookie("hello", "world1"));
-        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
-        zc2.setCookie(new Cookie("hello", "world"));
-        assertNotEquals(zc1, zc2);
-    }
-
-    @Test
-    public void tstNotEqualsWithNullAuthSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test1", "zosmfPort", "user", "password");
-        zc1.setCookie(null);
-        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
-        zc2.setCookie(null);
+    public void tstNotEqualsWithCookieSuccess() {
+        final ZosConnection zc1 = new ZosConnection.Builder(AuthenicationType.COOKIE)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort")
+                .cookie(new Cookie("hello", "world1")).build();
+        final ZosConnection zc2 = new ZosConnection.Builder(AuthenicationType.COOKIE)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort")
+                .cookie(new Cookie("hello", "world")).build();
         assertNotEquals(zc1, zc2);
     }
 
     @Test
     public void tstHashCodeMapWithSecondHostDifferentSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        final ZosConnection zc2 = new ZosConnection("test2", "zosmfPort", "user", "password");
+        final ZosConnection zc1 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
+        final ZosConnection zc2 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test2").password("password").user("user").zosmfPort("zosmfPort").build();
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
@@ -126,8 +114,10 @@ public class ZosConnectionTest {
 
     @Test
     public void tstHashCodeMapWithSecondZosmfPortDifferentSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort2", "user", "password");
+        final ZosConnection zc1 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
+        final ZosConnection zc2 =new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort2").build();
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
@@ -136,8 +126,10 @@ public class ZosConnectionTest {
 
     @Test
     public void tstHashCodeMapWithSecondUserDifferentSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user2", "password");
+        final ZosConnection zc1 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
+        final ZosConnection zc2 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user2").zosmfPort("zosmfPort").build();
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
@@ -146,8 +138,10 @@ public class ZosConnectionTest {
 
     @Test
     public void tstHashCodeMapWithSecondPasswordDifferentSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password2");
+        final ZosConnection zc1 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
+        final ZosConnection zc2 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password2").user("user").zosmfPort("zosmfPort").build();
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
@@ -156,8 +150,10 @@ public class ZosConnectionTest {
 
     @Test
     public void tstHashCodeMapNoDuplicateSuccess() {
-        final ZosConnection zc1 = new ZosConnection("test", "zosmfPort", "user", "password");
-        final ZosConnection zc2 = new ZosConnection("test", "zosmfPort", "user", "password");
+        final ZosConnection zc1 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
+        final ZosConnection zc2 = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+                .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);

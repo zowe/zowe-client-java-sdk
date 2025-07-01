@@ -80,7 +80,6 @@ public class ZosmfLogin {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody("");
 
         final Response response = request.executeRequest();

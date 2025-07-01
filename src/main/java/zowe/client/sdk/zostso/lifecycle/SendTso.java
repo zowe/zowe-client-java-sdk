@@ -148,7 +148,6 @@ public class SendTso {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody("");
 
         return new TsoResponseService(request.executeRequest()).getZosmfTsoResponse();
@@ -203,7 +202,6 @@ public class SendTso {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(jobObjBody);
 
         return new TsoResponseService(request.executeRequest()).getZosmfTsoResponse();

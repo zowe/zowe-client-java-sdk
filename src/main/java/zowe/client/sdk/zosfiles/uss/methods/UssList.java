@@ -126,7 +126,6 @@ public class UssList {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
         request.setUrl(url.toString());
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         final Response response = request.executeRequest();
 
@@ -173,7 +172,6 @@ public class UssList {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
         request.setUrl(url.toString());
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         final Response response = request.executeRequest();
 
