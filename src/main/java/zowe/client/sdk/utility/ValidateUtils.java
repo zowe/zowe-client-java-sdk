@@ -49,7 +49,7 @@ public final class ValidateUtils {
                     connection.getPassword().isBlank() || connection.getUser().isBlank()) {
                 throw new IllegalStateException(errMsg);
             }
-        } else if (connection.getAuthType().equals(AuthType.COOKIE)) {
+        } else if (connection.getAuthType().equals(AuthType.TOKEN)) {
             if (connection.getZosmfPort() == null || connection.getHost() == null ||
                     connection.getCookie() == null || connection.getZosmfPort().isBlank() ||
                     connection.getHost().isBlank()) {
