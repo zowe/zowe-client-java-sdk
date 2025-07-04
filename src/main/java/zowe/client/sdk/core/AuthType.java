@@ -23,10 +23,11 @@ public enum AuthType {
      */
     CLASSIC,
     /**
-     * Authentication cookie type. This case represents using a cookie value to use for
-     * authentication for the http request.
+     * Authentication token type. This case represents using a cookie value to use for
+     * authentication for the http request. A token can be retrieved by ZosmfLogin response payload
+     * containing JSON Web and LPTA token(s).
      */
-    COOKIE,
+    TOKEN,
     /**
      * Authentication ssl type. This case represents using a certificate file for
      * authentication for the http request.
