@@ -138,19 +138,17 @@ This enum is used to send it to the ZosConnection constructor denoting the type 
 For instance, the following ZosConnection object is specified to perform Basic authentication:  
   
     ZosConnection connection = new ZosConnection(AuthType.CLASSIC).host("xxxx").password("xxxx").user("xxxx").zosmfPort("xxxx").build();
-    
+  
 Basic authentication means that the http request contains a Basic header representing the username and password encrypted.   
-    
+  
 For web token example, the following ZosConnection object is specified:  
-   
-    ZosConnection connection = new ZosConnection(AuthType.TOKEN).host("xxxx").zosmfPort("xxxx").build();
-         
-With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve authentication tokens (a JSON Web and an LTPA token) on a Basic authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA token(s).     
-    
+  
+    ZosConnection connection = new ZosConnection(AuthType.TOKEN).host("xxxx").zosmfPort("xxxx").cookie(new Cookie("hello=hello")).build();
+  
+With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve authentication tokens (a JSON Web and an LTPA token) on a Basic authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA token(s).  
+  
 Web token support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web Token support in the IBM z/OS Management Facility Configuration Guide.  
   
-In addition to specifying the AuthType.TOKEN enum in ZosConnection constructor, to enable Web token authentication, you need to set a token value within the ZosConnection class "cookie" member.  
-       
 See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
   
 ## Requirements  
