@@ -20,42 +20,35 @@ import java.util.Objects;
  * @version 4.0
  */
 public class ZosConnection {
-
+ 
     /**
-     * Host name pointing to the backend z / OS instance
+     * Host name pointing to the backend z/OS instance
      */
     private final String host;
-
     /**
-     * Host z/OSMF port number pointing to the backend z / OS instance
+     * Host z/OSMF port number pointing to the backend z/OS instance
      */
     private final String zosmfPort;
-
     /**
-     * Host username with access to a backend z / OS instance
+     * Host username with access to a backend z/OS instance
      */
     private final String user;
-
     /**
      * Host username's password with access to backend z/OS instance
      */
     private final String password;
-
     /**
      * The certificate password for SSL authentication
      */
     private final String certPassword;
-
     /**
      * Cookie value set to use as an authentication token for http call
      */
     private final Cookie cookie;
-
     /**
      * Path with filename denoting the certificate for SSL authentication usage
      */
     private final String certFilePath;
-
     /**
      * AuthType: CLASSIC, TOKEN or SSL
      */
@@ -200,13 +193,38 @@ public class ZosConnection {
      * Builder class for ZosConnection
      */
     public static class Builder {
+
+        /**
+         * Host name pointing to the backend z/OS instance
+         */
         private String host;
+        /**
+         * Host z/OSMF port number pointing to the backend z/OS instance
+         */
         private String zosmfPort;
+        /**
+         * Host username with access to a backend z/OS instance
+         */
         private String user;
+        /**
+         * Host username's password with access to backend z/OS instance
+         */
         private String password;
+        /**
+         * The certificate password for SSL authentication
+         */
         private String certPassword;
+        /**
+         * Cookie value set to use as an authentication token for http call
+         */
         private Cookie cookie;
+        /**
+         * Path with filename denoting the certificate for SSL authentication usage
+         */
         private String certFilePath;
+        /**
+         * AuthType: CLASSIC, TOKEN or SSL
+         */
         private final AuthType authType;
 
         /**
