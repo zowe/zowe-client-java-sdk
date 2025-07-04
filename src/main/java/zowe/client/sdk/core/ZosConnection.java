@@ -20,7 +20,7 @@ import java.util.Objects;
  * @version 4.0
  */
 public class ZosConnection {
- 
+
     /**
      * Host name pointing to the backend z/OS instance
      */
