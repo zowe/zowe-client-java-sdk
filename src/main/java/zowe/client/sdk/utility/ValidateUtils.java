@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.utility;
 
-import zowe.client.sdk.core.AuthenicationType;
+import zowe.client.sdk.core.AuthenticationType;
 import zowe.client.sdk.core.SshConnection;
 import zowe.client.sdk.core.ZosConnection;
 
@@ -42,20 +42,20 @@ public final class ValidateUtils {
             throw new IllegalStateException("connection is null");
         }
         var errMsg = "required connection attribute(s) missing for " + connection.getAuthType() + "authentication";
-        if (connection.getAuthType().equals(AuthenicationType.CLASSIC)) {
+        if (connection.getAuthType().equals(AuthenticationType.CLASSIC)) {
             if (connection.getZosmfPort() == null || connection.getHost() == null ||
                     connection.getPassword() == null || connection.getUser() == null ||
                     connection.getZosmfPort().isBlank() || connection.getHost().isBlank() ||
                     connection.getPassword().isBlank() || connection.getUser().isBlank()) {
                 throw new IllegalStateException(errMsg);
             }
-        } else if (connection.getAuthType().equals(AuthenicationType.COOKIE)) {
+        } else if (connection.getAuthType().equals(AuthenticationType.COOKIE)) {
             if (connection.getZosmfPort() == null || connection.getHost() == null ||
                     connection.getCookie() == null || connection.getZosmfPort().isBlank() ||
                     connection.getHost().isBlank()) {
                 throw new IllegalStateException(errMsg);
             }
-        } else if (connection.getAuthType().equals(AuthenicationType.SSL)) {
+        } else if (connection.getAuthType().equals(AuthenticationType.SSL)) {
             if (connection.getZosmfPort() == null || connection.getHost() == null ||
                     connection.getCookie() == null || connection.getCertFilePath() == null ||
                     connection.getZosmfPort().isBlank() || connection.getHost().isBlank() ||

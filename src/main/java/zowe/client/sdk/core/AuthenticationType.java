@@ -9,10 +9,24 @@
  */
 package zowe.client.sdk.core;
 
-public enum AuthenicationType {
+/**
+ *
+ *
+ *
+ */
+public enum AuthenticationType {
 
+    /**
+     *
+     */
     CLASSIC,
+    /**
+     *
+     */
     COOKIE,
+    /**
+     *
+     */
     SSL
 
 }

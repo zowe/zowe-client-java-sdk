@@ -14,7 +14,7 @@ import kong.unirest.core.JsonNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import zowe.client.sdk.core.AuthenicationType;
+import zowe.client.sdk.core.AuthenticationType;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
@@ -36,7 +36,7 @@ public class ZoweRequestTest {
     @Before
     public void init() {
         mockReply = Mockito.mock(HttpResponse.class);
-        connection = new ZosConnection.Builder(AuthenicationType.CLASSIC)
+        connection = new ZosConnection.Builder(AuthenticationType.CLASSIC)
                 .host("1").password("1").user("1").zosmfPort("1").build();
     }
 
