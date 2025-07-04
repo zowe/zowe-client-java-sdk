@@ -41,7 +41,6 @@ public class GetJobsByTextGetRequestTest {
     private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthenicationType.COOKIE)
             .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
     private GetTextZosmfRequest mockTextGetRequest;
-    private JobGet getJobs;
 
     @Before
     public void init() {
@@ -62,6 +61,7 @@ public class GetJobsByTextGetRequestTest {
 
     @Test
     public void tstGetSpoolContentByIdToggleAuthSuccess() throws ZosmfRequestException {
+        JobGet getJobs = new JobGet(cookieConnection);
         GetTextZosmfRequest mockTextGetRequestAuth = Mockito.mock(GetTextZosmfRequest.class,
                 withSettings().useConstructor(cookieConnection));
         Whitebox.setInternalState(getJobs, "request", mockTextGetRequestAuth);
