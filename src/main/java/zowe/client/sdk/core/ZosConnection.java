@@ -77,34 +77,74 @@ public class ZosConnection {
         this.authType = builder.authType;
     }
 
+    /**
+     * Retrieve authType
+     *
+     * @return AuthType enum
+     */
     public AuthType getAuthType() {
         return authType;
     }
 
+    /**
+     * Retrieve certFilePath
+     *
+     * @return string value
+     */
     public String getCertFilePath() {
         return certFilePath;
     }
 
+    /**
+     * Retrieve cookie
+     *
+     * @return Cookie object
+     */
     public Cookie getCookie() {
         return cookie;
     }
 
+    /**
+     * Retrieve password
+     *
+     * @return string value
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Retrieve certPassword
+     *
+     * @return string value
+     */
     public String getCertPassword() {
         return certPassword;
     }
 
+    /**
+     * Retrieve user
+     *
+     * @return string value
+     */
     public String getUser() {
         return user;
     }
 
+    /**
+     * Retrieve zosmfPort
+     *
+     * @return string value
+     */
     public String getZosmfPort() {
         return zosmfPort;
     }
 
+    /**
+     * Retrieve
+     *
+     * @return string value
+     */
     public String getHost() {
         return host;
     }
