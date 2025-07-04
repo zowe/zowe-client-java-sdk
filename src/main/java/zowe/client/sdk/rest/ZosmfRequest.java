@@ -50,6 +50,10 @@ public abstract class ZosmfRequest {
      */
     public static final String X_CSRF_ZOSMF_HEADER_VALUE = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
     /**
+     * File format of certificate
+     */
+    public static final String CERTIFICATE_FORMAT_TYPE = "PKCS12";
+    /**
      * ZosConnection object
      */
     protected final ZosConnection connection;
@@ -131,7 +135,7 @@ public abstract class ZosmfRequest {
         var certPassword = connection.getCertPassword();
         SSLContext sslContext;
         try {
-            var clientStore = KeyStore.getInstance("PKCS12");
+            var clientStore = KeyStore.getInstance(CERTIFICATE_FORMAT_TYPE);
             clientStore.load(new FileInputStream(filePath), certPassword.toCharArray());
             sslContext = SSLContextBuilder.create().loadKeyMaterial(clientStore, certPassword.toCharArray()).build();
         } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException |
