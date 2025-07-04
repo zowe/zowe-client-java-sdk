@@ -78,7 +78,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Setup to be used first in setting up the http request
+     * Initialize the unirest http request object based on an authentication type
      *
      * @author Frank Giordano
      */
@@ -101,16 +101,31 @@ public abstract class ZosmfRequest {
         }
     }
 
+    /**
+     * Setup authentication classic type
+     *
+     * @author Frank Giordano
+     */
     private static void setupClassic() {
         Unirest.config().verifySsl(false);
     }
 
+    /**
+     * Setup authentication cookie type
+     *
+     * @author Frank Giordano
+     */
     private void setupCookie() {
         Unirest.config().verifySsl(false);
         this.cookie = connection.getCookie();
         headers.remove("Authorization");
     }
 
+    /**
+     * Setup authentication ssl type
+     *
+     * @author Frank Giordano
+     */
     private void setupSsl() {
         var filePath = connection.getCertFilePath();
         var certPassword = connection.getCertPassword();
