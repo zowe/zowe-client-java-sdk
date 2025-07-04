@@ -127,18 +127,30 @@ and the JSON error report document body response is:
   
 Since the release of the SDK, the authentication of each REST API call is done with Basic authentication.
   
-With SDK release version 3, it adds the option to perform authentication with Web token authentication.  
+With SDK release version 3, Web token authentication was added.   
   
-Basic authentication means that the client program provides a z/OS user ID and password in the header of a request. User ID and password are defined by the end user within the ZosConnection object and the SDK takes care of performing basic authentication with each request.       
+The current version 4, SSL authentication from a certificate file was added.  
   
-With SDK release version 3, it introduces the zosmfauth package. ZosmfAuth provides an API (zosmfLogin) to obtain authentication tokens (a JSON Web and an LTPA token) on the user's authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA token(s).      
+With three types of authentication available, the following enum class AuthType was introduced.  
   
+This enum is used to send it to the ZosConnection constructor denoting the type of authentication to perform.  
+  
+For instance, the following ZosConnection object is specified to perform Basic authentication:  
+  
+    ZosConnection connection = new ZosConnection(AuthType.CLASSIC).host("xxxx").password("xxxx").user("xxxx").zosmfPort("xxxx").build();
+    
+Basic authentication means that the http request contains a Basic header representing the username and password encrypted.   
+    
+For web token example, the following ZosConnection object is specified:  
+   
+    ZosConnection connection = new ZosConnection(AuthType.TOKEN).host("xxxx").zosmfPort("xxxx").build();
+         
+With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve authentication tokens (a JSON Web and an LTPA token) on a Basic authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA token(s).     
+    
 Web token support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web Token support in the IBM z/OS Management Facility Configuration Guide.  
   
-To enable Web token authentication, you need to set a token value within the ZosConnection class "cookie" member. Once set, each request is performed with the token value within the cookie http payload. At this point, Basic authentication is disabled.  
-  
-To enable Basic authentication after setting a cookie, you will need to set the cookie value as null.  
-     
+In addition to specifying the AuthType.TOKEN enum in ZosConnection constructor, to enable Web token authentication, you need to set a token value within the ZosConnection class "cookie" member.  
+       
 See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
   
 ## Requirements  
