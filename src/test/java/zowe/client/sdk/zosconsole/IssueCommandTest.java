@@ -46,7 +46,7 @@ import static org.mockito.Mockito.withSettings;
  */
 public class IssueCommandTest {
 
-    private final ZosConnection connection = new ZosConnection.Builder(AuthType.CLASSIC)
+    private final ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
             .host("1").password("1").user("1").zosmfPort("1").build();
     private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthType.TOKEN)
             .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();

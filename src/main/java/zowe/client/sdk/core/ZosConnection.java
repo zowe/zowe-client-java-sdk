@@ -50,7 +50,7 @@ public class ZosConnection {
      */
     private final String certFilePath;
     /**
-     * AuthType: CLASSIC, TOKEN or SSL
+     * AuthType: BASIC, TOKEN or SSL
      */
     private final AuthType authType;
 
@@ -223,7 +223,7 @@ public class ZosConnection {
          */
         private String certFilePath;
         /**
-         * AuthType: CLASSIC, TOKEN or SSL
+         * AuthType: BASIC, TOKEN or SSL
          */
         private final AuthType authType;
 

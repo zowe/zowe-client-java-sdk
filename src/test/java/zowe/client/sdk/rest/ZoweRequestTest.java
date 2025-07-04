@@ -36,7 +36,7 @@ public class ZoweRequestTest {
     @Before
     public void init() {
         mockReply = Mockito.mock(HttpResponse.class);
-        connection = new ZosConnection.Builder(AuthType.CLASSIC)
+        connection = new ZosConnection.Builder(AuthType.BASIC)
                 .host("1").password("1").user("1").zosmfPort("1").build();
     }
 

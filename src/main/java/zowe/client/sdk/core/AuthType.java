@@ -21,7 +21,7 @@ public enum AuthType {
      * Authentication classic type. This represents the bearer header with the requirement
      * for the username and password to be specified within ZosConnection object.
      */
-    CLASSIC,
+    BASIC,
     /**
      * Authentication token type. This case represents using a cookie value to use for
      * authentication for the http request. A token can be retrieved by ZosmfLogin response payload

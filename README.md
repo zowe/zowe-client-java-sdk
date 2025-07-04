@@ -137,7 +137,7 @@ This enum is used to send it to the ZosConnection constructor denoting the type 
   
 For instance, the following ZosConnection object is specified to perform Basic authentication:  
   
-    ZosConnection connection = new ZosConnection(AuthType.CLASSIC).host("xxxx").password("xxxx").user("xxxx").zosmfPort("xxxx").build();
+    ZosConnection connection = new ZosConnection(AuthType.BASIC).host("xxxx").password("xxxx").user("xxxx").zosmfPort("xxxx").build();
   
 Basic authentication means that the http request contains a Basic header representing the username and password encrypted.   
   

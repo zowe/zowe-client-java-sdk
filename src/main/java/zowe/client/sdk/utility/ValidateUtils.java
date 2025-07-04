@@ -42,7 +42,7 @@ public final class ValidateUtils {
             throw new IllegalStateException("connection is null");
         }
         var errMsg = "required connection attribute(s) missing for " + connection.getAuthType() + " authentication";
-        if (connection.getAuthType().equals(AuthType.CLASSIC)) {
+        if (connection.getAuthType().equals(AuthType.BASIC)) {
             if (connection.getZosmfPort() == null || connection.getHost() == null ||
                     connection.getPassword() == null || connection.getUser() == null ||
                     connection.getZosmfPort().isBlank() || connection.getHost().isBlank() ||

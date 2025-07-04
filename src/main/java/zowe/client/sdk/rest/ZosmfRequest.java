@@ -91,7 +91,7 @@ public abstract class ZosmfRequest {
         Unirest.config().enableCookieManagement(false);
         this.setStandardHeaders();
         switch (connection.getAuthType()) {
-            case CLASSIC:
+            case BASIC:
                 setupClassic();
                 break;
             case TOKEN:
@@ -284,7 +284,7 @@ public abstract class ZosmfRequest {
     public void setHeaders(final Map<String, String> headers) {
         this.headers.clear();
         this.setStandardHeaders();
-        if (!connection.getAuthType().name().equals("CLASSIC")) {
+        if (!connection.getAuthType().name().equals("BASIC")) {
             this.headers.remove("Authorization");
         }
         this.headers.putAll(headers);

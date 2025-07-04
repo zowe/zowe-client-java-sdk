@@ -39,7 +39,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(MockitoJUnitRunner.class)
 public class GetJobsByJsonGetRequestTest {
 
-    private final ZosConnection connection = new ZosConnection.Builder(AuthType.CLASSIC)
+    private final ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
             .host("1").password("1").user("1").zosmfPort("1").build();
     private GetJsonZosmfRequest mockJsonGetRequest;
     private JobGet getJobs;
