@@ -63,20 +63,20 @@ public class UssMountTest {
     }
 
     @Test
-    public void tstUssMountToggleAuthSuccess() throws ZosmfRequestException {
-        final PutJsonZosmfRequest mockJsonPutRequestAuth = Mockito.mock(PutJsonZosmfRequest.class,
+    public void tstUssMountToggleCookieSuccess() throws ZosmfRequestException {
+        final PutJsonZosmfRequest mockJsonPutRequestCookie = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(cookieConnection));
-        Mockito.when(mockJsonPutRequestAuth.executeRequest()).thenReturn(
+        Mockito.when(mockJsonPutRequestCookie.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockJsonPutRequestAuth).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonPutRequestAuth).setStandardHeaders();
-        doCallRealMethod().when(mockJsonPutRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonPutRequestAuth).getHeaders();
+        doCallRealMethod().when(mockJsonPutRequestCookie).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonPutRequestCookie).setStandardHeaders();
+        doCallRealMethod().when(mockJsonPutRequestCookie).setUrl(any());
+        doCallRealMethod().when(mockJsonPutRequestCookie).getHeaders();
 
-        final UssMount ussMount = new UssMount(cookieConnection, mockJsonPutRequestAuth);
+        final UssMount ussMount = new UssMount(cookieConnection, mockJsonPutRequestCookie);
         Response response = ussMount.mount("name", "mountpoint", "fstype");
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonPutRequestAuth.getHeaders().toString());
+                mockJsonPutRequestCookie.getHeaders().toString());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
         Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));

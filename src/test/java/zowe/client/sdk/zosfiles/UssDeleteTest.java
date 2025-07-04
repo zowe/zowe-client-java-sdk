@@ -42,7 +42,7 @@ public class UssDeleteTest {
     private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthenicationType.COOKIE)
             .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
     private DeleteJsonZosmfRequest mockJsonDeleteRequest;
-    private DeleteJsonZosmfRequest mockJsonDeleteRequestAuth;
+    private DeleteJsonZosmfRequest mockJsonDeleteRequestCookie;
     private UssDelete ussDelete;
 
     @Before
@@ -51,13 +51,13 @@ public class UssDeleteTest {
         Mockito.when(mockJsonDeleteRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
 
-        mockJsonDeleteRequestAuth = Mockito.mock(DeleteJsonZosmfRequest.class, withSettings().useConstructor(cookieConnection));
-        Mockito.when(mockJsonDeleteRequestAuth.executeRequest()).thenReturn(
+        mockJsonDeleteRequestCookie = Mockito.mock(DeleteJsonZosmfRequest.class, withSettings().useConstructor(cookieConnection));
+        Mockito.when(mockJsonDeleteRequestCookie.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockJsonDeleteRequestAuth).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonDeleteRequestAuth).setStandardHeaders();
-        doCallRealMethod().when(mockJsonDeleteRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonDeleteRequestAuth).getHeaders();
+        doCallRealMethod().when(mockJsonDeleteRequestCookie).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonDeleteRequestCookie).setStandardHeaders();
+        doCallRealMethod().when(mockJsonDeleteRequestCookie).setUrl(any());
+        doCallRealMethod().when(mockJsonDeleteRequestCookie).getHeaders();
 
         ussDelete = new UssDelete(connection);
     }
@@ -73,11 +73,11 @@ public class UssDeleteTest {
 
     @Test
     public void tstUssDeleteToggleAuthSuccess() throws ZosmfRequestException {
-        final UssDelete ussDelete = new UssDelete(cookieConnection, mockJsonDeleteRequestAuth);
+        final UssDelete ussDelete = new UssDelete(cookieConnection, mockJsonDeleteRequestCookie);
 
         Response response = ussDelete.delete("/xxx/xx/xx");
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonDeleteRequestAuth.getHeaders().toString());
+                mockJsonDeleteRequestCookie.getHeaders().toString());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
         Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));

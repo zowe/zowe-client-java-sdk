@@ -45,7 +45,7 @@ public class UssCreateTest {
     private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthenicationType.COOKIE)
             .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
     private PostJsonZosmfRequest mockJsonPostRequest;
-    private PostJsonZosmfRequest mockJsonPostRequestAuth;
+    private PostJsonZosmfRequest mockJsonPostRequestCookie;
     private UssCreate ussCreate;
 
     @Before
@@ -67,18 +67,18 @@ public class UssCreateTest {
 
     @Test
     public void tstUssCreateToggleAuthSuccess() throws ZosmfRequestException {
-        mockJsonPostRequestAuth = Mockito.mock(PostJsonZosmfRequest.class, withSettings().useConstructor(cookieConnection));
-        Mockito.when(mockJsonPostRequestAuth.executeRequest()).thenReturn(
+        mockJsonPostRequestCookie = Mockito.mock(PostJsonZosmfRequest.class, withSettings().useConstructor(cookieConnection));
+        Mockito.when(mockJsonPostRequestCookie.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockJsonPostRequestAuth).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonPostRequestAuth).setStandardHeaders();
-        doCallRealMethod().when(mockJsonPostRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonPostRequestAuth).getHeaders();
-        final UssCreate ussCreate = new UssCreate(cookieConnection, mockJsonPostRequestAuth);
+        doCallRealMethod().when(mockJsonPostRequestCookie).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonPostRequestCookie).setStandardHeaders();
+        doCallRealMethod().when(mockJsonPostRequestCookie).setUrl(any());
+        doCallRealMethod().when(mockJsonPostRequestCookie).getHeaders();
+        final UssCreate ussCreate = new UssCreate(cookieConnection, mockJsonPostRequestCookie);
 
         Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonPostRequestAuth.getHeaders().toString());
+                mockJsonPostRequestCookie.getHeaders().toString());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
         Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));

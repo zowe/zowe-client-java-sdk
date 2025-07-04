@@ -64,20 +64,20 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteTextToggleAuthSuccess() throws ZosmfRequestException {
-        PutTextZosmfRequest mockJsonPutRequestAuth = Mockito.mock(PutTextZosmfRequest.class,
+    public void tstUssWriteTextToggleCookieSuccess() throws ZosmfRequestException {
+        PutTextZosmfRequest mockJsonPutRequestCookie = Mockito.mock(PutTextZosmfRequest.class,
                 withSettings().useConstructor(cookieConnection));
-        Mockito.when(mockJsonPutRequestAuth.executeRequest()).thenReturn(
+        Mockito.when(mockJsonPutRequestCookie.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockJsonPutRequestAuth).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonPutRequestAuth).setStandardHeaders();
-        doCallRealMethod().when(mockJsonPutRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonPutRequestAuth).getHeaders();
-        final UssWrite ussWrite = new UssWrite(connection, mockJsonPutRequestAuth);
+        doCallRealMethod().when(mockJsonPutRequestCookie).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonPutRequestCookie).setStandardHeaders();
+        doCallRealMethod().when(mockJsonPutRequestCookie).setUrl(any());
+        doCallRealMethod().when(mockJsonPutRequestCookie).getHeaders();
+        final UssWrite ussWrite = new UssWrite(connection, mockJsonPutRequestCookie);
 
         Response response = ussWrite.writeText("/xx/xx/x", "text");
         String expectedResp = "{X-IBM-Data-Type=text;, X-CSRF-ZOSMF-HEADER=true, Content-Type=text/plain; charset=UTF-8}";
-        Assertions.assertEquals(expectedResp, mockJsonPutRequestAuth.getHeaders().toString());
+        Assertions.assertEquals(expectedResp, mockJsonPutRequestCookie.getHeaders().toString());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
         Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));

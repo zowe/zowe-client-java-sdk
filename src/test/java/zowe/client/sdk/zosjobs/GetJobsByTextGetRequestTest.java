@@ -60,21 +60,21 @@ public class GetJobsByTextGetRequestTest {
     }
 
     @Test
-    public void tstGetSpoolContentByIdToggleAuthSuccess() throws ZosmfRequestException {
+    public void tstGetSpoolContentByIdToggleCookieSuccess() throws ZosmfRequestException {
         JobGet getJobs = new JobGet(cookieConnection);
-        GetTextZosmfRequest mockTextGetRequestAuth = Mockito.mock(GetTextZosmfRequest.class,
+        GetTextZosmfRequest mockTextGetRequestCookie = Mockito.mock(GetTextZosmfRequest.class,
                 withSettings().useConstructor(cookieConnection));
-        Whitebox.setInternalState(getJobs, "request", mockTextGetRequestAuth);
-        Mockito.when(mockTextGetRequestAuth.executeRequest()).thenReturn(
+        Whitebox.setInternalState(getJobs, "request", mockTextGetRequestCookie);
+        Mockito.when(mockTextGetRequestCookie.executeRequest()).thenReturn(
                 new Response("1\n2\n3\n", 200, "success"));
-        doCallRealMethod().when(mockTextGetRequestAuth).setHeaders(anyMap());
-        doCallRealMethod().when(mockTextGetRequestAuth).setStandardHeaders();
-        doCallRealMethod().when(mockTextGetRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockTextGetRequestAuth).getHeaders();
+        doCallRealMethod().when(mockTextGetRequestCookie).setHeaders(anyMap());
+        doCallRealMethod().when(mockTextGetRequestCookie).setStandardHeaders();
+        doCallRealMethod().when(mockTextGetRequestCookie).setUrl(any());
+        doCallRealMethod().when(mockTextGetRequestCookie).getHeaders();
 
         String results = getJobs.getSpoolContent("jobName", "jobId", 1);
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=text/plain; charset=UTF-8}",
-                mockTextGetRequestAuth.getHeaders().toString());
+                mockTextGetRequestCookie.getHeaders().toString());
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
         assertEquals("1\n2\n3\n", results);
     }

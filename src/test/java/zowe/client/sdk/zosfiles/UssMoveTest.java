@@ -60,20 +60,20 @@ public class UssMoveTest {
     }
 
     @Test
-    public void tstUssMoveToggleAuthSuccess() throws ZosmfRequestException {
-        final PutJsonZosmfRequest mockJsonPutRequestAuth = Mockito.mock(PutJsonZosmfRequest.class,
+    public void tstUssMoveToggleCookieSuccess() throws ZosmfRequestException {
+        final PutJsonZosmfRequest mockJsonPutRequestCookie = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(cookieConnection));
-        Mockito.when(mockJsonPutRequestAuth.executeRequest()).thenReturn(
+        Mockito.when(mockJsonPutRequestCookie.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockJsonPutRequestAuth).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonPutRequestAuth).setStandardHeaders();
-        doCallRealMethod().when(mockJsonPutRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonPutRequestAuth).getHeaders();
-        final UssMove ussMove = new UssMove(connection, mockJsonPutRequestAuth);
+        doCallRealMethod().when(mockJsonPutRequestCookie).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonPutRequestCookie).setStandardHeaders();
+        doCallRealMethod().when(mockJsonPutRequestCookie).setUrl(any());
+        doCallRealMethod().when(mockJsonPutRequestCookie).getHeaders();
+        final UssMove ussMove = new UssMove(connection, mockJsonPutRequestCookie);
 
         Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonPutRequestAuth.getHeaders().toString());
+                mockJsonPutRequestCookie.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));

@@ -138,20 +138,20 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListFileListEmptyResponseToggleAuthSuccess() throws Exception {
-        GetJsonZosmfRequest mockJsonGetRequestAuth = Mockito.mock(GetJsonZosmfRequest.class,
+    public void tstUssListFileListEmptyResponseToggleCookieSuccess() throws Exception {
+        GetJsonZosmfRequest mockJsonGetRequestCookie = Mockito.mock(GetJsonZosmfRequest.class,
                 withSettings().useConstructor(cookieConnection));
-        Mockito.when(mockJsonGetRequestAuth.executeRequest()).thenReturn(
+        Mockito.when(mockJsonGetRequestCookie.executeRequest()).thenReturn(
                 new Response("{}", 200, "success"));
-        doCallRealMethod().when(mockJsonGetRequestAuth).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonGetRequestAuth).setStandardHeaders();
-        doCallRealMethod().when(mockJsonGetRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonGetRequestAuth).getHeaders();
+        doCallRealMethod().when(mockJsonGetRequestCookie).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonGetRequestCookie).setStandardHeaders();
+        doCallRealMethod().when(mockJsonGetRequestCookie).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequestCookie).getHeaders();
 
-        final UssList ussList = new UssList(cookieConnection, mockJsonGetRequestAuth);
+        final UssList ussList = new UssList(cookieConnection, mockJsonGetRequestCookie);
         List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonGetRequestAuth.getHeaders().toString());
+                mockJsonGetRequestCookie.getHeaders().toString());
         // should only contain two items
         assertEquals(0, items.size());
     }
