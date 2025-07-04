@@ -212,7 +212,7 @@ public class ZosConnection {
         /**
          * Constructor with setting the required authentication type
          *
-         * @param authType AuthenticationType
+         * @param authType AuthType
          */
         public Builder(AuthType authType) {
             this.authType = authType;
