@@ -29,8 +29,8 @@ public enum AuthenticationType {
     COOKIE,
     /**
      * Authentication ssl type. This case represents using a certificate file for
-     * authentication for the http request.
+     * authentication for the http request. 
      */
     SSL
-git st
+
 }
