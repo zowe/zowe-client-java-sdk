@@ -94,7 +94,7 @@ public abstract class ZosmfRequest {
             case CLASSIC:
                 setupClassic();
                 break;
-            case COOKIE:
+            case TOKEN:
                 setupCookie();
                 break;
             case SSL:
