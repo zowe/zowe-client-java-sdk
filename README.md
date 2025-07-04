@@ -149,6 +149,12 @@ With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve a
   
 Web token support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web Token support in the IBM z/OS Management Facility Configuration Guide.  
   
+For SSL example, the following ZosConnection object is specified:  
+
+    ZosConnection connection = new ZosConnection(AuthType.SSL).host("xxxx").zosmfPort("xxxx").certFilePath("xxxx".build();
+  
+The certificate file path value is normally retrieved from the teamconfig configuration file defined as a property.  
+  
 See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
   
 ## Requirements  
