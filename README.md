@@ -143,7 +143,7 @@ Basic authentication means that the http request contains a Basic header represe
   
 For web token example, the following ZosConnection object is specified:  
   
-    ZosConnection connection = new ZosConnection(AuthType.TOKEN).host("xxxx").zosmfPort("xxxx").cookie(new Cookie("hello=hello")).build();
+    ZosConnection connection = new ZosConnection(AuthType.TOKEN).host("xxxx").zosmfPort("xxxx").cookie(new Cookie("xxxx=xxxx")).build();
   
 With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve authentication tokens (a JSON Web and an LTPA token) on a Basic authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA token(s).  
   
