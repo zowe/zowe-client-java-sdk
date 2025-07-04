@@ -59,7 +59,7 @@ public class ZosConnection {
     /**
      * Authentication type: CLASSIC, COOKIE or SSL
      */
-    private final AuthenticationType authType;
+    private final AuthType authType;
 
     /**
      * Private constructor used by the Builder
@@ -77,7 +77,7 @@ public class ZosConnection {
         this.authType = builder.authType;
     }
 
-    public AuthenticationType getAuthType() {
+    public AuthType getAuthType() {
         return authType;
     }
 
@@ -167,14 +167,14 @@ public class ZosConnection {
         private String certPassword;
         private Cookie cookie;
         private String certFilePath;
-        private final AuthenticationType authType;
+        private final AuthType authType;
 
         /**
          * Constructor with setting the required authentication type
          *
          * @param authType AuthenticationType
          */
-        public Builder(AuthenticationType authType) {
+        public Builder(AuthType authType) {
             this.authType = authType;
         }
 

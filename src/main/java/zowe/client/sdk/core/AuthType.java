@@ -15,7 +15,7 @@ package zowe.client.sdk.core;
  * @author Frank Giordano
  * @version 4.0
  */
-public enum AuthenticationType {
+public enum AuthType {
 
     /**
      * Authentication classic type. This represents the bearer header with the requirement
