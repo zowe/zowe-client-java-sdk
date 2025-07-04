@@ -124,10 +124,26 @@ public class ZosConnection {
             return false;
         }
         ZosConnection other = (ZosConnection) obj;
-        return Objects.equals(host, other.host) && Objects.equals(zosmfPort, other.zosmfPort) &&
-                Objects.equals(user, other.user) && Objects.equals(password, other.password) &&
-                Objects.equals(certPassword, other.certPassword) && Objects.equals(cookie, other.cookie) &&
-                Objects.equals(certFilePath, other.certFilePath) && Objects.equals(authType, other.authType);
+        if (cookie != null) {
+            return Objects.equals(host, other.host) &&
+                    Objects.equals(zosmfPort, other.zosmfPort) &&
+                    Objects.equals(user, other.user) &&
+                    Objects.equals(password, other.password) &&
+                    Objects.equals(certPassword, other.certPassword) &&
+                    Objects.equals(cookie.getName(), other.cookie.getName()) &&
+                    Objects.equals(cookie.getValue(), other.cookie.getValue()) &&
+                    Objects.equals(certFilePath, other.certFilePath) &&
+                    Objects.equals(authType, other.authType);
+        } else {
+            return Objects.equals(host, other.host) &&
+                    Objects.equals(zosmfPort, other.zosmfPort) &&
+                    Objects.equals(user, other.user) &&
+                    Objects.equals(password, other.password) &&
+                    Objects.equals(certPassword, other.certPassword) &&
+                    Objects.equals(cookie, other.cookie) &&
+                    Objects.equals(certFilePath, other.certFilePath) &&
+                    Objects.equals(authType, other.authType);
+        }
     }
 
     /**

@@ -97,7 +97,7 @@ public abstract class ZosmfRequest {
                 setupSsl();
                 break;
             default:
-
+                throw new IllegalStateException("No authentication type found");
         }
     }
 
