@@ -116,7 +116,7 @@ public class ZosConnectionTest {
     public void tstHashCodeMapWithSecondZosmfPortDifferentSuccess() {
         final ZosConnection zc1 = new ZosConnection.Builder(AuthType.CLASSIC)
                 .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
-        final ZosConnection zc2 =new ZosConnection.Builder(AuthType.CLASSIC)
+        final ZosConnection zc2 = new ZosConnection.Builder(AuthType.CLASSIC)
                 .host("test").password("password").user("user").zosmfPort("zosmfPort2").build();
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
