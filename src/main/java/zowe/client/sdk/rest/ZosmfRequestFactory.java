@@ -18,7 +18,7 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
  * Zowe request factory that generates the desire CRUD operation
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class ZosmfRequestFactory {
 

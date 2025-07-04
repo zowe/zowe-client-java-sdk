@@ -14,7 +14,7 @@ package zowe.client.sdk.zoslogs.types;
  * Enum class representing a direction to gather log data from.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public enum DirectionType {
 

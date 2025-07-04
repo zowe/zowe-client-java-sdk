@@ -18,10 +18,10 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Http get operation with text content type
+ * Http get operation with a text content type
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class GetTextZosmfRequest extends ZosmfRequest {
 

@@ -17,7 +17,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * <a href="https://www.ibm.com/docs/en/zos/3.1.0?topic=services-change-user-password-passphrase">z/OSMF REST API </a>
  *
  * @author Esteban Sandoval
- * @version 3.0
+ * @version 4.0
  */
 public class PasswordParams {
 

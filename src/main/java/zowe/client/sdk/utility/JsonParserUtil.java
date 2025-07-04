@@ -21,7 +21,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
  * Utility class contains helper methods for json parse processing
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class JsonParserUtil {
 

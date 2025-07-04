@@ -21,7 +21,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * Http get stream operation with Json content type
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class GetStreamZosmfRequest extends ZosmfRequest {
 

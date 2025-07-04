@@ -17,7 +17,7 @@ import java.util.Objects;
  * Z/OSMF Connection information placeholder
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosConnection {
 

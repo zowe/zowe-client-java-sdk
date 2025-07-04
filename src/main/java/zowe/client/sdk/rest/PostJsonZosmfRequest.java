@@ -24,7 +24,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * Http post operation with Json content type
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class PostJsonZosmfRequest extends ZosmfRequest {
 

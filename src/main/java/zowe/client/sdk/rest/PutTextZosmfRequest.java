@@ -23,7 +23,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * Http put operation with text content type
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class PutTextZosmfRequest extends ZosmfRequest {
 

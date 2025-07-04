@@ -22,7 +22,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * Http put stream operation with binary content type
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class PutStreamZosmfRequest extends ZosmfRequest {
 

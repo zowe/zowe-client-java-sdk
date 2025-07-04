@@ -25,7 +25,7 @@ import zowe.client.sdk.zosjobs.response.Job;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.00
  */
 public class JobCancelExp extends TstZosConnection {
 
@@ -149,7 +149,7 @@ import zowe.client.sdk.zosjobs.response.Job;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class JobDeleteExp extends TstZosConnection {
 

@@ -15,7 +15,7 @@ import java.util.Optional;
  * The Z/OSMF info API response.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosmfInfoResponse {
 

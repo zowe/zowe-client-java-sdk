@@ -16,7 +16,7 @@ import com.google.common.collect.ListMultimap;
  * z/OSMF Headers info
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class ZosmfHeaders {
 

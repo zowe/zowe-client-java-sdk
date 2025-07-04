@@ -17,7 +17,7 @@ import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
  * Parse json response from Tso Stop request
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class TsoStopJsonParse implements JsonParse {
 

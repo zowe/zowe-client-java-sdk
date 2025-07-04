@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
  * Class containing unit tests for CreateZfsParams.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class CreateZfsParamsTest {
 

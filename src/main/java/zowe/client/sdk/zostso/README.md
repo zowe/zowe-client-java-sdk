@@ -22,7 +22,7 @@ import java.util.Arrays;
  * Class example to test tso command functionality via IssueTso class.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class IssueTsoExp extends TstZosConnection {
 
@@ -74,7 +74,7 @@ import zowe.client.sdk.rest.Response;
  * Utility class containing helper method(s).
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class Util {
 

@@ -15,7 +15,7 @@ package zowe.client.sdk.zosjobs.types;
  * job status, etc.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class JobStatus {
 

@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
  * Get z/OS log via z/OSMF restful api
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosLog {
 

@@ -17,7 +17,7 @@ import zowe.client.sdk.zosfiles.dsn.response.Member;
  * Extract Member from json response
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class MemberJsonParse implements JsonParse {
 
