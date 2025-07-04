@@ -57,7 +57,7 @@ public class ZosConnection {
     private final String certFilePath;
 
     /**
-     * Authentication type: CLASSIC, COOKIE or SSL
+     * AuthType: CLASSIC, TOKEN or SSL
      */
     private final AuthType authType;
 
