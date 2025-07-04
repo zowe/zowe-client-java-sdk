@@ -42,7 +42,7 @@ public class UssWriteTest {
 
     private final ZosConnection connection = new ZosConnection.Builder(AuthType.CLASSIC)
             .host("1").password("1").user("1").zosmfPort("1").build();
-    private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthType.COOKIE)
+    private final ZosConnection tokenConnection = new ZosConnection.Builder(AuthType.TOKEN)
             .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
     private UssWrite ussWrite;
 
@@ -64,20 +64,20 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstUssWriteTextToggleCookieSuccess() throws ZosmfRequestException {
-        PutTextZosmfRequest mockJsonPutRequestCookie = Mockito.mock(PutTextZosmfRequest.class,
-                withSettings().useConstructor(cookieConnection));
-        Mockito.when(mockJsonPutRequestCookie.executeRequest()).thenReturn(
+    public void tstUssWriteTextToggleTokenSuccess() throws ZosmfRequestException {
+        PutTextZosmfRequest mockJsonPutRequestToken = Mockito.mock(PutTextZosmfRequest.class,
+                withSettings().useConstructor(tokenConnection));
+        Mockito.when(mockJsonPutRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockJsonPutRequestCookie).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonPutRequestCookie).setStandardHeaders();
-        doCallRealMethod().when(mockJsonPutRequestCookie).setUrl(any());
-        doCallRealMethod().when(mockJsonPutRequestCookie).getHeaders();
-        final UssWrite ussWrite = new UssWrite(connection, mockJsonPutRequestCookie);
+        doCallRealMethod().when(mockJsonPutRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonPutRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockJsonPutRequestToken).setUrl(any());
+        doCallRealMethod().when(mockJsonPutRequestToken).getHeaders();
+        final UssWrite ussWrite = new UssWrite(connection, mockJsonPutRequestToken);
 
         Response response = ussWrite.writeText("/xx/xx/x", "text");
         String expectedResp = "{X-IBM-Data-Type=text;, X-CSRF-ZOSMF-HEADER=true, Content-Type=text/plain; charset=UTF-8}";
-        Assertions.assertEquals(expectedResp, mockJsonPutRequestCookie.getHeaders().toString());
+        Assertions.assertEquals(expectedResp, mockJsonPutRequestToken.getHeaders().toString());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
         Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));

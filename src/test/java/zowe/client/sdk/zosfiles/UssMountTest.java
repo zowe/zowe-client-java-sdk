@@ -41,7 +41,7 @@ public class UssMountTest {
 
     private final ZosConnection connection = new ZosConnection.Builder(AuthType.CLASSIC)
             .host("1").password("1").user("1").zosmfPort("1").build();
-    private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthType.COOKIE)
+    private final ZosConnection tokenConnection = new ZosConnection.Builder(AuthType.TOKEN)
             .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
     private UssMount ussMount;
 
@@ -63,20 +63,20 @@ public class UssMountTest {
     }
 
     @Test
-    public void tstUssMountToggleCookieSuccess() throws ZosmfRequestException {
-        final PutJsonZosmfRequest mockJsonPutRequestCookie = Mockito.mock(PutJsonZosmfRequest.class,
-                withSettings().useConstructor(cookieConnection));
-        Mockito.when(mockJsonPutRequestCookie.executeRequest()).thenReturn(
+    public void tstUssMountToggleTokenSuccess() throws ZosmfRequestException {
+        final PutJsonZosmfRequest mockJsonPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
+                withSettings().useConstructor(tokenConnection));
+        Mockito.when(mockJsonPutRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockJsonPutRequestCookie).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonPutRequestCookie).setStandardHeaders();
-        doCallRealMethod().when(mockJsonPutRequestCookie).setUrl(any());
-        doCallRealMethod().when(mockJsonPutRequestCookie).getHeaders();
+        doCallRealMethod().when(mockJsonPutRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonPutRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockJsonPutRequestToken).setUrl(any());
+        doCallRealMethod().when(mockJsonPutRequestToken).getHeaders();
 
-        final UssMount ussMount = new UssMount(cookieConnection, mockJsonPutRequestCookie);
+        final UssMount ussMount = new UssMount(tokenConnection, mockJsonPutRequestToken);
         Response response = ussMount.mount("name", "mountpoint", "fstype");
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonPutRequestCookie.getHeaders().toString());
+                mockJsonPutRequestToken.getHeaders().toString());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
         Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));

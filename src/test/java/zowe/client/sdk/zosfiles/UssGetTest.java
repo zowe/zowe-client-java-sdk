@@ -40,7 +40,7 @@ public class UssGetTest {
 
     private final ZosConnection connection = new ZosConnection.Builder(AuthType.CLASSIC)
             .host("1").password("1").user("1").zosmfPort("1").build();
-    private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthType.COOKIE)
+    private final ZosConnection tokenConnection = new ZosConnection.Builder(AuthType.TOKEN)
             .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
     private UssGet ussGet;
 
@@ -60,9 +60,9 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetTextFileTargetPathToggleCookieSuccess() throws ZosmfRequestException {
+    public void tstGetTextFileTargetPathToggleTokenSuccess() throws ZosmfRequestException {
         final GetTextZosmfRequest mockTextGetRequestAuth = Mockito.mock(GetTextZosmfRequest.class,
-                withSettings().useConstructor(cookieConnection));
+                withSettings().useConstructor(tokenConnection));
         Mockito.when(mockTextGetRequestAuth.executeRequest()).thenReturn(
                 new Response("text", 200, "success"));
         doCallRealMethod().when(mockTextGetRequestAuth).setHeaders(anyMap());
@@ -70,7 +70,7 @@ public class UssGetTest {
         doCallRealMethod().when(mockTextGetRequestAuth).setUrl(any());
         doCallRealMethod().when(mockTextGetRequestAuth).getHeaders();
 
-        final UssGet ussGet = new UssGet(cookieConnection, mockTextGetRequestAuth);
+        final UssGet ussGet = new UssGet(tokenConnection, mockTextGetRequestAuth);
         String response = ussGet.getText("/xxx/xx");
         String expectedResp = "{X-IBM-Data-Type=text, X-CSRF-ZOSMF-HEADER=true, " +
                 "Content-Type=text/plain; charset=UTF-8}";

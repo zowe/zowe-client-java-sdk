@@ -40,10 +40,10 @@ import static org.mockito.Mockito.withSettings;
 public class UssChangeTagTest {
     private final ZosConnection connection = new ZosConnection.Builder(AuthType.CLASSIC)
             .host("1").password("1").user("1").zosmfPort("1").build();
-    private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthType.COOKIE)
+    private final ZosConnection tokenConnection = new ZosConnection.Builder(AuthType.TOKEN)
             .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
     private PutJsonZosmfRequest mockJsonPutRequest;
-    private PutJsonZosmfRequest mockJsonPutRequestCookie;
+    private PutJsonZosmfRequest mockJsonPutRequestToken;
     private UssChangeTag ussChangeTag;
 
     @Before
@@ -52,13 +52,14 @@ public class UssChangeTagTest {
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
 
-        mockJsonPutRequestCookie = Mockito.mock(PutJsonZosmfRequest.class, withSettings().useConstructor(cookieConnection));
-        Mockito.when(mockJsonPutRequestCookie.executeRequest()).thenReturn(
+        mockJsonPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
+                withSettings().useConstructor(tokenConnection));
+        Mockito.when(mockJsonPutRequestToken.executeRequest()).thenReturn(
                 new Response(new org.json.simple.JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockJsonPutRequestCookie).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonPutRequestCookie).setStandardHeaders();
-        doCallRealMethod().when(mockJsonPutRequestCookie).setUrl(any());
-        doCallRealMethod().when(mockJsonPutRequestCookie).getHeaders();
+        doCallRealMethod().when(mockJsonPutRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonPutRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockJsonPutRequestToken).setUrl(any());
+        doCallRealMethod().when(mockJsonPutRequestToken).getHeaders();
 
         ussChangeTag = new UssChangeTag(connection);
     }
@@ -73,11 +74,11 @@ public class UssChangeTagTest {
     }
 
     @Test
-    public void tstUssChangeTagToggleAuthSuccess() throws ZosmfRequestException {
-        final UssChangeTag ussChangeTag = new UssChangeTag(cookieConnection, mockJsonPutRequestCookie);
+    public void tstUssChangeTagToggleTokenSuccess() throws ZosmfRequestException {
+        final UssChangeTag ussChangeTag = new UssChangeTag(tokenConnection, mockJsonPutRequestToken);
         Response response = ussChangeTag.binary("/xxx/xx/xx");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonPutRequestCookie.getHeaders().toString());
+                mockJsonPutRequestToken.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));

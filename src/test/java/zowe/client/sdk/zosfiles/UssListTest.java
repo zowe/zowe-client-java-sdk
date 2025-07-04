@@ -48,7 +48,7 @@ public class UssListTest {
 
     private final ZosConnection connection = new ZosConnection.Builder(AuthType.CLASSIC)
             .host("1").password("1").user("1").zosmfPort("1").build();
-    private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthType.COOKIE)
+    private final ZosConnection tokenConnection = new ZosConnection.Builder(AuthType.TOKEN)
             .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
     private GetJsonZosmfRequest mockJsonGetRequest;
     private UssList ussList;
@@ -138,9 +138,9 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListFileListEmptyResponseToggleCookieSuccess() throws Exception {
+    public void tstUssListFileListEmptyResponseToggleTokenSuccess() throws Exception {
         GetJsonZosmfRequest mockJsonGetRequestCookie = Mockito.mock(GetJsonZosmfRequest.class,
-                withSettings().useConstructor(cookieConnection));
+                withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonGetRequestCookie.executeRequest()).thenReturn(
                 new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestCookie).setHeaders(anyMap());
@@ -148,7 +148,7 @@ public class UssListTest {
         doCallRealMethod().when(mockJsonGetRequestCookie).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequestCookie).getHeaders();
 
-        final UssList ussList = new UssList(cookieConnection, mockJsonGetRequestCookie);
+        final UssList ussList = new UssList(tokenConnection, mockJsonGetRequestCookie);
         List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestCookie.getHeaders().toString());
