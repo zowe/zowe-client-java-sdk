@@ -151,7 +151,7 @@ Web token support must be enabled on your z/OSMF system. For more information, s
   
 For SSL example, the following ZosConnection object is specified:  
 
-    ZosConnection connection = new ZosConnection(AuthType.SSL).host("xxxx").zosmfPort("xxxx").certFilePath("xxxx".build();
+    ZosConnection connection = new ZosConnection(AuthType.SSL).host("xxxx").zosmfPort("xxxx").certPassword("xxxx").certFilePath("xxxx")..build();
   
 The certificate file path value is normally retrieved from the teamconfig configuration file defined as a property.  
   
