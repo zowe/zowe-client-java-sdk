@@ -110,7 +110,7 @@ public abstract class ZosmfRequest {
      *
      * @author Frank Giordano
      */
-    private static void setupBasic() {
+    private void setupBasic() {
         Unirest.config().verifySsl(false);
     }
 
