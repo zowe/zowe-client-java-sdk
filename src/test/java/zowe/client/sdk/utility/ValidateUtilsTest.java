@@ -34,7 +34,7 @@ public class ValidateUtilsTest {
     }
 
     @Test
-    public void tstValidateUtilsZosConnectionNulFailure() {
+    public void tstValidateUtilsZosConnectionNullFailure() {
         boolean isValid = true;
         var msg = "connection is null";
         String errMsg = "";
