@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 import javax.net.ssl.SSLContext;
@@ -133,6 +134,9 @@ public abstract class ZosmfRequest {
      */
     private void setupSsl() {
         String filePath = connection.getCertFilePath();
+        if (!FileUtils.doesPathExistAndIsFile(filePath)) {
+            throw new IllegalStateException("certificate file does not exist");
+        }
         String certPassword = connection.getCertPassword();
         SSLContext sslContext;
         try {
