@@ -74,8 +74,11 @@ public final class FileUtils {
     }
 
     /**
-     * @param pathString
-     * @return
+     * Validate file exists in the path specified
+     *
+     * @param pathString string value contains a path with filename
+     * @return true or false
+     * @author Frank Giordano
      */
     public static boolean doesPathExistAndIsFile(String pathString) {
         try {
