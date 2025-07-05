@@ -92,7 +92,7 @@ public abstract class ZosmfRequest {
         this.setStandardHeaders();
         switch (connection.getAuthType()) {
             case BASIC:
-                setupClassic();
+                setupBasic();
                 break;
             case TOKEN:
                 setupCookie();
@@ -106,11 +106,11 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Setup authentication classic type
+     * Setup authentication basic type
      *
      * @author Frank Giordano
      */
-    private static void setupClassic() {
+    private static void setupBasic() {
         Unirest.config().verifySsl(false);
     }
 
