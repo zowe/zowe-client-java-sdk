@@ -34,6 +34,21 @@ public class ValidateUtilsTest {
     }
 
     @Test
+    public void tstValidateUtilsZosConnectionNulFailure() {
+        boolean isValid = true;
+        var msg = "connection is null";
+        String errMsg = "";
+        try {
+            ValidateUtils.checkConnection(null);
+        } catch (Exception e) {
+            isValid = false;
+            errMsg = e.getMessage();
+        }
+        assertFalse(isValid);
+        assertEquals(msg, errMsg);
+    }
+
+    @Test
     public void tstValidateUtilsCheckConnectionBasicSuccess() {
         boolean isValid = true;
         try {
