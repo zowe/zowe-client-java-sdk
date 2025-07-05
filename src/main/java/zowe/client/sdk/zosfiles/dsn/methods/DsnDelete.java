@@ -25,7 +25,7 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnDelete {
 

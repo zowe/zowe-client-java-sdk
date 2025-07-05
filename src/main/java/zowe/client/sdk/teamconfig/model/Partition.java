@@ -17,7 +17,7 @@ import java.util.Map;
  * A partition can contain a separate complete Global Team Configuration based on an individual LPAR instance.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class Partition {
 

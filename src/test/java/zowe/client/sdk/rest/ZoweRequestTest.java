@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
  * Class containing unit test for ZoweRequest.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZoweRequestTest {
 

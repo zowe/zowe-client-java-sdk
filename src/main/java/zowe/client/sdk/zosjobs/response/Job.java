@@ -16,7 +16,7 @@ import java.util.OptionalLong;
  * Standard job response document that represents the attributes and status of a z/OS batch job
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class Job {
 

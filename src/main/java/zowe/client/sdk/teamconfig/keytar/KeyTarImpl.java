@@ -28,7 +28,7 @@ import java.util.Set;
  * Implementation class for IkeyTar interface that contains the logic for KeyTar processing
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class KeyTarImpl implements IKeyTar {
 

@@ -113,7 +113,7 @@ import zowe.client.sdk.teamconfig.service.TeamConfigService;
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class TstZosConnection {
 

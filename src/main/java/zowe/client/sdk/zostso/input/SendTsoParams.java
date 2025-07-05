@@ -15,7 +15,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * TSO issue command z/OSMF parameters
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class SendTsoParams {
 

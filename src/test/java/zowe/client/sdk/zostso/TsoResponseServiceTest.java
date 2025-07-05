@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
  * Class containing unit tests for TsoResponseService.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class TsoResponseServiceTest {

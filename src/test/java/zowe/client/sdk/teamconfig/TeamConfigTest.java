@@ -31,7 +31,7 @@ import static org.mockito.ArgumentMatchers.any;
  * Class containing unit test for TeamConfig.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class TeamConfigTest {
 

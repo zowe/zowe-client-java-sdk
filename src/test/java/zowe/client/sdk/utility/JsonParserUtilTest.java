@@ -15,7 +15,7 @@ import org.junit.Test;
  * Class containing unit test for JsonParserUtil.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class JsonParserUtilTest {
 

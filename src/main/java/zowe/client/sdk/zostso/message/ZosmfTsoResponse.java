@@ -18,7 +18,7 @@ import java.util.Optional;
  * z/OSMF synchronous most tso command response messages. See the z/OSMF REST API publication for complete details.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosmfTsoResponse {
 

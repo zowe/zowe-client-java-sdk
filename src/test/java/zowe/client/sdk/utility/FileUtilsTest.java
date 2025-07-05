@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
  * Class containing unit tests for FileUtils.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 @SuppressWarnings("DataFlowIssue")
 public class FileUtilsTest {

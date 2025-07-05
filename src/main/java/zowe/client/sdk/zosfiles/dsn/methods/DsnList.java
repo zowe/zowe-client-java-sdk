@@ -34,7 +34,7 @@ import java.util.*;
  * Provides list dataset and member functionality
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnList {
 

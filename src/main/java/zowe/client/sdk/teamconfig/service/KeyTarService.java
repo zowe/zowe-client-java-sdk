@@ -23,7 +23,7 @@ import java.util.List;
  * Zowe Global Team Configuration location information.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class KeyTarService {
 

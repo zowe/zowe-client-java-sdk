@@ -54,7 +54,7 @@ import java.util.List;
  * Class example to showcase team config functionality via TeamConfig class.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class TeamConfigExp {
 

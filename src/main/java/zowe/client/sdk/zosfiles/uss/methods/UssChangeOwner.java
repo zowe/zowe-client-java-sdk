@@ -30,7 +30,7 @@ import java.util.Map;
  * Parameter container class for Unix System Services (USS) chown operation
  *
  * @author James Kostrewski
- * @version 3.0
+ * @version 4.0
  */
 public class UssChangeOwner {
 
