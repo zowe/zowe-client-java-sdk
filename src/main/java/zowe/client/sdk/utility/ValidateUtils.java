@@ -57,14 +57,9 @@ public final class ValidateUtils {
             }
         } else if (connection.getAuthType().equals(AuthType.SSL)) {
             if (connection.getZosmfPort() == null || connection.getHost() == null ||
-                    connection.getCookie() == null || connection.getCertFilePath() == null ||
-                    connection.getZosmfPort().isBlank() || connection.getHost().isBlank() ||
-                    connection.getCertFilePath().isBlank()) {
+                    connection.getCertFilePath() == null || connection.getZosmfPort().isBlank() ||
+                    connection.getHost().isBlank() || connection.getCertFilePath().isBlank()) {
                 throw new IllegalStateException(errMsg);
-            } else {
-                if (!FileUtils.doesPathExistAndIsFile(connection.getCertFilePath())) {
-                    throw new IllegalStateException("certificate file does not exist");
-                }
             }
         }
     }
