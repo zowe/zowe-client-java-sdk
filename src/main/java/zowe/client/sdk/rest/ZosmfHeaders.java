@@ -79,13 +79,13 @@ public final class ZosmfHeaders {
 
     /**
      * If you use this header, delete job API will be asynchronous.
-     * this is the default setting, so using this header is not really necessary unless you want to be explicit.
+     * This is the default setting, so using this header is not really necessary unless you want to be explicit.
      */
     public final static String X_IBM_JOB_MODIFY_VERSION_1 = "X_IBM_JOB_MODIFY_VERSION_1";
 
     /**
      * If you use this header, delete job API will be synchronous.
-     * but using it may cause problems for some users depending on their maintenance level and configuration.
+     * But using it may cause problems for some users depending on their maintenance level and configuration.
      */
     public final static String X_IBM_JOB_MODIFY_VERSION_2 = "X_IBM_JOB_MODIFY_VERSION_2";
 
