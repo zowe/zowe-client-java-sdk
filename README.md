@@ -115,7 +115,7 @@ SDK release version 3 and above uses Unirest 4.x which removes the dependency on
    
 Unirest's library provides the ability to retrieve IBM z/OSMF JSON error document.  
   
-For example, the following http GET request will result in a HTTP 500 error:  
+For example, the following http GET request will result in an HTTP 500 error:  
   
     https://xxxxxxx.xxxxx.net:xxxx/zosmf/restfiles/ds?
   
