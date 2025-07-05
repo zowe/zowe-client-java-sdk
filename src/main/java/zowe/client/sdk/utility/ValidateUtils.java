@@ -51,7 +51,7 @@ public final class ValidateUtils {
             }
         } else if (connection.getAuthType().equals(AuthType.TOKEN)) {
             if (connection.getZosmfPort() == null || connection.getHost() == null ||
-                    connection.getCookie() == null || connection.getZosmfPort().isBlank() ||
+                    connection.getToken() == null || connection.getZosmfPort().isBlank() ||
                     connection.getHost().isBlank()) {
                 throw new IllegalStateException(errMsg);
             }

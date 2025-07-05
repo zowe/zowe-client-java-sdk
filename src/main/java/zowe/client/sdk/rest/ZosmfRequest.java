@@ -96,7 +96,7 @@ public abstract class ZosmfRequest {
                 setupBasic();
                 break;
             case TOKEN:
-                setupCookie();
+                setupToken();
                 break;
             case SSL:
                 setupSsl();
@@ -121,9 +121,9 @@ public abstract class ZosmfRequest {
      *
      * @author Frank Giordano
      */
-    private void setupCookie() {
+    private void setupToken() {
         Unirest.config().verifySsl(false);
-        this.cookie = connection.getCookie();
+        this.cookie = connection.getToken();
         headers.remove("Authorization");
     }
 

@@ -44,7 +44,7 @@ public class ZosConnection {
     /**
      * Cookie value set to use as an authentication token for http call
      */
-    private final Cookie cookie;
+    private final Cookie token;
     /**
      * Path with filename denoting the certificate for SSL authentication usage
      */
@@ -65,7 +65,7 @@ public class ZosConnection {
         this.user = builder.user;
         this.password = builder.password;
         this.certPassword = builder.certPassword;
-        this.cookie = builder.cookie;
+        this.token = builder.token;
         this.certFilePath = builder.certFilePath;
         this.authType = builder.authType;
     }
@@ -93,8 +93,8 @@ public class ZosConnection {
      *
      * @return Cookie object
      */
-    public Cookie getCookie() {
-        return cookie;
+    public Cookie getToken() {
+        return token;
     }
 
     /**
@@ -157,14 +157,14 @@ public class ZosConnection {
             return false;
         }
         ZosConnection other = (ZosConnection) obj;
-        if (cookie != null) {
+        if (token != null) {
             return Objects.equals(host, other.host) &&
                     Objects.equals(zosmfPort, other.zosmfPort) &&
                     Objects.equals(user, other.user) &&
                     Objects.equals(password, other.password) &&
                     Objects.equals(certPassword, other.certPassword) &&
-                    Objects.equals(cookie.getName(), other.cookie.getName()) &&
-                    Objects.equals(cookie.getValue(), other.cookie.getValue()) &&
+                    Objects.equals(token.getName(), other.token.getName()) &&
+                    Objects.equals(token.getValue(), other.token.getValue()) &&
                     Objects.equals(certFilePath, other.certFilePath) &&
                     Objects.equals(authType, other.authType);
         } else {
@@ -185,7 +185,7 @@ public class ZosConnection {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(host, zosmfPort, user, password, certPassword, cookie, certFilePath, authType);
+        return Objects.hash(host, zosmfPort, user, password, certPassword, token, certFilePath, authType);
     }
 
     /**
@@ -214,9 +214,9 @@ public class ZosConnection {
          */
         private String certPassword;
         /**
-         * Cookie value set to use as an authentication token for http call
+         * Token value set to use as an authentication token for http call
          */
-        private Cookie cookie;
+        private Cookie token;
         /**
          * Path with filename denoting the certificate for SSL authentication usage
          */
@@ -291,13 +291,13 @@ public class ZosConnection {
         }
 
         /**
-         * Set the cookie
+         * Set the token
          *
-         * @param cookie Cookie object containing a token value
+         * @param token Cookie object containing a token value
          * @return Builder instance
          */
-        public ZosConnection.Builder cookie(Cookie cookie) {
-            this.cookie = cookie;
+        public ZosConnection.Builder cookie(Cookie token) {
+            this.token = token;
             return this;
         }
 
