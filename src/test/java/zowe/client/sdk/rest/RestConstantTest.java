@@ -22,7 +22,7 @@ public class RestConstantTest {
         try {
             RestConstant.HTTP_STATUS.put(401, "test");
         } catch (UnsupportedOperationException e) {
-            assertTrue(e instanceof UnsupportedOperationException);
+            assertTrue(true);
         }
     }
 

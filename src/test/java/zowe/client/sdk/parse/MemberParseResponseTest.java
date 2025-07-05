@@ -55,7 +55,7 @@ public class MemberParseResponseTest {
 
         final Member response = (Member) JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse(json);
         assertEquals("ver", response.getMember().orElse("n\\a"));
-        assertEquals(Long.parseLong("0"), response.getVers().orElse(-1L));
+        assertEquals(0, response.getVers().orElse(-1L));
     }
 
 }
