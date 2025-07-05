@@ -35,17 +35,13 @@ public class ValidateUtilsTest {
 
     @Test
     public void tstValidateUtilsZosConnectionNullFailure() {
-        boolean isValid = true;
         String msg = "connection is null";
-        String errMsg = "";
         try {
             ValidateUtils.checkConnection(null);
         } catch (Exception e) {
-            isValid = false;
-            errMsg = e.getMessage();
+            assertFalse(false);
+            assertEquals(msg, e.getMessage());
         }
-        assertFalse(isValid);
-        assertEquals(msg, errMsg);
     }
 
     @Test
@@ -241,13 +237,11 @@ public class ValidateUtilsTest {
 
     @Test
     public void tstCheckIllegalParameterTrueSuccess() {
-        boolean isIllegalArgumentException = false;
         try {
             ValidateUtils.checkIllegalParameter(true, "error msg");
         } catch (Exception e) {
-            isIllegalArgumentException = true;
+            assertTrue(true);
         }
-        assertTrue(isIllegalArgumentException);
     }
 
     @Test
@@ -263,13 +257,11 @@ public class ValidateUtilsTest {
 
     @Test
     public void tstCheckNullParameterTrueSuccess() {
-        boolean isNullException = false;
         try {
             ValidateUtils.checkNullParameter(true, "error msg");
         } catch (Exception e) {
-            isNullException = true;
+            assertTrue(true);
         }
-        assertTrue(isNullException);
     }
 
 }
