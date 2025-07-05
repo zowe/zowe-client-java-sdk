@@ -218,7 +218,7 @@ public class ValidateUtilsTest {
         final int input = 5;
         boolean isIllegalArgumentException = false;
         try {
-            ValidateUtils.checkIllegalParameter(input == 15, "error msg");
+            ValidateUtils.checkIllegalParameter(false, "error msg");
         } catch (Exception e) {
             isIllegalArgumentException = true;
         }
@@ -230,7 +230,7 @@ public class ValidateUtilsTest {
         final int input = 5;
         boolean isIllegalArgumentException = false;
         try {
-            ValidateUtils.checkIllegalParameter(input == 5, "error msg");
+            ValidateUtils.checkIllegalParameter(true, "error msg");
         } catch (Exception e) {
             isIllegalArgumentException = true;
         }
@@ -242,7 +242,7 @@ public class ValidateUtilsTest {
         final String str = "";
         boolean isNullException = false;
         try {
-            ValidateUtils.checkNullParameter(str == null, "error msg");
+            ValidateUtils.checkNullParameter(false, "error msg");
         } catch (Exception e) {
             isNullException = true;
         }
@@ -254,7 +254,7 @@ public class ValidateUtilsTest {
         final String str = null;
         boolean isNullException = false;
         try {
-            ValidateUtils.checkNullParameter(str == null, "error msg");
+            ValidateUtils.checkNullParameter(true, "error msg");
         } catch (Exception e) {
             isNullException = true;
         }
