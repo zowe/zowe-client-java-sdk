@@ -28,11 +28,6 @@ public class PutJsonZosmfRequest extends ZosmfRequest {
     private static final Logger LOG = LoggerFactory.getLogger(PutJsonZosmfRequest.class);
 
     /**
-     * Optional Cookie object
-     */
-    private Cookie cookie;
-
-    /**
      * JSON String representation
      */
     private String body;
