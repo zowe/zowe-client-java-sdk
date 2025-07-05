@@ -173,7 +173,6 @@ public class ZosConnection {
                     Objects.equals(user, other.user) &&
                     Objects.equals(password, other.password) &&
                     Objects.equals(certPassword, other.certPassword) &&
-                    Objects.equals(cookie, other.cookie) &&
                     Objects.equals(certFilePath, other.certFilePath) &&
                     Objects.equals(authType, other.authType);
         }
