@@ -230,7 +230,6 @@ public class ValidateUtilsTest {
 
     @Test
     public void tstCheckIllegalParameterFalseSuccess() {
-        final int input = 5;
         boolean isIllegalArgumentException = false;
         try {
             ValidateUtils.checkIllegalParameter(false, "error msg");
@@ -242,7 +241,6 @@ public class ValidateUtilsTest {
 
     @Test
     public void tstCheckIllegalParameterTrueSuccess() {
-        final int input = 5;
         boolean isIllegalArgumentException = false;
         try {
             ValidateUtils.checkIllegalParameter(true, "error msg");
@@ -254,7 +252,6 @@ public class ValidateUtilsTest {
 
     @Test
     public void tstCheckNullParameterFalseSuccess() {
-        final String str = "";
         boolean isNullException = false;
         try {
             ValidateUtils.checkNullParameter(false, "error msg");
@@ -266,7 +263,6 @@ public class ValidateUtilsTest {
 
     @Test
     public void tstCheckNullParameterTrueSuccess() {
-        final String str = null;
         boolean isNullException = false;
         try {
             ValidateUtils.checkNullParameter(true, "error msg");
