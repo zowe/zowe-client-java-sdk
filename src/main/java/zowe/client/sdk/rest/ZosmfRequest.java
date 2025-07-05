@@ -131,11 +131,11 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setupSsl() {
-        var filePath = connection.getCertFilePath();
-        var certPassword = connection.getCertPassword();
+        String filePath = connection.getCertFilePath();
+        String certPassword = connection.getCertPassword();
         SSLContext sslContext;
         try {
-            var clientStore = KeyStore.getInstance(CERTIFICATE_FORMAT_TYPE);
+            KeyStore clientStore = KeyStore.getInstance(CERTIFICATE_FORMAT_TYPE);
             clientStore.load(new FileInputStream(filePath), certPassword.toCharArray());
             sslContext = SSLContextBuilder.create().loadKeyMaterial(clientStore, certPassword.toCharArray()).build();
         } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException |

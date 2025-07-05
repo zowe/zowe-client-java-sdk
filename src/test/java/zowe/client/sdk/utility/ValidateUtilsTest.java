@@ -36,7 +36,7 @@ public class ValidateUtilsTest {
     @Test
     public void tstValidateUtilsZosConnectionNullFailure() {
         boolean isValid = true;
-        var msg = "connection is null";
+        String msg = "connection is null";
         String errMsg = "";
         try {
             ValidateUtils.checkConnection(null);
@@ -87,7 +87,7 @@ public class ValidateUtilsTest {
     @Test
     public void tstValidateUtilsCheckConnectionBasicPasswordEmptyErrMsgFailure() {
         boolean isValid = true;
-        var msg = "required connection attribute(s) missing for BASIC authentication";
+        String msg = "required connection attribute(s) missing for BASIC authentication";
         String errMsg = "";
         try {
             ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.BASIC).host("test")
@@ -103,7 +103,7 @@ public class ValidateUtilsTest {
     @Test
     public void tstValidateUtilsCheckConnectionBasicPasswordNullErrMsgFailure() {
         boolean isValid = true;
-        var msg = "required connection attribute(s) missing for BASIC authentication";
+        String msg = "required connection attribute(s) missing for BASIC authentication";
         String errMsg = "";
         try {
             ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.BASIC).host("test")
@@ -119,7 +119,7 @@ public class ValidateUtilsTest {
     @Test
     public void tstValidateUtilsCheckConnectionBasicUserEmptyErrMsgFailure() {
         boolean isValid = true;
-        var msg = "required connection attribute(s) missing for BASIC authentication";
+        String msg = "required connection attribute(s) missing for BASIC authentication";
         String errMsg = "";
         try {
             ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.BASIC).host("test")
@@ -135,7 +135,7 @@ public class ValidateUtilsTest {
     @Test
     public void tstValidateUtilsCheckConnectionBasicUserNullErrMsgFailure() {
         boolean isValid = true;
-        var msg = "required connection attribute(s) missing for BASIC authentication";
+        String msg = "required connection attribute(s) missing for BASIC authentication";
         String errMsg = "";
         try {
             ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.BASIC).host("test")
@@ -151,7 +151,7 @@ public class ValidateUtilsTest {
     @Test
     public void tstValidateUtilsCheckConnectionBasicZosmfPortEmptyErrMsgFailure() {
         boolean isValid = true;
-        var msg = "required connection attribute(s) missing for BASIC authentication";
+        String msg = "required connection attribute(s) missing for BASIC authentication";
         String errMsg = "";
         try {
             ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.BASIC).host("test")
@@ -167,7 +167,7 @@ public class ValidateUtilsTest {
     @Test
     public void tstValidateUtilsCheckConnectionBasicZosmfPortNullErrMsgFailure() {
         boolean isValid = true;
-        var msg = "required connection attribute(s) missing for BASIC authentication";
+        String msg = "required connection attribute(s) missing for BASIC authentication";
         String errMsg = "";
         try {
             ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.BASIC).host("test")
@@ -183,7 +183,7 @@ public class ValidateUtilsTest {
     @Test
     public void tstValidateUtilsCheckConnectionTokenNullErrMsgFailure() {
         boolean isValid = true;
-        var msg = "required connection attribute(s) missing for TOKEN authentication";
+        String msg = "required connection attribute(s) missing for TOKEN authentication";
         String errMsg = "";
         try {
             ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.TOKEN).host("test")
@@ -199,7 +199,7 @@ public class ValidateUtilsTest {
     @Test
     public void tstValidateUtilsCheckConnectionSslEmptyErrMsgFailure() {
         boolean isValid = true;
-        var msg = "required connection attribute(s) missing for SSL authentication";
+        String msg = "required connection attribute(s) missing for SSL authentication";
         String errMsg = "";
         try {
             ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.SSL).host("test")
@@ -215,7 +215,7 @@ public class ValidateUtilsTest {
     @Test
     public void tstValidateUtilsCheckConnectionSslNullErrMsgFailure() {
         boolean isValid = true;
-        var msg = "required connection attribute(s) missing for SSL authentication";
+        String msg = "required connection attribute(s) missing for SSL authentication";
         String errMsg = "";
         try {
             ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.SSL).host("test")
