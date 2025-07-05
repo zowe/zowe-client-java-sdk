@@ -112,6 +112,7 @@ public abstract class ZosmfRequest {
      */
     private void setupBasic() {
         Unirest.config().verifySsl(false);
+        this.cookie = null;
     }
 
     /**
