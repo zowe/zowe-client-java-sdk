@@ -34,7 +34,7 @@ public class ZosmfLoginResponse {
      * ZosmfLoginResponse constructor
      *
      * @param response Response object
-     * @param tokens  Cookies object representing TOKENS
+     * @param tokens   Cookies object representing TOKENS
      * @author Frank Giordano
      */
     public ZosmfLoginResponse(final Response response, final Cookies tokens) {
