@@ -62,9 +62,9 @@ public class ZosmfLoginExp extends TstZosConnection {
         // display response
         System.out.println(loginResponse);
 
-        Cookies cookies = loginResponse.getCookies();
-        Cookie jwtToken = cookies.get(0);
-        Cookie ltpaToken = cookies.get(1);
+        Cookies tokens = loginResponse.getCookies();
+        Cookie jwtToken = tokens.get(0);
+        Cookie ltpaToken = tokens.get(1);
         // display jwtToken
         System.out.println(jwtToken);
         // display LtpaToken
@@ -89,12 +89,12 @@ public class ZosmfLoginExp extends TstZosConnection {
         // perform the same request without token authentication using the default basic authentication instead
         downloadDsnMember(connection, datasetName, memberName, params);
 
-        // set the token in connection cookie field
-        connection.setCookie(jwtToken);
+        // set the token in connection TOKEN field
+        connection.setToken(jwtToken);
 
-        // use jwtToken as cookie authentication
+        // use jwtToken as TOKEN authentication
         downloadDsnMemberWithToken(connection, jwtToken, datasetName, memberName, params);
-        // now use LtpaToken as cookie authentication
+        // now use LtpaToken as TOKEN authentication
         downloadDsnMemberWithToken(connection, ltpaToken, datasetName, memberName, params);
 
         // perform the same request without token
@@ -131,12 +131,12 @@ public class ZosmfLoginExp extends TstZosConnection {
     }
 
     /**
-     * Download a dataset member using token cookie authentication.
+     * Download a dataset member using TOKEN authentication.
      *
      * @param connection ZosConnection object
      * @param dsName     name of a dataset
      * @param memName    member name that exists within the specified dataset name
-     * @param params     download parameters object
+     * @param params     download parameter object
      * @author Leonid Baranov
      */
     private static void downloadDsnMember(ZosConnection connection, String dsName, String memName,
@@ -156,13 +156,13 @@ public class ZosmfLoginExp extends TstZosConnection {
      * @param connection ZosConnection object
      * @param dsName     name of a dataset
      * @param memName    member name that exists within the specified dataset name
-     * @param params     download parameters object
+     * @param params     download parameter object
      * @author Leonid Baranov
      */
-    private static void downloadDsnMemberWithToken(ZosConnection connection, Cookie cookie, String dsName, String memName,
+    private static void downloadDsnMemberWithToken(ZosConnection connection, Cookie token, String dsName, String memName,
                                                    DownloadParams params) {
-        // set the token in connection cookie field
-        connection.setCookie(cookie);
+        // set the token in connection TOKEN field
+        connection.setToken(token);
         try (InputStream inputStream = new DsnGet(connection).get(String.format("%s(%s)", dsName, memName), params)) {
             System.out.println(getTextStreamData(inputStream));
         } catch (ZosmfRequestException e) {

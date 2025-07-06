@@ -65,7 +65,7 @@ public class ZosmfLogin {
     }
 
     /**
-     * Request to log into the server and obtain authentication tokens
+     * Request to log into the server and retrieve authentication tokens
      *
      * @return ZosmfLoginResponse object
      * @throws ZosmfRequestException request error state
@@ -83,7 +83,7 @@ public class ZosmfLogin {
         request.setBody("");
 
         final Response response = request.executeRequest();
-        return new ZosmfLoginResponse(response, response.getCookies());
+        return new ZosmfLoginResponse(response, response.getTokens());
     }
 
 }

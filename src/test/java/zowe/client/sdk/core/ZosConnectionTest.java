@@ -37,7 +37,7 @@ public class ZosConnectionTest {
     public void tstReferenceNotEqualsWithCookieSuccess() {
         final ZosConnection zc1 = new ZosConnection.Builder(AuthType.TOKEN)
                 .host("test").password("password").user("user").zosmfPort("zosmfPort")
-                .cookie(new Cookie("hello", "world")).build();
+                .token(new Cookie("hello", "world")).build();
         final ZosConnection zc2 = new ZosConnection.Builder(AuthType.TOKEN)
                 .host("test").password("password").user("user").zosmfPort("zosmfPort").build();
         assertNotSame(zc1, zc2);
@@ -55,7 +55,7 @@ public class ZosConnectionTest {
     public void tstReferenceEqualsWithCookieSuccess() {
         final ZosConnection zc1 = new ZosConnection.Builder(AuthType.TOKEN)
                 .host("test").password("password").user("user").zosmfPort("zosmfPort")
-                .cookie(new Cookie("hello", "world")).build();
+                .token(new Cookie("hello", "world")).build();
         final ZosConnection zc2 = zc1;
         assertEquals(zc1, zc2);
     }
@@ -73,10 +73,10 @@ public class ZosConnectionTest {
     public void tstEqualsWithCookieSuccess() {
         final ZosConnection zc1 = new ZosConnection.Builder(AuthType.TOKEN)
                 .host("test").password("password").user("user").zosmfPort("zosmfPort")
-                .cookie(new Cookie("hello", "world")).build();
+                .token(new Cookie("hello", "world")).build();
         final ZosConnection zc2 = new ZosConnection.Builder(AuthType.TOKEN)
                 .host("test").password("password").user("user").zosmfPort("zosmfPort")
-                .cookie(new Cookie("hello", "world")).build();
+                .token(new Cookie("hello", "world")).build();
         assertEquals(zc1, zc2);
     }
 
@@ -93,10 +93,10 @@ public class ZosConnectionTest {
     public void tstNotEqualsWithCookieSuccess() {
         final ZosConnection zc1 = new ZosConnection.Builder(AuthType.TOKEN)
                 .host("test").password("password").user("user").zosmfPort("zosmfPort")
-                .cookie(new Cookie("hello", "world1")).build();
+                .token(new Cookie("hello", "world1")).build();
         final ZosConnection zc2 = new ZosConnection.Builder(AuthType.TOKEN)
                 .host("test").password("password").user("user").zosmfPort("zosmfPort")
-                .cookie(new Cookie("hello", "world")).build();
+                .token(new Cookie("hello", "world")).build();
         assertNotEquals(zc1, zc2);
     }
 

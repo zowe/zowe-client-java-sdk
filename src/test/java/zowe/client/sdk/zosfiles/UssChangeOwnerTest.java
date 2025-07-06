@@ -40,7 +40,7 @@ public class UssChangeOwnerTest {
     private final ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
             .host("1").password("1").user("1").zosmfPort("1").build();
     private final ZosConnection tokenConnection = new ZosConnection.Builder(AuthType.TOKEN)
-            .host("1").zosmfPort("1").cookie(new Cookie("hello=hello")).build();
+            .host("1").zosmfPort("1").token(new Cookie("hello=hello")).build();
     private PutJsonZosmfRequest mockJsonPutRequest;
     private PutJsonZosmfRequest mockJsonPutRequestToken;
     private UssChangeOwner ussChangeOwner;

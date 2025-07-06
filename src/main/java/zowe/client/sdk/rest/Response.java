@@ -40,7 +40,7 @@ public class Response {
     /**
      * Store raw reply
      */
-    private final Optional<Cookies> cookies;
+    private final Optional<Cookies> tokens;
 
     /**
      * Response constructor
@@ -58,7 +58,7 @@ public class Response {
             this.statusCode = OptionalInt.of(statusCode);
         }
         this.statusText = Optional.ofNullable(statusText);
-        this.cookies = Optional.empty();
+        this.tokens = Optional.empty();
     }
 
     /**
@@ -67,11 +67,11 @@ public class Response {
      * @param responsePhrase http response information
      * @param statusCode     http response status code
      * @param statusText     http response status text
-     * @param cookies        http response cookies
+     * @param tokens         http response Cookies object representing TOKENS
      * @author Frank Giordano
      */
     public Response(final Object responsePhrase, final Integer statusCode, final String statusText,
-                    final Cookies cookies) {
+                    final Cookies tokens) {
         this.responsePhrase = Optional.ofNullable(responsePhrase);
         if (statusCode == null) {
             this.statusCode = OptionalInt.empty();
@@ -79,7 +79,7 @@ public class Response {
             this.statusCode = OptionalInt.of(statusCode);
         }
         this.statusText = Optional.ofNullable(statusText);
-        this.cookies = Optional.ofNullable(cookies);
+        this.tokens = Optional.ofNullable(tokens);
     }
 
     /**
@@ -110,12 +110,12 @@ public class Response {
     }
 
     /**
-     * Retrieve cookies value
+     * Retrieve tokens value
      *
-     * @return cookies Cookies object
+     * @return tokens Cookies object representing TOKENS
      */
-    public Cookies getCookies() {
-        return cookies.orElse(null);
+    public Cookies getTokens() {
+        return tokens.orElse(null);
     }
 
     /**

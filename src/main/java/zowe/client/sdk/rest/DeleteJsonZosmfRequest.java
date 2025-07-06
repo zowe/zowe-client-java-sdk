@@ -48,7 +48,7 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         HttpResponse<JsonNode> reply;
         try {
-            reply = cookie != null ? Unirest.delete(url).cookie(cookie).headers(headers).asJson() :
+            reply = token != null ? Unirest.delete(url).cookie(token).headers(headers).asJson() :
                     Unirest.delete(url).headers(headers).asJson();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);

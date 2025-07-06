@@ -58,7 +58,7 @@ public class PostJsonZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(body == null, "body is null");
         HttpResponse<JsonNode> reply;
         try {
-            reply = cookie != null ? Unirest.post(url).cookie(cookie).headers(headers).body(body).asJson() :
+            reply = token != null ? Unirest.post(url).cookie(token).headers(headers).body(body).asJson() :
                     Unirest.post(url).headers(headers).body(body).asJson();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);

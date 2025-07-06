@@ -61,7 +61,7 @@ public class ValidateUtilsTest {
         boolean isValid = true;
         try {
             ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.TOKEN).host("test")
-                    .cookie(new Cookie("xxx", "xxx")).zosmfPort("zosmfPort").build());
+                    .token(new Cookie("xxx", "xxx")).zosmfPort("zosmfPort").build());
         } catch (Exception e) {
             isValid = false;
         }
@@ -183,7 +183,7 @@ public class ValidateUtilsTest {
         String errMsg = "";
         try {
             ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.TOKEN).host("test")
-                    .cookie(null).zosmfPort(null).build());
+                    .token(null).zosmfPort(null).build());
         } catch (Exception e) {
             isValid = false;
             errMsg = e.getMessage();

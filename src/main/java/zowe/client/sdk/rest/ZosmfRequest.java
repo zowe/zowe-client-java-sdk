@@ -67,9 +67,9 @@ public abstract class ZosmfRequest {
      */
     protected String url;
     /**
-     * Cookie object
+     * Cookie object representing a TOKEN
      */
-    protected Cookie cookie;
+    protected Cookie token;
 
     /**
      * ZosmfRequest constructor
@@ -107,28 +107,28 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Setup authentication basic type
+     * Setup authentication BASIC type
      *
      * @author Frank Giordano
      */
     private void setupBasic() {
         Unirest.config().verifySsl(false);
-        this.cookie = null;
+        this.token = null;
     }
 
     /**
-     * Setup authentication cookie type
+     * Setup authentication TOKEN type
      *
      * @author Frank Giordano
      */
     private void setupToken() {
         Unirest.config().verifySsl(false);
-        this.cookie = connection.getToken();
+        this.token = connection.getToken();
         headers.remove("Authorization");
     }
 
     /**
-     * Setup authentication ssl type
+     * Setup authentication SSL type
      *
      * @author Frank Giordano
      */
@@ -150,7 +150,7 @@ public abstract class ZosmfRequest {
         Unirest.config().verifySsl(true);
         Unirest.config().sslContext(sslContext);
         headers.remove("Authorization");
-        this.cookie = null;
+        this.token = null;
     }
 
     /**

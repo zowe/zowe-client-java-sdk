@@ -47,7 +47,7 @@ public class GetStreamZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         HttpResponse<byte[]> reply;
         try {
-            reply = cookie != null ? Unirest.get(url).cookie(cookie).headers(headers).asBytes() :
+            reply = token != null ? Unirest.get(url).cookie(token).headers(headers).asBytes() :
                     Unirest.get(url).headers(headers).asBytes();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);

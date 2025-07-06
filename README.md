@@ -111,7 +111,7 @@ Whenever you encounter a JSON parse error for reading the Zowe Team Configuratio
   
 SDK release version 2 uses Unirest 3.x Http functionality.  
   
-SDK release version 3 and above uses Unirest 4.x which removes the dependency on Apache Commons and provides cookie processing for Web token authentication.   
+SDK release version 3 and above uses Unirest 4.x which removes the dependency on Apache Commons and provides token processing for Web TOKEN authentication.   
    
 Unirest's library provides the ability to retrieve IBM z/OSMF JSON error document.  
   
@@ -125,9 +125,9 @@ and the JSON error report document body response is:
 
 ## Authenticating to z/OSMF
   
-Since the release of the SDK, the authentication of each REST API call is done with Basic authentication.
+Since the release of the SDK, the authentication of each REST API call is done with BASIC authentication.
   
-With SDK release version 3, Web token authentication was added.   
+With SDK release version 3, Web TOKEN authentication was added.   
   
 The current version 4, SSL authentication from a certificate file was added.  
   
@@ -135,19 +135,19 @@ With three types of authentication available, the following enum class AuthType 
   
 This enum is used to send it to the ZosConnection constructor denoting the type of authentication to perform.  
   
-For instance, the following ZosConnection object is specified to perform Basic authentication:  
+For instance, the following ZosConnection object is specified to perform BASIC authentication:  
   
     ZosConnection connection = new ZosConnection(AuthType.BASIC).host("xxxx").password("xxxx").user("xxxx").zosmfPort("xxxx").build();
   
-Basic authentication means that the http request contains a Basic header representing the username and password encrypted.   
+Basic authentication means that the http request contains a BASIC header representing the username and password encrypted.   
   
-For web token example, the following ZosConnection object is specified:  
+For web TOKEN example, the following ZosConnection object is specified:  
   
-    ZosConnection connection = new ZosConnection(AuthType.TOKEN).host("xxxx").zosmfPort("xxxx").cookie(new Cookie("xxxx=xxxx")).build();
+    ZosConnection connection = new ZosConnection(AuthType.TOKEN).host("xxxx").zosmfPort("xxxx").token(new Cookie("xxxx=xxxx")).build();
   
-With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve authentication tokens (a JSON Web and an LTPA token) on a Basic authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA token(s).  
+With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve authentication tokens (a JSON Web and an LTPA TOKEN) on a BASIC authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA TOKENS.  
   
-Web token support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web Token support in the IBM z/OS Management Facility Configuration Guide.  
+Web TOKEN support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web TOKEN support in the IBM z/OS Management Facility Configuration Guide.  
   
 For SSL example, the following ZosConnection object is specified:  
 

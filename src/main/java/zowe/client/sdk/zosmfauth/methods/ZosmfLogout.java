@@ -67,14 +67,14 @@ public class ZosmfLogout {
     /**
      * Request to log out of server and delete authentication cookie token
      *
-     * @param cookie Cookie Object
+     * @param token Cookie Object
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Esteban Sandoval
      * @author Frank Giordano
      */
-    public Response logout(Cookie cookie) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(cookie == null, "cookie is null");
+    public Response logout(Cookie token) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(token == null, "token is null");
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
                 ZosmfAuthConstants.RESOURCE;
 

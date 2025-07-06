@@ -89,7 +89,7 @@ public class ZosConnection {
     }
 
     /**
-     * Retrieve cookie
+     * Retrieve a cookie object representing a TOKEN
      *
      * @return Cookie object
      */
@@ -296,7 +296,7 @@ public class ZosConnection {
          * @param token Cookie object containing a token value
          * @return Builder instance
          */
-        public ZosConnection.Builder cookie(Cookie token) {
+        public ZosConnection.Builder token(Cookie token) {
             this.token = token;
             return this;
         }

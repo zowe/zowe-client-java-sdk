@@ -57,7 +57,7 @@ public class PutTextZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(body == null, "body is null");
         HttpResponse<String> reply;
         try {
-            reply = cookie != null ? Unirest.put(url).cookie(cookie).headers(headers).body(body).asString() :
+            reply = token != null ? Unirest.put(url).cookie(token).headers(headers).body(body).asString() :
                     Unirest.put(url).headers(headers).body(body).asString();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
