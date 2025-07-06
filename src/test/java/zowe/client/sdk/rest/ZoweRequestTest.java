@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.rest;
 
+import kong.unirest.core.Cookie;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
 import org.junit.Before;
@@ -19,7 +20,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Class containing unit test for ZoweRequest.
@@ -139,6 +140,22 @@ public class ZoweRequestTest {
         } catch (Exception e) {
             assertEquals(errMsg, e.getMessage());
         }
+    }
+
+    @Test
+    public void tstZoweRequestInitializeBasicSetupSuccess() {
+        ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host("host").zosmfPort("port").user("user").password("password").build();
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        assertNotNull(request.getHeaders().get("Authorization"));
+    }
+
+    @Test
+    public void tstZoweRequestInitializeTokenSetupSuccess() {
+        ZosConnection connection = new ZosConnection.Builder(AuthType.TOKEN)
+                .host("host").zosmfPort("port").token(new Cookie("hello", "world")).build();
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        assertNull(request.getHeaders().get("Authorization"));
     }
 
 }
