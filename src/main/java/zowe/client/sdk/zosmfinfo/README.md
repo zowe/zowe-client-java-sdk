@@ -37,7 +37,12 @@ public class ZosmfStatusExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host(hostName)
+                .zosmfPort(zosmfPort)
+                .user(userName)
+                .password(password)
+                .build();
         ZosmfStatus zosmfStatus = new ZosmfStatus(connection);
         ZosmfInfoResponse zosmfInfoResponse;
         try {
@@ -77,14 +82,19 @@ public class ZosmfSystemsExp extends TstZosConnection {
 
     /**
      * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * ZosmfSystems class functionality. This method perform API call to retrieve the entire list of
+     * ZosmfSystems class functionality. This method performs API call to retrieve the entire list of
      * defined z/OSMF systems running on the z/OS backend.
      *
      * @param args for main not used
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host(hostName)
+                .zosmfPort(zosmfPort)
+                .user(userName)
+                .password(password)
+                .build();
         ZosmfSystems zosmfSystems = new ZosmfSystems(connection);
         ZosmfSystemsResponse zosmfInfoResponse;
         try {
@@ -163,7 +173,12 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (new ZosConnection.Builder(AuthType.BASIC)
+                .host(profile.getHost())
+                .zosmfPort(profile.getPort())
+                .user(profile.getUser())
+                .password(profile.getPassword())
+                .build());
     }
 
 }

@@ -74,8 +74,6 @@ public class TeamConfigExp {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws ZosmfRequestException {
-        String dataSetName = "CCSQA.ASM.JCL";
-
         TeamConfig teamConfig;
         try {
             teamConfig = new TeamConfig();
@@ -83,10 +81,14 @@ public class TeamConfigExp {
             throw new RuntimeException(e.getMessage());
         }
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        ZosConnection connection = new ZosConnection(profile.getHost(), profile.getPort(),
-                profile.getUser(), profile.getPassword());
+        return (new ZosConnection.Builder(AuthType.BASIC)
+                .host(profile.getHost())
+                .zosmfPort(profile.getPort())
+                .user(profile.getUser())
+                .password(profile.getPassword())
+                .build());
 
-        TeamConfigExp.listMembers(connection, dataSetName);
+        TeamConfigExp.listMembers(connection, "CCSQA.ASM.JCL");
     }
 
     /**

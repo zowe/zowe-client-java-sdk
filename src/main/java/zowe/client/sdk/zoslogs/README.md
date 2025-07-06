@@ -38,7 +38,12 @@ public class ZosLogExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host(hostName)
+                .zosmfPort(zosmfPort)
+                .user(userName)
+                .password(password)
+                .build();
         ZosLog zosLog = new ZosLog(connection);
         ZosLogParams zosLogParams = new ZosLogParams.Builder()
                 .startTime("2022-11-27T05:06:20Z")
@@ -138,7 +143,12 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (new ZosConnection.Builder(AuthType.BASIC)
+                .host(profile.getHost())
+                .zosmfPort(profile.getPort())
+                .user(profile.getUser())
+                .password(profile.getPassword())
+                .build());
     }
 
 }

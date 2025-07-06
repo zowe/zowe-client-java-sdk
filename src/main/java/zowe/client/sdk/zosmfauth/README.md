@@ -54,10 +54,15 @@ public class ZosmfLoginExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws ZosmfRequestException {
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host(hostName)
+                .zosmfPort(zosmfPort)
+                .user(userName)
+                .password(password)
+                .build();
         ZosmfLogin login = new ZosmfLogin(connection);
 
-        // request to log into server and obtain authentication tokens
+        // request to log into server and retrieve authentication tokens
         ZosmfLoginResponse loginResponse = login.login();
         // display response
         System.out.println(loginResponse);
@@ -75,30 +80,18 @@ public class ZosmfLoginExp extends TstZosConnection {
         String memberName = "xxx";
         DownloadParams params = new DownloadParams.Builder().build();
 
-        // redefine connection object with no username and password specified
-        connection = new ZosConnection(hostName, zosmfPort, "", "");
-
-        // use jwtToken as cookie token authentication
-        downloadDsnMemberWithToken(connection, jwtToken, datasetName, memberName, params);
-        // now use LtpaToken as cookie token authentication
-        downloadDsnMemberWithToken(connection, ltpaToken, datasetName, memberName, params);
-
-        // redefine connection object with username and password specified
-        connection = new ZosConnection(hostName, zosmfPort, userName, password);
-
-        // perform the same request without token authentication using the default basic authentication instead
+        // following defines a TOKEN authentication usage
+        // redefined connection object with no username and password specified
+        // if you do specify a username and password, they will be ignored
+        // use jwtToken value for the token parameter. 
+        connection = new ZosConnection.Builder(AuthType.TOKEN)
+                .host(hostName).zosmfPort(zosmfPort).token(jwtToken).build();
+        // use jwtToken 
         downloadDsnMember(connection, datasetName, memberName, params);
 
-        // set the token in connection TOKEN field
-        connection.setToken(jwtToken);
-
-        // use jwtToken as TOKEN authentication
-        downloadDsnMemberWithToken(connection, jwtToken, datasetName, memberName, params);
-        // now use LtpaToken as TOKEN authentication
-        downloadDsnMemberWithToken(connection, ltpaToken, datasetName, memberName, params);
-
-        // perform the same request without token
-        connection.setCookie(null);
+        // now use LtpaToken as cookie token authentication
+        connection = new ZosConnection.Builder(AuthType.TOKEN)
+                .host(hostName).zosmfPort(zosmfPort).token(ltpaToken).build();
         downloadDsnMember(connection, datasetName, memberName, params);
 
         // request to log out of server and delete jwtToken authentication token
@@ -111,17 +104,16 @@ public class ZosmfLoginExp extends TstZosConnection {
         // display response
         System.out.println(response);
 
-        // use deleted token for authentication for next request
-        connection.setCookie(jwtToken);
         // this request should fail
         try {
-            downloadDsnMemberWithToken(connection, jwtToken, datasetName, memberName, params);
+            downloadDsnMemberWithToken(connection, datasetName, memberName, params);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
         // disable token authentication for the next API call.
-        connection.setCookie(null);
+        connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host(hostName).zosmfPort(zosmfPort).user(userName).password(password).build();
         // change z/OSMF user's password
         ZosmfPassword zosmfPassword = new ZosmfPassword(connection);
         PasswordParams passwordParams =
@@ -141,28 +133,6 @@ public class ZosmfLoginExp extends TstZosConnection {
      */
     private static void downloadDsnMember(ZosConnection connection, String dsName, String memName,
                                           DownloadParams params) {
-        try (InputStream inputStream = new DsnGet(connection).get(String.format("%s(%s)", dsName, memName), params)) {
-            System.out.println(getTextStreamData(inputStream));
-        } catch (ZosmfRequestException e) {
-            throw new RuntimeException(getByteResponseStatus(e));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Download a dataset member using basic authentication.
-     *
-     * @param connection ZosConnection object
-     * @param dsName     name of a dataset
-     * @param memName    member name that exists within the specified dataset name
-     * @param params     download parameter object
-     * @author Leonid Baranov
-     */
-    private static void downloadDsnMemberWithToken(ZosConnection connection, Cookie token, String dsName, String memName,
-                                                   DownloadParams params) {
-        // set the token in connection TOKEN field
-        connection.setToken(token);
         try (InputStream inputStream = new DsnGet(connection).get(String.format("%s(%s)", dsName, memName), params)) {
             System.out.println(getTextStreamData(inputStream));
         } catch (ZosmfRequestException e) {
@@ -248,7 +218,12 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (new ZosConnection.Builder(AuthType.BASIC)
+                .host(profile.getHost())
+                .zosmfPort(profile.getPort())
+                .user(profile.getUser())
+                .password(profile.getPassword())
+                .build());
     }
 
 }

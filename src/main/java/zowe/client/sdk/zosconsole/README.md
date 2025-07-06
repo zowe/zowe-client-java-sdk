@@ -36,7 +36,12 @@ public class IssueConsoleExp extends TstZosConnection {
      */
     public static void main(String[] args) {
         String command = "D IPLINFO";
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host(hostName)
+                .zosmfPort(zosmfPort)
+                .user(userName)
+                .password(password)
+                .build();
         IssueConsoleExp.issueCommand(connection, command);
         IssueConsoleExp.issueCommandCommon(connection, command);
     }
@@ -99,7 +104,7 @@ import zowe.client.sdk.rest.Response;
 public class Util {
 
     /**
-     * Extract response phrase string value if any from Response object.
+     * Extract response phrase string value if any from a Response object.
      *
      * @param response object
      * @return string value
@@ -149,7 +154,12 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (new ZosConnection.Builder(AuthType.BASIC)
+                .host(profile.getHost())
+                .zosmfPort(profile.getPort())
+                .user(profile.getUser())
+                .password(profile.getPassword())
+                .build());
     }
 
 }

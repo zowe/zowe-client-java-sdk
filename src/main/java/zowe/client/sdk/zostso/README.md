@@ -9,6 +9,7 @@ APIs located in method package.
 ````java
 package zowe.client.sdk.examples.zostso;
 
+import zowe.client.sdk.core.AuthType;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
@@ -38,7 +39,12 @@ public class IssueTsoExp extends TstZosConnection {
         String command = "xxx";
         String accountNumber = "xxx";
 
-        connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host(hostName)
+                .zosmfPort(zosmfPort)
+                .user(userName)
+                .password(password)
+                .build();
         IssueResponse response = IssueTsoExp.issueCommand(accountNumber, command);
         String[] results = response.getCommandResponses().orElse("").split("\n");
         Arrays.stream(results).sequential().forEach(System.out::println);
@@ -79,7 +85,7 @@ import zowe.client.sdk.rest.Response;
 public class Util {
 
     /**
-     * Extract response phrase string value if any from Response object.
+     * Extract response phrase string value if any from a Response object.
      *
      * @param response object
      * @return string value
@@ -128,7 +134,12 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (new ZosConnection.Builder(AuthType.BASIC)
+                .host(profile.getHost())
+                .zosmfPort(profile.getPort())
+                .user(profile.getUser())
+                .password(profile.getPassword())
+                .build());
     }
 
 }

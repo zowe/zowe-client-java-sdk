@@ -41,7 +41,12 @@ public class JobCancelExp extends TstZosConnection {
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
-        connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host(hostName)
+                .zosmfPort(zosmfPort)
+                .user(userName)
+                .password(password)
+                .build();
         System.out.println(cancelCommonWithVersion("2.0"));
         System.out.println(cancelCommon());
         System.out.println(cancelByJob());
@@ -165,7 +170,12 @@ public class JobDeleteExp extends TstZosConnection {
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
-        connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host(hostName)
+                .zosmfPort(zosmfPort)
+                .user(userName)
+                .password(password)
+                .build();
         System.out.println(deleteCommonWithVersion("2.0"));
         System.out.println(deleteCommon());
         System.out.println(deleteByJob());
@@ -283,7 +293,7 @@ public class JobGetExp extends TstZosConnection {
     private static JobGet getJob;
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * The Main method defines z/OSMF host and user connection and other parameters needed to showcase
      * JobGet class functionality.
      *
      * @param args for main not used
@@ -294,7 +304,12 @@ public class JobGetExp extends TstZosConnection {
         String owner = "xxx";
         String jobId = "xxx";
 
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host(hostName)
+                .zosmfPort(zosmfPort)
+                .user(userName)
+                .password(password)
+                .build();
         getJob = new JobGet(connection);
 
         JobGetExp.getCommon(prefix);
@@ -573,7 +588,7 @@ public class JobGetExp extends TstZosConnection {
      */
     public static void getSpoolFilesForJob(String prefix) {
         GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
-        List<JobFile> files = null;
+        List<JobFile> files;
         try {
             List<Job> jobs = getJob.getCommon(params);
             files = getJob.getSpoolFilesByJob(jobs.get(0));
@@ -663,7 +678,12 @@ public class JobMonitorExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host(hostName)
+                .zosmfPort(zosmfPort)
+                .user(userName)
+                .password(password)
+                .build();
         submitJob = new JobSubmit(connection);
         JobMonitorExp.monitorJobForOutputStatusByJobObject();
         JobMonitorExp.monitorJobForOutputStatusByJobNameAndId();
@@ -835,7 +855,12 @@ public class JobSubmitExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host(hostName)
+                .zosmfPort(zosmfPort)
+                .user(userName)
+                .password(password)
+                .build();
         System.out.println(JobSubmitExp.submitJob(connection, "xxx.xxx.xxx.xxx(xxx)"));
 
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\n// EXEC PGM=IEFBR14";
@@ -958,7 +983,12 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (new ZosConnection.Builder(AuthType.BASIC)
+                .host(profile.getHost())
+                .zosmfPort(profile.getPort())
+                .user(profile.getUser())
+                .password(profile.getPassword())
+                .build());
     }
 
 }
