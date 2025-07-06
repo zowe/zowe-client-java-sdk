@@ -145,6 +145,7 @@ public abstract class ZosmfRequest {
         }
         Unirest.config().verifySsl(true);
         Unirest.config().sslContext(sslContext);
+        headers.remove("Authorization");
     }
 
     /**
