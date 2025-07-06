@@ -58,7 +58,7 @@ public class SshConnectionTest {
         final var zcs = new HashMap<SshConnection, Integer>();
         zcs.put(sc1, 1);
         zcs.put(sc2, 2);
-        assertEquals(zcs.size(), 2);
+        assertEquals(2, zcs.size());
     }
 
     @Test
@@ -68,7 +68,7 @@ public class SshConnectionTest {
         final var zcs = new HashMap<SshConnection, Integer>();
         zcs.put(sc1, 1);
         zcs.put(sc2, 2);
-        assertEquals(zcs.size(), 2);
+        assertEquals(2, zcs.size());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class SshConnectionTest {
         final var zcs = new HashMap<SshConnection, Integer>();
         zcs.put(sc1, 1);
         zcs.put(sc2, 2);
-        assertEquals(zcs.size(), 2);
+        assertEquals(2, zcs.size());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class SshConnectionTest {
         final var zcs = new HashMap<SshConnection, Integer>();
         zcs.put(sc1, 1);
         zcs.put(sc2, 2);
-        assertEquals(zcs.size(), 2);
+        assertEquals(2, zcs.size());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class SshConnectionTest {
         final var zcs = new HashMap<SshConnection, Integer>();
         zcs.put(sc1, 1);
         zcs.put(sc2, 2);
-        assertEquals(zcs.size(), 1);
+        assertEquals(1, zcs.size());
     }
 
 }
