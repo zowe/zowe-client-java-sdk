@@ -133,12 +133,12 @@ public abstract class ZosmfRequest {
      */
     private void setupSsl() {
         String filePath = connection.getCertFilePath();
-        String certPassword = connection.getCertPassword();
+        String password = connection.getCertPassword();
         SSLContext sslContext;
         try {
             KeyStore clientStore = KeyStore.getInstance(CERTIFICATE_FORMAT_TYPE);
-            clientStore.load(new FileInputStream(filePath), certPassword.toCharArray());
-            sslContext = SSLContextBuilder.create().loadKeyMaterial(clientStore, certPassword.toCharArray()).build();
+            clientStore.load(new FileInputStream(filePath), password.toCharArray());
+            sslContext = SSLContextBuilder.create().loadKeyMaterial(clientStore, password.toCharArray()).build();
         } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException |
                  KeyManagementException | UnrecoverableKeyException e) {
             throw new IllegalStateException(e);
