@@ -90,6 +90,7 @@ public abstract class ZosmfRequest {
         Unirest.config().reset();
         Unirest.config().enableCookieManagement(false);
         this.setStandardHeaders();
+        this.token = null;
         switch (connection.getAuthType()) {
             case BASIC:
                 setupBasic();
@@ -112,7 +113,6 @@ public abstract class ZosmfRequest {
      */
     private void setupBasic() {
         Unirest.config().verifySsl(false);
-        this.token = null;
     }
 
     /**
@@ -145,8 +145,6 @@ public abstract class ZosmfRequest {
         }
         Unirest.config().verifySsl(true);
         Unirest.config().sslContext(sslContext);
-        headers.remove("Authorization");
-        this.token = null;
     }
 
     /**
