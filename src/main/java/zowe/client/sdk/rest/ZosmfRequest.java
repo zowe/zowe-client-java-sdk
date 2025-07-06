@@ -132,8 +132,8 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setupSsl() {
-        String filePath = connection.getCertFilePath();
-        String password = connection.getCertPassword();
+        final String filePath = connection.getCertFilePath();
+        final String password = connection.getCertPassword();
         SSLContext sslContext;
         try {
             KeyStore clientStore = KeyStore.getInstance(CERTIFICATE_FORMAT_TYPE);
