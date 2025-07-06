@@ -131,11 +131,11 @@ With SDK release version 3, Web TOKEN authentication was added.
   
 The current version 4, SSL authentication from a certificate file was added.  
   
-With three types of authentication available, the following enum class AuthType was introduced.  
+With three types of authentication available, the AuthType enum class was introduced to represent each type.    
   
 This enum is used to send it to the ZosConnection constructor denoting the type of authentication to perform.  
-  
-For instance, the following ZosConnection object is specified to perform BASIC authentication:  
+
+For BASIC example, the following ZosConnection object is specified to perform BASIC authentication:  
   
     ZosConnection connection = new ZosConnection(AuthType.BASIC).host("xxxx").password("xxxx").user("xxxx").zosmfPort("xxxx").build();
   
@@ -145,7 +145,7 @@ For web TOKEN example, the following ZosConnection object is specified:
   
     ZosConnection connection = new ZosConnection(AuthType.TOKEN).host("xxxx").zosmfPort("xxxx").token(new Cookie("xxxx=xxxx")).build();
   
-With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve authentication tokens (a JSON Web and an LTPA TOKEN) on a BASIC authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA TOKENS.  
+With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve authentication tokens (a JSON Web and an LTPA TOKEN) on a BASIC authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA tokens.  
   
 Web TOKEN support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web TOKEN support in the IBM z/OS Management Facility Configuration Guide.  
   
