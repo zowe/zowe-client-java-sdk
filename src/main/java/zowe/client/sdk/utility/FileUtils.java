@@ -9,10 +9,6 @@
  */
 package zowe.client.sdk.utility;
 
-import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,22 +67,6 @@ public final class FileUtils {
             throw new IllegalStateException("specify valid path value");
         }
         return value;
-    }
-
-    /**
-     * Validate file exists in the path specified
-     *
-     * @param pathString string value contains a path with filename
-     * @return true or false
-     * @author Frank Giordano
-     */
-    public static boolean doesPathExistAndIsFile(String pathString) {
-        try {
-            Path path = Paths.get(pathString);
-            return Files.exists(path) && Files.isRegularFile(path);
-        } catch (InvalidPathException e) {
-            return false; // Path is syntactically invalid
-        }
     }
 
 }

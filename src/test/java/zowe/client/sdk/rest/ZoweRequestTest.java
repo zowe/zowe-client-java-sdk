@@ -129,4 +129,16 @@ public class ZoweRequestTest {
         assertEquals(expectedErrMsg, errMsg);
     }
 
+    @Test
+    public void tstZoweRequestInitializeSslSetupFailure() {
+        ZosConnection connection = new ZosConnection.Builder(AuthType.SSL)
+                .host("host").zosmfPort("port").certFilePath("/file/file1").certPassword("").build();
+        String errMsg = "java.io.FileNotFoundException: \\file\\file1 (The system cannot find the path specified)";
+        try {
+            ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        } catch (Exception e) {
+            assertEquals(errMsg, e.getMessage());
+        }
+    }
+
 }
