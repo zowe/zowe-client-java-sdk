@@ -232,7 +232,11 @@ public class JobGet {
                 url += JobsConstants.QUERY_JOBID + params.getJobId().get();
             }
         } else {
-            url += JobsConstants.QUERY_OWNER + connection.getUser();
+            if (connection.getUser() != null && !connection.getUser().isEmpty()) {
+                url += JobsConstants.QUERY_OWNER + connection.getUser();
+            } else {
+                throw new IllegalStateException("user not specified");
+            }
         }
 
         if (request == null || !(request instanceof GetJsonZosmfRequest)) {
