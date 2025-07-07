@@ -109,7 +109,7 @@ public class ZosConnectionTest {
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
-        assertEquals(zcs.size(), 2);
+        assertEquals(2, zcs.size());
     }
 
     @Test
@@ -121,7 +121,7 @@ public class ZosConnectionTest {
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
-        assertEquals(zcs.size(), 2);
+        assertEquals(2, zcs.size());
     }
 
     @Test
@@ -133,7 +133,7 @@ public class ZosConnectionTest {
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
-        assertEquals(zcs.size(), 2);
+        assertEquals(2, zcs.size());
     }
 
     @Test
@@ -145,7 +145,7 @@ public class ZosConnectionTest {
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
-        assertEquals(zcs.size(), 2);
+        assertEquals(2, zcs.size());
     }
 
     @Test
@@ -157,7 +157,7 @@ public class ZosConnectionTest {
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
-        assertEquals(zcs.size(), 1);
+        assertEquals(1, zcs.size());
     }
 
 }
