@@ -20,6 +20,8 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 
+import java.util.Objects;
+
 import static org.junit.Assert.*;
 
 /**
@@ -157,5 +159,5 @@ public class ZoweRequestTest {
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         assertNull(request.getHeaders().get("Authorization"));
     }
-
+    
 }
