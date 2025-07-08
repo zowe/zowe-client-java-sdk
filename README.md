@@ -135,23 +135,33 @@ With three types of authentication available, the AuthType enum class was introd
   
 This enum is used to send it to the ZosConnection constructor denoting the type of authentication to perform.  
 
-For BASIC example, the following ZosConnection object is specified to perform BASIC authentication:  
+For the BASIC, the following ZosConnection object is specified to perform BASIC authentication:  
   
     ZosConnection connection = new ZosConnection(AuthType.BASIC).host("xxxx").password("xxxx").user("xxxx").zosmfPort("xxxx").build();
   
 Basic authentication means that the http request contains a BASIC header representing the username and password encrypted.   
   
-For web TOKEN example, the following ZosConnection object is specified:  
+For web TOKEN, the following ZosConnection object is specified:  
   
     ZosConnection connection = new ZosConnection(AuthType.TOKEN).host("xxxx").zosmfPort("xxxx").token(new Cookie("xxxx=xxxx")).build();
   
 With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve authentication tokens (a JSON Web and an LTPA TOKEN) on a BASIC authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA tokens.  
   
-Web TOKEN support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web TOKEN support in the IBM z/OS Management Facility Configuration Guide.  
+See the README.MD in the zosmfauth package for code examples on retrieving an initial token and then using it for further requests without needing user and password information.  
   
-For SSL example, the following ZosConnection object is specified:  
+Web TOKEN support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web TOKEN support in the IBM z/OS Management Facility Configuration Guide.  
+
+See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.     
+  
+For SSL, the following ZosConnection object is specified:  
 
     ZosConnection connection = new ZosConnection(AuthType.SSL).host("xxxx").zosmfPort("xxxx").certPassword("xxxx").certFilePath("xxxx")..build();
+  
+The SDK supports .p12 file format that represents a key-store that houses a self-signed certificate.  
+  
+In the example above, for certFilePath specify a path with a filename representing the location and file name of the .p12 file.  
+  
+For certPassword, specify the paraphrase/password used for the key store.  
   
 The certificate file path value is normally retrieved from the teamconfig configuration file defined as a property.  
   
