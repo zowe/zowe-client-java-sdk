@@ -135,7 +135,7 @@ With three types of authentication available, the AuthType enum class was introd
   
 This enum is used to send it to the ZosConnection constructor denoting the type of authentication to perform.  
 
-For the BASIC, the following ZosConnection object is specified to perform BASIC authentication:  
+For BASIC, the following ZosConnection object is specified to perform BASIC authentication:  
   
     ZosConnection connection = new ZosConnection(AuthType.BASIC).host("xxxx").password("xxxx").user("xxxx").zosmfPort("xxxx").build();
   
@@ -159,12 +159,14 @@ For SSL, the following ZosConnection object is specified:
   
 The SDK supports .p12 file format that represents a key-store that houses a self-signed certificate.  
   
-In the example above, for certFilePath specify a path with a filename representing the location and file name of the .p12 file.  
+In the example above, for certFilePath specify a path with a file name representing the location and file name of the .p12 file.  
   
 For certPassword, specify the paraphrase/password used for the key store.  
   
-The certificate file path value is normally retrieved from the teamconfig configuration file defined as a property.  
-  
+The certificate file path value is normally retrieved from the teamconfig configuration file defined as a property. 
+
+Or you can hard the values within the ZosConnection definition.   
+    
 See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
   
 ## Requirements  
