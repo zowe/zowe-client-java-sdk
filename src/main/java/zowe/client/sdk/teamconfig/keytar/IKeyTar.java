@@ -44,7 +44,7 @@ public interface IKeyTar {
     void processKey() throws TeamConfigException;
 
     /**
-     * Set required service name used for OS credential store querying
+     * Set the required service name used for OS credential store querying
      *
      * @param accountName string value used for OS credential store querying
      */

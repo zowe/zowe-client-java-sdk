@@ -60,7 +60,7 @@ public class Partition {
     }
 
     /**
-     * Return list of Profiles
+     * Return a list of Profiles
      *
      * @return list of profiles
      */
@@ -78,7 +78,7 @@ public class Partition {
     }
 
     /**
-     * Return string value representing Partition object
+     * Return string value representing a Partition object
      *
      * @return string representation of Partition
      */

@@ -71,7 +71,7 @@ public class KeyTarImpl implements IKeyTar {
     }
 
     /**
-     * Return keyString value after KeyTar has been fully processed.
+     * Return a keyString value after KeyTar has been fully processed.
      *
      * @return list of KeyTarConfig objects
      */
@@ -109,7 +109,8 @@ public class KeyTarImpl implements IKeyTar {
     }
 
     /**
-     * Retrieve the OS credential store by querying the OS with service and account name. Assign the value to keyString.
+     * Retrieve the OS credential store by querying the OS with service and account name.
+     * Assign the value to keyString.
      *
      * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
@@ -135,11 +136,23 @@ public class KeyTarImpl implements IKeyTar {
         this.keyString = new String(decodedBytes);
     }
 
+    /**
+     * Set the account name.
+     *
+     * @param accountName string value used for OS credential store querying
+     * @author Frank Giordano
+     */
     @Override
     public void setAccountName(final String accountName) {
         this.accountName = accountName;
     }
 
+    /**
+     * Set the service name.
+     *
+     * @param serviceName string value used for OS credential store querying
+     * @author Frank Giordano
+     */
     @Override
     public void setServiceName(final String serviceName) {
         this.serviceName = serviceName;

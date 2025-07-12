@@ -98,7 +98,7 @@ public class Profile {
     }
 
     /**
-     * Return string value representing Profile object
+     * Return string value representing a Profile object
      *
      * @return string representation of Profile
      */
