@@ -111,9 +111,9 @@ Whenever you encounter a JSON parse error for reading the Zowe Team Configuratio
   
 SDK release version 2 uses Unirest 3.x Http functionality.  
   
-SDK release version 3 and above uses Unirest 4.x which removes the dependency on Apache Commons and provides token processing for Web TOKEN authentication.   
+SDK release version 3 and above uses Unirest 4.x, which removes the dependency on Apache Commons and provides token processing for Web TOKEN authentication.   
    
-Unirest's library provides the ability to retrieve IBM z/OSMF JSON error document.  
+Unirest's library provides the ability to retrieve an IBM z/OSMF JSON error document.  
   
 For example, the following http GET request will result in an HTTP 500 error:  
   
@@ -166,6 +166,60 @@ For certPassword, specify the paraphrase/password used for the key store.
 The certificate file path value is normally retrieved from the teamconfig configuration file defined as a property. 
 
 Or you can hard the values within the ZosConnection definition.   
+  
+Check the following for an example test:
+
+    The following method to generate a p12 file for testing.
+    
+    AuthType.SSL authentication type supports p12 file format.
+    
+    The following shows how a private key and certificate can be combined into a p12 file format.
+    
+    C:> openssl genrsa -des3 -out node1.key 1024
+    Enter PEM pass phrase:frank
+    Verifying - Enter PEM pass phrase:frank
+    
+    C:> openssl req -new -key node1.key -out node1.csr
+    Enter pass phrase for node1.key:frank
+    You are about to be asked to enter information that will be incorporated into your certificate request.
+    What you are about to enter is what is called a Distinguished Name or a DN.
+    There are quite a few fields but you can leave some blank
+    For some fields there will be a default value, if you enter '.', the field will be left blank.
+    Country Name (2 letter code) [AU]:
+    State or Province Name (full name) [Some-State]:
+    Locality Name (eg, city) []:
+    Organization Name (eg, company) [Internet Widgits Pty Ltd]:
+    Organizational Unit Name (eg, section) []:
+    Common Name (e.g. server FQDN or YOUR name) []:
+    Email Address []:
+    Please enter the following 'extra' attributes to be sent with your certificate request
+    A challenge password []:frank
+    An optional company name []:
+    
+    C:> openssl x509 -req -days 3650 -in node1.csr -signkey node1.key -out node11.crt
+    Enter pass phrase for node1.key:frank
+    Certificate request self-signature ok
+    subject=C = , ST = , L = , O =
+    
+    C:> openssl pkcs12 -export -in node11.crt -inkey node1.key -name "node1" -out node1.p12
+    Enter pass phrase for node1.key:
+    Enter Export Password:
+    Verifying - Enter Export Password:
+    
+    The following files were created:
+    -a----          7/7/2025  11:22 PM            622 node1.csr
+    -a----          7/7/2025  11:21 PM           1080 node1.key
+    -a----          7/7/2025  11:23 PM           1710 node1.p12
+    -a----          7/7/2025  11:22 PM            742 node11.crt
+    
+    You can now use node1.p12 for authentication in the following way:
+    
+    ZosConnection connection = new ZosConnection.Builder(AuthType.SSL)
+                                                .host("host")
+                                                .zosmfPort("port").certPassword("frank")
+                                                .certFilePath(c:\node1.p12)
+                                                .build();
+    ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     
 See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
   
