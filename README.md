@@ -90,7 +90,7 @@ zowe.client.sdk.zosuss.method
           
 ## TeamConfig Package  
   
-The TeamConfig package provides API methods to retrieve a profile section from Zowe Global Team Configuration with keytar information to help perform connection processing without a hard coding username and password. Keytar represents credentials stored securely on your computer when performing the Zowe global initialize [command](https://docs.zowe.org/stable/user-guide/cli-using-initializing-team-configuration/) which prompts you for username and password.   
+The TeamConfig package provides API methods to retrieve a profile section from Zowe Global Team Configuration with keytar information to help perform connection processing without a hard coding username and password. Keytar represents credentials stored securely on your computer when performing the Zowe Global Initialize [command](https://docs.zowe.org/stable/user-guide/cli-using-initializing-team-configuration/) which prompts you for username and password.   
   
 TeamConfig class only supports Zowe Global Team Configuration provided by Zowe V2.  
   
@@ -163,7 +163,7 @@ In the example above, for certFilePath specify a path with a file name represent
   
 For certPassword, specify the paraphrase/password used for the key store.  
   
-The certificate file path value is normally retrieved from the teamconfig configuration file defined as a property. 
+The certificate file path value is normally retrieved from the Zowe Global Team Configuration file defined as a profile property. 
 
 Or you can hard the values within the ZosConnection definition.   
   
