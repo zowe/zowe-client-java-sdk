@@ -14,7 +14,7 @@ import kong.unirest.core.Cookie;
 import java.util.Objects;
 
 /**
- * Z/OSMF Connection information placeholder
+ * z/OSMF Connection information placeholder
  *
  * @author Frank Giordano
  * @version 4.0

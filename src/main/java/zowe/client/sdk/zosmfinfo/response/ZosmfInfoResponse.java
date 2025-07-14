@@ -12,7 +12,7 @@ package zowe.client.sdk.zosmfinfo.response;
 import java.util.Optional;
 
 /**
- * The Z/OSMF info API response.
+ * The z/OSMF info API response.
  *
  * @author Frank Giordano
  * @version 4.0
