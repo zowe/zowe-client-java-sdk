@@ -46,7 +46,7 @@ public class JobGet {
     /**
      * GetJobs Constructor.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public JobGet(final ZosConnection connection) {
@@ -58,7 +58,7 @@ public class JobGet {
      * Alternative GetJobs constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -99,7 +99,7 @@ public class JobGet {
     /**
      * Get the JCL that was used to submit a job.
      *
-     * @param params common job parameters, see CommonJobParams object
+     * @param params for common job parameters, see CommonJobParams object
      * @return JCL content
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
@@ -194,7 +194,7 @@ public class JobGet {
     /**
      * Get jobs filtered by owner and prefix.
      *
-     * @param params get job parameters, see GetJobParams object
+     * @param params to get job parameters, see GetJobParams object
      * @return list of job objects (matching jobs), without step-data
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
@@ -342,7 +342,7 @@ public class JobGet {
     /**
      * Get a list of all job spool files for a job.
      *
-     * @param params common job parameters, see CommonJobParams object
+     * @param params for common job parameters, see CommonJobParams object
      * @return list of JobFile objects
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
@@ -405,7 +405,7 @@ public class JobGet {
     /**
      * Get the status and other details (e.g., owner, return code) for a job, including step-data.
      *
-     * @param params common job parameters, see CommonJobParams object
+     * @param params for common job parameters, see CommonJobParams object
      * @return job document (matching job)
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano

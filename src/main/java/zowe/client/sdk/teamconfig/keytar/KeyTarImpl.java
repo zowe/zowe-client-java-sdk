@@ -55,7 +55,7 @@ public class KeyTarImpl implements IKeyTar {
     private String keyString;
 
     /**
-     * Return keyString json value parsed into a KeyTarConfig object.
+     * Return keyString JSON value parsed into a KeyTarConfig object.
      *
      * @return list of KeyTarConfig objects
      * @throws TeamConfigException error processing team configuration

@@ -25,17 +25,17 @@ public final class ParseConstants {
     }
 
     /**
-     * Data is null message
+     * Data is a null message
      */
     public static final String DATA_NULL_MSG = "data is null";
 
     /**
-     * isProcessResponse is null message
+     * isProcessResponse is a null message
      */
     public static final String IS_PROCESS_RESPONSE_NULL_MSG = "isProcessResponse is null";
 
     /**
-     * Mode is null message
+     * Mode is a null message
      */
     public static final String MODE_NULL_STR_MSG = "mode is null";
 

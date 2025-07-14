@@ -41,7 +41,7 @@ public class DsnCreate {
     /**
      * DsnCreate Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Leonid Baranov
      */
     public DsnCreate(final ZosConnection connection) {
@@ -71,7 +71,7 @@ public class DsnCreate {
      * Creates a new dataset with specified parameters
      *
      * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
-     * @param params      create dataset parameters, see CreateParams object
+     * @param params      to create dataset parameters, see CreateParams object
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Leonid Baranov

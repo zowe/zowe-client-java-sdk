@@ -74,7 +74,7 @@ public class IssueConsole {
     /**
      * Issue an MVS console command on default console name (Defcn) done synchronously - meaning solicited
      * (direct command responses) are gathered immediately after the command is issued.
-     * However, after (according to the z/OSMF REST API documentation) approximately 3 seconds, the response
+     * However, after (according to the z/OSMF REST API documentation), approximately 3 seconds, the response
      * will be returned.
      *
      * @param command string value that represents command to issue
@@ -87,9 +87,9 @@ public class IssueConsole {
     }
 
     /**
-     * Issue an MVS console command on given console name done synchronously - meaning solicited
+     * Issue an MVS console command on a given console name done synchronously - meaning solicited
      * (direct command responses) are gathered immediately after the command is issued.
-     * However, after (according to the z/OSMF REST API documentation) approximately 3 seconds, the response
+     * However, after (according to the z/OSMF REST API documentation), approximately 3 seconds, the response
      * will be returned.
      *
      * @param command     string value representing console command to issue

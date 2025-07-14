@@ -15,8 +15,8 @@ import kong.unirest.core.JsonNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import zowe.client.sdk.core.AuthType;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 
@@ -37,8 +37,7 @@ public class ZoweRequestTest {
     @Before
     public void init() {
         mockReply = Mockito.mock(HttpResponse.class);
-        connection = new ZosConnection.Builder(AuthType.BASIC)
-                .host("1").password("1").user("1").zosmfPort("1").build();
+        connection = ZosConnectionFactory.createBasicConnection("1", "1", "1", "1");
     }
 
     @Test
@@ -132,8 +131,8 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeSslSetupFailure() {
-        ZosConnection connection = new ZosConnection.Builder(AuthType.SSL)
-                .host("host").zosmfPort("port").certFilePath("/file/file1").certPassword("").build();
+        ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
+                "/file/file1", "");
         String errMsg = "java.io.FileNotFoundException: \\file\\file1 (The system cannot find the path specified)";
         try {
             ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -143,17 +142,40 @@ public class ZoweRequestTest {
     }
 
     @Test
+    public void tstZoweRequestInitializeSslSetupCertPasswordFailure() {
+        ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
+                "src/test/resources/certs/badssl.com-client.p12", "");
+        String errMsg = "java.io.IOException: keystore password was incorrect";
+        try {
+            ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        } catch (Exception e) {
+            assertEquals(errMsg, e.getMessage());
+        }
+    }
+
+    @Test
+    public void tstZoweRequestInitializeSslSetupCertPasswordSuccess() {
+        ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
+                "src/test/resources/certs/badssl.com-client.p12", "badssl.com");
+        try {
+            ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
     public void tstZoweRequestInitializeBasicSetupSuccess() {
-        ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
-                .host("host").zosmfPort("port").user("user").password("password").build();
+        ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("host", "port", "user", "password");
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         assertNotNull(request.getHeaders().get("Authorization"));
     }
 
     @Test
     public void tstZoweRequestInitializeTokenSetupSuccess() {
-        ZosConnection connection = new ZosConnection.Builder(AuthType.TOKEN)
-                .host("host").zosmfPort("port").token(new Cookie("hello", "world")).build();
+        ZosConnection connection = ZosConnectionFactory
+                .createTokenConnection("host", "port", new Cookie("hello", "world"));
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         assertNull(request.getHeaders().get("Authorization"));
     }

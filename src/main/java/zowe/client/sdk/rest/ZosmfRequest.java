@@ -18,9 +18,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -28,6 +31,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -54,6 +58,7 @@ public abstract class ZosmfRequest {
      */
     public static final String CERTIFICATE_FORMAT_TYPE = "PKCS12";
     /**
+     * /**
      * ZosConnection object
      */
     protected final ZosConnection connection;
@@ -73,7 +78,7 @@ public abstract class ZosmfRequest {
     /**
      * ZosmfRequest constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public ZosmfRequest(final ZosConnection connection) {
@@ -89,6 +94,7 @@ public abstract class ZosmfRequest {
     private void initialize() {
         Unirest.config().reset();
         Unirest.config().enableCookieManagement(false);
+        Unirest.config().verifySsl(false);
         this.setStandardHeaders();
         this.token = null;
         switch (connection.getAuthType()) {
@@ -112,7 +118,7 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setupBasic() {
-        Unirest.config().verifySsl(false);
+        headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
     }
 
     /**
@@ -121,9 +127,7 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setupToken() {
-        Unirest.config().verifySsl(false);
         this.token = connection.getToken();
-        headers.remove("Authorization");
     }
 
     /**
@@ -132,20 +136,42 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setupSsl() {
+//        final String filePath = connection.getCertFilePath();
+//        final String password = connection.getCertPassword();
+//        Unirest.config().clientCertificateStore(filePath, password)
+//                .followRedirects(true)
+//                .verifySsl(false);
         final String filePath = connection.getCertFilePath();
         final String password = connection.getCertPassword();
         SSLContext sslContext;
         try {
+            TrustManager[] trustAllCerts = new TrustManager[]{
+                    new X509TrustManager() {
+                        @Override
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return null;
+                        }
+
+                        @Override
+                        public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                            // Do nothing - trust all clients
+                        }
+
+                        @Override
+                        public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                            // Do nothing - trust all servers
+                        }
+                    }
+            };
             KeyStore clientStore = KeyStore.getInstance(CERTIFICATE_FORMAT_TYPE);
             clientStore.load(new FileInputStream(filePath), password.toCharArray());
             sslContext = SSLContextBuilder.create().loadKeyMaterial(clientStore, password.toCharArray()).build();
+            sslContext.init(null, trustAllCerts, new SecureRandom());
         } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException |
                  KeyManagementException | UnrecoverableKeyException e) {
             throw new IllegalStateException(e);
         }
-        Unirest.config().verifySsl(true);
         Unirest.config().sslContext(sslContext);
-        headers.remove("Authorization");
     }
 
     /**
@@ -282,11 +308,6 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     public void setHeaders(final Map<String, String> headers) {
-        this.headers.clear();
-        this.setStandardHeaders();
-        if (!connection.getAuthType().name().equals("BASIC")) {
-            this.headers.remove("Authorization");
-        }
         this.headers.putAll(headers);
     }
 

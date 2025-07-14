@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * Utility class for test package.
+ * Utility class for the test package.
  *
  * @author James Kostrewski
  * @version 4.0

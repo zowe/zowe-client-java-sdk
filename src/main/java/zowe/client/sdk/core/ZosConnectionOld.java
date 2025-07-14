@@ -19,7 +19,7 @@ import java.util.Objects;
  * @author Frank Giordano
  * @version 4.0
  */
-public class ZosConnection {
+public class ZosConnectionOld {
 
     /**
      * Host name pointing to the backend z/OS instance
@@ -32,7 +32,7 @@ public class ZosConnection {
     /**
      * Host username with access to a backend z/OS instance
      */
-    private String user;
+    private final String user;
     /**
      * Host username's password with access to backend z/OS instance
      */
@@ -50,7 +50,7 @@ public class ZosConnection {
      */
     private final String certFilePath;
     /**
-     * AuthType: BASIC, TOKEN or SSL enum value for http request processing
+     * AuthType: BASIC, TOKEN or SSL
      */
     private final AuthType authType;
 
@@ -58,9 +58,8 @@ public class ZosConnection {
      * Private constructor used by the Builder
      *
      * @param builder Builder instance containing configuration
-     * @author Frank Giordano
      */
-    private ZosConnection(ZosConnection.Builder builder) {
+    private ZosConnectionOld(ZosConnectionOld.Builder builder) {
         this.host = builder.host;
         this.zosmfPort = builder.zosmfPort;
         this.user = builder.user;
@@ -69,6 +68,15 @@ public class ZosConnection {
         this.token = builder.token;
         this.certFilePath = builder.certFilePath;
         this.authType = builder.authType;
+    }
+
+    /**
+     * Retrieve authType
+     *
+     * @return AuthType enum
+     */
+    public AuthType getAuthType() {
+        return authType;
     }
 
     /**
@@ -116,10 +124,6 @@ public class ZosConnection {
         return user;
     }
 
-    public void setUser(String user) {
-        this.user = user;
-    }
-
     /**
      * Retrieve zosmfPort
      *
@@ -130,21 +134,12 @@ public class ZosConnection {
     }
 
     /**
-     * Retrieve host
+     * Retrieve
      *
      * @return string value
      */
     public String getHost() {
         return host;
-    }
-
-    /**
-     * Retrieve AuthType: BASIC, TOKEN or SSL enum value for http request processing
-     *
-     * @return AuthType enum value
-     */
-    public AuthType getAuthType() {
-        return authType;
     }
 
     /**
@@ -161,38 +156,26 @@ public class ZosConnection {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        ZosConnection other = (ZosConnection) obj;
-        if (this.authType == AuthType.BASIC) {
+        ZosConnectionOld other = (ZosConnectionOld) obj;
+        if (token != null) {
             return Objects.equals(host, other.host) &&
                     Objects.equals(zosmfPort, other.zosmfPort) &&
                     Objects.equals(user, other.user) &&
-                    Objects.equals(password, other.password);
-        } else if (this.authType == AuthType.TOKEN) {
-            if (this.user != null && !this.user.isBlank()) {
-                return Objects.equals(host, other.host) &&
-                        Objects.equals(zosmfPort, other.zosmfPort) &&
-                        Objects.equals(user, other.user) &&
-                        Objects.equals(token.getValue(), other.token.getValue());
-            } else {
-                return Objects.equals(host, other.host) &&
-                        Objects.equals(zosmfPort, other.zosmfPort) &&
-                        Objects.equals(token.getValue(), other.token.getValue());
-            }
-        } else if (this.authType == AuthType.SSL) {
-            if (this.user != null && !this.user.isBlank()) {
-                return Objects.equals(host, other.host) &&
-                        Objects.equals(zosmfPort, other.zosmfPort) &&
-                        Objects.equals(user, other.user) &&
-                        Objects.equals(certPassword, other.certPassword) &&
-                        Objects.equals(certFilePath, other.certFilePath);
-            } else {
-                return Objects.equals(host, other.host) &&
-                        Objects.equals(zosmfPort, other.zosmfPort) &&
-                        Objects.equals(certPassword, other.certPassword) &&
-                        Objects.equals(certFilePath, other.certFilePath);
-            }
+                    Objects.equals(password, other.password) &&
+                    Objects.equals(certPassword, other.certPassword) &&
+                    Objects.equals(token.getName(), other.token.getName()) &&
+                    Objects.equals(token.getValue(), other.token.getValue()) &&
+                    Objects.equals(certFilePath, other.certFilePath) &&
+                    Objects.equals(authType, other.authType);
+        } else {
+            return Objects.equals(host, other.host) &&
+                    Objects.equals(zosmfPort, other.zosmfPort) &&
+                    Objects.equals(user, other.user) &&
+                    Objects.equals(password, other.password) &&
+                    Objects.equals(certPassword, other.certPassword) &&
+                    Objects.equals(certFilePath, other.certFilePath) &&
+                    Objects.equals(authType, other.authType);
         }
-        return false;
     }
 
     /**
@@ -202,7 +185,7 @@ public class ZosConnection {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(host, zosmfPort, user, password, certPassword, token, certFilePath);
+        return Objects.hash(host, zosmfPort, user, password, certPassword, token, certFilePath, authType);
     }
 
     /**
@@ -239,9 +222,18 @@ public class ZosConnection {
          */
         private String certFilePath;
         /**
-         * Authentication enum type for the http request
+         * AuthType: BASIC, TOKEN or SSL
          */
-        private AuthType authType;
+        private final AuthType authType;
+
+        /**
+         * Constructor with setting the required authentication type
+         *
+         * @param authType AuthType
+         */
+        public Builder(AuthType authType) {
+            this.authType = authType;
+        }
 
         /**
          * Set the host
@@ -249,7 +241,7 @@ public class ZosConnection {
          * @param host machine host pointing to backend z/OS instance
          * @return Builder instance
          */
-        public ZosConnection.Builder host(String host) {
+        public ZosConnectionOld.Builder host(String host) {
             this.host = host;
             return this;
         }
@@ -260,7 +252,7 @@ public class ZosConnection {
          * @param zosmfPort machine host z/OSMF port number pointing to backend z/OS instance
          * @return Builder instance
          */
-        public ZosConnection.Builder zosmfPort(String zosmfPort) {
+        public ZosConnectionOld.Builder zosmfPort(String zosmfPort) {
             this.zosmfPort = zosmfPort;
             return this;
         }
@@ -271,7 +263,7 @@ public class ZosConnection {
          * @param user machine host username with access to backend z/OS instance
          * @return Builder instance
          */
-        public ZosConnection.Builder user(String user) {
+        public ZosConnectionOld.Builder user(String user) {
             this.user = user;
             return this;
         }
@@ -282,7 +274,7 @@ public class ZosConnection {
          * @param password machine host username's password with access to backend z/OS instance
          * @return Builder instance
          */
-        public ZosConnection.Builder password(String password) {
+        public ZosConnectionOld.Builder password(String password) {
             this.password = password;
             return this;
         }
@@ -293,7 +285,7 @@ public class ZosConnection {
          * @param certPassword certificate password
          * @return Builder instance
          */
-        public ZosConnection.Builder certPassword(String certPassword) {
+        public ZosConnectionOld.Builder certPassword(String certPassword) {
             this.certPassword = certPassword;
             return this;
         }
@@ -304,7 +296,7 @@ public class ZosConnection {
          * @param token Cookie object containing a token value
          * @return Builder instance
          */
-        public ZosConnection.Builder token(Cookie token) {
+        public ZosConnectionOld.Builder token(Cookie token) {
             this.token = token;
             return this;
         }
@@ -315,19 +307,8 @@ public class ZosConnection {
          * @param certFilePath path to the certificate file
          * @return Builder instance
          */
-        public ZosConnection.Builder certFilePath(String certFilePath) {
+        public ZosConnectionOld.Builder certFilePath(String certFilePath) {
             this.certFilePath = certFilePath;
-            return this;
-        }
-
-        /**
-         * Set the AuthType: BASIC, TOKEN or SSL enum value for http request processing
-         *
-         * @param authType AuthType enum value
-         * @return Builder instance
-         */
-        public ZosConnection.Builder authType(AuthType authType) {
-            this.authType = authType;
             return this;
         }
 
@@ -336,10 +317,9 @@ public class ZosConnection {
          *
          * @return new ZosConnection instance
          */
-        public ZosConnection build() {
-            return new ZosConnection(this);
+        public ZosConnectionOld build() {
+            return new ZosConnectionOld(this);
         }
-
     }
 
 }

@@ -36,7 +36,7 @@ public class SetAclParams {
      * Because ACLs are not associated with symbolic links,
      * nothing happens if a symbolic link is encountered (setfacl -h).
      * <p>
-     * Note:  At least one of the following four keywords must be specified.
+     * Note: At least one of the following four keywords must be specified.
      * 'modify' and 'delete' may both be specified, but not with 'delete-type' and 'set'.
      */
     private final Optional<LinkType> links;
@@ -65,8 +65,8 @@ public class SetAclParams {
     /**
      * Modifies the ACL entries. 'entries' represents a string of ACL entries.
      * Refer to the setfacl command reference for the string format.
-     * If an ACL entry does not exist for a user or group that is specified in 'entries', it is created.
-     * If an ACL entry exists for a user or group that was specified in 'entries', it is replaced.
+     * If an ACL entry does not exist for a user or group specified in 'entries', it is created.
+     * If an ACL entry exists for a user or group specified in 'entries', it is replaced.
      * <p>
      * Note: The 'modify' keyword cannot be specified with 'delete-type' or 'set'.
      */
@@ -211,8 +211,8 @@ public class SetAclParams {
         /**
          * Modifies the ACL entries. 'entries' represents a string of ACL entries.
          * Refer to the setfacl command reference for the string format.
-         * If an ACL entry does not exist for a user or group that is specified in 'entries', it is created.
-         * If an ACL entry exists for a user or group that was specified in 'entries', it is replaced.
+         * If an ACL entry does not exist for a user or group specified in 'entries', it is created.
+         * If an ACL entry exists for a user or group specified in 'entries', it is replaced.
          * <p>
          * Note: The 'modify' keyword cannot be specified with 'delete-type' or 'set'.
          */

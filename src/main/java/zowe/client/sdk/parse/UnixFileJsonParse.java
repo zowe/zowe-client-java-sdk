@@ -14,7 +14,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.response.UnixFile;
 
 /**
- * Extract UNIX file from json response
+ * Extract UNIX file from JSON response
  *
  * @author Frank Giordano
  * @version 4.0

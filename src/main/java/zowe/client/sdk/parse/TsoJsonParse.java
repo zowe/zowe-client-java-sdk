@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Parse json response from Tso request
+ * Parse JSON response from Tso request
  *
  * @author Frank Giordano
  * @version 4.0

@@ -42,7 +42,7 @@ public class DsnRename {
     /**
      * DsnRename Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public DsnRename(final ZosConnection connection) {
@@ -54,7 +54,7 @@ public class DsnRename {
      * Alternative DsnRename constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */

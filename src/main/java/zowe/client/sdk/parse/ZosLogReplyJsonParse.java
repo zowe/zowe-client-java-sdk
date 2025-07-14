@@ -17,7 +17,7 @@ import zowe.client.sdk.zoslogs.response.ZosLogReply;
 import java.util.List;
 
 /**
- * Extract ZosLogReply from json response
+ * Extract ZosLogReply from JSON response
  *
  * @author Frank Giordano
  * @version 4.0

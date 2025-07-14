@@ -42,7 +42,7 @@ public class UssMove {
     /**
      * UssMove Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author James Kostrewski
      */
     public UssMove(final ZosConnection connection) {
@@ -54,7 +54,7 @@ public class UssMove {
      * Alternative UssMove constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author James Kostrewski
      */

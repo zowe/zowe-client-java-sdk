@@ -22,7 +22,7 @@ import zowe.client.sdk.zosuss.method.IssueUss;
 public class IssueUssExp {
 
     /**
-     * Main method defines SSH connection and showcases executing a USS command vis IssueUss class.
+     * The main method defines SSH connection and showcases executing a USS command via IssueUss class.
      *
      * @param args for main not used
      * @author Frank Giordano

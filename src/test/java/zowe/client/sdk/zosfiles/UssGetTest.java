@@ -14,8 +14,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
-import zowe.client.sdk.core.AuthType;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetStreamZosmfRequest;
 import zowe.client.sdk.rest.GetTextZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -38,10 +38,10 @@ import static org.mockito.Mockito.withSettings;
 @SuppressWarnings("DataFlowIssue")
 public class UssGetTest {
 
-    private final ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
-            .host("1").password("1").user("1").zosmfPort("1").build();
-    private final ZosConnection tokenConnection = new ZosConnection.Builder(AuthType.TOKEN)
-            .host("1").zosmfPort("1").token(new Cookie("hello=hello")).build();
+    private final ZosConnection connection = ZosConnectionFactory
+            .createBasicConnection("1", "1", "1", "1");
+    private final ZosConnection tokenConnection = ZosConnectionFactory
+            .createTokenConnection("1", "1", new Cookie("hello=hello"));
     private UssGet ussGet;
 
     @Before

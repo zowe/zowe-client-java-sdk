@@ -10,8 +10,6 @@
 package zowe.client.sdk.zostso.lifecycle;
 
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.parse.JsonParseFactory;
 import zowe.client.sdk.parse.type.ParseType;
@@ -29,14 +27,12 @@ import zowe.client.sdk.zostso.response.StartStopResponse;
 import zowe.client.sdk.zostso.service.TsoResponseService;
 
 /**
- * Stop active TSO address space using servlet key
+ * Stop active TSO address space using a servlet key
  *
  * @author Frank Giordano
  * @version 4.0
  */
 public class StopTso {
-
-    private static final Logger LOG = LoggerFactory.getLogger(StopTso.class);
 
     private final ZosConnection connection;
 
@@ -45,7 +41,7 @@ public class StopTso {
     /**
      * StopTso constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public StopTso(final ZosConnection connection) {
@@ -57,7 +53,7 @@ public class StopTso {
      * Alternative StopTso constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */

@@ -40,7 +40,7 @@ public class JobDelete {
     /**
      * DeleteJobs constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Nikunj Goyal
      */
     public JobDelete(final ZosConnection connection) {
@@ -52,7 +52,7 @@ public class JobDelete {
      * Alternative DeleteJobs constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -67,9 +67,9 @@ public class JobDelete {
     }
 
     /**
-     * Cancel and purge job from spool.
+     * Cancel and purge a job from spool.
      *
-     * @param jobName name of job to delete
+     * @param jobName name of a job to delete
      * @param jobId   job id
      * @param version version number, see ModifyJobParams object for version options
      * @return http response object

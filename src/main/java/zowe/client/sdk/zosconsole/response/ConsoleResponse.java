@@ -26,12 +26,12 @@ public class ConsoleResponse {
 
     /**
      * The list of zOSMF console API responses. May issue multiple requests (because of a user request) or
-     * to ensure that all messages are collected. Each individual response is placed here.
+     * to ensure that all messages are collected. Each response is placed here.
      */
     private Optional<ZosmfIssueResponse> zosmfResponse = Optional.empty();
 
     /**
-     * If an error occurs, returns the ImperativeError, which contains case error.
+     * If an error occurs, returns the ImperativeError, which contains a case error.
      */
     private Optional<String> failureResponse = Optional.empty();
 
@@ -111,7 +111,7 @@ public class ConsoleResponse {
     }
 
     /**
-     * Retrieve is keywordDetected specified
+     * Retrieve the keywordDetected specified
      *
      * @return keywordDetected true or false is keywordDetected seen
      */
@@ -158,7 +158,7 @@ public class ConsoleResponse {
     /**
      * Assign success value
      *
-     * @param success true or false is response seen
+     * @param success true or false is the response seen
      */
     public void setSuccess(boolean success) {
         this.success = success;

@@ -33,7 +33,7 @@ public final class ValidateUtils {
     /**
      * Check connection for validity.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @throws IllegalStateException with invalid connection object message
      * @author Frank Giordano
      */
@@ -68,7 +68,7 @@ public final class ValidateUtils {
      * Check for state of parameter
      *
      * @param check Check for true or false value
-     * @param msg   message to display if check is true
+     * @param msg   message to display if the check is true
      * @throws IllegalArgumentException with message
      * @author Frank Giordano
      */
@@ -83,7 +83,7 @@ public final class ValidateUtils {
      * Check for null parameter
      *
      * @param check check for true or false value
-     * @param msg   message to display if check is true
+     * @param msg   message to display if the check is true
      * @throws IllegalArgumentException with message
      * @author Frank Giordano
      */
@@ -97,7 +97,7 @@ public final class ValidateUtils {
     /**
      * Check SSH connection for validity.
      *
-     * @param connection connection information, see SshConnection object
+     * @param connection for connection information, see SshConnection object
      * @throws IllegalStateException with the message "Connection data not setup properly"
      * @author Frank Giordano
      */

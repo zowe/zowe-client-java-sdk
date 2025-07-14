@@ -11,8 +11,7 @@ package zowe.client.sdk.utility;
 
 import kong.unirest.core.Cookie;
 import org.junit.Test;
-import zowe.client.sdk.core.AuthType;
-import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 
 import static org.junit.Assert.*;
 
@@ -48,8 +47,8 @@ public class ValidateUtilsTest {
     public void tstValidateUtilsCheckConnectionBasicSuccess() {
         boolean isValid = true;
         try {
-            ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.BASIC).host("test")
-                    .password("password").user("user").zosmfPort("zosmfPort").build());
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", "port", "user", "password"));
         } catch (Exception e) {
             isValid = false;
         }
@@ -60,8 +59,8 @@ public class ValidateUtilsTest {
     public void tstValidateUtilsCheckConnectionTokenSuccess() {
         boolean isValid = true;
         try {
-            ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.TOKEN).host("test")
-                    .token(new Cookie("xxx", "xxx")).zosmfPort("zosmfPort").build());
+            ValidateUtils.checkConnection(ZosConnectionFactory.createTokenConnection("host", "port",
+                    new Cookie("xxx", "xxx")));
         } catch (Exception e) {
             isValid = false;
         }
@@ -72,8 +71,8 @@ public class ValidateUtilsTest {
     public void tstValidateUtilsCheckConnectionSslSuccess() {
         boolean isValid = true;
         try {
-            ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.SSL)
-                    .host("test").certFilePath("xxx").zosmfPort("zosmfPort").build());
+            ValidateUtils.checkConnection(ZosConnectionFactory.createSslConnection("host", "port",
+                    "xxx", "xxx"));
         } catch (Exception e) {
             isValid = false;
         }
@@ -86,8 +85,8 @@ public class ValidateUtilsTest {
         String msg = "required connection attribute(s) missing for BASIC authentication";
         String errMsg = "";
         try {
-            ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.BASIC).host("test")
-                    .password("").user("user").zosmfPort("zosmfPort").build());
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", "port", "user", ""));
         } catch (Exception e) {
             isValid = false;
             errMsg = e.getMessage();
@@ -102,8 +101,8 @@ public class ValidateUtilsTest {
         String msg = "required connection attribute(s) missing for BASIC authentication";
         String errMsg = "";
         try {
-            ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.BASIC).host("test")
-                    .password(null).user("user").zosmfPort("zosmfPort").build());
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", "port", "user", null));
         } catch (Exception e) {
             isValid = false;
             errMsg = e.getMessage();
@@ -118,8 +117,8 @@ public class ValidateUtilsTest {
         String msg = "required connection attribute(s) missing for BASIC authentication";
         String errMsg = "";
         try {
-            ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.BASIC).host("test")
-                    .password("password").user("").zosmfPort("zosmfPort").build());
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", "port", "", "password"));
         } catch (Exception e) {
             isValid = false;
             errMsg = e.getMessage();
@@ -134,8 +133,8 @@ public class ValidateUtilsTest {
         String msg = "required connection attribute(s) missing for BASIC authentication";
         String errMsg = "";
         try {
-            ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.BASIC).host("test")
-                    .password("password").user(null).zosmfPort("zosmfPort").build());
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", "port", null, "password"));
         } catch (Exception e) {
             isValid = false;
             errMsg = e.getMessage();
@@ -150,8 +149,8 @@ public class ValidateUtilsTest {
         String msg = "required connection attribute(s) missing for BASIC authentication";
         String errMsg = "";
         try {
-            ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.BASIC).host("test")
-                    .password("password").user("user").zosmfPort("").build());
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", "", "user", "password"));
         } catch (Exception e) {
             isValid = false;
             errMsg = e.getMessage();
@@ -166,8 +165,8 @@ public class ValidateUtilsTest {
         String msg = "required connection attribute(s) missing for BASIC authentication";
         String errMsg = "";
         try {
-            ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.BASIC).host("test")
-                    .password("password").user("user").zosmfPort(null).build());
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", null, "user", "password"));
         } catch (Exception e) {
             isValid = false;
             errMsg = e.getMessage();
@@ -182,8 +181,8 @@ public class ValidateUtilsTest {
         String msg = "required connection attribute(s) missing for TOKEN authentication";
         String errMsg = "";
         try {
-            ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.TOKEN).host("test")
-                    .token(null).zosmfPort(null).build());
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createTokenConnection("test", "port", null));
         } catch (Exception e) {
             isValid = false;
             errMsg = e.getMessage();
@@ -198,8 +197,8 @@ public class ValidateUtilsTest {
         String msg = "required connection attribute(s) missing for SSL authentication";
         String errMsg = "";
         try {
-            ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.SSL).host("test")
-                    .certFilePath("").zosmfPort(null).build());
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createSslConnection("test", "port", "", ""));
         } catch (Exception e) {
             isValid = false;
             errMsg = e.getMessage();
@@ -214,8 +213,8 @@ public class ValidateUtilsTest {
         String msg = "required connection attribute(s) missing for SSL authentication";
         String errMsg = "";
         try {
-            ValidateUtils.checkConnection(new ZosConnection.Builder(AuthType.SSL).host("test")
-                    .certFilePath(null).zosmfPort(null).build());
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createSslConnection("test", "port", null, null));
         } catch (Exception e) {
             isValid = false;
             errMsg = e.getMessage();

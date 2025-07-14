@@ -67,6 +67,12 @@ public class ZosmfTsoResponse {
      */
     private final Optional<String> appData;
 
+    /**
+     * Private constructor used by the Builder
+     *
+     * @param builder Builder instance containing configuration
+     * @author Frank Giordano
+     */
     private ZosmfTsoResponse(final Builder builder) {
         this.servletKey = Optional.ofNullable(builder.servletKey);
         this.queueId = Optional.ofNullable(builder.queueId);

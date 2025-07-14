@@ -14,7 +14,6 @@ import kong.unirest.core.Unirest;
 import kong.unirest.core.UnirestException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
@@ -28,7 +27,7 @@ public class GetTextZosmfRequest extends ZosmfRequest {
     /**
      * GetTextZosmfRequest constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public GetTextZosmfRequest(final ZosConnection connection) {
@@ -73,7 +72,6 @@ public class GetTextZosmfRequest extends ZosmfRequest {
      */
     @Override
     public void setStandardHeaders() {
-        headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
         headers.put("Content-Type", "text/plain; charset=UTF-8");
         headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }

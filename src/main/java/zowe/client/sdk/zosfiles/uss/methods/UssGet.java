@@ -40,7 +40,7 @@ public class UssGet {
     /**
      * UssGet Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      * @author James Kostrewski
      */
@@ -53,7 +53,7 @@ public class UssGet {
      * Alternative UssGet constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      * @author James Kostrewski

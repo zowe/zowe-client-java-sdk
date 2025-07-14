@@ -38,7 +38,7 @@ public class ZosmfLogout {
     /**
      * ZosmfLogout constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Esteban Sandoval
      */
     public ZosmfLogout(final ZosConnection connection) {
@@ -50,7 +50,7 @@ public class ZosmfLogout {
      * Alternative Logout constructor with ZosmfRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Esteban Sandoval
      */

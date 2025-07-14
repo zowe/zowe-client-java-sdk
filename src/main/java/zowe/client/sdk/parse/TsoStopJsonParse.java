@@ -14,7 +14,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
 
 /**
- * Parse json response from Tso Stop request
+ * Parse JSON response from Tso Stop request
  *
  * @author Frank Giordano
  * @version 4.0
@@ -49,7 +49,7 @@ public final class TsoStopJsonParse implements JsonParse {
     }
 
     /**
-     * Transform retrieved Tso Stop response into ZosmfTsoResponse
+     * Transform the retrieved Tso Stop response into ZosmfTsoResponse
      *
      * @param args json data to parse
      * @return populated console response, see ZosmfTsoResponse object

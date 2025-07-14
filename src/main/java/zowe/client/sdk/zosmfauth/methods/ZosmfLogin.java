@@ -38,7 +38,7 @@ public class ZosmfLogin {
     /**
      * ZosmfLogin constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Esteban Sandoval
      */
     public ZosmfLogin(final ZosConnection connection) {
@@ -50,7 +50,7 @@ public class ZosmfLogin {
      * Alternative Login constructor with ZosmfRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Esteban Sandoval
      */

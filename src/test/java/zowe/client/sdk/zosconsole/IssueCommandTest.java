@@ -17,8 +17,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
-import zowe.client.sdk.core.AuthType;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -46,10 +46,10 @@ import static org.mockito.Mockito.withSettings;
  */
 public class IssueCommandTest {
 
-    private final ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
-            .host("1").password("1").user("1").zosmfPort("1").build();
-    private final ZosConnection cookieConnection = new ZosConnection.Builder(AuthType.TOKEN)
-            .host("1").zosmfPort("1").token(new Cookie("hello=hello")).build();
+    private final ZosConnection connection = ZosConnectionFactory
+            .createBasicConnection("1", "1", "1", "1");
+    private final ZosConnection tokenConnection = ZosConnectionFactory
+            .createTokenConnection("1", "1", new Cookie("hello=hello"));
     private PutJsonZosmfRequest mockJsonGetRequest;
 
     @Before
@@ -74,13 +74,13 @@ public class IssueCommandTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseToggleAuthSuccess() throws ZosmfRequestException {
+    public void tstIssueCommandCmdResponseToggleTokenSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "student");
         final JSONObject json = new JSONObject(jsonMap);
 
         PutJsonZosmfRequest mockJsonGetRequestAuth = Mockito.mock(PutJsonZosmfRequest.class,
-                withSettings().useConstructor(cookieConnection));
+                withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonGetRequestAuth.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestAuth).setHeaders(anyMap());
@@ -88,7 +88,7 @@ public class IssueCommandTest {
         doCallRealMethod().when(mockJsonGetRequestAuth).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequestAuth).getHeaders();
 
-        final IssueConsole issueCommand = new IssueConsole(cookieConnection, mockJsonGetRequestAuth);
+        final IssueConsole issueCommand = new IssueConsole(tokenConnection, mockJsonGetRequestAuth);
 
         ConsoleResponse response = issueCommand.issueCommand("command");
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",

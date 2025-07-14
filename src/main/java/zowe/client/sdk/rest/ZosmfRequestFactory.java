@@ -34,7 +34,7 @@ public final class ZosmfRequestFactory {
     /**
      * Assign the request to the Http verb type request object
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param type       request http type, see ZosmfRequestType object
      * @return ZosmfRequest abstract object of ZosmfRequestType value
      * @author Frank Giordano

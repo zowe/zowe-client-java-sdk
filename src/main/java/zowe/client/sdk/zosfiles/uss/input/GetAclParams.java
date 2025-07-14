@@ -145,7 +145,7 @@ public class GetAclParams {
         /**
          * The user ID or UID (as a JSON string),
          * displays only the ACL entries for the specified types of access control lists (getfacl -a, -d, -f)
-         * which affects the specified user's access (getfacl -e user).
+         * which affect the specified user's access (getfacl -e user).
          */
         private String user;
 

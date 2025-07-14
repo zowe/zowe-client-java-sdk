@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 
 /**
- * Utility class contains helper methods for json parse processing
+ * Utility class contains helper methods for JSON parse processing
  *
  * @author Frank Giordano
  * @version 4.0
@@ -59,7 +59,7 @@ public final class JsonParserUtil {
      *
      * @param item JSON array representation
      * @return JSONArray object
-     * @throws ZosmfRequestException indicates the json item from z/OSMF request is invalid for parsing
+     * @throws ZosmfRequestException indicates the JSON item from z/OSMF request is invalid for parsing
      */
     public static JSONArray parseArray(final String item) throws ZosmfRequestException {
         try {

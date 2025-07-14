@@ -10,8 +10,8 @@
 package zowe.client.sdk.zosfiles;
 
 import org.junit.Test;
-import zowe.client.sdk.core.AuthType;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.methods.UssExtAttr;
 
@@ -25,8 +25,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class UssExtAttrTest {
 
-    private final ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
-            .host("1").password("1").user("1").zosmfPort("1").build();
+    private final ZosConnection connection = ZosConnectionFactory
+            .createBasicConnection("1", "1", "1", "1");
 
     @Test
     public void tstUssExtAttrSetValueFailure1() throws ZosmfRequestException {

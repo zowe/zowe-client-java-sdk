@@ -14,7 +14,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.input.JobFile;
 
 /**
- * Parse json response for job file
+ * Parse JSON response for a job file
  *
  * @author Frank Giordano
  * @version 4.0

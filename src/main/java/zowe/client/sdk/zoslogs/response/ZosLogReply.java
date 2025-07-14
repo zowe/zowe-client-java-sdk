@@ -36,7 +36,7 @@ public class ZosLogReply {
 
     /**
      * Indicates the source of the log.
-     * Value "OPERLOG" indicates the operations log.
+     * Value "OPERLOG" indicates the operation log.
      */
     private final Optional<String> source;
 

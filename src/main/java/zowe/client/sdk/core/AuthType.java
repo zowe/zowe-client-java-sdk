@@ -19,7 +19,7 @@ public enum AuthType {
 
     /**
      * Authentication classic type. This represents the bearer header with the requirement
-     * for the username and password to be specified within ZosConnection object.
+     * for the username and password to be specified within the ZosConnection object.
      */
     BASIC,
     /**

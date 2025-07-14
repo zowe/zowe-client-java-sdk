@@ -42,7 +42,7 @@ public class UssExtAttr {
     /**
      * UssCopy Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author James Kostrewski
      */
     public UssExtAttr(final ZosConnection connection) {

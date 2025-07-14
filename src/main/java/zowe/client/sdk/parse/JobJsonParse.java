@@ -16,7 +16,7 @@ import zowe.client.sdk.zosjobs.response.Job;
 import zowe.client.sdk.zosjobs.response.JobStepData;
 
 /**
- * Extract Job from json response
+ * Extract Job from JSON response
  *
  * @author Frank Giordano
  * @version 4.0

@@ -53,7 +53,7 @@ public class DsnCopy {
      * Alternative DsnCopy constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -83,7 +83,7 @@ public class DsnCopy {
      * @param fromDataSetName is a name of source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
      * @param toDataSetName   is a name of target dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
      * @param replace         if true members in the target dataset are replaced
-     * @param copyAllMembers  if true copy all members in the source partition dataset specified
+     * @param copyAllMembers  if true, copy all members in the source partition dataset specified
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
@@ -163,14 +163,14 @@ public class DsnCopy {
                 params.getFromDataSet().orElseThrow(() -> new IllegalStateException(fromDataSetNameErrMsg));
 
         final Map<String, Object> fromDataSetReq = new HashMap<>();
-        // is member name specified in DataSet value
+        // is a member name specified in DataSet value
         if (isMemberNameIncluded(fromDataSetName)) {
-            // member exist extract it
+            // member exists extract it
             final int startMemberIndex = fromDataSetName.indexOf("(");
             final String member = fromDataSetName
                     .substring(startMemberIndex + 1, fromDataSetName.length() - 1);
             fromDataSetReq.put("member", member);
-            // reassign fromDataSetName to dataSet value without member
+            // reassign fromDataSetName to dataSet value without a member
             fromDataSetName = fromDataSetName.substring(0, startMemberIndex);
         } else if (params.isCopyAllMembers()) {
             // no member specified copy all members as such

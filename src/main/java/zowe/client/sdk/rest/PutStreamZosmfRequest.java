@@ -15,11 +15,10 @@ import kong.unirest.core.Unirest;
 import kong.unirest.core.UnirestException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Http put stream operation with binary content type
+ * Http put stream operation with a binary content type
  *
  * @author Frank Giordano
  * @version 4.0
@@ -34,7 +33,7 @@ public class PutStreamZosmfRequest extends ZosmfRequest {
     /**
      * PutStreamZosmfRequest constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public PutStreamZosmfRequest(final ZosConnection connection) {
@@ -81,7 +80,6 @@ public class PutStreamZosmfRequest extends ZosmfRequest {
      */
     @Override
     public void setStandardHeaders() {
-        headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
         headers.put("Content-Type", "binary");
         headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }

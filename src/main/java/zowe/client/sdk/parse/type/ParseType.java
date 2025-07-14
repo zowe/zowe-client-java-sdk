@@ -10,7 +10,7 @@
 package zowe.client.sdk.parse.type;
 
 /**
- * Represents json parse operation type
+ * Represents JSON parse operation type
  *
  * @author Frank Giordano
  * @version 4.0

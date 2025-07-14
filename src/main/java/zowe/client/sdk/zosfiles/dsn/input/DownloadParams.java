@@ -59,7 +59,7 @@ public class DownloadParams {
     /**
      * The indicator to force the return of ETag.
      * If set to 'true' it forces the response to include an "ETag" header, regardless of the size of the response data.
-     * If it is not present, the default is to only send an Etag for data sets smaller than a system determined length,
+     * If it is not present, the default is to only send an Etag for data sets smaller than a system-determined length,
      * which is at least 8 MB.
      */
     private final boolean returnEtag;
@@ -298,7 +298,7 @@ public class DownloadParams {
         private String file;
 
         /**
-         * The extension you want to use for the file, e.g. extensions: .txt, .c
+         * The extension you want to use for the file, e.g., extensions: .txt, .c
          */
         private String extension;
 
@@ -314,13 +314,13 @@ public class DownloadParams {
         private String[] excludePatterns;
 
         /**
-         * Map data set names that match your pattern to the desired extension. e.g. cpgm=c,asmpgm=asm
+         * Map data set names that match your pattern to the desired extension. e.g., cpgm=c,asmpgm=asm
          */
         private HashMap<String, String> extensionMap;
 
         /**
          * The maximum REST requests to perform at once
-         * Increasing this value results in faster downloads but increases resource consumption
+         * Increasing this value result in faster downloads but increase resource consumption
          * on z/OS and risks encountering an error caused
          * by making too many requests at once.
          * Default: 1

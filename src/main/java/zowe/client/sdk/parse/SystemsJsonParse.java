@@ -16,7 +16,7 @@ import zowe.client.sdk.zosmfinfo.response.DefinedSystem;
 import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
 
 /**
- * Parse json response from z/OSMF defined systems request
+ * Parse JSON response from z/OSMF defined systems request
  *
  * @author Frank Giordano
  * @version 4.0

@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Parse json response into property list
+ * Parse JSON response into a property list
  *
  * @author Frank Giordano
  * @version 4.0

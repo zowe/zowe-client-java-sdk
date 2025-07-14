@@ -45,7 +45,7 @@ public class JobCancel {
     /**
      * CancelJobs constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Nikunj Goyal
      */
     public JobCancel(final ZosConnection connection) {
@@ -57,7 +57,7 @@ public class JobCancel {
      * Alternative CancelJobs constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -74,7 +74,7 @@ public class JobCancel {
     /**
      * Cancel a job on z/OS.
      *
-     * @param jobName name of job to cancel
+     * @param jobName name of a job to cancel
      * @param jobId   job id
      * @param version version number - 1.0 or 2.0
      *                To request asynchronous processing for this service (the default), set the "version" property to 1.0

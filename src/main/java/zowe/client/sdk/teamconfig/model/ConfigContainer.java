@@ -84,7 +84,7 @@ public class ConfigContainer {
     }
 
     /**
-     * Return list of partitions
+     * Return a list of partitions
      *
      * @return list of partitions gathered from reading and parsing Zowe Global Team Configuration
      */

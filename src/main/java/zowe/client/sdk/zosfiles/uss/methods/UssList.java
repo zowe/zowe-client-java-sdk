@@ -53,7 +53,7 @@ public class UssList {
     /**
      * UssList Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public UssList(final ZosConnection connection) {
@@ -65,7 +65,7 @@ public class UssList {
      * Alternative UssList constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -80,7 +80,7 @@ public class UssList {
     }
 
     /**
-     * Perform list of UNIX files operation
+     * Perform a list of UNIX files operation
      *
      * @param params ListParams object
      * @return list of UssItem objects
@@ -143,7 +143,7 @@ public class UssList {
     }
 
     /**
-     * Perform list of UNIX filesystems operation
+     * Perform a list of UNIX filesystems operation
      *
      * @param params ListZfsParams parameter object
      * @return list of UssZfsItem objects

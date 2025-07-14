@@ -25,13 +25,13 @@ import java.util.OptionalInt;
 public class ListZfsParams {
 
     /**
-     * The indicator that we want to show less files
+     * The indicator that we want to show fewer files
      */
     private final OptionalInt maxLength;
 
     /**
      * This parameter identifies the UNIX directory that contains the files and directories to be listed.
-     * This parameter may not be specified if the 'fsname' parameter is specified. It can consist a directory or
+     * This parameter may not be specified if the 'fsname' parameter is specified. It can consist of a directory or
      * fully qualified path name in the UNIX file system structure. A fully qualified file name can be up to 1023
      * bytes long. You cannot use wildcard characters for this parameter.
      */
@@ -112,7 +112,7 @@ public class ListZfsParams {
 
         /**
          * This parameter identifies the UNIX directory that contains the files and directories to be listed.
-         * This parameter may not be specified if the 'fsname' parameter is specified. It can consist a directory or
+         * This parameter may not be specified if the 'fsname' parameter is specified. It can consist of a directory or
          * fully qualified path name in the UNIX file system structure. A fully qualified file name can be up to 1023
          * bytes long. You cannot use wildcard characters for this parameter.
          */

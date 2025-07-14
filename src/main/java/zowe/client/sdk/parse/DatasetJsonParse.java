@@ -14,7 +14,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.dsn.response.Dataset;
 
 /**
- * Extract Dataset from json response
+ * Extract Dataset from JSON response
  *
  * @author Frank Giordano
  * @version 4.0

@@ -35,7 +35,7 @@ public class CopyParams {
 
     /**
      * The default is false.
-     * When 'true', copies all the files and subdirectories that are specified by source into a directory (cp -R).
+     * When 'true', copies all the files and subdirectories that the source specifies into a directory (cp -R).
      */
     private final boolean recursive;
 
@@ -109,7 +109,7 @@ public class CopyParams {
 
         /**
          * The default is false.
-         * When 'true', copies all the files and subdirectories that are specified by source into a directory (cp -R).
+         * When 'true', copies all the files and subdirectories that the source specifies into a directory (cp -R).
          */
         private boolean recursive = false;
 
