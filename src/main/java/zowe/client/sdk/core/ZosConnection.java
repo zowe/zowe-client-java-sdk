@@ -116,6 +116,11 @@ public class ZosConnection {
         return user;
     }
 
+    /**
+     * Set user value
+     *
+     * @param user string value
+     */
     public void setUser(String user) {
         this.user = user;
     }
