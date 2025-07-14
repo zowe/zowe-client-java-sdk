@@ -2,7 +2,7 @@
 
 Contains APIs to interact with the z/OS mvs console (using z/OSMF console REST endpoints).
 
-APIs located in method package.
+APIs are located in the method package.
 
 ## API Examples
 
@@ -12,6 +12,7 @@ APIs located in method package.
 package zowe.client.sdk.examples.zosconsole;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -29,28 +30,24 @@ import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 public class IssueConsoleExp extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection, and mvs command used for the example tests.
+     * The main method defines z/OSMF host and user connection, and mvs command used for the example tests.
      *
      * @param args for main not used
      * @author Frank Giordano
      */
     public static void main(String[] args) {
         String command = "D IPLINFO";
-        ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
-                .host(hostName)
-                .zosmfPort(zosmfPort)
-                .user(userName)
-                .password(password)
-                .build();
+        ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection(hostName, zosmfPort, userName, password);
         IssueConsoleExp.issueCommand(connection, command);
         IssueConsoleExp.issueCommandCommon(connection, command);
     }
 
     /**
      * Issue IssueConsole issueCommand method which will execute the given simple mvs console command
-     * without params object.
+     * without a params object.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param cmd        mvs command to execute
      * @author Frank Giordano
      */
@@ -70,7 +67,7 @@ public class IssueConsoleExp extends TstZosConnection {
     /**
      * Issue IssueConsole issueCommandCommon method which will execute the given mvs console command.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param cmd        mvs command to execute
      * @author Frank Giordano
      */
@@ -151,12 +148,8 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection.Builder(AuthType.BASIC)
-                .host(profile.getHost())
-                .zosmfPort(profile.getPort())
-                .user(profile.getUser())
-                .password(profile.getPassword())
-                .build());
+        return (ZosConnectionFactory.createBasicConnection(
+                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

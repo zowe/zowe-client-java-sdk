@@ -2,7 +2,7 @@
 
 Contains APIs to interact with jobs on z/OS (using z/OSMF jobs REST endpoints).
 
-APIs located in methods package.
+APIs are located in the methods package.
 
 ## API Examples
 
@@ -34,19 +34,14 @@ public class JobCancelExp extends TstZosConnection {
     private static String jobId;
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * JobCancel functionality.
      *
      * @param args for main not used
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
-        connection = new ZosConnection.Builder(AuthType.BASIC)
-                .host(hostName)
-                .zosmfPort(zosmfPort)
-                .user(userName)
-                .password(password)
-                .build();
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         System.out.println(cancelCommonWithVersion("2.0"));
         System.out.println(cancelCommon());
         System.out.println(cancelByJob());
@@ -163,19 +158,14 @@ public class JobDeleteExp extends TstZosConnection {
     private static String jobId;
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * JobDelete functionality.
      *
      * @param args for main not used
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
-        connection = new ZosConnection.Builder(AuthType.BASIC)
-                .host(hostName)
-                .zosmfPort(zosmfPort)
-                .user(userName)
-                .password(password)
-                .build();
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         System.out.println(deleteCommonWithVersion("2.0"));
         System.out.println(deleteCommon());
         System.out.println(deleteByJob());
@@ -304,12 +294,8 @@ public class JobGetExp extends TstZosConnection {
         String owner = "xxx";
         String jobId = "xxx";
 
-        ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
-                .host(hostName)
-                .zosmfPort(zosmfPort)
-                .user(userName)
-                .password(password)
-                .build();
+        ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection(hostName, zosmfPort, userName, password);
         getJob = new JobGet(connection);
 
         JobGetExp.getCommon(prefix);
@@ -407,7 +393,7 @@ public class JobGetExp extends TstZosConnection {
     /**
      * Example on how to call JobGet getStatusCommon method with StepData flag.
      * The getStatusCommon method is given a jobName and jobId value to use for retrieval
-     * of its status with StepData flag set to true.
+     * of its status with the StepData flag set to true.
      *
      * @param prefix partial or full job name to use for searching
      * @author Frank Giordano
@@ -483,8 +469,8 @@ public class JobGetExp extends TstZosConnection {
 
     /**
      * Example on how to call JobGet getByOwnerAndPrefix method.
-     * The getByOwnerAndPrefix method is given an owner and prefix values which will return a
-     * list of common job document/object.
+     * The getByOwnerAndPrefix method is given an owner and prefix value that will return a
+     * list of common job documents / objects.
      *
      * @param owner  owner value
      * @param prefix partial or full job name to use for searching
@@ -563,7 +549,7 @@ public class JobGetExp extends TstZosConnection {
 
     /**
      * Example on how to call JobGet getByOwner method.
-     * The getByOwner method is given an owner value to use retrieve a list of its available jobs.
+     * The getByOwner method is given an owner value to use to retrieve a list of its available jobs.
      *
      * @param owner owner value
      * @author Frank Giordano
@@ -678,12 +664,7 @@ public class JobMonitorExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        connection = new ZosConnection.Builder(AuthType.BASIC)
-                .host(hostName)
-                .zosmfPort(zosmfPort)
-                .user(userName)
-                .password(password)
-                .build();
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         submitJob = new JobSubmit(connection);
         JobMonitorExp.monitorJobForOutputStatusByJobObject();
         JobMonitorExp.monitorJobForOutputStatusByJobNameAndId();
@@ -807,7 +788,7 @@ public class JobMonitorExp extends TstZosConnection {
      * The waitByMessage method accepts a message value which will monitor the job output until
      * the message is seen or times out if not seen.
      *
-     * @param message given message text to monitor job output
+     * @param message given a message text to monitor job output
      * @author Frank Giordano
      */
     public static void monitorWaitForJobMessage(String message) {
@@ -848,19 +829,14 @@ import zowe.client.sdk.zosjobs.types.JobStatus;
 public class JobSubmitExp extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection needed to showcase
+     * The main method defines z/OSMF host and user connection needed to showcase
      * JobSubmit functionality.
      *
      * @param args for main not used
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        connection = new ZosConnection.Builder(AuthType.BASIC)
-                .host(hostName)
-                .zosmfPort(zosmfPort)
-                .user(userName)
-                .password(password)
-                .build();
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         System.out.println(JobSubmitExp.submitJob(connection, "xxx.xxx.xxx.xxx(xxx)"));
 
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\n// EXEC PGM=IEFBR14";
@@ -980,12 +956,8 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection.Builder(AuthType.BASIC)
-                .host(profile.getHost())
-                .zosmfPort(profile.getPort())
-                .user(profile.getUser())
-                .password(profile.getPassword())
-                .build());
+        return (ZosConnectionFactory.createBasicConnection(
+                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

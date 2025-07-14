@@ -30,7 +30,7 @@ public class IssueTsoExp extends TstZosConnection {
     private static ZosConnection connection;
 
     /**
-     * Main method defines z/OSMF host and user connection, and tso command parameters used for the example test.
+     * The main method defines z/OSMF host and user connection, and tso command parameters used for the example test.
      *
      * @param args for main not used
      * @author Frank Giordano
@@ -39,19 +39,14 @@ public class IssueTsoExp extends TstZosConnection {
         String command = "xxx";
         String accountNumber = "xxx";
 
-        connection = new ZosConnection.Builder(AuthType.BASIC)
-                .host(hostName)
-                .zosmfPort(zosmfPort)
-                .user(userName)
-                .password(password)
-                .build();
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         IssueResponse response = IssueTsoExp.issueCommand(accountNumber, command);
         String[] results = response.getCommandResponses().orElse("").split("\n");
         Arrays.stream(results).sequential().forEach(System.out::println);
     }
 
     /**
-     * Issue issueCommand method from IssueTso class which will execute the given tso command.
+     * Issue issueCommand method from the IssueTso class which will execute the given tso command.
      *
      * @param accountNumber user's z/OSMF permission account number
      * @param cmd           tso command to execute
@@ -131,12 +126,8 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection.Builder(AuthType.BASIC)
-                .host(profile.getHost())
-                .zosmfPort(profile.getPort())
-                .user(profile.getUser())
-                .password(profile.getPassword())
-                .build());
+        return (ZosConnectionFactory.createBasicConnection(
+                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

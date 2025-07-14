@@ -44,25 +44,21 @@ import java.io.StringWriter;
 public class ZosmfLoginExp extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection and showcases examples calling
+     * The main method defines z/OSMF host and user connection and showcases examples calling
      * the zosmfauth APIs.
      * <p>
-     * In addition, the examples showcases the usage of token authentication rather than
+     * In addition, the examples showcase the usage of token authentication rather than
      * basic authentication. 
      *
      * @param args for main not used
      * @author Frank Giordano
      */
     public static void main(String[] args) throws ZosmfRequestException {
-        ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
-                .host(hostName)
-                .zosmfPort(zosmfPort)
-                .user(userName)
-                .password(password)
-                .build();
+        ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection(hostName, zosmfPort, userName, password);
         ZosmfLogin login = new ZosmfLogin(connection);
 
-        // request to log into server and retrieve authentication tokens
+        // request to log into the server and retrieve authentication tokens
         ZosmfLoginResponse loginResponse = login.login();
         // display response
         System.out.println(loginResponse);
@@ -80,12 +76,12 @@ public class ZosmfLoginExp extends TstZosConnection {
         String memberName = "xxx";
         DownloadParams params = new DownloadParams.Builder().build();
 
-        // following defines a TOKEN authentication usage
+        // the following defines a TOKEN authentication usage
         // redefined connection object with no username and password specified
         // if you do specify a username and password, they will be ignored
         // use jwtToken value for the token parameter. 
-        connection = new ZosConnection.Builder(AuthType.TOKEN)
-                .host(hostName).zosmfPort(zosmfPort).token(jwtToken).build();
+        connection = ZosConnectionFactory
+                .createTokenConnection(hostName, zosmfPort, jwtToken);
         // use jwtToken 
         downloadDsnMember(connection, datasetName, memberName, params);
 
@@ -143,7 +139,7 @@ public class ZosmfLoginExp extends TstZosConnection {
     }
 
     /**
-     * Convert exception message's byte stream of data into a string
+     * Convert an exception message's byte stream of data into a string
      *
      * @param e ZosmfRequestException object
      * @return string value
@@ -215,12 +211,8 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection.Builder(AuthType.BASIC)
-                .host(profile.getHost())
-                .zosmfPort(profile.getPort())
-                .user(profile.getUser())
-                .password(profile.getPassword())
-                .build());
+        return (ZosConnectionFactory.createBasicConnection(
+                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

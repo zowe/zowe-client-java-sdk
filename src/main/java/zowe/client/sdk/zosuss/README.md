@@ -2,7 +2,7 @@
 
 Contains API to execute USS (Unix System Serves) commands via SSH connection.
 
-API located in method package.
+API located in the method package.
 
 ## API Example
 

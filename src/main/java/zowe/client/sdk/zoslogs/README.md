@@ -3,7 +3,7 @@
 Contains API to interact with retrieving z/OS log (OPERLOG or SYSLOG) information on z/OS (using z/OSMF logs REST
 endpoints).
 
-API located in method package.
+API located in the method package.
 
 ## API Examples
 
@@ -31,19 +31,15 @@ import zowe.client.sdk.zoslogs.types.HardCopyType;
 public class ZosLogExp extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * z/OS SYSLOG retrieval functionality via ZosLog class.
      *
      * @param args for main not used
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        ZosConnection connection = new ZosConnection.Builder(AuthType.BASIC)
-                .host(hostName)
-                .zosmfPort(zosmfPort)
-                .user(userName)
-                .password(password)
-                .build();
+        ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection(hostName, zosmfPort, userName, password);
         ZosLog zosLog = new ZosLog(connection);
         ZosLogParams zosLogParams = new ZosLogParams.Builder()
                 .startTime("2022-11-27T05:06:20Z")
@@ -94,7 +90,7 @@ import zowe.client.sdk.rest.Response;
 public class Util {
 
     /**
-     * Extract response phrase string value if any from Response object.
+     * Extract response phrase string value if any from a Response object.
      *
      * @param response object
      * @return string value
@@ -140,12 +136,8 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection.Builder(AuthType.BASIC)
-                .host(profile.getHost())
-                .zosmfPort(profile.getPort())
-                .user(profile.getUser())
-                .password(profile.getPassword())
-                .build());
+        return (ZosConnectionFactory.createBasicConnection(
+                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }
