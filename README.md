@@ -137,13 +137,13 @@ This enum is used to send it to the ZosConnection constructor denoting the type 
 
 For BASIC, the following ZosConnection object is specified to perform BASIC authentication:  
   
-    ZosConnection connection = new ZosConnection(AuthType.BASIC).host("xxxx").password("xxxx").user("xxxx").zosmfPort("xxxx").build();
+    ZosConnection connection = ZosConnectionFactory.createBasicConnection("host", "zosmfPort", "user", "password");
   
 Basic authentication means that the http request contains a BASIC header representing the username and password encrypted.   
   
 For web TOKEN, the following ZosConnection object is specified:  
   
-    ZosConnection connection = new ZosConnection(AuthType.TOKEN).host("xxxx").zosmfPort("xxxx").token(new Cookie("xxxx=xxxx")).build();
+    ZosConnection connection = ZosConnectionFactory.createTokenConnection("host", "port", new Cookie("xxx", "xxx")));
   
 With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve authentication tokens (a JSON Web and an LTPA TOKEN) on a BASIC authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA tokens.  
   
@@ -155,7 +155,7 @@ See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/
   
 For SSL, the following ZosConnection object is specified:  
 
-    ZosConnection connection = new ZosConnection(AuthType.SSL).host("xxxx").zosmfPort("xxxx").certPassword("xxxx").certFilePath("xxxx")..build();
+    ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port", "c:\file.p12", "certpassword"));
   
 The SDK supports .p12 file format that represents a key-store that houses a self-signed certificate.  
   
