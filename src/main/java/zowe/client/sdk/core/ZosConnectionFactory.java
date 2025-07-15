@@ -20,6 +20,13 @@ import kong.unirest.core.Cookie;
 public class ZosConnectionFactory {
 
     /**
+     * Private constructor defined to avoid instantiation of class
+     */
+    private ZosConnectionFactory() {
+        throw new IllegalStateException("static factory class");
+    }
+
+    /**
      * Creates a ZosConnection with basic authentication
      *
      * @param host     Host address of the z/OSMF server
