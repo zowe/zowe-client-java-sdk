@@ -232,10 +232,9 @@ public class JobGet {
                 url += JobsConstants.QUERY_JOBID + params.getJobId().get();
             }
         } else {
+            // if no user defined in ZosConnection then query jobs by owner=*
             if (connection.getUser() != null && !connection.getUser().isEmpty()) {
                 url += JobsConstants.QUERY_OWNER + connection.getUser();
-            } else {
-                throw new IllegalStateException("user not specified");
             }
         }
 
