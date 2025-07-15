@@ -37,6 +37,7 @@ username and password and retrieve a list of members from the dataset input stri
 
 ````java
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
@@ -78,12 +79,8 @@ public class TeamConfigExp {
             throw new RuntimeException(e.getMessage());
         }
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection.Builder(AuthType.BASIC)
-                .host(profile.getHost())
-                .zosmfPort(profile.getPort())
-                .user(profile.getUser())
-                .password(profile.getPassword())
-                .build());
+        return (ZosConnectionFactory.createBasicConnection(
+                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
 
         TeamConfigExp.listMembers(connection, "CCSQA.ASM.JCL");
     }

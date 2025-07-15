@@ -9,8 +9,8 @@ APIs located in method package.
 ````java
 package zowe.client.sdk.examples.zostso;
 
-import zowe.client.sdk.core.AuthType;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -102,6 +102,7 @@ public class Util {
 package zowe.client.sdk.examples;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.model.ProfileDao;

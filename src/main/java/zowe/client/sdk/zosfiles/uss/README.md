@@ -12,6 +12,7 @@ APIs located in methods package.
 package zowe.client.sdk.examples.zosfiles.uss;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
@@ -31,7 +32,7 @@ public class UssCreateExp extends TstZosConnection {
     private static ZosConnection connection;
 
     /**
-     * Main method performs setup and method calls to test UssCreate
+     * The main method performs setup and method calls to test UssCreate
      *
      * @param args for main not used
      * @author Frank Giordano
@@ -423,6 +424,7 @@ public class Util {
 package zowe.client.sdk.examples;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
@@ -447,8 +449,7 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (ZosConnectionFactory.createBasicConnection(
-                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

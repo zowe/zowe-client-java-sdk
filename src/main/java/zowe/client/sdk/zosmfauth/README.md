@@ -21,6 +21,7 @@ import kong.unirest.core.Cookie;
 import kong.unirest.core.Cookies;
 import org.apache.commons.io.IOUtils;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -187,6 +188,7 @@ public class ZosmfLoginExp extends TstZosConnection {
 package zowe.client.sdk.examples;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
