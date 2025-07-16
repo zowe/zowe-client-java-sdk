@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class to handle obtaining job and started task information
+ * Class to handle getting a job and started task information
  *
  * @author Frank Giordano
  * @version 4.0
