@@ -13,7 +13,6 @@ import kong.unirest.core.Cookie;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
 import kong.unirest.core.Unirest;
-import kong.unirest.core.java.SSLContextBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -21,6 +20,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
+import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -136,42 +136,39 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setupSsl() {
-//        final String filePath = connection.getCertFilePath();
-//        final String password = connection.getCertPassword();
-//        Unirest.config().clientCertificateStore(filePath, password)
-//                .followRedirects(true)
-//                .verifySsl(false);
         final String filePath = connection.getCertFilePath();
         final String password = connection.getCertPassword();
-        SSLContext sslContext;
-        try {
-            TrustManager[] trustAllCerts = new TrustManager[]{
-                    new X509TrustManager() {
-                        @Override
-                        public X509Certificate[] getAcceptedIssuers() {
-                            return null;
-                        }
 
-                        @Override
-                        public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                            // Do nothing - trust all clients
-                        }
-
-                        @Override
-                        public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                            // Do nothing - trust all servers
-                        }
+        // Trust all server certs (like --insecure)
+        TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
                     }
-            };
-            KeyStore clientStore = KeyStore.getInstance(CERTIFICATE_FORMAT_TYPE);
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                    }
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return new X509Certificate[0];
+                    }
+                }
+        };
+
+        try {
+            KeyStore clientStore = KeyStore.getInstance("PKCS12");
             clientStore.load(new FileInputStream(filePath), password.toCharArray());
-            sslContext = SSLContextBuilder.create().loadKeyMaterial(clientStore, password.toCharArray()).build();
-            sslContext.init(null, trustAllCerts, new SecureRandom());
-        } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException |
-                 KeyManagementException | UnrecoverableKeyException e) {
+
+            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+            keyManagerFactory.init(clientStore, password.toCharArray());
+
+            // Init SSLContext with client cert and trust-all policy
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(keyManagerFactory.getKeyManagers(), trustAllCerts, new SecureRandom());
+
+            Unirest.config().sslContext(sslContext);
+        } catch (NoSuchAlgorithmException | KeyStoreException |
+                 UnrecoverableKeyException | KeyManagementException |
+                 CertificateException | IOException e) {
             throw new IllegalStateException(e);
         }
-        Unirest.config().sslContext(sslContext);
     }
 
     /**
