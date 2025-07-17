@@ -53,6 +53,10 @@ public class ZosConnection {
      * AuthType: BASIC, TOKEN or SSL enum value for http request processing
      */
     private final AuthType authType;
+    /**
+     * Flag indicating to verify the authenticity of the server's certificate
+     */
+    private final boolean isSecure;
 
     /**
      * Private constructor used by the Builder
@@ -69,6 +73,16 @@ public class ZosConnection {
         this.token = builder.token;
         this.certFilePath = builder.certFilePath;
         this.authType = builder.authType;
+        this.isSecure = builder.isSecure;
+    }
+
+    /**
+     * Check if the flag to verify the authenticity of the server's certificate
+     *
+     * @return true if the server certificate verification is requested, false otherwise
+     */
+    public boolean isSecure() {
+        return isSecure;
     }
 
     /**
@@ -189,12 +203,14 @@ public class ZosConnection {
                         Objects.equals(zosmfPort, other.zosmfPort) &&
                         Objects.equals(user, other.user) &&
                         Objects.equals(certPassword, other.certPassword) &&
-                        Objects.equals(certFilePath, other.certFilePath);
+                        Objects.equals(certFilePath, other.certFilePath) &&
+                        isSecure == other.isSecure;
             } else {
                 return Objects.equals(host, other.host) &&
                         Objects.equals(zosmfPort, other.zosmfPort) &&
                         Objects.equals(certPassword, other.certPassword) &&
-                        Objects.equals(certFilePath, other.certFilePath);
+                        Objects.equals(certFilePath, other.certFilePath) &&
+                        isSecure == other.isSecure;
             }
         }
         return false;
@@ -207,7 +223,7 @@ public class ZosConnection {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(host, zosmfPort, user, password, certPassword, token, certFilePath);
+        return Objects.hash(host, zosmfPort, user, password, certPassword, token, certFilePath, isSecure);
     }
 
     /**
@@ -247,6 +263,22 @@ public class ZosConnection {
          * Authentication enum type for the http request
          */
         private AuthType authType;
+        /**
+         * Flag indicating to verify the authenticity of the server's certificate
+         * Default to true
+         */
+        private boolean isSecure = true;
+
+        /**
+         * Set whether the connection should be secure (HTTPS)
+         *
+         * @param isSecure true for secure connection, false otherwise
+         * @return Builder instance
+         */
+        public ZosConnection.Builder secure(boolean isSecure) {
+            this.isSecure = isSecure;
+            return this;
+        }
 
         /**
          * Set the host

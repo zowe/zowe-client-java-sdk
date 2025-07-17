@@ -29,8 +29,8 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.security.*;
-import java.security.cert.CertificateException;
+import java.security.KeyStore;
+import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
@@ -140,13 +140,16 @@ public abstract class ZosmfRequest {
                 new X509TrustManager() {
                     public void checkClientTrusted(X509Certificate[] certs, String authType) {
                     }
+
                     public void checkServerTrusted(X509Certificate[] certs, String authType) {
                     }
+
                     public X509Certificate[] getAcceptedIssuers() {
                         return new X509Certificate[0];
                     }
                 }
         };
+
 
         try {
             KeyStore clientStore = KeyStore.getInstance("PKCS12");
@@ -157,7 +160,12 @@ public abstract class ZosmfRequest {
 
             // Init SSLContext with client cert and trust-all policy
             SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(keyManagerFactory.getKeyManagers(), trustAllCerts, new SecureRandom());
+            if (!connection.isSecure()) {
+                sslContext.init(keyManagerFactory.getKeyManagers(), trustAllCerts, new SecureRandom());
+            } else {
+                sslContext.init(keyManagerFactory.getKeyManagers(), null, new SecureRandom());
+                Unirest.config().verifySsl(true);
+            }
 
             Unirest.config().sslContext(sslContext);
         } catch (Exception e) {

@@ -36,7 +36,9 @@ public class ZosConnectionFactory {
      * @return ZosConnection configured for basic authentication
      * @author Frank Giordano
      */
-    public static ZosConnection createBasicConnection(final String host, final String port, final String user,
+    public static ZosConnection createBasicConnection(final String host,
+                                                      final String port,
+                                                      final String user,
                                                       final String password) {
         return new ZosConnection.Builder()
                 .host(host)
@@ -56,7 +58,9 @@ public class ZosConnectionFactory {
      * @return ZosConnection configured for token authentication
      * @author Frank Giordano
      */
-    public static ZosConnection createTokenConnection(final String host, final String port, final Cookie token) {
+    public static ZosConnection createTokenConnection(final String host,
+                                                      final String port,
+                                                      final Cookie token) {
         return new ZosConnection.Builder()
                 .host(host)
                 .zosmfPort(port)
@@ -75,7 +79,9 @@ public class ZosConnectionFactory {
      * @return ZosConnection configured for SSL authentication
      * @author Frank Giordano
      */
-    public static ZosConnection createSslConnection(final String host, final String port, final String certFilePath,
+    public static ZosConnection createSslConnection(final String host,
+                                                    final String port,
+                                                    final String certFilePath,
                                                     final String certPassword) {
         return new ZosConnection.Builder()
                 .host(host)
@@ -83,6 +89,32 @@ public class ZosConnectionFactory {
                 .certFilePath(certFilePath)
                 .certPassword(certPassword)
                 .authType(AuthType.SSL)
+                .build();
+    }
+
+    /**
+     * Creates a ZosConnection with SSL certificate authentication with isSecure
+     *
+     * @param host         Host address of the z/OSMF server
+     * @param port         Port number of the z/OSMF server
+     * @param certFilePath Path to the certificate file (.p12)
+     * @param certPassword Password for the certificate
+     * @param isSecure     Flag indicating to verify the authenticity of the server's certificate
+     * @return ZosConnection configured for SSL authentication
+     * @author Frank Giordano
+     */
+    public static ZosConnection createSslConnection(final String host,
+                                                    final String port,
+                                                    final String certFilePath,
+                                                    final String certPassword,
+                                                    final boolean isSecure) {
+        return new ZosConnection.Builder()
+                .host(host)
+                .zosmfPort(port)
+                .certFilePath(certFilePath)
+                .certPassword(certPassword)
+                .authType(AuthType.SSL)
+                .secure(isSecure)
                 .build();
     }
 
