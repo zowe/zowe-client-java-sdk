@@ -160,9 +160,7 @@ public abstract class ZosmfRequest {
             sslContext.init(keyManagerFactory.getKeyManagers(), trustAllCerts, new SecureRandom());
 
             Unirest.config().sslContext(sslContext);
-        } catch (NoSuchAlgorithmException | KeyStoreException |
-                 UnrecoverableKeyException | KeyManagementException |
-                 CertificateException | IOException e) {
+        } catch (Exception e) {
             throw new IllegalStateException(e);
         }
     }
