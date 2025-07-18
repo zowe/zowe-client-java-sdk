@@ -28,6 +28,7 @@ import zowe.client.sdk.zoslogs.input.ZosLogParams;
 import zowe.client.sdk.zoslogs.response.ZosLogItem;
 import zowe.client.sdk.zoslogs.response.ZosLogReply;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -53,7 +54,7 @@ public class ZosLog {
     /**
      * GetZosLog constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public ZosLog(final ZosConnection connection) {
@@ -81,7 +82,7 @@ public class ZosLog {
     /**
      * Issue a z/OSMF log command and return log data.
      * <p>
-     * If API fails, you may be missing APAR see PH35930 required for log operations.
+     * If the API fails, you may be missing APAR see PH35930 required for log operations.
      *
      * @param params ZosLogParams object
      * @return ZosLogReply object with log messages/items
@@ -93,15 +94,11 @@ public class ZosLog {
 
         final String defaultUrl = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + RESOURCE;
         final StringBuilder url = new StringBuilder(defaultUrl);
+        final String customPattern = "yyyy-MM-dd'T'HH:mm'Z'";
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(customPattern);
 
-        params.getStartTime().ifPresent(time -> {
-            if (isNotValidDate(time)) {
-                throw new IllegalArgumentException("startTime date format is invalid");
-            }
-            final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT.withZone(ZoneId.systemDefault());
-            final ZonedDateTime zonedDateTime = ZonedDateTime.parse(time, formatter);
-            url.append("?time=").append(zonedDateTime);
-        });
+        params.getStartTime().ifPresentOrElse(time -> url.append("?time=").append(time),
+                () -> url.append("?time=").append(LocalDateTime.now().format(formatter)));
         params.getTimeRange().ifPresent(timeRange -> {
             if (params.getQueryCount() > 1) {
                 url.append("&timeRange=").append(timeRange);
@@ -147,21 +144,6 @@ public class ZosLog {
 
         final ZosLogReplyJsonParse parser = (ZosLogReplyJsonParse) JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY);
         return parser.parseResponse(jsonObject, zosLogItems);
-    }
-
-    /**
-     * Validate given string in expected date/time string format.
-     *
-     * @param value string representing a date/time
-     * @return boolean true or false
-     * @author Frank Giordano
-     */
-    private static boolean isNotValidDate(final String value) {
-        //  pattern to match example: 2022-11-27T05:06:20Z
-        final String patternStr = ".*[0-9]-.*[0-9]-.*[0-9][T].*[0-9][:]*[0-9][:]*[0-9][Z]";
-        final Pattern pattern = Pattern.compile(patternStr);
-        final Matcher matcher = pattern.matcher(value);
-        return !matcher.matches();
     }
 
 }

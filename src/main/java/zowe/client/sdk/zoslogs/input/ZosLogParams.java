@@ -29,7 +29,7 @@ public class ZosLogParams {
      * The z/OS log api time parameter. This field is optional.
      * <p>
      * Specifies when z/OSMF starts to retrieve messages in the ISO 8601 JSON date and time format.
-     * For example, 2021-01-26T03:33:18.065Z.
+     * For example, 2021-01-26T03:33Z.
      * <p>
      * The default value is the current UNIX timestamp on the server.
      * This value is used if the timestamp parameter is not specified.
