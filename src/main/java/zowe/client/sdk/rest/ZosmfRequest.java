@@ -147,7 +147,7 @@ public abstract class ZosmfRequest {
                     }
                 }
         };
-        
+
         try {
             KeyStore clientStore = KeyStore.getInstance("PKCS12");
             clientStore.load(new FileInputStream(filePath), password.toCharArray());
@@ -155,7 +155,7 @@ public abstract class ZosmfRequest {
             KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
             kmf.init(clientStore, password.toCharArray());
 
-            // Init SSLContext with client cert and trust-all policy
+            // initialize SSLContext with client cert
             SSLContext sslContext = SSLContext.getInstance("TLS");
             if (!connection.isSecure()) {
                 sslContext.init(kmf.getKeyManagers(), trustAllCerts, new SecureRandom());
