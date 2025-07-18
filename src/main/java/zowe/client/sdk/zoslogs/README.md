@@ -43,7 +43,7 @@ public class ZosLogExp extends TstZosConnection {
                 .createBasicConnection(hostName, zosmfPort, userName, password);
         ZosLog zosLog = new ZosLog(connection);
         ZosLogParams zosLogParams = new ZosLogParams.Builder()
-                .startTime("2022-11-27T05:06:20Z")
+                .startTime("2022-11-27T05:06Z")
                 .hardCopy(HardCopyType.SYSLOG)
                 .timeRange("24h")
                 .direction(DirectionType.BACKWARD)
