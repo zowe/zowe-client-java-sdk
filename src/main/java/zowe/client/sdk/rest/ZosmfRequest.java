@@ -161,7 +161,6 @@ public abstract class ZosmfRequest {
                 sslContext.init(kmf.getKeyManagers(), trustAllCerts, new SecureRandom());
             } else {
                 sslContext.init(kmf.getKeyManagers(), null, new SecureRandom());
-                Unirest.config().verifySsl(true);
             }
 
             Unirest.config().sslContext(sslContext);
