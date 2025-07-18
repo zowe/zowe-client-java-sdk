@@ -171,6 +171,7 @@ public abstract class ZosmfRequest {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
+        headers.put("X-CSRF-ZOSMF-HEADER", "dummy");
     }
 
     /**
