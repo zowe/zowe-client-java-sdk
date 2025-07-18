@@ -140,10 +140,8 @@ public abstract class ZosmfRequest {
                 new X509TrustManager() {
                     public void checkClientTrusted(X509Certificate[] certs, String authType) {
                     }
-
                     public void checkServerTrusted(X509Certificate[] certs, String authType) {
                     }
-
                     public X509Certificate[] getAcceptedIssuers() {
                         return new X509Certificate[0];
                     }
