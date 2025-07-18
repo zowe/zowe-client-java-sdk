@@ -155,15 +155,15 @@ public abstract class ZosmfRequest {
             KeyStore clientStore = KeyStore.getInstance("PKCS12");
             clientStore.load(new FileInputStream(filePath), password.toCharArray());
 
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
-            keyManagerFactory.init(clientStore, password.toCharArray());
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            kmf.init(clientStore, password.toCharArray());
 
             // Init SSLContext with client cert and trust-all policy
             SSLContext sslContext = SSLContext.getInstance("TLS");
             if (!connection.isSecure()) {
-                sslContext.init(keyManagerFactory.getKeyManagers(), trustAllCerts, new SecureRandom());
+                sslContext.init(kmf.getKeyManagers(), trustAllCerts, new SecureRandom());
             } else {
-                sslContext.init(keyManagerFactory.getKeyManagers(), null, new SecureRandom());
+                sslContext.init(kmf.getKeyManagers(), null, new SecureRandom());
                 Unirest.config().verifySsl(true);
             }
 
