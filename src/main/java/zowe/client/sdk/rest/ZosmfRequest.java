@@ -147,8 +147,7 @@ public abstract class ZosmfRequest {
                     }
                 }
         };
-
-
+        
         try {
             KeyStore clientStore = KeyStore.getInstance("PKCS12");
             clientStore.load(new FileInputStream(filePath), password.toCharArray());
