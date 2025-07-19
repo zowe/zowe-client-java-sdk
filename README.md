@@ -226,10 +226,10 @@ The following maven command at the root prompt of the project will produce zowe-
   
 ## Logger 
     
-For logging, you will need to implement SLF4J binding and logging framework dependencies. 
+For logging, the SDK provides SLF4J within its FATJAR. 
+
+You will need to plug into SLF4J by implementing a logging framework of your choice for your project. 
     
-The SDK does not provide SLF4J or any logging dependency included in its FATJAR.   
-  
 ## Documentation  
 
 https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk/latest/index.html  
