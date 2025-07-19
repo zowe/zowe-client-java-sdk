@@ -122,10 +122,11 @@ public class JobCancel {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         // generate full url request
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") + JobsConstants.RESOURCE +
                 JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
 
-        // generate json string body for the request
+        // generate JSON string body for the request
         final String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
 
         // To request asynchronous processing for this service (the default), set the "version" property to 1.0

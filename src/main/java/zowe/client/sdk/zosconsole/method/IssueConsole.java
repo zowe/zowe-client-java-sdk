@@ -118,6 +118,7 @@ public class IssueConsole {
         ValidateUtils.checkIllegalParameter(consoleName.isBlank(), "consoleName not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ConsoleConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(consoleName);
 
         final Map<String, String> issueMap = new HashMap<>();

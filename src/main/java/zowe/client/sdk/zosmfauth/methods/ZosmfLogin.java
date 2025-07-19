@@ -74,6 +74,7 @@ public class ZosmfLogin {
      */
     public ZosmfLoginResponse login() throws ZosmfRequestException {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosmfAuthConstants.RESOURCE;
 
         if (request == null) {

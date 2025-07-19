@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -98,6 +99,17 @@ public class IssueCommandTest {
                         .orElse("n/a")
                         .replaceAll("\\r", "")
                         .replaceAll("\\n", ""));
+    }
+
+    @Test
+    public void tstIssueCommandCmdResponseWithInvalidBasePathFailure() {
+        final ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("1", "1", "1", "1");
+        connection.setBasePath("consoles//");
+        // Create a mock request to verify URL
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        final IssueConsole issueCommand = new IssueConsole(connection, request);
+        assertThrows(IllegalArgumentException.class, () -> issueCommand.issueCommand("command"));
     }
 
     @Test

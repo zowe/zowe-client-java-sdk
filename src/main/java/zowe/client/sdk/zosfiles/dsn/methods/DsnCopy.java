@@ -140,6 +140,7 @@ public class DsnCopy {
                 .orElseThrow(() -> new IllegalArgumentException(toDataSetNameErrMsg));
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
         if (params.getToVolser().isPresent()) {
             url += "-(" + params.getToVolser().get() + ")/";

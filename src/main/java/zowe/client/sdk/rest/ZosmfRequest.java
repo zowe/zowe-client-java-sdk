@@ -332,6 +332,15 @@ public abstract class ZosmfRequest {
     }
 
     /**
+     * Retrieve the url string value
+     *
+     * @return string value
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
      * Check if the url is a valid http(s) url.
      *
      * @param url string value

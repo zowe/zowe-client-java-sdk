@@ -90,9 +90,10 @@ public class DsnList {
 
         final Map<String, String> headers = new HashMap<>();
         final List<Dataset> datasets = new ArrayList<>();
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_DS_LEVEL +
-                EncodeUtils.encodeURIComponent(dataSetName);
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID +
+                ZosFilesConstants.QUERY_DS_LEVEL + EncodeUtils.encodeURIComponent(dataSetName);
 
         if (params.getVolume().isPresent()) {
             url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
@@ -123,6 +124,7 @@ public class DsnList {
         final Map<String, String> headers = new HashMap<>();
         final List<Member> members = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
 

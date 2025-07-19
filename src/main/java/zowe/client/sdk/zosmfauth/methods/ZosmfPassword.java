@@ -81,6 +81,7 @@ public class ZosmfPassword {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosmfAuthConstants.RESOURCE;
 
         final Map<String, Object> passwordMap = new HashMap<>();

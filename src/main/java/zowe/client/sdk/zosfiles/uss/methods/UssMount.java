@@ -126,6 +126,7 @@ public class UssMount {
         }
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 

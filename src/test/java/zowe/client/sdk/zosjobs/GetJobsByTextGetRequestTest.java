@@ -19,10 +19,14 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetTextZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.zosjobs.methods.JobGet;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -57,6 +61,17 @@ public class GetJobsByTextGetRequestTest {
         final String results = getJobs.getSpoolContent("jobName", "jobId", 1);
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
         assertEquals("1\n2\n3\n", results);
+    }
+
+    @Test
+    public void tstGetSpoolContentCmdResponseWithInvalidBasePathFailure() {
+        final ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("1", "1", "1", "1");
+        connection.setBasePath("consoles//");
+        // Create a mock request to verify URL
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
+        final JobGet getJobs = new JobGet(connection, request);
+        assertThrows(IllegalArgumentException.class, () -> getJobs.getSpoolContent("jobName", "jobId", 1));
     }
 
     @Test

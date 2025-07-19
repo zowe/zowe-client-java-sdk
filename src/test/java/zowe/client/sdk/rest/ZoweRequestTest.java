@@ -180,4 +180,85 @@ public class ZoweRequestTest {
         assertNull(request.getHeaders().get("Authorization"));
     }
 
+    @Test
+    public void tstUrlConstructionWithBasePathSuccess() {
+        // Create a connection with a base path
+        final ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("test.host", "443", "user", "password");
+        connection.setBasePath("/custom/base/path");
+
+        // Create a mock request to verify URL
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
+
+        // Set URL for a hypothetical endpoint
+        final String RESOURCE_PATH = "/zosmf/resource/endpoint";
+        request.setUrl("https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+                RESOURCE_PATH);
+
+        // Verify the constructed URL contains the base path
+        final String expectedUrl = "https://test.host:443/custom/base/path/zosmf/resource/endpoint";
+        assertEquals(expectedUrl, request.getUrl());
+    }
+
+    @Test
+    public void tstUrlConstructionWithoutBasePathSuccess() {
+        // Create a connection without setting a base path
+        final ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("test.host", "443", "user", "password");
+
+        // Create a mock request to verify URL
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
+
+        // Set URL for a hypothetical endpoint
+        final String RESOURCE_PATH = "/zosmf/resource/endpoint";
+        request.setUrl("https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+                RESOURCE_PATH);
+
+        // Verify the constructed URL does not contain a base path
+        final String expectedUrl = "https://test.host:443/zosmf/resource/endpoint";
+        assertEquals(expectedUrl, request.getUrl());
+    }
+
+    @Test
+    public void tstUrlConstructionWithEmptyBasePathSuccess() {
+        // Create a connection and set an empty base path
+        final ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("test.host", "443", "user", "password");
+        connection.setBasePath("");
+
+        // Create a mock request to verify URL
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
+
+        // Set URL for a hypothetical endpoint
+        final String RESOURCE_PATH = "/zosmf/resource/endpoint";
+        request.setUrl("https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+                RESOURCE_PATH);
+
+        // Verify the constructed URL does not contain a base path
+        final String expectedUrl = "https://test.host:443/zosmf/resource/endpoint";
+        assertEquals(expectedUrl, request.getUrl());
+    }
+
+    @Test
+    public void tstUrlConstructionWithInvalidBasePathFailure() {
+        // Create a connection and set an empty base path
+        final ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("test.host", "443", "user", "password");
+        // set an invalid base path value
+        connection.setBasePath("frank//");
+
+        // Create a mock request to verify URL
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
+
+        // Set URL for a hypothetical endpoint
+        final String RESOURCE_PATH = "/zosmf/resource/endpoint";
+        assertThrows(IllegalArgumentException.class,
+                () -> request.setUrl("https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                        (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+                        RESOURCE_PATH));
+    }
+
 }

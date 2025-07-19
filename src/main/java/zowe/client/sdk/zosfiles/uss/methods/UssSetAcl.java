@@ -139,6 +139,7 @@ public class UssSetAcl {
                         params.getDeleteType().isEmpty(), "set, modify, delete, and delete type are all empty");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 

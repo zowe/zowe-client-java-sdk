@@ -93,7 +93,8 @@ public class JobDelete {
     public Response deleteCommon(final ModifyJobParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") + JobsConstants.RESOURCE +
                 JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
 
         final Map<String, String> headers = new HashMap<>();

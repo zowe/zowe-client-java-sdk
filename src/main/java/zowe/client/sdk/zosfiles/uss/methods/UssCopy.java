@@ -100,6 +100,7 @@ public class UssCopy {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 

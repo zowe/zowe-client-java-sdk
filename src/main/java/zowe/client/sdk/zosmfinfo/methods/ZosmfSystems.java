@@ -72,8 +72,9 @@ public class ZosmfSystems {
      * @author Frank Giordano
      */
     public ZosmfSystemsResponse get() throws ZosmfRequestException {
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosmfConstants.RESOURCE + ZosmfConstants.TOPOLOGY + ZosmfConstants.SYSTEMS;
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+                ZosmfConstants.RESOURCE + ZosmfConstants.TOPOLOGY + ZosmfConstants.SYSTEMS;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);

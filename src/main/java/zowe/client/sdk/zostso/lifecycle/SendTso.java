@@ -142,6 +142,7 @@ public class SendTso {
      */
     private ZosmfTsoResponse getDataFromTso(final String servletKey) throws ZosmfRequestException {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
 
         if (request == null) {
@@ -192,7 +193,8 @@ public class SendTso {
     public ZosmfTsoResponse sendDataToTsoCommon(final SendTsoParams commandParams) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;
 
         final TsoResponseMessage tsoResponseMessage = new TsoResponseMessage("0100", commandParams.getData());

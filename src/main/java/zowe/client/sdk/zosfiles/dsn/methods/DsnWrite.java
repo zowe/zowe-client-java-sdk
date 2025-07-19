@@ -97,6 +97,7 @@ public class DsnWrite {
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
