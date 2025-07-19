@@ -29,13 +29,9 @@ import zowe.client.sdk.zoslogs.response.ZosLogItem;
 import zowe.client.sdk.zoslogs.response.ZosLogReply;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Get z/OS log via z/OSMF restful api
