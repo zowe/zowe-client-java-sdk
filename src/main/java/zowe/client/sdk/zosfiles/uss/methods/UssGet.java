@@ -111,6 +111,7 @@ public class UssGet {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(fileNamePath)));
 

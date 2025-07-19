@@ -73,7 +73,8 @@ public class StartTso {
      * @author Frank Giordano
      */
     private String getResourcesQuery(final StartTsoParams params) {
-        String query = "https://" + connection.getHost() + ":" + connection.getZosmfPort();
+        String query = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "");
         query += TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "?";
         query += TsoConstants.PARAM_ACCT + "=" + params.account
                 .orElseThrow(() -> new IllegalStateException("account num not specified")) + "&";

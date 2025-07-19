@@ -88,7 +88,9 @@ public class ZosLog {
     public ZosLogReply issueCommand(final ZosLogParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String defaultUrl = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + RESOURCE;
+        final String defaultUrl = "https://" + connection.getHost() + ":" +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+                connection.getZosmfPort() + RESOURCE;
         final StringBuilder url = new StringBuilder(defaultUrl);
         final String customPattern = "yyyy-MM-dd'T'HH:mm'Z'";
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(customPattern);

@@ -92,6 +92,7 @@ public class UssList {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
 
         url.append("?path=").append(EncodeUtils.encodeURIComponent(FileUtils.validatePath(
@@ -157,6 +158,7 @@ public class UssList {
                 "no path or fsname specified");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS);
 
         params.getPath().ifPresent(path -> url.append("?path=").append(
