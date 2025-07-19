@@ -83,12 +83,7 @@ public class ZosConnectionFactory {
                                                     final String port,
                                                     final String certFilePath,
                                                     final String certPassword) {
-        return ZosConnectionFactory.createSslConnection(
-                host,
-                port,
-                certFilePath,
-                certPassword,
-                true);
+        return ZosConnectionFactory.createSslConnection(host, port, certFilePath, certPassword, true);
     }
 
     /**
