@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -31,14 +32,17 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for UssChangeOwner.
  *
  * @author James Kostrewski
- * @version 3.0
+ * @version 4.0
  */
 @SuppressWarnings("DataFlowIssue")
 public class UssChangeOwnerTest {
 
-    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
+    private final ZosConnection connection = ZosConnectionFactory
+            .createBasicConnection("1", "1", "1", "1");
+    private final ZosConnection tokenConnection = ZosConnectionFactory
+            .createTokenConnection("1", "1", new Cookie("hello=hello"));
     private PutJsonZosmfRequest mockJsonPutRequest;
-    private PutJsonZosmfRequest mockJsonPutRequestAuth;
+    private PutJsonZosmfRequest mockJsonPutRequestToken;
     private UssChangeOwner ussChangeOwner;
 
     @Before
@@ -47,14 +51,14 @@ public class UssChangeOwnerTest {
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
 
-        mockJsonPutRequestAuth = Mockito.mock(PutJsonZosmfRequest.class, withSettings().useConstructor(connection));
-        Mockito.when(mockJsonPutRequestAuth.executeRequest()).thenReturn(
+        mockJsonPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
+                withSettings().useConstructor(tokenConnection));
+        Mockito.when(mockJsonPutRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockJsonPutRequestAuth).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonPutRequestAuth).setStandardHeaders();
-        doCallRealMethod().when(mockJsonPutRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonPutRequestAuth).setCookie(any());
-        doCallRealMethod().when(mockJsonPutRequestAuth).getHeaders();
+        doCallRealMethod().when(mockJsonPutRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonPutRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockJsonPutRequestToken).setUrl(any());
+        doCallRealMethod().when(mockJsonPutRequestToken).getHeaders();
 
         ussChangeOwner = new UssChangeOwner(connection);
     }
@@ -69,21 +73,11 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstUssChangeOwnerToggleAuthSuccess() throws ZosmfRequestException {
-        final UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequestAuth);
-
-        connection.setCookie(new Cookie("hello=hello"));
+    public void tstUssChangeOwnerToggleTokenSuccess() throws ZosmfRequestException {
+        final UssChangeOwner ussChangeOwner = new UssChangeOwner(tokenConnection, mockJsonPutRequestToken);
         Response response = ussChangeOwner.change("/xxx/xx/xx", "user");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonPutRequestAuth.getHeaders().toString());
-        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        assertEquals(200, response.getStatusCode().orElse(-1));
-        assertEquals("success", response.getStatusText().orElse("n\\a"));
-
-        connection.setCookie(null);
-        response = ussChangeOwner.change("/xxx/xx/xx", "user");
-        assertEquals("{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonPutRequestAuth.getHeaders().toString());
+                mockJsonPutRequestToken.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));

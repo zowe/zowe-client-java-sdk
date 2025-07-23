@@ -12,6 +12,7 @@ APIs located in methods package.
 package zowe.client.sdk.examples.zosfiles.uss;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
@@ -24,14 +25,14 @@ import zowe.client.sdk.zosfiles.uss.types.CreateType;
  * Class example to test unix system services create command functionality via UssCreate class.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class UssCreateExp extends TstZosConnection {
 
     private static ZosConnection connection;
 
     /**
-     * Main method performs setup and method calls to test UssCreate
+     * The main method performs setup and method calls to test UssCreate
      *
      * @param args for main not used
      * @author Frank Giordano
@@ -40,7 +41,7 @@ public class UssCreateExp extends TstZosConnection {
         String fileNamePath = "/xxx/xx/xx";
         String dirNamePath = "/xxx/xx/xx";
 
-        connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         Response response = CreateFile(fileNamePath);
         System.out.println("status code = " +
                 (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
@@ -52,7 +53,7 @@ public class UssCreateExp extends TstZosConnection {
     /**
      * Create a Unix directory
      *
-     * @param value directory name with path to create
+     * @param value directory name with a path to create
      * @return Response object
      * @author Frank Giordano
      */
@@ -70,7 +71,7 @@ public class UssCreateExp extends TstZosConnection {
     /**
      * Create a Unix file
      *
-     * @param value file name with path to create
+     * @param value file name with a path to create
      * @return Response object
      * @author Frank Giordano
      */
@@ -104,14 +105,14 @@ import zowe.client.sdk.zosfiles.uss.methods.UssDelete;
  * Class example to test unix system services delete command functionality via UssDelete class.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class UssDeleteExp extends TstZosConnection {
 
     private static zowe.client.sdk.zosfiles.uss.methods.UssDelete ussDelete;
 
     /**
-     * Main method performs setup and method calls to test UssDelete
+     * The main method performs setup and method calls to test UssDelete
      *
      * @param args for main not used
      * @author Frank Giordano
@@ -120,7 +121,7 @@ public class UssDeleteExp extends TstZosConnection {
         String fileNamePath = "/xxx/xx/xx";
         String dirNamePath = "/xxx/xx/xx";
 
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         ussDelete = new UssDelete(connection);
         Response response = DeleteFile(fileNamePath);
         System.out.println("status code = " +
@@ -133,7 +134,7 @@ public class UssDeleteExp extends TstZosConnection {
     /**
      * Delete a UNIX file
      *
-     * @param value file name with path to delete
+     * @param value file name with a path to delete
      * @return Response object
      * @author Frank Giordano
      */
@@ -149,7 +150,7 @@ public class UssDeleteExp extends TstZosConnection {
     /**
      * Delete UNIX files and directories within recursively
      *
-     * @param value directory name with path to delete
+     * @param value directory name with a path to delete
      * @return Response object
      * @author Frank Giordano
      */
@@ -165,7 +166,7 @@ public class UssDeleteExp extends TstZosConnection {
 }
 `````
 
-**Create a file, add data to file, retrieve entire file content, and retrieve file content via filters and range**
+**Create a file, add data to the file, retrieve entire file content, and retrieve file content via filters and range**
 
 ````java
 package zowe.client.sdk.examples.zosfiles.uss;
@@ -186,7 +187,7 @@ import zowe.client.sdk.zosfiles.uss.types.CreateType;
  * Class example to showcase UssGet class functionality.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class UssGetExp extends TstZosConnection {
 
@@ -199,9 +200,9 @@ public class UssGetExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        String fileNamePath = "/xx/xx/xxx";  // where xxx is a file name the rest a directory path...
+        String fileNamePath = "/xx/xx/xxx";  // where xxx is a file name, the rest a directory path...
 
-        connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         getFileTextContentWithSearchFilterNoResults(fileNamePath);
         getFileTextContentWithSearchFilter(fileNamePath);
         getFileTextContent(fileNamePath);
@@ -209,14 +210,14 @@ public class UssGetExp extends TstZosConnection {
     }
 
     /**
-     * This method setups the file and its data for the rest of the test methods. As such, this method should
+     * This method sets up the file and its data for the rest of the test methods. As such, this method should
      * be called first in the main method.
      * <p>
      * Retrieve the contents of the fileNamePath value based on its search filter settings.
      * <p>
      * For this case, no search result is returned due to case-sensitive search.
      *
-     * @param fileNamePath file name with path
+     * @param fileNamePath file name with a path
      * @author Frank Giordano
      */
     private static void getFileTextContentWithSearchFilterNoResults(String fileNamePath) {
@@ -243,7 +244,7 @@ public class UssGetExp extends TstZosConnection {
      * This method performs a search against the fileNamePath value.
      * It returns data from the file from the starting point of the search value.
      *
-     * @param fileNamePath file name with path
+     * @param fileNamePath file name with a path
      * @author Frank Giordano
      */
     private static void getFileTextContentWithSearchFilter(String fileNamePath) {
@@ -263,7 +264,7 @@ public class UssGetExp extends TstZosConnection {
     /**
      * This method returns the entire text content of the fileNamePath value.
      *
-     * @param fileNamePath file name with path
+     * @param fileNamePath file name with a path
      * @author Frank Giordano
      */
     private static void getFileTextContent(String fileNamePath) {
@@ -282,7 +283,7 @@ public class UssGetExp extends TstZosConnection {
     /**
      * This method returns the last two records (lines) from the file name path value.
      *
-     * @param fileNamePath file name with path
+     * @param fileNamePath file name with a path
      * @author Frank Giordano
      */
     private static void getFileTextContentWithRange(String fileNamePath) {
@@ -323,14 +324,14 @@ import java.util.List;
  * Class example to showcase UssList class functionality.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class UssListExp extends TstZosConnection {
 
     private static ZosConnection connection;
 
     /**
-     * Main method performs setup and method calls to test UssList
+     * The main method performs setup and method calls to test UssList
      *
      * @param args for main not used
      * @author Frank Giordano
@@ -367,7 +368,7 @@ public class UssListExp extends TstZosConnection {
     /**
      * Perform a UNIX file list
      *
-     * @param value file name with path
+     * @param value file name with a path
      * @author Frank Giordano
      */
     private static void fileList(String value) {
@@ -396,12 +397,12 @@ import zowe.client.sdk.rest.Response;
  * Utility class containing helper method(s).
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class Util {
 
     /**
-     * Extract response phrase string value if any from Response object.
+     * Extract response phrase string value if any from a Response object.
      *
      * @param response object
      * @return string value
@@ -423,19 +424,17 @@ public class Util {
 package zowe.client.sdk.examples;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
-import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
-import zowe.client.sdk.teamconfig.service.KeyTarService;
-import zowe.client.sdk.teamconfig.service.TeamConfigService;
 
 /**
  * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class TstZosConnection {
 

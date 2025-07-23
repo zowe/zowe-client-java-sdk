@@ -18,7 +18,7 @@ import java.util.Optional;
  * z/OSMF synchronous most tso command response messages. See the z/OSMF REST API publication for complete details.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosmfTsoResponse {
 
@@ -67,6 +67,12 @@ public class ZosmfTsoResponse {
      */
     private final Optional<String> appData;
 
+    /**
+     * Private constructor used by the Builder
+     *
+     * @param builder Builder instance containing configuration
+     * @author Frank Giordano
+     */
     private ZosmfTsoResponse(final Builder builder) {
         this.servletKey = Optional.ofNullable(builder.servletKey);
         this.queueId = Optional.ofNullable(builder.queueId);

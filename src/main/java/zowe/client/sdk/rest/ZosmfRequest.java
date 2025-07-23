@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Base abstract class that conforms to http CRUD operations
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public abstract class ZosmfRequest {
 
@@ -50,6 +50,7 @@ public abstract class ZosmfRequest {
      */
     public static final String X_CSRF_ZOSMF_HEADER_VALUE = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
     /**
+     * /**
      * ZosConnection object
      */
     protected final ZosConnection connection;
@@ -62,31 +63,72 @@ public abstract class ZosmfRequest {
      */
     protected String url;
     /**
-     * Cookie object
+     * Cookie object representing a TOKEN
      */
-    protected Cookie cookie;
+    protected Cookie token;
 
     /**
      * ZosmfRequest constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public ZosmfRequest(final ZosConnection connection) {
         this.connection = connection;
-        this.setup();
+        this.initialize();
     }
 
     /**
-     * Setup to be used first in setting up the http request
+     * Initialize the unirest http request object based on an authentication type
      *
      * @author Frank Giordano
      */
-    private void setup() {
+    private void initialize() {
         Unirest.config().reset();
         Unirest.config().enableCookieManagement(false);
-        Unirest.config().verifySsl(false);
+        Unirest.config().verifySsl(connection.isSecure());
         this.setStandardHeaders();
+        this.token = null;
+        switch (connection.getAuthType()) {
+            case BASIC:
+                setupBasic();
+                break;
+            case TOKEN:
+                setupToken();
+                break;
+            case SSL:
+                setupSsl();
+                break;
+            default:
+                throw new IllegalStateException("no authentication type found");
+        }
+    }
+
+    /**
+     * Setup authentication BASIC type
+     *
+     * @author Frank Giordano
+     */
+    private void setupBasic() {
+        headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
+    }
+
+    /**
+     * Setup authentication TOKEN type
+     *
+     * @author Frank Giordano
+     */
+    private void setupToken() {
+        this.token = connection.getToken();
+    }
+
+    /**
+     * Setup authentication SSL type
+     *
+     * @author Frank Giordano
+     */
+    private void setupSsl() {
+        Unirest.config().clientCertificateStore(connection.getCertFilePath(), connection.getCertPassword());
     }
 
     /**
@@ -224,7 +266,7 @@ public abstract class ZosmfRequest {
      */
     public void setHeaders(final Map<String, String> headers) {
         this.headers.clear();
-        this.setStandardHeaders();
+        this.initialize();
         this.headers.putAll(headers);
     }
 
@@ -253,6 +295,15 @@ public abstract class ZosmfRequest {
     }
 
     /**
+     * Retrieve the url string value
+     *
+     * @return string value
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
      * Check if the url is a valid http(s) url.
      *
      * @param url string value
@@ -265,37 +316,6 @@ public abstract class ZosmfRequest {
             return false;
         } catch (URISyntaxException | MalformedURLException exception) {
             return true;
-        }
-    }
-
-    /**
-     * Set a cookie token for this request. This is optional for most requests and not needed.
-     * Setting the cookie with a non-null value will remove the HTTP Authorization request header.
-     * <p>
-     * Setting the cookie value as null afterward will revert/enable the HTTP Authorization
-     * request header for future requests.
-     *
-     * @param cookie object
-     * @author Frank Giordano
-     */
-    public void setCookie(final Cookie cookie) {
-        this.cookie = cookie;
-        this.toggleAuthenticationType();
-    }
-
-    /**
-     * Determine the authentication type (basic or token authorization) and switch accordingly.
-     *
-     * @author Frank Giordano
-     */
-    private void toggleAuthenticationType() {
-        if (this.cookie == null) {
-            LOG.debug("enable basic authorization");
-            headers.put("Authorization", "Basic " +
-                    EncodeUtils.encodeAuthComponent(connection));
-        } else {
-            LOG.debug("disable basic authorization");
-            headers.remove("Authorization");
         }
     }
 

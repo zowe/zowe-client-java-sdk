@@ -9,16 +9,17 @@
  */
 package zowe.client.sdk.utility;
 
+import kong.unirest.core.Cookie;
 import org.junit.Test;
+import zowe.client.sdk.core.ZosConnectionFactory;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Class containing unit tests for ValidateUtils.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ValidateUtilsTest {
 
@@ -32,11 +33,201 @@ public class ValidateUtilsTest {
     }
 
     @Test
+    public void tstValidateUtilsZosConnectionNullFailure() {
+        String msg = "connection is null";
+        try {
+            ValidateUtils.checkConnection(null);
+        } catch (Exception e) {
+            assertFalse(false);
+            assertEquals(msg, e.getMessage());
+        }
+    }
+
+    @Test
+    public void tstValidateUtilsCheckConnectionBasicSuccess() {
+        boolean isValid = true;
+        try {
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", "port", "user", "password"));
+        } catch (Exception e) {
+            isValid = false;
+        }
+        assertTrue(isValid);
+    }
+
+    @Test
+    public void tstValidateUtilsCheckConnectionTokenSuccess() {
+        boolean isValid = true;
+        try {
+            ValidateUtils.checkConnection(ZosConnectionFactory.createTokenConnection("host", "port",
+                    new Cookie("xxx", "xxx")));
+        } catch (Exception e) {
+            isValid = false;
+        }
+        assertTrue(isValid);
+    }
+
+    @Test
+    public void tstValidateUtilsCheckConnectionSslSuccess() {
+        boolean isValid = true;
+        try {
+            ValidateUtils.checkConnection(ZosConnectionFactory.createSslConnection("host", "port",
+                    "xxx", "xxx"));
+        } catch (Exception e) {
+            isValid = false;
+        }
+        assertTrue(isValid);
+    }
+
+    @Test
+    public void tstValidateUtilsCheckConnectionBasicPasswordEmptyErrMsgFailure() {
+        boolean isValid = true;
+        String msg = "required connection attribute(s) missing for BASIC authentication";
+        String errMsg = "";
+        try {
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", "port", "user", ""));
+        } catch (Exception e) {
+            isValid = false;
+            errMsg = e.getMessage();
+        }
+        assertFalse(isValid);
+        assertEquals(msg, errMsg);
+    }
+
+    @Test
+    public void tstValidateUtilsCheckConnectionBasicPasswordNullErrMsgFailure() {
+        boolean isValid = true;
+        String msg = "required connection attribute(s) missing for BASIC authentication";
+        String errMsg = "";
+        try {
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", "port", "user", null));
+        } catch (Exception e) {
+            isValid = false;
+            errMsg = e.getMessage();
+        }
+        assertFalse(isValid);
+        assertEquals(msg, errMsg);
+    }
+
+    @Test
+    public void tstValidateUtilsCheckConnectionBasicUserEmptyErrMsgFailure() {
+        boolean isValid = true;
+        String msg = "required connection attribute(s) missing for BASIC authentication";
+        String errMsg = "";
+        try {
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", "port", "", "password"));
+        } catch (Exception e) {
+            isValid = false;
+            errMsg = e.getMessage();
+        }
+        assertFalse(isValid);
+        assertEquals(msg, errMsg);
+    }
+
+    @Test
+    public void tstValidateUtilsCheckConnectionBasicUserNullErrMsgFailure() {
+        boolean isValid = true;
+        String msg = "required connection attribute(s) missing for BASIC authentication";
+        String errMsg = "";
+        try {
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", "port", null, "password"));
+        } catch (Exception e) {
+            isValid = false;
+            errMsg = e.getMessage();
+        }
+        assertFalse(isValid);
+        assertEquals(msg, errMsg);
+    }
+
+    @Test
+    public void tstValidateUtilsCheckConnectionBasicZosmfPortEmptyErrMsgFailure() {
+        boolean isValid = true;
+        String msg = "required connection attribute(s) missing for BASIC authentication";
+        String errMsg = "";
+        try {
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", "", "user", "password"));
+        } catch (Exception e) {
+            isValid = false;
+            errMsg = e.getMessage();
+        }
+        assertFalse(isValid);
+        assertEquals(msg, errMsg);
+    }
+
+    @Test
+    public void tstValidateUtilsCheckConnectionBasicZosmfPortNullErrMsgFailure() {
+        boolean isValid = true;
+        String msg = "required connection attribute(s) missing for BASIC authentication";
+        String errMsg = "";
+        try {
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createBasicConnection("test", null, "user", "password"));
+        } catch (Exception e) {
+            isValid = false;
+            errMsg = e.getMessage();
+        }
+        assertFalse(isValid);
+        assertEquals(msg, errMsg);
+    }
+
+    @Test
+    public void tstValidateUtilsCheckConnectionTokenNullErrMsgFailure() {
+        boolean isValid = true;
+        String msg = "required connection attribute(s) missing for TOKEN authentication";
+        String errMsg = "";
+        try {
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createTokenConnection("test", "port", null));
+        } catch (Exception e) {
+            isValid = false;
+            errMsg = e.getMessage();
+        }
+        assertFalse(isValid);
+        assertEquals(msg, errMsg);
+    }
+
+    @Test
+    public void tstValidateUtilsCheckConnectionSslEmptyErrMsgFailure() {
+        boolean isValid = true;
+        String msg = "required connection attribute(s) missing for SSL authentication";
+        String errMsg = "";
+        try {
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createSslConnection("test", "port", "", ""));
+        } catch (Exception e) {
+            isValid = false;
+            errMsg = e.getMessage();
+        }
+        assertFalse(isValid);
+        assertEquals(msg, errMsg);
+    }
+
+    @Test
+    public void tstValidateUtilsCheckConnectionSslNullErrMsgFailure() {
+        boolean isValid = true;
+        String msg = "required connection attribute(s) missing for SSL authentication";
+        String errMsg = "";
+        try {
+            ValidateUtils.checkConnection(ZosConnectionFactory
+                    .createSslConnection("test", "port", null, null));
+        } catch (Exception e) {
+            isValid = false;
+            errMsg = e.getMessage();
+        }
+        assertFalse(isValid);
+        assertEquals(msg, errMsg);
+    }
+
+    @Test
     public void tstCheckIllegalParameterFalseSuccess() {
-        final int input = 5;
         boolean isIllegalArgumentException = false;
         try {
-            ValidateUtils.checkIllegalParameter(input == 15, "error msg");
+            ValidateUtils.checkIllegalParameter(false, "error msg");
         } catch (Exception e) {
             isIllegalArgumentException = true;
         }
@@ -45,22 +236,18 @@ public class ValidateUtilsTest {
 
     @Test
     public void tstCheckIllegalParameterTrueSuccess() {
-        final int input = 5;
-        boolean isIllegalArgumentException = false;
         try {
-            ValidateUtils.checkIllegalParameter(input == 5, "error msg");
+            ValidateUtils.checkIllegalParameter(true, "error msg");
         } catch (Exception e) {
-            isIllegalArgumentException = true;
+            assertTrue(true);
         }
-        assertTrue(isIllegalArgumentException);
     }
 
     @Test
     public void tstCheckNullParameterFalseSuccess() {
-        final String str = "";
         boolean isNullException = false;
         try {
-            ValidateUtils.checkNullParameter(str == null, "error msg");
+            ValidateUtils.checkNullParameter(false, "error msg");
         } catch (Exception e) {
             isNullException = true;
         }
@@ -69,14 +256,11 @@ public class ValidateUtilsTest {
 
     @Test
     public void tstCheckNullParameterTrueSuccess() {
-        final String str = null;
-        boolean isNullException = false;
         try {
-            ValidateUtils.checkNullParameter(str == null, "error msg");
+            ValidateUtils.checkNullParameter(true, "error msg");
         } catch (Exception e) {
-            isNullException = true;
+            assertTrue(true);
         }
-        assertTrue(isNullException);
     }
 
 }

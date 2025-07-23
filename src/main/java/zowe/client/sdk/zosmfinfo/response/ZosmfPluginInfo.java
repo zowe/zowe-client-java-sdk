@@ -15,7 +15,7 @@ import java.util.Optional;
  * The plugin information structure for the plugin property of the z/OSMF info response
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosmfPluginInfo {
 

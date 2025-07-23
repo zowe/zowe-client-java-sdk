@@ -13,7 +13,7 @@ package zowe.client.sdk.teamconfig.keytar;
  * KeyTarConfig POJO to act as a container for a parsed Keytar json object
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class KeyTarConfig {
 

@@ -2,7 +2,7 @@
 
 Contains APIs to interact with retrieving z/OSMF information on z/OS (using z/OSMF jobs REST endpoints).
 
-APIs located in methods package.
+APIs are located in the methods package.
 
 ## API Examples
 
@@ -12,6 +12,7 @@ APIs located in methods package.
 package zowe.client.sdk.examples.zosmfInfo;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -24,20 +25,21 @@ import java.util.Arrays;
  * Class example to showcase ZosmfStatus class functionality.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosmfStatusExp extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * ZosmfStatus class functionality. This method perform API call to retrieve the status of the
+     * The main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * ZosmfStatus class functionality. This method performs API call to retrieve the status of the
      * running z/OSMF instance on the z/OS backend.
      *
      * @param args for main not used
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection(hostName, zosmfPort, userName, password);
         ZosmfStatus zosmfStatus = new ZosmfStatus(connection);
         ZosmfInfoResponse zosmfInfoResponse;
         try {
@@ -71,20 +73,21 @@ import java.util.Arrays;
  * Class example to showcase ZosmfSystems class functionality.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosmfSystemsExp extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
-     * ZosmfSystems class functionality. This method perform API call to retrieve the entire list of
+     * The main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * ZosmfSystems class functionality. This method performs API call to retrieve the entire list of
      * defined z/OSMF systems running on the z/OS backend.
      *
      * @param args for main not used
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection(hostName, zosmfPort, userName, password);
         ZosmfSystems zosmfSystems = new ZosmfSystems(connection);
         ZosmfSystemsResponse zosmfInfoResponse;
         try {
@@ -109,12 +112,12 @@ import zowe.client.sdk.rest.Response;
  * Utility class containing helper method(s).
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class Util {
 
     /**
-     * Extract response phrase string value if any from Response object.
+     * Extract response phrase string value if any from a Response object.
      *
      * @param response object
      * @return string value
@@ -136,19 +139,17 @@ public class Util {
 package zowe.client.sdk.examples;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
-import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
-import zowe.client.sdk.teamconfig.service.KeyTarService;
-import zowe.client.sdk.teamconfig.service.TeamConfigService;
 
 /**
  * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class TstZosConnection {
 
@@ -163,7 +164,8 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (ZosConnectionFactory.createBasicConnection(
+                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

@@ -13,7 +13,7 @@ package zowe.client.sdk.rest.type;
  * Zosmf Request CRUD types
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public enum ZosmfRequestType {
 
@@ -22,7 +22,7 @@ public enum ZosmfRequestType {
      */
     GET_JSON,
     /**
-     * Get TEXT type
+     * Get a TEXT type
      */
     GET_TEXT,
     /**
@@ -30,7 +30,7 @@ public enum ZosmfRequestType {
      */
     PUT_JSON,
     /**
-     * Put TEXT type
+     * Put a TEXT type
      */
     PUT_TEXT,
     /**
@@ -42,11 +42,11 @@ public enum ZosmfRequestType {
      */
     DELETE_TEXT,
     /**
-     * Post JSON type
+     * Post-JSON type
      */
     POST_JSON,
     /**
-     * Post TEXT type
+     * Post-TEXT type
      */
     POST_TEXT,
     /**

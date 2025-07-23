@@ -14,12 +14,12 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.CreateType;
 
 /**
- * Parameter container class for Unix System Services (USS) create file or directory object
+ * Parameter container class for Unix System Services (USS) create a file or directory object
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-create-unix-file-directory">z/OSMF REST API</a>
  *
  * @author James Kostrewski
- * @version 3.0
+ * @version 4.0
  */
 public class CreateParams {
 

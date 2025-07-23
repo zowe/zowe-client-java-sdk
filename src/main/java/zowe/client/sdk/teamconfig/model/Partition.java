@@ -17,7 +17,7 @@ import java.util.Map;
  * A partition can contain a separate complete Global Team Configuration based on an individual LPAR instance.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class Partition {
 
@@ -60,7 +60,7 @@ public class Partition {
     }
 
     /**
-     * Return list of Profiles
+     * Return a list of Profiles
      *
      * @return list of profiles
      */
@@ -78,7 +78,7 @@ public class Partition {
     }
 
     /**
-     * Return string value representing Partition object
+     * Return string value representing a Partition object
      *
      * @return string representation of Partition
      */

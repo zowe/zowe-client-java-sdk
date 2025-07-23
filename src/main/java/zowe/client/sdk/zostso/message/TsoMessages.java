@@ -15,7 +15,7 @@ import java.util.Optional;
  * Interface for TSO/E messages
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class TsoMessages {
 

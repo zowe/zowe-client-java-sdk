@@ -42,7 +42,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-list-zos-unix-filesystems">z/OSMF REST API zFS List</a>
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class UssList {
 
@@ -53,7 +53,7 @@ public class UssList {
     /**
      * UssList Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public UssList(final ZosConnection connection) {
@@ -65,7 +65,7 @@ public class UssList {
      * Alternative UssList constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -80,7 +80,7 @@ public class UssList {
     }
 
     /**
-     * Perform list of UNIX files operation
+     * Perform a list of UNIX files operation
      *
      * @param params ListParams object
      * @return list of UssItem objects
@@ -92,6 +92,7 @@ public class UssList {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
 
         url.append("?path=").append(EncodeUtils.encodeURIComponent(FileUtils.validatePath(
@@ -126,7 +127,6 @@ public class UssList {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
         request.setUrl(url.toString());
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         final Response response = request.executeRequest();
 
@@ -144,7 +144,7 @@ public class UssList {
     }
 
     /**
-     * Perform list of UNIX filesystems operation
+     * Perform a list of UNIX filesystems operation
      *
      * @param params ListZfsParams parameter object
      * @return list of UssZfsItem objects
@@ -158,6 +158,7 @@ public class UssList {
                 "no path or fsname specified");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS);
 
         params.getPath().ifPresent(path -> url.append("?path=").append(
@@ -173,7 +174,6 @@ public class UssList {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
         request.setUrl(url.toString());
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         final Response response = request.executeRequest();
 

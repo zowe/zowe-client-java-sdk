@@ -2,7 +2,7 @@
 
 Contains APIs to interact with datasets and members files on z/OS (using z/OSMF files REST endpoints).
 
-APIs located in methods package.
+APIs are located in the methods package.
 
 ## API Examples
 
@@ -12,6 +12,7 @@ APIs located in methods package.
 package zowe.client.sdk.examples.zosfiles.dsn;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
@@ -24,12 +25,12 @@ import zowe.client.sdk.zosfiles.dsn.methods.DsnCopy;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnCopyExp extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * DsnCopy functionality.
      *
      * @param args for main not used
@@ -38,7 +39,8 @@ public class DsnCopyExp extends TstZosConnection {
     public static void main(String[] args) {
         String fromDataSetName = "xxx";
         String toDataSetName = "xxx";
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection(hostName, zosmfPort, userName, password);
         copyDataset(connection, fromDataSetName, toDataSetName);
         copyDatasetByCopyParams(connection, fromDataSetName, toDataSetName);
         fromDataSetName = "xxx";  // specify a partition dataset only no member
@@ -132,7 +134,7 @@ public class DsnCopyExp extends TstZosConnection {
         Response response;
         try {
             DsnCopy dsnCopy = new DsnCopy(connection);
-            // 'replace' here will be true by default if not specified in builder.
+            // 'replace' here will be true by default if not specified in the builder.
             CopyParams copyParams = new CopyParams.Builder().fromDataSet(fromDataSetName)
                     .toDataSet(toDataSetName)
                     .copyAllMembers(true).build();
@@ -167,7 +169,7 @@ import zowe.client.sdk.zosfiles.dsn.methods.DsnCreate;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnCreateExp extends TstZosConnection {
 
@@ -182,7 +184,7 @@ public class DsnCreateExp extends TstZosConnection {
      */
     public static void main(String[] args) {
         String dataSetName = "xxx";
-        connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         createPartitionDataSet(dataSetName);
         dataSetName = "xxx";
         createSequentialDataSet(dataSetName);
@@ -336,7 +338,7 @@ import zowe.client.sdk.zosfiles.dsn.response.Dataset;
  * Class example to showcase retrieval of dataset information functionality via DsnGet class.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnGetInfoExp extends TstZosConnection {
 
@@ -349,7 +351,8 @@ public class DsnGetInfoExp extends TstZosConnection {
      */
     public static void main(String[] args) {
         String dataSetName = "xxx";
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection(hostName, zosmfPort, userName, password);
         System.out.println(DsnGetInfoExp.getDataSetInfo(connection, dataSetName));
     }
 
@@ -391,7 +394,7 @@ import zowe.client.sdk.zosfiles.dsn.methods.DsnDelete;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnDeleteExp extends TstZosConnection {
 
@@ -407,7 +410,7 @@ public class DsnDeleteExp extends TstZosConnection {
     public static void main(String[] args) {
         String dataSetName = "xxx";
         String member = "xxx";
-        connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         deleteDataSet(dataSetName);
         deleteMember(dataSetName, member);
     }
@@ -435,7 +438,7 @@ public class DsnDeleteExp extends TstZosConnection {
     /**
      * Delete a partition dataset member
      *
-     * @param dataSetName name of a dataset where member should be located (e.g. 'DATASET.LIB')
+     * @param dataSetName name of a dataset where the member should be located (e.g. 'DATASET.LIB')
      * @param member      name of member to delete
      * @author Frank Giordano
      */
@@ -478,12 +481,12 @@ import java.io.StringWriter;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnGetExp extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * DsnGet class functionality.
      *
      * @param args for main not used
@@ -494,7 +497,8 @@ public class DsnGetExp extends TstZosConnection {
         String datasetSeqName = "xxx";
         String memberName = "xxx";
         DownloadParams params = new DownloadParams.Builder().build();
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection(hostName, zosmfPort, userName, password);
         DsnGetExp.downloadDsnMember(connection, datasetName, memberName, params);
         DsnGetExp.downloadDsnSequential(connection, datasetSeqName, params);
     }
@@ -599,12 +603,12 @@ import java.util.List;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnListExp extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * DsnList functionality.
      *
      * @param args for main not used
@@ -720,14 +724,14 @@ import zowe.client.sdk.zosfiles.dsn.methods.DsnWrite;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnWriteExp extends TstZosConnection {
 
     private static ZosConnection connection;
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * DsnWrite functionality.
      *
      * @param args for main not used
@@ -737,7 +741,7 @@ public class DsnWriteExp extends TstZosConnection {
         String dataSetName = "xxx";
         String datasetSeqName = "xxx";
         String member = "xxx";
-        connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         var content = "NEW CONTENT\nTHE SECOND LINE UPDATED";
         DsnWriteExp.writeToDsnMember(dataSetName, member, content);
         DsnWriteExp.writeToDsnSequential(datasetSeqName, content);
@@ -746,7 +750,7 @@ public class DsnWriteExp extends TstZosConnection {
     /**
      * Write to the given member name specified replacing its content. If it does exist, it will be created.
      *
-     * @param dataSetName name of a dataset where member should be located (e.g. 'DATASET.LIB')
+     * @param dataSetName name of a dataset where the member should be located (e.g. 'DATASET.LIB')
      * @param member      name of member to write
      * @param content     content for write
      * @author Frank Giordano
@@ -798,12 +802,12 @@ import zowe.client.sdk.rest.Response;
  * Utility class containing helper method(s).
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class Util {
 
     /**
-     * Extract response phrase string value if any from Response object.
+     * Extract response phrase string value if any from a Response object.
      *
      * @param response object
      * @return string value
@@ -826,19 +830,17 @@ Connection setup
 package zowe.client.sdk.examples;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
-import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
-import zowe.client.sdk.teamconfig.service.KeyTarService;
-import zowe.client.sdk.teamconfig.service.TeamConfigService;
 
 /**
  * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class TstZosConnection {
 
@@ -853,7 +855,8 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (ZosConnectionFactory.createBasicConnection(
+                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

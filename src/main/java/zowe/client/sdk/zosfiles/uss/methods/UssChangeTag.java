@@ -35,7 +35,7 @@ import java.util.Map;
  *
  * @author James Kostrewski
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class UssChangeTag {
 
@@ -46,7 +46,7 @@ public class UssChangeTag {
     /**
      * UssChangeTag Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author James Kostrewski
      */
     public UssChangeTag(final ZosConnection connection) {
@@ -58,7 +58,7 @@ public class UssChangeTag {
      * Alternative UssChangeTag constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author James Kostrewski
      */
@@ -130,7 +130,7 @@ public class UssChangeTag {
      * Change tag of a UNIX file request driven by ChangeTagParams object settings
      *
      * @param fileNamePath file name with a path
-     * @param params       parameters for the change tag request, see ChangeTagParams object
+     * @param params       for parameters for the change tag request, see ChangeTagParams object
      * @return Response Object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
@@ -142,6 +142,7 @@ public class UssChangeTag {
         ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "action not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(fileNamePath));
 
@@ -159,7 +160,6 @@ public class UssChangeTag {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(changeTagMap).toString());
 
         return request.executeRequest();

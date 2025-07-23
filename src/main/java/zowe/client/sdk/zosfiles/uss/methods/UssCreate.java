@@ -35,7 +35,7 @@ import java.util.Map;
  *
  * @author James Kostrewski
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class UssCreate {
 
@@ -46,7 +46,7 @@ public class UssCreate {
     /**
      * UssCreate Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author James Kostrewski
      */
     public UssCreate(final ZosConnection connection) {
@@ -58,7 +58,7 @@ public class UssCreate {
      * Alternative UssCreate constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author James Kostrewski
      * @author Frank Giordano
@@ -77,7 +77,7 @@ public class UssCreate {
      * Perform UNIX create a file or directory name request driven by CreateParams object settings.
      *
      * @param targetPath the name of the file or directory you are going to create
-     * @param params     create response parameters, see CreateParams object
+     * @param params     to create response parameters, see CreateParams object
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
@@ -90,6 +90,7 @@ public class UssCreate {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
@@ -101,7 +102,6 @@ public class UssCreate {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(createMap).toString());
 
         return request.executeRequest();
@@ -135,6 +135,7 @@ public class UssCreate {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(fileSystemName));
         params.getTimeout().ifPresent(timeout -> url.append("?timeout=").append(timeout));
@@ -167,7 +168,6 @@ public class UssCreate {
 
         request.setHeaders(headers);
         request.setUrl(url.toString());
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(createZfsMap).toString());
 
         return request.executeRequest();

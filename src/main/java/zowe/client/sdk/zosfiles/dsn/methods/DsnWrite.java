@@ -25,7 +25,7 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnWrite {
 
@@ -36,7 +36,7 @@ public class DsnWrite {
     /**
      * DsnWrite Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Leonid Baranov
      */
     public DsnWrite(final ZosConnection connection) {
@@ -48,7 +48,7 @@ public class DsnWrite {
      * Alternative DsnWrite constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -97,6 +97,7 @@ public class DsnWrite {
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
@@ -104,7 +105,6 @@ public class DsnWrite {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(content);
 
         return request.executeRequest();

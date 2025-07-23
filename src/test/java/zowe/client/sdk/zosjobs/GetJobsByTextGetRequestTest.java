@@ -16,12 +16,17 @@ import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetTextZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.zosjobs.methods.JobGet;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -31,25 +36,27 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for JobGet.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class GetJobsByTextGetRequestTest {
 
-    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
+    private final ZosConnection connection = ZosConnectionFactory
+            .createBasicConnection("1", "1", "1", "1");
+    private final ZosConnection tokenConnection = ZosConnectionFactory
+            .createTokenConnection("1", "1", new Cookie("hello=hello"));
     private GetTextZosmfRequest mockTextGetRequest;
-    private JobGet getJobs;
 
     @Before
     public void init() {
         mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
-        getJobs = new JobGet(connection);
-        Whitebox.setInternalState(getJobs, "request", mockTextGetRequest);
     }
 
     @Test
     public void tstGetSpoolContentByIdSuccess() throws ZosmfRequestException {
+        JobGet getJobs = new JobGet(connection);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response("1\n2\n3\n", 200, "success"));
+        Whitebox.setInternalState(getJobs, "request", mockTextGetRequest);
 
         final String results = getJobs.getSpoolContent("jobName", "jobId", 1);
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
@@ -57,30 +64,32 @@ public class GetJobsByTextGetRequestTest {
     }
 
     @Test
-    public void tstGetSpoolContentByIdToggleAuthSuccess() throws ZosmfRequestException {
-        GetTextZosmfRequest mockTextGetRequestAuth = Mockito.mock(GetTextZosmfRequest.class,
-                withSettings().useConstructor(connection));
-        Whitebox.setInternalState(getJobs, "request", mockTextGetRequestAuth);
-        Mockito.when(mockTextGetRequestAuth.executeRequest()).thenReturn(
-                new Response("1\n2\n3\n", 200, "success"));
-        doCallRealMethod().when(mockTextGetRequestAuth).setHeaders(anyMap());
-        doCallRealMethod().when(mockTextGetRequestAuth).setStandardHeaders();
-        doCallRealMethod().when(mockTextGetRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockTextGetRequestAuth).setCookie(any());
-        doCallRealMethod().when(mockTextGetRequestAuth).getHeaders();
+    public void tstGetSpoolContentCmdResponseWithInvalidBasePathFailure() {
+        final ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("1", "1", "1", "1");
+        connection.setBasePath("consoles//");
+        // Create a mock request to verify URL
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
+        final JobGet getJobs = new JobGet(connection, request);
+        assertThrows(IllegalArgumentException.class, () -> getJobs.getSpoolContent("jobName", "jobId", 1));
+    }
 
-        connection.setCookie(new Cookie("hello=hello"));
+    @Test
+    public void tstGetSpoolContentByIdToggleTokenSuccess() throws ZosmfRequestException {
+        JobGet getJobs = new JobGet(tokenConnection);
+        GetTextZosmfRequest mockTextGetRequestToken = Mockito.mock(GetTextZosmfRequest.class,
+                withSettings().useConstructor(tokenConnection));
+        Whitebox.setInternalState(getJobs, "request", mockTextGetRequestToken);
+        Mockito.when(mockTextGetRequestToken.executeRequest()).thenReturn(
+                new Response("1\n2\n3\n", 200, "success"));
+        doCallRealMethod().when(mockTextGetRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockTextGetRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockTextGetRequestToken).setUrl(any());
+        doCallRealMethod().when(mockTextGetRequestToken).getHeaders();
+
         String results = getJobs.getSpoolContent("jobName", "jobId", 1);
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=text/plain; charset=UTF-8}",
-                mockTextGetRequestAuth.getHeaders().toString());
-        assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
-        assertEquals("1\n2\n3\n", results);
-
-        connection.setCookie(null);
-        results = getJobs.getSpoolContent("jobName", "jobId", 1);
-        final String expectedResp = "{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, " +
-                "Content-Type=text/plain; charset=UTF-8}";
-        Assertions.assertEquals(expectedResp, mockTextGetRequestAuth.getHeaders().toString());
+                mockTextGetRequestToken.getHeaders().toString());
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
         assertEquals("1\n2\n3\n", results);
     }

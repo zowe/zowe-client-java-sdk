@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.utility;
 
+import zowe.client.sdk.core.AuthType;
 import zowe.client.sdk.core.SshConnection;
 import zowe.client.sdk.core.ZosConnection;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
  * Utility class contains helper methods for validation processing
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class ValidateUtils {
 
@@ -32,7 +33,7 @@ public final class ValidateUtils {
     /**
      * Check connection for validity.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @throws IllegalStateException with invalid connection object message
      * @author Frank Giordano
      */
@@ -40,17 +41,25 @@ public final class ValidateUtils {
         if (connection == null) {
             throw new IllegalStateException("connection is null");
         }
-        if (connection.getCookie().isEmpty()) {
+        String errMsg = "required connection attribute(s) missing for " + connection.getAuthType() + " authentication";
+        if (connection.getAuthType().equals(AuthType.BASIC)) {
             if (connection.getZosmfPort() == null || connection.getHost() == null ||
                     connection.getPassword() == null || connection.getUser() == null ||
                     connection.getZosmfPort().isBlank() || connection.getHost().isBlank() ||
                     connection.getPassword().isBlank() || connection.getUser().isBlank()) {
-                throw new IllegalStateException("one or more connection attribute not defined properly");
+                throw new IllegalStateException(errMsg);
             }
-        } else {
+        } else if (connection.getAuthType().equals(AuthType.TOKEN)) {
             if (connection.getZosmfPort() == null || connection.getHost() == null ||
-                    connection.getZosmfPort().isBlank() || connection.getHost().isBlank()) {
-                throw new IllegalStateException("hostname or port connection attribute not defined properly");
+                    connection.getToken() == null || connection.getZosmfPort().isBlank() ||
+                    connection.getHost().isBlank()) {
+                throw new IllegalStateException(errMsg);
+            }
+        } else if (connection.getAuthType().equals(AuthType.SSL)) {
+            if (connection.getZosmfPort() == null || connection.getHost() == null ||
+                    connection.getCertFilePath() == null || connection.getZosmfPort().isBlank() ||
+                    connection.getHost().isBlank() || connection.getCertFilePath().isBlank()) {
+                throw new IllegalStateException(errMsg);
             }
         }
     }
@@ -59,7 +68,7 @@ public final class ValidateUtils {
      * Check for state of parameter
      *
      * @param check Check for true or false value
-     * @param msg   message to display if check is true
+     * @param msg   message to display if the check is true
      * @throws IllegalArgumentException with message
      * @author Frank Giordano
      */
@@ -74,7 +83,7 @@ public final class ValidateUtils {
      * Check for null parameter
      *
      * @param check check for true or false value
-     * @param msg   message to display if check is true
+     * @param msg   message to display if the check is true
      * @throws IllegalArgumentException with message
      * @author Frank Giordano
      */
@@ -88,7 +97,7 @@ public final class ValidateUtils {
     /**
      * Check SSH connection for validity.
      *
-     * @param connection connection information, see SshConnection object
+     * @param connection for connection information, see SshConnection object
      * @throws IllegalStateException with the message "Connection data not setup properly"
      * @author Frank Giordano
      */

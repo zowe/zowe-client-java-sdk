@@ -18,7 +18,7 @@ import java.util.Optional;
  * This interface defines the options that can be sent into the list data set function
  *
  * @author Leonid Baranov
- * @version 3.0
+ * @version 4.0
  */
 public class ListParams {
 

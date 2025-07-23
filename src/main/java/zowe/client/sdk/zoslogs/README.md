@@ -3,7 +3,7 @@
 Contains API to interact with retrieving z/OS log (OPERLOG or SYSLOG) information on z/OS (using z/OSMF logs REST
 endpoints).
 
-API located in method package.
+API located in the method package.
 
 ## API Examples
 
@@ -13,6 +13,7 @@ API located in method package.
 package zowe.client.sdk.examples.zoslogs;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -26,22 +27,23 @@ import zowe.client.sdk.zoslogs.types.HardCopyType;
  * Class example to showcase ZosLog class functionality.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosLogExp extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * z/OS SYSLOG retrieval functionality via ZosLog class.
      *
      * @param args for main not used
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection(hostName, zosmfPort, userName, password);
         ZosLog zosLog = new ZosLog(connection);
         ZosLogParams zosLogParams = new ZosLogParams.Builder()
-                .startTime("2022-11-27T05:06:20Z")
+                .startTime("2022-11-27T05:06Z")
                 .hardCopy(HardCopyType.SYSLOG)
                 .timeRange("24h")
                 .direction(DirectionType.BACKWARD)
@@ -84,12 +86,12 @@ import zowe.client.sdk.rest.Response;
  * Utility class containing helper method(s).
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class Util {
 
     /**
-     * Extract response phrase string value if any from Response object.
+     * Extract response phrase string value if any from a Response object.
      *
      * @param response object
      * @return string value
@@ -111,19 +113,17 @@ public class Util {
 package zowe.client.sdk.examples;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
-import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
-import zowe.client.sdk.teamconfig.service.KeyTarService;
-import zowe.client.sdk.teamconfig.service.TeamConfigService;
 
 /**
  * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class TstZosConnection {
 
@@ -138,7 +138,8 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (ZosConnectionFactory.createBasicConnection(
+                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

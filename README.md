@@ -12,20 +12,20 @@ Copyright Contributors to the Zowe Project.
 [![Maven Central](https://img.shields.io/maven-central/v/org.zowe.client.java.sdk/zowe-client-java-sdk.svg?label=Maven%20Central)](https://central.sonatype.com/search?q=org.zowe.client.java.sdk&smo=true)
 [![javadoc](https://javadoc.io/badge2/org.zowe.client.java.sdk/zowe-client-java-sdk/javadoc.svg)](https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk)
 
-This project is a subproject of Zowe, focusing on modernizing mainframe experience. Zowe is a project hosted by the Open Mainframe Project, a Linux Foundation project.
+This project is a subproject of Zowe, focusing on modernizing the mainframe experience. Zowe is a project hosted by the Open Mainframe Project, a Linux Foundation project.
 
 The Java SDK lets you leverage the underlying z/OSMF REST APIs on a z/OS system to build client applications and scripts that interface with your z/OS instance seamlessly.
 
 For instance, one API package provides the ability to upload and download z/OS data sets. You can leverage that package to rapidly build a client application that interacts with data sets.
 
-The Java SDK joins an existing community of other language-specific SDKs. It provides the Java community similar capabilities based on the NodeJS SDK. 
+The Java SDK joins an existing community of other language-specific SDKs. It provides the Java community with similar capabilities based on the NodeJS SDK. 
   
 This SDK may differ from some others with the JobMonitor class adding prebuilt functionality for automation tasks.  
   
-Issues worked on documenting main feature set provided can be viewed within the following MVP issues:  
+Issues worked on documenting the main feature set provided can be viewed within the following MVP issues:  
 [#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219) [#3](https://github.com/zowe/zowe-client-java-sdk/issues/281) [#4](https://github.com/zowe/zowe-client-java-sdk/issues/338)  
   
-Prebuilt API services located in the following packages/classes:  
+Prebuilt API services are located in the following packages/classes:  
 
 zowe.client.sdk.zosconsole.method  
   
@@ -90,15 +90,15 @@ zowe.client.sdk.zosuss.method
           
 ## TeamConfig Package  
   
-The TeamConfig package provides API methods to retrieve a profile section from Zowe Global Team Configuration with keytar information to help perform connection processing without hard coding username and password. Keytar represents credentials stored securely on your computer when performing the Zowe global initialize [command](https://docs.zowe.org/stable/user-guide/cli-using-initializing-team-configuration/) which prompts you for username and password.   
+The TeamConfig package provides API methods to retrieve a profile section from Zowe Global Team Configuration with keytar information to help perform connection processing without a hard coding username and password. Keytar represents credentials stored securely on your computer when performing the Zowe Global Initialize [command](https://docs.zowe.org/stable/user-guide/cli-using-initializing-team-configuration/) which prompts you for username and password.   
   
 TeamConfig class only supports Zowe Global Team Configuration provided by Zowe V2.  
   
-If you have Zowe CLI on your system with Global Team Configuration initialized, you can use TeamConfig API methods to retrieve a profile type which will include the secure username and password information stored in our OS credential store manager.   
+With Zowe CLI and Global Team Configuration initialized, you can use TeamConfig API methods to retrieve a profile type which will include the secure username and password information stored in our OS credential store manager.   
   
-You can use this information to create a dynamic ZosConnection object to perform zosmf authentication for the all the other packages. This avoids the need to hard code values.    
+You can use this information to create a dynamic ZosConnection object to perform zosmf authentication for all the other packages. This avoids the need to hard code values.    
   
-See following package/class:  
+See the following package/class:  
   
 zowe.client.sdk.teamconfig  
     
@@ -111,11 +111,11 @@ Whenever you encounter a JSON parse error for reading the Zowe Team Configuratio
   
 SDK release version 2 uses Unirest 3.x Http functionality.  
   
-SDK release version 3 and above uses Unirest 4.x which removes the dependency on Apache Commons and provides cookie processing for Web token authentication.   
+SDK release version 3 and above uses Unirest 4.x, which removes the dependency on Apache Commons and provides token processing for Web TOKEN authentication.   
    
-Unirest's library provides the ability to retrieve IBM z/OSMF JSON error document.  
+Unirest's library provides the ability to retrieve an IBM z/OSMF JSON error document.  
   
-For example, the following http GET request will result in a HTTP 500 error:  
+For example, the following http GET request will result in an HTTP 500 error:  
   
     https://xxxxxxx.xxxxx.net:xxxx/zosmf/restfiles/ds?
   
@@ -125,20 +125,44 @@ and the JSON error report document body response is:
 
 ## Authenticating to z/OSMF
   
-Since the release of the SDK, the authentication of each REST API call is done with Basic authentication.
+Since the release of the SDK, the authentication of each REST API call is done with BASIC authentication.
   
-With SDK release version 3, it adds the option to perform authentication with Web token authentication.  
+With SDK release version 3, Web TOKEN authentication was added.   
   
-Basic authentication means that the client program provides a z/OS user ID and password in the header of a request. User ID and password are defined by the end user within the ZosConnection object and the SDK takes care of performing basic authentication with each request.       
+The current version 4, SSL authentication from a certificate file was added.  
   
-With SDK release version 3, it introduces the zosmfauth package. ZosmfAuth provides an API (zosmfLogin) to obtain authentication tokens (a JSON Web and an LTPA token) on the user's authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA token(s).      
+With three types of authentication available, the AuthType enum class was introduced to represent each type.    
   
-Web token support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web Token support in the IBM z/OS Management Facility Configuration Guide.  
+This enum is used to send it to the ZosConnection constructor denoting the type of authentication to perform.  
+
+For BASIC, the following ZosConnection object is specified to perform BASIC authentication:  
   
-To enable Web token authentication, you need to set a token value within the ZosConnection class "cookie" member. Once set, each request is performed with the token value within the cookie http payload. At this point, Basic authentication is disabled.  
+    ZosConnection connection = ZosConnectionFactory.createBasicConnection("host", "zosmfPort", "user", "password");
   
-To enable Basic authentication after setting a cookie, you will need to set the cookie value as null.  
-     
+Basic authentication means that the http request contains a BASIC header representing the username and password encrypted.   
+  
+For web TOKEN, the following ZosConnection object is specified:  
+  
+    ZosConnection connection = ZosConnectionFactory.createTokenConnection("host", "port", new Cookie("xxx", "xxx")));
+  
+With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve authentication tokens (a JSON Web and an LTPA TOKEN) on a BASIC authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA tokens.  
+  
+See the README.MD in the zosmfauth package for code examples on retrieving an initial token and then using it for further requests without needing user and password information.  
+  
+Web TOKEN support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web TOKEN support in the IBM z/OS Management Facility Configuration Guide.  
+
+See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.     
+  
+For SSL, the following ZosConnection object is specified:  
+
+    ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port", "c:\file.p12", "certpassword"));
+  
+The SDK supports .p12 file format that represents a key-store that houses a self-signed certificate.  
+  
+In the example above, for certFilePath specify a path with a file name representing the location and file name of the .p12 file.  
+  
+For certPassword, specify the paraphrase/password used for the key store.
+  
 See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
   
 ## Requirements  
@@ -182,10 +206,10 @@ The following maven command at the root prompt of the project will produce zowe-
   
 ## Logger 
     
-For logging, you will need to implement SLF4J binding and logging framework dependencies. 
+For logging, the SDK provides SLF4J within its FATJAR. 
+
+You will need to plug into SLF4J by implementing a logging framework of your choice for your project. 
     
-The SDK does not provide SLF4J or any logging dependency included in its FATJAR.   
-  
 ## Documentation  
 
 https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk/latest/index.html  
@@ -205,9 +229,49 @@ For a Maven project add the SDK as a dependency by updating your `pom.xml` as fo
     <dependency>
         <groupId>org.zowe.client.java.sdk</groupId>
         <artifactId>zowe-client-java-sdk</artifactId>
-        <version>3.0.5</version>
+        <version>4.0.1</version>
     </dependency>
 
 For a Gradle project add the SDK as a dependency by updating your `build.gradle` as follows:
 
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '3.0.5'  
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '4.0.1'  
+  
+## Publishing to Maven Central  
+  
+The following documents the steps taken to publish a new release of this project to maven central:
+  
+- Start the following process on your machine:
+  
+      gpg-agent --daemon
+  
+  
+- Execute the following maven build and deploy command at the project's root directory:
+  
+      mvn clean deploy -Pci-cd
+  
+  You will be prompted for a passphrase for uploading.
+  
+   
+- Login to the following website:
+  
+      https://central.sonatype.com/
+  
+- Navigate to the Publish section within the website.
+
+    
+- In Publishing Settings, see the Deployments section and click on the Publish button for the release that was uploaded. 
+   
+NOTE: For the publishing to work fully, you will need to add a server section in your maven settings.xml file that contains an id of central with username and password values.  
+    
+The username and password values are generated by maven central repository as a portal token for publishing and specified within the server section of settings.xml.  
+  
+See https://central.sonatype.org/publish/generate-portal-token/  
+  
+See the settings.xml example described in the next section.   
+    
+## Maven settings.xml  
+  
+This project contains maven plugins within the pom.xml. Some of these require the maven2 repository. As such, the settings.xml file for your maven setup needs to have a maven2 repository specified.  
+  
+Within the project's root directory, a settings_example.xml is available as a template for this project usage within your local development environment.  
+  

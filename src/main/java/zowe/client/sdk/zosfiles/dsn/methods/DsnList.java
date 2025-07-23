@@ -34,7 +34,7 @@ import java.util.*;
  * Provides list dataset and member functionality
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnList {
 
@@ -47,7 +47,7 @@ public class DsnList {
     /**
      * DsnList constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public DsnList(final ZosConnection connection) {
@@ -59,7 +59,7 @@ public class DsnList {
      * Alternative DsnList constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -90,9 +90,10 @@ public class DsnList {
 
         final Map<String, String> headers = new HashMap<>();
         final List<Dataset> datasets = new ArrayList<>();
-        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_DS_LEVEL +
-                EncodeUtils.encodeURIComponent(dataSetName);
+        String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID +
+                ZosFilesConstants.QUERY_DS_LEVEL + EncodeUtils.encodeURIComponent(dataSetName);
 
         if (params.getVolume().isPresent()) {
             url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
@@ -123,6 +124,7 @@ public class DsnList {
         final Map<String, String> headers = new HashMap<>();
         final List<Member> members = new ArrayList<>();
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
 
@@ -227,7 +229,7 @@ public class DsnList {
         }
         request.setHeaders(headers);
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
+
         return request.executeRequest();
     }
 

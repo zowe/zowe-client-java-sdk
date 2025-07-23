@@ -15,21 +15,20 @@ import kong.unirest.core.Unirest;
 import kong.unirest.core.UnirestException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Http delete operation with Json content type
+ * Http delete operation with JSON content type
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DeleteJsonZosmfRequest extends ZosmfRequest {
 
     /**
      * DeleteJsonZosmfRequest constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public DeleteJsonZosmfRequest(final ZosConnection connection) {
@@ -48,7 +47,7 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         HttpResponse<JsonNode> reply;
         try {
-            reply = cookie != null ? Unirest.delete(url).cookie(cookie).headers(headers).asJson() :
+            reply = token != null ? Unirest.delete(url).cookie(token).headers(headers).asJson() :
                     Unirest.delete(url).headers(headers).asJson();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
@@ -74,7 +73,6 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
      */
     @Override
     public void setStandardHeaders() {
-        headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
         headers.put("Content-Type", "application/json");
         headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }

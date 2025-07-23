@@ -34,7 +34,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-unmount-unix-file-system">z/OSMF REST UNMOUNT API</a>
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class UssMount {
 
@@ -45,7 +45,7 @@ public class UssMount {
     /**
      * UssMount Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public UssMount(final ZosConnection connection) {
@@ -57,7 +57,7 @@ public class UssMount {
      * Alternative UssMount constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -126,6 +126,7 @@ public class UssMount {
         }
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 
@@ -139,7 +140,6 @@ public class UssMount {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(mountMap).toString());
 
         return request.executeRequest();

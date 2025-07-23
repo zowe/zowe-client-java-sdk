@@ -21,10 +21,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * Utility class for test package.
+ * Utility class for the test package.
  *
  * @author James Kostrewski
- * @version 3.0
+ * @version 4.0
  */
 public final class Utils {
 

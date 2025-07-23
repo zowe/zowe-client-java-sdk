@@ -37,7 +37,7 @@ import java.util.stream.IntStream;
  *
  * @author Nikunj Goyal
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnGet {
 
@@ -48,7 +48,7 @@ public class DsnGet {
     /**
      * DsnGet Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Nikunj Goyal
      */
     public DsnGet(final ZosConnection connection) {
@@ -60,7 +60,7 @@ public class DsnGet {
      * Alternative DsnGet constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -112,7 +112,7 @@ public class DsnGet {
      *
      * @param targetName name of a sequential dataset e.g., DATASET.SEQ.DATA
      *                   or a dataset member e.g., DATASET.LIB(MEMBER)
-     * @param params     download params parameters, see DownloadParams object
+     * @param params     to download params parameters, see DownloadParams object
      * @return a content stream
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
@@ -123,6 +123,7 @@ public class DsnGet {
         ValidateUtils.checkIllegalParameter(targetName.isBlank(), "targetName not specified");
 
         String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
 
         if (params.getVolume().isPresent()) {
@@ -164,7 +165,6 @@ public class DsnGet {
         }
         request.setHeaders(headers);
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         return new ByteArrayInputStream((byte[]) request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no dsn get response phrase")));

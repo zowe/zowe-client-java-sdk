@@ -16,10 +16,10 @@ import zowe.client.sdk.zosmfinfo.response.DefinedSystem;
 import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
 
 /**
- * Parse json response from z/OSMF defined systems request
+ * Parse JSON response from z/OSMF defined systems request
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class SystemsJsonParse implements JsonParse {
 

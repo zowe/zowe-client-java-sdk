@@ -16,7 +16,7 @@ import java.util.OptionalLong;
  * API response for list systems defined to z/OSMF.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosmfSystemsResponse {
 

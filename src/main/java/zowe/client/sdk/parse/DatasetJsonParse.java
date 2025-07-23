@@ -14,10 +14,10 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.dsn.response.Dataset;
 
 /**
- * Extract Dataset from json response
+ * Extract Dataset from JSON response
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class DatasetJsonParse implements JsonParse {
 

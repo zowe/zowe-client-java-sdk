@@ -14,21 +14,20 @@ import kong.unirest.core.Unirest;
 import kong.unirest.core.UnirestException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Http get operation with text content type
+ * Http get operation with a text content type
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class GetTextZosmfRequest extends ZosmfRequest {
 
     /**
      * GetTextZosmfRequest constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public GetTextZosmfRequest(final ZosConnection connection) {
@@ -47,7 +46,7 @@ public class GetTextZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(url == null, "url is null");
         HttpResponse<String> reply;
         try {
-            reply = cookie != null ? Unirest.get(url).cookie(cookie).headers(headers).asString() :
+            reply = token != null ? Unirest.get(url).cookie(token).headers(headers).asString() :
                     Unirest.get(url).headers(headers).asString();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
@@ -73,7 +72,6 @@ public class GetTextZosmfRequest extends ZosmfRequest {
      */
     @Override
     public void setStandardHeaders() {
-        headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
         headers.put("Content-Type", "text/plain; charset=UTF-8");
         headers.put(X_CSRF_ZOSMF_HEADER_KEY, X_CSRF_ZOSMF_HEADER_VALUE);
     }

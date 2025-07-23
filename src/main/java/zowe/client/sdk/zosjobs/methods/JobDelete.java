@@ -27,7 +27,7 @@ import java.util.Map;
  * DeleteJobs class to handle Job delete
  *
  * @author Nikunj Goyal
- * @version 3.0
+ * @version 4.0
  */
 public class JobDelete {
 
@@ -40,7 +40,7 @@ public class JobDelete {
     /**
      * DeleteJobs constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Nikunj Goyal
      */
     public JobDelete(final ZosConnection connection) {
@@ -52,7 +52,7 @@ public class JobDelete {
      * Alternative DeleteJobs constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -67,9 +67,9 @@ public class JobDelete {
     }
 
     /**
-     * Cancel and purge job from spool.
+     * Cancel and purge a job from spool.
      *
-     * @param jobName name of job to delete
+     * @param jobName name of a job to delete
      * @param jobId   job id
      * @param version version number, see ModifyJobParams object for version options
      * @return http response object
@@ -93,7 +93,8 @@ public class JobDelete {
     public Response deleteCommon(final ModifyJobParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") + JobsConstants.RESOURCE +
                 JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
 
         final Map<String, String> headers = new HashMap<>();
@@ -121,7 +122,6 @@ public class JobDelete {
         }
         request.setHeaders(headers);
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         // if synchronously response should contain a job document that was canceled and http return code
         // if asynchronously response should only contain http return code, let the caller handle the response JSON parsing

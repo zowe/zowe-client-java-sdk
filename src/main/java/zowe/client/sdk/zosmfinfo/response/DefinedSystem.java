@@ -12,10 +12,10 @@ package zowe.client.sdk.zosmfinfo.response;
 import java.util.Optional;
 
 /**
- * The Z/OSMF object returned for every defined system.
+ * The z/OSMF object returned for every defined system.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DefinedSystem {
 

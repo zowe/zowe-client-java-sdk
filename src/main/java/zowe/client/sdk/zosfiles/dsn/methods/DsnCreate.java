@@ -30,7 +30,7 @@ import java.util.Map;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnCreate {
 
@@ -41,7 +41,7 @@ public class DsnCreate {
     /**
      * DsnCreate Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Leonid Baranov
      */
     public DsnCreate(final ZosConnection connection) {
@@ -71,7 +71,7 @@ public class DsnCreate {
      * Creates a new dataset with specified parameters
      *
      * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
-     * @param params      create dataset parameters, see CreateParams object
+     * @param params      to create dataset parameters, see CreateParams object
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
@@ -82,6 +82,7 @@ public class DsnCreate {
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
@@ -107,7 +108,6 @@ public class DsnCreate {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(createMap).toString());
 
         return request.executeRequest();

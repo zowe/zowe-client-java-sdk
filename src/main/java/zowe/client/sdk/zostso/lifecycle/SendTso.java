@@ -35,7 +35,7 @@ import java.util.List;
  * Class to handle sending data to TSO
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class SendTso {
 
@@ -48,7 +48,7 @@ public class SendTso {
     /**
      * SendTso constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public SendTso(final ZosConnection connection) {
@@ -60,7 +60,7 @@ public class SendTso {
      * Alternative SendTso constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -89,7 +89,7 @@ public class SendTso {
     /**
      * Collects responses from address space until it reaches prompt
      *
-     * @param tso object from the first Tso response from witch responses are needed, see ZosmfTsoResponse
+     * @param tso object from the first Tso response from witch responses is needed, see ZosmfTsoResponse
      * @return CollectedResponses response object, see CollectedResponses
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
@@ -142,13 +142,13 @@ public class SendTso {
      */
     private ZosmfTsoResponse getDataFromTso(final String servletKey) throws ZosmfRequestException {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" + servletKey;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody("");
 
         return new TsoResponseService(request.executeRequest()).getZosmfTsoResponse();
@@ -193,7 +193,8 @@ public class SendTso {
     public ZosmfTsoResponse sendDataToTsoCommon(final SendTsoParams commandParams) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + TsoConstants.RESOURCE + "/" +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + commandParams.getServletKey() + TsoConstants.RES_DONT_READ_REPLY;
 
         final TsoResponseMessage tsoResponseMessage = new TsoResponseMessage("0100", commandParams.getData());
@@ -203,7 +204,6 @@ public class SendTso {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(jobObjBody);
 
         return new TsoResponseService(request.executeRequest()).getZosmfTsoResponse();

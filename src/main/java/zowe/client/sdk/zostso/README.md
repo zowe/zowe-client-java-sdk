@@ -10,6 +10,7 @@ APIs located in method package.
 package zowe.client.sdk.examples.zostso;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -22,14 +23,14 @@ import java.util.Arrays;
  * Class example to test tso command functionality via IssueTso class.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class IssueTsoExp extends TstZosConnection {
 
     private static ZosConnection connection;
 
     /**
-     * Main method defines z/OSMF host and user connection, and tso command parameters used for the example test.
+     * The main method defines z/OSMF host and user connection, and tso command parameters used for the example test.
      *
      * @param args for main not used
      * @author Frank Giordano
@@ -38,14 +39,14 @@ public class IssueTsoExp extends TstZosConnection {
         String command = "xxx";
         String accountNumber = "xxx";
 
-        connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         IssueResponse response = IssueTsoExp.issueCommand(accountNumber, command);
         String[] results = response.getCommandResponses().orElse("").split("\n");
         Arrays.stream(results).sequential().forEach(System.out::println);
     }
 
     /**
-     * Issue issueCommand method from IssueTso class which will execute the given tso command.
+     * Issue issueCommand method from the IssueTso class which will execute the given tso command.
      *
      * @param accountNumber user's z/OSMF permission account number
      * @param cmd           tso command to execute
@@ -74,12 +75,12 @@ import zowe.client.sdk.rest.Response;
  * Utility class containing helper method(s).
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class Util {
 
     /**
-     * Extract response phrase string value if any from Response object.
+     * Extract response phrase string value if any from a Response object.
      *
      * @param response object
      * @return string value
@@ -101,19 +102,17 @@ public class Util {
 package zowe.client.sdk.examples;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
-import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
-import zowe.client.sdk.teamconfig.service.KeyTarService;
-import zowe.client.sdk.teamconfig.service.TeamConfigService;
 
 /**
  * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class TstZosConnection {
 
@@ -128,7 +127,8 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (ZosConnectionFactory.createBasicConnection(
+                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

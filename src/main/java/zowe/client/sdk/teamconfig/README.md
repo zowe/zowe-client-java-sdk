@@ -37,13 +37,11 @@ username and password and retrieve a list of members from the dataset input stri
 
 ````java
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
-import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
-import zowe.client.sdk.teamconfig.service.KeyTarService;
-import zowe.client.sdk.teamconfig.service.TeamConfigService;
 import zowe.client.sdk.zosfiles.dsn.input.ListParams;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnList;
 import zowe.client.sdk.zosfiles.dsn.response.Member;
@@ -54,7 +52,7 @@ import java.util.List;
  * Class example to showcase team config functionality via TeamConfig class.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class TeamConfigExp {
 
@@ -74,8 +72,6 @@ public class TeamConfigExp {
      * @author Frank Giordano
      */
     public static void main(String[] args) throws ZosmfRequestException {
-        String dataSetName = "CCSQA.ASM.JCL";
-
         TeamConfig teamConfig;
         try {
             teamConfig = new TeamConfig();
@@ -83,10 +79,10 @@ public class TeamConfigExp {
             throw new RuntimeException(e.getMessage());
         }
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        ZosConnection connection = new ZosConnection(profile.getHost(), profile.getPort(),
-                profile.getUser(), profile.getPassword());
+        return (ZosConnectionFactory.createBasicConnection(
+                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
 
-        TeamConfigExp.listMembers(connection, dataSetName);
+        TeamConfigExp.listMembers(connection, "CCSQA.ASM.JCL");
     }
 
     /**

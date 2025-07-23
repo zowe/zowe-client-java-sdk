@@ -13,7 +13,7 @@ package zowe.client.sdk.teamconfig.exception;
  * Custom exception to represent Zowe team configuration error state
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class TeamConfigException extends Exception {
 

@@ -16,7 +16,7 @@ import java.util.OptionalLong;
  * Represents the name and details of an output (spool) DD for a z/OS batch job
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class JobFile {
 

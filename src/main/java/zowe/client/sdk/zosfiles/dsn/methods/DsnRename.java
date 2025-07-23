@@ -29,7 +29,7 @@ import java.util.Map;
  * Provides rename dataset and member functionality
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class DsnRename {
 
@@ -42,7 +42,7 @@ public class DsnRename {
     /**
      * DsnRename Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public DsnRename(final ZosConnection connection) {
@@ -54,7 +54,7 @@ public class DsnRename {
      * Alternative DsnRename constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -116,8 +116,10 @@ public class DsnRename {
      * @author Frank Giordano
      */
     private void setUrl(final String... args) {
-        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES + "/" + EncodeUtils.encodeURIComponent(args[0]);
+        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
+                EncodeUtils.encodeURIComponent(args[0]);
         if (args.length > 1) {
             url += "(" + EncodeUtils.encodeURIComponent(args[1]) + ")";
         }
@@ -150,7 +152,6 @@ public class DsnRename {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(renameMap).toString());
 
         return request.executeRequest();

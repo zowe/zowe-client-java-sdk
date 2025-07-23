@@ -34,7 +34,7 @@ import java.util.Map;
  * Issue MVS Console commands by using a system console
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class IssueConsole {
 
@@ -45,7 +45,7 @@ public class IssueConsole {
     /**
      * IssueCommand constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public IssueConsole(final ZosConnection connection) {
@@ -57,7 +57,7 @@ public class IssueConsole {
      * Alternative IssueCommand constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -74,7 +74,7 @@ public class IssueConsole {
     /**
      * Issue an MVS console command on default console name (Defcn) done synchronously - meaning solicited
      * (direct command responses) are gathered immediately after the command is issued.
-     * However, after (according to the z/OSMF REST API documentation) approximately 3 seconds, the response
+     * However, after (according to the z/OSMF REST API documentation), approximately 3 seconds, the response
      * will be returned.
      *
      * @param command string value that represents command to issue
@@ -87,9 +87,9 @@ public class IssueConsole {
     }
 
     /**
-     * Issue an MVS console command on given console name done synchronously - meaning solicited
+     * Issue an MVS console command on a given console name done synchronously - meaning solicited
      * (direct command responses) are gathered immediately after the command is issued.
-     * However, after (according to the z/OSMF REST API documentation) approximately 3 seconds, the response
+     * However, after (according to the z/OSMF REST API documentation), approximately 3 seconds, the response
      * will be returned.
      *
      * @param command     string value representing console command to issue
@@ -118,6 +118,7 @@ public class IssueConsole {
         ValidateUtils.checkIllegalParameter(consoleName.isBlank(), "consoleName not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ConsoleConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(consoleName);
 
         final Map<String, String> issueMap = new HashMap<>();
@@ -130,7 +131,6 @@ public class IssueConsole {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(issueMap).toString());
 
         final String jsonStr = request.executeRequest().getResponsePhrase()

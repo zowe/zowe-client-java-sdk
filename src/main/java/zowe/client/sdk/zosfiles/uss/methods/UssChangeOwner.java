@@ -30,7 +30,7 @@ import java.util.Map;
  * Parameter container class for Unix System Services (USS) chown operation
  *
  * @author James Kostrewski
- * @version 3.0
+ * @version 4.0
  */
 public class UssChangeOwner {
 
@@ -41,7 +41,7 @@ public class UssChangeOwner {
     /**
      * UssChangeOwner constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author James Kostrewski
      */
     public UssChangeOwner(final ZosConnection connection) {
@@ -53,7 +53,7 @@ public class UssChangeOwner {
      * Alternative UssChangeOwner constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -68,7 +68,7 @@ public class UssChangeOwner {
     }
 
     /**
-     * Perform chown operation on UNIX file or directory
+     * Perform chown operation on a UNIX file or directory
      *
      * @param targetPath identifies the UNIX file or directory to be the target of the operation
      * @param owner      new owner of the file or directory
@@ -97,6 +97,7 @@ public class UssChangeOwner {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
@@ -114,7 +115,6 @@ public class UssChangeOwner {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(changeOnerMap).toString());
 
         return request.executeRequest();

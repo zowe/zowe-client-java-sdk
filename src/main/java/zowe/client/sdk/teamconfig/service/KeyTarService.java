@@ -23,7 +23,7 @@ import java.util.List;
  * Zowe Global Team Configuration location information.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class KeyTarService {
 
@@ -59,8 +59,8 @@ public class KeyTarService {
     public KeyTarConfig getKeyTarConfig() throws TeamConfigException {
         List<KeyTarConfig> keyTarConfigs = new ArrayList<>();
         // Account name used for KeyTar querying of OS credential store
-        String ACCOUNT_NAME = "secure_config_props";
-        keyTar.setAccountName(ACCOUNT_NAME);
+        final String accountName = "secure_config_props";
+        keyTar.setAccountName(accountName);
         for (final String serviceName : serviceNames) {
             keyTar.setServiceName(serviceName);
             try {

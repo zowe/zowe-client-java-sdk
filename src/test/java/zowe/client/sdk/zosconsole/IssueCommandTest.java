@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -32,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -41,11 +43,14 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for IssueCommand.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class IssueCommandTest {
 
-    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
+    private final ZosConnection connection = ZosConnectionFactory
+            .createBasicConnection("1", "1", "1", "1");
+    private final ZosConnection tokenConnection = ZosConnectionFactory
+            .createTokenConnection("1", "1", new Cookie("hello=hello"));
     private PutJsonZosmfRequest mockJsonGetRequest;
 
     @Before
@@ -70,24 +75,22 @@ public class IssueCommandTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseToggleAuthSuccess() throws ZosmfRequestException {
+    public void tstIssueCommandCmdResponseToggleTokenSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "student");
         final JSONObject json = new JSONObject(jsonMap);
 
         PutJsonZosmfRequest mockJsonGetRequestAuth = Mockito.mock(PutJsonZosmfRequest.class,
-                withSettings().useConstructor(connection));
+                withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonGetRequestAuth.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestAuth).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonGetRequestAuth).setStandardHeaders();
         doCallRealMethod().when(mockJsonGetRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonGetRequestAuth).setCookie(any());
         doCallRealMethod().when(mockJsonGetRequestAuth).getHeaders();
 
-        final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequestAuth);
+        final IssueConsole issueCommand = new IssueConsole(tokenConnection, mockJsonGetRequestAuth);
 
-        connection.setCookie(new Cookie("hello=hello"));
         ConsoleResponse response = issueCommand.issueCommand("command");
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestAuth.getHeaders().toString());
@@ -96,16 +99,17 @@ public class IssueCommandTest {
                         .orElse("n/a")
                         .replaceAll("\\r", "")
                         .replaceAll("\\n", ""));
+    }
 
-        connection.setCookie(null);
-        response = issueCommand.issueCommand("command");
-        final String expectedResp = "{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}";
-        Assertions.assertEquals(expectedResp, mockJsonGetRequestAuth.getHeaders().toString());
-        assertEquals("student",
-                response.getCommandResponse()
-                        .orElse("n/a")
-                        .replaceAll("\\r", "")
-                        .replaceAll("\\n", ""));
+    @Test
+    public void tstIssueCommandCmdResponseWithInvalidBasePathFailure() {
+        final ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("1", "1", "1", "1");
+        connection.setBasePath("consoles//");
+        // Create a mock request to verify URL
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        final IssueConsole issueCommand = new IssueConsole(connection, request);
+        assertThrows(IllegalArgumentException.class, () -> issueCommand.issueCommand("command"));
     }
 
     @Test

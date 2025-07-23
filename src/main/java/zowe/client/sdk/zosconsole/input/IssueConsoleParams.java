@@ -17,7 +17,7 @@ import java.util.Optional;
  * The z/OSMF console API parameters. See the z/OSMF REST API documentation for full details.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class IssueConsoleParams {
 
@@ -39,7 +39,7 @@ public class IssueConsoleParams {
 
     /**
      * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
-     * sequences with '\n', but there may be cases where that are not preferable. Specify false to prevent processing.
+     * sequences with '\n', but there may be cases where that is not preferable. Specify false to prevent processing.
      */
     private boolean processResponse = false;
 

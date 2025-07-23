@@ -33,7 +33,7 @@ import java.util.Map;
  * Class to handle submitting of z/OS batch jobs and started tasks via z/OSMF
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class JobSubmit {
 
@@ -46,7 +46,7 @@ public class JobSubmit {
     /**
      * SubmitJobs Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public JobSubmit(final ZosConnection connection) {
@@ -58,7 +58,7 @@ public class JobSubmit {
      * Alternative SubmitJobs constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -127,14 +127,14 @@ public class JobSubmit {
         value = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_CLASS_A").get(1);
         headers.put(key, value);
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") + JobsConstants.RESOURCE;
 
         if (request == null || !(request instanceof PutTextZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
         }
         request.setHeaders(headers);
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(params.getJcl().orElseThrow(() -> new IllegalArgumentException("jcl not specified")));
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
@@ -167,7 +167,8 @@ public class JobSubmit {
     public Job submitCommon(final SubmitJobParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE;
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") + JobsConstants.RESOURCE;
 
         final String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(params.getJobDataSet().get()) + "'";
         final Map<String, String> submitMap = new HashMap<>();
@@ -180,7 +181,6 @@ public class JobSubmit {
             request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(submitMap).toString());
 
         final String jsonStr = request.executeRequest().getResponsePhrase()

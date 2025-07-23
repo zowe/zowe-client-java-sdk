@@ -14,10 +14,10 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
 
 /**
- * Parse json response from MVS console request
+ * Parse JSON response from MVS console request
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class MvsConsoleJsonParse implements JsonParse {
 

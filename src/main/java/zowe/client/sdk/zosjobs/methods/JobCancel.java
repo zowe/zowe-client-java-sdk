@@ -32,7 +32,7 @@ import java.util.Map;
  *
  * @author Nikunj Goyal
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class JobCancel {
 
@@ -45,7 +45,7 @@ public class JobCancel {
     /**
      * CancelJobs constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Nikunj Goyal
      */
     public JobCancel(final ZosConnection connection) {
@@ -57,7 +57,7 @@ public class JobCancel {
      * Alternative CancelJobs constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -74,7 +74,7 @@ public class JobCancel {
     /**
      * Cancel a job on z/OS.
      *
-     * @param jobName name of job to cancel
+     * @param jobName name of a job to cancel
      * @param jobId   job id
      * @param version version number - 1.0 or 2.0
      *                To request asynchronous processing for this service (the default), set the "version" property to 1.0
@@ -122,10 +122,11 @@ public class JobCancel {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         // generate full url request
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() + JobsConstants.RESOURCE +
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") + JobsConstants.RESOURCE +
                 JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
 
-        // generate json string body for the request
+        // generate JSON string body for the request
         final String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
 
         // To request asynchronous processing for this service (the default), set the "version" property to 1.0
@@ -148,7 +149,6 @@ public class JobCancel {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(cancelMap).toString());
 
         // if synchronously response should contain a job document that was canceled and http return code

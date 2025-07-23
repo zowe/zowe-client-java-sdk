@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetStreamZosmfRequest;
 import zowe.client.sdk.rest.GetTextZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -32,12 +33,15 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for UssGet.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 @SuppressWarnings("DataFlowIssue")
 public class UssGetTest {
 
-    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
+    private final ZosConnection connection = ZosConnectionFactory
+            .createBasicConnection("1", "1", "1", "1");
+    private final ZosConnection tokenConnection = ZosConnectionFactory
+            .createTokenConnection("1", "1", new Cookie("hello=hello"));
     private UssGet ussGet;
 
     @Before
@@ -56,28 +60,19 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetTextFileTargetPathToggleAuthSuccess() throws ZosmfRequestException {
+    public void tstGetTextFileTargetPathToggleTokenSuccess() throws ZosmfRequestException {
         final GetTextZosmfRequest mockTextGetRequestAuth = Mockito.mock(GetTextZosmfRequest.class,
-                withSettings().useConstructor(connection));
+                withSettings().useConstructor(tokenConnection));
         Mockito.when(mockTextGetRequestAuth.executeRequest()).thenReturn(
                 new Response("text", 200, "success"));
         doCallRealMethod().when(mockTextGetRequestAuth).setHeaders(anyMap());
         doCallRealMethod().when(mockTextGetRequestAuth).setStandardHeaders();
         doCallRealMethod().when(mockTextGetRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockTextGetRequestAuth).setCookie(any());
         doCallRealMethod().when(mockTextGetRequestAuth).getHeaders();
 
-        final UssGet ussGet = new UssGet(connection, mockTextGetRequestAuth);
-        connection.setCookie(new Cookie("hello=hello"));
+        final UssGet ussGet = new UssGet(tokenConnection, mockTextGetRequestAuth);
         String response = ussGet.getText("/xxx/xx");
         String expectedResp = "{X-IBM-Data-Type=text, X-CSRF-ZOSMF-HEADER=true, " +
-                "Content-Type=text/plain; charset=UTF-8}";
-        Assertions.assertEquals(expectedResp, mockTextGetRequestAuth.getHeaders().toString());
-        Assertions.assertEquals("text", response);
-
-        connection.setCookie(null);
-        response = ussGet.getText("/xxx/xx");
-        expectedResp = "{Authorization=Basic MTox, X-IBM-Data-Type=text, X-CSRF-ZOSMF-HEADER=true, " +
                 "Content-Type=text/plain; charset=UTF-8}";
         Assertions.assertEquals(expectedResp, mockTextGetRequestAuth.getHeaders().toString());
         Assertions.assertEquals("text", response);

@@ -19,7 +19,7 @@ import java.util.OptionalInt;
  * Interface for various GetJobs APIs
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class GetJobParams {
 

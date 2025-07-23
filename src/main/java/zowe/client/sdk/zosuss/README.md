@@ -2,7 +2,7 @@
 
 Contains API to execute USS (Unix System Serves) commands via SSH connection.
 
-API located in method package.
+API located in the method package.
 
 ## API Example
 
@@ -17,12 +17,12 @@ import zowe.client.sdk.zosuss.method.IssueUss;
  * Class example to test uss command functionality via IssueUss class.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class IssueUssExp {
 
     /**
-     * Main method defines SSH connection and showcases executing a USS command vis IssueUss class.
+     * The main method defines SSH connection and showcases executing a USS command via IssueUss class.
      *
      * @param args for main not used
      * @author Frank Giordano

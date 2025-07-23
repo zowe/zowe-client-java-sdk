@@ -18,7 +18,7 @@ import java.util.OptionalLong;
  * Standard log response document. Represents the details about the messages and logs.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosLogReply {
 
@@ -36,7 +36,7 @@ public class ZosLogReply {
 
     /**
      * Indicates the source of the log.
-     * Value "OPERLOG" indicates the operations log.
+     * Value "OPERLOG" indicates the operation log.
      */
     private final Optional<String> source;
 

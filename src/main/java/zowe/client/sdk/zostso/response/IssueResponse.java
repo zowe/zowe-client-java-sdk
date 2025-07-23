@@ -20,7 +20,7 @@ import java.util.Optional;
  * The TsoIssue API response
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class IssueResponse {
 

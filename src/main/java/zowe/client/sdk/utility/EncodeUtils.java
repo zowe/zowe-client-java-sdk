@@ -19,7 +19,7 @@ import java.util.Base64;
  * Utility class contains helper methods for encoding processing
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class EncodeUtils {
 
@@ -53,7 +53,7 @@ public final class EncodeUtils {
     /**
      * Encodes the passed connection String as UTF-8 for usage of the AUTHORIZATION http header.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @return encoded String
      * @author Frank Giordano
      */

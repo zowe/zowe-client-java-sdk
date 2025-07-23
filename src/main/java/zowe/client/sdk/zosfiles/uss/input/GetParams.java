@@ -19,7 +19,7 @@ import java.util.OptionalInt;
  *
  * @author James Kostrewski
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class GetParams {
 
@@ -68,7 +68,7 @@ public class GetParams {
      * <p>
      * Where SSS identifies the start record and EEE identifies the end record to be retrieved.
      * Both values are relative offsets (0-based). When EEE is set to 0, records through the end of the
-     * file are retrieved. When SSS is omitted (i.e. -EEE), the final EEE records of the file are retrieved.
+     * file are retrieved. When SSS is omitted (i.e., EEE), the final EEE records of the file are retrieved.
      * <p>
      * SSS,NNN
      * <p>

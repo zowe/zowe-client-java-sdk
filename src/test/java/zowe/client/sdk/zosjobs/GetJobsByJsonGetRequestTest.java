@@ -18,9 +18,13 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.zosjobs.methods.JobGet;
 import zowe.client.sdk.zosjobs.response.Job;
 
@@ -28,17 +32,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 /**
  * Class containing unit tests for JobGet.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 @RunWith(MockitoJUnitRunner.class)
 public class GetJobsByJsonGetRequestTest {
 
-    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
+    private final ZosConnection connection = ZosConnectionFactory
+            .createBasicConnection("1", "1", "1", "1");
     private GetJsonZosmfRequest mockJsonGetRequest;
     private JobGet getJobs;
     private JSONObject jobJson;
@@ -136,6 +142,17 @@ public class GetJobsByJsonGetRequestTest {
         final Job job = getJobs.getById("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
         assertEquals("job", job.getJobId().get());
+    }
+
+    @Test
+    public void tstGetByIdCmdResponseWithInvalidBasePathFailure() {
+        final ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("1", "1", "1", "1");
+        connection.setBasePath("consoles//");
+        // Create a mock request to verify URL
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
+        final JobGet getJobs = new JobGet(connection, request);
+        assertThrows(IllegalArgumentException.class, () -> getJobs.getById("1"));
     }
 
     @Test

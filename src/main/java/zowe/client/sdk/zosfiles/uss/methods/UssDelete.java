@@ -29,7 +29,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-delete-unix-file-directory">z/OSMF REST API</a>
  *
  * @author James Kostrewski
- * @version 3.0
+ * @version 4.0
  */
 public class UssDelete {
 
@@ -40,7 +40,7 @@ public class UssDelete {
     /**
      * UssDelete Constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author James Kostrewski
      */
     public UssDelete(final ZosConnection connection) {
@@ -52,7 +52,7 @@ public class UssDelete {
      * Alternative UssDelete constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author James Kostrewski
      * @author Frank Giordano
@@ -80,7 +80,7 @@ public class UssDelete {
     }
 
     /**
-     * Perform UNIX delete file or directory name request with recursive flag
+     * Perform UNIX delete file or directory name request with a recursive flag
      *
      * @param targetPath the name of the file or directory you are going to delete
      * @param recursive  flag indicates if contents of directory should also be deleted
@@ -93,6 +93,7 @@ public class UssDelete {
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
@@ -104,7 +105,6 @@ public class UssDelete {
             request.setHeaders(Map.of("X-IBM-Option", "recursive"));
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         return request.executeRequest();
     }
@@ -122,6 +122,7 @@ public class UssDelete {
         ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "fileSystemName not specified");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 
@@ -129,7 +130,6 @@ public class UssDelete {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         return request.executeRequest();
     }

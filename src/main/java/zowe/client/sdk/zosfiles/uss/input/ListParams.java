@@ -21,7 +21,7 @@ import java.util.OptionalInt;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-list-files-directories-unix-file-path">z/OSMF REST API</a>
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ListParams {
 
@@ -76,7 +76,7 @@ public class ListParams {
 
     /**
      * The permission octal mask to use
-     * The type is a string because valid values are either an integer, or an integer with a leading minus (-)
+     * The type is a string because valid values are either an integer or an integer with a leading minus (-)
      */
     private final Optional<String> perm;
 
@@ -86,8 +86,8 @@ public class ListParams {
     private final Optional<ListFilterType> type;
 
     /**
-     * The default value for this parameter is 0, which means that all subdirectories under path are listed,
-     * regardless of depth. When depth is greater than 1, subdirectories up to the specified depth are listed.
+     * The default value for this parameter is 0, which means that all subdirectories under a path are listed,
+     * regardless of depth. When the depth is greater than 1, subdirectories up to the specified depth are listed.
      * depth is 1, only the files in the path are listed.
      * <p>
      * The name field in the returned JSON document contains the path of the entry,
@@ -312,19 +312,19 @@ public class ListParams {
 
         /**
          * The modification time to filter, in days
-         * Valid values are either an integer, or an integer with leading plus (+) or minus (-)
+         * Valid values aren't either an integer or an integer with leading plus (+) or minus (-)
          */
         private String mtime;
 
         /**
          * The size to filter
-         * Valid values are either an integer, and integer with a suffix (K, M, G),
+         * Valid values is either an integer, and integer with a suffix (K, M, G),
          * or an integer with leading plus (+) or minus (-)
          */
         private Integer size;
 
         /**
-         * Select entries that match pattern according to the rules of fnmatch().
+         * Select entries that match the pattern according to the rules of fnmatch().
          * The supplied pattern is matched against the absolute path of the entry,
          * with behavior similar to the find -name option.
          */
@@ -332,7 +332,7 @@ public class ListParams {
 
         /**
          * The permission octal mask to use
-         * The type is a string because valid values are either an integer, or an integer with a leading minus (-)
+         * The type is a string because valid values are either an integer or an integer with a leading minus (-)
          */
         private String perm;
 
@@ -342,8 +342,8 @@ public class ListParams {
         private ListFilterType type;
 
         /**
-         * The default value for this parameter is 0, which means that all subdirectories under path are listed,
-         * regardless of depth. When depth is greater than 1, subdirectories up to the specified depth are listed.
+         * The default value for this parameter is 0, which means that all subdirectories under a path are listed,
+         * regardless of depth. When the depth is greater than 1, subdirectories up to the specified depth are listed.
          * depth is 1, only the files in the path are listed.
          * <p>
          * The name field in the returned JSON document contains the path of the entry,

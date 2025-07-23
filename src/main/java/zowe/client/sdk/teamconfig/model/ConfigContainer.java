@@ -16,7 +16,7 @@ import java.util.Map;
  * ConfigContainer POJO to act as a container for a parsed Zowe Global Team Configuration file representation
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ConfigContainer {
 
@@ -84,7 +84,7 @@ public class ConfigContainer {
     }
 
     /**
-     * Return list of partitions
+     * Return a list of partitions
      *
      * @return list of partitions gathered from reading and parsing Zowe Global Team Configuration
      */

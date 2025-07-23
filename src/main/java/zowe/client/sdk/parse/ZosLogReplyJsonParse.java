@@ -17,10 +17,10 @@ import zowe.client.sdk.zoslogs.response.ZosLogReply;
 import java.util.List;
 
 /**
- * Extract ZosLogReply from json response
+ * Extract ZosLogReply from JSON response
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class ZosLogReplyJsonParse implements JsonParse {
 

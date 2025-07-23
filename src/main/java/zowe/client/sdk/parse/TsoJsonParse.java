@@ -24,10 +24,10 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Parse json response from Tso request
+ * Parse JSON response from Tso request
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class TsoJsonParse implements JsonParse {
 

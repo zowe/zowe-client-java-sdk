@@ -27,7 +27,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
  * This class is used to list the systems defined to z/OSMF through the z/OSMF APIs.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosmfSystems {
 
@@ -38,7 +38,7 @@ public class ZosmfSystems {
     /**
      * ListDefinedSystems Constructor.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public ZosmfSystems(final ZosConnection connection) {
@@ -50,7 +50,7 @@ public class ZosmfSystems {
      * Alternative ListDefinedSystems constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
@@ -72,14 +72,14 @@ public class ZosmfSystems {
      * @author Frank Giordano
      */
     public ZosmfSystemsResponse get() throws ZosmfRequestException {
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort()
-                + ZosmfConstants.RESOURCE + ZosmfConstants.TOPOLOGY + ZosmfConstants.SYSTEMS;
+        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+                ZosmfConstants.RESOURCE + ZosmfConstants.TOPOLOGY + ZosmfConstants.SYSTEMS;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no z/osmf info response phrase")).toString();

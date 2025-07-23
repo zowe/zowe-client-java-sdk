@@ -14,10 +14,10 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
 
 /**
- * Extract UNIX zfs from json response
+ * Extract UNIX zfs from JSON response
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class UnixZfsJsonParse implements JsonParse {
 

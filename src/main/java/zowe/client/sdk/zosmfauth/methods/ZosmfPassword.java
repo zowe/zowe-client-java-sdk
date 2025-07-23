@@ -31,7 +31,7 @@ import java.util.Map;
  *
  * @author Esteban Sandoval
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosmfPassword {
 
@@ -42,7 +42,7 @@ public class ZosmfPassword {
     /**
      * ZosmfPassword constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Esteban Sandoval
      */
     public ZosmfPassword(final ZosConnection connection) {
@@ -54,7 +54,7 @@ public class ZosmfPassword {
      * Alternative ZosmfPassword constructor with ZosmfRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Esteban Sandoval
      */
@@ -81,6 +81,7 @@ public class ZosmfPassword {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosmfAuthConstants.RESOURCE;
 
         final Map<String, Object> passwordMap = new HashMap<>();
@@ -93,7 +94,6 @@ public class ZosmfPassword {
         }
 
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody(new JSONObject(passwordMap).toJSONString());
 
         return request.executeRequest();

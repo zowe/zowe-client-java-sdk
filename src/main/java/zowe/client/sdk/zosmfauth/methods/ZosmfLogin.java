@@ -27,7 +27,7 @@ import zowe.client.sdk.zosmfauth.response.ZosmfLoginResponse;
  *
  * @author Esteban Sandoval
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosmfLogin {
 
@@ -38,7 +38,7 @@ public class ZosmfLogin {
     /**
      * ZosmfLogin constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Esteban Sandoval
      */
     public ZosmfLogin(final ZosConnection connection) {
@@ -50,7 +50,7 @@ public class ZosmfLogin {
      * Alternative Login constructor with ZosmfRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Esteban Sandoval
      */
@@ -65,7 +65,7 @@ public class ZosmfLogin {
     }
 
     /**
-     * Request to log into the server and obtain authentication tokens
+     * Request to log into the server and retrieve authentication tokens
      *
      * @return ZosmfLoginResponse object
      * @throws ZosmfRequestException request error state
@@ -74,17 +74,17 @@ public class ZosmfLogin {
      */
     public ZosmfLoginResponse login() throws ZosmfRequestException {
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosmfAuthConstants.RESOURCE;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
         request.setUrl(url);
-        connection.getCookie().ifPresentOrElse(c -> request.setCookie(c), () -> request.setCookie(null));
         request.setBody("");
 
         final Response response = request.executeRequest();
-        return new ZosmfLoginResponse(response, response.getCookies());
+        return new ZosmfLoginResponse(response, response.getTokens());
     }
 
 }

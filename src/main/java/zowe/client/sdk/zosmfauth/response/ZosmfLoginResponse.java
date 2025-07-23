@@ -16,7 +16,7 @@ import zowe.client.sdk.rest.Response;
  * Holds Login response information
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosmfLoginResponse {
 
@@ -26,20 +26,20 @@ public class ZosmfLoginResponse {
     private final Response response;
 
     /**
-     * Holds cookies information
+     * Holds tokens information
      */
-    private final Cookies cookies;
+    private final Cookies tokens;
 
     /**
      * ZosmfLoginResponse constructor
      *
      * @param response Response object
-     * @param cookies  Cookies object
+     * @param tokens   Cookies object representing TOKENS
      * @author Frank Giordano
      */
-    public ZosmfLoginResponse(final Response response, final Cookies cookies) {
+    public ZosmfLoginResponse(final Response response, final Cookies tokens) {
         this.response = response;
-        this.cookies = cookies;
+        this.tokens = tokens;
     }
 
     /**
@@ -52,12 +52,12 @@ public class ZosmfLoginResponse {
     }
 
     /**
-     * Retrieve cookies
+     * Retrieve cookies representing TOKENS
      *
      * @return cookies object
      */
-    public Cookies getCookies() {
-        return cookies;
+    public Cookies getTokens() {
+        return tokens;
     }
 
     /**
@@ -69,7 +69,7 @@ public class ZosmfLoginResponse {
     public String toString() {
         return "LoginResponse{" +
                 "response=" + response +
-                ", cookies=" + cookies +
+                ", tokens=" + tokens +
                 '}';
     }
 

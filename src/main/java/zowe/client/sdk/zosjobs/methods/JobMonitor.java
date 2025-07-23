@@ -32,7 +32,7 @@ import java.util.List;
  * in MonitorJobs invoke z/OSMF jobs REST endpoints to collect job status information.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class JobMonitor {
 
@@ -63,7 +63,7 @@ public class JobMonitor {
     /**
      * MonitorJobs constructor.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection) {
@@ -74,7 +74,7 @@ public class JobMonitor {
     /**
      * MonitorJobs constructor.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param attempts   number of attempts to get status
      * @author Frank Giordano
      */
@@ -87,7 +87,7 @@ public class JobMonitor {
     /**
      * MonitorJobs constructor.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param attempts   number of attempts to get status
      * @param watchDelay delay time in milliseconds to wait each time requesting status
      * @author Frank Giordano
@@ -102,7 +102,7 @@ public class JobMonitor {
     /**
      * MonitorJobs constructor.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param attempts   number of attempts to get status
      * @param watchDelay delay time in milliseconds to wait each time requesting status
      * @param lineLimit  number of lines to inspect job output
@@ -463,7 +463,7 @@ public class JobMonitor {
     /**
      * Given jobname/jobid, check for the desired message continuously (based on the interval and attempts specified).
      *
-     * @param params  monitor jobs parameters, see MonitorJobWaitForParams object
+     * @param params  to monitor jobs parameters, see MonitorJobWaitForParams object
      * @param message message string
      * @return job document
      * @throws ZosmfRequestException request error state
@@ -496,7 +496,7 @@ public class JobMonitor {
      * than the current status of the job, then the method returns immediately (since the job will never enter the
      * requested status) with the current status of the job.
      *
-     * @param params monitor jobs parameters, see MonitorJobWaitForParams object
+     * @param params to monitor jobs parameters, see MonitorJobWaitForParams object
      * @return job document
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano

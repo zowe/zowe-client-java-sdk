@@ -27,7 +27,7 @@ import zowe.client.sdk.zosmfauth.ZosmfAuthConstants;
  *
  * @author Esteban Sandoval
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosmfLogout {
 
@@ -38,7 +38,7 @@ public class ZosmfLogout {
     /**
      * ZosmfLogout constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Esteban Sandoval
      */
     public ZosmfLogout(final ZosConnection connection) {
@@ -50,7 +50,7 @@ public class ZosmfLogout {
      * Alternative Logout constructor with ZosmfRequest object. This is mainly used for internal code
      * unit testing with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Esteban Sandoval
      */
@@ -67,22 +67,22 @@ public class ZosmfLogout {
     /**
      * Request to log out of server and delete authentication cookie token
      *
-     * @param cookie Cookie Object
+     * @param token Cookie Object
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Esteban Sandoval
      * @author Frank Giordano
      */
-    public Response logout(Cookie cookie) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(cookie == null, "cookie is null");
+    public Response logout(Cookie token) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(token == null, "token is null");
         final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
+                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
                 ZosmfAuthConstants.RESOURCE;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
-        request.setCookie(cookie);
 
         return request.executeRequest();
     }

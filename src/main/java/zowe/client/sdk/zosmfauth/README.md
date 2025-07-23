@@ -1,12 +1,12 @@
 # z/OSMF AUTH Package
 
-The z/OSMF authentication API services is provided for z/OSMF tasks and vendor applications.
+The z/OSMF authentication API services are provided for z/OSMF tasks and vendor applications.
 
-These services are used to obtain or delete authentication tokens (a JSON Web Token and an LTPA token) on the user's
+These services are used to get or delete authentication tokens (a JSON Web Token and an LTPA token) on the user's
 authentication request when logging in to or out of z/OSMF. Services also include an API to change a z/OSMF user’s
 password.
 
-Each API is located in the methods package.
+Each API is located in the method package.
 
 With the token retrieved, it can be used for authentication in place of basic authentication.
 
@@ -21,6 +21,7 @@ import kong.unirest.core.Cookie;
 import kong.unirest.core.Cookies;
 import org.apache.commons.io.IOUtils;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -39,32 +40,33 @@ import java.io.StringWriter;
  * Class example to showcase z/OSMF AUTH APIs functionality.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class ZosmfLoginExp extends TstZosConnection {
 
     /**
-     * Main method defines z/OSMF host and user connection and showcases examples calling
+     * The main method defines z/OSMF host and user connection and showcases examples calling
      * the zosmfauth APIs.
      * <p>
-     * In addition, the examples showcases the usage of token authentication rather than
+     * In addition, the examples showcase the usage of token authentication rather than
      * basic authentication. 
      *
      * @param args for main not used
      * @author Frank Giordano
      */
     public static void main(String[] args) throws ZosmfRequestException {
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection(hostName, zosmfPort, userName, password);
         ZosmfLogin login = new ZosmfLogin(connection);
 
-        // request to log into server and obtain authentication tokens
+        // request to log into the server and retrieve authentication tokens
         ZosmfLoginResponse loginResponse = login.login();
         // display response
         System.out.println(loginResponse);
 
-        Cookies cookies = loginResponse.getCookies();
-        Cookie jwtToken = cookies.get(0);
-        Cookie ltpaToken = cookies.get(1);
+        Cookies tokens = loginResponse.getCookies();
+        Cookie jwtToken = tokens.get(0);
+        Cookie ltpaToken = tokens.get(1);
         // display jwtToken
         System.out.println(jwtToken);
         // display LtpaToken
@@ -75,30 +77,18 @@ public class ZosmfLoginExp extends TstZosConnection {
         String memberName = "xxx";
         DownloadParams params = new DownloadParams.Builder().build();
 
-        // redefine connection object with no username and password specified
-        connection = new ZosConnection(hostName, zosmfPort, "", "");
-
-        // use jwtToken as cookie token authentication
-        downloadDsnMemberWithToken(connection, jwtToken, datasetName, memberName, params);
-        // now use LtpaToken as cookie token authentication
-        downloadDsnMemberWithToken(connection, ltpaToken, datasetName, memberName, params);
-
-        // redefine connection object with username and password specified
-        connection = new ZosConnection(hostName, zosmfPort, userName, password);
-
-        // perform the same request without token authentication using the default basic authentication instead
+        // the following defines a TOKEN authentication usage
+        // redefined connection object with no username and password specified
+        // if you do specify a username and password, they will be ignored
+        // use jwtToken value for the token parameter. 
+        connection = ZosConnectionFactory
+                .createTokenConnection(hostName, zosmfPort, jwtToken);
+        // use jwtToken 
         downloadDsnMember(connection, datasetName, memberName, params);
 
-        // set the token in connection cookie field
-        connection.setCookie(jwtToken);
-
-        // use jwtToken as cookie authentication
-        downloadDsnMemberWithToken(connection, jwtToken, datasetName, memberName, params);
-        // now use LtpaToken as cookie authentication
-        downloadDsnMemberWithToken(connection, ltpaToken, datasetName, memberName, params);
-
-        // perform the same request without token
-        connection.setCookie(null);
+        // now use LtpaToken as cookie token authentication
+        connection = new ZosConnection.Builder(AuthType.TOKEN)
+                .host(hostName).zosmfPort(zosmfPort).token(ltpaToken).build();
         downloadDsnMember(connection, datasetName, memberName, params);
 
         // request to log out of server and delete jwtToken authentication token
@@ -111,17 +101,16 @@ public class ZosmfLoginExp extends TstZosConnection {
         // display response
         System.out.println(response);
 
-        // use deleted token for authentication for next request
-        connection.setCookie(jwtToken);
         // this request should fail
         try {
-            downloadDsnMemberWithToken(connection, jwtToken, datasetName, memberName, params);
+            downloadDsnMemberWithToken(connection, datasetName, memberName, params);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
         // disable token authentication for the next API call.
-        connection.setCookie(null);
+        connection = new ZosConnection.Builder(AuthType.BASIC)
+                .host(hostName).zosmfPort(zosmfPort).user(userName).password(password).build();
         // change z/OSMF user's password
         ZosmfPassword zosmfPassword = new ZosmfPassword(connection);
         PasswordParams passwordParams =
@@ -131,12 +120,12 @@ public class ZosmfLoginExp extends TstZosConnection {
     }
 
     /**
-     * Download a dataset member using token cookie authentication.
+     * Download a dataset member using TOKEN authentication.
      *
      * @param connection ZosConnection object
      * @param dsName     name of a dataset
      * @param memName    member name that exists within the specified dataset name
-     * @param params     download parameters object
+     * @param params     download parameter object
      * @author Leonid Baranov
      */
     private static void downloadDsnMember(ZosConnection connection, String dsName, String memName,
@@ -151,29 +140,7 @@ public class ZosmfLoginExp extends TstZosConnection {
     }
 
     /**
-     * Download a dataset member using basic authentication.
-     *
-     * @param connection ZosConnection object
-     * @param dsName     name of a dataset
-     * @param memName    member name that exists within the specified dataset name
-     * @param params     download parameters object
-     * @author Leonid Baranov
-     */
-    private static void downloadDsnMemberWithToken(ZosConnection connection, Cookie cookie, String dsName, String memName,
-                                                   DownloadParams params) {
-        // set the token in connection cookie field
-        connection.setCookie(cookie);
-        try (InputStream inputStream = new DsnGet(connection).get(String.format("%s(%s)", dsName, memName), params)) {
-            System.out.println(getTextStreamData(inputStream));
-        } catch (ZosmfRequestException e) {
-            throw new RuntimeException(getByteResponseStatus(e));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Convert exception message's byte stream of data into a string
+     * Convert an exception message's byte stream of data into a string
      *
      * @param e ZosmfRequestException object
      * @return string value
@@ -221,19 +188,17 @@ public class ZosmfLoginExp extends TstZosConnection {
 package zowe.client.sdk.examples;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
-import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
-import zowe.client.sdk.teamconfig.service.KeyTarService;
-import zowe.client.sdk.teamconfig.service.TeamConfigService;
 
 /**
  * Base class with connection member static variables for use by examples to provide a means of a shortcut to avoid
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public class TstZosConnection {
 
@@ -248,7 +213,8 @@ public class TstZosConnection {
     public static ZosConnection getSecureZosConnection() throws TeamConfigException {
         TeamConfig teamConfig = new TeamConfig();
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (new ZosConnection(profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        return (ZosConnectionFactory.createBasicConnection(
+                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
     }
 
 }

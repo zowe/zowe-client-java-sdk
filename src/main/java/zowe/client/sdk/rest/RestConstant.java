@@ -7,7 +7,7 @@ import java.util.Map;
  * Constants variables for REST package
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 public final class RestConstant {
 

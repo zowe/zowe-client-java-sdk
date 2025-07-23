@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -31,14 +32,17 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for UssDelete.
  *
  * @author Frank Giordano
- * @version 3.0
+ * @version 4.0
  */
 @SuppressWarnings("DataFlowIssue")
 public class UssDeleteTest {
 
-    private final ZosConnection connection = new ZosConnection("1", "1", "1", "1");
+    private final ZosConnection connection = ZosConnectionFactory
+            .createBasicConnection("1", "1", "1", "1");
+    private final ZosConnection tokenConnection = ZosConnectionFactory
+            .createTokenConnection("1", "1", new Cookie("hello=hello"));
     private DeleteJsonZosmfRequest mockJsonDeleteRequest;
-    private DeleteJsonZosmfRequest mockJsonDeleteRequestAuth;
+    private DeleteJsonZosmfRequest mockJsonDeleteRequestToken;
     private UssDelete ussDelete;
 
     @Before
@@ -47,14 +51,14 @@ public class UssDeleteTest {
         Mockito.when(mockJsonDeleteRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
 
-        mockJsonDeleteRequestAuth = Mockito.mock(DeleteJsonZosmfRequest.class, withSettings().useConstructor(connection));
-        Mockito.when(mockJsonDeleteRequestAuth.executeRequest()).thenReturn(
+        mockJsonDeleteRequestToken = Mockito.mock(DeleteJsonZosmfRequest.class,
+                withSettings().useConstructor(tokenConnection));
+        Mockito.when(mockJsonDeleteRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockJsonDeleteRequestAuth).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonDeleteRequestAuth).setStandardHeaders();
-        doCallRealMethod().when(mockJsonDeleteRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockJsonDeleteRequestAuth).setCookie(any());
-        doCallRealMethod().when(mockJsonDeleteRequestAuth).getHeaders();
+        doCallRealMethod().when(mockJsonDeleteRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonDeleteRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockJsonDeleteRequestToken).setUrl(any());
+        doCallRealMethod().when(mockJsonDeleteRequestToken).getHeaders();
 
         ussDelete = new UssDelete(connection);
     }
@@ -69,21 +73,12 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstUssDeleteToggleAuthSuccess() throws ZosmfRequestException {
-        final UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequestAuth);
+    public void tstUssDeleteToggleTokenSuccess() throws ZosmfRequestException {
+        final UssDelete ussDelete = new UssDelete(tokenConnection, mockJsonDeleteRequestToken);
 
-        connection.setCookie(new Cookie("hello=hello"));
         Response response = ussDelete.delete("/xxx/xx/xx");
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonDeleteRequestAuth.getHeaders().toString());
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
-
-        connection.setCookie(null);
-        response = ussDelete.delete("/xxx/xx/xx");
-        final String expectedResp = "{Authorization=Basic MTox, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}";
-        Assertions.assertEquals(expectedResp, mockJsonDeleteRequestAuth.getHeaders().toString());
+                mockJsonDeleteRequestToken.getHeaders().toString());
         Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
         Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
