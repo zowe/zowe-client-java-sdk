@@ -258,6 +258,12 @@ public abstract class ZosmfRequest {
      */
     public abstract void setBody(final Object body);
 
+    /**
+     * Set any headers needed for the http request
+     *
+     * @param headers headers to add to the request
+     * @author Frank Giordano
+     */
     public void setHeaders(final Map<String, String> headers) {
         this.headers.clear();
         this.initialize();
