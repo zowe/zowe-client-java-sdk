@@ -20,18 +20,14 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyStore;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -90,7 +86,7 @@ public abstract class ZosmfRequest {
     private void initialize() {
         Unirest.config().reset();
         Unirest.config().enableCookieManagement(false);
-        Unirest.config().verifySsl(false);
+        Unirest.config().verifySsl(connection.isSecure());
         this.setStandardHeaders();
         this.token = null;
         switch (connection.getAuthType()) {
@@ -132,42 +128,7 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setupSsl() {
-        final String filePath = connection.getCertFilePath();
-        final String password = connection.getCertPassword();
-
-        // Trust all server certs (like --insecure)
-        TrustManager[] trustAllCerts = new TrustManager[]{
-                new X509TrustManager() {
-                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                    }
-                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                    }
-                    public X509Certificate[] getAcceptedIssuers() {
-                        return new X509Certificate[0];
-                    }
-                }
-        };
-
-        try {
-            KeyStore clientStore = KeyStore.getInstance("PKCS12");
-            clientStore.load(new FileInputStream(filePath), password.toCharArray());
-
-            KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-            kmf.init(clientStore, password.toCharArray());
-
-            // initialize SSLContext with client cert
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            if (!connection.isSecure()) {
-                sslContext.init(kmf.getKeyManagers(), trustAllCerts, new SecureRandom());
-            } else {
-                sslContext.init(kmf.getKeyManagers(), null, new SecureRandom());
-            }
-
-            Unirest.config().sslContext(sslContext);
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
-        headers.put("X-CSRF-ZOSMF-HEADER", "dummy");
+        Unirest.config().clientCertificateStore(connection.getCertFilePath(), connection.getCertPassword());
     }
 
     /**

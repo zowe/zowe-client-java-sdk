@@ -161,28 +161,8 @@ The SDK supports .p12 file format that represents a key-store that houses a self
   
 In the example above, for certFilePath specify a path with a file name representing the location and file name of the .p12 file.  
   
-For certPassword, specify the paraphrase/password used for the key store.  
+For certPassword, specify the paraphrase/password used for the key store.
   
-The certificate file path value is normally retrieved from the Zowe Global Team Configuration file defined as a profile property. 
-
-Or you can hard the values within the ZosConnection definition.   
-  
-Check the following for an example test:
-
-    The following exampple shows how to generate a p12 file for testing.
-    
-    The following shows how a private key and certificate can be combined into a p12 file format.
-    
-    C:> openssl x509 -req -days 3650 -in file.csr -signkey file.key -out file.crt
-    Enter pass phrase for node1.key:frank
-    Certificate request self-signature ok
-    
-    C:> openssl pkcs12 -export -in file.crt -inkey node1.key -name "node1" -out file.p12
-    Enter pass phrase for node1.key:
-    Enter Export Password:
-    Verifying - Enter Export Password:
-
-    
 See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
   
 ## Requirements  
@@ -249,12 +229,12 @@ For a Maven project add the SDK as a dependency by updating your `pom.xml` as fo
     <dependency>
         <groupId>org.zowe.client.java.sdk</groupId>
         <artifactId>zowe-client-java-sdk</artifactId>
-        <version>4.0.0-RC10</version>
+        <version>4.0.1</version>
     </dependency>
 
 For a Gradle project add the SDK as a dependency by updating your `build.gradle` as follows:
 
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '4.0.0-RC10'  
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '4.0.1'  
   
 ## Publishing to Maven Central  
   
