@@ -205,10 +205,10 @@ The following maven command at the root prompt of the project will produce zowe-
     mvn clean package  
   
 ## Logger 
-    
-For logging, the SDK provides SLF4J within its FATJAR. 
-
-You will need to plug into SLF4J by implementing a logging framework of your choice for your project. 
+     
+For logging, the SDK does NOT include SLF4j (Simple Logging Facade for Java) dependency within its FATJAR. 
+  
+You will need to add SLF4j dependency and plug into your SLF4J by implementing a logging framework of your choice for your project. 
     
 ## Documentation  
 
