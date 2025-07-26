@@ -75,7 +75,9 @@ public class IssueConsoleExp extends TstZosConnection {
         ConsoleResponse response;
         try {
             IssueConsole issueConsole = new IssueConsole(connection);
-            response = issueConsole.issueCommandCommon(ConsoleConstants.RES_DEF_CN, new IssueConsoleParams(cmd));
+            IssueConsoleParams params = new IssueConsoleParams(cmd);
+            params.setProcessResponse(true);
+            response = issueConsole.issueCommandCommon(ConsoleConstants.RES_DEF_CN, params);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
