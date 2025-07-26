@@ -55,7 +55,7 @@ public class ZosConnection {
      */
     private final AuthType authType;
     /**
-     * Flag indicating to verify the authenticity of the server's certificate
+     * Flag is not used at this time.
      */
     private final boolean isSecure;
     /**
