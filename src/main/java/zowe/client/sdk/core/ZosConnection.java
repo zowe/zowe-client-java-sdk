@@ -82,9 +82,9 @@ public class ZosConnection {
     }
 
     /**
-     * Check if the flag to verify the authenticity of the server's certificate
+     * Flag is not used at this time.
      *
-     * @return true if the server certificate verification is requested, false otherwise
+     * @return boolean value
      */
     public boolean isSecure() {
         return isSecure;
