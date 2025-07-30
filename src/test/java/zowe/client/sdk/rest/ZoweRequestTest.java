@@ -133,11 +133,14 @@ public class ZoweRequestTest {
     public void tstZoweRequestInitializeSslSetupFailure() {
         ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
                 "/file/file1", "");
-        String errMsg = "kong.unirest.core.UnirestConfigException: java.io.FileNotFoundException: \\file\\file1 (The system cannot find the path specified)";
+        String errMsgWindows = "kong.unirest.core.UnirestConfigException: " +
+                "java.io.FileNotFoundException: \\file\\file1 (The system cannot find the path specified)";
+        String errMsgMacOS = "kong.unirest.core.UnirestConfigException: " +
+                "java.io.FileNotFoundException: /file/file1 (No such file or directory)";
         try {
             ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         } catch (Exception e) {
-            assertEquals(errMsg, e.getMessage());
+            assertTrue(e.getMessage().contains(errMsgWindows) || e.getMessage().contains(errMsgMacOS));
         }
     }
 

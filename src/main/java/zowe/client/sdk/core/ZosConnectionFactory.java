@@ -20,7 +20,7 @@ import kong.unirest.core.Cookie;
 public class ZosConnectionFactory {
 
     /**
-     * Private constructor defined to avoid instantiation of class
+     * Private constructor defined to avoid instantiation of static factory class
      */
     private ZosConnectionFactory() {
         throw new IllegalStateException("static factory class");
