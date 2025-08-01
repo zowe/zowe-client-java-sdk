@@ -45,7 +45,6 @@ public class UssGet {
      * @author James Kostrewski
      */
     public UssGet(final ZosConnection connection) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -59,7 +58,6 @@ public class UssGet {
      * @author James Kostrewski
      */
     public UssGet(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         // request type check deferred 
         this.request = request;

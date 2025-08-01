@@ -40,7 +40,6 @@ public class DsnDelete {
      * @author Leonid Baranov
      */
     public DsnDelete(final ZosConnection connection) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -53,7 +52,6 @@ public class DsnDelete {
      * @author Frank Giordano
      */
     public DsnDelete(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof DeleteJsonZosmfRequest)) {

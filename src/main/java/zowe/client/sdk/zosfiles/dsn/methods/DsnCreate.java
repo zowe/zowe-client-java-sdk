@@ -45,7 +45,6 @@ public class DsnCreate {
      * @author Leonid Baranov
      */
     public DsnCreate(final ZosConnection connection) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -58,7 +57,6 @@ public class DsnCreate {
      * @author Frank Giordano
      */
     public DsnCreate(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PostJsonZosmfRequest)) {
