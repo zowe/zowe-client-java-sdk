@@ -40,6 +40,19 @@ public class ZosConnectionFactory {
                                                       final String port,
                                                       final String user,
                                                       final String password) {
+
+        if (host == null || host.isBlank())
+            throw new IllegalStateException("Host is either null or empty");
+
+        if (port == null || port.isBlank())
+            throw new IllegalStateException("Port is either null or empty");
+
+        if (user == null || user.isBlank())
+            throw new IllegalStateException("User is either null or empty");
+
+        if (password == null || password.isBlank())
+            throw new IllegalStateException("Password is either null or empty");
+
         return new ZosConnection.Builder()
                 .host(host)
                 .zosmfPort(port)
@@ -61,6 +74,15 @@ public class ZosConnectionFactory {
     public static ZosConnection createTokenConnection(final String host,
                                                       final String port,
                                                       final Cookie token) {
+        if (host == null || host.isBlank())
+            throw new IllegalStateException("Host is either null or empty");
+
+        if (port == null || port.isBlank())
+            throw new IllegalStateException("Port is either null or empty");
+
+        if (token == null)
+            throw new IllegalStateException("Token is null");
+
         return new ZosConnection.Builder()
                 .host(host)
                 .zosmfPort(port)
@@ -83,6 +105,18 @@ public class ZosConnectionFactory {
                                                     final String port,
                                                     final String certFilePath,
                                                     final String certPassword) {
+        if (host == null || host.isBlank())
+            throw new IllegalStateException("Host is either null or empty");
+
+        if (port == null || port.isBlank())
+            throw new IllegalStateException("Port is either null or empty");
+
+        if (certFilePath == null || certFilePath.isBlank())
+            throw new IllegalStateException("Certificate file path (.p12) is either null or empty");
+
+        if (certPassword == null || certPassword.isBlank())
+            throw new IllegalStateException("Certificate password is either null or empty");
+
         return new ZosConnection.Builder()
                 .host(host)
                 .zosmfPort(port)

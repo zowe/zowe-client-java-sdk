@@ -50,7 +50,6 @@ public class JobSubmit {
      * @author Frank Giordano
      */
     public JobSubmit(final ZosConnection connection) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -63,7 +62,6 @@ public class JobSubmit {
      * @author Frank Giordano
      */
     public JobSubmit(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         // request type check deferred
         this.request = request;

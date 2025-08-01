@@ -47,7 +47,6 @@ public class UssCopy {
      * @author James Kostrewski
      */
     public UssCopy(final ZosConnection connection) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -60,7 +59,6 @@ public class UssCopy {
      * @author James Kostrewski
      */
     public UssCopy(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {

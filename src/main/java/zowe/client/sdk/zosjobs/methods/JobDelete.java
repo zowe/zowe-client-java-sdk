@@ -44,7 +44,6 @@ public class JobDelete {
      * @author Nikunj Goyal
      */
     public JobDelete(final ZosConnection connection) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -57,7 +56,6 @@ public class JobDelete {
      * @author Frank Giordano
      */
     public JobDelete(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof DeleteJsonZosmfRequest)) {

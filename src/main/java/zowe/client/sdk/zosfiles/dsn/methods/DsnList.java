@@ -51,7 +51,6 @@ public class DsnList {
      * @author Frank Giordano
      */
     public DsnList(final ZosConnection connection) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -64,7 +63,6 @@ public class DsnList {
      * @author Frank Giordano
      */
     public DsnList(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof GetJsonZosmfRequest)) {

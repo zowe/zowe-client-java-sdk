@@ -132,7 +132,7 @@ public class ZoweRequestTest {
     @Test
     public void tstZoweRequestInitializeSslSetupFailure() {
         ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
-                "/file/file1", "");
+                "/file/file1", "dummy");
         String errMsgWindows = "kong.unirest.core.UnirestConfigException: " +
                 "java.io.FileNotFoundException: \\file\\file1 (The system cannot find the path specified)";
         String errMsgMacOS = "kong.unirest.core.UnirestConfigException: " +
@@ -147,7 +147,7 @@ public class ZoweRequestTest {
     @Test
     public void tstZoweRequestInitializeSslSetupCertPasswordFailure() {
         ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
-                "src/test/resources/certs/badssl.com-client.p12", "");
+                "src/test/resources/certs/badssl.com-client.p12", "dummy");
         String errMsg = "java.io.IOException: keystore password was incorrect";
         try {
             ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);

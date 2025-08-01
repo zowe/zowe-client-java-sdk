@@ -48,7 +48,6 @@ public class UssWrite {
      * @author Frank Giordano
      */
     public UssWrite(final ZosConnection connection) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -61,7 +60,6 @@ public class UssWrite {
      * @author Frank Giordano
      */
     public UssWrite(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         // request type check deferred
         this.request = request;

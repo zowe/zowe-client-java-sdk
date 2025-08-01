@@ -42,7 +42,6 @@ public class IssueTso {
      * @author Frank Giordano
      */
     public IssueTso(final ZosConnection connection) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 

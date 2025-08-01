@@ -50,7 +50,6 @@ public class JobGet {
      * @author Frank Giordano
      */
     public JobGet(final ZosConnection connection) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -63,7 +62,6 @@ public class JobGet {
      * @author Frank Giordano
      */
     public JobGet(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
         this.request = request;
     }
