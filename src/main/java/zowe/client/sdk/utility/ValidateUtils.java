@@ -31,40 +31,6 @@ public final class ValidateUtils {
     }
 
     /**
-     * Check connection for validity.
-     *
-     * @param connection for connection information, see ZosConnection object
-     * @throws IllegalStateException with invalid connection object message
-     * @author Frank Giordano
-     */
-    public static void checkConnection(final ZosConnection connection) {
-        if (connection == null) {
-            throw new IllegalStateException("connection is null");
-        }
-        String errMsg = "required connection attribute(s) missing for " + connection.getAuthType() + " authentication";
-        if (connection.getAuthType().equals(AuthType.BASIC)) {
-            if (connection.getZosmfPort() == null || connection.getHost() == null ||
-                    connection.getPassword() == null || connection.getUser() == null ||
-                    connection.getZosmfPort().isBlank() || connection.getHost().isBlank() ||
-                    connection.getPassword().isBlank() || connection.getUser().isBlank()) {
-                throw new IllegalStateException(errMsg);
-            }
-        } else if (connection.getAuthType().equals(AuthType.TOKEN)) {
-            if (connection.getZosmfPort() == null || connection.getHost() == null ||
-                    connection.getToken() == null || connection.getZosmfPort().isBlank() ||
-                    connection.getHost().isBlank()) {
-                throw new IllegalStateException(errMsg);
-            }
-        } else if (connection.getAuthType().equals(AuthType.SSL)) {
-            if (connection.getZosmfPort() == null || connection.getHost() == null ||
-                    connection.getCertFilePath() == null || connection.getZosmfPort().isBlank() ||
-                    connection.getHost().isBlank() || connection.getCertFilePath().isBlank()) {
-                throw new IllegalStateException(errMsg);
-            }
-        }
-    }
-
-    /**
      * Check for state of parameter
      *
      * @param check Check for true or false value

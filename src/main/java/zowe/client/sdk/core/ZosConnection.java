@@ -260,7 +260,7 @@ public class ZosConnection {
     /**
      * Builder class for ZosConnection
      */
-    public static class Builder {
+    static class Builder {
 
         /**
          * Host name pointing to the backend z/OS instance

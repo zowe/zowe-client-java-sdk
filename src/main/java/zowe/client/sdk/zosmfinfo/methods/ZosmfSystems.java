@@ -42,7 +42,6 @@ public class ZosmfSystems {
      * @author Frank Giordano
      */
     public ZosmfSystems(final ZosConnection connection) {
-        ValidateUtils.checkConnection(connection);
         this.connection = connection;
     }
 
@@ -55,7 +54,6 @@ public class ZosmfSystems {
      * @author Frank Giordano
      */
     public ZosmfSystems(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkConnection(connection);
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof GetJsonZosmfRequest)) {
