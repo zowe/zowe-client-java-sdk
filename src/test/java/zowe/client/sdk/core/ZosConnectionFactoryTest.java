@@ -95,4 +95,5 @@ class ZosConnectionFactoryTest {
                 ZosConnectionFactory.createTokenConnection("host", "port", null)
         );
     }
+
 }
