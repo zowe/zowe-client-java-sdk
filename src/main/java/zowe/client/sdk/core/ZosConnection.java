@@ -37,19 +37,19 @@ public class ZosConnection {
     /**
      * Host username's password with access to backend z/OS instance
      */
-    private final String password;
+    private String password;
     /**
      * The certificate password for SSL authentication
      */
-    private final String certPassword;
+    private String certPassword;
     /**
      * Cookie value set to use as an authentication token for http call
      */
-    private final Cookie token;
+    private Cookie token;
     /**
      * Path with filename denoting the certificate for SSL authentication usage
      */
-    private final String certFilePath;
+    private String certFilePath;
     /**
      * AuthType: BASIC, TOKEN or SSL enum value for http request processing
      */
@@ -57,28 +57,16 @@ public class ZosConnection {
     /**
      * Flag is not used at this time.
      */
-    private final boolean isSecure;
+    private final boolean isSecure = true;
     /**
      * Base path for z/OSMF REST endpoints
      */
     private Optional<String> basePath = Optional.empty();
 
-    /**
-     * Private constructor used by the Builder
-     *
-     * @param builder Builder instance containing configuration
-     * @author Frank Giordano
-     */
-    private ZosConnection(ZosConnection.Builder builder) {
-        this.host = builder.host;
-        this.zosmfPort = builder.zosmfPort;
-        this.user = builder.user;
-        this.password = builder.password;
-        this.certPassword = builder.certPassword;
-        this.token = builder.token;
-        this.certFilePath = builder.certFilePath;
-        this.authType = builder.authType;
-        this.isSecure = builder.isSecure;
+    ZosConnection(String host, String zosmfPort, AuthType authType) {
+        this.host = host;
+        this.zosmfPort = zosmfPort;
+        this.authType = authType;
     }
 
     /**
@@ -257,157 +245,19 @@ public class ZosConnection {
         return Objects.hash(host, zosmfPort, user, password, certPassword, token, certFilePath, isSecure, basePath);
     }
 
-    /**
-     * Builder class for ZosConnection
-     */
-    static class Builder {
-
-        /**
-         * Host name pointing to the backend z/OS instance
-         */
-        private String host;
-        /**
-         * Host z/OSMF port number pointing to the backend z/OS instance
-         */
-        private String zosmfPort;
-        /**
-         * Host username with access to a backend z/OS instance
-         */
-        private String user;
-        /**
-         * Host username's password with access to backend z/OS instance
-         */
-        private String password;
-        /**
-         * The certificate password for SSL authentication
-         */
-        private String certPassword;
-        /**
-         * Token value set to use as an authentication token for http call
-         */
-        private Cookie token;
-        /**
-         * Path with filename denoting the certificate for SSL authentication usage
-         */
-        private String certFilePath;
-        /**
-         * Authentication enum type for the http request
-         */
-        private AuthType authType;
-        /**
-         * Flag indicating to verify the authenticity of the server's certificate
-         * Default to true
-         */
-        private boolean isSecure = true;
-
-        /**
-         * Set whether the connection should be secure (HTTPS)
-         *
-         * @param isSecure true for secure connection, false otherwise
-         * @return Builder instance
-         */
-        public ZosConnection.Builder secure(boolean isSecure) {
-            this.isSecure = isSecure;
-            return this;
-        }
-
-        /**
-         * Set the host
-         *
-         * @param host machine host pointing to backend z/OS instance
-         * @return Builder instance
-         */
-        public ZosConnection.Builder host(String host) {
-            this.host = host;
-            return this;
-        }
-
-        /**
-         * Set the z/OSMF port
-         *
-         * @param zosmfPort machine host z/OSMF port number pointing to backend z/OS instance
-         * @return Builder instance
-         */
-        public ZosConnection.Builder zosmfPort(String zosmfPort) {
-            this.zosmfPort = zosmfPort;
-            return this;
-        }
-
-        /**
-         * Set the user
-         *
-         * @param user machine host username with access to backend z/OS instance
-         * @return Builder instance
-         */
-        public ZosConnection.Builder user(String user) {
-            this.user = user;
-            return this;
-        }
-
-        /**
-         * Set the password
-         *
-         * @param password machine host username's password with access to backend z/OS instance
-         * @return Builder instance
-         */
-        public ZosConnection.Builder password(String password) {
-            this.password = password;
-            return this;
-        }
-
-        /**
-         * Set the certificate password for SSL authentication
-         *
-         * @param certPassword certificate password
-         * @return Builder instance
-         */
-        public ZosConnection.Builder certPassword(String certPassword) {
-            this.certPassword = certPassword;
-            return this;
-        }
-
-        /**
-         * Set the token
-         *
-         * @param token Cookie object containing a token value
-         * @return Builder instance
-         */
-        public ZosConnection.Builder token(Cookie token) {
-            this.token = token;
-            return this;
-        }
-
-        /**
-         * Set the certificate file path
-         *
-         * @param certFilePath path to the certificate file
-         * @return Builder instance
-         */
-        public ZosConnection.Builder certFilePath(String certFilePath) {
-            this.certFilePath = certFilePath;
-            return this;
-        }
-
-        /**
-         * Set the AuthType: BASIC, TOKEN or SSL enum value for http request processing
-         *
-         * @param authType AuthType enum value
-         * @return Builder instance
-         */
-        public ZosConnection.Builder authType(AuthType authType) {
-            this.authType = authType;
-            return this;
-        }
-
-        /**
-         * Build the ZosConnection instance
-         *
-         * @return new ZosConnection instance
-         */
-        public ZosConnection build() {
-            return new ZosConnection(this);
-        }
-
+    public void setPassword(String password) {
+        this.password = password;
     }
 
+    public void setCertPassword(String certPassword) {
+        this.certPassword = certPassword;
+    }
+
+    public void setToken(Cookie token) {
+        this.token = token;
+    }
+
+    public void setCertFilePath(String certFilePath) {
+        this.certFilePath = certFilePath;
+    }
 }

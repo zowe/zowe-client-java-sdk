@@ -53,13 +53,10 @@ public class ZosConnectionFactory {
         if (password == null || password.isBlank())
             throw new IllegalStateException("Password is either null or empty");
 
-        return new ZosConnection.Builder()
-                .host(host)
-                .zosmfPort(port)
-                .user(user)
-                .password(password)
-                .authType(AuthType.BASIC)
-                .build();
+        ZosConnection zosConnection = new ZosConnection(host, port, AuthType.BASIC);
+        zosConnection.setUser(user);
+        zosConnection.setPassword(password);
+        return zosConnection;
     }
 
     /**
@@ -83,12 +80,9 @@ public class ZosConnectionFactory {
         if (token == null)
             throw new IllegalStateException("Token is null");
 
-        return new ZosConnection.Builder()
-                .host(host)
-                .zosmfPort(port)
-                .token(token)
-                .authType(AuthType.TOKEN)
-                .build();
+        ZosConnection zosConnection = new ZosConnection(host, port, AuthType.TOKEN);
+        zosConnection.setToken(token);
+        return zosConnection;
     }
 
     /**
@@ -117,13 +111,10 @@ public class ZosConnectionFactory {
         if (certPassword == null || certPassword.isBlank())
             throw new IllegalStateException("Certificate password is either null or empty");
 
-        return new ZosConnection.Builder()
-                .host(host)
-                .zosmfPort(port)
-                .certFilePath(certFilePath)
-                .certPassword(certPassword)
-                .authType(AuthType.SSL)
-                .build();
+        ZosConnection zosConnection = new ZosConnection(host, port, AuthType.SSL);
+        zosConnection.setCertFilePath(certFilePath);
+        zosConnection.setCertPassword(certPassword);
+        return zosConnection;
     }
 
 }
