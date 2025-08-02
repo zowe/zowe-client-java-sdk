@@ -128,7 +128,7 @@ public class ZosConnection {
      *
      * @param user string value
      */
-    public void setUser(String user) {
+    void setUser(String user) {
         this.user = user;
     }
 
@@ -245,19 +245,19 @@ public class ZosConnection {
         return Objects.hash(host, zosmfPort, user, password, certPassword, token, certFilePath, isSecure, basePath);
     }
 
-    public void setPassword(String password) {
+    void setPassword(String password) {
         this.password = password;
     }
 
-    public void setCertPassword(String certPassword) {
+    void setCertPassword(String certPassword) {
         this.certPassword = certPassword;
     }
 
-    public void setToken(Cookie token) {
+    void setToken(Cookie token) {
         this.token = token;
     }
 
-    public void setCertFilePath(String certFilePath) {
+    void setCertFilePath(String certFilePath) {
         this.certFilePath = certFilePath;
     }
 }
