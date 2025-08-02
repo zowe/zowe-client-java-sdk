@@ -14,6 +14,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Class containing unit tests for ZosConnectionFactory.
+ *
+ * @author Frank Giordano
+ */
 class ZosConnectionFactoryTest {
 
     @Test
