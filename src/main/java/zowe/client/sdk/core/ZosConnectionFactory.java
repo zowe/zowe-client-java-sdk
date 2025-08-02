@@ -20,10 +20,10 @@ import kong.unirest.core.Cookie;
 public class ZosConnectionFactory {
 
     /**
-     * Private constructor defined to avoid instantiation of static factory class
+     * Private constructor defined to avoid instantiation of a static factory class
      */
     private ZosConnectionFactory() {
-        throw new IllegalStateException("static factory class");
+        throw new IllegalStateException("Factory class");
     }
 
     /**
@@ -40,18 +40,17 @@ public class ZosConnectionFactory {
                                                       final String port,
                                                       final String user,
                                                       final String password) {
-
         if (host == null || host.isBlank())
-            throw new IllegalStateException("Host is either null or empty");
+            throw new IllegalStateException("host is either null or empty");
 
         if (port == null || port.isBlank())
-            throw new IllegalStateException("Port is either null or empty");
+            throw new IllegalStateException("port is either null or empty");
 
         if (user == null || user.isBlank())
-            throw new IllegalStateException("User is either null or empty");
+            throw new IllegalStateException("user is either null or empty");
 
         if (password == null || password.isBlank())
-            throw new IllegalStateException("Password is either null or empty");
+            throw new IllegalStateException("password is either null or empty");
 
         return new ZosConnection.Builder()
                 .host(host)
@@ -75,13 +74,13 @@ public class ZosConnectionFactory {
                                                       final String port,
                                                       final Cookie token) {
         if (host == null || host.isBlank())
-            throw new IllegalStateException("Host is either null or empty");
+            throw new IllegalStateException("host is either null or empty");
 
         if (port == null || port.isBlank())
-            throw new IllegalStateException("Port is either null or empty");
+            throw new IllegalStateException("port is either null or empty");
 
         if (token == null)
-            throw new IllegalStateException("Token is null");
+            throw new IllegalStateException("token is null");
 
         return new ZosConnection.Builder()
                 .host(host)
@@ -106,16 +105,16 @@ public class ZosConnectionFactory {
                                                     final String certFilePath,
                                                     final String certPassword) {
         if (host == null || host.isBlank())
-            throw new IllegalStateException("Host is either null or empty");
+            throw new IllegalStateException("host is either null or empty");
 
         if (port == null || port.isBlank())
-            throw new IllegalStateException("Port is either null or empty");
+            throw new IllegalStateException("port is either null or empty");
 
         if (certFilePath == null || certFilePath.isBlank())
-            throw new IllegalStateException("Certificate file path (.p12) is either null or empty");
+            throw new IllegalStateException("certificate file path (.p12) is either null or empty");
 
         if (certPassword == null || certPassword.isBlank())
-            throw new IllegalStateException("Certificate password is either null or empty");
+            throw new IllegalStateException("certificate password is either null or empty");
 
         return new ZosConnection.Builder()
                 .host(host)
