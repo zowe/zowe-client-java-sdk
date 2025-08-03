@@ -85,7 +85,6 @@ public abstract class ZosmfRequest {
     private void initialize() {
         Unirest.config().reset();
         Unirest.config().enableCookieManagement(false);
-        Unirest.config().verifySsl(connection.isSecure());
         this.setStandardHeaders();
         this.token = null;
         switch (connection.getAuthType()) {
