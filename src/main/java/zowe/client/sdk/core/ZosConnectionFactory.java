@@ -114,10 +114,10 @@ public class ZosConnectionFactory {
      * @author Frank Giordano
      */
     public static ZosConnection createSslConnection(final String host,
-                                                     final String port,
-                                                     final String certFilePath,
-                                                     final String certPassword,
-                                                     final boolean isSecure) {
+                                                    final String port,
+                                                    final String certFilePath,
+                                                    final String certPassword,
+                                                    final boolean isSecure) {
         if (host == null || host.isBlank())
             throw new IllegalStateException("host is either null or empty");
 
