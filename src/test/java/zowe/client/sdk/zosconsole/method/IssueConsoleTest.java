@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosconsole;
+package zowe.client.sdk.zosconsole.method;
 
 import kong.unirest.core.Cookie;
 import kong.unirest.core.HttpResponse;
@@ -26,7 +26,6 @@ import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.zosconsole.input.IssueConsoleParams;
-import zowe.client.sdk.zosconsole.method.IssueConsole;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 
 import java.util.HashMap;
@@ -45,7 +44,7 @@ import static org.mockito.Mockito.withSettings;
  * @author Frank Giordano
  * @version 4.0
  */
-public class IssueCommandTest {
+public class IssueConsoleTest {
 
     private final ZosConnection connection = ZosConnectionFactory
             .createBasicConnection("1", "1", "1", "1");
