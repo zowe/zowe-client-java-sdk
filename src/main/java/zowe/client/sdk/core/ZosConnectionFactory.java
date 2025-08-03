@@ -113,7 +113,7 @@ public class ZosConnectionFactory {
      * @return ZosConnection configured for SSL authentication
      * @author Frank Giordano
      */
-    private static ZosConnection createSslConnection(final String host,
+    public static ZosConnection createSslConnection(final String host,
                                                      final String port,
                                                      final String certFilePath,
                                                      final String certPassword,
