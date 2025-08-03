@@ -66,9 +66,9 @@ public class ZosConnection {
     /**
      * ZosConnection constructor
      *
-     * @param host string value
+     * @param host      string value
      * @param zosmfPort string value
-     * @param authType AuthType enum value
+     * @param authType  AuthType enum value
      */
     ZosConnection(String host, String zosmfPort, AuthType authType) {
         this.host = host;
@@ -132,7 +132,7 @@ public class ZosConnection {
 
     /**
      * Set the password value
-     *
+     * <p>
      * This method is access level is private-package
      *
      * @param password string value
@@ -152,7 +152,7 @@ public class ZosConnection {
 
     /**
      * Set token value
-     *
+     * <p>
      * This method is access level is private-package
      *
      * @param token Cookie object
@@ -173,7 +173,7 @@ public class ZosConnection {
 
     /**
      * Set certificate path value
-     *
+     * <p>
      * This method is access level is private-package
      *
      * @param certFilePath string value
@@ -193,7 +193,7 @@ public class ZosConnection {
 
     /**
      * Set the certificate password value
-     *
+     * <p>
      * This method is access level is private-package
      *
      * @param certPassword string value
