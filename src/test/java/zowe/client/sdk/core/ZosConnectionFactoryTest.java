@@ -314,7 +314,7 @@ class ZosConnectionFactoryTest {
     public void tstSslSecureIsFalseSuccess() {
         final ZosConnection connection = ZosConnectionFactory.createSslConnection(
                 "test", "zosmfPort", "certPath", "certPassword", false);
-        assertTrue(connection.isSecure(), "SSL connection should be secure by default");
+        assertFalse(connection.isSecure(), "SSL connection is not secure");
     }
 
     @Test
