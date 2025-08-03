@@ -188,7 +188,7 @@ public class IssueCommandTest {
     public void tstNullConnectionFailure() {
         try {
             new IssueConsole(null);
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
             assertEquals("Should throw IllegalArgumentException when connection is null",
                     "connection is null", e.getMessage());
         }

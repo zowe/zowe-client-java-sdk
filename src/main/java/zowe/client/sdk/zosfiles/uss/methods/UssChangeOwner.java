@@ -45,7 +45,7 @@ public class UssChangeOwner {
      * @author James Kostrewski
      */
     public UssChangeOwner(final ZosConnection connection) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -58,7 +58,7 @@ public class UssChangeOwner {
      * @author Frank Giordano
      */
     public UssChangeOwner(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {

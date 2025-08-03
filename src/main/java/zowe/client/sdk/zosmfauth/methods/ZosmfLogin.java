@@ -42,7 +42,7 @@ public class ZosmfLogin {
      * @author Esteban Sandoval
      */
     public ZosmfLogin(final ZosConnection connection) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -55,7 +55,7 @@ public class ZosmfLogin {
      * @author Esteban Sandoval
      */
     public ZosmfLogin(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {

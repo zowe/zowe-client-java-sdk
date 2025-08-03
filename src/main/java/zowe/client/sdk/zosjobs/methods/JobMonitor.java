@@ -67,7 +67,7 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -79,7 +79,7 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection, final int attempts) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
         this.attempts = attempts;
     }
@@ -93,7 +93,7 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection, final int attempts, final int watchDelay) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
         this.attempts = attempts;
         this.watchDelay = watchDelay;
@@ -109,7 +109,7 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection, final int attempts, final int watchDelay, final int lineLimit) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
         this.attempts = attempts;
         this.watchDelay = watchDelay;

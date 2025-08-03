@@ -438,7 +438,7 @@ public class UssListTest {
     public void tstNullConnectionFailure() {
         try {
             new UssList(null);
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
             assertEquals("Should throw IllegalArgumentException when connection is null",
                     "connection is null", e.getMessage());
         }

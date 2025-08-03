@@ -45,7 +45,7 @@ public class UssGet {
      * @author James Kostrewski
      */
     public UssGet(final ZosConnection connection) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -59,7 +59,7 @@ public class UssGet {
      * @author James Kostrewski
      */
     public UssGet(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
         // request type check deferred 
         this.request = request;

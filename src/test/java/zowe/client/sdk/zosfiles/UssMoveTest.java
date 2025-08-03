@@ -203,7 +203,7 @@ public class UssMoveTest {
     public void tstNullConnectionFailure() {
         try {
             new UssMove(null);
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
             Assert.assertEquals("Should throw IllegalArgumentException when connection is null",
                     "connection is null", e.getMessage());
         }

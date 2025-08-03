@@ -57,7 +57,7 @@ public class UssList {
      * @author Frank Giordano
      */
     public UssList(final ZosConnection connection) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -70,7 +70,7 @@ public class UssList {
      * @author Frank Giordano
      */
     public UssList(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof GetJsonZosmfRequest)) {

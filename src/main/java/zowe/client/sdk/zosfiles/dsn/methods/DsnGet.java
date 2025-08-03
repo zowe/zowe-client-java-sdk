@@ -52,7 +52,7 @@ public class DsnGet {
      * @author Nikunj Goyal
      */
     public DsnGet(final ZosConnection connection) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -65,7 +65,7 @@ public class DsnGet {
      * @author Frank Giordano
      */
     public DsnGet(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof GetStreamZosmfRequest)) {

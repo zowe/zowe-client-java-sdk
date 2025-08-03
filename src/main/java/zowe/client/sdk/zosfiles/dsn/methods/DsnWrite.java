@@ -40,7 +40,7 @@ public class DsnWrite {
      * @author Leonid Baranov
      */
     public DsnWrite(final ZosConnection connection) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -53,7 +53,7 @@ public class DsnWrite {
      * @author Frank Giordano
      */
     public DsnWrite(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
         if (!(request instanceof PutTextZosmfRequest)) {
             throw new IllegalStateException("PUT_TEXT request type required");

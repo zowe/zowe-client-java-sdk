@@ -42,7 +42,7 @@ public class IssueTso {
      * @author Frank Giordano
      */
     public IssueTso(final ZosConnection connection) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 

@@ -257,7 +257,7 @@ public class GetJobsByJsonGetRequestTest {
     public void tstNullConnectionFailure() {
         try {
             new JobGet(null);
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
             assertEquals("Should throw IllegalArgumentException when connection is null",
                     "connection is null", e.getMessage());
         }

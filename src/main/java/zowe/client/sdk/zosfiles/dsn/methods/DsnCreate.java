@@ -45,7 +45,7 @@ public class DsnCreate {
      * @author Leonid Baranov
      */
     public DsnCreate(final ZosConnection connection) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -58,7 +58,7 @@ public class DsnCreate {
      * @author Frank Giordano
      */
     public DsnCreate(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PostJsonZosmfRequest)) {

@@ -44,7 +44,7 @@ public class UssDelete {
      * @author James Kostrewski
      */
     public UssDelete(final ZosConnection connection) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -58,7 +58,7 @@ public class UssDelete {
      * @author Frank Giordano
      */
     public UssDelete(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof DeleteJsonZosmfRequest)) {
