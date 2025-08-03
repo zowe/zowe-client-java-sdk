@@ -45,6 +45,7 @@ public class DsnCopy {
      * @author Leonid Baranov
      */
     public DsnCopy(final ZosConnection connection) {
+        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -57,6 +58,7 @@ public class DsnCopy {
      * @author Frank Giordano
      */
     public DsnCopy(final ZosConnection connection, final ZosmfRequest request) {
+        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {

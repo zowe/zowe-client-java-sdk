@@ -45,6 +45,7 @@ public class DsnCreate {
      * @author Leonid Baranov
      */
     public DsnCreate(final ZosConnection connection) {
+        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -52,11 +53,12 @@ public class DsnCreate {
      * Alternative DsnCreate constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
     public DsnCreate(final ZosConnection connection, final ZosmfRequest request) {
+        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PostJsonZosmfRequest)) {

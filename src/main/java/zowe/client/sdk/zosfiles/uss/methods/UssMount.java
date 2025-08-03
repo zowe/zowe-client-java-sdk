@@ -49,6 +49,7 @@ public class UssMount {
      * @author Frank Giordano
      */
     public UssMount(final ZosConnection connection) {
+        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -61,6 +62,7 @@ public class UssMount {
      * @author Frank Giordano
      */
     public UssMount(final ZosConnection connection, final ZosmfRequest request) {
+        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {

@@ -50,6 +50,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     public JobGet(final ZosConnection connection) {
+        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -62,6 +63,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     public JobGet(final ZosConnection connection, final ZosmfRequest request) {
+        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
         this.connection = connection;
         this.request = request;
     }

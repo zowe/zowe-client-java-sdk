@@ -48,6 +48,7 @@ public class UssWrite {
      * @author Frank Giordano
      */
     public UssWrite(final ZosConnection connection) {
+        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -60,6 +61,7 @@ public class UssWrite {
      * @author Frank Giordano
      */
     public UssWrite(final ZosConnection connection, final ZosmfRequest request) {
+        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
         this.connection = connection;
         // request type check deferred
         this.request = request;

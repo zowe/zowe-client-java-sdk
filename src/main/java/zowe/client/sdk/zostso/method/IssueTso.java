@@ -38,10 +38,11 @@ public class IssueTso {
     /**
      * IssueTso constructor
      *
-     * @param connection connection information, see ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
     public IssueTso(final ZosConnection connection) {
+        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -107,7 +108,7 @@ public class IssueTso {
 
         issueResponse.setZosmfResponses(zosmfTsoResponses);
 
-        // lastly save the command response to our issueResponse reference
+        // lastly, save the command response to our issueResponse reference
         issueResponse.setCommandResponses(sendResponse.getCommandResponse()
                 .orElseThrow(() -> new IllegalStateException("error getting tso command response")));
 

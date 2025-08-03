@@ -50,6 +50,7 @@ public class UssCreate {
      * @author James Kostrewski
      */
     public UssCreate(final ZosConnection connection) {
+        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -63,6 +64,7 @@ public class UssCreate {
      * @author Frank Giordano
      */
     public UssCreate(final ZosConnection connection, final ZosmfRequest request) {
+        ValidateUtils.checkIllegalParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PostJsonZosmfRequest)) {
