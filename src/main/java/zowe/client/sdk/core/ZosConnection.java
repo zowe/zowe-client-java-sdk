@@ -59,9 +59,14 @@ public class ZosConnection {
      */
     private Optional<String> basePath = Optional.empty();
     /**
-     * Flag is not used at this time.
+     * By default, Unirest performs SSL/TLS certificate verification,
+     * meaning it checks if the certificate presented by the server is valid and trusted.
+     * Setting value to false disables this verification, allowing connections to servers
+     * with self-signed or invalid certificates.
+     * <p>
+     * Default is true.
      */
-    private final boolean isSecure = true;
+    private boolean isSecure = true;
 
     /**
      * ZosConnection constructor
@@ -221,12 +226,21 @@ public class ZosConnection {
     }
 
     /**
-     * Flag is not used at this time.
+     * Retrieve isSecure value
      *
      * @return boolean value
      */
     public boolean isSecure() {
         return isSecure;
+    }
+
+    /**
+     * Set isSecure value
+     *
+     * @param isSecure boolean value
+     */
+    void setSecure(boolean isSecure) {
+        this.isSecure = isSecure;
     }
 
     /**

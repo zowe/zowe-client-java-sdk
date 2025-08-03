@@ -85,7 +85,7 @@ public abstract class ZosmfRequest {
     private void initialize() {
         Unirest.config().reset();
         Unirest.config().enableCookieManagement(false);
-        Unirest.config().verifySsl(false);
+        Unirest.config().verifySsl(connection.isSecure());
         this.setStandardHeaders();
         this.token = null;
         switch (connection.getAuthType()) {
@@ -127,9 +127,7 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setupSsl() {
-        Unirest.config()
-                .clientCertificateStore(connection.getCertFilePath(), connection.getCertPassword())
-                .verifySsl(true);
+        Unirest.config().clientCertificateStore(connection.getCertFilePath(), connection.getCertPassword());
     }
 
     /**

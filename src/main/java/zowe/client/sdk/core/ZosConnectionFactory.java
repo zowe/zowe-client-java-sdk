@@ -85,7 +85,7 @@ public class ZosConnectionFactory {
     }
 
     /**
-     * Creates a ZosConnection with SSL certificate authentication with isSecure
+     * Creates a ZosConnection with SSL certificate authentication
      *
      * @param host         Host address of the z/OSMF server
      * @param port         Port number of the z/OSMF server
@@ -98,6 +98,26 @@ public class ZosConnectionFactory {
                                                     final String port,
                                                     final String certFilePath,
                                                     final String certPassword) {
+        return createSslConnection(host, port, certFilePath, certPassword, true);
+    }
+
+    /**
+     * Creates a ZosConnection with SSL certificate authentication with isSecure
+     *
+     * @param host         Host address of the z/OSMF server
+     * @param port         Port number of the z/OSMF server
+     * @param certFilePath Path to the certificate file (.p12)
+     * @param certPassword Password for the certificate
+     * @param isSecure     SSL/TLS certificate verification flag, false disables this verification,
+     *                     allowing connections to servers with self-signed or invalid certificates.
+     * @return ZosConnection configured for SSL authentication
+     * @author Frank Giordano
+     */
+    private static ZosConnection createSslConnection(final String host,
+                                                     final String port,
+                                                     final String certFilePath,
+                                                     final String certPassword,
+                                                     final boolean isSecure) {
         if (host == null || host.isBlank())
             throw new IllegalStateException("host is either null or empty");
 
@@ -113,6 +133,7 @@ public class ZosConnectionFactory {
         ZosConnection zosConnection = new ZosConnection(host, port, AuthType.SSL);
         zosConnection.setCertFilePath(certFilePath);
         zosConnection.setCertPassword(certPassword);
+        zosConnection.setSecure(isSecure);
         return zosConnection;
     }
 
