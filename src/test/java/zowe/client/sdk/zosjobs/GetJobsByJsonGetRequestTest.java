@@ -253,4 +253,14 @@ public class GetJobsByJsonGetRequestTest {
         assertEquals(JobsConstants.JOB_ID_ILLEGAL_MSG, errorMsg);
     }
 
+    @Test
+    public void tstNullConnectionFailure() {
+        try {
+            new JobGet(null);
+        } catch (IllegalArgumentException e) {
+            assertEquals("Should throw IllegalArgumentException when connection is null",
+                    "connection is null", e.getMessage());
+        }
+    }
+
 }

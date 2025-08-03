@@ -185,13 +185,13 @@ public class IssueCommandTest {
     }
 
     @Test
-    public void testNullConnectionFailure() {
+    public void tstNullConnectionFailure() {
         try {
             new IssueConsole(null);
-        } catch (Exception e) {
-            assertEquals("Should throw IllegalArgumentException when connection is null", e.getMessage(),"connection is null");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Should throw IllegalArgumentException when connection is null",
+                    "connection is null", e.getMessage());
         }
     }
-
 
 }

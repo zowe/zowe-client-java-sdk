@@ -259,4 +259,14 @@ public class UssCopyTest {
         assertEquals("specify valid path value", errMsg);
     }
 
+    @Test
+    public void tstNullConnectionFailure() {
+        try {
+            new UssCopy(null);
+        } catch (IllegalArgumentException e) {
+            assertEquals("Should throw IllegalArgumentException when connection is null",
+                    "connection is null", e.getMessage());
+        }
+    }
+
 }

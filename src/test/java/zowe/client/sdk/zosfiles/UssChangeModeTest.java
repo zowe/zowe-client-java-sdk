@@ -11,6 +11,7 @@ package zowe.client.sdk.zosfiles;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -168,6 +169,16 @@ public class UssChangeModeTest {
             errMsg = e.getMessage();
         }
         assertEquals("mode not specified", errMsg);
+    }
+
+    @Test
+    public void tstNullConnectionFailure() {
+        try {
+            new UssChangeMode(null);
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("Should throw IllegalArgumentException when connection is null",
+                    "connection is null", e.getMessage());
+        }
     }
 
 }

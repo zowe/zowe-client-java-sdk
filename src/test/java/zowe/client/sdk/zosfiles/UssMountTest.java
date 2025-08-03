@@ -284,4 +284,14 @@ public class UssMountTest {
         assertEquals("fileSystemName is null", errMsg);
     }
 
+    @Test
+    public void tstNullConnectionFailure() {
+        try {
+            new UssMount(null);
+        } catch (IllegalArgumentException e) {
+            assertEquals("Should throw IllegalArgumentException when connection is null",
+                    "connection is null", e.getMessage());
+        }
+    }
+
 }

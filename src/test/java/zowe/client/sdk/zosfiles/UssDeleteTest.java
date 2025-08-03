@@ -203,4 +203,14 @@ public class UssDeleteTest {
         assertEquals("fileSystemName not specified", errMsg);
     }
 
+    @Test
+    public void tstNullConnectionFailure() {
+        try {
+            new UssDelete(null);
+        } catch (IllegalArgumentException e) {
+            assertEquals("Should throw IllegalArgumentException when connection is null",
+                    "connection is null", e.getMessage());
+        }
+    }
+
 }

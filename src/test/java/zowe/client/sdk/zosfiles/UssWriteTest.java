@@ -238,4 +238,14 @@ public class UssWriteTest {
         assertEquals("specify valid path value", errMsg);
     }
 
+    @Test
+    public void tstNullConnectionFailure() {
+        try {
+            new UssWrite(null);
+        } catch (IllegalArgumentException e) {
+            assertEquals("Should throw IllegalArgumentException when connection is null",
+                    "connection is null", e.getMessage());
+        }
+    }
+
 }
