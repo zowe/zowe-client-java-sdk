@@ -238,76 +238,55 @@ class ZosConnectionFactoryTest {
     @Test
     public void tstBasicInvalidStatesFailure() {
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createBasicConnection
-                (null, "port", "user", "password")
-        );
+                (null, "port", "user", "password"));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createBasicConnection
-                ("", "port", "user", "password")
-        );
+                ("", "port", "user", "password"));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createBasicConnection
-                ("host", null, "user", "password")
-        );
+                ("host", null, "user", "password"));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createBasicConnection
-                ("host", " ", "user", "password")
-        );
+                ("host", " ", "user", "password"));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createBasicConnection
-                ("host", "port", null, "password")
-        );
+                ("host", "port", null, "password"));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createBasicConnection
-                ("host", "port", "", "password")
-        );
+                ("host", "port", "", "password"));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createBasicConnection
-                ("host", "port", "user", null)
-        );
+                ("host", "port", "user", null));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createBasicConnection
-                ("host", "port", "user", "")
-        );
+                ("host", "port", "user", ""));
     }
 
     @Test
     public void tstSslInvalidStatesFailure() {
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createSslConnection
-                (null, "port", "user", "password")
-        );
+                (null, "port", "user", "password"));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createSslConnection
-                ("", "port", "user", "password")
-        );
+                ("", "port", "user", "password"));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createSslConnection
-                ("host", null, "user", "password")
-        );
+                ("host", null, "user", "password"));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createSslConnection
-                ("host", " ", "user", "password")
-        );
+                ("host", " ", "user", "password"));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createSslConnection
-                ("host", "port", null, "password")
-        );
+                ("host", "port", null, "password"));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createSslConnection
-                ("host", "port", "", "password")
-        );
+                ("host", "port", "", "password"));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createSslConnection
-                ("host", "port", "user", null)
-        );
+                ("host", "port", "user", null));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createSslConnection
-                ("host", "port", "user", "")
-        );
+                ("host", "port", "user", ""));
     }
 
     @Test
     public void tstTokenInvalidStatesFailure() {
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createTokenConnection
-                (null, "port", new Cookie("foo", "bar"))
-        );
+                (null, "port", new Cookie("foo", "bar")));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createTokenConnection
-                ("", "port", new Cookie("foo", "bar"))
-        );
+                ("", "port", new Cookie("foo", "bar")));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createTokenConnection
-                ("host", null, new Cookie("foo", "bar"))
-        );
+                ("host", null, new Cookie("foo", "bar")));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createTokenConnection
-                ("host", " ", new Cookie("foo", "bar"))
-        );
+                ("host", " ", new Cookie("foo", "bar")));
         assertThrows(IllegalStateException.class, () -> ZosConnectionFactory.createTokenConnection
-                ("host", "port", null)
-        );
+                ("host", "port", null));
     }
 
 }
