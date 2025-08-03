@@ -11,7 +11,8 @@ package zowe.client.sdk.utility;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Class containing unit tests for ValidateUtils.
