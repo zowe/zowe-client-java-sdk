@@ -236,7 +236,7 @@ public class ZosConnection {
 
     /**
      * Set isSecure value
-     *
+     * <p>
      * This method's access level is private-package
      *
      * @param isSecure boolean value
