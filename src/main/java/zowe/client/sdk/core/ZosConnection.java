@@ -31,6 +31,10 @@ public class ZosConnection {
      */
     private final String zosmfPort;
     /**
+     * AuthType: BASIC, TOKEN or SSL enum value for http request processing
+     */
+    private final AuthType authType;
+    /**
      * Host username with access to a backend z/OS instance
      */
     private String user;
@@ -38,10 +42,6 @@ public class ZosConnection {
      * Host username's password with access to backend z/OS instance
      */
     private String password;
-    /**
-     * The certificate password for SSL authentication
-     */
-    private String certPassword;
     /**
      * Cookie value set to use as an authentication token for http call
      */
@@ -51,18 +51,25 @@ public class ZosConnection {
      */
     private String certFilePath;
     /**
-     * AuthType: BASIC, TOKEN or SSL enum value for http request processing
+     * The certificate password for SSL authentication
      */
-    private final AuthType authType;
-    /**
-     * Flag is not used at this time.
-     */
-    private final boolean isSecure = true;
+    private String certPassword;
     /**
      * Base path for z/OSMF REST endpoints
      */
     private Optional<String> basePath = Optional.empty();
+    /**
+     * Flag is not used at this time.
+     */
+    private final boolean isSecure = true;
 
+    /**
+     * ZosConnection constructor
+     *
+     * @param host string value
+     * @param zosmfPort string value
+     * @param authType AuthType enum value
+     */
     ZosConnection(String host, String zosmfPort, AuthType authType) {
         this.host = host;
         this.zosmfPort = zosmfPort;
@@ -70,48 +77,30 @@ public class ZosConnection {
     }
 
     /**
-     * Flag is not used at this time.
-     *
-     * @return boolean value
-     */
-    public boolean isSecure() {
-        return isSecure;
-    }
-
-    /**
-     * Retrieve certFilePath
+     * Retrieve host
      *
      * @return string value
      */
-    public String getCertFilePath() {
-        return certFilePath;
+    public String getHost() {
+        return host;
     }
 
     /**
-     * Retrieve a cookie object representing a TOKEN
-     *
-     * @return Cookie object
-     */
-    public Cookie getToken() {
-        return token;
-    }
-
-    /**
-     * Retrieve password
+     * Retrieve zosmfPort
      *
      * @return string value
      */
-    public String getPassword() {
-        return password;
+    public String getZosmfPort() {
+        return zosmfPort;
     }
 
     /**
-     * Retrieve certPassword
+     * Retrieve AuthType: BASIC, TOKEN or SSL enum value for http request processing
      *
-     * @return string value
+     * @return AuthType enum value
      */
-    public String getCertPassword() {
-        return certPassword;
+    public AuthType getAuthType() {
+        return authType;
     }
 
     /**
@@ -128,35 +117,89 @@ public class ZosConnection {
      *
      * @param user string value
      */
-    void setUser(String user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
     /**
-     * Retrieve zosmfPort
+     * Retrieve password
      *
      * @return string value
      */
-    public String getZosmfPort() {
-        return zosmfPort;
+    public String getPassword() {
+        return password;
     }
 
     /**
-     * Retrieve host
+     * Set the password value
+     *
+     * This method is access level is private-package
+     *
+     * @param password string value
+     */
+    void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * Retrieve a cookie object representing a TOKEN
+     *
+     * @return Cookie object
+     */
+    public Cookie getToken() {
+        return token;
+    }
+
+    /**
+     * Set token value
+     *
+     * This method is access level is private-package
+     *
+     * @param token Cookie object
+     */
+    void setToken(Cookie token) {
+        this.token = token;
+    }
+
+    /**
+     * Retrieve certFilePath
      *
      * @return string value
      */
-    public String getHost() {
-        return host;
+    public String getCertFilePath() {
+        return certFilePath;
+    }
+
+
+    /**
+     * Set certificate path value
+     *
+     * This method is access level is private-package
+     *
+     * @param certFilePath string value
+     */
+    void setCertFilePath(String certFilePath) {
+        this.certFilePath = certFilePath;
     }
 
     /**
-     * Retrieve AuthType: BASIC, TOKEN or SSL enum value for http request processing
+     * Retrieve certPassword
      *
-     * @return AuthType enum value
+     * @return string value
      */
-    public AuthType getAuthType() {
-        return authType;
+    public String getCertPassword() {
+        return certPassword;
+    }
+
+    /**
+     * Set the certificate password value
+     *
+     * This method is access level is private-package
+     *
+     * @param certPassword string value
+     */
+    void setCertPassword(String certPassword) {
+        this.certPassword = certPassword;
     }
 
     /**
@@ -175,6 +218,15 @@ public class ZosConnection {
      */
     public Optional<String> getBasePath() {
         return basePath;
+    }
+
+    /**
+     * Flag is not used at this time.
+     *
+     * @return boolean value
+     */
+    public boolean isSecure() {
+        return isSecure;
     }
 
     /**
@@ -245,19 +297,4 @@ public class ZosConnection {
         return Objects.hash(host, zosmfPort, user, password, certPassword, token, certFilePath, isSecure, basePath);
     }
 
-    void setPassword(String password) {
-        this.password = password;
-    }
-
-    void setCertPassword(String certPassword) {
-        this.certPassword = certPassword;
-    }
-
-    void setToken(Cookie token) {
-        this.token = token;
-    }
-
-    void setCertFilePath(String certFilePath) {
-        this.certFilePath = certFilePath;
-    }
 }
