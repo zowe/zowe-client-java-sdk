@@ -327,5 +327,3 @@ public abstract class ZosmfRequest {
     public Map<String, String> getHeaders() {
         return headers;
     }
-
-}
