@@ -9,9 +9,7 @@
  */
 package zowe.client.sdk.utility;
 
-import zowe.client.sdk.core.AuthType;
 import zowe.client.sdk.core.SshConnection;
-import zowe.client.sdk.core.ZosConnection;
 
 import java.util.Optional;
 
