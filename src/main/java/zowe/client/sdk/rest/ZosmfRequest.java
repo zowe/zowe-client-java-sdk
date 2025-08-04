@@ -124,18 +124,16 @@ public abstract class ZosmfRequest {
 
     /**
      * Setup authentication SSL type
+     * insecure
      *
      * @author Frank Giordano
      */
     private void setupSsl() {
-        final String certFilePath = connection.getCertFilePath();
-        final String certPassword = connection.getCertPassword();
-
         boolean inSecure = Boolean.parseBoolean(System.getProperty("zowe.sdk.allow.insecure.connection", "false"));
         if (inSecure) {
-            setupSelfSignCertificate(certFilePath, certPassword);
+            setupSelfSignCertificate(connection.getCertFilePath(), connection.getCertPassword());
         } else {
-            Unirest.config().clientCertificateStore(certFilePath, certPassword);
+            Unirest.config().clientCertificateStore(connection.getCertFilePath(), connection.getCertPassword());
         }
     }
 
