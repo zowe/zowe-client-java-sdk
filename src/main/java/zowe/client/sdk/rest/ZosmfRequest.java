@@ -124,14 +124,14 @@ public abstract class ZosmfRequest {
 
     /**
      * Setup authentication SSL type
-     * <p>
+     *
      * With the following system property set "zowe.sdk.allow.insecure.connection",
      * insecure type for self-signed certificate processing is enabled.
      *
      * @author Frank Giordano
      */
     private void setupSsl() {
-        boolean inSecure = Boolean.parseBoolean(System.getProperty("zowe.sdk.allow.insecure.connection", "false"));
+        boolean inSecure = Boolean.parseBoolean(System.getProperty(RestConstant.INSECURE_PROPERTY_NAME, "false"));
         if (inSecure) {
             setupSelfSignedCertificate(connection.getCertFilePath(), connection.getCertPassword());
         } else {
