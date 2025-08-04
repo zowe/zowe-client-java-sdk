@@ -124,7 +124,7 @@ public abstract class ZosmfRequest {
 
     /**
      * Setup authentication SSL type
-     *
+     * <p>
      * With the following system property set "zowe.sdk.allow.insecure.connection",
      * insecure type for self-signed certificate processing is enabled.
      *

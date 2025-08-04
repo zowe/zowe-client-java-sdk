@@ -104,7 +104,7 @@ public final class RestConstant {
     };
 
     /**
-     * The system properly value for insecure toggling to use a self-signed certificate
+     * The system property value for insecure toggling to use a self-signed certificate
      */
     public static final String INSECURE_PROPERTY_NAME = "zowe.sdk.allow.insecure.connection";
 
