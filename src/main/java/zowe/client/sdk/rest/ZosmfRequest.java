@@ -162,23 +162,9 @@ public abstract class ZosmfRequest {
                     KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
             keyManagerFactory.init(keyStore, certPassword.toCharArray());
 
-            // Trust all server certs (like --insecure)
-            TrustManager[] trustAllCerts = new TrustManager[]{
-                    new X509TrustManager() {
-                        public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                        }
-
-                        public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                        }
-
-                        public X509Certificate[] getAcceptedIssuers() {
-                            return new X509Certificate[0];
-                        }
-                    }
-            };
-
             SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(keyManagerFactory.getKeyManagers(), trustAllCerts, new java.security.SecureRandom());
+            sslContext.init(keyManagerFactory.getKeyManagers(),
+                    RestConstant.trustAllCerts, new java.security.SecureRandom());
             Unirest.config().sslContext(sslContext);
         } catch (Exception e) {
             throw new IllegalStateException(e);

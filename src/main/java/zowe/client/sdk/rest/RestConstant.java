@@ -1,5 +1,8 @@
 package zowe.client.sdk.rest;
 
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.security.cert.X509Certificate;
 import java.util.AbstractMap;
 import java.util.Map;
 
@@ -81,5 +84,23 @@ public final class RestConstant {
             new AbstractMap.SimpleEntry<>(508, "loop detected"),
             new AbstractMap.SimpleEntry<>(510, "not expended"),
             new AbstractMap.SimpleEntry<>(511, "network authentication required"));
+
+    /**
+     * Trust all server certs (like --insecure)
+     * Used when isSecure connection attribute is set to false
+     */
+    public static final TrustManager[] trustAllCerts = new TrustManager[]{
+            new X509TrustManager() {
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }
+            }
+    };
 
 }
