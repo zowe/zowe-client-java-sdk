@@ -87,7 +87,7 @@ public final class RestConstant {
 
     /**
      * Trust all server certs (like --insecure)
-     * Used when isSecure connection attribute is set to false
+     * Used when "zowe.sdk.allow.insecure.connection" System property is defined
      */
     public static final TrustManager[] TRUST_ALL_CERTS = new TrustManager[]{
             new X509TrustManager() {
