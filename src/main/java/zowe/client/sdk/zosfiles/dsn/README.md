@@ -320,7 +320,7 @@ public class DsnCreateExp extends TstZosConnection {
     }
 
 }
-`````
+````
 
 **Retrieve dataset information**
 
