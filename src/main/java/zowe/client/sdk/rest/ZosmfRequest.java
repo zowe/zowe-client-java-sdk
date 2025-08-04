@@ -20,14 +20,14 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyStore;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -125,10 +125,49 @@ public abstract class ZosmfRequest {
     /**
      * Setup authentication SSL type
      *
+     * With the following system property set "zowe.sdk.allow.insecure.connection",
+     * insecure type for self-signed certificate processing is enabled.
+     *
      * @author Frank Giordano
      */
     private void setupSsl() {
-        Unirest.config().clientCertificateStore(connection.getCertFilePath(), connection.getCertPassword());
+        boolean inSecure = Boolean.parseBoolean(System.getProperty(RestConstant.INSECURE_PROPERTY_NAME, "false"));
+        if (inSecure) {
+            setupSelfSignedCertificate(connection.getCertFilePath(), connection.getCertPassword());
+        } else {
+            Unirest.config().clientCertificateStore(connection.getCertFilePath(), connection.getCertPassword());
+        }
+    }
+
+    /**
+     * Setup self-signed certificate SSL type
+     *
+     * @param certFilePath certificate file (.p12) location
+     * @param certPassword certificate password for certificate file (.p12)
+     * @author Frank Giordano
+     */
+    private void setupSelfSignedCertificate(String certFilePath, String certPassword) {
+        try {
+            System.setProperty("jdk.internal.httpclient.disableHostnameVerification", "true");
+
+            KeyStore keyStore = KeyStore.getInstance("PKCS12");
+            try (FileInputStream fileInputStream = new FileInputStream(certFilePath)) {
+                keyStore.load(fileInputStream, certPassword.toCharArray());
+            } catch (Exception e) {
+                throw new IllegalStateException(e);
+            }
+
+            KeyManagerFactory keyManagerFactory =
+                    KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            keyManagerFactory.init(keyStore, certPassword.toCharArray());
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(keyManagerFactory.getKeyManagers(),
+                    RestConstant.TRUST_ALL_CERTS, new java.security.SecureRandom());
+            Unirest.config().sslContext(sslContext);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     /**
@@ -304,7 +343,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Check if the url is a valid http(s) url.
+     * Check if the url is a valid http(s) url
      *
      * @param url string value
      * @return boolean true or false

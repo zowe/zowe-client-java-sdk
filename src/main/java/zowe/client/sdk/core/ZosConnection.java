@@ -58,15 +58,6 @@ public class ZosConnection {
      * Base path for z/OSMF REST endpoints
      */
     private Optional<String> basePath = Optional.empty();
-    /**
-     * By default, Unirest performs SSL/TLS certificate verification,
-     * meaning it checks if the certificate presented by the server is valid and trusted.
-     * Setting value to false disables this verification, allowing connections to servers
-     * with self-signed or invalid certificates.
-     * <p>
-     * Default is true.
-     */
-    private boolean isSecure = true;
 
     /**
      * ZosConnection constructor
@@ -226,26 +217,6 @@ public class ZosConnection {
     }
 
     /**
-     * Retrieve isSecure value
-     *
-     * @return boolean value
-     */
-    public boolean isSecure() {
-        return isSecure;
-    }
-
-    /**
-     * Set isSecure value
-     * <p>
-     * This method's access level is private-package
-     *
-     * @param isSecure boolean value
-     */
-    void setSecure(boolean isSecure) {
-        this.isSecure = isSecure;
-    }
-
-    /**
      * Equals method. Use all members for equality.
      *
      * @param obj object
@@ -265,22 +236,19 @@ public class ZosConnection {
                     Objects.equals(zosmfPort, other.zosmfPort) &&
                     Objects.equals(user, other.user) &&
                     Objects.equals(password, other.password) &&
-                    Objects.equals(basePath, other.basePath) &&
-                    isSecure == other.isSecure;
+                    Objects.equals(basePath, other.basePath);
         } else if (this.authType == AuthType.TOKEN) {
             if (this.user != null && !this.user.isBlank()) {
                 return Objects.equals(host, other.host) &&
                         Objects.equals(zosmfPort, other.zosmfPort) &&
                         Objects.equals(user, other.user) &&
                         Objects.equals(token.getValue(), other.token.getValue()) &&
-                        Objects.equals(basePath, other.basePath) &&
-                        isSecure == other.isSecure;
+                        Objects.equals(basePath, other.basePath);
             } else {
                 return Objects.equals(host, other.host) &&
                         Objects.equals(zosmfPort, other.zosmfPort) &&
                         Objects.equals(token.getValue(), other.token.getValue()) &&
-                        Objects.equals(basePath, other.basePath) &&
-                        isSecure == other.isSecure;
+                        Objects.equals(basePath, other.basePath);
             }
         } else if (this.authType == AuthType.SSL) {
             if (this.user != null && !this.user.isBlank()) {
@@ -289,15 +257,13 @@ public class ZosConnection {
                         Objects.equals(user, other.user) &&
                         Objects.equals(certPassword, other.certPassword) &&
                         Objects.equals(certFilePath, other.certFilePath) &&
-                        Objects.equals(basePath, other.basePath) &&
-                        isSecure == other.isSecure;
+                        Objects.equals(basePath, other.basePath);
             } else {
                 return Objects.equals(host, other.host) &&
                         Objects.equals(zosmfPort, other.zosmfPort) &&
                         Objects.equals(certPassword, other.certPassword) &&
                         Objects.equals(certFilePath, other.certFilePath) &&
-                        Objects.equals(basePath, other.basePath) &&
-                        isSecure == other.isSecure;
+                        Objects.equals(basePath, other.basePath);
             }
         }
         return false;
@@ -310,7 +276,7 @@ public class ZosConnection {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(host, zosmfPort, user, password, certPassword, token, certFilePath, isSecure, basePath);
+        return Objects.hash(host, zosmfPort, user, password, certPassword, token, certFilePath, basePath);
     }
 
 }

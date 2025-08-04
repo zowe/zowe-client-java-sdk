@@ -289,48 +289,4 @@ class ZosConnectionFactoryTest {
                 "host", "port", null));
     }
 
-    @Test
-    public void tstSslSecureByDefaultSuccess() {
-        final ZosConnection connection = ZosConnectionFactory.createSslConnection(
-                "test", "zosmfPort", "certPath", "certPassword");
-        assertTrue(connection.isSecure(), "SSL connection should be secure by default");
-    }
-
-    @Test
-    public void tstBasicSecureByDefaultSuccess() {
-        final ZosConnection connection = ZosConnectionFactory.createBasicConnection(
-                "test", "zosmfPort", "user", "password");
-        assertTrue(connection.isSecure(), "Basic connection should be secure by default");
-    }
-
-    @Test
-    public void tstTokenSecureByDefaultSuccess() {
-        final ZosConnection connection = ZosConnectionFactory.createTokenConnection(
-                "test", "zosmfPort", new Cookie("hello", "world"));
-        assertTrue(connection.isSecure(), "Token connection should be secure by default");
-    }
-
-    @Test
-    public void tstSslSecureIsFalseSuccess() {
-        final ZosConnection connection = ZosConnectionFactory.createSslConnection(
-                "test", "zosmfPort", "certPath", "certPassword", false);
-        assertFalse(connection.isSecure(), "SSL connection is not secure");
-    }
-
-    @Test
-    public void tstBasicSecureIsFalseSuccess() {
-        final ZosConnection connection = ZosConnectionFactory.createBasicConnection(
-                "test", "zosmfPort", "user", "password");
-        connection.setSecure(false);
-        assertFalse(connection.isSecure(), "Basic connection should not be secure");
-    }
-
-    @Test
-    public void tstTokenSecureIsFalseSuccess() {
-        final ZosConnection connection = ZosConnectionFactory.createTokenConnection(
-                "test", "zosmfPort", new Cookie("hello", "world"));
-        connection.setSecure(false);
-        assertFalse(connection.isSecure(), "Token connection should not be secure");
-    }
-
 }

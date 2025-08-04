@@ -157,12 +157,18 @@ For SSL, the following ZosConnection object is specified:
 
     ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port", "c:\file.p12", "certpassword"));
   
-The SDK supports .p12 file format that represents a key-store that houses a self-signed certificate.  
+The SDK supports .p12 file format that represents a key-store that houses a certificate.  
   
 In the example above, for certFilePath specify a path with a file name representing the location and file name of the .p12 file.  
   
-For certPassword, specify the paraphrase/password used for the key store.
+For certPassword, specify the paraphrase/password used for the key store.  
   
+For a self-signed certificate, you will need to enable inSecure processing by setting the following system property:  
+  
+    zowe.sdk.allow.insecure.connection  
+  
+to true value.  
+      
 See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
   
 ## Requirements  
@@ -229,12 +235,12 @@ For a Maven project add the SDK as a dependency by updating your `pom.xml` as fo
     <dependency>
         <groupId>org.zowe.client.java.sdk</groupId>
         <artifactId>zowe-client-java-sdk</artifactId>
-        <version>4.1.3</version>
+        <version>4.2.0</version>
     </dependency>
 
 For a Gradle project add the SDK as a dependency by updating your `build.gradle` as follows:
 
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '4.1.3'  
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '4.2.0'  
   
 ## Publishing to Maven Central  
   
