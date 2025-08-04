@@ -157,12 +157,18 @@ For SSL, the following ZosConnection object is specified:
 
     ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port", "c:\file.p12", "certpassword"));
   
-The SDK supports .p12 file format that represents a key-store that houses a self-signed certificate.  
+The SDK supports .p12 file format that represents a key-store that houses a certificate.  
   
 In the example above, for certFilePath specify a path with a file name representing the location and file name of the .p12 file.  
   
-For certPassword, specify the paraphrase/password used for the key store.
+For certPassword, specify the paraphrase/password used for the key store.  
   
+For a self-signed certificate, you will need to enable inSecure processing by setting the following system property:  
+  
+    zowe.sdk.allow.insecure.connection  
+  
+to true value.  
+      
 See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
   
 ## Requirements  
