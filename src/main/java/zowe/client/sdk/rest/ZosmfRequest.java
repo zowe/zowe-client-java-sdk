@@ -108,6 +108,7 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setupBasic() {
+        Unirest.config().verifySsl(false);
         headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
     }
 
@@ -117,6 +118,7 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setupToken() {
+        Unirest.config().verifySsl(false);
         this.token = connection.getToken();
     }
 
