@@ -65,6 +65,7 @@ public class DsnRename {
         if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");
         }
+        this.request = request;
     }
 
     /**
