@@ -22,16 +22,12 @@ import zowe.client.sdk.utility.ValidateUtils;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.security.*;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
+import java.security.KeyStore;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -135,7 +131,8 @@ public abstract class ZosmfRequest {
         final String certFilePath = connection.getCertFilePath();
         final String certPassword = connection.getCertPassword();
 
-        if (!connection.isSecure()) {
+        boolean inSecure = Boolean.parseBoolean(System.getProperty("zowe.sdk.allow.insecure.connection", "false"));
+        if (inSecure) {
             setupSelfSignCertificate(certFilePath, certPassword);
         } else {
             Unirest.config().clientCertificateStore(certFilePath, certPassword);
@@ -151,6 +148,8 @@ public abstract class ZosmfRequest {
      */
     private void setupSelfSignCertificate(String certFilePath, String certPassword) {
         try {
+            System.setProperty("jdk.internal.httpclient.disableHostnameVerification", "true");
+
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             try (FileInputStream fileInputStream = new FileInputStream(certFilePath)) {
                 keyStore.load(fileInputStream, certPassword.toCharArray());
@@ -164,7 +163,7 @@ public abstract class ZosmfRequest {
 
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(keyManagerFactory.getKeyManagers(),
-                    RestConstant.trustAllCerts, new java.security.SecureRandom());
+                    RestConstant.TRUST_ALL_CERTS, new java.security.SecureRandom());
             Unirest.config().sslContext(sslContext);
         } catch (Exception e) {
             throw new IllegalStateException(e);

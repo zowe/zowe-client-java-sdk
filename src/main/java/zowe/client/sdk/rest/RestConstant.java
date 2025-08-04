@@ -89,7 +89,7 @@ public final class RestConstant {
      * Trust all server certs (like --insecure)
      * Used when isSecure connection attribute is set to false
      */
-    public static final TrustManager[] trustAllCerts = new TrustManager[]{
+    public static final TrustManager[] TRUST_ALL_CERTS = new TrustManager[]{
             new X509TrustManager() {
                 public void checkClientTrusted(X509Certificate[] certs, String authType) {
                 }
