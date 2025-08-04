@@ -131,7 +131,7 @@ public abstract class ZosmfRequest {
     private void setupSsl() {
         boolean inSecure = Boolean.parseBoolean(System.getProperty("zowe.sdk.allow.insecure.connection", "false"));
         if (inSecure) {
-            setupSelfSignCertificate(connection.getCertFilePath(), connection.getCertPassword());
+            setupSelfSignedCertificate(connection.getCertFilePath(), connection.getCertPassword());
         } else {
             Unirest.config().clientCertificateStore(connection.getCertFilePath(), connection.getCertPassword());
         }
@@ -144,7 +144,7 @@ public abstract class ZosmfRequest {
      * @param certPassword certificate password for certificate file (.p12)
      * @author Frank Giordano
      */
-    private void setupSelfSignCertificate(String certFilePath, String certPassword) {
+    private void setupSelfSignedCertificate(String certFilePath, String certPassword) {
         try {
             System.setProperty("jdk.internal.httpclient.disableHostnameVerification", "true");
 
