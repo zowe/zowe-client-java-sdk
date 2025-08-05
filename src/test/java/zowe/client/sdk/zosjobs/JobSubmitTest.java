@@ -159,7 +159,7 @@ public class JobSubmitTest {
                 IllegalStateException.class,
                 () -> new JobSubmit(connection, request)
         );
-        assertEquals("PUT_JSON request type required", exception.getMessage());
+        assertEquals("PUT_JSON or PUT_TEXT request type required", exception.getMessage());
     }
 
     @Test
