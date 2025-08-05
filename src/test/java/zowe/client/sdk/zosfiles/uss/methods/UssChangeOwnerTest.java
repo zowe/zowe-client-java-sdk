@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -50,6 +51,8 @@ public class UssChangeOwnerTest {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonPutRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonPutRequest).getUrl();
 
         mockJsonPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
@@ -59,6 +62,7 @@ public class UssChangeOwnerTest {
         doCallRealMethod().when(mockJsonPutRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockJsonPutRequestToken).setUrl(any());
         doCallRealMethod().when(mockJsonPutRequestToken).getHeaders();
+        doCallRealMethod().when(mockJsonPutRequestToken).getUrl();
 
         ussChangeOwner = new UssChangeOwner(connection);
     }
@@ -70,6 +74,7 @@ public class UssChangeOwnerTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
+        Assertions.assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx%2Fxx", mockJsonPutRequest.getUrl());
     }
 
     @Test
@@ -81,6 +86,7 @@ public class UssChangeOwnerTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
+        Assertions.assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx%2Fxx", mockJsonPutRequestToken.getUrl());
     }
 
     @Test
