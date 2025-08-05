@@ -157,7 +157,11 @@ public class DsnGet {
         }
 
         key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
-        value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
+        if (params.getEncoding().isPresent()) {
+            value = String.valueOf(params.getEncoding().getAsLong());
+        } else {
+            value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
+        }
         headers.put(key, value);
 
         if (request == null) {
