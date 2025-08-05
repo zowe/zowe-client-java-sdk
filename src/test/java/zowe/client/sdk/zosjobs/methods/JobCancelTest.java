@@ -116,7 +116,7 @@ public class JobCancelTest {
 
     @Test
     public void tstSecondaryConstructorWithNullConnection() {
-        ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
+        ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new JobCancel(null, request)
