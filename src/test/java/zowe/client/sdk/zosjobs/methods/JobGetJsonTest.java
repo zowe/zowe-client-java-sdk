@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs;
+package zowe.client.sdk.zosjobs.methods;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
