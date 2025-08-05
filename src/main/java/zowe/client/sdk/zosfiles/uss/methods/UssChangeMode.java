@@ -59,7 +59,7 @@ public class UssChangeMode {
      * @param request    any compatible ZoweRequest Interface object
      * @author James Kostrewski
      */
-    public UssChangeMode(final ZosConnection connection, final ZosmfRequest request) {
+    UssChangeMode(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;

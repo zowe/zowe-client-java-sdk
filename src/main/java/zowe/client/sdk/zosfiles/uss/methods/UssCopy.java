@@ -59,7 +59,7 @@ public class UssCopy {
      * @param request    any compatible ZoweRequest Interface object
      * @author James Kostrewski
      */
-    public UssCopy(final ZosConnection connection, final ZosmfRequest request) {
+    UssCopy(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;

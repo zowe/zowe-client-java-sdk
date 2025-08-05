@@ -60,7 +60,7 @@ public class UssWrite {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public UssWrite(final ZosConnection connection, final ZosmfRequest request) {
+    UssWrite(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
         // request type check deferred

@@ -148,4 +148,59 @@ public class JobGetTextTest {
         assertEquals("connection is null", exception.getMessage());
     }
 
+    @Test
+    public void tstSecondaryConstructorWithValidRequestType() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        ZosmfRequest request = Mockito.mock(GetTextZosmfRequest.class);
+        JobGet jobSubmit = new JobGet(connection, request);
+        assertNotNull(jobSubmit);
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithNullConnection() {
+        ZosmfRequest request = Mockito.mock(GetTextZosmfRequest.class);
+        NullPointerException exception = Assertions.assertThrows(
+                NullPointerException.class,
+                () -> new JobGet(null, request)
+        );
+        assertEquals("connection is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithNullRequest() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        NullPointerException exception = Assertions.assertThrows(
+                NullPointerException.class,
+                () -> new JobGet(connection, null)
+        );
+        assertEquals("request is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithInvalidRequestType() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        ZosmfRequest request = Mockito.mock(ZosmfRequest.class);
+        IllegalStateException exception = Assertions.assertThrows(
+                IllegalStateException.class,
+                () -> new JobGet(connection, request)
+        );
+        assertEquals("GET_JSON or GET_TEXT request type required", exception.getMessage());
+    }
+
+    @Test
+    public void tstPrimaryConstructorWithValidConnection() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        JobGet jobGet = new JobGet(connection);
+        assertNotNull(jobGet);
+    }
+
+    @Test
+    public void tstPrimaryConstructorWithNullConnection() {
+        NullPointerException exception = Assertions.assertThrows(
+                NullPointerException.class,
+                () -> new JobGet(null)
+        );
+        assertEquals("connection is null", exception.getMessage());
+    }
+
 }

@@ -60,7 +60,7 @@ public class UssGetAcl {
      * @param request    any compatible ZoweRequest Interface object
      * @author James Kostrewski
      */
-    public UssGetAcl(final ZosConnection connection, final ZosmfRequest request) {
+    UssGetAcl(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;

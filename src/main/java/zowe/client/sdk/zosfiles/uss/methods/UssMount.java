@@ -61,7 +61,7 @@ public class UssMount {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public UssMount(final ZosConnection connection, final ZosmfRequest request) {
+    UssMount(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;

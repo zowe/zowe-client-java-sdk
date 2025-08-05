@@ -56,7 +56,7 @@ public class StopTso {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public StopTso(final ZosConnection connection, final ZosmfRequest request) {
+    StopTso(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof DeleteJsonZosmfRequest)) {

@@ -66,7 +66,7 @@ public class ZosLog {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public ZosLog(final ZosConnection connection, final ZosmfRequest request) {
+    ZosLog(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
         if (!(request instanceof GetJsonZosmfRequest)) {

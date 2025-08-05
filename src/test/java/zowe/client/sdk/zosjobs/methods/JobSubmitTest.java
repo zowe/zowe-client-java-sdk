@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs;
+package zowe.client.sdk.zosjobs.methods;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
@@ -20,7 +20,6 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosjobs.methods.JobSubmit;
 import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;

@@ -63,7 +63,7 @@ public class SendTso {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public SendTso(final ZosConnection connection, final ZosmfRequest request) {
+    SendTso(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
