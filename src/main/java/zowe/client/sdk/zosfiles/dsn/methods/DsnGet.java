@@ -152,7 +152,7 @@ public class DsnGet {
 
         if (params.getResponseTimeout().isPresent()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_RESPONSE_TIMEOUT").get(0);
-            value = ZosmfHeaders.HEADERS.get(params.getResponseTimeout().toString()).get(1);
+            value = params.getResponseTimeout().get();
             headers.put(key, value);
         }
 
