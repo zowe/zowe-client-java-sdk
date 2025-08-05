@@ -7,15 +7,27 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss;
+package zowe.client.sdk.zosfiles.uss.methods;
 
+import kong.unirest.core.Cookie;
+import org.json.simple.JSONObject;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
+import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
+import zowe.client.sdk.rest.PutJsonZosmfRequest;
+import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.uss.methods.UssExtAttr;
+import zowe.client.sdk.zosfiles.dsn.methods.DsnCopy;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.withSettings;
 
 /**
  * Class containing unit tests for UssExtAttr.
@@ -27,6 +39,51 @@ public class UssExtAttrTest {
 
     private final ZosConnection connection = ZosConnectionFactory
             .createBasicConnection("1", "1", "1", "1");
+    private final ZosConnection tokenConnection = ZosConnectionFactory
+            .createTokenConnection("1", "1", new Cookie("hello=hello"));
+    private PutJsonZosmfRequest mockPutJsonRequest;
+    private PutJsonZosmfRequest mockPutJsonRequestToken;
+
+    @Before
+    public void init() throws ZosmfRequestException {
+        mockPutJsonRequest = Mockito.mock(PutJsonZosmfRequest.class);
+        Mockito.when(mockPutJsonRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockPutJsonRequest).setUrl(any());
+        doCallRealMethod().when(mockPutJsonRequest).getUrl();
+
+        mockPutJsonRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
+                withSettings().useConstructor(tokenConnection));
+        Mockito.when(mockPutJsonRequestToken.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockPutJsonRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockPutJsonRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockPutJsonRequestToken).setUrl(any());
+        doCallRealMethod().when(mockPutJsonRequestToken).getHeaders();
+        doCallRealMethod().when(mockPutJsonRequestToken).getUrl();
+    }
+
+    @Test
+    public void tstDsnCopySuccess() throws ZosmfRequestException {
+        final UssExtAttr ussExtAttr = new UssExtAttr(connection, mockPutJsonRequest);
+        final Response response = ussExtAttr.set("/test", "a");
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+        Assertions.assertEquals("https://1:1/zosmf/restfiles/fs%2Ftest", mockPutJsonRequest.getUrl());
+    }
+
+    @Test
+    public void tstDsnCopyTokenSuccess() throws ZosmfRequestException {
+        final UssExtAttr ussExtAttr = new UssExtAttr(tokenConnection, mockPutJsonRequestToken);
+        final Response response = ussExtAttr.set("/test", "a");
+        Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+                mockPutJsonRequestToken.getHeaders().toString());
+        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
+        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+        Assertions.assertEquals("https://1:1/zosmf/restfiles/fs%2Ftest", mockPutJsonRequestToken.getUrl());
+    }
 
     @Test
     public void tstUssExtAttrSetValueFailure1() throws ZosmfRequestException {
