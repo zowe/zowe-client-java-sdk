@@ -62,7 +62,7 @@ public class JobGet {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    JobGet(final ZosConnection connection, final ZosmfRequest request) {
+    public JobGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
         this.request = request;

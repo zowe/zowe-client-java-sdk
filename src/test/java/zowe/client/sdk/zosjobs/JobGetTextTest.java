@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs.methods;
+package zowe.client.sdk.zosjobs;
 
 import kong.unirest.core.Cookie;
 import org.junit.Before;
@@ -23,9 +23,9 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.zosjobs.methods.JobGet;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -91,6 +91,61 @@ public class JobGetTextTest {
                 mockTextGetRequestToken.getHeaders().toString());
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
         assertEquals("1\n2\n3\n", results);
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithValidRequestType() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        ZosmfRequest request = Mockito.mock(GetTextZosmfRequest.class);
+        JobGet jobSubmit = new JobGet(connection, request);
+        assertNotNull(jobSubmit);
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithNullConnection() {
+        ZosmfRequest request = Mockito.mock(GetTextZosmfRequest.class);
+        NullPointerException exception = Assertions.assertThrows(
+                NullPointerException.class,
+                () -> new JobGet(null, request)
+        );
+        assertEquals("connection is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithNullRequest() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        NullPointerException exception = Assertions.assertThrows(
+                NullPointerException.class,
+                () -> new JobGet(connection, null)
+        );
+        assertEquals("request is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithInvalidRequestType() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        ZosmfRequest request = Mockito.mock(ZosmfRequest.class);
+        IllegalStateException exception = Assertions.assertThrows(
+                IllegalStateException.class,
+                () -> new JobGet(connection, request)
+        );
+        assertEquals("GET_JSON or GET_TEXT request type required", exception.getMessage());
+    }
+
+    @Test
+    public void tstPrimaryConstructorWithValidConnection() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        JobGet jobGet = new JobGet(connection);
+        assertNotNull(jobGet);
+    }
+
+    @Test
+    public void tstPrimaryConstructorWithNullConnection() {
+        NullPointerException exception = Assertions.assertThrows(
+                NullPointerException.class,
+                () -> new JobGet(null)
+        );
+        assertEquals("connection is null", exception.getMessage());
     }
 
 }
