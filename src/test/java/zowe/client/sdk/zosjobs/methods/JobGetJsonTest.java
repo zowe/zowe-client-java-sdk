@@ -20,13 +20,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
-import zowe.client.sdk.rest.GetJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.zosjobs.methods.JobGet;
+import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;
