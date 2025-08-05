@@ -38,7 +38,7 @@ import static org.mockito.Mockito.withSettings;
  * @author Frank Giordano
  * @version 4.0
  */
-public class GetJobsByTextGetRequestTest {
+public class JobGetTextTest {
 
     private final ZosConnection connection = ZosConnectionFactory
             .createBasicConnection("1", "1", "1", "1");

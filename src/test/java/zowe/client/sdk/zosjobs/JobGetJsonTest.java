@@ -41,7 +41,7 @@ import static org.junit.Assert.assertThrows;
  * @version 4.0
  */
 @RunWith(MockitoJUnitRunner.class)
-public class GetJobsByJsonGetRequestTest {
+public class JobGetJsonTest {
 
     private final ZosConnection connection = ZosConnectionFactory
             .createBasicConnection("1", "1", "1", "1");
