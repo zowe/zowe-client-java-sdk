@@ -29,6 +29,12 @@ import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.withSettings;
 
+/**
+ * Class containing unit tests for DsnCreate.
+ *
+ * @author Frank Giordano
+ * @version 4.0
+ */
 public class DsnCreateTest {
 
     private final ZosConnection connection = ZosConnectionFactory

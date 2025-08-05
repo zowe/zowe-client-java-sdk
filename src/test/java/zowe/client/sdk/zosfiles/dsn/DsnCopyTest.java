@@ -26,6 +26,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * Class containing unit tests for DsnCopy.
+ *
+ * @author Frank Giordano
+ * @version 4.0
+ */
 public class DsnCopyTest {
 
     private final ZosConnection connection = ZosConnectionFactory

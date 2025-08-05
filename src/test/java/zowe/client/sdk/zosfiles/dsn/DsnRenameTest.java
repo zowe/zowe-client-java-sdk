@@ -28,6 +28,12 @@ import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.withSettings;
 
+/**
+ * Class containing unit tests for DsnRename.
+ *
+ * @author Frank Giordano
+ * @version 4.0
+ */
 public class DsnRenameTest {
 
     private final ZosConnection connection = ZosConnectionFactory
