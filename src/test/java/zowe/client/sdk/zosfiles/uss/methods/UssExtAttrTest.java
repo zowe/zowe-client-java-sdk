@@ -43,11 +43,12 @@ public class UssExtAttrTest {
             .createTokenConnection("1", "1", new Cookie("hello=hello"));
     private PutJsonZosmfRequest mockJsonPutRequest;
     private PutJsonZosmfRequest mockJsonPutRequestToken;
+    public UssExtAttr ussExtAttr;
 
     @Before
     public void init() throws ZosmfRequestException {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
-        Mockito.when(mockJsonPutRequestToken.executeRequest()).thenReturn(
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         doCallRealMethod().when(mockJsonPutRequest).setUrl(any());
         doCallRealMethod().when(mockJsonPutRequest).getUrl();
@@ -61,6 +62,8 @@ public class UssExtAttrTest {
         doCallRealMethod().when(mockJsonPutRequestToken).setUrl(any());
         doCallRealMethod().when(mockJsonPutRequestToken).getHeaders();
         doCallRealMethod().when(mockJsonPutRequestToken).getUrl();
+
+        ussExtAttr = new UssExtAttr(connection);
     }
 
     @Test
@@ -87,7 +90,6 @@ public class UssExtAttrTest {
 
     @Test
     public void tstUssExtAttrSetValueFailure1() throws ZosmfRequestException {
-        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.set("/xxx/xx/xx", "pp");
@@ -99,7 +101,6 @@ public class UssExtAttrTest {
 
     @Test
     public void tstUssExtAttrSetValueFailure2() throws ZosmfRequestException {
-        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.set("/xxx/xx/xx", "at");
@@ -111,7 +112,6 @@ public class UssExtAttrTest {
 
     @Test
     public void tstUssExtAttrSetValueFailure3() throws ZosmfRequestException {
-        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.set("/xxx/xx/xx", "yu");
@@ -123,7 +123,6 @@ public class UssExtAttrTest {
 
     @Test
     public void tstUssExtAttrSetValueFailure4() throws ZosmfRequestException {
-        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.set("/xxx/xx/xx", "apap");
@@ -135,7 +134,6 @@ public class UssExtAttrTest {
 
     @Test
     public void tstUssExtAttrResetValueFailure1() throws ZosmfRequestException {
-        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.reset("/xxx/xx/xx", "pp");
@@ -147,7 +145,6 @@ public class UssExtAttrTest {
 
     @Test
     public void tstUssExtAttrResetValueFailure2() throws ZosmfRequestException {
-        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.reset("/xxx/xx/xx", "at");
@@ -159,7 +156,6 @@ public class UssExtAttrTest {
 
     @Test
     public void tstUssExtAttrResetValueFailure3() throws ZosmfRequestException {
-        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.reset("/xxx/xx/xx", "yu");
@@ -171,7 +167,6 @@ public class UssExtAttrTest {
 
     @Test
     public void tstUssExtAttrResetValueFailure4() throws ZosmfRequestException {
-        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.reset("/xxx/xx/xx", "apap");
@@ -183,7 +178,6 @@ public class UssExtAttrTest {
 
     @Test
     public void tstUssExtAttrResetNullTargetPathFailure4() throws ZosmfRequestException {
-        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.reset(null, "a");
@@ -195,7 +189,6 @@ public class UssExtAttrTest {
 
     @Test
     public void tstUssExtAttrSetNullTargetPathFailure4() throws ZosmfRequestException {
-        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.set(null, "a");
@@ -207,7 +200,6 @@ public class UssExtAttrTest {
 
     @Test
     public void tstUssExtAttrDisplayNullTargetPathFailure4() throws ZosmfRequestException {
-        final UssExtAttr ussExtAttr = new UssExtAttr(connection);
         String errMsg = "";
         try {
             ussExtAttr.display(null);
