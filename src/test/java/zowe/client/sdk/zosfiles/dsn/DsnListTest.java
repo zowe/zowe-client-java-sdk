@@ -13,10 +13,6 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.dsn.input.ListParams;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnList;
-import zowe.client.sdk.zosfiles.dsn.response.Member;
-import zowe.client.sdk.zosfiles.dsn.types.AttributeType;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -56,7 +52,7 @@ public class DsnListTest {
     public void tstDsnListSuccess() throws ZosmfRequestException {
         final DsnList dsnList = new DsnList(connection, mockGetRequest);
         final ListParams params = new ListParams.Builder().responseTimeout("10").volume("vol1").build();
-        final List<Member> members = dsnList.getMembers("TEST.DATASET", params);
+        dsnList.getMembers("TEST.DATASET", params);
         assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET/member", mockGetRequest.getUrl());
     }
 
@@ -64,121 +60,12 @@ public class DsnListTest {
     public void tstDsnListTokenSuccess() throws ZosmfRequestException {
         final DsnList dsnList = new DsnList(connection, mockGetRequestToken);
         final ListParams params = new ListParams.Builder().responseTimeout("10").volume("vol1").build();
-        final List<Member> members = dsnList.getMembers("TEST.DATASET", params);
+        dsnList.getMembers("TEST.DATASET", params);
         assertEquals("{X-IBM-Max-Items=0, Accept-Encoding=gzip, X-IBM-Response-Timeout=10, " +
                         "X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockGetRequestToken.getHeaders().toString());
         assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET/member", mockGetRequestToken.getUrl());
     }
-
-//    @Test
-//    public void tstDsnListWithVolserSuccess() throws ZosmfRequestException {
-//        final DsnList dsnList = new DsnList(connection, mockGetRequest);
-//        final ListParams params = new ListParams.Builder().responseTimeout("10").volume("vol1").build();
-//        final Response response = dsnList.listCommon("TEST.DATASET", params);
-//        assertEquals("https://1:1/zosmf/restfiles/ds/-(VOL123)/TEST.DATASET", mockGetRequest.getUrl());
-//        assertEquals(200, response.getStatusCode().orElse(-1));
-//    }
-//
-//    @Test
-//    public void tstDsnListWithBaseAttributeSuccess() throws ZosmfRequestException {
-//        final DsnList dsnList = new DsnList(connection, mockGetRequest);
-//        final ListParams params = new ListParams.Builder()
-//                .attribute(AttributeType.BASE)
-//                .build();
-//        final Response response = dsnList.listCommon("TEST.DATASET", params);
-//        assertEquals("{Accept-Encoding=gzip, X-IBM-Attributes=base, X-IBM-Max-Items=0}",
-//                mockGetRequest.getHeaders().toString());
-//        assertEquals(200, response.getStatusCode().orElse(-1));
-//    }
-//
-//    @Test
-//    public void tstDsnListWithVolAttributeSuccess() throws ZosmfRequestException {
-//        final DsnList dsnList = new DsnList(connection, mockGetRequest);
-//        final ListParams params = new ListParams.Builder()
-//                .attribute(AttributeType.VOL)
-//                .build();
-//        final Response response = dsnList.listCommon("TEST.DATASET", params);
-//        assertEquals("{Accept-Encoding=gzip, X-IBM-Attributes=vol, X-IBM-Max-Items=0}",
-//                mockGetRequest.getHeaders().toString());
-//        assertEquals(200, response.getStatusCode().orElse(-1));
-//    }
-//
-//    @Test
-//    public void tstDsnListWithMaxLengthSuccess() throws ZosmfRequestException {
-//        final DsnList dsnList = new DsnList(connection, mockGetRequest);
-//        final ListParams params = new ListParams.Builder()
-//                .maxLength("100")
-//                .build();
-//        final Response response = dsnList.listCommon("TEST.DATASET", params);
-//        assertEquals("{Accept-Encoding=gzip, X-IBM-Max-Items=100}",
-//                mockGetRequest.getHeaders().toString());
-//        assertEquals(200, response.getStatusCode().orElse(-1));
-//    }
-//
-//    @Test
-//    public void tstDsnListWithResponseTimeoutSuccess() throws ZosmfRequestException {
-//        final DsnList dsnList = new DsnList(connection, mockGetRequest);
-//        final ListParams params = new ListParams.Builder()
-//                .responseTimeout("30")
-//                .build();
-//        final Response response = dsnList.listCommon("TEST.DATASET", params);
-//        assertEquals("{Accept-Encoding=gzip, X-IBM-Response-Timeout=30, X-IBM-Max-Items=0}",
-//                mockGetRequest.getHeaders().toString());
-//        assertEquals(200, response.getStatusCode().orElse(-1));
-//    }
-//
-//    @Test
-//    public void tstDsnListWithRecallWaitSuccess() throws ZosmfRequestException {
-//        final DsnList dsnList = new DsnList(connection, mockGetRequest);
-//        final ListParams params = new ListParams.Builder()
-//                .recall("wait")
-//                .build();
-//        final Response response = dsnList.listCommon("TEST.DATASET", params);
-//        assertEquals("{Accept-Encoding=gzip, X-IBM-Migrated-Recall=wait, X-IBM-Max-Items=0}",
-//                mockGetRequest.getHeaders().toString());
-//        assertEquals(200, response.getStatusCode().orElse(-1));
-//    }
-//
-//    @Test
-//    public void tstDsnListWithRecallNoWaitSuccess() throws ZosmfRequestException {
-//        final DsnList dsnList = new DsnList(connection, mockGetRequest);
-//        final ListParams params = new ListParams.Builder()
-//                .recall("nowait")
-//                .build();
-//        final Response response = dsnList.listCommon("TEST.DATASET", params);
-//        assertEquals("{Accept-Encoding=gzip, X-IBM-Migrated-Recall=nowait, X-IBM-Max-Items=0}",
-//                mockGetRequest.getHeaders().toString());
-//        assertEquals(200, response.getStatusCode().orElse(-1));
-//    }
-//
-//    @Test
-//    public void tstDsnListWithRecallErrorSuccess() throws ZosmfRequestException {
-//        final DsnList dsnList = new DsnList(connection, mockGetRequest);
-//        final ListParams params = new ListParams.Builder()
-//                .recall("error")
-//                .build();
-//        final Response response = dsnList.listCommon("TEST.DATASET", params);
-//        assertEquals("{Accept-Encoding=gzip, X-IBM-Migrated-Recall=error, X-IBM-Max-Items=0}",
-//                mockGetRequest.getHeaders().toString());
-//        assertEquals(200, response.getStatusCode().orElse(-1));
-//    }
-//
-//    @Test
-//    public void tstDsnListWithMultipleParamsSuccess() throws ZosmfRequestException {
-//        final DsnList dsnList = new DsnList(connection, mockGetRequest);
-//        final ListParams params = new ListParams.Builder()
-//                .attribute(AttributeType.BASE)
-//                .maxLength("100")
-//                .responseTimeout("30")
-//                .recall("wait")
-//                .build();
-//        final Response response = dsnList.listCommon("TEST.DATASET", params);
-//        assertEquals("{Accept-Encoding=gzip, X-IBM-Attributes=base, X-IBM-Max-Items=100, " +
-//                "X-IBM-Response-Timeout=30, X-IBM-Migrated-Recall=wait}",
-//                mockGetRequest.getHeaders().toString());
-//        assertEquals(200, response.getStatusCode().orElse(-1));
-//    }
 
     @Test
     public void tstSecondaryConstructorWithValidRequestType() {
