@@ -64,8 +64,11 @@ public class JobSubmit {
      */
     public JobSubmit(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        // request type check deferred
+        if (!(request instanceof PutJsonZosmfRequest)) {
+            throw new IllegalStateException("PUT_JSON request type required");
+        }
         this.request = request;
     }
 
@@ -174,7 +177,7 @@ public class JobSubmit {
         final Map<String, String> submitMap = new HashMap<>();
         submitMap.put("file", fullyQualifiedDataset);
 
-        if (request == null || !(request instanceof PutJsonZosmfRequest)) {
+        if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         if (params.getJclSymbols().isPresent()) {
