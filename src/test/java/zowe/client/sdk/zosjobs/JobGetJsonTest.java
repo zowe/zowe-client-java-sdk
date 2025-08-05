@@ -273,7 +273,7 @@ public class JobGetJsonTest {
 
     @Test
     public void tstSecondaryConstructorWithNullConnection() {
-        ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
+        ZosmfRequest request = Mockito.mock(GetJsonZosmfRequest.class);
         NullPointerException exception = Assertions.assertThrows(
                 NullPointerException.class,
                 () -> new JobGet(null, request)
