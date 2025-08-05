@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs;
+package zowe.client.sdk.zosjobs.methods;
 
 import kong.unirest.core.Cookie;
 import org.junit.Before;
@@ -23,7 +23,6 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.zosjobs.methods.JobGet;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;

@@ -62,7 +62,7 @@ public class UssChangeTag {
      * @param request    any compatible ZoweRequest Interface object
      * @author James Kostrewski
      */
-    public UssChangeTag(final ZosConnection connection, final ZosmfRequest request) {
+    UssChangeTag(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;

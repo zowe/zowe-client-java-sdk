@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs;
+package zowe.client.sdk.zosjobs.methods;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
@@ -17,11 +17,9 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
-import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosjobs.methods.JobCancel;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,89 +28,79 @@ import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.withSettings;
 
 /**
- * Class containing unit tests for JobCancel.
+ * Class containing unit tests for JobDelete.
  *
  * @author Frank Giordano
  * @version 4.0
  */
-public class JobCancelTest {
+public class JobDeleteTest {
 
     private final ZosConnection connection = ZosConnectionFactory
             .createBasicConnection("1", "1", "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
             .createTokenConnection("1", "1", new Cookie("hello=hello"));
-    private PutJsonZosmfRequest mockPutJsonZosmfRequest;
-    private PutJsonZosmfRequest mockPutJsonZosmfRequestToken;
+    private DeleteJsonZosmfRequest mockJsonDeleteRequest;
+    private DeleteJsonZosmfRequest mockJsonDeleteRequestToken;
 
     @Before
     public void init() throws ZosmfRequestException {
-        mockPutJsonZosmfRequest = Mockito.mock(PutJsonZosmfRequest.class);
-        Mockito.when(mockPutJsonZosmfRequest.executeRequest()).thenReturn(
+        mockJsonDeleteRequest = Mockito.mock(DeleteJsonZosmfRequest.class);
+        Mockito.when(mockJsonDeleteRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockPutJsonZosmfRequest).setUrl(any());
-        doCallRealMethod().when(mockPutJsonZosmfRequest).getUrl();
+        doCallRealMethod().when(mockJsonDeleteRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonDeleteRequest).getUrl();
 
-        mockPutJsonZosmfRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
+        mockJsonDeleteRequestToken = Mockito.mock(DeleteJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
-        Mockito.when(mockPutJsonZosmfRequestToken.executeRequest()).thenReturn(
+        Mockito.when(mockJsonDeleteRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).setHeaders(anyMap());
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).setStandardHeaders();
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).setUrl(any());
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).getHeaders();
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).getUrl();
+        doCallRealMethod().when(mockJsonDeleteRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonDeleteRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockJsonDeleteRequestToken).setUrl(any());
+        doCallRealMethod().when(mockJsonDeleteRequestToken).getHeaders();
+        doCallRealMethod().when(mockJsonDeleteRequestToken).getUrl();
     }
 
     @Test
-    public void tstJobCancelSuccess() throws ZosmfRequestException {
-        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequest);
-        final Response response = jobCancel.cancel("JOBNAME", "JOBID", "1.0");
+    public void tstJobDeleteSuccess() throws ZosmfRequestException {
+        final JobDelete jobDelete = new JobDelete(connection, mockJsonDeleteRequest);
+        final Response response = jobDelete.delete("JOBNAME", "JOBID", "1.0");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockPutJsonZosmfRequest.getUrl());
+        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockJsonDeleteRequest.getUrl());
     }
 
     @Test
-    public void tstJobCancelTokenSuccess() throws ZosmfRequestException {
-        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequestToken);
-        final Response response = jobCancel.cancel("JOBNAME", "JOBID", "1.0");
-        assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockPutJsonZosmfRequestToken.getHeaders().toString());
+    public void tstJobDeleteTokenSuccess() throws ZosmfRequestException {
+        final JobDelete jobDelete = new JobDelete(connection, mockJsonDeleteRequestToken);
+        final Response response = jobDelete.delete("JOBNAME", "JOBID", "1.0");
+        assertEquals("{X-IBM-Job-Modify-Version=1.0, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+                mockJsonDeleteRequestToken.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockPutJsonZosmfRequestToken.getUrl());
+        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockJsonDeleteRequestToken.getUrl());
     }
 
     @Test
-    public void tstJobCancelWithVersion2TokenSuccess() throws ZosmfRequestException {
-        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequestToken);
-        final Response response = jobCancel.cancel("JOBNAME", "JOBID", "2.0");
-        assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockPutJsonZosmfRequestToken.getHeaders().toString());
+    public void tstJobDeleteWithVersion2TokenSuccess() throws ZosmfRequestException {
+        final JobDelete jobDelete = new JobDelete(connection, mockJsonDeleteRequestToken);
+        final Response response = jobDelete.delete("JOBNAME", "JOBID", "2.0");
+        assertEquals("{X-IBM-Job-Modify-Version=2.0, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+                mockJsonDeleteRequestToken.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockPutJsonZosmfRequestToken.getUrl());
-    }
-
-    @Test
-    public void tstJobCancelWithInvalidVersionFailure() {
-        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequest);
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> jobCancel.cancel("JOBNAME", "JOBID", "3.0")
-        );
-        assertEquals("invalid version specified", exception.getMessage());
+        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockJsonDeleteRequestToken.getUrl());
     }
 
     @Test
     public void tstSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
-        ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
-        JobCancel jobCancel = new JobCancel(connection, request);
-        assertNotNull(jobCancel);
+        ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
+        JobDelete jobDelete = new JobDelete(connection, request);
+        assertNotNull(jobDelete);
     }
 
     @Test
@@ -120,7 +108,7 @@ public class JobCancelTest {
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new JobCancel(null, request)
+                () -> new JobDelete(null, request)
         );
         assertEquals("connection is null", exception.getMessage());
     }
@@ -130,7 +118,7 @@ public class JobCancelTest {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new JobCancel(connection, null)
+                () -> new JobDelete(connection, null)
         );
         assertEquals("request is null", exception.getMessage());
     }
@@ -141,23 +129,23 @@ public class JobCancelTest {
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a DeleteJsonZosmfRequest
         IllegalStateException exception = assertThrows(
                 IllegalStateException.class,
-                () -> new JobCancel(connection, request)
+                () -> new JobDelete(connection, request)
         );
-        assertEquals("PUT_JSON request type required", exception.getMessage());
+        assertEquals("DELETE_JSON request type required", exception.getMessage());
     }
 
     @Test
     public void tstPrimaryConstructorWithValidConnection() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
-        JobCancel jobCancel = new JobCancel(connection);
-        assertNotNull(jobCancel);
+        JobDelete jobDelete = new JobDelete(connection);
+        assertNotNull(jobDelete);
     }
 
     @Test
     public void tstPrimaryConstructorWithNullConnection() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new JobCancel(null)
+                () -> new JobDelete(null)
         );
         assertEquals("connection is null", exception.getMessage());
     }

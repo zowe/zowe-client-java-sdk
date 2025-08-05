@@ -54,7 +54,7 @@ public class ZosmfLogin {
      * @param request    any compatible ZoweRequest Interface object
      * @author Esteban Sandoval
      */
-    public ZosmfLogin(final ZosConnection connection, final ZosmfRequest request) {
+    ZosmfLogin(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;

@@ -57,7 +57,7 @@ public class UssDelete {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public UssDelete(final ZosConnection connection, final ZosmfRequest request) {
+    UssDelete(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;

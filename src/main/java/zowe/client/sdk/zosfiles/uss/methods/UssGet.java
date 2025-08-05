@@ -58,7 +58,7 @@ public class UssGet {
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public UssGet(final ZosConnection connection, final ZosmfRequest request) {
+    UssGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
         // request type check deferred 

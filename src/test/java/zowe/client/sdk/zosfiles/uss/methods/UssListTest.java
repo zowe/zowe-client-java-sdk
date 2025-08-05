@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss;
+package zowe.client.sdk.zosfiles.uss.methods;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
@@ -26,7 +26,6 @@ import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.ListParams;
 import zowe.client.sdk.zosfiles.uss.input.ListZfsParams;
-import zowe.client.sdk.zosfiles.uss.methods.UssList;
 import zowe.client.sdk.zosfiles.uss.response.UnixFile;
 import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
 

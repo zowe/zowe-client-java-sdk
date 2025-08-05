@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.dsn;
+package zowe.client.sdk.zosfiles.dsn.methods;
 
 import kong.unirest.core.Cookie;
 import org.junit.Before;
@@ -20,7 +20,6 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.dsn.input.DownloadParams;
-import zowe.client.sdk.zosfiles.dsn.methods.DsnGet;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -52,7 +52,7 @@ public class DsnWrite {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public DsnWrite(final ZosConnection connection, final ZosmfRequest request) {
+    DsnWrite(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
         if (!(request instanceof PutTextZosmfRequest)) {

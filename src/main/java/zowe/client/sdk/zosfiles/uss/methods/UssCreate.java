@@ -63,7 +63,7 @@ public class UssCreate {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public UssCreate(final ZosConnection connection, final ZosmfRequest request) {
+    UssCreate(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;

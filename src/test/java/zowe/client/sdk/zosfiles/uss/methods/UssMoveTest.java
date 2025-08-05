@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss;
+package zowe.client.sdk.zosfiles.uss.methods;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
@@ -20,7 +20,6 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.uss.methods.UssMove;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

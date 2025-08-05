@@ -57,7 +57,7 @@ public class DsnCopy {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public DsnCopy(final ZosConnection connection, final ZosmfRequest request) {
+    DsnCopy(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;

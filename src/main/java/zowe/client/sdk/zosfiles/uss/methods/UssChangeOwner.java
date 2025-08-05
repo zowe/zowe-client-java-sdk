@@ -57,7 +57,7 @@ public class UssChangeOwner {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public UssChangeOwner(final ZosConnection connection, final ZosmfRequest request) {
+    UssChangeOwner(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;

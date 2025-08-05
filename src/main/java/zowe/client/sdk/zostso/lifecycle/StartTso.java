@@ -54,7 +54,7 @@ public class StartTso {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    public StartTso(final ZosConnection connection, final ZosmfRequest request) {
+    StartTso(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PostJsonZosmfRequest)) {

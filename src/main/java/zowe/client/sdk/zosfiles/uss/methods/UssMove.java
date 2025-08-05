@@ -58,7 +58,7 @@ public class UssMove {
      * @param request    any compatible ZoweRequest Interface object
      * @author James Kostrewski
      */
-    public UssMove(final ZosConnection connection, final ZosmfRequest request) {
+    UssMove(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
