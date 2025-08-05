@@ -64,8 +64,12 @@ public class JobGet {
      */
     public JobGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         this.request = request;
+        if (!(request instanceof GetJsonZosmfRequest) && !(request instanceof GetTextZosmfRequest)) {
+            throw new IllegalStateException("GET_JSON or GET_TEXT request type required");
+        }
     }
 
     /**
