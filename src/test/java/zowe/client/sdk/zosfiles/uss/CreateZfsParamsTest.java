@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles;
+package zowe.client.sdk.zosfiles.uss;
 
 import org.junit.Test;
 import zowe.client.sdk.zosfiles.uss.input.CreateZfsParams;

@@ -7,11 +7,12 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles;
+package zowe.client.sdk.zosfiles.uss;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -22,6 +23,7 @@ import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.JsonParserUtil;
+import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.ListParams;
 import zowe.client.sdk.zosfiles.uss.input.ListZfsParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssList;
@@ -167,7 +169,7 @@ public class UssListTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        assertEquals(ZosFilesConstants.RESPONSE_PHRASE_ERROR, msg);
+        Assert.assertEquals(ZosFilesConstants.RESPONSE_PHRASE_ERROR, msg);
     }
 
     @Test

@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles;
+package zowe.client.sdk.zosfiles.uss;
 
 import kong.unirest.core.Cookie;
 import kong.unirest.core.json.JSONObject;
