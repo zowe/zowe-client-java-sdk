@@ -205,7 +205,7 @@ public class ZosConnection {
      *
      * @param basePath string value
      */
-    public void setBasePath(String basePath) {
+    void setBasePath(String basePath) {
         this.basePath = basePath;
     }
 

@@ -144,8 +144,7 @@ public class JobGetJsonTest {
     @Test
     public void tstJobGetByIdCmdResponseWithInvalidBasePathFailure() {
         final ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection("1", "1", "1", "1");
-        connection.setBasePath("consoles//");
+                .createBasicConnection("1", "1", "1", "1", "consoles//");
         // Create a mock request to verify URL
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         final JobGet getJobs = new JobGet(connection, request);

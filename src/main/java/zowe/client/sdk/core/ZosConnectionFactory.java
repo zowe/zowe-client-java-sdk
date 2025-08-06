@@ -40,6 +40,33 @@ public class ZosConnectionFactory {
                                                       final String port,
                                                       final String user,
                                                       final String password) {
+        return createBasicZosConnection(host, port, user, password, null);
+    }
+
+    /**
+     * Creates a ZosConnection with basic authentication
+     *
+     * @param host     Host address of the z/OSMF server
+     * @param port     Port number of the z/OSMF server
+     * @param user     Username for authentication
+     * @param password Password for authentication
+     * @param basePath base path for z/OSMF REST endpoints
+     * @return ZosConnection configured for basic authentication
+     * @author Frank Giordano
+     */
+    public static ZosConnection createBasicConnection(final String host,
+                                                      final String port,
+                                                      final String user,
+                                                      final String password,
+                                                      final String basePath) {
+        if (basePath == null || basePath.isBlank())
+            throw new IllegalStateException("basePath is either null or empty");
+
+        return createBasicZosConnection(host, port, user, password, basePath);
+    }
+
+    private static ZosConnection createBasicZosConnection(
+            String host, String port, String user, String password, String basePath) {
         if (host == null || host.isBlank())
             throw new IllegalStateException("host is either null or empty");
 
@@ -55,6 +82,7 @@ public class ZosConnectionFactory {
         ZosConnection zosConnection = new ZosConnection(host, port, AuthType.BASIC);
         zosConnection.setUser(user);
         zosConnection.setPassword(password);
+        zosConnection.setBasePath(basePath);
         return zosConnection;
     }
 
@@ -70,6 +98,30 @@ public class ZosConnectionFactory {
     public static ZosConnection createTokenConnection(final String host,
                                                       final String port,
                                                       final Cookie token) {
+        return createTokenZosConnection(host, port, token, null);
+    }
+
+    /**
+     * Creates a ZosConnection with token authentication
+     *
+     * @param host     Host address of the z/OSMF server
+     * @param port     Port number of the z/OSMF server
+     * @param token    Authentication token cookie
+     * @param basePath base path for z/OSMF REST endpoints
+     * @return ZosConnection configured for token authentication
+     * @author Frank Giordano
+     */
+    public static ZosConnection createTokenConnection(final String host,
+                                                      final String port,
+                                                      final Cookie token,
+                                                      final String basePath) {
+        if (basePath == null || basePath.isBlank())
+            throw new IllegalStateException("basePath is either null or empty");
+
+        return createTokenZosConnection(host, port, token, basePath);
+    }
+
+    private static ZosConnection createTokenZosConnection(String host, String port, Cookie token, String basePath) {
         if (host == null || host.isBlank())
             throw new IllegalStateException("host is either null or empty");
 
@@ -81,6 +133,7 @@ public class ZosConnectionFactory {
 
         ZosConnection zosConnection = new ZosConnection(host, port, AuthType.TOKEN);
         zosConnection.setToken(token);
+        zosConnection.setBasePath(basePath);
         return zosConnection;
     }
 
@@ -98,6 +151,32 @@ public class ZosConnectionFactory {
                                                     final String port,
                                                     final String certFilePath,
                                                     final String certPassword) {
+        return createSslZosConnection(host, port, certFilePath, certPassword, null);
+    }
+
+    /**
+     * Creates a ZosConnection with SSL certificate authentication with isSecure
+     *
+     * @param host         Host address of the z/OSMF server
+     * @param port         Port number of the z/OSMF server
+     * @param certFilePath Path to the certificate file (.p12)
+     * @param certPassword Password for the certificate
+     * @param basePath     base path for z/OSMF REST endpoints
+     * @return ZosConnection configured for SSL authentication
+     * @author Frank Giordano
+     */
+    public static ZosConnection createSslConnection(final String host,
+                                                    final String port,
+                                                    final String certFilePath,
+                                                    final String certPassword,
+                                                    final String basePath) {
+        if (basePath == null || basePath.isBlank())
+            throw new IllegalStateException("basePath is either null or empty");
+
+        return createSslZosConnection(host, port, certFilePath, certPassword, basePath);
+    }
+
+    private static ZosConnection createSslZosConnection(String host, String port, String certFilePath, String certPassword, String basePath) {
         if (host == null || host.isBlank())
             throw new IllegalStateException("host is either null or empty");
 
@@ -113,6 +192,7 @@ public class ZosConnectionFactory {
         ZosConnection zosConnection = new ZosConnection(host, port, AuthType.SSL);
         zosConnection.setCertFilePath(certFilePath);
         zosConnection.setCertPassword(certPassword);
+        zosConnection.setBasePath(basePath);
         return zosConnection;
     }
 

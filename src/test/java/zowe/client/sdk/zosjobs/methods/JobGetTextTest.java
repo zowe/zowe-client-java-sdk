@@ -64,8 +64,7 @@ public class JobGetTextTest {
     @Test
     public void tstGetSpoolContentCmdResponseWithInvalidBasePathFailure() {
         final ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection("1", "1", "1", "1");
-        connection.setBasePath("consoles//");
+                .createBasicConnection("1", "1", "1", "1", "consoles//");
         // Create a mock request to verify URL
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
         final JobGet getJobs = new JobGet(connection, request);
