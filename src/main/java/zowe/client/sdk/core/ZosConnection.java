@@ -217,12 +217,19 @@ public class ZosConnection {
         return Optional.ofNullable(basePath);
     }
 
+    /**
+     * Equals method. Use all members for equality except for TOKEN which is a special case and
+     * uses a subset of members for equality. 
+     *
+     * @param obj object
+     * @return true or false
+     */
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
+    public boolean equals(Object obj) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        ZosConnection that = (ZosConnection) o;
+        ZosConnection that = (ZosConnection) obj;
         if (this.authType == AuthType.TOKEN) {
             return Objects.equals(host, that.host) &&
                     Objects.equals(zosmfPort, that.zosmfPort) &&
