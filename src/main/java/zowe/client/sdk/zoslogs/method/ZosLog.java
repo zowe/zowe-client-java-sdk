@@ -70,6 +70,7 @@ public class ZosLog {
      */
     ZosLog(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof GetJsonZosmfRequest)) {
             throw new IllegalStateException("GET_JSON request type required");
