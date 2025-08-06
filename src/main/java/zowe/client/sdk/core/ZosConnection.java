@@ -216,22 +216,29 @@ public class ZosConnection {
     public Optional<String> getBasePath() {
         return Optional.ofNullable(basePath);
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
         ZosConnection that = (ZosConnection) o;
-        return Objects.equals(host, that.host) &&
-                Objects.equals(zosmfPort, that.zosmfPort) &&
-                authType == that.authType &&
-                Objects.equals(user, that.user) &&
-                Objects.equals(password, that.password) &&
-                Objects.equals(token, that.token) &&
-                Objects.equals(certFilePath, that.certFilePath) &&
-                Objects.equals(certPassword, that.certPassword) &&
-                Objects.equals(basePath, that.basePath);
+        if (this.authType == AuthType.TOKEN) {
+            return Objects.equals(host, that.host) &&
+                    Objects.equals(zosmfPort, that.zosmfPort) &&
+                    Objects.equals(user, that.user) &&
+                    Objects.equals(token.getValue(), that.token.getValue()) &&
+                    Objects.equals(basePath, that.basePath);
+        } else {
+            return Objects.equals(host, that.host) &&
+                    Objects.equals(zosmfPort, that.zosmfPort) &&
+                    authType == that.authType &&
+                    Objects.equals(user, that.user) &&
+                    Objects.equals(password, that.password) &&
+                    Objects.equals(certFilePath, that.certFilePath) &&
+                    Objects.equals(certPassword, that.certPassword) &&
+                    Objects.equals(basePath, that.basePath);
+        }
     }
 
     @Override
