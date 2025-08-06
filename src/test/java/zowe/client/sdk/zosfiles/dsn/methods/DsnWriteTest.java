@@ -28,7 +28,7 @@ import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.withSettings;
 
 /**
- * Class containing unit tests for DsnRename.
+ * Class containing unit tests for DsnWrite.
  *
  * @author Frank Giordano
  * @version 4.0
