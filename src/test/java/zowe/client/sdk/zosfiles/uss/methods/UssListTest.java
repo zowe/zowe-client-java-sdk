@@ -20,6 +20,7 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
+import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.JsonParserUtil;
@@ -52,6 +53,7 @@ public class UssListTest {
     private final ZosConnection tokenConnection = ZosConnectionFactory
             .createTokenConnection("1", "1", new Cookie("hello=hello"));
     private GetJsonZosmfRequest mockJsonGetRequest;
+    private GetJsonZosmfRequest mockJsonGetRequestToken;
     private UssList ussList;
     private final static String dataForFileList = "{\n" +
             "   \"items\": [\n" +
@@ -123,38 +125,45 @@ public class UssListTest {
             "}";
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        mockJsonGetRequestToken = Mockito.mock(GetJsonZosmfRequest.class);
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        mockJsonGetRequestToken = Mockito.mock(GetJsonZosmfRequest.class,
+                withSettings().useConstructor(tokenConnection));
+        Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonGetRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequestToken).getHeaders();
+        doCallRealMethod().when(mockJsonGetRequestToken).getUrl();
+
         ussList = new UssList(connection);
     }
 
     @Test
     public void tstUssListFileListEmptyResponseSuccess() throws Exception {
-        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response("{}", 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
         // should only contain two items
         assertEquals(0, items.size());
+        assertEquals("https://1:1/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
     }
 
     @Test
     public void tstUssListFileListEmptyResponseToggleTokenSuccess() throws Exception {
-        GetJsonZosmfRequest mockJsonGetRequestCookie = Mockito.mock(GetJsonZosmfRequest.class,
-                withSettings().useConstructor(tokenConnection));
-        Mockito.when(mockJsonGetRequestCookie.executeRequest()).thenReturn(
-                new Response("{}", 200, "success"));
-        doCallRealMethod().when(mockJsonGetRequestCookie).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonGetRequestCookie).setStandardHeaders();
-        doCallRealMethod().when(mockJsonGetRequestCookie).setUrl(any());
-        doCallRealMethod().when(mockJsonGetRequestCookie).getHeaders();
-
-        final UssList ussList = new UssList(tokenConnection, mockJsonGetRequestCookie);
+        final UssList ussList = new UssList(tokenConnection, mockJsonGetRequestToken);
         List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
-        Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockJsonGetRequestCookie.getHeaders().toString());
+        assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+                mockJsonGetRequestToken.getHeaders().toString());
         // should only contain two items
         assertEquals(0, items.size());
+        assertEquals("https://1:1/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequestToken.getUrl());
     }
 
     @Test
@@ -168,7 +177,8 @@ public class UssListTest {
         } catch (Exception e) {
             msg = e.getMessage();
         }
-        Assert.assertEquals(ZosFilesConstants.RESPONSE_PHRASE_ERROR, msg);
+        assertEquals(ZosFilesConstants.RESPONSE_PHRASE_ERROR, msg);
+        assertEquals("https://1:1/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
     }
 
     @Test
@@ -178,6 +188,7 @@ public class UssListTest {
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
+        assertEquals("https://1:1/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
         // should only contain two items
         assertEquals(2, items.size());
         // verify first item's data
@@ -209,6 +220,7 @@ public class UssListTest {
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
+        assertEquals("https://1:1/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
         // should only contain two items
         assertEquals(2, items.size());
         // verify first item's data
@@ -241,6 +253,7 @@ public class UssListTest {
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
         assertEquals(0, items.size());
+        assertEquals("https://1:1/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
     }
 
     @Test
@@ -250,6 +263,7 @@ public class UssListTest {
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
         assertEquals(0, items.size());
+        assertEquals("https://1:1/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
     }
 
     @Test
@@ -275,6 +289,7 @@ public class UssListTest {
         assertEquals(907651, items.get(0).getReadibc().orElse(-1));
         assertEquals(42, items.get(0).getWriteibc().orElse(-1));
         assertEquals(453057, items.get(0).getDiribc().orElse(-1));
+        assertEquals("https://1:1/zosmf/restfiles/mfs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
     }
 
     @Test
