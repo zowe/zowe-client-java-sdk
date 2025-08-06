@@ -140,7 +140,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Setup self-signed certificate SSL type
+     * Setup authentication SSL type for self-signed certificate 
      *
      * @param certFilePath certificate file (.p12) location
      * @param certPassword certificate password for certificate file (.p12)
