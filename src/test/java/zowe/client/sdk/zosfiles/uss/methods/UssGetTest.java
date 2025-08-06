@@ -12,16 +12,17 @@ package zowe.client.sdk.zosfiles.uss.methods;
 import kong.unirest.core.Cookie;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
-import zowe.client.sdk.rest.GetStreamZosmfRequest;
-import zowe.client.sdk.rest.GetTextZosmfRequest;
-import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.GetParams;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -243,6 +244,32 @@ public class UssGetTest {
             assertEquals("Should throw IllegalArgumentException when connection is null",
                     "connection is null", e.getMessage());
         }
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithValidTextRequestType() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        ZosmfRequest request = Mockito.mock(GetTextZosmfRequest.class);
+        UssGet ussGet = new UssGet(connection, request);
+        assertNotNull(ussGet);
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithValidStreamRequestType() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        ZosmfRequest request = Mockito.mock(GetStreamZosmfRequest.class);
+        UssGet ussGet = new UssGet(connection, request);
+        assertNotNull(ussGet);
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithNullRequest() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> new UssGet(connection, null)
+        );
+        Assertions.assertEquals("request is null", exception.getMessage());
     }
 
 }

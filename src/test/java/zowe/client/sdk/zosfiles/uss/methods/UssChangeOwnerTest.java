@@ -19,10 +19,12 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.ChangeOwnerParams;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -217,6 +219,45 @@ public class UssChangeOwnerTest {
             Assert.assertEquals("Should throw IllegalArgumentException when connection is null",
                     "connection is null", e.getMessage());
         }
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithValidRequestType() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
+        UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, request);
+        assertNotNull(ussChangeOwner);
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithNullConnection() {
+        ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> new UssChangeOwner(null, request)
+        );
+        assertEquals("connection is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithNullRequest() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> new UssChangeOwner(connection, null)
+        );
+        assertEquals("request is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstSecondaryConstructorWithInvalidRequestType() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PutJsonZosmfRequest
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> new UssChangeOwner(connection, request)
+        );
+        assertEquals("PUT_JSON request type required", exception.getMessage());
     }
 
 }
