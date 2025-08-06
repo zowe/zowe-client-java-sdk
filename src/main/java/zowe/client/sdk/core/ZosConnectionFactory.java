@@ -35,6 +35,7 @@ public class ZosConnectionFactory {
      * @param password Password for authentication
      * @return ZosConnection configured for basic authentication
      * @author Frank Giordano
+     * @author Shabaz Kowthalam
      */
     public static ZosConnection createBasicConnection(final String host,
                                                       final String port,
@@ -53,6 +54,7 @@ public class ZosConnectionFactory {
      * @param basePath base path for z/OSMF REST endpoints
      * @return ZosConnection configured for basic authentication
      * @author Frank Giordano
+     * @author Shabaz Kowthalam
      */
     public static ZosConnection createBasicConnection(final String host,
                                                       final String port,
@@ -74,6 +76,7 @@ public class ZosConnectionFactory {
      * @param password Password for authentication
      * @param basePath base path for z/OSMF REST endpoints
      * @return ZosConnection configured for token authentication
+     * @author Frank Giordano
      * @author Shabaz Kowthalam
      */
     private static ZosConnection createBasicZosConnection(final String host,
@@ -108,6 +111,7 @@ public class ZosConnectionFactory {
      * @param token Authentication token cookie
      * @return ZosConnection configured for token authentication
      * @author Frank Giordano
+     * @author Shabaz Kowthalam
      */
     public static ZosConnection createTokenConnection(final String host,
                                                       final String port,
@@ -124,6 +128,7 @@ public class ZosConnectionFactory {
      * @param basePath base path for z/OSMF REST endpoints
      * @return ZosConnection configured for token authentication
      * @author Frank Giordano
+     * @author Shabaz Kowthalam
      */
     public static ZosConnection createTokenConnection(final String host,
                                                       final String port,
@@ -143,6 +148,7 @@ public class ZosConnectionFactory {
      * @param token    Authentication token cookie
      * @param basePath base path for z/OSMF REST endpoints
      * @return ZosConnection configured for token authentication
+     * @author Frank Giordano
      * @author Shabaz Kowthalam
      */
     private static ZosConnection createTokenZosConnection(final String host,
@@ -173,6 +179,7 @@ public class ZosConnectionFactory {
      * @param certPassword Password for the certificate
      * @return ZosConnection configured for SSL authentication
      * @author Frank Giordano
+     * @author Shabaz Kowthalam
      */
     public static ZosConnection createSslConnection(final String host,
                                                     final String port,
@@ -191,6 +198,7 @@ public class ZosConnectionFactory {
      * @param basePath     base path for z/OSMF REST endpoints
      * @return ZosConnection configured for SSL authentication
      * @author Frank Giordano
+     * @author Shabaz Kowthalam
      */
     public static ZosConnection createSslConnection(final String host,
                                                     final String port,
@@ -212,6 +220,7 @@ public class ZosConnectionFactory {
      * @param certPassword Password for the certificate
      * @param basePath     base path for z/OSMF REST endpoints
      * @return ZosConnection configured for SSL authentication
+     * @author Frank Giordano
      * @author Shabaz Kowthalam
      */
     private static ZosConnection createSslZosConnection(final String host,
