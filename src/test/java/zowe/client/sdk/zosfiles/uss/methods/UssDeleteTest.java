@@ -49,6 +49,8 @@ public class UssDeleteTest {
         mockJsonDeleteRequest = Mockito.mock(DeleteJsonZosmfRequest.class);
         Mockito.when(mockJsonDeleteRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonDeleteRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonDeleteRequest).getUrl();
 
         mockJsonDeleteRequestToken = Mockito.mock(DeleteJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
@@ -58,6 +60,7 @@ public class UssDeleteTest {
         doCallRealMethod().when(mockJsonDeleteRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockJsonDeleteRequestToken).setUrl(any());
         doCallRealMethod().when(mockJsonDeleteRequestToken).getHeaders();
+        doCallRealMethod().when(mockJsonDeleteRequestToken).getUrl();
 
         ussDelete = new UssDelete(connection);
     }
@@ -66,9 +69,10 @@ public class UssDeleteTest {
     public void tstUssDeleteSuccess() throws ZosmfRequestException {
         final UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
         final Response response = ussDelete.delete("/xxx/xx/xx");
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx%2Fxx", mockJsonDeleteRequest.getUrl());
     }
 
     @Test
@@ -78,18 +82,20 @@ public class UssDeleteTest {
         Response response = ussDelete.delete("/xxx/xx/xx");
         Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonDeleteRequestToken.getHeaders().toString());
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx%2Fxx", mockJsonDeleteRequestToken.getUrl());
     }
 
     @Test
     public void tstUssDeleteRecursiveSuccess() throws ZosmfRequestException {
         final UssDelete ussDelete = new UssDelete(connection, mockJsonDeleteRequest);
         final Response response = ussDelete.delete("/xxx/xx/xx", true);
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx%2Fxx", mockJsonDeleteRequest.getUrl());
     }
 
     @Test
