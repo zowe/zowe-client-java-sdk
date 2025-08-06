@@ -62,6 +62,7 @@ public class UssWrite {
      */
     UssWrite(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         // request type check deferred
         this.request = request;
