@@ -56,6 +56,7 @@ public class DsnWrite {
      */
     DsnWrite(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PutTextZosmfRequest)) {
             throw new IllegalStateException("PUT_TEXT request type required");
