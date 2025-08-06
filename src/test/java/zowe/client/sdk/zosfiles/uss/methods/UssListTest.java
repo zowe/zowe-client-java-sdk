@@ -11,16 +11,12 @@ package zowe.client.sdk.zosfiles.uss.methods;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
-import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.JsonParserUtil;
