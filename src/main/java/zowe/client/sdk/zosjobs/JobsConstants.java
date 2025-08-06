@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosjobs;
 
 /**
- * Constants for various job related info
+ * Constants for various job-related info
  *
  * @author Frank Giordano
  * @version 4.0
@@ -50,27 +50,27 @@ public final class JobsConstants {
     public static final String FILE_DELIM = "/";
 
     /**
-     * Use for illegal exception error message
+     * Use for an illegal exception error message
      */
     public static final String JOB_NAME_ILLEGAL_MSG = "job name not specified";
 
     /**
-     * Use for illegal exception error message
+     * Use for an illegal exception error message
      */
     public static final String JOB_ID_ILLEGAL_MSG = "job id not specified";
 
     /**
-     * Use for null exception error message
+     * Use for a null exception error message
      */
     public static final String JOB_NAME_NULL_MSG = "job name not specified";
 
     /**
-     * Use for null exception error message
+     * Use for a null exception error message
      */
     public static final String JOB_ID_NULL_MSG = "job id not specified";
 
     /**
-     * Use for error message
+     * Use for an error message
      */
     public static final String JOB_FILE_ID_ERROR_MSG = "job file id not specified";
 
@@ -90,7 +90,7 @@ public final class JobsConstants {
     public static final String QUERY_MAX_JOBS = "max-jobs=";
 
     /**
-     * Query id for getting job by an owner
+     * Query id for getting a job by an owner
      */
     public static final String QUERY_OWNER = "owner=";
 

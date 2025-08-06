@@ -22,7 +22,7 @@ import java.util.OptionalLong;
 public class ZosLogItem {
 
     /**
-     * Eight character command and response token (CART).
+     * Eight-character command and response token (CART).
      */
     private final Optional<String> cart;
 
