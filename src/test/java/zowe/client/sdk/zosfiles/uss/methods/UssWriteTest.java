@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
+import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.PutStreamZosmfRequest;
 import zowe.client.sdk.rest.PutTextZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -43,43 +44,51 @@ public class UssWriteTest {
             .createBasicConnection("1", "1", "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
             .createTokenConnection("1", "1", new Cookie("hello=hello"));
+    private PutTextZosmfRequest mockTextPutRequest;
+    private PutTextZosmfRequest mockTextPutRequestToken;
     private UssWrite ussWrite;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
+        mockTextPutRequest = Mockito.mock(PutTextZosmfRequest.class);
+        Mockito.when(mockTextPutRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockTextPutRequest).setUrl(any());
+        doCallRealMethod().when(mockTextPutRequest).getUrl();
+
+        mockTextPutRequestToken = Mockito.mock(PutTextZosmfRequest.class,
+                withSettings().useConstructor(tokenConnection));
+        Mockito.when(mockTextPutRequestToken.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockTextPutRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockTextPutRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockTextPutRequestToken).setUrl(any());
+        doCallRealMethod().when(mockTextPutRequestToken).getHeaders();
+        doCallRealMethod().when(mockTextPutRequestToken).getUrl();
+
         ussWrite = new UssWrite(connection);
     }
 
     @Test
     public void tstUssWriteTextSuccess() throws ZosmfRequestException {
-        final PutTextZosmfRequest mockTextPutRequest = Mockito.mock(PutTextZosmfRequest.class);
-        Mockito.when(mockTextPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
         final UssWrite ussWrite = new UssWrite(connection, mockTextPutRequest);
         final Response response = ussWrite.writeText("/xx/xx/x", "text");
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxx%2Fxx%2Fx", mockTextPutRequest.getUrl());
     }
 
     @Test
     public void tstUssWriteTextToggleTokenSuccess() throws ZosmfRequestException {
-        PutTextZosmfRequest mockJsonPutRequestToken = Mockito.mock(PutTextZosmfRequest.class,
-                withSettings().useConstructor(tokenConnection));
-        Mockito.when(mockJsonPutRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockJsonPutRequestToken).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonPutRequestToken).setStandardHeaders();
-        doCallRealMethod().when(mockJsonPutRequestToken).setUrl(any());
-        doCallRealMethod().when(mockJsonPutRequestToken).getHeaders();
-        final UssWrite ussWrite = new UssWrite(connection, mockJsonPutRequestToken);
-
+        final UssWrite ussWrite = new UssWrite(connection, mockTextPutRequestToken);
         Response response = ussWrite.writeText("/xx/xx/x", "text");
         String expectedResp = "{X-IBM-Data-Type=text;, X-CSRF-ZOSMF-HEADER=true, Content-Type=text/plain; charset=UTF-8}";
-        Assertions.assertEquals(expectedResp, mockJsonPutRequestToken.getHeaders().toString());
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals(expectedResp, mockTextPutRequestToken.getHeaders().toString());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxx%2Fxx%2Fx", mockTextPutRequestToken.getUrl());
     }
 
     @Test
@@ -87,11 +96,14 @@ public class UssWriteTest {
         final PutStreamZosmfRequest mockStreamPutRequest = Mockito.mock(PutStreamZosmfRequest.class);
         Mockito.when(mockStreamPutRequest.executeRequest()).thenReturn(
                 new Response(new byte[0], 200, "success"));
+        doCallRealMethod().when(mockStreamPutRequest).setUrl(any());
+        doCallRealMethod().when(mockStreamPutRequest).getUrl();
         final UssWrite ussWrite = new UssWrite(connection, mockStreamPutRequest);
         final Response response = ussWrite.writeBinary("/xx/xx/x", new byte[0]);
         assertTrue(response.getResponsePhrase().orElse(null) instanceof byte[]);
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxx%2Fxx%2Fx", mockStreamPutRequest.getUrl());
     }
 
     @Test
