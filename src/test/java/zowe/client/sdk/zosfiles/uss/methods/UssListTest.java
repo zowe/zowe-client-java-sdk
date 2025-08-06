@@ -205,7 +205,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListPartialSuccess() throws ZosmfRequestException {
-        final JSONParser parser = new JSONParser();
         final JSONObject json = JsonParserUtil.parse(partialDataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
@@ -237,7 +236,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListEmptyFileListSuccess() throws ZosmfRequestException {
-        final JSONParser parser = new JSONParser();
         final JSONObject json = JsonParserUtil.parse("{}");
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
@@ -257,7 +255,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListSuccess() throws ZosmfRequestException {
-        final JSONParser parser = new JSONParser();
         final JSONObject json = JsonParserUtil.parse(dataForZfsList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
