@@ -168,7 +168,6 @@ public class ZosConnection {
         return certFilePath;
     }
 
-
     /**
      * Set certificate path value
      * <p>
@@ -217,68 +216,35 @@ public class ZosConnection {
     public Optional<String> getBasePath() {
         return Optional.ofNullable(basePath);
     }
-
-    /**
-     * Equals method. Use all members for equality.
-     *
-     * @param obj object
-     * @return true or false
-     */
+    
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ZosConnection other = (ZosConnection) obj;
-        if (this.authType == AuthType.BASIC) {
-            return Objects.equals(host, other.host) &&
-                    Objects.equals(zosmfPort, other.zosmfPort) &&
-                    Objects.equals(user, other.user) &&
-                    Objects.equals(password, other.password) &&
-                    Objects.equals(basePath, other.basePath);
-        } else if (this.authType == AuthType.TOKEN) {
-            if (this.user != null && !this.user.isBlank()) {
-                return Objects.equals(host, other.host) &&
-                        Objects.equals(zosmfPort, other.zosmfPort) &&
-                        Objects.equals(user, other.user) &&
-                        Objects.equals(token.getValue(), other.token.getValue()) &&
-                        Objects.equals(basePath, other.basePath);
-            } else {
-                return Objects.equals(host, other.host) &&
-                        Objects.equals(zosmfPort, other.zosmfPort) &&
-                        Objects.equals(token.getValue(), other.token.getValue()) &&
-                        Objects.equals(basePath, other.basePath);
-            }
-        } else if (this.authType == AuthType.SSL) {
-            if (this.user != null && !this.user.isBlank()) {
-                return Objects.equals(host, other.host) &&
-                        Objects.equals(zosmfPort, other.zosmfPort) &&
-                        Objects.equals(user, other.user) &&
-                        Objects.equals(certPassword, other.certPassword) &&
-                        Objects.equals(certFilePath, other.certFilePath) &&
-                        Objects.equals(basePath, other.basePath);
-            } else {
-                return Objects.equals(host, other.host) &&
-                        Objects.equals(zosmfPort, other.zosmfPort) &&
-                        Objects.equals(certPassword, other.certPassword) &&
-                        Objects.equals(certFilePath, other.certFilePath) &&
-                        Objects.equals(basePath, other.basePath);
-            }
-        }
-        return false;
+        ZosConnection that = (ZosConnection) o;
+        return Objects.equals(host, that.host) &&
+                Objects.equals(zosmfPort, that.zosmfPort) &&
+                authType == that.authType &&
+                Objects.equals(user, that.user) &&
+                Objects.equals(password, that.password) &&
+                Objects.equals(token, that.token) &&
+                Objects.equals(certFilePath, that.certFilePath) &&
+                Objects.equals(certPassword, that.certPassword) &&
+                Objects.equals(basePath, that.basePath);
     }
 
-    /**
-     * Hashcode method. Use all members for hashing.
-     *
-     * @return int value
-     */
     @Override
     public int hashCode() {
-        return Objects.hash(host, zosmfPort, user, password, certPassword, token, certFilePath, basePath);
+        return Objects.hash(host,
+                zosmfPort,
+                authType,
+                user,
+                password,
+                token,
+                certFilePath,
+                certPassword,
+                basePath);
     }
 
 }
