@@ -65,8 +65,22 @@ public class ZosConnectionFactory {
         return createBasicZosConnection(host, port, user, password, basePath);
     }
 
-    private static ZosConnection createBasicZosConnection(
-            String host, String port, String user, String password, String basePath) {
+    /**
+     * Private wrapper method for createBasicZosConnection
+     * 
+     * @param host     Host address of the z/OSMF server
+     * @param port     Port number of the z/OSMF server
+     * @param user     Username for authentication
+     * @param password Password for authentication
+     * @param basePath base path for z/OSMF REST endpoints
+     * @return ZosConnection configured for token authentication
+     * @author Frank Giordano
+     */
+    private static ZosConnection createBasicZosConnection(final String host,
+                                                          final String port,
+                                                          final String user,
+                                                          final String password,
+                                                          final String basePath) {
         if (host == null || host.isBlank())
             throw new IllegalStateException("host is either null or empty");
 
@@ -121,7 +135,20 @@ public class ZosConnectionFactory {
         return createTokenZosConnection(host, port, token, basePath);
     }
 
-    private static ZosConnection createTokenZosConnection(String host, String port, Cookie token, String basePath) {
+    /**
+     * Private wrapper method for createTokenZosConnection
+     *
+     * @param host     Host address of the z/OSMF server
+     * @param port     Port number of the z/OSMF server
+     * @param token    Authentication token cookie
+     * @param basePath base path for z/OSMF REST endpoints
+     * @return ZosConnection configured for token authentication
+     * @author Shabaz Kowthalam
+     */
+    private static ZosConnection createTokenZosConnection(final String host,
+                                                          final String port,
+                                                          final Cookie token,
+                                                          final String basePath) {
         if (host == null || host.isBlank())
             throw new IllegalStateException("host is either null or empty");
 
@@ -176,7 +203,22 @@ public class ZosConnectionFactory {
         return createSslZosConnection(host, port, certFilePath, certPassword, basePath);
     }
 
-    private static ZosConnection createSslZosConnection(String host, String port, String certFilePath, String certPassword, String basePath) {
+    /**
+     * Private wrapper method for createSslConnection
+     *
+     * @param host         Host address of the z/OSMF server
+     * @param port         Port number of the z/OSMF server
+     * @param certFilePath Path to the certificate file (.p12)
+     * @param certPassword Password for the certificate
+     * @param basePath     base path for z/OSMF REST endpoints
+     * @return ZosConnection configured for SSL authentication
+     * @author Frank Giordano
+     */
+    private static ZosConnection createSslZosConnection(final String host,
+                                                        final String port,
+                                                        final String certFilePath,
+                                                        final String certPassword,
+                                                        final String basePath) {
         if (host == null || host.isBlank())
             throw new IllegalStateException("host is either null or empty");
 
