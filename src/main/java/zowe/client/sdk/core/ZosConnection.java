@@ -68,7 +68,7 @@ public class ZosConnection {
      * @param zosmfPort string value
      * @param authType  AuthType enum value
      */
-    ZosConnection(String host, String zosmfPort, AuthType authType) {
+    ZosConnection(final String host, final String zosmfPort, final AuthType authType) {
         this.host = host;
         this.zosmfPort = zosmfPort;
         this.authType = authType;
