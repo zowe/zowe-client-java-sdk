@@ -108,6 +108,7 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setupBasic() {
+        LOG.debug("basic authentication type");
         Unirest.config().verifySsl(false);
         headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
     }
@@ -118,6 +119,7 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setupToken() {
+        LOG.debug("token authentication type");
         Unirest.config().verifySsl(false);
         this.token = connection.getToken();
     }
@@ -131,8 +133,10 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void setupSsl() {
+        LOG.debug("ssl authentication type");
         boolean inSecure = Boolean.parseBoolean(System.getProperty(RestConstant.INSECURE_PROPERTY_NAME, "false"));
         if (inSecure) {
+            LOG.debug("insecure enabled");
             setupSelfSignedCertificate(connection.getCertFilePath(), connection.getCertPassword());
         } else {
             Unirest.config().clientCertificateStore(connection.getCertFilePath(), connection.getCertPassword());
@@ -140,7 +144,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Setup authentication SSL type for self-signed certificate 
+     * Setup authentication SSL type for self-signed certificate
      *
      * @param certFilePath certificate file (.p12) location
      * @param certPassword certificate password for certificate file (.p12)
