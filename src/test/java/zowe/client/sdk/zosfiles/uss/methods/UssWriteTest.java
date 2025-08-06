@@ -13,11 +13,13 @@ import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
-import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.PutStreamZosmfRequest;
+import zowe.client.sdk.rest.PutTextZosmfRequest;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.WriteParams;
 
@@ -273,7 +275,7 @@ public class UssWriteTest {
                 NullPointerException.class,
                 () -> new UssWrite(null, request)
         );
-        Assertions.assertEquals("connection is null", exception.getMessage());
+        assertEquals("connection is null", exception.getMessage());
     }
 
     @Test
@@ -283,7 +285,7 @@ public class UssWriteTest {
                 NullPointerException.class,
                 () -> new UssWrite(connection, null)
         );
-        Assertions.assertEquals("request is null", exception.getMessage());
+        assertEquals("request is null", exception.getMessage());
     }
 
 }

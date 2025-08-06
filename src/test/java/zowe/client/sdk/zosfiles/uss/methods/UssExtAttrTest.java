@@ -13,7 +13,6 @@ import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -235,7 +234,7 @@ public class UssExtAttrTest {
                 NullPointerException.class,
                 () -> new UssExtAttr(null, request)
         );
-        Assertions.assertEquals("connection is null", exception.getMessage());
+        assertEquals("connection is null", exception.getMessage());
     }
 
     @Test
@@ -245,7 +244,7 @@ public class UssExtAttrTest {
                 NullPointerException.class,
                 () -> new UssExtAttr(connection, null)
         );
-        Assertions.assertEquals("request is null", exception.getMessage());
+        assertEquals("request is null", exception.getMessage());
     }
 
     @Test
@@ -256,7 +255,7 @@ public class UssExtAttrTest {
                 IllegalStateException.class,
                 () -> new UssExtAttr(connection, request)
         );
-        Assertions.assertEquals("PUT_JSON request type required", exception.getMessage());
+        assertEquals("PUT_JSON request type required", exception.getMessage());
     }
 
 }

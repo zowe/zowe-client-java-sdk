@@ -15,7 +15,6 @@ import kong.unirest.core.JsonNode;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -91,7 +90,7 @@ public class IssueConsoleTest {
         final IssueConsole issueCommand = new IssueConsole(tokenConnection, mockJsonGetRequestAuth);
 
         ConsoleResponse response = issueCommand.issueCommand("command");
-        Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+        assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestAuth.getHeaders().toString());
         assertEquals("student",
                 response.getCommandResponse()

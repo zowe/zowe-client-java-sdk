@@ -13,7 +13,6 @@ import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -73,9 +72,9 @@ public class UssCopyTest {
     public void tstUssCopySuccess() throws ZosmfRequestException {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copy("/xxx/xx/xx", "/xxx/xx/xx");
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
         assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx%2Fxx", mockJsonPutRequest.getUrl());
     }
 
@@ -84,11 +83,11 @@ public class UssCopyTest {
         final UssCopy ussCopy = new UssCopy(tokenConnection, mockJsonPutRequestToken);
 
         Response response = ussCopy.copy("/xxx/xx/xx", "/xxx/xx/xx");
-        Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+        assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonPutRequestToken.getHeaders().toString());
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
         assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx%2Fxx", mockJsonPutRequestToken.getUrl());
     }
 
@@ -97,9 +96,9 @@ public class UssCopyTest {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copyCommon("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").recursive(true).build());
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
         assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx%2Fxx", mockJsonPutRequest.getUrl());
     }
 
@@ -108,9 +107,9 @@ public class UssCopyTest {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copyCommon("/xxx/xx/xx",
                 new CopyParams.Builder().from("/xxx/xx/xx").overwrite(true).build());
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
         assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx%2Fxx", mockJsonPutRequest.getUrl());
     }
 

@@ -12,11 +12,13 @@ package zowe.client.sdk.zosfiles.uss.methods;
 import kong.unirest.core.Cookie;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
-import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.GetStreamZosmfRequest;
+import zowe.client.sdk.rest.GetTextZosmfRequest;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.GetParams;
 
@@ -269,7 +271,7 @@ public class UssGetTest {
                 NullPointerException.class,
                 () -> new UssGet(connection, null)
         );
-        Assertions.assertEquals("request is null", exception.getMessage());
+        assertEquals("request is null", exception.getMessage());
     }
 
 }

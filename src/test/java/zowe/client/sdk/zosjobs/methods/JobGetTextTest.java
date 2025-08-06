@@ -12,7 +12,6 @@ package zowe.client.sdk.zosjobs.methods;
 import kong.unirest.core.Cookie;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZosConnection;
@@ -87,7 +86,7 @@ public class JobGetTextTest {
         doCallRealMethod().when(mockTextGetRequestToken).getHeaders();
 
         String results = getJobs.getSpoolContent("jobName", "jobId", 1);
-        Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=text/plain; charset=UTF-8}",
+        assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=text/plain; charset=UTF-8}",
                 mockTextGetRequestToken.getHeaders().toString());
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
         assertEquals("1\n2\n3\n", results);
