@@ -70,22 +70,22 @@ public class UssExtAttrTest {
     public void tstDsnCopySuccess() throws ZosmfRequestException {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection, mockJsonPutRequest);
         final Response response = ussExtAttr.set("/test", "a");
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
-        Assertions.assertEquals("https://1:1/zosmf/restfiles/fs%2Ftest", mockJsonPutRequest.getUrl());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Ftest", mockJsonPutRequest.getUrl());
     }
 
     @Test
     public void tstDsnCopyTokenSuccess() throws ZosmfRequestException {
         final UssExtAttr ussExtAttr = new UssExtAttr(tokenConnection, mockJsonPutRequestToken);
         final Response response = ussExtAttr.set("/test", "a");
-        Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+        assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonPutRequestToken.getHeaders().toString());
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
-        Assertions.assertEquals("https://1:1/zosmf/restfiles/fs%2Ftest", mockJsonPutRequestToken.getUrl());
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Ftest", mockJsonPutRequestToken.getUrl());
     }
 
     @Test
