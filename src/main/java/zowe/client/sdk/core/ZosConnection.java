@@ -57,7 +57,7 @@ public class ZosConnection {
     /**
      * Base path for z/OSMF REST endpoints
      */
-    private Optional<String> basePath = Optional.empty();
+    private String basePath;
 
     /**
      * ZosConnection constructor
@@ -206,7 +206,7 @@ public class ZosConnection {
      * @param basePath string value
      */
     public void setBasePath(String basePath) {
-        this.basePath = Optional.ofNullable(basePath);
+        this.basePath = basePath;
     }
 
     /**
@@ -215,7 +215,7 @@ public class ZosConnection {
      * @return string value
      */
     public Optional<String> getBasePath() {
-        return basePath;
+        return Optional.ofNullable(basePath);
     }
 
     /**
