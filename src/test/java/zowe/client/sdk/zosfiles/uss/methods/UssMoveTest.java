@@ -40,6 +40,7 @@ public class UssMoveTest {
     private final ZosConnection tokenConnection = ZosConnectionFactory
             .createTokenConnection("1", "1", new Cookie("hello=hello"));
     private PutJsonZosmfRequest mockJsonPutRequest;
+    private PutJsonZosmfRequest mockJsonPutRequestToken;
     private UssMove ussMove;
 
     @Before
@@ -47,6 +48,19 @@ public class UssMoveTest {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonPutRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonPutRequest).getUrl();
+
+        mockJsonPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
+                withSettings().useConstructor(tokenConnection));
+        Mockito.when(mockJsonPutRequestToken.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonPutRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonPutRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockJsonPutRequestToken).setUrl(any());
+        doCallRealMethod().when(mockJsonPutRequestToken).getHeaders();
+        doCallRealMethod().when(mockJsonPutRequestToken).getUrl();
+
         ussMove = new UssMove(connection);
     }
 
@@ -57,26 +71,19 @@ public class UssMoveTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx%2Fxx", mockJsonPutRequest.getUrl());
     }
 
     @Test
     public void tstUssMoveToggleTokenSuccess() throws ZosmfRequestException {
-        final PutJsonZosmfRequest mockJsonPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
-                withSettings().useConstructor(tokenConnection));
-        Mockito.when(mockJsonPutRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockJsonPutRequestToken).setHeaders(anyMap());
-        doCallRealMethod().when(mockJsonPutRequestToken).setStandardHeaders();
-        doCallRealMethod().when(mockJsonPutRequestToken).setUrl(any());
-        doCallRealMethod().when(mockJsonPutRequestToken).getHeaders();
         final UssMove ussMove = new UssMove(connection, mockJsonPutRequestToken);
-
         Response response = ussMove.move("/xxx/xx/xx", "/xxx/xx/xx");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonPutRequestToken.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx%2Fxx", mockJsonPutRequestToken.getUrl());
     }
 
     @Test
@@ -86,6 +93,7 @@ public class UssMoveTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx%2Fxx", mockJsonPutRequest.getUrl());
     }
 
     @Test
