@@ -74,7 +74,7 @@ public class ZosConnectionFactory {
      * @param password Password for authentication
      * @param basePath base path for z/OSMF REST endpoints
      * @return ZosConnection configured for token authentication
-     * @author Frank Giordano
+     * @author Shabaz Kowthalam
      */
     private static ZosConnection createBasicZosConnection(final String host,
                                                           final String port,
@@ -212,7 +212,7 @@ public class ZosConnectionFactory {
      * @param certPassword Password for the certificate
      * @param basePath     base path for z/OSMF REST endpoints
      * @return ZosConnection configured for SSL authentication
-     * @author Frank Giordano
+     * @author Shabaz Kowthalam
      */
     private static ZosConnection createSslZosConnection(final String host,
                                                         final String port,
