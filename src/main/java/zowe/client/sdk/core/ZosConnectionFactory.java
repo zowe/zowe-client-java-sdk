@@ -67,7 +67,7 @@ public class ZosConnectionFactory {
 
     /**
      * Private wrapper method for createBasicZosConnection
-     * 
+     *
      * @param host     Host address of the z/OSMF server
      * @param port     Port number of the z/OSMF server
      * @param user     Username for authentication
