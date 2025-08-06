@@ -52,6 +52,8 @@ public class DsnCopy {
     /**
      * Alternative DsnCopy constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
+     * <p>
+     * This constructor is package-private
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object

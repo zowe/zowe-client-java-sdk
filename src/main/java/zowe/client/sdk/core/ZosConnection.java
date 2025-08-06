@@ -61,6 +61,8 @@ public class ZosConnection {
 
     /**
      * ZosConnection constructor
+     * <p>
+     * This constructor is package-private. Use ZosConnectionFactory to initiate a ZosConnection Object.
      *
      * @param host      string value
      * @param zosmfPort string value
