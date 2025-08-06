@@ -18,6 +18,7 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.PostJsonZosmfRequest;
+import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.CreateParams;
@@ -48,24 +49,13 @@ public class UssCreateTest {
     private UssCreate ussCreate;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
         mockJsonPostRequest = Mockito.mock(PostJsonZosmfRequest.class);
-        ussCreate = new UssCreate(connection);
-    }
-
-    @Test
-    public void tstUssCreateSuccess() throws ZosmfRequestException {
         Mockito.when(mockJsonPostRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        final UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequest);
-        final Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
-    }
+        doCallRealMethod().when(mockJsonPostRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonPostRequest).getUrl();
 
-    @Test
-    public void tstUssCreateToggleTokenSuccess() throws ZosmfRequestException {
         mockJsonPostRequestToken = Mockito.mock(PostJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonPostRequestToken.executeRequest()).thenReturn(
@@ -74,14 +64,31 @@ public class UssCreateTest {
         doCallRealMethod().when(mockJsonPostRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockJsonPostRequestToken).setUrl(any());
         doCallRealMethod().when(mockJsonPostRequestToken).getHeaders();
-        final UssCreate ussCreate = new UssCreate(tokenConnection, mockJsonPostRequestToken);
+        doCallRealMethod().when(mockJsonPostRequestToken).getUrl();
 
+        ussCreate = new UssCreate(connection);
+    }
+
+    @Test
+    public void tstUssCreateSuccess() throws ZosmfRequestException {
+        final UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequest);
+        final Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxx%2Fxx%2Fx", mockJsonPostRequest.getUrl());
+    }
+
+    @Test
+    public void tstUssCreateToggleTokenSuccess() throws ZosmfRequestException {
+        final UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequestToken);
         Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
-        Assertions.assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+        assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonPostRequestToken.getHeaders().toString());
-        Assertions.assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
-        Assertions.assertEquals(200, response.getStatusCode().orElse(-1));
-        Assertions.assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxx%2Fxx%2Fx", mockJsonPostRequestToken.getUrl());
     }
 
     @Test
