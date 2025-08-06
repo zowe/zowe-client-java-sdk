@@ -136,7 +136,7 @@ public class JobCancelTest {
     @Test
     public void tstSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
-        ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a DeleteJsonZosmfRequest
+        ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PutJsonZosmfRequest
         IllegalStateException exception = assertThrows(
                 IllegalStateException.class,
                 () -> new JobCancel(connection, request)
