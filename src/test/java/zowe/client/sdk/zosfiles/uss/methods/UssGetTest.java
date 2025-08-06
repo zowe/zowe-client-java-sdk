@@ -10,6 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.methods;
 
 import kong.unirest.core.Cookie;
+import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -18,6 +19,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetStreamZosmfRequest;
 import zowe.client.sdk.rest.GetTextZosmfRequest;
+import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.GetParams;
@@ -41,40 +43,48 @@ public class UssGetTest {
             .createBasicConnection("1", "1", "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
             .createTokenConnection("1", "1", new Cookie("hello=hello"));
+    private GetTextZosmfRequest mockTextGetRequest;
+    private GetTextZosmfRequest mockTextGetRequestToken;
     private UssGet ussGet;
 
     @Before
-    public void init() {
+    public void init() throws ZosmfRequestException {
+        mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
+        Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
+                new Response("text", 200, "success"));
+        doCallRealMethod().when(mockTextGetRequest).setUrl(any());
+        doCallRealMethod().when(mockTextGetRequest).getUrl();
+
+        mockTextGetRequestToken = Mockito.mock(GetTextZosmfRequest.class,
+                withSettings().useConstructor(tokenConnection));
+        Mockito.when(mockTextGetRequestToken.executeRequest()).thenReturn(
+                new Response("text", 200, "success"));
+        doCallRealMethod().when(mockTextGetRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockTextGetRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockTextGetRequestToken).setUrl(any());
+        doCallRealMethod().when(mockTextGetRequestToken).getHeaders();
+        doCallRealMethod().when(mockTextGetRequestToken).getUrl();
+
         ussGet = new UssGet(connection);
     }
 
     @Test
     public void tstGetTextFileTargetPathSuccess() throws ZosmfRequestException {
-        final GetTextZosmfRequest mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
-        Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
-                new Response("text", 200, "success"));
         final UssGet ussGet = new UssGet(connection, mockTextGetRequest);
         final String response = ussGet.getText("/xxx/xx");
-        Assertions.assertEquals("text", response);
+        assertEquals("text", response);
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx", mockTextGetRequest.getUrl());
     }
 
     @Test
     public void tstGetTextFileTargetPathToggleTokenSuccess() throws ZosmfRequestException {
-        final GetTextZosmfRequest mockTextGetRequestAuth = Mockito.mock(GetTextZosmfRequest.class,
-                withSettings().useConstructor(tokenConnection));
-        Mockito.when(mockTextGetRequestAuth.executeRequest()).thenReturn(
-                new Response("text", 200, "success"));
-        doCallRealMethod().when(mockTextGetRequestAuth).setHeaders(anyMap());
-        doCallRealMethod().when(mockTextGetRequestAuth).setStandardHeaders();
-        doCallRealMethod().when(mockTextGetRequestAuth).setUrl(any());
-        doCallRealMethod().when(mockTextGetRequestAuth).getHeaders();
-
-        final UssGet ussGet = new UssGet(tokenConnection, mockTextGetRequestAuth);
+        final UssGet ussGet = new UssGet(connection, mockTextGetRequestToken);
         String response = ussGet.getText("/xxx/xx");
         String expectedResp = "{X-IBM-Data-Type=text, X-CSRF-ZOSMF-HEADER=true, " +
                 "Content-Type=text/plain; charset=UTF-8}";
-        Assertions.assertEquals(expectedResp, mockTextGetRequestAuth.getHeaders().toString());
-        Assertions.assertEquals("text", response);
+        assertEquals(expectedResp, mockTextGetRequestToken.getHeaders().toString());
+        assertEquals("text", response);
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx", mockTextGetRequestToken.getUrl());
     }
 
     @Test
@@ -82,9 +92,12 @@ public class UssGetTest {
         final GetTextZosmfRequest mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response(null, 200, "success"));
+        doCallRealMethod().when(mockTextGetRequest).setUrl(any());
+        doCallRealMethod().when(mockTextGetRequest).getUrl();
         final UssGet ussGet = new UssGet(connection, mockTextGetRequest);
         final String response = ussGet.getText("/xxx/xx");
-        Assertions.assertEquals("", response);
+        assertEquals("", response);
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx", mockTextGetRequest.getUrl());
     }
 
     @Test
@@ -93,9 +106,12 @@ public class UssGetTest {
         final byte[] data = "data".getBytes();
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(
                 new Response(data, 200, "success"));
+        doCallRealMethod().when(mockStreamGetRequest).setUrl(any());
+        doCallRealMethod().when(mockStreamGetRequest).getUrl();
         final UssGet ussGet = new UssGet(connection, mockStreamGetRequest);
         final byte[] response = ussGet.getBinary("/xxx/xx");
-        Assertions.assertEquals(data, response);
+        assertEquals(data, response);
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx", mockStreamGetRequest.getUrl());
     }
 
     @Test
@@ -104,9 +120,12 @@ public class UssGetTest {
         final byte[] data = new byte[0];
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(
                 new Response(data, 200, "success"));
+        doCallRealMethod().when(mockStreamGetRequest).setUrl(any());
+        doCallRealMethod().when(mockStreamGetRequest).getUrl();
         final UssGet ussGet = new UssGet(connection, mockStreamGetRequest);
         final byte[] response = ussGet.getBinary("/xxx/xx");
-        Assertions.assertEquals(data, response);
+        assertEquals(data, response);
+        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx", mockStreamGetRequest.getUrl());
     }
 
     @Test
