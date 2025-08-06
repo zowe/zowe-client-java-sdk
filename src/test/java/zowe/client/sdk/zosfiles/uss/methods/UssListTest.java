@@ -173,7 +173,6 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListSuccess() throws ZosmfRequestException {
-        final JSONParser parser = new JSONParser();
         final JSONObject json = JsonParserUtil.parse(dataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));

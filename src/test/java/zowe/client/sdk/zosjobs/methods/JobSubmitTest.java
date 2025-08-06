@@ -153,7 +153,7 @@ public class JobSubmitTest {
     @Test
     public void tstSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
-        ZosmfRequest request = Mockito.mock(ZosmfRequest.class); 
+        ZosmfRequest request = Mockito.mock(ZosmfRequest.class);
         IllegalStateException exception = assertThrows(
                 IllegalStateException.class,
                 () -> new JobSubmit(connection, request)
