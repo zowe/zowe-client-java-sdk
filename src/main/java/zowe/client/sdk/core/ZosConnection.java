@@ -201,6 +201,8 @@ public class ZosConnection {
 
     /**
      * Set the base path for z/OSMF REST endpoints
+     * <p>
+     * This method's access level is private-package
      *
      * @param basePath string value
      */
