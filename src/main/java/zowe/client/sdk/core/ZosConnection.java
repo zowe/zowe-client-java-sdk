@@ -219,7 +219,7 @@ public class ZosConnection {
 
     /**
      * Equals method. Use all members for equality except for TOKEN which is a special case and
-     * uses a subset of members for equality. 
+     * uses a subset of members for equality.
      *
      * @param obj object
      * @return true or false
@@ -248,17 +248,15 @@ public class ZosConnection {
         }
     }
 
+    /**
+     * Hashcode method. Use all members for hashing.
+     *
+     * @return int value
+     */
     @Override
     public int hashCode() {
-        return Objects.hash(host,
-                zosmfPort,
-                authType,
-                user,
-                password,
-                token,
-                certFilePath,
-                certPassword,
-                basePath);
+        return Objects.hash(host, zosmfPort, authType, user, password, token,
+                certFilePath, certPassword, basePath);
     }
 
 }
