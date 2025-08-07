@@ -67,6 +67,7 @@ public class ZosConnection {
      * @param host      string value
      * @param zosmfPort string value
      * @param authType  AuthType enum value
+     * @author Frank Giordano
      */
     ZosConnection(final String host, final String zosmfPort, final AuthType authType) {
         this.host = host;
@@ -234,6 +235,7 @@ public class ZosConnection {
      *
      * @param obj object
      * @return true or false
+     * @author Frank Giordano
      */
     @Override
     public boolean equals(Object obj) {
