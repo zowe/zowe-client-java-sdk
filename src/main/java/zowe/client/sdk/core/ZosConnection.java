@@ -218,9 +218,9 @@ public class ZosConnection {
     public Optional<String> getBasePath() {
         return Optional.ofNullable(basePath);
     }
-    
+
     /**
-     * Retrieve the zOSMF url
+     * Retrieve the z/OSMF url
      *
      * @return string value
      */
