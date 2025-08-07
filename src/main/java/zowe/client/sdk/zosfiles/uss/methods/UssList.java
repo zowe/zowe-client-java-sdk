@@ -91,9 +91,7 @@ public class UssList {
     public List<UnixFile> getFiles(final ListParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
-                connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
 
         url.append("?path=").append(EncodeUtils.encodeURIComponent(FileUtils.validatePath(
                 params.getPath().orElseThrow(() -> new IllegalArgumentException("path not specified")))));
@@ -157,9 +155,7 @@ public class UssList {
         ValidateUtils.checkIllegalParameter(params.getPath().isEmpty() && params.getFsname().isEmpty(),
                 "no path or fsname specified");
 
-        final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
-                connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS);
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS);
 
         params.getPath().ifPresent(path -> url.append("?path=").append(
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(path))));

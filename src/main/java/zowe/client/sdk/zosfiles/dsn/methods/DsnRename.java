@@ -119,8 +119,7 @@ public class DsnRename {
      * @author Frank Giordano
      */
     private void setUrl(final String... args) {
-        url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+        url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(args[0]);
         if (args.length > 1) {

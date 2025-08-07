@@ -92,7 +92,7 @@ public final class TsoConstants {
     /**
      * URI base for TSO API
      */
-    public static final String RESOURCE = "/zosmf/tsoApp";
+    public static final String RESOURCE = "/tsoApp";
 
     /**
      * Param for not reading reply

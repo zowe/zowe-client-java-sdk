@@ -125,8 +125,7 @@ public class UssMount {
             ValidateUtils.checkIllegalParameter(params.getFsType().isEmpty(), "fsType not specified");
         }
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+        final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 

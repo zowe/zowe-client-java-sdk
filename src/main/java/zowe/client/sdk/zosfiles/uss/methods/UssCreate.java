@@ -89,8 +89,7 @@ public class UssCreate {
         ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+        final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
@@ -134,9 +133,7 @@ public class UssCreate {
         ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "fileSystemName not specified");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final StringBuilder url = new StringBuilder("https://" + connection.getHost() + ":" +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
-                connection.getZosmfPort() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(fileSystemName));
         params.getTimeout().ifPresent(timeout -> url.append("?timeout=").append(timeout));
 

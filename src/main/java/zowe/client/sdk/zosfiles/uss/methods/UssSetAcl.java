@@ -138,8 +138,7 @@ public class UssSetAcl {
                 params.getSet().isEmpty() && params.getModify().isEmpty() && params.getDelete().isEmpty() &&
                         params.getDeleteType().isEmpty(), "set, modify, delete, and delete type are all empty");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+        final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 

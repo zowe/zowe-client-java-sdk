@@ -82,8 +82,7 @@ public class ZosmfPassword {
     public Response changePassword(final PasswordParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+        final String url = connection.getZosmfUrl() +
                 ZosmfAuthConstants.RESOURCE;
 
         final Map<String, Object> passwordMap = new HashMap<>();

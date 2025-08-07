@@ -132,8 +132,7 @@ public class JobSubmit {
         value = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_CLASS_A").get(1);
         headers.put(key, value);
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") + JobsConstants.RESOURCE;
+        final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE;
 
         if (request == null || !(request instanceof PutTextZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
@@ -172,8 +171,7 @@ public class JobSubmit {
     public Job submitCommon(final SubmitJobParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") + JobsConstants.RESOURCE;
+        final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE;
 
         final String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(params.getJobDataSet().get()) + "'";
         final Map<String, String> submitMap = new HashMap<>();

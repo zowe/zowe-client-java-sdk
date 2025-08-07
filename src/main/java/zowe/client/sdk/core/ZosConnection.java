@@ -219,6 +219,17 @@ public class ZosConnection {
         return Optional.ofNullable(basePath);
     }
 
+
+    /**
+     * Retrieve the zOSMF url
+     *
+     * @return string value
+     */
+    public String getZosmfUrl() {
+        return "https://" + host + ":" + zosmfPort +
+                (basePath != null ? basePath : "") + "/zosmf";
+    }
+
     /**
      * Equals method. Use all members for equality except for TOKEN which is a special case and
      * uses a subset of members for equality.
