@@ -224,6 +224,7 @@ public class ZosConnection {
      * Retrieve the z/OSMF url
      *
      * @return string value
+     * @author Shabaz Kowthalam
      */
     public String getZosmfUrl() {
         return "https://" + host + ":" + zosmfPort + (basePath != null ? basePath : "") + "/zosmf";
