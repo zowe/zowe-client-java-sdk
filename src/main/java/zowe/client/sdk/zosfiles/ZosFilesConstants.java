@@ -65,7 +65,7 @@ public class ZosFilesConstants {
     /**
      * Specifies the z/OS data set and file REST interface
      */
-    public static final String RESOURCE = "/zosmf/restfiles";
+    public static final String RESOURCE = "/restfiles";
 
     /**
      * Json response array field name

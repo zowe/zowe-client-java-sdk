@@ -107,7 +107,7 @@ public final class JobsConstants {
     /**
      * URI base jobs API
      */
-    public static final String RESOURCE = "/zosmf/restjobs/jobs";
+    public static final String RESOURCE = "/restjobs/jobs";
 
     /**
      * URI endpoint for getting JCL

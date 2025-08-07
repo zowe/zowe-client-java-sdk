@@ -193,9 +193,8 @@ public class ZoweRequestTest {
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
 
         // Set URL for a hypothetical endpoint
-        final String RESOURCE_PATH = "/zosmf/resource/endpoint";
-        request.setUrl("https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+        final String RESOURCE_PATH = "/resource/endpoint";
+        request.setUrl(connection.getZosmfUrl() +
                 RESOURCE_PATH);
 
         // Verify the constructed URL contains the base path
@@ -213,9 +212,8 @@ public class ZoweRequestTest {
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
 
         // Set URL for a hypothetical endpoint
-        final String RESOURCE_PATH = "/zosmf/resource/endpoint";
-        request.setUrl("https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+        final String RESOURCE_PATH = "/resource/endpoint";
+        request.setUrl(connection.getZosmfUrl() +
                 RESOURCE_PATH);
 
         // Verify the constructed URL does not contain a base path
@@ -232,11 +230,9 @@ public class ZoweRequestTest {
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
 
         // Set URL for a hypothetical endpoint
-        final String RESOURCE_PATH = "/zosmf/resource/endpoint";
+        final String RESOURCE_PATH = "/resource/endpoint";
         assertThrows(IllegalArgumentException.class,
-                () -> request.setUrl("https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                        (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
-                        RESOURCE_PATH));
+                () -> request.setUrl(connection.getZosmfUrl() + RESOURCE_PATH));
     }
 
 }

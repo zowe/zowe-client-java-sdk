@@ -95,8 +95,7 @@ public class StopTso {
     public ZosmfTsoResponse stopCommon(final StopTsoParams commandParams) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+        final String url = connection.getZosmfUrl() +
                 TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/" +
                 commandParams.getServletKey().orElseThrow(() -> new IllegalArgumentException("servletKey not specified"));
 

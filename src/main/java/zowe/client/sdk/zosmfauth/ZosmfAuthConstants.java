@@ -27,6 +27,6 @@ public class ZosmfAuthConstants {
     /**
      * Specifies the z/OSMF authenticate resource
      */
-    public static final String RESOURCE = "/zosmf/services/authenticate";
+    public static final String RESOURCE = "/services/authenticate";
 
 }

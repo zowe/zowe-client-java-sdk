@@ -124,8 +124,7 @@ public class JobCancel {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         // generate full url request
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") + JobsConstants.RESOURCE +
+        final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE +
                 JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
 
         // generate JSON string body for the request

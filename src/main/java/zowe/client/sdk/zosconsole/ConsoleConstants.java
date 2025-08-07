@@ -31,7 +31,7 @@ public final class ConsoleConstants {
     /**
      * Base Resource for console
      */
-    public static final String RESOURCE = "/zosmf/restconsoles/consoles";
+    public static final String RESOURCE = "/restconsoles/consoles";
 
     /**
      * Resource authorization for console

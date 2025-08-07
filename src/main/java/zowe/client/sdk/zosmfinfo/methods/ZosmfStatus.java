@@ -74,8 +74,7 @@ public class ZosmfStatus {
      * @author Frank Giordano
      */
     public ZosmfInfoResponse get() throws ZosmfRequestException {
-        final String url = "https://" + connection.getHost() + ":" + connection.getZosmfPort() +
-                (connection.getBasePath().isPresent() ? connection.getBasePath().get() : "") +
+        final String url = connection.getZosmfUrl() +
                 ZosmfConstants.RESOURCE + ZosmfConstants.INFO;
 
         if (request == null) {
