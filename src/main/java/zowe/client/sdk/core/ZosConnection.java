@@ -218,16 +218,14 @@ public class ZosConnection {
     public Optional<String> getBasePath() {
         return Optional.ofNullable(basePath);
     }
-
-
+    
     /**
      * Retrieve the zOSMF url
      *
      * @return string value
      */
     public String getZosmfUrl() {
-        return "https://" + host + ":" + zosmfPort +
-                (basePath != null ? basePath : "") + "/zosmf";
+        return "https://" + host + ":" + zosmfPort + (basePath != null ? basePath : "") + "/zosmf";
     }
 
     /**
