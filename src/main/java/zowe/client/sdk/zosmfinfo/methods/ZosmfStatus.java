@@ -74,8 +74,7 @@ public class ZosmfStatus {
      * @author Frank Giordano
      */
     public ZosmfInfoResponse get() throws ZosmfRequestException {
-        final String url = connection.getZosmfUrl() +
-                ZosmfConstants.RESOURCE + ZosmfConstants.INFO;
+        final String url = connection.getZosmfUrl() + ZosmfConstants.INFO;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);

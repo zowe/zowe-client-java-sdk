@@ -30,11 +30,6 @@ public final class ZosmfConstants {
     public final static String INFO = "/info";
 
     /**
-     * Specifies the z/OS data set and file REST interface
-     */
-    public final static String RESOURCE = "/zosmf";
-
-    /**
      * Indicator for get defined systems in zosmf
      */
     public final static String SYSTEMS = "/systems";
