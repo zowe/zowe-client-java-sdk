@@ -122,8 +122,7 @@ public class IssueConsole {
         final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(consoleName);
 
         final Map<String, String> issueMap = new HashMap<>();
-        issueMap.put("cmd", params.getCmd().orElseThrow(
-                () -> new IllegalStateException("issue console params command not specified")));
+        issueMap.put("cmd", params.getCmd());
         params.getSolKey().ifPresent(solKey -> issueMap.put("sol-key", solKey));
         params.getSystem().ifPresent(sys -> issueMap.put("system", sys));
 
