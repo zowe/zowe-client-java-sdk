@@ -24,7 +24,7 @@ public class IssueConsoleParams {
     /**
      * The z/OS console command to issue.
      */
-    private final Optional<String> cmd;
+    private final String cmd;
 
     /**
      * The solicited keyword to check for in the response. Causes the API to return immediately when the keyword
@@ -52,7 +52,7 @@ public class IssueConsoleParams {
     public IssueConsoleParams(final String command) {
         ValidateUtils.checkNullParameter(command == null, "command is null");
         ValidateUtils.checkIllegalParameter(command.isBlank(), "command not specified");
-        this.cmd = Optional.of(command);
+        this.cmd = command;
     }
 
     /**
@@ -60,7 +60,7 @@ public class IssueConsoleParams {
      *
      * @return cmd value
      */
-    public Optional<String> getCmd() {
+    public String getCmd() {
         return cmd;
     }
 
