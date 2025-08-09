@@ -55,6 +55,7 @@ public class DsnCreateTest {
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockPostRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockPostRequestToken).setupRequest();
         doCallRealMethod().when(mockPostRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockPostRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockPostRequestToken).setUrl(any());

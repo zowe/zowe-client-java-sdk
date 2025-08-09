@@ -101,6 +101,7 @@ public class DsnDelete {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
+        request.setupRequest();
         request.setUrl(url);
 
         return request.executeRequest();

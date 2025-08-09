@@ -153,6 +153,7 @@ public class DsnRename {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
+        request.setupRequest();
         request.setUrl(url);
         request.setBody(new JSONObject(renameMap).toString());
 

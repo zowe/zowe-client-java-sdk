@@ -121,6 +121,7 @@ public class JobGet {
         if (request == null || !(request instanceof GetTextZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
         }
+        request.setupRequest();
         request.setUrl(url);
 
         return (String) request.executeRequest().getResponsePhrase()
@@ -247,6 +248,7 @@ public class JobGet {
         if (request == null || !(request instanceof GetJsonZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
+        request.setupRequest();
         request.setUrl(url);
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
@@ -296,6 +298,7 @@ public class JobGet {
         if (request == null || !(request instanceof GetTextZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
         }
+        request.setupRequest();
         request.setUrl(url);
 
         final String spoolErrMsg = "no job spool content response phrase";
@@ -325,6 +328,7 @@ public class JobGet {
         if (request == null || !(request instanceof GetTextZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
         }
+        request.setupRequest();
         request.setUrl(url);
 
         final String spoolErrMsg = "no job spool file content response phrase";
@@ -364,6 +368,7 @@ public class JobGet {
         if (request == null || !(request instanceof GetJsonZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
+        request.setupRequest();
         request.setUrl(url);
 
         final List<JobFile> files = new ArrayList<>();
@@ -432,6 +437,7 @@ public class JobGet {
         if (request == null || !(request instanceof GetJsonZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
+        request.setupRequest();
         request.setUrl(url);
 
         final String jsonStr = request.executeRequest().getResponsePhrase()

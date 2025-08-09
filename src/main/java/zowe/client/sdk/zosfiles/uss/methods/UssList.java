@@ -124,6 +124,7 @@ public class UssList {
         if (maxLength > 0) {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
+        request.setupRequest();
         request.setUrl(url.toString());
 
         final Response response = request.executeRequest();
@@ -169,6 +170,7 @@ public class UssList {
         if (maxLength > 0) {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
+        request.setupRequest();
         request.setUrl(url.toString());
 
         final Response response = request.executeRequest();

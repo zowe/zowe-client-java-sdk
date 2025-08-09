@@ -72,9 +72,8 @@ public abstract class ZosmfRequest {
      * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public ZosmfRequest(final ZosConnection connection) {
+    protected ZosmfRequest(final ZosConnection connection) {
         this.connection = connection;
-        this.initialize();
     }
 
     /**
@@ -82,7 +81,7 @@ public abstract class ZosmfRequest {
      *
      * @author Frank Giordano
      */
-    private void initialize() {
+    public void setupRequest() {
         Unirest.config().reset();
         Unirest.config().enableCookieManagement(false);
         this.setStandardHeaders();
@@ -309,7 +308,7 @@ public abstract class ZosmfRequest {
      */
     public void setHeaders(final Map<String, String> headers) {
         this.headers.clear();
-        this.initialize();
+        this.setupRequest();
         this.headers.putAll(headers);
     }
 

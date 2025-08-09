@@ -121,6 +121,7 @@ public class JobDelete {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
+        request.setupRequest();
         request.setHeaders(headers);
         request.setUrl(url);
 

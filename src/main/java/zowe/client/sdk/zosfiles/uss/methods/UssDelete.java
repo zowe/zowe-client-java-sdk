@@ -103,6 +103,7 @@ public class UssDelete {
         if (recursive) {
             request.setHeaders(Map.of("X-IBM-Option", "recursive"));
         }
+        request.setupRequest();
         request.setUrl(url);
 
         return request.executeRequest();
@@ -127,6 +128,7 @@ public class UssDelete {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
+        request.setupRequest();
         request.setUrl(url);
 
         return request.executeRequest();

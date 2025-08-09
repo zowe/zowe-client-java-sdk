@@ -39,65 +39,68 @@ public class JobCancelTest {
             .createBasicConnection("1", "1", "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
             .createTokenConnection("1", "1", new Cookie("hello=hello"));
-    private PutJsonZosmfRequest mockPutJsonZosmfRequest;
-    private PutJsonZosmfRequest mockPutJsonZosmfRequestToken;
+    private PutJsonZosmfRequest mockPutJsonRequest;
+    private PutJsonZosmfRequest mockPutJsonRequestToken;
 
     @Before
     public void init() throws ZosmfRequestException {
-        mockPutJsonZosmfRequest = Mockito.mock(PutJsonZosmfRequest.class);
-        Mockito.when(mockPutJsonZosmfRequest.executeRequest()).thenReturn(
+        mockPutJsonRequest = Mockito.mock(PutJsonZosmfRequest.class);
+        Mockito.when(mockPutJsonRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockPutJsonZosmfRequest).setUrl(any());
-        doCallRealMethod().when(mockPutJsonZosmfRequest).getUrl();
+        doCallRealMethod().when(mockPutJsonRequest).setUrl(any());
+        doCallRealMethod().when(mockPutJsonRequest).getUrl();
+        doCallRealMethod().when(mockPutJsonRequest).setupRequest();
 
-        mockPutJsonZosmfRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
+        mockPutJsonRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
-        Mockito.when(mockPutJsonZosmfRequestToken.executeRequest()).thenReturn(
+        Mockito.when(mockPutJsonRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).setHeaders(anyMap());
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).setStandardHeaders();
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).setUrl(any());
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).getHeaders();
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).getUrl();
+        doCallRealMethod().when(mockPutJsonRequestToken).setupRequest();
+        doCallRealMethod().when(mockPutJsonRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockPutJsonRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockPutJsonRequestToken).setUrl(any());
+        doCallRealMethod().when(mockPutJsonRequestToken).getHeaders();
+        doCallRealMethod().when(mockPutJsonRequestToken).getUrl();
+        doCallRealMethod().when(mockPutJsonRequestToken).setupRequest();
     }
 
     @Test
     public void tstJobCancelSuccess() throws ZosmfRequestException {
-        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequest);
+        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonRequestToken);
         final Response response = jobCancel.cancel("JOBNAME", "JOBID", "1.0");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockPutJsonZosmfRequest.getUrl());
+        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockPutJsonRequestToken.getUrl());
     }
 
     @Test
     public void tstJobCancelTokenSuccess() throws ZosmfRequestException {
-        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequestToken);
+        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonRequestToken);
         final Response response = jobCancel.cancel("JOBNAME", "JOBID", "1.0");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockPutJsonZosmfRequestToken.getHeaders().toString());
+                mockPutJsonRequestToken.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockPutJsonZosmfRequestToken.getUrl());
+        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockPutJsonRequestToken.getUrl());
     }
 
     @Test
     public void tstJobCancelWithVersion2TokenSuccess() throws ZosmfRequestException {
-        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequestToken);
+        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonRequestToken);
         final Response response = jobCancel.cancel("JOBNAME", "JOBID", "2.0");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockPutJsonZosmfRequestToken.getHeaders().toString());
+                mockPutJsonRequestToken.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockPutJsonZosmfRequestToken.getUrl());
+        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockPutJsonRequestToken.getUrl());
     }
 
     @Test
     public void tstJobCancelWithInvalidVersionFailure() {
-        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequest);
+        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonRequestToken);
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> jobCancel.cancel("JOBNAME", "JOBID", "3.0")

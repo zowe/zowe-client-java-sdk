@@ -79,6 +79,7 @@ public class JobGetTextTest {
         Whitebox.setInternalState(getJobs, "request", mockTextGetRequestToken);
         Mockito.when(mockTextGetRequestToken.executeRequest()).thenReturn(
                 new Response("1\n2\n3\n", 200, "success"));
+        doCallRealMethod().when(mockTextGetRequestToken).setupRequest();
         doCallRealMethod().when(mockTextGetRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockTextGetRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockTextGetRequestToken).setUrl(any());

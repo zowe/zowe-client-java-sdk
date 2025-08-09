@@ -45,8 +45,8 @@ public class JobSubmitTest {
             .createBasicConnection("1", "1", "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
             .createTokenConnection("1", "1", new Cookie("hello=hello"));
-    private PutJsonZosmfRequest mockPutJsonZosmfRequest;
-    private PutJsonZosmfRequest mockPutJsonZosmfRequestToken;
+    private PutJsonZosmfRequest mockPutJsonRequest;
+    private PutJsonZosmfRequest mockPutJsonRequestToken;
 
     @Before
     public void init() throws ZosmfRequestException {
@@ -65,28 +65,29 @@ public class JobSubmitTest {
         jsonMap.put("phase-name", "phase-name");
         JSONObject jobJson = new JSONObject(jsonMap);
 
-        mockPutJsonZosmfRequest = Mockito.mock(PutJsonZosmfRequest.class);
-        Mockito.when(mockPutJsonZosmfRequest.executeRequest()).thenReturn(
+        mockPutJsonRequest = Mockito.mock(PutJsonZosmfRequest.class);
+        Mockito.when(mockPutJsonRequest.executeRequest()).thenReturn(
                 new Response(jobJson, 200, "success"));
-        doCallRealMethod().when(mockPutJsonZosmfRequest).setUrl(any());
-        doCallRealMethod().when(mockPutJsonZosmfRequest).getUrl();
+        doCallRealMethod().when(mockPutJsonRequest).setUrl(any());
+        doCallRealMethod().when(mockPutJsonRequest).getUrl();
 
-        mockPutJsonZosmfRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
+        mockPutJsonRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
-        Mockito.when(mockPutJsonZosmfRequestToken.executeRequest()).thenReturn(
+        Mockito.when(mockPutJsonRequestToken.executeRequest()).thenReturn(
                 new Response(jobJson, 200, "success"));
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).setHeaders(anyMap());
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).setStandardHeaders();
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).setUrl(any());
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).getHeaders();
-        doCallRealMethod().when(mockPutJsonZosmfRequestToken).getUrl();
+        doCallRealMethod().when(mockPutJsonRequestToken).setupRequest();
+        doCallRealMethod().when(mockPutJsonRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockPutJsonRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockPutJsonRequestToken).setUrl(any());
+        doCallRealMethod().when(mockPutJsonRequestToken).getHeaders();
+        doCallRealMethod().when(mockPutJsonRequestToken).getUrl();
     }
 
     @Test
     public void tstJobDeleteSuccess() throws ZosmfRequestException {
-        final JobSubmit jobSubmit = new JobSubmit(connection, mockPutJsonZosmfRequest);
+        final JobSubmit jobSubmit = new JobSubmit(connection, mockPutJsonRequest);
         final Job job = jobSubmit.submit("TEST.DATASET");
-        assertEquals("https://1:1/zosmf/restjobs/jobs", mockPutJsonZosmfRequest.getUrl());
+        assertEquals("https://1:1/zosmf/restjobs/jobs", mockPutJsonRequest.getUrl());
         assertEquals("jobid", job.getJobId().get());
         assertEquals("jobname", job.getJobName().get());
         assertEquals("subsystem", job.getSubSystem().get());
@@ -103,11 +104,11 @@ public class JobSubmitTest {
 
     @Test
     public void tstJobDeleteTokenSuccess() throws ZosmfRequestException {
-        final JobSubmit jobSubmit = new JobSubmit(connection, mockPutJsonZosmfRequestToken);
+        final JobSubmit jobSubmit = new JobSubmit(connection, mockPutJsonRequestToken);
         final Job job = jobSubmit.submit("TEST.DATASET");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
-                mockPutJsonZosmfRequestToken.getHeaders().toString());
-        assertEquals("https://1:1/zosmf/restjobs/jobs", mockPutJsonZosmfRequestToken.getUrl());
+                mockPutJsonRequestToken.getHeaders().toString());
+        assertEquals("https://1:1/zosmf/restjobs/jobs", mockPutJsonRequestToken.getUrl());
         assertEquals("jobid", job.getJobId().get());
         assertEquals("jobname", job.getJobName().get());
         assertEquals("subsystem", job.getSubSystem().get());

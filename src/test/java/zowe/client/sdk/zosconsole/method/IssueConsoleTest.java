@@ -86,6 +86,7 @@ public class IssueConsoleTest {
         doCallRealMethod().when(mockJsonGetRequestAuth).setStandardHeaders();
         doCallRealMethod().when(mockJsonGetRequestAuth).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequestAuth).getHeaders();
+        doCallRealMethod().when(mockJsonGetRequestAuth).setupRequest();
 
         final IssueConsole issueCommand = new IssueConsole(tokenConnection, mockJsonGetRequestAuth);
 
