@@ -153,6 +153,7 @@ public class StartTso {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
+        request.setupRequest();
         request.setUrl(url);
         request.setBody("");
 

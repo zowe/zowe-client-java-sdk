@@ -57,6 +57,7 @@ public class DsnGetTest {
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockGetRequestToken.executeRequest()).thenReturn(
                 new Response("test data".getBytes(), 200, "success"));
+        doCallRealMethod().when(mockGetRequestToken).setupRequest();
         doCallRealMethod().when(mockGetRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockGetRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockGetRequestToken).setUrl(any());

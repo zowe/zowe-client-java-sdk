@@ -58,6 +58,7 @@ public class UssChangeOwnerTest {
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonPutRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonPutRequestToken).setupRequest();
         doCallRealMethod().when(mockJsonPutRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonPutRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockJsonPutRequestToken).setUrl(any());

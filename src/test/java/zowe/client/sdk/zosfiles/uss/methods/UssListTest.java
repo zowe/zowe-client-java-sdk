@@ -136,6 +136,7 @@ public class UssListTest {
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequestToken).setupRequest();
         doCallRealMethod().when(mockJsonGetRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonGetRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());

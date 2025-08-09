@@ -227,6 +227,7 @@ public class DsnList {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
+        request.setupRequest();
         request.setHeaders(headers);
         request.setUrl(url);
 

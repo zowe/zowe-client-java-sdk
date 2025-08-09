@@ -168,6 +168,7 @@ public class DsnGet {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_STREAM);
         }
+        request.setupRequest();
         request.setHeaders(headers);
         request.setUrl(url);
 

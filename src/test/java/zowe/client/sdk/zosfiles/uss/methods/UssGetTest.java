@@ -59,6 +59,7 @@ public class UssGetTest {
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockTextGetRequestToken.executeRequest()).thenReturn(
                 new Response("text", 200, "success"));
+        doCallRealMethod().when(mockTextGetRequestToken).setupRequest();
         doCallRealMethod().when(mockTextGetRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockTextGetRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockTextGetRequestToken).setUrl(any());

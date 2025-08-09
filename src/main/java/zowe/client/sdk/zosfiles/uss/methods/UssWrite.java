@@ -143,6 +143,7 @@ public class UssWrite {
             request.setBody(params.getTextContent().orElse(""));
         }
 
+        request.setupRequest();
         request.setHeaders(headers);
         request.setUrl(url);
 

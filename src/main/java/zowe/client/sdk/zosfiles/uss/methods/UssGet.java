@@ -146,6 +146,7 @@ public class UssGet {
         }
         params.getRecordsRange().ifPresent(range -> headers.put("X-IBM-Record-Range", range));
 
+        request.setupRequest();
         request.setHeaders(headers);
         request.setUrl(url.toString());
 

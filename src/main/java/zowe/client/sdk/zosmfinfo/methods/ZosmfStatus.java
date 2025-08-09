@@ -79,6 +79,7 @@ public class ZosmfStatus {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
+        request.setupRequest();
         request.setUrl(url);
 
         final String jsonStr = request.executeRequest().getResponsePhrase()

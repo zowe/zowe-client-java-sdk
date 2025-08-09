@@ -54,6 +54,7 @@ public class DsnDeleteTest {
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockDeleteRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockDeleteRequestToken).setupRequest();
         doCallRealMethod().when(mockDeleteRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockDeleteRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockDeleteRequestToken).setUrl(any());

@@ -137,6 +137,7 @@ public class JobSubmit {
         if (request == null || !(request instanceof PutTextZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
         }
+        request.setupRequest();
         request.setHeaders(headers);
         request.setUrl(url);
         request.setBody(params.getJcl().orElseThrow(() -> new IllegalArgumentException("jcl not specified")));
@@ -183,6 +184,7 @@ public class JobSubmit {
         if (params.getJclSymbols().isPresent()) {
             request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));
         }
+        request.setupRequest();
         request.setUrl(url);
         request.setBody(new JSONObject(submitMap).toString());
 

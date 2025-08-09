@@ -100,6 +100,7 @@ public class UssCreate {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
+        request.setupRequest();
         request.setUrl(url);
         request.setBody(new JSONObject(createMap).toString());
 
@@ -159,10 +160,9 @@ public class UssCreate {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
-
+        request.setupRequest();
         final Map<String, String> headers = new HashMap<>();
         params.getSystem().ifPresent(system -> headers.put("X-IBM-Target-System", system));
-
         request.setHeaders(headers);
         request.setUrl(url.toString());
         request.setBody(new JSONObject(createZfsMap).toString());

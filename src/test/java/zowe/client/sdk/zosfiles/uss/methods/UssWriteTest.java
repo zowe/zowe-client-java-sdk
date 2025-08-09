@@ -61,6 +61,7 @@ public class UssWriteTest {
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockTextPutRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockTextPutRequestToken).setupRequest();
         doCallRealMethod().when(mockTextPutRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockTextPutRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockTextPutRequestToken).setUrl(any());

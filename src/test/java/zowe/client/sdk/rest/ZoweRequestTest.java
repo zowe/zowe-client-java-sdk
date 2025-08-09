@@ -172,6 +172,7 @@ public class ZoweRequestTest {
         ZosConnection connection = ZosConnectionFactory
                 .createBasicConnection("host", "port", "user", "password");
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        request.setupRequest();
         assertNotNull(request.getHeaders().get("Authorization"));
     }
 
@@ -180,6 +181,7 @@ public class ZoweRequestTest {
         ZosConnection connection = ZosConnectionFactory
                 .createTokenConnection("host", "port", new Cookie("hello", "world"));
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        request.setupRequest();
         assertNull(request.getHeaders().get("Authorization"));
     }
 

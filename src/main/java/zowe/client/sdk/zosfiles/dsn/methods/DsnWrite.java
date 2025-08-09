@@ -106,6 +106,7 @@ public class DsnWrite {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
         }
+        request.setupRequest();
         request.setUrl(url);
         request.setBody(content);
 

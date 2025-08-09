@@ -61,6 +61,7 @@ public class UssCreateTest {
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonPostRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonPostRequestToken).setupRequest();
         doCallRealMethod().when(mockJsonPostRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonPostRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockJsonPostRequestToken).setUrl(any());

@@ -58,6 +58,7 @@ public class UssDeleteTest {
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonDeleteRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockJsonDeleteRequestToken).setupRequest();
         doCallRealMethod().when(mockJsonDeleteRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonDeleteRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockJsonDeleteRequestToken).setUrl(any());
