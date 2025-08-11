@@ -133,6 +133,7 @@ public abstract class ZosmfRequest {
      */
     private void setupSsl() {
         LOG.debug("ssl authentication type");
+        Unirest.config().verifySsl(true);
         boolean inSecure = Boolean.parseBoolean(System.getProperty(RestConstant.INSECURE_PROPERTY_NAME, "false"));
         if (inSecure) {
             LOG.debug("insecure enabled");
