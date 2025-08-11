@@ -10,7 +10,7 @@
 package zowe.client.sdk.core;
 
 import kong.unirest.core.Cookie;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.HashMap;
 
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @version 4.0
  */
-class ZosConnectionFactoryTest {
+public class ZosConnectionFactoryTest {
 
     @Test
     public void tstZosConnectionFactoryReferenceNotEqualsSuccess() {
