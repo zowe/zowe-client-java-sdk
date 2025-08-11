@@ -92,8 +92,7 @@ public class UssChangeOwner {
      */
     @SuppressWarnings("DuplicatedCode")
     public Response changeCommon(final String targetPath, final ChangeOwnerParams params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
+        ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = connection.getZosmfUrl() +

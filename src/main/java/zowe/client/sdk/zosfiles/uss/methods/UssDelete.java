@@ -89,8 +89,7 @@ public class UssDelete {
      * @author James Kostrewski
      */
     public Response delete(final String targetPath, final boolean recursive) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
+        ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
@@ -117,8 +116,7 @@ public class UssDelete {
      * @author Frank Giordano
      */
     public Response deleteZfs(final String fileSystemName) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(fileSystemName == null, "fileSystemName is null");
-        ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "fileSystemName not specified");
+        ValidateUtils.checkIllegalParameter(fileSystemName, "fileSystemName");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +

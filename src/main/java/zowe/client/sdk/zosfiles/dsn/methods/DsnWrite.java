@@ -77,10 +77,8 @@ public class DsnWrite {
      */
     public Response write(final String dataSetName, final String memberName, final String content)
             throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
-        ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
-        ValidateUtils.checkIllegalParameter(memberName.isBlank(), "memberName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
+        ValidateUtils.checkIllegalParameter(memberName, "memberName");
 
         return write(String.format("%s(%s)", dataSetName, memberName), content);
     }
@@ -95,9 +93,8 @@ public class DsnWrite {
      * @author Leonid Baranov
      */
     public Response write(final String dataSetName, final String content) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(content == null, "content is null");
-        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
+        ValidateUtils.checkIllegalParameter(content, "content");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +

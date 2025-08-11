@@ -27,7 +27,6 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.zosconsole.input.IssueConsoleParams;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
-import zowe.client.sdk.zosfiles.dsn.methods.DsnCopy;
 
 import java.util.HashMap;
 import java.util.Map;

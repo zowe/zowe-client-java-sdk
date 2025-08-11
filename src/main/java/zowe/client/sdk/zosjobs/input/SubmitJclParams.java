@@ -61,8 +61,7 @@ public class SubmitJclParams {
      * @author Frank Giordano
      */
     public SubmitJclParams(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl) {
-        ValidateUtils.checkNullParameter(jcl == null, "jcl is null");
-        ValidateUtils.checkIllegalParameter(jcl.isBlank(), "jcl not specified");
+        ValidateUtils.checkIllegalParameter(jcl, "jcl");
         this.jcl = Optional.of(jcl);
         this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);

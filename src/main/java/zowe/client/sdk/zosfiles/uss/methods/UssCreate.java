@@ -85,8 +85,7 @@ public class UssCreate {
      */
     @SuppressWarnings("DuplicatedCode")
     public Response create(final String targetPath, final CreateParams params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
+        ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = connection.getZosmfUrl() +
@@ -129,8 +128,7 @@ public class UssCreate {
      * @author Frank Giordano
      */
     public Response createZfsCommon(String fileSystemName, CreateZfsParams params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(fileSystemName == null, "fileSystemName is null");
-        ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "fileSystemName not specified");
+        ValidateUtils.checkIllegalParameter(fileSystemName, "fileSystemName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +

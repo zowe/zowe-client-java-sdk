@@ -115,9 +115,8 @@ public class IssueConsole {
      */
     public ConsoleResponse issueCommandCommon(final String consoleName, final IssueConsoleParams params)
             throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(consoleName, "consoleName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkNullParameter(consoleName == null, "consoleName is null");
-        ValidateUtils.checkIllegalParameter(consoleName.isBlank(), "consoleName not specified");
 
         final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(consoleName);
 

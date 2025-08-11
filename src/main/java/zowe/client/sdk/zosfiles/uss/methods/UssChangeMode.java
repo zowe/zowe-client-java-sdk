@@ -81,8 +81,7 @@ public class UssChangeMode {
      */
     @SuppressWarnings("DuplicatedCode")
     public Response change(final String targetPath, final ChangeModeParams params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
+        ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = connection.getZosmfUrl() +

@@ -74,8 +74,7 @@ public class StopTso {
      * @author Frank Giordano
      */
     public StartStopResponse stop(final String servletKey) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(servletKey == null, "servletKey is null");
-        ValidateUtils.checkIllegalParameter(servletKey.isBlank(), "servletKey not specified");
+        ValidateUtils.checkIllegalParameter(servletKey, "servletKey");
 
         final StopTsoParams commandParams = new StopTsoParams(servletKey);
         final ZosmfTsoResponse zosmfResponse = stopCommon(commandParams);

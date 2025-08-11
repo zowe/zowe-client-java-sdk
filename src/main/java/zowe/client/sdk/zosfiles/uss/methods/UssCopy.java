@@ -95,8 +95,7 @@ public class UssCopy {
      */
     @SuppressWarnings("DuplicatedCode")
     public Response copyCommon(final String targetPath, final CopyParams params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
+        ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = connection.getZosmfUrl() +

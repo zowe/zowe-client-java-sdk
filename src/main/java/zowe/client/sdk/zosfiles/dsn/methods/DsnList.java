@@ -86,9 +86,8 @@ public class DsnList {
      */
     public List<Dataset> getDatasets(final String dataSetName, final ListParams params)
             throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
 
         final Map<String, String> headers = new HashMap<>();
         final List<Dataset> datasets = new ArrayList<>();
@@ -118,9 +117,8 @@ public class DsnList {
      */
     public List<Member> getMembers(final String dataSetName, final ListParams params)
             throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
 
         final Map<String, String> headers = new HashMap<>();
         final List<Member> members = new ArrayList<>();

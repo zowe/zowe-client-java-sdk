@@ -37,10 +37,8 @@ public class SendTsoParams {
      * @author Frank Giordano
      */
     public SendTsoParams(final String servletKey, final String data) {
-        ValidateUtils.checkNullParameter(servletKey == null, "servletKey is null");
-        ValidateUtils.checkIllegalParameter(servletKey.isBlank(), "servletKey not specified");
-        ValidateUtils.checkNullParameter(data == null, "data is null");
-        ValidateUtils.checkIllegalParameter(data.isBlank(), "data not specified");
+        ValidateUtils.checkIllegalParameter(servletKey, "servletKey");
+        ValidateUtils.checkIllegalParameter(data, "data");
         this.servletKey = servletKey;
         this.data = data;
     }

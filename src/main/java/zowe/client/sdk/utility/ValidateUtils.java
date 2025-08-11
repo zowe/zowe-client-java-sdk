@@ -29,6 +29,18 @@ public final class ValidateUtils {
     }
 
     /**
+     * Check for the state of parameter by String value
+     *
+     * @param value string value
+     * @param name  name of attribute
+     * @author Frank Giordano
+     */
+    public static void checkIllegalParameter(String value, String name) {
+        if (value == null || value.isBlank())
+            throw new IllegalArgumentException(name + " is either null or empty");
+    }
+
+    /**
      * Check for state of parameter
      *
      * @param check Check for true or false value

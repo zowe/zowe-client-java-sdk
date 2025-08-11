@@ -124,7 +124,7 @@ public class UssMountTest {
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName not specified", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test
@@ -133,10 +133,10 @@ public class UssMountTest {
         try {
             ussMount.mountCommon(null,
                     new MountParams.Builder().action(MountActionType.MOUNT).mountPoint("mountpoint").build());
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName is null", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test
@@ -169,7 +169,7 @@ public class UssMountTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName not specified", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test
@@ -180,7 +180,7 @@ public class UssMountTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName not specified", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test
@@ -232,10 +232,10 @@ public class UssMountTest {
         String errMsg = "";
         try {
             ussMount.mount(null, "mount", "hfs");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName is null", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test
@@ -268,7 +268,7 @@ public class UssMountTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName not specified", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test
@@ -279,7 +279,7 @@ public class UssMountTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName not specified", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test
@@ -287,10 +287,10 @@ public class UssMountTest {
         String errMsg = "";
         try {
             ussMount.unmount(null);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName is null", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test

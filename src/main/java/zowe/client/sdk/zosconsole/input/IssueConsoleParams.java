@@ -50,8 +50,7 @@ public class IssueConsoleParams {
      * @author Frank Giordano
      */
     public IssueConsoleParams(final String command) {
-        ValidateUtils.checkNullParameter(command == null, "command is null");
-        ValidateUtils.checkIllegalParameter(command.isBlank(), "command not specified");
+        ValidateUtils.checkIllegalParameter(command, "command");
         this.cmd = command;
     }
 

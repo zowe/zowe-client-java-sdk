@@ -33,8 +33,7 @@ public class StopTsoParams {
      * @author Frank Giordano
      */
     public StopTsoParams(final String servletKey) {
-        ValidateUtils.checkNullParameter(servletKey == null, "servletKey is null");
-        ValidateUtils.checkIllegalParameter(servletKey.isBlank(), "servletKey not specified");
+        ValidateUtils.checkIllegalParameter(servletKey, "servletKey");
         this.servletKey = Optional.of(servletKey);
     }
 

@@ -120,9 +120,8 @@ public class DsnGet {
      * @author Nikunj Goyal
      */
     public InputStream get(final String targetName, final DownloadParams params) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(targetName, "targetName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkNullParameter(targetName == null, "targetName is null");
-        ValidateUtils.checkIllegalParameter(targetName.isBlank(), "targetName not specified");
 
         String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";

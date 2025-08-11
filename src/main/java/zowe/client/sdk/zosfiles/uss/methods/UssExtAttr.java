@@ -135,8 +135,7 @@ public class UssExtAttr {
      */
     private Response executeRequest(final String targetPath, final Map<String, String> jsonMap)
             throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
+        ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +

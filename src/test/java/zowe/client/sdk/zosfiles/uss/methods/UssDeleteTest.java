@@ -127,10 +127,10 @@ public class UssDeleteTest {
         String errMsg = "";
         try {
             ussDelete.delete(null);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath is null", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -141,7 +141,7 @@ public class UssDeleteTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -152,7 +152,7 @@ public class UssDeleteTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -160,10 +160,10 @@ public class UssDeleteTest {
         String errMsg = "";
         try {
             ussDelete.delete(null, true);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath is null", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -174,7 +174,7 @@ public class UssDeleteTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -182,10 +182,10 @@ public class UssDeleteTest {
         String errMsg = "";
         try {
             ussDelete.deleteZfs(null);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName is null", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test
@@ -196,7 +196,7 @@ public class UssDeleteTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName not specified", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test
@@ -207,7 +207,7 @@ public class UssDeleteTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName not specified", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test

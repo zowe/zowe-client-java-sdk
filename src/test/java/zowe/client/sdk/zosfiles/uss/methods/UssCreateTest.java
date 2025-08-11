@@ -108,10 +108,10 @@ public class UssCreateTest {
         String errMsg = "";
         try {
             ussCreate.create(null, new CreateParams(CreateType.FILE, "rwxrwxrwx"));
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath is null", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -122,7 +122,7 @@ public class UssCreateTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -133,7 +133,7 @@ public class UssCreateTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -230,10 +230,10 @@ public class UssCreateTest {
         String errMsg = "";
         try {
             ussCreate.createZfsCommon(null, new CreateZfsParams.Builder(2).build());
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName is null", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test
@@ -244,7 +244,7 @@ public class UssCreateTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName not specified", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test
@@ -263,10 +263,10 @@ public class UssCreateTest {
         String errMsg = "";
         try {
             ussCreate.createZfs(null);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName is null", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test
@@ -277,7 +277,7 @@ public class UssCreateTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileSystemName not specified", errMsg);
+        assertEquals("fileSystemName is either null or empty", errMsg);
     }
 
     @Test

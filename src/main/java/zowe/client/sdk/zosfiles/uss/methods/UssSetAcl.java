@@ -131,8 +131,7 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     public Response setAclCommon(final String targetPath, final SetAclParams params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
+        ValidateUtils.checkIllegalParameter(targetPath, "fromPath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(
                 params.getSet().isEmpty() && params.getModify().isEmpty() && params.getDelete().isEmpty() &&

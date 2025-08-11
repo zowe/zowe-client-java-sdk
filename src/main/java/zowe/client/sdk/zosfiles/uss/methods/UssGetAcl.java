@@ -105,8 +105,7 @@ public class UssGetAcl {
      * @author James Kostrewski
      */
     public Response getAclCommon(final String targetPath, final GetAclParams params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "path is empty");
+        ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = connection.getZosmfUrl() +

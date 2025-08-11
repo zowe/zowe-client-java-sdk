@@ -144,10 +144,10 @@ public class UssGetTest {
         String errMsg = "";
         try {
             ussGet.getText(null);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath is null", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -158,7 +158,7 @@ public class UssGetTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -169,7 +169,7 @@ public class UssGetTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -177,10 +177,10 @@ public class UssGetTest {
         String errMsg = "";
         try {
             ussGet.getBinary(null);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath is null", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -202,7 +202,7 @@ public class UssGetTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -213,7 +213,7 @@ public class UssGetTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test

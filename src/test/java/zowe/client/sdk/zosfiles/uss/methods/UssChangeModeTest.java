@@ -115,10 +115,10 @@ public class UssChangeModeTest {
         String errMsg = "";
         try {
             ussChangeMode.change(null, new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath is null", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -129,7 +129,7 @@ public class UssChangeModeTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -140,7 +140,7 @@ public class UssChangeModeTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test

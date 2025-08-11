@@ -102,10 +102,10 @@ public class UssMoveTest {
         String errMsg = "";
         try {
             ussMove.move(null, "/xxx/xx/xx");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fromPath is null", errMsg);
+        assertEquals("fromPath is either null or empty", errMsg);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class UssMoveTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fromPath not specified", errMsg);
+        assertEquals("fromPath is either null or empty", errMsg);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class UssMoveTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fromPath not specified", errMsg);
+        assertEquals("fromPath is either null or empty", errMsg);
     }
 
     @Test
@@ -135,10 +135,10 @@ public class UssMoveTest {
         String errMsg = "";
         try {
             ussMove.move("/xxx/xx/xx", null);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath is null", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -149,7 +149,7 @@ public class UssMoveTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -160,7 +160,7 @@ public class UssMoveTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test

@@ -181,10 +181,10 @@ public class UssExtAttrTest {
         String errMsg = "";
         try {
             ussExtAttr.reset(null, "a");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath is null", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -192,10 +192,10 @@ public class UssExtAttrTest {
         String errMsg = "";
         try {
             ussExtAttr.set(null, "a");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath is null", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -203,10 +203,10 @@ public class UssExtAttrTest {
         String errMsg = "";
         try {
             ussExtAttr.display(null);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath is null", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test

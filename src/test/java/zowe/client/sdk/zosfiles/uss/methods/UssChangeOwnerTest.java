@@ -116,10 +116,10 @@ public class UssChangeOwnerTest {
         String errMsg = "";
         try {
             ussChangeOwner.change(null, "user");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath is null", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -130,7 +130,7 @@ public class UssChangeOwnerTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test
@@ -141,7 +141,7 @@ public class UssChangeOwnerTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("targetPath not specified", errMsg);
+        assertEquals("targetPath is either null or empty", errMsg);
     }
 
     @Test

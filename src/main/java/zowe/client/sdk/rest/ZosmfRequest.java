@@ -328,8 +328,7 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     public void setUrl(final String url) throws IllegalArgumentException {
-        ValidateUtils.checkNullParameter(url == null, "url is null");
-        ValidateUtils.checkIllegalParameter(url.isBlank(), "url not specified");
+        ValidateUtils.checkIllegalParameter(url, "url");
         if (isUrlNotValid(url)) {
             throw new IllegalArgumentException("url is invalid");
         }

@@ -116,8 +116,7 @@ public class StartTso {
      */
     public StartStopResponses start(final String accountNumber, final StartTsoParams params)
             throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(accountNumber == null, "accountNumber is null");
-        ValidateUtils.checkIllegalParameter(accountNumber.isBlank(), "accountNumber not specified");
+        ValidateUtils.checkIllegalParameter(accountNumber, "accountNumber");
 
         StartTsoParams customParams;
         if (params == null) {

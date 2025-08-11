@@ -80,10 +80,8 @@ public class DsnRename {
      * @author Frank Giordano
      */
     public Response dataSetName(final String dataSetName, final String newDataSetName) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
-        ValidateUtils.checkNullParameter(newDataSetName == null, "newDataSetName is null");
-        ValidateUtils.checkIllegalParameter(newDataSetName.isBlank(), "newDataSetName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
+        ValidateUtils.checkIllegalParameter(newDataSetName, "newDataSetName");
 
         setUrl(newDataSetName);
         return executeCommon(dataSetName);
@@ -101,12 +99,9 @@ public class DsnRename {
      */
     public Response memberName(final String fromDataSetName, final String memberName, final String newMemberName)
             throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(fromDataSetName == null, "fromDataSetName is null");
-        ValidateUtils.checkIllegalParameter(fromDataSetName.isBlank(), "fromDataSetName not specified");
-        ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
-        ValidateUtils.checkIllegalParameter(memberName.isBlank(), "memberName not specified");
-        ValidateUtils.checkNullParameter(newMemberName == null, "newMemberName is null");
-        ValidateUtils.checkIllegalParameter(newMemberName.isBlank(), "newMemberName not specified");
+        ValidateUtils.checkIllegalParameter(fromDataSetName, "fromDataSetName");
+        ValidateUtils.checkIllegalParameter(fromDataSetName, "fromDataSetName");
+        ValidateUtils.checkIllegalParameter(memberName, "memberName");
 
         setUrl(fromDataSetName, newMemberName);
         return executeCommon(fromDataSetName, memberName);

@@ -156,7 +156,7 @@ public class JobGetJsonTest {
         String errorMsg = "";
         try {
             getJobs.getSpoolContent("jobName", null, 1);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
         assertEquals(JobsConstants.JOB_ID_NULL_MSG, errorMsg);
@@ -167,7 +167,7 @@ public class JobGetJsonTest {
         String errorMsg = "";
         try {
             getJobs.getSpoolContent(null, "1", 1);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
         assertEquals(JobsConstants.JOB_NAME_NULL_MSG, errorMsg);

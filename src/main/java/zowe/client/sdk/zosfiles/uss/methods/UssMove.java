@@ -110,10 +110,8 @@ public class UssMove {
      */
     private Response moveCommon(final String fromPath, final String targetPath, final boolean overwrite)
             throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(fromPath == null, "fromPath is null");
-        ValidateUtils.checkIllegalParameter(fromPath.isBlank(), "fromPath not specified");
-        ValidateUtils.checkNullParameter(targetPath == null, "targetPath is null");
-        ValidateUtils.checkIllegalParameter(targetPath.isBlank(), "targetPath not specified");
+        ValidateUtils.checkIllegalParameter(fromPath, "fromPath");
+        ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +

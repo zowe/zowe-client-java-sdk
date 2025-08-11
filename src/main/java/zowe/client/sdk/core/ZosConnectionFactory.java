@@ -10,6 +10,7 @@
 package zowe.client.sdk.core;
 
 import kong.unirest.core.Cookie;
+import zowe.client.sdk.utility.ValidateUtils;
 
 /**
  * Factory class for creating ZosConnection objects with different authentication types
@@ -61,8 +62,7 @@ public class ZosConnectionFactory {
                                                       final String user,
                                                       final String password,
                                                       final String basePath) {
-        if (basePath == null || basePath.isBlank())
-            throw new IllegalStateException("basePath is either null or empty");
+        ValidateUtils.checkIllegalParameter(basePath, "basePath");
 
         return createBasicZosConnection(host, port, user, password, basePath);
     }
@@ -84,17 +84,10 @@ public class ZosConnectionFactory {
                                                           final String user,
                                                           final String password,
                                                           final String basePath) {
-        if (host == null || host.isBlank())
-            throw new IllegalStateException("host is either null or empty");
-
-        if (port == null || port.isBlank())
-            throw new IllegalStateException("port is either null or empty");
-
-        if (user == null || user.isBlank())
-            throw new IllegalStateException("user is either null or empty");
-
-        if (password == null || password.isBlank())
-            throw new IllegalStateException("password is either null or empty");
+        ValidateUtils.checkIllegalParameter(host, "host");
+        ValidateUtils.checkIllegalParameter(port, "port");
+        ValidateUtils.checkIllegalParameter(user, "user");
+        ValidateUtils.checkIllegalParameter(password, "password");
 
         ZosConnection zosConnection = new ZosConnection(host, port, AuthType.BASIC);
         zosConnection.setUser(user);
@@ -134,8 +127,7 @@ public class ZosConnectionFactory {
                                                       final String port,
                                                       final Cookie token,
                                                       final String basePath) {
-        if (basePath == null || basePath.isBlank())
-            throw new IllegalStateException("basePath is either null or empty");
+        ValidateUtils.checkIllegalParameter(basePath, "basePath");
 
         return createTokenZosConnection(host, port, token, basePath);
     }
@@ -155,14 +147,9 @@ public class ZosConnectionFactory {
                                                           final String port,
                                                           final Cookie token,
                                                           final String basePath) {
-        if (host == null || host.isBlank())
-            throw new IllegalStateException("host is either null or empty");
-
-        if (port == null || port.isBlank())
-            throw new IllegalStateException("port is either null or empty");
-
-        if (token == null)
-            throw new IllegalStateException("token is null");
+        ValidateUtils.checkIllegalParameter(host, "host");
+        ValidateUtils.checkIllegalParameter(port, "port");
+        ValidateUtils.checkNullParameter(token == null, "token is null");
 
         ZosConnection zosConnection = new ZosConnection(host, port, AuthType.TOKEN);
         zosConnection.setToken(token);
@@ -205,8 +192,7 @@ public class ZosConnectionFactory {
                                                     final String certFilePath,
                                                     final String certPassword,
                                                     final String basePath) {
-        if (basePath == null || basePath.isBlank())
-            throw new IllegalStateException("basePath is either null or empty");
+        ValidateUtils.checkIllegalParameter(basePath, "basePath");
 
         return createSslZosConnection(host, port, certFilePath, certPassword, basePath);
     }
@@ -228,17 +214,10 @@ public class ZosConnectionFactory {
                                                         final String certFilePath,
                                                         final String certPassword,
                                                         final String basePath) {
-        if (host == null || host.isBlank())
-            throw new IllegalStateException("host is either null or empty");
-
-        if (port == null || port.isBlank())
-            throw new IllegalStateException("port is either null or empty");
-
-        if (certFilePath == null || certFilePath.isBlank())
-            throw new IllegalStateException("certificate file path (.p12) is either null or empty");
-
-        if (certPassword == null || certPassword.isBlank())
-            throw new IllegalStateException("certificate password is either null or empty");
+        ValidateUtils.checkIllegalParameter(host, "host");
+        ValidateUtils.checkIllegalParameter(port, "port");
+        ValidateUtils.checkIllegalParameter(certFilePath, "certificate file path (.p12)");
+        ValidateUtils.checkIllegalParameter(certPassword, "certPassword");
 
         ZosConnection zosConnection = new ZosConnection(host, port, AuthType.SSL);
         zosConnection.setCertFilePath(certFilePath);

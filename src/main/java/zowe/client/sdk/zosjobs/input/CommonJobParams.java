@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosjobs.input;
 
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosjobs.JobsConstants;
 
 import java.util.Optional;
 
@@ -104,10 +103,8 @@ public class CommonJobParams {
      * @author Frank Giordano
      */
     private void validateParameters(final String jobId, final String jobName) {
-        ValidateUtils.checkNullParameter(jobId == null, JobsConstants.JOB_ID_NULL_MSG);
-        ValidateUtils.checkIllegalParameter(jobId.isBlank(), JobsConstants.JOB_ID_ILLEGAL_MSG);
-        ValidateUtils.checkNullParameter(jobName == null, JobsConstants.JOB_NAME_NULL_MSG);
-        ValidateUtils.checkIllegalParameter(jobName.isBlank(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
+        ValidateUtils.checkIllegalParameter(jobId, "jobId");
+        ValidateUtils.checkIllegalParameter(jobName, "jobName");
     }
 
     /**

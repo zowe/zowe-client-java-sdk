@@ -52,27 +52,22 @@ public final class JobsConstants {
     /**
      * Use for an illegal exception error message
      */
-    public static final String JOB_NAME_ILLEGAL_MSG = "job name not specified";
+    public static final String JOB_NAME_ILLEGAL_MSG = "jobName is either null or empty";
 
     /**
      * Use for an illegal exception error message
      */
-    public static final String JOB_ID_ILLEGAL_MSG = "job id not specified";
+    public static final String JOB_ID_ILLEGAL_MSG = "jobId is either null or empty";
 
     /**
      * Use for a null exception error message
      */
-    public static final String JOB_NAME_NULL_MSG = "job name not specified";
+    public static final String JOB_NAME_NULL_MSG = "jobName is either null or empty";
 
     /**
      * Use for a null exception error message
      */
-    public static final String JOB_ID_NULL_MSG = "job id not specified";
-
-    /**
-     * Use for an error message
-     */
-    public static final String JOB_FILE_ID_ERROR_MSG = "job file id not specified";
+    public static final String JOB_ID_NULL_MSG = "jobId is either null or empty";
 
     /**
      * Query identifier

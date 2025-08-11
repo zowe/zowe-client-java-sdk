@@ -198,7 +198,7 @@ public class UssChangeTagTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -209,7 +209,7 @@ public class UssChangeTagTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -220,7 +220,7 @@ public class UssChangeTagTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -231,7 +231,7 @@ public class UssChangeTagTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -239,10 +239,10 @@ public class UssChangeTagTest {
         String errMsg = "";
         try {
             ussChangeTag.binary(null);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath is null", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -253,7 +253,7 @@ public class UssChangeTagTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -264,7 +264,7 @@ public class UssChangeTagTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -272,10 +272,10 @@ public class UssChangeTagTest {
         String errMsg = "";
         try {
             ussChangeTag.text(null, "codeset");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath is null", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -283,32 +283,32 @@ public class UssChangeTagTest {
         String errMsg = "";
         try {
             ussChangeTag.text("/xx/xx/x", null);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("codeSet is null", errMsg);
+        assertEquals("codeSet is either null or empty", errMsg);
     }
 
     @Test
     public void tstUssChangeTagChangeToTextEmptyCodeSetFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeTag.text(null, "");
+            ussChangeTag.text("fg", "");
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("codeSet not specified", errMsg);
+        assertEquals("codeSet is either null or empty", errMsg);
     }
 
     @Test
     public void tstUssChangeTagChangeToTextEmptyCodeSetWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeTag.text(null, "  ");
+            ussChangeTag.text("fg", "  ");
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("codeSet not specified", errMsg);
+        assertEquals("codeSet is either null or empty", errMsg);
     }
 
     @Test
@@ -319,7 +319,7 @@ public class UssChangeTagTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -330,7 +330,7 @@ public class UssChangeTagTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -338,10 +338,10 @@ public class UssChangeTagTest {
         String errMsg = "";
         try {
             ussChangeTag.remove(null);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath is null", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -352,7 +352,7 @@ public class UssChangeTagTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -363,7 +363,7 @@ public class UssChangeTagTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -371,10 +371,10 @@ public class UssChangeTagTest {
         String errMsg = "";
         try {
             ussChangeTag.get(null);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath is null", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test

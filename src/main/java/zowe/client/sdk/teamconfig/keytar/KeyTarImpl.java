@@ -117,10 +117,8 @@ public class KeyTarImpl implements IKeyTar {
      */
     @Override
     public void processKey() throws TeamConfigException {
-        ValidateUtils.checkNullParameter(serviceName == null, "serviceName is null");
-        ValidateUtils.checkIllegalParameter(serviceName.isBlank(), "serviceName is empty");
-        ValidateUtils.checkNullParameter(accountName == null, "accountName is null");
-        ValidateUtils.checkIllegalParameter(accountName.isBlank(), "accountName is empty");
+        ValidateUtils.checkIllegalParameter(serviceName, "serviceName");
+        ValidateUtils.checkIllegalParameter(accountName, "accountName");
         final Keytar instance = Keytar.getInstance();
         final String encodedString;
         try {

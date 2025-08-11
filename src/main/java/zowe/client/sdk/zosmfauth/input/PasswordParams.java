@@ -45,12 +45,9 @@ public class PasswordParams {
      * @author Esteban Sandoval
      */
     public PasswordParams(final String userId, final String oldPwd, final String newPwd) {
-        ValidateUtils.checkNullParameter(userId == null, "userId is null");
-        ValidateUtils.checkIllegalParameter(userId.isBlank(), "userId is empty");
-        ValidateUtils.checkNullParameter(oldPwd == null, "oldPwd is null");
-        ValidateUtils.checkIllegalParameter(oldPwd.isBlank(), "oldPwd is empty");
-        ValidateUtils.checkNullParameter(newPwd == null, "newPwd is null");
-        ValidateUtils.checkIllegalParameter(newPwd.isBlank(), "newPwd is empty");
+        ValidateUtils.checkIllegalParameter(userId, "userId");
+        ValidateUtils.checkIllegalParameter(oldPwd, "oldPwd");
+        ValidateUtils.checkIllegalParameter(newPwd, "newPwd");
         this.userId = userId;
         this.oldPwd = oldPwd;
         this.newPwd = newPwd;

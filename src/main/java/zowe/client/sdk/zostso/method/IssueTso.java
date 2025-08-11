@@ -73,10 +73,9 @@ public class IssueTso {
      */
     public IssueResponse issueCommand(final String accountNumber, final String command,
                                       final StartTsoParams startParams) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(accountNumber == null, "accountNumber is null");
-        ValidateUtils.checkNullParameter(command == null, "command is null");
-        ValidateUtils.checkIllegalParameter(accountNumber.isBlank(), "accountNumber not specified");
-        ValidateUtils.checkIllegalParameter(command.isBlank(), "command not specified");
+        ValidateUtils.checkIllegalParameter(accountNumber, "accountNumber");
+        ValidateUtils.checkIllegalParameter(command, "command");
+        ValidateUtils.checkNullParameter(startParams == null, "startParams is null");
         // first stage open tso servlet session to use for our tso command processing
         final StartTso startTso = new StartTso(connection);
         final StartStopResponses startResponse = startTso.start(accountNumber, startParams);

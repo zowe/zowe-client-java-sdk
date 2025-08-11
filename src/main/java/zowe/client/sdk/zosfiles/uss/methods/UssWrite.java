@@ -107,8 +107,7 @@ public class UssWrite {
      * @author Frank Giordano
      */
     public Response writeCommon(final String fileNamePath, final WriteParams params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
-        ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
+        ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = connection.getZosmfUrl() +

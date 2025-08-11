@@ -472,8 +472,8 @@ public class JobMonitor {
     public boolean waitMessageCommon(final MonitorJobWaitForParams params, final String message)
             throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), JobsConstants.JOB_NAME_NULL_MSG);
-        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
+        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), "jobName");
+        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), "JobId");
 
         if (params.getAttempts().isEmpty()) {
             params.setAttempts(attempts);

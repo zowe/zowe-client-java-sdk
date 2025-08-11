@@ -114,8 +114,7 @@ public class UssMount {
      * @author Frank Giordano
      */
     public Response mountCommon(final String fileSystemName, final MountParams params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(fileSystemName == null, "fileSystemName is null");
-        ValidateUtils.checkIllegalParameter(fileSystemName.isBlank(), "fileSystemName not specified");
+        ValidateUtils.checkIllegalParameter(fileSystemName, "fileSystemName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "params action not specified");
 

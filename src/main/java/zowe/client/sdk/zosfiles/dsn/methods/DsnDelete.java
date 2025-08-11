@@ -74,10 +74,8 @@ public class DsnDelete {
      * @author Frank Giordano
      */
     public Response delete(final String dataSetName, final String memberName) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
-        ValidateUtils.checkNullParameter(memberName == null, "memberName is null");
-        ValidateUtils.checkIllegalParameter(memberName.isBlank(), "memberName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
+        ValidateUtils.checkIllegalParameter(memberName, "memberName");
 
         return delete(String.format("%s(%s)", dataSetName, memberName));
     }
@@ -91,8 +89,7 @@ public class DsnDelete {
      * @author Leonid Baranov
      */
     public Response delete(final String dataSetName) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
+        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +

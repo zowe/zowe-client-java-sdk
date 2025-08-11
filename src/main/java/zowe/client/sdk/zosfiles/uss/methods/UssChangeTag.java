@@ -95,8 +95,8 @@ public class UssChangeTag {
      * @author Frank Giordano
      */
     public Response text(final String fileNamePath, final String codeSet) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(codeSet == null, "codeSet is null");
-        ValidateUtils.checkIllegalParameter(codeSet.isBlank(), "codeSet not specified");
+        ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");
+        ValidateUtils.checkIllegalParameter(codeSet, "codeSet");
 
         return changeCommon(fileNamePath, new ChangeTagParams.Builder()
                 .action(ChangeTagAction.SET).type(ChangeTagType.TEXT).codeset(codeSet).build());
@@ -136,8 +136,7 @@ public class UssChangeTag {
      * @author James Kostrewski
      */
     public Response changeCommon(final String fileNamePath, final ChangeTagParams params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(fileNamePath == null, "fileNamePath is null");
-        ValidateUtils.checkIllegalParameter(fileNamePath.isBlank(), "fileNamePath not specified");
+        ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "action not specified");
 

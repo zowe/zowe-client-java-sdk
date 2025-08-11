@@ -112,10 +112,10 @@ public class UssWriteTest {
         String errMsg = "";
         try {
             ussWrite.writeText(null, "content");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath is null", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -126,7 +126,7 @@ public class UssWriteTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -137,7 +137,7 @@ public class UssWriteTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -156,10 +156,10 @@ public class UssWriteTest {
         String errMsg = "";
         try {
             ussWrite.writeBinary(null, new byte[0]);
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath is null", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -170,7 +170,7 @@ public class UssWriteTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -181,7 +181,7 @@ public class UssWriteTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -200,10 +200,10 @@ public class UssWriteTest {
         String errMsg = "";
         try {
             ussWrite.writeCommon(null, new WriteParams.Builder().build());
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath is null", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -214,7 +214,7 @@ public class UssWriteTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test
@@ -225,7 +225,7 @@ public class UssWriteTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("fileNamePath not specified", errMsg);
+        assertEquals("fileNamePath is either null or empty", errMsg);
     }
 
     @Test

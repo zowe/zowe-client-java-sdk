@@ -79,9 +79,8 @@ public class DsnCreate {
      * @author Leonid Baranov
      */
     public Response create(final String dataSetName, final CreateParams params) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
-        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
