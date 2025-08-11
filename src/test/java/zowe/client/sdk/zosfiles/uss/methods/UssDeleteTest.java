@@ -211,7 +211,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstNullConnectionFailure() {
+    public void tstUssDeleteNullConnectionFailure() {
         try {
             new UssDelete(null);
         } catch (NullPointerException e) {
@@ -221,7 +221,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidRequestType() {
+    public void tstUssDeleteSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
         UssDelete ussDelete = new UssDelete(connection, request);
@@ -229,7 +229,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullConnection() {
+    public void tstUssDeleteSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -239,7 +239,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstUssDeleteSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -249,7 +249,7 @@ public class UssDeleteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithInvalidRequestType() {
+    public void tstUssDeleteSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a DeleteJsonZosmfRequest
         IllegalStateException exception = assertThrows(

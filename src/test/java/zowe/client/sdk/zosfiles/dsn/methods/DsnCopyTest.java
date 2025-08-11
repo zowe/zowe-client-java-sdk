@@ -82,7 +82,7 @@ public class DsnCopyTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidRequestType() {
+    public void tstDsnCopySecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         DsnCopy dsnCopy = new DsnCopy(connection, request);
@@ -90,7 +90,7 @@ public class DsnCopyTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullConnection() {
+    public void tstDsnCopySecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -100,7 +100,7 @@ public class DsnCopyTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstDsnCopySecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -110,7 +110,7 @@ public class DsnCopyTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithInvalidRequestType() {
+    public void tstDsnCopySecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PutJsonZosmfRequest
         IllegalStateException exception = assertThrows(
@@ -121,14 +121,14 @@ public class DsnCopyTest {
     }
 
     @Test
-    public void tstPrimaryConstructorWithValidConnection() {
+    public void tstDsnCopyPrimaryConstructorWithValidConnection() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         DsnCopy dsnCopy = new DsnCopy(connection);
         assertNotNull(dsnCopy);
     }
 
     @Test
-    public void tstPrimaryConstructorWithNullConnection() {
+    public void tstDsnCopyPrimaryConstructorWithNullConnection() {
         // When/Then
         NullPointerException exception = assertThrows(
                 NullPointerException.class,

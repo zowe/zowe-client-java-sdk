@@ -50,7 +50,7 @@ public class JobGetTextTest {
     }
 
     @Test
-    public void tstGetSpoolContentByIdSuccess() throws ZosmfRequestException {
+    public void tstJobGetTextSpoolContentByIdSuccess() throws ZosmfRequestException {
         JobGet getJobs = new JobGet(connection);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response("1\n2\n3\n", 200, "success"));
@@ -62,7 +62,7 @@ public class JobGetTextTest {
     }
 
     @Test
-    public void tstGetSpoolContentCmdResponseWithInvalidBasePathFailure() {
+    public void tstJobGetTextSpoolContentCmdResponseWithInvalidBasePathFailure() {
         final ZosConnection connection = ZosConnectionFactory
                 .createBasicConnection("1", "1", "1", "1", "consoles//");
         // Create a mock request to verify URL
@@ -72,7 +72,7 @@ public class JobGetTextTest {
     }
 
     @Test
-    public void tstGetSpoolContentByIdToggleTokenSuccess() throws ZosmfRequestException {
+    public void tstJobGetTextSpoolContentByIdToggleTokenSuccess() throws ZosmfRequestException {
         JobGet getJobs = new JobGet(tokenConnection);
         GetTextZosmfRequest mockTextGetRequestToken = Mockito.mock(GetTextZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));

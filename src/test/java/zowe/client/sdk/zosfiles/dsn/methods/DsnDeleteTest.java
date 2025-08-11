@@ -99,7 +99,7 @@ public class DsnDeleteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidRequestType() {
+    public void tstDsnDeleteSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
         DsnDelete dsnDelete = new DsnDelete(connection, request);
@@ -107,7 +107,7 @@ public class DsnDeleteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullConnection() {
+    public void tstDsnDeleteSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -117,7 +117,7 @@ public class DsnDeleteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstDsnDeleteSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -127,7 +127,7 @@ public class DsnDeleteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithInvalidRequestType() {
+    public void tstDsnDeleteSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a DeleteJsonZosmfRequest
         IllegalStateException exception = assertThrows(
@@ -138,14 +138,14 @@ public class DsnDeleteTest {
     }
 
     @Test
-    public void tstPrimaryConstructorWithValidConnection() {
+    public void tstDsnDeletePrimaryConstructorWithValidConnection() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         DsnDelete dsnDelete = new DsnDelete(connection);
         assertNotNull(dsnDelete);
     }
 
     @Test
-    public void tstPrimaryConstructorWithNullConnection() {
+    public void tstDsnDeletePrimaryConstructorWithNullConnection() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new DsnDelete(null)

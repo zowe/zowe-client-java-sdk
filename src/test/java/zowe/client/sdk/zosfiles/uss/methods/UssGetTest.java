@@ -69,7 +69,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetTextFileTargetPathSuccess() throws ZosmfRequestException {
+    public void tstUssGetTextFileTargetPathSuccess() throws ZosmfRequestException {
         final UssGet ussGet = new UssGet(connection, mockTextGetRequest);
         final String response = ussGet.getText("/xxx/xx");
         assertEquals("text", response);
@@ -77,7 +77,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetTextFileTargetPathToggleTokenSuccess() throws ZosmfRequestException {
+    public void tstUssGetTextFileTargetPathToggleTokenSuccess() throws ZosmfRequestException {
         final UssGet ussGet = new UssGet(connection, mockTextGetRequestToken);
         String response = ussGet.getText("/xxx/xx");
         String expectedResp = "{X-IBM-Data-Type=text, X-CSRF-ZOSMF-HEADER=true, " +
@@ -88,7 +88,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetTextFileTargetPathDefaultResponseSuccess() throws ZosmfRequestException {
+    public void tstUssGetTextFileTargetPathDefaultResponseSuccess() throws ZosmfRequestException {
         final GetTextZosmfRequest mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response(null, 200, "success"));
@@ -101,7 +101,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetBinaryFileTargetPathSuccess() throws ZosmfRequestException {
+    public void tstUssGetBinaryFileTargetPathSuccess() throws ZosmfRequestException {
         final GetStreamZosmfRequest mockStreamGetRequest = Mockito.mock(GetStreamZosmfRequest.class);
         final byte[] data = "data".getBytes();
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(
@@ -115,7 +115,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstGetBinaryFileTargetPathDefaultResponseSuccess() throws ZosmfRequestException {
+    public void tstUssGetBinaryFileTargetPathDefaultResponseSuccess() throws ZosmfRequestException {
         final GetStreamZosmfRequest mockStreamGetRequest = Mockito.mock(GetStreamZosmfRequest.class);
         final byte[] data = new byte[0];
         Mockito.when(mockStreamGetRequest.executeRequest()).thenReturn(
@@ -239,7 +239,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstNullConnectionFailure() {
+    public void tstUssGetNullConnectionFailure() {
         try {
             new UssGet(null);
         } catch (NullPointerException e) {
@@ -249,7 +249,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidTextRequestType() {
+    public void tstUssGetSecondaryConstructorWithValidTextRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(GetTextZosmfRequest.class);
         UssGet ussGet = new UssGet(connection, request);
@@ -257,7 +257,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidStreamRequestType() {
+    public void tstUssGetSecondaryConstructorWithValidStreamRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(GetStreamZosmfRequest.class);
         UssGet ussGet = new UssGet(connection, request);
@@ -265,7 +265,7 @@ public class UssGetTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstUssGetSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,

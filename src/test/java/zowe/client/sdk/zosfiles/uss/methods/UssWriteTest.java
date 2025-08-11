@@ -251,7 +251,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstNullConnectionFailure() {
+    public void tstUssWriteNullConnectionFailure() {
         try {
             new UssWrite(null);
         } catch (NullPointerException e) {
@@ -261,7 +261,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidRequestType() {
+    public void tstUssWriteSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(PutTextZosmfRequest.class);
         UssWrite ussWrite = new UssWrite(connection, request);
@@ -269,7 +269,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullConnection() {
+    public void tstUssWriteSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(PutTextZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -279,7 +279,7 @@ public class UssWriteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstUssWriteSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,

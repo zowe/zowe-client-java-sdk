@@ -106,7 +106,7 @@ public class JobCancelTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidRequestType() {
+    public void tstJobCancelSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         JobCancel jobCancel = new JobCancel(connection, request);
@@ -114,7 +114,7 @@ public class JobCancelTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullConnection() {
+    public void tstJobCancelSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -124,7 +124,7 @@ public class JobCancelTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstJobCancelSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -134,7 +134,7 @@ public class JobCancelTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithInvalidRequestType() {
+    public void tstJobCancelSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PutJsonZosmfRequest
         IllegalStateException exception = assertThrows(
@@ -145,14 +145,14 @@ public class JobCancelTest {
     }
 
     @Test
-    public void tstPrimaryConstructorWithValidConnection() {
+    public void tstJobCancelPrimaryConstructorWithValidConnection() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         JobCancel jobCancel = new JobCancel(connection);
         assertNotNull(jobCancel);
     }
 
     @Test
-    public void tstPrimaryConstructorWithNullConnection() {
+    public void tstJobCancelPrimaryConstructorWithNullConnection() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new JobCancel(null)

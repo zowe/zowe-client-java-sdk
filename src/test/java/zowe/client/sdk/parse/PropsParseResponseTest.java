@@ -28,7 +28,7 @@ import static org.junit.Assert.assertSame;
 public class PropsParseResponseTest {
 
     @Test
-    public void tstPropsParseJsonStopResponseNullFail() {
+    public void tstPropsParseResponseNullFail() {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.PROPS).parseResponse((Object) null);
@@ -39,7 +39,7 @@ public class PropsParseResponseTest {
     }
 
     @Test
-    public void tstPropsParseJsonStopResponseSingletonSuccess() {
+    public void tstPropsParseResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.PROPS);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.PROPS);
         assertSame(parser, parser2);
@@ -47,7 +47,7 @@ public class PropsParseResponseTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void tstPropsParseJsonStopResponseSuccess() {
+    public void tstPropsParseResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "ver");
         final JSONObject json = new JSONObject(jsonMap);

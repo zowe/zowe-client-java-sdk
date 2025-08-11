@@ -29,7 +29,7 @@ import static org.junit.Assert.assertSame;
 public class JobFileParseResponseTest {
 
     @Test
-    public void tstJobFileParseJsonStopResponseNullFail() {
+    public void tstJobFileParseResponseNullFail() {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.JOB_FILE).parseResponse((Object) null);
@@ -40,14 +40,14 @@ public class JobFileParseResponseTest {
     }
 
     @Test
-    public void tstJobFileParseJsonStopResponseSingletonSuccess() {
+    public void tstJobFileParseResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.JOB_FILE);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.JOB_FILE);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstJobFileParseJsonStopResponseSuccess() {
+    public void tstJobFileParseResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("jobname", "ver");
         jsonMap.put("jobid", "dev");

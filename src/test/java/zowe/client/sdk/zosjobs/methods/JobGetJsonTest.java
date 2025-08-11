@@ -70,7 +70,7 @@ public class JobGetJsonTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void tstGetJobFromMultipleJobsResultsExceptionFailure() throws ZosmfRequestException {
+    public void tstJobGetJsonFromMultipleJobsResultsExceptionFailure() throws ZosmfRequestException {
         final String msg = "expected 1 job returned but received 2 jobs.";
         final JSONArray jsonArray = new JSONArray();
 
@@ -100,7 +100,7 @@ public class JobGetJsonTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void tstJobGetWithAllJobMembersSuccess() throws ZosmfRequestException {
+    public void tstJobGetJsonWithAllJobMembersSuccess() throws ZosmfRequestException {
         final JSONArray jsonArray = new JSONArray();
         jsonArray.add(jobJson);
 
@@ -125,7 +125,7 @@ public class JobGetJsonTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void tstJobGetWithJobIdOnlySuccess() throws ZosmfRequestException {
+    public void tstJobGetJsonWithJobIdOnlySuccess() throws ZosmfRequestException {
         final JSONArray jsonArray = new JSONArray();
 
         final Map<String, String> jsonJobMap = new HashMap<>();
@@ -142,7 +142,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetByIdCmdResponseWithInvalidBasePathFailure() {
+    public void tstJobGetJsonByIdCmdResponseWithInvalidBasePathFailure() {
         final ZosConnection connection = ZosConnectionFactory
                 .createBasicConnection("1", "1", "1", "1", "consoles//");
         // Create a mock request to verify URL
@@ -152,7 +152,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetSpoolContentByIdJobIdNullExceptionFailure() throws ZosmfRequestException {
+    public void tstJobGetJsonSpoolContentByIdJobIdNullExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getSpoolContent("jobName", null, 1);
@@ -163,7 +163,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetSpoolContentByIdJobNameNullExceptionFailure() throws ZosmfRequestException {
+    public void tstJobGetJsonSpoolContentByIdJobNameNullExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getSpoolContent(null, "1", 1);
@@ -174,7 +174,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetSpoolContentByIdSpoolIdNegativeNumberExceptionFailure() throws ZosmfRequestException {
+    public void tstJobGetJsonSpoolContentByIdSpoolIdNegativeNumberExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getSpoolContent("jobName", "1", -11);
@@ -185,7 +185,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetSpoolContentByIdSpoolIdZeroExceptionFailure() throws ZosmfRequestException {
+    public void tstJobGetJsonSpoolContentByIdSpoolIdZeroExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getSpoolContent("jobName", "1", 0);
@@ -196,7 +196,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetStatusForJobNoParamsExceptionFailure() throws ZosmfRequestException {
+    public void tstJobGetJsonStatusForJobNoParamsExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getStatusByJob(new Job.Builder().build());
@@ -207,7 +207,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetStatusForJobSuccess() throws ZosmfRequestException {
+    public void tstJobGetJsonStatusForJobSuccess() throws ZosmfRequestException {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(jobJson, 200, "success"));
 
@@ -228,7 +228,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetStatusForJobWithJobIdOnlyExceptionFailure() throws ZosmfRequestException {
+    public void tstJobGetJsonStatusForJobWithJobIdOnlyExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getStatusByJob(new Job.Builder().jobId("1").build());
@@ -239,7 +239,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetStatusForJobWithJobNameOnlyExceptionFailure() throws ZosmfRequestException {
+    public void tstJobGetJsonStatusForJobWithJobNameOnlyExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
             getJobs.getStatusByJob(new Job.Builder().jobName("jobName").build());
@@ -250,7 +250,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetNullConnectionFailure() {
+    public void tstJobGetJsonNullConnectionFailure() {
         try {
             new JobGet(null);
         } catch (NullPointerException e) {
@@ -260,7 +260,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetSecondaryConstructorWithValidRequestType() {
+    public void tstJobGetJsonSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(GetTextZosmfRequest.class);
         JobGet jobGet = new JobGet(connection, request);
@@ -268,7 +268,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetSecondaryConstructorWithNullConnection() {
+    public void tstJobGetJsonSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(GetTextZosmfRequest.class);
         NullPointerException exception = Assertions.assertThrows(
                 NullPointerException.class,
@@ -278,7 +278,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetSecondaryConstructorWithNullRequest() {
+    public void tstJobGetJsonSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = Assertions.assertThrows(
                 NullPointerException.class,
@@ -288,7 +288,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetSecondaryConstructorWithInvalidRequestType() {
+    public void tstJobGetJsonSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class);
         IllegalStateException exception = Assertions.assertThrows(
@@ -299,14 +299,14 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetPrimaryConstructorWithValidConnection() {
+    public void tstJobGetJsonPrimaryConstructorWithValidConnection() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         JobGet jobGet = new JobGet(connection);
         assertNotNull(jobGet);
     }
 
     @Test
-    public void tstJobGetPrimaryConstructorWithNullConnection() {
+    public void tstJobGetJsonPrimaryConstructorWithNullConnection() {
         NullPointerException exception = Assertions.assertThrows(
                 NullPointerException.class,
                 () -> new JobGet(null)

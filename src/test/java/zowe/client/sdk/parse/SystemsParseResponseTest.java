@@ -27,7 +27,7 @@ import static org.junit.Assert.assertSame;
 public class SystemsParseResponseTest {
 
     @Test
-    public void tstZosmfSystemsParseJsonStopResponseNullFail() {
+    public void tstSystemsParseResponseNullFail() {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse((Object) null);
@@ -38,14 +38,14 @@ public class SystemsParseResponseTest {
     }
 
     @Test
-    public void tstZosmfSystemsParseJsonStopResponseSingletonSuccess() {
+    public void tstSystemsParseResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstZosmfSystemsParseJsonStopResponseSuccess() throws Exception {
+    public void tstSystemsParseResponseSuccess() throws Exception {
         final String data = "{\"items\":[{\"systemNickName\":\"test\",\"zosVR\":\"2.5\"}],\"numRows\":1}";
         final JSONObject json = new JSONObject((JSONObject) new JSONParser().parse(data));
         final ZosmfSystemsResponse response = (ZosmfSystemsResponse) JsonParseFactory

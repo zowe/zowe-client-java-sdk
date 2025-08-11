@@ -281,7 +281,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstNullConnectionFailure() {
+    public void tstUssCreateNullConnectionFailure() {
         try {
             new UssCreate(null);
         } catch (NullPointerException e) {
@@ -291,7 +291,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidRequestType() {
+    public void tstUssCreateSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(PostJsonZosmfRequest.class);
         UssCreate ussCreate = new UssCreate(connection, request);
@@ -299,7 +299,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullConnection() {
+    public void tstUssCreateSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(PostJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -309,7 +309,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstUssCreateSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -319,7 +319,7 @@ public class UssCreateTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithInvalidRequestType() {
+    public void tstUssCreateSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PostJsonZosmfRequest
         IllegalStateException exception = assertThrows(

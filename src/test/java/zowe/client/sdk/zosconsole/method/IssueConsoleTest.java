@@ -57,7 +57,7 @@ public class IssueConsoleTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseSuccess() throws ZosmfRequestException {
+    public void tstIssueConsoleIssueCommandCmdResponseSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "student");
         final JSONObject json = new JSONObject(jsonMap);
@@ -73,7 +73,7 @@ public class IssueConsoleTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseToggleTokenSuccess() throws ZosmfRequestException {
+    public void tstIssueConsoleIssueCommandCmdResponseToggleTokenSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "student");
         final JSONObject json = new JSONObject(jsonMap);
@@ -100,7 +100,7 @@ public class IssueConsoleTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseWithInvalidBasePathFailure() {
+    public void tstIssueConsoleIssueCommandCmdResponseWithInvalidBasePathFailure() {
         final ZosConnection connection = ZosConnectionFactory
                 .createBasicConnection("1", "1", "1", "1", "consoles//");
         // Create a mock request to verify URL
@@ -110,7 +110,7 @@ public class IssueConsoleTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseWithEmptyStringSuccess() throws ZosmfRequestException {
+    public void tstIssueConsoleIssueCommandCmdResponseWithEmptyStringSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "");
         final JSONObject json = new JSONObject(jsonMap);
@@ -122,7 +122,7 @@ public class IssueConsoleTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseWithEmptyStringAndIsProcessRequestSuccess() throws ZosmfRequestException {
+    public void tstIssueConsoleIssueCommandCmdResponseWithEmptyStringAndIsProcessRequestSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "");
         final JSONObject json = new JSONObject(jsonMap);
@@ -136,7 +136,7 @@ public class IssueConsoleTest {
     }
 
     @Test
-    public void tstIssueCommandCmdResponseUrlSuccess() throws ZosmfRequestException {
+    public void tstIssueConsoleIssueCommandCmdResponseUrlSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response-url", "student");
         final JSONObject json = new JSONObject(jsonMap);
@@ -153,7 +153,7 @@ public class IssueConsoleTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void tstIssueCommandHttpErrorFailure() throws ZosmfRequestException {
+    public void tstIssueConsoleIssueCommandHttpErrorFailure() throws ZosmfRequestException {
         final HttpResponse<JsonNode> mockReply = Mockito.mock(HttpResponse.class);
         Mockito.when(mockReply.getStatusText()).thenReturn("Unauthorized");
         Mockito.when(mockReply.getStatus()).thenReturn(401);
@@ -182,7 +182,7 @@ public class IssueConsoleTest {
     }
 
     @Test
-    public void tstNullConnectionFailure() {
+    public void tstIssueConsoleNullConnectionFailure() {
         try {
             new IssueConsole(null);
         } catch (NullPointerException e) {

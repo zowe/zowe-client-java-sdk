@@ -167,7 +167,7 @@ public class DsnGetTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidRequestType() {
+    public void tstDsnGetSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(GetStreamZosmfRequest.class);
         DsnGet dsnGet = new DsnGet(connection, request);
@@ -175,7 +175,7 @@ public class DsnGetTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullConnection() {
+    public void tstDsnGetSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(GetStreamZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -185,7 +185,7 @@ public class DsnGetTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstDsnGetSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -195,7 +195,7 @@ public class DsnGetTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithInvalidRequestType() {
+    public void tstDsnGetSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a GetZosmfRequest
         IllegalStateException exception = assertThrows(
@@ -206,14 +206,14 @@ public class DsnGetTest {
     }
 
     @Test
-    public void tstPrimaryConstructorWithValidConnection() {
+    public void tstDsnGetPrimaryConstructorWithValidConnection() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         DsnGet dsnGet = new DsnGet(connection);
         assertNotNull(dsnGet);
     }
 
     @Test
-    public void tstPrimaryConstructorWithNullConnection() {
+    public void tstDsnGetPrimaryConstructorWithNullConnection() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new DsnGet(null)

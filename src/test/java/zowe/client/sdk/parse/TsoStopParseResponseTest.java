@@ -28,7 +28,7 @@ import static org.junit.Assert.*;
 public class TsoStopParseResponseTest {
 
     @Test
-    public void tstTsoStopParseJsonStopResponseNullFail() {
+    public void tstTsoStopParseResponseNullFail() {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.TSO_STOP).parseResponse((Object) null);
@@ -39,14 +39,14 @@ public class TsoStopParseResponseTest {
     }
 
     @Test
-    public void tstTsoStopParseJsonStopResponseSingletonSuccess() {
+    public void tstTsoStopParseResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.TSO_STOP);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.TSO_STOP);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstTsoStopParseJsonStopResponseSuccess() {
+    public void tstTsoStopParseResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("ver", "ver");
         jsonMap.put("servletKey", "servletKey");

@@ -67,7 +67,7 @@ public class UssExtAttrTest {
     }
 
     @Test
-    public void tstDsnCopySuccess() throws ZosmfRequestException {
+    public void tstUssExtAttrSuccess() throws ZosmfRequestException {
         final UssExtAttr ussExtAttr = new UssExtAttr(connection, mockJsonPutRequest);
         final Response response = ussExtAttr.set("/test", "a");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -77,7 +77,7 @@ public class UssExtAttrTest {
     }
 
     @Test
-    public void tstDsnCopyTokenSuccess() throws ZosmfRequestException {
+    public void tstUssExtAttrTokenSuccess() throws ZosmfRequestException {
         final UssExtAttr ussExtAttr = new UssExtAttr(tokenConnection, mockJsonPutRequestToken);
         final Response response = ussExtAttr.set("/test", "a");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
@@ -210,7 +210,7 @@ public class UssExtAttrTest {
     }
 
     @Test
-    public void tstNullConnectionFailure() {
+    public void tstUssExtAttrNullConnectionFailure() {
         try {
             new UssExtAttr(null);
         } catch (NullPointerException e) {
@@ -220,7 +220,7 @@ public class UssExtAttrTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidRequestType() {
+    public void tstUssExtAttrSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         UssExtAttr ussExtAttr = new UssExtAttr(connection, request);
@@ -228,7 +228,7 @@ public class UssExtAttrTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullConnection() {
+    public void tstUssExtAttrSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -238,7 +238,7 @@ public class UssExtAttrTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstUssExtAttrSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -248,7 +248,7 @@ public class UssExtAttrTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithInvalidRequestType() {
+    public void tstUssExtAttrSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PutJsonZosmfRequest
         IllegalStateException exception = assertThrows(

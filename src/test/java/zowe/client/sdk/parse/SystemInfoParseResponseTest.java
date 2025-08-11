@@ -29,7 +29,7 @@ import static org.junit.Assert.assertSame;
 public class SystemInfoParseResponseTest {
 
     @Test
-    public void tstZosmfInfoParseJsonStopResponseNullFail() {
+    public void tstSystemInfoParseResponseNullFail() {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).parseResponse((Object) null);
@@ -40,14 +40,14 @@ public class SystemInfoParseResponseTest {
     }
 
     @Test
-    public void tstZosmfInfoParseJsonStopResponseSingletonSuccess() {
+    public void tstSystemInfoParseResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.ZOSMF_INFO);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.ZOSMF_INFO);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstZosmfInfoParseJsonStopResponseSuccess() {
+    public void tstSystemInfoParseResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("api_version", "ver");
         jsonMap.put("zosmf_port", "dev");

@@ -96,7 +96,7 @@ public class JobDeleteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidRequestType() {
+    public void tstJobDeleteSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
         JobDelete jobDelete = new JobDelete(connection, request);
@@ -104,7 +104,7 @@ public class JobDeleteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullConnection() {
+    public void tstJobDeleteSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -114,7 +114,7 @@ public class JobDeleteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstJobDeleteSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -124,7 +124,7 @@ public class JobDeleteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithInvalidRequestType() {
+    public void tstJobDeleteSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a DeleteJsonZosmfRequest
         IllegalStateException exception = assertThrows(
@@ -135,14 +135,14 @@ public class JobDeleteTest {
     }
 
     @Test
-    public void tstPrimaryConstructorWithValidConnection() {
+    public void tstJobDeletePrimaryConstructorWithValidConnection() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         JobDelete jobDelete = new JobDelete(connection);
         assertNotNull(jobDelete);
     }
 
     @Test
-    public void tstPrimaryConstructorWithNullConnection() {
+    public void tstJobDeletePrimaryConstructorWithNullConnection() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new JobDelete(null)

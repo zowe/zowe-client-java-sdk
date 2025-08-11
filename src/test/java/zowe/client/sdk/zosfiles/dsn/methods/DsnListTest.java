@@ -82,7 +82,7 @@ public class DsnListTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidRequestType() {
+    public void tstDsnListSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         GetJsonZosmfRequest request = Mockito.mock(GetJsonZosmfRequest.class);
         DsnList dsnList = new DsnList(connection, request);
@@ -90,7 +90,7 @@ public class DsnListTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullConnection() {
+    public void tstDsnListSecondaryConstructorWithNullConnection() {
         GetJsonZosmfRequest request = Mockito.mock(GetJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -100,7 +100,7 @@ public class DsnListTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstDsnListSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -110,7 +110,7 @@ public class DsnListTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithInvalidRequestType() {
+    public void tstDsnListSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a GetJsonZosmfRequest
         IllegalStateException exception = assertThrows(
@@ -121,14 +121,14 @@ public class DsnListTest {
     }
 
     @Test
-    public void tstPrimaryConstructorWithValidConnection() {
+    public void tstDsnListPrimaryConstructorWithValidConnection() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         DsnList dsnList = new DsnList(connection);
         assertNotNull(dsnList);
     }
 
     @Test
-    public void tstPrimaryConstructorWithNullConnection() {
+    public void tstDsnListPrimaryConstructorWithNullConnection() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new DsnList(null)

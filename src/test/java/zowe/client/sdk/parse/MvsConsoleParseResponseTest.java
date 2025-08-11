@@ -29,7 +29,7 @@ import static org.junit.Assert.assertSame;
 public class MvsConsoleParseResponseTest {
 
     @Test
-    public void tstMvsConsoleParseJsonStopResponseNullFail() {
+    public void tstMvsConsoleParseResponseNullFail() {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).parseResponse((Object) null);
@@ -40,14 +40,14 @@ public class MvsConsoleParseResponseTest {
     }
 
     @Test
-    public void tstMvsConsoleParseJsonStopResponseSingletonSuccess() {
+    public void tstMvsConsoleParseResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.MVS_CONSOLE);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.MVS_CONSOLE);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstMvsConsoleParseJsonStopResponseSuccess() {
+    public void tstMvsConsoleParseResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "ver");
         final JSONObject json = new JSONObject(jsonMap);

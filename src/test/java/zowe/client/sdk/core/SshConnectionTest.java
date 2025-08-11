@@ -24,35 +24,35 @@ import static org.junit.Assert.*;
 public class SshConnectionTest {
 
     @Test
-    public void tstReferenceNotEqualsSuccess() {
+    public void tstSshConnectionReferenceNotEqualsSuccess() {
         final SshConnection sc1 = new SshConnection("test", 1, "user", "password");
         final SshConnection sc2 = new SshConnection("test", 1, "user", "password");
         assertNotSame(sc1, sc2);
     }
 
     @Test
-    public void tstReferenceEqualsSuccess() {
+    public void tstSshConnectionReferenceEqualsSuccess() {
         final SshConnection sc1 = new SshConnection("test", 1, "user", "password");
         final SshConnection sc2 = sc1;
         assertEquals(sc1, sc2);
     }
 
     @Test
-    public void tstEqualsSuccess() {
+    public void tstSshConnectionEqualsSuccess() {
         final SshConnection sc1 = new SshConnection("test", 1, "user", "password");
         final SshConnection sc2 = new SshConnection("test", 1, "user", "password");
         assertEquals(sc1, sc2);
     }
 
     @Test
-    public void tstNotEqualsSuccess() {
+    public void tstSshConnectionNotEqualsSuccess() {
         final SshConnection sc1 = new SshConnection("test", 1, "user", "password");
         final SshConnection sc2 = new SshConnection("test2", 1, "user", "password");
         assertNotEquals(sc1, sc2);
     }
 
     @Test
-    public void tstHashCodeMapWithSecondHostDifferentSuccess() {
+    public void tstSshConnectionHashCodeMapWithSecondHostDifferentSuccess() {
         final SshConnection sc1 = new SshConnection("test", 1, "user", "password");
         final SshConnection sc2 = new SshConnection("test2", 1, "user", "password");
         final var zcs = new HashMap<SshConnection, Integer>();
@@ -62,7 +62,7 @@ public class SshConnectionTest {
     }
 
     @Test
-    public void tstHashCodeMapWithSecondPortDifferentSuccess() {
+    public void tstSshConnectionHashCodeMapWithSecondPortDifferentSuccess() {
         final SshConnection sc1 = new SshConnection("test", 1, "user", "password");
         final SshConnection sc2 = new SshConnection("test", 2, "user", "password");
         final var zcs = new HashMap<SshConnection, Integer>();
@@ -72,7 +72,7 @@ public class SshConnectionTest {
     }
 
     @Test
-    public void tstHashCodeMapWithSecondUserDifferentSuccess() {
+    public void tstSshConnectionHashCodeMapWithSecondUserDifferentSuccess() {
         final SshConnection sc1 = new SshConnection("test", 1, "user", "password");
         final SshConnection sc2 = new SshConnection("test", 1, "user2", "password");
         final var zcs = new HashMap<SshConnection, Integer>();
@@ -82,7 +82,7 @@ public class SshConnectionTest {
     }
 
     @Test
-    public void tstHashCodeMapWithSecondPasswordDifferentSuccess() {
+    public void tstSshConnectionHashCodeMapWithSecondPasswordDifferentSuccess() {
         final SshConnection sc1 = new SshConnection("test", 1, "user", "password");
         final SshConnection sc2 = new SshConnection("test", 1, "user", "password2");
         final var zcs = new HashMap<SshConnection, Integer>();
@@ -92,7 +92,7 @@ public class SshConnectionTest {
     }
 
     @Test
-    public void tstHashCodeMapNoDuplicateSuccess() {
+    public void tstSshConnectionHashCodeMapNoDuplicateSuccess() {
         final SshConnection sc1 = new SshConnection("test", 1, "user", "password");
         final SshConnection sc2 = new SshConnection("test", 1, "user", "password");
         final var zcs = new HashMap<SshConnection, Integer>();

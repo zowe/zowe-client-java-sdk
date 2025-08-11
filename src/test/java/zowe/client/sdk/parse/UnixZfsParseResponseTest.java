@@ -29,7 +29,7 @@ import static org.junit.Assert.assertSame;
 public class UnixZfsParseResponseTest {
 
     @Test
-    public void tstUnixZfsParseJsonStopResponseDataNullFail() {
+    public void tstUnixZfsParseResponseDataNullFail() {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.UNIX_ZFS).parseResponse((Object) null);
@@ -40,14 +40,14 @@ public class UnixZfsParseResponseTest {
     }
 
     @Test
-    public void tstUnixZfsParseJsonStopResponseSingletonSuccess() {
+    public void tstUnixZfsParseResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.UNIX_ZFS);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.UNIX_ZFS);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstUnixZfsParseJsonStopResponseSuccess() {
+    public void tstUnixZfsParseResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("name", "ver");
         jsonMap.put("mode", "mode");

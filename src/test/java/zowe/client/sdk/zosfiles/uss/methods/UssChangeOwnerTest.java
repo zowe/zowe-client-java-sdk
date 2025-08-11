@@ -211,7 +211,7 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstNullConnectionFailure() {
+    public void tstUssChangeOwnerNullConnectionFailure() {
         try {
             new UssChangeOwner(null);
         } catch (NullPointerException e) {
@@ -221,7 +221,7 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidRequestType() {
+    public void tstUssChangeOwnerSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, request);
@@ -229,7 +229,7 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullConnection() {
+    public void tstUssChangeOwnerSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -239,7 +239,7 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstUssChangeOwnerSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -249,7 +249,7 @@ public class UssChangeOwnerTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithInvalidRequestType() {
+    public void tstUssChangeOwnerSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PutJsonZosmfRequest
         IllegalStateException exception = assertThrows(

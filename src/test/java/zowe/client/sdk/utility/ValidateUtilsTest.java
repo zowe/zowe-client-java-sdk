@@ -32,7 +32,7 @@ public class ValidateUtilsTest {
     }
 
     @Test
-    public void tstCheckIllegalParameterFalseSuccess() {
+    public void tstValidateUtilsCheckIllegalParameterFalseSuccess() {
         boolean isIllegalArgumentException = false;
         try {
             ValidateUtils.checkIllegalParameter(false, "error msg");
@@ -43,7 +43,7 @@ public class ValidateUtilsTest {
     }
 
     @Test
-    public void tstCheckIllegalParameterTrueSuccess() {
+    public void tstValidateUtilsCheckIllegalParameterTrueSuccess() {
         try {
             ValidateUtils.checkIllegalParameter(true, "error msg");
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class ValidateUtilsTest {
     }
 
     @Test
-    public void tstCheckNullParameterFalseSuccess() {
+    public void tstValidateUtilsCheckNullParameterFalseSuccess() {
         boolean isNullException = false;
         try {
             ValidateUtils.checkNullParameter(false, "error msg");
@@ -63,7 +63,7 @@ public class ValidateUtilsTest {
     }
 
     @Test
-    public void tstCheckNullParameterTrueSuccess() {
+    public void tstValidateUtilsCheckNullParameterTrueSuccess() {
         try {
             ValidateUtils.checkNullParameter(true, "error msg");
         } catch (Exception e) {

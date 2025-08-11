@@ -62,7 +62,7 @@ public class DsnWriteTest {
     }
 
     @Test
-    public void tstDsnRenameDatasetSuccess() throws ZosmfRequestException {
+    public void tstDsnWriteDatasetSuccess() throws ZosmfRequestException {
         final DsnWrite dsnWrite = new DsnWrite(connection, mockTextPutRequest);
         final Response response = dsnWrite.write("TEXT_PDS", "data");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -72,7 +72,7 @@ public class DsnWriteTest {
     }
 
     @Test
-    public void tstDsnRenameMemberTokenSuccess() throws ZosmfRequestException {
+    public void tstDsnWriteMemberTokenSuccess() throws ZosmfRequestException {
         final DsnWrite dsnWrite = new DsnWrite(connection, mockTextPutRequestToken);
         final Response response = dsnWrite.write("TEXT_PDS", "data");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=text/plain; charset=UTF-8}",
@@ -84,7 +84,7 @@ public class DsnWriteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidRequestType() {
+    public void tstDsnWriteSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(PutTextZosmfRequest.class);
         DsnWrite dsnWrite = new DsnWrite(connection, request);
@@ -92,7 +92,7 @@ public class DsnWriteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullConnection() {
+    public void tstDsnWriteSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(PutTextZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -102,7 +102,7 @@ public class DsnWriteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstDsnWriteSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -112,7 +112,7 @@ public class DsnWriteTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithInvalidRequestType() {
+    public void tstDsnWriteSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PutTextZosmfRequest
         IllegalStateException exception = assertThrows(
@@ -123,14 +123,14 @@ public class DsnWriteTest {
     }
 
     @Test
-    public void tstPrimaryConstructorWithValidConnection() {
+    public void tstDsnWritePrimaryConstructorWithValidConnection() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         DsnWrite dsnWrite = new DsnWrite(connection);
         assertNotNull(dsnWrite);
     }
 
     @Test
-    public void tstPrimaryConstructorWithNullConnection() {
+    public void tstDsnWritePrimaryConstructorWithNullConnection() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new DsnWrite(null)

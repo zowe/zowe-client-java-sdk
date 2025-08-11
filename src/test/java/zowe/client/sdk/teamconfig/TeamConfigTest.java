@@ -45,7 +45,7 @@ public class TeamConfigTest {
     }
 
     @Test
-    public void tstGetDefaultProfileFailure() throws TeamConfigException {
+    public void tstTeamConfigGetDefaultProfileFailure() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433"));
         final List<Profile> profiles = List.of(new Profile("frank1", "zosmf", props, null));
         final Map<String, String> defaults = Map.of("zosmf", "frank");
@@ -70,7 +70,7 @@ public class TeamConfigTest {
     }
 
     @Test
-    public void tstGetDefaultProfileTypeNotFoundFailure() throws TeamConfigException {
+    public void tstTeamConfigGetDefaultProfileTypeNotFoundFailure() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf1", props, null));
         final Map<String, String> defaults = Map.of("zosmf", "frank");
@@ -95,7 +95,7 @@ public class TeamConfigTest {
     }
 
     @Test
-    public void tstGetDefaultProfileSuccess() throws TeamConfigException {
+    public void tstTeamConfigGetDefaultProfileSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null));
         final Map<String, String> defaults = Map.of("zosmf", "frank");
@@ -123,7 +123,7 @@ public class TeamConfigTest {
     }
 
     @Test
-    public void tstGetDefaultProfileHostAndPortValuesSuccess() throws TeamConfigException {
+    public void tstTeamConfigGetDefaultProfileHostAndPortValuesSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433", "host", "host"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null));
         final Map<String, String> defaults = Map.of("zosmf", "frank");
@@ -139,7 +139,7 @@ public class TeamConfigTest {
     }
 
     @Test
-    public void tstGetDefaultProfileMergeNonBaseHostValueSuccess() throws TeamConfigException {
+    public void tstTeamConfigGetDefaultProfileMergeNonBaseHostValueSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433", "host", "host"));
         final JSONObject baseProps = new JSONObject(Map.of("port", "433", "host", "host1"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null),
@@ -156,7 +156,7 @@ public class TeamConfigTest {
     }
 
     @Test
-    public void tstGetDefaultProfileMergeBaseHostValueSuccess() throws TeamConfigException {
+    public void tstTeamConfigGetDefaultProfileMergeBaseHostValueSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433"));
         final JSONObject baseProps = new JSONObject(Map.of("port", "433", "host", "host1"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null),
@@ -173,7 +173,7 @@ public class TeamConfigTest {
     }
 
     @Test
-    public void tstGetDefaultProfileUserNameAndPasswordValuesSuccess() throws TeamConfigException {
+    public void tstTeamConfigGetDefaultProfileUserNameAndPasswordValuesSuccess() throws TeamConfigException {
         final JSONObject props = new JSONObject(Map.of("port", "433"));
         final List<Profile> profiles = List.of(new Profile("frank", "zosmf", props, null));
         final Map<String, String> defaults = Map.of("zosmf", "frank");

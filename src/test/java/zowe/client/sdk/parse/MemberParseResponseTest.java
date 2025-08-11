@@ -29,7 +29,7 @@ import static org.junit.Assert.assertSame;
 public class MemberParseResponseTest {
 
     @Test
-    public void tstMemberParseJsonStopResponseNullFail() {
+    public void tstMemberParseResponseNullFail() {
         String msg = "";
         try {
             JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse((Object) null);
@@ -40,14 +40,14 @@ public class MemberParseResponseTest {
     }
 
     @Test
-    public void tstMemberParseJsonStopResponseSingletonSuccess() {
+    public void tstMemberParseResponseSingletonSuccess() {
         final JsonParse parser = JsonParseFactory.buildParser(ParseType.MEMBER);
         final JsonParse parser2 = JsonParseFactory.buildParser(ParseType.MEMBER);
         assertSame(parser, parser2);
     }
 
     @Test
-    public void tstMemberParseJsonStopResponseSuccess() {
+    public void tstMemberParseResponseSuccess() {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("member", "ver");
         jsonMap.put("vers", 0L);

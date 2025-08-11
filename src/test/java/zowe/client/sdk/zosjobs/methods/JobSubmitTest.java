@@ -83,7 +83,7 @@ public class JobSubmitTest {
     }
 
     @Test
-    public void tstJobDeleteSuccess() throws ZosmfRequestException {
+    public void tstJobSubmitSuccess() throws ZosmfRequestException {
         final JobSubmit jobSubmit = new JobSubmit(connection, mockPutJsonZosmfRequest);
         final Job job = jobSubmit.submit("TEST.DATASET");
         assertEquals("https://1:1/zosmf/restjobs/jobs", mockPutJsonZosmfRequest.getUrl());
@@ -102,7 +102,7 @@ public class JobSubmitTest {
     }
 
     @Test
-    public void tstJobDeleteTokenSuccess() throws ZosmfRequestException {
+    public void tstJobSubmitTokenSuccess() throws ZosmfRequestException {
         final JobSubmit jobSubmit = new JobSubmit(connection, mockPutJsonZosmfRequestToken);
         final Job job = jobSubmit.submit("TEST.DATASET");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
@@ -123,7 +123,7 @@ public class JobSubmitTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithValidRequestType() {
+    public void tstJobSubmitSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         JobSubmit jobSubmit = new JobSubmit(connection, request);
@@ -131,7 +131,7 @@ public class JobSubmitTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullConnection() {
+    public void tstJobSubmitSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -141,7 +141,7 @@ public class JobSubmitTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithNullRequest() {
+    public void tstJobSubmitSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -151,7 +151,7 @@ public class JobSubmitTest {
     }
 
     @Test
-    public void tstSecondaryConstructorWithInvalidRequestType() {
+    public void tstJobSubmitSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class);
         IllegalStateException exception = assertThrows(
@@ -162,14 +162,14 @@ public class JobSubmitTest {
     }
 
     @Test
-    public void tstPrimaryConstructorWithValidConnection() {
+    public void tstJobSubmitPrimaryConstructorWithValidConnection() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         JobSubmit jobSubmit = new JobSubmit(connection);
         assertNotNull(jobSubmit);
     }
 
     @Test
-    public void tstPrimaryConstructorWithNullConnection() {
+    public void tstJobSubmitPrimaryConstructorWithNullConnection() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new JobSubmit(null)

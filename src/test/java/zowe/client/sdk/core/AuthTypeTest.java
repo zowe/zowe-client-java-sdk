@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AuthTypeTest {
 
     @Test
-    public void tstEnumValuesSuccess() {
+    public void tstAuthTypeEnumValuesSuccess() {
         AuthType[] types = AuthType.values();
         assertEquals(3, types.length, "There should be exactly 3 auth types");
         assertArrayEquals(
@@ -33,28 +33,28 @@ public class AuthTypeTest {
     }
 
     @Test
-    public void tstEnumValuesExistSuccess() {
+    public void tstAuthTypeEnumValuesExistSuccess() {
         assertNotNull(AuthType.BASIC, "BASIC auth type should exist");
         assertNotNull(AuthType.TOKEN, "TOKEN auth type should exist");
         assertNotNull(AuthType.SSL, "SSL auth type should exist");
     }
 
     @Test
-    public void tstEnumValueOfSuccess() {
+    public void tstAuthTypeEnumValueOfSuccess() {
         assertEquals(AuthType.BASIC, AuthType.valueOf("BASIC"), "Should get BASIC auth type");
         assertEquals(AuthType.TOKEN, AuthType.valueOf("TOKEN"), "Should get TOKEN auth type");
         assertEquals(AuthType.SSL, AuthType.valueOf("SSL"), "Should get SSL auth type");
     }
 
     @Test
-    public void tstEnumToStringSuccess() {
+    public void tstAuthTypeEnumToStringSuccess() {
         assertEquals("BASIC", AuthType.BASIC.toString(), "BASIC toString should match");
         assertEquals("TOKEN", AuthType.TOKEN.toString(), "TOKEN toString should match");
         assertEquals("SSL", AuthType.SSL.toString(), "SSL toString should match");
     }
 
     @Test
-    public void tstInvalidValueOfFailure() {
+    public void tstAuthTypeInvalidValueOfFailure() {
         assertThrows(IllegalArgumentException.class,
                 () -> AuthType.valueOf("INVALID"),
                 "Should throw IllegalArgumentException for invalid auth type"
