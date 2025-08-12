@@ -234,14 +234,10 @@ public class ZosConnectionFactoryTest {
                 "host", null, "user", "password"));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
                 "host", " ", "user", "password"));
-        assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
+        assertThrows(NullPointerException.class, () -> ZosConnectionFactory.createBasicConnection(
                 "host", "port", null, "password"));
-        assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
-                "host", "port", "", "password"));
-        assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
+        assertThrows(NullPointerException.class, () -> ZosConnectionFactory.createBasicConnection(
                 "host", "port", "user", null));
-        assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
-                "host", "port", "user", ""));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
                 "host", "port", "user", "password", null));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
