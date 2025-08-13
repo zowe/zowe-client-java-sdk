@@ -92,7 +92,7 @@ public class JobCancel {
     }
 
     /**
-     * Cancel a job on z/OS ub job object.
+     * Cancel a job on z/OS by job object.
      *
      * @param job     job document wanting to cancel
      * @param version version number - 1.0 or 2.0
@@ -111,7 +111,7 @@ public class JobCancel {
     }
 
     /**
-     * Cancel a job on z/OS by ModifyJobParams object. 
+     * Cancel a job on z/OS by ModifyJobParams object.
      *
      * @param params cancel job parameters, see cancelJobsCommon object
      * @return job document with details about the submitted job
