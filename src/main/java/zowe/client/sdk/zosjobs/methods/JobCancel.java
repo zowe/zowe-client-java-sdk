@@ -92,7 +92,7 @@ public class JobCancel {
     }
 
     /**
-     * Cancel a job on z/OS ub job object. 
+     * Cancel a job on z/OS ub job object.
      *
      * @param job     job document wanting to cancel
      * @param version version number - 1.0 or 2.0
@@ -124,8 +124,8 @@ public class JobCancel {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         // generate full url request
-        final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM + params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
+        final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE + JobsConstants.FILE_DELIM +
+                params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
 
         // generate JSON string body for the request
         final String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
