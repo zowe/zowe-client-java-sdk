@@ -111,7 +111,7 @@ public class JobCancel {
     }
 
     /**
-     * Cancel a job on z/OS.
+     * Cancel a job on z/OS by ModifyJobParams object. 
      *
      * @param params cancel job parameters, see cancelJobsCommon object
      * @return job document with details about the submitted job
