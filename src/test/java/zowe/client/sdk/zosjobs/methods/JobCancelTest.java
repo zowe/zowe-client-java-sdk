@@ -84,7 +84,7 @@ public class JobCancelTest {
     }
 
     @Test
-    public void tstJobCancelWithVersion2TokenSuccess() throws ZosmfRequestException {
+    public void tstJobCancelWithVersionTokenSuccess() throws ZosmfRequestException {
         final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequestToken);
         final Response response = jobCancel.cancel("JOBNAME", "JOBID", "2.0");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
@@ -141,7 +141,7 @@ public class JobCancelTest {
                 IllegalStateException.class,
                 () -> new JobCancel(connection, request)
         );
-        assertEquals("PUT_JSON request type required", exception.getMessage());
+        assertEquals("PUT_JSON or DELETE_JSON request type required", exception.getMessage());
     }
 
     @Test
