@@ -184,10 +184,6 @@ public class JobCancelTest {
         exception = assertThrows(IllegalArgumentException.class, () ->
                 jobCancel.cancel("name", "1", "12.3"));
         assertTrue(exception.getMessage().contains("invalid version specified"));
-
-        exception = assertThrows(IllegalArgumentException.class, () ->
-                jobCancel.cancel("name", "1", ""));
-        assertTrue(exception.getMessage().contains("version is either null or empty"));
     }
 
     @Test
@@ -205,10 +201,6 @@ public class JobCancelTest {
         exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
                 jobCancel.cancelByJob(new Job.Builder().jobName("name").jobId(null).build(), "1"));
         assertTrue(exception.getMessage().contains("jobId is either null or empty"));
-
-        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
-                jobCancel.cancelByJob(new Job.Builder().jobName("name").jobId("1").build(), null));
-        assertTrue(exception.getMessage().contains("version is either null or empty"));
 
         exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
                 jobCancel.cancelByJob(new Job.Builder().jobName("name").jobId("1").build(), "4"));

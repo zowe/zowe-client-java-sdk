@@ -81,7 +81,6 @@ public class JobDelete {
     public Response delete(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jobName, "jobName");
         ValidateUtils.checkIllegalParameter(jobId, "jobId");
-        ValidateUtils.checkIllegalParameter(version, "version");
         return deleteCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
@@ -96,7 +95,6 @@ public class JobDelete {
      */
     public Response deleteByJob(final Job job, final String version) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        ValidateUtils.checkIllegalParameter(version, "version");
         final String jobName = job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG));
         final String jobId = job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG));
         return this.deleteCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());

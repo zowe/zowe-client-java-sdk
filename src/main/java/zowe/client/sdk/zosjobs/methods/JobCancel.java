@@ -87,7 +87,6 @@ public class JobCancel {
     public Response cancel(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jobName, JobsConstants.JOB_NAME_ILLEGAL_MSG);
         ValidateUtils.checkIllegalParameter(jobId, JobsConstants.JOB_ID_ILLEGAL_MSG);
-        ValidateUtils.checkIllegalParameter(version, "version");
         return this.cancelCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
@@ -106,7 +105,6 @@ public class JobCancel {
      */
     public Response cancelByJob(final Job job, final String version) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        ValidateUtils.checkIllegalParameter(version, "version");
         final String jobName = job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG));
         final String jobId = job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG));
         return this.cancelCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
