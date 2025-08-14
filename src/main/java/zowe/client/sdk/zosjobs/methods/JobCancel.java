@@ -127,7 +127,7 @@ public class JobCancel {
         final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE + JobsConstants.FILE_DELIM +
                 params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
 
-        // generate JSON string body for the request
+        // set version to default value if none given
         final String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
 
         // To request asynchronous processing for this service (the default), set the "version" property to 1.0
@@ -142,6 +142,7 @@ public class JobCancel {
             throw new IllegalArgumentException("invalid version specified");
         }
 
+        // generate JSON string body for the request
         final Map<String, String> cancelMap = new HashMap<>();
         cancelMap.put("request", JobsConstants.REQUEST_CANCEL);
         cancelMap.put("version", version);
@@ -151,7 +152,6 @@ public class JobCancel {
         }
         request.setBody(new JSONObject(cancelMap).toString());
         request.setUrl(url);
-
 
         // if synchronously response should contain a job document that was canceled and http return code
         // if asynchronously response should only contain http return code, let the caller handle the response JSON parsing
