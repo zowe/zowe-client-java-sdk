@@ -43,6 +43,11 @@ public class ModifyJobParams {
     private final Optional<String> version;
 
     /**
+     * Boolean value representing whether to purge the canceled job output
+     */
+    public boolean purge;
+
+    /**
      * ModifyJobParams constructor
      *
      * @param builder ModifyJobParams.Builder object
@@ -52,6 +57,7 @@ public class ModifyJobParams {
         this.jobName = Optional.ofNullable(builder.jobName);
         this.jobId = Optional.ofNullable(builder.jobId);
         this.version = Optional.ofNullable(builder.version);
+        this.purge = builder.purge;
     }
 
     /**
@@ -79,6 +85,15 @@ public class ModifyJobParams {
      */
     public Optional<String> getVersion() {
         return version;
+    }
+
+    /**
+     * Retrieve purge value
+     *
+     * @return boolean value
+     */
+    public boolean isPurge() {
+        return purge;
     }
 
     /**
@@ -121,6 +136,11 @@ public class ModifyJobParams {
         private String version;
 
         /**
+         * Boolean value representing whether to purge the canceled job output
+         */
+        private boolean purge = false;
+
+        /**
          * Builder constructor
          *
          * @param jobName job name value
@@ -143,6 +163,17 @@ public class ModifyJobParams {
          */
         public ModifyJobParams.Builder version(final String version) {
             this.version = version;
+            return this;
+        }
+
+        /**
+         * Set purge value
+         *
+         * @param purge boolean value
+         * @return Builder object
+         */
+        public ModifyJobParams.Builder purge(boolean purge) {
+            this.purge = purge;
             return this;
         }
 
