@@ -150,8 +150,8 @@ public class JobCancel {
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-            request.setBody(new JSONObject(cancelMap).toString());
         }
+        request.setBody(new JSONObject(cancelMap).toString());
         request.setUrl(url);
 
 
