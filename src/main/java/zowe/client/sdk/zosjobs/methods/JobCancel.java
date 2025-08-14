@@ -65,7 +65,7 @@ public class JobCancel {
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest) && !(request instanceof DeleteJsonZosmfRequest)) {
-            throw new IllegalStateException("PUT_JSON or DELETE_JSON request type required");
+            throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
@@ -113,48 +113,6 @@ public class JobCancel {
     }
 
     /**
-     * Cancel a job on z/OS by job name and job id values and purge the job output.
-     *
-     * @param jobName name of a job to cancel
-     * @param jobId   job id
-     * @param version version number - 1.0 or 2.0
-     *                To request asynchronous processing for this service (the default), set the "version" property to 1.0
-     *                or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
-     *                the system will attempt to process the request synchronously if such processing is supported on
-     *                the target JES2 subsystem.
-     * @return job document with details about the submitted job
-     * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
-     */
-    public Response cancelPurge(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(jobName, "jobName");
-        ValidateUtils.checkIllegalParameter(jobId, "jobId");
-        ValidateUtils.checkIllegalParameter(version, "version");
-        return this.cancelCommon(new ModifyJobParams.Builder(jobName, jobId).purge(true).version(version).build());
-    }
-
-    /**
-     * Cancel a job on z/OS by job object and purge the job output.
-     *
-     * @param job     job document wanting to cancel
-     * @param version version number - 1.0 or 2.0
-     *                To request asynchronous processing for this service (the default), set the "version" property to 1.0
-     *                or omit the property from the request. To request synchronous processing, set "version" to 2.0. If so,
-     *                the system will attempt to process the request synchronously if such processing is supported on
-     *                the target JES2 subsystem.
-     * @return job document with details about the submitted job
-     * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
-     */
-    public Response cancelPurgeByJob(final Job job, final String version) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
-        ValidateUtils.checkIllegalParameter(version, "version");
-        final String jobName = job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG));
-        final String jobId = job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG));
-        return this.cancelCommon(new ModifyJobParams.Builder(jobName, jobId).purge(true).version(version).build());
-    }
-
-    /**
      * Cancel a job on z/OS by ModifyJobParams object.
      *
      * @param params cancel job parameters, see cancelJobsCommon object
@@ -190,12 +148,9 @@ public class JobCancel {
         cancelMap.put("request", JobsConstants.REQUEST_CANCEL);
         cancelMap.put("version", version);
 
-        if (request == null && !params.isPurge()) {
+        if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
             request.setBody(new JSONObject(cancelMap).toString());
-        } else if ((request == null && params.isPurge())) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
-            request.setHeaders(Map.of("X-IBM-Job-Modify-Version", version));
         }
         request.setUrl(url);
 
