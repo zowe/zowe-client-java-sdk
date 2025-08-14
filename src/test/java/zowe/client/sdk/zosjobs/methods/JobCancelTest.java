@@ -20,6 +20,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosjobs.response.Job;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -106,7 +107,7 @@ public class JobCancelTest {
     }
 
     @Test
-    public void tstJobCancelSecondaryConstructorWithValidRequestType() {
+    public void tstJobCancelSecondaryConstructorWithValidRequestTypeSuccess() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         JobCancel jobCancel = new JobCancel(connection, request);
@@ -114,7 +115,7 @@ public class JobCancelTest {
     }
 
     @Test
-    public void tstJobCancelSecondaryConstructorWithNullConnection() {
+    public void tstJobCancelSecondaryConstructorWithNullConnectionFailure() {
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -124,7 +125,7 @@ public class JobCancelTest {
     }
 
     @Test
-    public void tstJobCancelSecondaryConstructorWithNullRequest() {
+    public void tstJobCancelSecondaryConstructorWithNullRequestFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -134,7 +135,7 @@ public class JobCancelTest {
     }
 
     @Test
-    public void tstJobCancelSecondaryConstructorWithInvalidRequestType() {
+    public void tstJobCancelSecondaryConstructorWithInvalidRequestTypeFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PutJsonZosmfRequest
         IllegalStateException exception = assertThrows(
@@ -145,19 +146,127 @@ public class JobCancelTest {
     }
 
     @Test
-    public void tstJobCancelPrimaryConstructorWithValidConnection() {
+    public void tstJobCancelPrimaryConstructorWithValidConnectionSuccess() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         JobCancel jobCancel = new JobCancel(connection);
         assertNotNull(jobCancel);
     }
 
     @Test
-    public void tstJobCancelPrimaryConstructorWithNullConnection() {
+    public void tstJobCancelPrimaryConstructorWithNullConnectionFailure() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new JobCancel(null)
         );
         assertEquals("connection is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstJobCancelNegativeParametersFailure() {
+        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequestToken);
+
+        Exception exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
+                jobCancel.cancel(null, "1", "1.0"));
+        assertTrue(exception.getMessage().contains("jobName is either null or empty"));
+
+        exception = assertThrows(IllegalArgumentException.class, () ->
+                jobCancel.cancel("", "1", "1.0"));
+        assertTrue(exception.getMessage().contains("jobName is either null or empty"));
+
+        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
+                jobCancel.cancel("name", null, "1.0"));
+        assertTrue(exception.getMessage().contains("jobId is either null or empty"));
+
+        exception = assertThrows(IllegalArgumentException.class, () ->
+                jobCancel.cancel("name", "", "1.0"));
+        assertTrue(exception.getMessage().contains("jobId is either null or empty"));
+
+        exception = assertThrows(IllegalArgumentException.class, () ->
+                jobCancel.cancel("name", "1", "12.3"));
+        assertTrue(exception.getMessage().contains("invalid version specified"));
+
+        exception = assertThrows(IllegalArgumentException.class, () ->
+                jobCancel.cancel("name", "1", ""));
+        assertTrue(exception.getMessage().contains("version is either null or empty"));
+    }
+
+    @Test
+    public void tstJobCancelPurgeNegativeParametersFailure() {
+        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequestToken);
+
+        Exception exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
+                jobCancel.cancelPurge(null, "1", "1.0"));
+        assertTrue(exception.getMessage().contains("jobName is either null or empty"));
+
+        exception = assertThrows(IllegalArgumentException.class, () ->
+                jobCancel.cancelPurge("", "1", "1.0"));
+        assertTrue(exception.getMessage().contains("jobName is either null or empty"));
+
+        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
+                jobCancel.cancelPurge("name", null, "1.0"));
+        assertTrue(exception.getMessage().contains("jobId is either null or empty"));
+
+        exception = assertThrows(IllegalArgumentException.class, () ->
+                jobCancel.cancelPurge("name", "", "1.0"));
+        assertTrue(exception.getMessage().contains("jobId is either null or empty"));
+
+        exception = assertThrows(IllegalArgumentException.class, () ->
+                jobCancel.cancelPurge("name", "1", "12.3"));
+        assertTrue(exception.getMessage().contains("invalid version specified"));
+
+        exception = assertThrows(IllegalArgumentException.class, () ->
+                jobCancel.cancelPurge("name", "1", ""));
+        assertTrue(exception.getMessage().contains("version is either null or empty"));
+    }
+
+    @Test
+    public void tstJobCancelByJobNegativeParametersFailure() {
+        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequestToken);
+
+        Exception exception = assertThrows(java.lang.NullPointerException.class, () ->
+                jobCancel.cancelByJob(null, "1"));
+        assertTrue(exception.getMessage().contains("job is null"));
+
+        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
+                jobCancel.cancelByJob(new Job.Builder().jobName(null).jobId("1").build(), "1"));
+        assertTrue(exception.getMessage().contains("jobName is either null or empty"));
+
+        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
+                jobCancel.cancelByJob(new Job.Builder().jobName("name").jobId(null).build(), "1"));
+        assertTrue(exception.getMessage().contains("jobId is either null or empty"));
+
+        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
+                jobCancel.cancelByJob(new Job.Builder().jobName("name").jobId("1").build(), null));
+        assertTrue(exception.getMessage().contains("version is either null or empty"));
+
+        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
+                jobCancel.cancelByJob(new Job.Builder().jobName("name").jobId("1").build(), "4"));
+        assertTrue(exception.getMessage().contains("invalid version specified"));
+    }
+
+    @Test
+    public void tstJobCancelPurgeByJobNegativeParametersFailure() {
+        final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequestToken);
+
+        Exception exception = assertThrows(java.lang.NullPointerException.class, () ->
+                jobCancel.cancelPurgeByJob(null, "1"));
+        assertTrue(exception.getMessage().contains("job is null"));
+
+        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
+                jobCancel.cancelPurgeByJob(new Job.Builder().jobName(null).jobId("1").build(), "1"));
+        assertTrue(exception.getMessage().contains("jobName is either null or empty"));
+
+        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
+                jobCancel.cancelPurgeByJob(new Job.Builder().jobName("name").jobId(null).build(), "1"));
+        assertTrue(exception.getMessage().contains("jobId is either null or empty"));
+
+        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
+                jobCancel.cancelPurgeByJob(new Job.Builder().jobName("name").jobId("1").build(), null));
+        assertTrue(exception.getMessage().contains("version is either null or empty"));
+
+        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
+                jobCancel.cancelPurgeByJob(new Job.Builder().jobName("name").jobId("1").build(), "4"));
+        assertTrue(exception.getMessage().contains("invalid version specified"));
     }
 
 }
