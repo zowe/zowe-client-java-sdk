@@ -80,7 +80,7 @@ public class GetJobParams {
     }
 
     /**
-     * Retrieve owner specified
+     * Retrieve an owner specified
      *
      * @return owner value
      */
@@ -118,7 +118,7 @@ public class GetJobParams {
     public static class Builder {
 
         /**
-         * Owner for which to obtain jobs for.
+         * Owner for which to get jobs for.
          */
         private String owner = "*";
 

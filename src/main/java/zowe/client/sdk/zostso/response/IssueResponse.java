@@ -45,8 +45,8 @@ public class IssueResponse {
     private Optional<StartStopResponse> stopResponse;
 
     /**
-     * The list of zOSMF send API responses. May issue multiple requests or
-     * to ensure that all messages are collected. Each individual response is placed here.
+     * The list of zOSMF sends API responses. May issue multiple requests or
+     * to ensure that all messages are collected. Each response is placed here.
      */
     private List<ZosmfTsoResponse> zosmfResponses;
 

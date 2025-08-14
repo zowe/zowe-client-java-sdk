@@ -69,7 +69,7 @@ public class UssMove {
     }
 
     /**
-     * Move a UNIX file or directory with overwrite set as true
+     * Move a UNIX file or directory with overwriting set as true
      *
      * @param fromPath   the source path of the file or directory to move
      * @param targetPath the target path of where the file or directory will be moved too
@@ -83,7 +83,7 @@ public class UssMove {
     }
 
     /**
-     * Move a UNIX file or directory with overwrite value specified
+     * Move a UNIX file or directory with overwritten value specified
      *
      * @param fromPath   the source path of the file or directory to move
      * @param targetPath the target path of where the file or directory will be moved too

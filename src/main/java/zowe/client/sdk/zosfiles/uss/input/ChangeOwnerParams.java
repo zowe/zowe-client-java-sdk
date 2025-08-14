@@ -77,7 +77,7 @@ public class ChangeOwnerParams {
     }
 
     /**
-     * Is recursive specified
+     * Retrieve recursive boolean value
      *
      * @return boolean true or false
      */

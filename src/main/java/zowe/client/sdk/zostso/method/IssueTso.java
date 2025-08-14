@@ -98,7 +98,7 @@ public class IssueTso {
         final String servletKey = startResponse.getServletKey()
                 .orElseThrow(() -> new IllegalStateException("no servletKey key value returned from startTso"));
 
-        // second stage send command to tso servlet session created in first stage and collect all tso responses
+        // the second stage sends command to tso servlet session created in first stage and collect all tso responses
         final SendTso sendTso = new SendTso(connection);
         final SendResponse sendResponse = sendTso.sendDataToTsoCollect(servletKey, command);
         issueResponse.setSuccess(sendResponse.isSuccess());

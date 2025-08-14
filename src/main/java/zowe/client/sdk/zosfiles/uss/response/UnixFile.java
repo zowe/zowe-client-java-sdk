@@ -51,7 +51,7 @@ public class UnixFile {
     private final OptionalLong gid;
 
     /**
-     * group of returned name item
+     * group of returned name items
      */
     private final Optional<String> group;
 
@@ -231,7 +231,7 @@ public class UnixFile {
         private Long gid;
 
         /**
-         * group of returned name item
+         * group of returned name items
          */
         private String group;
 
@@ -301,7 +301,7 @@ public class UnixFile {
         }
 
         /**
-         * Set gid long value
+         * Set gid value
          *
          * @param gid long value
          * @return Builder this object

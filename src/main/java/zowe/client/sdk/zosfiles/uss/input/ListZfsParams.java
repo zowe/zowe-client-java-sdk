@@ -106,7 +106,7 @@ public class ListZfsParams {
     public static class Builder {
 
         /**
-         * The indicator that we want to show less files
+         * The indicator that we want to show fewer files
          */
         private Integer maxLength;
 

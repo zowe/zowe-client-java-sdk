@@ -76,7 +76,7 @@ public final class JobJsonParse implements JsonParse {
                 .phase(data.get("phase") != null ? (Long) data.get("phase") : null)
                 .phaseName(data.get("phase-name") != null ? (String) data.get("phase-name") : null);
 
-        // check for "step-data" used by getStatusCommon if flag is set to true
+        // check for "step-data" used by getStatusCommon if a flag is set to true
         final JSONArray stepData = data.get("step-data") != null ? (JSONArray) data.get("step-data") : null;
         if (stepData != null) {
             final int size = stepData.size();

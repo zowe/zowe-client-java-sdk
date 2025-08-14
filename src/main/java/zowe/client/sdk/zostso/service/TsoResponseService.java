@@ -33,7 +33,7 @@ public class TsoResponseService {
     private ZosmfTsoResponse zosmfPhraseResponse;
 
     /**
-     * TsoResponseService constructor with Response object
+     * TsoResponseService constructor with a Response object
      *
      * @param response Response object
      */

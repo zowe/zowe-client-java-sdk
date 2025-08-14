@@ -32,7 +32,7 @@ public class ConfigContainer {
     private final String schema;
 
     /**
-     * List of profiles - profile section from Zowe Global Team Configuration
+     * List of a profiles - profile section from Zowe Global Team Configuration
      */
     private final List<Profile> profiles;
 

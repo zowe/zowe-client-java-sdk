@@ -61,7 +61,7 @@ public class CopyParams {
     }
 
     /**
-     * Retrieve is overwrite specified
+     * Retrieve overwrite boolean value
      *
      * @return boolean true or false
      */
@@ -70,7 +70,7 @@ public class CopyParams {
     }
 
     /**
-     * Is recursive specified
+     * Retrieve recursive boolean value
      *
      * @return boolean true or false
      */

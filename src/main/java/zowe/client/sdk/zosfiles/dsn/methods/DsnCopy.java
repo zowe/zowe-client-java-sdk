@@ -164,7 +164,7 @@ public class DsnCopy {
                 params.getFromDataSet().orElseThrow(() -> new IllegalStateException(fromDataSetNameErrMsg));
 
         final Map<String, Object> fromDataSetReq = new HashMap<>();
-        // is a member name specified in DataSet value
+        // is a member name specified in DataSet value?
         if (isMemberNameIncluded(fromDataSetName)) {
             // member exists extract it
             final int startMemberIndex = fromDataSetName.indexOf("(");

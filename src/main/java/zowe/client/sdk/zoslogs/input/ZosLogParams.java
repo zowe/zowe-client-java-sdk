@@ -66,7 +66,7 @@ public class ZosLogParams {
 
     /**
      * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
-     * sequences with '\n', but there may be cases where that is not preferable. Specify false to prevent processing.
+     * sequences with '\n', but there may be cases where that are not preferable. Specify false to prevent processing.
      */
     private final boolean processResponses;
 
@@ -127,7 +127,7 @@ public class ZosLogParams {
     }
 
     /**
-     * Is process response specified if so, handle json data differently
+     * Is process response specified if so, handle JSON data differently?
      *
      * @return boolean true or false
      */
@@ -206,7 +206,7 @@ public class ZosLogParams {
 
         /**
          * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
-         * sequences with '\n', but there may be cases where that is not preferable. Specify false to prevent processing.
+         * sequences with '\n', but there may be cases where that are not preferable. Specify false to prevent processing.
          */
         private boolean processResponses;
 
@@ -281,7 +281,7 @@ public class ZosLogParams {
 
         /**
          * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
-         * sequences with '\n', but there may be cases where that is not preferable. Specify false to prevent processing.
+         * sequences with '\n', but there may be cases where that are not preferable. Specify false to prevent processing.
          * <p>
          * Default is false.
          *

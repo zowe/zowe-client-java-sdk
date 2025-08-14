@@ -40,7 +40,7 @@ public class ListParams {
     private final Optional<String> path;
 
     /**
-     * The indicator that we want to show less files
+     * The indicator that we want to show fewer files
      */
     private final OptionalInt maxLength;
 
@@ -62,7 +62,7 @@ public class ListParams {
 
     /**
      * The size to filter
-     * Valid values are either an integer, and integer with a suffix (K, M, G),
+     * Valid values is either an integer, and integer with a suffix (K, M, G),
      * or an integer with leading plus (+) or minus (-)
      */
     private final OptionalInt size;
@@ -295,7 +295,7 @@ public class ListParams {
         private String path;
 
         /**
-         * The indicator that we want to show less files
+         * The indicator that we want to show fewer files
          */
         private Integer maxLength;
 

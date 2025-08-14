@@ -267,7 +267,7 @@ public class JobGet {
     }
 
     /**
-     * Get spool content from a job (keeping naming convention pattern with this duplication function).
+     * Get spool content from a job (keeping a naming convention pattern with this duplication function).
      *
      * @param jobFile spool file for which you want to retrieve the content
      * @return spool content
@@ -323,6 +323,10 @@ public class JobGet {
      */
     public String getSpoolContentCommon(final JobFile jobFile) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(jobFile == null, "jobFile is null");
+
+        if (jobFile.getJobName().isEmpty() || jobFile.getJobId().isEmpty() || jobFile.getId().isEmpty()) {
+            throw new ZosmfRequestException("jobFileName, JobId or jobFileId is either null or empty");
+        }
 
         url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(jobFile.getJobName().get()) + "/" +

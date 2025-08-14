@@ -43,7 +43,7 @@ public class WriteParams {
     private final boolean crlf;
 
     /**
-     * If true perform binary write instead of text.
+     * If true performs binary write instead of text.
      */
     private final boolean binary;
 
@@ -149,7 +149,7 @@ public class WriteParams {
         private boolean crlf = false;
 
         /**
-         * If true perform binary write instead of text.
+         * If true performs binary write instead of text.
          */
         private boolean binary = false;
 

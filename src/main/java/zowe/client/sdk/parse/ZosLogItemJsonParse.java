@@ -77,7 +77,7 @@ public final class ZosLogItemJsonParse implements JsonParse {
     }
 
     /**
-     * Process response message; message contains a log line statement.
+     * Process response message; a message contains a log line statement.
      * Perform special newline replacement if applicable.
      *
      * @param data JSONObject object

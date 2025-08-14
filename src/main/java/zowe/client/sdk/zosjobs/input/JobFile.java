@@ -46,7 +46,7 @@ public class JobFile {
     private final OptionalLong recordCount;
 
     /**
-     * Unique identifier of job (substitute of job name and job id)
+     * Unique identifier of a job (substitute of job name and job id)
      */
     private final Optional<String> jobCorrelator;
 
@@ -61,7 +61,7 @@ public class JobFile {
     private final OptionalLong id;
 
     /**
-     * DD name of job spool file
+     * DD name of a job spool file
      */
     private final Optional<String> ddName;
 
@@ -326,7 +326,7 @@ public class JobFile {
         private Long id;
 
         /**
-         * DD name of job spool file
+         * DD name of a job spool file
          */
         private String ddName;
 

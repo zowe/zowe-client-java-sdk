@@ -112,7 +112,7 @@ public class CopyParams {
     }
 
     /**
-     * Retrieve is replace specified
+     * Retrieve replace boolean value
      *
      * @return boolean true or false
      */

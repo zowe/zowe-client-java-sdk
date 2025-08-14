@@ -122,7 +122,7 @@ public class Member {
     }
 
     /**
-     * Retrieve name of the member
+     * Retrieve the name of the member
      *
      * @return Optional string value
      */
@@ -230,7 +230,7 @@ public class Member {
     }
 
     /**
-     * Return string value representing Member object
+     * Return string value representing a Member object
      *
      * @return string representation of Member
      */
@@ -346,7 +346,7 @@ public class Member {
         }
 
         /**
-         * Set mod long value
+         * Set mod value
          *
          * @param mod long value
          * @return Builder this object

@@ -191,13 +191,13 @@ public class JobMonitor {
 
         final String invalidStatusMsg = "Invalid status when checking for status ordering.";
         final int orderIndexOfDesiredJobStatus = getOrderIndexOfStatus(statusNameCheck);
-        if (orderIndexOfDesiredJobStatus == -1) { // this should never happen but let's check for it.
+        if (orderIndexOfDesiredJobStatus == -1) { // this should never happen, but let's check for it.
             throw new IllegalStateException(invalidStatusMsg);
         }
 
         final int orderIndexOfCurrRunningJobStatus = getOrderIndexOfStatus(
                 job.getStatus().orElseThrow(() -> new IllegalStateException("job status not specified")));
-        if (orderIndexOfCurrRunningJobStatus == -1) {  // this should never happen but let's check for it.
+        if (orderIndexOfCurrRunningJobStatus == -1) {  // this should never happen, but let's check for it.
             throw new IllegalStateException(invalidStatusMsg);
         }
 

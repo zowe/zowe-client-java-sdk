@@ -42,7 +42,7 @@ public final class JsonParserUtil {
      *
      * @param item JSON string representation
      * @return JSONObject object
-     * @throws ZosmfRequestException indicates the json item from z/OSMF request is invalid for parsing
+     * @throws ZosmfRequestException indicates the JSON item from z/OSMF request is invalid for parsing
      */
     public static JSONObject parse(final String item) throws ZosmfRequestException {
         try {

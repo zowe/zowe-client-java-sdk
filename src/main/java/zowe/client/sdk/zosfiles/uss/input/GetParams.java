@@ -55,7 +55,7 @@ public class GetParams {
     private final int queryCount;
 
     /**
-     * If true perform binary read instead of text.
+     * If true, performs binary read instead of text.
      */
     private final boolean binary;
 
@@ -117,7 +117,7 @@ public class GetParams {
     }
 
     /**
-     * Retrieve is insensitive specified
+     * Retrieve insensitive boolean value
      *
      * @return boolean true or false
      */
@@ -217,7 +217,7 @@ public class GetParams {
         private int queryCount = 0;
 
         /**
-         * If true perform binary read instead of text.
+         * If true, performs binary read instead of text.
          */
         private boolean binary = false;
 

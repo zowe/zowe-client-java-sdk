@@ -126,7 +126,7 @@ public final class ZosmfHeaders {
 
     /**
      * This header value specifies the maximum number of items to return.
-     * To request that all items be returned, set this header to 0. If you omit this header, or specify an incorrect
+     * To request that all items be returned, set this header to 0. If you omit this header or specify an incorrect
      * value, up to 1000 items are returned by default.
      */
     public final static String X_IBM_MAX_ITEMS = "X_IBM_MAX_ITEMS";
@@ -166,7 +166,7 @@ public final class ZosmfHeaders {
 
     /**
      * Header to force return of ETag in response regardless of file size
-     * By default Etag is returned only for files smaller than a system determined value (which is at least 8mb)
+     * By default Etag is returned only for files smaller than a system determined value (which is at least 8 mb)
      */
     public final static String X_IBM_RETURN_ETAG = "X_IBM_RETURN_ETAG";
 

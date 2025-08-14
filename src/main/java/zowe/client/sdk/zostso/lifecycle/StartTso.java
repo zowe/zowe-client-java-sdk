@@ -25,7 +25,7 @@ import zowe.client.sdk.zostso.response.StartStopResponses;
 import zowe.client.sdk.zostso.service.TsoResponseService;
 
 /**
- * Start TSO address space and receive servlet key
+ * Start TSO address space and receive a servlet key
  *
  * @author Frank Giordano
  * @version 4.0

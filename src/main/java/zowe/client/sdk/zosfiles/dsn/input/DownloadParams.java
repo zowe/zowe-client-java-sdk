@@ -27,7 +27,7 @@ public class DownloadParams {
     private final Optional<String> file;
 
     /**
-     * The extension you want to use for the file, e.g. extensions: .txt, .c
+     * The extension you want to use for the file, e.g., extensions: .txt, .c
      */
     private final Optional<String> extension;
 
@@ -43,7 +43,7 @@ public class DownloadParams {
     private final Optional<String[]> excludePatterns;
 
     /**
-     * Map data set names that match your pattern to the desired extension. e.g. cpgm=c,asmpgm=asm
+     * Map data set names that match your pattern to the desired extension. e.g., cpgm=c,asmpgm=asm
      */
     private final Optional<HashMap<String, String>> extensionMap;
 
@@ -75,7 +75,7 @@ public class DownloadParams {
     /**
      * Indicates if a download operation for multiple files/data sets should fail as soon as the first failure happens.
      * If set to true, the first failure will throw an error and abort the download operation.
-     * If set to false, individual download failures will be reported after all other downloads have completed.
+     * If set to false, individual download failures will be reported after all other downloads have been completed.
      * The default value is true for backward compatibility.
      */
     private final boolean failFast;
@@ -346,7 +346,7 @@ public class DownloadParams {
         /**
          * Indicates if a download operation for multiple files/data sets should fail as soon as the first failure happens.
          * If set to true, the first failure will throw an error and abort the download operation.
-         * If set to false, individual download failures will be reported after all other downloads have completed.
+         * If set to false, individual download failures will be reported after all other downloads have been completed.
          * The default value is true for backward compatibility.
          */
         private boolean failFast;

@@ -143,7 +143,7 @@ public class Dataset {
     }
 
     /**
-     * Retrieve name of the dataset
+     * Retrieve the name of the dataset
      *
      * @return Optional string value
      */
@@ -450,7 +450,7 @@ public class Dataset {
         }
 
         /**
-         * Set name of the dataset
+         * Set the name of the dataset
          *
          * @param dsname string value
          * @return Builder this object

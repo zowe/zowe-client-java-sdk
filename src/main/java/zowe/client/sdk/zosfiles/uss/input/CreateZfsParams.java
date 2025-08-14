@@ -151,7 +151,7 @@ public class CreateZfsParams {
     }
 
     /**
-     * Retrieve owner specified
+     * Retrieve an owner specified
      *
      * @return owner value
      */
@@ -160,7 +160,7 @@ public class CreateZfsParams {
     }
 
     /**
-     * Retrieve group specified
+     * Retrieve a group specified
      *
      * @return group value
      */
@@ -241,7 +241,7 @@ public class CreateZfsParams {
     }
 
     /**
-     * Retrieve system specified
+     * Retrieve a system specified
      *
      * @return system value
      */

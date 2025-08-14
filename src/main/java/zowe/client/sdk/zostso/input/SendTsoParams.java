@@ -46,7 +46,7 @@ public class SendTsoParams {
     /**
      * Retrieve data specified
      *
-     * @return data value being used to send to active address space
+     * @return data value being used to send it to active address space
      */
     public String getData() {
         return data;

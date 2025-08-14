@@ -85,7 +85,7 @@ public class StartTsoParams {
     }
 
     /**
-     * Retrieve account specified
+     * Retrieve an account specified
      *
      * @return account user account value
      */

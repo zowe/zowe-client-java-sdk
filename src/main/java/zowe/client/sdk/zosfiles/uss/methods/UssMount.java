@@ -93,7 +93,7 @@ public class UssMount {
     }
 
     /**
-     * Perform unmount of a file system name
+     * Perform unmounting of a file system name
      *
      * @param fileSystemName the file system name
      * @return Response object

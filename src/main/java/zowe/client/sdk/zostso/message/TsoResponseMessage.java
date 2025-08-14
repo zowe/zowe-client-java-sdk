@@ -50,7 +50,7 @@ public class TsoResponseMessage {
     }
 
     /**
-     * Retrieve version specified
+     * Retrieve a version specified
      *
      * @return version value
      */

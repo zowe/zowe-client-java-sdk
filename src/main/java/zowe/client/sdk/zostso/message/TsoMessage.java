@@ -50,7 +50,7 @@ public class TsoMessage {
     }
 
     /**
-     * Retrieve version specified
+     * Retrieve a version specified
      *
      * @return version value
      */
@@ -79,7 +79,7 @@ public class TsoMessage {
     /**
      * Assign version value
      *
-     * @param data description os the data type
+     * @param data description as the data type
      */
     public void setData(final String data) {
         this.data = Optional.ofNullable(data);

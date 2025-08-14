@@ -54,7 +54,7 @@ public class TeamConfig {
      */
     private final String BASE_PROFILE_NAME = "base";
     /**
-     * Is Base profile predicate
+     * Is Base profile predicate?
      */
     private final Predicate<Profile> isBaseProfile = i -> i.getName().equals(BASE_PROFILE_NAME);
     /**

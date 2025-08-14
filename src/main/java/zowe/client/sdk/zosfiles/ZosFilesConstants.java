@@ -68,7 +68,7 @@ public class ZosFilesConstants {
     public static final String RESOURCE = "/restfiles";
 
     /**
-     * Json response array field name
+     * JSON response array field name
      */
     public static final String RESPONSE_ITEMS = "items";
 

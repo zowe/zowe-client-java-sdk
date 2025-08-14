@@ -38,7 +38,7 @@ public enum ParseType {
      */
     MVS_CONSOLE,
     /**
-     * properties type
+     * property type
      */
     PROPS,
     /**

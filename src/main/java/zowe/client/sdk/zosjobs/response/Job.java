@@ -164,7 +164,7 @@ public class Job {
     }
 
     /**
-     * Retrieve owner specified
+     * Retrieve an owner specified
      *
      * @return owner value
      */
@@ -245,7 +245,7 @@ public class Job {
     }
 
     /**
-     * Return string value representing Job object
+     * Return string value representing a Job object
      *
      * @return string representation of Job
      */
@@ -330,7 +330,7 @@ public class Job {
         private String filesUrl;
 
         /**
-         * Unique identifier of job (substitute of job name and job id). If this value is null, the job was
+         * Unique identifier of a job (substitute of job name and job id). If this value is null, the job was
          * submitted to JES3.
          */
         private String jobCorrelator;
@@ -506,7 +506,7 @@ public class Job {
         }
 
         /**
-         * Return Job object based on Builder this object
+         * Return a Job object based on Builder this object
          *
          * @return Job this object
          */

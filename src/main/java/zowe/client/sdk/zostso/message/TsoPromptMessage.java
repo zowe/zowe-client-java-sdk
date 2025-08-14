@@ -50,7 +50,7 @@ public class TsoPromptMessage {
     }
 
     /**
-     * Retrieve version specified
+     * Retrieve a version specified
      *
      * @return version value
      */

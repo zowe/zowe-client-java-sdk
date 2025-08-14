@@ -83,7 +83,7 @@ public class UssDelete {
      * Perform UNIX delete file or directory name request with a recursive flag
      *
      * @param targetPath the name of the file or directory you are going to delete
-     * @param recursive  flag indicates if contents of directory should also be deleted
+     * @param recursive  the flag indicates if contents of the directory should also be deleted
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski

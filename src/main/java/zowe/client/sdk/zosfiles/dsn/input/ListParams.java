@@ -33,7 +33,7 @@ public class ListParams {
     private final Optional<AttributeType> attribute;
 
     /**
-     * The indicator that we want to show less data sets or members
+     * The indicator that we want to show fewer data sets or members
      */
     private final Optional<String> maxLength;
 
