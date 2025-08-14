@@ -87,8 +87,6 @@ public class JobSubmit {
     public Job submitByJcl(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jcl, "jcl");
-        ValidateUtils.checkIllegalParameter(internalReaderRecfm, "internalReaderRecfm");
-        ValidateUtils.checkIllegalParameter(internalReaderLrecl, "internalReaderLrecl");
         return this.submitJclCommon(new SubmitJclParams(jcl, internalReaderRecfm, internalReaderLrecl));
     }
 
