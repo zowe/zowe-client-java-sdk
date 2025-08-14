@@ -42,7 +42,7 @@ public class ModifyJobParams {
     /**
      * Boolean value representing whether to purge the canceled job output
      */
-    public boolean purge;
+    public final boolean purge;
 
     /**
      * ModifyJobParams constructor
