@@ -86,6 +86,9 @@ public class JobSubmit {
      */
     public Job submitByJcl(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl)
             throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(jcl, "jcl");
+        ValidateUtils.checkIllegalParameter(internalReaderRecfm, "internalReaderRecfm");
+        ValidateUtils.checkIllegalParameter(internalReaderLrecl, "internalReaderLrecl");
         return this.submitJclCommon(new SubmitJclParams(jcl, internalReaderRecfm, internalReaderLrecl));
     }
 
@@ -156,6 +159,7 @@ public class JobSubmit {
      * @author Frank Giordano
      */
     public Job submit(final String jobDataSet) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(jobDataSet, "jobDataSet");
         return this.submitCommon(new SubmitJobParams(jobDataSet));
     }
 

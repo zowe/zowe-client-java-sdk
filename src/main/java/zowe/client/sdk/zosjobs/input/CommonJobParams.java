@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.zosjobs.input;
 
-import zowe.client.sdk.utility.ValidateUtils;
-
 import java.util.Optional;
 
 /**
@@ -47,9 +45,8 @@ public class CommonJobParams {
      * @author Frank Giordano
      */
     public CommonJobParams(final String jobId, final String jobName) {
-        validateParameters(jobId, jobName);
-        this.jobId = Optional.of(jobId);
-        this.jobName = Optional.of(jobName);
+        this.jobId = Optional.ofNullable(jobId);
+        this.jobName = Optional.ofNullable(jobName);
         this.stepData = false;
     }
 
@@ -62,9 +59,8 @@ public class CommonJobParams {
      * @author Frank Giordano
      */
     public CommonJobParams(final String jobId, final String jobName, final boolean stepData) {
-        validateParameters(jobId, jobName);
-        this.jobId = Optional.of(jobId);
-        this.jobName = Optional.of(jobName);
+        this.jobId = Optional.ofNullable(jobId);
+        this.jobName = Optional.ofNullable(jobName);
         this.stepData = stepData;
     }
 
@@ -93,18 +89,6 @@ public class CommonJobParams {
      */
     public boolean isStepData() {
         return stepData;
-    }
-
-    /**
-     * Helper method to validate constructor inputs
-     *
-     * @param jobId   job id value
-     * @param jobName job name value
-     * @author Frank Giordano
-     */
-    private void validateParameters(final String jobId, final String jobName) {
-        ValidateUtils.checkIllegalParameter(jobId, "jobId");
-        ValidateUtils.checkIllegalParameter(jobName, "jobName");
     }
 
     /**

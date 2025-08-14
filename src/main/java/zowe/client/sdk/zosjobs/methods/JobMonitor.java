@@ -250,8 +250,7 @@ public class JobMonitor {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private boolean pollByMessage(final MonitorJobWaitForParams params, final String message)
-            throws ZosmfRequestException {
+    private boolean pollByMessage(final MonitorJobWaitForParams params, final String message) throws ZosmfRequestException {
         final int timeoutVal = params.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
         boolean messageFound;  // no assigment boolean means, by default, it is false
         boolean shouldContinue;
@@ -337,12 +336,13 @@ public class JobMonitor {
      */
     public boolean waitByMessage(final Job job, final String message) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        return waitMessageCommon(
-                new MonitorJobWaitForParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
-                        .jobStatus(JobStatus.Type.OUTPUT)
-                        .attempts(attempts)
-                        .watchDelay(watchDelay)
-                        .build(), message);
+        return waitMessageCommon(new MonitorJobWaitForParams.Builder(
+                job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG)),
+                job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG)))
+                .jobStatus(JobStatus.Type.OUTPUT)
+                .attempts(attempts)
+                .watchDelay(watchDelay)
+                .build(), message);
     }
 
     /**
@@ -359,14 +359,15 @@ public class JobMonitor {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public boolean waitByMessage(final String jobName, final String jobId, final String message)
-            throws ZosmfRequestException {
-        return waitMessageCommon(
-                new MonitorJobWaitForParams.Builder(jobName, jobId)
-                        .jobStatus(JobStatus.Type.OUTPUT)
-                        .attempts(attempts)
-                        .watchDelay(watchDelay)
-                        .build(), message);
+    public boolean waitByMessage(final String jobName, final String jobId, final String message) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(jobName, "jobName");
+        ValidateUtils.checkIllegalParameter(jobId, "jobId");
+        ValidateUtils.checkIllegalParameter(message, "message");
+        return waitMessageCommon(new MonitorJobWaitForParams.Builder(jobName, jobId)
+                .jobStatus(JobStatus.Type.OUTPUT)
+                .attempts(attempts)
+                .watchDelay(watchDelay)
+                .build(), message);
     }
 
     /**
@@ -383,12 +384,13 @@ public class JobMonitor {
      */
     public Job waitByOutputStatus(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        return waitStatusCommon(
-                new MonitorJobWaitForParams.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
-                        .jobStatus(JobStatus.Type.OUTPUT)
-                        .attempts(attempts)
-                        .watchDelay(watchDelay)
-                        .build());
+        return waitStatusCommon(new MonitorJobWaitForParams.Builder(
+                job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG)),
+                job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG)))
+                .jobStatus(JobStatus.Type.OUTPUT)
+                .attempts(attempts)
+                .watchDelay(watchDelay)
+                .build());
     }
 
     /**
@@ -405,12 +407,13 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public Job waitByOutputStatus(final String jobName, final String jobId) throws ZosmfRequestException {
-        return waitStatusCommon(
-                new MonitorJobWaitForParams.Builder(jobName, jobId)
-                        .jobStatus(JobStatus.Type.OUTPUT)
-                        .attempts(attempts)
-                        .watchDelay(watchDelay)
-                        .build());
+        ValidateUtils.checkIllegalParameter(jobName, "jobName");
+        ValidateUtils.checkIllegalParameter(jobId, "jobId");
+        return waitStatusCommon(new MonitorJobWaitForParams.Builder(jobName, jobId)
+                .jobStatus(JobStatus.Type.OUTPUT)
+                .attempts(attempts)
+                .watchDelay(watchDelay)
+                .build());
     }
 
     /**
@@ -472,8 +475,7 @@ public class JobMonitor {
     public boolean waitMessageCommon(final MonitorJobWaitForParams params, final String message)
             throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), "jobName");
-        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), "JobId");
+        ValidateUtils.checkIllegalParameter(message, "message");
 
         if (params.getAttempts().isEmpty()) {
             params.setAttempts(attempts);
@@ -503,8 +505,6 @@ public class JobMonitor {
      */
     public Job waitStatusCommon(final MonitorJobWaitForParams params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
-        ValidateUtils.checkIllegalParameter(params.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 
         if (params.getJobStatus().isEmpty()) {
             params.setJobStatus(DEFAULT_STATUS);

@@ -127,8 +127,8 @@ public class JobCancel {
      * @author Frank Giordano
      */
     public Response cancelPurge(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(jobName, JobsConstants.JOB_NAME_ILLEGAL_MSG);
-        ValidateUtils.checkIllegalParameter(jobId, JobsConstants.JOB_ID_ILLEGAL_MSG);
+        ValidateUtils.checkIllegalParameter(jobName, "jobName");
+        ValidateUtils.checkIllegalParameter(jobId, "jobId");
         ValidateUtils.checkIllegalParameter(version, "version");
         return this.cancelCommon(new ModifyJobParams.Builder(jobName, jobId).purge(true).version(version).build());
     }

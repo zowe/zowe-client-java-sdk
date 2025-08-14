@@ -79,7 +79,27 @@ public class JobDelete {
      * @author Nikunj goyal
      */
     public Response delete(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(jobName, "jobName");
+        ValidateUtils.checkIllegalParameter(jobId, "jobId");
+        ValidateUtils.checkIllegalParameter(version, "version");
         return deleteCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
+    }
+
+    /**
+     * Cancel and purge a job from spool.
+     *
+     * @param job     job document wanting to delete
+     * @param version version number, see ModifyJobParams object for version options
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public Response deleteByJob(final Job job, final String version) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(job == null, "job is null");
+        ValidateUtils.checkIllegalParameter(version, "version");
+        final String jobName = job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG));
+        final String jobId = job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG));
+        return this.deleteCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
     /**
@@ -127,21 +147,6 @@ public class JobDelete {
         // if synchronously response should contain a job document that was canceled and http return code
         // if asynchronously response should only contain http return code, let the caller handle the response JSON parsing
         return request.executeRequest();
-    }
-
-    /**
-     * Cancel and purge a job from spool.
-     *
-     * @param job     job document wanting to delete
-     * @param version version number, see ModifyJobParams object for version options
-     * @return http response object
-     * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
-     */
-    public Response deleteByJob(final Job job, final String version) throws ZosmfRequestException {
-        final String jobName = job.getJobName().orElse("");
-        final String jobId = job.getJobId().orElse("");
-        return this.deleteCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
     }
 
 }
