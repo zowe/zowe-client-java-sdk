@@ -208,7 +208,7 @@ Java 11 and above is required to compile JAR file. Maven is required to build JA
   
 The following maven command at the root prompt of the project will produce zowe-client-java-sdk.jar in the target directory:
   
-    mvn clean package  
+    ./mvnw clean package  
   
 ## Logger 
      
@@ -253,7 +253,7 @@ The following documents the steps taken to publish a new release of this project
   
 - Execute the following maven build and deploy command at the project's root directory:
   
-      mvn clean deploy -Pci-cd
+      ./mvnw clean deploy -Pci-cd
   
   You will be prompted for a passphrase for uploading.
   

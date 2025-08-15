@@ -38,6 +38,10 @@ import java.util.Map;
  */
 public class IssueConsole {
 
+    private static final String CMD = "cmd";
+    private static final String SOL_KEY = "sol-key";
+    private static final String SYSTEM = "system";
+
     private final ZosConnection connection;
 
     private ZosmfRequest request;
@@ -120,10 +124,7 @@ public class IssueConsole {
 
         final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(consoleName);
 
-        final Map<String, String> issueMap = new HashMap<>();
-        issueMap.put("cmd", params.getCmd());
-        params.getSolKey().ifPresent(solKey -> issueMap.put("sol-key", solKey));
-        params.getSystem().ifPresent(sys -> issueMap.put("system", sys));
+        final Map<String, String> issueMap = getIssueMap(params);
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -137,6 +138,14 @@ public class IssueConsole {
         return ConsoleResponseService.getInstance()
                 .buildConsoleResponse((ZosmfIssueResponse) JsonParseFactory.buildParser(ParseType.MVS_CONSOLE)
                         .parseResponse(jsonObject), params.isProcessResponse());
+    }
+
+    private Map<String, String> getIssueMap(IssueConsoleParams params) {
+        final Map<String, String> issueMap = new HashMap<>();
+        issueMap.put(CMD, params.getCmd());
+        params.getSolKey().ifPresent(solKey -> issueMap.put(SOL_KEY, solKey));
+        params.getSystem().ifPresent(sys -> issueMap.put(SYSTEM, sys));
+        return issueMap;
     }
 
 }

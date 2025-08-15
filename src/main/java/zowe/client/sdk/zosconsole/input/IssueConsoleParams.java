@@ -30,12 +30,12 @@ public class IssueConsoleParams {
      * The solicited keyword to check for in the response. Causes the API to return immediately when the keyword
      * is found, however, it may include solicited command response messages beyond the keyword itself.
      */
-    private Optional<String> solKey = Optional.empty();
+    private String solKey;
 
     /**
      * The system in the sysplex to route the command.
      */
-    private Optional<String> system = Optional.empty();
+    private String system;
 
     /**
      * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
@@ -69,7 +69,7 @@ public class IssueConsoleParams {
      * @return solKey value
      */
     public Optional<String> getSolKey() {
-        return solKey;
+        return Optional.ofNullable(solKey);
     }
 
     /**
@@ -78,7 +78,7 @@ public class IssueConsoleParams {
      * @param solKey value
      */
     public void setSolKey(final String solKey) {
-        this.solKey = Optional.ofNullable(solKey);
+        this.solKey = solKey;
     }
 
     /**
@@ -87,7 +87,7 @@ public class IssueConsoleParams {
      * @return system value
      */
     public Optional<String> getSystem() {
-        return system;
+        return Optional.ofNullable(system);
     }
 
     /**
@@ -96,7 +96,7 @@ public class IssueConsoleParams {
      * @param system value
      */
     public void setSystem(final String system) {
-        this.system = Optional.ofNullable(system);
+        this.system = system;
     }
 
     /**
@@ -109,12 +109,10 @@ public class IssueConsoleParams {
     }
 
     /**
-     * Assign system value
-     *
-     * @param processResponse value
+     * Set process response to true
      */
-    public void setProcessResponse(boolean processResponse) {
-        this.processResponse = processResponse;
+    public void setProcessResponse() {
+        this.processResponse = true;
     }
 
     /**
