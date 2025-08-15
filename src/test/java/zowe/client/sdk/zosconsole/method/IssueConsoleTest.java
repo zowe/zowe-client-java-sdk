@@ -132,7 +132,8 @@ public class IssueConsoleTest {
                 new Response(json, 200, "success"));
         final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
         final IssueConsoleParams issueConsoleParams = new IssueConsoleParams("command");
-        issueConsoleParams.setProcessResponse(true);
+        issueConsoleParams.setProcessResponse();
+        issueConsoleParams.setSolKey("foo");
         final ConsoleResponse response = issueCommand.issueCommandCommon("consolename", issueConsoleParams);
         assertEquals("", response.getCommandResponse().orElse("n/a"));
     }
