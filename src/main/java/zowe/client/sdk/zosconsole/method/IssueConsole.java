@@ -122,7 +122,8 @@ public class IssueConsole {
         ValidateUtils.checkIllegalParameter(consoleName, "consoleName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
-        final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(consoleName);
+        final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + "/" +
+                EncodeUtils.encodeURIComponent(consoleName);
 
         final Map<String, String> issueMap = getIssueMap(params);
 
@@ -135,9 +136,9 @@ public class IssueConsole {
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no issue console response phrase")).toString();
         final JSONObject jsonObject = JsonParserUtil.parse(jsonStr);
-        return ConsoleResponseService.getInstance()
-                .buildConsoleResponse((ZosmfIssueResponse) JsonParseFactory.buildParser(ParseType.MVS_CONSOLE)
-                        .parseResponse(jsonObject), params.isProcessResponse());
+        return ConsoleResponseService.getInstance().buildConsoleResponse(
+                (ZosmfIssueResponse) JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).parseResponse(jsonObject),
+                params.isProcessResponse());
     }
 
     private Map<String, String> getIssueMap(IssueConsoleParams params) {
