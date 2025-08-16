@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs.input.JobGet;
+package zowe.client.sdk.zosjobs.input;
 
 import zowe.client.sdk.zosjobs.JobsConstants;
 

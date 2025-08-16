@@ -17,7 +17,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
-import zowe.client.sdk.zosjobs.input.JobModify.JobModifyInputData;
+import zowe.client.sdk.zosjobs.input.JobModifyInputData;
 import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;

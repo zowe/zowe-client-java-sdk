@@ -17,7 +17,7 @@ import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosjobs.input.JobModify.JobModifyInputData;
+import zowe.client.sdk.zosjobs.input.JobModifyInputData;
 import zowe.client.sdk.zosjobs.methods.JobCancel;
 import zowe.client.sdk.zosjobs.response.Job;
 
@@ -141,7 +141,7 @@ import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosjobs.input.JobModify.JobModifyInputData;
+import zowe.client.sdk.zosjobs.input.JobModifyInputData;
 import zowe.client.sdk.zosjobs.methods.JobDelete;
 import zowe.client.sdk.zosjobs.response.Job;
 
@@ -266,7 +266,7 @@ import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosjobs.input.CommonJobInputData;
 import zowe.client.sdk.zosjobs.input.CommonJobParams;
-import zowe.client.sdk.zosjobs.input.JobGet.JobGetInputData;
+import zowe.client.sdk.zosjobs.input.JobGetInputData;
 import zowe.client.sdk.zosjobs.response.JobFile;
 import zowe.client.sdk.zosjobs.methods.JobGet;
 import zowe.client.sdk.zosjobs.response.Job;
@@ -641,8 +641,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosjobs.input.JobMonitor.JobMonitorInputData;
-import zowe.client.sdk.zosjobs.input.JobMonitor.MonitorJobWaitForParams;
+import zowe.client.sdk.zosjobs.input.JobMonitorInputData;
 import zowe.client.sdk.zosjobs.methods.JobMonitor;
 import zowe.client.sdk.zosjobs.methods.JobSubmit;
 import zowe.client.sdk.zosjobs.response.Job;
@@ -679,7 +678,7 @@ public class JobMonitorExp extends TstZosConnection {
 
     /**
      * Example on how to call JobMonitor isJobRunning method.
-     * The isJobRunning method accepts a MonitorJobWaitForParams object.
+     * The isJobRunning method accepts a JobMonitorInputData object.
      *
      * @author Frank Giordano
      */

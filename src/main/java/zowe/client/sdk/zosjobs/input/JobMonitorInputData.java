@@ -8,7 +8,7 @@
  * Copyright Contributors to the Zowe Project.
  *
  */
-package zowe.client.sdk.zosjobs.input.JobMonitor;
+package zowe.client.sdk.zosjobs.input;
 
 import zowe.client.sdk.zosjobs.types.JobStatus;
 

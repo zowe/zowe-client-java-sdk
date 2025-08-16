@@ -22,7 +22,7 @@ import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.CommonJobInputData;
-import zowe.client.sdk.zosjobs.input.JobGet.JobGetInputData;
+import zowe.client.sdk.zosjobs.input.JobGetInputData;
 import zowe.client.sdk.zosjobs.response.Job;
 import zowe.client.sdk.zosjobs.response.JobFile;
 
