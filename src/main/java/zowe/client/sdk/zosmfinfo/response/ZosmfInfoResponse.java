@@ -22,42 +22,42 @@ public class ZosmfInfoResponse {
     /**
      * z/OS version
      */
-    private final Optional<String> zosVersion;
+    private final String zosVersion;
 
     /**
      * Zosmf port number
      */
-    private final Optional<String> zosmfPort;
+    private final String zosmfPort;
 
     /**
      * Zosmf version
      */
-    private final Optional<String> zosmfVersion;
+    private final String zosmfVersion;
 
     /**
      * Zosmf host name
      */
-    private final Optional<String> zosmfHostName;
+    private final String zosmfHostName;
 
     /**
      * Zosmf saf realm
      */
-    private final Optional<String> zosmfSafRealm;
+    private final String zosmfSafRealm;
 
     /**
      * Zosmf full version
      */
-    private final Optional<String> zosmfFullVersion;
+    private final String zosmfFullVersion;
 
     /**
      * Zosmf api version
      */
-    private final Optional<String> apiVersion;
+    private final String apiVersion;
 
     /**
      * Zosmf plugin information
      */
-    private final Optional<ZosmfPluginInfo[]> zosmfPluginsInfo;
+    private final ZosmfPluginInfo[] zosmfPluginsInfo;
 
     /**
      * ZosmfInfoResponse constructor
@@ -66,14 +66,14 @@ public class ZosmfInfoResponse {
      * @author Frank Giordano
      */
     private ZosmfInfoResponse(final Builder builder) {
-        this.zosVersion = Optional.ofNullable(builder.zosVersion);
-        this.zosmfPort = Optional.ofNullable(builder.zosmfPort);
-        this.zosmfVersion = Optional.ofNullable(builder.zosmfVersion);
-        this.zosmfHostName = Optional.ofNullable(builder.zosmfHostName);
-        this.zosmfSafRealm = Optional.ofNullable(builder.zosmfSafRealm);
-        this.zosmfFullVersion = Optional.ofNullable(builder.zosmfFullVersion);
-        this.apiVersion = Optional.ofNullable(builder.apiVersion);
-        this.zosmfPluginsInfo = Optional.ofNullable(builder.zosmfPluginsInfo);
+        this.zosVersion = builder.zosVersion;
+        this.zosmfPort = builder.zosmfPort;
+        this.zosmfVersion = builder.zosmfVersion;
+        this.zosmfHostName = builder.zosmfHostName;
+        this.zosmfSafRealm = builder.zosmfSafRealm;
+        this.zosmfFullVersion = builder.zosmfFullVersion;
+        this.apiVersion = builder.apiVersion;
+        this.zosmfPluginsInfo = builder.zosmfPluginsInfo;
     }
 
     /**
@@ -82,7 +82,7 @@ public class ZosmfInfoResponse {
      * @return apiVersion value
      */
     public Optional<String> getApiVersion() {
-        return apiVersion;
+        return Optional.ofNullable(apiVersion);
     }
 
     /**
@@ -91,7 +91,7 @@ public class ZosmfInfoResponse {
      * @return zosVersion value
      */
     public Optional<String> getZosVersion() {
-        return zosVersion;
+        return Optional.ofNullable(zosVersion);
     }
 
     /**
@@ -100,7 +100,7 @@ public class ZosmfInfoResponse {
      * @return zosmfFullVersion value
      */
     public Optional<String> getZosmfFullVersion() {
-        return zosmfFullVersion;
+        return Optional.ofNullable(zosmfFullVersion);
     }
 
     /**
@@ -109,7 +109,7 @@ public class ZosmfInfoResponse {
      * @return zosmfHostName value
      */
     public Optional<String> getZosmfHostName() {
-        return zosmfHostName;
+        return Optional.ofNullable(zosmfHostName);
     }
 
     /**
@@ -118,7 +118,7 @@ public class ZosmfInfoResponse {
      * @return zosmfPluginsInfo value
      */
     public Optional<ZosmfPluginInfo[]> getZosmfPluginsInfo() {
-        return zosmfPluginsInfo;
+        return Optional.ofNullable(zosmfPluginsInfo);
     }
 
     /**
@@ -127,7 +127,7 @@ public class ZosmfInfoResponse {
      * @return zosmfPort value
      */
     public Optional<String> getZosmfPort() {
-        return zosmfPort;
+        return Optional.ofNullable(zosmfPort);
     }
 
     /**
@@ -136,7 +136,7 @@ public class ZosmfInfoResponse {
      * @return zosmfSafRealm value
      */
     public Optional<String> getZosmfSafRealm() {
-        return zosmfSafRealm;
+        return Optional.ofNullable(zosmfSafRealm);
     }
 
     /**
@@ -145,7 +145,7 @@ public class ZosmfInfoResponse {
      * @return zosmfVersion value
      */
     public Optional<String> getZosmfVersion() {
-        return zosmfVersion;
+        return Optional.ofNullable(zosmfVersion);
     }
 
     /**

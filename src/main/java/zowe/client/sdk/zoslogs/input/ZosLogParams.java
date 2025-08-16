@@ -34,7 +34,7 @@ public class ZosLogParams {
      * The default value is the current UNIX timestamp on the server.
      * This value is used if the timestamp parameter is not specified.
      */
-    private final Optional<String> startTime;
+    private final String startTime;
 
     /**
      * Specify the source where the logs come from. This field is optional.
@@ -42,7 +42,7 @@ public class ZosLogParams {
      * If the hardcopy parameter is not specified, the API tries OPERLOG first.
      * If the OPERLOG is not enabled on the system, the API returns the SYSLOG to the user.
      */
-    private final Optional<HardCopyType> hardCopy;
+    private final HardCopyType hardCopy;
 
     /**
      * Specifies the direction (from a specified time) in which messages are retrieved. This field is optional.
@@ -50,7 +50,7 @@ public class ZosLogParams {
      * <p>
      * The default is 'backward', meaning that messages are retrieved backward from the specified time.
      */
-    private final Optional<DirectionType> direction;
+    private final DirectionType direction;
 
     /**
      * Specifies the time range for which the log is to be retrieved. This field is optional.
@@ -62,7 +62,7 @@ public class ZosLogParams {
      * <p>
      * The default is 10m.
      */
-    private final Optional<String> timeRange;
+    private final String timeRange;
 
     /**
      * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
@@ -82,10 +82,10 @@ public class ZosLogParams {
      * @author Frank Giordano
      */
     private ZosLogParams(final Builder builder) {
-        this.startTime = Optional.ofNullable(builder.startTime);
-        this.hardCopy = Optional.ofNullable(builder.hardCopy);
-        this.direction = Optional.ofNullable(builder.direction);
-        this.timeRange = Optional.ofNullable(builder.timeRange);
+        this.startTime = builder.startTime;
+        this.hardCopy = builder.hardCopy;
+        this.direction = builder.direction;
+        this.timeRange = builder.timeRange;
         this.processResponses = builder.processResponses;
         this.queryCount = builder.queryCount;
     }
@@ -96,7 +96,7 @@ public class ZosLogParams {
      * @return String value
      */
     public Optional<String> getStartTime() {
-        return startTime;
+        return Optional.ofNullable(startTime);
     }
 
     /**
@@ -105,7 +105,7 @@ public class ZosLogParams {
      * @return HardCopyType enum value
      */
     public Optional<HardCopyType> getHardCopy() {
-        return hardCopy;
+        return Optional.ofNullable(hardCopy);
     }
 
     /**
@@ -114,7 +114,7 @@ public class ZosLogParams {
      * @return DirectionType enum type
      */
     public Optional<DirectionType> getDirection() {
-        return direction;
+        return Optional.ofNullable(direction);
     }
 
     /**
@@ -123,7 +123,7 @@ public class ZosLogParams {
      * @return string value
      */
     public Optional<String> getTimeRange() {
-        return timeRange;
+        return Optional.ofNullable(timeRange);
     }
 
     /**

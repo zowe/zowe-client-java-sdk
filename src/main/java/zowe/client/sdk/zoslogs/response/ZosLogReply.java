@@ -26,24 +26,24 @@ public class ZosLogReply {
      * Specify the timezone of the z/OS system. Valid values for the timezone range from -12 to 12.
      * For example, "-3" means UTC-3 timezone.
      */
-    private final OptionalLong timeZone;
+    private final Long timeZone;
 
     /**
      * The UNIX timestamp. This value could be used in a later request to specify a starting timestamp.
      * Logs in the "nextTimestamp" are not returned to the current response.
      */
-    private final OptionalLong nextTimeStamp;
+    private final Long nextTimeStamp;
 
     /**
      * Indicates the source of the log.
      * Value "OPERLOG" indicates the operation log.
      */
-    private final Optional<String> source;
+    private final String source;
 
     /**
      * Total number of messages returned to the response.
      */
-    private final OptionalLong totalItems;
+    private final Long totalItems;
 
     /**
      * JSON array of messages
@@ -62,22 +62,10 @@ public class ZosLogReply {
      */
     public ZosLogReply(final Long timeZone, final Long nextTimeStamp, final String source, final Long totalItems,
                        final List<ZosLogItem> items) {
-        if (timeZone == null) {
-            this.timeZone = OptionalLong.empty();
-        } else {
-            this.timeZone = OptionalLong.of(timeZone);
-        }
-        if (nextTimeStamp == 0) {
-            this.nextTimeStamp = OptionalLong.empty();
-        } else {
-            this.nextTimeStamp = OptionalLong.of(nextTimeStamp);
-        }
-        this.source = Optional.ofNullable(source);
-        if (totalItems == 0) {
-            this.totalItems = OptionalLong.empty();
-        } else {
-            this.totalItems = OptionalLong.of(totalItems);
-        }
+        this.timeZone = timeZone;
+        this.nextTimeStamp = nextTimeStamp;
+        this.source = source;
+        this.totalItems = totalItems;
         this.items = items;
     }
 
@@ -87,7 +75,7 @@ public class ZosLogReply {
      * @return OptionalLong value
      */
     public OptionalLong getTimeZone() {
-        return timeZone;
+        return (timeZone == null) ? OptionalLong.empty() : OptionalLong.of(timeZone);
     }
 
     /**
@@ -96,7 +84,7 @@ public class ZosLogReply {
      * @return OptionalLong value
      */
     public OptionalLong getNextTimeStamp() {
-        return nextTimeStamp;
+        return (nextTimeStamp == null) ? OptionalLong.empty() : OptionalLong.of(nextTimeStamp);
     }
 
     /**
@@ -105,7 +93,7 @@ public class ZosLogReply {
      * @return OptionalLong value
      */
     public Optional<String> getSource() {
-        return source;
+        return Optional.ofNullable(source);
     }
 
     /**
@@ -114,7 +102,7 @@ public class ZosLogReply {
      * @return OptionalLong value
      */
     public OptionalLong getTotalItems() {
-        return totalItems;
+        return (totalItems == null) ? OptionalLong.empty() : OptionalLong.of(totalItems);
     }
 
     /**

@@ -22,65 +22,65 @@ public class DefinedSystem {
     /**
      * Unique name assigned to the system definition.
      */
-    private final Optional<String> systemNickName;
+    private final String systemNickName;
 
     /**
      * Comma-separated list of the groups to which the system is assigned.
      */
-    private final Optional<String> groupNames;
+    private final String groupNames;
 
     /**
      * Serial number of the CPC.
      */
-    private final Optional<String> cpcSerial;
+    private final String cpcSerial;
 
     /**
      * Version of z/OS
      */
-    private final Optional<String> zosVR;
+    private final String zosVR;
 
     /**
      * Name specified for the system on the SYSNAME parameter in the IEASYSxx parmlib member.
      */
-    private final Optional<String> systemName;
+    private final String systemName;
 
     /**
      * Type for the primary job entry subsystem running on the system. The type is either JES2 or JES3.
      */
-    private final Optional<String> jesType;
+    private final String jesType;
 
     /**
      * Name of the sysplex where the z/OS system is a member.
      */
-    private final Optional<String> sysplexName;
+    private final String sysplexName;
 
     /**
      * JES2 multi-access spool (MAS) member name or JES3 complex member name
      */
-    private final Optional<String> jesMemberName;
+    private final String jesMemberName;
 
     /**
      * Name of the HTTP proxy definition that specifies the settings required to access the system through
      * an HTTP or SOCKS proxy server.
      */
-    private final Optional<String> httpProxyName;
+    private final String httpProxyName;
 
     /**
      * Name of the server definition that specifies the settings required to access the FTP or SFTP server
      * that is running on the system.
      */
-    private final Optional<String> ftpDestinationName;
+    private final String ftpDestinationName;
 
     /**
      * URL used to access the z/OSMF instance that resides in the same sysplex as the system identified by
      * the systemName attribute.
      */
-    private final Optional<String> url;
+    private final String url;
 
     /**
      * Name specified for the central processor complex (CPC) at the support element (SE) of that processor complex.
      */
-    private final Optional<String> cpcName;
+    private final String cpcName;
 
     /**
      * DefinedSystem constructor
@@ -89,18 +89,18 @@ public class DefinedSystem {
      * @author Frank Giordano
      */
     private DefinedSystem(final Builder builder) {
-        this.systemNickName = Optional.ofNullable(builder.systemNickName);
-        this.groupNames = Optional.ofNullable(builder.groupNames);
-        this.cpcSerial = Optional.ofNullable(builder.cpcSerial);
-        this.zosVR = Optional.ofNullable(builder.zosVR);
-        this.systemName = Optional.ofNullable(builder.systemName);
-        this.jesType = Optional.ofNullable(builder.jesType);
-        this.sysplexName = Optional.ofNullable(builder.sysplexName);
-        this.jesMemberName = Optional.ofNullable(builder.jesMemberName);
-        this.httpProxyName = Optional.ofNullable(builder.httpProxyName);
-        this.ftpDestinationName = Optional.ofNullable(builder.ftpDestinationName);
-        this.url = Optional.ofNullable(builder.url);
-        this.cpcName = Optional.ofNullable(builder.cpcName);
+        this.systemNickName = builder.systemNickName;
+        this.groupNames = builder.groupNames;
+        this.cpcSerial = builder.cpcSerial;
+        this.zosVR = builder.zosVR;
+        this.systemName = builder.systemName;
+        this.jesType = builder.jesType;
+        this.sysplexName = builder.sysplexName;
+        this.jesMemberName = builder.jesMemberName;
+        this.httpProxyName = builder.httpProxyName;
+        this.ftpDestinationName = builder.ftpDestinationName;
+        this.url = builder.url;
+        this.cpcName = builder.cpcName;
     }
 
     /**
@@ -109,7 +109,7 @@ public class DefinedSystem {
      * @return cpcName value
      */
     public Optional<String> getCpcName() {
-        return cpcName;
+        return Optional.ofNullable(cpcName);
     }
 
     /**
@@ -118,7 +118,7 @@ public class DefinedSystem {
      * @return cpcSerial value
      */
     public Optional<String> getCpcSerial() {
-        return cpcSerial;
+        return Optional.ofNullable(cpcSerial);
     }
 
     /**
@@ -127,7 +127,7 @@ public class DefinedSystem {
      * @return ftpDestinationName value
      */
     public Optional<String> getFtpDestinationName() {
-        return ftpDestinationName;
+        return Optional.ofNullable(ftpDestinationName);
     }
 
     /**
@@ -136,7 +136,7 @@ public class DefinedSystem {
      * @return groupNames value
      */
     public Optional<String> getGroupNames() {
-        return groupNames;
+        return Optional.ofNullable(groupNames);
     }
 
     /**
@@ -145,7 +145,7 @@ public class DefinedSystem {
      * @return httpProxyName value
      */
     public Optional<String> getHttpProxyName() {
-        return httpProxyName;
+        return Optional.ofNullable(httpProxyName);
     }
 
     /**
@@ -154,7 +154,7 @@ public class DefinedSystem {
      * @return jesMemberName value
      */
     public Optional<String> getJesMemberName() {
-        return jesMemberName;
+        return Optional.ofNullable(jesMemberName);
     }
 
     /**
@@ -163,7 +163,7 @@ public class DefinedSystem {
      * @return jesType value
      */
     public Optional<String> getJesType() {
-        return jesType;
+        return Optional.ofNullable(jesType);
     }
 
     /**
@@ -172,7 +172,7 @@ public class DefinedSystem {
      * @return sysplexName value
      */
     public Optional<String> getSysplexName() {
-        return sysplexName;
+        return Optional.ofNullable(sysplexName);
     }
 
     /**
@@ -181,7 +181,7 @@ public class DefinedSystem {
      * @return systemName value
      */
     public Optional<String> getSystemName() {
-        return systemName;
+        return Optional.ofNullable(systemName);
     }
 
     /**
@@ -190,7 +190,7 @@ public class DefinedSystem {
      * @return systemNickName value
      */
     public Optional<String> getSystemNickName() {
-        return systemNickName;
+        return Optional.ofNullable(systemNickName);
     }
 
     /**
@@ -199,7 +199,7 @@ public class DefinedSystem {
      * @return url value
      */
     public Optional<String> getUrl() {
-        return url;
+        return Optional.ofNullable(url);
     }
 
     /**
@@ -208,7 +208,7 @@ public class DefinedSystem {
      * @return zosVR value
      */
     public Optional<String> getZosVR() {
-        return zosVR;
+        return Optional.ofNullable(zosVR);
     }
 
     /**
