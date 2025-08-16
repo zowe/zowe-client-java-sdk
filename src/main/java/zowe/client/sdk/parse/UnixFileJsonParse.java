@@ -11,7 +11,7 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosfiles.uss.response.UnixFile;
+import zowe.client.sdk.zosfiles.uss.response.UnixFileDocument;
 
 /**
  * Extract UNIX file from JSON response
@@ -59,7 +59,7 @@ public final class UnixFileJsonParse implements JsonParse {
     public synchronized Object parseResponse(final Object... args) {
         ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
         final JSONObject data = (JSONObject) args[0];
-        return new UnixFile.Builder()
+        return new UnixFileDocument.Builder()
                 .name(data.get("name") != null ? (String) data.get("name") : null)
                 .mode(data.get("mode") != null ? (String) data.get("mode") : null)
                 .size(data.get("size") != null ? (Long) data.get("size") : null)

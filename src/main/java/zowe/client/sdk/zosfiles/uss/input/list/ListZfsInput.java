@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.input.list;
 
 import zowe.client.sdk.utility.ValidateUtils;
 
@@ -22,7 +22,7 @@ import java.util.OptionalInt;
  * @author Frank Giordano
  * @version 4.0
  */
-public class ListZfsParams {
+public class ListZfsInput {
 
     /**
      * The indicator that we want to show fewer files
@@ -49,7 +49,7 @@ public class ListZfsParams {
      * @param builder ListZfsParams.Builder builder
      * @author Frank Giordano
      */
-    public ListZfsParams(final ListZfsParams.Builder builder) {
+    public ListZfsInput(final ListZfsInput.Builder builder) {
         if (builder.maxLength == null) {
             this.maxLength = OptionalInt.empty();
         } else {
@@ -178,8 +178,8 @@ public class ListZfsParams {
          *
          * @return ListZfsParams object
          */
-        public ListZfsParams build() {
-            return new ListZfsParams(this);
+        public ListZfsInput build() {
+            return new ListZfsInput(this);
         }
 
     }

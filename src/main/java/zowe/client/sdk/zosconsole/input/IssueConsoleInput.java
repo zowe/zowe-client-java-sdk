@@ -19,7 +19,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 4.0
  */
-public class IssueConsoleParams {
+public class IssueConsoleInput {
 
     /**
      * The z/OS console command to issue.
@@ -49,7 +49,7 @@ public class IssueConsoleParams {
      * @param command console command to issue
      * @author Frank Giordano
      */
-    public IssueConsoleParams(final String command) {
+    public IssueConsoleInput(final String command) {
         ValidateUtils.checkIllegalParameter(command, "command");
         this.cmd = command;
     }

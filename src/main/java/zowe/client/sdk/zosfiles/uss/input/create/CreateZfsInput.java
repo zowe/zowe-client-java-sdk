@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.input.create;
 
 import zowe.client.sdk.utility.ValidateUtils;
 
@@ -24,7 +24,7 @@ import java.util.OptionalInt;
  * @author Frank Giordano
  * @version 4.0
  */
-public class CreateZfsParams {
+public class CreateZfsInput {
 
     /**
      * The z/OS user ID or UID for the owner of the ZFS root directory.
@@ -112,7 +112,7 @@ public class CreateZfsParams {
      * @param builder CreateZfsParams.Builder object
      * @author Frank Giordano
      */
-    private CreateZfsParams(final CreateZfsParams.Builder builder) {
+    private CreateZfsInput(final CreateZfsInput.Builder builder) {
         if (builder.owner == null) {
             this.owner = OptionalInt.empty();
         } else {
@@ -482,8 +482,8 @@ public class CreateZfsParams {
          *
          * @return CreateZfsParams object
          */
-        public CreateZfsParams build() {
-            return new CreateZfsParams(this);
+        public CreateZfsInput build() {
+            return new CreateZfsInput(this);
         }
 
     }

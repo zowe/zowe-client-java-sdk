@@ -21,7 +21,7 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.ChangeModeParams;
+import zowe.client.sdk.zosfiles.uss.input.change.ChangeModeInput;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -80,7 +80,7 @@ public class UssChangeMode {
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response change(final String targetPath, final ChangeModeParams params) throws ZosmfRequestException {
+    public Response change(final String targetPath, final ChangeModeInput params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 

@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.input.get;
 
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -21,7 +21,7 @@ import java.util.OptionalInt;
  * @author Frank Giordano
  * @version 4.0
  */
-public class GetParams {
+public class GetInput {
 
     /**
      * The file is searched for the first line that contains the string, without respect to case (by default).
@@ -84,7 +84,7 @@ public class GetParams {
      * @param builder GetParams.Builder builder
      * @author James Kostrewski
      */
-    public GetParams(final GetParams.Builder builder) {
+    public GetInput(final GetInput.Builder builder) {
         this.search = Optional.ofNullable(builder.search);
         this.research = Optional.ofNullable(builder.research);
         this.insensitive = builder.insensitive;
@@ -327,8 +327,8 @@ public class GetParams {
          *
          * @return GetParams object
          */
-        public GetParams build() {
-            return new GetParams(this);
+        public GetInput build() {
+            return new GetInput(this);
         }
 
     }

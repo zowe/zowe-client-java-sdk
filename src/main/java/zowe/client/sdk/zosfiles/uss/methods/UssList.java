@@ -26,10 +26,10 @@ import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.ListParams;
-import zowe.client.sdk.zosfiles.uss.input.ListZfsParams;
-import zowe.client.sdk.zosfiles.uss.response.UnixFile;
-import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
+import zowe.client.sdk.zosfiles.uss.input.list.ListInput;
+import zowe.client.sdk.zosfiles.uss.input.list.ListZfsInput;
+import zowe.client.sdk.zosfiles.uss.response.UnixFileDocument;
+import zowe.client.sdk.zosfiles.uss.response.UnixZfsDocument;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +88,7 @@ public class UssList {
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public List<UnixFile> getFiles(final ListParams params) throws ZosmfRequestException {
+    public List<UnixFileDocument> getFiles(final ListInput params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
@@ -128,13 +128,13 @@ public class UssList {
 
         final Response response = request.executeRequest();
 
-        final List<UnixFile> items = new ArrayList<>();
+        final List<UnixFileDocument> items = new ArrayList<>();
         final JSONObject jsonObject = JsonParserUtil.parse(String.valueOf(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
             for (final Object jsonObj : jsonArray) {
-                items.add((UnixFile) JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse(jsonObj));
+                items.add((UnixFileDocument) JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse(jsonObj));
             }
         }
 
@@ -150,7 +150,7 @@ public class UssList {
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public List<UnixZfs> getZfsSystems(final ListZfsParams params) throws ZosmfRequestException {
+    public List<UnixZfsDocument> getZfsSystems(final ListZfsInput params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getPath().isEmpty() && params.getFsname().isEmpty(),
                 "no path or fsname specified");
@@ -173,7 +173,7 @@ public class UssList {
 
         final Response response = request.executeRequest();
 
-        final List<UnixZfs> items = new ArrayList<>();
+        final List<UnixZfsDocument> items = new ArrayList<>();
         final JSONObject jsonObject = JsonParserUtil.parse(String.valueOf(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");

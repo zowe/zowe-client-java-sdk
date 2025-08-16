@@ -12,7 +12,7 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONObject;
 import org.junit.Test;
 import zowe.client.sdk.parse.type.ParseType;
-import zowe.client.sdk.zosfiles.uss.response.UnixFile;
+import zowe.client.sdk.zosfiles.uss.response.UnixFileDocument;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,7 +53,7 @@ public class UnixFileParseResponseTest {
         jsonMap.put("mode", "mode");
         final JSONObject json = new JSONObject(jsonMap);
 
-        final UnixFile response = (UnixFile) JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse(json);
+        final UnixFileDocument response = (UnixFileDocument) JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse(json);
         assertEquals("ver", response.getName().orElse("n\\a"));
         assertEquals("mode", response.getMode().orElse("n\\a"));
     }

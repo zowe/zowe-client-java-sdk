@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.input.list;
 
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.ListFilterType;
@@ -23,7 +23,7 @@ import java.util.OptionalInt;
  * @author Frank Giordano
  * @version 4.0
  */
-public class ListParams {
+public class ListInput {
 
     /**
      * This parameter identifies the UNIX directory that contains the files and directories to be listed.
@@ -117,7 +117,7 @@ public class ListParams {
      * @param builder ListParams.Builder builder
      * @author Frank Giordano
      */
-    public ListParams(final ListParams.Builder builder) {
+    public ListInput(final ListInput.Builder builder) {
         this.path = Optional.of(builder.path);
         if (builder.maxLength == null) {
             this.maxLength = OptionalInt.empty();
@@ -414,7 +414,7 @@ public class ListParams {
          * @param user string value
          * @return Builder this object
          */
-        public ListParams.Builder user(final String user) {
+        public ListInput.Builder user(final String user) {
             this.user = user;
             return this;
         }
@@ -512,8 +512,8 @@ public class ListParams {
          *
          * @return ListParams object
          */
-        public ListParams build() {
-            return new ListParams(this);
+        public ListInput build() {
+            return new ListInput(this);
         }
 
     }

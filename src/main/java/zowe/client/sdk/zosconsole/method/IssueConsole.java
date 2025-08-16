@@ -22,7 +22,7 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
-import zowe.client.sdk.zosconsole.input.IssueConsoleParams;
+import zowe.client.sdk.zosconsole.input.IssueConsoleInput;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
 import zowe.client.sdk.zosconsole.service.ConsoleResponseService;
@@ -89,7 +89,7 @@ public class IssueConsole {
      * @author Frank Giordano
      */
     public ConsoleResponse issueCommand(final String command) throws ZosmfRequestException {
-        return issueCommandCommon(ConsoleConstants.RES_DEF_CN, new IssueConsoleParams(command));
+        return issueCommandCommon(ConsoleConstants.RES_DEF_CN, new IssueConsoleInput(command));
     }
 
     /**
@@ -105,7 +105,7 @@ public class IssueConsole {
      * @author Frank Giordano
      */
     public ConsoleResponse issueCommand(final String command, final String consoleName) throws ZosmfRequestException {
-        return issueCommandCommon(consoleName, new IssueConsoleParams(command));
+        return issueCommandCommon(consoleName, new IssueConsoleInput(command));
     }
 
     /**
@@ -117,7 +117,7 @@ public class IssueConsole {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ConsoleResponse issueCommandCommon(final String consoleName, final IssueConsoleParams params)
+    public ConsoleResponse issueCommandCommon(final String consoleName, final IssueConsoleInput params)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(consoleName, "consoleName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
@@ -148,7 +148,7 @@ public class IssueConsole {
      * @return Map for JSON body
      * @author Shabaz Kowthalam
      */
-    private Map<String, String> getIssueMap(IssueConsoleParams params) {
+    private Map<String, String> getIssueMap(IssueConsoleInput params) {
         final Map<String, String> issueMap = new HashMap<>();
         issueMap.put(CMD, params.getCmd());
         params.getSolKey().ifPresent(solKey -> issueMap.put(SOL_KEY, solKey));

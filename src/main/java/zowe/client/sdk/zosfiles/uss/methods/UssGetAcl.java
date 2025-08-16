@@ -23,7 +23,7 @@ import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.GetAclParams;
+import zowe.client.sdk.zosfiles.uss.input.get.GetAclInput;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -82,8 +82,8 @@ public class UssGetAcl {
     @SuppressWarnings("unchecked")
     public String get(final String targetPath, final boolean useCommas) throws ZosmfRequestException {
         final Response response = useCommas ?
-                getAclCommon(targetPath, new GetAclParams.Builder().usecommas(true).build()) :
-                getAclCommon(targetPath, new GetAclParams.Builder().build());
+                getAclCommon(targetPath, new GetAclInput.Builder().usecommas(true).build()) :
+                getAclCommon(targetPath, new GetAclInput.Builder().build());
         final JSONObject json = JsonParserUtil.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
         final StringBuilder str = new StringBuilder();
@@ -104,7 +104,7 @@ public class UssGetAcl {
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response getAclCommon(final String targetPath, final GetAclParams params) throws ZosmfRequestException {
+    public Response getAclCommon(final String targetPath, final GetAclInput params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 

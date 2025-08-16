@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.input.change;
 
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
@@ -24,7 +24,7 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 4.0
  */
-public class ChangeTagParams {
+public class ChangeTagInput {
 
     /**
      * The file tag action.
@@ -66,7 +66,7 @@ public class ChangeTagParams {
      * @param builder Builder builder
      * @author James Kostrewski
      */
-    public ChangeTagParams(final Builder builder) {
+    public ChangeTagInput(final Builder builder) {
         this.action = Optional.ofNullable(builder.action);
         this.type = Optional.ofNullable(builder.type);
         this.codeset = Optional.ofNullable(builder.codeset);
@@ -241,8 +241,8 @@ public class ChangeTagParams {
          *
          * @return ChangeTagParams this object
          */
-        public ChangeTagParams build() {
-            return new ChangeTagParams(this);
+        public ChangeTagInput build() {
+            return new ChangeTagInput(this);
         }
 
     }

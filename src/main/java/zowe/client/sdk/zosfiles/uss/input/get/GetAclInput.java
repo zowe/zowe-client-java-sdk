@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.input.get;
 
 import zowe.client.sdk.zosfiles.uss.types.GetAclType;
 
@@ -21,7 +21,7 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 4.0
  */
-public class GetAclParams {
+public class GetAclInput {
 
     /**
      * The default is 'access', displays the access ACL entries for a file or directory (getfacl -a).
@@ -61,7 +61,7 @@ public class GetAclParams {
      * @param builder GetAclParams.Builder builder
      * @author James Kostrewski
      */
-    public GetAclParams(final GetAclParams.Builder builder) {
+    public GetAclInput(final GetAclInput.Builder builder) {
         this.type = Optional.ofNullable(builder.type);
         this.user = Optional.ofNullable(builder.user);
         this.useCommas = builder.usecommas;
@@ -234,8 +234,8 @@ public class GetAclParams {
          *
          * @return GetAclParams object
          */
-        public GetAclParams build() {
-            return new GetAclParams(this);
+        public GetAclInput build() {
+            return new GetAclInput(this);
         }
 
     }

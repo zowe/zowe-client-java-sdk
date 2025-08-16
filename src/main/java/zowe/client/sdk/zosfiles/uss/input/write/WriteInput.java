@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.input.write;
 
 import java.util.Optional;
 
@@ -19,7 +19,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 4.0
  */
-public class WriteParams {
+public class WriteInput {
 
     /**
      * Text content for file write
@@ -53,7 +53,7 @@ public class WriteParams {
      * @param builder WriteParams.Builder builder
      * @author Frank Giordano
      */
-    public WriteParams(final WriteParams.Builder builder) {
+    public WriteInput(final WriteInput.Builder builder) {
         this.textContent = Optional.ofNullable(builder.textContent);
         this.binaryContent = Optional.ofNullable(builder.binaryContent);
         this.fileEncoding = Optional.ofNullable(builder.fileEncoding);
@@ -219,8 +219,8 @@ public class WriteParams {
          *
          * @return WriteParams object
          */
-        public WriteParams build() {
-            return new WriteParams(this);
+        public WriteInput build() {
+            return new WriteInput(this);
         }
 
     }

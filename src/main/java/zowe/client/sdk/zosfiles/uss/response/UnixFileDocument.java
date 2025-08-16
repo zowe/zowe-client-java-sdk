@@ -18,7 +18,7 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 4.0
  */
-public class UnixFile {
+public class UnixFileDocument {
 
     /**
      * File, symbolic file or directory name
@@ -70,7 +70,7 @@ public class UnixFile {
      * @param builder UnixFile.Builder object
      * @author Frank Giordano
      */
-    public UnixFile(final UnixFile.Builder builder) {
+    public UnixFileDocument(final UnixFileDocument.Builder builder) {
         this.name = Optional.ofNullable(builder.name);
         this.mode = Optional.ofNullable(builder.mode);
         if (builder.size == null) {
@@ -349,8 +349,8 @@ public class UnixFile {
          *
          * @return UnixFile this object
          */
-        public UnixFile build() {
-            return new UnixFile(this);
+        public UnixFileDocument build() {
+            return new UnixFileDocument(this);
         }
 
     }

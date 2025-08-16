@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.input.change;
 
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.LinkType;
@@ -22,7 +22,7 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 4.0
  */
-public class ChangeOwnerParams {
+public class ChangeOwnerInput {
 
     /**
      * The user ID or UID
@@ -51,7 +51,7 @@ public class ChangeOwnerParams {
      * @param builder ChangeOwnerParams.Builder builder
      * @author James Kostrewski
      */
-    public ChangeOwnerParams(final ChangeOwnerParams.Builder builder) {
+    public ChangeOwnerInput(final ChangeOwnerInput.Builder builder) {
         this.owner = Optional.ofNullable(builder.owner);
         this.group = Optional.ofNullable(builder.group);
         this.recursive = builder.recursive;
@@ -192,8 +192,8 @@ public class ChangeOwnerParams {
          *
          * @return ChangeOwnerParams object
          */
-        public ChangeOwnerParams build() {
-            return new ChangeOwnerParams(this);
+        public ChangeOwnerInput build() {
+            return new ChangeOwnerInput(this);
         }
 
     }

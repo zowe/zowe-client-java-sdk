@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.input.change;
 
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.LinkType;
@@ -22,7 +22,7 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 4.0
  */
-public class ChangeModeParams {
+public class ChangeModeInput {
 
     /**
      * The mode value, which is specified as the POSIX symbolic form or octal value (as a JSON string).
@@ -48,7 +48,7 @@ public class ChangeModeParams {
      * @param builder ChangeModeParams.Builder builder
      * @author James Kostrewski
      */
-    public ChangeModeParams(final ChangeModeParams.Builder builder) {
+    public ChangeModeInput(final ChangeModeInput.Builder builder) {
         this.mode = Optional.of(builder.mode);
         this.recursive = builder.recursive;
         this.links = Optional.ofNullable(builder.links);
@@ -164,8 +164,8 @@ public class ChangeModeParams {
          *
          * @return ChangeModeParams object
          */
-        public ChangeModeParams build() {
-            return new ChangeModeParams(this);
+        public ChangeModeInput build() {
+            return new ChangeModeInput(this);
         }
 
     }

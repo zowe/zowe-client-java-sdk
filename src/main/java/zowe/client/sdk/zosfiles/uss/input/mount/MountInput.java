@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.input.mount;
 
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.MountActionType;
@@ -24,7 +24,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 4.0
  */
-public class MountParams {
+public class MountInput {
 
     /**
      * Specifies the action mount to mount a UNIX file system.
@@ -54,7 +54,7 @@ public class MountParams {
      * @param builder MountParams.Builder builder
      * @author Frank Giordano
      */
-    public MountParams(final MountParams.Builder builder) {
+    public MountInput(final MountInput.Builder builder) {
         this.action = Optional.ofNullable(builder.action);
         this.mountPoint = Optional.ofNullable(builder.mountPoint);
         this.fsType = Optional.ofNullable(builder.fsType);
@@ -198,8 +198,8 @@ public class MountParams {
          *
          * @return MountParams object
          */
-        public MountParams build() {
-            return new MountParams(this);
+        public MountInput build() {
+            return new MountInput(this);
         }
 
     }

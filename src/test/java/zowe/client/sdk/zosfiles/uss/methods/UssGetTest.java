@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.GetTextZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.uss.input.GetParams;
+import zowe.client.sdk.zosfiles.uss.input.get.GetInput;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -231,7 +231,7 @@ public class UssGetTest {
     public void tstUssGetCommonInvalidTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussGet.getCommon("name", new GetParams.Builder().build());
+            ussGet.getCommon("name", new GetInput.Builder().build());
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }

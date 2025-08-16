@@ -25,7 +25,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.zosconsole.input.IssueConsoleParams;
+import zowe.client.sdk.zosconsole.input.IssueConsoleInput;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 
 import java.util.HashMap;
@@ -131,7 +131,7 @@ public class IssueConsoleTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
-        final IssueConsoleParams issueConsoleParams = new IssueConsoleParams("command");
+        final IssueConsoleInput issueConsoleParams = new IssueConsoleInput("command");
         issueConsoleParams.setProcessResponse();
         issueConsoleParams.setSolKey("foo");
         final ConsoleResponse response = issueCommand.issueCommandCommon("consolename", issueConsoleParams);

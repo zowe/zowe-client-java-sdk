@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.uss.input.MountParams;
+import zowe.client.sdk.zosfiles.uss.input.mount.MountInput;
 import zowe.client.sdk.zosfiles.uss.types.MountActionType;
 
 import static org.junit.Assert.assertEquals;
@@ -96,7 +96,7 @@ public class UssMountTest {
         String errMsg = "";
         try {
             ussMount.mountCommon("name",
-                    new MountParams.Builder().action(MountActionType.MOUNT).mountPoint("mountpoint").build());
+                    new MountInput.Builder().action(MountActionType.MOUNT).mountPoint("mountpoint").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -108,7 +108,7 @@ public class UssMountTest {
         String errMsg = "";
         try {
             ussMount.mountCommon("name",
-                    new MountParams.Builder().action(MountActionType.MOUNT).fsType("fstype").build());
+                    new MountInput.Builder().action(MountActionType.MOUNT).fsType("fstype").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -120,7 +120,7 @@ public class UssMountTest {
         String errMsg = "";
         try {
             ussMount.mountCommon("",
-                    new MountParams.Builder().action(MountActionType.MOUNT).mountPoint("mountpoint").build());
+                    new MountInput.Builder().action(MountActionType.MOUNT).mountPoint("mountpoint").build());
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -132,7 +132,7 @@ public class UssMountTest {
         String errMsg = "";
         try {
             ussMount.mountCommon(null,
-                    new MountParams.Builder().action(MountActionType.MOUNT).mountPoint("mountpoint").build());
+                    new MountInput.Builder().action(MountActionType.MOUNT).mountPoint("mountpoint").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -154,7 +154,7 @@ public class UssMountTest {
     public void tstUssMountEmptyActionFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussMount.mountCommon("name", new MountParams.Builder().build());
+            ussMount.mountCommon("name", new MountInput.Builder().build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }

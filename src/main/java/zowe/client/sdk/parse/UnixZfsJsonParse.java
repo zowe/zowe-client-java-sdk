@@ -11,7 +11,7 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
+import zowe.client.sdk.zosfiles.uss.response.UnixZfsDocument;
 
 /**
  * Extract UNIX zfs from JSON response
@@ -56,13 +56,13 @@ public final class UnixZfsJsonParse implements JsonParse {
      * @author Frank Giordano
      */
     @Override
-    public synchronized UnixZfs parseResponse(final Object... args) {
+    public synchronized UnixZfsDocument parseResponse(final Object... args) {
         ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
         ValidateUtils.checkNullParameter(args[1] == null, ParseConstants.MODE_NULL_STR_MSG);
         final JSONObject data = (JSONObject) args[0];
         final String modeStr = (String) args[1];
         ValidateUtils.checkNullParameter(modeStr.isBlank(), ParseConstants.MODE_EMPTY_STR_MSG);
-        return new UnixZfs.Builder()
+        return new UnixZfsDocument.Builder()
                 .name(data.get("name") != null ? (String) data.get("name") : null)
                 .mountpoint(data.get("mountpoint") != null ? (String) data.get("mountpoint") : null)
                 .fstname(data.get("fstname") != null ? (String) data.get("fstname") : null)

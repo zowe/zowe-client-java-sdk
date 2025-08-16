@@ -18,7 +18,7 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 4.0
  */
-public class UnixZfs {
+public class UnixZfsDocument {
 
     /**
      * zfs name
@@ -109,7 +109,7 @@ public class UnixZfs {
      * @param builder UnixZfs.Builder object
      * @author Frank Giordano
      */
-    public UnixZfs(final UnixZfs.Builder builder) {
+    public UnixZfsDocument(final UnixZfsDocument.Builder builder) {
         this.name = Optional.ofNullable(builder.name);
         this.mountpoint = Optional.ofNullable(builder.mountpoint);
         this.fstname = Optional.ofNullable(builder.fstname);
@@ -633,8 +633,8 @@ public class UnixZfs {
          *
          * @return UnixZfs this object
          */
-        public UnixZfs build() {
-            return new UnixZfs(this);
+        public UnixZfsDocument build() {
+            return new UnixZfsDocument(this);
         }
 
     }

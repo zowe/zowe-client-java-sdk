@@ -12,7 +12,7 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONObject;
 import org.junit.Test;
 import zowe.client.sdk.parse.type.ParseType;
-import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
+import zowe.client.sdk.zosfiles.uss.response.UnixZfsDocument;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,7 +54,7 @@ public class UnixZfsParseResponseTest {
         final JSONObject json = new JSONObject(jsonMap);
 
         final UnixZfsJsonParse parser = (UnixZfsJsonParse) JsonParseFactory.buildParser(ParseType.UNIX_ZFS);
-        final UnixZfs response = parser.parseResponse(json, "mode");
+        final UnixZfsDocument response = parser.parseResponse(json, "mode");
         assertEquals("ver", response.getName().orElse("n\\a"));
         assertEquals("mode", response.getMode().orElse("n\\a"));
     }

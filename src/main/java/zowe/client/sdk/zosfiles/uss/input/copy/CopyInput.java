@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.input.copy;
 
 import zowe.client.sdk.utility.ValidateUtils;
 
@@ -21,7 +21,7 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 4.0
  */
-public class CopyParams {
+public class CopyInput {
 
     /**
      * The file or directory to be copied. May not be specified with 'from-dataset'.
@@ -45,7 +45,7 @@ public class CopyParams {
      * @param builder CopyParams.Builder builder
      * @author James Kostrewski
      */
-    public CopyParams(final CopyParams.Builder builder) {
+    public CopyInput(final CopyInput.Builder builder) {
         this.from = Optional.ofNullable(builder.from);
         this.overwrite = builder.overwrite;
         this.recursive = builder.recursive;
@@ -159,8 +159,8 @@ public class CopyParams {
          *
          * @return CopyParams object
          */
-        public CopyParams build() {
-            return new CopyParams(this);
+        public CopyInput build() {
+            return new CopyInput(this);
         }
 
     }
