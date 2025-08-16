@@ -22,97 +22,97 @@ public class Dataset {
     /**
      * The name of the dataset
      */
-    private final Optional<String> dsname;
+    private final String dsname;
 
     /**
      * The block size of the dataset
      */
-    private final Optional<String> blksz;
+    private final String blksz;
 
     /**
      * The catalog in which the dataset entry is stored
      */
-    private final Optional<String> catnm;
+    private final String catnm;
 
     /**
      * The dataset creation date
      */
-    private final Optional<String> cdate;
+    private final String cdate;
 
     /**
      * The type of the device the dataset is stored on
      */
-    private final Optional<String> dev;
+    private final String dev;
 
     /**
      * The type of the dataset
      */
-    private final Optional<String> dsntp;
+    private final String dsntp;
 
     /**
      * The organization of the data set as physical sequential (PS), partitioned (PO), or direct (DA)
      */
-    private final Optional<String> dsorg;
+    private final String dsorg;
 
     /**
      * The dataset expiration date
      */
-    private final Optional<String> edate;
+    private final String edate;
 
     /**
      * The number of extensions the dataset has
      */
-    private final Optional<String> extx;
+    private final String extx;
 
     /**
      * The length, in bytes, of each record in the data set
      */
-    private final Optional<String> lrectl;
+    private final String lrectl;
 
     /**
      * Indicates if automatic migration to a lower level of storage is active for this dataset
      */
-    private final Optional<String> migr;
+    private final String migr;
 
     /**
      * Indicates if the dataset is multi-volume
      */
-    private final Optional<String> mvol;
+    private final String mvol;
 
     /**
      * Open virtualization format
      */
-    private final Optional<String> ovf;
+    private final String ovf;
 
     /**
      * The date of the last time the dataset was referred to
      */
-    private final Optional<String> rdate;
+    private final String rdate;
 
     /**
      * The record format of the dataset
      */
-    private final Optional<String> recfm;
+    private final String recfm;
 
     /**
      * The size of the first extent in tracks
      */
-    private final Optional<String> sizex;
+    private final String sizex;
 
     /**
      * The type of space units measurement
      */
-    private final Optional<String> spacu;
+    private final String spacu;
 
     /**
      * The percentage of used space in the dataset
      */
-    private final Optional<String> used;
+    private final String used;
 
     /**
      * The volume name on which the dataset is stored
      */
-    private final Optional<String> vol;
+    private final String vol;
 
     /**
      * Dataset constructor
@@ -121,25 +121,25 @@ public class Dataset {
      * @author Nikunj Goyal
      */
     private Dataset(final Builder builder) {
-        this.dsname = Optional.ofNullable(builder.dsname);
-        this.blksz = Optional.ofNullable(builder.blksz);
-        this.catnm = Optional.ofNullable(builder.catnm);
-        this.cdate = Optional.ofNullable(builder.cdate);
-        this.dev = Optional.ofNullable(builder.dev);
-        this.dsntp = Optional.ofNullable(builder.dsntp);
-        this.dsorg = Optional.ofNullable(builder.dsorg);
-        this.edate = Optional.ofNullable(builder.edate);
-        this.extx = Optional.ofNullable(builder.extx);
-        this.lrectl = Optional.ofNullable(builder.lrectl);
-        this.migr = Optional.ofNullable(builder.migr);
-        this.mvol = Optional.ofNullable(builder.mvol);
-        this.ovf = Optional.ofNullable(builder.ovf);
-        this.rdate = Optional.ofNullable(builder.rdate);
-        this.recfm = Optional.ofNullable(builder.recfm);
-        this.sizex = Optional.ofNullable(builder.sizex);
-        this.spacu = Optional.ofNullable(builder.spacu);
-        this.used = Optional.ofNullable(builder.used);
-        this.vol = Optional.ofNullable(builder.vol);
+        this.dsname = builder.dsname;
+        this.blksz = builder.blksz;
+        this.catnm = builder.catnm;
+        this.cdate = builder.cdate;
+        this.dev = builder.dev;
+        this.dsntp = builder.dsntp;
+        this.dsorg = builder.dsorg;
+        this.edate = builder.edate;
+        this.extx = builder.extx;
+        this.lrectl = builder.lrectl;
+        this.migr = builder.migr;
+        this.mvol = builder.mvol;
+        this.ovf = builder.ovf;
+        this.rdate = builder.rdate;
+        this.recfm = builder.recfm;
+        this.sizex = builder.sizex;
+        this.spacu = builder.spacu;
+        this.used = builder.used;
+        this.vol = builder.vol;
     }
 
     /**
@@ -148,7 +148,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getDsname() {
-        return dsname;
+        return Optional.ofNullable(dsname);
     }
 
     /**
@@ -157,7 +157,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getBlksz() {
-        return blksz;
+        return Optional.ofNullable(blksz);
     }
 
     /**
@@ -166,7 +166,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getCatnm() {
-        return catnm;
+        return Optional.ofNullable(catnm);
     }
 
     /**
@@ -175,7 +175,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getCdate() {
-        return cdate;
+        return Optional.ofNullable(cdate);
     }
 
     /**
@@ -184,7 +184,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getDev() {
-        return dev;
+        return Optional.ofNullable(dev);
     }
 
     /**
@@ -193,7 +193,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getDsntp() {
-        return dsntp;
+        return Optional.ofNullable(dsntp);
     }
 
     /**
@@ -202,7 +202,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getDsorg() {
-        return dsorg;
+        return Optional.ofNullable(dsorg);
     }
 
     /**
@@ -211,7 +211,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getEdate() {
-        return edate;
+        return Optional.ofNullable(edate);
     }
 
     /**
@@ -220,7 +220,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getExtx() {
-        return extx;
+        return Optional.ofNullable(extx);
     }
 
     /**
@@ -229,7 +229,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getLrectl() {
-        return lrectl;
+        return Optional.ofNullable(lrectl);
     }
 
     /**
@@ -238,7 +238,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getMigr() {
-        return migr;
+        return Optional.ofNullable(migr);
     }
 
     /**
@@ -247,7 +247,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getMvol() {
-        return mvol;
+        return Optional.ofNullable(mvol);
     }
 
     /**
@@ -256,7 +256,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getOvf() {
-        return ovf;
+        return Optional.ofNullable(ovf);
     }
 
     /**
@@ -265,7 +265,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getRdate() {
-        return rdate;
+        return Optional.ofNullable(rdate);
     }
 
     /**
@@ -274,7 +274,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getRecfm() {
-        return recfm;
+        return Optional.ofNullable(recfm);
     }
 
     /**
@@ -283,7 +283,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getSizex() {
-        return sizex;
+        return Optional.ofNullable(sizex);
     }
 
     /**
@@ -292,7 +292,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getSpacu() {
-        return spacu;
+        return Optional.ofNullable(spacu);
     }
 
     /**
@@ -301,7 +301,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getUsed() {
-        return used;
+        return Optional.ofNullable(used);
     }
 
     /**
@@ -310,7 +310,7 @@ public class Dataset {
      * @return Optional string value
      */
     public Optional<String> getVol() {
-        return vol;
+        return Optional.ofNullable(vol);
     }
 
     /**

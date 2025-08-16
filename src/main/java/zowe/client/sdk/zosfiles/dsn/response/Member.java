@@ -23,62 +23,62 @@ public class Member {
     /**
      * The name of the member
      */
-    private final Optional<String> member;
+    private final String member;
 
     /**
      * The version of member
      */
-    private final OptionalLong vers;
+    private final Long vers;
 
     /**
      * The number of modifications of member
      */
-    private final OptionalLong mod;
+    private final Long mod;
 
     /**
      * The creation date of member
      */
-    private final Optional<String> c4date;
+    private final String c4date;
 
     /**
      * The modification date of member
      */
-    private final Optional<String> m4date;
+    private final String m4date;
 
     /**
      * The cnorc of member
      */
-    private final OptionalLong cnorc;
+    private final Long cnorc;
 
     /**
      * The inorc of member
      */
-    private final OptionalLong inorc;
+    private final Long inorc;
 
     /**
      * The mnorc of member
      */
-    private final OptionalLong mnorc;
+    private final Long mnorc;
 
     /**
      * The mtime of member
      */
-    private final Optional<String> mtime;
+    private final String mtime;
 
     /**
      * The msec of member
      */
-    private final Optional<String> msec;
+    private final String msec;
 
     /**
      * The user of member
      */
-    private final Optional<String> user;
+    private final String user;
 
     /**
      * The sclm of member
      */
-    private final Optional<String> sclm;
+    private final String sclm;
 
     /**
      * Member constructor
@@ -87,38 +87,18 @@ public class Member {
      * @author Frank Giordano
      */
     private Member(final Builder builder) {
-        this.member = Optional.ofNullable(builder.member);
-        if (builder.vers == null) {
-            this.vers = OptionalLong.empty();
-        } else {
-            this.vers = OptionalLong.of(builder.vers);
-        }
-        if (builder.mod == null) {
-            this.mod = OptionalLong.empty();
-        } else {
-            this.mod = OptionalLong.of(builder.mod);
-        }
-        this.c4date = Optional.ofNullable(builder.c4date);
-        this.m4date = Optional.ofNullable(builder.m4date);
-        if (builder.cnorc == null) {
-            this.cnorc = OptionalLong.empty();
-        } else {
-            this.cnorc = OptionalLong.of(builder.cnorc);
-        }
-        if (builder.inorc == null) {
-            this.inorc = OptionalLong.empty();
-        } else {
-            this.inorc = OptionalLong.of(builder.inorc);
-        }
-        if (builder.mnorc == null) {
-            this.mnorc = OptionalLong.empty();
-        } else {
-            this.mnorc = OptionalLong.of(builder.mnorc);
-        }
-        this.mtime = Optional.ofNullable(builder.mtime);
-        this.msec = Optional.ofNullable(builder.msec);
-        this.user = Optional.ofNullable(builder.user);
-        this.sclm = Optional.ofNullable(builder.sclm);
+        this.member = builder.member;
+        this.vers = builder.vers;
+        this.mod = builder.mod;
+        this.c4date = builder.c4date;
+        this.m4date = builder.m4date;
+        this.cnorc = builder.cnorc;
+        this.inorc = builder.inorc;
+        this.mnorc = builder.mnorc;
+        this.mtime = builder.mtime;
+        this.msec = builder.msec;
+        this.user = builder.user;
+        this.sclm = builder.sclm;
     }
 
     /**
@@ -127,7 +107,7 @@ public class Member {
      * @return Optional string value
      */
     public Optional<String> getMember() {
-        return member;
+        return Optional.ofNullable(member);
     }
 
     /**
@@ -136,7 +116,7 @@ public class Member {
      * @return Optional long value
      */
     public OptionalLong getVers() {
-        return vers;
+        return (vers == null) ? OptionalLong.empty() : OptionalLong.of(vers);
     }
 
     /**
@@ -145,7 +125,7 @@ public class Member {
      * @return Optional long value
      */
     public OptionalLong getMod() {
-        return mod;
+        return (mod == null) ? OptionalLong.empty() : OptionalLong.of(mod);
     }
 
     /**
@@ -154,7 +134,7 @@ public class Member {
      * @return Optional string value
      */
     public Optional<String> getC4date() {
-        return c4date;
+        return Optional.ofNullable(c4date);
     }
 
     /**
@@ -163,7 +143,7 @@ public class Member {
      * @return Optional string value
      */
     public Optional<String> getM4date() {
-        return m4date;
+        return Optional.ofNullable(m4date);
     }
 
     /**
@@ -172,7 +152,7 @@ public class Member {
      * @return Optional long value
      */
     public OptionalLong getCnorc() {
-        return cnorc;
+        return (cnorc == null) ? OptionalLong.empty() : OptionalLong.of(cnorc);
     }
 
     /**
@@ -181,7 +161,7 @@ public class Member {
      * @return Optional long value
      */
     public OptionalLong getInorc() {
-        return inorc;
+        return (inorc == null) ? OptionalLong.empty() : OptionalLong.of(inorc);
     }
 
     /**
@@ -190,7 +170,7 @@ public class Member {
      * @return Optional long value
      */
     public OptionalLong getMnorc() {
-        return mnorc;
+        return (mnorc == null) ? OptionalLong.empty() : OptionalLong.of(mnorc);
     }
 
     /**
@@ -199,7 +179,7 @@ public class Member {
      * @return Optional string value
      */
     public Optional<String> getMtime() {
-        return mtime;
+        return Optional.ofNullable(mtime);
     }
 
     /**
@@ -208,7 +188,7 @@ public class Member {
      * @return Optional string value
      */
     public Optional<String> getMsec() {
-        return msec;
+        return Optional.ofNullable(msec);
     }
 
     /**
@@ -217,7 +197,7 @@ public class Member {
      * @return Optional string value
      */
     public Optional<String> getUser() {
-        return user;
+        return Optional.ofNullable(user);
     }
 
     /**
@@ -226,7 +206,7 @@ public class Member {
      * @return Optional string value
      */
     public Optional<String> getSclm() {
-        return sclm;
+        return Optional.ofNullable(sclm);
     }
 
     /**

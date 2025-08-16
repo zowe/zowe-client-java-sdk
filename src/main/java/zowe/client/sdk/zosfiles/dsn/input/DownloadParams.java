@@ -24,28 +24,28 @@ public class DownloadParams {
     /**
      * The local file to download the data set to, e.g. "./path/to/file.txt"
      */
-    private final Optional<String> file;
+    private final String file;
 
     /**
      * The extension you want to use for the file, e.g., extensions: .txt, .c
      */
-    private final Optional<String> extension;
+    private final String extension;
 
     /**
      * The local directory to download all members from a pds. e.g. "./path/to/dir"
      */
-    private final Optional<String> directory;
+    private final String directory;
 
     /**
      * Exclude data sets that match these DSLEVEL patterns. Any data sets that match
      * this pattern will not be downloaded, e.g. "ibmuser.**.jcl, ibmuser.rexa.*"
      */
-    private final Optional<String[]> excludePatterns;
+    private final String[] excludePatterns;
 
     /**
      * Map data set names that match your pattern to the desired extension. e.g., cpgm=c,asmpgm=asm
      */
-    private final Optional<HashMap<String, String>> extensionMap;
+    private final HashMap<String, String> extensionMap;
 
     /**
      * The maximum REST requests to perform at once
@@ -54,7 +54,7 @@ public class DownloadParams {
      * by making too many requests at once.
      * Default: 1
      */
-    private final OptionalLong maxConcurrentRequests;
+    private final Long maxConcurrentRequests;
 
     /**
      * The indicator to force the return of ETag.
@@ -88,22 +88,22 @@ public class DownloadParams {
     /**
      * Code page encoding
      */
-    private final OptionalLong encoding;
+    private final Long encoding;
 
     /**
      * The volume on which the data set is stored
      */
-    private final Optional<String> volume;
+    private final String volume;
 
     /**
      * Task status object used by CLI handlers to create progress bars
      */
-    private final Optional<String> task;
+    private final String task;
 
     /**
      * Request time out value
      */
-    private final Optional<String> responseTimeout;
+    private final String responseTimeout;
 
     /**
      * DownloadParams constructor
@@ -112,28 +112,20 @@ public class DownloadParams {
      * @author Nikunj Goyal
      */
     private DownloadParams(final Builder builder) {
-        this.file = Optional.ofNullable(builder.file);
-        this.extension = Optional.ofNullable(builder.extension);
-        this.directory = Optional.ofNullable(builder.directory);
-        this.excludePatterns = Optional.ofNullable(builder.excludePatterns);
-        this.extensionMap = Optional.ofNullable(builder.extensionMap);
-        if (builder.maxConcurrentRequests == null) {
-            this.maxConcurrentRequests = OptionalLong.empty();
-        } else {
-            this.maxConcurrentRequests = OptionalLong.of(builder.maxConcurrentRequests);
-        }
+        this.file = builder.file;
+        this.extension = builder.extension;
+        this.directory = builder.directory;
+        this.excludePatterns = builder.excludePatterns;
+        this.extensionMap = builder.extensionMap;
+        this.maxConcurrentRequests = builder.maxConcurrentRequests;
         this.returnEtag = builder.returnEtag;
         this.preserveOriginalLetterCase = builder.preserveOriginalLetterCase;
         this.failFast = builder.failFast;
         this.binary = builder.binary;
-        if (builder.encoding == null) {
-            this.encoding = OptionalLong.empty();
-        } else {
-            this.encoding = OptionalLong.of(builder.encoding);
-        }
-        this.volume = Optional.ofNullable(builder.volume);
-        this.task = Optional.ofNullable(builder.task);
-        this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
+        this.encoding = builder.encoding;
+        this.volume = builder.volume;
+        this.task = builder.task;
+        this.responseTimeout = builder.responseTimeout;
     }
 
     /**
@@ -151,7 +143,7 @@ public class DownloadParams {
      * @return directory value
      */
     public Optional<String> getDirectory() {
-        return directory;
+        return Optional.ofNullable(directory);
     }
 
     /**
@@ -160,7 +152,7 @@ public class DownloadParams {
      * @return encoding value
      */
     public OptionalLong getEncoding() {
-        return encoding;
+        return (encoding == null) ? OptionalLong.empty() : OptionalLong.of(encoding);
     }
 
     /**
@@ -169,7 +161,7 @@ public class DownloadParams {
      * @return excludePatterns value
      */
     public Optional<String[]> getExcludePatterns() {
-        return excludePatterns;
+        return Optional.ofNullable(excludePatterns);
     }
 
     /**
@@ -178,7 +170,7 @@ public class DownloadParams {
      * @return extension value
      */
     public Optional<String> getExtension() {
-        return extension;
+        return Optional.ofNullable(extension);
     }
 
     /**
@@ -187,7 +179,7 @@ public class DownloadParams {
      * @return extensionMap value
      */
     public Optional<HashMap<String, String>> getExtensionMap() {
-        return extensionMap;
+        return Optional.ofNullable(extensionMap);
     }
 
     /**
@@ -205,7 +197,7 @@ public class DownloadParams {
      * @return file value
      */
     public Optional<String> getFile() {
-        return file;
+        return Optional.ofNullable(file);
     }
 
     /**
@@ -214,7 +206,7 @@ public class DownloadParams {
      * @return maxConcurrentRequests value
      */
     public OptionalLong getNaxConcurrentRequests() {
-        return maxConcurrentRequests;
+        return (maxConcurrentRequests == null) ? OptionalLong.empty() : OptionalLong.of(maxConcurrentRequests);
     }
 
     /**
@@ -232,7 +224,7 @@ public class DownloadParams {
      * @return responseTimeout value
      */
     public Optional<String> getResponseTimeout() {
-        return responseTimeout;
+        return Optional.ofNullable(responseTimeout);
     }
 
     /**
@@ -250,7 +242,7 @@ public class DownloadParams {
      * @return task value
      */
     public Optional<String> getTask() {
-        return task;
+        return Optional.ofNullable(task);
     }
 
     /**
@@ -259,7 +251,7 @@ public class DownloadParams {
      * @return volume value
      */
     public Optional<String> getVolume() {
-        return volume;
+        return Optional.ofNullable(volume);
     }
 
     /**

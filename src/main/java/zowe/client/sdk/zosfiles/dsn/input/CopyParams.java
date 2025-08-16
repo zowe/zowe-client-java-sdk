@@ -24,22 +24,22 @@ public class CopyParams {
     /**
      * The volume to copy from
      */
-    private final Optional<String> fromVolser;
+    private final String fromVolser;
 
     /**
      * The dataset to copy from
      */
-    private final Optional<String> fromDataSet;
+    private final String fromDataSet;
 
     /**
      * The volume to copy too
      */
-    private final Optional<String> toVolser;
+    private final String toVolser;
 
     /**
      * The dataset to copy too
      */
-    private final Optional<String> toDataSet;
+    private final String toDataSet;
 
     /**
      * Replace option
@@ -58,10 +58,10 @@ public class CopyParams {
      * @author Leonid Baranov
      */
     private CopyParams(final Builder builder) {
-        this.fromVolser = Optional.ofNullable(builder.fromVolser);
-        this.fromDataSet = Optional.ofNullable(builder.fromDataSet);
-        this.toVolser = Optional.ofNullable(builder.toVolser);
-        this.toDataSet = Optional.ofNullable(builder.toDataSet);
+        this.fromVolser = builder.fromVolser;
+        this.fromDataSet = builder.fromDataSet;
+        this.toVolser = builder.toVolser;
+        this.toDataSet = builder.toDataSet;
         this.replace = builder.replace;
         this.copyAllMembers = builder.copyAllMembers;
     }
@@ -72,7 +72,7 @@ public class CopyParams {
      * @return fromDataSet value
      */
     public Optional<String> getFromDataSet() {
-        return fromDataSet;
+        return Optional.ofNullable(fromDataSet);
     }
 
     /**
@@ -81,7 +81,7 @@ public class CopyParams {
      * @return fromVolser value
      */
     public Optional<String> getFromVolser() {
-        return fromVolser;
+        return Optional.ofNullable(fromVolser);
     }
 
     /**
@@ -90,7 +90,7 @@ public class CopyParams {
      * @return toDataSet value
      */
     public Optional<String> getToDataSet() {
-        return toDataSet;
+        return Optional.ofNullable(toDataSet);
     }
 
     /**
@@ -99,7 +99,7 @@ public class CopyParams {
      * @return toVolser value
      */
     public Optional<String> getToVolser() {
-        return toVolser;
+        return Optional.ofNullable(toVolser);
     }
 
     /**

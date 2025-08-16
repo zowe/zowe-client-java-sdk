@@ -25,37 +25,37 @@ public class ListParams {
     /**
      * The volume where the data set resides
      */
-    private final Optional<String> volume;
+    private final String volume;
 
     /**
      * The indicator that we want to show more attributes
      */
-    private final Optional<AttributeType> attribute;
+    private final AttributeType attribute;
 
     /**
      * The indicator that we want to show fewer data sets or members
      */
-    private final Optional<String> maxLength;
+    private final String maxLength;
 
     /**
      * An optional search parameter that specifies the first data set name to return to the response document
      */
-    private final Optional<String> start;
+    private final String start;
 
     /**
      * An optional parameter that specifies how to handle migrated data sets
      */
-    private final Optional<String> recall;
+    private final String recall;
 
     /**
      * An optional pattern for restricting the response list
      */
-    private final Optional<String> pattern;
+    private final String pattern;
 
     /**
      * Response time out value
      */
-    private final Optional<String> responseTimeout;
+    private final String responseTimeout;
 
     /**
      * ListParams constructor
@@ -64,13 +64,13 @@ public class ListParams {
      * @author Nikunj Goyal
      */
     private ListParams(final Builder builder) {
-        this.volume = Optional.ofNullable(builder.volume);
-        this.attribute = Optional.ofNullable(builder.attribute);
-        this.maxLength = Optional.ofNullable(builder.maxLength);
-        this.start = Optional.ofNullable(builder.start);
-        this.recall = Optional.ofNullable(builder.recall);
-        this.pattern = Optional.ofNullable(builder.pattern);
-        this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
+        this.volume = builder.volume;
+        this.attribute = builder.attribute;
+        this.maxLength = builder.maxLength;
+        this.start = builder.start;
+        this.recall = builder.recall;
+        this.pattern = builder.pattern;
+        this.responseTimeout = builder.responseTimeout;
     }
 
     /**
@@ -79,7 +79,7 @@ public class ListParams {
      * @return attributes value
      */
     public Optional<AttributeType> getAttribute() {
-        return attribute;
+        return Optional.ofNullable(attribute);
     }
 
     /**
@@ -88,7 +88,7 @@ public class ListParams {
      * @return maxLength value
      */
     public Optional<String> getMaxLength() {
-        return maxLength;
+        return Optional.ofNullable(maxLength);
     }
 
     /**
@@ -97,7 +97,7 @@ public class ListParams {
      * @return pattern value
      */
     public Optional<String> getPattern() {
-        return pattern;
+        return Optional.ofNullable(pattern);
     }
 
     /**
@@ -106,7 +106,7 @@ public class ListParams {
      * @return recall value
      */
     public Optional<String> getRecall() {
-        return recall;
+        return Optional.ofNullable(recall);
     }
 
     /**
@@ -115,7 +115,7 @@ public class ListParams {
      * @return responseTimeout value
      */
     public Optional<String> getResponseTimeout() {
-        return responseTimeout;
+        return Optional.ofNullable(responseTimeout);
     }
 
     /**
@@ -124,7 +124,7 @@ public class ListParams {
      * @return start value
      */
     public Optional<String> getStart() {
-        return start;
+        return Optional.ofNullable(start);
     }
 
     /**
@@ -133,7 +133,7 @@ public class ListParams {
      * @return volume value
      */
     public Optional<String> getVolume() {
-        return volume;
+        return Optional.ofNullable(volume);
     }
 
     /**

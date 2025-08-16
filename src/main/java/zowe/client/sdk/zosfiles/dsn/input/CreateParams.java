@@ -25,77 +25,77 @@ public class CreateParams {
     /**
      * The volume serial
      */
-    private final Optional<String> volser;
+    private final String volser;
 
     /**
      * The device type
      */
-    private final Optional<String> unit;
+    private final String unit;
 
     /**
      * The data set organization
      */
-    private final Optional<String> dsorg;
+    private final String dsorg;
 
     /**
      * The unit of space allocation
      */
-    private final Optional<String> alcunit;
+    private final String alcunit;
 
     /**
      * The primary space allocation
      */
-    private final OptionalInt primary;
+    private final Integer primary;
 
     /**
      * The secondary space allocation
      */
-    private final OptionalInt secondary;
+    private final Integer secondary;
 
     /**
      * The number of directory blocks
      */
-    private final OptionalInt dirblk;
+    private final Integer dirblk;
 
     /**
      * The average block
      */
-    private final OptionalInt avgblk;
+    private final Integer avgblk;
 
     /**
      * The record format
      */
-    private final Optional<String> recfm;
+    private final String recfm;
 
     /**
      * The block size
      */
-    private final OptionalInt blksize;
+    private final Integer blksize;
 
     /**
      * The record length
      */
-    private final OptionalInt lrecl;
+    private final Integer lrecl;
 
     /**
      * The storage class
      */
-    private final Optional<String> storclass;
+    private final String storclass;
 
     /**
      * The management class
      */
-    private final Optional<String> mgntclass;
+    private final String mgntclass;
 
     /**
      * The data class
      */
-    private final Optional<String> dataclass;
+    private final String dataclass;
 
     /**
      * The data set type
      */
-    private final Optional<String> dsntype;
+    private final String dsntype;
 
     /**
      * The indicator that we need to show the attributes
@@ -107,12 +107,12 @@ public class CreateParams {
      * The abstraction of Allocation unit and Primary Space
      * DO NOT SEND THIS TO ZOSMF
      */
-    private final Optional<String> size;
+    private final String size;
 
     /**
      * Response time out value
      */
-    private final Optional<String> responseTimeout;
+    private final String responseTimeout;
 
     /**
      * CreateParams constructor
@@ -121,48 +121,24 @@ public class CreateParams {
      * @author Leonid Baranov
      */
     private CreateParams(final Builder builder) {
-        this.volser = Optional.ofNullable(builder.volser);
-        this.unit = Optional.ofNullable(builder.unit);
-        this.dsorg = Optional.ofNullable(builder.dsorg);
-        this.alcunit = Optional.ofNullable(builder.alcunit);
-        if (builder.primary == null) {
-            this.primary = OptionalInt.empty();
-        } else {
-            this.primary = OptionalInt.of(builder.primary);
-        }
-        if (builder.secondary == null) {
-            this.secondary = OptionalInt.empty();
-        } else {
-            this.secondary = OptionalInt.of(builder.secondary);
-        }
-        if (builder.dirblk == null) {
-            this.dirblk = OptionalInt.empty();
-        } else {
-            this.dirblk = OptionalInt.of(builder.dirblk);
-        }
-        if (builder.avgblk == null) {
-            this.avgblk = OptionalInt.empty();
-        } else {
-            this.avgblk = OptionalInt.of(builder.avgblk);
-        }
-        this.recfm = Optional.ofNullable(builder.recfm);
-        if (builder.blksize == null) {
-            this.blksize = OptionalInt.empty();
-        } else {
-            this.blksize = OptionalInt.of(builder.blksize);
-        }
-        if (builder.lrecl == null) {
-            this.lrecl = OptionalInt.empty();
-        } else {
-            this.lrecl = OptionalInt.of(builder.lrecl);
-        }
-        this.storclass = Optional.ofNullable(builder.storclass);
-        this.mgntclass = Optional.ofNullable(builder.mgntclass);
-        this.dataclass = Optional.ofNullable(builder.dataclass);
-        this.dsntype = Optional.ofNullable(builder.dsntype);
+        this.volser = builder.volser;
+        this.unit = builder.unit;
+        this.dsorg = builder.dsorg;
+        this.alcunit = builder.alcunit;
+        this.primary = builder.primary;
+        this.secondary = builder.secondary;
+        this.dirblk = builder.dirblk;
+        this.avgblk = builder.avgblk;
+        this.recfm = builder.recfm;
+        this.blksize = builder.blksize;
+        this.lrecl = builder.lrecl;
+        this.storclass = builder.storclass;
+        this.mgntclass = builder.mgntclass;
+        this.dataclass = builder.dataclass;
+        this.dsntype = builder.dsntype;
         this.showAttributes = builder.showAttributes;
-        this.size = Optional.ofNullable(builder.size);
-        this.responseTimeout = Optional.ofNullable(builder.responseTimeout);
+        this.size = builder.size;
+        this.responseTimeout = builder.responseTimeout;
     }
 
     /**
@@ -171,7 +147,7 @@ public class CreateParams {
      * @return alcunit value
      */
     public Optional<String> getAlcunit() {
-        return alcunit;
+        return Optional.ofNullable(alcunit);
     }
 
     /**
@@ -180,7 +156,7 @@ public class CreateParams {
      * @return avgblk value
      */
     public OptionalInt getAvgblk() {
-        return avgblk;
+        return (avgblk == null) ? OptionalInt.empty() : OptionalInt.of(avgblk);
     }
 
     /**
@@ -189,7 +165,7 @@ public class CreateParams {
      * @return blksize value
      */
     public OptionalInt getBlksize() {
-        return blksize;
+        return (blksize == null) ? OptionalInt.empty() : OptionalInt.of(blksize);
     }
 
     /**
@@ -198,7 +174,7 @@ public class CreateParams {
      * @return dataclass value
      */
     public Optional<String> getDataclass() {
-        return dataclass;
+        return Optional.ofNullable(dataclass);
     }
 
     /**
@@ -207,7 +183,7 @@ public class CreateParams {
      * @return dirblk value
      */
     public OptionalInt getDirblk() {
-        return dirblk;
+        return (dirblk == null) ? OptionalInt.empty() : OptionalInt.of(dirblk);
     }
 
     /**
@@ -216,7 +192,7 @@ public class CreateParams {
      * @return dsntype value
      */
     public Optional<String> getDsntype() {
-        return dsntype;
+        return Optional.ofNullable(dsntype);
     }
 
     /**
@@ -225,7 +201,7 @@ public class CreateParams {
      * @return dsorg value
      */
     public Optional<String> getDsorg() {
-        return dsorg;
+        return Optional.ofNullable(dsorg);
     }
 
     /**
@@ -234,7 +210,7 @@ public class CreateParams {
      * @return lrecl value
      */
     public OptionalInt getLrecl() {
-        return lrecl;
+        return (lrecl == null) ? OptionalInt.empty() : OptionalInt.of(lrecl);
     }
 
     /**
@@ -243,7 +219,7 @@ public class CreateParams {
      * @return mgntclass value
      */
     public Optional<String> getMgntclass() {
-        return mgntclass;
+        return Optional.ofNullable(mgntclass);
     }
 
     /**
@@ -252,7 +228,7 @@ public class CreateParams {
      * @return primary value
      */
     public OptionalInt getPrimary() {
-        return primary;
+        return (primary == null) ? OptionalInt.empty() : OptionalInt.of(primary);
     }
 
     /**
@@ -261,7 +237,7 @@ public class CreateParams {
      * @return recfm value
      */
     public Optional<String> getRecfm() {
-        return recfm;
+        return Optional.ofNullable(recfm);
     }
 
     /**
@@ -270,7 +246,7 @@ public class CreateParams {
      * @return responseTimeout value
      */
     public Optional<String> getResponseTimeout() {
-        return responseTimeout;
+        return Optional.ofNullable(responseTimeout);
     }
 
     /**
@@ -279,7 +255,7 @@ public class CreateParams {
      * @return secondary value
      */
     public OptionalInt getSecondary() {
-        return secondary;
+        return (secondary == null) ? OptionalInt.empty() : OptionalInt.of(secondary);
     }
 
     /**
@@ -297,7 +273,7 @@ public class CreateParams {
      * @return size value
      */
     public Optional<String> getSize() {
-        return size;
+        return Optional.ofNullable(size);
     }
 
     /**
@@ -306,7 +282,7 @@ public class CreateParams {
      * @return storclass value
      */
     public Optional<String> getStorclass() {
-        return storclass;
+        return Optional.ofNullable(storclass);
     }
 
     /**
@@ -315,7 +291,7 @@ public class CreateParams {
      * @return unit value
      */
     public Optional<String> getUnit() {
-        return unit;
+        return Optional.ofNullable(unit);
     }
 
     /**
@@ -324,7 +300,7 @@ public class CreateParams {
      * @return volser value
      */
     public Optional<String> getVolser() {
-        return volser;
+        return Optional.ofNullable(volser);
     }
 
     /**
