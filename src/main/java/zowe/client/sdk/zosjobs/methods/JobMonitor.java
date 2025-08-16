@@ -19,7 +19,7 @@ import zowe.client.sdk.utility.timer.WaitUtil;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.CommonJobParams;
 import zowe.client.sdk.zosjobs.input.GetJobParams;
-import zowe.client.sdk.zosjobs.input.JobFile;
+import zowe.client.sdk.zosjobs.response.JobFile;
 import zowe.client.sdk.zosjobs.input.MonitorJobWaitForParams;
 import zowe.client.sdk.zosjobs.response.CheckJobStatus;
 import zowe.client.sdk.zosjobs.response.Job;

@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs.input;
+package zowe.client.sdk.zosjobs.response;
 
 import java.util.Optional;
 import java.util.OptionalLong;

@@ -12,7 +12,7 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONObject;
 import org.junit.Test;
 import zowe.client.sdk.parse.type.ParseType;
-import zowe.client.sdk.zosjobs.input.JobFile;
+import zowe.client.sdk.zosjobs.response.JobFile;
 
 import java.util.HashMap;
 import java.util.Map;
