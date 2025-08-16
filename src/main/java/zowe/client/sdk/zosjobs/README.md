@@ -11,7 +11,7 @@ APIs are located in the methods package.
 ````java
 package zowe.client.sdk.examples.zosjobs;
 
-import zowe.client.sdk.core.ZosConna ection;
+import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
