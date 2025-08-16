@@ -18,7 +18,7 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 4.0
  */
-public class JobFile {
+public class SpoolDocument {
 
     /**
      * Job id for a job. Uniquely identifies a job on a z/OS system
@@ -96,7 +96,7 @@ public class JobFile {
      * @param builder JobFile.Builder object
      * @author Frank Giordano
      */
-    private JobFile(final Builder builder) {
+    private SpoolDocument(final Builder builder) {
         this.jobId = builder.jobId;
         this.jobName = builder.jobName;
         this.recfm = builder.recfm;
@@ -520,8 +520,8 @@ public class JobFile {
          *
          * @return JobFile this object
          */
-        public JobFile build() {
-            return new JobFile(this);
+        public SpoolDocument build() {
+            return new SpoolDocument(this);
         }
 
     }

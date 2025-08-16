@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.JobModify.JobInput;
-import zowe.client.sdk.zosjobs.response.Job;
+import zowe.client.sdk.zosjobs.response.JobDocument;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -103,7 +103,7 @@ public class JobCancel {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response cancelByJob(final Job job, final String version) throws ZosmfRequestException {
+    public Response cancelByJob(final JobDocument job, final String version) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         final String jobName = job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG));
         final String jobId = job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG));

@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosjobs.response.Job;
+import zowe.client.sdk.zosjobs.response.JobDocument;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -195,15 +195,15 @@ public class JobCancelTest {
         assertTrue(exception.getMessage().contains("job is null"));
 
         exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
-                jobCancel.cancelByJob(new Job.Builder().jobName(null).jobId("1").build(), "1"));
+                jobCancel.cancelByJob(new JobDocument.Builder().jobName(null).jobId("1").build(), "1"));
         assertTrue(exception.getMessage().contains("jobName is either null or empty"));
 
         exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
-                jobCancel.cancelByJob(new Job.Builder().jobName("name").jobId(null).build(), "1"));
+                jobCancel.cancelByJob(new JobDocument.Builder().jobName("name").jobId(null).build(), "1"));
         assertTrue(exception.getMessage().contains("jobId is either null or empty"));
 
         exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
-                jobCancel.cancelByJob(new Job.Builder().jobName("name").jobId("1").build(), "4"));
+                jobCancel.cancelByJob(new JobDocument.Builder().jobName("name").jobId("1").build(), "4"));
         assertTrue(exception.getMessage().contains("invalid version specified"));
     }
 

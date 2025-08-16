@@ -12,7 +12,7 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONObject;
 import org.junit.Test;
 import zowe.client.sdk.parse.type.ParseType;
-import zowe.client.sdk.zosjobs.response.Job;
+import zowe.client.sdk.zosjobs.response.JobDocument;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,7 +53,7 @@ public class JobParseResponseTest {
         jsonMap.put("jobid", "dev");
         final JSONObject json = new JSONObject(jsonMap);
 
-        final Job response = (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(json);
+        final JobDocument response = (JobDocument) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(json);
         assertEquals("ver", response.getJobName().orElse("n\\a"));
         assertEquals("dev", response.getJobId().orElse("n\\a"));
     }

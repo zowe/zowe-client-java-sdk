@@ -24,7 +24,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.JobSubmit.JclInput;
 import zowe.client.sdk.zosjobs.input.JobSubmit.JobInput;
-import zowe.client.sdk.zosjobs.response.Job;
+import zowe.client.sdk.zosjobs.response.JobDocument;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -84,7 +84,7 @@ public class JobSubmit {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Job submitByJcl(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl)
+    public JobDocument submitByJcl(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jcl, "jcl");
         return this.submitJclCommon(new JclInput(jcl, internalReaderRecfm, internalReaderLrecl));
@@ -98,7 +98,7 @@ public class JobSubmit {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Job submitJclCommon(final JclInput params) throws ZosmfRequestException {
+    public JobDocument submitJclCommon(final JclInput params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         String key, value;
@@ -145,7 +145,7 @@ public class JobSubmit {
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job jcl submit response phrase")).toString();
         final JSONObject jsonObject = JsonParserUtil.parse(jsonStr);
-        return (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
+        return (JobDocument) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
     }
 
     /**
@@ -156,7 +156,7 @@ public class JobSubmit {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Job submit(final String jobDataSet) throws ZosmfRequestException {
+    public JobDocument submit(final String jobDataSet) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jobDataSet, "jobDataSet");
         return this.submitCommon(new JobInput(jobDataSet));
     }
@@ -170,7 +170,7 @@ public class JobSubmit {
      * @author Frank Giordano
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in SubmitJobParams
-    public Job submitCommon(final JobInput params) throws ZosmfRequestException {
+    public JobDocument submitCommon(final JobInput params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE;
@@ -191,7 +191,7 @@ public class JobSubmit {
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job submit response phrase")).toString();
         final JSONObject jsonObject = JsonParserUtil.parse(jsonStr);
-        return (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
+        return (JobDocument) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
     }
 
     /**

@@ -18,7 +18,7 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 4.0
  */
-public class JobStepData {
+public class StepDataDocument {
 
     /**
      * SMFID
@@ -61,7 +61,7 @@ public class JobStepData {
      * @param builder JobStepData.Builder object
      * @author Frank Giordano
      */
-    private JobStepData(final JobStepData.Builder builder) {
+    private StepDataDocument(final StepDataDocument.Builder builder) {
         this.smfid = Optional.ofNullable(builder.smfid);
         this.completion = Optional.ofNullable(builder.completion);
         this.active = builder.active;
@@ -284,8 +284,8 @@ public class JobStepData {
          *
          * @return JobStepData this object
          */
-        public JobStepData build() {
-            return new JobStepData(this);
+        public StepDataDocument build() {
+            return new StepDataDocument(this);
         }
 
     }

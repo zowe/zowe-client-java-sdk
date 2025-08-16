@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosjobs.response.Job;
+import zowe.client.sdk.zosjobs.response.JobDocument;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,7 +85,7 @@ public class JobSubmitTest {
     @Test
     public void tstJobSubmitSuccess() throws ZosmfRequestException {
         final JobSubmit jobSubmit = new JobSubmit(connection, mockPutJsonZosmfRequest);
-        final Job job = jobSubmit.submit("TEST.DATASET");
+        final JobDocument job = jobSubmit.submit("TEST.DATASET");
         assertEquals("https://1:1/zosmf/restjobs/jobs", mockPutJsonZosmfRequest.getUrl());
         assertEquals("jobid", job.getJobId().get());
         assertEquals("jobname", job.getJobName().get());
@@ -104,7 +104,7 @@ public class JobSubmitTest {
     @Test
     public void tstJobSubmitTokenSuccess() throws ZosmfRequestException {
         final JobSubmit jobSubmit = new JobSubmit(connection, mockPutJsonZosmfRequestToken);
-        final Job job = jobSubmit.submit("TEST.DATASET");
+        final JobDocument job = jobSubmit.submit("TEST.DATASET");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockPutJsonZosmfRequestToken.getHeaders().toString());
         assertEquals("https://1:1/zosmf/restjobs/jobs", mockPutJsonZosmfRequestToken.getUrl());

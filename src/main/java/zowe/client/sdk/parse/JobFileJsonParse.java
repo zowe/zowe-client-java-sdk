@@ -11,7 +11,7 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosjobs.response.JobFile;
+import zowe.client.sdk.zosjobs.response.SpoolDocument;
 
 /**
  * Parse JSON response for a job file
@@ -59,7 +59,7 @@ public final class JobFileJsonParse implements JsonParse {
     public synchronized Object parseResponse(final Object... args) {
         ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
         final JSONObject data = (JSONObject) args[0];
-        return new JobFile.Builder()
+        return new SpoolDocument.Builder()
                 .jobId(data.get("jobid") != null ? (String) data.get("jobid") : null)
                 .jobName(data.get("jobname") != null ? (String) data.get("jobname") : null)
                 .recfm(data.get("recfm") != null ? (String) data.get("recfm") : null)

@@ -24,7 +24,7 @@ import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.zosjobs.JobsConstants;
-import zowe.client.sdk.zosjobs.response.Job;
+import zowe.client.sdk.zosjobs.response.JobDocument;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -107,7 +107,7 @@ public class JobGetJsonTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(jsonArray, 200, "success"));
 
-        final Job job = getJobs.getById("1");
+        final JobDocument job = getJobs.getById("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
         assertEquals("jobid", job.getJobId().get());
         assertEquals("jobname", job.getJobName().get());
@@ -136,7 +136,7 @@ public class JobGetJsonTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(jsonArray, 200, "success"));
 
-        final Job job = getJobs.getById("1");
+        final JobDocument job = getJobs.getById("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
         assertEquals("job", job.getJobId().get());
     }
@@ -199,7 +199,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonStatusForJobNoParamsExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getStatusByJob(new Job.Builder().build());
+            getJobs.getStatusByJob(new JobDocument.Builder().build());
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
@@ -211,7 +211,7 @@ public class JobGetJsonTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(jobJson, 200, "success"));
 
-        final Job job = getJobs.getStatusByJob(new Job.Builder().jobId("1").jobName("jobName").build());
+        final JobDocument job = getJobs.getStatusByJob(new JobDocument.Builder().jobId("1").jobName("jobName").build());
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/1?step-data=Y", getJobs.getUrl());
         assertEquals("jobid", job.getJobId().get());
         assertEquals("jobname", job.getJobName().get());
@@ -231,7 +231,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonStatusForJobWithJobIdOnlyExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getStatusByJob(new Job.Builder().jobId("1").build());
+            getJobs.getStatusByJob(new JobDocument.Builder().jobId("1").build());
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
@@ -242,7 +242,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonStatusForJobWithJobNameOnlyExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getStatusByJob(new Job.Builder().jobName("jobName").build());
+            getJobs.getStatusByJob(new JobDocument.Builder().jobName("jobName").build());
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }

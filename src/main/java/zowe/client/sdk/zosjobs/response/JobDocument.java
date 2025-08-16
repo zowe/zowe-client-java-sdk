@@ -18,7 +18,7 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 4.0
  */
-public class Job {
+public class JobDocument {
 
     /**
      * Job id for a job. Uniquely identifies a job on a z/OS system
@@ -63,7 +63,7 @@ public class Job {
     /**
      * Detailed job step data
      */
-    private final Optional<JobStepData[]> stepData;
+    private final Optional<StepDataDocument[]> stepData;
 
     /**
      * Url for direct reference of job info
@@ -97,7 +97,7 @@ public class Job {
      * @param builder Job.Builder object
      * @author Frank Giordano
      */
-    private Job(final Job.Builder builder) {
+    private JobDocument(final JobDocument.Builder builder) {
         this.jobId = Optional.ofNullable(builder.jobId);
         this.jobName = Optional.ofNullable(builder.jobName);
         this.subSystem = Optional.ofNullable(builder.subSystem);
@@ -213,7 +213,7 @@ public class Job {
      *
      * @return stepData value
      */
-    public Optional<JobStepData[]> getStepData() {
+    public Optional<StepDataDocument[]> getStepData() {
         return stepData;
     }
 
@@ -317,7 +317,7 @@ public class Job {
         /**
          * Detailed job step data
          */
-        private JobStepData[] stepData;
+        private StepDataDocument[] stepData;
 
         /**
          * Url for direct reference of job info
@@ -467,7 +467,7 @@ public class Job {
          * @param stepData JobStepData array value
          * @return Builder this object
          */
-        public Builder stepData(final JobStepData[] stepData) {
+        public Builder stepData(final StepDataDocument[] stepData) {
             this.stepData = stepData;
             return this;
         }
@@ -510,8 +510,8 @@ public class Job {
          *
          * @return Job this object
          */
-        public Job build() {
-            return new Job(this);
+        public JobDocument build() {
+            return new JobDocument(this);
         }
 
     }

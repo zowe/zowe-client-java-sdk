@@ -12,8 +12,8 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosjobs.response.Job;
-import zowe.client.sdk.zosjobs.response.JobStepData;
+import zowe.client.sdk.zosjobs.response.JobDocument;
+import zowe.client.sdk.zosjobs.response.StepDataDocument;
 
 /**
  * Extract Job from JSON response
@@ -61,7 +61,7 @@ public final class JobJsonParse implements JsonParse {
     public synchronized Object parseResponse(final Object... args) {
         ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
         final JSONObject data = (JSONObject) args[0];
-        final Job.Builder job = new Job.Builder()
+        final JobDocument.Builder job = new JobDocument.Builder()
                 .jobId(data.get("jobid") != null ? (String) data.get("jobid") : null)
                 .jobName(data.get("jobname") != null ? (String) data.get("jobname") : null)
                 .subSystem(data.get("subsystem") != null ? (String) data.get("subsystem") : null)
@@ -80,7 +80,7 @@ public final class JobJsonParse implements JsonParse {
         final JSONArray stepData = data.get("step-data") != null ? (JSONArray) data.get("step-data") : null;
         if (stepData != null) {
             final int size = stepData.size();
-            final JobStepData[] jobStepDataArray = new JobStepData[size];
+            final StepDataDocument[] jobStepDataArray = new StepDataDocument[size];
             for (int i = 0; i < size; i++) {
                 jobStepDataArray[i] = parseStepDataResponse((JSONObject) stepData.get(i));
             }
@@ -95,8 +95,8 @@ public final class JobJsonParse implements JsonParse {
      * @return JobStepData object
      * @author Frank Giordano
      */
-    private JobStepData parseStepDataResponse(final JSONObject data) {
-        return new JobStepData.Builder()
+    private StepDataDocument parseStepDataResponse(final JSONObject data) {
+        return new StepDataDocument.Builder()
                 .smfid(data.get("smfid") != null ? (String) data.get("smfid") : null)
                 .completion(data.get("completion") != null ? (String) data.get("completion") : null)
                 .stepNumber(data.get("step-number") != null ? (Long) data.get("step-number") : null)
