@@ -22,27 +22,27 @@ public class ZosmfIssueResponse {
     /**
      * Follow-up response URL.
      */
-    private Optional<String> cmdResponseUrl = Optional.empty();
+    private String cmdResponseUrl;
 
     /**
      * Command response text.
      */
-    private Optional<String> cmdResponse = Optional.empty();
+    private String cmdResponse;
 
     /**
      * The follow-up response URI.
      */
-    private Optional<String> cmdResponseUri = Optional.empty();
+    private String cmdResponseUri;
 
     /**
      * The command response key used for follow-up requests.
      */
-    private Optional<String> cmdResponseKey = Optional.empty();
+    private String cmdResponseKey;
 
     /**
      * True if the solicited keyword requested is present.
      */
-    private Optional<String> solKeyDetected = Optional.empty();
+    private String solKeyDetected;
 
     /**
      * Retrieve cmdResponse value
@@ -50,7 +50,7 @@ public class ZosmfIssueResponse {
      * @return cmdResponse value
      */
     public Optional<String> getCmdResponse() {
-        return cmdResponse;
+        return Optional.ofNullable(cmdResponse);
     }
 
     /**
@@ -59,7 +59,7 @@ public class ZosmfIssueResponse {
      * @param cmdResponse value
      */
     public void setCmdResponse(final String cmdResponse) {
-        this.cmdResponse = Optional.ofNullable(cmdResponse);
+        this.cmdResponse = cmdResponse;
     }
 
     /**
@@ -68,7 +68,7 @@ public class ZosmfIssueResponse {
      * @return cmdResponseKey value
      */
     public Optional<String> getCmdResponseKey() {
-        return cmdResponseKey;
+        return Optional.ofNullable(cmdResponseKey);
     }
 
     /**
@@ -77,7 +77,7 @@ public class ZosmfIssueResponse {
      * @param cmdResponseKey value
      */
     public void setCmdResponseKey(final String cmdResponseKey) {
-        this.cmdResponseKey = Optional.ofNullable(cmdResponseKey);
+        this.cmdResponseKey = cmdResponseKey;
     }
 
     /**
@@ -86,7 +86,7 @@ public class ZosmfIssueResponse {
      * @return cmdResponseUri value
      */
     public Optional<String> getCmdResponseUri() {
-        return cmdResponseUri;
+        return Optional.ofNullable(cmdResponseUri);
     }
 
     /**
@@ -95,7 +95,7 @@ public class ZosmfIssueResponse {
      * @param cmdResponseUri value
      */
     public void setCmdResponseUri(final String cmdResponseUri) {
-        this.cmdResponseUri = Optional.ofNullable(cmdResponseUri);
+        this.cmdResponseUri = cmdResponseUri;
     }
 
     /**
@@ -104,7 +104,7 @@ public class ZosmfIssueResponse {
      * @return cmdResponseUrl value
      */
     public Optional<String> getCmdResponseUrl() {
-        return cmdResponseUrl;
+        return Optional.ofNullable(cmdResponseUrl);
     }
 
     /**
@@ -113,7 +113,7 @@ public class ZosmfIssueResponse {
      * @param cmdResponseUrl value
      */
     public void setCmdResponseUrl(final String cmdResponseUrl) {
-        this.cmdResponseUrl = Optional.ofNullable(cmdResponseUrl);
+        this.cmdResponseUrl = cmdResponseUrl;
     }
 
     /**
@@ -122,7 +122,7 @@ public class ZosmfIssueResponse {
      * @return solKeyDetected value
      */
     public Optional<String> getSolKeyDetected() {
-        return solKeyDetected;
+        return Optional.ofNullable(solKeyDetected);
     }
 
     /**
@@ -131,7 +131,7 @@ public class ZosmfIssueResponse {
      * @param solKeyDetected value
      */
     public void setSolKeyDetected(final String solKeyDetected) {
-        this.solKeyDetected = Optional.ofNullable(solKeyDetected);
+        this.solKeyDetected = solKeyDetected;
     }
 
     /**
