@@ -23,7 +23,7 @@ public class ZosFilesParams {
     /**
      * Response time out value
      */
-    private final Optional<String> responseTimeout;
+    private final String responseTimeout;
 
     /**
      * ZosFilesParams constructor
@@ -32,7 +32,7 @@ public class ZosFilesParams {
      * @author Leonid Baranov
      */
     public ZosFilesParams(final String responseTimeout) {
-        this.responseTimeout = Optional.ofNullable(responseTimeout);
+        this.responseTimeout = responseTimeout;
     }
 
     /**
@@ -41,7 +41,7 @@ public class ZosFilesParams {
      * @return responseTimeout value
      */
     public Optional<String> getResponseTimeout() {
-        return responseTimeout;
+        return Optional.ofNullable(responseTimeout);
     }
 
     /**
