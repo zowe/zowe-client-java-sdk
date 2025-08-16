@@ -24,57 +24,57 @@ public class ZosLogItem {
     /**
      * Eight-character command and response token (CART).
      */
-    private final Optional<String> cart;
+    private final String cart;
 
     /**
      * The color of the message.
      */
-    private final Optional<String> color;
+    private final String color;
 
     /**
      * The name of the job that generates the message.
      */
-    private final Optional<String> jobName;
+    private final String jobName;
 
     /**
      * The content of the message.
      */
-    private final Optional<String> message;
+    private final String message;
 
     /**
      * The message ID.
      */
-    private final Optional<String> messageId;
+    private final String messageId;
 
     /**
      * Reply ID, in decimal.
      */
-    private final Optional<String> replyId;
+    private final String replyId;
 
     /**
      * Original eight-character system name.
      */
-    private final Optional<String> system;
+    private final String system;
 
     /**
      * Type variable
      */
-    private final Optional<String> type;
+    private final String type;
 
     /**
      * Indicate whether the message is a DOM, WTOR, or HOLD message.
      */
-    private final Optional<String> subType;
+    private final String subType;
 
     /**
      * For example, "Thu Feb 03 03:00 GMT 2021".
      */
-    private final Optional<String> time;
+    private final String time;
 
     /**
      * UNIX timestamp. For example, 1621920830109.
      */
-    private final OptionalLong timeStamp;
+    private final Long timeStamp;
 
     /**
      * ZosLogItem constructor
@@ -83,21 +83,17 @@ public class ZosLogItem {
      * @author Frank Giordano
      */
     private ZosLogItem(final Builder builder) {
-        this.cart = Optional.ofNullable(builder.cart);
-        this.color = Optional.ofNullable(builder.color);
-        this.jobName = Optional.ofNullable(builder.jobName);
-        this.message = Optional.ofNullable(builder.message);
-        this.messageId = Optional.ofNullable(builder.messageId);
-        this.replyId = Optional.ofNullable(builder.replyId);
-        this.system = Optional.ofNullable(builder.system);
-        this.type = Optional.ofNullable(builder.type);
-        this.subType = Optional.ofNullable(builder.subType);
-        this.time = Optional.ofNullable(builder.time);
-        if (builder.timeStamp == 0) {
-            this.timeStamp = OptionalLong.empty();
-        } else {
-            this.timeStamp = OptionalLong.of(builder.timeStamp);
-        }
+        this.cart = builder.cart;
+        this.color = builder.color;
+        this.jobName = builder.jobName;
+        this.message = builder.message;
+        this.messageId = builder.messageId;
+        this.replyId = builder.replyId;
+        this.system = builder.system;
+        this.type = builder.type;
+        this.subType = builder.subType;
+        this.time = builder.time;
+        this.timeStamp = builder.timeStamp;
     }
 
     /**
@@ -106,7 +102,7 @@ public class ZosLogItem {
      * @return cart optional value
      */
     public Optional<String> getCart() {
-        return cart;
+        return Optional.ofNullable(cart);
     }
 
     /**
@@ -115,7 +111,7 @@ public class ZosLogItem {
      * @return color optional value
      */
     public Optional<String> getColor() {
-        return color;
+        return Optional.ofNullable(color);
     }
 
     /**
@@ -124,7 +120,7 @@ public class ZosLogItem {
      * @return jobName optional value
      */
     public Optional<String> getJobName() {
-        return jobName;
+        return Optional.ofNullable(jobName);
     }
 
     /**
@@ -133,7 +129,7 @@ public class ZosLogItem {
      * @return message optional value
      */
     public Optional<String> getMessage() {
-        return message;
+        return Optional.ofNullable(message);
     }
 
     /**
@@ -142,7 +138,7 @@ public class ZosLogItem {
      * @return messageId optional value
      */
     public Optional<String> getMessageId() {
-        return messageId;
+        return Optional.ofNullable(messageId);
     }
 
     /**
@@ -151,7 +147,7 @@ public class ZosLogItem {
      * @return replyId optional value
      */
     public Optional<String> getReplyId() {
-        return replyId;
+        return Optional.ofNullable(replyId);
     }
 
     /**
@@ -160,7 +156,7 @@ public class ZosLogItem {
      * @return system optional value
      */
     public Optional<String> getSystem() {
-        return system;
+        return Optional.ofNullable(system);
     }
 
     /**
@@ -169,7 +165,7 @@ public class ZosLogItem {
      * @return type optional value
      */
     public Optional<String> getType() {
-        return type;
+        return Optional.ofNullable(type);
     }
 
     /**
@@ -178,7 +174,7 @@ public class ZosLogItem {
      * @return subType optional value
      */
     public Optional<String> getSubType() {
-        return subType;
+        return Optional.ofNullable(subType);
     }
 
     /**
@@ -187,7 +183,7 @@ public class ZosLogItem {
      * @return time optional value
      */
     public Optional<String> getTime() {
-        return time;
+        return Optional.ofNullable(time);
     }
 
     /**
@@ -196,7 +192,7 @@ public class ZosLogItem {
      * @return number optional value
      */
     public OptionalLong getTimeStamp() {
-        return timeStamp;
+        return (timeStamp == null) ? OptionalLong.empty() : OptionalLong.of(timeStamp);
     }
 
     /**
