@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author Nikunj Goyal
  * @version 4.0
  */
-public class Dataset {
+public class DatasetDocument {
 
     /**
      * The name of the dataset
@@ -120,7 +120,7 @@ public class Dataset {
      * @param builder Builder object
      * @author Nikunj Goyal
      */
-    private Dataset(final Builder builder) {
+    private DatasetDocument(final Builder builder) {
         this.dsname = Optional.ofNullable(builder.dsname);
         this.blksz = Optional.ofNullable(builder.blksz);
         this.catnm = Optional.ofNullable(builder.catnm);
@@ -663,8 +663,8 @@ public class Dataset {
          *
          * @return Dataset object
          */
-        public Dataset build() {
-            return new Dataset(this);
+        public DatasetDocument build() {
+            return new DatasetDocument(this);
         }
 
     }

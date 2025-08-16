@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.dsn.input;
+package zowe.client.sdk.zosfiles.dsn.input.create;
 
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -20,7 +20,7 @@ import java.util.OptionalInt;
  * @author Leonid Baranov
  * @version 4.0
  */
-public class CreateParams {
+public class CreateInput {
 
     /**
      * The volume serial
@@ -120,7 +120,7 @@ public class CreateParams {
      * @param builder Builder object
      * @author Leonid Baranov
      */
-    private CreateParams(final Builder builder) {
+    private CreateInput(final Builder builder) {
         this.volser = Optional.ofNullable(builder.volser);
         this.unit = Optional.ofNullable(builder.unit);
         this.dsorg = Optional.ofNullable(builder.dsorg);
@@ -663,8 +663,8 @@ public class CreateParams {
          *
          * @return CreateParams this object
          */
-        public CreateParams build() {
-            return new CreateParams(this);
+        public CreateInput build() {
+            return new CreateInput(this);
         }
 
     }

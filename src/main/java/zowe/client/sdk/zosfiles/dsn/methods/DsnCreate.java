@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.dsn.input.CreateParams;
+import zowe.client.sdk.zosfiles.dsn.input.create.CreateInput;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -78,7 +78,7 @@ public class DsnCreate {
      * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
      */
-    public Response create(final String dataSetName, final CreateParams params) throws ZosmfRequestException {
+    public Response create(final String dataSetName, final CreateInput params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 

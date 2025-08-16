@@ -25,7 +25,8 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.dsn.input.DownloadParams;
+import zowe.client.sdk.zosfiles.dsn.input.download.DownloadInput;
+import zowe.client.sdk.zosfiles.dsn.input.download.DownloadParams;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnGet;
 import zowe.client.sdk.zosmfauth.methods.ZosmfLogin;
 import zowe.client.sdk.zosmfauth.methods.ZosmfLogout;
@@ -75,7 +76,7 @@ public class ZosmfLoginExp extends TstZosConnection {
         // Perform an API call with token authentication used
         String datasetName = "xxx.xxx.xxx";
         String memberName = "xxx";
-        DownloadParams params = new DownloadParams.Builder().build();
+        DownloadInput params = new DownloadInput.Builder().build();
 
         // the following defines a TOKEN authentication usage
         // redefined connection object with no username and password specified
@@ -129,7 +130,7 @@ public class ZosmfLoginExp extends TstZosConnection {
      * @author Leonid Baranov
      */
     private static void downloadDsnMember(ZosConnection connection, String dsName, String memName,
-                                          DownloadParams params) {
+                                          DownloadInput params) {
         try (InputStream inputStream = new DsnGet(connection).get(String.format("%s(%s)", dsName, memName), params)) {
             System.out.println(getTextStreamData(inputStream));
         } catch (ZosmfRequestException e) {

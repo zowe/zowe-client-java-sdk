@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.dsn.input.CopyParams;
+import zowe.client.sdk.zosfiles.dsn.input.copy.CopyInput;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -92,7 +92,7 @@ public class DsnCopy {
      */
     public Response copy(final String fromDataSetName, final String toDataSetName, final boolean replace,
                          final boolean copyAllMembers) throws ZosmfRequestException {
-        return copyCommon(new CopyParams.Builder()
+        return copyCommon(new CopyInput.Builder()
                 .fromDataSet(fromDataSetName)
                 .toDataSet(toDataSetName)
                 .replace(replace)
@@ -109,7 +109,7 @@ public class DsnCopy {
      * @author Leonid Baranov
      * @author Frank Giordano
      */
-    public Response copyCommon(final CopyParams params) throws ZosmfRequestException {
+    public Response copyCommon(final CopyInput params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = setUrl(params);
@@ -136,7 +136,7 @@ public class DsnCopy {
      * @return url string value
      * @author Frank Giordano
      */
-    private String setUrl(final CopyParams params) {
+    private String setUrl(final CopyInput params) {
         final String toDataSetNameErrMsg = "toDataSetName not specified";
         final String toDataSet = params.getToDataSet()
                 .orElseThrow(() -> new IllegalArgumentException(toDataSetNameErrMsg));
@@ -158,7 +158,7 @@ public class DsnCopy {
      * @return map containing key-value pairs for the from-dataset parent json value
      * @author Frank Giordano
      */
-    private Map<String, Object> setFromDataSetMapValues(final CopyParams params) {
+    private Map<String, Object> setFromDataSetMapValues(final CopyInput params) {
         final String fromDataSetNameErrMsg = "fromDataSetName not specified";
         String fromDataSetName =
                 params.getFromDataSet().orElseThrow(() -> new IllegalStateException(fromDataSetNameErrMsg));

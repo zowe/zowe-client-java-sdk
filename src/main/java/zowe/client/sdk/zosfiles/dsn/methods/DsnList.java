@@ -23,9 +23,9 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.dsn.input.ListParams;
-import zowe.client.sdk.zosfiles.dsn.response.Dataset;
-import zowe.client.sdk.zosfiles.dsn.response.Member;
+import zowe.client.sdk.zosfiles.dsn.input.list.ListInput;
+import zowe.client.sdk.zosfiles.dsn.response.DatasetDocument;
+import zowe.client.sdk.zosfiles.dsn.response.MemberDocument;
 import zowe.client.sdk.zosfiles.dsn.types.AttributeType;
 
 import java.util.*;
@@ -84,13 +84,13 @@ public class DsnList {
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public List<Dataset> getDatasets(final String dataSetName, final ListParams params)
+    public List<DatasetDocument> getDatasets(final String dataSetName, final ListInput params)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final Map<String, String> headers = new HashMap<>();
-        final List<Dataset> datasets = new ArrayList<>();
+        final List<DatasetDocument> datasets = new ArrayList<>();
         String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID +
                 ZosFilesConstants.QUERY_DS_LEVEL + EncodeUtils.encodeURIComponent(dataSetName);
@@ -115,13 +115,13 @@ public class DsnList {
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public List<Member> getMembers(final String dataSetName, final ListParams params)
+    public List<MemberDocument> getMembers(final String dataSetName, final ListInput params)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final Map<String, String> headers = new HashMap<>();
-        final List<Member> members = new ArrayList<>();
+        final List<MemberDocument> members = new ArrayList<>();
         String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
@@ -219,7 +219,7 @@ public class DsnList {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private Response getResponse(final ListParams params, final Map<String, String> headers, final String url)
+    private Response getResponse(final ListInput params, final Map<String, String> headers, final String url)
             throws ZosmfRequestException {
         setHeaders(params, headers);
         if (request == null) {
@@ -238,7 +238,7 @@ public class DsnList {
      * @param headers list of headers for http request
      * @author Nikunj Goyal
      */
-    private void setHeaders(final ListParams params, final Map<String, String> headers) {
+    private void setHeaders(final ListInput params, final Map<String, String> headers) {
         String key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
         String value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
         headers.put(key, value);

@@ -11,7 +11,7 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosfiles.dsn.response.Member;
+import zowe.client.sdk.zosfiles.dsn.response.MemberDocument;
 
 /**
  * Extract Member from JSON response
@@ -59,7 +59,7 @@ public final class MemberJsonParse implements JsonParse {
     public synchronized Object parseResponse(final Object... args) {
         ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
         final JSONObject data = (JSONObject) args[0];
-        return new Member.Builder()
+        return new MemberDocument.Builder()
                 .member(data.get("member") != null ? (String) data.get("member") : null)
                 .vers(data.get("vers") != null ? (Long) data.get("vers") : 0)
                 .mod(data.get("mod") != null ? (Long) data.get("mod") : 0)

@@ -42,9 +42,9 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
-import zowe.client.sdk.zosfiles.dsn.input.ListParams;
+import zowe.client.sdk.zosfiles.dsn.input.list.ListInput;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnList;
-import zowe.client.sdk.zosfiles.dsn.response.Member;
+import zowe.client.sdk.zosfiles.dsn.response.MemberDocument;
 
 import java.util.List;
 
@@ -94,9 +94,9 @@ public class TeamConfigExp {
      * @author Frank Giordano
      */
     public static void listMembers(ZosConnection connection, String dataSetName) throws ZosmfRequestException {
-        ListParams params = new ListParams.Builder().build();
+        zowe.client.sdk.zosfiles.dsn.input.list.ListInput params = new zowe.client.sdk.zosfiles.dsn.input.list.ListInput.Builder().build();
         DsnList dsnList = new DsnList(connection);
-        List<Member> datasets = dsnList.getMembers(dataSetName, params);
+        List<MemberDocument> datasets = dsnList.getMembers(dataSetName, params);
         datasets.forEach(System.out::println);
     }
 

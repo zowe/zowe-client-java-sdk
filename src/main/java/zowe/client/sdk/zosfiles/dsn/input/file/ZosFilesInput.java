@@ -8,7 +8,7 @@
  * Copyright Contributors to the Zowe Project.
  *
  */
-package zowe.client.sdk.zosfiles.dsn.input;
+package zowe.client.sdk.zosfiles.dsn.input.file;
 
 import java.util.Optional;
 
@@ -18,7 +18,7 @@ import java.util.Optional;
  * @author Leonid Baranov
  * @version 4.0
  */
-public class ZosFilesParams {
+public class ZosFilesInput {
 
     /**
      * Response time out value
@@ -31,7 +31,7 @@ public class ZosFilesParams {
      * @param responseTimeout response time out value
      * @author Leonid Baranov
      */
-    public ZosFilesParams(final String responseTimeout) {
+    public ZosFilesInput(final String responseTimeout) {
         this.responseTimeout = Optional.ofNullable(responseTimeout);
     }
 

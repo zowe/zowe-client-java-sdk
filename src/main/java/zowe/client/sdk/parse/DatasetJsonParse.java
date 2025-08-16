@@ -11,7 +11,7 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosfiles.dsn.response.Dataset;
+import zowe.client.sdk.zosfiles.dsn.response.DatasetDocument;
 
 /**
  * Extract Dataset from JSON response
@@ -56,10 +56,10 @@ public final class DatasetJsonParse implements JsonParse {
      * @author Frank Giordano
      */
     @Override
-    public synchronized Dataset parseResponse(final Object... args) {
+    public synchronized DatasetDocument parseResponse(final Object... args) {
         ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
         final JSONObject data = (JSONObject) args[0];
-        return new Dataset.Builder()
+        return new DatasetDocument.Builder()
                 .dsname(data.get("dsname") != null ? (String) data.get("dsname") : null)
                 .blksz(data.get("blksz") != null ? (String) data.get("blksz") : null)
                 .catnm(data.get("catnm") != null ? (String) data.get("catnm") : null)

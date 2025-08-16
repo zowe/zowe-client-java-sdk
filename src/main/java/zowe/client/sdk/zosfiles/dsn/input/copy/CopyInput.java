@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.dsn.input;
+package zowe.client.sdk.zosfiles.dsn.input.copy;
 
 import zowe.client.sdk.utility.ValidateUtils;
 
@@ -19,7 +19,7 @@ import java.util.Optional;
  * @author Leonid Baranov
  * @version 4.0
  */
-public class CopyParams {
+public class CopyInput {
 
     /**
      * The volume to copy from
@@ -57,7 +57,7 @@ public class CopyParams {
      * @param builder Builder object
      * @author Leonid Baranov
      */
-    private CopyParams(final Builder builder) {
+    private CopyInput(final Builder builder) {
         this.fromVolser = Optional.ofNullable(builder.fromVolser);
         this.fromDataSet = Optional.ofNullable(builder.fromDataSet);
         this.toVolser = Optional.ofNullable(builder.toVolser);
@@ -252,8 +252,8 @@ public class CopyParams {
          *
          * @return CopyParams this object
          */
-        public CopyParams build() {
-            return new CopyParams(this);
+        public CopyInput build() {
+            return new CopyInput(this);
         }
 
     }

@@ -18,7 +18,7 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 4.0
  */
-public class Member {
+public class MemberDocument {
 
     /**
      * The name of the member
@@ -86,7 +86,7 @@ public class Member {
      * @param builder Builder object
      * @author Frank Giordano
      */
-    private Member(final Builder builder) {
+    private MemberDocument(final Builder builder) {
         this.member = Optional.ofNullable(builder.member);
         if (builder.vers == null) {
             this.vers = OptionalLong.empty();
@@ -460,8 +460,8 @@ public class Member {
          *
          * @return Member object
          */
-        public Member build() {
-            return new Member(this);
+        public MemberDocument build() {
+            return new MemberDocument(this);
         }
 
     }

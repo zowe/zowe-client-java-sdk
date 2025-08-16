@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.dsn.input;
+package zowe.client.sdk.zosfiles.dsn.input.download;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -19,7 +19,7 @@ import java.util.OptionalLong;
  * @author Nikunj Goyal
  * @version 4.0
  */
-public class DownloadParams {
+public class DownloadInput {
 
     /**
      * The local file to download the data set to, e.g. "./path/to/file.txt"
@@ -111,7 +111,7 @@ public class DownloadParams {
      * @param builder Builder object
      * @author Nikunj Goyal
      */
-    private DownloadParams(final Builder builder) {
+    private DownloadInput(final Builder builder) {
         this.file = Optional.ofNullable(builder.file);
         this.extension = Optional.ofNullable(builder.extension);
         this.directory = Optional.ofNullable(builder.directory);
@@ -541,8 +541,8 @@ public class DownloadParams {
          *
          * @return DownloadParams this object
          */
-        public DownloadParams build() {
-            return new DownloadParams(this);
+        public DownloadInput build() {
+            return new DownloadInput(this);
         }
 
     }

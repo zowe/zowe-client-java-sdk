@@ -12,7 +12,7 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONObject;
 import org.junit.Test;
 import zowe.client.sdk.parse.type.ParseType;
-import zowe.client.sdk.zosfiles.dsn.response.Member;
+import zowe.client.sdk.zosfiles.dsn.response.MemberDocument;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,7 +53,7 @@ public class MemberParseResponseTest {
         jsonMap.put("vers", 0L);
         final JSONObject json = new JSONObject(jsonMap);
 
-        final Member response = (Member) JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse(json);
+        final MemberDocument response = (MemberDocument) JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse(json);
         assertEquals("ver", response.getMember().orElse("n\\a"));
         assertEquals(0, response.getVers().orElse(-1L));
     }

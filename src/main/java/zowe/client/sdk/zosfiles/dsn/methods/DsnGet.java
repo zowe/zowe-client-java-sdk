@@ -19,9 +19,9 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.dsn.input.DownloadParams;
-import zowe.client.sdk.zosfiles.dsn.input.ListParams;
-import zowe.client.sdk.zosfiles.dsn.response.Dataset;
+import zowe.client.sdk.zosfiles.dsn.input.download.DownloadInput;
+import zowe.client.sdk.zosfiles.dsn.input.list.ListInput;
+import zowe.client.sdk.zosfiles.dsn.response.DatasetDocument;
 import zowe.client.sdk.zosfiles.dsn.types.AttributeType;
 
 import java.io.ByteArrayInputStream;
@@ -84,10 +84,10 @@ public class DsnGet {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Dataset getDsnInfo(final String dataSetName) throws ZosmfRequestException {
+    public DatasetDocument getDsnInfo(final String dataSetName) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
-        Dataset emptyDataSet = new Dataset.Builder().dsname(dataSetName).build();
+        DatasetDocument emptyDataSet = new DatasetDocument.Builder().dsname(dataSetName).build();
 
         final String[] tokens = dataSetName.split("\\.");
         final int length = tokens.length - 1;
@@ -101,10 +101,10 @@ public class DsnGet {
         String dataSetSearchStr = str.toString();
         dataSetSearchStr = dataSetSearchStr.substring(0, str.length() - 1);
         final DsnList dsnList = new DsnList(connection);
-        final ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
-        final List<Dataset> dsLst = dsnList.getDatasets(dataSetSearchStr, params);
+        final ListInput params = new ListInput.Builder().attribute(AttributeType.BASE).build();
+        final List<DatasetDocument> dsLst = dsnList.getDatasets(dataSetSearchStr, params);
 
-        final Optional<Dataset> dataSet = dsLst.stream()
+        final Optional<DatasetDocument> dataSet = dsLst.stream()
                 .filter(d -> d.getDsname().orElse("n/a").contains(dataSetName)).findFirst();
         return dataSet.orElse(emptyDataSet);
     }
@@ -119,7 +119,7 @@ public class DsnGet {
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public InputStream get(final String targetName, final DownloadParams params) throws ZosmfRequestException {
+    public InputStream get(final String targetName, final DownloadInput params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetName, "targetName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 

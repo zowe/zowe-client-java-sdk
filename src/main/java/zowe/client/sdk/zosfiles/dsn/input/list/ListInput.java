@@ -8,7 +8,7 @@
  * Copyright Contributors to the Zowe Project.
  *
  */
-package zowe.client.sdk.zosfiles.dsn.input;
+package zowe.client.sdk.zosfiles.dsn.input.list;
 
 import zowe.client.sdk.zosfiles.dsn.types.AttributeType;
 
@@ -20,7 +20,7 @@ import java.util.Optional;
  * @author Leonid Baranov
  * @version 4.0
  */
-public class ListParams {
+public class ListInput {
 
     /**
      * The volume where the data set resides
@@ -63,7 +63,7 @@ public class ListParams {
      * @param builder Builder object
      * @author Nikunj Goyal
      */
-    private ListParams(final Builder builder) {
+    private ListInput(final Builder builder) {
         this.volume = Optional.ofNullable(builder.volume);
         this.attribute = Optional.ofNullable(builder.attribute);
         this.maxLength = Optional.ofNullable(builder.maxLength);
@@ -282,8 +282,8 @@ public class ListParams {
          *
          * @return ListParams this object
          */
-        public ListParams build() {
-            return new ListParams(this);
+        public ListInput build() {
+            return new ListInput(this);
         }
 
     }
