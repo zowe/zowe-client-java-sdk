@@ -23,12 +23,12 @@ public class ZosmfSystemsResponse {
     /**
      * Total items returned.
      */
-    private final OptionalLong numRows;
+    private final Long numRows;
 
     /**
      * Properties of each defined system.
      */
-    private final Optional<DefinedSystem[]> definedSystems;
+    private final DefinedSystem[] definedSystems;
 
     /**
      * ZosmfListDefinedSystemsResponse constructor
@@ -37,12 +37,8 @@ public class ZosmfSystemsResponse {
      * @author Frank Giordano
      */
     private ZosmfSystemsResponse(final Builder builder) {
-        if (builder.numRows == null) {
-            this.numRows = OptionalLong.empty();
-        } else {
-            this.numRows = OptionalLong.of(builder.numRows);
-        }
-        this.definedSystems = Optional.ofNullable(builder.definedSystems);
+        this.numRows = builder.numRows;
+        this.definedSystems = builder.definedSystems;
     }
 
     /**
@@ -51,7 +47,7 @@ public class ZosmfSystemsResponse {
      * @return definedSystems value
      */
     public Optional<DefinedSystem[]> getDefinedSystems() {
-        return definedSystems;
+        return Optional.ofNullable(definedSystems);
     }
 
     /**
@@ -60,7 +56,7 @@ public class ZosmfSystemsResponse {
      * @return numRows value
      */
     public OptionalLong getNumRows() {
-        return numRows;
+        return (numRows == null) ? OptionalLong.empty() : OptionalLong.of(numRows);
     }
 
     /**
