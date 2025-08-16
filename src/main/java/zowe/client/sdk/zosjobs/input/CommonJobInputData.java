@@ -12,12 +12,12 @@ package zowe.client.sdk.zosjobs.input;
 import java.util.Optional;
 
 /**
- * Interface for various common GetJobs APIs
+ * Parameters for various common Job API input data
  *
  * @author Frank Giordano
  * @version 4.0
  */
-public class CommonJobParams {
+public class CommonJobInputData {
 
     /**
      * Job id for a job
@@ -44,7 +44,7 @@ public class CommonJobParams {
      * @param jobName job name value
      * @author Frank Giordano
      */
-    public CommonJobParams(final String jobId, final String jobName) {
+    public CommonJobInputData(final String jobId, final String jobName) {
         this.jobId = jobId;
         this.jobName = jobName;
         this.stepData = false;
@@ -58,7 +58,7 @@ public class CommonJobParams {
      * @param stepData determines whether step data is included in the rest call
      * @author Frank Giordano
      */
-    public CommonJobParams(final String jobId, final String jobName, final boolean stepData) {
+    public CommonJobInputData(final String jobId, final String jobName, final boolean stepData) {
         this.jobId = jobId;
         this.jobName = jobName;
         this.stepData = stepData;

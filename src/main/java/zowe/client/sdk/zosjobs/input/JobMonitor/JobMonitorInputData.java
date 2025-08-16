@@ -8,7 +8,7 @@
  * Copyright Contributors to the Zowe Project.
  *
  */
-package zowe.client.sdk.zosjobs.input;
+package zowe.client.sdk.zosjobs.input.JobMonitor;
 
 import zowe.client.sdk.zosjobs.types.JobStatus;
 
@@ -16,12 +16,12 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
- * MonitorJobs "waitFor..." APIs parameters interface
+ * Parameters for MonitorJobs "waitFor..." API input data
  *
  * @author Frank Giordano
  * @version 4.0
  */
-public class MonitorJobWaitForParams {
+public class JobMonitorInputData {
 
     /**
      * The z/OS JOBID for the job to monitor. No pre-validation of the JOBID (other than its presence) is performed.
@@ -72,7 +72,7 @@ public class MonitorJobWaitForParams {
      * @param builder MonitorJobWaitForParams.Builder object
      * @author Frank Giordano
      */
-    private MonitorJobWaitForParams(final MonitorJobWaitForParams.Builder builder) {
+    private JobMonitorInputData(final JobMonitorInputData.Builder builder) {
         this.jobId = builder.jobId;
         this.jobName = builder.jobName;
         this.watchDelay = builder.watchDelay;
@@ -253,7 +253,7 @@ public class MonitorJobWaitForParams {
          * @param attempts number of attempts to get status
          * @return Builder object
          */
-        public MonitorJobWaitForParams.Builder attempts(final int attempts) {
+        public JobMonitorInputData.Builder attempts(final int attempts) {
             this.attempts = attempts;
             return this;
         }
@@ -264,7 +264,7 @@ public class MonitorJobWaitForParams {
          * @param jobStatus job status type, see JobStatus.Type object
          * @return Builder object
          */
-        public MonitorJobWaitForParams.Builder jobStatus(final JobStatus.Type jobStatus) {
+        public JobMonitorInputData.Builder jobStatus(final JobStatus.Type jobStatus) {
             this.jobStatus = jobStatus;
             return this;
         }
@@ -275,7 +275,7 @@ public class MonitorJobWaitForParams {
          * @param lineLimit number of lines to inspect
          * @return Builder object
          */
-        public MonitorJobWaitForParams.Builder lineLimit(final int lineLimit) {
+        public JobMonitorInputData.Builder lineLimit(final int lineLimit) {
             this.lineLimit = lineLimit;
             return this;
         }
@@ -286,7 +286,7 @@ public class MonitorJobWaitForParams {
          * @param watchDelay delay of polling operation in milliseconds
          * @return Builder object
          */
-        public MonitorJobWaitForParams.Builder watchDelay(final int watchDelay) {
+        public JobMonitorInputData.Builder watchDelay(final int watchDelay) {
             this.watchDelay = watchDelay;
             return this;
         }
@@ -296,8 +296,8 @@ public class MonitorJobWaitForParams {
          *
          * @return MonitorJobWaitForParams object
          */
-        public MonitorJobWaitForParams build() {
-            return new MonitorJobWaitForParams(this);
+        public JobMonitorInputData build() {
+            return new JobMonitorInputData(this);
         }
 
     }

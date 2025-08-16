@@ -7,18 +7,18 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs.input;
+package zowe.client.sdk.zosjobs.input.JobSubmit;
 
 import java.util.Map;
 import java.util.Optional;
 
 /**
- * Submit job parameters
+ * Parameters for JobSubmit API input data
  *
  * @author Frank Giordano
  * @version 4.0
  */
-public class SubmitJobParams {
+public class JobSubmitInputData {
 
     /**
      * z/OS dataset which should contain syntactically correct JCL. Example value: IBMUSER.PUBLIC.CNTL(IEFBR14)
@@ -39,7 +39,7 @@ public class SubmitJobParams {
      * @param jobDataSet z/OS data set which should contain syntactically correct JCL
      * @author Frank Giordano
      */
-    public SubmitJobParams(final String jobDataSet) {
+    public JobSubmitInputData(final String jobDataSet) {
         this.jobDataSet = jobDataSet;
     }
 
@@ -50,7 +50,7 @@ public class SubmitJobParams {
      * @param jclSymbols Map for JCL symbolic substitution
      * @author Frank Giordano
      */
-    public SubmitJobParams(final String jobDataSet, final Map<String, String> jclSymbols) {
+    public JobSubmitInputData(final String jobDataSet, final Map<String, String> jclSymbols) {
         this.jobDataSet = jobDataSet;
         this.jclSymbols = jclSymbols;
     }

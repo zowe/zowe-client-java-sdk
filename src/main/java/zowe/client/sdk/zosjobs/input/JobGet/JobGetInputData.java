@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs.input;
+package zowe.client.sdk.zosjobs.input.JobGet;
 
 import zowe.client.sdk.zosjobs.JobsConstants;
 
@@ -15,12 +15,12 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
- * Interface for various GetJobs APIs
+ * Parameters for JobGet API input data
  *
  * @author Frank Giordano
  * @version 4.0
  */
-public class GetJobParams {
+public class JobGetInputData {
 
     /**
      * Owner for which to get jobs for.
@@ -50,7 +50,7 @@ public class GetJobParams {
      * @param builder GetJobParams.Builder object
      * @author Frank Giordano
      */
-    private GetJobParams(final Builder builder) {
+    private JobGetInputData(final Builder builder) {
         this.owner = builder.owner;
         this.prefix = builder.prefix;
         this.maxJobs = builder.maxJobs;
@@ -188,8 +188,8 @@ public class GetJobParams {
          *
          * @return GetJobParams this object
          */
-        public GetJobParams build() {
-            return new GetJobParams(this);
+        public JobGetInputData build() {
+            return new JobGetInputData(this);
         }
 
     }
