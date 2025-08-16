@@ -152,7 +152,7 @@ public class JobFile {
     public OptionalLong getId() {
         if (id == null) {
             return OptionalLong.empty();
-        } else  {
+        } else {
             return OptionalLong.of(id);
         }
     }
@@ -192,7 +192,7 @@ public class JobFile {
     public OptionalLong getLrecl() {
         if (lrecl == null) {
             return OptionalLong.empty();
-        }  else {
+        } else {
             return OptionalLong.of(lrecl);
         }
     }
@@ -223,7 +223,7 @@ public class JobFile {
     public OptionalLong getRecordCount() {
         if (recordCount == null) {
             return OptionalLong.empty();
-        }  else {
+        } else {
             return OptionalLong.of(recordCount);
         }
     }

@@ -19,9 +19,8 @@ import zowe.client.sdk.utility.timer.WaitUtil;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.CommonJobInput;
 import zowe.client.sdk.zosjobs.input.JobMonitor.JobInput;
-import zowe.client.sdk.zosjobs.response.JobFile;
-import zowe.client.sdk.zosjobs.response.CheckJobStatus;
 import zowe.client.sdk.zosjobs.response.Job;
+import zowe.client.sdk.zosjobs.response.JobFile;
 import zowe.client.sdk.zosjobs.types.JobStatus;
 
 import java.util.List;
@@ -58,6 +57,56 @@ public class JobMonitor {
     private int attempts = DEFAULT_ATTEMPTS;
     private int watchDelay = DEFAULT_WATCH_DELAY;
     private int lineLimit = DEFAULT_LINE_LIMIT;
+
+    /**
+     * Class used internally to help determine current job status
+     *
+     * @author Frank Giordano
+     * @version 4.0
+     */
+    static class CheckJobStatus {
+
+        /**
+         * Has the desired job status been seen, true or false?
+         */
+        private final boolean expectedStatus;
+
+        /**
+         * The given Job for checking its status
+         */
+        private final Job job;
+
+        /**
+         * CheckJobStatus constructor
+         *
+         * @param expectedStatus holds if job status was found or not
+         * @param job            job used for status checking
+         * @author Frank Giordano
+         */
+        public CheckJobStatus(final boolean expectedStatus, final Job job) {
+            this.expectedStatus = expectedStatus;
+            this.job = job;
+        }
+
+        /**
+         * Retrieve job object
+         *
+         * @return job object
+         */
+        public Job getJob() {
+            return job;
+        }
+
+        /**
+         * Retrieve is expectedStatus specified
+         *
+         * @return boolean true or false
+         */
+        public boolean isExpectedStatus() {
+            return expectedStatus;
+        }
+
+    }
 
     /**
      * MonitorJobs constructor.
@@ -297,7 +346,7 @@ public class JobMonitor {
         do {
             numOfAttempts++;
             checkJobStatus = checkStatus(params);
-            expectedStatus = checkJobStatus.isStatusFound();
+            expectedStatus = checkJobStatus.isExpectedStatus();
             shouldContinue = !expectedStatus && (maxAttempts > 0 && numOfAttempts < maxAttempts);
 
             if (shouldContinue) {

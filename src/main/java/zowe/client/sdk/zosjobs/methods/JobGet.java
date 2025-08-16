@@ -23,8 +23,8 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.CommonJobInput;
 import zowe.client.sdk.zosjobs.input.JobGet.JobInput;
-import zowe.client.sdk.zosjobs.response.JobFile;
 import zowe.client.sdk.zosjobs.response.Job;
+import zowe.client.sdk.zosjobs.response.JobFile;
 
 import java.util.ArrayList;
 import java.util.List;
