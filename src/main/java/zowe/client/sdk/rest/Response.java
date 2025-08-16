@@ -25,22 +25,22 @@ public class Response {
     /**
      * Holds http response information
      */
-    private final Optional<Object> responsePhrase;
+    private final Object responsePhrase;
 
     /**
      * Holds http response status code
      */
-    private final OptionalInt statusCode;
+    private final Integer statusCode;
 
     /**
      * Holds http response status text
      */
-    private final Optional<String> statusText;
+    private final String statusText;
 
     /**
      * Store raw reply
      */
-    private final Optional<Cookies> tokens;
+    private final Cookies tokens;
 
     /**
      * Response constructor
@@ -51,14 +51,10 @@ public class Response {
      * @author Frank Giordano
      */
     public Response(final Object responsePhrase, final Integer statusCode, final String statusText) {
-        this.responsePhrase = Optional.ofNullable(responsePhrase);
-        if (statusCode == null) {
-            this.statusCode = OptionalInt.empty();
-        } else {
-            this.statusCode = OptionalInt.of(statusCode);
-        }
-        this.statusText = Optional.ofNullable(statusText);
-        this.tokens = Optional.empty();
+        this.responsePhrase = responsePhrase;
+        this.statusCode = statusCode;
+        this.statusText = statusText;
+        this.tokens = null;
     }
 
     /**
@@ -72,14 +68,10 @@ public class Response {
      */
     public Response(final Object responsePhrase, final Integer statusCode, final String statusText,
                     final Cookies tokens) {
-        this.responsePhrase = Optional.ofNullable(responsePhrase);
-        if (statusCode == null) {
-            this.statusCode = OptionalInt.empty();
-        } else {
-            this.statusCode = OptionalInt.of(statusCode);
-        }
-        this.statusText = Optional.ofNullable(statusText);
-        this.tokens = Optional.ofNullable(tokens);
+        this.responsePhrase = responsePhrase;
+        this.statusCode = statusCode;
+        this.statusText = statusText;
+        this.tokens = tokens;
     }
 
     /**
@@ -88,7 +80,7 @@ public class Response {
      * @return responsePhrase Optional object value
      */
     public Optional<Object> getResponsePhrase() {
-        return responsePhrase;
+        return Optional.ofNullable(responsePhrase);
     }
 
     /**
@@ -97,7 +89,8 @@ public class Response {
      * @return statusCode Optional int value
      */
     public OptionalInt getStatusCode() {
-        return statusCode;
+        return (statusCode == null) ? OptionalInt.empty() :
+                OptionalInt.of(statusCode);
     }
 
     /**
@@ -106,7 +99,7 @@ public class Response {
      * @return statusText Optional String value
      */
     public Optional<String> getStatusText() {
-        return statusText;
+        return Optional.ofNullable(statusText);
     }
 
     /**
@@ -115,7 +108,7 @@ public class Response {
      * @return tokens Cookies object representing TOKENS
      */
     public Cookies getTokens() {
-        return tokens.orElse(null);
+        return tokens;
     }
 
     /**
