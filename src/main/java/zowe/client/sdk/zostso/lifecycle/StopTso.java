@@ -21,7 +21,7 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
-import zowe.client.sdk.zostso.input.StopTsoParams;
+import zowe.client.sdk.zostso.input.StopTsoInputData;
 import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
 import zowe.client.sdk.zostso.response.StartStopResponse;
 import zowe.client.sdk.zostso.service.TsoResponseService;
@@ -76,7 +76,7 @@ public class StopTso {
     public StartStopResponse stop(final String servletKey) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(servletKey, "servletKey");
 
-        final StopTsoParams commandParams = new StopTsoParams(servletKey);
+        final StopTsoInputData commandParams = new StopTsoInputData(servletKey);
         final ZosmfTsoResponse zosmfResponse = stopCommon(commandParams);
 
         // TODO
@@ -91,7 +91,7 @@ public class StopTso {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ZosmfTsoResponse stopCommon(final StopTsoParams commandParams) throws ZosmfRequestException {
+    public ZosmfTsoResponse stopCommon(final StopTsoInputData commandParams) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
         final String url = connection.getZosmfUrl() +

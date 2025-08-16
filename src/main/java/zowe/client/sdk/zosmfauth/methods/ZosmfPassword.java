@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfauth.ZosmfAuthConstants;
-import zowe.client.sdk.zosmfauth.input.PasswordParams;
+import zowe.client.sdk.zosmfauth.input.PasswordInputData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +79,7 @@ public class ZosmfPassword {
      * @author Esteban Sandoval
      * @author Frank Giordano
      */
-    public Response changePassword(final PasswordParams params) throws ZosmfRequestException {
+    public Response changePassword(final PasswordInputData params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = connection.getZosmfUrl() +

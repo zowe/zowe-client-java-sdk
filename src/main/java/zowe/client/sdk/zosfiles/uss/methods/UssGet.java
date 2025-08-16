@@ -17,7 +17,7 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.GetParams;
+import zowe.client.sdk.zosfiles.uss.input.GetInputData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,7 +76,7 @@ public class UssGet {
      * @author James Kostrewski
      */
     public byte[] getBinary(final String fileNamePath) throws ZosmfRequestException {
-        GetParams params = new GetParams.Builder().binary(true).build();
+        GetInputData params = new GetInputData.Builder().binary(true).build();
         Response response = getCommon(fileNamePath, params);
         return (byte[]) response.getResponsePhrase().orElse(new byte[0]);
     }
@@ -91,7 +91,7 @@ public class UssGet {
      * @author James Kostrewski
      */
     public String getText(final String fileNamePath) throws ZosmfRequestException {
-        GetParams params = new GetParams.Builder().build();
+        GetInputData params = new GetInputData.Builder().build();
         Response response = getCommon(fileNamePath, params);
         return (String) response.getResponsePhrase().orElse("");
     }
@@ -106,7 +106,7 @@ public class UssGet {
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public Response getCommon(final String fileNamePath, final GetParams params) throws ZosmfRequestException {
+    public Response getCommon(final String fileNamePath, final GetInputData params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 

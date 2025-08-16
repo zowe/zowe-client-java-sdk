@@ -17,7 +17,8 @@ import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.uss.input.CreateParams;
+import zowe.client.sdk.zosfiles.uss.input.CreateInputData;
+import zowe.client.sdk.zosfiles.uss.input.create.CreateParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssCreate;
 import zowe.client.sdk.zosfiles.uss.types.CreateType;
 
@@ -60,7 +61,7 @@ public class UssCreateExp extends TstZosConnection {
     private static Response CreateDirectory(String value) {
         try {
             UssCreate ussCreate = new UssCreate(connection);
-            CreateParams params = new CreateParams(CreateType.DIR, "-wx-wx-wx");
+            CreateInputData params = new CreateInputData(CreateType.DIR, "-wx-wx-wx");
             return ussCreate.create(value, params);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
@@ -78,7 +79,7 @@ public class UssCreateExp extends TstZosConnection {
     private static Response CreateFile(String value) {
         try {
             UssCreate ussCreate = new UssCreate(connection);
-            CreateParams params = new CreateParams(CreateType.FILE, "-wx-wx-wx");
+            CreateInputData params = new CreateInputData(CreateType.FILE, "-wx-wx-wx");
             return ussCreate.create(value, params);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
@@ -176,8 +177,9 @@ import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.uss.input.CreateParams;
-import zowe.client.sdk.zosfiles.uss.input.GetParams;
+import zowe.client.sdk.zosfiles.uss.input.CreateInputData;
+import zowe.client.sdk.zosfiles.uss.input.GetInputData;
+import zowe.client.sdk.zosfiles.uss.input.create.CreateParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssCreate;
 import zowe.client.sdk.zosfiles.uss.methods.UssGet;
 import zowe.client.sdk.zosfiles.uss.methods.UssWrite;
@@ -224,13 +226,13 @@ public class UssGetExp extends TstZosConnection {
         Response response;
         try {
             UssCreate ussCreate = new UssCreate(connection);
-            ussCreate.create(fileNamePath, new CreateParams(CreateType.FILE, "rwxr--r--"));
+            ussCreate.create(fileNamePath, new CreateInputData(CreateType.FILE, "rwxr--r--"));
 
             UssWrite ussWrite = new UssWrite(connection);
             ussWrite.writeText(fileNamePath, "Frank\nFrank2\nApple\nhelp\n");
 
             UssGet ussGet = new UssGet(connection);
-            GetParams params = new GetParams.Builder().insensitive(false).search("apple").build();
+            GetInputData params = new GetInputData.Builder().insensitive(false).search("apple").build();
             response = ussGet.getCommon(fileNamePath, params);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
@@ -251,7 +253,7 @@ public class UssGetExp extends TstZosConnection {
         Response response;
         try {
             UssGet ussGet = new UssGet(connection);
-            GetParams params = new GetParams.Builder().insensitive(false).search("Apple").build();
+            GetInputData params = new GetInputData.Builder().insensitive(false).search("Apple").build();
             response = ussGet.getCommon(fileNamePath, params);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
@@ -290,7 +292,7 @@ public class UssGetExp extends TstZosConnection {
         Response response;
         try {
             UssGet ussGet = new UssGet(connection);
-            GetParams params = new GetParams.Builder().recordsRange("-2").build();
+            GetInputData params = new GetInputData.Builder().recordsRange("-2").build();
             response = ussGet.getCommon(fileNamePath, params);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
@@ -312,7 +314,9 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosfiles.uss.input.ListInputData;
 import zowe.client.sdk.zosfiles.uss.input.ListParams;
+import zowe.client.sdk.zosfiles.uss.input.ListZfsInputData;
 import zowe.client.sdk.zosfiles.uss.input.ListZfsParams;
 import zowe.client.sdk.zosfiles.uss.methods.UssList;
 import zowe.client.sdk.zosfiles.uss.response.UnixFile;
@@ -355,7 +359,7 @@ public class UssListExp extends TstZosConnection {
         List<UnixZfs> items;
         try {
             UssList ussList = new UssList(connection);
-            ListZfsParams params = new ListZfsParams.Builder().path(value).build();
+            ListZfsInputData params = new ListZfsInputData.Builder().path(value).build();
             items = ussList.getZfsSystems(params);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
@@ -375,7 +379,7 @@ public class UssListExp extends TstZosConnection {
         List<UnixFile> items;
         try {
             UssList ussList = new UssList(connection);
-            ListParams params = new ListParams.Builder().path(value).build();
+            ListInputData params = new ListInputData.Builder().path(value).build();
             items = ussList.getFiles(params);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());

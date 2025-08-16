@@ -19,7 +19,7 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.WriteParams;
+import zowe.client.sdk.zosfiles.uss.input.WriteInputData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +79,7 @@ public class UssWrite {
      * @author James Kostrewski
      */
     public Response writeText(final String fileNamePath, final String content) throws ZosmfRequestException {
-        return writeCommon(fileNamePath, new WriteParams.Builder().textContent(content).build());
+        return writeCommon(fileNamePath, new WriteInputData.Builder().textContent(content).build());
     }
 
     /**
@@ -93,7 +93,7 @@ public class UssWrite {
      * @author James Kostrewski
      */
     public Response writeBinary(final String fileNamePath, final byte[] content) throws ZosmfRequestException {
-        return writeCommon(fileNamePath, new WriteParams.Builder().binaryContent(content).binary(true).build());
+        return writeCommon(fileNamePath, new WriteInputData.Builder().binaryContent(content).binary(true).build());
     }
 
     /**
@@ -106,7 +106,7 @@ public class UssWrite {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response writeCommon(final String fileNamePath, final WriteParams params) throws ZosmfRequestException {
+    public Response writeCommon(final String fileNamePath, final WriteInputData params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 

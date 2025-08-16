@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.GetStreamZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.dsn.input.DownloadParams;
+import zowe.client.sdk.zosfiles.dsn.input.DownloadInputData;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,7 +67,7 @@ public class DsnGetTest {
     @Test
     public void tstDsnGetSuccess() throws ZosmfRequestException, IOException {
         final DsnGet dsnGet = new DsnGet(connection, mockGetRequest);
-        final DownloadParams params = new DownloadParams.Builder().binary(true).build();
+        final DownloadInputData params = new DownloadInputData.Builder().binary(true).build();
         final InputStream inputStream = dsnGet.get("TEST.DATASET", params);
         assertEquals("test data", new String(inputStream.readAllBytes()));
         assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET", mockGetRequest.getUrl());
@@ -76,7 +76,7 @@ public class DsnGetTest {
     @Test
     public void tstDsnGetTokenSuccess() throws ZosmfRequestException, IOException {
         final DsnGet dsnGet = new DsnGet(connection, mockGetRequestToken);
-        final DownloadParams params = new DownloadParams.Builder().binary(true).build();
+        final DownloadInputData params = new DownloadInputData.Builder().binary(true).build();
         final InputStream inputStream = dsnGet.get("TEST.DATASET", params);
         assertEquals("{X-IBM-Data-Type=binary, Accept-Encoding=gzip, X-CSRF-ZOSMF-HEADER=true, " +
                 "Content-Type=application/json}", mockGetRequestToken.getHeaders().toString());
@@ -87,7 +87,7 @@ public class DsnGetTest {
     @Test
     public void tstDsnGetTokenWithMultipleParamsSuccess() throws ZosmfRequestException, IOException {
         final DsnGet dsnGet = new DsnGet(connection, mockGetRequestToken);
-        final DownloadParams params = new DownloadParams.Builder()
+        final DownloadInputData params = new DownloadInputData.Builder()
                 .binary(true)
                 .encoding(1047L)
                 .returnEtag(true)
@@ -105,7 +105,7 @@ public class DsnGetTest {
     @Test
     public void tstDsnGetTokenWithMultipleParamsWithoutEncodingSuccess() throws ZosmfRequestException, IOException {
         final DsnGet dsnGet = new DsnGet(connection, mockGetRequestToken);
-        final DownloadParams params = new DownloadParams.Builder()
+        final DownloadInputData params = new DownloadInputData.Builder()
                 .binary(true)
                 .returnEtag(true)
                 .responseTimeout("30")
@@ -122,7 +122,7 @@ public class DsnGetTest {
     @Test
     public void tstDsnGetTokenWithMultipleParamsWithoutEncodingAndEtagSuccess() throws ZosmfRequestException, IOException {
         final DsnGet dsnGet = new DsnGet(connection, mockGetRequestToken);
-        final DownloadParams params = new DownloadParams.Builder()
+        final DownloadInputData params = new DownloadInputData.Builder()
                 .binary(true)
                 .responseTimeout("30")
                 .build();
@@ -137,7 +137,7 @@ public class DsnGetTest {
     @Test
     public void tstDsnGetTokenWithMultipleParamsWithoutEncodingAndEtagFalseSuccess() throws ZosmfRequestException, IOException {
         final DsnGet dsnGet = new DsnGet(connection, mockGetRequestToken);
-        final DownloadParams params = new DownloadParams.Builder()
+        final DownloadInputData params = new DownloadInputData.Builder()
                 .binary(true)
                 .returnEtag(false)
                 .responseTimeout("30")
@@ -153,7 +153,7 @@ public class DsnGetTest {
     @Test
     public void tstDsnGetTokenWithMultipleParamsWithoutEncodingAndBinaryAndEtagFalseSuccess() throws ZosmfRequestException, IOException {
         final DsnGet dsnGet = new DsnGet(connection, mockGetRequestToken);
-        final DownloadParams params = new DownloadParams.Builder()
+        final DownloadInputData params = new DownloadInputData.Builder()
                 .binary(false)
                 .returnEtag(false)
                 .responseTimeout("30")
