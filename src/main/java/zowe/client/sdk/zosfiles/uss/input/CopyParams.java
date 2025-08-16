@@ -26,7 +26,7 @@ public class CopyParams {
     /**
      * The file or directory to be copied. May not be specified with 'from-dataset'.
      */
-    private final Optional<String> from;
+    private final String from;
 
     /**
      * The default is true.
@@ -46,7 +46,7 @@ public class CopyParams {
      * @author James Kostrewski
      */
     public CopyParams(final CopyParams.Builder builder) {
-        this.from = Optional.ofNullable(builder.from);
+        this.from = builder.from;
         this.overwrite = builder.overwrite;
         this.recursive = builder.recursive;
     }
@@ -57,7 +57,7 @@ public class CopyParams {
      * @return from value
      */
     public Optional<String> getFrom() {
-        return from;
+        return Optional.ofNullable(from);
     }
 
     /**

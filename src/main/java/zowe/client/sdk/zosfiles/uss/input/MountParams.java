@@ -29,24 +29,24 @@ public class MountParams {
     /**
      * Specifies the action mount to mount a UNIX file system.
      */
-    private final Optional<MountActionType> action;
+    private final MountActionType action;
 
     /**
      * Specifies the mount point to be used for mounting the UNIX file system.
      */
-    private final Optional<String> mountPoint;
+    private final String mountPoint;
 
     /**
      * Specifies the type of file system to be mounted. This value must match the TYPE operand on a FILESYSTYPE
      * statement in the BPXPRMxx parmlib member for your system.
      */
-    private final Optional<String> fsType;
+    private final String fsType;
 
     /**
      * Specifies the mode in which the file system is mounted.
      * If not specified, this value defaults to rdonly.
      */
-    private final Optional<MountModeType> mode;
+    private final MountModeType mode;
 
     /**
      * MountParams constructor
@@ -55,10 +55,10 @@ public class MountParams {
      * @author Frank Giordano
      */
     public MountParams(final MountParams.Builder builder) {
-        this.action = Optional.ofNullable(builder.action);
-        this.mountPoint = Optional.ofNullable(builder.mountPoint);
-        this.fsType = Optional.ofNullable(builder.fsType);
-        this.mode = Optional.ofNullable(builder.mode);
+        this.action = builder.action;
+        this.mountPoint = builder.mountPoint;
+        this.fsType = builder.fsType;
+        this.mode = builder.mode;
     }
 
     /**
@@ -67,7 +67,7 @@ public class MountParams {
      * @return action value
      */
     public Optional<MountActionType> getAction() {
-        return action;
+        return Optional.ofNullable(action);
     }
 
     /**
@@ -76,7 +76,7 @@ public class MountParams {
      * @return mountPoint value
      */
     public Optional<String> getMountPoint() {
-        return mountPoint;
+        return Optional.ofNullable(mountPoint);
     }
 
     /**
@@ -85,7 +85,7 @@ public class MountParams {
      * @return fsType value
      */
     public Optional<String> getFsType() {
-        return fsType;
+        return Optional.ofNullable(fsType);
     }
 
     /**
@@ -94,7 +94,7 @@ public class MountParams {
      * @return mode value
      */
     public Optional<MountModeType> getMode() {
-        return mode;
+        return Optional.ofNullable(mode);
     }
 
     /**

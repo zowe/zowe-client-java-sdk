@@ -28,14 +28,14 @@ public class GetAclParams {
      * 'dir' displays the directory default ACL entries (getfacl -d).
      * If the target is not a directory, a warning is issued.
      */
-    private final Optional<GetAclType> type;
+    private final GetAclType type;
 
     /**
      * The user ID or UID (as a JSON string),
      * displays only the ACL entries for the specified types of access control lists (getfacl -a, -d, -f)
      * which affects the specified user's access (getfacl -e user).
      */
-    private final Optional<String> user;
+    private final String user;
 
     /**
      * The default is 'false'.
@@ -62,8 +62,8 @@ public class GetAclParams {
      * @author James Kostrewski
      */
     public GetAclParams(final GetAclParams.Builder builder) {
-        this.type = Optional.ofNullable(builder.type);
-        this.user = Optional.ofNullable(builder.user);
+        this.type = builder.type;
+        this.user = builder.user;
         this.useCommas = builder.usecommas;
         this.suppressHeader = builder.suppressheader;
         this.suppressBaseAcl = builder.suppressbaseacl;
@@ -75,7 +75,7 @@ public class GetAclParams {
      * @return type value
      */
     public Optional<GetAclType> getType() {
-        return type;
+        return Optional.ofNullable(type);
     }
 
     /**
@@ -84,7 +84,7 @@ public class GetAclParams {
      * @return user value
      */
     public Optional<String> getUser() {
-        return user;
+        return Optional.ofNullable(user);
     }
 
     /**

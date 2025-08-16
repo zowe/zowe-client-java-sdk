@@ -23,46 +23,46 @@ public class UnixFile {
     /**
      * File, symbolic file or directory name
      */
-    private final Optional<String> name;
+    private final String name;
 
     /**
      * Permission (mode) of returned name item
      */
-    private final Optional<String> mode;
+    private final String mode;
 
     /**
      * size of returned name item
      */
-    private final OptionalLong size;
+    private final Long size;
 
     /**
      * uid of returned name item
      */
-    private final OptionalLong uid;
+    private final Long uid;
 
     /**
      * user of returned name item
      */
-    private final Optional<String> user;
+    private final String user;
 
     /**
      * gid of returned name item
      */
-    private final OptionalLong gid;
+    private final Long gid;
 
     /**
      * group of returned name items
      */
-    private final Optional<String> group;
+    private final String group;
 
     /**
      * mtime of returned name item
      */
-    private final Optional<String> mtime;
+    private final String mtime;
     /**
      * target of returned name item
      */
-    private final Optional<String> target;
+    private final String target;
 
     /**
      * UnixFile constructor
@@ -71,27 +71,15 @@ public class UnixFile {
      * @author Frank Giordano
      */
     public UnixFile(final UnixFile.Builder builder) {
-        this.name = Optional.ofNullable(builder.name);
-        this.mode = Optional.ofNullable(builder.mode);
-        if (builder.size == null) {
-            this.size = OptionalLong.empty();
-        } else {
-            this.size = OptionalLong.of(builder.size);
-        }
-        if (builder.uid == null) {
-            this.uid = OptionalLong.empty();
-        } else {
-            this.uid = OptionalLong.of(builder.uid);
-        }
-        this.user = Optional.ofNullable(builder.user);
-        if (builder.gid == null) {
-            this.gid = OptionalLong.empty();
-        } else {
-            this.gid = OptionalLong.of(builder.gid);
-        }
-        this.group = Optional.ofNullable(builder.group);
-        this.mtime = Optional.ofNullable(builder.mtime);
-        this.target = Optional.ofNullable(builder.target);
+        this.name = builder.name;
+        this.mode = builder.mode;
+        this.size = builder.size;
+        this.uid = builder.uid;
+        this.user = builder.user;
+        this.gid = builder.gid;
+        this.group = builder.group;
+        this.mtime = builder.mtime;
+        this.target = builder.target;
     }
 
     /**
@@ -100,7 +88,7 @@ public class UnixFile {
      * @return name value
      */
     public Optional<String> getName() {
-        return name;
+        return Optional.ofNullable(name);
     }
 
     /**
@@ -109,7 +97,7 @@ public class UnixFile {
      * @return mode value
      */
     public Optional<String> getMode() {
-        return mode;
+        return Optional.ofNullable(mode);
     }
 
     /**
@@ -118,7 +106,7 @@ public class UnixFile {
      * @return size value
      */
     public OptionalLong getSize() {
-        return size;
+        return (size == null) ? OptionalLong.empty() : OptionalLong.of(size);
     }
 
     /**
@@ -127,7 +115,7 @@ public class UnixFile {
      * @return uid value
      */
     public OptionalLong getUid() {
-        return uid;
+        return (uid == null) ? OptionalLong.empty() : OptionalLong.of(uid);
     }
 
     /**
@@ -136,7 +124,7 @@ public class UnixFile {
      * @return user value
      */
     public Optional<String> getUser() {
-        return user;
+        return Optional.ofNullable(user);
     }
 
     /**
@@ -145,7 +133,7 @@ public class UnixFile {
      * @return gid value
      */
     public OptionalLong getGid() {
-        return gid;
+        return (gid == null) ? OptionalLong.empty() : OptionalLong.of(gid);
     }
 
     /**
@@ -154,7 +142,7 @@ public class UnixFile {
      * @return group value
      */
     public Optional<String> getGroup() {
-        return group;
+        return Optional.ofNullable(group);
     }
 
     /**
@@ -163,7 +151,7 @@ public class UnixFile {
      * @return mtime value
      */
     public Optional<String> getMtime() {
-        return mtime;
+        return Optional.ofNullable(mtime);
     }
 
     /**
@@ -172,7 +160,7 @@ public class UnixFile {
      * @return target value
      */
     public Optional<String> getTarget() {
-        return target;
+        return Optional.ofNullable(target);
     }
 
     /**

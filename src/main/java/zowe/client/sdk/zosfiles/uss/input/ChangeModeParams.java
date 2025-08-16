@@ -27,7 +27,7 @@ public class ChangeModeParams {
     /**
      * The mode value, which is specified as the POSIX symbolic form or octal value (as a JSON string).
      */
-    private final Optional<String> mode;
+    private final String mode;
 
     /**
      * The default is false. When 'true', the file mode bits of the directory and all files in the
@@ -40,7 +40,7 @@ public class ChangeModeParams {
      * to by any encountered links. 'suppress' is a mode change for the file or directory pointed to by any
      * encountered symbolic links.
      */
-    private final Optional<LinkType> links;
+    private final LinkType links;
 
     /**
      * ChangeModeParams constructor
@@ -49,9 +49,9 @@ public class ChangeModeParams {
      * @author James Kostrewski
      */
     public ChangeModeParams(final ChangeModeParams.Builder builder) {
-        this.mode = Optional.of(builder.mode);
+        this.mode = builder.mode;
         this.recursive = builder.recursive;
-        this.links = Optional.ofNullable(builder.links);
+        this.links = builder.links;
     }
 
     /**
@@ -60,7 +60,7 @@ public class ChangeModeParams {
      * @return mode value
      */
     public Optional<String> getMode() {
-        return mode;
+        return Optional.ofNullable(mode);
     }
 
     /**
@@ -78,7 +78,7 @@ public class ChangeModeParams {
      * @return linkType value
      */
     public Optional<LinkType> getLinks() {
-        return links;
+        return Optional.ofNullable(links);
     }
 
     /**

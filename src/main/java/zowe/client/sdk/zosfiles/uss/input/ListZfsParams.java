@@ -27,7 +27,7 @@ public class ListZfsParams {
     /**
      * The indicator that we want to show fewer files
      */
-    private final OptionalInt maxLength;
+    private final Integer maxLength;
 
     /**
      * This parameter identifies the UNIX directory that contains the files and directories to be listed.
@@ -35,13 +35,13 @@ public class ListZfsParams {
      * fully qualified path name in the UNIX file system structure. A fully qualified file name can be up to 1023
      * bytes long. You cannot use wildcard characters for this parameter.
      */
-    private final Optional<String> path;
+    private final String path;
 
     /**
      * This parameter identifies the fully qualified filesystem name to be listed. For zFS filesystems, this is
      * the data set name of the aggregate. This parameter may not be specified if the 'path' parameter is specified.
      */
-    private final Optional<String> fsname;
+    private final String fsname;
 
     /**
      * ListZfsParams constructor
@@ -50,13 +50,9 @@ public class ListZfsParams {
      * @author Frank Giordano
      */
     public ListZfsParams(final ListZfsParams.Builder builder) {
-        if (builder.maxLength == null) {
-            this.maxLength = OptionalInt.empty();
-        } else {
-            this.maxLength = OptionalInt.of(builder.maxLength);
-        }
-        this.path = Optional.ofNullable(builder.path);
-        this.fsname = Optional.ofNullable(builder.fsname);
+        this.maxLength = builder.maxLength;
+        this.path = builder.path;
+        this.fsname = builder.fsname;
     }
 
     /**
@@ -65,7 +61,7 @@ public class ListZfsParams {
      * @return maxLength value
      */
     public OptionalInt getMaxLength() {
-        return maxLength;
+        return (maxLength == null) ? OptionalInt.empty() : OptionalInt.of(maxLength);
     }
 
     /**
@@ -74,7 +70,7 @@ public class ListZfsParams {
      * @return path value
      */
     public Optional<String> getPath() {
-        return path;
+        return Optional.ofNullable(path);
     }
 
     /**
@@ -83,7 +79,7 @@ public class ListZfsParams {
      * @return fsname value
      */
     public Optional<String> getFsname() {
-        return fsname;
+        return Optional.ofNullable(fsname);
     }
 
     /**
