@@ -26,12 +26,12 @@ public class SubmitJobParams {
      * //IEFBR14 JOB ()
      * //RUN     EXEC PGM=IEFBR14
      */
-    private Optional<String> jobDataSet;
+    private String jobDataSet;
 
     /**
      * A Map for JCL symbolic substitution, specify key,value for symbol substitution
      */
-    private Optional<Map<String, String>> jclSymbols = Optional.empty();
+    private Map<String, String> jclSymbols;
 
     /**
      * SubmitJobParams constructor
@@ -40,7 +40,7 @@ public class SubmitJobParams {
      * @author Frank Giordano
      */
     public SubmitJobParams(final String jobDataSet) {
-        this.jobDataSet = Optional.ofNullable(jobDataSet);
+        this.jobDataSet = jobDataSet;
     }
 
     /**
@@ -51,8 +51,8 @@ public class SubmitJobParams {
      * @author Frank Giordano
      */
     public SubmitJobParams(final String jobDataSet, final Map<String, String> jclSymbols) {
-        this.jobDataSet = Optional.ofNullable(jobDataSet);
-        this.jclSymbols = Optional.ofNullable(jclSymbols);
+        this.jobDataSet = jobDataSet;
+        this.jclSymbols = jclSymbols;
     }
 
     /**
@@ -61,7 +61,7 @@ public class SubmitJobParams {
      * @return jclSymbols value
      */
     public Optional<Map<String, String>> getJclSymbols() {
-        return jclSymbols;
+        return Optional.ofNullable(jclSymbols);
     }
 
     /**
@@ -70,7 +70,7 @@ public class SubmitJobParams {
      * @param jclSymbols Map for JCL symbolic substitution
      */
     public void setJclSymbols(final Map<String, String> jclSymbols) {
-        this.jclSymbols = Optional.ofNullable(jclSymbols);
+        this.jclSymbols = jclSymbols;
     }
 
     /**
@@ -79,7 +79,7 @@ public class SubmitJobParams {
      * @return jobDataSet value
      */
     public Optional<String> getJobDataSet() {
-        return jobDataSet;
+        return Optional.ofNullable(jobDataSet);
     }
 
     /**
@@ -88,7 +88,7 @@ public class SubmitJobParams {
      * @param jobDataSet z/OS data set which should contain syntactically correct JCL
      */
     public void setJobDataSet(final String jobDataSet) {
-        this.jobDataSet = Optional.ofNullable(jobDataSet);
+        this.jobDataSet = jobDataSet;
     }
 
     /**

@@ -22,12 +22,12 @@ public class ModifyJobParams {
     /**
      * Job name value specified for request
      */
-    private final Optional<String> jobName;
+    private final String jobName;
 
     /**
      * Job id value specified for request
      */
-    private final Optional<String> jobId;
+    private final String jobId;
 
     /**
      * Version value specified for the request.
@@ -37,7 +37,7 @@ public class ModifyJobParams {
      * the system will attempt to process the request synchronously if such processing is supported on
      * the target JES2 subsystem.
      */
-    private final Optional<String> version;
+    private final String version;
 
     /**
      * ModifyJobParams constructor
@@ -46,9 +46,9 @@ public class ModifyJobParams {
      * @author Nikunj Goyal
      */
     private ModifyJobParams(final ModifyJobParams.Builder builder) {
-        this.jobName = Optional.ofNullable(builder.jobName);
-        this.jobId = Optional.ofNullable(builder.jobId);
-        this.version = Optional.ofNullable(builder.version);
+        this.jobName = builder.jobName;
+        this.jobId = builder.jobId;
+        this.version = builder.version;
     }
 
     /**
@@ -57,7 +57,7 @@ public class ModifyJobParams {
      * @return jobId value
      */
     public Optional<String> getJobId() {
-        return jobId;
+        return Optional.ofNullable(jobId);
     }
 
     /**
@@ -66,7 +66,7 @@ public class ModifyJobParams {
      * @return jobName value
      */
     public Optional<String> getJobName() {
-        return jobName;
+        return Optional.ofNullable(jobName);
     }
 
     /**
@@ -75,7 +75,7 @@ public class ModifyJobParams {
      * @return version value
      */
     public Optional<String> getVersion() {
-        return version;
+        return Optional.ofNullable(version);
     }
 
     /**

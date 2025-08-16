@@ -22,12 +22,12 @@ public class CommonJobParams {
     /**
      * Job id for a job
      */
-    private final Optional<String> jobId;
+    private final String jobId;
 
     /**
      * Job name for a job
      */
-    private final Optional<String> jobName;
+    private final String jobName;
 
     /**
      * Flag to indicate whether to include step data
@@ -45,8 +45,8 @@ public class CommonJobParams {
      * @author Frank Giordano
      */
     public CommonJobParams(final String jobId, final String jobName) {
-        this.jobId = Optional.ofNullable(jobId);
-        this.jobName = Optional.ofNullable(jobName);
+        this.jobId = jobId;
+        this.jobName = jobName;
         this.stepData = false;
     }
 
@@ -59,8 +59,8 @@ public class CommonJobParams {
      * @author Frank Giordano
      */
     public CommonJobParams(final String jobId, final String jobName, final boolean stepData) {
-        this.jobId = Optional.ofNullable(jobId);
-        this.jobName = Optional.ofNullable(jobName);
+        this.jobId = jobId;
+        this.jobName = jobName;
         this.stepData = stepData;
     }
 
@@ -70,7 +70,7 @@ public class CommonJobParams {
      * @return jobId value
      */
     public Optional<String> getJobId() {
-        return jobId;
+        return Optional.ofNullable(jobId);
     }
 
     /**
@@ -79,7 +79,7 @@ public class CommonJobParams {
      * @return jobName value
      */
     public Optional<String> getJobName() {
-        return jobName;
+        return Optional.ofNullable(jobName);
     }
 
     /**

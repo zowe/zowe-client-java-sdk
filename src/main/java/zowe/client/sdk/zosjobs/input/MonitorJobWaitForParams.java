@@ -28,14 +28,14 @@ public class MonitorJobWaitForParams {
      * Any errors that you receive regarding invalid JOBID/JOBNAME will be surfaced by z/OSMF. Ensure that your
      * JOBID specification adheres to the z/OS standards.
      */
-    private final Optional<String> jobId;
+    private final String jobId;
 
     /**
      * The z/OS JOBNAME for the job to monitor. No pre-validation of the JOBNAME (other than its presence) is performed.
      * Any errors that you receive regarding invalid JOBID/JOBNAME will be surfaced by z/OSMF. Ensure that your
      * JOBNAME specification adheres to the z/OS standards.
      */
-    private final Optional<String> jobName;
+    private final String jobName;
 
     /**
      * Watch delay is the polling delay in milliseconds. MonitorJobs will poll every "watchDelay" milliseconds for the
@@ -43,7 +43,7 @@ public class MonitorJobWaitForParams {
      * for the expected status.
      * Default: MonitorJobs.DEFAULT_WATCHER_DELAY
      */
-    private OptionalInt watchDelay;
+    private Integer watchDelay;
 
     /**
      * The job status (see z/OSMF Jobs REST APIs documentation - and the JOB_STATUS type for possible options) to
@@ -51,20 +51,20 @@ public class MonitorJobWaitForParams {
      * documentation for full details) the "waitFor..." API methods will return immediately with the current status.
      * Default: MonitorJobs.DEFAULT_STATUS.
      */
-    private Optional<JobStatus.Type> jobStatus;
+    private JobStatus.Type jobStatus;
 
     /**
      * Maximum number of poll attempts. Use in conjunction with "watchDelay" to specify your maximum wait
      * for the expected status.
      * Default: MonitorJobs.DEFAULT_ATTEMPTS.
      */
-    private OptionalInt attempts;
+    private Integer attempts;
 
     /**
      * Number of lines to inspect from job output.
      * Default: MonitorJobs.DEFAULT_LINE_LIMIT.
      */
-    private OptionalInt lineLimit;
+    private Integer lineLimit;
 
     /**
      * MonitorJobWaitForParams constructor
@@ -73,10 +73,10 @@ public class MonitorJobWaitForParams {
      * @author Frank Giordano
      */
     private MonitorJobWaitForParams(final MonitorJobWaitForParams.Builder builder) {
-        this.jobId = Optional.ofNullable(builder.jobId);
-        this.jobName = Optional.ofNullable(builder.jobName);
+        this.jobId = builder.jobId;
+        this.jobName = builder.jobName;
         this.watchDelay = builder.watchDelay;
-        this.jobStatus = Optional.ofNullable(builder.jobStatus);
+        this.jobStatus = builder.jobStatus;
         this.attempts = builder.attempts;
         this.lineLimit = builder.lineLimit;
     }
@@ -87,7 +87,7 @@ public class MonitorJobWaitForParams {
      * @return attempts value
      */
     public OptionalInt getAttempts() {
-        return attempts;
+        return (attempts == null) ? OptionalInt.empty() : OptionalInt.of(attempts);
     }
 
     /**
@@ -96,7 +96,7 @@ public class MonitorJobWaitForParams {
      * @param attempts number of attempts to get status
      */
     public void setAttempts(final int attempts) {
-        this.attempts = OptionalInt.of(attempts);
+        this.attempts = attempts;
     }
 
     /**
@@ -105,7 +105,7 @@ public class MonitorJobWaitForParams {
      * @return jobId value
      */
     public Optional<String> getJobId() {
-        return jobId;
+        return Optional.ofNullable(jobId);
     }
 
     /**
@@ -114,7 +114,7 @@ public class MonitorJobWaitForParams {
      * @return jobName value
      */
     public Optional<String> getJobName() {
-        return jobName;
+        return Optional.ofNullable(jobName);
     }
 
     /**
@@ -123,7 +123,7 @@ public class MonitorJobWaitForParams {
      * @return jobStatus value
      */
     public Optional<JobStatus.Type> getJobStatus() {
-        return jobStatus;
+        return Optional.ofNullable(jobStatus);
     }
 
     /**
@@ -132,7 +132,7 @@ public class MonitorJobWaitForParams {
      * @param jobStatus job status type, see JobStatus.Type object
      */
     public void setJobStatus(final JobStatus.Type jobStatus) {
-        this.jobStatus = Optional.ofNullable(jobStatus);
+        this.jobStatus = jobStatus;
     }
 
     /**
@@ -141,7 +141,7 @@ public class MonitorJobWaitForParams {
      * @return lineLimit value
      */
     public OptionalInt getLineLimit() {
-        return lineLimit;
+        return (lineLimit == null) ? OptionalInt.empty() : OptionalInt.of(lineLimit);
     }
 
     /**
@@ -150,7 +150,7 @@ public class MonitorJobWaitForParams {
      * @param lineLimit number of lines to inspect
      */
     public void setLineLimit(final int lineLimit) {
-        this.lineLimit = OptionalInt.of(lineLimit);
+        this.lineLimit = lineLimit;
     }
 
     /**
@@ -159,7 +159,7 @@ public class MonitorJobWaitForParams {
      * @return watchDelay value
      */
     public OptionalInt getWatchDelay() {
-        return watchDelay;
+        return (watchDelay == null) ? OptionalInt.empty() : OptionalInt.of(watchDelay);
     }
 
     /**
@@ -168,7 +168,7 @@ public class MonitorJobWaitForParams {
      * @param watchDelay delay of polling operation in milliseconds
      */
     public void setWatchDelay(final int watchDelay) {
-        this.watchDelay = OptionalInt.of(watchDelay);
+        this.watchDelay = watchDelay;
     }
 
     /**
@@ -213,7 +213,7 @@ public class MonitorJobWaitForParams {
          * for the expected status.
          * Default: MonitorJobs.DEFAULT_WATCHER_DELAY
          */
-        private OptionalInt watchDelay = OptionalInt.empty();
+        private Integer watchDelay;
 
         /**
          * The job status (see z/OSMF Jobs REST APIs documentation - and the JOB_STATUS type for possible options) to
@@ -228,13 +228,13 @@ public class MonitorJobWaitForParams {
          * for the expected status.
          * Default: MonitorJobs.DEFAULT_ATTEMPTS.
          */
-        private OptionalInt attempts = OptionalInt.empty();
+        private Integer attempts;
 
         /**
          * Number of lines to inspect from job output.
          * Default: MonitorJobs.DEFAULT_LINE_LIMIT.
          */
-        private OptionalInt lineLimit = OptionalInt.empty();
+        private Integer lineLimit;
 
         /**
          * Builder constructor
@@ -254,7 +254,7 @@ public class MonitorJobWaitForParams {
          * @return Builder object
          */
         public MonitorJobWaitForParams.Builder attempts(final int attempts) {
-            this.attempts = OptionalInt.of(attempts);
+            this.attempts = attempts;
             return this;
         }
 
@@ -276,7 +276,7 @@ public class MonitorJobWaitForParams {
          * @return Builder object
          */
         public MonitorJobWaitForParams.Builder lineLimit(final int lineLimit) {
-            this.lineLimit = OptionalInt.of(lineLimit);
+            this.lineLimit = lineLimit;
             return this;
         }
 
@@ -287,7 +287,7 @@ public class MonitorJobWaitForParams {
          * @return Builder object
          */
         public MonitorJobWaitForParams.Builder watchDelay(final int watchDelay) {
-            this.watchDelay = OptionalInt.of(watchDelay);
+            this.watchDelay = watchDelay;
             return this;
         }
 

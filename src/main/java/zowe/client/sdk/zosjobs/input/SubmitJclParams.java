@@ -26,21 +26,21 @@ public class SubmitJclParams {
      * "//IEFBR14 JOB ()" +
      * "//RUN     EXEC PGM=IEFBR14"
      */
-    private Optional<String> jcl;
+    private String jcl;
 
     /**
      * Specify internal reader RECFM and corresponding http(s) headers will be appended to the request accordingly
      * A single character that specifies the internal reader record format: F or V.
      * If you omit this header or specify a value other than F or V, the default of F is used.
      */
-    private Optional<String> internalReaderRecfm;
+    private String internalReaderRecfm;
 
     /**
      * Specify internal reader LRECL and corresponding http(s) headers will be appended to the request accordingly
      * An integer value that specifies the internal reader logical record length (LRECL).
      * If you omit this header or specify a non-integer value, the default of 80 is used.
      */
-    private Optional<String> internalReaderLrecl;
+    private String internalReaderLrecl;
 
     /**
      * A Map for JCL symbolic substitution
@@ -48,7 +48,7 @@ public class SubmitJclParams {
      * For example, this accepts a Map of key/value pairs: {"SYM","SYM"}, {"SYM2","\"SYM 2\""}, etc...
      * Values with spaces should be enclosed in double quotes.
      */
-    private Optional<Map<String, String>> jclSymbols = Optional.empty();
+    private Map<String, String> jclSymbols;
 
     /**
      * SubmitJclParams constructor
@@ -59,9 +59,9 @@ public class SubmitJclParams {
      * @author Frank Giordano
      */
     public SubmitJclParams(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl) {
-        this.jcl = Optional.ofNullable(jcl);
-        this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
-        this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
+        this.jcl = jcl;
+        this.internalReaderRecfm = internalReaderRecfm;
+        this.internalReaderLrecl = internalReaderLrecl;
     }
 
     /**
@@ -75,10 +75,10 @@ public class SubmitJclParams {
      */
     public SubmitJclParams(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl,
                            final Map<String, String> jclSymbols) {
-        this.jcl = Optional.ofNullable(jcl);
-        this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
-        this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
-        this.jclSymbols = Optional.ofNullable(jclSymbols);
+        this.jcl = jcl;
+        this.internalReaderRecfm = internalReaderRecfm;
+        this.internalReaderLrecl = internalReaderLrecl;
+        this.jclSymbols = jclSymbols;
     }
 
     /**
@@ -87,7 +87,7 @@ public class SubmitJclParams {
      * @return internalReaderLrecl value
      */
     public Optional<String> getInternalReaderLrecl() {
-        return internalReaderLrecl;
+        return Optional.ofNullable(internalReaderLrecl);
     }
 
     /**
@@ -98,7 +98,7 @@ public class SubmitJclParams {
      *                            An integer value that specifies the internal reader logical record length (LRECL).
      */
     public void setInternalReaderLrecl(final String internalReaderLrecl) {
-        this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
+        this.internalReaderLrecl = internalReaderLrecl;
     }
 
     /**
@@ -107,7 +107,7 @@ public class SubmitJclParams {
      * @return internalReaderRecfm value
      */
     public Optional<String> getInternalReaderRecfm() {
-        return internalReaderRecfm;
+        return Optional.ofNullable(internalReaderRecfm);
     }
 
     /**
@@ -118,7 +118,7 @@ public class SubmitJclParams {
      *                            A single character that specifies the internal reader record format: F or V.
      */
     public void setInternalReaderRecfm(final String internalReaderRecfm) {
-        this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
+        this.internalReaderRecfm = internalReaderRecfm;
     }
 
     /**
@@ -127,7 +127,7 @@ public class SubmitJclParams {
      * @return jcl value
      */
     public Optional<String> getJcl() {
-        return jcl;
+        return Optional.ofNullable(jcl);
     }
 
     /**
@@ -136,7 +136,7 @@ public class SubmitJclParams {
      * @param jcl string representing jcl content
      */
     public void setJcl(final String jcl) {
-        this.jcl = Optional.ofNullable(jcl);
+        this.jcl = jcl;
     }
 
     /**
@@ -145,7 +145,7 @@ public class SubmitJclParams {
      * @return jclSymbols value
      */
     public Optional<Map<String, String>> getJclSymbols() {
-        return jclSymbols;
+        return Optional.ofNullable(jclSymbols);
     }
 
     /**
@@ -154,7 +154,7 @@ public class SubmitJclParams {
      * @param jclSymbols Map of JCL symbolic substitution
      */
     public void setJclSymbols(final Map<String, String> jclSymbols) {
-        this.jclSymbols = Optional.ofNullable(jclSymbols);
+        this.jclSymbols = jclSymbols;
     }
 
     /**

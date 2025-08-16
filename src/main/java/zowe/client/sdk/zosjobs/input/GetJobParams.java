@@ -25,24 +25,24 @@ public class GetJobParams {
     /**
      * Owner for which to get jobs for.
      */
-    private final Optional<String> owner;
+    private final String owner;
 
     /**
      * Prefix to filter when getting jobs.
      * Default: *
      */
-    private final Optional<String> prefix;
+    private final String prefix;
 
     /**
      * Max jobs to return in a list
      * Default: JobsConstants.DEFAULT_MAX_JOBS
      */
-    private final OptionalInt maxJobs;
+    private final Integer maxJobs;
 
     /**
      * job id for a job
      */
-    private final Optional<String> jobId;
+    private final String jobId;
 
     /**
      * GetJobParams constructor
@@ -51,14 +51,10 @@ public class GetJobParams {
      * @author Frank Giordano
      */
     private GetJobParams(final Builder builder) {
-        this.owner = Optional.ofNullable(builder.owner);
-        this.prefix = Optional.ofNullable(builder.prefix);
-        if (builder.maxJobs == null) {
-            this.maxJobs = OptionalInt.empty();
-        } else {
-            this.maxJobs = OptionalInt.of(builder.maxJobs);
-        }
-        this.jobId = Optional.ofNullable(builder.jobId);
+        this.owner = builder.owner;
+        this.prefix = builder.prefix;
+        this.maxJobs = builder.maxJobs;
+        this.jobId = builder.jobId;
     }
 
     /**
@@ -67,7 +63,7 @@ public class GetJobParams {
      * @return jobId value
      */
     public Optional<String> getJobId() {
-        return jobId;
+        return Optional.ofNullable(jobId);
     }
 
     /**
@@ -76,7 +72,7 @@ public class GetJobParams {
      * @return maxJobs value
      */
     public OptionalInt getMaxJobs() {
-        return maxJobs;
+        return (maxJobs == null) ? OptionalInt.empty() : OptionalInt.of(maxJobs);
     }
 
     /**
@@ -85,7 +81,7 @@ public class GetJobParams {
      * @return owner value
      */
     public Optional<String> getOwner() {
-        return owner;
+        return Optional.ofNullable(owner);
     }
 
     /**
@@ -94,7 +90,7 @@ public class GetJobParams {
      * @return prefix value
      */
     public Optional<String> getPrefix() {
-        return prefix;
+        return Optional.ofNullable(prefix);
     }
 
     /**

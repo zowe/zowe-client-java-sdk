@@ -23,12 +23,12 @@ public class JobStepData {
     /**
      * SMFID
      */
-    private final Optional<String> smfid;
+    private final String smfid;
 
     /**
      * Completion
      */
-    private final Optional<String> completion;
+    private final String completion;
 
     /**
      * Active
@@ -38,22 +38,22 @@ public class JobStepData {
     /**
      * Job relevant step
      */
-    private final OptionalLong stepNumber;
+    private final Long stepNumber;
 
     /**
      * Job relevant proc
      */
-    private final Optional<String> procStepName;
+    private final String procStepName;
 
     /**
      * Step for which job dd exists
      */
-    private final Optional<String> stepName;
+    private final String stepName;
 
     /**
      * Program EXEC=
      */
-    private final Optional<String> programName;
+    private final String programName;
 
     /**
      * JobStepData constructor
@@ -62,17 +62,13 @@ public class JobStepData {
      * @author Frank Giordano
      */
     private JobStepData(final JobStepData.Builder builder) {
-        this.smfid = Optional.ofNullable(builder.smfid);
-        this.completion = Optional.ofNullable(builder.completion);
+        this.smfid = builder.smfid;
+        this.completion = builder.completion;
         this.active = builder.active;
-        if (builder.stepNumber == null) {
-            this.stepNumber = OptionalLong.empty();
-        } else {
-            this.stepNumber = OptionalLong.of(builder.stepNumber);
-        }
-        this.procStepName = Optional.ofNullable(builder.procStepName);
-        this.stepName = Optional.ofNullable(builder.stepName);
-        this.programName = Optional.ofNullable(builder.programName);
+        this.stepNumber = builder.stepNumber;
+        this.procStepName = builder.procStepName;
+        this.stepName = builder.stepName;
+        this.programName = builder.programName;
     }
 
     /**
@@ -90,7 +86,7 @@ public class JobStepData {
      * @return optional string
      */
     public Optional<String> getCompletion() {
-        return completion;
+        return Optional.ofNullable(completion);
     }
 
     /**
@@ -99,7 +95,7 @@ public class JobStepData {
      * @return optional string
      */
     public Optional<String> getProcStepName() {
-        return procStepName;
+        return Optional.ofNullable(procStepName);
     }
 
     /**
@@ -108,7 +104,7 @@ public class JobStepData {
      * @return optional string
      */
     public Optional<String> getProgramName() {
-        return programName;
+        return Optional.ofNullable(programName);
     }
 
     /**
@@ -117,7 +113,7 @@ public class JobStepData {
      * @return optional string
      */
     public Optional<String> getSmfid() {
-        return smfid;
+        return Optional.ofNullable(smfid);
     }
 
     /**
@@ -126,7 +122,7 @@ public class JobStepData {
      * @return optional string
      */
     public Optional<String> getStepName() {
-        return stepName;
+        return Optional.ofNullable(stepName);
     }
 
     /**
@@ -135,7 +131,7 @@ public class JobStepData {
      * @return optional long
      */
     public OptionalLong getStepNumber() {
-        return stepNumber;
+        return (stepNumber == null) ? OptionalLong.empty() : OptionalLong.of(stepNumber);
     }
 
     /**
