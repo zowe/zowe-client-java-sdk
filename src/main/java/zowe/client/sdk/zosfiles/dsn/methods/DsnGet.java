@@ -19,8 +19,8 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.dsn.input.DownloadParams;
-import zowe.client.sdk.zosfiles.dsn.input.ListParams;
+import zowe.client.sdk.zosfiles.dsn.input.DownloadInputData;
+import zowe.client.sdk.zosfiles.dsn.input.ListInputData;
 import zowe.client.sdk.zosfiles.dsn.response.Dataset;
 import zowe.client.sdk.zosfiles.dsn.types.AttributeType;
 
@@ -101,7 +101,7 @@ public class DsnGet {
         String dataSetSearchStr = str.toString();
         dataSetSearchStr = dataSetSearchStr.substring(0, str.length() - 1);
         final DsnList dsnList = new DsnList(connection);
-        final ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
+        final ListInputData params = new ListInputData.Builder().attribute(AttributeType.BASE).build();
         final List<Dataset> dsLst = dsnList.getDatasets(dataSetSearchStr, params);
 
         final Optional<Dataset> dataSet = dsLst.stream()
@@ -119,7 +119,7 @@ public class DsnGet {
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public InputStream get(final String targetName, final DownloadParams params) throws ZosmfRequestException {
+    public InputStream get(final String targetName, final DownloadInputData params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetName, "targetName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 

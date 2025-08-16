@@ -21,7 +21,7 @@ import zowe.client.sdk.rest.PutTextZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.uss.input.WriteParams;
+import zowe.client.sdk.zosfiles.uss.input.WriteInputData;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -199,7 +199,7 @@ public class UssWriteTest {
     public void tstUssWriteCommonNullTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussWrite.writeCommon(null, new WriteParams.Builder().build());
+            ussWrite.writeCommon(null, new WriteInputData.Builder().build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -210,7 +210,7 @@ public class UssWriteTest {
     public void tstUssWriteCommonEmptyTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussWrite.writeCommon("", new WriteParams.Builder().build());
+            ussWrite.writeCommon("", new WriteInputData.Builder().build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -221,7 +221,7 @@ public class UssWriteTest {
     public void tstUssWriteCommonEmptyTargetPathWithSpacesWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussWrite.writeCommon("  ", new WriteParams.Builder().build());
+            ussWrite.writeCommon("  ", new WriteInputData.Builder().build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -243,7 +243,7 @@ public class UssWriteTest {
     public void tstUssWriteCommonInvalidTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussWrite.writeCommon("name", new WriteParams.Builder().build());
+            ussWrite.writeCommon("name", new WriteInputData.Builder().build());
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }

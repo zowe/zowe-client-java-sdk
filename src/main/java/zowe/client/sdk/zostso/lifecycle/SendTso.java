@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
-import zowe.client.sdk.zostso.input.SendTsoParams;
+import zowe.client.sdk.zostso.input.SendTsoInputData;
 import zowe.client.sdk.zostso.message.TsoMessage;
 import zowe.client.sdk.zostso.message.TsoMessages;
 import zowe.client.sdk.zostso.message.TsoResponseMessage;
@@ -174,7 +174,7 @@ public class SendTso {
      * @author Frank Giordano
      */
     public SendResponse sendDataToTsoCollect(final String servletKey, final String command) throws ZosmfRequestException {
-        final ZosmfTsoResponse putResponse = sendDataToTsoCommon(new SendTsoParams(servletKey, command));
+        final ZosmfTsoResponse putResponse = sendDataToTsoCommon(new SendTsoInputData(servletKey, command));
         final CollectedResponses responses = getAllResponses(putResponse);
         return createResponse(responses);
     }
@@ -187,7 +187,7 @@ public class SendTso {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ZosmfTsoResponse sendDataToTsoCommon(final SendTsoParams commandParams) throws ZosmfRequestException {
+    public ZosmfTsoResponse sendDataToTsoCommon(final SendTsoInputData commandParams) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +

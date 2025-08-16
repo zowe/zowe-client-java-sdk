@@ -21,7 +21,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.uss.input.ChangeTagParams;
+import zowe.client.sdk.zosfiles.uss.input.ChangeTagInputData;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -125,7 +125,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeCommonSuccess() throws ZosmfRequestException {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.changeCommon("/xxx/xx/xx",
-                new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
+                new ChangeTagInputData.Builder().action(ChangeTagAction.LIST).build());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
@@ -136,7 +136,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeCommonWithSpacesInFileNamePathSuccess() throws ZosmfRequestException {
         final UssChangeTag ussChangeTag = new UssChangeTag(connection, mockJsonPutRequest);
         final Response response = ussChangeTag.changeCommon("/xx x/x x/x x",
-                new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
+                new ChangeTagInputData.Builder().action(ChangeTagAction.LIST).build());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
@@ -148,7 +148,7 @@ public class UssChangeTagTest {
         String errMsg = "";
         try {
             ussChangeTag.changeCommon("xxx/xx/xx",
-                    new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
+                    new ChangeTagInputData.Builder().action(ChangeTagAction.LIST).build());
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
@@ -160,7 +160,7 @@ public class UssChangeTagTest {
         String errMsg = "";
         try {
             ussChangeTag.changeCommon("/xxx/xx/xx",
-                    new ChangeTagParams.Builder().action(null).build());
+                    new ChangeTagInputData.Builder().action(null).build());
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
@@ -171,7 +171,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeCommonNoActionInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeTag.changeCommon("/xxx/xx/xx", new ChangeTagParams.Builder().build());
+            ussChangeTag.changeCommon("/xxx/xx/xx", new ChangeTagInputData.Builder().build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -183,7 +183,7 @@ public class UssChangeTagTest {
         String errMsg = "";
         try {
             ussChangeTag.changeCommon("hello",
-                    new ChangeTagParams.Builder().action(ChangeTagAction.SET).build());
+                    new ChangeTagInputData.Builder().action(ChangeTagAction.SET).build());
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
@@ -194,7 +194,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeCommonEmptyFileNamePathPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeTag.changeCommon("", new ChangeTagParams.Builder().build());
+            ussChangeTag.changeCommon("", new ChangeTagInputData.Builder().build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -205,7 +205,7 @@ public class UssChangeTagTest {
     public void tstUssChangeTagChangeCommonEmptyFileNamePathPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeTag.changeCommon("  ", new ChangeTagParams.Builder().build());
+            ussChangeTag.changeCommon("  ", new ChangeTagInputData.Builder().build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }

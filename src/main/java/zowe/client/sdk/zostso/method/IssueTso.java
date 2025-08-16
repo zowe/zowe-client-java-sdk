@@ -12,7 +12,7 @@ package zowe.client.sdk.zostso.method;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zostso.input.StartTsoParams;
+import zowe.client.sdk.zostso.input.StartTsoInputData;
 import zowe.client.sdk.zostso.lifecycle.SendTso;
 import zowe.client.sdk.zostso.lifecycle.StartTso;
 import zowe.client.sdk.zostso.lifecycle.StopTso;
@@ -72,7 +72,7 @@ public class IssueTso {
      * @author Frank Giordano
      */
     public IssueResponse issueCommand(final String accountNumber, final String command,
-                                      final StartTsoParams startParams) throws ZosmfRequestException {
+                                      final StartTsoInputData startParams) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(accountNumber, "accountNumber");
         ValidateUtils.checkIllegalParameter(command, "command");
         // first stage open tso servlet session to use for our tso command processing

@@ -17,6 +17,7 @@ import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosfiles.dsn.input.CopyInputData;
 import zowe.client.sdk.zosfiles.dsn.input.CopyParams;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnCopy;
 
@@ -105,7 +106,7 @@ public class DsnCopyExp extends TstZosConnection {
             DsnCopy dsnCopy = new DsnCopy(connection);
             // 'replace' builder variable here will be true by default if not specified in builder.
             // 'copyAllMembers' builder variable here will be false by default
-            CopyParams copyParams = new CopyParams.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).build();
+            CopyInputData copyParams = new CopyInputData.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).build();
             response = dsnCopy.copyCommon(copyParams);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
@@ -135,7 +136,7 @@ public class DsnCopyExp extends TstZosConnection {
         try {
             DsnCopy dsnCopy = new DsnCopy(connection);
             // 'replace' here will be true by default if not specified in the builder.
-            CopyParams copyParams = new CopyParams.Builder().fromDataSet(fromDataSetName)
+            CopyInputData copyParams = new CopyInputData.Builder().fromDataSet(fromDataSetName)
                     .toDataSet(toDataSetName)
                     .copyAllMembers(true).build();
             response = dsnCopy.copyCommon(copyParams);
@@ -161,6 +162,7 @@ import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosfiles.dsn.input.CreateInputData;
 import zowe.client.sdk.zosfiles.dsn.input.CreateParams;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnCreate;
 
@@ -235,8 +237,8 @@ public class DsnCreateExp extends TstZosConnection {
      *
      * @return prebuilt CreateParams
      */
-    public static CreateParams binary() {
-        return new CreateParams.Builder()
+    public static CreateInputData binary() {
+        return new CreateInputData.Builder()
                 .dsorg("PO")
                 .alcunit("CYL")
                 .primary(10)
@@ -253,8 +255,8 @@ public class DsnCreateExp extends TstZosConnection {
      *
      * @return prebuilt CreateParams
      */
-    public static CreateParams c() {
-        return new CreateParams.Builder()
+    public static CreateInputData c() {
+        return new CreateInputData.Builder()
                 .dsorg("PO")
                 .alcunit("CYL")
                 .primary(1)
@@ -271,8 +273,8 @@ public class DsnCreateExp extends TstZosConnection {
      *
      * @return prebuilt CreateParams
      */
-    public static CreateParams classic() {
-        return new CreateParams.Builder()
+    public static CreateInputData classic() {
+        return new CreateInputData.Builder()
                 .dsorg("PO")
                 .alcunit("CYL")
                 .primary(1)
@@ -289,8 +291,8 @@ public class DsnCreateExp extends TstZosConnection {
      *
      * @return prebuilt CreateParams
      */
-    public static CreateParams partitioned() {
-        return new CreateParams.Builder()
+    public static CreateInputData partitioned() {
+        return new CreateInputData.Builder()
                 .dsorg("PO")
                 .alcunit("CYL")
                 .primary(1)
@@ -307,8 +309,8 @@ public class DsnCreateExp extends TstZosConnection {
      *
      * @return prebuilt CreateParams
      */
-    public static CreateParams sequential() {
-        return new CreateParams.Builder()
+    public static CreateInputData sequential() {
+        return new CreateInputData.Builder()
                 .dsorg("PS")
                 .alcunit("CYL")
                 .primary(1)
@@ -468,6 +470,7 @@ import org.apache.commons.io.IOUtils;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosfiles.dsn.input.DownloadInputData;
 import zowe.client.sdk.zosfiles.dsn.input.DownloadParams;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnGet;
 
@@ -496,7 +499,7 @@ public class DsnGetExp extends TstZosConnection {
         String datasetName = "xxx";
         String datasetSeqName = "xxx";
         String memberName = "xxx";
-        DownloadParams params = new DownloadParams.Builder().build();
+        DownloadInputData params = new DownloadInputData.Builder().build();
         ZosConnection connection = ZosConnectionFactory
                 .createBasicConnection(hostName, zosmfPort, userName, password);
         DsnGetExp.downloadDsnMember(connection, datasetName, memberName, params);
@@ -513,7 +516,7 @@ public class DsnGetExp extends TstZosConnection {
      * @author Leonid Baranov
      */
     public static void downloadDsnMember(ZosConnection connection, String dsName, String memName,
-                                         DownloadParams params) {
+                                         DownloadInputData params) {
         try (InputStream inputStream = new DsnGet(connection).get(String.format("%s(%s)", dsName, memName), params)) {
             System.out.println(getTextStreamData(inputStream));
         } catch (ZosmfRequestException e) {
@@ -531,7 +534,7 @@ public class DsnGetExp extends TstZosConnection {
      * @param params     download parameters object
      * @author Frank Giordano
      */
-    public static void downloadDsnSequential(ZosConnection connection, String dsName, DownloadParams params) {
+    public static void downloadDsnSequential(ZosConnection connection, String dsName, DownloadInputData params) {
         try (InputStream inputStream = new DsnGet(connection).get(dsName, params)) {
             System.out.println(getTextStreamData(inputStream));
         } catch (ZosmfRequestException e) {
@@ -590,6 +593,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosfiles.dsn.input.ListInputData;
 import zowe.client.sdk.zosfiles.dsn.input.ListParams;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnList;
 import zowe.client.sdk.zosfiles.dsn.response.Dataset;
@@ -634,7 +638,7 @@ public class DsnListExp extends TstZosConnection {
     public static void listMembersWithAllAttributes(ZosConnection connection, String dataSetName) {
         List<Member> datasets;
         try {
-            ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
+            ListInputData params = new ListInputData.Builder().attribute(AttributeType.BASE).build();
             DsnList dsnList = new DsnList(connection);
             datasets = dsnList.getMembers(dataSetName, params);
         } catch (ZosmfRequestException e) {
@@ -654,7 +658,7 @@ public class DsnListExp extends TstZosConnection {
     public static void listMembers(ZosConnection connection, String dataSetName) {
         List<Member> datasets;
         try {
-            ListParams params = new ListParams.Builder().attribute(AttributeType.MEMBER).build();
+            ListInputData params = new ListInputData.Builder().attribute(AttributeType.MEMBER).build();
             DsnList dsnList = new DsnList(connection);
             datasets = dsnList.getMembers(dataSetName, params);
         } catch (ZosmfRequestException e) {
@@ -674,7 +678,7 @@ public class DsnListExp extends TstZosConnection {
     public static void listDsn(ZosConnection connection, String dataSetName) {
         List<Dataset> datasets;
         try {
-            ListParams params = new ListParams.Builder().attribute(AttributeType.BASE).build();
+            ListInputData params = new ListInputData.Builder().attribute(AttributeType.BASE).build();
             DsnList dsnList = new DsnList(connection);
             datasets = dsnList.getDatasets(dataSetName, params);
         } catch (ZosmfRequestException e) {
@@ -694,7 +698,7 @@ public class DsnListExp extends TstZosConnection {
     public static void listDsnVol(ZosConnection connection, String dataSetName) {
         List<Dataset> datasets;
         try {
-            ListParams params = new ListParams.Builder().attribute(AttributeType.VOL).build();
+            ListInputData params = new ListInputData.Builder().attribute(AttributeType.VOL).build();
             DsnList dsnList = new DsnList(connection);
             datasets = dsnList.getDatasets(dataSetName, params);
         } catch (ZosmfRequestException e) {

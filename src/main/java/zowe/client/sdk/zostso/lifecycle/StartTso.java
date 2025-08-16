@@ -18,7 +18,7 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
-import zowe.client.sdk.zostso.input.StartTsoParams;
+import zowe.client.sdk.zostso.input.StartTsoInputData;
 import zowe.client.sdk.zostso.message.ZosmfTsoResponse;
 import zowe.client.sdk.zostso.response.CollectedResponses;
 import zowe.client.sdk.zostso.response.StartStopResponses;
@@ -70,7 +70,7 @@ public class StartTso {
      * @return generated url
      * @author Frank Giordano
      */
-    private String getResourcesQuery(final StartTsoParams params) {
+    private String getResourcesQuery(final StartTsoInputData params) {
         String query = connection.getZosmfUrl();
         query += TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "?";
         query += TsoConstants.PARAM_ACCT + "=" + params.account
@@ -92,9 +92,9 @@ public class StartTso {
      * @return StartTsoParams object
      * @author Frank Giordano
      */
-    private StartTsoParams setDefaultAddressSpaceParams(StartTsoParams params, final String accountNumber) {
+    private StartTsoInputData setDefaultAddressSpaceParams(StartTsoInputData params, final String accountNumber) {
         if (params == null) {
-            params = new StartTsoParams();
+            params = new StartTsoInputData();
         }
         final String proc = params.getLogonProcedure().orElse(TsoConstants.DEFAULT_PROC);
         final String chset = params.getCharacterSet().orElse(TsoConstants.DEFAULT_CHSET);
@@ -102,7 +102,7 @@ public class StartTso {
         final String rowNum = params.getRows().orElse(TsoConstants.DEFAULT_ROWS);
         final String cols = params.getColumns().orElse(TsoConstants.DEFAULT_COLS);
         final String rSize = params.getRegionSize().orElse(TsoConstants.DEFAULT_RSIZE);
-        return new StartTsoParams(proc, chset, cpage, rowNum, cols, accountNumber, rSize);
+        return new StartTsoInputData(proc, chset, cpage, rowNum, cols, accountNumber, rSize);
     }
 
     /**
@@ -114,11 +114,11 @@ public class StartTso {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public StartStopResponses start(final String accountNumber, final StartTsoParams params)
+    public StartStopResponses start(final String accountNumber, final StartTsoInputData params)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(accountNumber, "accountNumber");
 
-        StartTsoParams customParams;
+        StartTsoInputData customParams;
         if (params == null) {
             customParams = setDefaultAddressSpaceParams(null, EncodeUtils.encodeURIComponent(accountNumber));
         } else {
@@ -144,7 +144,7 @@ public class StartTso {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ZosmfTsoResponse startCommon(final StartTsoParams commandParams) throws ZosmfRequestException {
+    public ZosmfTsoResponse startCommon(final StartTsoInputData commandParams) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(commandParams == null, "commandParams is null");
 
         final String url = getResourcesQuery(commandParams);

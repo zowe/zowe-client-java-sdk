@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.uss.input.CopyParams;
+import zowe.client.sdk.zosfiles.uss.input.CopyInputData;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -95,7 +95,7 @@ public class UssCopyTest {
     public void tstUssCopyRecursiveSuccess() throws ZosmfRequestException {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copyCommon("/xxx/xx/xx",
-                new CopyParams.Builder().from("/xxx/xx/xx").recursive(true).build());
+                new CopyInputData.Builder().from("/xxx/xx/xx").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
@@ -106,7 +106,7 @@ public class UssCopyTest {
     public void tstUssCopyOverwriteSuccess() throws ZosmfRequestException {
         final UssCopy ussCopy = new UssCopy(connection, mockJsonPutRequest);
         final Response response = ussCopy.copyCommon("/xxx/xx/xx",
-                new CopyParams.Builder().from("/xxx/xx/xx").overwrite(true).build());
+                new CopyInputData.Builder().from("/xxx/xx/xx").overwrite(true).build());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
@@ -216,7 +216,7 @@ public class UssCopyTest {
     public void tstUssCopyNullFromInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCopy.copyCommon("/xxx/xx/xx", new CopyParams.Builder().from(null).build());
+            ussCopy.copyCommon("/xxx/xx/xx", new CopyInputData.Builder().from(null).build());
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
@@ -227,7 +227,7 @@ public class UssCopyTest {
     public void tstUssCopyEmptyFromInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCopy.copyCommon("/xxx/xx/xx", new CopyParams.Builder().from("").build());
+            ussCopy.copyCommon("/xxx/xx/xx", new CopyInputData.Builder().from("").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -238,7 +238,7 @@ public class UssCopyTest {
     public void tstUssCopyEmptyFromInParamsWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCopy.copyCommon("/xxx/xx/xx", new CopyParams.Builder().from("   ").build());
+            ussCopy.copyCommon("/xxx/xx/xx", new CopyInputData.Builder().from("   ").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -249,7 +249,7 @@ public class UssCopyTest {
     public void tstUssCopyInvalidTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCopy.copyCommon("name", new CopyParams.Builder().from("/xxx/xx/xx").build());
+            ussCopy.copyCommon("name", new CopyInputData.Builder().from("/xxx/xx/xx").build());
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
@@ -260,7 +260,7 @@ public class UssCopyTest {
     public void tstUssCopyInvalidFromPathInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCopy.copyCommon("/xxx/xx/xx", new CopyParams.Builder().from("name").build());
+            ussCopy.copyCommon("/xxx/xx/xx", new CopyInputData.Builder().from("name").build());
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }

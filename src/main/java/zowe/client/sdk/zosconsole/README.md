@@ -17,7 +17,7 @@ import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
-import zowe.client.sdk.zosconsole.input.IssueConsoleParams;
+import zowe.client.sdk.zosconsole.input.IssueConsoleInputData;
 import zowe.client.sdk.zosconsole.method.IssueConsole;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 
@@ -75,7 +75,7 @@ public class IssueConsoleExp extends TstZosConnection {
         ConsoleResponse response;
         try {
             IssueConsole issueConsole = new IssueConsole(connection);
-            IssueConsoleParams params = new IssueConsoleParams(cmd);
+            IssueConsoleInputData params = new IssueConsoleInputData(cmd);
             params.setProcessResponse(true);
             response = issueConsole.issueCommandCommon(ConsoleConstants.RES_DEF_CN, params);
         } catch (ZosmfRequestException e) {

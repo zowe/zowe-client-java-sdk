@@ -22,8 +22,8 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
-import zowe.client.sdk.zosjobs.input.SubmitJclParams;
-import zowe.client.sdk.zosjobs.input.SubmitJobParams;
+import zowe.client.sdk.zosjobs.input.JobSubmit.JclInputData;
+import zowe.client.sdk.zosjobs.input.JobSubmit.JobInputData;
 import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;
@@ -87,7 +87,7 @@ public class JobSubmit {
     public Job submitByJcl(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jcl, "jcl");
-        return this.submitJclCommon(new SubmitJclParams(jcl, internalReaderRecfm, internalReaderLrecl));
+        return this.submitJclCommon(new JclInputData(jcl, internalReaderRecfm, internalReaderLrecl));
     }
 
     /**
@@ -98,7 +98,7 @@ public class JobSubmit {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Job submitJclCommon(final SubmitJclParams params) throws ZosmfRequestException {
+    public Job submitJclCommon(final JclInputData params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         String key, value;
@@ -158,7 +158,7 @@ public class JobSubmit {
      */
     public Job submit(final String jobDataSet) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jobDataSet, "jobDataSet");
-        return this.submitCommon(new SubmitJobParams(jobDataSet));
+        return this.submitCommon(new JobInputData(jobDataSet));
     }
 
     /**
@@ -170,7 +170,7 @@ public class JobSubmit {
      * @author Frank Giordano
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in SubmitJobParams
-    public Job submitCommon(final SubmitJobParams params) throws ZosmfRequestException {
+    public Job submitCommon(final JobInputData params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE;

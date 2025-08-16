@@ -23,7 +23,7 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.dsn.input.ListParams;
+import zowe.client.sdk.zosfiles.dsn.input.ListInputData;
 import zowe.client.sdk.zosfiles.dsn.response.Dataset;
 import zowe.client.sdk.zosfiles.dsn.response.Member;
 import zowe.client.sdk.zosfiles.dsn.types.AttributeType;
@@ -84,7 +84,7 @@ public class DsnList {
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public List<Dataset> getDatasets(final String dataSetName, final ListParams params)
+    public List<Dataset> getDatasets(final String dataSetName, final ListInputData params)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
@@ -115,7 +115,7 @@ public class DsnList {
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public List<Member> getMembers(final String dataSetName, final ListParams params)
+    public List<Member> getMembers(final String dataSetName, final ListInputData params)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
@@ -219,7 +219,7 @@ public class DsnList {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private Response getResponse(final ListParams params, final Map<String, String> headers, final String url)
+    private Response getResponse(final ListInputData params, final Map<String, String> headers, final String url)
             throws ZosmfRequestException {
         setHeaders(params, headers);
         if (request == null) {
@@ -238,7 +238,7 @@ public class DsnList {
      * @param headers list of headers for http request
      * @author Nikunj Goyal
      */
-    private void setHeaders(final ListParams params, final Map<String, String> headers) {
+    private void setHeaders(final ListInputData params, final Map<String, String> headers) {
         String key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
         String value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
         headers.put(key, value);

@@ -26,8 +26,8 @@ import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.ListParams;
-import zowe.client.sdk.zosfiles.uss.input.ListZfsParams;
+import zowe.client.sdk.zosfiles.uss.input.ListInputData;
+import zowe.client.sdk.zosfiles.uss.input.ListZfsInputData;
 import zowe.client.sdk.zosfiles.uss.response.UnixFile;
 import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
 
@@ -88,7 +88,7 @@ public class UssList {
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public List<UnixFile> getFiles(final ListParams params) throws ZosmfRequestException {
+    public List<UnixFile> getFiles(final ListInputData params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
@@ -150,7 +150,7 @@ public class UssList {
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public List<UnixZfs> getZfsSystems(final ListZfsParams params) throws ZosmfRequestException {
+    public List<UnixZfs> getZfsSystems(final ListZfsInputData params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getPath().isEmpty() && params.getFsname().isEmpty(),
                 "no path or fsname specified");
