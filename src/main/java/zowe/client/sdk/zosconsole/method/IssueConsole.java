@@ -141,6 +141,13 @@ public class IssueConsole {
                 params.isProcessResponse());
     }
 
+    /**
+     * Generate a map of values for JSON body payload for request
+     *
+     * @param params IssueConsoleParams object
+     * @return Map for JSON body
+     * @author Shabaz Kowthalam
+     */
     private Map<String, String> getIssueMap(IssueConsoleParams params) {
         final Map<String, String> issueMap = new HashMap<>();
         issueMap.put(CMD, params.getCmd());
