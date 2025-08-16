@@ -23,73 +23,73 @@ public class Job {
     /**
      * Job id for a job. Uniquely identifies a job on a z/OS system
      */
-    private final Optional<String> jobId;
+    private final String jobId;
 
     /**
      * Job Name for a job
      */
-    private final Optional<String> jobName;
+    private final String jobName;
 
     /**
      * The primary or secondary JES subsystem. If this value is null, the job was processed by the primary subsystem.
      */
-    private final Optional<String> subSystem;
+    private final String subSystem;
 
     /**
      * Owner of the job
      */
-    private final Optional<String> owner;
+    private final String owner;
 
     /**
      * Status of the job
      */
-    private final Optional<String> status;
+    private final String status;
 
     /**
      * Type of job
      */
-    private final Optional<String> type;
+    private final String type;
 
     /**
      * Job class
      */
-    private final Optional<String> classs;
+    private final String classs;
 
     /**
      * Return code of the job
      */
-    private final Optional<String> retCode;
+    private final String retCode;
 
     /**
      * Detailed job step data
      */
-    private final Optional<JobStepData[]> stepData;
+    private final JobStepData[] stepData;
 
     /**
      * Url for direct reference of job info
      */
-    private final Optional<String> url;
+    private final String url;
 
     /**
      * Spool files url for direct reference
      */
-    private final Optional<String> filesUrl;
+    private final String filesUrl;
 
     /**
      * Unique identifier of a job (substitute of job name and job id). If this value is null, the job was
      * submitted to JES3.
      */
-    private final Optional<String> jobCorrelator;
+    private final String jobCorrelator;
 
     /**
      * Job phase
      */
-    private final OptionalLong phase;
+    private final Long phase;
 
     /**
      * Job phase name
      */
-    private final Optional<String> phaseName;
+    private final String phaseName;
 
     /**
      * Job constructor
@@ -98,24 +98,20 @@ public class Job {
      * @author Frank Giordano
      */
     private Job(final Job.Builder builder) {
-        this.jobId = Optional.ofNullable(builder.jobId);
-        this.jobName = Optional.ofNullable(builder.jobName);
-        this.subSystem = Optional.ofNullable(builder.subSystem);
-        this.owner = Optional.ofNullable(builder.owner);
-        this.status = Optional.ofNullable(builder.status);
-        this.type = Optional.ofNullable(builder.type);
-        this.classs = Optional.ofNullable(builder.classs);
-        this.retCode = Optional.ofNullable(builder.retCode);
-        this.stepData = Optional.ofNullable(builder.stepData);
-        this.url = Optional.ofNullable(builder.url);
-        this.filesUrl = Optional.ofNullable(builder.filesUrl);
-        this.jobCorrelator = Optional.ofNullable(builder.jobCorrelator);
-        if (builder.phase == null) {
-            this.phase = OptionalLong.empty();
-        } else {
-            this.phase = OptionalLong.of(builder.phase);
-        }
-        this.phaseName = Optional.ofNullable(builder.phaseName);
+        this.jobId = builder.jobId;
+        this.jobName = builder.jobName;
+        this.subSystem = builder.subSystem;
+        this.owner = builder.owner;
+        this.status = builder.status;
+        this.type = builder.type;
+        this.classs = builder.classs;
+        this.retCode = builder.retCode;
+        this.stepData = builder.stepData;
+        this.url = builder.url;
+        this.filesUrl = builder.filesUrl;
+        this.jobCorrelator = builder.jobCorrelator;
+        this.phase = builder.phase;
+        this.phaseName = builder.phaseName;
     }
 
     /**
@@ -124,7 +120,7 @@ public class Job {
      * @return classs value
      */
     public Optional<String> getClasss() {
-        return classs;
+        return Optional.ofNullable(classs);
     }
 
     /**
@@ -133,7 +129,7 @@ public class Job {
      * @return filesUrl value
      */
     public Optional<String> getFilesUrl() {
-        return filesUrl;
+        return Optional.ofNullable(filesUrl);
     }
 
     /**
@@ -142,7 +138,7 @@ public class Job {
      * @return jobCorrelator value
      */
     public Optional<String> getJobCorrelator() {
-        return jobCorrelator;
+        return Optional.ofNullable(jobCorrelator);
     }
 
     /**
@@ -151,7 +147,7 @@ public class Job {
      * @return jobId value
      */
     public Optional<String> getJobId() {
-        return jobId;
+        return Optional.ofNullable(jobId);
     }
 
     /**
@@ -160,7 +156,7 @@ public class Job {
      * @return jobName value
      */
     public Optional<String> getJobName() {
-        return jobName;
+        return Optional.ofNullable(jobName);
     }
 
     /**
@@ -169,7 +165,7 @@ public class Job {
      * @return owner value
      */
     public Optional<String> getOwner() {
-        return owner;
+        return Optional.ofNullable(owner);
     }
 
     /**
@@ -178,7 +174,7 @@ public class Job {
      * @return phase value
      */
     public OptionalLong getPhase() {
-        return phase;
+        return (phase == null) ? OptionalLong.empty() : OptionalLong.of(phase);
     }
 
     /**
@@ -187,7 +183,7 @@ public class Job {
      * @return phaseName value
      */
     public Optional<String> getPhaseName() {
-        return phaseName;
+        return Optional.ofNullable(phaseName);
     }
 
     /**
@@ -196,7 +192,7 @@ public class Job {
      * @return retCode value
      */
     public Optional<String> getRetCode() {
-        return retCode;
+        return Optional.ofNullable(retCode);
     }
 
     /**
@@ -205,7 +201,7 @@ public class Job {
      * @return status value
      */
     public Optional<String> getStatus() {
-        return status;
+        return Optional.ofNullable(status);
     }
 
     /**
@@ -214,7 +210,7 @@ public class Job {
      * @return stepData value
      */
     public Optional<JobStepData[]> getStepData() {
-        return stepData;
+        return Optional.ofNullable(stepData);
     }
 
     /**
@@ -223,7 +219,7 @@ public class Job {
      * @return subSystem value
      */
     public Optional<String> getSubSystem() {
-        return subSystem;
+        return Optional.ofNullable(subSystem);
     }
 
     /**
@@ -232,7 +228,7 @@ public class Job {
      * @return type value
      */
     public Optional<String> getType() {
-        return type;
+        return Optional.ofNullable(type);
     }
 
     /**
@@ -241,7 +237,7 @@ public class Job {
      * @return url value
      */
     public Optional<String> getUrl() {
-        return url;
+        return Optional.ofNullable(url);
     }
 
     /**
