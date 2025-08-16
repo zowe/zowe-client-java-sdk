@@ -28,22 +28,22 @@ public class ConsoleResponse {
      * The list of zOSMF console API responses. May issue multiple requests (because of a user request) or
      * to ensure that all messages are collected. Each response is placed here.
      */
-    private Optional<ZosmfIssueResponse> zosmfResponse = Optional.empty();
+    private ZosmfIssueResponse zosmfResponse;
 
     /**
      * If an error occurs, returns the ImperativeError, which contains a case error.
      */
-    private Optional<String> failureResponse = Optional.empty();
+    private String failureResponse;
 
     /**
      * The command response text.
      */
-    private Optional<String> commandResponse = Optional.empty();
+    private String commandResponse;
 
     /**
      * The final command response key - used to "follow up" and check for additional response messages for the command.
      */
-    private Optional<String> lastResponseKey = Optional.empty();
+    private String lastResponseKey;
 
     /**
      * If the solicited keyword is specified, indicates that the keyword was detected.
@@ -54,7 +54,7 @@ public class ConsoleResponse {
      * The "follow-up" command response URL - you can paste this in the browser to do a "GET" using the command
      * response key provided in the URI route.
      */
-    private Optional<String> cmdResponseUrl = Optional.empty();
+    private String cmdResponseUrl;
 
     /**
      * Retrieve cmdResponseUrl specified
@@ -62,7 +62,7 @@ public class ConsoleResponse {
      * @return cmdResponseUrl value
      */
     public Optional<String> getCmdResponseUrl() {
-        return cmdResponseUrl;
+        return Optional.ofNullable(cmdResponseUrl);
     }
 
     /**
@@ -71,7 +71,7 @@ public class ConsoleResponse {
      * @param cmdResponseUrl value
      */
     public void setCmdResponseUrl(final String cmdResponseUrl) {
-        this.cmdResponseUrl = Optional.ofNullable(cmdResponseUrl);
+        this.cmdResponseUrl = cmdResponseUrl;
     }
 
     /**
@@ -80,7 +80,7 @@ public class ConsoleResponse {
      * @return commandResponse value
      */
     public Optional<String> getCommandResponse() {
-        return commandResponse;
+        return Optional.ofNullable(commandResponse);
     }
 
     /**
@@ -89,7 +89,7 @@ public class ConsoleResponse {
      * @param commandResponse value
      */
     public void setCommandResponse(final String commandResponse) {
-        this.commandResponse = Optional.ofNullable(commandResponse);
+        this.commandResponse = commandResponse;
     }
 
     /**
@@ -98,7 +98,7 @@ public class ConsoleResponse {
      * @return failureResponse value
      */
     public Optional<String> getFailureResponse() {
-        return failureResponse;
+        return Optional.ofNullable(failureResponse);
     }
 
     /**
@@ -107,7 +107,7 @@ public class ConsoleResponse {
      * @param failureResponse value
      */
     public void setFailureResponse(final String failureResponse) {
-        this.failureResponse = Optional.ofNullable(failureResponse);
+        this.failureResponse = failureResponse;
     }
 
     /**
@@ -134,7 +134,7 @@ public class ConsoleResponse {
      * @return lastResponseKey value
      */
     public Optional<String> getLastResponseKey() {
-        return lastResponseKey;
+        return Optional.ofNullable(lastResponseKey);
     }
 
     /**
@@ -143,7 +143,7 @@ public class ConsoleResponse {
      * @param lastResponseKey value
      */
     public void setLastResponseKey(final String lastResponseKey) {
-        this.lastResponseKey = Optional.ofNullable(lastResponseKey);
+        this.lastResponseKey = lastResponseKey;
     }
 
     /**
@@ -170,7 +170,7 @@ public class ConsoleResponse {
      * @return zosmfResponse value
      */
     public Optional<ZosmfIssueResponse> getZosmfResponse() {
-        return zosmfResponse;
+        return Optional.ofNullable(zosmfResponse);
     }
 
     /**
@@ -179,7 +179,7 @@ public class ConsoleResponse {
      * @param zosmfResponse value
      */
     public void setZosmfResponse(final ZosmfIssueResponse zosmfResponse) {
-        this.zosmfResponse = Optional.ofNullable(zosmfResponse);
+        this.zosmfResponse = zosmfResponse;
     }
 
     /**
