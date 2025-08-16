@@ -23,72 +23,72 @@ public class JobFile {
     /**
      * Job id for a job. Uniquely identifies a job on a z/OS system
      */
-    private final Optional<String> jobId;
+    private final String jobId;
 
     /**
      * Job Name for a job
      */
-    private final Optional<String> jobName;
+    private final String jobName;
 
     /**
      * Record format of the spool file (DD)
      */
-    private final Optional<String> recfm;
+    private final String recfm;
 
     /**
      * Total bytes in the spool file
      */
-    private final OptionalLong byteCount;
+    private final Long byteCount;
 
     /**
      * Total records (roughly equivalent to lines) in the spool file
      */
-    private final OptionalLong recordCount;
+    private final Long recordCount;
 
     /**
      * Unique identifier of a job (substitute of job name and job id)
      */
-    private final Optional<String> jobCorrelator;
+    private final String jobCorrelator;
 
     /**
      * Job class for which job ran
      */
-    private final Optional<String> classs;
+    private final String classs;
 
     /**
      * Identifier for this spool file. Each JobFile for a single batch job will have a unique ID
      */
-    private final OptionalLong id;
+    private final Long id;
 
     /**
      * DD name of a job spool file
      */
-    private final Optional<String> ddName;
+    private final String ddName;
 
     /**
      * Direct access to job record content
      */
-    private final Optional<String> recordsUrl;
+    private final String recordsUrl;
 
     /**
      * Job DD lrecl (logical record length - how many bytes each record is)
      */
-    private final OptionalLong lrecl;
+    private final Long lrecl;
 
     /**
      * The primary or secondary JES subsystem. If this value is null, the job was processed by the primary subsystem.
      */
-    private final Optional<String> subSystem;
+    private final String subSystem;
 
     /**
      * The name of the job step during which this spool file was produced
      */
-    private final Optional<String> stepName;
+    private final String stepName;
 
     /**
      * If this spool file was produced during a job procedure step, the name of the step will be here.
      */
-    private final Optional<String> procStep;
+    private final String procStep;
 
     /**
      * JobFile constructor
@@ -97,36 +97,20 @@ public class JobFile {
      * @author Frank Giordano
      */
     private JobFile(final Builder builder) {
-        this.jobId = Optional.ofNullable(builder.jobId);
-        this.jobName = Optional.ofNullable(builder.jobName);
-        this.recfm = Optional.ofNullable(builder.recfm);
-        if (builder.byteCount == null) {
-            this.byteCount = OptionalLong.empty();
-        } else {
-            this.byteCount = OptionalLong.of(builder.byteCount);
-        }
-        if (builder.recordCount == null) {
-            this.recordCount = OptionalLong.empty();
-        } else {
-            this.recordCount = OptionalLong.of(builder.recordCount);
-        }
-        this.jobCorrelator = Optional.ofNullable(builder.jobCorrelator);
-        this.classs = Optional.ofNullable(builder.classs);
-        if (builder.id == null) {
-            this.id = OptionalLong.empty();
-        } else {
-            this.id = OptionalLong.of(builder.id);
-        }
-        this.ddName = Optional.ofNullable(builder.ddName);
-        this.recordsUrl = Optional.ofNullable(builder.recordsUrl);
-        if (builder.lrecl == null) {
-            this.lrecl = OptionalLong.empty();
-        } else {
-            this.lrecl = OptionalLong.of(builder.lrecl);
-        }
-        this.subSystem = Optional.ofNullable(builder.subSystem);
-        this.stepName = Optional.ofNullable(builder.stepName);
-        this.procStep = Optional.ofNullable(builder.procStep);
+        this.jobId = builder.jobId;
+        this.jobName = builder.jobName;
+        this.recfm = builder.recfm;
+        this.byteCount = builder.byteCount;
+        this.recordCount = builder.recordCount;
+        this.jobCorrelator = builder.jobCorrelator;
+        this.classs = builder.classs;
+        this.id = builder.id;
+        this.ddName = builder.ddName;
+        this.recordsUrl = builder.recordsUrl;
+        this.lrecl = builder.lrecl;
+        this.subSystem = builder.subSystem;
+        this.stepName = builder.stepName;
+        this.procStep = builder.procStep;
     }
 
     /**
@@ -135,7 +119,11 @@ public class JobFile {
      * @return byteCount value
      */
     public OptionalLong getByteCount() {
-        return byteCount;
+        if (byteCount == null) {
+            return OptionalLong.empty();
+        } else {
+            return OptionalLong.of(byteCount);
+        }
     }
 
     /**
@@ -144,7 +132,7 @@ public class JobFile {
      * @return classs value
      */
     public Optional<String> getClasss() {
-        return classs;
+        return Optional.ofNullable(classs);
     }
 
     /**
@@ -153,7 +141,7 @@ public class JobFile {
      * @return ddName value
      */
     public Optional<String> getDdName() {
-        return ddName;
+        return Optional.ofNullable(ddName);
     }
 
     /**
@@ -162,7 +150,11 @@ public class JobFile {
      * @return id value
      */
     public OptionalLong getId() {
-        return id;
+        if (id == null) {
+            return OptionalLong.empty();
+        } else  {
+            return OptionalLong.of(id);
+        }
     }
 
     /**
@@ -171,7 +163,7 @@ public class JobFile {
      * @return jobCorrelator value
      */
     public Optional<String> getJobCorrelator() {
-        return jobCorrelator;
+        return Optional.ofNullable(jobCorrelator);
     }
 
     /**
@@ -180,7 +172,7 @@ public class JobFile {
      * @return jobId value
      */
     public Optional<String> getJobId() {
-        return jobId;
+        return Optional.ofNullable(jobId);
     }
 
     /**
@@ -189,7 +181,7 @@ public class JobFile {
      * @return jobName value
      */
     public Optional<String> getJobName() {
-        return jobName;
+        return Optional.ofNullable(jobName);
     }
 
     /**
@@ -198,7 +190,11 @@ public class JobFile {
      * @return lrecl value
      */
     public OptionalLong getLrecl() {
-        return lrecl;
+        if (lrecl == null) {
+            return OptionalLong.empty();
+        }  else {
+            return OptionalLong.of(lrecl);
+        }
     }
 
     /**
@@ -207,7 +203,7 @@ public class JobFile {
      * @return procStep value
      */
     public Optional<String> getProcStep() {
-        return procStep;
+        return Optional.ofNullable(procStep);
     }
 
     /**
@@ -216,7 +212,7 @@ public class JobFile {
      * @return recfm value
      */
     public Optional<String> getRecfm() {
-        return recfm;
+        return Optional.ofNullable(recfm);
     }
 
     /**
@@ -225,7 +221,11 @@ public class JobFile {
      * @return recordCount value
      */
     public OptionalLong getRecordCount() {
-        return recordCount;
+        if (recordCount == null) {
+            return OptionalLong.empty();
+        }  else {
+            return OptionalLong.of(recordCount);
+        }
     }
 
     /**
@@ -234,7 +234,7 @@ public class JobFile {
      * @return recordsUrl value
      */
     public Optional<String> getRecordsUrl() {
-        return recordsUrl;
+        return Optional.ofNullable(recordsUrl);
     }
 
     /**
@@ -243,7 +243,7 @@ public class JobFile {
      * @return stepName value
      */
     public Optional<String> getStepName() {
-        return stepName;
+        return Optional.ofNullable(stepName);
     }
 
     /**
@@ -252,7 +252,7 @@ public class JobFile {
      * @return subSystem value
      */
     public Optional<String> getSubSystem() {
-        return subSystem;
+        return Optional.ofNullable(subSystem);
     }
 
     /**

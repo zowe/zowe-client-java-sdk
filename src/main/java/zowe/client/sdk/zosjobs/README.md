@@ -17,7 +17,7 @@ import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosjobs.input.ModifyJobParams;
+import zowe.client.sdk.zosjobs.input.JobModify.JobInput;
 import zowe.client.sdk.zosjobs.methods.JobCancel;
 import zowe.client.sdk.zosjobs.response.Job;
 
@@ -62,7 +62,7 @@ public class JobCancelExp extends TstZosConnection {
     public static Response cancelCommonWithVersion(String version) {
         jobId = "xxx";
         jobName = "xxx";
-        ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).version(version).build();
+        JobInput params = new JobInput.Builder(jobName, jobId).version(version).build();
         try {
             return new JobCancel(connection).cancelCommon(params);
         } catch (ZosmfRequestException e) {
@@ -82,7 +82,7 @@ public class JobCancelExp extends TstZosConnection {
     public static Response cancelCommon() {
         jobId = "xxx";
         jobName = "xxx";
-        ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).build();
+        JobInput params = new JobInput.Builder(jobName, jobId).build();
         try {
             return new JobCancel(connection).cancelCommon(params);
         } catch (ZosmfRequestException e) {
@@ -141,7 +141,8 @@ import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosjobs.input.ModifyJobParams;
+import zowe.client.sdk.zosjobs.input.JobModify.JobInput;
+import zowe.client.sdk.zosjobs.input.JobModify.ModifyJobParams;
 import zowe.client.sdk.zosjobs.methods.JobDelete;
 import zowe.client.sdk.zosjobs.response.Job;
 
@@ -186,7 +187,7 @@ public class JobDeleteExp extends TstZosConnection {
     public static Response deleteCommonWithVersion(String version) {
         jobId = "xxx";
         jobName = "xxx";
-        ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).version(version).build();
+        JobInput params = new JobInput.Builder(jobName, jobId).version(version).build();
         try {
             return new JobDelete(connection).deleteCommon(params);
         } catch (ZosmfRequestException e) {
@@ -206,7 +207,7 @@ public class JobDeleteExp extends TstZosConnection {
     public static Response deleteCommon() {
         jobId = "xxx";
         jobName = "xxx";
-        ModifyJobParams params = new ModifyJobParams.Builder(jobName, jobId).build();
+        JobInput params = new JobInput.Builder(jobName, jobId).build();
         try {
             return new JobDelete(connection).deleteCommon(params);
         } catch (ZosmfRequestException e) {
@@ -264,8 +265,9 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosjobs.input.CommonJobInput;
 import zowe.client.sdk.zosjobs.input.CommonJobParams;
-import zowe.client.sdk.zosjobs.input.GetJobParams;
+import zowe.client.sdk.zosjobs.input.JobGet.JobInput;
 import zowe.client.sdk.zosjobs.response.JobFile;
 import zowe.client.sdk.zosjobs.methods.JobGet;
 import zowe.client.sdk.zosjobs.response.Job;
@@ -329,7 +331,7 @@ public class JobGetExp extends TstZosConnection {
         try {
             List<Job> jobs = getJob.getByPrefix(prefix);
             System.out.println(getJob.getJclCommon(
-                    new CommonJobParams(jobs.get(0).getJobId().orElseThrow(() -> new ZosmfRequestException("job id not specified")),
+                    new CommonJobInput(jobs.get(0).getJobId().orElseThrow(() -> new ZosmfRequestException("job id not specified")),
                             jobs.get(0).getJobName().orElseThrow(() -> new ZosmfRequestException("job name not specified")))));
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
@@ -403,7 +405,7 @@ public class JobGetExp extends TstZosConnection {
         try {
             List<Job> jobs = getJob.getByPrefix(prefix);
             Job job = getJob.getStatusCommon(
-                    new CommonJobParams(jobs.get(0).getJobId().orElseThrow(() -> new ZosmfRequestException("job id not specified")),
+                    new CommonJobInput(jobs.get(0).getJobId().orElseThrow(() -> new ZosmfRequestException("job id not specified")),
                             jobs.get(0).getJobName().orElseThrow(() -> new ZosmfRequestException("job name not specified")), true));
             System.out.println(job.toString());
             Arrays.stream(job.getStepData().orElseThrow(() -> new ZosmfRequestException("no step data found"))).forEach(i -> System.out.println(i.toString()));
@@ -532,7 +534,7 @@ public class JobGetExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void getSpoolContent(String prefix) {
-        GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
+        JobInput params = new JobInput.Builder("*").prefix(prefix).build();
         String[] output;
         try {
             List<Job> jobs = getJob.getCommon(params);
@@ -574,7 +576,7 @@ public class JobGetExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void getSpoolFilesForJob(String prefix) {
-        GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
+        JobInput params = new JobInput.Builder("*").prefix(prefix).build();
         List<JobFile> files;
         try {
             List<Job> jobs = getJob.getCommon(params);
@@ -594,7 +596,7 @@ public class JobGetExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void getSpoolFiles(String prefix) {
-        GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
+        JobInput params = new JobInput.Builder("*").prefix(prefix).build();
         List<JobFile> files;
         try {
             List<Job> jobs = getJob.getCommon(params);
@@ -617,7 +619,7 @@ public class JobGetExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void getCommon(String prefix) {
-        GetJobParams params = new GetJobParams.Builder("*").prefix(prefix).build();
+        JobInput params = new JobInput.Builder("*").prefix(prefix).build();
         List<Job> jobs;
         try {
             jobs = getJob.getCommon(params);
@@ -640,7 +642,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosjobs.input.MonitorJobWaitForParams;
+import zowe.client.sdk.zosjobs.input.JobMonitor.JobInput;
 import zowe.client.sdk.zosjobs.methods.JobMonitor;
 import zowe.client.sdk.zosjobs.methods.JobSubmit;
 import zowe.client.sdk.zosjobs.response.Job;
@@ -683,7 +685,7 @@ public class JobMonitorExp extends TstZosConnection {
      */
     public static void monitorIsJobRunning() {
         JobMonitor jobMonitor = new JobMonitor(connection);
-        MonitorJobWaitForParams monitorParams = new MonitorJobWaitForParams.Builder("XXX", "XXX").build();
+        JobInput monitorParams = new JobInput.Builder("XXX", "XXX").build();
         try {
             System.out.println(jobMonitor.isRunning(monitorParams));
         } catch (ZosmfRequestException e) {

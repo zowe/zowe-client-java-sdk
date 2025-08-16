@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs.input;
+package zowe.client.sdk.zosjobs.input.JobModify;
 
 import java.util.Optional;
 
@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 4.0
  */
-public class ModifyJobParams {
+public class JobInput {
 
     /**
      * Job name value specified for request
@@ -45,7 +45,7 @@ public class ModifyJobParams {
      * @param builder ModifyJobParams.Builder object
      * @author Nikunj Goyal
      */
-    private ModifyJobParams(final ModifyJobParams.Builder builder) {
+    private JobInput(final JobInput.Builder builder) {
         this.jobName = Optional.ofNullable(builder.jobName);
         this.jobId = Optional.ofNullable(builder.jobId);
         this.version = Optional.ofNullable(builder.version);
@@ -134,7 +134,7 @@ public class ModifyJobParams {
          * @param version version value
          * @return Builder object
          */
-        public ModifyJobParams.Builder version(final String version) {
+        public JobInput.Builder version(final String version) {
             this.version = version;
             return this;
         }
@@ -144,8 +144,8 @@ public class ModifyJobParams {
          *
          * @return ModifyJobParams this object
          */
-        public ModifyJobParams build() {
-            return new ModifyJobParams(this);
+        public JobInput build() {
+            return new JobInput(this);
         }
 
     }

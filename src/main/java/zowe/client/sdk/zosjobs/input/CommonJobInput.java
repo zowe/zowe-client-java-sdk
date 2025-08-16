@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 4.0
  */
-public class CommonJobParams {
+public class CommonJobInput {
 
     /**
      * Job id for a job
@@ -44,7 +44,7 @@ public class CommonJobParams {
      * @param jobName job name value
      * @author Frank Giordano
      */
-    public CommonJobParams(final String jobId, final String jobName) {
+    public CommonJobInput(final String jobId, final String jobName) {
         this.jobId = Optional.ofNullable(jobId);
         this.jobName = Optional.ofNullable(jobName);
         this.stepData = false;
@@ -58,7 +58,7 @@ public class CommonJobParams {
      * @param stepData determines whether step data is included in the rest call
      * @author Frank Giordano
      */
-    public CommonJobParams(final String jobId, final String jobName, final boolean stepData) {
+    public CommonJobInput(final String jobId, final String jobName, final boolean stepData) {
         this.jobId = Optional.ofNullable(jobId);
         this.jobName = Optional.ofNullable(jobName);
         this.stepData = stepData;

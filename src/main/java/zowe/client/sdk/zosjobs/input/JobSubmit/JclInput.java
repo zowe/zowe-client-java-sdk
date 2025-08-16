@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosjobs.input;
+package zowe.client.sdk.zosjobs.input.JobSubmit;
 
 import java.util.Map;
 import java.util.Optional;
@@ -18,7 +18,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 4.0
  */
-public class SubmitJclParams {
+public class JclInput {
 
     /**
      * JCL string to submit which should contain syntactically correct JCL.
@@ -58,7 +58,7 @@ public class SubmitJclParams {
      * @param internalReaderLrecl internal reader LRECL
      * @author Frank Giordano
      */
-    public SubmitJclParams(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl) {
+    public JclInput(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl) {
         this.jcl = Optional.ofNullable(jcl);
         this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);
@@ -73,8 +73,8 @@ public class SubmitJclParams {
      * @param jclSymbols          Map of JCL symbolic substitution
      * @author Frank Giordano
      */
-    public SubmitJclParams(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl,
-                           final Map<String, String> jclSymbols) {
+    public JclInput(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl,
+                    final Map<String, String> jclSymbols) {
         this.jcl = Optional.ofNullable(jcl);
         this.internalReaderRecfm = Optional.ofNullable(internalReaderRecfm);
         this.internalReaderLrecl = Optional.ofNullable(internalReaderLrecl);

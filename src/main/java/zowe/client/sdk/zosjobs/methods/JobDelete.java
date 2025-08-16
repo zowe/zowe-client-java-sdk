@@ -17,7 +17,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
-import zowe.client.sdk.zosjobs.input.ModifyJobParams;
+import zowe.client.sdk.zosjobs.input.JobModify.JobInput;
 import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;
@@ -81,7 +81,7 @@ public class JobDelete {
     public Response delete(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jobName, "jobName");
         ValidateUtils.checkIllegalParameter(jobId, "jobId");
-        return deleteCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
+        return deleteCommon(new JobInput.Builder(jobName, jobId).version(version).build());
     }
 
     /**
@@ -97,7 +97,7 @@ public class JobDelete {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         final String jobName = job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG));
         final String jobId = job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG));
-        return this.deleteCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
+        return this.deleteCommon(new JobInput.Builder(jobName, jobId).version(version).build());
     }
 
     /**
@@ -110,7 +110,7 @@ public class JobDelete {
      * @author Frank Giordano
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in ModifyJobParams
-    public Response deleteCommon(final ModifyJobParams params) throws ZosmfRequestException {
+    public Response deleteCommon(final JobInput params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE + JobsConstants.FILE_DELIM +
