@@ -23,79 +23,79 @@ public class UnixZfs {
     /**
      * zfs name
      */
-    private final Optional<String> name;
+    private final String name;
 
     /**
      * Mount point name
      */
-    private final Optional<String> mountpoint;
+    private final String mountpoint;
 
     /**
      * FST name
      */
-    private final Optional<String> fstname;
+    private final String fstname;
 
     /**
      * Status value
      */
-    private final Optional<String> status;
+    private final String status;
 
     /**
      * Mode values
      */
-    private final Optional<String> mode;
+    private final String mode;
 
-    private final OptionalLong dev;
+    private final Long dev;
 
     /**
      * File system type
      */
-    private final OptionalLong fstype;
+    private final Long fstype;
 
     /**
      * Block size
      */
-    private final OptionalLong bsize;
+    private final Long bsize;
 
     /**
      * Blocks available
      */
-    private final OptionalLong bavail;
+    private final Long bavail;
 
     /**
      * Count of blocks in I/O operations
      */
-    private final OptionalLong blocks;
+    private final Long blocks;
 
     /**
      * Target system name
      */
-    private final Optional<String> sysname;
+    private final String sysname;
 
     /**
      * Count of I/O operations
      */
-    public final OptionalLong readibc;
+    public final Long readibc;
 
     /**
      * Count of I/O operations
      */
-    public final OptionalLong writeibc;
+    public final Long writeibc;
 
     /**
      * Count of I/O operations
      */
-    private final OptionalLong diribc;
+    private final Long diribc;
 
     /**
      * The number of filesystem items returned
      */
-    private final OptionalLong returnedRows;
+    private final Long returnedRows;
 
     /**
      * The total number of filesystems
      */
-    private final OptionalLong totalRows;
+    private final Long totalRows;
 
     /**
      * If more items than specified by X-IBM-Max-Items (or the default of 1000) match the request,
@@ -110,62 +110,22 @@ public class UnixZfs {
      * @author Frank Giordano
      */
     public UnixZfs(final UnixZfs.Builder builder) {
-        this.name = Optional.ofNullable(builder.name);
-        this.mountpoint = Optional.ofNullable(builder.mountpoint);
-        this.fstname = Optional.ofNullable(builder.fstname);
-        this.status = Optional.ofNullable(builder.status);
-        this.mode = Optional.ofNullable(builder.mode);
-        if (builder.dev == null) {
-            this.dev = OptionalLong.empty();
-        } else {
-            this.dev = OptionalLong.of(builder.dev);
-        }
-        if (builder.fstype == null) {
-            this.fstype = OptionalLong.empty();
-        } else {
-            this.fstype = OptionalLong.of(builder.fstype);
-        }
-        if (builder.bsize == null) {
-            this.bsize = OptionalLong.empty();
-        } else {
-            this.bsize = OptionalLong.of(builder.bsize);
-        }
-        if (builder.bavail == null) {
-            this.bavail = OptionalLong.empty();
-        } else {
-            this.bavail = OptionalLong.of(builder.bavail);
-        }
-        if (builder.blocks == null) {
-            this.blocks = OptionalLong.empty();
-        } else {
-            this.blocks = OptionalLong.of(builder.blocks);
-        }
-        this.sysname = Optional.ofNullable(builder.sysname);
-        if (builder.readibc == null) {
-            this.readibc = OptionalLong.empty();
-        } else {
-            this.readibc = OptionalLong.of(builder.readibc);
-        }
-        if (builder.writeibc == null) {
-            this.writeibc = OptionalLong.empty();
-        } else {
-            this.writeibc = OptionalLong.of(builder.writeibc);
-        }
-        if (builder.diribc == null) {
-            this.diribc = OptionalLong.empty();
-        } else {
-            this.diribc = OptionalLong.of(builder.diribc);
-        }
-        if (builder.returnedRows == null) {
-            this.returnedRows = OptionalLong.empty();
-        } else {
-            this.returnedRows = OptionalLong.of(builder.returnedRows);
-        }
-        if (builder.totalRows == null) {
-            this.totalRows = OptionalLong.empty();
-        } else {
-            this.totalRows = OptionalLong.of(builder.totalRows);
-        }
+        this.name = builder.name;
+        this.mountpoint = builder.mountpoint;
+        this.fstname = builder.fstname;
+        this.status = builder.status;
+        this.mode = builder.mode;
+        this.dev = builder.dev;
+        this.fstype = builder.fstype;
+        this.bsize = builder.bsize;
+        this.bavail = builder.bavail;
+        this.blocks = builder.blocks;
+        this.sysname = builder.sysname;
+        this.readibc = builder.readibc;
+        this.writeibc = builder.writeibc;
+        this.diribc = builder.diribc;
+        this.returnedRows = builder.returnedRows;
+        this.totalRows = builder.totalRows;
         this.moreRows = builder.moreRows;
     }
 
@@ -175,7 +135,7 @@ public class UnixZfs {
      * @return name value
      */
     public Optional<String> getName() {
-        return name;
+        return Optional.ofNullable(name);
     }
 
     /**
@@ -184,7 +144,7 @@ public class UnixZfs {
      * @return mountpoint value
      */
     public Optional<String> getMountpoint() {
-        return mountpoint;
+        return Optional.ofNullable(mountpoint);
     }
 
     /**
@@ -193,7 +153,7 @@ public class UnixZfs {
      * @return fstname value
      */
     public Optional<String> getFstname() {
-        return fstname;
+        return Optional.ofNullable(fstname);
     }
 
     /**
@@ -202,7 +162,7 @@ public class UnixZfs {
      * @return status value
      */
     public Optional<String> getStatus() {
-        return status;
+        return Optional.ofNullable(status);
     }
 
     /**
@@ -211,7 +171,7 @@ public class UnixZfs {
      * @return mode value
      */
     public Optional<String> getMode() {
-        return mode;
+        return Optional.ofNullable(mode);
     }
 
     /**
@@ -220,7 +180,7 @@ public class UnixZfs {
      * @return dev value
      */
     public OptionalLong getDev() {
-        return dev;
+        return (dev == null) ? OptionalLong.empty() : OptionalLong.of(dev);
     }
 
     /**
@@ -229,7 +189,7 @@ public class UnixZfs {
      * @return fstype value
      */
     public OptionalLong getFstype() {
-        return fstype;
+        return (fstype == null) ? OptionalLong.empty() : OptionalLong.of(fstype);
     }
 
     /**
@@ -238,7 +198,7 @@ public class UnixZfs {
      * @return bsize value
      */
     public OptionalLong getBsize() {
-        return bsize;
+        return (bsize == null) ? OptionalLong.empty() : OptionalLong.of(bsize);
     }
 
     /**
@@ -247,7 +207,7 @@ public class UnixZfs {
      * @return bavail value
      */
     public OptionalLong getBavail() {
-        return bavail;
+        return (bavail == null) ? OptionalLong.empty() : OptionalLong.of(bavail);
     }
 
     /**
@@ -256,7 +216,7 @@ public class UnixZfs {
      * @return blocks value
      */
     public OptionalLong getBlocks() {
-        return blocks;
+        return (blocks == null) ? OptionalLong.empty() : OptionalLong.of(blocks);
     }
 
     /**
@@ -265,7 +225,7 @@ public class UnixZfs {
      * @return sysname value
      */
     public Optional<String> getSysname() {
-        return sysname;
+        return Optional.ofNullable(sysname);
     }
 
     /**
@@ -274,7 +234,7 @@ public class UnixZfs {
      * @return readibc value
      */
     public OptionalLong getReadibc() {
-        return readibc;
+        return (readibc == null) ? OptionalLong.empty() : OptionalLong.of(readibc);
     }
 
     /**
@@ -283,7 +243,7 @@ public class UnixZfs {
      * @return writeibc value
      */
     public OptionalLong getWriteibc() {
-        return writeibc;
+        return (writeibc == null) ? OptionalLong.empty() : OptionalLong.of(writeibc);
     }
 
     /**
@@ -292,7 +252,7 @@ public class UnixZfs {
      * @return diribc value
      */
     public OptionalLong getDiribc() {
-        return diribc;
+        return (diribc == null) ? OptionalLong.empty() : OptionalLong.of(diribc);
     }
 
     /**
@@ -301,7 +261,7 @@ public class UnixZfs {
      * @return returnedRows value
      */
     public OptionalLong getReturnedRows() {
-        return returnedRows;
+        return (returnedRows == null) ? OptionalLong.empty() : OptionalLong.of(returnedRows);
     }
 
     /**
@@ -310,7 +270,7 @@ public class UnixZfs {
      * @return totalRows value
      */
     public OptionalLong getTotalRows() {
-        return totalRows;
+        return (totalRows == null) ? OptionalLong.empty() : OptionalLong.of(totalRows);
     }
 
     /**

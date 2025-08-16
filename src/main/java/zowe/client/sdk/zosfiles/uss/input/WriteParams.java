@@ -24,17 +24,17 @@ public class WriteParams {
     /**
      * Text content for file write
      */
-    private final Optional<String> textContent;
+    private final String textContent;
 
     /**
      * Binary byte array content for file write
      */
-    private final Optional<byte[]> binaryContent;
+    private final byte[] binaryContent;
 
     /**
      * Can be used to specify an alternate EBCDIC code page. The default code page is IBM-1047.
      */
-    private final Optional<String> fileEncoding;
+    private final String fileEncoding;
 
     /**
      * Can be used to control whether each input text line is terminated with a carriage return line feed (CRLF),
@@ -54,9 +54,9 @@ public class WriteParams {
      * @author Frank Giordano
      */
     public WriteParams(final WriteParams.Builder builder) {
-        this.textContent = Optional.ofNullable(builder.textContent);
-        this.binaryContent = Optional.ofNullable(builder.binaryContent);
-        this.fileEncoding = Optional.ofNullable(builder.fileEncoding);
+        this.textContent = builder.textContent;
+        this.binaryContent = builder.binaryContent;
+        this.fileEncoding = builder.fileEncoding;
         this.crlf = builder.crlf;
         this.binary = builder.binary;
     }
@@ -67,7 +67,7 @@ public class WriteParams {
      * @return textContent value
      */
     public Optional<String> getTextContent() {
-        return textContent;
+        return Optional.ofNullable(textContent);
     }
 
     /**
@@ -76,7 +76,7 @@ public class WriteParams {
      * @return binaryContent value
      */
     public Optional<byte[]> getBinaryContent() {
-        return binaryContent;
+        return Optional.ofNullable(binaryContent);
     }
 
     /**
@@ -85,7 +85,7 @@ public class WriteParams {
      * @return fileEncoding value
      */
     public Optional<String> getFileEncoding() {
-        return fileEncoding;
+        return Optional.ofNullable(fileEncoding);
     }
 
     /**

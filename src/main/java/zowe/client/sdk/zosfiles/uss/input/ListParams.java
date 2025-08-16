@@ -37,53 +37,53 @@ public class ListParams {
      * /bin
      * /usr/lib/libSM.a
      */
-    private final Optional<String> path;
+    private final String path;
 
     /**
      * The indicator that we want to show fewer files
      */
-    private final OptionalInt maxLength;
+    private final Integer maxLength;
 
     /**
      * The group owner or GID to filter
      */
-    private final Optional<String> group;
+    private final String group;
 
     /**
      * The username or UID to filter
      */
-    private final Optional<String> user;
+    private final String user;
 
     /**
      * The modification time to filter, in days
      * Valid values are either an integer, or an integer with leading plus (+) or minus (-)
      */
-    private final Optional<String> mtime;
+    private final String mtime;
 
     /**
      * The size to filter
      * Valid values is either an integer, and integer with a suffix (K, M, G),
      * or an integer with leading plus (+) or minus (-)
      */
-    private final OptionalInt size;
+    private final Integer size;
 
     /**
      * Select entries that match pattern according to the rules of fnmatch().
      * The supplied pattern is matched against the absolute path of the entry,
      * with behavior similar to the find -name option.
      */
-    private final Optional<String> name;
+    private final String name;
 
     /**
      * The permission octal mask to use
      * The type is a string because valid values are either an integer or an integer with a leading minus (-)
      */
-    private final Optional<String> perm;
+    private final String perm;
 
     /**
      * The type of file to filter for, see ListFilterType enum object
      */
-    private final Optional<ListFilterType> type;
+    private final ListFilterType type;
 
     /**
      * The default value for this parameter is 0, which means that all subdirectories under a path are listed,
@@ -93,7 +93,7 @@ public class ListParams {
      * The name field in the returned JSON document contains the path of the entry,
      * relative to the path query parameter.
      */
-    private final OptionalInt depth;
+    private final Integer depth;
 
     /**
      * Whether to search all filesystems under the path, or just the same filesystem as the path
@@ -118,28 +118,16 @@ public class ListParams {
      * @author Frank Giordano
      */
     public ListParams(final ListParams.Builder builder) {
-        this.path = Optional.of(builder.path);
-        if (builder.maxLength == null) {
-            this.maxLength = OptionalInt.empty();
-        } else {
-            this.maxLength = OptionalInt.of(builder.maxLength);
-        }
-        this.group = Optional.ofNullable(builder.group);
-        this.user = Optional.ofNullable(builder.user);
-        this.mtime = Optional.ofNullable(builder.mtime);
-        if (builder.size == null) {
-            this.size = OptionalInt.empty();
-        } else {
-            this.size = OptionalInt.of(builder.size);
-        }
-        this.name = Optional.ofNullable(builder.name);
-        this.perm = Optional.ofNullable(builder.perm);
-        this.type = Optional.ofNullable(builder.type);
-        if (builder.depth == null) {
-            this.depth = OptionalInt.empty();
-        } else {
-            this.depth = OptionalInt.of(builder.depth);
-        }
+        this.path = builder.path;
+        this.maxLength = builder.maxLength;
+        this.group = builder.group;
+        this.user = builder.user;
+        this.mtime = builder.mtime;
+        this.size = builder.size;
+        this.name = builder.name;
+        this.perm = builder.perm;
+        this.type = builder.type;
+        this.depth = builder.depth;
         this.filesys = builder.filesys;
         this.symlinks = builder.symlinks;
     }
@@ -150,7 +138,7 @@ public class ListParams {
      * @return path value
      */
     public Optional<String> getPath() {
-        return path;
+        return Optional.ofNullable(path);
     }
 
     /**
@@ -159,7 +147,7 @@ public class ListParams {
      * @return maxLength value
      */
     public OptionalInt getMaxLength() {
-        return maxLength;
+        return (maxLength == null) ? OptionalInt.empty() : OptionalInt.of(maxLength);
     }
 
     /**
@@ -168,7 +156,7 @@ public class ListParams {
      * @return group value
      */
     public Optional<String> getGroup() {
-        return group;
+        return Optional.ofNullable(group);
     }
 
     /**
@@ -177,7 +165,7 @@ public class ListParams {
      * @return user value
      */
     public Optional<String> getUser() {
-        return user;
+        return Optional.ofNullable(user);
     }
 
     /**
@@ -186,7 +174,7 @@ public class ListParams {
      * @return mtime value
      */
     public Optional<String> getMtime() {
-        return mtime;
+        return Optional.ofNullable(mtime);
     }
 
     /**
@@ -195,7 +183,7 @@ public class ListParams {
      * @return size value
      */
     public OptionalInt getSize() {
-        return size;
+        return (size == null) ? OptionalInt.empty() : OptionalInt.of(size);
     }
 
     /**
@@ -204,7 +192,7 @@ public class ListParams {
      * @return name value
      */
     public Optional<String> getName() {
-        return name;
+        return Optional.ofNullable(name);
     }
 
     /**
@@ -213,7 +201,7 @@ public class ListParams {
      * @return perm value
      */
     public Optional<String> getPerm() {
-        return perm;
+        return Optional.ofNullable(perm);
     }
 
     /**
@@ -222,7 +210,7 @@ public class ListParams {
      * @return type value
      */
     public Optional<ListFilterType> getType() {
-        return type;
+        return Optional.ofNullable(type);
     }
 
     /**
@@ -231,7 +219,7 @@ public class ListParams {
      * @return depth value
      */
     public OptionalInt getDepth() {
-        return depth;
+        return (depth == null) ? OptionalInt.empty() : OptionalInt.of(depth);
     }
 
     /**

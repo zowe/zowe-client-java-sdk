@@ -31,35 +31,35 @@ public class CreateZfsParams {
      * <p>
      * Defaults to 755. This property is not required.
      */
-    private final OptionalInt owner;
+    private final Integer owner;
 
     /**
      * The z/OS group ID or GID for the group of the ZFS root directory.
      * <p>
      * Defaults to 755. This property is not required.
      */
-    private final OptionalInt group;
+    private final Integer group;
 
     /**
      * The permissions code for the ZFS root directory.
      * <p>
      * Defaults to 755. This property is not required.
      */
-    private final OptionalInt perms;
+    private final Integer perms;
 
     /**
      * The number of primary cylinders to allocate for the ZFS.
      * <p>
      * Defaults to 0. This property is required.
      */
-    private final OptionalInt cylsPri;
+    private final Integer cylsPri;
 
     /**
      * The number of secondary cylinders to allocate for the ZFS.
      * <p>
      * Defaults to 0. This property is not required.
      */
-    private final OptionalInt cylsSec;
+    private final Integer cylsSec;
 
     /**
      * The SMS storage class to use for the allocation is a collection of performance goals
@@ -67,7 +67,7 @@ public class CreateZfsParams {
      * <p>
      * This property is not required.
      */
-    private final Optional<String> storageClass;
+    private final String storageClass;
 
     /**
      * The SMS management class to use for the allocation is a list of data set migration,
@@ -75,14 +75,14 @@ public class CreateZfsParams {
      * <p>
      * This property is not required.
      */
-    private final Optional<String> managementClass;
+    private final String managementClass;
 
     /**
      * The SMS data class to use for the allocation attributes and their values.
      * <p>
      * This property is not required.
      */
-    private final Optional<String> dataClass;
+    private final String dataClass;
 
     /**
      * List of volumes. This property is not required.
@@ -95,7 +95,7 @@ public class CreateZfsParams {
      * <p>
      * Default value: 20. This property is not required.
      */
-    private final OptionalInt timeout;
+    private final Integer timeout;
 
     /**
      * Indicates the target system name (nickname) for this request, where the system name (nickname)
@@ -104,7 +104,7 @@ public class CreateZfsParams {
      * provided for the target system. If the target system is the local system, this is ignored
      * and has no effect.
      */
-    private final Optional<String> system;
+    private final String system;
 
     /**
      * CreateZfsParams constructor
@@ -113,41 +113,17 @@ public class CreateZfsParams {
      * @author Frank Giordano
      */
     private CreateZfsParams(final CreateZfsParams.Builder builder) {
-        if (builder.owner == null) {
-            this.owner = OptionalInt.empty();
-        } else {
-            this.owner = OptionalInt.of(builder.owner);
-        }
-        if (builder.group == null) {
-            this.group = OptionalInt.empty();
-        } else {
-            this.group = OptionalInt.of(builder.group);
-        }
-        if (builder.perms == null) {
-            this.perms = OptionalInt.empty();
-        } else {
-            this.perms = OptionalInt.of(builder.perms);
-        }
-        if (builder.cylsPri == null) {
-            this.cylsPri = OptionalInt.empty();
-        } else {
-            this.cylsPri = OptionalInt.of(builder.cylsPri);
-        }
-        if (builder.cylsSec == null) {
-            this.cylsSec = OptionalInt.empty();
-        } else {
-            this.cylsSec = OptionalInt.of(builder.cylsSec);
-        }
-        this.storageClass = Optional.ofNullable(builder.storageClass);
-        this.managementClass = Optional.ofNullable(builder.managementClass);
-        this.dataClass = Optional.ofNullable(builder.dataClass);
+        this.owner = builder.owner;
+        this.group = builder.group;
+        this.perms = builder.perms;
+        this.cylsPri = builder.cylsPri;
+        this.cylsSec = builder.cylsSec;
+        this.storageClass = builder.storageClass;
+        this.managementClass = builder.managementClass;
+        this.dataClass = builder.dataClass;
         this.volumes = builder.volumes;
-        if (builder.timeout == null) {
-            this.timeout = OptionalInt.empty();
-        } else {
-            this.timeout = OptionalInt.of(builder.timeout);
-        }
-        this.system = Optional.ofNullable(builder.system);
+        this.timeout = builder.timeout;
+        this.system = builder.system;
     }
 
     /**
@@ -156,7 +132,7 @@ public class CreateZfsParams {
      * @return owner value
      */
     public OptionalInt getOwner() {
-        return owner;
+        return (owner == null) ? OptionalInt.empty() : OptionalInt.of(owner);
     }
 
     /**
@@ -165,7 +141,7 @@ public class CreateZfsParams {
      * @return group value
      */
     public OptionalInt getGroup() {
-        return group;
+        return (group == null) ? OptionalInt.empty() : OptionalInt.of(group);
     }
 
     /**
@@ -174,7 +150,7 @@ public class CreateZfsParams {
      * @return perms value
      */
     public OptionalInt getPerms() {
-        return perms;
+        return (perms == null) ? OptionalInt.empty() : OptionalInt.of(perms);
     }
 
     /**
@@ -183,7 +159,7 @@ public class CreateZfsParams {
      * @return cylsPri value
      */
     public OptionalInt getCylsPri() {
-        return cylsPri;
+        return (cylsPri == null) ? OptionalInt.empty() : OptionalInt.of(cylsPri);
     }
 
     /**
@@ -192,7 +168,7 @@ public class CreateZfsParams {
      * @return cylsSec value
      */
     public OptionalInt getCylsSec() {
-        return cylsSec;
+        return (cylsSec == null) ? OptionalInt.empty() : OptionalInt.of(cylsSec);
     }
 
     /**
@@ -201,7 +177,7 @@ public class CreateZfsParams {
      * @return storageClass value
      */
     public Optional<String> getStorageClass() {
-        return storageClass;
+        return Optional.ofNullable(storageClass);
     }
 
     /**
@@ -210,7 +186,7 @@ public class CreateZfsParams {
      * @return managementClass value
      */
     public Optional<String> getManagementClass() {
-        return managementClass;
+        return Optional.ofNullable(managementClass);
     }
 
     /**
@@ -219,7 +195,7 @@ public class CreateZfsParams {
      * @return dataClass value
      */
     public Optional<String> getDataClass() {
-        return dataClass;
+        return Optional.ofNullable(dataClass);
     }
 
     /**
@@ -237,7 +213,7 @@ public class CreateZfsParams {
      * @return timeout value
      */
     public OptionalInt getTimeout() {
-        return timeout;
+        return (timeout == null) ? OptionalInt.empty() : OptionalInt.of(timeout);
     }
 
     /**
@@ -246,7 +222,7 @@ public class CreateZfsParams {
      * @return system value
      */
     public Optional<String> getSystem() {
-        return system;
+        return Optional.ofNullable(system);
     }
 
     /**

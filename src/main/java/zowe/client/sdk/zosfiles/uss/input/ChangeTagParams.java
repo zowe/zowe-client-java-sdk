@@ -32,19 +32,19 @@ public class ChangeTagParams {
      * If "remove", any existing file tag is removed.
      * If "list", the existing tag information will be returned in a JSON response document.
      */
-    private final Optional<ChangeTagAction> action;
+    private final ChangeTagAction action;
 
     /**
      * The default is "mixed".
      * This option can be specified only when the action is "set".
      */
-    private final Optional<ChangeTagType> type;
+    private final ChangeTagType type;
 
     /**
      * Specifies the coded character set in which text data is encoded, such as ASCII or EBCDIC.
      * For example, the code set for ASCII is ISO8859-1; the code set for EBCDIC is IBM-1047.
      */
-    private final Optional<String> codeset;
+    private final String codeset;
 
     /**
      * The default is false.
@@ -58,7 +58,7 @@ public class ChangeTagParams {
      * <p>
      * 'suppress' a tag action for the file or directory pointed to by any encountered
      */
-    private final Optional<LinkType> links;
+    private final LinkType links;
 
     /**
      * ChangeTagParams constructor
@@ -67,11 +67,11 @@ public class ChangeTagParams {
      * @author James Kostrewski
      */
     public ChangeTagParams(final Builder builder) {
-        this.action = Optional.ofNullable(builder.action);
-        this.type = Optional.ofNullable(builder.type);
-        this.codeset = Optional.ofNullable(builder.codeset);
+        this.action = builder.action;
+        this.type = builder.type;
+        this.codeset = builder.codeset;
         this.recursive = builder.recursive;
-        this.links = Optional.ofNullable(builder.links);
+        this.links = builder.links;
     }
 
     /**
@@ -80,7 +80,7 @@ public class ChangeTagParams {
      * @return action value
      */
     public Optional<ChangeTagAction> getAction() {
-        return action;
+        return Optional.ofNullable(action);
     }
 
     /**
@@ -89,7 +89,7 @@ public class ChangeTagParams {
      * @return type value
      */
     public Optional<ChangeTagType> getType() {
-        return type;
+        return Optional.ofNullable(type);
     }
 
     /**
@@ -98,7 +98,7 @@ public class ChangeTagParams {
      * @return codeset value
      */
     public Optional<String> getCodeset() {
-        return codeset;
+        return Optional.ofNullable(codeset);
     }
 
     /**
@@ -116,7 +116,7 @@ public class ChangeTagParams {
      * @return links value
      */
     public Optional<LinkType> getLinks() {
-        return links;
+        return Optional.ofNullable(links);
     }
 
     /**

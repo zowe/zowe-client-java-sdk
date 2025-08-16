@@ -28,13 +28,13 @@ public class GetParams {
      * Optionally, insensitive=false may be specified for case-sensitive matching.
      * This parameter may not be specified with the research parameter.
      */
-    private final Optional<String> search;
+    private final String search;
 
     /**
      * The file is searched for the first line that matches the given extended regular expression.
      * This parameter may not be specified with the search parameter.
      */
-    private final Optional<String> research;
+    private final String research;
 
     /**
      * The default is 'true'. When 'true', searches (search and research) are case-insensitive.
@@ -47,7 +47,7 @@ public class GetParams {
      * The value given is the maximum number of lines to return.
      * The default, if not specified, is 100.
      */
-    private final OptionalInt maxreturnsize;
+    private final Integer maxreturnsize;
 
     /**
      * Internal use to count number of query parameters specified
@@ -76,7 +76,7 @@ public class GetParams {
      * <p>
      * Usage note: If zero bytes returned due to the range specified, status code 500 is returned.
      */
-    private final Optional<String> recordsRange;
+    private final String recordsRange;
 
     /**
      * GetParams constructor
@@ -85,17 +85,13 @@ public class GetParams {
      * @author James Kostrewski
      */
     public GetParams(final GetParams.Builder builder) {
-        this.search = Optional.ofNullable(builder.search);
-        this.research = Optional.ofNullable(builder.research);
+        this.search = builder.search;
+        this.research = builder.research;
         this.insensitive = builder.insensitive;
-        if (builder.maxreturnsize == null) {
-            this.maxreturnsize = OptionalInt.empty();
-        } else {
-            this.maxreturnsize = OptionalInt.of(builder.maxreturnsize);
-        }
+        this.maxreturnsize = builder.maxreturnsize;
         this.queryCount = builder.queryCount;
         this.binary = builder.binary;
-        this.recordsRange = Optional.ofNullable(builder.recordsRange);
+        this.recordsRange = builder.recordsRange;
     }
 
     /**
@@ -104,7 +100,7 @@ public class GetParams {
      * @return search value
      */
     public Optional<String> getSearch() {
-        return search;
+        return Optional.ofNullable(search);
     }
 
     /**
@@ -113,7 +109,7 @@ public class GetParams {
      * @return research value
      */
     public Optional<String> getResearch() {
-        return research;
+        return Optional.ofNullable(research);
     }
 
     /**
@@ -131,7 +127,7 @@ public class GetParams {
      * @return maxreturnsize value
      */
     public OptionalInt getMaxReturnSize() {
-        return maxreturnsize;
+        return (maxreturnsize == null) ? OptionalInt.empty() : OptionalInt.of(maxreturnsize);
     }
 
     /**
@@ -158,7 +154,7 @@ public class GetParams {
      * @return boolean true or false
      */
     public Optional<String> getRecordsRange() {
-        return recordsRange;
+        return Optional.ofNullable(recordsRange);
     }
 
     /**

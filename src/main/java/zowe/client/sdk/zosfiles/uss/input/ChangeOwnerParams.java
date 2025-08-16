@@ -27,12 +27,12 @@ public class ChangeOwnerParams {
     /**
      * The user ID or UID
      */
-    private final Optional<String> owner;
+    private final String owner;
 
     /**
      * The group ID or GID
      */
-    private final Optional<String> group;
+    private final String group;
 
     /**
      * The default is false. When 'true', changes all the files and subdirectories in that directory to
@@ -43,7 +43,7 @@ public class ChangeOwnerParams {
     /**
      * The default is 'follow'. 'change' does not follow the link, but instead changes the link itself (chown -h).
      */
-    private final Optional<LinkType> links;
+    private final LinkType links;
 
     /**
      * ChangeOwnerParams constructor
@@ -52,10 +52,10 @@ public class ChangeOwnerParams {
      * @author James Kostrewski
      */
     public ChangeOwnerParams(final ChangeOwnerParams.Builder builder) {
-        this.owner = Optional.ofNullable(builder.owner);
-        this.group = Optional.ofNullable(builder.group);
+        this.owner = builder.owner;
+        this.group = builder.group;
         this.recursive = builder.recursive;
-        this.links = Optional.ofNullable(builder.links);
+        this.links = builder.links;
     }
 
     /**
@@ -64,7 +64,7 @@ public class ChangeOwnerParams {
      * @return owner value
      */
     public Optional<String> getOwner() {
-        return owner;
+        return Optional.ofNullable(owner);
     }
 
     /**
@@ -73,7 +73,7 @@ public class ChangeOwnerParams {
      * @return group value
      */
     public Optional<String> getGroup() {
-        return group;
+        return Optional.ofNullable(group);
     }
 
     /**
@@ -91,7 +91,7 @@ public class ChangeOwnerParams {
      * @return linkType value
      */
     public Optional<LinkType> getLinks() {
-        return links;
+        return Optional.ofNullable(links);
     }
 
     /**

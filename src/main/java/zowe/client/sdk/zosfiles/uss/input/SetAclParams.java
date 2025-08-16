@@ -39,7 +39,7 @@ public class SetAclParams {
      * Note: At least one of the following four keywords must be specified.
      * 'modify' and 'delete' may both be specified, but not with 'delete-type' and 'set'.
      */
-    private final Optional<LinkType> links;
+    private final LinkType links;
 
     /**
      * Delete all extended ACL entries by type (setfacl -D type):
@@ -51,7 +51,7 @@ public class SetAclParams {
      * <p>
      * Note: The 'delete-type' keyword cannot be specified with 'set', 'modify' or 'delete'.
      */
-    private final Optional<DeleteAclType> deleteType;
+    private final DeleteAclType deleteType;
 
     /**
      * sets (replaces) all ACLs with 'entries'.
@@ -60,7 +60,7 @@ public class SetAclParams {
      * <p>
      * Note: The 'set' keyword cannot be specified with 'delete-type', 'modify' or 'delete'.
      */
-    private final Optional<String> set;
+    private final String set;
 
     /**
      * Modifies the ACL entries. 'entries' represents a string of ACL entries.
@@ -70,7 +70,7 @@ public class SetAclParams {
      * <p>
      * Note: The 'modify' keyword cannot be specified with 'delete-type' or 'set'.
      */
-    private final Optional<String> modify;
+    private final String modify;
 
     /**
      * Deletes the extended ACL entries that are specified by 'entries'. 'entries' is a string of ACL entries.
@@ -79,7 +79,7 @@ public class SetAclParams {
      * <p>
      * Note: The 'delete' keyword cannot be specified with 'delete-type' or 'set'.
      */
-    private final Optional<String> delete;
+    private final String delete;
 
     /**
      * SetAclParams constructor
@@ -88,11 +88,11 @@ public class SetAclParams {
      */
     public SetAclParams(final SetAclParams.Builder builder) {
         this.abort = builder.abort;
-        this.links = Optional.ofNullable(builder.links);
-        this.deleteType = Optional.ofNullable(builder.deleteType);
-        this.set = Optional.ofNullable(builder.set);
-        this.modify = Optional.ofNullable(builder.modify);
-        this.delete = Optional.ofNullable(builder.delete);
+        this.links = builder.links;
+        this.deleteType = builder.deleteType;
+        this.set = builder.set;
+        this.modify = builder.modify;
+        this.delete = builder.delete;
     }
 
     /**
@@ -110,7 +110,7 @@ public class SetAclParams {
      * @return links value
      */
     public Optional<LinkType> getLinks() {
-        return links;
+        return Optional.ofNullable(links);
     }
 
     /**
@@ -119,7 +119,7 @@ public class SetAclParams {
      * @return deleteType value
      */
     public Optional<DeleteAclType> getDeleteType() {
-        return deleteType;
+        return Optional.ofNullable(deleteType);
     }
 
     /**
@@ -128,7 +128,7 @@ public class SetAclParams {
      * @return set value
      */
     public Optional<String> getSet() {
-        return set;
+        return Optional.ofNullable(set);
     }
 
     /**
@@ -137,7 +137,7 @@ public class SetAclParams {
      * @return modify value
      */
     public Optional<String> getModify() {
-        return modify;
+        return Optional.ofNullable(modify);
     }
 
     /**
@@ -146,7 +146,7 @@ public class SetAclParams {
      * @return delete value
      */
     public Optional<String> getDelete() {
-        return delete;
+        return Optional.ofNullable(delete);
     }
 
     /**
