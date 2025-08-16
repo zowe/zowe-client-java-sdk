@@ -61,7 +61,7 @@ public final class FileUtils {
      */
     public static String validatePath(final String value) {
         ValidateUtils.checkNullParameter(value == null, "path value is null");
-        Pattern p = Pattern.compile("\\/.*");
+        Pattern p = Pattern.compile("/.*");
         Matcher m = p.matcher(value);
         if (!m.matches()) {
             throw new IllegalStateException("specify valid path value");
