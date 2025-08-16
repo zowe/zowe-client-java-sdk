@@ -42,11 +42,11 @@ public final class EncodeUtils {
         ValidateUtils.checkIllegalParameter(value, "value");
         return URLEncoder.encode(value, StandardCharsets.UTF_8)
                 .replaceAll("\\+", "%20")
-                .replaceAll("\\%21", "!")
-                .replaceAll("\\%27", "'")
-                .replaceAll("\\%28", "(")
-                .replaceAll("\\%29", ")")
-                .replaceAll("\\%7E", "~");
+                .replaceAll("%21", "!")
+                .replaceAll("%27", "'")
+                .replaceAll("%28", "(")
+                .replaceAll("%29", ")")
+                .replaceAll("%7E", "~");
     }
 
     /**
