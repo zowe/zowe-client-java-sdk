@@ -11,7 +11,7 @@ APIs are located in the methods package.
 ````java
 package zowe.client.sdk.examples.zosjobs;
 
-import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConna ection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
@@ -186,9 +186,9 @@ public class JobDeleteExp extends TstZosConnection {
     public static Response deleteCommonWithVersion(String version) {
         jobId = "xxx";
         jobName = "xxx";
-        JobModifyInputData params = new JobModifyInputData.Builder(jobName, jobId).version(version).build();
+        JobModifyInputData jobModifyInputData = new JobModifyInputData.Builder(jobName, jobId).version(version).build();
         try {
-            return new JobDelete(connection).deleteCommon(params);
+            return new JobDelete(connection).deleteCommon(jobModifyInputData);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -206,9 +206,9 @@ public class JobDeleteExp extends TstZosConnection {
     public static Response deleteCommon() {
         jobId = "xxx";
         jobName = "xxx";
-        JobModifyInputData params = new JobModifyInputData.Builder(jobName, jobId).build();
+        JobModifyInputData jobModifyInputData = new JobModifyInputData.Builder(jobName, jobId).build();
         try {
-            return new JobDelete(connection).deleteCommon(params);
+            return new JobDelete(connection).deleteCommon(jobModifyInputData);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -282,7 +282,7 @@ import java.util.List;
  */
 public class JobGetExp extends TstZosConnection {
 
-    private static JobGet getJob;
+    private static JobGet jobGet;
 
     /**
      * The Main method defines z/OSMF host and user connection and other parameters needed to showcase
@@ -298,7 +298,7 @@ public class JobGetExp extends TstZosConnection {
 
         ZosConnection connection = ZosConnectionFactory
                 .createBasicConnection(hostName, zosmfPort, userName, password);
-        getJob = new JobGet(connection);
+        jobGet = new JobGet(connection);
 
         JobGetExp.getCommon(prefix);
         JobGetExp.getSpoolFiles(prefix);
@@ -328,8 +328,8 @@ public class JobGetExp extends TstZosConnection {
      */
     public static void getJclCommon(String prefix) {
         try {
-            List<Job> jobs = getJob.getByPrefix(prefix);
-            System.out.println(getJob.getJclCommon(
+            List<Job> jobs = jobGet.getByPrefix(prefix);
+            System.out.println(jobGet.getJclCommon(
                     new CommonJobInputData(jobs.get(0).getJobId().orElseThrow(() -> new ZosmfRequestException("job id not specified")),
                             jobs.get(0).getJobName().orElseThrow(() -> new ZosmfRequestException("job name not specified")))));
         } catch (ZosmfRequestException e) {
@@ -347,8 +347,8 @@ public class JobGetExp extends TstZosConnection {
      */
     public static void getJclByJob(String prefix) {
         try {
-            List<Job> jobs = getJob.getByPrefix(prefix);
-            System.out.println(getJob.getJclByJob(jobs.get(0)));
+            List<Job> jobs = jobGet.getByPrefix(prefix);
+            System.out.println(jobGet.getJclByJob(jobs.get(0)));
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -364,9 +364,9 @@ public class JobGetExp extends TstZosConnection {
      */
     public static void getJcl(String prefix) {
         try {
-            List<Job> jobs = getJob.getByPrefix(prefix);
+            List<Job> jobs = jobGet.getByPrefix(prefix);
             System.out.println(
-                    getJob.getJcl(jobs.get(0).getJobName().orElseThrow(() -> new ZosmfRequestException("job name not specified")),
+                    jobGet.getJcl(jobs.get(0).getJobName().orElseThrow(() -> new ZosmfRequestException("job name not specified")),
                             jobs.get(0).getJobId().orElseThrow(() -> new ZosmfRequestException("job id not specified"))));
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
@@ -383,8 +383,8 @@ public class JobGetExp extends TstZosConnection {
      */
     public static void getStatusByJob(String prefix) {
         try {
-            List<Job> jobs = getJob.getByPrefix(prefix);
-            Job job = getJob.getStatusByJob(jobs.get(0));
+            List<Job> jobs = jobGet.getByPrefix(prefix);
+            Job job = jobGet.getStatusByJob(jobs.get(0));
             System.out.println(job);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
@@ -402,8 +402,8 @@ public class JobGetExp extends TstZosConnection {
      */
     public static void getStatusCommon(String prefix) {
         try {
-            List<Job> jobs = getJob.getByPrefix(prefix);
-            Job job = getJob.getStatusCommon(
+            List<Job> jobs = jobGet.getByPrefix(prefix);
+            Job job = jobGet.getStatusCommon(
                     new CommonJobInputData(jobs.get(0).getJobId().orElseThrow(() -> new ZosmfRequestException("job id not specified")),
                             jobs.get(0).getJobName().orElseThrow(() -> new ZosmfRequestException("job name not specified")), true));
             System.out.println(job.toString());
@@ -423,8 +423,8 @@ public class JobGetExp extends TstZosConnection {
      */
     public static void getStatus(String prefix) {
         try {
-            List<Job> jobs = getJob.getByPrefix(prefix);
-            Job job = getJob.getStatus(
+            List<Job> jobs = jobGet.getByPrefix(prefix);
+            Job job = jobGet.getStatus(
                     jobs.get(0).getJobName().orElseThrow(() -> new ZosmfRequestException("job name not specified")),
                     jobs.get(0).getJobId().orElseThrow(() -> new ZosmfRequestException("job id not specified")));
             System.out.println(job.toString());
@@ -443,7 +443,7 @@ public class JobGetExp extends TstZosConnection {
      */
     public static void nonExistentGetJob(String jobId) {
         try {
-            getJob.getById(jobId);
+            jobGet.getById(jobId);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -459,9 +459,9 @@ public class JobGetExp extends TstZosConnection {
      */
     public static void getById(String prefix) {
         try {
-            List<Job> jobs = getJob.getByPrefix(prefix);
+            List<Job> jobs = jobGet.getByPrefix(prefix);
             String jobId = jobs.get(0).getJobId().orElseThrow(() -> new ZosmfRequestException("job id not specified"));
-            Job job = getJob.getById(jobId);
+            Job job = jobGet.getById(jobId);
             System.out.println(job.toString());
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
@@ -481,7 +481,7 @@ public class JobGetExp extends TstZosConnection {
     public static void getByOwnerAndPrefix(String owner, String prefix) {
         List<Job> jobs;
         try {
-            jobs = getJob.getByOwnerAndPrefix(owner, prefix);
+            jobs = jobGet.getByOwnerAndPrefix(owner, prefix);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -499,7 +499,7 @@ public class JobGetExp extends TstZosConnection {
     public static void getByPrefix(String prefix) {
         List<Job> jobs;
         try {
-            jobs = getJob.getByPrefix(prefix);
+            jobs = jobGet.getByPrefix(prefix);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -517,7 +517,7 @@ public class JobGetExp extends TstZosConnection {
         // get any jobs out there for the logged-in user
         List<Job> jobs;
         try {
-            jobs = getJob.getAll();
+            jobs = jobGet.getAll();
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -536,9 +536,9 @@ public class JobGetExp extends TstZosConnection {
         JobGetInputData params = new JobGetInputData.Builder("*").prefix(prefix).build();
         String[] output;
         try {
-            List<Job> jobs = getJob.getCommon(params);
-            List<JobFile> files = getJob.getSpoolFilesByJob(jobs.get(0));
-            output = getJob.getSpoolContent(files.get(0)).split("\n");
+            List<Job> jobs = jobGet.getCommon(params);
+            List<JobFile> files = jobGet.getSpoolFilesByJob(jobs.get(0));
+            output = jobGet.getSpoolContent(files.get(0)).split("\n");
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -559,7 +559,7 @@ public class JobGetExp extends TstZosConnection {
     public static void getByOwner(String owner) {
         List<Job> jobs;
         try {
-            jobs = getJob.getByOwner(owner);
+            jobs = jobGet.getByOwner(owner);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -575,11 +575,11 @@ public class JobGetExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void getSpoolFilesForJob(String prefix) {
-        JobGetInputData params = new JobGetInputData.Builder("*").prefix(prefix).build();
+        JobGetInputData jobGetInputData = new JobGetInputData.Builder("*").prefix(prefix).build();
         List<JobFile> files;
         try {
-            List<Job> jobs = getJob.getCommon(params);
-            files = getJob.getSpoolFilesByJob(jobs.get(0));
+            List<Job> jobs = jobGet.getCommon(jobGetInputData);
+            files = jobGet.getSpoolFilesByJob(jobs.get(0));
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -595,11 +595,11 @@ public class JobGetExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void getSpoolFiles(String prefix) {
-        JobGetInputData params = new JobGetInputData.Builder("*").prefix(prefix).build();
+        JobGetInputData jobGetInputData = new JobGetInputData.Builder("*").prefix(prefix).build();
         List<JobFile> files;
         try {
-            List<Job> jobs = getJob.getCommon(params);
-            files = getJob.getSpoolFiles(
+            List<Job> jobs = jobGet.getCommon(jobGetInputData);
+            files = jobGet.getSpoolFiles(
                     jobs.get(0).getJobName().orElseThrow(() -> new ZosmfRequestException("job name not specified")),
                     jobs.get(0).getJobId().orElseThrow(() -> new ZosmfRequestException("job id not specified")));
         } catch (ZosmfRequestException e) {
@@ -618,10 +618,10 @@ public class JobGetExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void getCommon(String prefix) {
-        JobGetInputData params = new JobGetInputData.Builder("*").prefix(prefix).build();
+        JobGetInputData jobGetInputData = new JobGetInputData.Builder("*").prefix(prefix).build();
         List<Job> jobs;
         try {
-            jobs = getJob.getCommon(params);
+            jobs = jobGet.getCommon(jobGetInputData);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -655,7 +655,7 @@ import zowe.client.sdk.zosjobs.types.JobStatus;
  */
 public class JobMonitorExp extends TstZosConnection {
 
-    private static JobSubmit submitJob;
+    private static JobSubmit jobSubmit;
     private static ZosConnection connection;
 
     /**
@@ -667,7 +667,7 @@ public class JobMonitorExp extends TstZosConnection {
      */
     public static void main(String[] args) {
         connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
-        submitJob = new JobSubmit(connection);
+        jobSubmit = new JobSubmit(connection);
         JobMonitorExp.monitorJobForOutputStatusByJobObject();
         JobMonitorExp.monitorJobForOutputStatusByJobNameAndId();
         JobMonitorExp.monitorJobForStatusByJobObject(JobStatus.Type.INPUT);
@@ -684,9 +684,9 @@ public class JobMonitorExp extends TstZosConnection {
      */
     public static void monitorIsJobRunning() {
         JobMonitor jobMonitor = new JobMonitor(connection);
-        JobMonitorInputData monitorParams = new JobMonitorInputData.Builder("XXX", "XXX").build();
+        JobMonitorInputData jobMonitorInputData = new JobMonitorInputData.Builder("XXX", "XXX").build();
         try {
-            System.out.println(jobMonitor.isRunning(monitorParams));
+            System.out.println(jobMonitor.isRunning(jobMonitorInputData));
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -704,7 +704,7 @@ public class JobMonitorExp extends TstZosConnection {
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
         Job job;
         try {
-            job = submitJob.submitByJcl(jclString, null, null);
+            job = jobSubmit.submitByJcl(jclString, null, null);
             JobMonitor jobMonitor = new JobMonitor(connection);
             job = jobMonitor.waitByOutputStatus(job);
         } catch (ZosmfRequestException e) {
@@ -726,7 +726,7 @@ public class JobMonitorExp extends TstZosConnection {
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
         Job job;
         try {
-            job = submitJob.submitByJcl(jclString, null, null);
+            job = jobSubmit.submitByJcl(jclString, null, null);
             JobMonitor jobMonitor = new JobMonitor(connection);
             job = jobMonitor.waitByOutputStatus(
                     job.getJobName().orElseThrow(() -> new ZosmfRequestException("job name not specified")),
@@ -810,7 +810,7 @@ public class JobMonitorExp extends TstZosConnection {
 
 **Submit a job**
 
-````java
+```java
 package zowe.client.sdk.examples.zosjobs;
 
 import zowe.client.sdk.core.ZosConnection;
@@ -842,18 +842,18 @@ public class JobSubmitExp extends TstZosConnection {
         System.out.println(JobSubmitExp.submitJob(connection, "xxx.xxx.xxx.xxx(xxx)"));
 
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\n// EXEC PGM=IEFBR14";
-        Job submitJobsTest = JobSubmitExp.submitJclJob(connection, jclString);
+        Job jobSubmitTest = JobSubmitExp.submitJclJob(connection, jclString);
         // Wait for the job to complete
         JobMonitor jobMonitor = new JobMonitor(connection);
         try {
-            submitJobsTest = jobMonitor.waitByStatus(submitJobsTest, JobStatus.Type.OUTPUT);
+            jobSubmitTest = jobMonitor.waitByStatus(jobSubmitTest, JobStatus.Type.OUTPUT);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
         }
-        System.out.println(submitJobsTest);
+        System.out.println(jobSubmitTest);
         // Get the return code
-        String retCode = submitJobsTest.getRetCode().orElse("n/a");
+        String retCode = jobSubmitTest.getRetCode().orElse("n/a");
         System.out.println("Expected Return Code = CC 0000 [" + retCode + "]");
     }
 
@@ -896,7 +896,7 @@ public class JobSubmitExp extends TstZosConnection {
     }
 
 }
-`````
+```
 
 ````java
 package zowe.client.sdk.examples.utility;
@@ -912,7 +912,7 @@ import zowe.client.sdk.rest.Response;
 public class Util {
 
     /**
-     * Extract response phrase string value if any from Response object.
+     * Extract response phrase string value if any from a Response object.
      *
      * @param response object
      * @return string value
