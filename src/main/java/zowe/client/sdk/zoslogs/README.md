@@ -17,6 +17,7 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zoslogs.input.ZosLogInputData;
 import zowe.client.sdk.zoslogs.input.ZosLogParams;
 import zowe.client.sdk.zoslogs.method.ZosLog;
 import zowe.client.sdk.zoslogs.response.ZosLogReply;
@@ -42,7 +43,7 @@ public class ZosLogExp extends TstZosConnection {
         ZosConnection connection = ZosConnectionFactory
                 .createBasicConnection(hostName, zosmfPort, userName, password);
         ZosLog zosLog = new ZosLog(connection);
-        ZosLogParams zosLogParams = new ZosLogParams.Builder()
+        ZosLogInputData zosLogInputData = new ZosLogInputData.Builder()
                 .startTime("2022-11-27T05:06Z")
                 .hardCopy(HardCopyType.SYSLOG)
                 .timeRange("24h")
@@ -51,7 +52,7 @@ public class ZosLogExp extends TstZosConnection {
                 .build();
         ZosLogReply zosLogReply;
         try {
-            zosLogReply = zosLog.issueCommand(zosLogParams);
+            zosLogReply = zosLog.issueCommand(zosLogInputData);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -59,14 +60,14 @@ public class ZosLogExp extends TstZosConnection {
         zosLogReply.getItemLst().forEach(i -> System.out.println(i.getTime().get() + " " + i.getMessage().get()));
 
         // get the last one minute of syslog from the date/time of now backwards...
-        zosLogParams = new ZosLogParams.Builder()
+        zosLogInputData = new ZosLogInputData.Builder()
                 .hardCopy(HardCopyType.SYSLOG)
                 .timeRange("1m")
                 .direction(DirectionType.BACKWARD)
                 .processResponses(true)
                 .build();
         try {
-            zosLogReply = zosLog.issueCommand(zosLogParams);
+            zosLogReply = zosLog.issueCommand(zosLogInputData);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
