@@ -18,7 +18,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
-import zowe.client.sdk.zosjobs.input.ModifyJobParams;
+import zowe.client.sdk.zosjobs.input.JobModifyInputData;
 import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;
@@ -87,7 +87,7 @@ public class JobCancel {
     public Response cancel(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jobName, JobsConstants.JOB_NAME_ILLEGAL_MSG);
         ValidateUtils.checkIllegalParameter(jobId, JobsConstants.JOB_ID_ILLEGAL_MSG);
-        return this.cancelCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
+        return this.cancelCommon(new JobModifyInputData.Builder(jobName, jobId).version(version).build());
     }
 
     /**
@@ -107,7 +107,7 @@ public class JobCancel {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         final String jobName = job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG));
         final String jobId = job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG));
-        return this.cancelCommon(new ModifyJobParams.Builder(jobName, jobId).version(version).build());
+        return this.cancelCommon(new JobModifyInputData.Builder(jobName, jobId).version(version).build());
     }
 
     /**
@@ -120,7 +120,7 @@ public class JobCancel {
      * @author Frank Giordano
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in ModifyJobParams
-    public Response cancelCommon(final ModifyJobParams params) throws ZosmfRequestException {
+    public Response cancelCommon(final JobModifyInputData params) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
         // generate full url request
