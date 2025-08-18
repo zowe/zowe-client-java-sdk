@@ -19,7 +19,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * @author Esteban Sandoval
  * @version 4.0
  */
-public class PasswordParams {
+public class PasswordInputData {
 
     /**
      * The user ID value for the password or passphrase change
@@ -37,14 +37,14 @@ public class PasswordParams {
     private final String newPwd;
 
     /**
-     * PasswordParams constructor
+     * PasswordInputData constructor
      *
      * @param userId user ID value
      * @param oldPwd old password value
      * @param newPwd new password value
      * @author Esteban Sandoval
      */
-    public PasswordParams(final String userId, final String oldPwd, final String newPwd) {
+    public PasswordInputData(final String userId, final String oldPwd, final String newPwd) {
         ValidateUtils.checkIllegalParameter(userId, "userId");
         ValidateUtils.checkIllegalParameter(oldPwd, "oldPwd");
         ValidateUtils.checkIllegalParameter(newPwd, "newPwd");
@@ -81,13 +81,13 @@ public class PasswordParams {
     }
 
     /**
-     * Return string value representing PasswordParams object
+     * Return string value representing PasswordInputData object
      *
-     * @return string representation of PasswordParams
+     * @return string representation of PasswordInputData
      */
     @Override
     public String toString() {
-        return "PasswordParams{" +
+        return "PasswordInputData{" +
                 "userId='" + userId + '\'' +
                 ", oldPwd='" + oldPwd + '\'' +
                 ", newPwd='" + newPwd + '\'' +
