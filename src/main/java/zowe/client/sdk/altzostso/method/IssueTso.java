@@ -76,7 +76,7 @@ public class IssueTso {
      */
     public List<String> issueCommend(final String command, final StartTsoInputData startTsoData) throws ZosmfRequestException {
         this.startTsoData = startTsoData;
-        String sessionKey = this.startTso();
+        final String sessionKey = this.startTso();
         return this.processTsoCommand(sessionKey, command);
     }
 
