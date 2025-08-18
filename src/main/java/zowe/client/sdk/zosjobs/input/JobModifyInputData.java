@@ -12,12 +12,12 @@ package zowe.client.sdk.zosjobs.input;
 import java.util.Optional;
 
 /**
- * ModifyJobParams APIs parameters interface for delete and cancel job operations
+ * Parameters for delete (JobDelete) and cancel (JobCancel) job operations
  *
  * @author Frank Giordano
  * @version 4.0
  */
-public class ModifyJobParams {
+public class JobModifyInputData {
 
     /**
      * Job name value specified for request
@@ -45,7 +45,7 @@ public class ModifyJobParams {
      * @param builder ModifyJobParams.Builder object
      * @author Nikunj Goyal
      */
-    private ModifyJobParams(final ModifyJobParams.Builder builder) {
+    private JobModifyInputData(final JobModifyInputData.Builder builder) {
         this.jobName = builder.jobName;
         this.jobId = builder.jobId;
         this.version = builder.version;
@@ -134,7 +134,7 @@ public class ModifyJobParams {
          * @param version version value
          * @return Builder object
          */
-        public ModifyJobParams.Builder version(final String version) {
+        public JobModifyInputData.Builder version(final String version) {
             this.version = version;
             return this;
         }
@@ -144,8 +144,8 @@ public class ModifyJobParams {
          *
          * @return ModifyJobParams this object
          */
-        public ModifyJobParams build() {
-            return new ModifyJobParams(this);
+        public JobModifyInputData build() {
+            return new JobModifyInputData(this);
         }
 
     }
