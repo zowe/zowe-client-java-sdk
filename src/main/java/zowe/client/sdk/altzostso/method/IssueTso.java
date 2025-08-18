@@ -56,11 +56,12 @@ public class IssueTso {
      * Issue TSO command API call to process the given command via z/OSMF restful api
      *
      * @param command tso command string
+     * @return list of all tso returned messages
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public void issueCommend(final String command) throws ZosmfRequestException {
-        this.issueCommend(command, null);
+    public List<String> issueCommend(final String command) throws ZosmfRequestException {
+        return this.issueCommend(command, null);
     }
 
     /**
@@ -69,13 +70,14 @@ public class IssueTso {
      *
      * @param command      tso command string
      * @param startTsoData start TSO request inputs parameters
+     * @return list of all tso returned messages
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public void issueCommend(final String command, final StartTsoInputData startTsoData) throws ZosmfRequestException {
+    public List<String> issueCommend(final String command, final StartTsoInputData startTsoData) throws ZosmfRequestException {
         this.startTsoData = startTsoData;
         String sessionKey = startTso();
-        processTsoCommand(sessionKey, command).forEach(System.out::println);
+        return processTsoCommand(sessionKey, command);
     }
 
     /**
