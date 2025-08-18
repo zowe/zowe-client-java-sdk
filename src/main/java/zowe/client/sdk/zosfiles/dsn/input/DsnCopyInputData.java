@@ -14,12 +14,12 @@ import zowe.client.sdk.utility.ValidateUtils;
 import java.util.Optional;
 
 /**
- * This interface defines the options that can be sent into the copy data set function.
+ * Parameter container class for the copy data set function.
  *
  * @author Leonid Baranov
  * @version 4.0
  */
-public class CopyParams {
+public class DsnCopyInputData {
 
     /**
      * The volume to copy from
@@ -57,7 +57,7 @@ public class CopyParams {
      * @param builder Builder object
      * @author Leonid Baranov
      */
-    private CopyParams(final Builder builder) {
+    private DsnCopyInputData(final Builder builder) {
         this.fromVolser = builder.fromVolser;
         this.fromDataSet = builder.fromDataSet;
         this.toVolser = builder.toVolser;
@@ -252,8 +252,8 @@ public class CopyParams {
          *
          * @return CopyParams this object
          */
-        public CopyParams build() {
-            return new CopyParams(this);
+        public DsnCopyInputData build() {
+            return new DsnCopyInputData(this);
         }
 
     }

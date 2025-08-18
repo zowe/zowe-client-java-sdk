@@ -13,14 +13,14 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
- * Interface for create dataset API
+ * Parameter container class for create dataset API
  * zOSMF REST API information:
  * <a href="https://www.ibm.com/support/knowledgecenter/SSLTBW_2.3.0/com.ibm.zos.v2r3.izua700/IZUHPINFO_API_CreateDataSet.htm#CreateDataSet">...</a>
  *
  * @author Leonid Baranov
  * @version 4.0
  */
-public class CreateParams {
+public class DsnCreateInputData {
 
     /**
      * The volume serial
@@ -120,7 +120,7 @@ public class CreateParams {
      * @param builder Builder object
      * @author Leonid Baranov
      */
-    private CreateParams(final Builder builder) {
+    private DsnCreateInputData(final Builder builder) {
         this.volser = builder.volser;
         this.unit = builder.unit;
         this.dsorg = builder.dsorg;
@@ -639,8 +639,8 @@ public class CreateParams {
          *
          * @return CreateParams this object
          */
-        public CreateParams build() {
-            return new CreateParams(this);
+        public DsnCreateInputData build() {
+            return new DsnCreateInputData(this);
         }
 
     }

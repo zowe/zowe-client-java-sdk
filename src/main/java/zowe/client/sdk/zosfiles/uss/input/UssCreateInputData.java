@@ -21,7 +21,7 @@ import zowe.client.sdk.zosfiles.uss.types.CreateType;
  * @author James Kostrewski
  * @version 4.0
  */
-public class CreateParams {
+public class UssCreateInputData {
 
     /**
      * The request type defined as a CreateType enum value.
@@ -56,7 +56,7 @@ public class CreateParams {
      * @param mode permission string value
      * @author James Kostrewski
      */
-    public CreateParams(final CreateType type, final String mode) {
+    public UssCreateInputData(final CreateType type, final String mode) {
         ValidateUtils.checkNullParameter(type == null, "type is null");
         ValidateUtils.checkNullParameter(mode == null, "mode is null");
         this.type = type;

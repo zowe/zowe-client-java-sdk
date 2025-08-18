@@ -21,7 +21,7 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.ChangeTagParams;
+import zowe.client.sdk.zosfiles.uss.input.UssChangeTagInputData;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagAction;
 import zowe.client.sdk.zosfiles.uss.types.ChangeTagType;
 
@@ -81,7 +81,7 @@ public class UssChangeTag {
      * @author Frank Giordano
      */
     public Response binary(final String fileNamePath) throws ZosmfRequestException {
-        return changeCommon(fileNamePath, new ChangeTagParams.Builder()
+        return changeCommon(fileNamePath, new UssChangeTagInputData.Builder()
                 .action(ChangeTagAction.SET).type(ChangeTagType.BINARY).build());
     }
 
@@ -98,7 +98,7 @@ public class UssChangeTag {
         ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");
         ValidateUtils.checkIllegalParameter(codeSet, "codeSet");
 
-        return changeCommon(fileNamePath, new ChangeTagParams.Builder()
+        return changeCommon(fileNamePath, new UssChangeTagInputData.Builder()
                 .action(ChangeTagAction.SET).type(ChangeTagType.TEXT).codeset(codeSet).build());
     }
 
@@ -111,7 +111,7 @@ public class UssChangeTag {
      * @author Frank Giordano
      */
     public Response remove(final String fileNamePath) throws ZosmfRequestException {
-        return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.REMOVE).build());
+        return changeCommon(fileNamePath, new UssChangeTagInputData.Builder().action(ChangeTagAction.REMOVE).build());
     }
 
     /**
@@ -123,7 +123,7 @@ public class UssChangeTag {
      * @author Frank Giordano
      */
     public Response get(final String fileNamePath) throws ZosmfRequestException {
-        return changeCommon(fileNamePath, new ChangeTagParams.Builder().action(ChangeTagAction.LIST).build());
+        return changeCommon(fileNamePath, new UssChangeTagInputData.Builder().action(ChangeTagAction.LIST).build());
     }
 
     /**
@@ -135,7 +135,7 @@ public class UssChangeTag {
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response changeCommon(final String fileNamePath, final ChangeTagParams params) throws ZosmfRequestException {
+    public Response changeCommon(final String fileNamePath, final UssChangeTagInputData params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "action not specified");

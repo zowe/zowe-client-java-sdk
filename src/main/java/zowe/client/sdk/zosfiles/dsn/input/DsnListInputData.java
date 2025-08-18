@@ -15,12 +15,12 @@ import zowe.client.sdk.zosfiles.dsn.types.AttributeType;
 import java.util.Optional;
 
 /**
- * This interface defines the options that can be sent into the list data set function
+ * Parameter container class for the list data set function
  *
  * @author Leonid Baranov
  * @version 4.0
  */
-public class ListParams {
+public class DsnListInputData {
 
     /**
      * The volume where the data set resides
@@ -63,7 +63,7 @@ public class ListParams {
      * @param builder Builder object
      * @author Nikunj Goyal
      */
-    private ListParams(final Builder builder) {
+    private DsnListInputData(final Builder builder) {
         this.volume = builder.volume;
         this.attribute = builder.attribute;
         this.maxLength = builder.maxLength;
@@ -282,8 +282,8 @@ public class ListParams {
          *
          * @return ListParams this object
          */
-        public ListParams build() {
-            return new ListParams(this);
+        public DsnListInputData build() {
+            return new DsnListInputData(this);
         }
 
     }

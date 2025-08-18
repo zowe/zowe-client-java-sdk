@@ -13,12 +13,12 @@ package zowe.client.sdk.zosfiles.dsn.input;
 import java.util.Optional;
 
 /**
- * This interface defines the options that can be sent into the Zos Files function
+ * Parameter container class for the Zos Files function
  *
  * @author Leonid Baranov
  * @version 4.0
  */
-public class ZosFilesParams {
+public class DsnZosFilesInputData {
 
     /**
      * Response time out value
@@ -31,7 +31,7 @@ public class ZosFilesParams {
      * @param responseTimeout response time out value
      * @author Leonid Baranov
      */
-    public ZosFilesParams(final String responseTimeout) {
+    public DsnZosFilesInputData(final String responseTimeout) {
         this.responseTimeout = responseTimeout;
     }
 

@@ -21,7 +21,7 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.CopyParams;
+import zowe.client.sdk.zosfiles.uss.input.UssCopyInputData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -80,7 +80,7 @@ public class UssCopy {
      * @author Frank Giordano
      */
     public Response copy(final String fromPath, final String targetPath) throws ZosmfRequestException {
-        return copyCommon(targetPath, new CopyParams.Builder().from(fromPath).build());
+        return copyCommon(targetPath, new UssCopyInputData.Builder().from(fromPath).build());
     }
 
     /**
@@ -94,7 +94,7 @@ public class UssCopy {
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response copyCommon(final String targetPath, final CopyParams params) throws ZosmfRequestException {
+    public Response copyCommon(final String targetPath, final UssCopyInputData params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 

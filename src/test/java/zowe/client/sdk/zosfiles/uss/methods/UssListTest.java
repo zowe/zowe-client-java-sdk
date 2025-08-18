@@ -22,8 +22,8 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.ListParams;
-import zowe.client.sdk.zosfiles.uss.input.ListZfsParams;
+import zowe.client.sdk.zosfiles.uss.input.UssListInputData;
+import zowe.client.sdk.zosfiles.uss.input.UssListZfsInputData;
 import zowe.client.sdk.zosfiles.uss.response.UnixFile;
 import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
 
@@ -148,7 +148,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListEmptyResponseSuccess() throws Exception {
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
         // should only contain two items
         assertEquals(0, items.size());
         assertEquals("https://1:1/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
@@ -157,7 +157,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListEmptyResponseToggleTokenSuccess() throws Exception {
         final UssList ussList = new UssList(tokenConnection, mockJsonGetRequestToken);
-        List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
+        List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestToken.getHeaders().toString());
         // should only contain two items
@@ -172,7 +172,7 @@ public class UssListTest {
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         String msg = "";
         try {
-            ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
+            ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
         } catch (Exception e) {
             msg = e.getMessage();
         }
@@ -186,7 +186,7 @@ public class UssListTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
         assertEquals("https://1:1/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
         // should only contain two items
         assertEquals(2, items.size());
@@ -218,7 +218,7 @@ public class UssListTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
         assertEquals("https://1:1/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
         // should only contain two items
         assertEquals(2, items.size());
@@ -250,7 +250,7 @@ public class UssListTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
         assertEquals(0, items.size());
         assertEquals("https://1:1/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
     }
@@ -260,7 +260,7 @@ public class UssListTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UnixFile> items = ussList.getFiles(new ListParams.Builder().path("/xxx/xx/x").build());
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
         assertEquals(0, items.size());
         assertEquals("https://1:1/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
     }
@@ -271,7 +271,7 @@ public class UssListTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UnixZfs> items = ussList.getZfsSystems(new ListZfsParams.Builder().path("/xxx/xx/x").build());
+        final List<UnixZfs> items = ussList.getZfsSystems(new UssListZfsInputData.Builder().path("/xxx/xx/x").build());
         // should only contain one item
         assertEquals(1, items.size());
         // verify first item's data
@@ -306,7 +306,7 @@ public class UssListTest {
     public void tstUssListFileListParamsPathEmptyFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussList.getFiles(new ListParams.Builder().path("").build());
+            ussList.getFiles(new UssListInputData.Builder().path("").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -317,7 +317,7 @@ public class UssListTest {
     public void tstUssListFileListParamsInvalidPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussList.getFiles(new ListParams.Builder().path("hello").build());
+            ussList.getFiles(new UssListInputData.Builder().path("hello").build());
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
@@ -328,7 +328,7 @@ public class UssListTest {
     public void tstUssListFileListParamsPathEmptyWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussList.getFiles(new ListParams.Builder().path("    ").build());
+            ussList.getFiles(new UssListInputData.Builder().path("    ").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -339,7 +339,7 @@ public class UssListTest {
     public void tstUssListFileListParamsPathNullFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussList.getFiles(new ListParams.Builder().path(null).build());
+            ussList.getFiles(new UssListInputData.Builder().path(null).build());
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
@@ -350,7 +350,7 @@ public class UssListTest {
     public void tstUssListZfsListEmptyParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussList.getZfsSystems(new ListZfsParams.Builder().build());
+            ussList.getZfsSystems(new UssListZfsInputData.Builder().build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -361,7 +361,7 @@ public class UssListTest {
     public void tstUssListZfsListParamsFsnameEmptyFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussList.getZfsSystems(new ListZfsParams.Builder().fsname("").build());
+            ussList.getZfsSystems(new UssListZfsInputData.Builder().fsname("").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -372,7 +372,7 @@ public class UssListTest {
     public void tstUssListZfsListParamsFsnameEmptyWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussList.getZfsSystems(new ListZfsParams.Builder().fsname("    ").build());
+            ussList.getZfsSystems(new UssListZfsInputData.Builder().fsname("    ").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -383,7 +383,7 @@ public class UssListTest {
     public void tstUssListZfsListParamsFsnameNullFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussList.getZfsSystems(new ListZfsParams.Builder().fsname(null).build());
+            ussList.getZfsSystems(new UssListZfsInputData.Builder().fsname(null).build());
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
@@ -394,7 +394,7 @@ public class UssListTest {
     public void tstUssListZfsListParamsPathAndFsnameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussList.getZfsSystems(new ListZfsParams.Builder().path("p").fsname("p").build());
+            ussList.getZfsSystems(new UssListZfsInputData.Builder().path("p").fsname("p").build());
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
@@ -405,7 +405,7 @@ public class UssListTest {
     public void tstUssListZfsListParamsPathEmptyFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussList.getZfsSystems(new ListZfsParams.Builder().path("").build());
+            ussList.getZfsSystems(new UssListZfsInputData.Builder().path("").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -416,7 +416,7 @@ public class UssListTest {
     public void tstUssListZfsListParamsInvalidPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussList.getZfsSystems(new ListZfsParams.Builder().path("hello").build());
+            ussList.getZfsSystems(new UssListZfsInputData.Builder().path("hello").build());
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
@@ -427,7 +427,7 @@ public class UssListTest {
     public void tstUssListZfsListParamsPathEmptyWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussList.getZfsSystems(new ListZfsParams.Builder().path("   ").build());
+            ussList.getZfsSystems(new UssListZfsInputData.Builder().path("   ").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -438,7 +438,7 @@ public class UssListTest {
     public void tstUssListZfsListParamsPathNullFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussList.getZfsSystems(new ListZfsParams.Builder().path(null).build());
+            ussList.getZfsSystems(new UssListZfsInputData.Builder().path(null).build());
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }

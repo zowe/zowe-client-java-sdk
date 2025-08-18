@@ -19,7 +19,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 4.0
  */
-public class WriteParams {
+public class UssWriteInputData {
 
     /**
      * Text content for file write
@@ -53,7 +53,7 @@ public class WriteParams {
      * @param builder WriteParams.Builder builder
      * @author Frank Giordano
      */
-    public WriteParams(final WriteParams.Builder builder) {
+    public UssWriteInputData(final UssWriteInputData.Builder builder) {
         this.textContent = builder.textContent;
         this.binaryContent = builder.binaryContent;
         this.fileEncoding = builder.fileEncoding;
@@ -219,8 +219,8 @@ public class WriteParams {
          *
          * @return WriteParams object
          */
-        public WriteParams build() {
-            return new WriteParams(this);
+        public UssWriteInputData build() {
+            return new UssWriteInputData(this);
         }
 
     }

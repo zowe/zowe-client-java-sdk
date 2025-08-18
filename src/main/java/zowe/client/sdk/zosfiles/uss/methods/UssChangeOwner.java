@@ -21,7 +21,7 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.ChangeOwnerParams;
+import zowe.client.sdk.zosfiles.uss.input.UssChangeOwnerInputData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +77,7 @@ public class UssChangeOwner {
      * @author James Kostrewski
      */
     public Response change(final String targetPath, final String owner) throws ZosmfRequestException {
-        return changeCommon(targetPath, new ChangeOwnerParams.Builder().owner(owner).build());
+        return changeCommon(targetPath, new UssChangeOwnerInputData.Builder().owner(owner).build());
     }
 
     /**
@@ -91,7 +91,7 @@ public class UssChangeOwner {
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response changeCommon(final String targetPath, final ChangeOwnerParams params) throws ZosmfRequestException {
+    public Response changeCommon(final String targetPath, final UssChangeOwnerInputData params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 

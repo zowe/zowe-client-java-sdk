@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.MountParams;
+import zowe.client.sdk.zosfiles.uss.input.UssMountInputData;
 import zowe.client.sdk.zosfiles.uss.types.MountActionType;
 import zowe.client.sdk.zosfiles.uss.types.MountModeType;
 
@@ -84,7 +84,7 @@ public class UssMount {
     public Response mount(final String fileSystemName, final String mountPoint, final String fsType)
             throws ZosmfRequestException {
         return mountCommon(fileSystemName,
-                new MountParams.Builder()
+                new UssMountInputData.Builder()
                         .action(MountActionType.MOUNT)
                         .mountPoint(mountPoint)
                         .fsType(fsType)
@@ -101,7 +101,7 @@ public class UssMount {
      * @author Frank Giordano
      */
     public Response unmount(final String fileSystemName) throws ZosmfRequestException {
-        return mountCommon(fileSystemName, new MountParams.Builder().action(MountActionType.UNMOUNT).build());
+        return mountCommon(fileSystemName, new UssMountInputData.Builder().action(MountActionType.UNMOUNT).build());
     }
 
     /**
@@ -113,7 +113,7 @@ public class UssMount {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response mountCommon(final String fileSystemName, final MountParams params) throws ZosmfRequestException {
+    public Response mountCommon(final String fileSystemName, final UssMountInputData params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileSystemName, "fileSystemName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "params action not specified");

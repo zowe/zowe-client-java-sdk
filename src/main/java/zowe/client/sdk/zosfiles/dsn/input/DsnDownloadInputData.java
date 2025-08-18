@@ -14,12 +14,12 @@ import java.util.Optional;
 import java.util.OptionalLong;
 
 /**
- * This interface defines the options that can be sent into the download data set function
+ * Parameter container class for the download data set function
  *
  * @author Nikunj Goyal
  * @version 4.0
  */
-public class DownloadParams {
+public class DsnDownloadInputData {
 
     /**
      * The local file to download the data set to, e.g. "./path/to/file.txt"
@@ -111,7 +111,7 @@ public class DownloadParams {
      * @param builder Builder object
      * @author Nikunj Goyal
      */
-    private DownloadParams(final Builder builder) {
+    private DsnDownloadInputData(final Builder builder) {
         this.file = builder.file;
         this.extension = builder.extension;
         this.directory = builder.directory;
@@ -533,8 +533,8 @@ public class DownloadParams {
          *
          * @return DownloadParams this object
          */
-        public DownloadParams build() {
-            return new DownloadParams(this);
+        public DsnDownloadInputData build() {
+            return new DsnDownloadInputData(this);
         }
 
     }
