@@ -76,8 +76,8 @@ public class IssueTso {
      */
     public List<String> issueCommend(final String command, final StartTsoInputData startTsoData) throws ZosmfRequestException {
         this.startTsoData = startTsoData;
-        String sessionKey = startTso();
-        return processTsoCommand(sessionKey, command);
+        String sessionKey = this.startTso();
+        return this.processTsoCommand(sessionKey, command);
     }
 
     /**
@@ -93,14 +93,14 @@ public class IssueTso {
         this.msgLst.clear();
         this.promptLst.clear();
 
-        String responseStr = sendTsoCommand(sessionKey, command);
-        JsonNode tsoData = getJsonNode(responseStr, TsoConstants.SEND_TSO_COMMAND_FAIL_MSG).get("tsoData");
-        processTsoData(tsoData);
+        String responseStr = this.sendTsoCommand(sessionKey, command);
+        JsonNode tsoData = this.getJsonNode(responseStr, TsoConstants.SEND_TSO_COMMAND_FAIL_MSG).get("tsoData");
+        this.processTsoData(tsoData);
 
         while (promptLst.isEmpty()) {
-            responseStr = sendTso(sessionKey);
-            tsoData = getJsonNode(responseStr, TsoConstants.SEND_TSO_FAIL_MSG).get("tsoData");
-            processTsoData(tsoData);
+            responseStr = this.sendTso(sessionKey);
+            tsoData = this.getJsonNode(responseStr, TsoConstants.SEND_TSO_FAIL_MSG).get("tsoData");
+            this.processTsoData(tsoData);
         }
 
         this.stopTso(sessionKey);
