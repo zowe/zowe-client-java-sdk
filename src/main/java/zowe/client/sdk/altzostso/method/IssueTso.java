@@ -135,8 +135,8 @@ public class IssueTso {
         request.setUrl(url);
         request.setBody("");
 
-        final String responseStr = executeRequest(request, TsoConstants.START_TSO_FAIL_MSG);
-        final JsonNode rootNode = getJsonNode(responseStr, TsoConstants.START_TSO_FAIL_MSG);
+        final String responseStr = this.executeRequest(request, TsoConstants.START_TSO_FAIL_MSG);
+        final JsonNode rootNode = this.getJsonNode(responseStr, TsoConstants.START_TSO_FAIL_MSG);
 
         final String servletKey = rootNode.get("servletKey").asText();
         if ("null".equalsIgnoreCase(servletKey)) {
@@ -166,7 +166,7 @@ public class IssueTso {
         request.setUrl(url);
         request.setBody(body);
 
-        return executeRequest(request, TsoConstants.SEND_TSO_COMMAND_FAIL_MSG);
+        return this.executeRequest(request, TsoConstants.SEND_TSO_COMMAND_FAIL_MSG);
     }
 
     /**
@@ -187,7 +187,7 @@ public class IssueTso {
         request.setUrl(url);
         request.setBody("");
 
-        return executeRequest(request, TsoConstants.SEND_TSO_FAIL_MSG);
+        return this.executeRequest(request, TsoConstants.SEND_TSO_FAIL_MSG);
     }
 
     /**
@@ -206,7 +206,7 @@ public class IssueTso {
         }
         request.setUrl(url);
 
-        executeRequest(request, TsoConstants.STOP_TSO_COMMAND_FAIL_MSG);
+        this.executeRequest(request, TsoConstants.STOP_TSO_COMMAND_FAIL_MSG);
     }
 
     /**
