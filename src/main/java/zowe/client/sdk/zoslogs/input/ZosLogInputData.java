@@ -23,7 +23,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 4.0
  */
-public class ZosLogParams {
+public class ZosLogInputData {
 
     /**
      * The z/OS log api time parameter. This field is optional.
@@ -76,12 +76,12 @@ public class ZosLogParams {
     private final int queryCount;
 
     /**
-     * ZosLogParams constructor
+     * ZosLogInputData constructor
      *
      * @param builder Builder object
      * @author Frank Giordano
      */
-    private ZosLogParams(final Builder builder) {
+    private ZosLogInputData(final ZosLogInputData.Builder builder) {
         this.startTime = builder.startTime;
         this.hardCopy = builder.hardCopy;
         this.direction = builder.direction;
@@ -145,13 +145,13 @@ public class ZosLogParams {
     }
 
     /**
-     * Return string value representing ZosLogParams object
+     * Return string value representing ZosLogInputData object
      *
-     * @return string representation of ZosLogParams
+     * @return string representation of ZosLogInputData
      */
     @Override
     public String toString() {
-        return "ZosLogParams{" +
+        return "ZosLogInputData{" +
                 "startTime=" + startTime +
                 ", hardCopy=" + hardCopy +
                 ", direction=" + direction +
@@ -161,7 +161,7 @@ public class ZosLogParams {
     }
 
     /**
-     * Builder class for ZosLogParams
+     * Builder class for ZosLogInputData
      */
     public static class Builder {
 
@@ -295,12 +295,12 @@ public class ZosLogParams {
         }
 
         /**
-         * Return ZosLogParams object based on Builder this object
+         * Return ZosLogInputData object based on Builder this object
          *
-         * @return ZosLogParams this object
+         * @return ZosLogInputData this object
          */
-        public ZosLogParams build() {
-            return new ZosLogParams(this);
+        public ZosLogInputData build() {
+            return new ZosLogInputData(this);
         }
 
     }
