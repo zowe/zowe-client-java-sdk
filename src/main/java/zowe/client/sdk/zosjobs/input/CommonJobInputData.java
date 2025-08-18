@@ -38,7 +38,7 @@ public class CommonJobInputData {
     private final boolean stepData;
 
     /**
-     * CommonJobParams constructor, no step data information included.
+     * CommonJobInputData constructor, no step data information included.
      *
      * @param jobId   job id value
      * @param jobName job name value
@@ -92,13 +92,13 @@ public class CommonJobInputData {
     }
 
     /**
-     * Return string value representing CommonJobParams object
+     * Return string value representing CommonJobInputData object
      *
-     * @return string representation of CommonJobParams
+     * @return string representation of CommonJobInputData
      */
     @Override
     public String toString() {
-        return "CommonJobParams{" +
+        return "CommonJobInputData{" +
                 "jobId=" + jobId +
                 ", jobName=" + jobName +
                 '}';

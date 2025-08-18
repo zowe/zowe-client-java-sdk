@@ -58,12 +58,12 @@ public class DsnListInputData {
     private final String responseTimeout;
 
     /**
-     * ListParams constructor
+     * DsnListInputData constructor
      *
-     * @param builder Builder object
+     * @param builder DsnListInputData.Builder object
      * @author Nikunj Goyal
      */
-    private DsnListInputData(final Builder builder) {
+    private DsnListInputData(final DsnListInputData.Builder builder) {
         this.volume = builder.volume;
         this.attribute = builder.attribute;
         this.maxLength = builder.maxLength;
@@ -137,13 +137,13 @@ public class DsnListInputData {
     }
 
     /**
-     * Return string value representing ListParams object
+     * Return string value representing DsnListInputData object
      *
-     * @return string representation of ListParams
+     * @return string representation of DsnListInputData
      */
     @Override
     public String toString() {
-        return "ListParams{" +
+        return "DsnListInputData{" +
                 "volume=" + volume +
                 ", attribute=" + attribute +
                 ", maxLength=" + maxLength +
@@ -155,7 +155,7 @@ public class DsnListInputData {
     }
 
     /**
-     * Builder class for ListParams
+     * Builder class for DsnListInputData
      */
     public static class Builder {
 
@@ -278,9 +278,9 @@ public class DsnListInputData {
         }
 
         /**
-         * Return ListParams object based on Builder this object
+         * Return DsnListInputData object based on Builder this object
          *
-         * @return ListParams this object
+         * @return DsnListInputData this object
          */
         public DsnListInputData build() {
             return new DsnListInputData(this);

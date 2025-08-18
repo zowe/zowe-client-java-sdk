@@ -82,9 +82,9 @@ public class UssSetAclInputData {
     private final String delete;
 
     /**
-     * SetAclParams constructor
+     * UssSetAclInputData constructor
      *
-     * @param builder SetAclParams.Builder builder
+     * @param builder UssSetAclInputData.Builder builder
      */
     public UssSetAclInputData(final UssSetAclInputData.Builder builder) {
         this.abort = builder.abort;
@@ -150,13 +150,13 @@ public class UssSetAclInputData {
     }
 
     /**
-     * Return string value representing SetAclParams object
+     * Return string value representing UssSetAclInputData object
      *
-     * @return string representation of SetAclParams
+     * @return string representation of UssSetAclInputData
      */
     @Override
     public String toString() {
-        return "SetAclParams{" +
+        return "UssSetAclInputData{" +
                 "abort=" + abort +
                 ", links=" + links +
                 ", deleteType=" + deleteType +
@@ -167,7 +167,7 @@ public class UssSetAclInputData {
     }
 
     /**
-     * Builder class for SetAclParams
+     * Builder class for UssSetAclInputData
      */
     public static class Builder {
 
@@ -301,9 +301,9 @@ public class UssSetAclInputData {
         }
 
         /**
-         * Build SetAclParams object
+         * Build UssSetAclInputData object
          *
-         * @return SetAclParams
+         * @return UssSetAclInputData
          */
         public UssSetAclInputData build() {
             return new UssSetAclInputData(this);

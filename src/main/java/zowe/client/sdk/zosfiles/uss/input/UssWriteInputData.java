@@ -48,9 +48,9 @@ public class UssWriteInputData {
     private final boolean binary;
 
     /**
-     * WriteParams constructor
+     * UssWriteInputData constructor
      *
-     * @param builder WriteParams.Builder builder
+     * @param builder UssWriteInputData.Builder builder
      * @author Frank Giordano
      */
     public UssWriteInputData(final UssWriteInputData.Builder builder) {
@@ -107,13 +107,13 @@ public class UssWriteInputData {
     }
 
     /**
-     * Return string value representing WriteParams object
+     * Return string value representing UssWriteInputData object
      *
-     * @return string representation of WriteParams
+     * @return string representation of UssWriteInputData
      */
     @Override
     public String toString() {
-        return "WriteParams{" +
+        return "UssWriteInputData{" +
                 "textContent=" + textContent +
                 ", binaryContent=" + binaryContent +
                 ", fileEncoding=" + fileEncoding +
@@ -123,7 +123,7 @@ public class UssWriteInputData {
     }
 
     /**
-     * Builder class for WriteParams
+     * Builder class for UssWriteInputData
      */
     public static class Builder {
 
@@ -215,9 +215,9 @@ public class UssWriteInputData {
         }
 
         /**
-         * Return WriteParams object based on Builder this object
+         * Return UssWriteInputData object based on Builder this object
          *
-         * @return WriteParams object
+         * @return UssWriteInputData object
          */
         public UssWriteInputData build() {
             return new UssWriteInputData(this);

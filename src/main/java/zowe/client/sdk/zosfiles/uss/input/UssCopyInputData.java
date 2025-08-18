@@ -40,9 +40,9 @@ public class UssCopyInputData {
     private final boolean recursive;
 
     /**
-     * CopyParams constructor
+     * UssCopyInputData constructor
      *
-     * @param builder CopyParams.Builder builder
+     * @param builder UssCopyInputData.Builder builder
      * @author James Kostrewski
      */
     public UssCopyInputData(final UssCopyInputData.Builder builder) {
@@ -79,13 +79,13 @@ public class UssCopyInputData {
     }
 
     /**
-     * Return string value representing CopyParams object
+     * Return string value representing UssCopyInputData object
      *
-     * @return string representation of CopyParams
+     * @return string representation of UssCopyInputData
      */
     @Override
     public String toString() {
-        return "CopyParams{" +
+        return "UssCopyInputData{" +
                 "from=" + this.getFrom() +
                 ", overwrite=" + this.isOverwrite() +
                 ", recursive=" + this.isRecursive() +
@@ -93,7 +93,7 @@ public class UssCopyInputData {
     }
 
     /**
-     * Builder class for CopyParams
+     * Builder class for UssCopyInputData
      */
     public static class Builder {
 
@@ -155,9 +155,9 @@ public class UssCopyInputData {
         }
 
         /**
-         * Return CopyParams object based on Builder this object
+         * Return UssCopyInputData object based on Builder this object
          *
-         * @return CopyParams object
+         * @return UssCopyInputData object
          */
         public UssCopyInputData build() {
             return new UssCopyInputData(this);

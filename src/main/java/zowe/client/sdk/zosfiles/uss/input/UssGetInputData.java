@@ -79,9 +79,9 @@ public class UssGetInputData {
     private final String recordsRange;
 
     /**
-     * GetParams constructor
+     * UssGetInputData constructor
      *
-     * @param builder GetParams.Builder builder
+     * @param builder UssGetInputData.Builder builder
      * @author James Kostrewski
      */
     public UssGetInputData(final UssGetInputData.Builder builder) {
@@ -158,13 +158,13 @@ public class UssGetInputData {
     }
 
     /**
-     * Return string value representing GetParams object
+     * Return string value representing UssGetInputData object
      *
-     * @return string representation of GetParams
+     * @return string representation of UssGetInputData
      */
     @Override
     public String toString() {
-        return "GetParams{" +
+        return "UssGetInputData{" +
                 "search=" + search +
                 ", research=" + research +
                 ", insensitive=" + insensitive +
@@ -177,7 +177,7 @@ public class UssGetInputData {
     }
 
     /**
-     * Builder class for GetParams
+     * Builder class for UssGetInputData
      */
     public static class Builder {
 
@@ -319,9 +319,9 @@ public class UssGetInputData {
         }
 
         /**
-         * Return GetParams object based on Builder this object
+         * Return UssGetInputData object based on Builder this object
          *
-         * @return GetParams object
+         * @return UssGetInputData object
          */
         public UssGetInputData build() {
             return new UssGetInputData(this);

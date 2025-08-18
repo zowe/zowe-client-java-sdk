@@ -46,9 +46,9 @@ public class UssChangeOwnerInputData {
     private final LinkType links;
 
     /**
-     * ChangeOwnerParams constructor
+     * UssChangeOwnerInputData constructor
      *
-     * @param builder ChangeOwnerParams.Builder builder
+     * @param builder UssChangeOwnerInputData.Builder builder
      * @author James Kostrewski
      */
     public UssChangeOwnerInputData(final UssChangeOwnerInputData.Builder builder) {
@@ -95,13 +95,13 @@ public class UssChangeOwnerInputData {
     }
 
     /**
-     * Return string value representing ChangeOwnerParams object
+     * Return string value representing UssChangeOwnerInputData object
      *
-     * @return string representation of ChangeOwnerParams
+     * @return string representation of UssChangeOwnerInputData
      */
     @Override
     public String toString() {
-        return "ChangeOwnerParams{" +
+        return "UssChangeOwnerInputData{" +
                 "owner='" + owner + '\'' +
                 ", group=" + group +
                 ", recursive=" + recursive +
@@ -110,7 +110,7 @@ public class UssChangeOwnerInputData {
     }
 
     /**
-     * Builder class for ChangeOwnerParams
+     * Builder class for UssChangeOwnerInputData
      */
     public static class Builder {
 
@@ -188,9 +188,9 @@ public class UssChangeOwnerInputData {
         }
 
         /**
-         * Return ChangeOwnerParams object based on Builder this object
+         * Return UssChangeOwnerInputData object based on Builder this object
          *
-         * @return ChangeOwnerParams object
+         * @return UssChangeOwnerInputData object
          */
         public UssChangeOwnerInputData build() {
             return new UssChangeOwnerInputData(this);

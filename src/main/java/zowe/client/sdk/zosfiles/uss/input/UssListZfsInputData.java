@@ -44,9 +44,9 @@ public class UssListZfsInputData {
     private final String fsname;
 
     /**
-     * ListZfsParams constructor
+     * UssListZfsInputData constructor
      *
-     * @param builder ListZfsParams.Builder builder
+     * @param builder UssListZfsInputData.Builder builder
      * @author Frank Giordano
      */
     public UssListZfsInputData(final UssListZfsInputData.Builder builder) {
@@ -83,13 +83,13 @@ public class UssListZfsInputData {
     }
 
     /**
-     * Return string value representing ListZfsParams object
+     * Return string value representing UssListZfsInputData object
      *
-     * @return string representation of ListZfsParams
+     * @return string representation of UssListZfsInputData
      */
     @Override
     public String toString() {
-        return "ListZfsParams{" +
+        return "UssListZfsInputData{" +
                 "maxLength=" + maxLength +
                 ", path=" + path +
                 ", fsname=" + fsname +
@@ -97,7 +97,7 @@ public class UssListZfsInputData {
     }
 
     /**
-     * Builder class for ListZfsParams
+     * Builder class for UssListZfsInputData
      */
     public static class Builder {
 
@@ -170,9 +170,9 @@ public class UssListZfsInputData {
         }
 
         /**
-         * Return ListZfsParams object based on Builder this object
+         * Return UssListZfsInputData object based on Builder this object
          *
-         * @return ListZfsParams object
+         * @return UssListZfsInputData object
          */
         public UssListZfsInputData build() {
             return new UssListZfsInputData(this);

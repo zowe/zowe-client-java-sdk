@@ -50,7 +50,7 @@ public class UssCreateInputData {
     private final String mode;
 
     /**
-     * CreateParams constructor
+     * UssCreateInputData constructor
      *
      * @param type CreateType enum value
      * @param mode permission string value
@@ -82,13 +82,13 @@ public class UssCreateInputData {
     }
 
     /**
-     * Return string value representing CreateOptions object
+     * Return string value representing UssCreateInputData object
      *
-     * @return string representation of CreateOptions
+     * @return string representation of UssCreateInputData
      */
     @Override
     public String toString() {
-        return "CreateOptions{" +
+        return "UssCreateInputData{" +
                 "type=" + type +
                 ", mode=" + mode +
                 "}";

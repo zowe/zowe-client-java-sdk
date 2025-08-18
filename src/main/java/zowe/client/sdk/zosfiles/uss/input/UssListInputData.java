@@ -112,9 +112,9 @@ public class UssListInputData {
     public final boolean symlinks;
 
     /**
-     * ListParams constructor
+     * UssListInputData constructor
      *
-     * @param builder ListParams.Builder builder
+     * @param builder UssListInputData.Builder builder
      * @author Frank Giordano
      */
     public UssListInputData(final UssListInputData.Builder builder) {
@@ -241,13 +241,13 @@ public class UssListInputData {
     }
 
     /**
-     * Return string value representing ListParams object
+     * Return string value representing UssListInputData object
      *
-     * @return string representation of ListParams
+     * @return string representation of UssListInputData
      */
     @Override
     public String toString() {
-        return "ListParams{" +
+        return "UssListInputData{" +
                 "path=" + path +
                 ", maxLength=" + maxLength +
                 ", group=" + group +
@@ -264,7 +264,7 @@ public class UssListInputData {
     }
 
     /**
-     * Builder class for ListParams
+     * Builder class for UssListInputData
      */
     public static class Builder {
 
@@ -496,9 +496,9 @@ public class UssListInputData {
         }
 
         /**
-         * Return ListParams object based on Builder this object
+         * Return UssListInputData object based on Builder this object
          *
-         * @return ListParams object
+         * @return UssListInputData object
          */
         public UssListInputData build() {
             return new UssListInputData(this);
