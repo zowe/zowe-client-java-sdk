@@ -21,7 +21,7 @@ import java.util.OptionalInt;
  * @author Frank Giordano
  * @version 4.0
  */
-public class GetParams {
+public class UssGetInputData {
 
     /**
      * The file is searched for the first line that contains the string, without respect to case (by default).
@@ -84,7 +84,7 @@ public class GetParams {
      * @param builder GetParams.Builder builder
      * @author James Kostrewski
      */
-    public GetParams(final GetParams.Builder builder) {
+    public UssGetInputData(final UssGetInputData.Builder builder) {
         this.search = builder.search;
         this.research = builder.research;
         this.insensitive = builder.insensitive;
@@ -323,8 +323,8 @@ public class GetParams {
          *
          * @return GetParams object
          */
-        public GetParams build() {
-            return new GetParams(this);
+        public UssGetInputData build() {
+            return new UssGetInputData(this);
         }
 
     }

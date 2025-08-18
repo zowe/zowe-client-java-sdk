@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.dsn.input.CreateParams;
+import zowe.client.sdk.zosfiles.dsn.input.DsnCreateInputData;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -104,8 +104,8 @@ public class DsnCreateTest {
         assertEquals("https://1:1/zosmf/restfiles/ds/TEST.PDS", mockPostRequest.getUrl());
     }
 
-    public static CreateParams classic() {
-        return new CreateParams.Builder()
+    public static DsnCreateInputData classic() {
+        return new DsnCreateInputData.Builder()
                 .dsorg("PO")
                 .alcunit("CYL")
                 .primary(1)
@@ -117,8 +117,8 @@ public class DsnCreateTest {
                 .build();
     }
 
-    public static CreateParams partitioned() {
-        return new CreateParams.Builder()
+    public static DsnCreateInputData partitioned() {
+        return new DsnCreateInputData.Builder()
                 .dsorg("PO")
                 .alcunit("CYL")
                 .primary(1)
@@ -130,8 +130,8 @@ public class DsnCreateTest {
                 .build();
     }
 
-    public static CreateParams sequential() {
-        return new CreateParams.Builder()
+    public static DsnCreateInputData sequential() {
+        return new DsnCreateInputData.Builder()
                 .dsorg("PS")
                 .alcunit("CYL")
                 .primary(1)

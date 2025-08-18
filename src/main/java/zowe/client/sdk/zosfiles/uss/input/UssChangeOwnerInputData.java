@@ -22,7 +22,7 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 4.0
  */
-public class ChangeOwnerParams {
+public class UssChangeOwnerInputData {
 
     /**
      * The user ID or UID
@@ -51,7 +51,7 @@ public class ChangeOwnerParams {
      * @param builder ChangeOwnerParams.Builder builder
      * @author James Kostrewski
      */
-    public ChangeOwnerParams(final ChangeOwnerParams.Builder builder) {
+    public UssChangeOwnerInputData(final UssChangeOwnerInputData.Builder builder) {
         this.owner = builder.owner;
         this.group = builder.group;
         this.recursive = builder.recursive;
@@ -192,8 +192,8 @@ public class ChangeOwnerParams {
          *
          * @return ChangeOwnerParams object
          */
-        public ChangeOwnerParams build() {
-            return new ChangeOwnerParams(this);
+        public UssChangeOwnerInputData build() {
+            return new UssChangeOwnerInputData(this);
         }
 
     }

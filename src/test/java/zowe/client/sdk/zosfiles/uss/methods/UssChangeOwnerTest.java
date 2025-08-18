@@ -21,7 +21,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.uss.input.ChangeOwnerParams;
+import zowe.client.sdk.zosfiles.uss.input.UssChangeOwnerInputData;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -93,7 +93,7 @@ public class UssChangeOwnerTest {
     public void tstUssChangeOwnerRecursiveSuccess() throws ZosmfRequestException {
         final UssChangeOwner ussChangeOwner = new UssChangeOwner(connection, mockJsonPutRequest);
         final Response response = ussChangeOwner.changeCommon("/xxx/xx/xx",
-                new ChangeOwnerParams.Builder().owner("user").recursive(true).build());
+                new UssChangeOwnerInputData.Builder().owner("user").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
@@ -159,7 +159,7 @@ public class UssChangeOwnerTest {
     public void tstUssChangeOwnerNoOwnerSpecifiedInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeOwner.changeCommon("/xxx/xx/xx", new ChangeOwnerParams.Builder().build());
+            ussChangeOwner.changeCommon("/xxx/xx/xx", new UssChangeOwnerInputData.Builder().build());
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
@@ -170,7 +170,7 @@ public class UssChangeOwnerTest {
     public void tstUssChangeOwnerInvalidTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeOwner.changeCommon("name", new ChangeOwnerParams.Builder().build());
+            ussChangeOwner.changeCommon("name", new UssChangeOwnerInputData.Builder().build());
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }

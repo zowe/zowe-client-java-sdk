@@ -24,7 +24,7 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 4.0
  */
-public class ChangeTagParams {
+public class UssChangeTagInputData {
 
     /**
      * The file tag action.
@@ -66,7 +66,7 @@ public class ChangeTagParams {
      * @param builder Builder builder
      * @author James Kostrewski
      */
-    public ChangeTagParams(final Builder builder) {
+    public UssChangeTagInputData(final Builder builder) {
         this.action = builder.action;
         this.type = builder.type;
         this.codeset = builder.codeset;
@@ -241,8 +241,8 @@ public class ChangeTagParams {
          *
          * @return ChangeTagParams this object
          */
-        public ChangeTagParams build() {
-            return new ChangeTagParams(this);
+        public UssChangeTagInputData build() {
+            return new UssChangeTagInputData(this);
         }
 
     }

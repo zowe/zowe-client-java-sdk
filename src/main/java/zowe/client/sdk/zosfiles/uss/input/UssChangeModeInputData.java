@@ -22,7 +22,7 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 4.0
  */
-public class ChangeModeParams {
+public class UssChangeModeInputData {
 
     /**
      * The mode value, which is specified as the POSIX symbolic form or octal value (as a JSON string).
@@ -48,7 +48,7 @@ public class ChangeModeParams {
      * @param builder ChangeModeParams.Builder builder
      * @author James Kostrewski
      */
-    public ChangeModeParams(final ChangeModeParams.Builder builder) {
+    public UssChangeModeInputData(final UssChangeModeInputData.Builder builder) {
         this.mode = builder.mode;
         this.recursive = builder.recursive;
         this.links = builder.links;
@@ -164,8 +164,8 @@ public class ChangeModeParams {
          *
          * @return ChangeModeParams object
          */
-        public ChangeModeParams build() {
-            return new ChangeModeParams(this);
+        public UssChangeModeInputData build() {
+            return new UssChangeModeInputData(this);
         }
 
     }

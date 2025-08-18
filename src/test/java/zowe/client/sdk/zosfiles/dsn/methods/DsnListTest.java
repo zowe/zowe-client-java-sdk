@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.dsn.input.ListParams;
+import zowe.client.sdk.zosfiles.dsn.input.DsnListInputData;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -65,7 +65,7 @@ public class DsnListTest {
     @Test
     public void tstDsnListSuccess() throws ZosmfRequestException {
         final DsnList dsnList = new DsnList(connection, mockGetRequest);
-        final ListParams params = new ListParams.Builder().responseTimeout("10").volume("vol1").build();
+        final DsnListInputData params = new DsnListInputData.Builder().responseTimeout("10").volume("vol1").build();
         dsnList.getMembers("TEST.DATASET", params);
         assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET/member", mockGetRequest.getUrl());
     }
@@ -73,7 +73,7 @@ public class DsnListTest {
     @Test
     public void tstDsnListTokenSuccess() throws ZosmfRequestException {
         final DsnList dsnList = new DsnList(connection, mockGetRequestToken);
-        final ListParams params = new ListParams.Builder().responseTimeout("10").volume("vol1").build();
+        final DsnListInputData params = new DsnListInputData.Builder().responseTimeout("10").volume("vol1").build();
         dsnList.getMembers("TEST.DATASET", params);
         assertEquals("{X-IBM-Max-Items=0, Accept-Encoding=gzip, X-IBM-Response-Timeout=10, " +
                         "X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",

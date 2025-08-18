@@ -23,7 +23,7 @@ import java.util.OptionalInt;
  * @author Frank Giordano
  * @version 4.0
  */
-public class ListParams {
+public class UssListInputData {
 
     /**
      * This parameter identifies the UNIX directory that contains the files and directories to be listed.
@@ -117,7 +117,7 @@ public class ListParams {
      * @param builder ListParams.Builder builder
      * @author Frank Giordano
      */
-    public ListParams(final ListParams.Builder builder) {
+    public UssListInputData(final UssListInputData.Builder builder) {
         this.path = builder.path;
         this.maxLength = builder.maxLength;
         this.group = builder.group;
@@ -402,7 +402,7 @@ public class ListParams {
          * @param user string value
          * @return Builder this object
          */
-        public ListParams.Builder user(final String user) {
+        public UssListInputData.Builder user(final String user) {
             this.user = user;
             return this;
         }
@@ -500,8 +500,8 @@ public class ListParams {
          *
          * @return ListParams object
          */
-        public ListParams build() {
-            return new ListParams(this);
+        public UssListInputData build() {
+            return new UssListInputData(this);
         }
 
     }

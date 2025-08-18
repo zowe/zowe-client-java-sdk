@@ -23,7 +23,7 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 4.0
  */
-public class SetAclParams {
+public class UssSetAclInputData {
 
     /**
      * The default is false. When true, aborts processing if an error or warning occurs.
@@ -86,7 +86,7 @@ public class SetAclParams {
      *
      * @param builder SetAclParams.Builder builder
      */
-    public SetAclParams(final SetAclParams.Builder builder) {
+    public UssSetAclInputData(final UssSetAclInputData.Builder builder) {
         this.abort = builder.abort;
         this.links = builder.links;
         this.deleteType = builder.deleteType;
@@ -233,7 +233,7 @@ public class SetAclParams {
          * @param abort abort value
          * @return SetAclParams.Builder
          */
-        public SetAclParams.Builder setAbort(final boolean abort) {
+        public UssSetAclInputData.Builder setAbort(final boolean abort) {
             this.abort = abort;
             return this;
         }
@@ -244,7 +244,7 @@ public class SetAclParams {
          * @param links links value
          * @return SetAclParams.Builder
          */
-        public SetAclParams.Builder setLinks(final LinkType links) {
+        public UssSetAclInputData.Builder setLinks(final LinkType links) {
             this.links = links;
             return this;
         }
@@ -255,7 +255,7 @@ public class SetAclParams {
          * @param deleteType deleteType value
          * @return SetAclParams.Builder
          */
-        public SetAclParams.Builder setDeleteType(final DeleteAclType deleteType) {
+        public UssSetAclInputData.Builder setDeleteType(final DeleteAclType deleteType) {
             ValidateUtils.checkNullParameter(deleteType == null, "deleteType is null");
             this.deleteType = deleteType;
             return this;
@@ -267,7 +267,7 @@ public class SetAclParams {
          * @param set set value
          * @return SetAclParams.Builder
          */
-        public SetAclParams.Builder setSet(final String set) {
+        public UssSetAclInputData.Builder setSet(final String set) {
             ValidateUtils.checkNullParameter(set == null, "set is null");
             ValidateUtils.checkIllegalParameter(set.isBlank(), "set not specified");
             this.set = set;
@@ -280,7 +280,7 @@ public class SetAclParams {
          * @param modify modify value
          * @return SetAclParams.Builder
          */
-        public SetAclParams.Builder setModify(final String modify) {
+        public UssSetAclInputData.Builder setModify(final String modify) {
             ValidateUtils.checkNullParameter(modify == null, "modify is null");
             ValidateUtils.checkIllegalParameter(modify.isBlank(), "modify not specified");
             this.modify = modify;
@@ -293,7 +293,7 @@ public class SetAclParams {
          * @param delete delete value
          * @return SetAclParams.Builder
          */
-        public SetAclParams.Builder setDelete(final String delete) {
+        public UssSetAclInputData.Builder setDelete(final String delete) {
             ValidateUtils.checkNullParameter(delete == null, "delete is null");
             ValidateUtils.checkIllegalParameter(delete.isBlank(), "delete not specified");
             this.delete = delete;
@@ -305,8 +305,8 @@ public class SetAclParams {
          *
          * @return SetAclParams
          */
-        public SetAclParams build() {
-            return new SetAclParams(this);
+        public UssSetAclInputData build() {
+            return new UssSetAclInputData(this);
         }
 
     }

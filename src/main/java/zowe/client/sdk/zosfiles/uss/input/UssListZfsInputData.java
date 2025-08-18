@@ -22,7 +22,7 @@ import java.util.OptionalInt;
  * @author Frank Giordano
  * @version 4.0
  */
-public class ListZfsParams {
+public class UssListZfsInputData {
 
     /**
      * The indicator that we want to show fewer files
@@ -49,7 +49,7 @@ public class ListZfsParams {
      * @param builder ListZfsParams.Builder builder
      * @author Frank Giordano
      */
-    public ListZfsParams(final ListZfsParams.Builder builder) {
+    public UssListZfsInputData(final UssListZfsInputData.Builder builder) {
         this.maxLength = builder.maxLength;
         this.path = builder.path;
         this.fsname = builder.fsname;
@@ -174,8 +174,8 @@ public class ListZfsParams {
          *
          * @return ListZfsParams object
          */
-        public ListZfsParams build() {
-            return new ListZfsParams(this);
+        public UssListZfsInputData build() {
+            return new UssListZfsInputData(this);
         }
 
     }

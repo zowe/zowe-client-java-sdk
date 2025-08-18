@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosfiles.uss;
 
 import org.junit.Test;
-import zowe.client.sdk.zosfiles.uss.input.CreateZfsParams;
+import zowe.client.sdk.zosfiles.uss.input.UssCreateZfsInputData;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -25,7 +25,7 @@ public class CreateZfsParamsTest {
 
     @Test
     public void tstCreateZfsParamsValueCheckSuccess() {
-        CreateZfsParams createZfsParams = new CreateZfsParams.Builder(10).build();
+        UssCreateZfsInputData createZfsParams = new UssCreateZfsInputData.Builder(10).build();
         assertEquals(10, createZfsParams.getCylsPri().getAsInt());
     }
 
@@ -33,7 +33,7 @@ public class CreateZfsParamsTest {
     public void tstCreateZfsParamsNullValueFailure() {
         boolean isException = false;
         try {
-            new CreateZfsParams.Builder(null).build();
+            new UssCreateZfsInputData.Builder(null).build();
         } catch (Exception e) {
             isException = true;
         }
@@ -44,7 +44,7 @@ public class CreateZfsParamsTest {
     public void tstCreateZfsParamsNullValueMessageFailure() {
         String errMsg = null;
         try {
-            new CreateZfsParams.Builder(null).build();
+            new UssCreateZfsInputData.Builder(null).build();
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -55,7 +55,7 @@ public class CreateZfsParamsTest {
     public void tstCreateZfsParamsZeroValueMessageFailure() {
         String errMsg = null;
         try {
-            new CreateZfsParams.Builder(0).build();
+            new UssCreateZfsInputData.Builder(0).build();
         } catch (Exception e) {
             errMsg = e.getMessage();
         }
@@ -66,7 +66,7 @@ public class CreateZfsParamsTest {
     public void tstCreateZfsParamsNegativeValueMessageFailure() {
         String errMsg = null;
         try {
-            new CreateZfsParams.Builder(-1).build();
+            new UssCreateZfsInputData.Builder(-1).build();
         } catch (Exception e) {
             errMsg = e.getMessage();
         }

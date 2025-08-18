@@ -21,8 +21,8 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.CreateParams;
-import zowe.client.sdk.zosfiles.uss.input.CreateZfsParams;
+import zowe.client.sdk.zosfiles.uss.input.UssCreateInputData;
+import zowe.client.sdk.zosfiles.uss.input.UssCreateZfsInputData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -84,7 +84,7 @@ public class UssCreate {
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response create(final String targetPath, final CreateParams params) throws ZosmfRequestException {
+    public Response create(final String targetPath, final UssCreateInputData params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 
@@ -115,7 +115,7 @@ public class UssCreate {
      * @author Frank Giordano
      */
     public Response createZfs(String fileSystemName) throws ZosmfRequestException {
-        return createZfsCommon(fileSystemName, new CreateZfsParams.Builder(10).cylsSec(2).timeout(20).build());
+        return createZfsCommon(fileSystemName, new UssCreateZfsInputData.Builder(10).cylsSec(2).timeout(20).build());
     }
 
     /**
@@ -127,7 +127,7 @@ public class UssCreate {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response createZfsCommon(String fileSystemName, CreateZfsParams params) throws ZosmfRequestException {
+    public Response createZfsCommon(String fileSystemName, UssCreateZfsInputData params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileSystemName, "fileSystemName");
         ValidateUtils.checkNullParameter(params == null, "params is null");
 

@@ -21,7 +21,7 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.SetAclParams;
+import zowe.client.sdk.zosfiles.uss.input.UssSetAclInputData;
 import zowe.client.sdk.zosfiles.uss.types.DeleteAclType;
 
 import java.util.HashMap;
@@ -79,7 +79,7 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     public Response set(final String targetPath, final String value) throws ZosmfRequestException {
-        return setAclCommon(targetPath, new SetAclParams.Builder().setSet(value).build());
+        return setAclCommon(targetPath, new UssSetAclInputData.Builder().setSet(value).build());
     }
 
     /**
@@ -92,7 +92,7 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     public Response modify(final String targetPath, final String value) throws ZosmfRequestException {
-        return setAclCommon(targetPath, new SetAclParams.Builder().setModify(value).build());
+        return setAclCommon(targetPath, new UssSetAclInputData.Builder().setModify(value).build());
     }
 
     /**
@@ -105,7 +105,7 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     public Response delete(final String targetPath, final String value) throws ZosmfRequestException {
-        return setAclCommon(targetPath, new SetAclParams.Builder().setDelete(value).build());
+        return setAclCommon(targetPath, new UssSetAclInputData.Builder().setDelete(value).build());
     }
 
     /**
@@ -118,7 +118,7 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     public Response deleteByType(final String targetPath, final DeleteAclType deleteType) throws ZosmfRequestException {
-        return setAclCommon(targetPath, new SetAclParams.Builder().setDeleteType(deleteType).build());
+        return setAclCommon(targetPath, new UssSetAclInputData.Builder().setDeleteType(deleteType).build());
     }
 
     /**
@@ -130,7 +130,7 @@ public class UssSetAcl {
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response setAclCommon(final String targetPath, final SetAclParams params) throws ZosmfRequestException {
+    public Response setAclCommon(final String targetPath, final UssSetAclInputData params) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "fromPath");
         ValidateUtils.checkNullParameter(params == null, "params is null");
         ValidateUtils.checkIllegalParameter(

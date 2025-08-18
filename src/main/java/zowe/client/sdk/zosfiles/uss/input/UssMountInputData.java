@@ -24,7 +24,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 4.0
  */
-public class MountParams {
+public class UssMountInputData {
 
     /**
      * Specifies the action mount to mount a UNIX file system.
@@ -54,7 +54,7 @@ public class MountParams {
      * @param builder MountParams.Builder builder
      * @author Frank Giordano
      */
-    public MountParams(final MountParams.Builder builder) {
+    public UssMountInputData(final UssMountInputData.Builder builder) {
         this.action = builder.action;
         this.mountPoint = builder.mountPoint;
         this.fsType = builder.fsType;
@@ -198,8 +198,8 @@ public class MountParams {
          *
          * @return MountParams object
          */
-        public MountParams build() {
-            return new MountParams(this);
+        public UssMountInputData build() {
+            return new UssMountInputData(this);
         }
 
     }

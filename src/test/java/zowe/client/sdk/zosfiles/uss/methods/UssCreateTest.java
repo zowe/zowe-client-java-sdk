@@ -20,8 +20,8 @@ import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.uss.input.CreateParams;
-import zowe.client.sdk.zosfiles.uss.input.CreateZfsParams;
+import zowe.client.sdk.zosfiles.uss.input.UssCreateInputData;
+import zowe.client.sdk.zosfiles.uss.input.UssCreateZfsInputData;
 import zowe.client.sdk.zosfiles.uss.types.CreateType;
 
 import static org.junit.Assert.assertEquals;
@@ -73,7 +73,7 @@ public class UssCreateTest {
     @Test
     public void tstUssCreateSuccess() throws ZosmfRequestException {
         final UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequest);
-        final Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+        final Response response = ussCreate.create("/xx/xx/x", new UssCreateInputData(CreateType.FILE, "rwxrwxrwx"));
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
@@ -83,7 +83,7 @@ public class UssCreateTest {
     @Test
     public void tstUssCreateToggleTokenSuccess() throws ZosmfRequestException {
         final UssCreate ussCreate = new UssCreate(connection, mockJsonPostRequestToken);
-        Response response = ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+        Response response = ussCreate.create("/xx/xx/x", new UssCreateInputData(CreateType.FILE, "rwxrwxrwx"));
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonPostRequestToken.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -96,7 +96,7 @@ public class UssCreateTest {
     public void tstUssCreateInvalidTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCreate.create("name", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+            ussCreate.create("name", new UssCreateInputData(CreateType.FILE, "rwxrwxrwx"));
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
@@ -107,7 +107,7 @@ public class UssCreateTest {
     public void tstUssCreateNullTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCreate.create(null, new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+            ussCreate.create(null, new UssCreateInputData(CreateType.FILE, "rwxrwxrwx"));
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -118,7 +118,7 @@ public class UssCreateTest {
     public void tstUssCreateEmptyTargetPathFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCreate.create("", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+            ussCreate.create("", new UssCreateInputData(CreateType.FILE, "rwxrwxrwx"));
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -129,7 +129,7 @@ public class UssCreateTest {
     public void tstUssCreateEmptyTargetPathWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCreate.create("  ", new CreateParams(CreateType.FILE, "rwxrwxrwx"));
+            ussCreate.create("  ", new UssCreateInputData(CreateType.FILE, "rwxrwxrwx"));
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -151,7 +151,7 @@ public class UssCreateTest {
     public void tstUssCreateNullTypeInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCreate.create("/xx/xx/x", new CreateParams(null, "rwxrwxrwx"));
+            ussCreate.create("/xx/xx/x", new UssCreateInputData(null, "rwxrwxrwx"));
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
@@ -162,7 +162,7 @@ public class UssCreateTest {
     public void tstUssCreateNullModeInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, null));
+            ussCreate.create("/xx/xx/x", new UssCreateInputData(CreateType.FILE, null));
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
@@ -173,7 +173,7 @@ public class UssCreateTest {
     public void tstUssCreateEmptyModeInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, ""));
+            ussCreate.create("/xx/xx/x", new UssCreateInputData(CreateType.FILE, ""));
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -184,7 +184,7 @@ public class UssCreateTest {
     public void tstUssCreateEmptyModeInParamsWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "  "));
+            ussCreate.create("/xx/xx/x", new UssCreateInputData(CreateType.FILE, "  "));
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -195,7 +195,7 @@ public class UssCreateTest {
     public void tstUssCreateInvalidModeWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCreate.create("/xx/xx/x", new CreateParams(CreateType.FILE, "rwxrwxrwf"));
+            ussCreate.create("/xx/xx/x", new UssCreateInputData(CreateType.FILE, "rwxrwxrwf"));
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
@@ -207,7 +207,7 @@ public class UssCreateTest {
     public void tstUssCreateZfsCommonNullCylsPriFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCreate.createZfsCommon("xx.xx.x", new CreateZfsParams.Builder(null).build());
+            ussCreate.createZfsCommon("xx.xx.x", new UssCreateZfsInputData.Builder(null).build());
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
@@ -218,7 +218,7 @@ public class UssCreateTest {
     public void tstUssCreateZfsCommonZeroCylsPriFailure2() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCreate.createZfsCommon("xx.xx.x", new CreateZfsParams.Builder(0).build());
+            ussCreate.createZfsCommon("xx.xx.x", new UssCreateZfsInputData.Builder(0).build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -229,7 +229,7 @@ public class UssCreateTest {
     public void tstUssCreateZfsCommonNullFileSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCreate.createZfsCommon(null, new CreateZfsParams.Builder(2).build());
+            ussCreate.createZfsCommon(null, new UssCreateZfsInputData.Builder(2).build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -240,7 +240,7 @@ public class UssCreateTest {
     public void tstUssCreateZfsCommonEmptyFileSystemNameFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussCreate.createZfsCommon("", new CreateZfsParams.Builder(2).build());
+            ussCreate.createZfsCommon("", new UssCreateZfsInputData.Builder(2).build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }

@@ -24,7 +24,7 @@ import java.util.OptionalInt;
  * @author Frank Giordano
  * @version 4.0
  */
-public class CreateZfsParams {
+public class UssCreateZfsInputData {
 
     /**
      * The z/OS user ID or UID for the owner of the ZFS root directory.
@@ -112,7 +112,7 @@ public class CreateZfsParams {
      * @param builder CreateZfsParams.Builder object
      * @author Frank Giordano
      */
-    private CreateZfsParams(final CreateZfsParams.Builder builder) {
+    private UssCreateZfsInputData(final UssCreateZfsInputData.Builder builder) {
         this.owner = builder.owner;
         this.group = builder.group;
         this.perms = builder.perms;
@@ -458,8 +458,8 @@ public class CreateZfsParams {
          *
          * @return CreateZfsParams object
          */
-        public CreateZfsParams build() {
-            return new CreateZfsParams(this);
+        public UssCreateZfsInputData build() {
+            return new UssCreateZfsInputData(this);
         }
 
     }

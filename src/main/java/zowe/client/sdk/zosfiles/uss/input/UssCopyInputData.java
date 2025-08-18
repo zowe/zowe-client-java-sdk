@@ -21,7 +21,7 @@ import java.util.Optional;
  * @author James Kostrewski
  * @version 4.0
  */
-public class CopyParams {
+public class UssCopyInputData {
 
     /**
      * The file or directory to be copied. May not be specified with 'from-dataset'.
@@ -45,7 +45,7 @@ public class CopyParams {
      * @param builder CopyParams.Builder builder
      * @author James Kostrewski
      */
-    public CopyParams(final CopyParams.Builder builder) {
+    public UssCopyInputData(final UssCopyInputData.Builder builder) {
         this.from = builder.from;
         this.overwrite = builder.overwrite;
         this.recursive = builder.recursive;
@@ -159,8 +159,8 @@ public class CopyParams {
          *
          * @return CopyParams object
          */
-        public CopyParams build() {
-            return new CopyParams(this);
+        public UssCopyInputData build() {
+            return new UssCopyInputData(this);
         }
 
     }

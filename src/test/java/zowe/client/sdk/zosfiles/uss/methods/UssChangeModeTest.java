@@ -21,7 +21,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosfiles.uss.input.ChangeModeParams;
+import zowe.client.sdk.zosfiles.uss.input.UssChangeModeInputData;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -69,7 +69,7 @@ public class UssChangeModeTest {
     public void tstUssChangeModeSuccess() throws ZosmfRequestException {
         final UssChangeMode ussChangeMode = new UssChangeMode(connection, mockJsonPutRequest);
         final Response response = ussChangeMode.change("/xxx/xx/xx",
-                new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
+                new UssChangeModeInputData.Builder().mode("rwxrwxrwx").build());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
@@ -80,7 +80,7 @@ public class UssChangeModeTest {
     public void tstUssChangeModeToggleTokenSuccess() throws ZosmfRequestException {
         final UssChangeMode ussChangeMode = new UssChangeMode(tokenConnection, mockJsonPutRequestToken);
         Response response = ussChangeMode.change("/xxx/xx/xx",
-                new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
+                new UssChangeModeInputData.Builder().mode("rwxrwxrwx").build());
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonPutRequestToken.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -93,7 +93,7 @@ public class UssChangeModeTest {
     public void tstUssChangeModeWithRecursiveInParamsSuccess() throws ZosmfRequestException {
         final UssChangeMode ussChangeMode = new UssChangeMode(connection, mockJsonPutRequest);
         final Response response = ussChangeMode.change("/xxx/xx/xx",
-                new ChangeModeParams.Builder().mode("rwxrwxrwx").recursive(true).build());
+                new UssChangeModeInputData.Builder().mode("rwxrwxrwx").recursive(true).build());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
@@ -103,7 +103,7 @@ public class UssChangeModeTest {
     public void tstUssChangeModeInvalidTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeMode.change("name", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
+            ussChangeMode.change("name", new UssChangeModeInputData.Builder().mode("rwxrwxrwx").build());
         } catch (IllegalStateException e) {
             errMsg = e.getMessage();
         }
@@ -114,7 +114,7 @@ public class UssChangeModeTest {
     public void tstUssChangeModeNullTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeMode.change(null, new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
+            ussChangeMode.change(null, new UssChangeModeInputData.Builder().mode("rwxrwxrwx").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -125,7 +125,7 @@ public class UssChangeModeTest {
     public void tstUssChangeModeEmptyTargetPathWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeMode.change("", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
+            ussChangeMode.change("", new UssChangeModeInputData.Builder().mode("rwxrwxrwx").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -136,7 +136,7 @@ public class UssChangeModeTest {
     public void tstUssChangeModeEmptyTargetPathWithSpacesWithParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeMode.change("  ", new ChangeModeParams.Builder().mode("rwxrwxrwx").build());
+            ussChangeMode.change("  ", new UssChangeModeInputData.Builder().mode("rwxrwxrwx").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -147,7 +147,7 @@ public class UssChangeModeTest {
     public void tstUssChangeModeNullModeInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode(null).build());
+            ussChangeMode.change("/xxx/xx/xx", new UssChangeModeInputData.Builder().mode(null).build());
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
@@ -158,7 +158,7 @@ public class UssChangeModeTest {
     public void tstUssChangeModeEmptyModeInParamsFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("").build());
+            ussChangeMode.change("/xxx/xx/xx", new UssChangeModeInputData.Builder().mode("").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
@@ -169,7 +169,7 @@ public class UssChangeModeTest {
     public void tstUssChangeModeEmptyModeInParamsWithSpacesFailure() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussChangeMode.change("/xxx/xx/xx", new ChangeModeParams.Builder().mode("  ").build());
+            ussChangeMode.change("/xxx/xx/xx", new UssChangeModeInputData.Builder().mode("  ").build());
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
