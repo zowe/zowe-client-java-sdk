@@ -49,9 +49,9 @@ public class UssMountInputData {
     private final MountModeType mode;
 
     /**
-     * MountParams constructor
+     * UssMountInputData constructor
      *
-     * @param builder MountParams.Builder builder
+     * @param builder UssMountInputData.Builder builder
      * @author Frank Giordano
      */
     public UssMountInputData(final UssMountInputData.Builder builder) {
@@ -98,13 +98,13 @@ public class UssMountInputData {
     }
 
     /**
-     * Return string value representing MountParams object
+     * Return string value representing UssMountInputData object
      *
-     * @return string representation of MountParams
+     * @return string representation of UssMountInputData
      */
     @Override
     public String toString() {
-        return "MountParams{" +
+        return "UssMountInputData{" +
                 "action=" + action +
                 ", mountPoint=" + mountPoint +
                 ", fsType=" + fsType +
@@ -113,7 +113,7 @@ public class UssMountInputData {
     }
 
     /**
-     * Builder class for MountParams
+     * Builder class for UssMountInputData
      */
     public static class Builder {
 
@@ -194,9 +194,9 @@ public class UssMountInputData {
         }
 
         /**
-         * Return MountParams object based on Builder this object
+         * Return UssMountInputData object based on Builder this object
          *
-         * @return MountParams object
+         * @return UssMountInputData object
          */
         public UssMountInputData build() {
             return new UssMountInputData(this);

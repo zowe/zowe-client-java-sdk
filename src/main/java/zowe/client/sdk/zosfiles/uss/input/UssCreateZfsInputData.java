@@ -107,9 +107,9 @@ public class UssCreateZfsInputData {
     private final String system;
 
     /**
-     * CreateZfsParams constructor
+     * UssCreateZfsInputData constructor
      *
-     * @param builder CreateZfsParams.Builder object
+     * @param builder UssCreateZfsInputData.Builder object
      * @author Frank Giordano
      */
     private UssCreateZfsInputData(final UssCreateZfsInputData.Builder builder) {
@@ -226,13 +226,13 @@ public class UssCreateZfsInputData {
     }
 
     /**
-     * Return string value representing CreateZfsParams object
+     * Return string value representing UssCreateZfsInputData object
      *
-     * @return string representation of CreateZfsParams
+     * @return string representation of UssCreateZfsInputData
      */
     @Override
     public String toString() {
-        return "CreateZfsParams{" +
+        return "UssCreateZfsInputData{" +
                 "owner=" + owner +
                 ", group=" + group +
                 ", perms=" + perms +
@@ -454,9 +454,9 @@ public class UssCreateZfsInputData {
         }
 
         /**
-         * Return CreateZfsParams object based on Builder this object
+         * Return UssCreateZfsInputData object based on Builder this object
          *
-         * @return CreateZfsParams object
+         * @return UssCreateZfsInputData object
          */
         public UssCreateZfsInputData build() {
             return new UssCreateZfsInputData(this);

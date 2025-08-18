@@ -26,7 +26,7 @@ public class DsnZosFilesInputData {
     private final String responseTimeout;
 
     /**
-     * ZosFilesParams constructor
+     * DsnZosFilesInputData constructor
      *
      * @param responseTimeout response time out value
      * @author Leonid Baranov
@@ -45,13 +45,13 @@ public class DsnZosFilesInputData {
     }
 
     /**
-     * Return string value representing a ZosFilesParams object
+     * Return string value representing a DsnZosFilesInputData object
      *
-     * @return string representation of ZosFilesParams
+     * @return string representation of DsnZosFilesInputData
      */
     @Override
     public String toString() {
-        return "ZosFilesParams{" +
+        return "DsnZosFilesInputData{" +
                 "responseTimeout=" + responseTimeout +
                 '}';
     }

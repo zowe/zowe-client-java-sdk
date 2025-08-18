@@ -43,9 +43,9 @@ public class UssChangeModeInputData {
     private final LinkType links;
 
     /**
-     * ChangeModeParams constructor
+     * UssChangeModeInputData constructor
      *
-     * @param builder ChangeModeParams.Builder builder
+     * @param builder UssChangeModeInputData.Builder builder
      * @author James Kostrewski
      */
     public UssChangeModeInputData(final UssChangeModeInputData.Builder builder) {
@@ -82,13 +82,13 @@ public class UssChangeModeInputData {
     }
 
     /**
-     * Return string value representing ChangeModeParams object
+     * Return string value representing UssChangeModeInputData object
      *
-     * @return string representation of ChangeModeParams
+     * @return string representation of UssChangeModeInputData
      */
     @Override
     public String toString() {
-        return "ChangeModeParams{" +
+        return "UssChangeModeInputData{" +
                 "mode=" + mode +
                 ", recursive=" + recursive +
                 ", links=" + links +
@@ -96,7 +96,7 @@ public class UssChangeModeInputData {
     }
 
     /**
-     * Builder class for ChangeModeParams
+     * Builder class for UssChangeModeInputData
      */
     public static class Builder {
 
@@ -160,9 +160,9 @@ public class UssChangeModeInputData {
         }
 
         /**
-         * Return ChangeModeParams object based on Builder this object
+         * Return UssChangeModeInputData object based on Builder this object
          *
-         * @return ChangeModeParams object
+         * @return UssChangeModeInputData object
          */
         public UssChangeModeInputData build() {
             return new UssChangeModeInputData(this);

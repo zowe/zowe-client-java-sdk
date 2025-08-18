@@ -56,9 +56,9 @@ public class UssGetAclInputData {
     private final boolean suppressBaseAcl;
 
     /**
-     * GetAclParams constructor
+     * UssGetAclInputData constructor
      *
-     * @param builder GetAclParams.Builder builder
+     * @param builder UssGetAclInputData.Builder builder
      * @author James Kostrewski
      */
     public UssGetAclInputData(final UssGetAclInputData.Builder builder) {
@@ -115,13 +115,13 @@ public class UssGetAclInputData {
     }
 
     /**
-     * Return string value representing GetAclParams object
+     * Return string value representing UssGetAclInputData object
      *
-     * @return string representation of GetAclParams
+     * @return string representation of UssGetAclInputData
      */
     @Override
     public String toString() {
-        return "GetAclParams{" +
+        return "UssGetAclInputData{" +
                 "type=" + type +
                 ", user=" + user +
                 ", useCommas=" + useCommas +
@@ -131,7 +131,7 @@ public class UssGetAclInputData {
     }
 
     /**
-     * Builder class for GetAclParams
+     * Builder class for UssGetAclInputData
      */
     public static class Builder {
 
@@ -230,9 +230,9 @@ public class UssGetAclInputData {
         }
 
         /**
-         * Return GetAclParams object based on Builder this object
+         * Return UssGetAclInputData object based on Builder this object
          *
-         * @return GetAclParams object
+         * @return UssGetAclInputData object
          */
         public UssGetAclInputData build() {
             return new UssGetAclInputData(this);

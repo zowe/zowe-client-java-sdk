@@ -51,7 +51,7 @@ public class JobSubmitJclInputData {
     private Map<String, String> jclSymbols;
 
     /**
-     * SubmitJclParams constructor
+     * JobSubmitJclInputData constructor
      *
      * @param jcl                 syntactically correct JCL
      * @param internalReaderRecfm internal reader RECFM
@@ -65,7 +65,7 @@ public class JobSubmitJclInputData {
     }
 
     /**
-     * SubmitJclParams constructor with Jcl Symbols
+     * JobSubmitJclInputData constructor with Jcl Symbols
      *
      * @param jcl                 syntactically correct JCL
      * @param internalReaderRecfm internal reader RECFM
@@ -158,13 +158,13 @@ public class JobSubmitJclInputData {
     }
 
     /**
-     * Return string value representing SubmitJclParams object
+     * Return string value representing JobSubmitJclInputData object
      *
-     * @return string representation of SubmitJclParams
+     * @return string representation of JobSubmitJclInputData
      */
     @Override
     public String toString() {
-        return "SubmitJclParams{" +
+        return "JobSubmitJclInputData{" +
                 "jcl=" + jcl +
                 ", internalReaderRecfm=" + internalReaderRecfm +
                 ", internalReaderLrecl=" + internalReaderLrecl +

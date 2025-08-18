@@ -106,12 +106,12 @@ public class DsnDownloadInputData {
     private final String responseTimeout;
 
     /**
-     * DownloadParams constructor
+     * DsnDownloadInputData constructor
      *
-     * @param builder Builder object
+     * @param builder DsnDownloadInputData.Builder object
      * @author Nikunj Goyal
      */
-    private DsnDownloadInputData(final Builder builder) {
+    private DsnDownloadInputData(final DsnDownloadInputData.Builder builder) {
         this.file = builder.file;
         this.extension = builder.extension;
         this.directory = builder.directory;
@@ -255,13 +255,13 @@ public class DsnDownloadInputData {
     }
 
     /**
-     * Return string value representing DownloadOptions object
+     * Return string value representing DsnDownloadInputData object
      *
-     * @return string representation of DownloadOptions
+     * @return string representation of DsnDownloadInputData
      */
     @Override
     public String toString() {
-        return "DownloadOptions{" +
+        return "DsnDownloadInputData{" +
                 "file=" + file +
                 ", extension=" + extension +
                 ", directory=" + directory +
@@ -529,9 +529,9 @@ public class DsnDownloadInputData {
         }
 
         /**
-         * Return DownloadParams object based on Builder this object
+         * Return DsnDownloadInputData object based on Builder this object
          *
-         * @return DownloadParams this object
+         * @return DsnDownloadInputData this object
          */
         public DsnDownloadInputData build() {
             return new DsnDownloadInputData(this);

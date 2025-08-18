@@ -45,12 +45,12 @@ public class JobGetInputData {
     private final String jobId;
 
     /**
-     * GetJobParams constructor
+     * JobGetInputData constructor
      *
-     * @param builder GetJobParams.Builder object
+     * @param builder JobGetInputData.Builder object
      * @author Frank Giordano
      */
-    private JobGetInputData(final Builder builder) {
+    private JobGetInputData(final JobGetInputData.Builder builder) {
         this.owner = builder.owner;
         this.prefix = builder.prefix;
         this.maxJobs = builder.maxJobs;
@@ -94,13 +94,13 @@ public class JobGetInputData {
     }
 
     /**
-     * Return string value representing a GetJobParams object
+     * Return string value representing a JobGetInputData object
      *
-     * @return string representation of GetJobParams
+     * @return string representation of JobGetInputData
      */
     @Override
     public String toString() {
-        return "GetJobParams{" +
+        return "JobGetInputData{" +
                 "owner=" + owner +
                 ", prefix=" + prefix +
                 ", maxJobs=" + maxJobs +
@@ -109,7 +109,7 @@ public class JobGetInputData {
     }
 
     /**
-     * Builder class for GetJobParams
+     * Builder class for JobGetInputData
      */
     public static class Builder {
 

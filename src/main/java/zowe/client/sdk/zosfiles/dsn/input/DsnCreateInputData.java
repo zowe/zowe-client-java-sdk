@@ -115,12 +115,12 @@ public class DsnCreateInputData {
     private final String responseTimeout;
 
     /**
-     * CreateParams constructor
+     * DsnCreateInputData constructor
      *
-     * @param builder Builder object
+     * @param builder DsnCreateInputData.Builder object
      * @author Leonid Baranov
      */
-    private DsnCreateInputData(final Builder builder) {
+    private DsnCreateInputData(final DsnCreateInputData.Builder builder) {
         this.volser = builder.volser;
         this.unit = builder.unit;
         this.dsorg = builder.dsorg;
@@ -304,13 +304,13 @@ public class DsnCreateInputData {
     }
 
     /**
-     * Return string value representing CreateOptions object
+     * Return string value representing DsnCreateInputData object
      *
-     * @return string representation of CreateOptions
+     * @return string representation of DsnCreateInputData
      */
     @Override
     public String toString() {
-        return "CreateOptions{" +
+        return "DsnCreateInputData{" +
                 "volser=" + volser +
                 ", unit=" + unit +
                 ", dsorg=" + dsorg +
@@ -333,7 +333,7 @@ public class DsnCreateInputData {
     }
 
     /**
-     * Builder class for CreateParams
+     * Builder class for DsnCreateInputData
      */
     public static class Builder {
 
@@ -635,9 +635,9 @@ public class DsnCreateInputData {
         }
 
         /**
-         * Return CreateParams object based on Builder this object
+         * Return DsnCreateInputData object based on Builder this object
          *
-         * @return CreateParams this object
+         * @return DsnCreateInputData this object
          */
         public DsnCreateInputData build() {
             return new DsnCreateInputData(this);

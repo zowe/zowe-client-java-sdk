@@ -40,9 +40,9 @@ public class JobModifyInputData {
     private final String version;
 
     /**
-     * ModifyJobParams constructor
+     * JobModifyInputData constructor
      *
-     * @param builder ModifyJobParams.Builder object
+     * @param builder JobModifyInputData.Builder object
      * @author Nikunj Goyal
      */
     private JobModifyInputData(final JobModifyInputData.Builder builder) {
@@ -79,13 +79,13 @@ public class JobModifyInputData {
     }
 
     /**
-     * Return string value representing CancelJobParams object
+     * Return string value representing JobModifyInputData object
      *
-     * @return string representation of CancelJobParams
+     * @return string representation of JobModifyInputData
      */
     @Override
     public String toString() {
-        return "ModifyJobParams{" +
+        return "JobModifyInputData{" +
                 "jobId=" + jobId +
                 ", jobName=" + jobName +
                 ", version=" + version +
@@ -93,7 +93,7 @@ public class JobModifyInputData {
     }
 
     /**
-     * Builder class for ModifyJobParams
+     * Builder class for JobModifyInputData
      */
     public static class Builder {
 
@@ -140,9 +140,9 @@ public class JobModifyInputData {
         }
 
         /**
-         * Return ModifyJobParams object based on Builder this object
+         * Return JobModifyInputData object based on Builder this object
          *
-         * @return ModifyJobParams this object
+         * @return JobModifyInputData this object
          */
         public JobModifyInputData build() {
             return new JobModifyInputData(this);

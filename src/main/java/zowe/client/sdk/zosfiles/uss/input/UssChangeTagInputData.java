@@ -61,12 +61,12 @@ public class UssChangeTagInputData {
     private final LinkType links;
 
     /**
-     * ChangeTagParams constructor
+     * UssChangeTagInputData constructor
      *
-     * @param builder Builder builder
+     * @param builder UssChangeTagInputData.Builder builder
      * @author James Kostrewski
      */
-    public UssChangeTagInputData(final Builder builder) {
+    public UssChangeTagInputData(final UssChangeTagInputData.Builder builder) {
         this.action = builder.action;
         this.type = builder.type;
         this.codeset = builder.codeset;
@@ -120,13 +120,13 @@ public class UssChangeTagInputData {
     }
 
     /**
-     * Return string value representing ChangeTagParams object
+     * Return string value representing UssChangeTagInputData object
      *
-     * @return string representation of ChangeTagParams
+     * @return string representation of UssChangeTagInputData
      */
     @Override
     public String toString() {
-        return "ChangeTagParams{" +
+        return "UssChangeTagInputData{" +
                 "action='" + action + '\'' +
                 ", type='" + type + '\'' +
                 ", codeset='" + codeset + '\'' +
@@ -136,7 +136,7 @@ public class UssChangeTagInputData {
     }
 
     /**
-     * Builder class for ChangeTagParams
+     * Builder class for UssChangeTagInputData
      */
     public static class Builder {
 
@@ -237,9 +237,9 @@ public class UssChangeTagInputData {
         }
 
         /**
-         * Return ChangeTagParams object based on Builder this object
+         * Return UssChangeTagInputData object based on Builder this object
          *
-         * @return ChangeTagParams this object
+         * @return UssChangeTagInputData this object
          */
         public UssChangeTagInputData build() {
             return new UssChangeTagInputData(this);

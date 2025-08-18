@@ -19,7 +19,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 4.0
  */
-public class IssueConsoleParams {
+public class IssueConsoleInputData {
 
     /**
      * The z/OS console command to issue.
@@ -44,12 +44,12 @@ public class IssueConsoleParams {
     private boolean processResponse = false;
 
     /**
-     * IssueConsoleParams constructor, command value is required
+     * IssueConsoleInputData constructor, command value is required
      *
      * @param command console command to issue
      * @author Frank Giordano
      */
-    public IssueConsoleParams(final String command) {
+    public IssueConsoleInputData(final String command) {
         ValidateUtils.checkIllegalParameter(command, "command");
         this.cmd = command;
     }

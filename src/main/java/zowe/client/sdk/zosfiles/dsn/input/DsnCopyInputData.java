@@ -52,12 +52,12 @@ public class DsnCopyInputData {
     private final boolean copyAllMembers;
 
     /**
-     * CopyParams constructor
+     * DsnCopyInputData constructor
      *
-     * @param builder Builder object
+     * @param builder DsnCopyInputData.Builder object
      * @author Leonid Baranov
      */
-    private DsnCopyInputData(final Builder builder) {
+    private DsnCopyInputData(final DsnCopyInputData.Builder builder) {
         this.fromVolser = builder.fromVolser;
         this.fromDataSet = builder.fromDataSet;
         this.toVolser = builder.toVolser;
@@ -121,13 +121,13 @@ public class DsnCopyInputData {
     }
 
     /**
-     * Return string value representing CopyParams object
+     * Return string value representing DsnCopyInputData object
      *
-     * @return string representation of CopyParams
+     * @return string representation of DsnCopyInputData
      */
     @Override
     public String toString() {
-        return "CopyParams{" +
+        return "DsnCopyInputData{" +
                 "fromVolser=" + fromVolser +
                 ", fromDataSet=" + fromDataSet +
                 ", toVolser=" + toVolser +
@@ -137,7 +137,7 @@ public class DsnCopyInputData {
     }
 
     /**
-     * Builder class for CopyParams
+     * Builder class for DsnCopyInputData
      */
     public static class Builder {
 
@@ -248,9 +248,9 @@ public class DsnCopyInputData {
         }
 
         /**
-         * Return CopyParams object based on Builder this object
+         * Return DsnCopyInputData object based on Builder this object
          *
-         * @return CopyParams this object
+         * @return DsnCopyInputData this object
          */
         public DsnCopyInputData build() {
             return new DsnCopyInputData(this);

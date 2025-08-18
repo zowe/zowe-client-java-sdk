@@ -67,9 +67,9 @@ public class JobMonitorInputData {
     private Integer lineLimit;
 
     /**
-     * MonitorJobWaitForParams constructor
+     * JobMonitorInputData constructor
      *
-     * @param builder MonitorJobWaitForParams.Builder object
+     * @param builder JobMonitorInputData.Builder object
      * @author Frank Giordano
      */
     private JobMonitorInputData(final JobMonitorInputData.Builder builder) {
@@ -172,13 +172,13 @@ public class JobMonitorInputData {
     }
 
     /**
-     * Return string value representing MonitorJobWaitForParams object
+     * Return string value representing JobMonitorInputData object
      *
-     * @return string representation of MonitorJobWaitForParams
+     * @return string representation of JobMonitorInputData
      */
     @Override
     public String toString() {
-        return "MonitorJobWaitForParams{" +
+        return "JobMonitorInputData{" +
                 "jobId=" + jobId +
                 ", jobName=" + jobName +
                 ", watchDelay=" + watchDelay +
@@ -189,7 +189,7 @@ public class JobMonitorInputData {
     }
 
     /**
-     * Builder class for MonitorJobWaitForParams
+     * Builder class for JobMonitorInputData
      */
     public static class Builder {
 
@@ -292,9 +292,9 @@ public class JobMonitorInputData {
         }
 
         /**
-         * Return MonitorJobWaitForParams object based on Builder this object
+         * Return JobMonitorInputData object based on Builder this object
          *
-         * @return MonitorJobWaitForParams object
+         * @return JobMonitorInputData object
          */
         public JobMonitorInputData build() {
             return new JobMonitorInputData(this);

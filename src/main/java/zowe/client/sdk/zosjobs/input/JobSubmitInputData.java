@@ -34,7 +34,7 @@ public class JobSubmitInputData {
     private Map<String, String> jclSymbols;
 
     /**
-     * SubmitJobParams constructor
+     * JobSubmitInputData constructor
      *
      * @param jobDataSet z/OS data set which should contain syntactically correct JCL
      * @author Frank Giordano
@@ -44,7 +44,7 @@ public class JobSubmitInputData {
     }
 
     /**
-     * SubmitJobParams constructor
+     * JobSubmitInputData constructor
      *
      * @param jobDataSet z/OS data set which should contain syntactically correct JCL
      * @param jclSymbols Map for JCL symbolic substitution
@@ -92,13 +92,13 @@ public class JobSubmitInputData {
     }
 
     /**
-     * Return string value representing SubmitJobParams object
+     * Return string value representing JobSubmitInputData object
      *
-     * @return string representation of SubmitJobParams
+     * @return string representation of JobSubmitInputData
      */
     @Override
     public String toString() {
-        return "SubmitJobParams{" +
+        return "JobSubmitInputData{" +
                 "jobDataSet=" + jobDataSet +
                 ", jclSymbols=" + jclSymbols +
                 '}';
