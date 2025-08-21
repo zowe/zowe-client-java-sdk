@@ -19,6 +19,7 @@ import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.ValidateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class IssueTso {
      * @author Frank Giordano
      */
     public IssueTso(final ZosConnection connection, final String accountNumber) {
+        ValidateUtils.checkIllegalParameter(accountNumber, "accountNumber");
         this.connection = connection;
         this.accountNumber = accountNumber;
     }
@@ -61,6 +63,7 @@ public class IssueTso {
      * @author Frank Giordano
      */
     public List<String> issueCommend(final String command) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(command, "command");
         return this.issueCommend(command, null);
     }
 
@@ -75,6 +78,7 @@ public class IssueTso {
      * @author Frank Giordano
      */
     public List<String> issueCommend(final String command, final StartTsoInputData startTsoData) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(command, "command");
         this.startTsoData = startTsoData;
         final String sessionKey = this.startTso();
         return this.processTsoCommand(sessionKey, command);
@@ -104,7 +108,6 @@ public class IssueTso {
         }
 
         this.stopTso(sessionKey);
-
         return msgLst;
     }
 
