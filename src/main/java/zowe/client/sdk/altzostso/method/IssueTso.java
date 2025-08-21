@@ -180,7 +180,7 @@ public class IssueTso {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private String sendTso(String sessionKey) throws ZosmfRequestException {
+    private String sendTso(final String sessionKey) throws ZosmfRequestException {
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + sessionKey;
 
