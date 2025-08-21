@@ -19,6 +19,8 @@ import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zostso.response.IssueResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,7 @@ public class IssueTso {
     private final List<String> promptLst = new ArrayList<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final ZosConnection connection;
-    private final String accountNumber;
+    private String accountNumber;
     private ZosmfRequest request;
     private StartTsoInputData startTsoData;
 
@@ -48,6 +50,7 @@ public class IssueTso {
      * @author Frank Giordano
      */
     public IssueTso(final ZosConnection connection, final String accountNumber) {
+        ValidateUtils.checkIllegalParameter(accountNumber, "accountNumber");
         this.connection = connection;
         this.accountNumber = accountNumber;
     }
@@ -60,8 +63,9 @@ public class IssueTso {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public List<String> issueCommend(final String command) throws ZosmfRequestException {
-        return this.issueCommend(command, null);
+    public List<String> issueCommand(final String command) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(command, "command");
+        return this.issueCommand(command, null);
     }
 
     /**
@@ -74,7 +78,8 @@ public class IssueTso {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public List<String> issueCommend(final String command, final StartTsoInputData startTsoData) throws ZosmfRequestException {
+    public List<String> issueCommand(final String command, final StartTsoInputData startTsoData) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(command, "command");
         this.startTsoData = startTsoData;
         final String sessionKey = this.startTso();
         return this.processTsoCommand(sessionKey, command);
@@ -104,7 +109,6 @@ public class IssueTso {
         }
 
         this.stopTso(sessionKey);
-
         return msgLst;
     }
 
@@ -177,7 +181,7 @@ public class IssueTso {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private String sendTso(String sessionKey) throws ZosmfRequestException {
+    private String sendTso(final String sessionKey) throws ZosmfRequestException {
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + sessionKey;
 
@@ -273,6 +277,17 @@ public class IssueTso {
             throw new ZosmfRequestException(msg + " Response: " + e.getMessage());
         }
         return rootNode;
+    }
+
+    /**
+     * Allow the change of the account number to another value since constructor
+     *
+     * @param accountNumber string value
+     * @author Frank Giordano
+     */
+    public void setAccountNumber(String accountNumber) {
+        ValidateUtils.checkIllegalParameter(accountNumber, "accountNumber");
+        this.accountNumber = accountNumber;
     }
 
 }
