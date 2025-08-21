@@ -20,6 +20,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zostso.response.IssueResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class IssueTso {
     private final List<String> promptLst = new ArrayList<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final ZosConnection connection;
-    private final String accountNumber;
+    private String accountNumber;
     private ZosmfRequest request;
     private StartTsoInputData startTsoData;
 
@@ -276,6 +277,17 @@ public class IssueTso {
             throw new ZosmfRequestException(msg + " Response: " + e.getMessage());
         }
         return rootNode;
+    }
+
+    /**
+     * Allow the change of the account number to another value since constructor
+     *
+     * @param accountNumber string value
+     * @author Frank Giordano
+     */
+    public void setAccountNumber(String accountNumber) {
+        ValidateUtils.checkIllegalParameter(accountNumber, "accountNumber");
+        this.accountNumber = accountNumber;
     }
 
 }
