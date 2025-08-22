@@ -13,10 +13,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
-import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.altzostso.method.IssueTso;
-
-import java.util.Arrays;
+import zowe.client.sdk.zostso.method.IssueTso;
 
 /**
  * Class example to test tso command functionality via IssueTso class.

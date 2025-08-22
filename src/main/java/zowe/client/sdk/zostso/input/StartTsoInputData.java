@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.altzostso.input;
+package zowe.client.sdk.zostso.input;
 
 import java.util.Optional;
 

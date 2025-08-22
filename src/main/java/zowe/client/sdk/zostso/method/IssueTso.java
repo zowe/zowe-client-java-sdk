@@ -7,13 +7,13 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.altzostso.method;
+package zowe.client.sdk.zostso.method;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import zowe.client.sdk.altzostso.TsoConstants;
-import zowe.client.sdk.altzostso.input.StartTsoInputData;
+import zowe.client.sdk.zostso.TsoConstants;
+import zowe.client.sdk.zostso.input.StartTsoInputData;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;

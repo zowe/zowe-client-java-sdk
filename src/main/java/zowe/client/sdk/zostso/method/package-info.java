@@ -1,4 +1,4 @@
 /**
  * z/OS tso command functionality by the SDK
  */
-package zowe.client.sdk.altzostso.method;
+package zowe.client.sdk.zostso.method;

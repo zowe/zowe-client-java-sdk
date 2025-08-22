@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.altzostso;
+package zowe.client.sdk.zostso;
 
 /**
  * Constants for various tso related info
