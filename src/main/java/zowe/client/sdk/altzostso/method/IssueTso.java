@@ -20,7 +20,6 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zostso.response.IssueResponse;
 
 import java.util.ArrayList;
 import java.util.List;

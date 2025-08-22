@@ -10,6 +10,7 @@
 package zowe.client.sdk.zostso;
 
 import org.junit.Test;
+import zowe.client.sdk.altzostso.TsoConstants;
 import zowe.client.sdk.utility.Utils;
 
 /**
