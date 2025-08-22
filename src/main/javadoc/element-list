@@ -1,6 +1,6 @@
-zowe.client.sdk.altzostso
-zowe.client.sdk.altzostso.input
-zowe.client.sdk.altzostso.method
+zowe.client.sdk.zostso
+zowe.client.sdk.zostso.input
+zowe.client.sdk.zostso.method
 zowe.client.sdk.core
 zowe.client.sdk.parse
 zowe.client.sdk.parse.type

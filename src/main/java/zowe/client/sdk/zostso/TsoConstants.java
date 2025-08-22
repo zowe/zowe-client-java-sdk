@@ -55,41 +55,6 @@ public final class TsoConstants {
     public static final String DEFAULT_RSIZE = "4096";
 
     /**
-     * Query id of account number passed to z/OSMF URI
-     */
-    public static final String PARAM_ACCT = "acct";
-
-    /**
-     * Query id of character-set passed to z/OSMF URI
-     */
-    public static final String PARAM_CHSET = "chset";
-
-    /**
-     * Query id of columns passed to z/OSMF URI
-     */
-    public static final String PARAM_COLS = "cols";
-
-    /**
-     * Query id of code page passed to z/OSMF URI
-     */
-    public static final String PARAM_CPAGE = "cpage";
-
-    /**
-     * Query id of logonProcedure passed to z/OSMF URI
-     */
-    public static final String PARAM_PROC = "proc";
-
-    /**
-     * Query id of rows passed to z/OSMF URI
-     */
-    public static final String PARAM_ROWS = "rows";
-
-    /**
-     * Query id of region size passed to z/OSMF URI
-     */
-    public static final String PARAM_RSIZE = "rsize";
-
-    /**
      * URI base for TSO API
      */
     public static final String RESOURCE = "/tsoApp";
@@ -123,5 +88,26 @@ public final class TsoConstants {
      * z/OSMF unknown error
      */
     public static final String ZOSMF_UNKNOWN_ERROR = "zOSMF unknown error response";
+
+    /**
+     *
+     */
+    public static final String START_TSO_FAIL_MSG = "Failed to startTso session.";
+
+    /**
+     *
+     */
+    public static final String SEND_TSO_COMMAND_FAIL_MSG =
+            "Failed to sendTsoCommand session for initial tso command execution.";
+
+    /**
+     *
+     */
+    public static final String SEND_TSO_FAIL_MSG = "Failed to sendTso session ping for more data.";
+
+    /**
+     *
+     */
+    public static final String STOP_TSO_COMMAND_FAIL_MSG = "Failed to stopTso session.";
 
 }

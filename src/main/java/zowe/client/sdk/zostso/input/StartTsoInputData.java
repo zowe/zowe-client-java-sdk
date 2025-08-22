@@ -17,51 +17,51 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 4.0
  */
-public class StartTsoParams {
+public class StartTsoInputData {
 
     /**
      * User's z/OS permission account number
      */
-    public Optional<String> account = Optional.empty();
+    public String account;
 
     /**
      * Character set for address space
      */
-    public Optional<String> characterSet = Optional.empty();
+    public String characterSet;
 
     /**
      * Code page for tso address space
      */
-    public Optional<String> codePage = Optional.empty();
+    public String codePage;
 
     /**
      * Number of columns
      */
-    public Optional<String> columns = Optional.empty();
+    public String columns;
 
     /**
      * Name of the logonProcedure for address space
      */
-    public Optional<String> logonProcedure = Optional.empty();
+    public String logonProcedure;
 
     /**
      * Region size for tso address space
      */
-    public Optional<String> regionSize = Optional.empty();
+    public String regionSize;
 
     /**
      * Number of rows
      */
-    public Optional<String> rows = Optional.empty();
+    public String rows;
 
     /**
-     * StartTsoParams default constructor
+     * StartTsoInputData default constructor
      */
-    public StartTsoParams() {
+    public StartTsoInputData() {
     }
 
     /**
-     * StartTsoParams constructor
+     * StartTsoInputData constructor
      *
      * @param logonProcedure name of the logonProcedure for address space
      * @param characterSet   character set for address space
@@ -72,16 +72,20 @@ public class StartTsoParams {
      * @param regionSize     region size for tso address space
      * @author Frank Giordano
      */
-    public StartTsoParams(final String logonProcedure, final String characterSet, final String codePage,
-                          final String rows, final String columns, final String accountNumber,
-                          final String regionSize) {
-        this.logonProcedure = Optional.ofNullable(logonProcedure);
-        this.characterSet = Optional.ofNullable(characterSet);
-        this.codePage = Optional.ofNullable(codePage);
-        this.rows = Optional.ofNullable(rows);
-        this.columns = Optional.ofNullable(columns);
-        this.account = Optional.ofNullable(accountNumber);
-        this.regionSize = Optional.ofNullable(regionSize);
+    public StartTsoInputData(final String logonProcedure,
+                             final String characterSet,
+                             final String codePage,
+                             final String rows,
+                             final String columns,
+                             final String accountNumber,
+                             final String regionSize) {
+        this.logonProcedure = logonProcedure;
+        this.characterSet = characterSet;
+        this.codePage = codePage;
+        this.rows = rows;
+        this.columns = columns;
+        this.account = accountNumber;
+        this.regionSize = regionSize;
     }
 
     /**
@@ -90,7 +94,7 @@ public class StartTsoParams {
      * @return account user account value
      */
     public Optional<String> getAccount() {
-        return account;
+        return Optional.ofNullable(account);
     }
 
     /**
@@ -99,7 +103,7 @@ public class StartTsoParams {
      * @param account user's z/OS permission account number
      */
     public void setAccount(final String account) {
-        this.account = Optional.ofNullable(account);
+        this.account = account;
     }
 
     /**
@@ -108,7 +112,7 @@ public class StartTsoParams {
      * @return characterSet character set value for address space
      */
     public Optional<String> getCharacterSet() {
-        return characterSet;
+        return Optional.ofNullable(characterSet);
     }
 
     /**
@@ -117,7 +121,7 @@ public class StartTsoParams {
      * @param characterSet character set for address space
      */
     public void setCharacterSet(final String characterSet) {
-        this.characterSet = Optional.of(characterSet);
+        this.characterSet = characterSet;
     }
 
     /**
@@ -126,7 +130,7 @@ public class StartTsoParams {
      * @return codePage name of the logonProcedure for address space
      */
     public Optional<String> getCodePage() {
-        return codePage;
+        return Optional.ofNullable(codePage);
     }
 
     /**
@@ -135,7 +139,7 @@ public class StartTsoParams {
      * @param codePage code page for tso address space
      */
     public void setCodePage(final String codePage) {
-        this.codePage = Optional.ofNullable(codePage);
+        this.codePage = codePage;
     }
 
     /**
@@ -144,7 +148,7 @@ public class StartTsoParams {
      * @return columns number value of columns
      */
     public Optional<String> getColumns() {
-        return columns;
+        return Optional.ofNullable(columns);
     }
 
     /**
@@ -153,7 +157,7 @@ public class StartTsoParams {
      * @param columns number of columns
      */
     public void setColumns(final String columns) {
-        this.columns = Optional.ofNullable(columns);
+        this.columns = columns;
     }
 
     /**
@@ -162,7 +166,7 @@ public class StartTsoParams {
      * @return logonProcedure name value of the logonProcedure for address space
      */
     public Optional<String> getLogonProcedure() {
-        return logonProcedure;
+        return Optional.ofNullable(logonProcedure);
     }
 
     /**
@@ -171,7 +175,7 @@ public class StartTsoParams {
      * @param logonProcedure name of the logonProcedure for address space
      */
     public void setLogonProcedure(final String logonProcedure) {
-        this.logonProcedure = Optional.of(logonProcedure);
+        this.logonProcedure = logonProcedure;
     }
 
     /**
@@ -180,7 +184,7 @@ public class StartTsoParams {
      * @return regionSize region size value for tso address space
      */
     public Optional<String> getRegionSize() {
-        return regionSize;
+        return Optional.ofNullable(regionSize);
     }
 
     /**
@@ -189,7 +193,7 @@ public class StartTsoParams {
      * @param regionSize region size for tso address space
      */
     public void setRegionSize(final String regionSize) {
-        this.regionSize = Optional.of(regionSize);
+        this.regionSize = regionSize;
     }
 
     /**
@@ -198,7 +202,7 @@ public class StartTsoParams {
      * @return rows number value of rows
      */
     public Optional<String> getRows() {
-        return rows;
+        return Optional.ofNullable(rows);
     }
 
     /**
@@ -207,17 +211,17 @@ public class StartTsoParams {
      * @param rows number of rows
      */
     public void setRows(String rows) {
-        this.rows = Optional.ofNullable(rows);
+        this.rows = rows;
     }
 
     /**
-     * Return string value representing StartTsoParams object
+     * Return string value representing StartTsoInputData object
      *
-     * @return string representation of StartTsoParams
+     * @return string representation of StartTsoInputData
      */
     @Override
     public String toString() {
-        return "StartTsoParams{" +
+        return "StartTsoInputData{" +
                 "logonProcedure=" + logonProcedure +
                 ", characterSet=" + characterSet +
                 ", codePage=" + codePage +

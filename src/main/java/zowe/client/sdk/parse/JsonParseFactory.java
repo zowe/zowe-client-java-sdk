@@ -59,12 +59,6 @@ public final class JsonParseFactory {
             case PROPS:
                 parseResponse = PropsJsonParse.getInstance();
                 break;
-            case TSO_CONSOLE:
-                parseResponse = TsoJsonParse.getInstance();
-                break;
-            case TSO_STOP:
-                parseResponse = TsoStopJsonParse.getInstance();
-                break;
             case UNIX_FILE:
                 parseResponse = UnixFileJsonParse.getInstance();
                 break;

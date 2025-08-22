@@ -13,11 +13,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
-import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zostso.method.IssueTso;
-import zowe.client.sdk.zostso.response.IssueResponse;
-
-import java.util.Arrays;
 
 /**
  * Class example to test tso command functionality via IssueTso class.
@@ -40,57 +36,21 @@ public class IssueTsoExp extends TstZosConnection {
         String accountNumber = "xxx";
 
         connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
-        IssueResponse response = IssueTsoExp.issueCommand(accountNumber, command);
-        String[] results = response.getCommandResponses().orElse("").split("\n");
-        Arrays.stream(results).sequential().forEach(System.out::println);
+        List<String> result = IssueTsoExp.issueCommand(accountNumber, command);
+        result.forEach(System.out::println);
     }
 
     /**
      * Issue issueCommand method from the IssueTso class which will execute the given tso command.
      *
      * @param accountNumber user's z/OSMF permission account number
-     * @param cmd           tso command to execute
-     * @return issue response object
+     * @param command           tso command to execute
+     * @return list of messages result
      * @author Frank Giordano
      */
-    public static IssueResponse issueCommand(String accountNumber, String cmd) {
-        IssueTso issueTso = new IssueTso(connection);
-        try {
-            return issueTso.issueCommand(accountNumber, cmd);
-        } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
-        }
-    }
-
-}
-`````
-
-````java
-package zowe.client.sdk.examples.utility;
-
-import zowe.client.sdk.rest.Response;
-
-/**
- * Utility class containing helper method(s).
- *
- * @author Frank Giordano
- * @version 4.0
- */
-public class Util {
-
-    /**
-     * Extract response phrase string value if any from a Response object.
-     *
-     * @param response object
-     * @return string value
-     * @author Frank Giordano
-     */
-    public static String getResponsePhrase(Response response) {
-        if (response == null || response.getResponsePhrase().isEmpty()) {
-            return null;
-        }
-        return response.getResponsePhrase().get().toString();
+    public static List<String> issueCommand(String accountNumber, String command) {
+        IssueTso issueTso = new IssueTso(connection, accountNumber);
+        return issueTso.issueCommand(command);
     }
 
 }
