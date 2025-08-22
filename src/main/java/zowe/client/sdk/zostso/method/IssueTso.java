@@ -37,7 +37,7 @@ public class IssueTso {
     private final List<String> promptLst = new ArrayList<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final ZosConnection connection;
-    private String accountNumber;
+    private final String accountNumber;
     private ZosmfRequest request;
     private StartTsoInputData startTsoData;
 
@@ -125,7 +125,7 @@ public class IssueTso {
         }
 
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO +
-                "?" + "acct" + "=" + EncodeUtils.encodeURIComponent(this.accountNumber) +
+                "?" + "acct" + "=" + EncodeUtils.encodeURIComponent(startTsoData.getAccount().orElse(this.accountNumber)) +
                 "&" + "proc" + "=" + startTsoData.getLogonProcedure().orElse(TsoConstants.DEFAULT_PROC) +
                 "&" + "chset" + "=" + startTsoData.getCharacterSet().orElse(TsoConstants.DEFAULT_CHSET) +
                 "&" + "cpage" + "=" + startTsoData.getCodePage().orElse(TsoConstants.DEFAULT_CPAGE) +
@@ -277,17 +277,6 @@ public class IssueTso {
             throw new ZosmfRequestException(msg + " Response: " + e.getMessage());
         }
         return rootNode;
-    }
-
-    /**
-     * Allow the change of the account number to another value since constructor
-     *
-     * @param accountNumber string value
-     * @author Frank Giordano
-     */
-    public void setAccountNumber(String accountNumber) {
-        ValidateUtils.checkIllegalParameter(accountNumber, "accountNumber");
-        this.accountNumber = accountNumber;
     }
 
 }
