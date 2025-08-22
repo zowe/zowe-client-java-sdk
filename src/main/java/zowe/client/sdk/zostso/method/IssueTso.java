@@ -77,7 +77,8 @@ public class IssueTso {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public List<String> issueCommand(final String command, final StartTsoInputData startTsoData) throws ZosmfRequestException {
+    public List<String> issueCommand(final String command, final StartTsoInputData startTsoData)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(command, "command");
         this.startTsoData = startTsoData;
         final String sessionKey = this.startTso();
