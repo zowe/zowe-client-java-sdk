@@ -12,14 +12,14 @@ package zowe.client.sdk.zostso.method;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import zowe.client.sdk.zostso.TsoConstants;
-import zowe.client.sdk.zostso.input.StartTsoInputData;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zostso.TsoConstants;
+import zowe.client.sdk.zostso.input.StartTsoInputData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +49,7 @@ public class IssueTso {
      * @author Frank Giordano
      */
     public IssueTso(final ZosConnection connection, final String accountNumber) {
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkIllegalParameter(accountNumber, "accountNumber");
         this.connection = connection;
         this.accountNumber = accountNumber;
