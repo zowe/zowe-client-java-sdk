@@ -87,8 +87,7 @@ public class ZosmfLoginExp extends TstZosConnection {
         downloadDsnMember(connection, datasetName, memberName, downloadInputData);
 
         // now use LtpaToken as cookie token authentication
-        connection = new ZosConnection.Builder(AuthType.TOKEN)
-                .host(hostName).zosmfPort(zosmfPort).token(ltpaToken).build();
+        connection = ZosConnectionFactory.createTokenConnection(hostName, zosmfPort, ltpaToken);
         downloadDsnMember(connection, datasetName, memberName, downloadInputData);
 
         // request to log out of server and delete jwtToken authentication token
