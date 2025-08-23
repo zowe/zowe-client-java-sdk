@@ -122,20 +122,21 @@ public class UssSetAcl {
     }
 
     /**
-     * Sets the ACL for a USS file or directory request driven by SetAclParams object settings
+     * Sets the ACL for a USS file or directory request driven by UssSetAclInputData object settings
      *
-     * @param targetPath target path of the file or directory
-     * @param params     SetAclParams object to drive the request
+     * @param targetPath      target path of the file or directory
+     * @param setAclInputData UssSetAclInputData object to drive the request
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response setAclCommon(final String targetPath, final UssSetAclInputData params) throws ZosmfRequestException {
+    public Response setAclCommon(final String targetPath, final UssSetAclInputData setAclInputData)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "fromPath");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(
-                params.getSet().isEmpty() && params.getModify().isEmpty() && params.getDelete().isEmpty() &&
-                        params.getDeleteType().isEmpty(), "set, modify, delete, and delete type are all empty");
+        ValidateUtils.checkNullParameter(setAclInputData == null, "setAclInputData is null");
+        ValidateUtils.checkIllegalParameter(setAclInputData.getSet().isEmpty() &&
+                setAclInputData.getModify().isEmpty() && setAclInputData.getDelete().isEmpty() &&
+                setAclInputData.getDeleteType().isEmpty(), "set, modify, delete, and delete type are all empty");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
@@ -143,14 +144,14 @@ public class UssSetAcl {
 
         final Map<String, Object> setAclMap = new HashMap<>();
         setAclMap.put("request", "setfacl");
-        if (params.isAbort()) {
-            setAclMap.put("abort", params.isAbort());
+        if (setAclInputData.isAbort()) {
+            setAclMap.put("abort", setAclInputData.isAbort());
         }
-        params.getLinks().ifPresent(links -> setAclMap.put("links", links.getValue()));
-        params.getDeleteType().ifPresent(deleteType -> setAclMap.put("delete-type", deleteType.getValue()));
-        params.getSet().ifPresent(set -> setAclMap.put("set", set));
-        params.getModify().ifPresent(modify -> setAclMap.put("modify", modify));
-        params.getDelete().ifPresent(delete -> setAclMap.put("delete", delete));
+        setAclInputData.getLinks().ifPresent(links -> setAclMap.put("links", links.getValue()));
+        setAclInputData.getDeleteType().ifPresent(deleteType -> setAclMap.put("delete-type", deleteType.getValue()));
+        setAclInputData.getSet().ifPresent(set -> setAclMap.put("set", set));
+        setAclInputData.getModify().ifPresent(modify -> setAclMap.put("modify", modify));
+        setAclInputData.getDelete().ifPresent(delete -> setAclMap.put("delete", delete));
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);

@@ -71,24 +71,24 @@ public class ZosmfPassword {
     }
 
     /**
-     * Change the password or passphrase for a specified User ID driven by PasswordParams object settings
+     * Change the password or passphrase for a specified User ID driven by PasswordInputData object settings
      *
-     * @param params Password response parameters, see PasswordParams object
+     * @param pwdInputData Password response parameters, see PasswordInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Esteban Sandoval
      * @author Frank Giordano
      */
-    public Response changePassword(final PasswordInputData params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+    public Response changePassword(final PasswordInputData pwdInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(pwdInputData == null, "pwdInputData is null");
 
         final String url = connection.getZosmfUrl() +
                 ZosmfAuthConstants.RESOURCE;
 
         final Map<String, Object> passwordMap = new HashMap<>();
-        passwordMap.put("userID", params.getUserId());
-        passwordMap.put("oldPwd", params.getOldPwd());
-        passwordMap.put("newPwd", params.getNewPwd());
+        passwordMap.put("userID", pwdInputData.getUserId());
+        passwordMap.put("oldPwd", pwdInputData.getOldPwd());
+        passwordMap.put("newPwd", pwdInputData.getNewPwd());
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);

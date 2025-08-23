@@ -81,19 +81,20 @@ public class UssChangeOwner {
     }
 
     /**
-     * Perform chown operation on a UNIX file or directory request driven by ChangeOwnerParams object settings
+     * Perform chown operation on a UNIX file or directory request driven by UssChangeOwnerInputData object settings
      *
-     * @param targetPath identifies the UNIX file or directory to be the target of the operation
-     * @param params     change owner response parameters, see ChangeOwnerParams object
+     * @param targetPath           identifies the UNIX file or directory to be the target of the operation
+     * @param changeOwnerInputData change owner response parameters, see UssChangeOwnerInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response changeCommon(final String targetPath, final UssChangeOwnerInputData params) throws ZosmfRequestException {
+    public Response changeCommon(final String targetPath, final UssChangeOwnerInputData changeOwnerInputData)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(changeOwnerInputData == null, "changeOwnerInputData is null");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
@@ -101,13 +102,13 @@ public class UssChangeOwner {
 
         final Map<String, Object> changeOnerMap = new HashMap<>();
         changeOnerMap.put("request", "chown");
-        params.getGroup().ifPresent(group -> changeOnerMap.put("group", group));
-        if (params.isRecursive()) {
+        changeOwnerInputData.getGroup().ifPresent(group -> changeOnerMap.put("group", group));
+        if (changeOwnerInputData.isRecursive()) {
             changeOnerMap.put("recursive", "true");
         }
-        params.getLinks().ifPresent(type -> changeOnerMap.put("links", type.getValue()));
+        changeOwnerInputData.getLinks().ifPresent(type -> changeOnerMap.put("links", type.getValue()));
         final String errMsg = "owner not specified";
-        changeOnerMap.put("owner", params.getOwner().orElseThrow(() -> new IllegalStateException(errMsg)));
+        changeOnerMap.put("owner", changeOwnerInputData.getOwner().orElseThrow(() -> new IllegalStateException(errMsg)));
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);

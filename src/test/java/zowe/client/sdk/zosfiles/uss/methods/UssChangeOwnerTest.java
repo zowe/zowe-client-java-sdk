@@ -152,7 +152,7 @@ public class UssChangeOwnerTest {
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("params is null", errMsg);
+        assertEquals("changeOwnerInputData is null", errMsg);
     }
 
     @Test

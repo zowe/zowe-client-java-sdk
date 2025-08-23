@@ -76,8 +76,8 @@ public class UssGet {
      * @author James Kostrewski
      */
     public byte[] getBinary(final String fileNamePath) throws ZosmfRequestException {
-        UssGetInputData params = new UssGetInputData.Builder().binary(true).build();
-        Response response = getCommon(fileNamePath, params);
+        UssGetInputData getInputData = new UssGetInputData.Builder().binary(true).build();
+        Response response = getCommon(fileNamePath, getInputData);
         return (byte[]) response.getResponsePhrase().orElse(new byte[0]);
     }
 
@@ -91,39 +91,39 @@ public class UssGet {
      * @author James Kostrewski
      */
     public String getText(final String fileNamePath) throws ZosmfRequestException {
-        UssGetInputData params = new UssGetInputData.Builder().build();
-        Response response = getCommon(fileNamePath, params);
+        UssGetInputData getInputData = new UssGetInputData.Builder().build();
+        Response response = getCommon(fileNamePath, getInputData);
         return (String) response.getResponsePhrase().orElse("");
     }
 
     /**
-     * Get the contents of a UNIX file driven by the GetParams object settings
+     * Get the contents of a UNIX file driven by the UssGetInputData object settings
      *
      * @param fileNamePath file name with a path
-     * @param params       GetParams object to drive the request
+     * @param getInputData UssGetInputData object to drive the request
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      * @author James Kostrewski
      */
-    public Response getCommon(final String fileNamePath, final UssGetInputData params) throws ZosmfRequestException {
+    public Response getCommon(final String fileNamePath, final UssGetInputData getInputData) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(getInputData == null, "getInputData is null");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(fileNamePath)));
 
-        params.getSearch().ifPresent(str -> url.append("?search=").append(EncodeUtils.encodeURIComponent(str)));
-        params.getResearch().ifPresent(str -> url.append("?research=").append(EncodeUtils.encodeURIComponent(str)));
-        if (!params.isInsensitive()) {
-            if (params.getQueryCount() > 1) {
+        getInputData.getSearch().ifPresent(str -> url.append("?search=").append(EncodeUtils.encodeURIComponent(str)));
+        getInputData.getResearch().ifPresent(str -> url.append("?research=").append(EncodeUtils.encodeURIComponent(str)));
+        if (!getInputData.isInsensitive()) {
+            if (getInputData.getQueryCount() > 1) {
                 url.append("&insensitive=false");
             } else {
                 url.append("?insensitive=false");
             }
         }
-        params.getMaxReturnSize().ifPresent(size -> {
-            if (params.getQueryCount() > 1) {
+        getInputData.getMaxReturnSize().ifPresent(size -> {
+            if (getInputData.getQueryCount() > 1) {
                 url.append("&maxreturnsize=").append(size);
             } else {
                 url.append("?maxreturnsize=").append(size);
@@ -132,7 +132,7 @@ public class UssGet {
 
         final Map<String, String> headers = new HashMap<>();
 
-        if (params.isBinary()) {
+        if (getInputData.isBinary()) {
             headers.put("X-IBM-Data-Type", "binary");
             if (request == null || !(request instanceof GetStreamZosmfRequest)) {
                 request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_STREAM);
@@ -143,7 +143,7 @@ public class UssGet {
                 request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
             }
         }
-        params.getRecordsRange().ifPresent(range -> headers.put("X-IBM-Record-Range", range));
+        getInputData.getRecordsRange().ifPresent(range -> headers.put("X-IBM-Record-Range", range));
 
         request.setHeaders(headers);
         request.setUrl(url.toString());

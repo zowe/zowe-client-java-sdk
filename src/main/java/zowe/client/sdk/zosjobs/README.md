@@ -51,7 +51,7 @@ public class JobCancelExp extends TstZosConnection {
 
     /**
      * Example on how to call JobCancel cancelCommon method.
-     * The cancelCommon method accepts a CancelJobParams object with parameters filled needed
+     * The cancelCommon method accepts a JobModifyInputData object with parameters filled needed
      * to cancel a given job and the version to indicate 1.0 for async or 2.0 for sync processing
      * of the request.
      *
@@ -62,9 +62,9 @@ public class JobCancelExp extends TstZosConnection {
     public static Response cancelCommonWithVersion(String version) {
         jobId = "xxx";
         jobName = "xxx";
-        JobModifyInputData params = new JobModifyInputData.Builder(jobName, jobId).version(version).build();
+        JobModifyInputData modifyInputData = new JobModifyInputData.Builder(jobName, jobId).version(version).build();
         try {
-            return new JobCancel(connection).cancelCommon(params);
+            return new JobCancel(connection).cancelCommon(modifyInputData);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -73,7 +73,7 @@ public class JobCancelExp extends TstZosConnection {
 
     /**
      * Example on how to call JobCancel cancelCommon method.
-     * The cancelCommon method accepts a CancelJobParams object with parameters filled needed
+     * The cancelCommon method accepts a JobModifyInputData object with parameters filled needed
      * to cancel a given job.
      *
      * @return response object
@@ -82,9 +82,9 @@ public class JobCancelExp extends TstZosConnection {
     public static Response cancelCommon() {
         jobId = "xxx";
         jobName = "xxx";
-        JobModifyInputData params = new JobModifyInputData.Builder(jobName, jobId).build();
+        JobModifyInputData modifyInputData = new JobModifyInputData.Builder(jobName, jobId).build();
         try {
-            return new JobCancel(connection).cancelCommon(params);
+            return new JobCancel(connection).cancelCommon(modifyInputData);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());
             throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
@@ -175,7 +175,7 @@ public class JobDeleteExp extends TstZosConnection {
 
     /**
      * Example on how to call JobDelete deleteCommon method.
-     * The deleteCommon method accepts a DeleteJobParams object with parameters filled needed
+     * The deleteCommon method accepts a JobModifyInputData object with parameters filled needed
      * to delete a given job and the version to indicate 1.0 for async or 2.0 for sync
      * processing of the request.
      *
@@ -197,7 +197,7 @@ public class JobDeleteExp extends TstZosConnection {
 
     /**
      * Example on how to call JobDelete deleteCommon method.
-     * The deleteCommon method accepts a DeleteJobParams object with parameters
+     * The deleteCommon method accepts a JobModifyInputData object with parameters
      * filled needed to delete a given job.
      *
      * @return response object
@@ -265,7 +265,6 @@ import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosjobs.input.CommonJobInputData;
-import zowe.client.sdk.zosjobs.input.CommonJobParams;
 import zowe.client.sdk.zosjobs.input.JobGetInputData;
 import zowe.client.sdk.zosjobs.response.JobFile;
 import zowe.client.sdk.zosjobs.methods.JobGet;
@@ -320,7 +319,7 @@ public class JobGetExp extends TstZosConnection {
 
     /**
      * Example on how to call JobGet getJclCommon method.
-     * The getJclCommon method is given CommonJobParams object filled with information on the given job to
+     * The getJclCommon method is given CommonJobInputData object filled with information on the given job to
      * use for retrieval of its JCL content.
      *
      * @param prefix partial or full job name to use for searching
@@ -533,10 +532,10 @@ public class JobGetExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void getSpoolContent(String prefix) {
-        JobGetInputData params = new JobGetInputData.Builder("*").prefix(prefix).build();
+        JobGetInputData getInputData = new JobGetInputData.Builder("*").prefix(prefix).build();
         String[] output;
         try {
-            List<Job> jobs = jobGet.getCommon(params);
+            List<Job> jobs = jobGet.getCommon(getInputData);
             List<JobFile> files = jobGet.getSpoolFilesByJob(jobs.get(0));
             output = jobGet.getSpoolContent(files.get(0)).split("\n");
         } catch (ZosmfRequestException e) {
@@ -611,7 +610,7 @@ public class JobGetExp extends TstZosConnection {
 
     /**
      * Example on how to call JobGet getCommon method.
-     * The getCommon method is given a GetJobParams object filled with search parameters which will
+     * The getCommon method is given a JobGetInputData object filled with search parameters which will
      * retrieve a list of all jobs.
      *
      * @param prefix partial or full job name to use for searching

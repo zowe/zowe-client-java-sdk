@@ -299,7 +299,7 @@ public class UssListTest {
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("params is null", errMsg);
+        assertEquals("listInputData is null", errMsg);
     }
 
     @Test

@@ -18,7 +18,6 @@ import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.input.IssueConsoleInputData;
-import zowe.client.sdk.zosconsole.input.IssueConsoleParams;
 import zowe.client.sdk.zosconsole.method.IssueConsole;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 
@@ -46,7 +45,7 @@ public class IssueConsoleExp extends TstZosConnection {
 
     /**
      * Issue IssueConsole issueCommand method which will execute the given simple mvs console command
-     * without a params object.
+     * without a IssueConsoleInputData object.
      *
      * @param connection for connection information, see ZosConnection object
      * @param cmd        mvs command to execute
@@ -76,8 +75,8 @@ public class IssueConsoleExp extends TstZosConnection {
         ConsoleResponse response;
         try {
             IssueConsole issueConsole = new IssueConsole(connection);
-            IssueConsoleInputData issueConsoleInputData = new IssueConsoleInputData(cmd);
-            params.setProcessResponse(true);
+            IssueConsoleInputData consoleInputData = new IssueConsoleInputData(cmd);
+            consoleInputData.setProcessResponse();
             response = issueConsole.issueCommandCommon(ConsoleConstants.RES_DEF_CN, issueConsoleInputData);
         } catch (ZosmfRequestException e) {
             final String errMsg = Util.getResponsePhrase(e.getResponse());

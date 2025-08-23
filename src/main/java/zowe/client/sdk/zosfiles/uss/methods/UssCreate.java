@@ -74,27 +74,28 @@ public class UssCreate {
     }
 
     /**
-     * Perform UNIX create a file or directory name request driven by CreateParams object settings.
+     * Perform UNIX create a file or directory name request driven by UssCreateInputData object settings.
      *
-     * @param targetPath the name of the file or directory you are going to create
-     * @param params     to create response parameters, see CreateParams object
+     * @param targetPath      the name of the file or directory you are going to create
+     * @param createInputData to create response parameters, see UssCreateInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response create(final String targetPath, final UssCreateInputData params) throws ZosmfRequestException {
+    public Response create(final String targetPath, final UssCreateInputData createInputData)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(createInputData == null, "createInputData is null");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
         final Map<String, Object> createMap = new HashMap<>();
-        createMap.put("type", params.getType().getValue());
-        createMap.put("mode", params.getMode());
+        createMap.put("type", createInputData.getType().getValue());
+        createMap.put("mode", createInputData.getMode());
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
@@ -119,37 +120,38 @@ public class UssCreate {
     }
 
     /**
-     * Create a ZFS request driven by the CreateZfsParams object settings.
+     * Create a ZFS request driven by the UssCreateZfsInputData object settings.
      *
-     * @param fileSystemName ZFS file system name
-     * @param params         create ZFS response parameters, see CreateZfsParams object
+     * @param fileSystemName     ZFS file system name
+     * @param createZfsInputData create ZFS response parameters, see UssCreateZfsInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response createZfsCommon(String fileSystemName, UssCreateZfsInputData params) throws ZosmfRequestException {
+    public Response createZfsCommon(String fileSystemName, UssCreateZfsInputData createZfsInputData)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileSystemName, "fileSystemName");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(createZfsInputData == null, "createZfsInputData is null");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(fileSystemName));
-        params.getTimeout().ifPresent(timeout -> url.append("?timeout=").append(timeout));
+        createZfsInputData.getTimeout().ifPresent(timeout -> url.append("?timeout=").append(timeout));
 
         final Map<String, Object> createZfsMap = new HashMap<>();
-        params.getOwner().ifPresent(owner -> createZfsMap.put("owner", owner));
-        params.getGroup().ifPresent(group -> createZfsMap.put("group", group));
-        params.getPerms().ifPresent(perms -> createZfsMap.put("perms", perms));
-        params.getCylsPri().ifPresent(cylsPri -> createZfsMap.put("cylsPri", cylsPri));
-        params.getCylsSec().ifPresent(cs -> createZfsMap.put("cylsSec", cs));
-        params.getStorageClass().ifPresent(sc -> createZfsMap.put("storageClass", sc));
-        params.getManagementClass().ifPresent(mc -> createZfsMap.put("managementClass", mc));
-        params.getDataClass().ifPresent(dc -> createZfsMap.put("dataClass", dc));
-        if (params.getVolumes().size() == 1) {
-            createZfsMap.put("volumes", "[\"" + params.getVolumes().get(0) + "\"]");
+        createZfsInputData.getOwner().ifPresent(owner -> createZfsMap.put("owner", owner));
+        createZfsInputData.getGroup().ifPresent(group -> createZfsMap.put("group", group));
+        createZfsInputData.getPerms().ifPresent(perms -> createZfsMap.put("perms", perms));
+        createZfsInputData.getCylsPri().ifPresent(cylsPri -> createZfsMap.put("cylsPri", cylsPri));
+        createZfsInputData.getCylsSec().ifPresent(cs -> createZfsMap.put("cylsSec", cs));
+        createZfsInputData.getStorageClass().ifPresent(sc -> createZfsMap.put("storageClass", sc));
+        createZfsInputData.getManagementClass().ifPresent(mc -> createZfsMap.put("managementClass", mc));
+        createZfsInputData.getDataClass().ifPresent(dc -> createZfsMap.put("dataClass", dc));
+        if (createZfsInputData.getVolumes().size() == 1) {
+            createZfsMap.put("volumes", "[\"" + createZfsInputData.getVolumes().get(0) + "\"]");
         }
-        if (params.getVolumes().size() > 1) {
+        if (createZfsInputData.getVolumes().size() > 1) {
             final StringBuilder volumesStr = new StringBuilder();
-            params.getVolumes().forEach(volume -> volumesStr.append("\"").append(volume).append("\","));
+            createZfsInputData.getVolumes().forEach(volume -> volumesStr.append("\"").append(volume).append("\","));
             createZfsMap.put("volumes", "[" + volumesStr.substring(0, volumesStr.length() - 1) + "]");
         }
         createZfsMap.put("JSONversion", 1);
@@ -159,7 +161,7 @@ public class UssCreate {
         }
 
         final Map<String, String> headers = new HashMap<>();
-        params.getSystem().ifPresent(system -> headers.put("X-IBM-Target-System", system));
+        createZfsInputData.getSystem().ifPresent(system -> headers.put("X-IBM-Target-System", system));
 
         request.setHeaders(headers);
         request.setUrl(url.toString());

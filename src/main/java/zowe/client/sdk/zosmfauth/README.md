@@ -27,6 +27,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.dsn.input.DsnDownloadInputData;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnGet;
+import zowe.client.sdk.zosmfauth.input.PasswordInputData;
 import zowe.client.sdk.zosmfauth.methods.ZosmfLogin;
 import zowe.client.sdk.zosmfauth.methods.ZosmfLogout;
 import zowe.client.sdk.zosmfauth.response.ZosmfLoginResponse;
@@ -75,21 +76,20 @@ public class ZosmfLoginExp extends TstZosConnection {
         // Perform an API call with token authentication used
         String datasetName = "xxx.xxx.xxx";
         String memberName = "xxx";
-        DsnDownloadInputData params = new DsnDownloadInputData.Builder().build();
+        DsnDownloadInputData downloadInputData = new DsnDownloadInputData.Builder().build();
 
         // the following defines a TOKEN authentication usage
         // redefined connection object with no username and password specified
         // if you do specify a username and password, they will be ignored
         // use jwtToken value for the token parameter. 
-        connection = ZosConnectionFactory
-                .createTokenConnection(hostName, zosmfPort, jwtToken);
+        connection = ZosConnectionFactory.createTokenConnection(hostName, zosmfPort, jwtToken);
         // use jwtToken 
-        downloadDsnMember(connection, datasetName, memberName, params);
+        downloadDsnMember(connection, datasetName, memberName, downloadInputData);
 
         // now use LtpaToken as cookie token authentication
         connection = new ZosConnection.Builder(AuthType.TOKEN)
                 .host(hostName).zosmfPort(zosmfPort).token(ltpaToken).build();
-        downloadDsnMember(connection, datasetName, memberName, params);
+        downloadDsnMember(connection, datasetName, memberName, downloadInputData);
 
         // request to log out of server and delete jwtToken authentication token
         ZosmfLogout logout = new ZosmfLogout(connection);
@@ -103,7 +103,7 @@ public class ZosmfLoginExp extends TstZosConnection {
 
         // this request should fail
         try {
-            downloadDsnMemberWithToken(connection, datasetName, memberName, params);
+            downloadDsnMemberWithToken(connection, datasetName, memberName, downloadInputData);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -113,9 +113,9 @@ public class ZosmfLoginExp extends TstZosConnection {
                 .host(hostName).zosmfPort(zosmfPort).user(userName).password(password).build();
         // change z/OSMF user's password
         ZosmfPassword zosmfPassword = new ZosmfPassword(connection);
-        PasswordParams passwordParams =
-                new PasswordParams(connection.getUser(), connection.getPassword(), "xxx");
-        response = zosmfPassword.changePassword(passwordParams);
+        PasswordInputData pwdInputData =
+                new PasswordInputData(connection.getUser(), connection.getPassword(), "xxx");
+        response = zosmfPassword.changePassword(pwdInputData);
         System.out.println(response);
     }
 
@@ -125,12 +125,12 @@ public class ZosmfLoginExp extends TstZosConnection {
      * @param connection ZosConnection object
      * @param dsName     name of a dataset
      * @param memName    member name that exists within the specified dataset name
-     * @param params     download parameter object
+     * @param downloadInputData  download parameter object
      * @author Leonid Baranov
      */
     private static void downloadDsnMember(ZosConnection connection, String dsName, String memName,
-                                          DsnDownloadInputData params) {
-        try (InputStream inputStream = new DsnGet(connection).get(String.format("%s(%s)", dsName, memName), params)) {
+                                          DsnDownloadInputData downloadInputData) {
+        try (InputStream inputStream = new DsnGet(connection).get(String.format("%s(%s)", dsName, memName), downloadInputData)) {
             System.out.println(getTextStreamData(inputStream));
         } catch (ZosmfRequestException e) {
             throw new RuntimeException(getByteResponseStatus(e));

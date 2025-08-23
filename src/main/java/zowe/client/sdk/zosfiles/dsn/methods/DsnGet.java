@@ -101,8 +101,8 @@ public class DsnGet {
         String dataSetSearchStr = str.toString();
         dataSetSearchStr = dataSetSearchStr.substring(0, str.length() - 1);
         final DsnList dsnList = new DsnList(connection);
-        final DsnListInputData params = new DsnListInputData.Builder().attribute(AttributeType.BASE).build();
-        final List<Dataset> dsLst = dsnList.getDatasets(dataSetSearchStr, params);
+        final DsnListInputData listInputData = new DsnListInputData.Builder().attribute(AttributeType.BASE).build();
+        final List<Dataset> dsLst = dsnList.getDatasets(dataSetSearchStr, listInputData);
 
         final Optional<Dataset> dataSet = dsLst.stream()
                 .filter(d -> d.getDsname().orElse("n/a").contains(dataSetName)).findFirst();
@@ -112,53 +112,54 @@ public class DsnGet {
     /**
      * Retrieve sequential dataset or dataset member content
      *
-     * @param targetName name of a sequential dataset e.g., DATASET.SEQ.DATA
-     *                   or a dataset member e.g., DATASET.LIB(MEMBER)
-     * @param params     to download params parameters, see DownloadParams object
+     * @param targetName           name of a sequential dataset e.g., DATASET.SEQ.DATA
+     *                             or a dataset member e.g., DATASET.LIB(MEMBER)
+     * @param downloadInputData to download parameters, see DsnDownloadInputData object
      * @return a content stream
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public InputStream get(final String targetName, final DsnDownloadInputData params) throws ZosmfRequestException {
+    public InputStream get(final String targetName, final DsnDownloadInputData downloadInputData)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetName, "targetName");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(downloadInputData == null, "downloadInputData is null");
 
         String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
 
-        if (params.getVolume().isPresent()) {
-            url += "-(" + params.getVolume().get() + ")/";
+        if (downloadInputData.getVolume().isPresent()) {
+            url += "-(" + downloadInputData.getVolume().get() + ")/";
         }
         url += EncodeUtils.encodeURIComponent(targetName);
 
         String key, value;
         final Map<String, String> headers = new HashMap<>();
 
-        if (params.isBinary()) {
+        if (downloadInputData.isBinary()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(1);
             headers.put(key, value);
-        } else if (params.getEncoding().isPresent()) {
+        } else if (downloadInputData.getEncoding().isPresent()) {
             key = ZosmfHeaders.X_IBM_TEXT;
-            value = ZosmfHeaders.X_IBM_TEXT + ZosmfHeaders.X_IBM_TEXT_ENCODING + params.getEncoding();
+            value = ZosmfHeaders.X_IBM_TEXT + ZosmfHeaders.X_IBM_TEXT_ENCODING + downloadInputData.getEncoding();
             headers.put(key, value);
         }
 
-        if (params.isReturnEtag()) {
+        if (downloadInputData.isReturnEtag()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_RETURN_ETAG").get(1);
             headers.put(key, value);
         }
 
-        if (params.getResponseTimeout().isPresent()) {
+        if (downloadInputData.getResponseTimeout().isPresent()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_RESPONSE_TIMEOUT").get(0);
-            value = params.getResponseTimeout().get();
+            value = downloadInputData.getResponseTimeout().get();
             headers.put(key, value);
         }
 
         key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
-        if (params.getEncoding().isPresent()) {
-            value = String.valueOf(params.getEncoding().getAsLong());
+        if (downloadInputData.getEncoding().isPresent()) {
+            value = String.valueOf(downloadInputData.getEncoding().getAsLong());
         } else {
             value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
         }

@@ -98,15 +98,16 @@ public class UssGetAcl {
     /**
      * Get the ACL for a USS file or directory
      *
-     * @param targetPath file name with a path
-     * @param params     GetAclParams object to drive the request
+     * @param targetPath      file name with a path
+     * @param getAclInputData UssGetAclInputData object to drive the request
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response getAclCommon(final String targetPath, final UssGetAclInputData params) throws ZosmfRequestException {
+    public Response getAclCommon(final String targetPath, final UssGetAclInputData getAclInputData)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(getAclInputData == null, "getAclInputData is null");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
@@ -114,16 +115,16 @@ public class UssGetAcl {
 
         final Map<String, Object> getAclMap = new HashMap<>();
         getAclMap.put("request", "getfacl");
-        params.getType().ifPresent(type -> getAclMap.put("type", type.getValue()));
-        params.getUser().ifPresent(user -> getAclMap.put("user", user));
-        if (params.getUseCommas()) {
-            getAclMap.put("use-commas", params.getUseCommas());
+        getAclInputData.getType().ifPresent(type -> getAclMap.put("type", type.getValue()));
+        getAclInputData.getUser().ifPresent(user -> getAclMap.put("user", user));
+        if (getAclInputData.getUseCommas()) {
+            getAclMap.put("use-commas", getAclInputData.getUseCommas());
         }
-        if (params.getSuppressHeader()) {
-            getAclMap.put("suppress-header", params.getSuppressHeader());
+        if (getAclInputData.getSuppressHeader()) {
+            getAclMap.put("suppress-header", getAclInputData.getSuppressHeader());
         }
-        if (params.getSuppressBaseAcl()) {
-            getAclMap.put("suppress-baseacl", params.getSuppressBaseAcl());
+        if (getAclInputData.getSuppressBaseAcl()) {
+            getAclMap.put("suppress-baseacl", getAclInputData.getSuppressBaseAcl());
         }
 
         if (request == null) {

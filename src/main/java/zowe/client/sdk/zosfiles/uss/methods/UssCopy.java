@@ -84,19 +84,19 @@ public class UssCopy {
     }
 
     /**
-     * Copy a Unix file or directory to another location request driven by CopyParams object settings
+     * Copy a Unix file or directory to another location request driven by UssCopyInputData object settings
      *
-     * @param targetPath target path of where the file or directory will be copied too
-     * @param params     CopyParams parameters that specify copy action request
+     * @param targetPath    target path of where the file or directory will be copied too
+     * @param copyInputData UssCopyInputData parameters that specify copy action request
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response copyCommon(final String targetPath, final UssCopyInputData params) throws ZosmfRequestException {
+    public Response copyCommon(final String targetPath, final UssCopyInputData copyInputData) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(copyInputData == null, "copyInputData is null");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
@@ -104,12 +104,12 @@ public class UssCopy {
 
         final Map<String, Object> copyMap = new HashMap<>();
         copyMap.put("request", "copy");
-        copyMap.put("from", FileUtils.validatePath(params.getFrom()
+        copyMap.put("from", FileUtils.validatePath(copyInputData.getFrom()
                 .orElseThrow(() -> new IllegalStateException("copy /'from/' not specified"))));
-        if (!params.isOverwrite()) {
+        if (!copyInputData.isOverwrite()) {
             copyMap.put("overwrite", "false");
         }
-        if (params.isRecursive()) {
+        if (copyInputData.isRecursive()) {
             copyMap.put("recursive", "true");
         }
 

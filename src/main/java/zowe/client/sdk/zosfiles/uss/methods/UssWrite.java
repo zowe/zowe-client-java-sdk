@@ -97,49 +97,50 @@ public class UssWrite {
     }
 
     /**
-     * Perform UNIX write request driven by WriteParams settings
+     * Perform UNIX write request driven by UssWriteInputData settings
      *
-     * @param fileNamePath file name with a path
-     * @param params       parameters within a WriteParams object that drives the write action request
+     * @param fileNamePath   file name with a path
+     * @param writeInputData parameters within a UssWriteInputData object that drives the write action request
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    public Response writeCommon(final String fileNamePath, final UssWriteInputData params) throws ZosmfRequestException {
+    public Response writeCommon(final String fileNamePath, final UssWriteInputData writeInputData)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(writeInputData == null, "writeInputData is null");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(fileNamePath));
 
         final Map<String, String> headers = new HashMap<>();
-        if (params.isBinary()) {
+        if (writeInputData.isBinary()) {
             headers.put("X-IBM-Data-Type", "binary;");
-            if (params.getBinaryContent().isEmpty()) {
+            if (writeInputData.getBinaryContent().isEmpty()) {
                 LOG.debug("binaryContent is empty");
             }
             if (request == null || !(request instanceof PutStreamZosmfRequest)) {
                 request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_STREAM);
             }
-            request.setBody(params.getBinaryContent().orElse(new byte[0]));
+            request.setBody(writeInputData.getBinaryContent().orElse(new byte[0]));
         } else {
             final StringBuilder textHeader = new StringBuilder("text");
-            params.getFileEncoding().ifPresent(encoding -> textHeader.append(";fileEncoding=").append(encoding));
-            if (params.isCrlf()) {
+            writeInputData.getFileEncoding().ifPresent(encoding -> textHeader.append(";fileEncoding=").append(encoding));
+            if (writeInputData.isCrlf()) {
                 textHeader.append(";crlf=true");
             }
             // end with semicolon
             textHeader.append(";");
             headers.put("X-IBM-Data-Type", textHeader.toString());
-            if (params.getTextContent().isEmpty()) {
+            if (writeInputData.getTextContent().isEmpty()) {
                 LOG.debug("textContent is empty");
             }
             if (request == null || !(request instanceof PutTextZosmfRequest)) {
                 request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
             }
-            request.setBody(params.getTextContent().orElse(""));
+            request.setBody(writeInputData.getTextContent().orElse(""));
         }
 
         request.setHeaders(headers);

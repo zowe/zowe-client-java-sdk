@@ -78,16 +78,16 @@ public class DsnList {
     /**
      * Get a list of Dataset objects
      *
-     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
-     * @param params      list parameters, see ListParams object
+     * @param dataSetName   name of a dataset (e.g. 'DATASET.LIB')
+     * @param listInputData list parameters, see DsnListInputData object
      * @return A String list of Dataset names
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public List<Dataset> getDatasets(final String dataSetName, final DsnListInputData params)
+    public List<Dataset> getDatasets(final String dataSetName, final DsnListInputData listInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(listInputData == null, "listInputData is null");
 
         final Map<String, String> headers = new HashMap<>();
         final List<Dataset> datasets = new ArrayList<>();
@@ -95,30 +95,30 @@ public class DsnList {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID +
                 ZosFilesConstants.QUERY_DS_LEVEL + EncodeUtils.encodeURIComponent(dataSetName);
 
-        if (params.getVolume().isPresent()) {
+        if (listInputData.getVolume().isPresent()) {
             url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
-                    EncodeUtils.encodeURIComponent(params.getVolume().get());
+                    EncodeUtils.encodeURIComponent(listInputData.getVolume().get());
         }
-        if (params.getStart().isPresent()) {
-            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + params.getStart().get();
+        if (listInputData.getStart().isPresent()) {
+            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + listInputData.getStart().get();
         }
 
-        return getResult(getResponse(params, headers, url), datasets, null);
+        return getResult(getResponse(listInputData, headers, url), datasets, null);
     }
 
     /**
      * Get a list of member objects from a partition Dataset
      *
-     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
-     * @param params      list parameters, see ListParams object
+     * @param dataSetName   name of a dataset (e.g. 'DATASET.LIB')
+     * @param listInputData list parameters, see DsnListInputData object
      * @return list of member objects
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public List<Member> getMembers(final String dataSetName, final DsnListInputData params)
+    public List<Member> getMembers(final String dataSetName, final DsnListInputData listInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(listInputData == null, "listInputData is null");
 
         final Map<String, String> headers = new HashMap<>();
         final List<Member> members = new ArrayList<>();
@@ -126,12 +126,12 @@ public class DsnList {
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
 
-        if (params.getPattern().isPresent()) {
+        if (listInputData.getPattern().isPresent()) {
             url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN +
-                    EncodeUtils.encodeURIComponent(params.getPattern().get());
+                    EncodeUtils.encodeURIComponent(listInputData.getPattern().get());
         }
 
-        return getResult(getResponse(params, headers, url), null, members);
+        return getResult(getResponse(listInputData, headers, url), null, members);
     }
 
     /**
@@ -212,16 +212,16 @@ public class DsnList {
     /**
      * Perform the http request and return its response.
      *
-     * @param params  list parameters
-     * @param headers list of headers for http request
-     * @param url     url for http request
+     * @param listInputData list parameters
+     * @param headers       list of headers for http request
+     * @param url           url for http request
      * @return response object with http response info
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private Response getResponse(final DsnListInputData params, final Map<String, String> headers, final String url)
+    private Response getResponse(final DsnListInputData listInputData, final Map<String, String> headers, final String url)
             throws ZosmfRequestException {
-        setHeaders(params, headers);
+        setHeaders(listInputData, headers);
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
@@ -234,17 +234,17 @@ public class DsnList {
     /**
      * Generate the http headers for the request
      *
-     * @param params  list parameters
-     * @param headers list of headers for http request
+     * @param listInputData list parameters
+     * @param headers       list of headers for http request
      * @author Nikunj Goyal
      */
-    private void setHeaders(final DsnListInputData params, final Map<String, String> headers) {
+    private void setHeaders(final DsnListInputData listInputData, final Map<String, String> headers) {
         String key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);
         String value = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(1);
         headers.put(key, value);
 
-        if (params.getAttribute().isPresent()) {
-            AttributeType attribute = params.getAttribute().get();
+        if (listInputData.getAttribute().isPresent()) {
+            AttributeType attribute = listInputData.getAttribute().get();
             if (attribute == AttributeType.BASE) {
                 key = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(0);
                 value = ZosmfHeaders.HEADERS.get("X_IBM_ATTRIBUTES_BASE").get(1);
@@ -254,21 +254,21 @@ public class DsnList {
             }
             headers.put(key, value);
         }
-        if (params.getMaxLength().isPresent()) {
+        if (listInputData.getMaxLength().isPresent()) {
             key = "X-IBM-Max-Items";
-            value = params.getMaxLength().get();
+            value = listInputData.getMaxLength().get();
         } else {
             key = ZosmfHeaders.HEADERS.get("X_IBM_MAX_ITEMS").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_MAX_ITEMS").get(1);
         }
         headers.put(key, value);
-        if (params.getResponseTimeout().isPresent()) {
+        if (listInputData.getResponseTimeout().isPresent()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_RESPONSE_TIMEOUT").get(0);
-            value = params.getResponseTimeout().get();
+            value = listInputData.getResponseTimeout().get();
             headers.put(key, value);
         }
-        if (params.getRecall().isPresent()) {
-            switch (params.getRecall().get().toLowerCase(Locale.ROOT)) {
+        if (listInputData.getRecall().isPresent()) {
+            switch (listInputData.getRecall().get().toLowerCase(Locale.ROOT)) {
                 case "wait":
                     key = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_WAIT").get(0);
                     value = ZosmfHeaders.HEADERS.get("X_IBM_MIGRATED_RECALL_WAIT").get(1);

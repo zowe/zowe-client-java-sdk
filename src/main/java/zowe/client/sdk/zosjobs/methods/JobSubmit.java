@@ -93,13 +93,13 @@ public class JobSubmit {
     /**
      * Submit a JCL string to run which can contain JCL symbolic substitutions
      *
-     * @param params submit jcl parameters, see SubmitJclParams object
+     * @param submitJclInputData submit jcl parameters, see JobSubmitJclInputData object
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Job submitJclCommon(final JobSubmitJclInputData params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+    public Job submitJclCommon(final JobSubmitJclInputData submitJclInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(submitJclInputData == null, "submitJclInputData is null");
 
         String key, value;
         final Map<String, String> headers = new HashMap<>();
@@ -108,25 +108,25 @@ public class JobSubmit {
         value = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_MODE_TEXT").get(1);
         headers.put(key, value);
 
-        if (params.getInternalReaderLrecl().isPresent()) {
+        if (submitJclInputData.getInternalReaderLrecl().isPresent()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_LRECL").get(0);
-            headers.put(key, params.getInternalReaderLrecl().get());
+            headers.put(key, submitJclInputData.getInternalReaderLrecl().get());
         } else {
             key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_LRECL_80").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_LRECL_80").get(1);
             headers.put(key, value);
         }
-        if (params.getInternalReaderRecfm().isPresent()) {
+        if (submitJclInputData.getInternalReaderRecfm().isPresent()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_RECFM").get(0);
-            headers.put(key, params.getInternalReaderLrecl().get());
+            headers.put(key, submitJclInputData.getInternalReaderLrecl().get());
         } else {
             key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_RECFM_F").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_RECFM_F").get(1);
             headers.put(key, value);
         }
 
-        if (params.getJclSymbols().isPresent()) {
-            headers.putAll(getSubstitutionHeaders(params.getJclSymbols().get()));
+        if (submitJclInputData.getJclSymbols().isPresent()) {
+            headers.putAll(getSubstitutionHeaders(submitJclInputData.getJclSymbols().get()));
         }
 
         key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_CLASS_A").get(0);
@@ -140,7 +140,7 @@ public class JobSubmit {
         }
         request.setHeaders(headers);
         request.setUrl(url);
-        request.setBody(params.getJcl().orElseThrow(() -> new IllegalArgumentException("jcl not specified")));
+        request.setBody(submitJclInputData.getJcl().orElseThrow(() -> new IllegalArgumentException("jcl not specified")));
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job jcl submit response phrase")).toString();
@@ -151,7 +151,7 @@ public class JobSubmit {
     /**
      * Submit a job on z/OS.
      *
-     * @param jobDataSet job dataset to be translated into SubmitJobParams object
+     * @param jobDataSet job dataset to be translated into JobSubmitInputData object
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
@@ -164,26 +164,26 @@ public class JobSubmit {
     /**
      * Submit a job on z/OS.
      *
-     * @param params submit job parameters, see SubmitJobParams object
+     * @param submitInputData submit job parameters, see JobSubmitInputData object
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in SubmitJobParams
-    public Job submitCommon(final JobSubmitInputData params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in JobSubmitInputData
+    public Job submitCommon(final JobSubmitInputData submitInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(submitInputData == null, "submitInputData is null");
 
         final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE;
 
-        final String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(params.getJobDataSet().get()) + "'";
+        final String fullyQualifiedDataset = "//'" + EncodeUtils.encodeURIComponent(submitInputData.getJobDataSet().get()) + "'";
         final Map<String, String> submitMap = new HashMap<>();
         submitMap.put("file", fullyQualifiedDataset);
 
         if (request == null || !(request instanceof PutJsonZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
-        if (params.getJclSymbols().isPresent()) {
-            request.setHeaders(getSubstitutionHeaders(params.getJclSymbols().get()));
+        if (submitInputData.getJclSymbols().isPresent()) {
+            request.setHeaders(getSubstitutionHeaders(submitInputData.getJclSymbols().get()));
         }
         request.setUrl(url);
         request.setBody(new JSONObject(submitMap).toString());

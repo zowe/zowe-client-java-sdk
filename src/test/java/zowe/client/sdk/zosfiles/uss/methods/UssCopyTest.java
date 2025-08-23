@@ -209,7 +209,7 @@ public class UssCopyTest {
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("params is null", errMsg);
+        assertEquals("copyInputData is null", errMsg);
     }
 
     @Test

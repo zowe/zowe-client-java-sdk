@@ -84,7 +84,7 @@ public class DsnCopyExp extends TstZosConnection {
 
     /**
      * Example on how to call DsnCopy copyCommon method.
-     * Copy method accepts a CopyParams object.
+     * Copy method accepts a DsnCopyInputData object.
      * <p>
      * This copy method allows the following copy operations:
      * <p>
@@ -118,7 +118,7 @@ public class DsnCopyExp extends TstZosConnection {
 
     /**
      * Example on how to call DsnCopy copyCommon method.
-     * Copy method accepts a CopyParams object.
+     * Copy method accepts a DsnCopyInputData object.
      * <p>
      * This copy method is different from the other two examples above as it
      * sets the copyAllMember variable true to indicate that the copy operation will be performed
@@ -231,9 +231,9 @@ public class DsnCreateExp extends TstZosConnection {
     }
 
     /**
-     * Example of a prebuilt CreateParams for creating a binary dataset.
+     * Example of a prebuilt UssCreateInputData for creating a binary dataset.
      *
-     * @return prebuilt CreateParams
+     * @return prebuilt DsnCreateInputData
      */
     public static DsnCreateInputData binary() {
         return new DsnCreateInputData.Builder()
@@ -249,9 +249,9 @@ public class DsnCreateExp extends TstZosConnection {
     }
 
     /**
-     * Example of a prebuilt CreateParams for creating a c dataset
+     * Example of a prebuilt DsnCreateInputData for creating a c dataset
      *
-     * @return prebuilt CreateParams
+     * @return prebuilt DsnCreateInputData
      */
     public static DsnCreateInputData c() {
         return new DsnCreateInputData.Builder()
@@ -267,9 +267,9 @@ public class DsnCreateExp extends TstZosConnection {
     }
 
     /**
-     * Example of a prebuilt CreateParams for creating classic dataset
+     * Example of a prebuilt DsnCreateInputData for creating classic dataset
      *
-     * @return prebuilt CreateParams
+     * @return prebuilt DsnCreateInputData
      */
     public static DsnCreateInputData classic() {
         return new DsnCreateInputData.Builder()
@@ -285,9 +285,9 @@ public class DsnCreateExp extends TstZosConnection {
     }
 
     /**
-     * Example of a prebuilt CreateParams for creating partitioned dataset
+     * Example of a prebuilt DsnCreateInputData for creating partitioned dataset
      *
-     * @return prebuilt CreateParams
+     * @return prebuilt DsnCreateInputData
      */
     public static DsnCreateInputData partitioned() {
         return new DsnCreateInputData.Builder()
@@ -303,9 +303,9 @@ public class DsnCreateExp extends TstZosConnection {
     }
 
     /**
-     * Example of a prebuilt CreateParams for creating sequential dataset
+     * Example of a prebuilt DsnCreateInputData for creating sequential dataset
      *
-     * @return prebuilt CreateParams
+     * @return prebuilt DsnCreateInputData
      */
     public static DsnCreateInputData sequential() {
         return new DsnCreateInputData.Builder()
@@ -591,7 +591,6 @@ import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.dsn.input.DsnListInputData;
-import zowe.client.sdk.zosfiles.dsn.input.ListParams;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnList;
 import zowe.client.sdk.zosfiles.dsn.response.Dataset;
 import zowe.client.sdk.zosfiles.dsn.response.Member;

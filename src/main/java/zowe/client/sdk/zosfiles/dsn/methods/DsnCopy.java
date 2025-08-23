@@ -101,24 +101,24 @@ public class DsnCopy {
     }
 
     /**
-     * Copy dataset or dataset member request driven by CopyParams object settings
+     * Copy dataset or dataset member request driven by DsnCopyInputData object settings
      *
-     * @param params contains copy dataset parameters
+     * @param copyInputData contains copy dataset parameters
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
      * @author Frank Giordano
      */
-    public Response copyCommon(final DsnCopyInputData params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+    public Response copyCommon(final DsnCopyInputData copyInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(copyInputData == null, "copyInputData is null");
 
-        final String url = setUrl(params);
+        final String url = setUrl(copyInputData);
         // build the body key-value pairs needed for the request
-        final Map<String, Object> fromDataSetMap = setFromDataSetMapValues(params);
+        final Map<String, Object> fromDataSetMap = setFromDataSetMapValues(copyInputData);
         final Map<String, Object> copyMap = new HashMap<>();
         copyMap.put("request", "copy");
         copyMap.put("from-dataset", new JSONObject(fromDataSetMap));
-        copyMap.put("replace", params.isReplace());
+        copyMap.put("replace", copyInputData.isReplace());
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -130,20 +130,20 @@ public class DsnCopy {
     }
 
     /**
-     * Return url string value formulated by the given CopyParams object
+     * Return url string value formulated by the given DsnCopyInputData object
      *
-     * @param params CopyParams object
+     * @param copyInputData DsnCopyInputData object
      * @return url string value
      * @author Frank Giordano
      */
-    private String setUrl(final DsnCopyInputData params) {
+    private String setUrl(final DsnCopyInputData copyInputData) {
         final String toDataSetNameErrMsg = "toDataSetName not specified";
-        final String toDataSet = params.getToDataSet()
+        final String toDataSet = copyInputData.getToDataSet()
                 .orElseThrow(() -> new IllegalArgumentException(toDataSetNameErrMsg));
 
         String url = connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
-        if (params.getToVolser().isPresent()) {
-            url += "-(" + params.getToVolser().get() + ")/";
+        if (copyInputData.getToVolser().isPresent()) {
+            url += "-(" + copyInputData.getToVolser().get() + ")/";
         }
         url += EncodeUtils.encodeURIComponent(toDataSet);
         return url;
@@ -154,14 +154,14 @@ public class DsnCopy {
      * <p>
      * Keys to be considered: dsn, member, and volser
      *
-     * @param params CopyParams object
+     * @param copyInputData DsnCopyInputData object
      * @return map containing key-value pairs for the from-dataset parent json value
      * @author Frank Giordano
      */
-    private Map<String, Object> setFromDataSetMapValues(final DsnCopyInputData params) {
+    private Map<String, Object> setFromDataSetMapValues(final DsnCopyInputData copyInputData) {
         final String fromDataSetNameErrMsg = "fromDataSetName not specified";
         String fromDataSetName =
-                params.getFromDataSet().orElseThrow(() -> new IllegalStateException(fromDataSetNameErrMsg));
+                copyInputData.getFromDataSet().orElseThrow(() -> new IllegalStateException(fromDataSetNameErrMsg));
 
         final Map<String, Object> fromDataSetReq = new HashMap<>();
         // is a member name specified in DataSet value?
@@ -173,13 +173,13 @@ public class DsnCopy {
             fromDataSetReq.put("member", member);
             // reassign fromDataSetName to dataSet value without a member
             fromDataSetName = fromDataSetName.substring(0, startMemberIndex);
-        } else if (params.isCopyAllMembers()) {
+        } else if (copyInputData.isCopyAllMembers()) {
             // no member specified copy all members as such
             fromDataSetReq.put("member", "*");
         }
         fromDataSetReq.put("dsn", fromDataSetName);
-        if (params.getFromVolser().isPresent()) {
-            fromDataSetReq.put("volser", params.getFromVolser().get());
+        if (copyInputData.getFromVolser().isPresent()) {
+            fromDataSetReq.put("volser", copyInputData.getFromVolser().get());
         }
         return fromDataSetReq;
     }

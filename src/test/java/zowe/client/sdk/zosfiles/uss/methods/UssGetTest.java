@@ -224,7 +224,7 @@ public class UssGetTest {
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("params is null", errMsg);
+        assertEquals("getInputData is null", errMsg);
     }
 
     @Test

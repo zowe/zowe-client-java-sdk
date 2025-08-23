@@ -307,9 +307,9 @@ public class ZosmfInfoResponse {
         }
 
         /**
-         * Return ChangeTagParams object based on Builder this object
+         * Return ZosmfInfoResponse object based on Builder this object
          *
-         * @return ChangeTagParams this object
+         * @return ZosmfInfoResponse this object
          */
         public ZosmfInfoResponse build() {
             return new ZosmfInfoResponse(this);

@@ -127,18 +127,19 @@ public class UssChangeTag {
     }
 
     /**
-     * Change tag of a UNIX file request driven by ChangeTagParams object settings
+     * Change tag of a UNIX file request driven by UssChangeTagInputData object settings
      *
-     * @param fileNamePath file name with a path
-     * @param params       for parameters for the change tag request, see ChangeTagParams object
+     * @param fileNamePath       file name with a path
+     * @param changeTagInputData for parameters for the change tag request, see UssChangeTagInputData object
      * @return Response Object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response changeCommon(final String fileNamePath, final UssChangeTagInputData params) throws ZosmfRequestException {
+    public Response changeCommon(final String fileNamePath, final UssChangeTagInputData changeTagInputData)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "action not specified");
+        ValidateUtils.checkNullParameter(changeTagInputData == null, "changeTagInputData is null");
+        ValidateUtils.checkIllegalParameter(changeTagInputData.getAction().isEmpty(), "action not specified");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
@@ -146,13 +147,13 @@ public class UssChangeTag {
 
         final Map<String, Object> changeTagMap = new HashMap<>();
         changeTagMap.put("request", "chtag");
-        changeTagMap.put("action", params.getAction().get().getValue());
-        params.getType().ifPresent(type -> changeTagMap.put("type", type.getValue()));
-        params.getCodeset().ifPresent(codeset -> changeTagMap.put("codeset", codeset));
-        if (!params.isRecursive()) {
+        changeTagMap.put("action", changeTagInputData.getAction().get().getValue());
+        changeTagInputData.getType().ifPresent(type -> changeTagMap.put("type", type.getValue()));
+        changeTagInputData.getCodeset().ifPresent(codeset -> changeTagMap.put("codeset", codeset));
+        if (!changeTagInputData.isRecursive()) {
             changeTagMap.put("recursive", "false");
         }
-        params.getLinks().ifPresent(links -> changeTagMap.put("links", links.getValue()));
+        changeTagInputData.getLinks().ifPresent(links -> changeTagMap.put("links", links.getValue()));
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);

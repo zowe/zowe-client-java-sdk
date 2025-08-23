@@ -236,7 +236,7 @@ public class UssWriteTest {
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("params is null", errMsg);
+        assertEquals("writeInputData is null", errMsg);
     }
 
     @Test

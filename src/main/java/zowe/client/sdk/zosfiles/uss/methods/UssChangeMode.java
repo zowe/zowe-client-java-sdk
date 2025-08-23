@@ -70,19 +70,20 @@ public class UssChangeMode {
     }
 
     /**
-     * Change the mode of a UNIX file or directory request driven by ChangeModeParams object settings
+     * Change the mode of a UNIX file or directory request driven by UssChangeModeInputData object settings
      *
-     * @param targetPath identifies the UNIX file or directory to be the target of the operation
-     * @param params     change mode response parameters, see ChangeModeParams object
+     * @param targetPath          identifies the UNIX file or directory to be the target of the operation
+     * @param changeModeInputData change mode response parameters, see UssChangeModeInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewsk
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public Response change(final String targetPath, final UssChangeModeInputData params) throws ZosmfRequestException {
+    public Response change(final String targetPath, final UssChangeModeInputData changeModeInputData)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(changeModeInputData == null, "changeModeInputData is null");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
@@ -90,11 +91,11 @@ public class UssChangeMode {
 
         final Map<String, Object> changeModeMap = new HashMap<>();
         changeModeMap.put("request", "chmod");
-        if (params.isRecursive()) {
+        if (changeModeInputData.isRecursive()) {
             changeModeMap.put("recursive", "true");
         }
-        params.getLinks().ifPresent(type -> changeModeMap.put("links", type.getValue()));
-        changeModeMap.put("mode", params.getMode()
+        changeModeInputData.getLinks().ifPresent(type -> changeModeMap.put("links", type.getValue()));
+        changeModeMap.put("mode", changeModeInputData.getMode()
                 .orElseThrow(() -> new IllegalArgumentException("mode not specified")));
 
         if (request == null) {

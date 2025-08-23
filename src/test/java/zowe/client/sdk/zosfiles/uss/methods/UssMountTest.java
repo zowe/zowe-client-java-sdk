@@ -147,7 +147,7 @@ public class UssMountTest {
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("params is null", errMsg);
+        assertEquals("mountInputData is null", errMsg);
     }
 
     @Test
@@ -158,7 +158,7 @@ public class UssMountTest {
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("params action not specified", errMsg);
+        assertEquals("mountInputData action not specified", errMsg);
     }
 
     @Test

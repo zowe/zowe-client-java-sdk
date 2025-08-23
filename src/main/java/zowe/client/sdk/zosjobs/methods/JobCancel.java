@@ -111,24 +111,24 @@ public class JobCancel {
     }
 
     /**
-     * Cancel a job on z/OS by ModifyJobParams object.
+     * Cancel a job on z/OS by JobModifyInputData object.
      *
-     * @param params cancel job parameters, see cancelJobsCommon object
+     * @param modifyInputData cancel job parameters, see JobModifyInputData object
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in ModifyJobParams
-    public Response cancelCommon(final JobModifyInputData params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in JobModifyInputData
+    public Response cancelCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
 
         // generate full url request
         final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE + JobsConstants.FILE_DELIM +
-                params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
+                modifyInputData.getJobName().get() + JobsConstants.FILE_DELIM + modifyInputData.getJobId().get();
 
         // set version to default value if none given
-        final String version = params.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
+        final String version = modifyInputData.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
 
         // To request asynchronous processing for this service (the default), set the "version" property to 1.0
         // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If 2.0,

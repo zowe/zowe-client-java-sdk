@@ -18,7 +18,6 @@ import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zoslogs.input.ZosLogInputData;
-import zowe.client.sdk.zoslogs.input.ZosLogParams;
 import zowe.client.sdk.zoslogs.method.ZosLog;
 import zowe.client.sdk.zoslogs.response.ZosLogReply;
 import zowe.client.sdk.zoslogs.types.DirectionType;

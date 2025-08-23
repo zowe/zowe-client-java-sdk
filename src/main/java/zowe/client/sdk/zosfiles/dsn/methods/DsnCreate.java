@@ -72,37 +72,37 @@ public class DsnCreate {
     /**
      * Creates a new dataset with specified parameters
      *
-     * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
-     * @param params      to create dataset parameters, see CreateParams object
+     * @param dataSetName     name of a dataset to create (e.g. 'DATASET.LIB')
+     * @param createInputData to create dataset parameters, see DsnCreateInputData object
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
      */
-    public Response create(final String dataSetName, final DsnCreateInputData params) throws ZosmfRequestException {
+    public Response create(final String dataSetName, final DsnCreateInputData createInputData) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(createInputData == null, "createInputData is null");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
         final Map<String, Object> createMap = new HashMap<>();
-        params.getVolser().ifPresent(v -> createMap.put("volser", v));
-        params.getUnit().ifPresent(v -> createMap.put("unit", v));
-        params.getDsorg().ifPresent(v -> createMap.put("dsorg", v));
-        params.getAlcunit().ifPresent(v -> createMap.put("alcunit", v));
-        params.getPrimary().ifPresent(v -> createMap.put("primary", v));
-        params.getSecondary().ifPresent(v -> createMap.put("secondary", v));
-        params.getDirblk().ifPresent(v -> createMap.put("dirblk", v));
-        params.getAvgblk().ifPresent(v -> createMap.put("avgblk", v));
-        params.getRecfm().ifPresent(v -> createMap.put("recfm", v));
-        params.getBlksize().ifPresent(v -> createMap.put("blksize", v));
-        params.getLrecl().ifPresent(v -> createMap.put("lrecl", v));
-        params.getStorclass().ifPresent(v -> createMap.put("storclass", v));
-        params.getStorclass().ifPresent(v -> createMap.put("mgntclass", v));
-        params.getMgntclass().ifPresent(v -> createMap.put("mgntclass", v));
-        params.getDataclass().ifPresent(v -> createMap.put("dataclass", v));
-        params.getDsntype().ifPresent(v -> createMap.put("dsntype", v));
+        createInputData.getVolser().ifPresent(v -> createMap.put("volser", v));
+        createInputData.getUnit().ifPresent(v -> createMap.put("unit", v));
+        createInputData.getDsorg().ifPresent(v -> createMap.put("dsorg", v));
+        createInputData.getAlcunit().ifPresent(v -> createMap.put("alcunit", v));
+        createInputData.getPrimary().ifPresent(v -> createMap.put("primary", v));
+        createInputData.getSecondary().ifPresent(v -> createMap.put("secondary", v));
+        createInputData.getDirblk().ifPresent(v -> createMap.put("dirblk", v));
+        createInputData.getAvgblk().ifPresent(v -> createMap.put("avgblk", v));
+        createInputData.getRecfm().ifPresent(v -> createMap.put("recfm", v));
+        createInputData.getBlksize().ifPresent(v -> createMap.put("blksize", v));
+        createInputData.getLrecl().ifPresent(v -> createMap.put("lrecl", v));
+        createInputData.getStorclass().ifPresent(v -> createMap.put("storclass", v));
+        createInputData.getStorclass().ifPresent(v -> createMap.put("mgntclass", v));
+        createInputData.getMgntclass().ifPresent(v -> createMap.put("mgntclass", v));
+        createInputData.getDataclass().ifPresent(v -> createMap.put("dataclass", v));
+        createInputData.getDsntype().ifPresent(v -> createMap.put("dsntype", v));
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);

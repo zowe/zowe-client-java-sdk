@@ -73,7 +73,7 @@ public class JobDelete {
      *
      * @param jobName name of a job to delete
      * @param jobId   job id
-     * @param version version number, see ModifyJobParams object for version options
+     * @param version version number, see JobModifyInputData object for version options
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Nikunj goyal
@@ -88,7 +88,7 @@ public class JobDelete {
      * Cancel and purge a job from spool.
      *
      * @param job     job document wanting to delete
-     * @param version version number, see ModifyJobParams object for version options
+     * @param version version number, see JobModifyInputData object for version options
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
@@ -101,25 +101,25 @@ public class JobDelete {
     }
 
     /**
-     * Delete a job on z/OS.
+     * Delete a job on z/OS by JobModifyInputData object.
      *
-     * @param params delete job parameters, see DeleteJobParams object
+     * @param modifyInputData delete job parameters, see JobModifyInputData object
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in ModifyJobParams
-    public Response deleteCommon(final JobModifyInputData params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in JobModifyInputData
+    public Response deleteCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(modifyInputData == null, "jobModifyInputData is null");
 
         final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE + JobsConstants.FILE_DELIM +
-                params.getJobName().get() + JobsConstants.FILE_DELIM + params.getJobId().get();
+                modifyInputData.getJobName().get() + JobsConstants.FILE_DELIM + modifyInputData.getJobId().get();
 
         final Map<String, String> headers = new HashMap<>();
 
         // set version to default value if none given
-        final String version = params.getVersion().orElse(JobsConstants.DEFAULT_DELETE_VERSION);
+        final String version = modifyInputData.getVersion().orElse(JobsConstants.DEFAULT_DELETE_VERSION);
 
         // To request asynchronous processing for this service (the default), set the "version" property to 1.0
         // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If 2.0,

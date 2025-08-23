@@ -43,7 +43,6 @@ import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
 import zowe.client.sdk.zosfiles.dsn.input.DsnListInputData;
-import zowe.client.sdk.zosfiles.dsn.input.ListParams;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnList;
 import zowe.client.sdk.zosfiles.dsn.response.Member;
 
@@ -95,9 +94,9 @@ public class TeamConfigExp {
      * @author Frank Giordano
      */
     public static void listMembers(ZosConnection connection, String dataSetName) throws ZosmfRequestException {
-        DsnListInputData params = new DsnListInputData.Builder().build();
+        DsnListInputData listInputData = new DsnListInputData.Builder().build();
         DsnList dsnList = new DsnList(connection);
-        List<Member> datasets = dsnList.getMembers(dataSetName, params);
+        List<Member> datasets = dsnList.getMembers(dataSetName, listInputData);
         datasets.forEach(System.out::println);
     }
 

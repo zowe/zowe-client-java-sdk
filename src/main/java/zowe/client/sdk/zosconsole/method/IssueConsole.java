@@ -109,23 +109,23 @@ public class IssueConsole {
     }
 
     /**
-     * Issue an MVS console command on a given console name driven by IssueConsoleParams settings done synchronously
+     * Issue an MVS console command on a given console name driven by IssueConsoleInputData settings done synchronously
      *
-     * @param consoleName name of the console that is used to issue the command
-     * @param params      synchronous console issue parameters, see ZosmfIssueParams object
+     * @param consoleName      name of the console that is used to issue the command
+     * @param consoleInputData synchronous console issue parameters, see IssueConsoleInputData object
      * @return command response on resolve, see ZosmfIssueResponse object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ConsoleResponse issueCommandCommon(final String consoleName, final IssueConsoleInputData params)
+    public ConsoleResponse issueCommandCommon(final String consoleName, final IssueConsoleInputData consoleInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(consoleName, "consoleName");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+        ValidateUtils.checkNullParameter(consoleInputData == null, "consoleInputData is null");
 
         final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(consoleName);
 
-        final Map<String, String> issueMap = getIssueMap(params);
+        final Map<String, String> issueMap = getIssueMap(consoleInputData);
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -138,21 +138,21 @@ public class IssueConsole {
         final JSONObject jsonObject = JsonParserUtil.parse(jsonStr);
         return ConsoleResponseService.getInstance().buildConsoleResponse(
                 (ZosmfIssueResponse) JsonParseFactory.buildParser(ParseType.MVS_CONSOLE).parseResponse(jsonObject),
-                params.isProcessResponse());
+                consoleInputData.isProcessResponse());
     }
 
     /**
      * Generate a map of values for JSON body payload for request
      *
-     * @param params IssueConsoleParams object
+     * @param consoleInputData IssueConsoleInputData object
      * @return Map for JSON body
      * @author Shabaz Kowthalam
      */
-    private Map<String, String> getIssueMap(IssueConsoleInputData params) {
+    private Map<String, String> getIssueMap(IssueConsoleInputData consoleInputData) {
         final Map<String, String> issueMap = new HashMap<>();
-        issueMap.put(CMD, params.getCmd());
-        params.getSolKey().ifPresent(solKey -> issueMap.put(SOL_KEY, solKey));
-        params.getSystem().ifPresent(sys -> issueMap.put(SYSTEM, sys));
+        issueMap.put(CMD, consoleInputData.getCmd());
+        consoleInputData.getSolKey().ifPresent(solKey -> issueMap.put(SOL_KEY, solKey));
+        consoleInputData.getSystem().ifPresent(sys -> issueMap.put(SYSTEM, sys));
         return issueMap;
     }
 

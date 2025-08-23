@@ -83,37 +83,37 @@ public class ZosLog {
      * <p>
      * If the API fails, you may be missing APAR see PH35930 required for log operations.
      *
-     * @param params ZosLogParams object
+     * @param logInputData ZosLogInputData object
      * @return ZosLogReply object with log messages/items
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ZosLogReply issueCommand(final ZosLogInputData params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+    public ZosLogReply issueCommand(final ZosLogInputData logInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(logInputData == null, "logInputData is null");
 
         final String defaultUrl = connection.getZosmfUrl() + RESOURCE;
         final StringBuilder url = new StringBuilder(defaultUrl);
         final String customPattern = "yyyy-MM-dd'T'HH:mm'Z'";
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(customPattern);
 
-        params.getStartTime().ifPresentOrElse(time -> url.append("?time=").append(time),
+        logInputData.getStartTime().ifPresentOrElse(time -> url.append("?time=").append(time),
                 () -> url.append("?time=").append(LocalDateTime.now().format(formatter)));
-        params.getTimeRange().ifPresent(timeRange -> {
-            if (params.getQueryCount() > 1) {
+        logInputData.getTimeRange().ifPresent(timeRange -> {
+            if (logInputData.getQueryCount() > 1) {
                 url.append("&timeRange=").append(timeRange);
             } else {
                 url.append("?timeRange=").append(timeRange);
             }
         });
-        params.getDirection().ifPresent(direction -> {
-            if (params.getQueryCount() > 1) {
+        logInputData.getDirection().ifPresent(direction -> {
+            if (logInputData.getQueryCount() > 1) {
                 url.append("&direction=").append(direction.getValue());
             } else {
                 url.append("?direction=").append(direction.getValue());
             }
         });
-        params.getHardCopy().ifPresent(hardCopy -> {
-            if (params.getQueryCount() > 1) {
+        logInputData.getHardCopy().ifPresent(hardCopy -> {
+            if (logInputData.getQueryCount() > 1) {
                 url.append("&hardcopy=").append(hardCopy.getValue());
             } else {
                 url.append("?hardcopy=").append(hardCopy.getValue());
@@ -134,7 +134,7 @@ public class ZosLog {
         }
 
         final List<ZosLogItem> zosLogItems = new ArrayList<>();
-        final boolean isProcessResponse = params.isProcessResponses();
+        final boolean isProcessResponse = logInputData.isProcessResponses();
 
         for (Object itemJsonObj : jsonArray) {
             final ZosLogItemJsonParse parser = (ZosLogItemJsonParse) JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM);

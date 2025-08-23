@@ -107,17 +107,17 @@ public class JobGet {
     /**
      * Get the JCL that was used to submit a job.
      *
-     * @param params for common job parameters, see CommonJobParams object
+     * @param commonInputData for common job parameters, see CommonJobInputData object
      * @return JCL content
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobParams
-    public String getJclCommon(final CommonJobInputData params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobInputData
+    public String getJclCommon(final CommonJobInputData commonInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(commonInputData == null, "commonInputData is null");
 
         url = connection.getZosmfUrl() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" + params.getJobId().get() +
+                EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) + "/" + commonInputData.getJobId().get() +
                 JobsConstants.RESOURCE_SPOOL_FILES + JobsConstants.RESOURCE_JCL_CONTENT + JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         if (request == null || !(request instanceof GetTextZosmfRequest)) {
@@ -207,42 +207,42 @@ public class JobGet {
     /**
      * Get jobs filtered by owner and prefix.
      *
-     * @param params to get job parameters, see GetJobParams object
+     * @param getInputData to get job parameters, see JobGetInputData object
      * @return list of job objects (matching jobs), without step-data
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public List<Job> getCommon(final JobGetInputData params) throws ZosmfRequestException {
+    public List<Job> getCommon(final JobGetInputData getInputData) throws ZosmfRequestException {
         List<Job> jobs = new ArrayList<>();
 
         url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE + QueryConstants.QUERY_ID;
 
-        if (params != null) {
-            if (params.getOwner().isPresent()) {
-                url += JobsConstants.QUERY_OWNER + params.getOwner().get();
+        if (getInputData != null) {
+            if (getInputData.getOwner().isPresent()) {
+                url += JobsConstants.QUERY_OWNER + getInputData.getOwner().get();
             }
-            if (params.getPrefix().isPresent()) {
-                if (!JobsConstants.DEFAULT_PREFIX.equals(params.getPrefix().get())) {
+            if (getInputData.getPrefix().isPresent()) {
+                if (!JobsConstants.DEFAULT_PREFIX.equals(getInputData.getPrefix().get())) {
                     if (url.contains(QueryConstants.QUERY_ID)) {
                         url += QueryConstants.COMBO_ID;
                     }
-                    url += JobsConstants.QUERY_PREFIX + EncodeUtils.encodeURIComponent(params.getPrefix().get());
+                    url += JobsConstants.QUERY_PREFIX + EncodeUtils.encodeURIComponent(getInputData.getPrefix().get());
                 }
             }
-            if (params.getMaxJobs().isPresent()) {
-                if (params.getMaxJobs().getAsInt() != JobsConstants.DEFAULT_MAX_JOBS) {
+            if (getInputData.getMaxJobs().isPresent()) {
+                if (getInputData.getMaxJobs().getAsInt() != JobsConstants.DEFAULT_MAX_JOBS) {
                     if (url.contains(QueryConstants.QUERY_ID)) {
                         url += QueryConstants.COMBO_ID;
                     }
-                    url += JobsConstants.QUERY_MAX_JOBS + params.getMaxJobs().getAsInt();
+                    url += JobsConstants.QUERY_MAX_JOBS + getInputData.getMaxJobs().getAsInt();
                 }
             }
-            if (params.getJobId().isPresent()) {
+            if (getInputData.getJobId().isPresent()) {
                 if (url.contains(QueryConstants.QUERY_ID)) {
                     url += QueryConstants.COMBO_ID;
                 }
-                url += JobsConstants.QUERY_JOBID + params.getJobId().get();
+                url += JobsConstants.QUERY_JOBID + getInputData.getJobId().get();
             }
         } else {
             // if no user defined in ZosConnection then query jobs by owner=*
@@ -289,18 +289,18 @@ public class JobGet {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobParams
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobInputData
     public String getSpoolContent(final String jobName, final String jobId, final int spoolId)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jobName, "jobName");
         ValidateUtils.checkIllegalParameter(jobId, "jobId");
         ValidateUtils.checkIllegalParameter(spoolId <= 0, "spool id not specified");
 
-        // use CommonJobParams container class that does all the ValidateUtils checks
-        final CommonJobInputData params = new CommonJobInputData(jobId, jobName);
+        // use CommonJobInputData container class that does all the ValidateUtils checks
+        final CommonJobInputData commonInputData = new CommonJobInputData(jobId, jobName);
         url = connection.getZosmfUrl() +
-                JobsConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" +
-                params.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES + "/" + spoolId +
+                JobsConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) + "/" +
+                commonInputData.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES + "/" + spoolId +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         if (request == null || !(request instanceof GetTextZosmfRequest)) {
@@ -361,18 +361,18 @@ public class JobGet {
     /**
      * Get a list of all job spool files for a job.
      *
-     * @param params for common job parameters, see CommonJobParams object
+     * @param commonInputData for common job parameters, see CommonJobInputData object
      * @return list of JobFile objects
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobParams
-    public List<JobFile> getSpoolFilesCommon(final CommonJobInputData params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobInputData
+    public List<JobFile> getSpoolFilesCommon(final CommonJobInputData commonInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(commonInputData == null, "commonInputData is null");
 
         url = connection.getZosmfUrl() +
-                JobsConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/" +
-                params.getJobId().get() + "/files";
+                JobsConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
+                "/" + commonInputData.getJobId().get() + "/files";
 
         if (request == null || !(request instanceof GetJsonZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
@@ -429,20 +429,20 @@ public class JobGet {
     /**
      * Get the status and other details (e.g., owner, return code) for a job, including step-data.
      *
-     * @param params for common job parameters, see CommonJobParams object
+     * @param commonInputData for common job parameters, see CommonJobInputData object
      * @return job document (matching job)
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobParams
-    public Job getStatusCommon(final CommonJobInputData params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobInputData
+    public Job getStatusCommon(final CommonJobInputData commonInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(commonInputData == null, "commonInputData is null");
 
-        url = connection.getZosmfUrl() +
-                JobsConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(params.getJobName().get()) + "/"
-                + params.getJobId().get();
+        url = connection.getZosmfUrl() + JobsConstants.RESOURCE + "/" +
+                EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) + "/" +
+                commonInputData.getJobId().get();
 
-        if (params.isStepData()) {
+        if (commonInputData.isStepData()) {
             url += JobsConstants.QUERY_ID + JobsConstants.STEP_DATA;
         }
 

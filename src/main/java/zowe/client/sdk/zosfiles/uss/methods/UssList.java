@@ -82,37 +82,37 @@ public class UssList {
     /**
      * Perform a list of UNIX files operation
      *
-     * @param params ListParams object
+     * @param listInputData UssListInputData object
      * @return list of UssItem objects
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public List<UnixFile> getFiles(final UssListInputData params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
+    public List<UnixFile> getFiles(final UssListInputData listInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(listInputData == null, "listInputData is null");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
 
         url.append("?path=").append(EncodeUtils.encodeURIComponent(FileUtils.validatePath(
-                params.getPath().orElseThrow(() -> new IllegalArgumentException("path not specified")))));
-        params.getGroup().ifPresent(group -> url.append("&group=").append(EncodeUtils.encodeURIComponent(group)));
-        params.getUser().ifPresent(user -> url.append("&user=").append(EncodeUtils.encodeURIComponent(user)));
-        params.getMtime().ifPresent(mtime -> url.append("&mtime=").append(EncodeUtils.encodeURIComponent(mtime)));
-        params.getSize().ifPresent(size -> url.append("&size=").append(size));
-        params.getName().ifPresent(name -> url.append("&name=").append(EncodeUtils.encodeURIComponent(name)));
-        params.getPerm().ifPresent(perm -> url.append("&perm=").append(EncodeUtils.encodeURIComponent(perm)));
+                listInputData.getPath().orElseThrow(() -> new IllegalArgumentException("path not specified")))));
+        listInputData.getGroup().ifPresent(group -> url.append("&group=").append(EncodeUtils.encodeURIComponent(group)));
+        listInputData.getUser().ifPresent(user -> url.append("&user=").append(EncodeUtils.encodeURIComponent(user)));
+        listInputData.getMtime().ifPresent(mtime -> url.append("&mtime=").append(EncodeUtils.encodeURIComponent(mtime)));
+        listInputData.getSize().ifPresent(size -> url.append("&size=").append(size));
+        listInputData.getName().ifPresent(name -> url.append("&name=").append(EncodeUtils.encodeURIComponent(name)));
+        listInputData.getPerm().ifPresent(perm -> url.append("&perm=").append(EncodeUtils.encodeURIComponent(perm)));
         // If type parameter is specified with the size parameter, it must be set to 'f'.
         // Sizes that are associated with all other types are unspecified.
-        if (params.getSize().isPresent() && params.getType().isPresent()) {
+        if (listInputData.getSize().isPresent() && listInputData.getType().isPresent()) {
             url.append("&type=f");
         } else {
-            params.getType().ifPresent(type -> url.append("&type=").append(type.getValue()));
+            listInputData.getType().ifPresent(type -> url.append("&type=").append(type.getValue()));
         }
-        params.getDepth().ifPresent(depth -> url.append("&depth=").append(depth));
-        if (params.isFilesys()) {
+        listInputData.getDepth().ifPresent(depth -> url.append("&depth=").append(depth));
+        if (listInputData.isFilesys()) {
             url.append("&filesys=all");
         }
-        if (params.isSymlinks()) {
+        if (listInputData.isSymlinks()) {
             url.append("&symlinks=report");
         }
 
@@ -120,7 +120,7 @@ public class UssList {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
 
-        final int maxLength = params.getMaxLength().orElse(0);
+        final int maxLength = listInputData.getMaxLength().orElse(0);
         if (maxLength > 0) {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }
@@ -144,28 +144,28 @@ public class UssList {
     /**
      * Perform a list of UNIX filesystems operation
      *
-     * @param params ListZfsParams parameter object
+     * @param listZfsInputData UssListZfsInputData parameter object
      * @return list of UssZfsItem objects
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
-    public List<UnixZfs> getZfsSystems(final UssListZfsInputData params) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getPath().isEmpty() && params.getFsname().isEmpty(),
+    public List<UnixZfs> getZfsSystems(final UssListZfsInputData listZfsInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(listZfsInputData == null, "listZfsInputData is null");
+        ValidateUtils.checkIllegalParameter(listZfsInputData.getPath().isEmpty() && listZfsInputData.getFsname().isEmpty(),
                 "no path or fsname specified");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS);
 
-        params.getPath().ifPresent(path -> url.append("?path=").append(
+        listZfsInputData.getPath().ifPresent(path -> url.append("?path=").append(
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(path))));
-        params.getFsname().ifPresent(fsname -> url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
+        listZfsInputData.getFsname().ifPresent(fsname -> url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
 
-        final int maxLength = params.getMaxLength().orElse(0);
+        final int maxLength = listZfsInputData.getMaxLength().orElse(0);
         if (maxLength > 0) {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
         }

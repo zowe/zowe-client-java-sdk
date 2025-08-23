@@ -105,23 +105,24 @@ public class UssMount {
     }
 
     /**
-     * Perform mount or unmount of a file system name request driven by MountParams settings
+     * Perform mount or unmount of a file system name request driven by UssMountInputData settings
      *
      * @param fileSystemName the file system name
-     * @param params         MountParams object
+     * @param mountInputData UssMountInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response mountCommon(final String fileSystemName, final UssMountInputData params) throws ZosmfRequestException {
+    public Response mountCommon(final String fileSystemName, final UssMountInputData mountInputData)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileSystemName, "fileSystemName");
-        ValidateUtils.checkNullParameter(params == null, "params is null");
-        ValidateUtils.checkIllegalParameter(params.getAction().isEmpty(), "params action not specified");
+        ValidateUtils.checkNullParameter(mountInputData == null, "mountInputData is null");
+        ValidateUtils.checkIllegalParameter(mountInputData.getAction().isEmpty(), "mountInputData action not specified");
 
-        final String action = params.getAction().get().getValue();
+        final String action = mountInputData.getAction().get().getValue();
         if ("MOUNT".equalsIgnoreCase(action)) {
-            ValidateUtils.checkIllegalParameter(params.getMountPoint().isEmpty(), "mountPoint not specified");
-            ValidateUtils.checkIllegalParameter(params.getFsType().isEmpty(), "fsType not specified");
+            ValidateUtils.checkIllegalParameter(mountInputData.getMountPoint().isEmpty(), "mountPoint not specified");
+            ValidateUtils.checkIllegalParameter(mountInputData.getFsType().isEmpty(), "fsType not specified");
         }
 
         final String url = connection.getZosmfUrl() +
@@ -130,9 +131,9 @@ public class UssMount {
 
         final Map<String, Object> mountMap = new HashMap<>();
         mountMap.put("action", action);
-        params.getMountPoint().ifPresent(str -> mountMap.put("mount-point", str));
-        params.getFsType().ifPresent(str -> mountMap.put("fs-type", str));
-        params.getMode().ifPresent(str -> mountMap.put("mode", str.getValue()));
+        mountInputData.getMountPoint().ifPresent(str -> mountMap.put("mount-point", str));
+        mountInputData.getFsType().ifPresent(str -> mountMap.put("fs-type", str));
+        mountInputData.getMode().ifPresent(str -> mountMap.put("mode", str.getValue()));
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);

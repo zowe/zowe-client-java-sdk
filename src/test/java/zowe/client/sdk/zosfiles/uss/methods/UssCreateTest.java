@@ -144,7 +144,7 @@ public class UssCreateTest {
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("params is null", errMsg);
+        assertEquals("createInputData is null", errMsg);
     }
 
     @Test
@@ -255,7 +255,7 @@ public class UssCreateTest {
         } catch (NullPointerException e) {
             errMsg = e.getMessage();
         }
-        assertEquals("params is null", errMsg);
+        assertEquals("createZfsInputData is null", errMsg);
     }
 
     @Test
