@@ -16,12 +16,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Class containing unit tests for CreateZfsParams.
+ * Class containing unit tests for UssCreateZfsInputData.
  *
  * @author Frank Giordano
  * @version 4.0
  */
-public class CreateZfsParamsTest {
+public class UssCreateZfsInputDataTest {
 
     @Test
     public void tstCreateZfsParamsValueCheckSuccess() {

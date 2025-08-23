@@ -65,16 +65,16 @@ public class DsnListTest {
     @Test
     public void tstDsnListSuccess() throws ZosmfRequestException {
         final DsnList dsnList = new DsnList(connection, mockGetRequest);
-        final DsnListInputData params = new DsnListInputData.Builder().responseTimeout("10").volume("vol1").build();
-        dsnList.getMembers("TEST.DATASET", params);
+        final DsnListInputData listInputData = new DsnListInputData.Builder().responseTimeout("10").volume("vol1").build();
+        dsnList.getMembers("TEST.DATASET", listInputData);
         assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET/member", mockGetRequest.getUrl());
     }
 
     @Test
     public void tstDsnListTokenSuccess() throws ZosmfRequestException {
         final DsnList dsnList = new DsnList(connection, mockGetRequestToken);
-        final DsnListInputData params = new DsnListInputData.Builder().responseTimeout("10").volume("vol1").build();
-        dsnList.getMembers("TEST.DATASET", params);
+        final DsnListInputData listInputData = new DsnListInputData.Builder().responseTimeout("10").volume("vol1").build();
+        dsnList.getMembers("TEST.DATASET", listInputData);
         assertEquals("{X-IBM-Max-Items=0, Accept-Encoding=gzip, X-IBM-Response-Timeout=10, " +
                         "X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockGetRequestToken.getHeaders().toString());

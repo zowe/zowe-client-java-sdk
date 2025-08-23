@@ -116,13 +116,13 @@ public class IssueConsoleInputData {
     }
 
     /**
-     * Return string value representing IssueConsoleParams object
+     * Return string value representing IssueConsoleInputData object
      *
-     * @return string representation of IssueConsoleParams
+     * @return string representation of IssueConsoleInputData
      */
     @Override
     public String toString() {
-        return "IssueConsoleParams{" +
+        return "IssueConsoleInputData{" +
                 "cmd=" + cmd +
                 ", solKey=" + solKey +
                 ", system=" + system +
