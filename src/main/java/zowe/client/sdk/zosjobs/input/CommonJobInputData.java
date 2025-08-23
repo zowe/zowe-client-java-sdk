@@ -51,7 +51,7 @@ public class CommonJobInputData {
     }
 
     /**
-     * CommonJobParams constructor with a step data flag
+     * CommonJobInputData constructor with a step data flag
      *
      * @param jobId    job id value
      * @param jobName  job name value

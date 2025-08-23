@@ -280,7 +280,7 @@ public class DsnDownloadInputData {
     }
 
     /**
-     * Builder class for DownloadParams
+     * Builder class for DsnDownloadInputData
      */
     public static class Builder {
 

@@ -248,7 +248,7 @@ public class UssCreateZfsInputData {
     }
 
     /**
-     * Builder class for CreateZfsParams
+     * Builder class for UssCreateZfsInputData
      */
     public static class Builder {
 

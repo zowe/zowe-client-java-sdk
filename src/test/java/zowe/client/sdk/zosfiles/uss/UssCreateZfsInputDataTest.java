@@ -25,8 +25,8 @@ public class UssCreateZfsInputDataTest {
 
     @Test
     public void tstCreateZfsParamsValueCheckSuccess() {
-        UssCreateZfsInputData createZfsParams = new UssCreateZfsInputData.Builder(10).build();
-        assertEquals(10, createZfsParams.getCylsPri().getAsInt());
+        UssCreateZfsInputData createZfsInputData = new UssCreateZfsInputData.Builder(10).build();
+        assertEquals(10, createZfsInputData.getCylsPri().getAsInt());
     }
 
     @Test

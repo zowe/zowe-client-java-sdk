@@ -131,10 +131,10 @@ public class IssueConsoleTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
-        final IssueConsoleInputData issueConsoleParams = new IssueConsoleInputData("command");
-        issueConsoleParams.setProcessResponse();
-        issueConsoleParams.setSolKey("foo");
-        final ConsoleResponse response = issueCommand.issueCommandCommon("consolename", issueConsoleParams);
+        final IssueConsoleInputData consoleInputData = new IssueConsoleInputData("command");
+        consoleInputData.setProcessResponse();
+        consoleInputData.setSolKey("foo");
+        final ConsoleResponse response = issueCommand.issueCommandCommon("consolename", consoleInputData);
         assertEquals("", response.getCommandResponse().orElse("n/a"));
     }
 

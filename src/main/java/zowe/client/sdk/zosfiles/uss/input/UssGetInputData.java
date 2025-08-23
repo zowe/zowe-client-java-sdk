@@ -208,7 +208,7 @@ public class UssGetInputData {
         private Integer maxreturnsize;
 
         /**
-         * Internal use to count number of query parameters specified
+         * Internal use to count the number of query parameters specified
          */
         private int queryCount = 0;
 
@@ -243,7 +243,7 @@ public class UssGetInputData {
         }
 
         /**
-         * Set search string value
+         * Set a search string value
          *
          * @param search string value
          * @return Builder this object
@@ -261,7 +261,7 @@ public class UssGetInputData {
          * Set research value
          *
          * @param research string value
-         * @return GetParams.Builder this object
+         * @return UssGetInputData.Builder this object
          */
         public Builder research(final String research) {
             if (this.search != null) {
@@ -297,7 +297,7 @@ public class UssGetInputData {
         }
 
         /**
-         * Set binary boolean value
+         * Set a binary boolean value
          *
          * @param binary boolean true or false value
          * @return Builder this object

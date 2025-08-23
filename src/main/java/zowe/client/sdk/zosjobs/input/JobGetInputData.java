@@ -184,9 +184,9 @@ public class JobGetInputData {
         }
 
         /**
-         * Return GetJobParams object based on Builder this object
+         * Return JobGetInputData object based on Builder this object
          *
-         * @return GetJobParams this object
+         * @return JobGetInputData this object
          */
         public JobGetInputData build() {
             return new JobGetInputData(this);

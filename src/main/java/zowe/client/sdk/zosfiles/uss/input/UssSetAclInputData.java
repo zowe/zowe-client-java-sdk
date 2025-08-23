@@ -231,7 +231,7 @@ public class UssSetAclInputData {
          * Set abort value
          *
          * @param abort abort value
-         * @return SetAclParams.Builder
+         * @return UssSetAclInputData.Builder
          */
         public UssSetAclInputData.Builder setAbort(final boolean abort) {
             this.abort = abort;
@@ -242,7 +242,7 @@ public class UssSetAclInputData {
          * Set links value
          *
          * @param links links value
-         * @return SetAclParams.Builder
+         * @return UssSetAclInputData.Builder
          */
         public UssSetAclInputData.Builder setLinks(final LinkType links) {
             this.links = links;
@@ -253,7 +253,7 @@ public class UssSetAclInputData {
          * Set deleteType value
          *
          * @param deleteType deleteType value
-         * @return SetAclParams.Builder
+         * @return UssSetAclInputData.Builder
          */
         public UssSetAclInputData.Builder setDeleteType(final DeleteAclType deleteType) {
             ValidateUtils.checkNullParameter(deleteType == null, "deleteType is null");
@@ -265,7 +265,7 @@ public class UssSetAclInputData {
          * Set the SET value
          *
          * @param set set value
-         * @return SetAclParams.Builder
+         * @return UssSetAclInputData.Builder
          */
         public UssSetAclInputData.Builder setSet(final String set) {
             ValidateUtils.checkNullParameter(set == null, "set is null");
@@ -278,7 +278,7 @@ public class UssSetAclInputData {
          * Set modify value
          *
          * @param modify modify value
-         * @return SetAclParams.Builder
+         * @return UssSetAclInputData.Builder
          */
         public UssSetAclInputData.Builder setModify(final String modify) {
             ValidateUtils.checkNullParameter(modify == null, "modify is null");
@@ -291,7 +291,7 @@ public class UssSetAclInputData {
          * Set delete value
          *
          * @param delete delete value
-         * @return SetAclParams.Builder
+         * @return UssSetAclInputData.Builder
          */
         public UssSetAclInputData.Builder setDelete(final String delete) {
             ValidateUtils.checkNullParameter(delete == null, "delete is null");
