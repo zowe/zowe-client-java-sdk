@@ -265,6 +265,9 @@ public class IssueTsoTest {
 
             IssueTso issueTso = new IssueTso(mock(ZosConnection.class), "ACCT123");
 
+            // The ZosConnection mock passed into IssueTso is a dummy dependency —
+            // it never actually matters in this test, because all request-building logic is intercepted by
+            // the mocked static factory.
             List<String> messages = issueTso.issueCommand("LU TESTUSER");
             assertEquals(List.of("Message1"), messages);
 
