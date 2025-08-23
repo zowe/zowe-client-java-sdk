@@ -109,7 +109,7 @@ public class IssueConsoleInputData {
     }
 
     /**
-     * Set process response to true
+     * Set a process response to true
      */
     public void setProcessResponse() {
         this.processResponse = true;
