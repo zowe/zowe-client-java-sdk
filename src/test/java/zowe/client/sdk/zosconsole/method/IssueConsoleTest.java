@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -30,14 +31,16 @@ import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.Mockito.doCallRealMethod;
-import static org.mockito.Mockito.withSettings;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 /**
  * Class containing unit tests for IssueCommand.
@@ -67,11 +70,7 @@ public class IssueConsoleTest {
                 new Response(json, 200, "success"));
         final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
         final ConsoleResponse response = issueCommand.issueCommand("command");
-        assertEquals("student",
-                response.getCommandResponse()
-                        .orElse("n/a")
-                        .replaceAll("\\r", "")
-                        .replaceAll("\\n", ""));
+        assertEquals("student", response.getCommandResponse().orElse("n/a"));
     }
 
     @Test
@@ -94,11 +93,7 @@ public class IssueConsoleTest {
         ConsoleResponse response = issueCommand.issueCommand("command");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestAuth.getHeaders().toString());
-        assertEquals("student",
-                response.getCommandResponse()
-                        .orElse("n/a")
-                        .replaceAll("\\r", "")
-                        .replaceAll("\\n", ""));
+        assertEquals("student", response.getCommandResponse().orElse("n/a"));
     }
 
     @Test
@@ -147,11 +142,7 @@ public class IssueConsoleTest {
                 new Response(json, 200, "success"));
         IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
         ConsoleResponse response = issueCommand.issueCommand("command");
-        assertEquals("student",
-                response.getCmdResponseUrl()
-                        .orElse("n/a")
-                        .replaceAll("\\r", "")
-                        .replaceAll("\\n", ""));
+        assertEquals("student", response.getCmdResponseUrl().orElse("n/a"));
     }
 
     @SuppressWarnings("unchecked")
