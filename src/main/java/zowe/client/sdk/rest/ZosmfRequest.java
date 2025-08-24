@@ -150,7 +150,7 @@ public abstract class ZosmfRequest {
      * @param certPassword certificate password for certificate file (.p12)
      * @author Frank Giordano
      */
-    private void setupSelfSignedCertificate(String certFilePath, String certPassword) {
+    private void setupSelfSignedCertificate(final String certFilePath, final String certPassword) {
         try {
             System.setProperty("jdk.internal.httpclient.disableHostnameVerification", "true");
 
