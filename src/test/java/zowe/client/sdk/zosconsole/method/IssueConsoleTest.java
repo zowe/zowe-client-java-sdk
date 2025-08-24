@@ -74,6 +74,31 @@ public class IssueConsoleTest {
     }
 
     @Test
+    public void tstIssueConsoleIssueCommandCmdResponseWithMockStaticSuccess() throws ZosmfRequestException {
+        final Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("cmd-response", "student");
+        final JSONObject json = new JSONObject(jsonMap);
+
+        ZosmfRequest mockRequest = mock(ZosmfRequest.class);
+
+        Response mockResponse = mock(Response.class);
+        when(mockResponse.getResponsePhrase()).thenReturn(Optional.of(json));
+        when(mockResponse.getStatusCode()).thenReturn(OptionalInt.of(200));
+        when(mockResponse.getStatusText()).thenReturn(Optional.of("success"));
+
+        try (MockedStatic<ZosmfRequestFactory> mockedFactory = mockStatic(ZosmfRequestFactory.class)) {
+            mockedFactory.when(() -> ZosmfRequestFactory.buildRequest(any(), any(ZosmfRequestType.class)))
+                    .thenReturn(mockRequest);
+
+            when(mockRequest.executeRequest()).thenReturn(mockResponse);
+
+            final IssueConsole issueCommand = new IssueConsole(mock(ZosConnection.class));
+            final ConsoleResponse response = issueCommand.issueCommand("command");
+            assertEquals("student", response.getCommandResponse().orElse("n/a"));
+        }
+    }
+
+    @Test
     public void tstIssueConsoleIssueCommandCmdResponseToggleTokenSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "student");
