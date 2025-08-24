@@ -34,7 +34,7 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for DsnGet.
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class DsnGetTest {
 

@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Class containing unit tests for ZosConnectionFactory.
  *
- * @version 4.0
+ * @version 5.0
  */
 public class ZosConnectionFactoryTest {
 

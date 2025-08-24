@@ -17,7 +17,7 @@ import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
  * Parse JSON response from MVS console request
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public final class MvsConsoleJsonParse implements JsonParse {
 

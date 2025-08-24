@@ -35,7 +35,7 @@ import static org.junit.Assert.*;
  * Class containing unit tests for JobGet.
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 @RunWith(MockitoJUnitRunner.class)
 public class JobGetJsonTest {

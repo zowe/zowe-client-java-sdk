@@ -13,7 +13,7 @@ package zowe.client.sdk.zostso;
  * Constants for various tso related info
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public final class TsoConstants {
 

@@ -19,7 +19,7 @@ import zowe.client.sdk.zostso.method.IssueTso;
  * Class example to test tso command functionality via IssueTso class.
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class IssueTsoExp extends TstZosConnection {
 
@@ -72,7 +72,7 @@ import zowe.client.sdk.teamconfig.model.ProfileDao;
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class TstZosConnection {
 

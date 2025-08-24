@@ -22,7 +22,7 @@ import static org.junit.Assert.assertSame;
  * Class containing unit tests for SystemsParseResponse.
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class SystemsParseResponseTest {
 

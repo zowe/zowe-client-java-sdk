@@ -14,7 +14,7 @@ package zowe.client.sdk.zosjobs.response;
  * Class used internally to help determine current job status
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class CheckJobStatus {
 

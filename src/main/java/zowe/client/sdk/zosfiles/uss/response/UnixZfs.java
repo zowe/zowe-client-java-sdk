@@ -16,7 +16,7 @@ import java.util.OptionalLong;
  * UssZfsItem object representing a zfs item from Unix System Services (USS) list operation
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class UnixZfs {
 

@@ -25,7 +25,7 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class DsnWrite {
 

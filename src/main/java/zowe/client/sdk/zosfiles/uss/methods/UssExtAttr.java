@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
  * Provides Unix System Services (USS) extattr functionality
  *
  * @author James Kostrewski
- * @version 4.0
+ * @version 5.0
  */
 public class UssExtAttr {
 

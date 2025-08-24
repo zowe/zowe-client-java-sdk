@@ -27,7 +27,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
  * This class is used to list the systems defined to z/OSMF through the z/OSMF APIs.
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class ZosmfSystems {
 

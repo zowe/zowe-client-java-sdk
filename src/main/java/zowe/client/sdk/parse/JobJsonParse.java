@@ -19,7 +19,7 @@ import zowe.client.sdk.zosjobs.response.JobStepData;
  * Extract Job from JSON response
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public final class JobJsonParse implements JsonParse {
 

@@ -16,7 +16,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * Factory class for creating ZosConnection objects with different authentication types
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class ZosConnectionFactory {
 

@@ -28,7 +28,7 @@ import java.util.Properties;
  * IssueUss Class provides a way to execute USS commands via SSH connection
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class IssueUss {
 

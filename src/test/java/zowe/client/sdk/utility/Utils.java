@@ -24,7 +24,7 @@ import static org.junit.Assert.fail;
  * Utility class for the test package.
  *
  * @author James Kostrewski
- * @version 4.0
+ * @version 5.0
  */
 public final class Utils {
 

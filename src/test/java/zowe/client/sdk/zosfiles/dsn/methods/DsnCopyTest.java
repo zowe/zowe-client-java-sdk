@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
  * Class containing unit tests for DsnCopy.
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class DsnCopyTest {
 

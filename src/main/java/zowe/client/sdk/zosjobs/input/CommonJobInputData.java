@@ -15,7 +15,7 @@ import java.util.Optional;
  * Parameters for various common Job API input data
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class CommonJobInputData {
 

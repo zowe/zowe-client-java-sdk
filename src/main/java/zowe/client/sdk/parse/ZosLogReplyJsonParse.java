@@ -20,7 +20,7 @@ import java.util.List;
  * Extract ZosLogReply from JSON response
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public final class ZosLogReplyJsonParse implements JsonParse {
 

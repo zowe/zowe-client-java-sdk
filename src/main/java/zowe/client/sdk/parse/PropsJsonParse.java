@@ -19,7 +19,7 @@ import java.util.Map;
  * Parse JSON response into a property list
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public final class PropsJsonParse implements JsonParse {
 

@@ -18,7 +18,7 @@ import java.util.Optional;
  * Parameter container class for the list data set function
  *
  * @author Leonid Baranov
- * @version 4.0
+ * @version 5.0
  */
 public class DsnListInputData {
 

@@ -18,7 +18,7 @@ import java.util.Optional;
  * z/OSMF Connection information placeholder
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class ZosConnection {
 

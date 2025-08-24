@@ -36,7 +36,7 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for UssWrite.
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 @SuppressWarnings("DataFlowIssue")
 public class UssWriteTest {

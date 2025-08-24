@@ -23,7 +23,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * Http put operation with JSON content type
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class PutJsonZosmfRequest extends ZosmfRequest {
 

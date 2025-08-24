@@ -36,7 +36,7 @@ import java.util.stream.Stream;
  * supports Zowe Global Team Configuration provided by Zowe V2.
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class TeamConfig {
 

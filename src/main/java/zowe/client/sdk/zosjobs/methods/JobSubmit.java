@@ -33,7 +33,7 @@ import java.util.Map;
  * Class to handle submitting of z/OS batch jobs and started tasks via z/OSMF
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class JobSubmit {
 

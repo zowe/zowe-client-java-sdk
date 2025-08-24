@@ -19,7 +19,7 @@ import java.util.OptionalInt;
  *
  * @author James Kostrewski
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class UssGetInputData {
 

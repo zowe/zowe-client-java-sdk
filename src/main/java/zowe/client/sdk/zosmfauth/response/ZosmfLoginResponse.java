@@ -16,7 +16,7 @@ import zowe.client.sdk.rest.Response;
  * Holds Login response information
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class ZosmfLoginResponse {
 

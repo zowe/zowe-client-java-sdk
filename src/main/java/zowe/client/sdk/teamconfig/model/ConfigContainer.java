@@ -16,7 +16,7 @@ import java.util.Map;
  * ConfigContainer POJO to act as a container for a parsed Zowe Global Team Configuration file representation
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class ConfigContainer {
 

@@ -17,7 +17,7 @@ import java.util.Optional;
  * The z/OSMF console API parameters. See the z/OSMF REST API documentation for full details.
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class IssueConsoleInputData {
 

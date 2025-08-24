@@ -27,7 +27,7 @@ import java.util.Map;
  * DeleteJobs class to handle Job delete
  *
  * @author Nikunj Goyal
- * @version 4.0
+ * @version 5.0
  */
 public class JobDelete {
 

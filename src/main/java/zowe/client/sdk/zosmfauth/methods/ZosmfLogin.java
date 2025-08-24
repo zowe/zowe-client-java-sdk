@@ -27,7 +27,7 @@ import zowe.client.sdk.zosmfauth.response.ZosmfLoginResponse;
  *
  * @author Esteban Sandoval
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class ZosmfLogin {
 

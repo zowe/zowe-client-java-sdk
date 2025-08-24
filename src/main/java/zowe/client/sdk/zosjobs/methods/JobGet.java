@@ -33,7 +33,7 @@ import java.util.List;
  * Class to handle getting a job and started task information
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class JobGet {
 

@@ -17,7 +17,7 @@ import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
  * Extract UNIX zfs from JSON response
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public final class UnixZfsJsonParse implements JsonParse {
 

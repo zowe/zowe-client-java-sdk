@@ -17,7 +17,7 @@ import zowe.client.sdk.parse.type.ParseType;
  * Parse factory that generates the desire JSON parse operation
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public final class JsonParseFactory {
 

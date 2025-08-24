@@ -25,7 +25,7 @@ import zowe.client.sdk.zosconsole.response.ConsoleResponse;
  * Class example to showcase mvs console command functionality via IssueConsole class.
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class IssueConsoleExp extends TstZosConnection {
 
@@ -98,7 +98,7 @@ import zowe.client.sdk.rest.Response;
  * Utility class containing helper method(s).
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class Util {
 
@@ -136,7 +136,7 @@ import zowe.client.sdk.teamconfig.model.ProfileDao;
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class TstZosConnection {
 

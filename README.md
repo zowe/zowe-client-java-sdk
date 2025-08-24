@@ -129,7 +129,7 @@ Since the release of the SDK, the authentication of each REST API call is done w
   
 With SDK release version 3, Web TOKEN authentication was added.   
   
-The current version 4, SSL authentication from a certificate file was added.  
+With project version 4, SSL authentication from a certificate file was added.  
   
 With three types of authentication available, the AuthType enum class was introduced to represent each type.    
   
@@ -235,12 +235,12 @@ For a Maven project add the SDK as a dependency by updating your `pom.xml` as fo
     <dependency>
         <groupId>org.zowe.client.java.sdk</groupId>
         <artifactId>zowe-client-java-sdk</artifactId>
-        <version>5.0.0-RC4</version>
+        <version>5.0.0-RC5</version>
     </dependency>
 
 For a Gradle project add the SDK as a dependency by updating your `build.gradle` as follows:
 
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '5.0.0-RC4'  
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '5.0.0-RC5'  
   
 ## Publishing to Maven Central  
   

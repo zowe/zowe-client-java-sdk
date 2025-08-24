@@ -17,7 +17,7 @@ import zowe.client.sdk.zosconsole.response.ZosmfIssueResponse;
  * ConsoleResponseService singleton class service.
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public final class ConsoleResponseService {
 

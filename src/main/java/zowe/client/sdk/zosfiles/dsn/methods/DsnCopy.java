@@ -30,7 +30,7 @@ import java.util.Map;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class DsnCopy {
 

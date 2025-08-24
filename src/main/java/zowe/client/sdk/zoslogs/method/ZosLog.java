@@ -37,7 +37,7 @@ import java.util.List;
  * Get z/OS log via z/OSMF restful api
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public class ZosLog {
 

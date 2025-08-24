@@ -19,7 +19,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfPluginInfo;
  * Parse JSON response from z/OSMF status request
  *
  * @author Frank Giordano
- * @version 4.0
+ * @version 5.0
  */
 public final class SystemInfoJsonParse implements JsonParse {
 
