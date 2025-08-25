@@ -11,8 +11,8 @@ package zowe.client.sdk.zosfiles.dsn.methods;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -42,7 +42,7 @@ public class DsnDeleteTest {
     private DeleteJsonZosmfRequest mockDeleteRequest;
     private DeleteJsonZosmfRequest mockDeleteRequestToken;
 
-    @Before
+    @BeforeEach
     public void init() throws ZosmfRequestException {
         mockDeleteRequest = Mockito.mock(DeleteJsonZosmfRequest.class);
         Mockito.when(mockDeleteRequest.executeRequest()).thenReturn(

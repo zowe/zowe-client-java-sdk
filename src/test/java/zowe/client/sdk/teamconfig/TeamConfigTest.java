@@ -10,8 +10,8 @@
 package zowe.client.sdk.teamconfig;
 
 import org.json.simple.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
@@ -24,7 +24,7 @@ import zowe.client.sdk.teamconfig.service.TeamConfigService;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
 /**
@@ -38,7 +38,7 @@ public class TeamConfigTest {
     private TeamConfigService teamConfigServiceMock;
     private KeyTarService keyTarServiceMock;
 
-    @Before
+    @BeforeEach
     public void init() {
         teamConfigServiceMock = Mockito.mock(TeamConfigService.class);
         keyTarServiceMock = Mockito.mock(KeyTarService.class);

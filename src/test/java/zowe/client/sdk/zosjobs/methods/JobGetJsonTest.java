@@ -11,12 +11,9 @@ package zowe.client.sdk.zosjobs.methods;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -29,7 +26,8 @@ import zowe.client.sdk.zosjobs.response.Job;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 /**
  * Class containing unit tests for JobGet.
@@ -37,7 +35,6 @@ import static org.junit.Assert.*;
  * @author Frank Giordano
  * @version 5.0
  */
-@RunWith(MockitoJUnitRunner.class)
 public class JobGetJsonTest {
 
     private final ZosConnection connection = ZosConnectionFactory
@@ -46,7 +43,7 @@ public class JobGetJsonTest {
     private JobGet getJobs;
     private JSONObject jobJson;
 
-    @Before
+    @BeforeEach
     public void init() {
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
         getJobs = new JobGet(connection);
@@ -254,8 +251,7 @@ public class JobGetJsonTest {
         try {
             new JobGet(null);
         } catch (NullPointerException e) {
-            assertEquals("Should throw IllegalArgumentException when connection is null",
-                    "connection is null", e.getMessage());
+            assertEquals("connection is null", e.getMessage());
         }
     }
 
@@ -270,7 +266,7 @@ public class JobGetJsonTest {
     @Test
     public void tstJobGetJsonSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(GetTextZosmfRequest.class);
-        NullPointerException exception = Assertions.assertThrows(
+        NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new JobGet(null, request)
         );
@@ -280,7 +276,7 @@ public class JobGetJsonTest {
     @Test
     public void tstJobGetJsonSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
-        NullPointerException exception = Assertions.assertThrows(
+        NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new JobGet(connection, null)
         );
@@ -291,7 +287,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class);
-        IllegalStateException exception = Assertions.assertThrows(
+        IllegalStateException exception = assertThrows(
                 IllegalStateException.class,
                 () -> new JobGet(connection, request)
         );
@@ -307,7 +303,7 @@ public class JobGetJsonTest {
 
     @Test
     public void tstJobGetJsonPrimaryConstructorWithNullConnection() {
-        NullPointerException exception = Assertions.assertThrows(
+        NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new JobGet(null)
         );

@@ -11,12 +11,12 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 /**
  * Class containing unit tests for SystemsParseResponse.

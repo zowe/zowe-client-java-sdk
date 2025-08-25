@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.core;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -11,9 +11,8 @@ package zowe.client.sdk.zosfiles.uss.methods;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -44,7 +43,7 @@ public class UssMoveTest {
     private PutJsonZosmfRequest mockJsonPutRequestToken;
     private UssMove ussMove;
 
-    @Before
+    @BeforeEach
     public void init() throws ZosmfRequestException {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
@@ -212,8 +211,7 @@ public class UssMoveTest {
         try {
             new UssMove(null);
         } catch (NullPointerException e) {
-            Assert.assertEquals("Should throw IllegalArgumentException when connection is null",
-                    "connection is null", e.getMessage());
+            assertEquals("connection is null", e.getMessage());
         }
     }
 

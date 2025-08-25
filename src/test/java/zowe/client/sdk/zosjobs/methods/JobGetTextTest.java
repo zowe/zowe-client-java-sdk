@@ -10,8 +10,8 @@
 package zowe.client.sdk.zosjobs.methods;
 
 import kong.unirest.core.Cookie;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZosConnection;
@@ -23,8 +23,8 @@ import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -44,7 +44,7 @@ public class JobGetTextTest {
             .createTokenConnection("1", "1", new Cookie("hello=hello"));
     private GetTextZosmfRequest mockTextGetRequest;
 
-    @Before
+    @BeforeEach
     public void init() {
         mockTextGetRequest = Mockito.mock(GetTextZosmfRequest.class);
     }

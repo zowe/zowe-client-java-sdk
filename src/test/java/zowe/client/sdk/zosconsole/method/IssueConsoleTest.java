@@ -13,10 +13,8 @@ import kong.unirest.core.Cookie;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
 import org.json.simple.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.mockito.MockedStatic;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -31,16 +29,12 @@ import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-import java.util.OptionalInt;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.withSettings;
 
 /**
  * Class containing unit tests for IssueCommand.
@@ -56,7 +50,7 @@ public class IssueConsoleTest {
             .createTokenConnection("1", "1", new Cookie("hello=hello"));
     private PutJsonZosmfRequest mockJsonGetRequest;
 
-    @Before
+    @BeforeEach
     public void init() {
         mockJsonGetRequest = Mockito.mock(PutJsonZosmfRequest.class);
     }
@@ -180,8 +174,7 @@ public class IssueConsoleTest {
         try {
             new IssueConsole(null);
         } catch (NullPointerException e) {
-            assertEquals("Should throw IllegalArgumentException when connection is null",
-                    "connection is null", e.getMessage());
+            assertEquals("connection is null", e.getMessage());
         }
     }
 
@@ -196,32 +189,32 @@ public class IssueConsoleTest {
     @Test
     public void tstIssueConsoleSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
-        NullPointerException exception = Assertions.assertThrows(
+        NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new IssueConsole(null, request)
         );
-        Assertions.assertEquals("connection is null", exception.getMessage());
+        assertEquals("connection is null", exception.getMessage());
     }
 
     @Test
     public void tstIssueConsoleSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
-        NullPointerException exception = Assertions.assertThrows(
+        NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new IssueConsole(connection, null)
         );
-        Assertions.assertEquals("request is null", exception.getMessage());
+        assertEquals("request is null", exception.getMessage());
     }
 
     @Test
     public void tstIssueConsoleSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PutJsonZosmfRequest
-        IllegalStateException exception = Assertions.assertThrows(
+        IllegalStateException exception = assertThrows(
                 IllegalStateException.class,
                 () -> new IssueConsole(connection, request)
         );
-        Assertions.assertEquals("PUT_JSON request type required", exception.getMessage());
+        assertEquals("PUT_JSON request type required", exception.getMessage());
     }
 
     @Test
@@ -234,11 +227,11 @@ public class IssueConsoleTest {
     @Test
     public void tstDsnCopyPrimaryConstructorWithNullConnection() {
         // When/Then
-        NullPointerException exception = Assertions.assertThrows(
+        NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new IssueConsole(null)
         );
-        Assertions.assertEquals("connection is null", exception.getMessage());
+        assertEquals("connection is null", exception.getMessage());
     }
 
 }

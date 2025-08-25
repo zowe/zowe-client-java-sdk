@@ -29,7 +29,7 @@ public final class ValidateUtils {
     }
 
     /**
-     * Check for the state of parameter by String value
+     * Check for the state of a parameter by String value
      *
      * @param value string value
      * @param name  name of attribute

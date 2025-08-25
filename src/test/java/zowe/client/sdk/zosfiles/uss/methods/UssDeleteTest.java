@@ -11,8 +11,8 @@ package zowe.client.sdk.zosfiles.uss.methods;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -21,9 +21,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -46,7 +44,7 @@ public class UssDeleteTest {
     private DeleteJsonZosmfRequest mockJsonDeleteRequestToken;
     private UssDelete ussDelete;
 
-    @Before
+    @BeforeEach
     public void init() throws ZosmfRequestException {
         mockJsonDeleteRequest = Mockito.mock(DeleteJsonZosmfRequest.class);
         Mockito.when(mockJsonDeleteRequest.executeRequest()).thenReturn(
@@ -215,8 +213,7 @@ public class UssDeleteTest {
         try {
             new UssDelete(null);
         } catch (NullPointerException e) {
-            assertEquals("Should throw IllegalArgumentException when connection is null",
-                    "connection is null", e.getMessage());
+            assertEquals("connection is null", e.getMessage());
         }
     }
 

@@ -11,8 +11,8 @@ package zowe.client.sdk.zosfiles.dsn.methods;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -42,7 +42,7 @@ public class DsnWriteTest {
     private PutTextZosmfRequest mockTextPutRequest;
     private PutTextZosmfRequest mockTextPutRequestToken;
 
-    @Before
+    @BeforeEach
     public void init() throws ZosmfRequestException {
         mockTextPutRequest = Mockito.mock(PutTextZosmfRequest.class);
         Mockito.when(mockTextPutRequest.executeRequest()).thenReturn(
