@@ -67,6 +67,7 @@ public class TsoStartService {
     /**
      * Make the first TSO request to start the TSO session and retrieve its session id (servletKey).
      *
+     * @param inputData parameters for start tso call, see StartTsoInputData
      * @return string value representing the session id (servletKey)
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
