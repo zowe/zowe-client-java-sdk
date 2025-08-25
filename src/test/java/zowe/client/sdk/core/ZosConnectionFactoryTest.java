@@ -10,7 +10,7 @@
 package zowe.client.sdk.core;
 
 import kong.unirest.core.Cookie;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 

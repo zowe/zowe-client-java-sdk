@@ -12,15 +12,15 @@ package zowe.client.sdk.rest;
 import kong.unirest.core.Cookie;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Class containing unit test for ZoweRequest.
@@ -34,7 +34,7 @@ public class ZoweRequestTest {
     private ZosConnection connection;
 
     @SuppressWarnings("unchecked")
-    @Before
+    @BeforeEach
     public void init() {
         mockReply = Mockito.mock(HttpResponse.class);
         connection = ZosConnectionFactory.createBasicConnection("1", "1", "1", "1");

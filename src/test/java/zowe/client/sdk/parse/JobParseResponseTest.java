@@ -10,15 +10,15 @@
 package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.zosjobs.response.Job;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 /**
  * Class containing unit tests for JobParseResponse.

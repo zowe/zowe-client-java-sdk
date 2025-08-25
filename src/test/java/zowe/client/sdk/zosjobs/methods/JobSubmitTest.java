@@ -11,8 +11,8 @@ package zowe.client.sdk.zosjobs.methods;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -25,9 +25,7 @@ import zowe.client.sdk.zosjobs.response.Job;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -48,7 +46,7 @@ public class JobSubmitTest {
     private PutJsonZosmfRequest mockPutJsonZosmfRequest;
     private PutJsonZosmfRequest mockPutJsonZosmfRequestToken;
 
-    @Before
+    @BeforeEach
     public void init() throws ZosmfRequestException {
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("jobid", "jobid");
