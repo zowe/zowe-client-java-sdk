@@ -71,8 +71,12 @@ public class IssueTso {
      * @param tsoReplyService TsoReplyService for mocking
      * @author Frank Giordano
      */
-    IssueTso(final ZosConnection connection, final String accountNumber, final TsoStartService tsoStartService,
-             final TsoStopService tsoStopService, final TsoSendService tsoSendService, final TsoReplyService tsoReplyService) {
+    IssueTso(final ZosConnection connection,
+             final String accountNumber,
+             final TsoStartService tsoStartService,
+             final TsoStopService tsoStopService,
+             final TsoSendService tsoSendService,
+             final TsoReplyService tsoReplyService) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
         this.accountNumber = accountNumber;
