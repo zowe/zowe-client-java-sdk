@@ -169,7 +169,13 @@ public class TsoReplyServiceTest {
     }
 
     /**
-     * Test reply builds a new request when the request is null.
+     * Test that when the TsoReplyService is constructed without an initial request (alternative constructor),
+     * the reply method builds a new PutJsonZosmfRequest using the factory, sets the correct
+     * URL and body, and calls ResponseUtil.getResponseStr. Verifies that the mocked response
+     * is returned as the result.
+     * <p>
+     * This ensures the service correctly handles the case where no request
+     * object was provided through the alternative constructor.
      */
     @Test
     public void tstReplyBuildsNewRequestWhenRequestIsNullSuccess() throws Exception {

@@ -20,6 +20,8 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 
 /**
+ * This class handles sending the request to end the TSO session via z/OSMF
+ *
  * @author Frank Giordano
  * @version 5.0
  */

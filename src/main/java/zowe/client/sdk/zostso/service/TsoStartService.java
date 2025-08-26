@@ -25,6 +25,8 @@ import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
 
 /**
+ * This class handles sending the request to start the TSO session via z/OSMF
+ *
  * @author Frank Giordano
  * @version 5.0
  */

@@ -20,6 +20,8 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 
 /**
+ * This class handles sending a request to z/OSMF TSO for additional TSO message data
+ *
  * @author Frank Giordano
  * @version 5.0
  */
