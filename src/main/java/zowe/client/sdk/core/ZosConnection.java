@@ -231,7 +231,7 @@ public class ZosConnection {
     }
 
     /**
-     * Equals method. Use all members for equality except for TOKEN which is a special case and
+     * Equals method. Use all members for equality except for TOKEN, which is a special case and
      * uses a subset of members for equality.
      *
      * @param obj object
