@@ -46,6 +46,8 @@ public class TsoReplyServiceTest {
     @AfterEach
     void tearDown() {
         Mockito.framework().clearInlineMocks();
+        // This ensures any leftover static mocks are cleared between tests
+        Mockito.clearAllCaches();
     }
 
     /**
