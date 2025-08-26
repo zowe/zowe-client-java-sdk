@@ -1,6 +1,7 @@
 package zowe.client.sdk.zostso.service;
 
 import org.json.simple.JSONObject;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -42,6 +43,13 @@ public class TsoStartServiceTest {
         when(mockConnection.getZosmfUrl()).thenReturn("https://zosmf:1234");
         mockRequest = mock(PostJsonZosmfRequest.class);
         service = new TsoStartService(mockConnection, mockRequest);
+    }
+
+    @AfterEach
+    void tearDown() {
+        Mockito.framework().clearInlineMocks();
+        // This ensures any leftover static mocks are cleared between tests
+        Mockito.clearAllCaches();
     }
 
     /**
