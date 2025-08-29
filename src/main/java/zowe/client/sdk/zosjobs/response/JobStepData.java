@@ -46,7 +46,7 @@ public class JobStepData {
     private final String procStepName;
 
     /**
-     * Step for which job dd exists
+     * Step for which a job dd exists
      */
     private final String stepName;
 
