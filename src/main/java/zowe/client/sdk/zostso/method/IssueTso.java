@@ -115,16 +115,25 @@ public class IssueTso {
         this.msgLst.clear();
         this.promptLst.clear();
 
+        // send tso start call and return the session id
         final String sessionId = this.startTso(inputData);
 
+        // send tso command to execute with session id
         String responseStr = this.sendTsoCommand(sessionId, command);
         JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
         this.processTsoData(tsoData);
 
-        while (promptLst.isEmpty()) {
+        boolean tsoMessagesReceived = false;
+        while (!tsoMessagesReceived) {
+            // retrieve additional tso messages for the command
             responseStr = this.sendTsoForReply(sessionId);
             tsoData = this.getJsonNode(responseStr).get("tsoData");
             this.processTsoData(tsoData);
+
+            // check tso prompt message which indicates end of request 
+            if (!promptLst.isEmpty()) {
+                tsoMessagesReceived = true;
+            }
         }
 
         this.stopTso(sessionId);
