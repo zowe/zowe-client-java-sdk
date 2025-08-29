@@ -315,8 +315,8 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.UssListInputData;
 import zowe.client.sdk.zosfiles.uss.input.UssListZfsInputData;
 import zowe.client.sdk.zosfiles.uss.methods.UssList;
-import zowe.client.sdk.zosfiles.uss.response.UnixFile;
-import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
+import zowe.client.sdk.zosfiles.uss.model.UnixFile;
+import zowe.client.sdk.zosfiles.uss.model.UnixZfs;
 
 import java.util.List;
 

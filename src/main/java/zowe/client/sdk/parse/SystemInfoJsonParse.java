@@ -12,8 +12,8 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosmfinfo.model.ZosmfPlugin;
 import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
-import zowe.client.sdk.zosmfinfo.response.ZosmfPluginInfo;
 
 /**
  * Parse JSON response from z/OSMF status request
@@ -77,7 +77,7 @@ public final class SystemInfoJsonParse implements JsonParse {
         }
         if (plugins != null) {
             int size = plugins.size();
-            ZosmfPluginInfo[] zosmfPluginsInfo = new ZosmfPluginInfo[size];
+            ZosmfPlugin[] zosmfPluginsInfo = new ZosmfPlugin[size];
             for (int i = 0; i < size; i++) {
                 zosmfPluginsInfo[i] = parseZosmfPluginInfo((JSONObject) plugins.get(i));
             }
@@ -93,8 +93,8 @@ public final class SystemInfoJsonParse implements JsonParse {
      * @return ZosmfPluginInfo object
      * @author Frank Giordano
      */
-    private static ZosmfPluginInfo parseZosmfPluginInfo(final JSONObject data) {
-        return new ZosmfPluginInfo.Builder()
+    private static ZosmfPlugin parseZosmfPluginInfo(final JSONObject data) {
+        return new ZosmfPlugin.Builder()
                 .pluginVersion(data.get("pluginVersion") != null ? (String) data.get("pluginVersion") : null)
                 .pluginDefaultName(data.get("pluginDefaultName") != null ? (String) data.get("pluginDefaultName") : null)
                 .pluginStatus(data.get("pluginStatus") != null ? (String) data.get("pluginStatus") : null)

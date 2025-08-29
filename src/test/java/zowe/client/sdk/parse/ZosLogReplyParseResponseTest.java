@@ -12,7 +12,7 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
 import zowe.client.sdk.parse.type.ParseType;
-import zowe.client.sdk.zoslogs.response.ZosLogReply;
+import zowe.client.sdk.zoslogs.response.ZosLogResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +56,7 @@ public class ZosLogReplyParseResponseTest {
 
         final ZosLogReplyJsonParse parser = (ZosLogReplyJsonParse)
                 JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY);
-        final ZosLogReply response = parser.parseResponse(json, new ArrayList<>());
+        final ZosLogResponse response = parser.parseResponse(json, new ArrayList<>());
         assertEquals(Long.parseLong("1"), response.getTotalItems().orElse(-1L));
         assertEquals("dev", response.getSource().orElse("n\\a"));
     }

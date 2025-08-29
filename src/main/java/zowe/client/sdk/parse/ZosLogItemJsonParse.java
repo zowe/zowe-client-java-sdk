@@ -11,7 +11,7 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zoslogs.response.ZosLogItem;
+import zowe.client.sdk.zoslogs.model.ZosLogItem;
 
 /**
  * Extract ZosLogItem from JSON response

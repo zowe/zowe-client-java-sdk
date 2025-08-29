@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosmfinfo.response;
+package zowe.client.sdk.zosmfinfo.model;
 
 import java.util.Optional;
 

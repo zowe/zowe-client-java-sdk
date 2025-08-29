@@ -12,7 +12,7 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosmfinfo.response.DefinedSystem;
+import zowe.client.sdk.zosmfinfo.model.DefinedSystem;
 import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
 
 /**

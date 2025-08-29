@@ -24,7 +24,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.JobSubmitInputData;
 import zowe.client.sdk.zosjobs.input.JobSubmitJclInputData;
-import zowe.client.sdk.zosjobs.response.Job;
+import zowe.client.sdk.zosjobs.model.Job;
 
 import java.util.HashMap;
 import java.util.Map;

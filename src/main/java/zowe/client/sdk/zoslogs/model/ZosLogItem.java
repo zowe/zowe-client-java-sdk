@@ -8,7 +8,7 @@
  * Copyright Contributors to the Zowe Project.
  *
  */
-package zowe.client.sdk.zoslogs.response;
+package zowe.client.sdk.zoslogs.model;
 
 import java.util.Optional;
 import java.util.OptionalLong;

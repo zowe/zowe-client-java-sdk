@@ -19,7 +19,7 @@ import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zoslogs.input.ZosLogInputData;
 import zowe.client.sdk.zoslogs.method.ZosLog;
-import zowe.client.sdk.zoslogs.response.ZosLogReply;
+import zowe.client.sdk.zoslogs.response.ZosLogResponse;
 import zowe.client.sdk.zoslogs.types.DirectionType;
 import zowe.client.sdk.zoslogs.types.HardCopyType;
 
@@ -49,7 +49,7 @@ public class ZosLogExp extends TstZosConnection {
                 .direction(DirectionType.BACKWARD)
                 .processResponses(true)
                 .build();
-        ZosLogReply zosLogReply;
+        ZosLogResponse zosLogReply;
         try {
             zosLogReply = zosLog.issueCommand(zosLogInputData);
         } catch (ZosmfRequestException e) {

@@ -10,6 +10,8 @@
  */
 package zowe.client.sdk.zoslogs.response;
 
+import zowe.client.sdk.zoslogs.model.ZosLogItem;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalLong;
@@ -20,7 +22,7 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 5.0
  */
-public class ZosLogReply {
+public class ZosLogResponse {
 
     /**
      * Specify the timezone of the z/OS system. Valid values for the timezone range from -12 to 12.
@@ -60,8 +62,8 @@ public class ZosLogReply {
      * @param items         ZosLogItem object items returned from response
      * @author Frank Giordano
      */
-    public ZosLogReply(final Long timeZone, final Long nextTimeStamp, final String source, final Long totalItems,
-                       final List<ZosLogItem> items) {
+    public ZosLogResponse(final Long timeZone, final Long nextTimeStamp, final String source, final Long totalItems,
+                          final List<ZosLogItem> items) {
         this.timeZone = timeZone;
         this.nextTimeStamp = nextTimeStamp;
         this.source = source;

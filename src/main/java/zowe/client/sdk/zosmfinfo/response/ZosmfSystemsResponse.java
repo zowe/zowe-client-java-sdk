@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosmfinfo.response;
 
+import zowe.client.sdk.zosmfinfo.model.DefinedSystem;
+
 import java.util.Optional;
 import java.util.OptionalLong;
 
