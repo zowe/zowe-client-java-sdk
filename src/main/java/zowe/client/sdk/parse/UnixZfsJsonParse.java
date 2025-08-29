@@ -11,7 +11,7 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosfiles.uss.response.UnixZfs;
+import zowe.client.sdk.zosfiles.uss.model.UnixZfs;
 
 /**
  * Extract UNIX zfs from JSON response

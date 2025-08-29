@@ -12,7 +12,7 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
 import zowe.client.sdk.parse.type.ParseType;
-import zowe.client.sdk.zosfiles.dsn.response.Dataset;
+import zowe.client.sdk.zosfiles.dsn.model.Dataset;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -24,8 +24,8 @@ import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.dsn.input.DsnListInputData;
-import zowe.client.sdk.zosfiles.dsn.response.Dataset;
-import zowe.client.sdk.zosfiles.dsn.response.Member;
+import zowe.client.sdk.zosfiles.dsn.model.Dataset;
+import zowe.client.sdk.zosfiles.dsn.model.Member;
 import zowe.client.sdk.zosfiles.dsn.types.AttributeType;
 
 import java.util.*;

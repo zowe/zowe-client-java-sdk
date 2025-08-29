@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosmfinfo.response;
 
+import zowe.client.sdk.zosmfinfo.model.ZosmfPlugin;
+
 import java.util.Optional;
 
 /**
@@ -57,7 +59,7 @@ public class ZosmfInfoResponse {
     /**
      * Zosmf plugin information
      */
-    private final ZosmfPluginInfo[] zosmfPluginsInfo;
+    private final ZosmfPlugin[] zosmfPluginsInfo;
 
     /**
      * ZosmfInfoResponse constructor
@@ -117,7 +119,7 @@ public class ZosmfInfoResponse {
      *
      * @return zosmfPluginsInfo value
      */
-    public Optional<ZosmfPluginInfo[]> getZosmfPluginsInfo() {
+    public Optional<ZosmfPlugin[]> getZosmfPluginsInfo() {
         return Optional.ofNullable(zosmfPluginsInfo);
     }
 
@@ -210,7 +212,7 @@ public class ZosmfInfoResponse {
         /**
          * Zosmf plugin information
          */
-        private ZosmfPluginInfo[] zosmfPluginsInfo;
+        private ZosmfPlugin[] zosmfPluginsInfo;
 
         /**
          * Builder constructor
@@ -268,7 +270,7 @@ public class ZosmfInfoResponse {
          * @param zosmfPluginsInfo string value
          * @return Builder this object
          */
-        public Builder zosmfPluginsInfo(final ZosmfPluginInfo[] zosmfPluginsInfo) {
+        public Builder zosmfPluginsInfo(final ZosmfPlugin[] zosmfPluginsInfo) {
             this.zosmfPluginsInfo = zosmfPluginsInfo;
             return this;
         }

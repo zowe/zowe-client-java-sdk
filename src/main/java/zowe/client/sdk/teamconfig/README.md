@@ -44,7 +44,7 @@ import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.model.ProfileDao;
 import zowe.client.sdk.zosfiles.dsn.input.DsnListInputData;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnList;
-import zowe.client.sdk.zosfiles.dsn.response.Member;
+import zowe.client.sdk.zosfiles.dsn.model.Member;
 
 import java.util.List;
 

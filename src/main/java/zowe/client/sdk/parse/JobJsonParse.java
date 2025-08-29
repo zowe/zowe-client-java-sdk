@@ -12,8 +12,8 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosjobs.response.Job;
-import zowe.client.sdk.zosjobs.response.JobStepData;
+import zowe.client.sdk.zosjobs.model.Job;
+import zowe.client.sdk.zosjobs.model.JobStepData;
 
 /**
  * Extract Job from JSON response

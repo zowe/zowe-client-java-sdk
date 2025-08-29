@@ -11,7 +11,7 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosfiles.uss.response.UnixFile;
+import zowe.client.sdk.zosfiles.uss.model.UnixFile;
 
 /**
  * Extract UNIX file from JSON response

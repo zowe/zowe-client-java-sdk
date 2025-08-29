@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.response;
+package zowe.client.sdk.zosfiles.uss.model;
 
 import java.util.Optional;
 import java.util.OptionalLong;

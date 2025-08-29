@@ -11,7 +11,7 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosfiles.dsn.response.Dataset;
+import zowe.client.sdk.zosfiles.dsn.model.Dataset;
 
 /**
  * Extract Dataset from JSON response

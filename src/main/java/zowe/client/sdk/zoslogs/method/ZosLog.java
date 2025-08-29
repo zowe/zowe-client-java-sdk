@@ -25,8 +25,8 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.JsonParserUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zoslogs.input.ZosLogInputData;
-import zowe.client.sdk.zoslogs.response.ZosLogItem;
-import zowe.client.sdk.zoslogs.response.ZosLogReply;
+import zowe.client.sdk.zoslogs.model.ZosLogItem;
+import zowe.client.sdk.zoslogs.response.ZosLogResponse;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -88,7 +88,7 @@ public class ZosLog {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ZosLogReply issueCommand(final ZosLogInputData logInputData) throws ZosmfRequestException {
+    public ZosLogResponse issueCommand(final ZosLogInputData logInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(logInputData == null, "logInputData is null");
 
         final String defaultUrl = connection.getZosmfUrl() + RESOURCE;

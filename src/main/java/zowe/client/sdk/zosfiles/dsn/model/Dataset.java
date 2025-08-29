@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.dsn.response;
+package zowe.client.sdk.zosfiles.dsn.model;
 
 import java.util.Optional;
 

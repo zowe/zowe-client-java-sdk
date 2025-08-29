@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosjobs.response.Job;
+import zowe.client.sdk.zosjobs.model.Job;
 
 import java.util.HashMap;
 import java.util.Map;

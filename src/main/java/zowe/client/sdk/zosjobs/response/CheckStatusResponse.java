@@ -10,13 +10,15 @@
  */
 package zowe.client.sdk.zosjobs.response;
 
+import zowe.client.sdk.zosjobs.model.Job;
+
 /**
  * Class used internally to help determine current job status
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class CheckJobStatus {
+public class CheckStatusResponse {
 
     /**
      * Has the desired job status been seen, true or false?
@@ -35,7 +37,7 @@ public class CheckJobStatus {
      * @param job         job used for status checking
      * @author Frank Giordano
      */
-    public CheckJobStatus(final boolean statusFound, final Job job) {
+    public CheckStatusResponse(final boolean statusFound, final Job job) {
         this.statusFound = statusFound;
         this.job = job;
     }
@@ -65,7 +67,7 @@ public class CheckJobStatus {
      */
     @Override
     public String toString() {
-        return "CheckJobStatus{" +
+        return "CheckStatusResponse{" +
                 "statusFound=" + statusFound +
                 ", job=" + job +
                 '}';

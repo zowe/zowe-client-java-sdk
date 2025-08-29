@@ -11,8 +11,8 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zoslogs.response.ZosLogItem;
-import zowe.client.sdk.zoslogs.response.ZosLogReply;
+import zowe.client.sdk.zoslogs.model.ZosLogItem;
+import zowe.client.sdk.zoslogs.response.ZosLogResponse;
 
 import java.util.List;
 
@@ -60,12 +60,12 @@ public final class ZosLogReplyJsonParse implements JsonParse {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public synchronized ZosLogReply parseResponse(final Object... args) {
+    public synchronized ZosLogResponse parseResponse(final Object... args) {
         ValidateUtils.checkNullParameter(args[0] == null, ParseConstants.DATA_NULL_MSG);
         ValidateUtils.checkNullParameter(args[1] == null, ParseConstants.LIST_OF_ZOS_LOG_ITEM_NULL_MSG);
         final JSONObject data = (JSONObject) args[0];
         final List<ZosLogItem> zosLogItems = (List<ZosLogItem>) args[1];
-        return new ZosLogReply(
+        return new ZosLogResponse(
                 data.get("timezone") != null ? (Long) data.get("timezone") : 0,
                 data.get("nextTimestamp") != null ? (Long) data.get("nextTimestamp") : 0,
                 data.get("source") != null ? (String) data.get("source") : null,

@@ -12,7 +12,7 @@ package zowe.client.sdk.parse;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
 import zowe.client.sdk.parse.type.ParseType;
-import zowe.client.sdk.zoslogs.response.ZosLogItem;
+import zowe.client.sdk.zoslogs.model.ZosLogItem;
 
 import java.util.HashMap;
 import java.util.Map;

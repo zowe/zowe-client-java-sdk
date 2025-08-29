@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosmfinfo.response;
+package zowe.client.sdk.zosmfinfo.model;
 
 import java.util.Optional;
 
@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 5.0
  */
-public class ZosmfPluginInfo {
+public class ZosmfPlugin {
 
     /**
      * Plugin version
@@ -40,7 +40,7 @@ public class ZosmfPluginInfo {
      * @param builder Builder Object
      * @author Frank Giordano
      */
-    private ZosmfPluginInfo(final Builder builder) {
+    private ZosmfPlugin(final Builder builder) {
         this.pluginVersion = builder.pluginVersion;
         this.pluginDefaultName = builder.pluginDefaultName;
         this.pluginStatus = builder.pluginStatus;
@@ -151,8 +151,8 @@ public class ZosmfPluginInfo {
          *
          * @return ZosmfPluginInfo this object
          */
-        public ZosmfPluginInfo build() {
-            return new ZosmfPluginInfo(this);
+        public ZosmfPlugin build() {
+            return new ZosmfPlugin(this);
         }
 
     }

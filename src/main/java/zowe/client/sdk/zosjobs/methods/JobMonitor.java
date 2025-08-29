@@ -20,9 +20,9 @@ import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.CommonJobInputData;
 import zowe.client.sdk.zosjobs.input.JobGetInputData;
 import zowe.client.sdk.zosjobs.input.JobMonitorInputData;
-import zowe.client.sdk.zosjobs.response.CheckJobStatus;
-import zowe.client.sdk.zosjobs.response.Job;
-import zowe.client.sdk.zosjobs.response.JobFile;
+import zowe.client.sdk.zosjobs.model.Job;
+import zowe.client.sdk.zosjobs.model.JobFile;
+import zowe.client.sdk.zosjobs.response.CheckStatusResponse;
 import zowe.client.sdk.zosjobs.types.JobStatus;
 
 import java.util.List;
@@ -166,7 +166,7 @@ public class JobMonitor {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private CheckJobStatus checkStatus(final JobMonitorInputData monitorInputData) throws ZosmfRequestException {
+    private CheckStatusResponse checkStatus(final JobMonitorInputData monitorInputData) throws ZosmfRequestException {
         return checkStatus(monitorInputData, false);
     }
 
@@ -178,7 +178,7 @@ public class JobMonitor {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private CheckJobStatus checkStatus(final JobMonitorInputData monitorInputData, final boolean isStepData)
+    private CheckStatusResponse checkStatus(final JobMonitorInputData monitorInputData, final boolean isStepData)
             throws ZosmfRequestException {
         final JobGet getJobs = new JobGet(connection);
         final String statusNameCheck = monitorInputData.getJobStatus().orElse(DEFAULT_STATUS).toString();
@@ -187,7 +187,7 @@ public class JobMonitor {
                 monitorInputData.getJobId().orElse(""), monitorInputData.getJobName().orElse(""), isStepData));
 
         if (statusNameCheck.equals(job.getStatus().orElse(DEFAULT_STATUS.toString()))) {
-            return new CheckJobStatus(true, job);
+            return new CheckStatusResponse(true, job);
         }
 
         final String invalidStatusMsg = "Invalid status when checking for status ordering.";
@@ -203,10 +203,10 @@ public class JobMonitor {
         }
 
         if (orderIndexOfCurrRunningJobStatus > orderIndexOfDesiredJobStatus) {
-            return new CheckJobStatus(true, job);
+            return new CheckStatusResponse(true, job);
         }
 
-        return new CheckJobStatus(false, job);
+        return new CheckStatusResponse(false, job);
     }
 
     /**
@@ -296,7 +296,7 @@ public class JobMonitor {
         String statusName = monitorInputData.getJobStatus().orElse(DEFAULT_STATUS).toString();
         LOG.info("Waiting for status \"{}\"", statusName);
 
-        CheckJobStatus checkJobStatus;
+        CheckStatusResponse checkJobStatus;
         do {
             numOfAttempts++;
             checkJobStatus = checkStatus(monitorInputData);

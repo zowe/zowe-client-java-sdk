@@ -11,7 +11,7 @@ package zowe.client.sdk.parse;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosjobs.response.JobFile;
+import zowe.client.sdk.zosjobs.model.JobFile;
 
 /**
  * Parse JSON response for a job file
