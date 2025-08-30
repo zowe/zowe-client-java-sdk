@@ -109,7 +109,70 @@ public class TsoStartServiceTest {
             ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
                     () -> service.startTso(input));
             assertTrue(ex.getMessage().contains(TsoConstants.START_TSO_FAIL_MSG));
+            assertTrue(ex.getMessage().contains("Invalid servletKey"));
         }
+    }
+
+    /**
+     * Test that startTso throws an exception when servletKey is missing in the response.
+     */
+    @Test
+    public void tstStartTsoMissingServletKeyThrowsZosmfRequestExceptionFailure() {
+        StartTsoInputData input = new StartTsoInputData("LOGONPROC", "UTF-8",
+                "1047", "24", "80", "ACCT123", "4096");
+
+        try (var mocked = Mockito.mockStatic(ResponseUtil.class)) {
+            mocked.when(() -> ResponseUtil.getResponseStr(any(), any()))
+                    .thenReturn("{}\n");
+
+            ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
+                    () -> service.startTso(input));
+            assertTrue(ex.getMessage().contains(TsoConstants.START_TSO_FAIL_MSG));
+            assertTrue(ex.getMessage().contains("Response missing servletKey"));
+        }
+    }
+
+    /**
+     * Test that startTso throws an exception when servletKey is empty in the response.
+     */
+    @Test
+    public void tstStartTsoEmptyServletKeyThrowsZosmfRequestExceptionFailure() {
+        StartTsoInputData input = new StartTsoInputData("LOGONPROC", "UTF-8",
+                "1047", "24", "80", "ACCT123", "4096");
+
+        try (var mocked = Mockito.mockStatic(ResponseUtil.class)) {
+            mocked.when(() -> ResponseUtil.getResponseStr(any(), any()))
+                    .thenReturn("{\"servletKey\":\"\"}");
+
+            ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
+                    () -> service.startTso(input));
+            assertTrue(ex.getMessage().contains(TsoConstants.START_TSO_FAIL_MSG));
+            assertTrue(ex.getMessage().contains("Invalid servletKey"));
+        }
+    }
+
+    /**
+     * Test that the public constructor throws an exception if the connection is null.
+     */
+    @Test
+    public void tstPublicConstructorNullConnectionFailure() {
+        NullPointerException ex = assertThrows(
+                NullPointerException.class,
+                () -> new TsoStartService(null)
+        );
+        assertEquals("connection is null", ex.getMessage());
+    }
+
+    /**
+     * Test that the alternative constructor throws an exception if the connection is null (TsoStartService).
+     */
+    @Test
+    public void tstAlternativeConstructorNullConnectionForStartServiceFailure() {
+        NullPointerException ex = assertThrows(
+                NullPointerException.class,
+                () -> new TsoStartService(null, mockRequest)
+        );
+        assertEquals("connection is null", ex.getMessage());
     }
 
     /**

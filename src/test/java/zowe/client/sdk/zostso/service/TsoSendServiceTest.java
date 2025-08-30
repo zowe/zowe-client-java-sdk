@@ -200,4 +200,41 @@ public class TsoSendServiceTest {
         assertEquals("PUT_JSON request type required", ex.getMessage());
     }
 
+    /**
+     * Test that sendCommand throws when sessionId is null or empty.
+     */
+    @Test
+    public void tstSendCommandNullSessionIdFailure() {
+        final TsoSendService service = new TsoSendService(mockConnection, mockPutRequest);
+        IllegalArgumentException ex = assertThrows(
+                IllegalArgumentException.class,
+                () -> service.sendCommand(null, "CMD")
+        );
+        assertEquals("sessionId is either null or empty", ex.getMessage());
+    }
+
+    /**
+     * Test that sendCommand throws when command is null or empty.
+     */
+    @Test
+    public void tstSendCommandNullCommandFailure() {
+        final TsoSendService service = new TsoSendService(mockConnection, mockPutRequest);
+        IllegalArgumentException ex = assertThrows(
+                IllegalArgumentException.class,
+                () -> service.sendCommand("SERVKEY", null)
+        );
+        assertEquals("command is either null or empty", ex.getMessage());
+    }
+
+    /**
+     * Test that the public constructor throws when connection is null.
+     */
+    @Test
+    public void tstPublicConstructorNullConnectionFailure() {
+        NullPointerException ex = assertThrows(
+                NullPointerException.class,
+                () -> new TsoSendService(null)
+        );
+        assertEquals("connection is null", ex.getMessage());
+    }
 }

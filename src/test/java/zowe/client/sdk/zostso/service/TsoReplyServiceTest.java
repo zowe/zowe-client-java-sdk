@@ -196,4 +196,28 @@ public class TsoReplyServiceTest {
         }
     }
 
+    /**
+     * Test that reply throws when sessionId is null or empty.
+     */
+    @Test
+    public void tstReplyNullSessionIdFailure() {
+        final TsoReplyService service = new TsoReplyService(mockConnection, mockPutRequest);
+        IllegalArgumentException ex = assertThrows(
+                IllegalArgumentException.class,
+                () -> service.reply(null)
+        );
+        assertEquals("sessionId is either null or empty", ex.getMessage());
+    }
+
+    /**
+     * Test that the public constructor throws when connection is null.
+     */
+    @Test
+    public void tstPublicConstructorNullConnectionFailure() {
+        NullPointerException ex = assertThrows(
+                NullPointerException.class,
+                () -> new TsoReplyService(null)
+        );
+        assertEquals("connection is null", ex.getMessage());
+    }
 }

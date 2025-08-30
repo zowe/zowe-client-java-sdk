@@ -168,4 +168,29 @@ public class TsoStopServiceTest {
         assertEquals("DELETE_JSON request type required", ex.getMessage());
     }
 
+    /**
+     * Test that stopTso throws when sessionId is null or empty.
+     */
+    @Test
+    public void tstStopTsoNullSessionIdFailure() {
+        final TsoStopService service = new TsoStopService(mockConnection, mockDeleteRequest);
+        IllegalArgumentException ex = assertThrows(
+                IllegalArgumentException.class,
+                () -> service.stopTso(null)
+        );
+        assertEquals("sessionId is either null or empty", ex.getMessage());
+    }
+
+    /**
+     * Test that the public constructor throws when connection is null.
+     */
+    @Test
+    public void tstPublicConstructorNullConnectionFailure() {
+        NullPointerException ex = assertThrows(
+                NullPointerException.class,
+                () -> new TsoStopService(null)
+        );
+        assertEquals("connection is null", ex.getMessage());
+    }
+
 }

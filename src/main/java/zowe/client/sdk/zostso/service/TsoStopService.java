@@ -37,6 +37,7 @@ public class TsoStopService {
      * @author Frank Giordano
      */
     public TsoStopService(final ZosConnection connection) {
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -68,6 +69,7 @@ public class TsoStopService {
      * @author Frank Giordano
      */
     public void stopTso(final String sessionId) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + sessionId;
 

@@ -37,6 +37,7 @@ public class TsoSendService {
      * @author Frank Giordano
      */
     public TsoSendService(final ZosConnection connection) {
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -70,6 +71,8 @@ public class TsoSendService {
      * @author Frank Giordano
      */
     public String sendCommand(final String sessionId, final String command) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
+        ValidateUtils.checkIllegalParameter(command, "command");
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + sessionId + TsoConstants.RES_DONT_READ_REPLY;
         final String body = "{\"TSO RESPONSE\":{\"VERSION\":\"0100\",\"DATA\":\"" + command + "\"}}";

@@ -43,6 +43,7 @@ public class TsoStartService {
      * @author Frank Giordano
      */
     public TsoStartService(final ZosConnection connection) {
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
@@ -101,9 +102,13 @@ public class TsoStartService {
             throw new ZosmfRequestException(TsoConstants.START_TSO_FAIL_MSG + " Response: " + e.getMessage());
         }
 
-        final String servletKey = rootNode.get("servletKey").asText();
-        if ("null".equalsIgnoreCase(servletKey)) {
-            throw new ZosmfRequestException(TsoConstants.START_TSO_FAIL_MSG + " Response: " + responseStr);
+        final JsonNode keyNode = rootNode.get("servletKey");
+        if (keyNode == null || keyNode.isNull()) {
+            throw new ZosmfRequestException(TsoConstants.START_TSO_FAIL_MSG + " Response missing servletKey: " + responseStr);
+        }
+        final String servletKey = keyNode.asText();
+        if (servletKey == null || servletKey.trim().isEmpty() || "null".equalsIgnoreCase(servletKey)) {
+            throw new ZosmfRequestException(TsoConstants.START_TSO_FAIL_MSG + " Invalid servletKey in response: " + responseStr);
         }
 
         return servletKey;
