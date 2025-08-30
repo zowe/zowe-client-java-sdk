@@ -136,6 +136,7 @@ public class IssueTso {
             }
         }
 
+        // stop the tso session 
         this.stopTso(sessionId);
         return msgLst;
     }
