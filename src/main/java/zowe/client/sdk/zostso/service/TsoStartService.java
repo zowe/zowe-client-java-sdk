@@ -99,16 +99,19 @@ public class TsoStartService {
         try {
             rootNode = objectMapper.readTree(responseStr);
         } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException(TsoConstants.START_TSO_FAIL_MSG + " Response: " + e.getMessage());
+            throw new ZosmfRequestException(TsoConstants.START_TSO_FAIL_MSG +
+                    " Response: " + e.getMessage());
         }
 
         final JsonNode keyNode = rootNode.get("servletKey");
         if (keyNode == null || keyNode.isNull()) {
-            throw new ZosmfRequestException(TsoConstants.START_TSO_FAIL_MSG + " Response missing servletKey: " + responseStr);
+            throw new ZosmfRequestException(TsoConstants.START_TSO_FAIL_MSG +
+                    " Response missing servletKey: " + responseStr);
         }
         final String servletKey = keyNode.asText();
         if (servletKey == null || servletKey.trim().isEmpty() || "null".equalsIgnoreCase(servletKey)) {
-            throw new ZosmfRequestException(TsoConstants.START_TSO_FAIL_MSG + " Invalid servletKey in response: " + responseStr);
+            throw new ZosmfRequestException(TsoConstants.START_TSO_FAIL_MSG +
+                    " Invalid servletKey in response: " + responseStr);
         }
 
         return servletKey;
