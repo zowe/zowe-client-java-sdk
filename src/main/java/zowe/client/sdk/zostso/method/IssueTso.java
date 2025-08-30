@@ -130,7 +130,7 @@ public class IssueTso {
             tsoData = this.getJsonNode(responseStr).get("tsoData");
             this.processTsoData(tsoData);
 
-            // check tso prompt message which indicates end of request 
+            // check for tso prompt message - indicates the end command
             if (!promptLst.isEmpty()) {
                 tsoMessagesReceived = true;
             }
