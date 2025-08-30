@@ -37,7 +37,7 @@ public class IssueTso {
     private final List<String> promptLst = new ArrayList<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final ZosConnection connection;
-    private String accountNumber;
+    private final String accountNumber;
     private TsoStartService tsoStartService;
     private TsoStopService tsoStopService;
     private TsoSendService tsoSendService;
@@ -155,7 +155,9 @@ public class IssueTso {
         if (inputData == null) {
             inputData = new StartTsoInputData();
         }
-        inputData.setAccount(accountNumber);
+        if (inputData.getAccount().isEmpty()) {
+            inputData.setAccount(accountNumber);
+        }
         return tsoStartService.startTso(inputData);
     }
 
@@ -245,16 +247,6 @@ public class IssueTso {
             throw new ZosmfRequestException(TsoConstants.SEND_TSO_FAIL_MSG + " Response: " + e.getMessage());
         }
         return rootNode;
-    }
-
-    /**
-     * Allow the ability to change account number
-     *
-     * @param accountNumber string value
-     * @author Frank Giordano
-     */
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
     }
 
 }
