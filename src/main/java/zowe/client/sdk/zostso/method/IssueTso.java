@@ -211,15 +211,19 @@ public class IssueTso {
      * @author Frank Giordano
      */
     private void processTsoData(final JsonNode tsoData) {
+        if (tsoData == null || !tsoData.isArray()) {
+            return;
+        }
         tsoData.forEach(tsoDataItem -> {
-            try {
-                if (tsoDataItem.get(TsoConstants.TSO_MESSAGE) != null) {
-                    this.msgLst.add(tsoDataItem.get("TSO MESSAGE").get("DATA").asText());
-                }
-                if (tsoDataItem.get(TsoConstants.TSO_PROMPT) != null) {
-                    this.promptLst.add(tsoDataItem.get("TSO PROMPT").get("HIDDEN").asText());
-                }
-            } catch (Exception ignored) {
+            // Extract message text if present
+            final JsonNode messageNode = tsoDataItem.get(TsoConstants.TSO_MESSAGE);
+            if (messageNode != null && messageNode.hasNonNull("DATA")) {
+                this.msgLst.add(messageNode.get("DATA").asText());
+            }
+            // Extract prompt hidden text if present (signals the end of conversation)
+            final JsonNode promptNode = tsoDataItem.get(TsoConstants.TSO_PROMPT);
+            if (promptNode != null && promptNode.hasNonNull("HIDDEN")) {
+                this.promptLst.add(promptNode.get("HIDDEN").asText());
             }
         });
     }
