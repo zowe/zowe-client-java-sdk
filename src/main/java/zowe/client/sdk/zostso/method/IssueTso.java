@@ -42,6 +42,7 @@ public class IssueTso {
     private TsoStopService tsoStopService;
     private TsoSendService tsoSendService;
     private TsoReplyService tsoReplyService;
+    private StartTsoInputData inputData;
 
     /**
      * IssueTso constructor
@@ -149,17 +150,18 @@ public class IssueTso {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private String startTso(StartTsoInputData inputData) throws ZosmfRequestException {
+    private String startTso(final StartTsoInputData inputData) throws ZosmfRequestException {
         if (tsoStartService == null) {
             tsoStartService = new TsoStartService(connection);
         }
-        if (inputData == null) {
-            inputData = new StartTsoInputData();
+        this.inputData = inputData;
+        if (this.inputData == null) {
+            this.inputData = new StartTsoInputData();
+            this.inputData.setAccount(accountNumber);
+        } else if (this.inputData.getAccount().isEmpty()) {
+            this.inputData.setAccount(accountNumber);
         }
-        if (inputData.getAccount().isEmpty()) {
-            inputData.setAccount(accountNumber);
-        }
-        return tsoStartService.startTso(inputData);
+        return tsoStartService.startTso(this.inputData);
     }
 
     /**
@@ -248,6 +250,16 @@ public class IssueTso {
             throw new ZosmfRequestException(TsoConstants.SEND_TSO_FAIL_MSG + " Response: " + e.getMessage());
         }
         return rootNode;
+    }
+
+    /**
+     * Returns the input data for the start TSO session call
+     * This is private-package
+     *
+     * @return StartTsoInputData object
+     */
+    StartTsoInputData getInputData() {
+        return inputData;
     }
 
 }
