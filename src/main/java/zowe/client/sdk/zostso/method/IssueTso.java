@@ -219,12 +219,12 @@ public class IssueTso {
             return;
         }
         tsoData.forEach(tsoDataItem -> {
-            // Extract message text if present
+            // extract message text if present
             final JsonNode messageNode = tsoDataItem.get(TsoConstants.TSO_MESSAGE);
             if (messageNode != null && messageNode.hasNonNull("DATA")) {
                 this.msgLst.add(messageNode.get("DATA").asText());
             }
-            // Extract prompt hidden text if present (signals the end of conversation)
+            // extract prompt hidden text if present (signals the end of conversation)
             final JsonNode promptNode = tsoDataItem.get(TsoConstants.TSO_PROMPT);
             if (promptNode != null && promptNode.hasNonNull("HIDDEN")) {
                 this.promptLst.add(promptNode.get("HIDDEN").asText());
