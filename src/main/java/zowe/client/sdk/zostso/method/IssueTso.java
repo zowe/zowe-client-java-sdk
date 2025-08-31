@@ -96,7 +96,6 @@ public class IssueTso {
      * @author Frank Giordano
      */
     public List<String> issueCommand(final String command) throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(command, "command");
         return this.issueCommand(command, null);
     }
 
