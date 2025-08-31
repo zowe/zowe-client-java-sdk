@@ -92,6 +92,48 @@ public class IssueTsoTest {
 
         assertEquals(1, result.size());
         assertEquals("JOB STARTED", result.get(0));
+        assertEquals(account, issueTso.getInputData().getAccount().orElse(null));
+
+        verify(mockTsoStartService, times(1)).startTso(any(StartTsoInputData.class));
+        verify(mockTsoSendService, times(1)).sendCommand(sessionId, command);
+        verify(mockTsoReplyService, atLeastOnce()).reply(sessionId);
+        verify(mockTsoStopService, times(1)).stopTso(sessionId);
+    }
+
+    /**
+     * Tests issuing a TSO command when the initial response contains a TSO message
+     * and later responses contain a TSO prompt with a different account number than
+     * the initial request.
+     * <p>
+     * Verifies that the command response is collected, the reply loop continues
+     * until a prompt is returned, and that the session is properly started and stopped.
+     *
+     * @throws Exception if a mocked service call fails unexpectedly
+     */
+    @Test
+    public void tstIssueCommandWithTsoMessageAndPromptWithDifferentAccountNumberSuccess() throws Exception {
+        String firstResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"JOB STARTED\"}}]}";
+        String secondResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"HIDDEN\":\"READY\"}}]}";
+
+        when(mockTsoStartService.startTso(any(StartTsoInputData.class))).thenReturn(sessionId);
+        when(mockTsoSendService.sendCommand(sessionId, command)).thenReturn(firstResponse);
+        when(mockTsoReplyService.reply(sessionId)).thenReturn(secondResponse);
+
+        IssueTso issueTso = new IssueTso(
+                mockConnection,
+                account,
+                mockTsoStartService,
+                mockTsoStopService,
+                mockTsoSendService,
+                mockTsoReplyService
+        );
+        StartTsoInputData inputData = new StartTsoInputData();
+        inputData.setAccount("ACCT456");
+        List<String> result = issueTso.issueCommand(command, inputData);
+
+        assertEquals(1, result.size());
+        assertEquals("JOB STARTED", result.get(0));
+        assertEquals("ACCT456", issueTso.getInputData().getAccount().orElse(null));
 
         verify(mockTsoStartService, times(1)).startTso(any(StartTsoInputData.class));
         verify(mockTsoSendService, times(1)).sendCommand(sessionId, command);

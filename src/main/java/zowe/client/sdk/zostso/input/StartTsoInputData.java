@@ -20,7 +20,8 @@ import java.util.Optional;
 public class StartTsoInputData {
 
     /**
-     * User's z/OS permission account number
+     * User's z/OS permission account number.
+     * This parameter overrides the account specified in IssueTso constructor.
      */
     public String account;
 
