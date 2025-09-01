@@ -21,7 +21,7 @@ public class TsoPingResponse {
 
     private String servletKey;
     private String ver;
-    private String timeout;
+    private Boolean timeout;
 
     /**
      * TsoPingResponse No-argument constructor (required by Jackson)
@@ -68,18 +68,18 @@ public class TsoPingResponse {
     /**
      * Retrieve tso timeout value
      *
-     * @return string value
+     * @return Boolean value
      */
-    public String getTimeout() {
+    public Boolean getTimeout() {
         return timeout;
     }
 
     /**
      * Set tso timeout value
      *
-     * @param timeout string value
+     * @param timeout Boolean value
      */
-    public void setTimeout(String timeout) {
+    public void setTimeout(Boolean timeout) {
         this.timeout = timeout;
     }
 

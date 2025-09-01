@@ -21,7 +21,7 @@ public class TsoStopResponse {
 
     private String servletKey;
     private String ver;
-    private String timeout;
+    private Boolean timeout;
     private Boolean reuse;
 
     /**
@@ -69,18 +69,18 @@ public class TsoStopResponse {
     /**
      * Retrieve tso timeout value
      *
-     * @return string value
+     * @return Boolean value
      */
-    public String getTimeout() {
+    public Boolean getTimeout() {
         return timeout;
     }
 
     /**
      * Set tso timeout value
      *
-     * @param timeout
+     * @param timeout Boolean value
      */
-    public void setTimeout(String timeout) {
+    public void setTimeout(Boolean timeout) {
         this.timeout = timeout;
     }
 
