@@ -133,7 +133,7 @@ public class IssueTsoTest {
 
         assertEquals(1, result.size());
         assertEquals("JOB STARTED", result.get(0));
-        assertEquals("ACCT456", issueTso.getInputData().getAccount().orElse(null));
+        assertEquals(account, issueTso.getInputData().getAccount().orElse(null));
 
         verify(mockTsoStartService, times(1)).startTso(any(StartTsoInputData.class));
         verify(mockTsoSendService, times(1)).sendCommand(sessionId, command);
