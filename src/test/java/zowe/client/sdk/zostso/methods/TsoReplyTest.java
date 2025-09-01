@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso.method;
+package zowe.client.sdk.zostso.methods;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

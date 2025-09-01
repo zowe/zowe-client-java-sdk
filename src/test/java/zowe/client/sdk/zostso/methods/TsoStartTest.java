@@ -1,4 +1,4 @@
-package zowe.client.sdk.zostso.method;
+package zowe.client.sdk.zostso.methods;
 
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.AfterEach;

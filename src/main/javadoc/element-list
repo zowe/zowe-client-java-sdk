@@ -47,7 +47,7 @@ zowe.client.sdk.zosmfinfo.model
 zowe.client.sdk.zosmfinfo.response
 zowe.client.sdk.zostso
 zowe.client.sdk.zostso.input
-zowe.client.sdk.zostso.method
+zowe.client.sdk.zostso.methods
 zowe.client.sdk.zostso.service
 zowe.client.sdk.zosuss.exception
 zowe.client.sdk.zosuss.method

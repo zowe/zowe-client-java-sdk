@@ -82,7 +82,7 @@ zowe.client.sdk.zosmfinfo.methods
     ZosmfStatus  
     ZosmfSystems   
 
-zowe.client.sdk.zostso.method  
+zowe.client.sdk.zostso.methods  
   
     IssueTso    
 
