@@ -99,4 +99,9 @@ public final class TsoConstants {
      */
     public static final String STOP_TSO_FAIL_MSG = "Failed to end tso session.";
 
+    /**
+     * Failure message for when trying to perform a ping tso session
+     */
+    public static final String PING_TSO_FAIL_MSG = "Failed to ping tso session.";
+
 }

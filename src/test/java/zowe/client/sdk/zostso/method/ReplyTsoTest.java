@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso.service;
+package zowe.client.sdk.zostso.method;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -34,12 +34,12 @@ import static org.mockito.Mockito.*;
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoReplyServiceTest {
+public class ReplyTsoTest {
 
     private final ZosConnection mockConnection = mock(ZosConnection.class);
     private final PutJsonZosmfRequest mockPutRequest = mock(PutJsonZosmfRequest.class);
 
-    public TsoReplyServiceTest() {
+    public ReplyTsoTest() {
         when(mockConnection.getZosmfUrl()).thenReturn("https://zosmf:1443");
     }
 
@@ -62,8 +62,8 @@ public class TsoReplyServiceTest {
             mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
                     .thenReturn("{}");
 
-            final TsoReplyService service = new TsoReplyService(mockConnection, mockPutRequest);
-            service.reply("SESSION123");
+            final ReplyTso replyTso = new ReplyTso(mockConnection, mockPutRequest);
+            replyTso.reply("SESSION123");
 
             final String actualUrl = mockPutRequest.getUrl();
             assertEquals("https://zosmf:1443/tsoApp/tso/SESSION123", actualUrl);
@@ -87,8 +87,8 @@ public class TsoReplyServiceTest {
             mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
                     .thenReturn("{}");
 
-            final TsoReplyService service = new TsoReplyService(mockConnection, putJsonZosmfRequest);
-            service.reply("SESSION123");
+            final ReplyTso replyTso = new ReplyTso(mockConnection, putJsonZosmfRequest);
+            replyTso.reply("SESSION123");
 
             Map<String, String> headers = putJsonZosmfRequest.getHeaders();
 
@@ -108,11 +108,11 @@ public class TsoReplyServiceTest {
             mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
                     .thenThrow(new ZosmfRequestException("Reply failed"));
 
-            final TsoReplyService service = new TsoReplyService(mockConnection, mockPutRequest);
+            final ReplyTso replyTso = new ReplyTso(mockConnection, mockPutRequest);
 
             ZosmfRequestException ex = assertThrows(
                     ZosmfRequestException.class,
-                    () -> service.reply("SESSION123")
+                    () -> replyTso.reply("SESSION123")
             );
 
             assertEquals("Reply failed", ex.getMessage());
@@ -128,8 +128,8 @@ public class TsoReplyServiceTest {
             mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
                     .thenReturn("{\"status\":\"ok\"}");
 
-            final TsoReplyService service = new TsoReplyService(mockConnection, mockPutRequest);
-            assertDoesNotThrow(() -> service.reply("SESSION123"));
+            final ReplyTso replyTso = new ReplyTso(mockConnection, mockPutRequest);
+            assertDoesNotThrow(() -> replyTso.reply("SESSION123"));
         }
     }
 
@@ -140,7 +140,7 @@ public class TsoReplyServiceTest {
     public void tstAlternativeConstructorNullConnectionFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoReplyService(null, mockPutRequest)
+                () -> new ReplyTso(null, mockPutRequest)
         );
         assertEquals("connection is null", ex.getMessage());
     }
@@ -152,7 +152,7 @@ public class TsoReplyServiceTest {
     public void tstAlternativeConstructorNullRequestFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoReplyService(mockConnection, null)
+                () -> new ReplyTso(mockConnection, null)
         );
         assertEquals("request is null", ex.getMessage());
     }
@@ -165,7 +165,7 @@ public class TsoReplyServiceTest {
         final ZosmfRequest wrongRequest = mock(ZosmfRequest.class);
         IllegalStateException ex = assertThrows(
                 IllegalStateException.class,
-                () -> new TsoReplyService(mockConnection, wrongRequest)
+                () -> new ReplyTso(mockConnection, wrongRequest)
         );
         assertEquals("PUT_JSON request type required", ex.getMessage());
     }
@@ -189,8 +189,8 @@ public class TsoReplyServiceTest {
             responseMock.when(() -> ResponseUtil.getResponseStr(mockPutRequest, TsoConstants.SEND_TSO_FAIL_MSG))
                     .thenReturn("{\"status\":\"ok\"}");
 
-            final TsoReplyService service = new TsoReplyService(mockConnection);
-            String result = service.reply("SESSION999");
+            final ReplyTso replyTso = new ReplyTso(mockConnection);
+            String result = replyTso.reply("SESSION999");
 
             assertEquals("{\"status\":\"ok\"}", result);
         }
@@ -201,10 +201,10 @@ public class TsoReplyServiceTest {
      */
     @Test
     public void tstReplyNullSessionIdFailure() {
-        final TsoReplyService service = new TsoReplyService(mockConnection, mockPutRequest);
+        final ReplyTso replyTso = new ReplyTso(mockConnection, mockPutRequest);
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,
-                () -> service.reply(null)
+                () -> replyTso.reply(null)
         );
         assertEquals("sessionId is either null or empty", ex.getMessage());
     }
@@ -216,7 +216,7 @@ public class TsoReplyServiceTest {
     public void tstPublicConstructorNullConnectionFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoReplyService(null)
+                () -> new ReplyTso(null)
         );
         assertEquals("connection is null", ex.getMessage());
     }

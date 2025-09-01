@@ -17,10 +17,6 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
-import zowe.client.sdk.zostso.service.TsoReplyService;
-import zowe.client.sdk.zostso.service.TsoSendService;
-import zowe.client.sdk.zostso.service.TsoStartService;
-import zowe.client.sdk.zostso.service.TsoStopService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +34,10 @@ public class IssueTso {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final ZosConnection connection;
     private final String accountNumber;
-    private TsoStartService tsoStartService;
-    private TsoStopService tsoStopService;
-    private TsoSendService tsoSendService;
-    private TsoReplyService tsoReplyService;
+    private StartTso startTso;
+    private StopTso stopTso;
+    private SendTso sendTso;
+    private ReplyTso replyTso;
     private StartTsoInputData inputData;
 
     /**
@@ -64,27 +60,27 @@ public class IssueTso {
      * <p>
      * This constructor is package-private
      *
-     * @param connection      for connection information, see ZosConnection object
-     * @param accountNumber   account number for tso processing
-     * @param tsoStartService TsoStartService for mocking
-     * @param tsoStopService  TsoStopService for mocking
-     * @param tsoSendService  TsoSendService for mocking
-     * @param tsoReplyService TsoReplyService for mocking
+     * @param connection    for connection information, see ZosConnection object
+     * @param accountNumber account number for tso processing
+     * @param startTso      StartTso for mocking
+     * @param stopTso       StopTso for mocking
+     * @param sendTso       SendTso for mocking
+     * @param replyTso      ReplyTso for mocking
      * @author Frank Giordano
      */
     IssueTso(final ZosConnection connection,
              final String accountNumber,
-             final TsoStartService tsoStartService,
-             final TsoStopService tsoStopService,
-             final TsoSendService tsoSendService,
-             final TsoReplyService tsoReplyService) {
+             final StartTso startTso,
+             final StopTso stopTso,
+             final SendTso sendTso,
+             final ReplyTso replyTso) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
         this.accountNumber = accountNumber;
-        this.tsoStartService = tsoStartService;
-        this.tsoStopService = tsoStopService;
-        this.tsoSendService = tsoSendService;
-        this.tsoReplyService = tsoReplyService;
+        this.startTso = startTso;
+        this.stopTso = stopTso;
+        this.sendTso = sendTso;
+        this.replyTso = replyTso;
     }
 
     /**
@@ -150,15 +146,15 @@ public class IssueTso {
      * @author Frank Giordano
      */
     private String startTso(final StartTsoInputData inputData) throws ZosmfRequestException {
-        if (tsoStartService == null) {
-            tsoStartService = new TsoStartService(connection);
+        if (startTso == null) {
+            startTso = new StartTso(connection);
         }
         this.inputData = inputData;
         if (this.inputData == null) {
             this.inputData = new StartTsoInputData();
         }
         this.inputData.setAccount(accountNumber);
-        return tsoStartService.startTso(this.inputData);
+        return startTso.start(this.inputData);
     }
 
     /**
@@ -171,10 +167,10 @@ public class IssueTso {
      * @author Frank Giordano
      */
     private String sendTsoCommand(final String sessionId, final String command) throws ZosmfRequestException {
-        if (tsoSendService == null) {
-            tsoSendService = new TsoSendService(connection);
+        if (sendTso == null) {
+            sendTso = new SendTso(connection);
         }
-        return tsoSendService.sendCommand(sessionId, command);
+        return sendTso.sendCommand(sessionId, command);
     }
 
     /**
@@ -186,10 +182,10 @@ public class IssueTso {
      * @author Frank Giordano
      */
     private String sendTsoForReply(final String sessionId) throws ZosmfRequestException {
-        if (tsoReplyService == null) {
-            tsoReplyService = new TsoReplyService(connection);
+        if (replyTso == null) {
+            replyTso = new ReplyTso(connection);
         }
-        return tsoReplyService.reply(sessionId);
+        return replyTso.reply(sessionId);
     }
 
     /**
@@ -200,10 +196,10 @@ public class IssueTso {
      * @author Frank Giordano
      */
     private void stopTso(final String sessionId) throws ZosmfRequestException {
-        if (tsoStopService == null) {
-            tsoStopService = new TsoStopService(connection);
+        if (stopTso == null) {
+            stopTso = new StopTso(connection);
         }
-        tsoStopService.stopTso(sessionId);
+        stopTso.stop(sessionId);
     }
 
     /**

@@ -7,10 +7,10 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso.service;
+package zowe.client.sdk.zostso.method;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
+import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -20,29 +20,29 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 
 /**
- * This class handles sending the request to end the TSO session via z/OSMF
+ * This class handles sending the TSO command to be performed via z/OSMF
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoStopService {
+public class SendTso {
 
     private final ZosConnection connection;
     private ZosmfRequest request;
 
     /**
-     * TsoStopService constructor
+     * SendTso constructor
      *
      * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public TsoStopService(final ZosConnection connection) {
+    public SendTso(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
     /**
-     * Alternative TsoStopService constructor with ZoweRequest object. This is mainly used for internal code unit
+     * Alternative SendTso constructor with ZoweRequest object. This is mainly used for internal code unit
      * testing with mockito, and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private
@@ -51,34 +51,39 @@ public class TsoStopService {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    TsoStopService(final ZosConnection connection, final ZosmfRequest request) {
+    SendTso(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if (!(request instanceof DeleteJsonZosmfRequest)) {
-            throw new IllegalStateException("DELETE_JSON request type required");
+        if (!(request instanceof PutJsonZosmfRequest)) {
+            throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
 
     /**
-     * Stop the TSO session by session id (servletKey)
+     * Make the second request to send TSO the command to perform via z/OSMF
      *
-     * @param sessionId servletKey id retrieve from start TSO request
+     * @param sessionId servletKey id retrieved from start TSO request
+     * @param command   tso command
+     * @return response string representing the returned request payload
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public void stopTso(final String sessionId) throws ZosmfRequestException {
+    public String sendCommand(final String sessionId, final String command) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
+        ValidateUtils.checkIllegalParameter(command, "command");
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" + sessionId;
+                TsoConstants.RES_START_TSO + "/" + sessionId + TsoConstants.RES_DONT_READ_REPLY;
+        final String body = "{\"TSO RESPONSE\":{\"VERSION\":\"0100\",\"DATA\":\"" + command + "\"}}";
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
+        if (request == null || !(request instanceof PutJsonZosmfRequest)) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        request.setBody(body);
 
-        ResponseUtil.getResponseStr(request, TsoConstants.STOP_TSO_FAIL_MSG);
+        return ResponseUtil.getResponseStr(request, TsoConstants.SEND_TSO_FAIL_MSG);
     }
 
 }

@@ -7,10 +7,11 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso.service;
+package zowe.client.sdk.zostso.method;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
+import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -20,29 +21,29 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 
 /**
- * This class handles sending a request to z/OSMF TSO for additional TSO message data
+ * This class handles sending a ping request to z/OSMF TSO to keep the session alive.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoReplyService {
+public class PingTso {
 
     private final ZosConnection connection;
     private ZosmfRequest request;
 
     /**
-     * TsoReplyService constructor
+     * PingTso constructor
      *
      * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public TsoReplyService(final ZosConnection connection) {
+    public PingTso(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
     /**
-     * Alternative TsoReplyService constructor with ZoweRequest object. This is mainly used for internal code unit
+     * Alternative PingTso constructor with ZoweRequest object. This is mainly used for internal code unit
      * testing with mockito, and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private
@@ -51,7 +52,7 @@ public class TsoReplyService {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    TsoReplyService(final ZosConnection connection, final ZosmfRequest request) {
+    PingTso(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -62,17 +63,16 @@ public class TsoReplyService {
     }
 
     /**
-     * Send a request to z/OSMF TSO for additional TSO message data
+     * Send a ping request to z/OSMF TSO to keep the session alive
      *
-     * @param sessionId servletKey id retrieve from start TSO request
-     * @return response string representing the returned request payload
+     * @param sessionId servletKey id retrieved from start TSO request
+     * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public String reply(final String sessionId) throws ZosmfRequestException {
+    public Response ping(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
-        final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" + sessionId;
+        final String url = connection.getZosmfUrl() + TsoConstants.RES_PING + "/" + sessionId;
 
         if (request == null || !(request instanceof PutJsonZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -80,7 +80,7 @@ public class TsoReplyService {
         request.setUrl(url);
         request.setBody("");
 
-        return ResponseUtil.getResponseStr(request, TsoConstants.SEND_TSO_FAIL_MSG);
+        return request.executeRequest();
     }
 
 }

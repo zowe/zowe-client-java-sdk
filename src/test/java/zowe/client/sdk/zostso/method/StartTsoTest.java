@@ -1,4 +1,4 @@
-package zowe.client.sdk.zostso.service;
+package zowe.client.sdk.zostso.method;
 
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.AfterEach;
@@ -27,11 +27,11 @@ import static org.mockito.Mockito.*;
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoStartServiceTest {
+public class StartTsoTest {
 
     private ZosConnection mockConnection;
     private PostJsonZosmfRequest mockRequest;
-    private TsoStartService service;
+    private StartTso startTso;
 
     /**
      * Setup executed before each test.
@@ -42,7 +42,7 @@ public class TsoStartServiceTest {
         mockConnection = mock(ZosConnection.class);
         when(mockConnection.getZosmfUrl()).thenReturn("https://zosmf:1234");
         mockRequest = mock(PostJsonZosmfRequest.class);
-        service = new TsoStartService(mockConnection, mockRequest);
+        startTso = new StartTso(mockConnection, mockRequest);
     }
 
     @AfterEach
@@ -66,7 +66,7 @@ public class TsoStartServiceTest {
             mocked.when(() -> ResponseUtil.getResponseStr(any(), any()))
                     .thenReturn("{\"servletKey\":\"mySession123\"}");
 
-            final String result = service.startTso(input);
+            final String result = startTso.start(input);
             assertEquals("mySession123", result);
 
             verify(mockRequest).setUrl(contains("acct=ACCT123"));
@@ -88,7 +88,7 @@ public class TsoStartServiceTest {
                     .thenReturn("invalid json response");
 
             ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
-                    () -> service.startTso(input));
+                    () -> startTso.start(input));
             assertTrue(ex.getMessage().contains(TsoConstants.START_TSO_FAIL_MSG));
         }
     }
@@ -107,7 +107,7 @@ public class TsoStartServiceTest {
                     .thenReturn("{\"servletKey\":\"null\"}");
 
             ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
-                    () -> service.startTso(input));
+                    () -> startTso.start(input));
             assertTrue(ex.getMessage().contains(TsoConstants.START_TSO_FAIL_MSG));
             assertTrue(ex.getMessage().contains("Invalid servletKey"));
         }
@@ -126,7 +126,7 @@ public class TsoStartServiceTest {
                     .thenReturn("{}\n");
 
             ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
-                    () -> service.startTso(input));
+                    () -> startTso.start(input));
             assertTrue(ex.getMessage().contains(TsoConstants.START_TSO_FAIL_MSG));
             assertTrue(ex.getMessage().contains("Response missing servletKey"));
         }
@@ -145,7 +145,7 @@ public class TsoStartServiceTest {
                     .thenReturn("{\"servletKey\":\"\"}");
 
             ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
-                    () -> service.startTso(input));
+                    () -> startTso.start(input));
             assertTrue(ex.getMessage().contains(TsoConstants.START_TSO_FAIL_MSG));
             assertTrue(ex.getMessage().contains("Invalid servletKey"));
         }
@@ -158,7 +158,7 @@ public class TsoStartServiceTest {
     public void tstPublicConstructorNullConnectionFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoStartService(null)
+                () -> new StartTso(null)
         );
         assertEquals("connection is null", ex.getMessage());
     }
@@ -170,7 +170,7 @@ public class TsoStartServiceTest {
     public void tstAlternativeConstructorNullConnectionForStartServiceFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoStartService(null, mockRequest)
+                () -> new StartTso(null, mockRequest)
         );
         assertEquals("connection is null", ex.getMessage());
     }
@@ -195,7 +195,7 @@ public class TsoStartServiceTest {
         mockStatic(ResponseUtil.class);
         when(ResponseUtil.getResponseStr(eq(mockRequest), eq(TsoConstants.START_TSO_FAIL_MSG))).thenReturn(jsonResponse);
 
-        final String result = service.startTso(inputData);
+        final String result = startTso.start(inputData);
         assertEquals("TSO12345", result);
     }
 
@@ -216,7 +216,7 @@ public class TsoStartServiceTest {
         Mockito.when(mockRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(map), 200, "success"));
 
-        final String result = service.startTso(inputData);
+        final String result = startTso.start(inputData);
         assertEquals("SERVKEY123", result);
 
         final String expectedUrl = "https://zosmf:1234/tsoApp/tso?acct=ACCT123&proc=PROC1&chset=UTF-8" +
@@ -248,9 +248,9 @@ public class TsoStartServiceTest {
             mocked.when(() -> ResponseUtil.getResponseStr(any(), any()))
                     .thenReturn("{\"servletKey\":\"SERVKEY123\"}");
 
-            service = new TsoStartService(mockConnection, postJsonZosmfRequest);
+            startTso = new StartTso(mockConnection, postJsonZosmfRequest);
 
-            final String result = service.startTso(inputData);
+            final String result = startTso.start(inputData);
             assertEquals("SERVKEY123", result);
 
             Map<String, String> headers = postJsonZosmfRequest.getHeaders();
@@ -267,7 +267,7 @@ public class TsoStartServiceTest {
     public void tstStartTsoNullInputDataFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> service.startTso(null)
+                () -> startTso.start(null)
         );
         assertEquals("inputData is null", ex.getMessage());
     }
@@ -281,7 +281,7 @@ public class TsoStartServiceTest {
         input.setLogonProcedure("LOGONPROC");
 
         ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
-                () -> service.startTso(input));
+                () -> startTso.start(input));
         assertEquals("accountNumber is not specified", ex.getMessage());
     }
 
@@ -292,7 +292,7 @@ public class TsoStartServiceTest {
     public void tstAlternativeConstructorNullConnectionFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoStopService(null, mockRequest)
+                () -> new StopTso(null, mockRequest)
         );
         assertEquals("connection is null", ex.getMessage());
     }
@@ -305,7 +305,7 @@ public class TsoStartServiceTest {
     public void tstAlternativeConstructorNullRequestFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoStartService(mockConnection, null)
+                () -> new StartTso(mockConnection, null)
         );
         assertEquals("request is null", ex.getMessage());
     }
@@ -319,7 +319,7 @@ public class TsoStartServiceTest {
         final ZosmfRequest wrongRequest = mock(ZosmfRequest.class);
         IllegalStateException ex = assertThrows(
                 IllegalStateException.class,
-                () -> new TsoStartService(mockConnection, wrongRequest)
+                () -> new StartTso(mockConnection, wrongRequest)
         );
         assertEquals("POST_JSON request type required", ex.getMessage());
     }

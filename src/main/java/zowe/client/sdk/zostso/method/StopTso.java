@@ -7,10 +7,11 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso.service;
+package zowe.client.sdk.zostso.method;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.PutJsonZosmfRequest;
+import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
+import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -20,29 +21,29 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 
 /**
- * This class handles sending the TSO command to be performed via z/OSMF
+ * This class handles sending the request to end the TSO session via z/OSMF
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoSendService {
+public class StopTso {
 
     private final ZosConnection connection;
     private ZosmfRequest request;
 
     /**
-     * TsoSendService constructor
+     * StopTso constructor
      *
      * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public TsoSendService(final ZosConnection connection) {
+    public StopTso(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
     /**
-     * Alternative TsoSendService constructor with ZoweRequest object. This is mainly used for internal code unit
+     * Alternative StopTso constructor with ZoweRequest object. This is mainly used for internal code unit
      * testing with mockito, and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private
@@ -51,39 +52,35 @@ public class TsoSendService {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    TsoSendService(final ZosConnection connection, final ZosmfRequest request) {
+    StopTso(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if (!(request instanceof PutJsonZosmfRequest)) {
-            throw new IllegalStateException("PUT_JSON request type required");
+        if (!(request instanceof DeleteJsonZosmfRequest)) {
+            throw new IllegalStateException("DELETE_JSON request type required");
         }
         this.request = request;
     }
 
     /**
-     * Make the second request to send TSO the command to perform via z/OSMF
+     * Stop the TSO session by session id (servletKey)
      *
-     * @param sessionId servletKey id retrieve from start TSO request
-     * @param command   tso command
-     * @return response string representing the returned request payload
+     * @param sessionId servletKey id retrieved from start TSO request
+     * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public String sendCommand(final String sessionId, final String command) throws ZosmfRequestException {
+    public Response stop(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
-        ValidateUtils.checkIllegalParameter(command, "command");
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" + sessionId + TsoConstants.RES_DONT_READ_REPLY;
-        final String body = "{\"TSO RESPONSE\":{\"VERSION\":\"0100\",\"DATA\":\"" + command + "\"}}";
+                TsoConstants.RES_START_TSO + "/" + sessionId;
 
-        if (request == null || !(request instanceof PutJsonZosmfRequest)) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        if (request == null) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
         request.setUrl(url);
-        request.setBody(body);
 
-        return ResponseUtil.getResponseStr(request, TsoConstants.SEND_TSO_FAIL_MSG);
+        return request.executeRequest();
     }
 
 }

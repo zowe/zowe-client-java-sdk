@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso.service;
+package zowe.client.sdk.zostso.method;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -33,12 +33,12 @@ import static org.mockito.Mockito.*;
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoSendServiceTest {
+public class SendTsoTest {
 
     private final ZosConnection mockConnection = mock(ZosConnection.class);
     private final PutJsonZosmfRequest mockPutRequest = mock(PutJsonZosmfRequest.class);
 
-    public TsoSendServiceTest() {
+    public SendTsoTest() {
         when(mockConnection.getZosmfUrl()).thenReturn("https://zosmf:1443");
     }
 
@@ -69,8 +69,8 @@ public class TsoSendServiceTest {
             mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
                     .thenReturn("{}");
 
-            final TsoSendService service = new TsoSendService(mockConnection, putJsonZosmfRequest);
-            service.sendCommand("SERVKEY123", "LISTCAT");
+            final SendTso sendTso = new SendTso(mockConnection, putJsonZosmfRequest);
+            sendTso.sendCommand("SERVKEY123", "LISTCAT");
 
             Map<String, String> headers = putJsonZosmfRequest.getHeaders();
 
@@ -95,8 +95,8 @@ public class TsoSendServiceTest {
             mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
                     .thenReturn("{}");
 
-            final TsoSendService service = new TsoSendService(mockConnection, mockPutRequest);
-            service.sendCommand("SERVKEY123", "LISTCAT");
+            final SendTso sendTso = new SendTso(mockConnection, mockPutRequest);
+            sendTso.sendCommand("SERVKEY123", "LISTCAT");
 
             final String actualUrl = mockPutRequest.getUrl();
 
@@ -118,8 +118,8 @@ public class TsoSendServiceTest {
             responseMock.when(() -> ResponseUtil.getResponseStr(eq(mockPutRequest), anyString()))
                     .thenReturn("{\"status\":\"ok\"}");
 
-            final TsoSendService service = new TsoSendService(mockConnection);
-            String result = service.sendCommand("SERVKEY999", "TIME");
+            final SendTso sendTso = new SendTso(mockConnection);
+            String result = sendTso.sendCommand("SERVKEY999", "TIME");
 
             assertEquals("{\"status\":\"ok\"}", result);
             verify(mockPutRequest).setUrl(contains("SERVKEY999"));
@@ -136,11 +136,11 @@ public class TsoSendServiceTest {
             responseMock.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
                     .thenThrow(new ZosmfRequestException("Send failed"));
 
-            final TsoSendService service = new TsoSendService(mockConnection, mockPutRequest);
+            final SendTso sendTso = new SendTso(mockConnection, mockPutRequest);
 
             ZosmfRequestException ex = assertThrows(
                     ZosmfRequestException.class,
-                    () -> service.sendCommand("SERVKEY123", "LISTCAT")
+                    () -> sendTso.sendCommand("SERVKEY123", "LISTCAT")
             );
 
             assertEquals("Send failed", ex.getMessage());
@@ -156,8 +156,8 @@ public class TsoSendServiceTest {
             responseMock.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
                     .thenReturn("{\"status\":\"ok\"}");
 
-            final TsoSendService service = new TsoSendService(mockConnection, mockPutRequest);
-            String result = service.sendCommand("SERVKEY123", "LISTCAT");
+            final SendTso sendTso = new SendTso(mockConnection, mockPutRequest);
+            String result = sendTso.sendCommand("SERVKEY123", "LISTCAT");
 
             assertEquals("{\"status\":\"ok\"}", result);
         }
@@ -170,7 +170,7 @@ public class TsoSendServiceTest {
     public void tstAlternativeConstructorNullConnectionFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoSendService(null, mockPutRequest)
+                () -> new SendTso(null, mockPutRequest)
         );
         assertEquals("connection is null", ex.getMessage());
     }
@@ -182,7 +182,7 @@ public class TsoSendServiceTest {
     public void tstAlternativeConstructorNullRequestFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoSendService(mockConnection, null)
+                () -> new SendTso(mockConnection, null)
         );
         assertEquals("request is null", ex.getMessage());
     }
@@ -195,7 +195,7 @@ public class TsoSendServiceTest {
         final ZosmfRequest wrongRequest = mock(ZosmfRequest.class);
         IllegalStateException ex = assertThrows(
                 IllegalStateException.class,
-                () -> new TsoSendService(mockConnection, wrongRequest)
+                () -> new SendTso(mockConnection, wrongRequest)
         );
         assertEquals("PUT_JSON request type required", ex.getMessage());
     }
@@ -205,35 +205,35 @@ public class TsoSendServiceTest {
      */
     @Test
     public void tstSendCommandNullSessionIdFailure() {
-        final TsoSendService service = new TsoSendService(mockConnection, mockPutRequest);
+        final SendTso sendTso = new SendTso(mockConnection, mockPutRequest);
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,
-                () -> service.sendCommand(null, "CMD")
+                () -> sendTso.sendCommand(null, "CMD")
         );
         assertEquals("sessionId is either null or empty", ex.getMessage());
     }
 
     /**
-     * Test that sendCommand throws when command is null or empty.
+     * Test that sendCommand throws when the command is null or empty.
      */
     @Test
     public void tstSendCommandNullCommandFailure() {
-        final TsoSendService service = new TsoSendService(mockConnection, mockPutRequest);
+        final SendTso sendTso = new SendTso(mockConnection, mockPutRequest);
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,
-                () -> service.sendCommand("SERVKEY", null)
+                () -> sendTso.sendCommand("SERVKEY", null)
         );
         assertEquals("command is either null or empty", ex.getMessage());
     }
 
     /**
-     * Test that the public constructor throws when connection is null.
+     * Test that the public constructor throws when the connection is null.
      */
     @Test
     public void tstPublicConstructorNullConnectionFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoSendService(null)
+                () -> new SendTso(null)
         );
         assertEquals("connection is null", ex.getMessage());
     }

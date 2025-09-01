@@ -98,7 +98,7 @@ public class JobModifyInputData {
     public static class Builder {
 
         /**
-         * Job name value specified for request
+         * Job name value specified for the request
          */
         private final String jobName;
 

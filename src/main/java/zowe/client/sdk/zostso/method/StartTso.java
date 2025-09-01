@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso.service;
+package zowe.client.sdk.zostso.method;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -30,25 +30,25 @@ import zowe.client.sdk.zostso.input.StartTsoInputData;
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoStartService {
+public class StartTso {
 
     private final ZosConnection connection;
     private ZosmfRequest request;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * TsoStartService constructor
+     * StartTso constructor
      *
      * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public TsoStartService(final ZosConnection connection) {
+    public StartTso(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
     /**
-     * Alternative TsoStartService constructor with ZoweRequest object. This is mainly used for internal code unit
+     * Alternative StartTso constructor with ZoweRequest object. This is mainly used for internal code unit
      * testing with mockito, and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private
@@ -57,7 +57,7 @@ public class TsoStartService {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    TsoStartService(final ZosConnection connection, final ZosmfRequest request) {
+    StartTso(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -75,7 +75,7 @@ public class TsoStartService {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public String startTso(final StartTsoInputData inputData) throws ZosmfRequestException {
+    public String start(final StartTsoInputData inputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData == null, "inputData is null");
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO +
                 "?" + "acct" + "=" + EncodeUtils.encodeURIComponent(inputData.getAccount()

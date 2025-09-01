@@ -14,10 +14,6 @@ import org.junit.jupiter.api.Test;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
-import zowe.client.sdk.zostso.service.TsoReplyService;
-import zowe.client.sdk.zostso.service.TsoSendService;
-import zowe.client.sdk.zostso.service.TsoStartService;
-import zowe.client.sdk.zostso.service.TsoStopService;
 
 import java.util.List;
 
@@ -37,10 +33,10 @@ import static org.mockito.Mockito.*;
 public class IssueTsoTest {
 
     private ZosConnection mockConnection;
-    private TsoStartService mockTsoStartService;
-    private TsoSendService mockTsoSendService;
-    private TsoReplyService mockTsoReplyService;
-    private TsoStopService mockTsoStopService;
+    private StartTso mockStartTso;
+    private SendTso mockSendTso;
+    private ReplyTso mockReplyTso;
+    private StopTso mockStopTso;
     private String account = "ACCT123";
     private String sessionId = "SESSION123";
     private String command = "LISTDS";
@@ -56,10 +52,10 @@ public class IssueTsoTest {
         command = "LISTDS";
 
         mockConnection = mock(ZosConnection.class);
-        mockTsoStartService = mock(TsoStartService.class);
-        mockTsoSendService = mock(TsoSendService.class);
-        mockTsoReplyService = mock(TsoReplyService.class);
-        mockTsoStopService = mock(TsoStopService.class);
+        mockStartTso = mock(StartTso.class);
+        mockSendTso = mock(SendTso.class);
+        mockReplyTso = mock(ReplyTso.class);
+        mockStopTso = mock(StopTso.class);
     }
 
     /**
@@ -76,17 +72,17 @@ public class IssueTsoTest {
         String firstResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"JOB STARTED\"}}]}";
         String secondResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"HIDDEN\":\"READY\"}}]}";
 
-        when(mockTsoStartService.startTso(any(StartTsoInputData.class))).thenReturn(sessionId);
-        when(mockTsoSendService.sendCommand(sessionId, command)).thenReturn(firstResponse);
-        when(mockTsoReplyService.reply(sessionId)).thenReturn(secondResponse);
+        when(mockStartTso.start(any(StartTsoInputData.class))).thenReturn(sessionId);
+        when(mockSendTso.sendCommand(sessionId, command)).thenReturn(firstResponse);
+        when(mockReplyTso.reply(sessionId)).thenReturn(secondResponse);
 
         IssueTso issueTso = new IssueTso(
                 mockConnection,
                 account,
-                mockTsoStartService,
-                mockTsoStopService,
-                mockTsoSendService,
-                mockTsoReplyService
+                mockStartTso,
+                mockStopTso,
+                mockSendTso,
+                mockReplyTso
         );
         List<String> result = issueTso.issueCommand(command);
 
@@ -94,10 +90,10 @@ public class IssueTsoTest {
         assertEquals("JOB STARTED", result.get(0));
         assertEquals(account, issueTso.getInputData().getAccount().orElse(null));
 
-        verify(mockTsoStartService, times(1)).startTso(any(StartTsoInputData.class));
-        verify(mockTsoSendService, times(1)).sendCommand(sessionId, command);
-        verify(mockTsoReplyService, atLeastOnce()).reply(sessionId);
-        verify(mockTsoStopService, times(1)).stopTso(sessionId);
+        verify(mockStartTso, times(1)).start(any(StartTsoInputData.class));
+        verify(mockSendTso, times(1)).sendCommand(sessionId, command);
+        verify(mockReplyTso, atLeastOnce()).reply(sessionId);
+        verify(mockStopTso, times(1)).stop(sessionId);
     }
 
     /**
@@ -115,17 +111,17 @@ public class IssueTsoTest {
         String firstResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"JOB STARTED\"}}]}";
         String secondResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"HIDDEN\":\"READY\"}}]}";
 
-        when(mockTsoStartService.startTso(any(StartTsoInputData.class))).thenReturn(sessionId);
-        when(mockTsoSendService.sendCommand(sessionId, command)).thenReturn(firstResponse);
-        when(mockTsoReplyService.reply(sessionId)).thenReturn(secondResponse);
+        when(mockStartTso.start(any(StartTsoInputData.class))).thenReturn(sessionId);
+        when(mockSendTso.sendCommand(sessionId, command)).thenReturn(firstResponse);
+        when(mockReplyTso.reply(sessionId)).thenReturn(secondResponse);
 
         IssueTso issueTso = new IssueTso(
                 mockConnection,
                 account,
-                mockTsoStartService,
-                mockTsoStopService,
-                mockTsoSendService,
-                mockTsoReplyService
+                mockStartTso,
+                mockStopTso,
+                mockSendTso,
+                mockReplyTso
         );
         StartTsoInputData inputData = new StartTsoInputData();
         inputData.setAccount("ACCT456");
@@ -135,10 +131,10 @@ public class IssueTsoTest {
         assertEquals("JOB STARTED", result.get(0));
         assertEquals(account, issueTso.getInputData().getAccount().orElse(null));
 
-        verify(mockTsoStartService, times(1)).startTso(any(StartTsoInputData.class));
-        verify(mockTsoSendService, times(1)).sendCommand(sessionId, command);
-        verify(mockTsoReplyService, atLeastOnce()).reply(sessionId);
-        verify(mockTsoStopService, times(1)).stopTso(sessionId);
+        verify(mockStartTso, times(1)).start(any(StartTsoInputData.class));
+        verify(mockSendTso, times(1)).sendCommand(sessionId, command);
+        verify(mockReplyTso, atLeastOnce()).reply(sessionId);
+        verify(mockStopTso, times(1)).stop(sessionId);
     }
 
     /**
@@ -156,22 +152,22 @@ public class IssueTsoTest {
         String firstReplyResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"RUNNING2\"}}]}";
         String secondReplyResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"HIDDEN\":\"READY\"}}]}";
 
-        when(mockTsoStartService.startTso(any(StartTsoInputData.class))).thenReturn(sessionId);
-        when(mockTsoSendService.sendCommand(sessionId, command)).thenReturn(firstResponse);
-        when(mockTsoReplyService.reply(sessionId)).thenReturn(firstReplyResponse, secondReplyResponse);
+        when(mockStartTso.start(any(StartTsoInputData.class))).thenReturn(sessionId);
+        when(mockSendTso.sendCommand(sessionId, command)).thenReturn(firstResponse);
+        when(mockReplyTso.reply(sessionId)).thenReturn(firstReplyResponse, secondReplyResponse);
 
         IssueTso issueTso = new IssueTso(
                 mockConnection,
                 account,
-                mockTsoStartService,
-                mockTsoStopService,
-                mockTsoSendService,
-                mockTsoReplyService
+                mockStartTso,
+                mockStopTso,
+                mockSendTso,
+                mockReplyTso
         );
         List<String> result = issueTso.issueCommand(command);
 
         assertEquals(List.of("RUNNING", "RUNNING2"), result);
-        verify(mockTsoStopService).stopTso(sessionId);
+        verify(mockStopTso).stop(sessionId);
     }
 
     /**
@@ -184,15 +180,15 @@ public class IssueTsoTest {
      */
     @Test
     public void tstIssueCommandThrowsZosmfRequestExceptionFailure() throws ZosmfRequestException {
-        when(mockTsoStartService.startTso(any())).thenThrow(new ZosmfRequestException("start failed"));
+        when(mockStartTso.start(any())).thenThrow(new ZosmfRequestException("start failed"));
 
         IssueTso issueTso = new IssueTso(
                 mockConnection,
                 "ACCTFAIL",
-                mockTsoStartService,
-                mockTsoStopService,
-                mockTsoSendService,
-                mockTsoReplyService
+                mockStartTso,
+                mockStopTso,
+                mockSendTso,
+                mockReplyTso
         );
 
         try {
@@ -201,7 +197,7 @@ public class IssueTsoTest {
             assertEquals("start failed", e.getMessage());
         }
 
-        verify(mockTsoStopService, never()).stopTso(anyString());
+        verify(mockStopTso, never()).stop(anyString());
     }
 
     /**
