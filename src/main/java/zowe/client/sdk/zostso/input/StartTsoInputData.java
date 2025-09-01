@@ -21,7 +21,8 @@ public class StartTsoInputData {
 
     /**
      * User's z/OS permission account number.
-     * This parameter overrides the account specified in IssueTso constructor.
+     * This member is a placeholder for account value sent via IssueTso constructor.
+     * Setting this member will have no effect.
      */
     public String account;
 

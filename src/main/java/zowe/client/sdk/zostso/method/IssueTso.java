@@ -156,10 +156,8 @@ public class IssueTso {
         this.inputData = inputData;
         if (this.inputData == null) {
             this.inputData = new StartTsoInputData();
-            this.inputData.setAccount(accountNumber);
-        } else if (this.inputData.getAccount().isEmpty()) {
-            this.inputData.setAccount(accountNumber);
         }
+        this.inputData.setAccount(accountNumber);
         return tsoStartService.startTso(this.inputData);
     }
 
