@@ -109,7 +109,7 @@ public class TsoStopTest {
 
             final TsoStop tsoStop = new TsoStop(mockConnection, mockDeleteRequest);
             TsoStopResponse tsoStopResponse = tsoStop.stop("SERVKEY123");
-            assertEquals("ZOSMFAD-71-aabcaaaf",  tsoStopResponse.getServletKey());
+            assertEquals("ZOSMFAD-71-aabcaaaf", tsoStopResponse.getServletKey());
             assertEquals("0100", tsoStopResponse.getVer());
             assertEquals(false, tsoStopResponse.getTimeout());
             assertEquals(true, tsoStopResponse.getReuse());
