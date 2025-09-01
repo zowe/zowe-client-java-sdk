@@ -9,15 +9,18 @@
  */
 package zowe.client.sdk.zostso.methods;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.ResponseUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
+import zowe.client.sdk.zostso.response.TsoStopResponse;
 
 /**
  * This class handles sending the request to end the TSO session via z/OSMF
@@ -29,6 +32,7 @@ public class TsoStop {
 
     private final ZosConnection connection;
     private ZosmfRequest request;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * TsoStop constructor
@@ -69,7 +73,7 @@ public class TsoStop {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response stop(final String sessionId) throws ZosmfRequestException {
+    public TsoStopResponse stop(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + sessionId;
@@ -79,7 +83,16 @@ public class TsoStop {
         }
         request.setUrl(url);
 
-        return request.executeRequest();
+        final String responseStr = ResponseUtil.getResponseStr(request);
+
+        TsoStopResponse tsoStopResponse;
+        try {
+            tsoStopResponse = objectMapper.readValue(responseStr, TsoStopResponse.class);
+        } catch (JsonProcessingException e) {
+            throw new ZosmfRequestException(e.getMessage(), e);
+        }
+
+        return tsoStopResponse;
     }
 
 }
