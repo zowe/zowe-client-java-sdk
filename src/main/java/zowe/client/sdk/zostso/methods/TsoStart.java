@@ -93,7 +93,7 @@ public class TsoStart {
         request.setUrl(url);
         request.setBody("");
 
-        final String responseStr = ResponseUtil.getResponseStr(request, TsoConstants.START_TSO_FAIL_MSG);
+        final String responseStr = ResponseUtil.getResponseStr(request);
 
         final JsonNode rootNode;
         try {

@@ -55,7 +55,7 @@ public class TsoStopTest {
         doCallRealMethod().when(mockDeleteRequest).getUrl();
 
         try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
+            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn("{}");
 
             final TsoStop tsoStop = new TsoStop(mockConnection, mockDeleteRequest);
@@ -80,7 +80,7 @@ public class TsoStopTest {
         doCallRealMethod().when(deleteJsonZosmfRequest).getHeaders();
 
         try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
+            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn("{}");
 
             final TsoStop tsoStop = new TsoStop(mockConnection, deleteJsonZosmfRequest);
@@ -101,7 +101,7 @@ public class TsoStopTest {
     @Test
     public void tstTsoStopSuccess() {
         try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
+            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn("{\"status\":\"ok\"}");
 
             final TsoStop tsoStop = new TsoStop(mockConnection, mockDeleteRequest);

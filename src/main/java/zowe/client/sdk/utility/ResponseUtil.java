@@ -35,22 +35,21 @@ public class ResponseUtil {
      * as a string value.
      *
      * @param request request object for performing http call
-     * @param msg     error message string content
      * @return response object as a string value of the http call
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static String getResponseStr(final ZosmfRequest request, final String msg) throws ZosmfRequestException {
+    public static String getResponseStr(final ZosmfRequest request) throws ZosmfRequestException {
         final Response response = request.executeRequest();
         final String responseStr = response.getResponsePhrase()
-                .orElseThrow(() -> new ZosmfRequestException(msg))
+                .orElseThrow(() -> new ZosmfRequestException("response phrase is either null or empty"))
                 .toString();
 
         AtomicInteger statusCode = new AtomicInteger();
         response.getStatusCode().ifPresent(statusCode::set);
 
         if (!(statusCode.get() >= 100 && statusCode.get() <= 299)) {
-            throw new ZosmfRequestException(msg + " Response: " + responseStr);
+            throw new ZosmfRequestException("Response: " + responseStr);
         }
 
         return responseStr;

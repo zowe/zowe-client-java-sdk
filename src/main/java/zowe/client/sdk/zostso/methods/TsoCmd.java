@@ -240,7 +240,7 @@ public class TsoCmd {
         try {
             rootNode = objectMapper.readTree(responseStr);
         } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException(TsoConstants.SEND_TSO_FAIL_MSG + " Response: " + e.getMessage());
+            throw new ZosmfRequestException("Response: " + e.getMessage());
         }
         return rootNode;
     }

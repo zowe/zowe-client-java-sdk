@@ -80,7 +80,7 @@ public class TsoReply {
         request.setUrl(url);
         request.setBody("");
 
-        return ResponseUtil.getResponseStr(request, TsoConstants.SEND_TSO_FAIL_MSG);
+        return ResponseUtil.getResponseStr(request);
     }
 
 }

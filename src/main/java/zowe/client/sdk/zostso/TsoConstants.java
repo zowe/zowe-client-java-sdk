@@ -84,24 +84,4 @@ public final class TsoConstants {
      */
     public static final String TSO_PROMPT = "TSO PROMPT";
 
-    /**
-     * Failure message for when trying to perform a start tso session
-     */
-    public static final String START_TSO_FAIL_MSG = "Failed to start tso session.";
-
-    /**
-     * Failure message for when trying to perform send tso for data
-     */
-    public static final String SEND_TSO_FAIL_MSG = "Failed to send tso for data.";
-
-    /**
-     * Failure message for when trying to perform an end tso session
-     */
-    public static final String STOP_TSO_FAIL_MSG = "Failed to end tso session.";
-
-    /**
-     * Failure message for when trying to perform a ping tso session
-     */
-    public static final String PING_TSO_FAIL_MSG = "Failed to ping tso session.";
-
 }

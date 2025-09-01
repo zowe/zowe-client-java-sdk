@@ -59,7 +59,7 @@ public class TsoReplyTest {
         doCallRealMethod().when(mockPutRequest).getUrl();
 
         try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
+            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn("{}");
 
             final TsoReply tsoReply = new TsoReply(mockConnection, mockPutRequest);
@@ -84,7 +84,7 @@ public class TsoReplyTest {
         doCallRealMethod().when(putJsonZosmfRequest).getHeaders();
 
         try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
+            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn("{}");
 
             final TsoReply tsoReply = new TsoReply(mockConnection, putJsonZosmfRequest);
@@ -105,7 +105,7 @@ public class TsoReplyTest {
     @Test
     public void tstTsoReplyThrowsZosmfRequestExceptionOnResponseErrorFailure() {
         try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
+            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenThrow(new ZosmfRequestException("Reply failed"));
 
             final TsoReply tsoReply = new TsoReply(mockConnection, mockPutRequest);
@@ -125,7 +125,7 @@ public class TsoReplyTest {
     @Test
     public void tstTsoReplySuccess() {
         try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
+            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn("{\"status\":\"ok\"}");
 
             final TsoReply tsoReply = new TsoReply(mockConnection, mockPutRequest);
@@ -186,7 +186,7 @@ public class TsoReplyTest {
 
             factoryMock.when(() -> ZosmfRequestFactory.buildRequest(mockConnection, ZosmfRequestType.PUT_JSON))
                     .thenReturn(mockPutRequest);
-            responseMock.when(() -> ResponseUtil.getResponseStr(mockPutRequest, TsoConstants.SEND_TSO_FAIL_MSG))
+            responseMock.when(() -> ResponseUtil.getResponseStr(mockPutRequest))
                     .thenReturn("{\"status\":\"ok\"}");
 
             final TsoReply tsoReply = new TsoReply(mockConnection);

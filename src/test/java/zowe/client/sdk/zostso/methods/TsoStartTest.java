@@ -63,7 +63,7 @@ public class TsoStartTest {
 
         // Mock ResponseUtil static call
         try (var mocked = Mockito.mockStatic(ResponseUtil.class)) {
-            mocked.when(() -> ResponseUtil.getResponseStr(any(), any()))
+            mocked.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn("{\"servletKey\":\"mySession123\"}");
 
             final String result = tsoStart.start(input);
@@ -84,7 +84,7 @@ public class TsoStartTest {
                 "1047", "24", "80", "ACCT123", "4096");
 
         try (var mocked = Mockito.mockStatic(ResponseUtil.class)) {
-            mocked.when(() -> ResponseUtil.getResponseStr(any(), any()))
+            mocked.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn("invalid json response");
 
             ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
@@ -103,7 +103,7 @@ public class TsoStartTest {
                 "1047", "24", "80", "ACCT123", "4096");
 
         try (var mocked = Mockito.mockStatic(ResponseUtil.class)) {
-            mocked.when(() -> ResponseUtil.getResponseStr(any(), any()))
+            mocked.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn("{\"servletKey\":\"null\"}");
 
             ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
@@ -121,7 +121,7 @@ public class TsoStartTest {
                 "1047", "24", "80", "ACCT123", "4096");
 
         try (var mocked = Mockito.mockStatic(ResponseUtil.class)) {
-            mocked.when(() -> ResponseUtil.getResponseStr(any(), any()))
+            mocked.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn("{}\n");
 
             ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
@@ -139,12 +139,11 @@ public class TsoStartTest {
                 "1047", "24", "80", "ACCT123", "4096");
 
         try (var mocked = Mockito.mockStatic(ResponseUtil.class)) {
-            mocked.when(() -> ResponseUtil.getResponseStr(any(), any()))
+            mocked.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn("{\"servletKey\":\"\"}");
 
             ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
                     () -> tsoStart.start(input));
-            System.out.println(ex.getMessage());
             assertTrue(ex.getMessage().contains("Response servletKey is empty"));
         }
     }
@@ -191,7 +190,7 @@ public class TsoStartTest {
 
         final String jsonResponse = "{\"servletKey\":\"TSO12345\"}";
         mockStatic(ResponseUtil.class);
-        when(ResponseUtil.getResponseStr(eq(mockRequest), eq(TsoConstants.START_TSO_FAIL_MSG))).thenReturn(jsonResponse);
+        when(ResponseUtil.getResponseStr(eq(mockRequest))).thenReturn(jsonResponse);
 
         final String result = tsoStart.start(inputData);
         assertEquals("TSO12345", result);
@@ -243,7 +242,7 @@ public class TsoStartTest {
 
         // Mock response to return servletKey
         try (var mocked = Mockito.mockStatic(ResponseUtil.class)) {
-            mocked.when(() -> ResponseUtil.getResponseStr(any(), any()))
+            mocked.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn("{\"servletKey\":\"SERVKEY123\"}");
 
             tsoStart = new TsoStart(mockConnection, postJsonZosmfRequest);
