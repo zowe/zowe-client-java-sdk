@@ -17,7 +17,9 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ResponseUtil;
+import zowe.client.sdk.zostso.response.TsoStopResponse;
 
 import java.util.Map;
 
@@ -99,13 +101,18 @@ public class TsoStopTest {
      * Test TsoStop succeeds when response is valid.
      */
     @Test
-    public void tstTsoStopSuccess() {
+    public void tstTsoStopSuccess() throws ZosmfRequestException {
+        final String payload = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"timeout\":false,\"reuse\":true}";
         try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
             mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
-                    .thenReturn("{\"status\":\"ok\"}");
+                    .thenReturn(payload);
 
             final TsoStop tsoStop = new TsoStop(mockConnection, mockDeleteRequest);
-            assertDoesNotThrow(() -> tsoStop.stop("SERVKEY123"));
+            TsoStopResponse tsoStopResponse = tsoStop.stop("SERVKEY123");
+            assertEquals("ZOSMFAD-71-aabcaaaf",  tsoStopResponse.getServletKey());
+            assertEquals("0100", tsoStopResponse.getVer());
+            assertEquals(false, tsoStopResponse.getTimeout());
+            assertEquals(true, tsoStopResponse.getReuse());
         }
     }
 
