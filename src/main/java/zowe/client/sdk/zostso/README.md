@@ -13,7 +13,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.examples.utility.Util;
-import zowe.client.sdk.zostso.method.IssueTso;
+import zowe.client.sdk.zostso.method.TsoCmd;
 
 /**
  * Class example to test tso command functionality via IssueTso class.
@@ -21,7 +21,7 @@ import zowe.client.sdk.zostso.method.IssueTso;
  * @author Frank Giordano
  * @version 5.0
  */
-public class IssueTsoExp extends TstZosConnection {
+public class TsoCmdExp extends TstZosConnection {
 
     private static ZosConnection connection;
 
@@ -36,7 +36,7 @@ public class IssueTsoExp extends TstZosConnection {
         String accountNumber = "xxx";
 
         connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
-        List<String> result = IssueTsoExp.issueCommand(accountNumber, command);
+        List<String> result = TsoCmdExp.issueCommand(accountNumber, command);
         result.forEach(System.out::println);
     }
 
@@ -49,8 +49,8 @@ public class IssueTsoExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static List<String> issueCommand(String accountNumber, String command) {
-        IssueTso issueTso = new IssueTso(connection, accountNumber);
-        return issueTso.issueCommand(command);
+        TsoCmd tsoCmd = new TsoCmd(connection, accountNumber);
+        return tsoCmd.issueCommand(command);
     }
 
 }

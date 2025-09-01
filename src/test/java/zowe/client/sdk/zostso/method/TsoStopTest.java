@@ -16,9 +16,7 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ResponseUtil;
 
 import java.util.Map;
@@ -27,17 +25,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Unit tests for the TsoStopService class.
+ * Unit tests for the TsoStop class.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class StopTsoTest {
+public class TsoStopTest {
 
     private final ZosConnection mockConnection = mock(ZosConnection.class);
     private final DeleteJsonZosmfRequest mockDeleteRequest = mock(DeleteJsonZosmfRequest.class);
 
-    public StopTsoTest() {
+    public TsoStopTest() {
         when(mockConnection.getZosmfUrl()).thenReturn("https://zosmf:1443");
     }
 
@@ -49,10 +47,10 @@ public class StopTsoTest {
     }
 
     /**
-     * Test stopTso sets the correct URL in the request.
+     * Test TsoStop sets the correct URL in the request.
      */
     @Test
-    public void tstStopTsoSetsCorrectUrlSuccess() throws Exception {
+    public void tstTsoStopSetsCorrectUrlSuccess() throws Exception {
         doCallRealMethod().when(mockDeleteRequest).setUrl(any());
         doCallRealMethod().when(mockDeleteRequest).getUrl();
 
@@ -60,8 +58,8 @@ public class StopTsoTest {
             mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
                     .thenReturn("{}");
 
-            final StopTso stopTso = new StopTso(mockConnection, mockDeleteRequest);
-            stopTso.stop("SERVKEY123");
+            final TsoStop tsoStop = new TsoStop(mockConnection, mockDeleteRequest);
+            tsoStop.stop("SERVKEY123");
 
             final String actualUrl = mockDeleteRequest.getUrl();
             assertEquals("https://zosmf:1443/tsoApp/tso/SERVKEY123", actualUrl);
@@ -69,10 +67,10 @@ public class StopTsoTest {
     }
 
     /**
-     * Test stopTso sets the correct headers in the request.
+     * Test TsoStop sets the correct headers in the request.
      */
     @Test
-    public void tstStopTsoSetsCorrectHeadersSuccess() throws Exception {
+    public void tstTsoStopSetsCorrectHeadersSuccess() throws Exception {
         DeleteJsonZosmfRequest deleteJsonZosmfRequest = Mockito.mock(DeleteJsonZosmfRequest.class,
                 withSettings().useConstructor(ZosConnectionFactory
                         .createBasicConnection("1", "1", "1", "1")));
@@ -85,8 +83,8 @@ public class StopTsoTest {
             mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
                     .thenReturn("{}");
 
-            final StopTso stopTso = new StopTso(mockConnection, deleteJsonZosmfRequest);
-            stopTso.stop("SERVKEY123");
+            final TsoStop tsoStop = new TsoStop(mockConnection, deleteJsonZosmfRequest);
+            tsoStop.stop("SERVKEY123");
 
             Map<String, String> headers = deleteJsonZosmfRequest.getHeaders();
 
@@ -98,16 +96,16 @@ public class StopTsoTest {
     }
 
     /**
-     * Test stopTso succeeds when response is valid.
+     * Test TsoStop succeeds when response is valid.
      */
     @Test
-    public void tstStopTsoSuccess() {
+    public void tstTsoStopSuccess() {
         try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
             mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
                     .thenReturn("{\"status\":\"ok\"}");
 
-            final StopTso stopTso = new StopTso(mockConnection, mockDeleteRequest);
-            assertDoesNotThrow(() -> stopTso.stop("SERVKEY123"));
+            final TsoStop tsoStop = new TsoStop(mockConnection, mockDeleteRequest);
+            assertDoesNotThrow(() -> tsoStop.stop("SERVKEY123"));
         }
     }
 
@@ -118,7 +116,7 @@ public class StopTsoTest {
     public void tstAlternativeConstructorNullConnectionFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new StopTso(null, mockDeleteRequest)
+                () -> new TsoStop(null, mockDeleteRequest)
         );
         assertEquals("connection is null", ex.getMessage());
     }
@@ -130,7 +128,7 @@ public class StopTsoTest {
     public void tstAlternativeConstructorNullRequestFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new StopTso(mockConnection, null)
+                () -> new TsoStop(mockConnection, null)
         );
         assertEquals("request is null", ex.getMessage());
     }
@@ -144,20 +142,20 @@ public class StopTsoTest {
         final ZosmfRequest wrongRequest = mock(ZosmfRequest.class);
         IllegalStateException ex = assertThrows(
                 IllegalStateException.class,
-                () -> new StopTso(mockConnection, wrongRequest)
+                () -> new TsoStop(mockConnection, wrongRequest)
         );
         assertEquals("DELETE_JSON request type required", ex.getMessage());
     }
 
     /**
-     * Test that stopTso throws when sessionId is null or empty.
+     * Test that TsoStop throws when sessionId is null or empty.
      */
     @Test
-    public void tstStopTsoNullSessionIdFailure() {
-        final StopTso stopTso = new StopTso(mockConnection, mockDeleteRequest);
+    public void tstTsoStopNullSessionIdFailure() {
+        final TsoStop tsoStop = new TsoStop(mockConnection, mockDeleteRequest);
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,
-                () -> stopTso.stop(null)
+                () -> tsoStop.stop(null)
         );
         assertEquals("sessionId is either null or empty", ex.getMessage());
     }
@@ -169,7 +167,7 @@ public class StopTsoTest {
     public void tstPublicConstructorNullConnectionFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new StopTso(null)
+                () -> new TsoStop(null)
         );
         assertEquals("connection is null", ex.getMessage());
     }

@@ -20,29 +20,29 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 
 /**
- * This class handles sending the TSO command to be performed via z/OSMF
+ * This class handles sending a request to z/OSMF TSO for additional TSO message data
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class SendTso {
+public class TsoReply {
 
     private final ZosConnection connection;
     private ZosmfRequest request;
 
     /**
-     * SendTso constructor
+     * TsoReply constructor
      *
      * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public SendTso(final ZosConnection connection) {
+    public TsoReply(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
     /**
-     * Alternative SendTso constructor with ZoweRequest object. This is mainly used for internal code unit
+     * Alternative TsoReply constructor with ZoweRequest object. This is mainly used for internal code unit
      * testing with mockito, and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private
@@ -51,7 +51,7 @@ public class SendTso {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    SendTso(final ZosConnection connection, final ZosmfRequest request) {
+    TsoReply(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -62,26 +62,23 @@ public class SendTso {
     }
 
     /**
-     * Make the second request to send TSO the command to perform via z/OSMF
+     * Send a request to z/OSMF TSO for additional TSO message data from a valid already started TSO session.
      *
      * @param sessionId servletKey id retrieved from start TSO request
-     * @param command   tso command
      * @return response string representing the returned request payload
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public String sendCommand(final String sessionId, final String command) throws ZosmfRequestException {
+    public String reply(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
-        ValidateUtils.checkIllegalParameter(command, "command");
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" + sessionId + TsoConstants.RES_DONT_READ_REPLY;
-        final String body = "{\"TSO RESPONSE\":{\"VERSION\":\"0100\",\"DATA\":\"" + command + "\"}}";
+                TsoConstants.RES_START_TSO + "/" + sessionId;
 
         if (request == null || !(request instanceof PutJsonZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(body);
+        request.setBody("");
 
         return ResponseUtil.getResponseStr(request, TsoConstants.SEND_TSO_FAIL_MSG);
     }

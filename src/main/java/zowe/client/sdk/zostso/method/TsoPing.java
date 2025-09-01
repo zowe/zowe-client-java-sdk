@@ -10,40 +10,39 @@
 package zowe.client.sdk.zostso.method;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
+import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.ResponseUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 
 /**
- * This class handles sending the request to end the TSO session via z/OSMF
+ * This class handles sending a ping request to z/OSMF TSO to keep the session alive.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class StopTso {
+public class TsoPing {
 
     private final ZosConnection connection;
     private ZosmfRequest request;
 
     /**
-     * StopTso constructor
+     * TsoPing constructor
      *
      * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public StopTso(final ZosConnection connection) {
+    public TsoPing(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
     /**
-     * Alternative StopTso constructor with ZoweRequest object. This is mainly used for internal code unit
+     * Alternative TsoPing constructor with ZoweRequest object. This is mainly used for internal code unit
      * testing with mockito, and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private
@@ -52,33 +51,33 @@ public class StopTso {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    StopTso(final ZosConnection connection, final ZosmfRequest request) {
+    TsoPing(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
-        if (!(request instanceof DeleteJsonZosmfRequest)) {
-            throw new IllegalStateException("DELETE_JSON request type required");
+        if (!(request instanceof PutJsonZosmfRequest)) {
+            throw new IllegalStateException("PUT_JSON request type required");
         }
         this.request = request;
     }
 
     /**
-     * Stop the TSO session by session id (servletKey)
+     * Send a ping request to z/OSMF TSO to keep the session alive
      *
      * @param sessionId servletKey id retrieved from start TSO request
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response stop(final String sessionId) throws ZosmfRequestException {
+    public Response ping(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
-        final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" + sessionId;
+        final String url = connection.getZosmfUrl() + TsoConstants.RES_PING + "/" + sessionId;
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
+        if (request == null || !(request instanceof PutJsonZosmfRequest)) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        request.setBody("");
 
         return request.executeRequest();
     }
