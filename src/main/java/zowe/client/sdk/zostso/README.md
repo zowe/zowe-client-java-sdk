@@ -2,55 +2,81 @@
 
 Contains APIs to interact with TSO on z/OS (using z/OSMF TSO REST endpoints).
 
-APIs located in method package.
+APIs are located in the methods package.
 
 ## API Examples
 
 ````java
-package zowe.client.sdk.examples.zostso;
+package zowe.client.sdk.zostso.methods;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
-import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
-import zowe.client.sdk.zostso.methods.TsoCmd;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zostso.input.StartTsoInputData;
+import zowe.client.sdk.zostso.response.TsoPingResponse;
+import zowe.client.sdk.zostso.response.TsoStopResponse;
+
+import java.util.List;
 
 /**
- * Class example to test tso command functionality via IssueTso class.
+ * Example to showcase the tso package method classes. 
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoCmdExp extends TstZosConnection {
+public class TsoCmdExp {
 
     private static ZosConnection connection;
 
-    /**
-     * The main method defines z/OSMF host and user connection, and tso command parameters used for the example test.
-     *
-     * @param args for main not used
-     * @author Frank Giordano
-     */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ZosmfRequestException {
         String command = "xxx";
         String accountNumber = "xxx";
 
-        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
+        connection = ZosConnectionFactory.createBasicConnection(
+                "hostName", "zosmfPort", "userName", "password");
         List<String> result = TsoCmdExp.issueCommand(accountNumber, command);
         result.forEach(System.out::println);
+        pingWorkflow(accountNumber);
     }
 
     /**
-     * Issue issueCommand method from the IssueTso class which will execute the given tso command.
+     * Issue issueCommand method from the TsoCmd class which will execute the given tso command.
      *
      * @param accountNumber user's z/OSMF permission account number
-     * @param command           tso command to execute
+     * @param command       tso command to execute
      * @return list of messages result
+     * @throws ZosmfRequestException exception thrown when issueCommand fails
      * @author Frank Giordano
      */
-    public static List<String> issueCommand(String accountNumber, String command) {
+    public static List<String> issueCommand(String accountNumber, String command) throws ZosmfRequestException {
         TsoCmd tsoCmd = new TsoCmd(connection, accountNumber);
         return tsoCmd.issueCommand(command);
+    }
+
+    /**
+     * Demonstrate starting, pinging, and stopping a TSO address space
+     *
+     * @param accountNumber user's z/OSMF permission account number
+     * @throws ZosmfRequestException exception thrown when ping fails
+     * @author Frank Giordano
+     */
+    public static void pingWorkflow(String accountNumber) throws ZosmfRequestException {
+
+        StartTsoInputData inputData = new StartTsoInputData();
+        inputData.setLogonProcedure(accountNumber);
+        TsoStart tsoStart = new TsoStart(connection);
+        // send tso start call and return the session id
+        final String sessionId = tsoStart.start(inputData);
+
+        TsoPing tsoPing = new TsoPing(connection);
+        // ping the session id
+        TsoPingResponse tsoPingResponse = tsoPing.ping(sessionId);
+        System.out.println(tsoPingResponse);
+
+        TsoStop tsoStop = new TsoStop(connection);
+        // stop the tso session
+        TsoStopResponse tsoStopResponse = tsoStop.stop(sessionId);
+        System.out.println(tsoStopResponse);
     }
 
 }
