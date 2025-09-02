@@ -102,7 +102,7 @@ public class TsoStopTest {
      */
     @Test
     public void tstTsoStopSuccess() throws ZosmfRequestException {
-        final String payload = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"timeout\":false,\"reuse\":true}";
+        final String payload = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"timeout\":false,\"reused\":true}";
         try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
             mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn(payload);
@@ -112,7 +112,7 @@ public class TsoStopTest {
             assertEquals("ZOSMFAD-71-aabcaaaf", tsoStopResponse.getServletKey());
             assertEquals("0100", tsoStopResponse.getVer());
             assertEquals(false, tsoStopResponse.getTimeout());
-            assertEquals(true, tsoStopResponse.getReuse());
+            assertEquals(true, tsoStopResponse.getReused());
         }
     }
 

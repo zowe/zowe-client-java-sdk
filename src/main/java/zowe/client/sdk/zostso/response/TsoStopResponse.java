@@ -22,7 +22,7 @@ public class TsoStopResponse {
     private String servletKey;
     private String ver;
     private Boolean timeout;
-    private Boolean reuse;
+    private Boolean reused;
 
     /**
      * TsoStopResponse No-argument constructor (required by Jackson)
@@ -89,17 +89,17 @@ public class TsoStopResponse {
      *
      * @return boolean value
      */
-    public Boolean getReuse() {
-        return reuse;
+    public Boolean getReused() {
+        return reused;
     }
 
     /**
      * Set tso reuse value
      *
-     * @param reuse boolean value
+     * @param reused boolean value
      */
-    public void setReuse(Boolean reuse) {
-        this.reuse = reuse;
+    public void setReused(Boolean reused) {
+        this.reused = reused;
     }
 
     /**
@@ -113,7 +113,7 @@ public class TsoStopResponse {
                 "servletKey='" + servletKey + '\'' +
                 ", ver='" + ver + '\'' +
                 ", timeout='" + timeout + '\'' +
-                ", reuse='" + reuse + '\'' +
+                ", reused='" + reused + '\'' +
                 '}';
     }
 
