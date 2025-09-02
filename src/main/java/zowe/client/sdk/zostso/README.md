@@ -67,6 +67,7 @@ public class TsoCmdExp {
         TsoStart tsoStart = new TsoStart(connection);
         // send tso start call and return the session id
         final String sessionId = tsoStart.start(inputData);
+        System.out.println("TSO session id: " + sessionId);
 
         TsoPing tsoPing = new TsoPing(connection);
         // ping the session id
