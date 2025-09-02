@@ -83,6 +83,11 @@ public class TsoPingResponse {
         this.timeout = timeout;
     }
 
+    /**
+     * Return string value representing TsoPingResponse object
+     *
+     * @return string representation of TsoPingResponse
+     */
     @Override
     public String toString() {
         return "TsoPingResponse{" +

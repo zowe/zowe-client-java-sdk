@@ -102,6 +102,11 @@ public class TsoStopResponse {
         this.reuse = reuse;
     }
 
+    /**
+     * Return string value representing TsoStopResponse object
+     *
+     * @return string representation of TsoStopResponse
+     */
     @Override
     public String toString() {
         return "TsoStopResponse{" +
