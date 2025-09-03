@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso.service;
+package zowe.client.sdk.zostso.methods;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.ResponseUtil;
+import zowe.client.sdk.utility.TsoUtil;
 
 import java.util.Map;
 
@@ -28,17 +28,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Unit tests for the TsoSendService class.
+ * Unit tests for the TsoSend class.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoSendServiceTest {
+public class TsoSendTest {
 
     private final ZosConnection mockConnection = mock(ZosConnection.class);
     private final PutJsonZosmfRequest mockPutRequest = mock(PutJsonZosmfRequest.class);
 
-    public TsoSendServiceTest() {
+    public TsoSendTest() {
         when(mockConnection.getZosmfUrl()).thenReturn("https://zosmf:1443");
     }
 
@@ -50,10 +50,10 @@ public class TsoSendServiceTest {
     }
 
     /**
-     * Test sendCommand sets the correct headers in the request.
+     * Test TsoSend sets the correct headers in the request.
      */
     @Test
-    public void tstSendCommandSetsCorrectHeadersSuccess() throws Exception {
+    public void tstTsoSendCommandSetsCorrectHeadersSuccess() throws Exception {
         PutJsonZosmfRequest putJsonZosmfRequest = Mockito.mock(
                 PutJsonZosmfRequest.class,
                 withSettings().useConstructor(
@@ -65,12 +65,12 @@ public class TsoSendServiceTest {
         doCallRealMethod().when(putJsonZosmfRequest).setHeaders(anyMap());
         doCallRealMethod().when(putJsonZosmfRequest).getHeaders();
 
-        try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
+        try (MockedStatic<TsoUtil> mockResponseUtil = mockStatic(TsoUtil.class)) {
+            mockResponseUtil.when(() -> TsoUtil.getResponseStr(any()))
                     .thenReturn("{}");
 
-            final TsoSendService service = new TsoSendService(mockConnection, putJsonZosmfRequest);
-            service.sendCommand("SERVKEY123", "LISTCAT");
+            final TsoSend tsoSend = new TsoSend(mockConnection, putJsonZosmfRequest);
+            tsoSend.sendCommand("SERVKEY123", "LISTCAT");
 
             Map<String, String> headers = putJsonZosmfRequest.getHeaders();
 
@@ -83,20 +83,20 @@ public class TsoSendServiceTest {
     }
 
     /**
-     * Test sendCommand sets the correct URL in the request.
+     * Test TsoSend sets the correct URL in the request.
      */
     @Test
-    public void tstSendCommandSetsCorrectUrlAndBodySuccess() throws Exception {
+    public void tstTsoSendCommandSetsCorrectUrlAndBodySuccess() throws Exception {
         doCallRealMethod().when(mockPutRequest).setUrl(any());
         doCallRealMethod().when(mockPutRequest).setBody(any());
         doCallRealMethod().when(mockPutRequest).getUrl();
 
-        try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
+        try (MockedStatic<TsoUtil> mockResponseUtil = mockStatic(TsoUtil.class)) {
+            mockResponseUtil.when(() -> TsoUtil.getResponseStr(any()))
                     .thenReturn("{}");
 
-            final TsoSendService service = new TsoSendService(mockConnection, mockPutRequest);
-            service.sendCommand("SERVKEY123", "LISTCAT");
+            final TsoSend tsoSend = new TsoSend(mockConnection, mockPutRequest);
+            tsoSend.sendCommand("SERVKEY123", "LISTCAT");
 
             final String actualUrl = mockPutRequest.getUrl();
 
@@ -105,21 +105,21 @@ public class TsoSendServiceTest {
     }
 
     /**
-     * Test sendCommand builds a new request when the request is null.
+     * Test TsoSend builds a new request when the request is null.
      * Test does not use alternative constructor.
      */
     @Test
-    public void tstSendCommandBuildsNewRequestWhenRequestIsNullSuccess() throws Exception {
+    public void tstTsoSendCommandBuildsNewRequestWhenRequestIsNullSuccess() throws Exception {
         try (MockedStatic<ZosmfRequestFactory> factoryMock = mockStatic(ZosmfRequestFactory.class);
-             MockedStatic<ResponseUtil> responseMock = mockStatic(ResponseUtil.class)) {
+             MockedStatic<TsoUtil> responseMock = mockStatic(TsoUtil.class)) {
 
             factoryMock.when(() -> ZosmfRequestFactory.buildRequest(mockConnection, ZosmfRequestType.PUT_JSON))
                     .thenReturn(mockPutRequest);
-            responseMock.when(() -> ResponseUtil.getResponseStr(eq(mockPutRequest), anyString()))
+            responseMock.when(() -> TsoUtil.getResponseStr(eq(mockPutRequest)))
                     .thenReturn("{\"status\":\"ok\"}");
 
-            final TsoSendService service = new TsoSendService(mockConnection);
-            String result = service.sendCommand("SERVKEY999", "TIME");
+            final TsoSend tsoSend = new TsoSend(mockConnection);
+            String result = tsoSend.sendCommand("SERVKEY999", "TIME");
 
             assertEquals("{\"status\":\"ok\"}", result);
             verify(mockPutRequest).setUrl(contains("SERVKEY999"));
@@ -128,19 +128,19 @@ public class TsoSendServiceTest {
     }
 
     /**
-     * Test sendCommand propagates ZosmfRequestException from ResponseUtil.
+     * Test TsoSend propagates ZosmfRequestException from ResponseUtil.
      */
     @Test
-    public void tstSendCommandThrowsZosmfRequestExceptionOnResponseErrorFailure() {
-        try (MockedStatic<ResponseUtil> responseMock = mockStatic(ResponseUtil.class)) {
-            responseMock.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
+    public void tstTsoSendCommandThrowsZosmfRequestExceptionOnResponseErrorFailure() {
+        try (MockedStatic<TsoUtil> responseMock = mockStatic(TsoUtil.class)) {
+            responseMock.when(() -> TsoUtil.getResponseStr(any()))
                     .thenThrow(new ZosmfRequestException("Send failed"));
 
-            final TsoSendService service = new TsoSendService(mockConnection, mockPutRequest);
+            final TsoSend tsoSend = new TsoSend(mockConnection, mockPutRequest);
 
             ZosmfRequestException ex = assertThrows(
                     ZosmfRequestException.class,
-                    () -> service.sendCommand("SERVKEY123", "LISTCAT")
+                    () -> tsoSend.sendCommand("SERVKEY123", "LISTCAT")
             );
 
             assertEquals("Send failed", ex.getMessage());
@@ -148,16 +148,16 @@ public class TsoSendServiceTest {
     }
 
     /**
-     * Test sendCommand succeeds when the response is valid.
+     * Test TsoSend succeeds when the response is valid.
      */
     @Test
-    public void tstSendCommandSuccess() throws Exception {
-        try (MockedStatic<ResponseUtil> responseMock = mockStatic(ResponseUtil.class)) {
-            responseMock.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
+    public void tstTsoSendCommandSuccess() throws Exception {
+        try (MockedStatic<TsoUtil> responseMock = mockStatic(TsoUtil.class)) {
+            responseMock.when(() -> TsoUtil.getResponseStr(any()))
                     .thenReturn("{\"status\":\"ok\"}");
 
-            final TsoSendService service = new TsoSendService(mockConnection, mockPutRequest);
-            String result = service.sendCommand("SERVKEY123", "LISTCAT");
+            final TsoSend tsoSend = new TsoSend(mockConnection, mockPutRequest);
+            String result = tsoSend.sendCommand("SERVKEY123", "LISTCAT");
 
             assertEquals("{\"status\":\"ok\"}", result);
         }
@@ -170,7 +170,7 @@ public class TsoSendServiceTest {
     public void tstAlternativeConstructorNullConnectionFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoSendService(null, mockPutRequest)
+                () -> new TsoSend(null, mockPutRequest)
         );
         assertEquals("connection is null", ex.getMessage());
     }
@@ -182,7 +182,7 @@ public class TsoSendServiceTest {
     public void tstAlternativeConstructorNullRequestFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoSendService(mockConnection, null)
+                () -> new TsoSend(mockConnection, null)
         );
         assertEquals("request is null", ex.getMessage());
     }
@@ -195,45 +195,45 @@ public class TsoSendServiceTest {
         final ZosmfRequest wrongRequest = mock(ZosmfRequest.class);
         IllegalStateException ex = assertThrows(
                 IllegalStateException.class,
-                () -> new TsoSendService(mockConnection, wrongRequest)
+                () -> new TsoSend(mockConnection, wrongRequest)
         );
         assertEquals("PUT_JSON request type required", ex.getMessage());
     }
 
     /**
-     * Test that sendCommand throws when sessionId is null or empty.
+     * Test that TsoSend throws when sessionId is null or empty.
      */
     @Test
-    public void tstSendCommandNullSessionIdFailure() {
-        final TsoSendService service = new TsoSendService(mockConnection, mockPutRequest);
+    public void tstTsoSendCommandNullSessionIdFailure() {
+        final TsoSend tsoSend = new TsoSend(mockConnection, mockPutRequest);
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,
-                () -> service.sendCommand(null, "CMD")
+                () -> tsoSend.sendCommand(null, "CMD")
         );
         assertEquals("sessionId is either null or empty", ex.getMessage());
     }
 
     /**
-     * Test that sendCommand throws when command is null or empty.
+     * Test that TsoSend throws when the command is null or empty.
      */
     @Test
-    public void tstSendCommandNullCommandFailure() {
-        final TsoSendService service = new TsoSendService(mockConnection, mockPutRequest);
+    public void tstTsoSendCommandNullCommandFailure() {
+        final TsoSend tsoSend = new TsoSend(mockConnection, mockPutRequest);
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,
-                () -> service.sendCommand("SERVKEY", null)
+                () -> tsoSend.sendCommand("SERVKEY", null)
         );
         assertEquals("command is either null or empty", ex.getMessage());
     }
 
     /**
-     * Test that the public constructor throws when connection is null.
+     * Test that the public constructor throws when the connection is null.
      */
     @Test
     public void tstPublicConstructorNullConnectionFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoSendService(null)
+                () -> new TsoSend(null)
         );
         assertEquals("connection is null", ex.getMessage());
     }

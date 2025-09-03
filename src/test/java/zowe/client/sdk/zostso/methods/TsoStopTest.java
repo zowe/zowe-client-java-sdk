@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso.service;
+package zowe.client.sdk.zostso.methods;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,8 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.utility.ResponseUtil;
+import zowe.client.sdk.utility.TsoUtil;
+import zowe.client.sdk.zostso.response.TsoCommonResponse;
 
 import java.util.Map;
 
@@ -26,17 +27,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Unit tests for the TsoStopService class.
+ * Unit tests for the TsoStop class.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoStopServiceTest {
+public class TsoStopTest {
 
     private final ZosConnection mockConnection = mock(ZosConnection.class);
     private final DeleteJsonZosmfRequest mockDeleteRequest = mock(DeleteJsonZosmfRequest.class);
 
-    public TsoStopServiceTest() {
+    public TsoStopTest() {
         when(mockConnection.getZosmfUrl()).thenReturn("https://zosmf:1443");
     }
 
@@ -48,19 +49,19 @@ public class TsoStopServiceTest {
     }
 
     /**
-     * Test stopTso sets the correct URL in the request.
+     * Test TsoStop sets the correct URL in the request.
      */
     @Test
-    public void tstStopTsoSetsCorrectUrlSuccess() throws Exception {
+    public void tstTsoStopSetsCorrectUrlSuccess() throws Exception {
         doCallRealMethod().when(mockDeleteRequest).setUrl(any());
         doCallRealMethod().when(mockDeleteRequest).getUrl();
 
-        try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
+        try (MockedStatic<TsoUtil> mockResponseUtil = mockStatic(TsoUtil.class)) {
+            mockResponseUtil.when(() -> TsoUtil.getResponseStr(any()))
                     .thenReturn("{}");
 
-            final TsoStopService service = new TsoStopService(mockConnection, mockDeleteRequest);
-            service.stopTso("SERVKEY123");
+            final TsoStop tsoStop = new TsoStop(mockConnection, mockDeleteRequest);
+            tsoStop.stop("SERVKEY123");
 
             final String actualUrl = mockDeleteRequest.getUrl();
             assertEquals("https://zosmf:1443/tsoApp/tso/SERVKEY123", actualUrl);
@@ -68,10 +69,10 @@ public class TsoStopServiceTest {
     }
 
     /**
-     * Test stopTso sets the correct headers in the request.
+     * Test TsoStop sets the correct headers in the request.
      */
     @Test
-    public void tstStopTsoSetsCorrectHeadersSuccess() throws Exception {
+    public void tstTsoStopSetsCorrectHeadersSuccess() throws Exception {
         DeleteJsonZosmfRequest deleteJsonZosmfRequest = Mockito.mock(DeleteJsonZosmfRequest.class,
                 withSettings().useConstructor(ZosConnectionFactory
                         .createBasicConnection("1", "1", "1", "1")));
@@ -80,12 +81,12 @@ public class TsoStopServiceTest {
         doCallRealMethod().when(deleteJsonZosmfRequest).setHeaders(anyMap());
         doCallRealMethod().when(deleteJsonZosmfRequest).getHeaders();
 
-        try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
+        try (MockedStatic<TsoUtil> mockResponseUtil = mockStatic(TsoUtil.class)) {
+            mockResponseUtil.when(() -> TsoUtil.getResponseStr(any()))
                     .thenReturn("{}");
 
-            final TsoStopService service = new TsoStopService(mockConnection, deleteJsonZosmfRequest);
-            service.stopTso("SERVKEY123");
+            final TsoStop tsoStop = new TsoStop(mockConnection, deleteJsonZosmfRequest);
+            tsoStop.stop("SERVKEY123");
 
             Map<String, String> headers = deleteJsonZosmfRequest.getHeaders();
 
@@ -97,36 +98,21 @@ public class TsoStopServiceTest {
     }
 
     /**
-     * Test stopTso propagates ZosmfRequestException from ResponseUtil.
+     * Test TsoStop succeeds when response is valid.
      */
     @Test
-    public void tstStopTsoThrowsZosmfRequestExceptionOnResponseErrorFailure() {
-        try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
-                    .thenThrow(new ZosmfRequestException("Stop failed"));
+    public void tstTsoStopSuccess() throws ZosmfRequestException {
+        final String payload = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"timeout\":false,\"reused\":true}";
+        try (MockedStatic<TsoUtil> mockResponseUtil = mockStatic(TsoUtil.class)) {
+            mockResponseUtil.when(() -> TsoUtil.getResponseStr(any()))
+                    .thenReturn(payload);
 
-            final TsoStopService service = new TsoStopService(mockConnection, mockDeleteRequest);
-
-            ZosmfRequestException ex = assertThrows(
-                    ZosmfRequestException.class,
-                    () -> service.stopTso("SERVKEY123")
-            );
-
-            assertEquals("Stop failed", ex.getMessage());
-        }
-    }
-
-    /**
-     * Test stopTso succeeds when response is valid.
-     */
-    @Test
-    public void tstStopTsoSuccess() {
-        try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any(), anyString()))
-                    .thenReturn("{\"status\":\"ok\"}");
-
-            final TsoStopService service = new TsoStopService(mockConnection, mockDeleteRequest);
-            assertDoesNotThrow(() -> service.stopTso("SERVKEY123"));
+            final TsoStop tsoStop = new TsoStop(mockConnection, mockDeleteRequest);
+            TsoCommonResponse tsoCommonResponse = tsoStop.stop("SERVKEY123");
+            assertEquals("ZOSMFAD-71-aabcaaaf", tsoCommonResponse.getServletKey());
+            assertEquals("0100", tsoCommonResponse.getVer());
+            assertEquals(false, tsoCommonResponse.getTimeout());
+            assertEquals(true, tsoCommonResponse.getReused());
         }
     }
 
@@ -137,7 +123,7 @@ public class TsoStopServiceTest {
     public void tstAlternativeConstructorNullConnectionFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoStopService(null, mockDeleteRequest)
+                () -> new TsoStop(null, mockDeleteRequest)
         );
         assertEquals("connection is null", ex.getMessage());
     }
@@ -149,7 +135,7 @@ public class TsoStopServiceTest {
     public void tstAlternativeConstructorNullRequestFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoStopService(mockConnection, null)
+                () -> new TsoStop(mockConnection, null)
         );
         assertEquals("request is null", ex.getMessage());
     }
@@ -163,32 +149,32 @@ public class TsoStopServiceTest {
         final ZosmfRequest wrongRequest = mock(ZosmfRequest.class);
         IllegalStateException ex = assertThrows(
                 IllegalStateException.class,
-                () -> new TsoStopService(mockConnection, wrongRequest)
+                () -> new TsoStop(mockConnection, wrongRequest)
         );
         assertEquals("DELETE_JSON request type required", ex.getMessage());
     }
 
     /**
-     * Test that stopTso throws when sessionId is null or empty.
+     * Test that TsoStop throws when sessionId is null or empty.
      */
     @Test
-    public void tstStopTsoNullSessionIdFailure() {
-        final TsoStopService service = new TsoStopService(mockConnection, mockDeleteRequest);
+    public void tstTsoStopNullSessionIdFailure() {
+        final TsoStop tsoStop = new TsoStop(mockConnection, mockDeleteRequest);
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,
-                () -> service.stopTso(null)
+                () -> tsoStop.stop(null)
         );
         assertEquals("sessionId is either null or empty", ex.getMessage());
     }
 
     /**
-     * Test that the public constructor throws when connection is null.
+     * Test that the public constructor throws when the connection is null.
      */
     @Test
     public void tstPublicConstructorNullConnectionFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoStopService(null)
+                () -> new TsoStop(null)
         );
         assertEquals("connection is null", ex.getMessage());
     }

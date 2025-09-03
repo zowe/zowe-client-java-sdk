@@ -9,6 +9,9 @@
  */
 package zowe.client.sdk.utility;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -21,12 +24,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Frank Giordano
  * @version 5.0
  */
-public class ResponseUtil {
+public class TsoUtil {
 
     /**
      * Private constructor defined to avoid instantiation of class
      */
-    private ResponseUtil() {
+    private TsoUtil() {
         throw new IllegalStateException("Utility class");
     }
 
@@ -35,25 +38,50 @@ public class ResponseUtil {
      * as a string value.
      *
      * @param request request object for performing http call
-     * @param msg     error message string content
      * @return response object as a string value of the http call
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static String getResponseStr(final ZosmfRequest request, final String msg) throws ZosmfRequestException {
+    public static String getResponseStr(final ZosmfRequest request) throws ZosmfRequestException {
         final Response response = request.executeRequest();
         final String responseStr = response.getResponsePhrase()
-                .orElseThrow(() -> new ZosmfRequestException(msg))
+                .orElseThrow(() -> new ZosmfRequestException("response phrase is either null or empty"))
                 .toString();
 
         AtomicInteger statusCode = new AtomicInteger();
         response.getStatusCode().ifPresent(statusCode::set);
 
         if (!(statusCode.get() >= 100 && statusCode.get() <= 299)) {
-            throw new ZosmfRequestException(msg + " Response: " + responseStr);
+            throw new ZosmfRequestException("Response: " + responseStr);
         }
 
         return responseStr;
+    }
+
+    /**
+     * Retrieve error message text from response string value.
+     *
+     * @param responseStr response string value
+     * @return error message text
+     * @author Frank Giordano
+     */
+    public static String getMsgDataText(String responseStr) {
+        String errMsg = "";
+        JsonNode rootNode;
+        final ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            rootNode = objectMapper.readTree(responseStr);
+            rootNode = rootNode.get("msgData");
+            if (rootNode.isArray() && rootNode.size() == 1) {
+                errMsg = rootNode.get(0).get("messageText").asText();
+            } else if (rootNode.isArray() && rootNode.size() > 1) {
+                errMsg = rootNode.toPrettyString();
+            } else if (rootNode.isObject()) {
+                errMsg = rootNode.toPrettyString();
+            }
+        } catch (JsonProcessingException ignored) {
+        }
+        return errMsg;
     }
 
 }

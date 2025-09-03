@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso.service;
+package zowe.client.sdk.zostso.methods;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -19,10 +19,11 @@ import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.ResponseUtil;
+import zowe.client.sdk.utility.TsoUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
+import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 /**
  * This class handles sending the request to start the TSO session via z/OSMF
@@ -30,25 +31,25 @@ import zowe.client.sdk.zostso.input.StartTsoInputData;
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoStartService {
+public class TsoStart {
 
     private final ZosConnection connection;
     private ZosmfRequest request;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * TsoStartService constructor
+     * TsoStart constructor
      *
      * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public TsoStartService(final ZosConnection connection) {
+    public TsoStart(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
     /**
-     * Alternative TsoStartService constructor with ZoweRequest object. This is mainly used for internal code unit
+     * Alternative TsoStart constructor with ZoweRequest object. This is mainly used for internal code unit
      * testing with mockito, and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private
@@ -57,7 +58,7 @@ public class TsoStartService {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    TsoStartService(final ZosConnection connection, final ZosmfRequest request) {
+    TsoStart(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -75,7 +76,7 @@ public class TsoStartService {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public String startTso(final StartTsoInputData inputData) throws ZosmfRequestException {
+    public TsoStartResponse start(final StartTsoInputData inputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData == null, "inputData is null");
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO +
                 "?" + "acct" + "=" + EncodeUtils.encodeURIComponent(inputData.getAccount()
@@ -93,28 +94,31 @@ public class TsoStartService {
         request.setUrl(url);
         request.setBody("");
 
-        final String responseStr = ResponseUtil.getResponseStr(request, TsoConstants.START_TSO_FAIL_MSG);
+        final String responseStr = TsoUtil.getResponseStr(request);
 
         final JsonNode rootNode;
         try {
             rootNode = objectMapper.readTree(responseStr);
         } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException(TsoConstants.START_TSO_FAIL_MSG +
-                    " Response: " + e.getMessage());
+            throw new ZosmfRequestException(e.getMessage());
         }
 
         final JsonNode keyNode = rootNode.get("servletKey");
         if (keyNode == null || keyNode.isNull()) {
-            throw new ZosmfRequestException(TsoConstants.START_TSO_FAIL_MSG +
-                    " Response missing servletKey: " + responseStr);
+            final String errMsg = "Response missing servletKey: " + responseStr;
+            throw new ZosmfRequestException(errMsg);
         }
         final String servletKey = keyNode.asText();
         if (servletKey == null || servletKey.trim().isEmpty() || "null".equalsIgnoreCase(servletKey)) {
-            throw new ZosmfRequestException(TsoConstants.START_TSO_FAIL_MSG +
-                    " Invalid servletKey in response: " + responseStr);
+            final String errMsg = "Response servletKey is empty: " + responseStr;
+            throw new ZosmfRequestException(errMsg);
         }
 
-        return servletKey;
+        if (responseStr.contains("IKJ56455I")) { // successful logon
+            return new TsoStartResponse(true, servletKey, responseStr);
+        } else {
+            return new TsoStartResponse(false, servletKey, responseStr);
+        }
     }
 
 }

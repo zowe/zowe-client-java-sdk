@@ -21,8 +21,12 @@ public class StartTsoInputData {
 
     /**
      * User's z/OS permission account number.
-     * This member is a placeholder for account value sent via IssueTso constructor.
-     * Setting this member will have no effect.
+     * <p>
+     * This member is a placeholder for account value sent via TsoCmd constructor.
+     * As such, setting this member will have no effect when used within the TsoCmd class.
+     * <p>
+     * This member is the only way to define the account number for usage for the
+     * start TSO session call for the TsoStart class.
      */
     public String account;
 

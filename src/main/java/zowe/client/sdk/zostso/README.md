@@ -2,55 +2,87 @@
 
 Contains APIs to interact with TSO on z/OS (using z/OSMF TSO REST endpoints).
 
-APIs located in method package.
+APIs are located in the methods package.
 
 ## API Examples
 
 ````java
-package zowe.client.sdk.examples.zostso;
+package org.example;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
-import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
-import zowe.client.sdk.zostso.method.IssueTso;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zostso.input.StartTsoInputData;
+import zowe.client.sdk.zostso.methods.TsoCmd;
+import zowe.client.sdk.zostso.methods.TsoPing;
+import zowe.client.sdk.zostso.methods.TsoStart;
+import zowe.client.sdk.zostso.methods.TsoStop;
+import zowe.client.sdk.zostso.response.TsoCommonResponse;
+import zowe.client.sdk.zostso.response.TsoStartResponse;
+
+import java.util.List;
 
 /**
- * Class example to test tso command functionality via IssueTso class.
+ * Example to showcase the tso package method classes.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class IssueTsoExp extends TstZosConnection {
+public class TsoCmdExp extends TstZosConnection {
 
     private static ZosConnection connection;
 
-    /**
-     * The main method defines z/OSMF host and user connection, and tso command parameters used for the example test.
-     *
-     * @param args for main not used
-     * @author Frank Giordano
-     */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ZosmfRequestException {
         String command = "xxx";
         String accountNumber = "xxx";
 
-        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
-        List<String> result = IssueTsoExp.issueCommand(accountNumber, command);
+        connection = ZosConnectionFactory
+                .createBasicConnection(hostName, zosmfPort, userName, password);
+        List<String> result = TsoCmdExp.issueCommand(accountNumber, command);
         result.forEach(System.out::println);
+        pingWorkflow(accountNumber);
     }
 
     /**
-     * Issue issueCommand method from the IssueTso class which will execute the given tso command.
+     * Issue issueCommand method from the TsoCmd class which will execute the given tso command.
      *
      * @param accountNumber user's z/OSMF permission account number
-     * @param command           tso command to execute
+     * @param command       tso command to execute
      * @return list of messages result
+     * @throws ZosmfRequestException exception thrown when issueCommand fails
      * @author Frank Giordano
      */
-    public static List<String> issueCommand(String accountNumber, String command) {
-        IssueTso issueTso = new IssueTso(connection, accountNumber);
-        return issueTso.issueCommand(command);
+    public static List<String> issueCommand(String accountNumber, String command) throws ZosmfRequestException {
+        TsoCmd tsoCmd = new TsoCmd(connection, accountNumber);
+        return tsoCmd.issueCommand(command);
+    }
+
+    /**
+     * Demonstrate starting, pinging, and stopping a TSO address space
+     *
+     * @param accountNumber user's z/OSMF permission account number
+     * @throws ZosmfRequestException exception thrown when ping fails
+     * @author Frank Giordano
+     */
+    public static void pingWorkflow(String accountNumber) throws ZosmfRequestException {
+        StartTsoInputData inputData = new StartTsoInputData();
+        inputData.setAccount(accountNumber);
+        TsoStart tsoStart = new TsoStart(connection);
+        // send tso start call and return the session id
+        final TsoStartResponse tsoStartResponse = tsoStart.start(inputData);
+        System.out.println("TSO start succeeded: " + tsoStartResponse.isSuccess());
+        System.out.println("TSO start response: " + tsoStartResponse.getResponse());
+        System.out.println("TSO session id: " + tsoStartResponse.getSessionId());
+
+        TsoPing tsoPing = new TsoPing(connection);
+        // ping the session id
+        TsoCommonResponse tsoCommonResponse = tsoPing.ping(tsoStartResponse.getSessionId());
+        System.out.println(tsoCommonResponse);
+
+        TsoStop tsoStop = new TsoStop(connection);
+        // stop the tso session
+        tsoCommonResponse = tsoStop.stop(tsoStartResponse.getSessionId());
+        System.out.println(tsoCommonResponse);
     }
 
 }

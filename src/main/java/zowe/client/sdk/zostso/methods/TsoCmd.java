@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso.method;
+package zowe.client.sdk.zostso.methods;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -17,10 +17,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
-import zowe.client.sdk.zostso.service.TsoReplyService;
-import zowe.client.sdk.zostso.service.TsoSendService;
-import zowe.client.sdk.zostso.service.TsoStartService;
-import zowe.client.sdk.zostso.service.TsoStopService;
+import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,27 +28,27 @@ import java.util.List;
  * @author Frank Giordano
  * @version 5.0
  */
-public class IssueTso {
+public class TsoCmd {
 
     private final List<String> msgLst = new ArrayList<>();
     private final List<String> promptLst = new ArrayList<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final ZosConnection connection;
     private final String accountNumber;
-    private TsoStartService tsoStartService;
-    private TsoStopService tsoStopService;
-    private TsoSendService tsoSendService;
-    private TsoReplyService tsoReplyService;
+    private TsoStart tsoStart;
+    private TsoStop tsoStop;
+    private TsoSend tsoSend;
+    private TsoReply tsoReply;
     private StartTsoInputData inputData;
 
     /**
-     * IssueTso constructor
+     * TsoCmd constructor
      *
      * @param connection    ZosConnection object
      * @param accountNumber account number for tso processing
      * @author Frank Giordano
      */
-    public IssueTso(final ZosConnection connection, final String accountNumber) {
+    public TsoCmd(final ZosConnection connection, final String accountNumber) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkIllegalParameter(accountNumber, "accountNumber");
         this.connection = connection;
@@ -59,32 +56,32 @@ public class IssueTso {
     }
 
     /**
-     * Alternative IssueTso constructor with ZoweRequest object. This is mainly used for internal code unit
+     * Alternative TsoCmd constructor with ZoweRequest object. This is mainly used for internal code unit
      * testing with mockito, and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private
      *
-     * @param connection      for connection information, see ZosConnection object
-     * @param accountNumber   account number for tso processing
-     * @param tsoStartService TsoStartService for mocking
-     * @param tsoStopService  TsoStopService for mocking
-     * @param tsoSendService  TsoSendService for mocking
-     * @param tsoReplyService TsoReplyService for mocking
+     * @param connection    for connection information, see ZosConnection object
+     * @param accountNumber account number for tso processing
+     * @param tsoStart      TsoStart for mocking
+     * @param tsoStop       TsoStop for mocking
+     * @param tsoSend       TsoSend for mocking
+     * @param tsoReply      TsoReply for mocking
      * @author Frank Giordano
      */
-    IssueTso(final ZosConnection connection,
-             final String accountNumber,
-             final TsoStartService tsoStartService,
-             final TsoStopService tsoStopService,
-             final TsoSendService tsoSendService,
-             final TsoReplyService tsoReplyService) {
+    TsoCmd(final ZosConnection connection,
+           final String accountNumber,
+           final TsoStart tsoStart,
+           final TsoStop tsoStop,
+           final TsoSend tsoSend,
+           final TsoReply tsoReply) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
         this.accountNumber = accountNumber;
-        this.tsoStartService = tsoStartService;
-        this.tsoStopService = tsoStopService;
-        this.tsoSendService = tsoSendService;
-        this.tsoReplyService = tsoReplyService;
+        this.tsoStart = tsoStart;
+        this.tsoStop = tsoStop;
+        this.tsoSend = tsoSend;
+        this.tsoReply = tsoReply;
     }
 
     /**
@@ -116,17 +113,22 @@ public class IssueTso {
         this.promptLst.clear();
 
         // send tso start call and return the session id
-        final String sessionId = this.startTso(inputData);
+        final TsoStartResponse tsoStartResponse = this.startTso(inputData);
+        if (!tsoStartResponse.isSuccess()) {
+            final JsonNode tsoData = this.getJsonNode(tsoStartResponse.getResponse()).get("tsoData");
+            this.processTsoData(tsoData);
+            return msgLst;
+        }
 
         // send tso command to execute with session id
-        String responseStr = this.sendTsoCommand(sessionId, command);
+        String responseStr = this.sendTsoCommand(tsoStartResponse.getSessionId(), command);
         JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
         this.processTsoData(tsoData);
 
         boolean tsoMessagesReceived = false;
         while (!tsoMessagesReceived) {
             // retrieve additional tso messages for the command
-            responseStr = this.sendTsoForReply(sessionId);
+            responseStr = this.sendTsoForReply(tsoStartResponse.getSessionId());
             tsoData = this.getJsonNode(responseStr).get("tsoData");
             this.processTsoData(tsoData);
 
@@ -137,7 +139,7 @@ public class IssueTso {
         }
 
         // stop the tso session
-        this.stopTso(sessionId);
+        this.stopTso(tsoStartResponse.getSessionId());
         return msgLst;
     }
 
@@ -145,20 +147,20 @@ public class IssueTso {
      * Make the first TSO request to start the TSO session and retrieve its session id (servletKey).
      *
      * @param inputData start TSO request inputs parameters, see StartTsoInputData
-     * @return string value representing the session id (servletKey)
+     * @return sTsoStartResponse object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private String startTso(final StartTsoInputData inputData) throws ZosmfRequestException {
-        if (tsoStartService == null) {
-            tsoStartService = new TsoStartService(connection);
+    private TsoStartResponse startTso(final StartTsoInputData inputData) throws ZosmfRequestException {
+        if (tsoStart == null) {
+            tsoStart = new TsoStart(connection);
         }
         this.inputData = inputData;
         if (this.inputData == null) {
             this.inputData = new StartTsoInputData();
         }
         this.inputData.setAccount(accountNumber);
-        return tsoStartService.startTso(this.inputData);
+        return tsoStart.start(this.inputData);
     }
 
     /**
@@ -171,10 +173,10 @@ public class IssueTso {
      * @author Frank Giordano
      */
     private String sendTsoCommand(final String sessionId, final String command) throws ZosmfRequestException {
-        if (tsoSendService == null) {
-            tsoSendService = new TsoSendService(connection);
+        if (tsoSend == null) {
+            tsoSend = new TsoSend(connection);
         }
-        return tsoSendService.sendCommand(sessionId, command);
+        return tsoSend.sendCommand(sessionId, command);
     }
 
     /**
@@ -186,10 +188,10 @@ public class IssueTso {
      * @author Frank Giordano
      */
     private String sendTsoForReply(final String sessionId) throws ZosmfRequestException {
-        if (tsoReplyService == null) {
-            tsoReplyService = new TsoReplyService(connection);
+        if (tsoReply == null) {
+            tsoReply = new TsoReply(connection);
         }
-        return tsoReplyService.reply(sessionId);
+        return tsoReply.reply(sessionId);
     }
 
     /**
@@ -200,10 +202,10 @@ public class IssueTso {
      * @author Frank Giordano
      */
     private void stopTso(final String sessionId) throws ZosmfRequestException {
-        if (tsoStopService == null) {
-            tsoStopService = new TsoStopService(connection);
+        if (tsoStop == null) {
+            tsoStop = new TsoStop(connection);
         }
-        tsoStopService.stopTso(sessionId);
+        tsoStop.stop(sessionId);
     }
 
     /**
@@ -244,7 +246,7 @@ public class IssueTso {
         try {
             rootNode = objectMapper.readTree(responseStr);
         } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException(TsoConstants.SEND_TSO_FAIL_MSG + " Response: " + e.getMessage());
+            throw new ZosmfRequestException("Response: " + e.getMessage());
         }
         return rootNode;
     }

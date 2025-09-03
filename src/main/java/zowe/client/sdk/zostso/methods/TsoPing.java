@@ -7,42 +7,46 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zostso.service;
+package zowe.client.sdk.zostso.methods;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.ResponseUtil;
+import zowe.client.sdk.utility.TsoUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
+import zowe.client.sdk.zostso.response.TsoCommonResponse;
 
 /**
- * This class handles sending a request to z/OSMF TSO for additional TSO message data
+ * This class handles sending a ping request to z/OSMF TSO to keep the session alive.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoReplyService {
+public class TsoPing {
 
     private final ZosConnection connection;
     private ZosmfRequest request;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * TsoReplyService constructor
+     * TsoPing constructor
      *
      * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    public TsoReplyService(final ZosConnection connection) {
+    public TsoPing(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         this.connection = connection;
     }
 
     /**
-     * Alternative TsoReplyService constructor with ZoweRequest object. This is mainly used for internal code unit
+     * Alternative TsoPing constructor with ZoweRequest object. This is mainly used for internal code unit
      * testing with mockito, and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private
@@ -51,7 +55,7 @@ public class TsoReplyService {
      * @param request    any compatible ZoweRequest Interface object
      * @author Frank Giordano
      */
-    TsoReplyService(final ZosConnection connection, final ZosmfRequest request) {
+    TsoPing(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
         ValidateUtils.checkNullParameter(request == null, "request is null");
         this.connection = connection;
@@ -62,17 +66,16 @@ public class TsoReplyService {
     }
 
     /**
-     * Send a request to z/OSMF TSO for additional TSO message data
+     * Send a ping request to z/OSMF TSO to keep the session alive
      *
-     * @param sessionId servletKey id retrieve from start TSO request
-     * @return response string representing the returned request payload
+     * @param sessionId servletKey id retrieved from start TSO request
+     * @return TsoCommonResponse object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public String reply(final String sessionId) throws ZosmfRequestException {
+    public TsoCommonResponse ping(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
-        final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" + sessionId;
+        final String url = connection.getZosmfUrl() + TsoConstants.RES_PING + "/" + sessionId;
 
         if (request == null || !(request instanceof PutJsonZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -80,7 +83,18 @@ public class TsoReplyService {
         request.setUrl(url);
         request.setBody("");
 
-        return ResponseUtil.getResponseStr(request, TsoConstants.SEND_TSO_FAIL_MSG);
+        final String responseStr = TsoUtil.getResponseStr(request);
+
+        TsoCommonResponse tsoCommonResponse;
+        try {
+            tsoCommonResponse = objectMapper.readValue(responseStr, TsoCommonResponse.class);
+        } catch (JsonProcessingException e) {
+            // check for msdData error message if it exists
+            final String errMsg = TsoUtil.getMsgDataText(responseStr);
+            throw new ZosmfRequestException(errMsg.isBlank() ? e.getMessage() : errMsg);
+        }
+
+        return tsoCommonResponse;
     }
 
 }
