@@ -13,13 +13,12 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
-import zowe.client.sdk.zostso.response.TsoCommonResponse;
 import zowe.client.sdk.zostso.methods.TsoCmd;
 import zowe.client.sdk.zostso.methods.TsoPing;
 import zowe.client.sdk.zostso.methods.TsoStart;
 import zowe.client.sdk.zostso.methods.TsoStop;
-import zowe.client.sdk.zostso.response.TsoPingResponse;
-import zowe.client.sdk.zostso.response.TsoStopResponse;
+import zowe.client.sdk.zostso.response.TsoCommonResponse;
+import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 import java.util.List;
 
@@ -66,22 +65,23 @@ public class TsoCmdExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void pingWorkflow(String accountNumber) throws ZosmfRequestException {
-
         StartTsoInputData inputData = new StartTsoInputData();
         inputData.setAccount(accountNumber);
         TsoStart tsoStart = new TsoStart(connection);
         // send tso start call and return the session id
-        final String sessionId = tsoStart.start(inputData);
-        System.out.println("TSO session id: " + sessionId);
+        final TsoStartResponse tsoStartResponse = tsoStart.start(inputData);
+        System.out.println("TSO start succeeded: " + tsoStartResponse.isSuccess());
+        System.out.println("TSO start response: " + tsoStartResponse.getResponse());
+        System.out.println("TSO session id: " + tsoStartResponse.getSessionId());
 
         TsoPing tsoPing = new TsoPing(connection);
         // ping the session id
-        TsoCommonResponse tsoCommonResponse = tsoPing.ping(sessionId);
+        TsoCommonResponse tsoCommonResponse = tsoPing.ping(tsoStartResponse.getSessionId());
         System.out.println(tsoCommonResponse);
 
         TsoStop tsoStop = new TsoStop(connection);
         // stop the tso session
-        tsoCommonResponse = tsoStop.stop(sessionId);
+        tsoCommonResponse = tsoStop.stop(tsoStartResponse.getSessionId());
         System.out.println(tsoCommonResponse);
     }
 
