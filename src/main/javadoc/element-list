@@ -48,6 +48,6 @@ zowe.client.sdk.zosmfinfo.response
 zowe.client.sdk.zostso
 zowe.client.sdk.zostso.input
 zowe.client.sdk.zostso.methods
-zowe.client.sdk.zostso.service
+zowe.client.sdk.zostso.response
 zowe.client.sdk.zosuss.exception
 zowe.client.sdk.zosuss.method
