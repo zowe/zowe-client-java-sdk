@@ -103,13 +103,13 @@ public class TsoCommonResponse {
     }
 
     /**
-     * Return string value representing TsoStopResponse object
+     * Return string value representing TsoCommonResponse object
      *
-     * @return string representation of TsoStopResponse
+     * @return string representation of TsoCommonResponse
      */
     @Override
     public String toString() {
-        return "TsoStopResponse{" +
+        return "TsoCommonResponse{" +
                 "servletKey='" + servletKey + '\'' +
                 ", ver='" + ver + '\'' +
                 ", timeout='" + timeout + '\'' +
