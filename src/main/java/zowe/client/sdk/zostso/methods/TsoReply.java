@@ -80,7 +80,12 @@ public class TsoReply {
         request.setUrl(url);
         request.setBody("");
 
-        return TsoUtil.getResponseStr(request);
+        final String responseStr = TsoUtil.getResponseStr(request);
+        if (responseStr.contains("msgData")) {
+            final String errMsg = TsoUtil.getMsgDataText(responseStr);
+            throw new ZosmfRequestException(errMsg);
+        }
+        return responseStr;
     }
 
 }
