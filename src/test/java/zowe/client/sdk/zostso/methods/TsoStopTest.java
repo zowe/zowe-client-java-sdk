@@ -18,7 +18,7 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.utility.ResponseUtil;
+import zowe.client.sdk.utility.TsoUtil;
 import zowe.client.sdk.zostso.response.TsoCommonResponse;
 
 import java.util.Map;
@@ -56,8 +56,8 @@ public class TsoStopTest {
         doCallRealMethod().when(mockDeleteRequest).setUrl(any());
         doCallRealMethod().when(mockDeleteRequest).getUrl();
 
-        try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
+        try (MockedStatic<TsoUtil> mockResponseUtil = mockStatic(TsoUtil.class)) {
+            mockResponseUtil.when(() -> TsoUtil.getResponseStr(any()))
                     .thenReturn("{}");
 
             final TsoStop tsoStop = new TsoStop(mockConnection, mockDeleteRequest);
@@ -81,8 +81,8 @@ public class TsoStopTest {
         doCallRealMethod().when(deleteJsonZosmfRequest).setHeaders(anyMap());
         doCallRealMethod().when(deleteJsonZosmfRequest).getHeaders();
 
-        try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
+        try (MockedStatic<TsoUtil> mockResponseUtil = mockStatic(TsoUtil.class)) {
+            mockResponseUtil.when(() -> TsoUtil.getResponseStr(any()))
                     .thenReturn("{}");
 
             final TsoStop tsoStop = new TsoStop(mockConnection, deleteJsonZosmfRequest);
@@ -103,8 +103,8 @@ public class TsoStopTest {
     @Test
     public void tstTsoStopSuccess() throws ZosmfRequestException {
         final String payload = "{\"servletKey\":\"ZOSMFAD-71-aabcaaaf\",\"ver\":\"0100\",\"timeout\":false,\"reused\":true}";
-        try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
+        try (MockedStatic<TsoUtil> mockResponseUtil = mockStatic(TsoUtil.class)) {
+            mockResponseUtil.when(() -> TsoUtil.getResponseStr(any()))
                     .thenReturn(payload);
 
             final TsoStop tsoStop = new TsoStop(mockConnection, mockDeleteRequest);

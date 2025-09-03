@@ -21,12 +21,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Frank Giordano
  * @version 5.0
  */
-public class ResponseUtil {
+public class TsoUtil {
 
     /**
      * Private constructor defined to avoid instantiation of class
      */
-    private ResponseUtil() {
+    private TsoUtil() {
         throw new IllegalStateException("Utility class");
     }
 

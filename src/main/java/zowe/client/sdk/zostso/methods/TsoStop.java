@@ -17,7 +17,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.ResponseUtil;
+import zowe.client.sdk.utility.TsoUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.response.TsoCommonResponse;
@@ -83,7 +83,7 @@ public class TsoStop {
         }
         request.setUrl(url);
 
-        final String responseStr = ResponseUtil.getResponseStr(request);
+        final String responseStr = TsoUtil.getResponseStr(request);
 
         TsoCommonResponse tsoCommonResponse;
         try {

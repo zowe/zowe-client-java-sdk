@@ -18,7 +18,7 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.utility.ResponseUtil;
+import zowe.client.sdk.utility.TsoUtil;
 import zowe.client.sdk.zostso.response.TsoCommonResponse;
 
 import java.util.Map;
@@ -56,8 +56,8 @@ public class TsoPingTest {
         doCallRealMethod().when(mockPutRequest).setUrl(any());
         doCallRealMethod().when(mockPutRequest).getUrl();
 
-        try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
+        try (MockedStatic<TsoUtil> mockResponseUtil = mockStatic(TsoUtil.class)) {
+            mockResponseUtil.when(() -> TsoUtil.getResponseStr(any()))
                     .thenReturn("{}");
 
             final TsoPing tsoPing = new TsoPing(mockConnection, mockPutRequest);
@@ -81,8 +81,8 @@ public class TsoPingTest {
         doCallRealMethod().when(putJsonZosmfRequest).setHeaders(anyMap());
         doCallRealMethod().when(putJsonZosmfRequest).getHeaders();
 
-        try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
+        try (MockedStatic<TsoUtil> mockResponseUtil = mockStatic(TsoUtil.class)) {
+            mockResponseUtil.when(() -> TsoUtil.getResponseStr(any()))
                     .thenReturn("{}");
 
             final TsoPing tsoPing = new TsoPing(mockConnection, putJsonZosmfRequest);
@@ -103,8 +103,8 @@ public class TsoPingTest {
     @Test
     public void tstTsoPingSuccess() throws ZosmfRequestException {
         final String payload = "{\"servletKey\":\"ZOSMFAD-71-xyz\",\"ver\":\"0100\",\"timeout\":false,\"reused\":true}";
-        try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
-            mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
+        try (MockedStatic<TsoUtil> mockResponseUtil = mockStatic(TsoUtil.class)) {
+            mockResponseUtil.when(() -> TsoUtil.getResponseStr(any()))
                     .thenReturn(payload);
 
             final TsoPing tsoPing = new TsoPing(mockConnection, mockPutRequest);
