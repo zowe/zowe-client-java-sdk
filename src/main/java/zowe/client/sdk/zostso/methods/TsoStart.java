@@ -23,6 +23,7 @@ import zowe.client.sdk.utility.TsoUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
+import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 /**
  * This class handles sending the request to start the TSO session via z/OSMF
@@ -75,7 +76,7 @@ public class TsoStart {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public String start(final StartTsoInputData inputData) throws ZosmfRequestException {
+    public TsoStartResponse start(final StartTsoInputData inputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData == null, "inputData is null");
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO +
                 "?" + "acct" + "=" + EncodeUtils.encodeURIComponent(inputData.getAccount()
@@ -113,7 +114,11 @@ public class TsoStart {
             throw new ZosmfRequestException(errMsg);
         }
 
-        return servletKey;
+        if (responseStr.contains("IKJ56455I")) {
+            return new TsoStartResponse(true, servletKey, responseStr);
+        } else {
+            return new TsoStartResponse(false, servletKey, responseStr);
+        }
     }
 
 }

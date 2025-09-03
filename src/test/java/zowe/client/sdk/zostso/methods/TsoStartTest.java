@@ -1,3 +1,12 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ */
 package zowe.client.sdk.zostso.methods;
 
 import org.json.simple.JSONObject;
@@ -13,6 +22,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.TsoUtil;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
+import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,8 +75,8 @@ public class TsoStartTest {
             mocked.when(() -> TsoUtil.getResponseStr(any()))
                     .thenReturn("{\"servletKey\":\"mySession123\"}");
 
-            final String result = tsoStart.start(input);
-            assertEquals("mySession123", result);
+            final TsoStartResponse result = tsoStart.start(input);
+            assertEquals("mySession123", result.getSessionId());
 
             verify(mockRequest).setUrl(contains("acct=ACCT123"));
             verify(mockRequest).setBody("");
@@ -191,8 +201,8 @@ public class TsoStartTest {
         mockStatic(TsoUtil.class);
         when(TsoUtil.getResponseStr(eq(mockRequest))).thenReturn(jsonResponse);
 
-        final String result = tsoStart.start(inputData);
-        assertEquals("TSO12345", result);
+        final TsoStartResponse result = tsoStart.start(inputData);
+        assertEquals("TSO12345", result.getSessionId());
     }
 
     /**
@@ -212,8 +222,8 @@ public class TsoStartTest {
         Mockito.when(mockRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(map), 200, "success"));
 
-        final String result = tsoStart.start(inputData);
-        assertEquals("SERVKEY123", result);
+        final TsoStartResponse result = tsoStart.start(inputData);
+        assertEquals("SERVKEY123", result.getSessionId());
 
         final String expectedUrl = "https://zosmf:1234/tsoApp/tso?acct=ACCT123&proc=PROC1&chset=UTF-8" +
                 "&cpage=037&rows=24&cols=80&rsize=4096";
@@ -246,8 +256,8 @@ public class TsoStartTest {
 
             tsoStart = new TsoStart(mockConnection, postJsonZosmfRequest);
 
-            final String result = tsoStart.start(inputData);
-            assertEquals("SERVKEY123", result);
+            final TsoStartResponse result = tsoStart.start(inputData);
+            assertEquals("SERVKEY123", result.getSessionId());
 
             Map<String, String> headers = postJsonZosmfRequest.getHeaders();
 

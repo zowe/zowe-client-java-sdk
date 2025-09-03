@@ -17,6 +17,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
+import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,17 +113,22 @@ public class TsoCmd {
         this.promptLst.clear();
 
         // send tso start call and return the session id
-        final String sessionId = this.startTso(inputData);
+        final TsoStartResponse tsoStartResponse = this.startTso(inputData);
+        if (!tsoStartResponse.isSuccess()) {
+            final JsonNode tsoData = this.getJsonNode(tsoStartResponse.getResponse()).get("tsoData");
+            this.processTsoData(tsoData);
+            return msgLst;
+        }
 
         // send tso command to execute with session id
-        String responseStr = this.sendTsoCommand(sessionId, command);
+        String responseStr = this.sendTsoCommand(tsoStartResponse.getSessionId(), command);
         JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
         this.processTsoData(tsoData);
 
         boolean tsoMessagesReceived = false;
         while (!tsoMessagesReceived) {
             // retrieve additional tso messages for the command
-            responseStr = this.sendTsoForReply(sessionId);
+            responseStr = this.sendTsoForReply(tsoStartResponse.getSessionId());
             tsoData = this.getJsonNode(responseStr).get("tsoData");
             this.processTsoData(tsoData);
 
@@ -133,7 +139,7 @@ public class TsoCmd {
         }
 
         // stop the tso session
-        this.stopTso(sessionId);
+        this.stopTso(tsoStartResponse.getSessionId());
         return msgLst;
     }
 
@@ -141,11 +147,11 @@ public class TsoCmd {
      * Make the first TSO request to start the TSO session and retrieve its session id (servletKey).
      *
      * @param inputData start TSO request inputs parameters, see StartTsoInputData
-     * @return string value representing the session id (servletKey)
+     * @return sTsoStartResponse object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private String startTso(final StartTsoInputData inputData) throws ZosmfRequestException {
+    private TsoStartResponse startTso(final StartTsoInputData inputData) throws ZosmfRequestException {
         if (tsoStart == null) {
             tsoStart = new TsoStart(connection);
         }

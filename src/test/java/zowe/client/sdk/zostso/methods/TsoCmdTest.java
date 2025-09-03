@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
+import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 import java.util.List;
 
@@ -72,7 +73,8 @@ public class TsoCmdTest {
         String firstResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"JOB STARTED\"}}]}";
         String secondResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"HIDDEN\":\"READY\"}}]}";
 
-        when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(sessionId);
+        when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(
+                new TsoStartResponse(true, sessionId, ""));
         when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(firstResponse);
         when(mockTsoReply.reply(sessionId)).thenReturn(secondResponse);
 
@@ -111,7 +113,8 @@ public class TsoCmdTest {
         String firstResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"JOB STARTED\"}}]}";
         String secondResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"HIDDEN\":\"READY\"}}]}";
 
-        when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(sessionId);
+        when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(
+                new TsoStartResponse(true, sessionId, ""));
         when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(firstResponse);
         when(mockTsoReply.reply(sessionId)).thenReturn(secondResponse);
 
@@ -152,7 +155,8 @@ public class TsoCmdTest {
         String firstReplyResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"RUNNING2\"}}]}";
         String secondReplyResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"HIDDEN\":\"READY\"}}]}";
 
-        when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(sessionId);
+        when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(
+                new TsoStartResponse(true, sessionId, ""));
         when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(firstResponse);
         when(mockTsoReply.reply(sessionId)).thenReturn(firstReplyResponse, secondReplyResponse);
 
