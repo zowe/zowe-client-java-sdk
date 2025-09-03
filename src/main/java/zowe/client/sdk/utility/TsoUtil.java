@@ -9,6 +9,9 @@
  */
 package zowe.client.sdk.utility;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -53,6 +56,32 @@ public class TsoUtil {
         }
 
         return responseStr;
+    }
+
+    /**
+     * Retrieve error message text from response string value.
+     *
+     * @param responseStr response string value
+     * @return error message text
+     * @author Frank Giordano
+     */
+    public String getMsgDataText(String responseStr) {
+        String errMsg = "";
+        JsonNode rootNode;
+        final ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            rootNode = objectMapper.readTree(responseStr);
+            rootNode = rootNode.get("msgData");
+            if (rootNode.isArray() && rootNode.size() == 1) {
+                errMsg = rootNode.get(0).get("messageText").asText();
+            } else if (rootNode.isArray() && rootNode.size() > 1) {
+                errMsg = rootNode.toPrettyString();
+            } else if (rootNode.isObject()) {
+                errMsg = rootNode.toPrettyString();
+            }
+        } catch (JsonProcessingException ignored) {
+        }
+        return errMsg;
     }
 
 }
