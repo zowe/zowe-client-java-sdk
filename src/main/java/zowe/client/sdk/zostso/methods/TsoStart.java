@@ -114,7 +114,7 @@ public class TsoStart {
             throw new ZosmfRequestException(errMsg);
         }
 
-        if (responseStr.contains("IKJ56455I")) {
+        if (responseStr.contains("IKJ56455I")) { // successful logon
             return new TsoStartResponse(true, servletKey, responseStr);
         } else {
             return new TsoStartResponse(false, servletKey, responseStr);
