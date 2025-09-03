@@ -24,9 +24,9 @@ public class TsoStartResponse {
     /**
      * TsoStartResponse constructor
      *
-     * @param success boolean value
+     * @param success   boolean value
      * @param sessionId string value
-     * @param response string value
+     * @param response  string value
      */
     public TsoStartResponse(final boolean success, final String sessionId, final String response) {
         this.success = success;
