@@ -7,23 +7,29 @@ APIs are located in the methods package.
 ## API Examples
 
 ````java
-package zowe.client.sdk.zostso.methods;
+package org.example;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
 import zowe.client.sdk.zostso.response.TsoCommonResponse;
+import zowe.client.sdk.zostso.methods.TsoCmd;
+import zowe.client.sdk.zostso.methods.TsoPing;
+import zowe.client.sdk.zostso.methods.TsoStart;
+import zowe.client.sdk.zostso.methods.TsoStop;
+import zowe.client.sdk.zostso.response.TsoPingResponse;
+import zowe.client.sdk.zostso.response.TsoStopResponse;
 
 import java.util.List;
 
 /**
- * Example to showcase the tso package method classes. 
+ * Example to showcase the tso package method classes.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoCmdExp {
+public class TsoCmdExp extends TstZosConnection {
 
     private static ZosConnection connection;
 
@@ -31,8 +37,8 @@ public class TsoCmdExp {
         String command = "xxx";
         String accountNumber = "xxx";
 
-        connection = ZosConnectionFactory.createBasicConnection(
-                "hostName", "zosmfPort", "userName", "password");
+        connection = ZosConnectionFactory
+                .createBasicConnection(hostName, zosmfPort, userName, password);
         List<String> result = TsoCmdExp.issueCommand(accountNumber, command);
         result.forEach(System.out::println);
         pingWorkflow(accountNumber);
@@ -62,7 +68,7 @@ public class TsoCmdExp {
     public static void pingWorkflow(String accountNumber) throws ZosmfRequestException {
 
         StartTsoInputData inputData = new StartTsoInputData();
-        inputData.setLogonProcedure(accountNumber);
+        inputData.setAccount(accountNumber);
         TsoStart tsoStart = new TsoStart(connection);
         // send tso start call and return the session id
         final String sessionId = tsoStart.start(inputData);
