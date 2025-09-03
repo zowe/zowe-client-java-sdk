@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ResponseUtil;
-import zowe.client.sdk.zostso.response.TsoPingResponse;
+import zowe.client.sdk.zostso.response.TsoCommonResponse;
 
 import java.util.Map;
 
@@ -102,16 +102,17 @@ public class TsoPingTest {
      */
     @Test
     public void tstTsoPingSuccess() throws ZosmfRequestException {
-        final String payload = "{\"servletKey\":\"ZOSMFAD-71-xyz\",\"ver\":\"0100\",\"timeout\":false}";
+        final String payload = "{\"servletKey\":\"ZOSMFAD-71-xyz\",\"ver\":\"0100\",\"timeout\":false,\"reused\":true}";
         try (MockedStatic<ResponseUtil> mockResponseUtil = mockStatic(ResponseUtil.class)) {
             mockResponseUtil.when(() -> ResponseUtil.getResponseStr(any()))
                     .thenReturn(payload);
 
             final TsoPing tsoPing = new TsoPing(mockConnection, mockPutRequest);
-            TsoPingResponse tsoPingResponse = tsoPing.ping("SERVKEY123");
-            assertEquals("ZOSMFAD-71-xyz", tsoPingResponse.getServletKey());
-            assertEquals("0100", tsoPingResponse.getVer());
-            assertEquals(false, tsoPingResponse.getTimeout());
+            TsoCommonResponse tsoCommonResponse = tsoPing.ping("SERVKEY123");
+            assertEquals("ZOSMFAD-71-xyz", tsoCommonResponse.getServletKey());
+            assertEquals("0100", tsoCommonResponse.getVer());
+            assertEquals(false, tsoCommonResponse.getTimeout());
+            assertEquals(true, tsoCommonResponse.getReused());
         }
     }
 

@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ResponseUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
-import zowe.client.sdk.zostso.response.TsoStopResponse;
+import zowe.client.sdk.zostso.response.TsoCommonResponse;
 
 /**
  * This class handles sending the request to end the TSO session via z/OSMF
@@ -73,7 +73,7 @@ public class TsoStop {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public TsoStopResponse stop(final String sessionId) throws ZosmfRequestException {
+    public TsoCommonResponse stop(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
                 TsoConstants.RES_START_TSO + "/" + sessionId;
@@ -85,14 +85,14 @@ public class TsoStop {
 
         final String responseStr = ResponseUtil.getResponseStr(request);
 
-        TsoStopResponse tsoStopResponse;
+        TsoCommonResponse tsoCommonResponse;
         try {
-            tsoStopResponse = objectMapper.readValue(responseStr, TsoStopResponse.class);
+            tsoCommonResponse = objectMapper.readValue(responseStr, TsoCommonResponse.class);
         } catch (JsonProcessingException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
         }
 
-        return tsoStopResponse;
+        return tsoCommonResponse;
     }
 
 }

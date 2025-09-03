@@ -13,8 +13,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
-import zowe.client.sdk.zostso.response.TsoPingResponse;
-import zowe.client.sdk.zostso.response.TsoStopResponse;
+import zowe.client.sdk.zostso.response.TsoCommonResponse;
 
 import java.util.List;
 
@@ -71,13 +70,13 @@ public class TsoCmdExp {
 
         TsoPing tsoPing = new TsoPing(connection);
         // ping the session id
-        TsoPingResponse tsoPingResponse = tsoPing.ping(sessionId);
-        System.out.println(tsoPingResponse);
+        TsoCommonResponse tsoCommonResponse = tsoPing.ping(sessionId);
+        System.out.println(tsoCommonResponse);
 
         TsoStop tsoStop = new TsoStop(connection);
         // stop the tso session
-        TsoStopResponse tsoStopResponse = tsoStop.stop(sessionId);
-        System.out.println(tsoStopResponse);
+        tsoCommonResponse = tsoStop.stop(sessionId);
+        System.out.println(tsoCommonResponse);
     }
 
 }

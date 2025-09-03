@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ResponseUtil;
-import zowe.client.sdk.zostso.response.TsoStopResponse;
+import zowe.client.sdk.zostso.response.TsoCommonResponse;
 
 import java.util.Map;
 
@@ -108,11 +108,11 @@ public class TsoStopTest {
                     .thenReturn(payload);
 
             final TsoStop tsoStop = new TsoStop(mockConnection, mockDeleteRequest);
-            TsoStopResponse tsoStopResponse = tsoStop.stop("SERVKEY123");
-            assertEquals("ZOSMFAD-71-aabcaaaf", tsoStopResponse.getServletKey());
-            assertEquals("0100", tsoStopResponse.getVer());
-            assertEquals(false, tsoStopResponse.getTimeout());
-            assertEquals(true, tsoStopResponse.getReused());
+            TsoCommonResponse tsoCommonResponse = tsoStop.stop("SERVKEY123");
+            assertEquals("ZOSMFAD-71-aabcaaaf", tsoCommonResponse.getServletKey());
+            assertEquals("0100", tsoCommonResponse.getVer());
+            assertEquals(false, tsoCommonResponse.getTimeout());
+            assertEquals(true, tsoCommonResponse.getReused());
         }
     }
 

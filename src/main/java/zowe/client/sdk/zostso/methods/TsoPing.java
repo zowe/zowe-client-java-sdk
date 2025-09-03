@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ResponseUtil;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
-import zowe.client.sdk.zostso.response.TsoPingResponse;
+import zowe.client.sdk.zostso.response.TsoCommonResponse;
 
 /**
  * This class handles sending a ping request to z/OSMF TSO to keep the session alive.
@@ -69,11 +69,11 @@ public class TsoPing {
      * Send a ping request to z/OSMF TSO to keep the session alive
      *
      * @param sessionId servletKey id retrieved from start TSO request
-     * @return TsoPingResponse object
+     * @return TsoCommonResponse object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public TsoPingResponse ping(final String sessionId) throws ZosmfRequestException {
+    public TsoCommonResponse ping(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
         final String url = connection.getZosmfUrl() + TsoConstants.RES_PING + "/" + sessionId;
 
@@ -85,14 +85,14 @@ public class TsoPing {
 
         final String responseStr = ResponseUtil.getResponseStr(request);
 
-        TsoPingResponse tsoPingResponse;
+        TsoCommonResponse tsoCommonResponse;
         try {
-            tsoPingResponse = objectMapper.readValue(responseStr, TsoPingResponse.class);
+            tsoCommonResponse = objectMapper.readValue(responseStr, TsoCommonResponse.class);
         } catch (JsonProcessingException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
         }
 
-        return tsoPingResponse;
+        return tsoCommonResponse;
     }
 
 }

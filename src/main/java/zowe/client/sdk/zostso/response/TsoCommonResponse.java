@@ -10,14 +10,14 @@
 package zowe.client.sdk.zostso.response;
 
 /**
- * The z/OSMF tso stop response.
+ * The z/OSMF tso common response.
  * <p>
- * This class is used to parse the response from the z/OSMF tso ping command using jackson library.
+ * This class is used to parse the response from the z/OSMF tso apis using jackson library.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoStopResponse {
+public class TsoCommonResponse {
 
     private String servletKey;
     private String ver;
@@ -27,7 +27,7 @@ public class TsoStopResponse {
     /**
      * TsoStopResponse No-argument constructor (required by Jackson)
      */
-    public TsoStopResponse() {
+    public TsoCommonResponse() {
     }
 
     /**
