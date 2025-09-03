@@ -89,7 +89,9 @@ public class TsoStop {
         try {
             tsoCommonResponse = objectMapper.readValue(responseStr, TsoCommonResponse.class);
         } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException(e.getMessage(), e);
+            // check for msdData error message if it exists
+            final String errMsg = TsoUtil.getMsgDataText(responseStr);
+            throw new ZosmfRequestException(errMsg.isBlank() ? e.getMessage() : errMsg);
         }
 
         return tsoCommonResponse;

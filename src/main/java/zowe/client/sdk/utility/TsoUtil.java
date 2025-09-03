@@ -65,7 +65,7 @@ public class TsoUtil {
      * @return error message text
      * @author Frank Giordano
      */
-    public String getMsgDataText(String responseStr) {
+    public static String getMsgDataText(String responseStr) {
         String errMsg = "";
         JsonNode rootNode;
         final ObjectMapper objectMapper = new ObjectMapper();
