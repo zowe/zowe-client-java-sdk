@@ -84,7 +84,11 @@ zowe.client.sdk.zosmfinfo.methods
 
 zowe.client.sdk.zostso.methods  
   
-    IssueTso    
+    TsoCmd
+    TsoPing
+    TsoReply
+    TsoSend
+    TsoStop
 
 zowe.client.sdk.zosuss.method  
   
