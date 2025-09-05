@@ -138,4 +138,14 @@ public class DsnWriteTest {
         assertEquals("connection is null", exception.getMessage());
     }
 
+    @Test
+    public void tstDsnWriteNullContentFailure() throws ZosmfRequestException {
+        final DsnWrite dsnWrite = new DsnWrite(connection, mockTextPutRequest);
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> dsnWrite.write("TEXT_PDS", null)
+        );
+        assertEquals("content is null", exception.getMessage());
+    }
+
 }

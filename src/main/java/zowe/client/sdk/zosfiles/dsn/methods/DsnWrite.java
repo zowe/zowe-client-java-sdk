@@ -94,7 +94,7 @@ public class DsnWrite {
      */
     public Response write(final String dataSetName, final String content) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
-        ValidateUtils.checkIllegalParameter(content, "content");
+        ValidateUtils.checkNullParameter(content == null, "content is null");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
