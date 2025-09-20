@@ -15,7 +15,6 @@ package zowe.client.sdk.examples.zoslogs;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zoslogs.input.ZosLogInputData;
 import zowe.client.sdk.zoslogs.method.ZosLog;
@@ -53,10 +52,13 @@ public class ZosLogExp extends TstZosConnection {
         try {
             zosLogReply = zosLog.issueCommand(zosLogInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
-        zosLogReply.getItemLst().forEach(i -> System.out.println(i.getTime().get() + " " + i.getMessage().get()));
+        zosLogReply.getItemLst().forEach(i -> {
+            String msg = i.getTime().orElse("n\\a") + " " + i.getMessage().orElse("n\\a");
+            System.out.println(msg);
+        });
 
         // get the last one minute of syslog from the date/time of now backwards...
         zosLogInputData = new ZosLogInputData.Builder()
@@ -68,40 +70,13 @@ public class ZosLogExp extends TstZosConnection {
         try {
             zosLogReply = zosLog.issueCommand(zosLogInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
-        zosLogReply.getItemLst().forEach(i -> System.out.println(i.getTime().get() + " " + i.getMessage().get()));
-    }
-
-}
-`````
-
-````java
-package zowe.client.sdk.examples.utility;
-
-import zowe.client.sdk.rest.Response;
-
-/**
- * Utility class containing helper method(s).
- *
- * @author Frank Giordano
- * @version 5.0
- */
-public class Util {
-
-    /**
-     * Extract response phrase string value if any from a Response object.
-     *
-     * @param response object
-     * @return string value
-     * @author Frank Giordano
-     */
-    public static String getResponsePhrase(Response response) {
-        if (response == null || response.getResponsePhrase().isEmpty()) {
-            return null;
-        }
-        return response.getResponsePhrase().get().toString();
+        zosLogReply.getItemLst().forEach(i -> {
+            String msg = i.getTime().orElse("n\\a") + " " + i.getMessage().orElse("n\\a");
+            System.out.println(msg);
+        });
     }
 
 }

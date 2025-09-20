@@ -14,9 +14,9 @@ package zowe.client.sdk.examples.zosmfInfo;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosmfinfo.methods.ZosmfStatus;
+import zowe.client.sdk.zosmfinfo.model.ZosmfPlugin;
 import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
 
 import java.util.Arrays;
@@ -38,18 +38,17 @@ public class ZosmfStatusExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         ZosmfStatus zosmfStatus = new ZosmfStatus(connection);
         ZosmfInfoResponse zosmfInfoResponse;
         try {
             zosmfInfoResponse = zosmfStatus.get();
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
         System.out.println(zosmfInfoResponse.toString());
-        Arrays.stream(zosmfInfoResponse.getZosmfPluginsInfo().get()).forEach(i -> System.out.println(i.toString()));
+        Arrays.stream(zosmfInfoResponse.getZosmfPluginsInfo().orElse(new ZosmfPlugin[0])).forEach(System.out::println);
     }
 
 }
@@ -61,10 +60,11 @@ public class ZosmfStatusExp extends TstZosConnection {
 package zowe.client.sdk.examples.zosmfInfo;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosmfinfo.methods.ZosmfSystems;
+import zowe.client.sdk.zosmfinfo.model.DefinedSystem;
 import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
 
 import java.util.Arrays;
@@ -86,52 +86,21 @@ public class ZosmfSystemsExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void main(String[] args) {
-        ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         ZosmfSystems zosmfSystems = new ZosmfSystems(connection);
         ZosmfSystemsResponse zosmfInfoResponse;
         try {
             zosmfInfoResponse = zosmfSystems.get();
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
         System.out.println(zosmfInfoResponse.toString());
-        Arrays.stream(zosmfInfoResponse.getDefinedSystems().get()).forEach(i -> System.out.println(i.toString()));
+        Arrays.stream(zosmfInfoResponse.getDefinedSystems().orElse(new DefinedSystem[0])).forEach(System.out::println);
     }
 
 }
 ```
-
-````java
-package zowe.client.sdk.examples.utility;
-
-import zowe.client.sdk.rest.Response;
-
-/**
- * Utility class containing helper method(s).
- *
- * @author Frank Giordano
- * @version 5.0
- */
-public class Util {
-
-    /**
-     * Extract response phrase string value if any from a Response object.
-     *
-     * @param response object
-     * @return string value
-     * @author Frank Giordano
-     */
-    public static String getResponsePhrase(Response response) {
-        if (response == null || response.getResponsePhrase().isEmpty()) {
-            return null;
-        }
-        return response.getResponsePhrase().get().toString();
-    }
-
-}
-`````
 
 **Connection setup**
 

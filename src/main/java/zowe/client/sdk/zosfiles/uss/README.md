@@ -14,7 +14,6 @@ package zowe.client.sdk.examples.zosfiles.uss;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.UssCreateInputData;
@@ -43,11 +42,9 @@ public class UssCreateExp extends TstZosConnection {
 
         connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         Response response = CreateFile(fileNamePath);
-        System.out.println("status code = " +
-                (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
+        System.out.println(response.toString());
         response = CreateDirectory(dirNamePath);
-        System.out.println("status code = " +
-                (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
+        System.out.println(response.toString());
     }
 
     /**
@@ -63,8 +60,8 @@ public class UssCreateExp extends TstZosConnection {
             UssCreateInputData ussCreateInputData = new UssCreateInputData(CreateType.DIR, "-wx-wx-wx");
             return ussCreate.create(value, ussCreateInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
     }
 
@@ -81,8 +78,8 @@ public class UssCreateExp extends TstZosConnection {
             UssCreateInputData ussCreateInputData = new UssCreateInputData(CreateType.FILE, "-wx-wx-wx");
             return ussCreate.create(value, ussCreateInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
     }
 
@@ -95,8 +92,8 @@ public class UssCreateExp extends TstZosConnection {
 package zowe.client.sdk.examples.zosfiles.uss;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.methods.UssDelete;
@@ -124,11 +121,9 @@ public class UssDeleteExp extends TstZosConnection {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         ussDelete = new UssDelete(connection);
         Response response = DeleteFile(fileNamePath);
-        System.out.println("status code = " +
-                (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
+        System.out.println(response.toString());
         response = DeleteDirectory(dirNamePath);
-        System.out.println("status code = " +
-                (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
+        System.out.println(response.toString());
     }
 
     /**
@@ -142,8 +137,8 @@ public class UssDeleteExp extends TstZosConnection {
         try {
             return ussDelete.delete(value);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
     }
 
@@ -158,8 +153,8 @@ public class UssDeleteExp extends TstZosConnection {
         try {
             return ussDelete.delete(value, true);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);;
         }
     }
 
@@ -172,8 +167,8 @@ public class UssDeleteExp extends TstZosConnection {
 package zowe.client.sdk.examples.zosfiles.uss;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.UssCreateInputData;
@@ -233,8 +228,8 @@ public class UssGetExp extends TstZosConnection {
             UssGetInputData ussGetInputData = new UssGetInputData.Builder().insensitive(false).search("apple").build();
             response = ussGet.getCommon(fileNamePath, ussGetInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
         System.out.println(response.getResponsePhrase().orElse("no response phrase"));
@@ -254,8 +249,8 @@ public class UssGetExp extends TstZosConnection {
             UssGetInputData ussGetInputData = new UssGetInputData.Builder().insensitive(false).search("Apple").build();
             response = ussGet.getCommon(fileNamePath, ussGetInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
         System.out.println(response.getResponsePhrase().orElse("no response phrase"));
@@ -273,8 +268,8 @@ public class UssGetExp extends TstZosConnection {
             UssGet ussGet = new UssGet(connection);
             content = ussGet.getText(fileNamePath);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
         System.out.println(content);
@@ -293,8 +288,8 @@ public class UssGetExp extends TstZosConnection {
             UssGetInputData ussGetInputData = new UssGetInputData.Builder().recordsRange("-2").build();
             response = ussGet.getCommon(fileNamePath, ussGetInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
         System.out.println(response.getResponsePhrase().orElse("no response phrase"));
@@ -309,8 +304,8 @@ public class UssGetExp extends TstZosConnection {
 package zowe.client.sdk.examples.zosfiles.uss;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.uss.input.UssListInputData;
 import zowe.client.sdk.zosfiles.uss.input.UssListZfsInputData;
@@ -340,7 +335,7 @@ public class UssListExp extends TstZosConnection {
         String fileNamePath = "/xxx/xx/xx";
         String dirNamePath = "/xxx/xx/xx";
 
-        connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         fileList(fileNamePath);
         zfsList(dirNamePath);
     }
@@ -358,8 +353,8 @@ public class UssListExp extends TstZosConnection {
             UssListZfsInputData ussListZfsInputData = new UssListZfsInputData.Builder().path(value).build();
             items = ussList.getZfsSystems(ussListZfsInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
         items.forEach(System.out::println);
@@ -378,41 +373,11 @@ public class UssListExp extends TstZosConnection {
             UssListInputData ussListInputData = new UssListInputData.Builder().path(value).build();
             items = ussList.getFiles(ussListInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
         items.forEach(System.out::println);
-    }
-
-}
-`````
-
-````java
-package zowe.client.sdk.examples.utility;
-
-import zowe.client.sdk.rest.Response;
-
-/**
- * Utility class containing helper method(s).
- *
- * @author Frank Giordano
- * @version 5.0
- */
-public class Util {
-
-    /**
-     * Extract response phrase string value if any from a Response object.
-     *
-     * @param response object
-     * @return string value
-     * @author Frank Giordano
-     */
-    public static String getResponsePhrase(Response response) {
-        if (response == null || response.getResponsePhrase().isEmpty()) {
-            return null;
-        }
-        return response.getResponsePhrase().get().toString();
     }
 
 }

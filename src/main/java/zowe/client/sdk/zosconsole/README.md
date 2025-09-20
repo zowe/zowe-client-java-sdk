@@ -14,7 +14,6 @@ package zowe.client.sdk.examples.zosconsole;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.input.IssueConsoleInputData;
@@ -37,8 +36,7 @@ public class IssueConsoleExp extends TstZosConnection {
      */
     public static void main(String[] args) {
         String command = "D IPLINFO";
-        ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         IssueConsoleExp.issueCommand(connection, command);
         IssueConsoleExp.issueCommandCommon(connection, command);
     }
@@ -57,8 +55,8 @@ public class IssueConsoleExp extends TstZosConnection {
             IssueConsole issueConsole = new IssueConsole(connection);
             response = issueConsole.issueCommand(cmd);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
         System.out.println(response.getCommandResponse().orElse("no command response"));
@@ -77,43 +75,13 @@ public class IssueConsoleExp extends TstZosConnection {
             IssueConsole issueConsole = new IssueConsole(connection);
             IssueConsoleInputData consoleInputData = new IssueConsoleInputData(cmd);
             consoleInputData.setProcessResponse();
-            response = issueConsole.issueCommandCommon(ConsoleConstants.RES_DEF_CN, issueConsoleInputData);
+            response = issueConsole.issueCommandCommon(ConsoleConstants.RES_DEF_CN, consoleInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
         System.out.println(response.getCommandResponse().orElse("no command response"));
-    }
-
-}
-`````
-
-````java
-package zowe.client.sdk.examples.utility;
-
-import zowe.client.sdk.rest.Response;
-
-/**
- * Utility class containing helper method(s).
- *
- * @author Frank Giordano
- * @version 5.0
- */
-public class Util {
-
-    /**
-     * Extract response phrase string value if any from a Response object.
-     *
-     * @param response object
-     * @return string value
-     * @author Frank Giordano
-     */
-    public static String getResponsePhrase(Response response) {
-        if (response == null || response.getResponsePhrase().isEmpty()) {
-            return null;
-        }
-        return response.getResponsePhrase().get().toString();
     }
 
 }

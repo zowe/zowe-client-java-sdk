@@ -14,7 +14,6 @@ package zowe.client.sdk.examples.zosfiles.dsn;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.dsn.input.DsnCopyInputData;
@@ -39,8 +38,7 @@ public class DsnCopyExp extends TstZosConnection {
     public static void main(String[] args) {
         String fromDataSetName = "xxx";
         String toDataSetName = "xxx";
-        ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         copyDataset(connection, fromDataSetName, toDataSetName);
         copyDatasetByCopyParams(connection, fromDataSetName, toDataSetName);
         fromDataSetName = "xxx";  // specify a partition dataset only no member
@@ -74,12 +72,11 @@ public class DsnCopyExp extends TstZosConnection {
             DsnCopy dsnCopy = new DsnCopy(connection);
             response = dsnCopy.copy(fromDataSetName, toDataSetName, true, false);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
-        System.out.println("status code = " +
-                (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
+        System.out.println(response.toString());
     }
 
     /**
@@ -108,12 +105,11 @@ public class DsnCopyExp extends TstZosConnection {
             DsnCopyInputData dsnCopyInputData = new DsnCopyInputData.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).build();
             response = dsnCopy.copyCommon(dsnCopyInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
-        System.out.println("status code = " +
-                (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
+        System.out.println(response.toString());
     }
 
     /**
@@ -135,17 +131,17 @@ public class DsnCopyExp extends TstZosConnection {
         try {
             DsnCopy dsnCopy = new DsnCopy(connection);
             // 'replace' here will be true by default if not specified in the builder.
-            DsnCopyInputData dsnCopyInputData = new DsnCopyInputData.Builder().fromDataSet(fromDataSetName)
+            DsnCopyInputData dsnCopyInputData = new DsnCopyInputData.Builder()
+                    .fromDataSet(fromDataSetName)
                     .toDataSet(toDataSetName)
                     .copyAllMembers(true).build();
             response = dsnCopy.copyCommon(dsnCopyInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
-        System.out.println("status code = " +
-                (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
+        System.out.println(response.toString());
     }
 
 }
@@ -157,8 +153,8 @@ public class DsnCopyExp extends TstZosConnection {
 package zowe.client.sdk.examples.zosfiles.dsn;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.dsn.input.DsnCreateInputData;
@@ -202,12 +198,11 @@ public class DsnCreateExp extends TstZosConnection {
             DsnCreate dsnCreate = new DsnCreate(connection);
             response = dsnCreate.create(dataSetName, sequential());
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
-        System.out.println("status code = " +
-                (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
+        System.out.println(response.toString());
     }
 
     /**
@@ -222,12 +217,11 @@ public class DsnCreateExp extends TstZosConnection {
             DsnCreate dsnCreate = new DsnCreate(connection);
             response = dsnCreate.create(dataSetName, partitioned());
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
-        System.out.println("status code = " +
-                (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
+        System.out.println(response.toString());
     }
 
     /**
@@ -328,8 +322,8 @@ public class DsnCreateExp extends TstZosConnection {
 package zowe.client.sdk.examples.zosfiles.dsn;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnGet;
 import zowe.client.sdk.zosfiles.dsn.model.Dataset;
@@ -351,8 +345,7 @@ public class DsnGetInfoExp extends TstZosConnection {
      */
     public static void main(String[] args) {
         String dataSetName = "xxx";
-        ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         System.out.println(DsnGetInfoExp.getDataSetInfo(connection, dataSetName));
     }
 
@@ -369,8 +362,8 @@ public class DsnGetInfoExp extends TstZosConnection {
             DsnGet dsnGet = new DsnGet(connection);
             return dsnGet.getDsnInfo(dataSetName);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
     }
 
@@ -383,8 +376,8 @@ public class DsnGetInfoExp extends TstZosConnection {
 package zowe.client.sdk.examples.zosfiles.dsn;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnDelete;
@@ -427,12 +420,11 @@ public class DsnDeleteExp extends TstZosConnection {
             DsnDelete zosDsn = new DsnDelete(connection);
             response = zosDsn.delete(dataSetName);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
-        System.out.println("status code = " +
-                (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
+        System.out.println(response.toString());
     }
 
     /**
@@ -448,12 +440,11 @@ public class DsnDeleteExp extends TstZosConnection {
             DsnDelete zosDsn = new DsnDelete(connection);
             response = zosDsn.delete(dataSetName, member);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
-        System.out.println("status code = " +
-                (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
+        System.out.println(response.toString());
     }
 
 }
@@ -466,6 +457,7 @@ package zowe.client.sdk.examples.zosfiles.dsn;
 
 import org.apache.commons.io.IOUtils;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.dsn.input.DsnDownloadInputData;
@@ -497,8 +489,7 @@ public class DsnGetExp extends TstZosConnection {
         String datasetSeqName = "xxx";
         String memberName = "xxx";
         DsnDownloadInputData dsnDownloadInputData = new DsnDownloadInputData.Builder().build();
-        ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         DsnGetExp.downloadDsnMember(connection, datasetName, memberName, dsnDownloadInputData);
         DsnGetExp.downloadDsnSequential(connection, datasetSeqName, dsnDownloadInputData);
     }
@@ -549,7 +540,7 @@ public class DsnGetExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static String getByteResponseStatus(ZosmfRequestException e) {
-        byte[] byteMsg = (byte[]) e.getResponse().getResponsePhrase().get();
+        byte[] byteMsg = (byte[]) e.getResponse().getResponsePhrase().orElse(new byte[0]);
         ByteArrayInputStream errorStream = new ByteArrayInputStream(byteMsg);
         String errMsg;
         try {
@@ -587,8 +578,8 @@ public class DsnGetExp extends TstZosConnection {
 package zowe.client.sdk.examples.zosfiles.dsn;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.dsn.input.DsnListInputData;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnList;
@@ -617,7 +608,7 @@ public class DsnListExp extends TstZosConnection {
     public static void main(String[] args) {
         String dataSetMask = "xxx";
         String dataSetName = "xxx";
-        ZosConnection connection = new ZosConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         DsnListExp.listDsn(connection, dataSetMask);
         DsnListExp.listDsnVol(connection, dataSetMask);
         DsnListExp.listMembersWithAllAttributes(connection, dataSetName);
@@ -638,8 +629,8 @@ public class DsnListExp extends TstZosConnection {
             DsnList dsnList = new DsnList(connection);
             datasets = dsnList.getMembers(dataSetName, dsnListInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
         datasets.forEach(m -> System.out.println(m.toString()));
     }
@@ -658,8 +649,8 @@ public class DsnListExp extends TstZosConnection {
             DsnList dsnList = new DsnList(connection);
             datasets = dsnList.getMembers(dataSetName, dsnListInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
         datasets.forEach(m -> System.out.println(m.toString()));
     }
@@ -678,8 +669,8 @@ public class DsnListExp extends TstZosConnection {
             DsnList dsnList = new DsnList(connection);
             datasets = dsnList.getDatasets(dataSetName, dsnListInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
         datasets.forEach(System.out::println);
     }
@@ -698,8 +689,8 @@ public class DsnListExp extends TstZosConnection {
             DsnList dsnList = new DsnList(connection);
             datasets = dsnList.getDatasets(dataSetName, dsnListInputData);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
         datasets.forEach(System.out::println);
     }
@@ -713,8 +704,8 @@ public class DsnListExp extends TstZosConnection {
 package zowe.client.sdk.examples.zosfiles.dsn;
 
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
-import zowe.client.sdk.examples.utility.Util;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnWrite;
@@ -761,12 +752,11 @@ public class DsnWriteExp extends TstZosConnection {
             DsnWrite dsnWrite = new DsnWrite(connection);
             response = dsnWrite.write(dataSetName, member, content);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
-        System.out.println("status code = " +
-                (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
+        System.out.println(response.toString());
     }
 
     /**
@@ -782,46 +772,14 @@ public class DsnWriteExp extends TstZosConnection {
             DsnWrite dsnWrite = new DsnWrite(connection);
             response = dsnWrite.write(dataSetName, content);
         } catch (ZosmfRequestException e) {
-            final String errMsg = Util.getResponsePhrase(e.getResponse());
-            throw new RuntimeException((errMsg != null ? errMsg : e.getMessage()));
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
-        System.out.println("status code = " +
-                (response.getStatusCode().isEmpty() ? "no status code available" : response.getStatusCode().getAsInt()));
+        System.out.println(response.toString());
     }
 
 }
-`````
-
-````java
-package zowe.client.sdk.examples.utility;
-
-import zowe.client.sdk.rest.Response;
-
-/**
- * Utility class containing helper method(s).
- *
- * @author Frank Giordano
- * @version 5.0
- */
-public class Util {
-
-    /**
-     * Extract response phrase string value if any from a Response object.
-     *
-     * @param response object
-     * @return string value
-     * @author Frank Giordano
-     */
-    public static String getResponsePhrase(Response response) {
-        if (response == null || response.getResponsePhrase().isEmpty()) {
-            return null;
-        }
-        return response.getResponsePhrase().get().toString();
-    }
-
-}
-
 `````
 
 Connection setup
