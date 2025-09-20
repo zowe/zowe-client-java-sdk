@@ -92,7 +92,7 @@ zowe.client.sdk.zostso.methods
 
 zowe.client.sdk.zosuss.method  
   
-    IssueUss   
+    UssCmd   
           
 ## TeamConfig Package  
   
