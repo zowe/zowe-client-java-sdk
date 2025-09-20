@@ -30,6 +30,7 @@ import zowe.client.sdk.zosfiles.dsn.methods.DsnGet;
 import zowe.client.sdk.zosmfauth.input.PasswordInputData;
 import zowe.client.sdk.zosmfauth.methods.ZosmfLogin;
 import zowe.client.sdk.zosmfauth.methods.ZosmfLogout;
+import zowe.client.sdk.zosmfauth.methods.ZosmfPassword;
 import zowe.client.sdk.zosmfauth.response.ZosmfLoginResponse;
 
 import java.io.ByteArrayInputStream;
@@ -50,14 +51,13 @@ public class ZosmfLoginExp extends TstZosConnection {
      * the zosmfauth APIs.
      * <p>
      * In addition, the examples showcase the usage of token authentication rather than
-     * basic authentication. 
+     * basic authentication.
      *
      * @param args for main not used
      * @author Frank Giordano
      */
     public static void main(String[] args) throws ZosmfRequestException {
-        ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         ZosmfLogin login = new ZosmfLogin(connection);
 
         // request to log into the server and retrieve authentication tokens
@@ -65,7 +65,7 @@ public class ZosmfLoginExp extends TstZosConnection {
         // display response
         System.out.println(loginResponse);
 
-        Cookies tokens = loginResponse.getCookies();
+        Cookies tokens = loginResponse.getTokens();
         Cookie jwtToken = tokens.get(0);
         Cookie ltpaToken = tokens.get(1);
         // display jwtToken
@@ -81,9 +81,9 @@ public class ZosmfLoginExp extends TstZosConnection {
         // the following defines a TOKEN authentication usage
         // redefined connection object with no username and password specified
         // if you do specify a username and password, they will be ignored
-        // use jwtToken value for the token parameter. 
+        // use jwtToken value for the token parameter.
         connection = ZosConnectionFactory.createTokenConnection(hostName, zosmfPort, jwtToken);
-        // use jwtToken 
+        // use jwtToken
         downloadDsnMember(connection, datasetName, memberName, downloadInputData);
 
         // now use LtpaToken as cookie token authentication
@@ -100,21 +100,12 @@ public class ZosmfLoginExp extends TstZosConnection {
         // display response
         System.out.println(response);
 
-        // this request should fail
-        try {
-            downloadDsnMemberWithToken(connection, datasetName, memberName, downloadInputData);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
         // disable token authentication for the next API call.
-        connection = new ZosConnection.Builder(AuthType.BASIC)
-                .host(hostName).zosmfPort(zosmfPort).user(userName).password(password).build();
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         // change z/OSMF user's password
         ZosmfPassword zosmfPassword = new ZosmfPassword(connection);
-        PasswordInputData pwdInputData =
-                new PasswordInputData(connection.getUser(), connection.getPassword(), "xxx");
-        response = zosmfPassword.changePassword(pwdInputData);
+        PasswordInputData inputData = new PasswordInputData(connection.getUser(), connection.getPassword(), "xxx");
+        response = zosmfPassword.changePassword(inputData);
         System.out.println(response);
     }
 
@@ -146,7 +137,7 @@ public class ZosmfLoginExp extends TstZosConnection {
      * @author Frank Giordano
      */
     private static String getByteResponseStatus(ZosmfRequestException e) {
-        byte[] byteMsg = (byte[]) e.getResponse().getResponsePhrase().get();
+        byte[] byteMsg = (byte[]) e.getResponse().getResponsePhrase().orElse(new byte[0]);
         ByteArrayInputStream errorStream = new ByteArrayInputStream(byteMsg);
         String errMsg;
         try {

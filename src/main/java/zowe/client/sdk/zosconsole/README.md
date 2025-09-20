@@ -36,8 +36,7 @@ public class IssueConsoleExp extends TstZosConnection {
      */
     public static void main(String[] args) {
         String command = "D IPLINFO";
-        ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection(hostName, zosmfPort, userName, password);
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         IssueConsoleExp.issueCommand(connection, command);
         IssueConsoleExp.issueCommandCommon(connection, command);
     }
@@ -56,7 +55,8 @@ public class IssueConsoleExp extends TstZosConnection {
             IssueConsole issueConsole = new IssueConsole(connection);
             response = issueConsole.issueCommand(cmd);
         } catch (ZosmfRequestException e) {
-            throw new RuntimeException(e.getMessage());
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
         System.out.println(response.getCommandResponse().orElse("no command response"));
@@ -77,7 +77,8 @@ public class IssueConsoleExp extends TstZosConnection {
             consoleInputData.setProcessResponse();
             response = issueConsole.issueCommandCommon(ConsoleConstants.RES_DEF_CN, consoleInputData);
         } catch (ZosmfRequestException e) {
-            throw new RuntimeException(e.getMessage());
+            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            throw new RuntimeException(errMsg);
         }
 
         System.out.println(response.getCommandResponse().orElse("no command response"));
