@@ -20,7 +20,7 @@ import zowe.client.sdk.zosuss.method.UssSshCmd;
  * @author Frank Giordano
  * @version 5.0
  */
-public class IssueUssExp {
+public class UssCmdExp {
 
     /**
      * The main method defines SSH connection and showcases executing a USS command via UssCmd class.
