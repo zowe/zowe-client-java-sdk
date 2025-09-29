@@ -209,7 +209,7 @@ public class TsoCmd {
     }
 
     /**
-     * Transform the JSON response payload for its tso message types
+     * Transform the JSON response payload for its TSO message types
      *
      * @param tsoData JsonNode object
      * @author Frank Giordano
