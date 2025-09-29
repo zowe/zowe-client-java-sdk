@@ -26,7 +26,7 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 /**
- * UssCmd Class provides a way to execute USS commands via SSH connection
+ * UssCmd Class provides a way to execute USS commands via ssh connection
  *
  * @author Frank Giordano
  * @version 5.0
@@ -53,7 +53,7 @@ public class UssCmd {
      * @param command string value contains one or more USS commands
      * @param timeout int value in milliseconds for timeout duration on session connection
      * @return string output value
-     * @throws UssCmdException SSH Unix System Services error request
+     * @throws UssCmdException ssh Unix System Services error request
      * @author Frank Giordano
      */
     public String issueCommand(final String command, final int timeout) throws UssCmdException {
@@ -67,11 +67,7 @@ public class UssCmd {
             }
 
             return responseStream.toString();
-        } catch (IOException e) {
-            LOG.debug("IOException error {}", String.valueOf(e));
-            throw new UssCmdException(e.getMessage(), e);
-        } catch (JSchException e) {
-            LOG.debug("JSchException error {}", String.valueOf(e));
+        } catch (IOException | JSchException e) {
             throw new UssCmdException(e.getMessage(), e);
         }
     }
