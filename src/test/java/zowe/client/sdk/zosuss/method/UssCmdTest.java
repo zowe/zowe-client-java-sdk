@@ -32,7 +32,7 @@ import static org.mockito.Mockito.when;
  * @author Frank Giordano
  * @version 5.0
  */
-class UssCmdTest {
+public class UssCmdTest {
 
     private SshConnection mockConnection;
 
@@ -46,7 +46,7 @@ class UssCmdTest {
     }
 
     @Test
-    void tstIssueCommandReturnsOutputSuccess() throws Exception {
+    public void tstIssueCommandReturnsOutputSuccess() throws Exception {
         // Mock JSch Session and ChannelExec
         Session mockSession = mock(Session.class);
         ChannelExec mockChannel = mock(ChannelExec.class);
@@ -73,7 +73,7 @@ class UssCmdTest {
     }
 
     @Test
-    void tstIssueCommandThrowsExceptionOnJSchError() throws Exception {
+    public void tstIssueCommandThrowsExceptionOnJSchError() throws Exception {
         Session mockSession = mock(Session.class);
         when(mockSession.openChannel("exec")).thenThrow(new JSchException("SSH error"));
 
@@ -85,5 +85,5 @@ class UssCmdTest {
             assertThrows(UssCmdException.class, () -> cmd.issueCommand("bad cmd", 1000));
         }
     }
-    
+
 }
