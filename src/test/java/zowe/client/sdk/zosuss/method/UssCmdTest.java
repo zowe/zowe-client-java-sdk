@@ -85,4 +85,5 @@ class UssCmdTest {
             assertThrows(UssCmdException.class, () -> cmd.issueCommand("bad cmd", 1000));
         }
     }
+    
 }
