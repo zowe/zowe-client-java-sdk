@@ -37,7 +37,7 @@ public class UssCmdTest {
     private SshConnection mockConnection;
 
     @BeforeEach
-    void setup() {
+    public void setup() {
         mockConnection = mock(SshConnection.class);
         when(mockConnection.getUser()).thenReturn("testuser");
         when(mockConnection.getHost()).thenReturn("localhost");
