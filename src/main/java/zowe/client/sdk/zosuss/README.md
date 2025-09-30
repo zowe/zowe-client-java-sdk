@@ -15,7 +15,7 @@ import zowe.client.sdk.zosuss.method.UssCmd;
 import zowe.client.sdk.zosuss.method.UssSshCmd;
 
 /**
- * Class example to test uss command functionality via UssCmd class.
+ * Class example to test USS command functionality via UssCmd class.
  *
  * @author Frank Giordano
  * @version 5.0
@@ -23,7 +23,7 @@ import zowe.client.sdk.zosuss.method.UssSshCmd;
 public class UssCmdExp {
 
     /**
-     * The main method defines SSH connection and showcases executing a USS command via UssCmd class.
+     * The main method defines ssh connection and showcases executing a USS command via UssCmd class.
      *
      * @param args for main not used
      * @author Frank Giordano
