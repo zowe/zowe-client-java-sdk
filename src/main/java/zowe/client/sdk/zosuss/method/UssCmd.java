@@ -13,8 +13,6 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.SshConnection;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.utility.timer.WaitUtil;
@@ -32,8 +30,6 @@ import java.util.Properties;
  * @version 5.0
  */
 public class UssCmd {
-
-    private static final Logger LOG = LoggerFactory.getLogger(UssCmd.class);
 
     private final SshConnection connection;
 
