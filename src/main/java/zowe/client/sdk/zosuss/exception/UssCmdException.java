@@ -15,16 +15,16 @@ package zowe.client.sdk.zosuss.exception;
  * @author Frank Giordano
  * @version 5.0
  */
-public class IssueUssException extends Exception {
+public class UssCmdException extends Exception {
 
     /**
-     * IssueCommandException constructor for message value
+     * UssCmdException constructor for message value
      *
      * @param message error message
      * @param err     original throwable exception
      * @author Frank Giordano
      */
-    public IssueUssException(final String message, Throwable err) {
+    public UssCmdException(final String message, Throwable err) {
         super(message, err);
     }
 

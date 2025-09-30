@@ -10,19 +10,20 @@ API located in the method package.
 package zowe.client.sdk.examples.zosuss;
 
 import zowe.client.sdk.core.SshConnection;
-import zowe.client.sdk.zosuss.exception.IssueUssException;
-import zowe.client.sdk.zosuss.method.IssueUss;
+import zowe.client.sdk.zosuss.exception.UssCmdException;
+import zowe.client.sdk.zosuss.method.UssCmd;
+import zowe.client.sdk.zosuss.method.UssSshCmd;
 
 /**
- * Class example to test uss command functionality via IssueUss class.
+ * Class example to test USS command functionality via UssCmd class.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class IssueUssExp {
+public class UssCmdExp {
 
     /**
-     * The main method defines SSH connection and showcases executing a USS command via IssueUss class.
+     * The main method defines ssh connection and showcases executing a USS command via UssCmd class.
      *
      * @param args for main not used
      * @author Frank Giordano
@@ -30,12 +31,12 @@ public class IssueUssExp {
     public static void main(String[] args) {
         int portNum = 0; // replace with valid value
         SshConnection conn = new SshConnection("xxx", portNum, "xxx", "xxx");
-        IssueUss issueUss = new IssueUss(conn);
+        UssCmd ussCmd = new UssCmd(conn);
         // 10000 is the timeout value in milliseconds
         try {
             // value "frank" should display
-            System.out.println(issueUss.issueCommand("mkdir test;cd test;touch frank;ls", 10000));
-        } catch (IssueUssException e) {
+            System.out.println(ussCmd.issueCommand("mkdir test;cd test;touch frank;ls", 10000));
+        } catch (UssCmdException e) {
             throw new RuntimeException(e);
         }
     }
