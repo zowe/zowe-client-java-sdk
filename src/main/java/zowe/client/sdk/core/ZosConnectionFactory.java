@@ -86,8 +86,8 @@ public class ZosConnectionFactory {
                                                           final String basePath) {
         ValidateUtils.checkIllegalParameter(host, "host");
         ValidateUtils.checkIllegalParameter(port, "port");
-        ValidateUtils.checkNullParameter(user == null, "user is null");
-        ValidateUtils.checkNullParameter(password == null, "password is null");
+        ValidateUtils.checkIllegalParameter(user, "user");
+        ValidateUtils.checkIllegalParameter(password, "password");
 
         ZosConnection zosConnection = new ZosConnection(host, port, AuthType.BASIC);
         zosConnection.setUser(user);
