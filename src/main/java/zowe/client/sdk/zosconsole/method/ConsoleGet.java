@@ -15,7 +15,7 @@ import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
 
 /**
- * Get synchronous z/OS console response messages from console issue command.
+ * Get synchronous z/OS console response messages from console issue command request.
  *
  * @author Frank Giordano
  * @version 5.0
@@ -58,7 +58,7 @@ public class ConsoleGet {
     }
 
     /**
-     * Retrieve synchronous z/OS console response messages from issue console command response key.
+     * Retrieve synchronous z/OS console response messages from console issue command request response key.
      *
      * @param responseKey response key from the issue console command request
      * @return ConsoleResponse object
@@ -70,7 +70,8 @@ public class ConsoleGet {
     }
 
     /**
-     * Retrieve synchronous z/OS console response messages.
+     * Retrieve synchronous z/OS console response messages from console issue command request response key
+     * and console name.
      *
      * @param responseKey response key from the issue console command request
      * @param consoleName name of the console that is used to issue the command
@@ -84,7 +85,7 @@ public class ConsoleGet {
 
     /**
      * Common method with all inputs to retrieve any outstanding synchronous
-     * z/OS console response messages from console issue command.
+     * z/OS console response messages from console issue command request.
      *
      * @param responseKey     response key from the issue console command request
      * @param consoleName     name of the console that is used to issue the command
