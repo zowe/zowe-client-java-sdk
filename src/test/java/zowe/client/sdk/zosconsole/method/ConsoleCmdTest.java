@@ -25,7 +25,7 @@ import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.zosconsole.input.ConsoleCmdInputData;
-import zowe.client.sdk.zosconsole.response.IssueCommandResponse;
+import zowe.client.sdk.zosconsole.response.ConsoleCmdResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +63,7 @@ public class ConsoleCmdTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
-        final IssueCommandResponse response = consoleCmd.issueCommand("command");
+        final ConsoleCmdResponse response = consoleCmd.issueCommand("command");
         assertEquals("student", response.getCmdResponse().orElse("n/a"));
     }
 
@@ -84,7 +84,7 @@ public class ConsoleCmdTest {
 
         final ConsoleCmd consoleCmd = new ConsoleCmd(tokenConnection, mockJsonGetRequestAuth);
 
-        IssueCommandResponse response = consoleCmd.issueCommand("command");
+        ConsoleCmdResponse response = consoleCmd.issueCommand("command");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestAuth.getHeaders().toString());
         assertEquals("student", response.getCmdResponse().orElse("n/a"));
@@ -108,7 +108,7 @@ public class ConsoleCmdTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
-        final IssueCommandResponse response = consoleCmd.issueCommand("command");
+        final ConsoleCmdResponse response = consoleCmd.issueCommand("command");
         assertEquals("", response.getCmdResponse().orElse("n/a"));
     }
 
@@ -123,7 +123,7 @@ public class ConsoleCmdTest {
         final ConsoleCmdInputData consoleInputData = new ConsoleCmdInputData("command");
         consoleInputData.setProcessResponse();
         consoleInputData.setSolKey("foo");
-        final IssueCommandResponse response = consoleCmd.issueCommandCommon("consolename", consoleInputData);
+        final ConsoleCmdResponse response = consoleCmd.issueCommandCommon("consolename", consoleInputData);
         assertEquals("", response.getCmdResponse().orElse("n/a"));
     }
 
@@ -135,7 +135,7 @@ public class ConsoleCmdTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
-        IssueCommandResponse response = consoleCmd.issueCommand("command");
+        ConsoleCmdResponse response = consoleCmd.issueCommand("command");
         assertEquals("student", response.getCmdResponseUrl().orElse("n/a"));
     }
 

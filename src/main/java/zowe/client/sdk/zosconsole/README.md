@@ -18,6 +18,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.input.ConsoleCmdInputData;
 import zowe.client.sdk.zosconsole.method.ConsoleCmd;
+import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 
 /**
@@ -50,7 +51,7 @@ public class IssueConsoleExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void issueCommand(ZosConnection connection, String cmd) {
-        ConsoleResponse response;
+        ConsoleGetResponse response;
         try {
             ConsoleCmd consoleCmd = new ConsoleCmd(connection);
             response = consoleCmd.issueCommand(cmd);
@@ -70,7 +71,7 @@ public class IssueConsoleExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void issueCommandCommon(ZosConnection connection, String cmd) {
-        ConsoleResponse response;
+        ConsoleGetResponse response;
         try {
             ConsoleCmd consoleCmd = new ConsoleCmd(connection);
             ConsoleCmdInputData consoleInputData = new ConsoleCmdInputData(cmd);

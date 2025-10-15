@@ -10,7 +10,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 5.0
  */
-public class IssueCommandResponse {
+public class ConsoleCmdResponse {
 
     /**
      * Key that can be used to retrieve the command response.

@@ -23,7 +23,7 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.input.ConsoleCmdInputData;
-import zowe.client.sdk.zosconsole.response.IssueCommandResponse;
+import zowe.client.sdk.zosconsole.response.ConsoleCmdResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,7 +85,7 @@ public class ConsoleCmd {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public IssueCommandResponse issueCommand(final String command) throws ZosmfRequestException {
+    public ConsoleCmdResponse issueCommand(final String command) throws ZosmfRequestException {
         return issueCommandCommon(ConsoleConstants.RES_DEF_CN, new ConsoleCmdInputData(command));
     }
 
@@ -101,7 +101,7 @@ public class ConsoleCmd {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public IssueCommandResponse issueCommand(final String command, final String consoleName) throws ZosmfRequestException {
+    public ConsoleCmdResponse issueCommand(final String command, final String consoleName) throws ZosmfRequestException {
         return issueCommandCommon(consoleName, new ConsoleCmdInputData(command));
     }
 
@@ -114,7 +114,7 @@ public class ConsoleCmd {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public IssueCommandResponse issueCommandCommon(final String consoleName, final ConsoleCmdInputData consoleInputData)
+    public ConsoleCmdResponse issueCommandCommon(final String consoleName, final ConsoleCmdInputData consoleInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(consoleName, "consoleName");
         ValidateUtils.checkNullParameter(consoleInputData == null, "consoleInputData is null");
@@ -140,7 +140,7 @@ public class ConsoleCmd {
             throw new ZosmfRequestException(e.getMessage());
         }
 
-        IssueCommandResponse response = objectMapper.convertValue(jsonNode, IssueCommandResponse.class);
+        ConsoleCmdResponse response = objectMapper.convertValue(jsonNode, ConsoleCmdResponse.class);
         if (consoleInputData.isProcessResponse()) {
             String responseStr = response.getCmdResponse().orElse("");
             responseStr = responseStr.replace('\r', '\n');

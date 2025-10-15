@@ -12,10 +12,10 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
-import zowe.client.sdk.zosconsole.response.ConsoleResponse;
+import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
 
 /**
- * Get synchronous z/OS console response messages from issue console command.
+ * Get synchronous z/OS console response messages from console issue command.
  *
  * @author Frank Giordano
  * @version 5.0
@@ -65,7 +65,7 @@ public class ConsoleGet {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ConsoleResponse getResponse(final String responseKey) throws ZosmfRequestException {
+    public ConsoleGetResponse getResponse(final String responseKey) throws ZosmfRequestException {
         return getResponseCommon(responseKey, "", true);
     }
 
@@ -78,7 +78,7 @@ public class ConsoleGet {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ConsoleResponse getResponse(final String responseKey, final String consoleName) throws ZosmfRequestException {
+    public ConsoleGetResponse getResponse(final String responseKey, final String consoleName) throws ZosmfRequestException {
         return getResponseCommon(responseKey, consoleName, true);
     }
 
@@ -86,15 +86,15 @@ public class ConsoleGet {
      * Common method with all inputs to retrieve any outstanding synchronous
      * z/OS console response messages from console issue command.
      *
-     * @param responseKey response key from the issue console command request
-     * @param consoleName name of the console that is used to issue the command
+     * @param responseKey     response key from the issue console command request
+     * @param consoleName     name of the console that is used to issue the command
      * @param processResponse process console command response
      * @return ConsoleResponse object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ConsoleResponse getResponseCommon(final String responseKey, final String consoleName,
-                                             boolean processResponse) throws ZosmfRequestException {
+    public ConsoleGetResponse getResponseCommon(final String responseKey, final String consoleName,
+                                                boolean processResponse) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(responseKey, "responseKey");
 
         final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + "/" +
@@ -116,14 +116,14 @@ public class ConsoleGet {
             throw new ZosmfRequestException(e.getMessage());
         }
 
-        ConsoleResponse response = objectMapper.convertValue(jsonNode, ConsoleResponse.class);
+        ConsoleGetResponse response = objectMapper.convertValue(jsonNode, ConsoleGetResponse.class);
         if (processResponse) {
-            String responseStr = response.getCommandResponse().orElse("");
+            String responseStr = response.getCmdResponse().orElse("");
             responseStr = responseStr.replace('\r', '\n');
             if (!responseStr.isBlank() && responseStr.charAt(responseStr.length() - 1) != '\n') {
                 responseStr = responseStr + "\n";
             }
-            response.setCommandResponse(responseStr);
+            response.setCmdResponse(responseStr);
         }
         return response;
     }
