@@ -25,12 +25,6 @@ public class ConsoleResponse {
     private boolean success = false;
 
     /**
-     * The list of zOSMF console API responses. May issue multiple requests (because of a user request) or
-     * to ensure that all messages are collected. Each response is placed here.
-     */
-    private ZosmfIssueResponse zosmfResponse;
-
-    /**
      * If an error occurs, returns the ImperativeError, which contains a case error.
      */
     private String failureResponse;
@@ -165,24 +159,6 @@ public class ConsoleResponse {
     }
 
     /**
-     * Retrieve zosmfResponse specified
-     *
-     * @return zosmfResponse value
-     */
-    public Optional<ZosmfIssueResponse> getZosmfResponse() {
-        return Optional.ofNullable(zosmfResponse);
-    }
-
-    /**
-     * Assign zosmfResponse value
-     *
-     * @param zosmfResponse value
-     */
-    public void setZosmfResponse(final ZosmfIssueResponse zosmfResponse) {
-        this.zosmfResponse = zosmfResponse;
-    }
-
-    /**
      * Return string value representing ConsoleResponse object
      *
      * @return string representation of ConsoleResponse
@@ -191,7 +167,6 @@ public class ConsoleResponse {
     public String toString() {
         return "ConsoleResponse{" +
                 "success=" + success +
-                ", zosmfResponse=" + zosmfResponse +
                 ", failureResponse=" + failureResponse +
                 ", commandResponse=" + commandResponse +
                 ", lastResponseKey=" + lastResponseKey +

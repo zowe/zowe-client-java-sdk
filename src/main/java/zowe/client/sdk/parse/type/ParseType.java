@@ -34,10 +34,6 @@ public enum ParseType {
      */
     MEMBER,
     /**
-     * mvs console type
-     */
-    MVS_CONSOLE,
-    /**
      * property type
      */
     PROPS,

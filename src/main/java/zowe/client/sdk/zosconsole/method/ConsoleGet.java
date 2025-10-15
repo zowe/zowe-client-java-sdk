@@ -1,0 +1,131 @@
+package zowe.client.sdk.zosconsole.method;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.GetJsonZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosconsole.ConsoleConstants;
+import zowe.client.sdk.zosconsole.response.ConsoleResponse;
+
+/**
+ * Get synchronous z/OS console response messages from issue console command.
+ *
+ * @author Frank Giordano
+ * @version 5.0
+ */
+public class ConsoleGet {
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ZosConnection connection;
+    private ZosmfRequest request;
+
+    /**
+     * ConsoleGet constructor
+     *
+     * @param connection for connection information, see ZosConnection object
+     * @author Frank Giordano
+     */
+    public ConsoleGet(final ZosConnection connection) {
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        this.connection = connection;
+    }
+
+    /**
+     * Alternative ConsoleGet constructor with ZoweRequest object. This is mainly used for internal code unit testing
+     * with mockito, and it is not recommended to be used by the larger community.
+     * <p>
+     * This constructor is package-private
+     *
+     * @param connection for connection information, see ZosConnection object
+     * @param request    any compatible ZoweRequest Interface object
+     * @author Frank Giordano
+     */
+    ConsoleGet(final ZosConnection connection, final ZosmfRequest request) {
+        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(request == null, "request is null");
+        this.connection = connection;
+        if (!(request instanceof GetJsonZosmfRequest)) {
+            throw new IllegalStateException("GET_JSON request type required");
+        }
+        this.request = request;
+    }
+
+    /**
+     * Retrieve synchronous z/OS console response messages from issue console command response key.
+     *
+     * @param responseKey response key from the issue console command request
+     * @return ConsoleResponse object
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public ConsoleResponse getResponse(final String responseKey) throws ZosmfRequestException {
+        return getResponseCommon(responseKey, "", true);
+    }
+
+    /**
+     * Retrieve synchronous z/OS console response messages.
+     *
+     * @param responseKey response key from the issue console command request
+     * @param consoleName name of the console that is used to issue the command
+     * @return ConsoleResponse object
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public ConsoleResponse getResponse(final String responseKey, final String consoleName) throws ZosmfRequestException {
+        return getResponseCommon(responseKey, consoleName, true);
+    }
+
+    /**
+     * Common method with all inputs to retrieve any outstanding synchronous
+     * z/OS console response messages from console issue command.
+     *
+     * @param responseKey response key from the issue console command request
+     * @param consoleName name of the console that is used to issue the command
+     * @param processResponse process console command response
+     * @return ConsoleResponse object
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public ConsoleResponse getResponseCommon(final String responseKey, final String consoleName,
+                                             boolean processResponse) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(responseKey, "responseKey");
+
+        final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + "/" +
+                EncodeUtils.encodeURIComponent(consoleName.isBlank() ? ConsoleConstants.RES_DEF_CN : consoleName) +
+                "/solmsgs/" + responseKey;
+
+        if (request == null) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
+        }
+        request.setUrl(url);
+
+        final String jsonStr = request.executeRequest().getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no issue console response phrase")).toString();
+
+        final JsonNode jsonNode;
+        try {
+            jsonNode = objectMapper.readTree(jsonStr);
+        } catch (JsonProcessingException e) {
+            throw new ZosmfRequestException(e.getMessage());
+        }
+
+        ConsoleResponse response = objectMapper.convertValue(jsonNode, ConsoleResponse.class);
+        if (processResponse) {
+            String responseStr = response.getCommandResponse().orElse("");
+            responseStr = responseStr.replace('\r', '\n');
+            if (!responseStr.isBlank() && responseStr.charAt(responseStr.length() - 1) != '\n') {
+                responseStr = responseStr + "\n";
+            }
+            response.setCommandResponse(responseStr);
+        }
+        return response;
+    }
+
+}
