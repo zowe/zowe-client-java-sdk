@@ -37,7 +37,7 @@ import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.withSettings;
 
 /**
- * Class containing unit tests for IssueCommand.
+ * Class containing unit tests for ConsoleCmd class.
  *
  * @author Frank Giordano
  * @version 5.0
