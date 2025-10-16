@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 /**
- * Utility class contains helper methods for encoding processing
+ * Utility class contains helper methods for encoding processing.
  *
  * @author Frank Giordano
  * @version 5.0

@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 
 /**
- * Utility class contains helper methods for JSON parse processing
+ * Utility class contains helper methods for JSON parse processing.
  *
  * @author Frank Giordano
  * @version 5.0
