@@ -19,6 +19,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.ConsoleUtil;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
@@ -157,12 +158,7 @@ public class ConsoleCmd {
 
         ConsoleCmdResponse response = objectMapper.convertValue(jsonNode, ConsoleCmdResponse.class);
         if (consoleInputData.isProcessResponse()) {
-            String responseStr = response.getCmdResponse().orElse("");
-            responseStr = responseStr.replace('\r', '\n');
-            if (!responseStr.isBlank() && responseStr.charAt(responseStr.length() - 1) != '\n') {
-                responseStr = responseStr + "\n";
-            }
-            response.setCmdResponse(responseStr);
+            response.setCmdResponse(ConsoleUtil.processCmdResponse(response.getCmdResponse().orElse("")));
         }
         return response;
     }
