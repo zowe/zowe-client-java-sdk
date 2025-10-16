@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosconsole;
 
 import org.junit.jupiter.api.Test;
-import zowe.client.sdk.utility.Utils;
+import zowe.client.sdk.utility.UtilsTestHelper;
 
 /**
  * Class containing unit test for ConsoleConstantsTest.
@@ -26,7 +26,7 @@ public class ConsoleConstantsTest {
     @Test
     public void tstConsoleConstantsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Constants class";
-        Utils.validateClass(ConsoleConstants.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(ConsoleConstants.class, privateConstructorExceptionMsg);
     }
 
 }

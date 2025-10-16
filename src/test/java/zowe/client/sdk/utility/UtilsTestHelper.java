@@ -26,14 +26,14 @@ import static org.junit.jupiter.api.Assertions.fail;
  * @author James Kostrewski
  * @version 5.0
  */
-public final class Utils {
+public final class UtilsTestHelper {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Utils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UtilsTestHelper.class);
 
     /**
      * Private constructor defined to avoid instantiation of class
      */
-    private Utils() {
+    private UtilsTestHelper() {
         throw new IllegalStateException("Utility class");
     }
 
@@ -79,7 +79,7 @@ public final class Utils {
      */
     public static void validateClass(Class name, String privateConstructorMsg) {
         try {
-            Utils.assertUtilityClassWellDefined(name);
+            UtilsTestHelper.assertUtilityClassWellDefined(name);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalStateException e) {
             LOG.error("error " + e);
             fail();

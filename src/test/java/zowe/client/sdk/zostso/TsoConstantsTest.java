@@ -10,7 +10,7 @@
 package zowe.client.sdk.zostso;
 
 import org.junit.jupiter.api.Test;
-import zowe.client.sdk.utility.Utils;
+import zowe.client.sdk.utility.UtilsTestHelper;
 
 /**
  * Class containing unit test for TsoConstantsTest.
@@ -26,7 +26,7 @@ public class TsoConstantsTest {
     @Test
     public void tstTsoConstantsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Constants class";
-        Utils.validateClass(TsoConstants.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(TsoConstants.class, privateConstructorExceptionMsg);
     }
 
 }

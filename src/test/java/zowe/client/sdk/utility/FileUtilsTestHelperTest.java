@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @version 5.0
  */
 @SuppressWarnings("DataFlowIssue")
-public class FileUtilsTest {
+public class FileUtilsTestHelperTest {
 
     /**
      * Validate class structure
@@ -28,7 +28,7 @@ public class FileUtilsTest {
     @Test
     public void tstFileUtilsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Utility class";
-        Utils.validateClass(FileUtils.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(FileUtils.class, privateConstructorExceptionMsg);
     }
 
     @Test

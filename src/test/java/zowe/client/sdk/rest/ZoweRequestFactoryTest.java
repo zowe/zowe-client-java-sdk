@@ -10,7 +10,7 @@
 package zowe.client.sdk.rest;
 
 import org.junit.jupiter.api.Test;
-import zowe.client.sdk.utility.Utils;
+import zowe.client.sdk.utility.UtilsTestHelper;
 
 /**
  * Class containing unit tests for ZoweRequestFactory.
@@ -26,7 +26,7 @@ public class ZoweRequestFactoryTest {
     @Test
     public void tstZoweRequestFactoryClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Factory class";
-        Utils.validateClass(ZosmfRequestFactory.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(ZosmfRequestFactory.class, privateConstructorExceptionMsg);
     }
 
 }

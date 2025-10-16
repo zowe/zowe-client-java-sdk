@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
  * @author Frank Giordano
  * @version 5.0
  */
-public class EncodeUtilsTest {
+public class EncodeUtilsTestHelperTest {
 
     /**
      * Validate class structure
@@ -25,7 +25,7 @@ public class EncodeUtilsTest {
     @Test
     public void tstEncodeUtilsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Utility class";
-        Utils.validateClass(EncodeUtils.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(EncodeUtils.class, privateConstructorExceptionMsg);
     }
 
 }

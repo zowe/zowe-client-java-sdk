@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author Frank Giordano
  * @version 5.0
  */
-public class ValidateUtilsTest {
+public class ValidateUtilsTestHelperTest {
 
     /**
      * Validate class structure
@@ -28,7 +28,7 @@ public class ValidateUtilsTest {
     @Test
     public void tstValidateUtilsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Utility class";
-        Utils.validateClass(ValidateUtils.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(ValidateUtils.class, privateConstructorExceptionMsg);
     }
 
     @Test
