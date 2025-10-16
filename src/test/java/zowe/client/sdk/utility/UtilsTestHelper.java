@@ -23,18 +23,37 @@ import static org.junit.jupiter.api.Assertions.fail;
 /**
  * Utility class for the test package.
  *
- * @author James Kostrewski
+ * @author Frank Giordano
  * @version 5.0
  */
-public final class Utils {
+public final class UtilsTestHelper {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Utils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UtilsTestHelper.class);
 
     /**
      * Private constructor defined to avoid instantiation of class
      */
-    private Utils() {
+    private UtilsTestHelper() {
         throw new IllegalStateException("Utility class");
+    }
+
+    /**
+     * Assertion checks class conforms to being set as final, one private constructor, and with all static methods.
+     *
+     * @param name class object
+     */
+    public static void validateClass(Class name, String privateConstructorMsg) {
+        try {
+            UtilsTestHelper.assertUtilityClassWellDefined(name);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalStateException e) {
+            markFailed("error " + e);
+        } catch (InvocationTargetException e) {
+            if (e.getTargetException() instanceof IllegalStateException) {
+                assertEquals(privateConstructorMsg, e.getTargetException().getMessage());
+            } else {
+                markFailed("error " + e);
+            }
+        }
     }
 
     /**
@@ -73,24 +92,13 @@ public final class Utils {
     }
 
     /**
-     * Assertion checks class conforms to being set as final, one private constructor, and with all static methods.
+     * Helper method to mark the test as failed.
      *
-     * @param name class object
+     * @param error error message
      */
-    public static void validateClass(Class name, String privateConstructorMsg) {
-        try {
-            Utils.assertUtilityClassWellDefined(name);
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalStateException e) {
-            LOG.error("error " + e);
-            fail();
-        } catch (InvocationTargetException e) {
-            if (e.getTargetException() instanceof IllegalStateException) {
-                assertEquals(privateConstructorMsg, e.getTargetException().getMessage());
-            } else {
-                LOG.error("error " + e);
-                fail();
-            }
-        }
+    private static void markFailed(String error) {
+        LOG.error(error);
+        fail();
     }
 
 }

@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosmfinfo;
 
 import org.junit.jupiter.api.Test;
-import zowe.client.sdk.utility.Utils;
+import zowe.client.sdk.utility.UtilsTestHelper;
 
 /**
  * Class containing unit test for ZosmfConstantsTest.
@@ -26,7 +26,7 @@ public class ZosmfConstantsTest {
     @Test
     public void tstZosmfConstantsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Constants class";
-        Utils.validateClass(ZosmfConstants.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(ZosmfConstants.class, privateConstructorExceptionMsg);
     }
 
 }

@@ -28,7 +28,7 @@ public class ValidateUtilsTest {
     @Test
     public void tstValidateUtilsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Utility class";
-        Utils.validateClass(ValidateUtils.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(ValidateUtils.class, privateConstructorExceptionMsg);
     }
 
     @Test

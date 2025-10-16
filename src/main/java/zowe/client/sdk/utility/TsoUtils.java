@@ -19,17 +19,17 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Utility class contains helper methods for response processing
+ * Utility class contains helper methods for TSO response processing.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoUtil {
+public final class TsoUtils {
 
     /**
      * Private constructor defined to avoid instantiation of class
      */
-    private TsoUtil() {
+    private TsoUtils() {
         throw new IllegalStateException("Utility class");
     }
 

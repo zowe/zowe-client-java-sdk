@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
-import zowe.client.sdk.utility.JsonParserUtil;
+import zowe.client.sdk.utility.JsonParserUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 
@@ -81,7 +81,7 @@ public class UssExtAttr {
         final Map<String, String> requestMap = new HashMap<>();
         requestMap.put("request", "extattr");
         final Response response = executeRequest(targetPath, requestMap);
-        final JSONObject json = JsonParserUtil.parse(response.getResponsePhrase()
+        final JSONObject json = JsonParserUtils.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
         final StringBuilder str = new StringBuilder();
         ((JSONArray) json.get("stdout")).forEach(item -> str.append(item.toString()).append("\n"));

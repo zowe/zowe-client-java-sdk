@@ -10,7 +10,7 @@
 package zowe.client.sdk.rest;
 
 import org.junit.jupiter.api.Test;
-import zowe.client.sdk.utility.Utils;
+import zowe.client.sdk.utility.UtilsTestHelper;
 
 /**
  * Class containing unit test for QueryConstantsTest.
@@ -26,7 +26,7 @@ public class QueryConstantsTest {
     @Test
     public void tstQueryConstantsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Constants class";
-        Utils.validateClass(QueryConstants.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(QueryConstants.class, privateConstructorExceptionMsg);
     }
 
 }

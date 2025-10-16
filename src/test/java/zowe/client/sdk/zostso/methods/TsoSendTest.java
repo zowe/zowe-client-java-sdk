@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.TsoUtil;
+import zowe.client.sdk.utility.TsoUtils;
 
 import java.util.Map;
 
@@ -65,8 +65,8 @@ public class TsoSendTest {
         doCallRealMethod().when(putJsonZosmfRequest).setHeaders(anyMap());
         doCallRealMethod().when(putJsonZosmfRequest).getHeaders();
 
-        try (MockedStatic<TsoUtil> mockResponseUtil = mockStatic(TsoUtil.class)) {
-            mockResponseUtil.when(() -> TsoUtil.getResponseStr(any()))
+        try (MockedStatic<TsoUtils> mockResponseUtil = mockStatic(TsoUtils.class)) {
+            mockResponseUtil.when(() -> TsoUtils.getResponseStr(any()))
                     .thenReturn("{}");
 
             final TsoSend tsoSend = new TsoSend(mockConnection, putJsonZosmfRequest);
@@ -91,8 +91,8 @@ public class TsoSendTest {
         doCallRealMethod().when(mockPutRequest).setBody(any());
         doCallRealMethod().when(mockPutRequest).getUrl();
 
-        try (MockedStatic<TsoUtil> mockResponseUtil = mockStatic(TsoUtil.class)) {
-            mockResponseUtil.when(() -> TsoUtil.getResponseStr(any()))
+        try (MockedStatic<TsoUtils> mockResponseUtil = mockStatic(TsoUtils.class)) {
+            mockResponseUtil.when(() -> TsoUtils.getResponseStr(any()))
                     .thenReturn("{}");
 
             final TsoSend tsoSend = new TsoSend(mockConnection, mockPutRequest);
@@ -111,11 +111,11 @@ public class TsoSendTest {
     @Test
     public void tstTsoSendCommandBuildsNewRequestWhenRequestIsNullSuccess() throws Exception {
         try (MockedStatic<ZosmfRequestFactory> factoryMock = mockStatic(ZosmfRequestFactory.class);
-             MockedStatic<TsoUtil> responseMock = mockStatic(TsoUtil.class)) {
+             MockedStatic<TsoUtils> responseMock = mockStatic(TsoUtils.class)) {
 
             factoryMock.when(() -> ZosmfRequestFactory.buildRequest(mockConnection, ZosmfRequestType.PUT_JSON))
                     .thenReturn(mockPutRequest);
-            responseMock.when(() -> TsoUtil.getResponseStr(eq(mockPutRequest)))
+            responseMock.when(() -> TsoUtils.getResponseStr(eq(mockPutRequest)))
                     .thenReturn("{\"status\":\"ok\"}");
 
             final TsoSend tsoSend = new TsoSend(mockConnection);
@@ -132,8 +132,8 @@ public class TsoSendTest {
      */
     @Test
     public void tstTsoSendCommandThrowsZosmfRequestExceptionOnResponseErrorFailure() {
-        try (MockedStatic<TsoUtil> responseMock = mockStatic(TsoUtil.class)) {
-            responseMock.when(() -> TsoUtil.getResponseStr(any()))
+        try (MockedStatic<TsoUtils> responseMock = mockStatic(TsoUtils.class)) {
+            responseMock.when(() -> TsoUtils.getResponseStr(any()))
                     .thenThrow(new ZosmfRequestException("Send failed"));
 
             final TsoSend tsoSend = new TsoSend(mockConnection, mockPutRequest);
@@ -152,8 +152,8 @@ public class TsoSendTest {
      */
     @Test
     public void tstTsoSendCommandSuccess() throws Exception {
-        try (MockedStatic<TsoUtil> responseMock = mockStatic(TsoUtil.class)) {
-            responseMock.when(() -> TsoUtil.getResponseStr(any()))
+        try (MockedStatic<TsoUtils> responseMock = mockStatic(TsoUtils.class)) {
+            responseMock.when(() -> TsoUtils.getResponseStr(any()))
                     .thenReturn("{\"status\":\"ok\"}");
 
             final TsoSend tsoSend = new TsoSend(mockConnection, mockPutRequest);

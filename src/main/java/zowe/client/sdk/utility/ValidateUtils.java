@@ -14,7 +14,7 @@ import zowe.client.sdk.core.SshConnection;
 import java.util.Optional;
 
 /**
- * Utility class contains helper methods for validation processing
+ * Utility class contains helper methods for validation processing.
  *
  * @author Frank Giordano
  * @version 5.0

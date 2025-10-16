@@ -12,20 +12,20 @@ package zowe.client.sdk.utility;
 import org.junit.jupiter.api.Test;
 
 /**
- * Class containing unit test for JsonParserUtil.
+ * Class containing unit test for JsonParserUtils.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class JsonParserUtilTest {
+public class JsonParserUtilsTest {
 
     /**
      * Validate class structure
      */
     @Test
-    public void tstEncodeUtilsClassStructureSuccess() {
+    public void tstJsonParserUtilsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Utility class";
-        Utils.validateClass(JsonParserUtil.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(JsonParserUtils.class, privateConstructorExceptionMsg);
     }
 
 }

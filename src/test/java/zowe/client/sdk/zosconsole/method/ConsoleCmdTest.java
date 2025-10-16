@@ -24,8 +24,8 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.zosconsole.input.IssueConsoleInputData;
-import zowe.client.sdk.zosconsole.response.ConsoleResponse;
+import zowe.client.sdk.zosconsole.input.ConsoleCmdInputData;
+import zowe.client.sdk.zosconsole.response.ConsoleCmdResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,12 +37,12 @@ import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.withSettings;
 
 /**
- * Class containing unit tests for IssueCommand.
+ * Class containing unit tests for ConsoleCmd class.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class IssueConsoleTest {
+public class ConsoleCmdTest {
 
     private final ZosConnection connection = ZosConnectionFactory
             .createBasicConnection("1", "1", "1", "1");
@@ -62,9 +62,9 @@ public class IssueConsoleTest {
         final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
-        final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
-        final ConsoleResponse response = issueCommand.issueCommand("command");
-        assertEquals("student", response.getCommandResponse().orElse("n/a"));
+        final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
+        final ConsoleCmdResponse response = consoleCmd.issueCommand("command");
+        assertEquals("student", response.getCmdResponse().orElse("n/a"));
     }
 
     @Test
@@ -82,12 +82,12 @@ public class IssueConsoleTest {
         doCallRealMethod().when(mockJsonGetRequestAuth).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequestAuth).getHeaders();
 
-        final IssueConsole issueCommand = new IssueConsole(tokenConnection, mockJsonGetRequestAuth);
+        final ConsoleCmd consoleCmd = new ConsoleCmd(tokenConnection, mockJsonGetRequestAuth);
 
-        ConsoleResponse response = issueCommand.issueCommand("command");
+        ConsoleCmdResponse response = consoleCmd.issueCommand("command");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestAuth.getHeaders().toString());
-        assertEquals("student", response.getCommandResponse().orElse("n/a"));
+        assertEquals("student", response.getCmdResponse().orElse("n/a"));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class IssueConsoleTest {
                 .createBasicConnection("1", "1", "1", "1", "consoles//");
         // Create a mock request to verify URL
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        final IssueConsole issueCommand = new IssueConsole(connection, request);
+        final ConsoleCmd issueCommand = new ConsoleCmd(connection, request);
         assertThrows(IllegalArgumentException.class, () -> issueCommand.issueCommand("command"));
     }
 
@@ -107,9 +107,9 @@ public class IssueConsoleTest {
         final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
-        final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
-        final ConsoleResponse response = issueCommand.issueCommand("command");
-        assertEquals("", response.getCommandResponse().orElse("n/a"));
+        final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
+        final ConsoleCmdResponse response = consoleCmd.issueCommand("command");
+        assertEquals("", response.getCmdResponse().orElse("n/a"));
     }
 
     @Test
@@ -119,12 +119,12 @@ public class IssueConsoleTest {
         final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
-        final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
-        final IssueConsoleInputData consoleInputData = new IssueConsoleInputData("command");
+        final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
+        final ConsoleCmdInputData consoleInputData = new ConsoleCmdInputData("command");
         consoleInputData.setProcessResponse();
         consoleInputData.setSolKey("foo");
-        final ConsoleResponse response = issueCommand.issueCommandCommon("consolename", consoleInputData);
-        assertEquals("", response.getCommandResponse().orElse("n/a"));
+        final ConsoleCmdResponse response = consoleCmd.issueCommandCommon("consolename", consoleInputData);
+        assertEquals("", response.getCmdResponse().orElse("n/a"));
     }
 
     @Test
@@ -134,8 +134,8 @@ public class IssueConsoleTest {
         final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
-        IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
-        ConsoleResponse response = issueCommand.issueCommand("command");
+        ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
+        ConsoleCmdResponse response = consoleCmd.issueCommand("command");
         assertEquals("student", response.getCmdResponseUrl().orElse("n/a"));
     }
 
@@ -158,7 +158,7 @@ public class IssueConsoleTest {
 
         Mockito.when(mockJsonGetRequest.executeRequest()).thenThrow(new IllegalStateException(errorMsg));
 
-        final IssueConsole issueCommand = new IssueConsole(connection, mockJsonGetRequest);
+        final ConsoleCmd issueCommand = new ConsoleCmd(connection, mockJsonGetRequest);
         try {
             issueCommand.issueCommand("test");
         } catch (IllegalStateException e) {
@@ -172,7 +172,7 @@ public class IssueConsoleTest {
     @Test
     public void tstIssueConsoleNullConnectionFailure() {
         try {
-            new IssueConsole(null);
+            new ConsoleCmd(null);
         } catch (NullPointerException e) {
             assertEquals("connection is null", e.getMessage());
         }
@@ -182,8 +182,8 @@ public class IssueConsoleTest {
     public void tstIssueConsoleSecondaryConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
-        IssueConsole issueConsole = new IssueConsole(connection, request);
-        assertNotNull(issueConsole);
+        ConsoleCmd consoleCmd = new ConsoleCmd(connection, request);
+        assertNotNull(consoleCmd);
     }
 
     @Test
@@ -191,7 +191,7 @@ public class IssueConsoleTest {
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new IssueConsole(null, request)
+                () -> new ConsoleCmd(null, request)
         );
         assertEquals("connection is null", exception.getMessage());
     }
@@ -201,7 +201,7 @@ public class IssueConsoleTest {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new IssueConsole(connection, null)
+                () -> new ConsoleCmd(connection, null)
         );
         assertEquals("request is null", exception.getMessage());
     }
@@ -212,7 +212,7 @@ public class IssueConsoleTest {
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PutJsonZosmfRequest
         IllegalStateException exception = assertThrows(
                 IllegalStateException.class,
-                () -> new IssueConsole(connection, request)
+                () -> new ConsoleCmd(connection, request)
         );
         assertEquals("PUT_JSON request type required", exception.getMessage());
     }
@@ -220,8 +220,8 @@ public class IssueConsoleTest {
     @Test
     public void tstIssueConsolePrimaryConstructorWithValidConnection() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
-        IssueConsole issueConsole = new IssueConsole(connection);
-        assertNotNull(issueConsole);
+        ConsoleCmd consoleCmd = new ConsoleCmd(connection);
+        assertNotNull(consoleCmd);
     }
 
     @Test
@@ -229,7 +229,7 @@ public class IssueConsoleTest {
         // When/Then
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new IssueConsole(null)
+                () -> new ConsoleCmd(null)
         );
         assertEquals("connection is null", exception.getMessage());
     }

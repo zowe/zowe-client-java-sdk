@@ -53,9 +53,6 @@ public final class JsonParseFactory {
             case MEMBER:
                 parseResponse = MemberJsonParse.getInstance();
                 break;
-            case MVS_CONSOLE:
-                parseResponse = MvsConsoleJsonParse.getInstance();
-                break;
             case PROPS:
                 parseResponse = PropsJsonParse.getInstance();
                 break;

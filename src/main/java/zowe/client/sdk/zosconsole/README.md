@@ -16,8 +16,9 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
-import zowe.client.sdk.zosconsole.input.IssueConsoleInputData;
-import zowe.client.sdk.zosconsole.method.IssueConsole;
+import zowe.client.sdk.zosconsole.input.ConsoleCmdInputData;
+import zowe.client.sdk.zosconsole.method.ConsoleCmd;
+import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
 import zowe.client.sdk.zosconsole.response.ConsoleResponse;
 
 /**
@@ -50,10 +51,10 @@ public class IssueConsoleExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void issueCommand(ZosConnection connection, String cmd) {
-        ConsoleResponse response;
+        ConsoleGetResponse response;
         try {
-            IssueConsole issueConsole = new IssueConsole(connection);
-            response = issueConsole.issueCommand(cmd);
+            ConsoleCmd consoleCmd = new ConsoleCmd(connection);
+            response = consoleCmd.issueCommand(cmd);
         } catch (ZosmfRequestException e) {
             String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
             throw new RuntimeException(errMsg);
@@ -70,12 +71,12 @@ public class IssueConsoleExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void issueCommandCommon(ZosConnection connection, String cmd) {
-        ConsoleResponse response;
+        ConsoleGetResponse response;
         try {
-            IssueConsole issueConsole = new IssueConsole(connection);
-            IssueConsoleInputData consoleInputData = new IssueConsoleInputData(cmd);
+            ConsoleCmd consoleCmd = new ConsoleCmd(connection);
+            ConsoleCmdInputData consoleInputData = new ConsoleCmdInputData(cmd);
             consoleInputData.setProcessResponse();
-            response = issueConsole.issueCommandCommon(ConsoleConstants.RES_DEF_CN, consoleInputData);
+            response = consoleCmd.issueCommandCommon(ConsoleConstants.RES_DEF_CN, consoleInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
             throw new RuntimeException(errMsg);

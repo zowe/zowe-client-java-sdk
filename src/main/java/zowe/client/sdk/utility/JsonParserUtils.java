@@ -18,21 +18,21 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 
 /**
- * Utility class contains helper methods for JSON parse processing
+ * Utility class contains helper methods for JSON parse processing.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public final class JsonParserUtil {
+public final class JsonParserUtils {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JsonParserUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JsonParserUtils.class);
 
     private static final String PARSE_ERROR_MSG = "json response parse error";
 
     /**
      * Private constructor defined to avoid instantiation of class
      */
-    private JsonParserUtil() {
+    private JsonParserUtils() {
         throw new IllegalStateException("Utility class");
     }
 

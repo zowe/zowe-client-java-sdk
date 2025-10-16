@@ -15,7 +15,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.TsoUtil;
+import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 
@@ -80,9 +80,9 @@ public class TsoReply {
         request.setUrl(url);
         request.setBody("");
 
-        final String responseStr = TsoUtil.getResponseStr(request);
+        final String responseStr = TsoUtils.getResponseStr(request);
         if (responseStr.contains("msgData")) {
-            final String errMsg = TsoUtil.getMsgDataText(responseStr);
+            final String errMsg = TsoUtils.getMsgDataText(responseStr);
             throw new ZosmfRequestException(errMsg);
         }
         return responseStr;

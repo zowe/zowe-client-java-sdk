@@ -28,7 +28,7 @@ public class FileUtilsTest {
     @Test
     public void tstFileUtilsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Utility class";
-        Utils.validateClass(FileUtils.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(FileUtils.class, privateConstructorExceptionMsg);
     }
 
     @Test

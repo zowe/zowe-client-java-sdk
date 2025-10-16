@@ -14,12 +14,12 @@ import zowe.client.sdk.utility.ValidateUtils;
 import java.util.Optional;
 
 /**
- * The z/OSMF console API parameters. See the z/OSMF REST API documentation for full details.
+ * The z/OSMF console command API parameters. See the z/OSMF REST API documentation for full details.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class IssueConsoleInputData {
+public class ConsoleCmdInputData {
 
     /**
      * The z/OS console command to issue.
@@ -28,7 +28,7 @@ public class IssueConsoleInputData {
 
     /**
      * The solicited keyword to check for in the response. Causes the API to return immediately when the keyword
-     * is found, however, it may include solicited command response messages beyond the keyword itself.
+     * is found; however, it may include solicited command response messages beyond the keyword itself.
      */
     private String solKey;
 
@@ -38,8 +38,10 @@ public class IssueConsoleInputData {
     private String system;
 
     /**
-     * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
-     * sequences with '\n', but there may be cases where that are not preferable. Specify false to prevent processing.
+     * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks.
+     * You can use the following flag variable to replace these sequences with '\n'.
+     * But there may be cases where this may not be preferable.
+     * Specify false to prevent processing.
      */
     private boolean processResponse = false;
 
@@ -49,7 +51,7 @@ public class IssueConsoleInputData {
      * @param command console command to issue
      * @author Frank Giordano
      */
-    public IssueConsoleInputData(final String command) {
+    public ConsoleCmdInputData(final String command) {
         ValidateUtils.checkIllegalParameter(command, "command");
         this.cmd = command;
     }

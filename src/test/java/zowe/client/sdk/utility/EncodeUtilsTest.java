@@ -25,7 +25,7 @@ public class EncodeUtilsTest {
     @Test
     public void tstEncodeUtilsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Utility class";
-        Utils.validateClass(EncodeUtils.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(EncodeUtils.class, privateConstructorExceptionMsg);
     }
 
 }

@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosjobs;
 
 import org.junit.jupiter.api.Test;
-import zowe.client.sdk.utility.Utils;
+import zowe.client.sdk.utility.UtilsTestHelper;
 
 /**
  * Class containing unit test for JobsConstantsTest.
@@ -26,7 +26,7 @@ public class JobsConstantsTest {
     @Test
     public void tstJobsConstantsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Constants class";
-        Utils.validateClass(JobsConstants.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(JobsConstants.class, privateConstructorExceptionMsg);
     }
 
 }
