@@ -23,7 +23,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
-import zowe.client.sdk.utility.JsonParserUtil;
+import zowe.client.sdk.utility.JsonParserUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssListInputData;
@@ -129,7 +129,7 @@ public class UssList {
         final Response response = request.executeRequest();
 
         final List<UnixFile> items = new ArrayList<>();
-        final JSONObject jsonObject = JsonParserUtil.parse(String.valueOf(response.getResponsePhrase()
+        final JSONObject jsonObject = JsonParserUtils.parse(String.valueOf(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
@@ -174,7 +174,7 @@ public class UssList {
         final Response response = request.executeRequest();
 
         final List<UnixZfs> items = new ArrayList<>();
-        final JSONObject jsonObject = JsonParserUtil.parse(String.valueOf(response.getResponsePhrase()
+        final JSONObject jsonObject = JsonParserUtils.parse(String.valueOf(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {

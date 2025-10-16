@@ -10,17 +10,17 @@
 package zowe.client.sdk.utility;
 
 /**
- * Utility class contains helper methods for console processing
+ * Utility class contains helper methods for console processing.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class ConsoleUtil {
+public class ConsoleUtils {
 
     /**
      * Private constructor defined to avoid instantiation of class
      */
-    private ConsoleUtil() {
+    private ConsoleUtils() {
         throw new IllegalStateException("Utility class");
     }
 

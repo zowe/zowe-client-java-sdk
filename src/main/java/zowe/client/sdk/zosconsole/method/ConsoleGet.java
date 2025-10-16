@@ -9,7 +9,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.ConsoleUtil;
+import zowe.client.sdk.utility.ConsoleUtils;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
@@ -127,7 +127,7 @@ public class ConsoleGet {
 
         ConsoleGetResponse response = objectMapper.convertValue(jsonNode, ConsoleGetResponse.class);
         if (processResponse) {
-            response.setCmdResponse(ConsoleUtil.processCmdResponse(response.getCmdResponse().orElse("")));
+            response.setCmdResponse(ConsoleUtils.processCmdResponse(response.getCmdResponse().orElse("")));
         }
         return response;
     }

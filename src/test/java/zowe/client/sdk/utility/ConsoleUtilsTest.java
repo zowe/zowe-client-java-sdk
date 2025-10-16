@@ -21,11 +21,11 @@ import java.lang.reflect.InvocationTargetException;
  * @author Frank Giordano
  * @version 5.0
  */
-public class ConsoleUtilTest {
+public class ConsoleUtilsTest {
 
     @Test
     public void tstConsoleUtilPrivateConstructorThrowsException() {
-        Constructor<?> constructor = ConsoleUtil.class.getDeclaredConstructors()[0];
+        Constructor<?> constructor = ConsoleUtils.class.getDeclaredConstructors()[0];
         constructor.setAccessible(true);
         InvocationTargetException exception = assertThrows(
                 InvocationTargetException.class,
@@ -37,35 +37,35 @@ public class ConsoleUtilTest {
     @Test
     public void tstProcessCmdResponseConvertsCRToLF() {
         String input = "LINE1\rLINE2";
-        String output = ConsoleUtil.processCmdResponse(input);
+        String output = ConsoleUtils.processCmdResponse(input);
         assertEquals("LINE1\nLINE2\n", output);
     }
 
     @Test
     public void tstProcessCmdResponseAddsTrailingNewline() {
         String input = "LINE1";
-        String output = ConsoleUtil.processCmdResponse(input);
+        String output = ConsoleUtils.processCmdResponse(input);
         assertEquals("LINE1\n", output);
     }
 
     @Test
     public void tstProcessCmdResponseKeepsExistingNewline() {
         String input = "LINE1\n";
-        String output = ConsoleUtil.processCmdResponse(input);
+        String output = ConsoleUtils.processCmdResponse(input);
         assertEquals("LINE1\n", output);
     }
 
     @Test
     public void tstProcessCmdResponseBlankString() {
         String input = "";
-        String output = ConsoleUtil.processCmdResponse(input);
+        String output = ConsoleUtils.processCmdResponse(input);
         assertEquals("", output);
     }
 
     @Test
     public void tstProcessCmdResponseWhitespaceOnly() {
         String input = "   ";
-        String output = ConsoleUtil.processCmdResponse(input);
+        String output = ConsoleUtils.processCmdResponse(input);
         assertEquals("   ", output); // Space is considered blank; no newline appended
     }
 
