@@ -12,7 +12,7 @@ package zowe.client.sdk.utility;
 import org.junit.jupiter.api.Test;
 
 /**
- * Class containing unit test for JsonParserUtil.
+ * Class containing unit test for JsonParserUtils.
  *
  * @author Frank Giordano
  * @version 5.0

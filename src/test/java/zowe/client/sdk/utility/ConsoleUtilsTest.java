@@ -16,7 +16,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- * Class containing unit test for ConsoleUtil.
+ * Class containing unit test for ConsoleUtils.
  *
  * @author Frank Giordano
  * @version 5.0
