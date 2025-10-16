@@ -38,6 +38,27 @@ public final class UtilsTestHelper {
     }
 
     /**
+     * Assertion checks class conforms to being set as final, one private constructor, and with all static methods.
+     *
+     * @param name class object
+     */
+    public static void validateClass(Class name, String privateConstructorMsg) {
+        try {
+            UtilsTestHelper.assertUtilityClassWellDefined(name);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalStateException e) {
+            LOG.error("error " + e);
+            fail();
+        } catch (InvocationTargetException e) {
+            if (e.getTargetException() instanceof IllegalStateException) {
+                assertEquals(privateConstructorMsg, e.getTargetException().getMessage());
+            } else {
+                LOG.error("error " + e);
+                fail();
+            }
+        }
+    }
+
+    /**
      * Verifies that a class defined as final and uses all static methods is well-defined.
      *
      * @param clazz class object to verify
@@ -70,27 +91,6 @@ public final class UtilsTestHelper {
         constructor.setAccessible(true);
         constructor.newInstance();
         constructor.setAccessible(false);
-    }
-
-    /**
-     * Assertion checks class conforms to being set as final, one private constructor, and with all static methods.
-     *
-     * @param name class object
-     */
-    public static void validateClass(Class name, String privateConstructorMsg) {
-        try {
-            UtilsTestHelper.assertUtilityClassWellDefined(name);
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalStateException e) {
-            LOG.error("error " + e);
-            fail();
-        } catch (InvocationTargetException e) {
-            if (e.getTargetException() instanceof IllegalStateException) {
-                assertEquals(privateConstructorMsg, e.getTargetException().getMessage());
-            } else {
-                LOG.error("error " + e);
-                fail();
-            }
-        }
     }
 
 }
