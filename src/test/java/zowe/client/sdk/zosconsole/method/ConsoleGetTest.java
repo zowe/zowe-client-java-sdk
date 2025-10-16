@@ -26,6 +26,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.withSettings;
 
 /**
@@ -100,6 +103,41 @@ public class ConsoleGetTest {
         );
         assertEquals("GET_JSON request type required", exception.getMessage());
     }
+
+    @Test
+    public void tstConsoleGetToggleTokenSuccess() throws Exception {
+        final Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("cmd-response", "LINE1\rLINE2");
+        final JSONObject json = new JSONObject(jsonMap);
+
+        // Create mock with token constructor
+        GetJsonZosmfRequest mockJsonGetRequestAuth = Mockito.mock(
+                GetJsonZosmfRequest.class,
+                withSettings().useConstructor(tokenConnection)
+        );
+
+        Mockito.when(mockJsonGetRequestAuth.executeRequest()).thenReturn(
+                new Response(json, 200, "{ \"cmd-response\": \"LINE1\\rLINE2\" }")
+        );
+
+        // Enable real header and URL handling
+        doCallRealMethod().when(mockJsonGetRequestAuth).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonGetRequestAuth).setStandardHeaders();
+        doCallRealMethod().when(mockJsonGetRequestAuth).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequestAuth).getHeaders();
+
+        // Execute ConsoleGet with token
+        final ConsoleGet consoleGet = new ConsoleGet(tokenConnection, mockJsonGetRequestAuth);
+        ConsoleGetResponse response = consoleGet.getResponse("respKey");
+
+        // 🔍 Validate token header injection
+        assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+                mockJsonGetRequestAuth.getHeaders().toString());
+
+        // 🔍 Validate response was processed
+        assertEquals("LINE1\nLINE2\n", response.getCmdResponse().orElse("n/a"));
+    }
+
 
     @Test
     public void tstConsoleGetResponseSuccess() throws ZosmfRequestException {
