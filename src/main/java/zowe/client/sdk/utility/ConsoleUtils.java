@@ -15,7 +15,7 @@ package zowe.client.sdk.utility;
  * @author Frank Giordano
  * @version 5.0
  */
-public class ConsoleUtils {
+public final class ConsoleUtils {
 
     /**
      * Private constructor defined to avoid instantiation of class

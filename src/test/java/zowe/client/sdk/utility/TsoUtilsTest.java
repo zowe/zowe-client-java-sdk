@@ -29,6 +29,15 @@ import static org.mockito.Mockito.when;
  */
 class TsoUtilsTest {
 
+    /**
+     * Validate class structure
+     */
+    @Test
+    public void tstTsoUtilsClassStructureSuccess() {
+        final String privateConstructorExceptionMsg = "Utility class";
+        UtilsTestHelper.validateClass(TsoUtils.class, privateConstructorExceptionMsg);
+    }
+
     @Test
     void tstGetResponseStrSuccess() throws Exception {
         // Mock Response

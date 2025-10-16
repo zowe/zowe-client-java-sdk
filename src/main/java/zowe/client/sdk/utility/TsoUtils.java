@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Frank Giordano
  * @version 5.0
  */
-public class TsoUtils {
+public final class TsoUtils {
 
     /**
      * Private constructor defined to avoid instantiation of class

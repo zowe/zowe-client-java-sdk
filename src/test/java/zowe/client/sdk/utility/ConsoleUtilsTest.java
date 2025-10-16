@@ -24,6 +24,12 @@ import java.lang.reflect.InvocationTargetException;
 public class ConsoleUtilsTest {
 
     @Test
+    public void tstConsoleUtilsClassStructureSuccess() {
+        final String privateConstructorExceptionMsg = "Utility class";
+        UtilsTestHelper.validateClass(ConsoleUtils.class, privateConstructorExceptionMsg);
+    }
+
+    @Test
     public void tstConsoleUtilPrivateConstructorThrowsException() {
         Constructor<?> constructor = ConsoleUtils.class.getDeclaredConstructors()[0];
         constructor.setAccessible(true);

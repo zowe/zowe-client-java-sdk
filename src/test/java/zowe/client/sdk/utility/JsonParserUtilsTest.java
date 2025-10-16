@@ -23,7 +23,7 @@ public class JsonParserUtilsTest {
      * Validate class structure
      */
     @Test
-    public void tstEncodeUtilsClassStructureSuccess() {
+    public void tstJsonParserUtilsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Utility class";
         UtilsTestHelper.validateClass(JsonParserUtils.class, privateConstructorExceptionMsg);
     }
