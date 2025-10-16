@@ -21,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
  * @author Frank Giordano
  * @version 5.0
  */
-public class ConsoleUtilsTestHelperTest {
+public class ConsoleUtilsTest {
 
     @Test
     public void tstConsoleUtilPrivateConstructorThrowsException() {

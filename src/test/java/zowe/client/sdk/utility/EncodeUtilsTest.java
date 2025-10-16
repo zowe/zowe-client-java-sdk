@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
  * @author Frank Giordano
  * @version 5.0
  */
-public class EncodeUtilsTestHelperTest {
+public class EncodeUtilsTest {
 
     /**
      * Validate class structure

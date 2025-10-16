@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @version 5.0
  */
 @SuppressWarnings("DataFlowIssue")
-public class FileUtilsTestHelperTest {
+public class FileUtilsTest {
 
     /**
      * Validate class structure

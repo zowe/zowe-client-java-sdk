@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author Frank Giordano
  * @version 5.0
  */
-public class ValidateUtilsTestHelperTest {
+public class ValidateUtilsTest {
 
     /**
      * Validate class structure

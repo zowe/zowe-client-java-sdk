@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
  * @author Frank Giordano
  * @version 5.0
  */
-public class JsonParserUtilsTestHelperTest {
+public class JsonParserUtilsTest {
 
     /**
      * Validate class structure
