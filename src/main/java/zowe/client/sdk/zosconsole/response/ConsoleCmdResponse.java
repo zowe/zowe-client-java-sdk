@@ -1,5 +1,6 @@
 package zowe.client.sdk.zosconsole.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Optional;
@@ -10,6 +11,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 5.0
  */
+@JsonIgnoreProperties
 public class ConsoleCmdResponse {
 
     /**
