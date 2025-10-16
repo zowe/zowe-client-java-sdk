@@ -15,7 +15,13 @@ import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
 
 /**
- * Get synchronous z/OS console response messages from console issue command request.
+ * Get synchronous z/OS console response messages from a console issue command request (see ConsoleCmd class).
+ * <p>
+ * This class is used to retrieve the console response messages not provided to the console issue command request
+ * within a certain time interval of approximately 3 seconds. It is possible that the command responses exist after
+ * the time interval and can be retrieved.
+ * <p>
+ * Response messages are stored in the response key of the console issue command request.
  *
  * @author Frank Giordano
  * @version 5.0
@@ -58,7 +64,7 @@ public class ConsoleGet {
     }
 
     /**
-     * Retrieve synchronous z/OS console response messages from console issue command request response key.
+     * Retrieve synchronous z/OS console response messages from a console issue command request's response value.
      *
      * @param responseKey response key from the issue console command request
      * @return ConsoleResponse object
@@ -70,8 +76,8 @@ public class ConsoleGet {
     }
 
     /**
-     * Retrieve synchronous z/OS console response messages from console issue command request response key
-     * and console name.
+     * Retrieve synchronous z/OS console response messages from a console issue command request's
+     * response value and console name.
      *
      * @param responseKey response key from the issue console command request
      * @param consoleName name of the console that is used to issue the command
@@ -79,13 +85,14 @@ public class ConsoleGet {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public ConsoleGetResponse getResponse(final String responseKey, final String consoleName) throws ZosmfRequestException {
+    public ConsoleGetResponse getResponse(final String responseKey, final String consoleName)
+            throws ZosmfRequestException {
         return getResponseCommon(responseKey, consoleName, true);
     }
 
     /**
-     * Common method with all inputs to retrieve any outstanding synchronous
-     * z/OS console response messages from console issue command request.
+     * Common method with all inputs to retrieve any outstanding synchronous z/OS console response messages
+     * from a console issue command request.
      *
      * @param responseKey     response key from the issue console command request
      * @param consoleName     name of the console that is used to issue the command
