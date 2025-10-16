@@ -46,14 +46,12 @@ public final class UtilsTestHelper {
         try {
             UtilsTestHelper.assertUtilityClassWellDefined(name);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalStateException e) {
-            LOG.error("error " + e);
-            fail();
+            markFailed("error " + e);
         } catch (InvocationTargetException e) {
             if (e.getTargetException() instanceof IllegalStateException) {
                 assertEquals(privateConstructorMsg, e.getTargetException().getMessage());
             } else {
-                LOG.error("error " + e);
-                fail();
+                markFailed("error " + e);
             }
         }
     }
@@ -91,6 +89,16 @@ public final class UtilsTestHelper {
         constructor.setAccessible(true);
         constructor.newInstance();
         constructor.setAccessible(false);
+    }
+
+    /**
+     * Helper method to mark the test as failed.
+     *
+     * @param error error message
+     */
+    private static void markFailed(String error) {
+        LOG.error(error);
+        fail();
     }
 
 }
