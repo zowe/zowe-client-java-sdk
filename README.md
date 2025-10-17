@@ -31,7 +31,8 @@ Prebuilt API services are located in the following packages/classes:
 
 zowe.client.sdk.zosconsole.method  
   
-    IssueConsole
+    ConsoleCmd
+    ConsoleGet
   
 zowe.client.sdk.zosfiles.dsn.methods  
   
