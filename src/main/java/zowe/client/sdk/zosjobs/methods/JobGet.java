@@ -245,7 +245,7 @@ public class JobGet {
                 url += JobsConstants.QUERY_JOBID + getInputData.getJobId().get();
             }
         } else {
-            // if no user defined in ZosConnection then query jobs by owner=*
+            // if no user defined in ZosConnection then query jobs the z/OS user ID
             if (connection.getUser() != null && !connection.getUser().isEmpty()) {
                 url += JobsConstants.QUERY_OWNER + connection.getUser();
             }
