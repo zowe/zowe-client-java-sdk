@@ -11,7 +11,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 5.0
  */
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ConsoleCmdResponse {
 
     /**
