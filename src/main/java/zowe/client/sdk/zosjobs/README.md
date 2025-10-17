@@ -515,9 +515,7 @@ public class JobGetExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void getAll() {
-        // get any jobs out there for the logged-in user for basic authentication type
-        // for other authentication types, use connection.setuser() method, otherwise
-        // query for job by owner=* meaning for all users 
+        // get any jobs out there for the logged-in user or the user specified within connection
         List<Job> jobs;
         try {
             jobs = jobGet.getAll();
