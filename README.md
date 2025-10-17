@@ -25,7 +25,7 @@ This SDK may differ from some others with the JobMonitor class adding prebuilt f
 Issues worked on documenting the main feature set provided can be viewed within the following MVP issues:  
 [#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219) [#3](https://github.com/zowe/zowe-client-java-sdk/issues/281) [#4](https://github.com/zowe/zowe-client-java-sdk/issues/338)   
   
-In addition to the MVP issues noted, see the following release notes for [version 4](https://github.com/zowe/zowe-client-java-sdk/pull/363) and [version 5](https://github.com/zowe/zowe-client-java-sdk/issues/414) of the SDK.   
+In addition to the MVP issues noted, see the following release notes for [version 4](https://github.com/zowe/zowe-client-java-sdk/pull/363), [version 5](https://github.com/zowe/zowe-client-java-sdk/issues/414) and [version 5.1.0](https://github.com/zowe/zowe-client-java-sdk/issues/429) of the SDK.   
     
 Prebuilt API services are located in the following packages/classes:  
 
@@ -241,12 +241,12 @@ For a Maven project add the SDK as a dependency by updating your `pom.xml` as fo
     <dependency>
         <groupId>org.zowe.client.java.sdk</groupId>
         <artifactId>zowe-client-java-sdk</artifactId>
-        <version>5.0.1</version>
+        <version>5.1.0</version>
     </dependency>
 
 For a Gradle project add the SDK as a dependency by updating your `build.gradle` as follows:
 
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '5.0.1'  
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '5.1.0'  
   
 ## Publishing to Maven Central  
   
