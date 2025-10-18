@@ -127,7 +127,7 @@ public class ConsoleGet {
 
         ConsoleGetResponse response = objectMapper.convertValue(jsonNode, ConsoleGetResponse.class);
         if (processResponse) {
-            response = response.withCmdResponse(ConsoleUtils.processCmdResponse(response.getCmdResponse().orElse("")));
+            response = response.withCmdResponse(ConsoleUtils.processCmdResponse(response.getCmdResponse()));
         }
         return response;
     }

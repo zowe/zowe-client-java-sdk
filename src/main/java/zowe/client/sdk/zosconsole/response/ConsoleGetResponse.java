@@ -13,8 +13,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Optional;
-
 /**
  * The console response for a z/OSMF synchronous issue console command request.
  *
@@ -37,9 +35,9 @@ public class ConsoleGetResponse {
     private final boolean keywordDetected;
 
     /**
-     * Constructor for JSON deserialization
+     * ConsoleGetResponse constructor for JSON deserialization
      *
-     * @param cmdResponse Command response text
+     * @param cmdResponse     Command response text
      * @param keywordDetected Indicates if the solicited keyword was detected
      */
     @JsonCreator
@@ -55,8 +53,8 @@ public class ConsoleGetResponse {
      *
      * @return cmdResponse value
      */
-    public Optional<String> getCmdResponse() {
-        return Optional.ofNullable(cmdResponse);
+    public String getCmdResponse() {
+        return cmdResponse;
     }
 
     /**

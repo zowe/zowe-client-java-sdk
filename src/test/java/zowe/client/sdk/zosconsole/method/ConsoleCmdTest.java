@@ -64,7 +64,7 @@ public class ConsoleCmdTest {
                 new Response(json, 200, "success"));
         final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
         final ConsoleCmdResponse response = consoleCmd.issueCommand("command");
-        assertEquals("student", response.getCmdResponse().orElse("n/a"));
+        assertEquals("student", response.getCmdResponse());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class ConsoleCmdTest {
         ConsoleCmdResponse response = consoleCmd.issueCommand("command");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestAuth.getHeaders().toString());
-        assertEquals("student", response.getCmdResponse().orElse("n/a"));
+        assertEquals("student", response.getCmdResponse());
     }
 
     @Test
@@ -109,7 +109,7 @@ public class ConsoleCmdTest {
                 new Response(json, 200, "success"));
         final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
         final ConsoleCmdResponse response = consoleCmd.issueCommand("command");
-        assertEquals("", response.getCmdResponse().orElse("n/a"));
+        assertEquals("", response.getCmdResponse());
     }
 
     @Test
@@ -124,7 +124,7 @@ public class ConsoleCmdTest {
         consoleInputData.setProcessResponse();
         consoleInputData.setSolKey("foo");
         final ConsoleCmdResponse response = consoleCmd.issueCommandCommon("consolename", consoleInputData);
-        assertEquals("", response.getCmdResponse().orElse("n/a"));
+        assertEquals("", response.getCmdResponse());
     }
 
     @Test
@@ -136,7 +136,7 @@ public class ConsoleCmdTest {
                 new Response(json, 200, "success"));
         ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
         ConsoleCmdResponse response = consoleCmd.issueCommand("command");
-        assertEquals("student", response.getCmdResponseUrl().orElse("n/a"));
+        assertEquals("student", response.getCmdResponseUrl());
     }
 
     @SuppressWarnings("unchecked")
