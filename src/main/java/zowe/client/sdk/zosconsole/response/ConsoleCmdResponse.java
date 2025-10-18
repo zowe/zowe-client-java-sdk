@@ -1,5 +1,15 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ */
 package zowe.client.sdk.zosconsole.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,27 +28,27 @@ public class ConsoleCmdResponse {
      * Key that can be used to retrieve the command response.
      */
     @JsonProperty("cmd-response-key")
-    private String cmdResponseKey;
+    private final String cmdResponseKey;
 
     /**
      * URL that can be used to retrieve the command response later
      * when the value for cmd-response is empty.
      */
     @JsonProperty("cmd-response-url")
-    private String cmdResponseUrl;
+    private final String cmdResponseUrl;
 
     /**
      * URI that can be used to retrieve the command response later
      * when the value for cmd-response is empty. The URI starts with /zosmf.
      */
     @JsonProperty("cmd-response-uri")
-    private String cmdResponseUri;
+    private final String cmdResponseUri;
 
     /**
      * Command response text.
      */
     @JsonProperty("cmd-response")
-    private String cmdResponse;
+    private final String cmdResponse;
 
     /**
      * Returned when a sol-key was specified, and unsol-detect-sync was specified
@@ -46,7 +56,30 @@ public class ConsoleCmdResponse {
      * the value is true. Otherwise, the value is false.
      */
     @JsonProperty("sol-key-detected")
-    private String solKeyDetected;
+    private final String solKeyDetected;
+
+    /**
+     * Constructor for JSON deserialization
+     *
+     * @param cmdResponseKey Key that can be used to retrieve the command response
+     * @param cmdResponseUrl URL that can be used to retrieve the command response later
+     * @param cmdResponseUri URI that can be used to retrieve the command response later
+     * @param cmdResponse Command response text
+     * @param solKeyDetected Indicates if the keyword was detected in the command response
+     */
+    @JsonCreator
+    public ConsoleCmdResponse(
+            @JsonProperty("cmd-response-key") final String cmdResponseKey,
+            @JsonProperty("cmd-response-url") final String cmdResponseUrl,
+            @JsonProperty("cmd-response-uri") final String cmdResponseUri,
+            @JsonProperty("cmd-response") final String cmdResponse,
+            @JsonProperty("sol-key-detected") final String solKeyDetected) {
+        this.cmdResponseKey = cmdResponseKey;
+        this.cmdResponseUrl = cmdResponseUrl;
+        this.cmdResponseUri = cmdResponseUri;
+        this.cmdResponse = cmdResponse;
+        this.solKeyDetected = solKeyDetected;
+    }
 
     /**
      * Retrieve cmdResponseKey value
@@ -55,15 +88,6 @@ public class ConsoleCmdResponse {
      */
     public Optional<String> getCmdResponseKey() {
         return Optional.ofNullable(cmdResponseKey);
-    }
-
-    /**
-     * Assign cmdResponseKey value
-     *
-     * @param cmdResponseKey value
-     */
-    public void setCmdResponseKey(final String cmdResponseKey) {
-        this.cmdResponseKey = cmdResponseKey;
     }
 
     /**
@@ -76,30 +100,12 @@ public class ConsoleCmdResponse {
     }
 
     /**
-     * Assign cmdResponseUrl value
-     *
-     * @param cmdResponseUrl value
-     */
-    public void setCmdResponseUrl(final String cmdResponseUrl) {
-        this.cmdResponseUrl = cmdResponseUrl;
-    }
-
-    /**
      * Retrieve cmdResponseUri value
      *
      * @return cmdResponseUri value
      */
     public Optional<String> getCmdResponseUri() {
         return Optional.ofNullable(cmdResponseUri);
-    }
-
-    /**
-     * Assign cmdResponseUri value
-     *
-     * @param cmdResponseUri value
-     */
-    public void setCmdResponseUri(final String cmdResponseUri) {
-        this.cmdResponseUri = cmdResponseUri;
     }
 
     /**
@@ -112,15 +118,6 @@ public class ConsoleCmdResponse {
     }
 
     /**
-     * Assign cmdResponse value
-     *
-     * @param cmdResponse value
-     */
-    public void setCmdResponse(final String cmdResponse) {
-        this.cmdResponse = cmdResponse;
-    }
-
-    /**
      * Retrieve solKeyDetected value
      *
      * @return solKeyDetected value
@@ -130,12 +127,19 @@ public class ConsoleCmdResponse {
     }
 
     /**
-     * Assign solKeyDetected value
+     * Create a new ConsoleCmdResponse with a different cmdResponse value
      *
-     * @param solKeyDetected value
+     * @param newCmdResponse the new command response value
+     * @return a new ConsoleCmdResponse instance with the updated cmdResponse
      */
-    public void setSolKeyDetected(final String solKeyDetected) {
-        this.solKeyDetected = solKeyDetected;
+    public ConsoleCmdResponse withCmdResponse(final String newCmdResponse) {
+        return new ConsoleCmdResponse(
+                this.cmdResponseKey,
+                this.cmdResponseUrl,
+                this.cmdResponseUri,
+                newCmdResponse,
+                this.solKeyDetected
+        );
     }
 
     /**

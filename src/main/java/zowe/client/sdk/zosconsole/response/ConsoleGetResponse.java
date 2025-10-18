@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosconsole.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -27,13 +28,27 @@ public class ConsoleGetResponse {
      * Command response text.
      */
     @JsonProperty("cmd-response")
-    private String cmdResponse;
+    private final String cmdResponse;
 
     /**
      * If the solicited keyword is specified, indicates that the keyword was detected.
      */
     @JsonProperty("sol_key_detected")
-    private boolean keywordDetected = false;
+    private final boolean keywordDetected;
+
+    /**
+     * Constructor for JSON deserialization
+     *
+     * @param cmdResponse Command response text
+     * @param keywordDetected Indicates if the solicited keyword was detected
+     */
+    @JsonCreator
+    public ConsoleGetResponse(
+            @JsonProperty("cmd-response") final String cmdResponse,
+            @JsonProperty("sol_key_detected") final boolean keywordDetected) {
+        this.cmdResponse = cmdResponse;
+        this.keywordDetected = keywordDetected;
+    }
 
     /**
      * Retrieve cmdResponse specified
@@ -42,15 +57,6 @@ public class ConsoleGetResponse {
      */
     public Optional<String> getCmdResponse() {
         return Optional.ofNullable(cmdResponse);
-    }
-
-    /**
-     * Assign cmdResponse value
-     *
-     * @param cmdResponse value
-     */
-    public void setCmdResponse(final String cmdResponse) {
-        this.cmdResponse = cmdResponse;
     }
 
     /**
@@ -63,12 +69,13 @@ public class ConsoleGetResponse {
     }
 
     /**
-     * Assign keywordDetected value
+     * Create a new ConsoleGetResponse with a different cmdResponse value
      *
-     * @param keywordDetected value
+     * @param newCmdResponse the new command response value
+     * @return a new ConsoleGetResponse instance with the updated cmdResponse
      */
-    public void setKeywordDetected(boolean keywordDetected) {
-        this.keywordDetected = keywordDetected;
+    public ConsoleGetResponse withCmdResponse(final String newCmdResponse) {
+        return new ConsoleGetResponse(newCmdResponse, this.keywordDetected);
     }
 
     @Override
