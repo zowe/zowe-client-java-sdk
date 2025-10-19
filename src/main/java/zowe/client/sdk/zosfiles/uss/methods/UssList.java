@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -24,7 +23,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
-import zowe.client.sdk.utility.JsonParserUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssListInputData;
@@ -131,7 +130,7 @@ public class UssList {
         final Response response = request.executeRequest();
 
         final List<UnixFile> items = new ArrayList<>();
-        final JSONObject jsonObject = JsonParserUtils.parse(String.valueOf(response.getResponsePhrase()
+        final JSONObject jsonObject = JsonUtils.parse(String.valueOf(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))));
         final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
         if (jsonArray != null) {
@@ -176,18 +175,12 @@ public class UssList {
         }
         request.setUrl(url.toString());
 
-        final Response response = request.executeRequest();
-        final String responsePhrase = String.valueOf(response.getResponsePhrase().orElseThrow(
+        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase().orElseThrow(
                 () -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)));
 
-        UnixZfsResponse unixZfsResponse;
-        try {
-            unixZfsResponse = objectMapper.readValue(responsePhrase, UnixZfsResponse.class);
-        } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException("failed to parse getZfsSystems response", e);
-        }
-
-        return unixZfsResponse.getItems();
+        final String context = "getZfsSystems";
+        UnixZfsResponse response = JsonUtils.parseResponse(responsePhrase, UnixZfsResponse.class, context);
+        return response.getItems();
     }
 
 }

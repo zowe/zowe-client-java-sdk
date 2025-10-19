@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.utility;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,16 +25,16 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
  * @author Frank Giordano
  * @version 5.0
  */
-public final class JsonParserUtils {
+public final class JsonUtils {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JsonParserUtils.class);
-
+    private static final Logger LOG = LoggerFactory.getLogger(JsonUtils.class);
+    private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final String PARSE_ERROR_MSG = "json response parse error";
 
     /**
      * Private constructor defined to avoid instantiation of class
      */
-    private JsonParserUtils() {
+    private JsonUtils() {
         throw new IllegalStateException("Utility class");
     }
 
@@ -67,6 +69,27 @@ public final class JsonParserUtils {
         } catch (ParseException e) {
             LOG.debug(PARSE_ERROR_MSG, e);
             throw new ZosmfRequestException(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Parse a JSON string into a specified POJO type.
+     *
+     * @param json  the JSON string to parse
+     * @param clazz the target class type
+     * @param <T>   the type parameter
+     * @return deserialized object of type T
+     * @throws ZosmfRequestException if parsing fails
+     */
+    public static <T> T parseResponse(final String json, final Class<T> clazz, final String context)
+            throws ZosmfRequestException {   // IDE sees this as "checked"
+        try {
+            return objectMapper.readValue(json, clazz);
+        } catch (JsonProcessingException e) {
+            throw new ZosmfRequestException(
+                    "Failed to parse JSON response for [" + context +
+                            "] into " + clazz.getSimpleName(), e);
+
         }
     }
 

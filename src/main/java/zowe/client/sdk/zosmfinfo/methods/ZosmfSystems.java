@@ -18,7 +18,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.JsonParserUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfinfo.ZosmfConstants;
 import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
@@ -83,7 +83,7 @@ public class ZosmfSystems {
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no z/osmf info response phrase")).toString();
-        final JSONObject jsonObject = JsonParserUtils.parse(jsonStr);
+        final JSONObject jsonObject = JsonUtils.parse(jsonStr);
         return (ZosmfSystemsResponse) JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse(jsonObject);
     }
 

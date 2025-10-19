@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.JsonParserUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.dsn.input.DsnListInputData;
@@ -184,7 +184,7 @@ public class DsnList {
         }
 
         final String jsonStr = response.getResponsePhrase().get().toString();
-        final JSONObject jsonObject = JsonParserUtils.parse(jsonStr);
+        final JSONObject jsonObject = JsonUtils.parse(jsonStr);
         if (jsonObject.isEmpty()) {
             if (datasetLst == null) {
                 return memberLst;

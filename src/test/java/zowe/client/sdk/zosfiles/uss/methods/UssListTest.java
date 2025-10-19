@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.utility.JsonParserUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssListInputData;
 import zowe.client.sdk.zosfiles.uss.input.UssListZfsInputData;
@@ -179,7 +179,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonParserUtils.parse(dataForFileList);
+        final JSONObject json = JsonUtils.parse(dataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -211,7 +211,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListPartialSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonParserUtils.parse(partialDataForFileList);
+        final JSONObject json = JsonUtils.parse(partialDataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -243,7 +243,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListEmptyFileListSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonParserUtils.parse("{}");
+        final JSONObject json = JsonUtils.parse("{}");
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -264,7 +264,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonParserUtils.parse(dataForZfsList);
+        final JSONObject json = JsonUtils.parse(dataForZfsList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);

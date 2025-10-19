@@ -22,7 +22,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.JsonParserUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zoslogs.input.ZosLogInputData;
 import zowe.client.sdk.zoslogs.model.ZosLogItem;
@@ -127,7 +127,7 @@ public class ZosLog {
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no zos log response phrase")).toString();
-        final JSONObject jsonObject = JsonParserUtils.parse(jsonStr);
+        final JSONObject jsonObject = JsonUtils.parse(jsonStr);
         JSONArray jsonArray = new JSONArray();
         if (jsonObject.get("items") != null) {
             jsonArray = (JSONArray) jsonObject.get("items");

@@ -9,8 +9,6 @@
  */
 package zowe.client.sdk.zosconsole.method;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
@@ -21,6 +19,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ConsoleUtils;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.input.ConsoleCmdInputData;
@@ -146,17 +145,11 @@ public class ConsoleCmd {
         request.setUrl(url);
         request.setBody(new JSONObject(issueMap).toString());
 
-        final String jsonStr = request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no issue console response phrase")).toString();
+        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no issue console response phrase")));
 
-        final JsonNode jsonNode;
-        try {
-            jsonNode = objectMapper.readTree(jsonStr);
-        } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException(e.getMessage());
-        }
-
-        ConsoleCmdResponse response = objectMapper.convertValue(jsonNode, ConsoleCmdResponse.class);
+        final String context = "issueCommandCommon";
+        ConsoleCmdResponse response = JsonUtils.parseResponse(responsePhrase, ConsoleCmdResponse.class, context);
         if (consoleInputData.isProcessResponse()) {
             response = response.withCmdResponse(ConsoleUtils.processCmdResponse(response.getCmdResponse()));
         }

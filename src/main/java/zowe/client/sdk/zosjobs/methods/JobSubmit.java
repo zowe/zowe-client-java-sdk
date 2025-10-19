@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.JsonParserUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.JobSubmitInputData;
@@ -144,7 +144,7 @@ public class JobSubmit {
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job jcl submit response phrase")).toString();
-        final JSONObject jsonObject = JsonParserUtils.parse(jsonStr);
+        final JSONObject jsonObject = JsonUtils.parse(jsonStr);
         return (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
     }
 
@@ -190,7 +190,7 @@ public class JobSubmit {
 
         final String jsonStr = request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no job submit response phrase")).toString();
-        final JSONObject jsonObject = JsonParserUtils.parse(jsonStr);
+        final JSONObject jsonObject = JsonUtils.parse(jsonStr);
         return (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
     }
 
