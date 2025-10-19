@@ -48,11 +48,11 @@ public class ConsoleCmdTest {
             .createBasicConnection("1", "1", "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
             .createTokenConnection("1", "1", new Cookie("hello=hello"));
-    private PutJsonZosmfRequest mockJsonGetRequest;
+    private PutJsonZosmfRequest mockJsonPutRequest;
 
     @BeforeEach
     public void init() {
-        mockJsonGetRequest = Mockito.mock(PutJsonZosmfRequest.class);
+        mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
     }
 
     @Test
@@ -60,9 +60,9 @@ public class ConsoleCmdTest {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "student");
         final JSONObject json = new JSONObject(jsonMap);
-        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
-        final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
+        final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonPutRequest);
         final ConsoleCmdResponse response = consoleCmd.issueCommand("command");
         assertEquals("student", response.getCmdResponse());
     }
@@ -105,9 +105,9 @@ public class ConsoleCmdTest {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "");
         final JSONObject json = new JSONObject(jsonMap);
-        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
-        final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
+        final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonPutRequest);
         final ConsoleCmdResponse response = consoleCmd.issueCommand("command");
         assertEquals("", response.getCmdResponse());
     }
@@ -117,9 +117,9 @@ public class ConsoleCmdTest {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "");
         final JSONObject json = new JSONObject(jsonMap);
-        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
-        final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
+        final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonPutRequest);
         final ConsoleCmdInputData consoleInputData = new ConsoleCmdInputData("command");
         consoleInputData.setProcessResponse();
         consoleInputData.setSolKey("foo");
@@ -132,9 +132,9 @@ public class ConsoleCmdTest {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response-url", "student");
         final JSONObject json = new JSONObject(jsonMap);
-        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
-        ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonGetRequest);
+        ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonPutRequest);
         ConsoleCmdResponse response = consoleCmd.issueCommand("command");
         assertEquals("student", response.getCmdResponseUrl());
     }
@@ -156,9 +156,9 @@ public class ConsoleCmdTest {
             errorMsg = e.getMessage();
         }
 
-        Mockito.when(mockJsonGetRequest.executeRequest()).thenThrow(new IllegalStateException(errorMsg));
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenThrow(new IllegalStateException(errorMsg));
 
-        final ConsoleCmd issueCommand = new ConsoleCmd(connection, mockJsonGetRequest);
+        final ConsoleCmd issueCommand = new ConsoleCmd(connection, mockJsonPutRequest);
         try {
             issueCommand.issueCommand("test");
         } catch (IllegalStateException e) {
