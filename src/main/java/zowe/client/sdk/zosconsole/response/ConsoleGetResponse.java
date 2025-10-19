@@ -9,9 +9,7 @@
  */
 package zowe.client.sdk.zosconsole.response;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
 /**
  * The console response for a z/OSMF synchronous issue console command request.
@@ -25,13 +23,12 @@ public class ConsoleGetResponse {
     /**
      * Command response text.
      */
-    @JsonProperty("cmd-response")
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String cmdResponse;
 
     /**
      * If the solicited keyword is specified, indicates that the keyword was detected.
      */
-    @JsonProperty("sol_key_detected")
     private final boolean keywordDetected;
 
     /**
