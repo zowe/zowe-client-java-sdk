@@ -16,7 +16,7 @@ import zowe.client.sdk.zosfiles.uss.model.UnixZfs;
 import java.util.List;
 
 /**
- * UssZfsResponse object representing a zfs response from Unix System Services (USS) list operation.
+ * UssZfsResponse object representing a ZFS response from Unix System Services (USS) filesystems list operation.
  * Immutable class using Jackson for JSON parsing.
  *
  * @author Frank Giordano
