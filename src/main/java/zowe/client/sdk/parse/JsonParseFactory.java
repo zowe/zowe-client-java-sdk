@@ -56,9 +56,6 @@ public final class JsonParseFactory {
             case PROPS:
                 parseResponse = PropsJsonParse.getInstance();
                 break;
-            case UNIX_FILE:
-                parseResponse = UnixFileJsonParse.getInstance();
-                break;
             case ZOS_LOG_ITEM:
                 parseResponse = ZosLogItemJsonParse.getInstance();
                 break;

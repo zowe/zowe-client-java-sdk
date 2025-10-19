@@ -188,25 +188,25 @@ public class UssListTest {
         // should only contain two items
         assertEquals(2, items.size());
         // verify first item's data
-        assertEquals("test", items.get(0).getName().orElse("n\\a"));
-        assertEquals("drwxr-xr-x", items.get(0).getMode().orElse("n\\a"));
-        assertEquals(0, items.get(0).getSize().orElse(-1));
-        assertEquals(10000518, items.get(0).getUid().orElse(-1));
-        assertEquals("user", items.get(0).getUser().orElse("n\\a"));
-        assertEquals(8, items.get(0).getGid().orElse(-1));
-        assertEquals("FRAMEWKG", items.get(0).getGroup().orElse("n\\a"));
-        assertEquals("2022-11-03T10:48:32", items.get(0).getMtime().orElse("n\\a"));
-        assertEquals("target", items.get(0).getTarget().orElse("n\\a"));
+        assertEquals("test", items.get(0).getName());
+        assertEquals("drwxr-xr-x", items.get(0).getMode());
+        assertEquals(0, items.get(0).getSize());
+        assertEquals(10000518, items.get(0).getUid());
+        assertEquals("user", items.get(0).getUser());
+        assertEquals(8, items.get(0).getGid());
+        assertEquals("FRAMEWKG", items.get(0).getGroup());
+        assertEquals("2022-11-03T10:48:32", items.get(0).getMtime());
+        assertEquals("target", items.get(0).getTarget());
         // verify second item's data
-        assertEquals("test2", items.get(1).getName().orElse("n\\a"));
-        assertEquals("-rwxr-xr-x", items.get(1).getMode().orElse("n\\a"));
-        assertEquals(13545, items.get(1).getSize().orElse(-1));
-        assertEquals(10000518, items.get(1).getUid().orElse(-1));
-        assertEquals("user2", items.get(1).getUser().orElse("n\\a"));
-        assertEquals(8, items.get(1).getGid().orElse(-1));
-        assertEquals("FRAMEWKG", items.get(1).getGroup().orElse("n\\a"));
-        assertEquals("2022-11-12T15:20:11", items.get(1).getMtime().orElse("n\\a"));
-        assertEquals("target", items.get(1).getTarget().orElse("n\\a"));
+        assertEquals("test2", items.get(1).getName());
+        assertEquals("-rwxr-xr-x", items.get(1).getMode());
+        assertEquals(13545, items.get(1).getSize());
+        assertEquals(10000518, items.get(1).getUid());
+        assertEquals("user2", items.get(1).getUser());
+        assertEquals(8, items.get(1).getGid());
+        assertEquals("FRAMEWKG", items.get(1).getGroup());
+        assertEquals("2022-11-12T15:20:11", items.get(1).getMtime());
+        assertEquals("target", items.get(1).getTarget());
     }
 
     @Test
@@ -222,20 +222,21 @@ public class UssListTest {
         // verify first item's data
         assertTrue(items.get(0).getName().isEmpty());
         assertTrue(items.get(0).getMode().isEmpty());
-        assertEquals(0, items.get(0).getSize().orElse(-1));
-        assertTrue(items.get(0).getUid().isEmpty());
+        assertEquals(0, items.get(0).getSize());
+        assertEquals(0, items.get(0).getUid());
         assertTrue(items.get(0).getUser().isEmpty());
-        assertTrue(items.get(0).getGid().isEmpty());
+        assertEquals(0, items.get(0).getGid());
         assertTrue(items.get(0).getGroup().isEmpty());
         assertTrue(items.get(0).getMtime().isEmpty());
         assertTrue(items.get(0).getTarget().isEmpty());
         // verify second item's data
-        assertEquals("test2", items.get(1).getName().orElse("n\\a"));
+        assertEquals("test2", items.get(1).getName());
         assertTrue(items.get(1).getMode().isEmpty());
-        assertEquals(-1, items.get(1).getSize().orElse(-1));
-        assertTrue(items.get(1).getUid().isEmpty());
+        assertEquals(0, items.get(1).getSize());
+        final String toStr = "UnixFile{name=test2, mode=, size=0, uid=0, user=, gid=0, group=, mtime=, target=}";
+        assertEquals(toStr, items.get(1).toString());
         assertTrue(items.get(1).getUser().isEmpty());
-        assertTrue(items.get(1).getGid().isEmpty());
+        assertEquals(0, items.get(1).getGid());
         assertTrue(items.get(1).getGroup().isEmpty());
         assertTrue(items.get(1).getMtime().isEmpty());
         assertTrue(items.get(1).getTarget().isEmpty());

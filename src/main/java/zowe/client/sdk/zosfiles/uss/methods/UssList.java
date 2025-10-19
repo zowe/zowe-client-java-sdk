@@ -9,13 +9,8 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseFactory;
-import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -29,9 +24,9 @@ import zowe.client.sdk.zosfiles.uss.input.UssListInputData;
 import zowe.client.sdk.zosfiles.uss.input.UssListZfsInputData;
 import zowe.client.sdk.zosfiles.uss.model.UnixFile;
 import zowe.client.sdk.zosfiles.uss.model.UnixZfs;
-import zowe.client.sdk.zosfiles.uss.reaponse.UnixZfsResponse;
+import zowe.client.sdk.zosfiles.uss.reaponse.UnixFileListResponse;
+import zowe.client.sdk.zosfiles.uss.reaponse.UnixZfsListResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -126,19 +121,12 @@ public class UssList {
         }
         request.setUrl(url.toString());
 
-        final Response response = request.executeRequest();
+        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)));
 
-        final List<UnixFile> items = new ArrayList<>();
-        final JSONObject jsonObject = JsonUtils.parse(String.valueOf(response.getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))));
-        final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
-        if (jsonArray != null) {
-            for (final Object jsonObj : jsonArray) {
-                items.add((UnixFile) JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse(jsonObj));
-            }
-        }
-
-        return items;
+        final String context = "getFiles";
+        UnixFileListResponse response = JsonUtils.parseResponse(responsePhrase, UnixFileListResponse.class, context);
+        return response.getItems() == null ? List.of() : response.getItems();
     }
 
     /**
@@ -180,8 +168,8 @@ public class UssList {
                 () -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)));
 
         final String context = "getZfsSystems";
-        UnixZfsResponse response = JsonUtils.parseResponse(responsePhrase, UnixZfsResponse.class, context);
-        return response.getItems();
+        UnixZfsListResponse response = JsonUtils.parseResponse(responsePhrase, UnixZfsListResponse.class, context);
+        return response.getItems() == null ? List.of() : response.getItems();
     }
 
 }

@@ -9,43 +9,48 @@
  */
 package zowe.client.sdk.zosfiles.uss.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
 import java.util.List;
 
 /**
- * UssZfsItem object representing a zfs item from Unix System Services (USS) list operation
+ * UssZfsItem object representing a zfs item from Unix System Services (USS) list operation.
  * Immutable class using Jackson for JSON parsing.
  *
  * @author Frank Giordano
  * @version 5.0
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public final class UnixZfs {
 
     /**
      * zfs name
      */
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String name;
 
     /**
      * Mount point name
      */
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String mountpoint;
 
     /**
      * FST name
      */
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String fstname;
 
     /**
      * Status value
      */
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String status;
 
     /**
      * Mode values
      */
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String mode;
 
     /**
@@ -76,6 +81,7 @@ public final class UnixZfs {
     /**
      * Target system name
      */
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String sysname;
 
     /**
@@ -157,15 +163,15 @@ public final class UnixZfs {
         this.mode = (modeList != null) ? String.join(",", modeList) : null;
         this.dev = dev;
         this.fstype = fstype;
-        this.bsize = bsize;
-        this.bavail = bavail;
-        this.blocks = blocks;
+        this.bsize = (bsize == null) ? 0L : bsize;
+        this.bavail = (bavail == null) ? 0L : bavail;
+        this.blocks = (blocks == null) ? 0L : blocks;
         this.sysname = sysname;
-        this.readibc = readibc;
-        this.writeibc = writeibc;
-        this.diribc = diribc;
-        this.returnedRows = returnedRows;
-        this.totalRows = totalRows;
+        this.readibc = (readibc == null) ? 0L : readibc;
+        this.writeibc = (writeibc == null) ? 0L : writeibc;
+        this.diribc = (diribc == null) ? 0L : diribc;
+        this.returnedRows = (returnedRows == null) ? 0L : returnedRows;
+        this.totalRows = (totalRows == null) ? 0L : totalRows;
         this.moreRows = moreRows;
     }
 

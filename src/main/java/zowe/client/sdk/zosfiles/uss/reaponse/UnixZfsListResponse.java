@@ -10,6 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.reaponse;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import zowe.client.sdk.zosfiles.uss.model.UnixZfs;
 
@@ -22,7 +23,8 @@ import java.util.List;
  * @author Frank Giordano
  * @version 5.0
  */
-public final class UnixZfsResponse {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public final class UnixZfsListResponse {
 
     private final int jsonVersion;
     private final List<UnixZfs> items;
@@ -34,7 +36,7 @@ public final class UnixZfsResponse {
      * @param items       UnixZfs items list
      */
     @JsonCreator
-    public UnixZfsResponse(
+    public UnixZfsListResponse(
             @JsonProperty("JSONversion") int jsonVersion,
             @JsonProperty("items") List<UnixZfs> items) {
         this.jsonVersion = jsonVersion;
