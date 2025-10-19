@@ -92,7 +92,8 @@ public class UssList {
     public List<UnixFile> getFiles(final UssListInputData listInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(listInputData == null, "listInputData is null");
 
-        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
+        final String urlStart = connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES;
+        final StringBuilder url = new StringBuilder(urlStart);
 
         url.append("?path=").append(EncodeUtils.encodeURIComponent(FileUtils.validatePath(
                 listInputData.getPath().orElseThrow(() -> new IllegalArgumentException("path not specified")))));
@@ -153,8 +154,10 @@ public class UssList {
     @SuppressWarnings("DuplicatedCode")
     public List<UnixZfs> getZfsSystems(final UssListZfsInputData listZfsInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(listZfsInputData == null, "listZfsInputData is null");
-        ValidateUtils.checkIllegalParameter(listZfsInputData.getPath().isEmpty() && listZfsInputData.getFsname().isEmpty(),
-                "no path or fsname specified");
+        ValidateUtils.checkIllegalParameter(
+                listZfsInputData.getPath().isEmpty() && listZfsInputData.getFsname().isEmpty(),
+                "no path or fsname specified"
+        );
 
         final String urlStart = connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS;
         final StringBuilder url = new StringBuilder(urlStart);
