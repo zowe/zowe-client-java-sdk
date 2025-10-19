@@ -65,9 +65,6 @@ public final class JsonParseFactory {
             case ZOSMF_SYSTEMS:
                 parseResponse = SystemsJsonParse.getInstance();
                 break;
-            case ZOSMF_INFO:
-                parseResponse = SystemInfoJsonParse.getInstance();
-                break;
             default:
                 throw new IllegalStateException("no valid ParseType type specified");
         }

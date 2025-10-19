@@ -9,10 +9,7 @@
  */
 package zowe.client.sdk.zosmfinfo.methods;
 
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseFactory;
-import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
@@ -81,10 +78,11 @@ public class ZosmfStatus {
         }
         request.setUrl(url);
 
-        final String jsonStr = request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no z/osmf status response phrase")).toString();
-        final JSONObject jsonObject = JsonUtils.parse(jsonStr);
-        return (ZosmfInfoResponse) JsonParseFactory.buildParser(ParseType.ZOSMF_INFO).parseResponse(jsonObject);
+        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no z/osmf status response phrase")));
+
+        final String context = "get";
+        return JsonUtils.parseResponse(responsePhrase, ZosmfInfoResponse.class, context);
     }
 
 }
