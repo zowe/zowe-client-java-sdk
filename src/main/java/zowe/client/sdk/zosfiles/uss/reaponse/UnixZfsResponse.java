@@ -31,7 +31,7 @@ public final class UnixZfsResponse {
      * UssZfsItem Constructor for Jackson
      *
      * @param jsonVersion int value
-     * @param items UnixZfs items list
+     * @param items       UnixZfs items list
      */
     @JsonCreator
     public UnixZfsResponse(
