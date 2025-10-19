@@ -9,16 +9,19 @@
  */
 package zowe.client.sdk.zosfiles.uss.model;
 
-import java.util.Optional;
-import java.util.OptionalLong;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
 
 /**
  * UssZfsItem object representing a zfs item from Unix System Services (USS) list operation
+ * Immutable class using Jackson for JSON parsing.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class UnixZfs {
+public final class UnixZfs {
 
     /**
      * zfs name
@@ -45,6 +48,9 @@ public class UnixZfs {
      */
     private final String mode;
 
+    /**
+     * Device identifier
+     */
     private final Long dev;
 
     /**
@@ -73,17 +79,17 @@ public class UnixZfs {
     private final String sysname;
 
     /**
-     * Count of I/O operations
+     * Count of read I/O operations
      */
-    public final Long readibc;
+    private final Long readibc;
 
     /**
-     * Count of I/O operations
+     * Count of write I/O operations
      */
-    public final Long writeibc;
+    private final Long writeibc;
 
     /**
-     * Count of I/O operations
+     * Count of directory I/O operations
      */
     private final Long diribc;
 
@@ -104,179 +110,213 @@ public class UnixZfs {
     private final boolean moreRows;
 
     /**
-     * UnixZfs constructor
+     * Jackson constructor for UnixZfs
      *
-     * @param builder UnixZfs.Builder object
-     * @author Frank Giordano
+     * @param name         zfs name
+     * @param mountpoint   mount point
+     * @param fstname      FST name
+     * @param status       status value
+     * @param modeList     mode list string
+     * @param dev          device id
+     * @param fstype       file system type
+     * @param bsize        block size
+     * @param bavail       available blocks
+     * @param blocks       block count
+     * @param sysname      target system name
+     * @param readibc      read I/O count
+     * @param writeibc     write I/O count
+     * @param diribc       directory I/O count
+     * @param returnedRows returned rows
+     * @param totalRows    total rows
+     * @param moreRows     true if more rows are available
      */
-    public UnixZfs(final UnixZfs.Builder builder) {
-        this.name = builder.name;
-        this.mountpoint = builder.mountpoint;
-        this.fstname = builder.fstname;
-        this.status = builder.status;
-        this.mode = builder.mode;
-        this.dev = builder.dev;
-        this.fstype = builder.fstype;
-        this.bsize = builder.bsize;
-        this.bavail = builder.bavail;
-        this.blocks = builder.blocks;
-        this.sysname = builder.sysname;
-        this.readibc = builder.readibc;
-        this.writeibc = builder.writeibc;
-        this.diribc = builder.diribc;
-        this.returnedRows = builder.returnedRows;
-        this.totalRows = builder.totalRows;
-        this.moreRows = builder.moreRows;
+    @JsonCreator
+    public UnixZfs(
+            @JsonProperty("name") String name,
+            @JsonProperty("mountpoint") String mountpoint,
+            @JsonProperty("fstname") String fstname,
+            @JsonProperty("status") String status,
+            @JsonProperty("mode") List<String> modeList,
+            @JsonProperty("dev") Long dev,
+            @JsonProperty("fstype") Long fstype,
+            @JsonProperty("bsize") Long bsize,
+            @JsonProperty("bavail") Long bavail,
+            @JsonProperty("blocks") Long blocks,
+            @JsonProperty("sysname") String sysname,
+            @JsonProperty("readibc") Long readibc,
+            @JsonProperty("writeibc") Long writeibc,
+            @JsonProperty("diribc") Long diribc,
+            @JsonProperty("returnedRows") Long returnedRows,
+            @JsonProperty("totalRows") Long totalRows,
+            @JsonProperty("moreRows") boolean moreRows) {
+
+        this.name = name;
+        this.mountpoint = mountpoint;
+        this.fstname = fstname;
+        this.status = status;
+        this.mode = (modeList != null) ? String.join(",", modeList) : null;
+        this.dev = dev;
+        this.fstype = fstype;
+        this.bsize = bsize;
+        this.bavail = bavail;
+        this.blocks = blocks;
+        this.sysname = sysname;
+        this.readibc = readibc;
+        this.writeibc = writeibc;
+        this.diribc = diribc;
+        this.returnedRows = returnedRows;
+        this.totalRows = totalRows;
+        this.moreRows = moreRows;
     }
 
     /**
      * Retrieve name value
      *
-     * @return name value
+     * @return name string value
      */
-    public Optional<String> getName() {
-        return Optional.ofNullable(name);
+    public String getName() {
+        return name;
     }
 
     /**
      * Retrieve mountpoint value
      *
-     * @return mountpoint value
+     * @return mountpoint string value
      */
-    public Optional<String> getMountpoint() {
-        return Optional.ofNullable(mountpoint);
+    public String getMountpoint() {
+        return mountpoint;
     }
 
     /**
      * Retrieve fstname value
      *
-     * @return fstname value
+     * @return fstname string value
      */
-    public Optional<String> getFstname() {
-        return Optional.ofNullable(fstname);
+    public String getFstname() {
+        return fstname;
     }
 
     /**
      * Retrieve status value
      *
-     * @return status value
+     * @return status string value
      */
-    public Optional<String> getStatus() {
-        return Optional.ofNullable(status);
+    public String getStatus() {
+        return status;
     }
 
     /**
      * Retrieve mode value
      *
-     * @return mode value
+     * @return mode string value
      */
-    public Optional<String> getMode() {
-        return Optional.ofNullable(mode);
+    public String getMode() {
+        return mode;
     }
 
     /**
      * Retrieve dev value
      *
-     * @return dev value
+     * @return dev long value
      */
-    public OptionalLong getDev() {
-        return (dev == null) ? OptionalLong.empty() : OptionalLong.of(dev);
+    public Long getDev() {
+        return dev;
     }
 
     /**
      * Retrieve fstype value
      *
-     * @return fstype value
+     * @return fstype long value
      */
-    public OptionalLong getFstype() {
-        return (fstype == null) ? OptionalLong.empty() : OptionalLong.of(fstype);
+    public Long getFstype() {
+        return fstype;
     }
 
     /**
      * Retrieve bsize value
      *
-     * @return bsize value
+     * @return bsize long value
      */
-    public OptionalLong getBsize() {
-        return (bsize == null) ? OptionalLong.empty() : OptionalLong.of(bsize);
+    public Long getBsize() {
+        return bsize;
     }
 
     /**
      * Retrieve bavail value
      *
-     * @return bavail value
+     * @return bavail long value
      */
-    public OptionalLong getBavail() {
-        return (bavail == null) ? OptionalLong.empty() : OptionalLong.of(bavail);
+    public Long getBavail() {
+        return bavail;
     }
 
     /**
      * Retrieve blocks value
      *
-     * @return blocks value
+     * @return blocks long value
      */
-    public OptionalLong getBlocks() {
-        return (blocks == null) ? OptionalLong.empty() : OptionalLong.of(blocks);
+    public Long getBlocks() {
+        return blocks;
     }
 
     /**
      * Retrieve sysname value
      *
-     * @return sysname value
+     * @return sysname string value
      */
-    public Optional<String> getSysname() {
-        return Optional.ofNullable(sysname);
+    public String getSysname() {
+        return sysname;
     }
 
     /**
      * Retrieve readibc value
      *
-     * @return readibc value
+     * @return readibc long value
      */
-    public OptionalLong getReadibc() {
-        return (readibc == null) ? OptionalLong.empty() : OptionalLong.of(readibc);
+    public Long getReadibc() {
+        return readibc;
     }
 
     /**
      * Retrieve writeibc value
      *
-     * @return writeibc value
+     * @return writeibc long value
      */
-    public OptionalLong getWriteibc() {
-        return (writeibc == null) ? OptionalLong.empty() : OptionalLong.of(writeibc);
+    public Long getWriteibc() {
+        return writeibc;
     }
 
     /**
      * Retrieve diribc value
      *
-     * @return diribc value
+     * @return diribc long value
      */
-    public OptionalLong getDiribc() {
-        return (diribc == null) ? OptionalLong.empty() : OptionalLong.of(diribc);
+    public Long getDiribc() {
+        return diribc;
     }
 
     /**
      * Retrieve returnedRows value
      *
-     * @return returnedRows value
+     * @return returnedRows long value
      */
-    public OptionalLong getReturnedRows() {
-        return (returnedRows == null) ? OptionalLong.empty() : OptionalLong.of(returnedRows);
+    public Long getReturnedRows() {
+        return returnedRows;
     }
 
     /**
      * Retrieve totalRows value
      *
-     * @return totalRows value
+     * @return totalRows long value
      */
-    public OptionalLong getTotalRows() {
-        return (totalRows == null) ? OptionalLong.empty() : OptionalLong.of(totalRows);
+    public Long getTotalRows() {
+        return totalRows;
     }
 
     /**
      * Retrieve moreRows value
      *
-     * @return moreRows value
+     * @return moreRows boolean value
      */
     public boolean isMoreRows() {
         return moreRows;
@@ -308,295 +348,6 @@ public class UnixZfs {
                 ", totalRows=" + totalRows +
                 ", moreRows=" + moreRows +
                 '}';
-    }
-
-    /**
-     * Builder class for UnixZfs
-     */
-    public static class Builder {
-
-        /**
-         * zfs name
-         */
-        private String name;
-
-        /**
-         * Mount point name
-         */
-        private String mountpoint;
-
-        /**
-         * FST name
-         */
-        private String fstname;
-
-        /**
-         * Status value
-         */
-        private String status;
-
-        /**
-         * Mode values
-         */
-        private String mode;
-
-        /**
-         * dev value
-         */
-        private Long dev;
-
-        /**
-         * File system type
-         */
-        private Long fstype;
-
-        /**
-         * Block size
-         */
-        private Long bsize;
-
-        /**
-         * Blocks available
-         */
-        private Long bavail;
-
-        /**
-         * Count of blocks in I/O operations
-         */
-        private Long blocks;
-
-        /**
-         * Target system name
-         */
-        private String sysname;
-
-        /**
-         * Count of I/O operations
-         */
-        private Long readibc;
-
-        /**
-         * Count of I/O operations
-         */
-        private Long writeibc;
-
-        /**
-         * Count of I/O operations
-         */
-        private Long diribc;
-
-        /**
-         * The number of filesystem items returned
-         */
-        private Long returnedRows;
-
-        /**
-         * The total number of filesystems
-         */
-        private Long totalRows;
-
-        /**
-         * If more items than specified by X-IBM-Max-Items (or the default of 1000) match the request,
-         * then moreRows will be true
-         */
-        private boolean moreRows = false;
-
-        /**
-         * Set name string value
-         *
-         * @param name string value
-         * @return Builder this object
-         */
-        public Builder name(final String name) {
-            this.name = name;
-            return this;
-        }
-
-        /**
-         * Set mountpoint string value
-         *
-         * @param mountpoint string value
-         * @return Builder this object
-         */
-        public Builder mountpoint(final String mountpoint) {
-            this.mountpoint = mountpoint;
-            return this;
-        }
-
-        /**
-         * Set fstname string value
-         *
-         * @param fstname string value
-         * @return Builder this object
-         */
-        public Builder fstname(final String fstname) {
-            this.fstname = fstname;
-            return this;
-        }
-
-        /**
-         * Set status string value
-         *
-         * @param status string value
-         * @return Builder this object
-         */
-        public Builder status(final String status) {
-            this.status = status;
-            return this;
-        }
-
-        /**
-         * Set mode string value
-         *
-         * @param mode string value
-         * @return Builder this object
-         */
-        public Builder mode(final String mode) {
-            this.mode = mode;
-            return this;
-        }
-
-        /**
-         * Set dev long value
-         *
-         * @param dev long value
-         * @return Builder this object
-         */
-        public Builder dev(final Long dev) {
-            this.dev = dev;
-            return this;
-        }
-
-        /**
-         * Set fstype long value
-         *
-         * @param fstype long value
-         * @return Builder this object
-         */
-        public Builder fstype(final Long fstype) {
-            this.fstype = fstype;
-            return this;
-        }
-
-        /**
-         * Set bsize long value
-         *
-         * @param bsize long value
-         * @return Builder this object
-         */
-        public Builder bsize(final Long bsize) {
-            this.bsize = bsize;
-            return this;
-        }
-
-        /**
-         * Set bavail long value
-         *
-         * @param bavail long value
-         * @return Builder this object
-         */
-        public Builder bavail(final Long bavail) {
-            this.bavail = bavail;
-            return this;
-        }
-
-        /**
-         * Set blocks long value
-         *
-         * @param blocks long value
-         * @return Builder this object
-         */
-        public Builder blocks(final Long blocks) {
-            this.blocks = blocks;
-            return this;
-        }
-
-        /**
-         * Set sysname string value
-         *
-         * @param sysname string value
-         * @return Builder this object
-         */
-        public Builder sysname(final String sysname) {
-            this.sysname = sysname;
-            return this;
-        }
-
-        /**
-         * Set readibc long value
-         *
-         * @param readibc long value
-         * @return Builder this object
-         */
-        public Builder readibc(final Long readibc) {
-            this.readibc = readibc;
-            return this;
-        }
-
-        /**
-         * Set writeibc long value
-         *
-         * @param writeibc long value
-         * @return Builder this object
-         */
-        public Builder writeibc(final Long writeibc) {
-            this.writeibc = writeibc;
-            return this;
-        }
-
-        /**
-         * Set diribc long value
-         *
-         * @param diribc long value
-         * @return Builder this object
-         */
-        public Builder diribc(final Long diribc) {
-            this.diribc = diribc;
-            return this;
-        }
-
-        /**
-         * Set returnedRows long value
-         *
-         * @param returnedRows long value
-         * @return Builder this object
-         */
-        public Builder returnedRows(final Long returnedRows) {
-            this.returnedRows = returnedRows;
-            return this;
-        }
-
-        /**
-         * Set totalRows long value
-         *
-         * @param totalRows long value
-         * @return Builder this object
-         */
-        public Builder totalRows(final Long totalRows) {
-            this.totalRows = totalRows;
-            return this;
-        }
-
-        /**
-         * Set moreRows boolean value
-         *
-         * @param moreRows boolean true or false value
-         * @return Builder this object
-         */
-        public Builder moreRows(final boolean moreRows) {
-            this.moreRows = moreRows;
-            return this;
-        }
-
-        /**
-         * Return UnixZfs object based on Builder this object
-         *
-         * @return UnixZfs this object
-         */
-        public UnixZfs build() {
-            return new UnixZfs(this);
-        }
-
     }
 
 }

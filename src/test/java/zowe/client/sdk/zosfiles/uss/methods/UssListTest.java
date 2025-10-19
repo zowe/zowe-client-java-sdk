@@ -272,19 +272,19 @@ public class UssListTest {
         // should only contain one item
         assertEquals(1, items.size());
         // verify first item's data
-        assertEquals("OMVSGRP.USER.TNGFW.CA31", items.get(0).getName().orElse("n\\a"));
-        assertEquals("/CA31/u/users/framewrk", items.get(0).getMountpoint().orElse("n\\a"));
-        assertEquals("ZFS", items.get(0).getFstname().orElse("n\\a"));
-        assertEquals("noautomove,unmount,acl,synchonly", items.get(0).getMode().orElse("n\\a"));
-        assertEquals(2718, items.get(0).getDev().orElse(-1));
-        assertEquals(1, items.get(0).getFstype().orElse(-1));
-        assertEquals(1024, items.get(0).getBsize().orElse(-1));
-        assertEquals(269231, items.get(0).getBavail().orElse(-1));
-        assertEquals(1382400, items.get(0).getBlocks().orElse(-1));
-        assertEquals("CA31", items.get(0).getSysname().orElse("n\\a"));
-        assertEquals(907651, items.get(0).getReadibc().orElse(-1));
-        assertEquals(42, items.get(0).getWriteibc().orElse(-1));
-        assertEquals(453057, items.get(0).getDiribc().orElse(-1));
+        assertEquals("OMVSGRP.USER.TNGFW.CA31", items.get(0).getName());
+        assertEquals("/CA31/u/users/framewrk", items.get(0).getMountpoint());
+        assertEquals("ZFS", items.get(0).getFstname());
+        assertEquals("noautomove,unmount,acl,synchonly", items.get(0).getMode());
+        assertEquals(2718, items.get(0).getDev());
+        assertEquals(1, items.get(0).getFstype());
+        assertEquals(1024, items.get(0).getBsize());
+        assertEquals(269231, items.get(0).getBavail());
+        assertEquals(1382400, items.get(0).getBlocks());
+        assertEquals("CA31", items.get(0).getSysname());
+        assertEquals(907651, items.get(0).getReadibc());
+        assertEquals(42, items.get(0).getWriteibc());
+        assertEquals(453057, items.get(0).getDiribc());
         assertEquals("https://1:1/zosmf/restfiles/mfs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
     }
 
