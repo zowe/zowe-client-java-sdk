@@ -235,4 +235,41 @@ public class ZoweRequestTest {
                 () -> request.setUrl(connection.getZosmfUrl() + RESOURCE_PATH));
     }
 
+    @Test
+    public void tstBuildResponseThrowsOnHttpErrorFailure() {
+        // Create a minimal concrete ZosmfRequest
+        ZosmfRequest request = new ZosmfRequest(connection) {
+            @Override
+            public Response executeRequest() {
+                return null; // not used in this test
+            }
+
+            @Override
+            public void setBody(Object body) {
+            }
+
+            @Override
+            public void setStandardHeaders() {
+            }
+        };
+
+        // Mock HttpResponse to simulate 404 error
+        HttpResponse<String> httpResponse = Mockito.mock(HttpResponse.class);
+        Mockito.when(httpResponse.getStatus()).thenReturn(404);
+        Mockito.when(httpResponse.getStatusText()).thenReturn("Not Found");
+        Mockito.when(httpResponse.getBody()).thenReturn("Error occurred");
+        Mockito.when(httpResponse.getCookies()).thenReturn(null);
+
+        // Assert that buildResponse throws ZosmfRequestException
+        ZosmfRequestException thrown = assertThrows(
+                ZosmfRequestException.class,
+                () -> request.buildResponse(httpResponse),
+                "Expected buildResponse() to throw ZosmfRequestException"
+        );
+
+        // Verify correct message content
+        assertTrue(thrown.getMessage().contains("http status error code: 404"));
+        assertTrue(thrown.getMessage().contains("Not Found"));
+    }
+
 }
