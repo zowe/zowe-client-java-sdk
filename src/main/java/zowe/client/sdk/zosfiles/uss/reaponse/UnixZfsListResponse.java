@@ -26,7 +26,14 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class UnixZfsListResponse {
 
-    private final int jsonVersion;
+    /**
+     * JSON version of the response
+     */
+    private final Integer jsonVersion;
+
+    /**
+     * List of zfs items
+     */
     private final List<UnixZfs> items;
 
     /**
@@ -37,9 +44,9 @@ public final class UnixZfsListResponse {
      */
     @JsonCreator
     public UnixZfsListResponse(
-            @JsonProperty("JSONversion") int jsonVersion,
+            @JsonProperty("JSONversion") Integer jsonVersion,
             @JsonProperty("items") List<UnixZfs> items) {
-        this.jsonVersion = jsonVersion;
+        this.jsonVersion = (jsonVersion == null) ? 0 : jsonVersion;
         this.items = items;
     }
 

@@ -29,17 +29,17 @@ public final class UnixFileListResponse {
     /**
      * JSON version of the response
      */
-    private final int jsonVersion;
+    private final Integer jsonVersion;
 
     /**
      * Number of filesystem items returned
      */
-    private final int returnedRows;
+    private final Integer returnedRows;
 
     /**
      * Total number of filesystem items
      */
-    private final int totalRows;
+    private final Integer totalRows;
 
     /**
      * List of UnixFile items
@@ -56,14 +56,14 @@ public final class UnixFileListResponse {
      */
     @JsonCreator
     public UnixFileListResponse(
-            @JsonProperty("JSONversion") int jsonVersion,
-            @JsonProperty("returnedRows") int returnedRows,
-            @JsonProperty("totalRows") int totalRows,
+            @JsonProperty("JSONversion") Integer jsonVersion,
+            @JsonProperty("returnedRows") Integer returnedRows,
+            @JsonProperty("totalRows") Integer totalRows,
             @JsonProperty("items") List<UnixFile> items
     ) {
-        this.jsonVersion = jsonVersion;
-        this.returnedRows = returnedRows;
-        this.totalRows = totalRows;
+        this.jsonVersion = (jsonVersion == null) ? 0 : jsonVersion;
+        this.returnedRows = (returnedRows == null) ? 0 : returnedRows;
+        this.totalRows = (totalRows == null) ? 0 : totalRows;
         this.items = items;
     }
 
