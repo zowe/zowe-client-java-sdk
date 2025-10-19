@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
@@ -48,7 +47,6 @@ import java.util.Map;
 public class UssList {
 
     private final ZosConnection connection;
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private ZosmfRequest request;
 
     /**
