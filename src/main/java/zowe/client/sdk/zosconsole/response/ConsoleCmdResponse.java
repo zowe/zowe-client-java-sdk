@@ -9,9 +9,7 @@
  */
 package zowe.client.sdk.zosconsole.response;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
 /**
  * z/OSMF synchronous console command response messages. See the z/OSMF REST API publication for complete details.
@@ -25,27 +23,27 @@ public class ConsoleCmdResponse {
     /**
      * Key that can be used to retrieve the command response.
      */
-    @JsonProperty("cmd-response-key")
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String cmdResponseKey;
 
     /**
      * URL that can be used to retrieve the command response later
      * when the value for cmd-response is empty.
      */
-    @JsonProperty("cmd-response-url")
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String cmdResponseUrl;
 
     /**
      * URI that can be used to retrieve the command response later
      * when the value for cmd-response is empty. The URI starts with /zosmf.
      */
-    @JsonProperty("cmd-response-uri")
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String cmdResponseUri;
 
     /**
      * Command response text.
      */
-    @JsonProperty("cmd-response")
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String cmdResponse;
 
     /**
@@ -53,7 +51,7 @@ public class ConsoleCmdResponse {
      * as N or not specified. If the keyword was detected in the command response,
      * the value is true. Otherwise, the value is false.
      */
-    @JsonProperty("sol-key-detected")
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String solKeyDetected;
 
     /**
