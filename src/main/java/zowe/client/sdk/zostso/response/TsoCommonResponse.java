@@ -9,6 +9,10 @@
  */
 package zowe.client.sdk.zostso.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * The z/OSMF tso common response.
  * <p>
@@ -17,17 +21,51 @@ package zowe.client.sdk.zostso.response;
  * @author Frank Giordano
  * @version 5.0
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TsoCommonResponse {
 
-    private String servletKey;
-    private String ver;
-    private Boolean timeout;
-    private Boolean reused;
+    /**
+     * TSO session identifier
+     */
+    @JsonProperty("servletKey")
+    private final String servletKey;
 
     /**
-     * TsoStopResponse No-argument constructor (required by Jackson)
+     * TSO version
      */
-    public TsoCommonResponse() {
+    @JsonProperty("ver")
+    private final String ver;
+
+    /**
+     * Indicates if timeout occurred
+     */
+    @JsonProperty("timeout")
+    private final Boolean timeout;
+
+    /**
+     * Indicates if a session was reused
+     */
+    @JsonProperty("reused")
+    private final Boolean reused;
+
+    /**
+     * TsoCommonResponse constructor for JSON deserialization
+     *
+     * @param servletKey TSO session identifier
+     * @param ver        TSO version
+     * @param timeout    Indicates if timeout occurred
+     * @param reused     Indicates if a session was reused
+     */
+    @JsonCreator
+    public TsoCommonResponse(
+            @JsonProperty("servletKey") final String servletKey,
+            @JsonProperty("ver") final String ver,
+            @JsonProperty("timeout") final Boolean timeout,
+            @JsonProperty("reused") final Boolean reused) {
+        this.servletKey = servletKey;
+        this.ver = ver;
+        this.timeout = timeout;
+        this.reused = reused;
     }
 
     /**
@@ -40,30 +78,12 @@ public class TsoCommonResponse {
     }
 
     /**
-     * Set tso session id
-     *
-     * @param servletKey string value representing tso session id
-     */
-    public void setServletKey(String servletKey) {
-        this.servletKey = servletKey;
-    }
-
-    /**
      * Retrieve tso version value
      *
      * @return string value
      */
     public String getVer() {
         return ver;
-    }
-
-    /**
-     * Set tso version value
-     *
-     * @param ver string value
-     */
-    public void setVer(String ver) {
-        this.ver = ver;
     }
 
     /**
@@ -76,30 +96,12 @@ public class TsoCommonResponse {
     }
 
     /**
-     * Set tso timeout value
-     *
-     * @param timeout Boolean value
-     */
-    public void setTimeout(Boolean timeout) {
-        this.timeout = timeout;
-    }
-
-    /**
      * Retrieve tso reuse value
      *
      * @return boolean value
      */
     public Boolean getReused() {
         return reused;
-    }
-
-    /**
-     * Set tso reuse value
-     *
-     * @param reused boolean value
-     */
-    public void setReused(Boolean reused) {
-        this.reused = reused;
     }
 
     /**

@@ -13,8 +13,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Optional;
-
 /**
  * z/OSMF synchronous console command response messages. See the z/OSMF REST API publication for complete details.
  *
@@ -59,12 +57,12 @@ public class ConsoleCmdResponse {
     private final String solKeyDetected;
 
     /**
-     * Constructor for JSON deserialization
+     * ConsoleCmdResponse constructor for JSON deserialization
      *
      * @param cmdResponseKey Key that can be used to retrieve the command response
      * @param cmdResponseUrl URL that can be used to retrieve the command response later
      * @param cmdResponseUri URI that can be used to retrieve the command response later
-     * @param cmdResponse Command response text
+     * @param cmdResponse    Command response text
      * @param solKeyDetected Indicates if the keyword was detected in the command response
      */
     @JsonCreator
@@ -86,8 +84,8 @@ public class ConsoleCmdResponse {
      *
      * @return cmdResponseKey value
      */
-    public Optional<String> getCmdResponseKey() {
-        return Optional.ofNullable(cmdResponseKey);
+    public String getCmdResponseKey() {
+        return cmdResponseKey;
     }
 
     /**
@@ -95,8 +93,8 @@ public class ConsoleCmdResponse {
      *
      * @return cmdResponseUrl value
      */
-    public Optional<String> getCmdResponseUrl() {
-        return Optional.ofNullable(cmdResponseUrl);
+    public String getCmdResponseUrl() {
+        return cmdResponseUrl;
     }
 
     /**
@@ -104,8 +102,8 @@ public class ConsoleCmdResponse {
      *
      * @return cmdResponseUri value
      */
-    public Optional<String> getCmdResponseUri() {
-        return Optional.ofNullable(cmdResponseUri);
+    public String getCmdResponseUri() {
+        return cmdResponseUri;
     }
 
     /**
@@ -113,8 +111,8 @@ public class ConsoleCmdResponse {
      *
      * @return cmdResponse value
      */
-    public Optional<String> getCmdResponse() {
-        return Optional.ofNullable(cmdResponse);
+    public String getCmdResponse() {
+        return cmdResponse;
     }
 
     /**
@@ -122,8 +120,8 @@ public class ConsoleCmdResponse {
      *
      * @return solKeyDetected value
      */
-    public Optional<String> getSolKeyDetected() {
-        return Optional.ofNullable(solKeyDetected);
+    public String getSolKeyDetected() {
+        return solKeyDetected;
     }
 
     /**

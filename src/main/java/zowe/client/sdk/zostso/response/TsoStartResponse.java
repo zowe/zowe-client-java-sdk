@@ -9,26 +9,49 @@
  */
 package zowe.client.sdk.zostso.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * The z/OSMF tso start response.
  *
  * @author Frank Giordano
  * @version 5.0
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TsoStartResponse {
 
+    /**
+     * Indicates if TSO start was successful
+     */
+    @JsonProperty("success")
     private final boolean success;
+
+    /**
+     * TSO session identifier
+     */
+    @JsonProperty("sessionId")
     private final String sessionId;
+
+    /**
+     * TSO start response message
+     */
+    @JsonProperty("response")
     private final String response;
 
     /**
-     * TsoStartResponse constructor
+     * TsoStartResponse constructor for JSON deserialization
      *
-     * @param success   boolean value
-     * @param sessionId string value
-     * @param response  string value
+     * @param success   indicates if TSO start was successful
+     * @param sessionId TSO session identifier
+     * @param response  TSO start response message
      */
-    public TsoStartResponse(final boolean success, final String sessionId, final String response) {
+    @JsonCreator
+    public TsoStartResponse(
+            @JsonProperty("success") final boolean success,
+            @JsonProperty("sessionId") final String sessionId,
+            @JsonProperty("response") final String response) {
         this.success = success;
         this.sessionId = sessionId;
         this.response = response;
@@ -68,10 +91,11 @@ public class TsoStartResponse {
      */
     @Override
     public String toString() {
-        return "TsoStartResponse [" +
-                "success=" + success + ", " +
-                "sessionId=" + sessionId + ", " +
-                "response=" + response + "]";
+        return "TsoStartResponse{" +
+                "success=" + success +
+                ", sessionId='" + sessionId + '\'' +
+                ", response='" + response + '\'' +
+                '}';
     }
 
 }

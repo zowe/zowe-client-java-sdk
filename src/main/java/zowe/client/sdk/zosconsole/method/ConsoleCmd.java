@@ -158,7 +158,7 @@ public class ConsoleCmd {
 
         ConsoleCmdResponse response = objectMapper.convertValue(jsonNode, ConsoleCmdResponse.class);
         if (consoleInputData.isProcessResponse()) {
-            response = response.withCmdResponse(ConsoleUtils.processCmdResponse(response.getCmdResponse().orElse("")));
+            response = response.withCmdResponse(ConsoleUtils.processCmdResponse(response.getCmdResponse()));
         }
         return response;
     }

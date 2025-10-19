@@ -135,7 +135,7 @@ public class ConsoleGetTest {
                 mockJsonGetRequestAuth.getHeaders().toString());
 
         // 🔍 Validate response was processed
-        assertEquals("LINE1\nLINE2\n", response.getCmdResponse().orElse("n/a"));
+        assertEquals("LINE1\nLINE2\n", response.getCmdResponse());
     }
 
 
@@ -149,7 +149,7 @@ public class ConsoleGetTest {
         );
         ConsoleGet consoleGet = new ConsoleGet(connection, mockJsonGetRequest);
         ConsoleGetResponse response = consoleGet.getResponse("respKey");
-        assertEquals("LINE1\nLINE2\n", response.getCmdResponse().orElse("n/a"));
+        assertEquals("LINE1\nLINE2\n", response.getCmdResponse());
     }
 
     @Test
@@ -162,7 +162,7 @@ public class ConsoleGetTest {
         );
         ConsoleGet consoleGet = new ConsoleGet(connection, mockJsonGetRequest);
         ConsoleGetResponse response = consoleGet.getResponse("respKey");
-        assertEquals("", response.getCmdResponse().orElse("n/a"));
+        assertEquals("", response.getCmdResponse());
     }
 
     @Test
