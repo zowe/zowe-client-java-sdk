@@ -90,12 +90,18 @@ public class UssList {
 
         url.append("?path=").append(EncodeUtils.encodeURIComponent(FileUtils.validatePath(
                 listInputData.getPath().orElseThrow(() -> new IllegalArgumentException("path not specified")))));
-        listInputData.getGroup().ifPresent(group -> url.append("&group=").append(EncodeUtils.encodeURIComponent(group)));
-        listInputData.getUser().ifPresent(user -> url.append("&user=").append(EncodeUtils.encodeURIComponent(user)));
-        listInputData.getMtime().ifPresent(mtime -> url.append("&mtime=").append(EncodeUtils.encodeURIComponent(mtime)));
-        listInputData.getSize().ifPresent(size -> url.append("&size=").append(size));
-        listInputData.getName().ifPresent(name -> url.append("&name=").append(EncodeUtils.encodeURIComponent(name)));
-        listInputData.getPerm().ifPresent(perm -> url.append("&perm=").append(EncodeUtils.encodeURIComponent(perm)));
+        listInputData.getGroup().ifPresent(group ->
+                url.append("&group=").append(EncodeUtils.encodeURIComponent(group)));
+        listInputData.getUser().ifPresent(user ->
+                url.append("&user=").append(EncodeUtils.encodeURIComponent(user)));
+        listInputData.getMtime().ifPresent(mtime ->
+                url.append("&mtime=").append(EncodeUtils.encodeURIComponent(mtime)));
+        listInputData.getSize().ifPresent(size ->
+                url.append("&size=").append(size));
+        listInputData.getName().ifPresent(name ->
+                url.append("&name=").append(EncodeUtils.encodeURIComponent(name)));
+        listInputData.getPerm().ifPresent(perm ->
+                url.append("&perm=").append(EncodeUtils.encodeURIComponent(perm)));
         // If the type parameter is specified with the size parameter, it must be set to 'f'.
         // Sizes that are associated with all other types are unspecified.
         if (listInputData.getSize().isPresent() && listInputData.getType().isPresent()) {
