@@ -6,114 +6,137 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Copyright Contributors to the Zowe Project.
- *
  */
 package zowe.client.sdk.zoslogs.response;
 
+import com.fasterxml.jackson.annotation.*;
 import zowe.client.sdk.zoslogs.model.ZosLogItem;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalLong;
 
 /**
  * Standard log response document. Represents the details about the messages and logs.
  *
+ * <p>Refactored as an immutable Jackson POJO without Optional or builder.
+ * Uses primitive {@code long} defaults for numeric fields when null.</p>
+ *
  * @author Frank Giordano
  * @version 5.0
  */
-public class ZosLogResponse {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public final class ZosLogResponse {
 
     /**
      * Specify the timezone of the z/OS system. Valid values for the timezone range from -12 to 12.
      * For example, "-3" means UTC-3 timezone.
      */
-    private final Long timeZone;
+    private final long timeZone;
 
     /**
      * The UNIX timestamp. This value could be used in a later request to specify a starting timestamp.
      * Logs in the "nextTimestamp" are not returned to the current response.
      */
-    private final Long nextTimeStamp;
+    private final long nextTimeStamp;
 
     /**
      * Indicates the source of the log.
      * Value "OPERLOG" indicates the operation log.
      */
+    @JsonSetter(value = "source", nulls = Nulls.AS_EMPTY)
     private final String source;
 
     /**
      * Total number of messages returned to the response.
      */
-    private final Long totalItems;
+    private final long totalItems;
 
     /**
-     * JSON array of messages
+     * JSON array of messages.
      */
     private final List<ZosLogItem> items;
 
     /**
-     * ZosLogReply constructor
+     * Jackson constructor for ZosLogResponse.
      *
-     * @param timeZone      long timezone value returned from response
-     * @param nextTimeStamp long nextTimestamp value returned from response
-     * @param source        string source value returned from response
-     * @param totalItems    long totalitems value returned from response
-     * @param items         ZosLogItem object items returned from response
-     * @author Frank Giordano
+     * @param timeZone      Timezone value returned from response
+     * @param nextTimeStamp Next timestamp value returned from response
+     * @param source        Source string value returned from response
+     * @param totalItems    Total items count returned from response
+     * @param items         List of ZosLogItem messages returned from response
      */
-    public ZosLogResponse(final Long timeZone, final Long nextTimeStamp, final String source, final Long totalItems,
-                          final List<ZosLogItem> items) {
-        this.timeZone = timeZone;
-        this.nextTimeStamp = nextTimeStamp;
+    @JsonCreator
+    public ZosLogResponse(
+            @JsonProperty("timeZone") final Long timeZone,
+            @JsonProperty("nextTimeStamp") final Long nextTimeStamp,
+            @JsonProperty("source") final String source,
+            @JsonProperty("totalItems") final Long totalItems,
+            @JsonProperty("items") final List<ZosLogItem> items) {
+        this.timeZone = timeZone == null ? 0L : timeZone;
+        this.nextTimeStamp = nextTimeStamp == null ? 0L : nextTimeStamp;
         this.source = source;
-        this.totalItems = totalItems;
+        this.totalItems = totalItems == null ? 0L : totalItems;
         this.items = items;
     }
 
     /**
-     * Return timeZone OptionalLong value.
+     * Retrieve the timezone.
      *
-     * @return OptionalLong value
+     * @return long value representing the timezone (0 if absent)
      */
-    public OptionalLong getTimeZone() {
-        return (timeZone == null) ? OptionalLong.empty() : OptionalLong.of(timeZone);
+    public long getTimeZone() {
+        return timeZone;
     }
 
     /**
-     * Return nextTimeStamp OptionalLong value.
+     * Retrieve the next timestamp.
      *
-     * @return OptionalLong value
+     * @return long value representing the next timestamp (0 if absent)
      */
-    public OptionalLong getNextTimeStamp() {
-        return (nextTimeStamp == null) ? OptionalLong.empty() : OptionalLong.of(nextTimeStamp);
+    public long getNextTimeStamp() {
+        return nextTimeStamp;
     }
 
     /**
-     * Return source Optional value.
+     * Retrieve the source of the log.
      *
-     * @return OptionalLong value
+     * @return source string
      */
-    public Optional<String> getSource() {
-        return Optional.ofNullable(source);
+    public String getSource() {
+        return source;
     }
 
     /**
-     * Return totalItems OptionalLong value.
+     * Retrieve the total number of items.
      *
-     * @return OptionalLong value
+     * @return long total number of messages (0 if absent)
      */
-    public OptionalLong getTotalItems() {
-        return (totalItems == null) ? OptionalLong.empty() : OptionalLong.of(totalItems);
+    public long getTotalItems() {
+        return totalItems;
     }
 
     /**
-     * Return items value.
+     * Retrieve the list of log items.
      *
-     * @return OptionalLong value
+     * @return list of {@link ZosLogItem}
      */
-    public List<ZosLogItem> getItemLst() {
+    public List<ZosLogItem> getItems() {
         return items;
+    }
+
+    /**
+     * Return string value representing ZosLogResponse object.
+     *
+     * @return string representation of ZosLogResponse
+     */
+    @Override
+    public String toString() {
+        return "ZosLogResponse{" +
+                "timeZone=" + timeZone +
+                ", nextTimeStamp=" + nextTimeStamp +
+                ", source='" + source + '\'' +
+                ", totalItems=" + totalItems +
+                ", items=" + items +
+                '}';
     }
 
 }

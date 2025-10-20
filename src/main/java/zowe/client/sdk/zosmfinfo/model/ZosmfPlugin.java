@@ -9,10 +9,7 @@
  */
 package zowe.client.sdk.zosmfinfo.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
+import com.fasterxml.jackson.annotation.*;
 
 /**
  * The plugin information structure for the plugin property of the z/OSMF info response.
@@ -20,6 +17,7 @@ import com.fasterxml.jackson.annotation.Nulls;
  * @author Frank Giordano
  * @version 5.0
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ZosmfPlugin {
 
     /**

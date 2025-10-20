@@ -36,14 +36,6 @@ public enum ParseType {
     /**
      * property type
      */
-    PROPS,
-    /**
-     * zos log item type
-     */
-    ZOS_LOG_ITEM,
-    /**
-     * zos log reply item
-     */
-    ZOS_LOG_REPLY
+    PROPS
 
 }

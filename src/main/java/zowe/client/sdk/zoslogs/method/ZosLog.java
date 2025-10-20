@@ -10,13 +10,7 @@
  */
 package zowe.client.sdk.zoslogs.method;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseFactory;
-import zowe.client.sdk.parse.ZosLogItemJsonParse;
-import zowe.client.sdk.parse.ZosLogReplyJsonParse;
-import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
@@ -25,13 +19,10 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zoslogs.input.ZosLogInputData;
-import zowe.client.sdk.zoslogs.model.ZosLogItem;
 import zowe.client.sdk.zoslogs.response.ZosLogResponse;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Get z/OS log via z/OSMF restful api
@@ -125,24 +116,11 @@ public class ZosLog {
         }
         request.setUrl(url.toString().replace("?&", "?"));
 
-        final String jsonStr = request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no zos log response phrase")).toString();
-        final JSONObject jsonObject = JsonUtils.parse(jsonStr);
-        JSONArray jsonArray = new JSONArray();
-        if (jsonObject.get("items") != null) {
-            jsonArray = (JSONArray) jsonObject.get("items");
-        }
+        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no zos log response phrase")));
 
-        final List<ZosLogItem> zosLogItems = new ArrayList<>();
-        final boolean isProcessResponse = logInputData.isProcessResponses();
-
-        for (Object itemJsonObj : jsonArray) {
-            final ZosLogItemJsonParse parser = (ZosLogItemJsonParse) JsonParseFactory.buildParser(ParseType.ZOS_LOG_ITEM);
-            zosLogItems.add(parser.parseResponse(itemJsonObj, isProcessResponse));
-        }
-
-        final ZosLogReplyJsonParse parser = (ZosLogReplyJsonParse) JsonParseFactory.buildParser(ParseType.ZOS_LOG_REPLY);
-        return parser.parseResponse(jsonObject, zosLogItems);
+        String context = "issueCommand";
+        return JsonUtils.parseResponse(responsePhrase, ZosLogResponse.class, context);
     }
 
 }

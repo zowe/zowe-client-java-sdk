@@ -6,12 +6,10 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Copyright Contributors to the Zowe Project.
- *
  */
 package zowe.client.sdk.zoslogs.model;
 
-import java.util.Optional;
-import java.util.OptionalLong;
+import com.fasterxml.jackson.annotation.*;
 
 /**
  * Represents the details of one log item.
@@ -19,56 +17,67 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 5.0
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ZosLogItem {
 
     /**
      * Eight-character command and response token (CART).
      */
+    @JsonSetter(value = "cart", nulls = Nulls.AS_EMPTY)
     private final String cart;
 
     /**
      * The color of the message.
      */
+    @JsonSetter(value = "color", nulls = Nulls.AS_EMPTY)
     private final String color;
 
     /**
      * The name of the job that generates the message.
      */
+    @JsonSetter(value = "jobName", nulls = Nulls.AS_EMPTY)
     private final String jobName;
 
     /**
      * The content of the message.
      */
+    @JsonSetter(value = "message", nulls = Nulls.AS_EMPTY)
     private final String message;
 
     /**
      * The message ID.
      */
+    @JsonSetter(value = "messageId", nulls = Nulls.AS_EMPTY)
     private final String messageId;
 
     /**
      * Reply ID, in decimal.
      */
+    @JsonSetter(value = "replyId", nulls = Nulls.AS_EMPTY)
     private final String replyId;
 
     /**
      * Original eight-character system name.
      */
+    @JsonSetter(value = "system", nulls = Nulls.AS_EMPTY)
     private final String system;
 
     /**
      * Type variable
      */
+    @JsonSetter(value = "type", nulls = Nulls.AS_EMPTY)
     private final String type;
 
     /**
      * Indicate whether the message is a DOM, WTOR, or HOLD message.
      */
+    @JsonSetter(value = "subType", nulls = Nulls.AS_EMPTY)
     private final String subType;
 
     /**
      * For example, "Thu Feb 03 03:00 GMT 2021".
      */
+    @JsonSetter(value = "time", nulls = Nulls.AS_EMPTY)
     private final String time;
 
     /**
@@ -79,318 +88,163 @@ public class ZosLogItem {
     /**
      * ZosLogItem constructor
      *
-     * @param builder Builder Object
-     * @author Frank Giordano
+     * @param cart      Eight-character command and response token (CART)
+     * @param color     The color of the message
+     * @param jobName   The name of the job that generates the message
+     * @param message   The content of the message
+     * @param messageId The message ID
+     * @param replyId   Reply ID, in decimal
+     * @param system    Original eight-character system name
+     * @param type      Type variable
+     * @param subType   Indicate whether the message is a DOM, WTOR, or HOLD message
+     * @param time      For example, "Thu Feb 03 03:00 GMT 2021"
+     * @param timeStamp UNIX timestamp. For example, 1621920830109
      */
-    private ZosLogItem(final Builder builder) {
-        this.cart = builder.cart;
-        this.color = builder.color;
-        this.jobName = builder.jobName;
-        this.message = builder.message;
-        this.messageId = builder.messageId;
-        this.replyId = builder.replyId;
-        this.system = builder.system;
-        this.type = builder.type;
-        this.subType = builder.subType;
-        this.time = builder.time;
-        this.timeStamp = builder.timeStamp;
+    @JsonCreator
+    public ZosLogItem(
+            @JsonProperty("cart") final String cart,
+            @JsonProperty("color") final String color,
+            @JsonProperty("jobName") final String jobName,
+            @JsonProperty("message") final String message,
+            @JsonProperty("messageId") final String messageId,
+            @JsonProperty("replyId") final String replyId,
+            @JsonProperty("system") final String system,
+            @JsonProperty("type") final String type,
+            @JsonProperty("subType") final String subType,
+            @JsonProperty("time") final String time,
+            @JsonProperty("timeStamp") final Long timeStamp) {
+        this.cart = cart;
+        this.color = color;
+        this.jobName = jobName;
+        this.message = message;
+        this.messageId = messageId;
+        this.replyId = replyId;
+        this.system = system;
+        this.type = type;
+        this.subType = subType;
+        this.time = time;
+        this.timeStamp = timeStamp == null ? 0L : timeStamp;
     }
 
     /**
-     * Retrieve cart optional value
+     * Retrieve cart value.
      *
-     * @return cart optional value
+     * @return cart value
      */
-    public Optional<String> getCart() {
-        return Optional.ofNullable(cart);
+    public String getCart() {
+        return cart;
     }
 
     /**
-     * Retrieve color optional value
+     * Retrieve color value.
      *
-     * @return color optional value
+     * @return color value
      */
-    public Optional<String> getColor() {
-        return Optional.ofNullable(color);
+    public String getColor() {
+        return color;
     }
 
     /**
-     * Retrieve jobName optional value
+     * Retrieve jobName value.
      *
-     * @return jobName optional value
+     * @return jobName value
      */
-    public Optional<String> getJobName() {
-        return Optional.ofNullable(jobName);
+    public String getJobName() {
+        return jobName;
     }
 
     /**
-     * Retrieve message optional value
+     * Retrieve message value.
      *
-     * @return message optional value
+     * @return message value
      */
-    public Optional<String> getMessage() {
-        return Optional.ofNullable(message);
+    public String getMessage() {
+        return message;
     }
 
     /**
-     * Retrieve messageId optional value
+     * Retrieve messageId value.
      *
-     * @return messageId optional value
+     * @return messageId value
      */
-    public Optional<String> getMessageId() {
-        return Optional.ofNullable(messageId);
+    public String getMessageId() {
+        return messageId;
     }
 
     /**
-     * Retrieve replyId optional value
+     * Retrieve replyId value.
      *
-     * @return replyId optional value
+     * @return replyId value
      */
-    public Optional<String> getReplyId() {
-        return Optional.ofNullable(replyId);
+    public String getReplyId() {
+        return replyId;
     }
 
     /**
-     * Retrieve system optional value
+     * Retrieve system value.
      *
-     * @return system optional value
+     * @return system value
      */
-    public Optional<String> getSystem() {
-        return Optional.ofNullable(system);
+    public String getSystem() {
+        return system;
     }
 
     /**
-     * Retrieve type optional value
+     * Retrieve type value.
      *
-     * @return type optional value
+     * @return type value
      */
-    public Optional<String> getType() {
-        return Optional.ofNullable(type);
+    public String getType() {
+        return type;
     }
 
     /**
-     * Retrieve subType optional value
+     * Retrieve subType value.
      *
-     * @return subType optional value
+     * @return subType value
      */
-    public Optional<String> getSubType() {
-        return Optional.ofNullable(subType);
+    public String getSubType() {
+        return subType;
     }
 
     /**
-     * Retrieve time optional value
+     * Retrieve time value.
      *
-     * @return time optional value
+     * @return time value
      */
-    public Optional<String> getTime() {
-        return Optional.ofNullable(time);
+    public String getTime() {
+        return time;
     }
 
     /**
-     * Retrieve number optional value
+     * Retrieve timeStamp value.
      *
-     * @return number optional value
+     * @return timeStamp value (0L if absent in JSON)
      */
-    public OptionalLong getTimeStamp() {
-        return (timeStamp == null) ? OptionalLong.empty() : OptionalLong.of(timeStamp);
+    public long getTimeStamp() {
+        return timeStamp;
     }
 
     /**
-     * Builder class for ZosLogItem
+     * Return string value representing ZosLogItem object.
+     *
+     * @return string representation of ZosLogItem
      */
-    public static class Builder {
-
-        /**
-         * Eight-character command and response token (CART).
-         */
-        private String cart;
-
-        /**
-         * The color of the message.
-         */
-        private String color;
-
-        /**
-         * The name of the job that generates the message.
-         */
-        private String jobName;
-
-        /**
-         * The content of the message.
-         */
-        private String message;
-
-        /**
-         * The message ID.
-         */
-        private String messageId;
-
-        /**
-         * Reply ID, in decimal.
-         */
-        private String replyId;
-
-        /**
-         * Original eight-character system name.
-         */
-        private String system;
-
-        /**
-         * Type variable
-         */
-        private String type;
-
-        /**
-         * Indicate whether the message is a DOM, WTOR, or HOLD message.
-         */
-        private String subType;
-
-        /**
-         * For example, "Thu Feb 03 03:00 GMT 2021".
-         */
-        private String time;
-
-        /**
-         * UNIX timestamp. For example, 1621920830109.
-         */
-        private Long timeStamp;
-
-        /**
-         * Builder constructor
-         */
-        public Builder() {
-        }
-
-        /**
-         * Set cart string value from response
-         *
-         * @param cart string value
-         * @return Builder object
-         */
-        public Builder cart(final String cart) {
-            this.cart = cart;
-            return this;
-        }
-
-        /**
-         * Set a color string value from response
-         *
-         * @param color string value
-         * @return Builder object
-         */
-        public Builder color(final String color) {
-            this.color = color;
-            return this;
-        }
-
-        /**
-         * Set jobName string value from response
-         *
-         * @param jobName string value
-         * @return Builder object
-         */
-        public Builder jobName(final String jobName) {
-            this.jobName = jobName;
-            return this;
-        }
-
-        /**
-         * Set a message string value from response
-         *
-         * @param message string value
-         * @return Builder object
-         */
-        public Builder message(final String message) {
-            this.message = message;
-            return this;
-        }
-
-        /**
-         * Set messageId string value from response
-         *
-         * @param messageId string value
-         * @return Builder object
-         */
-        public Builder messageId(final String messageId) {
-            this.messageId = messageId;
-            return this;
-        }
-
-        /**
-         * Set replyId string value from response
-         *
-         * @param replyId string value
-         * @return Builder object
-         */
-        public Builder replyId(final String replyId) {
-            this.replyId = replyId;
-            return this;
-        }
-
-        /**
-         * Set system string value from response
-         *
-         * @param system string value
-         * @return Builder object
-         */
-        public Builder system(final String system) {
-            this.system = system;
-            return this;
-        }
-
-        /**
-         * Set type string value from response
-         *
-         * @param type string value
-         * @return Builder object
-         */
-        public Builder type(final String type) {
-            this.type = type;
-            return this;
-        }
-
-        /**
-         * Set subType string value from response
-         *
-         * @param subType string value
-         * @return Builder object
-         */
-        public Builder subType(final String subType) {
-            this.subType = subType;
-            return this;
-        }
-
-        /**
-         * Set time string value from response
-         *
-         * @param time string value
-         * @return Builder object
-         */
-        public Builder time(final String time) {
-            this.time = time;
-            return this;
-        }
-
-        /**
-         * Set timeStamp long value from response
-         *
-         * @param timeStamp long value
-         * @return Builder object
-         */
-        public Builder timeStamp(final long timeStamp) {
-            this.timeStamp = timeStamp;
-            return this;
-        }
-
-        /**
-         * Return ZosLogItem object based on Builder this object
-         *
-         * @return ZosLogItem this object
-         */
-        public ZosLogItem build() {
-            return new ZosLogItem(this);
-        }
-
+    @Override
+    public String toString() {
+        return "ZosLogItem{" +
+                "cart='" + cart + '\'' +
+                ", color='" + color + '\'' +
+                ", jobName='" + jobName + '\'' +
+                ", message='" + message + '\'' +
+                ", messageId='" + messageId + '\'' +
+                ", replyId='" + replyId + '\'' +
+                ", system='" + system + '\'' +
+                ", type='" + type + '\'' +
+                ", subType='" + subType + '\'' +
+                ", time='" + time + '\'' +
+                ", timeStamp='" + timeStamp + '\'' +
+                '}';
     }
 
 }
