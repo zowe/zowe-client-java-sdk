@@ -12,6 +12,8 @@ package zowe.client.sdk.zosmfinfo.response;
 import com.fasterxml.jackson.annotation.*;
 import zowe.client.sdk.zosmfinfo.model.ZosmfPlugin;
 
+import java.util.Arrays;
+
 /**
  * The z/OSMF info API response.
  * Immutable class using Jackson for JSON parsing.
@@ -189,7 +191,7 @@ public final class ZosmfInfoResponse {
                 ", zosmfSafRealm=" + zosmfSafRealm +
                 ", zosmfFullVersion=" + zosmfFullVersion +
                 ", apiVersion=" + apiVersion +
-                ", zosmfPluginsInfo=" + zosmfPluginsInfo +
+                ", zosmfPluginsInfo=" + Arrays.toString(zosmfPluginsInfo) +
                 '}';
     }
 
