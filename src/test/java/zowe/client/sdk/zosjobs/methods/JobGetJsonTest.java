@@ -106,18 +106,18 @@ public class JobGetJsonTest {
 
         final Job job = getJobs.getById("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
-        assertEquals("jobid", job.getJobId().get());
-        assertEquals("jobname", job.getJobName().get());
-        assertEquals("subsystem", job.getSubSystem().get());
-        assertEquals("owner", job.getOwner().get());
-        assertEquals("status", job.getStatus().get());
-        assertEquals("type", job.getType().get());
-        assertEquals("class", job.getClasss().get());
-        assertEquals("retcode", job.getRetCode().get());
-        assertEquals("url", job.getUrl().get());
-        assertEquals("files-url", job.getFilesUrl().get());
-        assertEquals("job-correlator", job.getJobCorrelator().get());
-        assertEquals("phase-name", job.getPhaseName().get());
+        assertEquals("jobid", job.getJobId());
+        assertEquals("jobname", job.getJobName());
+        assertEquals("subsystem", job.getSubSystem());
+        assertEquals("owner", job.getOwner());
+        assertEquals("status", job.getStatus());
+        assertEquals("type", job.getType());
+        assertEquals("class", job.getClasss());
+        assertEquals("retcode", job.getRetCode());
+        assertEquals("url", job.getUrl());
+        assertEquals("files-url", job.getFilesUrl());
+        assertEquals("job-correlator", job.getJobCorrelator());
+        assertEquals("phase-name", job.getPhaseName());
     }
 
     @Test
@@ -135,7 +135,7 @@ public class JobGetJsonTest {
 
         final Job job = getJobs.getById("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
-        assertEquals("job", job.getJobId().get());
+        assertEquals("job", job.getJobId());
     }
 
     @Test
@@ -197,10 +197,10 @@ public class JobGetJsonTest {
         String errorMsg = "";
         try {
             getJobs.getStatusByJob(new Job.Builder().build());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalStateException e) {
             errorMsg = e.getMessage();
         }
-        assertEquals(JobsConstants.JOB_ID_ILLEGAL_MSG, errorMsg);
+        assertEquals(JobsConstants.JOB_NAME_ILLEGAL_MSG, errorMsg);
     }
 
     @Test
@@ -210,18 +210,18 @@ public class JobGetJsonTest {
 
         final Job job = getJobs.getStatusByJob(new Job.Builder().jobId("1").jobName("jobName").build());
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/1?step-data=Y", getJobs.getUrl());
-        assertEquals("jobid", job.getJobId().get());
-        assertEquals("jobname", job.getJobName().get());
-        assertEquals("subsystem", job.getSubSystem().get());
-        assertEquals("owner", job.getOwner().get());
-        assertEquals("status", job.getStatus().get());
-        assertEquals("type", job.getType().get());
-        assertEquals("class", job.getClasss().get());
-        assertEquals("retcode", job.getRetCode().get());
-        assertEquals("url", job.getUrl().get());
-        assertEquals("files-url", job.getFilesUrl().get());
-        assertEquals("job-correlator", job.getJobCorrelator().get());
-        assertEquals("phase-name", job.getPhaseName().get());
+        assertEquals("jobid", job.getJobId());
+        assertEquals("jobname", job.getJobName());
+        assertEquals("subsystem", job.getSubSystem());
+        assertEquals("owner", job.getOwner());
+        assertEquals("status", job.getStatus());
+        assertEquals("type", job.getType());
+        assertEquals("class", job.getClasss());
+        assertEquals("retcode", job.getRetCode());
+        assertEquals("url", job.getUrl());
+        assertEquals("files-url", job.getFilesUrl());
+        assertEquals("job-correlator", job.getJobCorrelator());
+        assertEquals("phase-name", job.getPhaseName());
     }
 
     @Test
@@ -229,7 +229,7 @@ public class JobGetJsonTest {
         String errorMsg = "";
         try {
             getJobs.getStatusByJob(new Job.Builder().jobId("1").build());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalStateException e) {
             errorMsg = e.getMessage();
         }
         assertEquals(JobsConstants.JOB_NAME_ILLEGAL_MSG, errorMsg);
@@ -240,7 +240,7 @@ public class JobGetJsonTest {
         String errorMsg = "";
         try {
             getJobs.getStatusByJob(new Job.Builder().jobName("jobName").build());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalStateException e) {
             errorMsg = e.getMessage();
         }
         assertEquals(JobsConstants.JOB_ID_ILLEGAL_MSG, errorMsg);

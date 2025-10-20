@@ -101,7 +101,7 @@ public class JobGet {
      */
     public String getJclByJob(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        return getJclCommon(new CommonJobInputData(job.getJobId().orElse(""), job.getJobName().orElse("")));
+        return getJclCommon(new CommonJobInputData(job.getJobId(), job.getJobName()));
     }
 
     /**
@@ -256,11 +256,13 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final String jsonStr = request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no get job response phrase")).toString();
-        final JSONArray results = JsonUtils.parseArray(jsonStr);
+        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no get job response phrase")));
+
+        final String context = "getCommon";
+        final JSONArray results = JsonUtils.parseArray(responsePhrase);
         for (final Object jsonObj : results) {
-            jobs.add((Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObj));
+            jobs.add(JsonUtils.parseResponse(String.valueOf(jsonObj), Job.class, context));
         }
 
         return jobs;
@@ -406,9 +408,7 @@ public class JobGet {
      */
     public List<JobFile> getSpoolFilesByJob(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        return getSpoolFilesCommon(new CommonJobInputData(
-                job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG)),
-                job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG))));
+        return getSpoolFilesCommon(new CommonJobInputData(job.getJobId(), job.getJobName()));
     }
 
     /**
@@ -439,8 +439,9 @@ public class JobGet {
         ValidateUtils.checkNullParameter(commonInputData == null, "commonInputData is null");
 
         url = connection.getZosmfUrl() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) + "/" +
-                commonInputData.getJobId().get();
+                EncodeUtils.encodeURIComponent(commonInputData.getJobName()
+                        .orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_NAME_ILLEGAL_MSG))) + "/" +
+                commonInputData.getJobId().orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_ID_ILLEGAL_MSG));
 
         if (commonInputData.isStepData()) {
             url += JobsConstants.QUERY_ID + JobsConstants.STEP_DATA;
@@ -451,11 +452,11 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final String jsonStr = request.executeRequest()
-                .getResponsePhrase().orElseThrow(() -> new IllegalStateException("no job get response phrase"))
-                .toString();
-        final JSONObject jsonObject = JsonUtils.parse(jsonStr);
-        return (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
+        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no job get response phrase")));
+
+        final String context = "getStatusCommon";
+        return JsonUtils.parseResponse(responsePhrase, Job.class, context);
     }
 
     /**
@@ -472,10 +473,7 @@ public class JobGet {
      */
     public Job getStatusByJob(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        return getStatusCommon(new CommonJobInputData(
-                job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG)),
-                job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG)),
-                true));
+        return getStatusCommon(new CommonJobInputData(job.getJobId(), job.getJobName(), true));
     }
 
     /**
@@ -491,7 +489,7 @@ public class JobGet {
         ValidateUtils.checkIllegalParameter(jobName, "jobName");
         ValidateUtils.checkIllegalParameter(jobId, "jobId");
         final Job job = getStatusCommon(new CommonJobInputData(jobId, jobName));
-        return job.getStatus().orElseThrow(() -> new IllegalStateException("job status not returned"));
+        return job.getStatus();
     }
 
     /**
@@ -504,10 +502,8 @@ public class JobGet {
      */
     public String getStatusValueByJob(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        final Job result = getStatusCommon(new CommonJobInputData(
-                job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG)),
-                job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG))));
-        return result.getStatus().orElseThrow(() -> new IllegalStateException("job status not returned"));
+        final Job result = getStatusCommon(new CommonJobInputData(job.getJobId(), job.getJobName()));
+        return result.getStatus();
     }
 
     /**

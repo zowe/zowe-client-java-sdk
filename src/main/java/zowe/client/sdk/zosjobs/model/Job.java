@@ -9,8 +9,7 @@
  */
 package zowe.client.sdk.zosjobs.model;
 
-import java.util.Optional;
-import java.util.OptionalLong;
+import com.fasterxml.jackson.annotation.*;
 
 /**
  * Standard job response document that represents the attributes and status of a z/OS batch job
@@ -18,46 +17,55 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 5.0
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Job {
 
     /**
      * Job id for a job. Uniquely identifies a job on a z/OS system
      */
+    @JsonSetter(value = "jobId", nulls = Nulls.AS_EMPTY)
     private final String jobId;
 
     /**
      * Job Name for a job
      */
+    @JsonSetter(value = "jobName", nulls = Nulls.AS_EMPTY)
     private final String jobName;
 
     /**
-     * The primary or secondary JES subsystem. If this value is null, the job was processed by the primary subsystem.
+     * The primary or secondary JES subsystem.
      */
+    @JsonSetter(value = "subSystem", nulls = Nulls.AS_EMPTY)
     private final String subSystem;
 
     /**
      * Owner of the job
      */
+    @JsonSetter(value = "owner", nulls = Nulls.AS_EMPTY)
     private final String owner;
 
     /**
      * Status of the job
      */
+    @JsonSetter(value = "status", nulls = Nulls.AS_EMPTY)
     private final String status;
 
     /**
      * Type of job
      */
+    @JsonSetter(value = "type", nulls = Nulls.AS_EMPTY)
     private final String type;
 
     /**
      * Job class
      */
+    @JsonSetter(value = "classs", nulls = Nulls.AS_EMPTY)
     private final String classs;
 
     /**
      * Return code of the job
      */
+    @JsonSetter(value = "retCode", nulls = Nulls.AS_EMPTY)
     private final String retCode;
 
     /**
@@ -68,17 +76,19 @@ public class Job {
     /**
      * Url for direct reference of job info
      */
+    @JsonSetter(value = "url", nulls = Nulls.AS_EMPTY)
     private final String url;
 
     /**
      * Spool files url for direct reference
      */
+    @JsonSetter(value = "filesUrl", nulls = Nulls.AS_EMPTY)
     private final String filesUrl;
 
     /**
-     * Unique identifier of a job (substitute of job name and job id). If this value is null, the job was
-     * submitted to JES3.
+     * Unique identifier of a job
      */
+    @JsonSetter(value = "jobCorrelator", nulls = Nulls.AS_EMPTY)
     private final String jobCorrelator;
 
     /**
@@ -89,15 +99,65 @@ public class Job {
     /**
      * Job phase name
      */
+    @JsonSetter(value = "phaseName", nulls = Nulls.AS_EMPTY)
     private final String phaseName;
 
     /**
      * Job constructor
      *
-     * @param builder Job.Builder object
-     * @author Frank Giordano
+     * @param jobId         job id value
+     * @param jobName       job name value
+     * @param subSystem     JES subsystem
+     * @param owner         job owner
+     * @param status        job status
+     * @param type          job type
+     * @param classs        job class
+     * @param retCode       job return code
+     * @param stepData      array of step data
+     * @param url           job URL
+     * @param filesUrl      job spool files URL
+     * @param jobCorrelator job correlator
+     * @param phase         job phase
+     * @param phaseName     job phase name
      */
-    private Job(final Job.Builder builder) {
+    @JsonCreator
+    public Job(
+            @JsonProperty("jobid") final String jobId,
+            @JsonProperty("jobname") final String jobName,
+            @JsonProperty("subsystem") final String subSystem,
+            @JsonProperty("owner") final String owner,
+            @JsonProperty("status") final String status,
+            @JsonProperty("type") final String type,
+            @JsonProperty("class") final String classs,
+            @JsonProperty("retcode") final String retCode,
+            @JsonProperty("stepData") final JobStepData[] stepData,
+            @JsonProperty("url") final String url,
+            @JsonProperty("files-url") final String filesUrl,
+            @JsonProperty("job-correlator") final String jobCorrelator,
+            @JsonProperty("phase") final Long phase,
+            @JsonProperty("phase-name") final String phaseName) {
+        this.jobId = jobId;
+        this.jobName = jobName;
+        this.subSystem = subSystem;
+        this.owner = owner;
+        this.status = status;
+        this.type = type;
+        this.classs = classs;
+        this.retCode = retCode;
+        this.stepData = stepData;
+        this.url = url;
+        this.filesUrl = filesUrl;
+        this.jobCorrelator = jobCorrelator;
+        this.phase = phase == null ? 0L : phase;
+        this.phaseName = phaseName;
+    }
+
+    /**
+     * Private constructor for Builder
+     *
+     * @param builder Builder object
+     */
+    private Job(final Builder builder) {
         this.jobId = builder.jobId;
         this.jobName = builder.jobName;
         this.subSystem = builder.subSystem;
@@ -119,8 +179,8 @@ public class Job {
      *
      * @return classs value
      */
-    public Optional<String> getClasss() {
-        return Optional.ofNullable(classs);
+    public String getClasss() {
+        return classs;
     }
 
     /**
@@ -128,8 +188,8 @@ public class Job {
      *
      * @return filesUrl value
      */
-    public Optional<String> getFilesUrl() {
-        return Optional.ofNullable(filesUrl);
+    public String getFilesUrl() {
+        return filesUrl;
     }
 
     /**
@@ -137,8 +197,8 @@ public class Job {
      *
      * @return jobCorrelator value
      */
-    public Optional<String> getJobCorrelator() {
-        return Optional.ofNullable(jobCorrelator);
+    public String getJobCorrelator() {
+        return jobCorrelator;
     }
 
     /**
@@ -146,8 +206,8 @@ public class Job {
      *
      * @return jobId value
      */
-    public Optional<String> getJobId() {
-        return Optional.ofNullable(jobId);
+    public String getJobId() {
+        return jobId;
     }
 
     /**
@@ -155,8 +215,8 @@ public class Job {
      *
      * @return jobName value
      */
-    public Optional<String> getJobName() {
-        return Optional.ofNullable(jobName);
+    public String getJobName() {
+        return jobName;
     }
 
     /**
@@ -164,8 +224,8 @@ public class Job {
      *
      * @return owner value
      */
-    public Optional<String> getOwner() {
-        return Optional.ofNullable(owner);
+    public String getOwner() {
+        return owner;
     }
 
     /**
@@ -173,8 +233,8 @@ public class Job {
      *
      * @return phase value
      */
-    public OptionalLong getPhase() {
-        return (phase == null) ? OptionalLong.empty() : OptionalLong.of(phase);
+    public Long getPhase() {
+        return phase;
     }
 
     /**
@@ -182,8 +242,8 @@ public class Job {
      *
      * @return phaseName value
      */
-    public Optional<String> getPhaseName() {
-        return Optional.ofNullable(phaseName);
+    public String getPhaseName() {
+        return phaseName;
     }
 
     /**
@@ -191,8 +251,8 @@ public class Job {
      *
      * @return retCode value
      */
-    public Optional<String> getRetCode() {
-        return Optional.ofNullable(retCode);
+    public String getRetCode() {
+        return retCode;
     }
 
     /**
@@ -200,8 +260,8 @@ public class Job {
      *
      * @return status value
      */
-    public Optional<String> getStatus() {
-        return Optional.ofNullable(status);
+    public String getStatus() {
+        return status;
     }
 
     /**
@@ -209,8 +269,8 @@ public class Job {
      *
      * @return stepData value
      */
-    public Optional<JobStepData[]> getStepData() {
-        return Optional.ofNullable(stepData);
+    public JobStepData[] getStepData() {
+        return stepData;
     }
 
     /**
@@ -218,8 +278,8 @@ public class Job {
      *
      * @return subSystem value
      */
-    public Optional<String> getSubSystem() {
-        return Optional.ofNullable(subSystem);
+    public String getSubSystem() {
+        return subSystem;
     }
 
     /**
@@ -227,8 +287,8 @@ public class Job {
      *
      * @return type value
      */
-    public Optional<String> getType() {
-        return Optional.ofNullable(type);
+    public String getType() {
+        return type;
     }
 
     /**
@@ -236,8 +296,8 @@ public class Job {
      *
      * @return url value
      */
-    public Optional<String> getUrl() {
-        return Optional.ofNullable(url);
+    public String getUrl() {
+        return url;
     }
 
     /**
@@ -248,20 +308,20 @@ public class Job {
     @Override
     public String toString() {
         return "Job{" +
-                "jobId=" + jobId +
-                ", jobName=" + jobName +
-                ", subSystem=" + subSystem +
-                ", owner=" + owner +
-                ", status=" + status +
-                ", type=" + type +
-                ", classs=" + classs +
-                ", retCode=" + retCode +
-                ", stepData=" + stepData +
-                ", url=" + url +
-                ", filesUrl=" + filesUrl +
-                ", jobCorrelator=" + jobCorrelator +
+                "jobId='" + jobId + '\'' +
+                ", jobName='" + jobName + '\'' +
+                ", subSystem='" + subSystem + '\'' +
+                ", owner='" + owner + '\'' +
+                ", status='" + status + '\'' +
+                ", type='" + type + '\'' +
+                ", classs='" + classs + '\'' +
+                ", retCode='" + retCode + '\'' +
+                ", stepData=" + (stepData != null ? stepData.length : "null") +
+                ", url='" + url + '\'' +
+                ", filesUrl='" + filesUrl + '\'' +
+                ", jobCorrelator='" + jobCorrelator + '\'' +
                 ", phase=" + phase +
-                ", phaseName=" + phaseName +
+                ", phaseName='" + phaseName + '\'' +
                 '}';
     }
 
@@ -281,7 +341,8 @@ public class Job {
         private String jobName;
 
         /**
-         * The primary or secondary JES subsystem. If this value is null, the job was processed by the primary subsystem.
+         * The primary or secondary JES subsystem. If this value is null,
+         * the job was processed by the primary subsystem.
          */
         private String subSystem;
 
@@ -326,7 +387,8 @@ public class Job {
         private String filesUrl;
 
         /**
-         * Unique identifier of a job (substitute of job name and job id). If this value is null, the job was
+         * Unique identifier of a job (substitute of job name and job id).
+         * If this value is null, the job was
          * submitted to JES3.
          */
         private String jobCorrelator;

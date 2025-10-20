@@ -22,10 +22,6 @@ public enum ParseType {
      */
     DATASET,
     /**
-     * job type
-     */
-    JOB,
-    /**
      * job file type
      */
     JOB_FILE,

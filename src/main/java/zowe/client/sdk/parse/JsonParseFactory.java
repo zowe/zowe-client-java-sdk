@@ -44,9 +44,6 @@ public final class JsonParseFactory {
             case DATASET:
                 parseResponse = DatasetJsonParse.getInstance();
                 break;
-            case JOB:
-                parseResponse = JobJsonParse.getInstance();
-                break;
             case JOB_FILE:
                 parseResponse = JobFileJsonParse.getInstance();
                 break;

@@ -105,9 +105,7 @@ public class JobCancel {
      */
     public Response cancelByJob(final Job job, final String version) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        final String jobName = job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG));
-        final String jobId = job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG));
-        return this.cancelCommon(new JobModifyInputData.Builder(jobName, jobId).version(version).build());
+        return this.cancelCommon(new JobModifyInputData.Builder(job.getJobName(), job.getJobId()).version(version).build());
     }
 
     /**
@@ -124,8 +122,14 @@ public class JobCancel {
         ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
 
         // generate full url request
-        final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE + JobsConstants.FILE_DELIM +
-                modifyInputData.getJobName().get() + JobsConstants.FILE_DELIM + modifyInputData.getJobId().get();
+        final String url = connection.getZosmfUrl() +
+                JobsConstants.RESOURCE +
+                JobsConstants.FILE_DELIM +
+                modifyInputData.getJobName()
+                        .orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_NAME_NULL_MSG)) +
+                JobsConstants.FILE_DELIM +
+                modifyInputData.getJobId()
+                        .orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_ID_NULL_MSG));
 
         // set version to default value if none given
         final String version = modifyInputData.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
