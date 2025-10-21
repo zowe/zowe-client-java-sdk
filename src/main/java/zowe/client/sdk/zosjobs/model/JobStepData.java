@@ -23,13 +23,11 @@ public class JobStepData {
     /**
      * SMFID
      */
-    @JsonSetter(value = "smfid", nulls = Nulls.AS_EMPTY)
     private final String smfid;
 
     /**
      * Completion
      */
-    @JsonSetter(value = "completion", nulls = Nulls.AS_EMPTY)
     private final String completion;
 
     /**
@@ -45,19 +43,16 @@ public class JobStepData {
     /**
      * Job relevant proc
      */
-    @JsonSetter(value = "procStepName", nulls = Nulls.AS_EMPTY)
     private final String procStepName;
 
     /**
      * Step for which a job dd exists
      */
-    @JsonSetter(value = "stepName", nulls = Nulls.AS_EMPTY)
     private final String stepName;
 
     /**
      * Program EXEC=
      */
-    @JsonSetter(value = "programName", nulls = Nulls.AS_EMPTY)
     private final String programName;
 
     /**
@@ -81,13 +76,13 @@ public class JobStepData {
             @JsonProperty("proc-step-name") final String procStepName,
             @JsonProperty("step-name") final String stepName,
             @JsonProperty("program-name") final String programName) {
-        this.smfid = smfid;
-        this.completion = completion;
+        this.smfid = smfid == null ? "" : smfid;
+        this.completion = completion == null ? "" : completion;
         this.active = active;
         this.stepNumber = stepNumber == null ? 0L : stepNumber;
-        this.procStepName = procStepName;
-        this.stepName = stepName;
-        this.programName = programName;
+        this.procStepName = procStepName == null ? "" : procStepName;
+        this.stepName = stepName == null ? "" : stepName;
+        this.programName = programName == null ? "" : programName;
     }
 
     /**

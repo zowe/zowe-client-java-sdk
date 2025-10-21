@@ -26,31 +26,26 @@ public final class UnixZfs {
     /**
      * zfs name
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String name;
 
     /**
      * Mount point name
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String mountpoint;
 
     /**
      * FST name
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String fstname;
 
     /**
      * Status value
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String status;
 
     /**
      * Mode values
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String mode;
 
     /**
@@ -81,7 +76,6 @@ public final class UnixZfs {
     /**
      * Target system name
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String sysname;
 
     /**
@@ -156,22 +150,22 @@ public final class UnixZfs {
             @JsonProperty("totalRows") Long totalRows,
             @JsonProperty("moreRows") boolean moreRows) {
 
-        this.name = name;
-        this.mountpoint = mountpoint;
-        this.fstname = fstname;
-        this.status = status;
-        this.mode = (modeList != null) ? String.join(",", modeList) : null;
-        this.dev = dev;
-        this.fstype = fstype;
-        this.bsize = (bsize == null) ? 0L : bsize;
-        this.bavail = (bavail == null) ? 0L : bavail;
-        this.blocks = (blocks == null) ? 0L : blocks;
-        this.sysname = sysname;
-        this.readibc = (readibc == null) ? 0L : readibc;
-        this.writeibc = (writeibc == null) ? 0L : writeibc;
-        this.diribc = (diribc == null) ? 0L : diribc;
-        this.returnedRows = (returnedRows == null) ? 0L : returnedRows;
-        this.totalRows = (totalRows == null) ? 0L : totalRows;
+        this.name = name == null ? "" : name;
+        this.mountpoint = mountpoint == null ? "" : mountpoint;
+        this.fstname = fstname == null ? "" : fstname;
+        this.status = status == null ? "" : status;
+        this.mode = modeList != null ? String.join(",", modeList) : null;
+        this.dev =  dev == null ? 0L : dev;
+        this.fstype = fstype == null ? 0L : fstype;
+        this.bsize = bsize == null ? 0L : bsize;
+        this.bavail = bavail == null ? 0L : bavail;
+        this.blocks = blocks == null ? 0L : blocks;
+        this.sysname = sysname == null ? "" : sysname;
+        this.readibc = readibc == null ? 0L : readibc;
+        this.writeibc = writeibc == null ? 0L : writeibc;
+        this.diribc = diribc == null ? 0L : diribc;
+        this.returnedRows = returnedRows == null ? 0L : returnedRows;
+        this.totalRows = totalRows == null ? 0L : totalRows;
         this.moreRows = moreRows;
     }
 

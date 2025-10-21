@@ -24,13 +24,11 @@ public final class UnixFile {
     /**
      * File, symbolic file or directory name
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String name;
 
     /**
      * Permission (mode) of returned name item
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String mode;
 
     /**
@@ -46,7 +44,6 @@ public final class UnixFile {
     /**
      * user of returned name item
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String user;
 
     /**
@@ -57,19 +54,16 @@ public final class UnixFile {
     /**
      * group of returned name items
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String group;
 
     /**
      * mtime of returned name item
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String mtime;
 
     /**
      * target of returned name item
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String target;
 
     /**
@@ -97,15 +91,15 @@ public final class UnixFile {
             @JsonProperty("mtime") String mtime,
             @JsonProperty("target") String target
     ) {
-        this.name = name;
-        this.mode = mode;
+        this.name = name == null ? "" : name;
+        this.mode = mode == null ? "" : mode;
         this.size = (size == null) ? 0L : size;
         this.uid = (uid == null) ? 0L : uid;
         this.gid = (gid == null) ? 0L : gid;
-        this.user = user;
-        this.group = group;
-        this.mtime = mtime;
-        this.target = target;
+        this.user = user == null ? "" : user;
+        this.group = group == null ? "" : group;
+        this.mtime = mtime == null ? "" : mtime;
+        this.target = target == null ? "" : target;
     }
 
     /**

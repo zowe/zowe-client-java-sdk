@@ -12,6 +12,7 @@ package zowe.client.sdk.zoslogs.response;
 import com.fasterxml.jackson.annotation.*;
 import zowe.client.sdk.zoslogs.model.ZosLogItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +43,6 @@ public final class ZosLogResponse {
      * Indicates the source of the log.
      * Value "OPERLOG" indicates the operation log.
      */
-    @JsonSetter(value = "source", nulls = Nulls.AS_EMPTY)
     private final String source;
 
     /**
@@ -73,9 +73,9 @@ public final class ZosLogResponse {
             @JsonProperty("items") final List<ZosLogItem> items) {
         this.timeZone = timeZone == null ? 0L : timeZone;
         this.nextTimeStamp = nextTimeStamp == null ? 0L : nextTimeStamp;
-        this.source = source;
+        this.source = source == null ? "" : source;
         this.totalItems = totalItems == null ? 0L : totalItems;
-        this.items = items;
+        this.items = items == null ? new ArrayList<>() : items;
     }
 
     /**
