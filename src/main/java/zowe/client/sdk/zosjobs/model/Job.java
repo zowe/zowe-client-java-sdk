@@ -68,19 +68,16 @@ public class Job {
     /**
      * Url for direct reference of job info
      */
-    @JsonSetter(value = "url", nulls = Nulls.AS_EMPTY)
     private final String url;
 
     /**
      * Spool files url for direct reference
      */
-    @JsonSetter(value = "filesUrl", nulls = Nulls.AS_EMPTY)
     private final String filesUrl;
 
     /**
      * Unique identifier of a job
      */
-    @JsonSetter(value = "jobCorrelator", nulls = Nulls.AS_EMPTY)
     private final String jobCorrelator;
 
     /**
@@ -91,7 +88,6 @@ public class Job {
     /**
      * Job phase name
      */
-    @JsonSetter(value = "phaseName", nulls = Nulls.AS_EMPTY)
     private final String phaseName;
 
     /**
