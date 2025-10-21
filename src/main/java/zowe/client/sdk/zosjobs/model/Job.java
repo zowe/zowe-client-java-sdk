@@ -9,7 +9,9 @@
  */
 package zowe.client.sdk.zosjobs.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Standard job response document that represents the attributes and status of a z/OS batch job

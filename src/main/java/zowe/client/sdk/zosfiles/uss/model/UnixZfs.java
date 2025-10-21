@@ -9,7 +9,9 @@
  */
 package zowe.client.sdk.zosfiles.uss.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -155,7 +157,7 @@ public final class UnixZfs {
         this.fstname = fstname == null ? "" : fstname;
         this.status = status == null ? "" : status;
         this.mode = modeList != null ? String.join(",", modeList) : null;
-        this.dev =  dev == null ? 0L : dev;
+        this.dev = dev == null ? 0L : dev;
         this.fstype = fstype == null ? 0L : fstype;
         this.bsize = bsize == null ? 0L : bsize;
         this.bavail = bavail == null ? 0L : bavail;
