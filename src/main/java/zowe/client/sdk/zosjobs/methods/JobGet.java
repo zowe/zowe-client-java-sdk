@@ -434,14 +434,19 @@ public class JobGet {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobInputData
     public Job getStatusCommon(final CommonJobInputData commonInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(commonInputData == null, "commonInputData is null");
 
+        if (commonInputData.getJobName().isEmpty()) {
+            throw new IllegalStateException(JobsConstants.JOB_NAME_ILLEGAL_MSG);
+        }
+        if (commonInputData.getJobId().isEmpty()) {
+            throw new IllegalStateException(JobsConstants.JOB_ID_ILLEGAL_MSG);
+        }
+
         url = connection.getZosmfUrl() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(commonInputData.getJobName()
-                        .orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_NAME_ILLEGAL_MSG))) + "/" +
-                commonInputData.getJobId().orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_ID_ILLEGAL_MSG));
+                EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) + "/" +
+                commonInputData.getJobId().get();
 
         if (commonInputData.isStepData()) {
             url += JobsConstants.QUERY_ID + JobsConstants.STEP_DATA;
@@ -517,4 +522,3 @@ public class JobGet {
     }
 
 }
-
