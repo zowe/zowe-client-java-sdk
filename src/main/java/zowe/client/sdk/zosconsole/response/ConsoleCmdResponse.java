@@ -9,7 +9,9 @@
  */
 package zowe.client.sdk.zosconsole.response;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * z/OSMF synchronous console command response messages. See the z/OSMF REST API publication for complete details.

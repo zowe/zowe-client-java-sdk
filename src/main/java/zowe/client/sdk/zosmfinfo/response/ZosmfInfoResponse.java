@@ -9,7 +9,9 @@
  */
 package zowe.client.sdk.zosmfinfo.response;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import zowe.client.sdk.zosmfinfo.model.ZosmfPlugin;
 
 import java.util.Arrays;

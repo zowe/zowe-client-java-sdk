@@ -9,7 +9,9 @@
  */
 package zowe.client.sdk.zosmfinfo.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * The z/OSMF object returned for every defined system.

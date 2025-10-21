@@ -122,7 +122,7 @@ public class Job {
             @JsonProperty("type") final String type,
             @JsonProperty("class") final String classs,
             @JsonProperty("retcode") final String retCode,
-            @JsonProperty("stepData") final JobStepData[] stepData,
+            @JsonProperty("step-data") final JobStepData[] stepData,
             @JsonProperty("url") final String url,
             @JsonProperty("files-url") final String filesUrl,
             @JsonProperty("job-correlator") final String jobCorrelator,
