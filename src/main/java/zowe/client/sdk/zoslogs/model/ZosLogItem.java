@@ -23,61 +23,51 @@ public class ZosLogItem {
     /**
      * Eight-character command and response token (CART).
      */
-    @JsonSetter(value = "cart", nulls = Nulls.AS_EMPTY)
     private final String cart;
 
     /**
      * The color of the message.
      */
-    @JsonSetter(value = "color", nulls = Nulls.AS_EMPTY)
     private final String color;
 
     /**
      * The name of the job that generates the message.
      */
-    @JsonSetter(value = "jobName", nulls = Nulls.AS_EMPTY)
     private final String jobName;
 
     /**
      * The content of the message.
      */
-    @JsonSetter(value = "message", nulls = Nulls.AS_EMPTY)
     private final String message;
 
     /**
      * The message ID.
      */
-    @JsonSetter(value = "messageId", nulls = Nulls.AS_EMPTY)
     private final String messageId;
 
     /**
      * Reply ID, in decimal.
      */
-    @JsonSetter(value = "replyId", nulls = Nulls.AS_EMPTY)
     private final String replyId;
 
     /**
      * Original eight-character system name.
      */
-    @JsonSetter(value = "system", nulls = Nulls.AS_EMPTY)
     private final String system;
 
     /**
      * Type variable
      */
-    @JsonSetter(value = "type", nulls = Nulls.AS_EMPTY)
     private final String type;
 
     /**
      * Indicate whether the message is a DOM, WTOR, or HOLD message.
      */
-    @JsonSetter(value = "subType", nulls = Nulls.AS_EMPTY)
     private final String subType;
 
     /**
      * For example, "Thu Feb 03 03:00 GMT 2021".
      */
-    @JsonSetter(value = "time", nulls = Nulls.AS_EMPTY)
     private final String time;
 
     /**
@@ -113,16 +103,16 @@ public class ZosLogItem {
             @JsonProperty("subType") final String subType,
             @JsonProperty("time") final String time,
             @JsonProperty("timeStamp") final Long timeStamp) {
-        this.cart = cart;
-        this.color = color;
-        this.jobName = jobName;
-        this.message = message;
-        this.messageId = messageId;
-        this.replyId = replyId;
-        this.system = system;
-        this.type = type;
-        this.subType = subType;
-        this.time = time;
+        this.cart = cart == null ? "" : cart;
+        this.color = color == null ? "" : color;
+        this.jobName = jobName == null ? "" : jobName;
+        this.message = message == null ? "" : message;
+        this.messageId = messageId == null ? "" : messageId;
+        this.replyId = replyId == null ? "" : replyId;
+        this.system = system == null ? "" : system;
+        this.type = type == null ? "" : type;
+        this.subType = subType == null ? "" : subType;
+        this.time = time == null ? "" : time;
         this.timeStamp = timeStamp == null ? 0L : timeStamp;
     }
 

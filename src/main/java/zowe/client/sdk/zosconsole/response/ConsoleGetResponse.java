@@ -23,7 +23,6 @@ public class ConsoleGetResponse {
     /**
      * Command response text.
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String cmdResponse;
 
     /**
@@ -41,7 +40,7 @@ public class ConsoleGetResponse {
     public ConsoleGetResponse(
             @JsonProperty("cmd-response") final String cmdResponse,
             @JsonProperty("sol_key_detected") final boolean keywordDetected) {
-        this.cmdResponse = cmdResponse;
+        this.cmdResponse = cmdResponse == null ? "" : cmdResponse;
         this.keywordDetected = keywordDetected;
     }
 

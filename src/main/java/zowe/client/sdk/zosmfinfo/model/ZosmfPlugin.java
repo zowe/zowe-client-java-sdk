@@ -23,19 +23,16 @@ public class ZosmfPlugin {
     /**
      * Plugin version.
      */
-    @JsonSetter(value = "pluginVersion", nulls = Nulls.AS_EMPTY)
     private final String pluginVersion;
 
     /**
      * Plugin default name.
      */
-    @JsonSetter(value = "pluginDefaultName", nulls = Nulls.AS_EMPTY)
     private final String pluginDefaultName;
 
     /**
      * Plugin status.
      */
-    @JsonSetter(value = "pluginStatus", nulls = Nulls.AS_EMPTY)
     private final String pluginStatus;
 
     /**
@@ -50,9 +47,9 @@ public class ZosmfPlugin {
             @JsonProperty("pluginVersion") final String pluginVersion,
             @JsonProperty("pluginDefaultName") final String pluginDefaultName,
             @JsonProperty("pluginStatus") final String pluginStatus) {
-        this.pluginVersion = pluginVersion;
-        this.pluginDefaultName = pluginDefaultName;
-        this.pluginStatus = pluginStatus;
+        this.pluginVersion = pluginVersion == null ? "" : pluginVersion;
+        this.pluginDefaultName = pluginDefaultName == null ? "" : pluginDefaultName;
+        this.pluginStatus = pluginStatus == null ? "" : pluginStatus;
     }
 
     /**

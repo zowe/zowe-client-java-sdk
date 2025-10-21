@@ -27,49 +27,42 @@ public final class ZosmfInfoResponse {
     /**
      * z/OS version
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String zosVersion;
 
     /**
      * Zosmf port number
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String zosmfPort;
 
     /**
      * Zosmf version
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String zosmfVersion;
 
     /**
      * Zosmf host name
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String zosmfHostName;
 
     /**
      * Zosmf saf realm
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String zosmfSafRealm;
 
     /**
      * Zosmf full version
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String zosmfFullVersion;
 
     /**
      * Zosmf api version
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String apiVersion;
 
     /**
      * Zosmf plugin information
      */
-    private final ZosmfPlugin[] zosmfPluginsInfo;
+    private ZosmfPlugin[] zosmfPluginsInfo;
 
     /**
      * Jackson constructor for ZosmfInfoResponse
@@ -81,7 +74,6 @@ public final class ZosmfInfoResponse {
      * @param zosmfSafRealm    Zosmf saf realm
      * @param zosmfFullVersion Zosmf full version
      * @param apiVersion       Zosmf api version
-     * @param zosmfPluginsInfo Zosmf plugin information
      */
     @JsonCreator
     public ZosmfInfoResponse(
@@ -91,17 +83,15 @@ public final class ZosmfInfoResponse {
             @JsonProperty("zosmf_hostname") String zosmfHostName,
             @JsonProperty("zosmf_saf_realm") String zosmfSafRealm,
             @JsonProperty("zosmf_full_version") String zosmfFullVersion,
-            @JsonProperty("api_version") String apiVersion,
-            @JsonProperty("plugins") ZosmfPlugin[] zosmfPluginsInfo
+            @JsonProperty("api_version") String apiVersion
     ) {
-        this.zosVersion = zosVersion;
-        this.zosmfPort = zosmfPort;
-        this.zosmfVersion = zosmfVersion;
-        this.zosmfHostName = zosmfHostName;
-        this.zosmfSafRealm = zosmfSafRealm;
-        this.zosmfFullVersion = zosmfFullVersion;
-        this.apiVersion = apiVersion;
-        this.zosmfPluginsInfo = zosmfPluginsInfo;
+        this.zosVersion = zosVersion == null ? "" : zosVersion;
+        this.zosmfPort = zosmfPort == null ? "" : zosmfPort;
+        this.zosmfVersion = zosmfVersion == null ? "" : zosmfVersion;
+        this.zosmfHostName = zosmfHostName == null ? "" : zosmfHostName;
+        this.zosmfSafRealm = zosmfSafRealm == null ? "" : zosmfSafRealm;
+        this.zosmfFullVersion = zosmfFullVersion == null ? "" : zosmfFullVersion;
+        this.apiVersion = apiVersion == null ? "" : apiVersion;
     }
 
     /**
@@ -174,6 +164,11 @@ public final class ZosmfInfoResponse {
      */
     public String getZosmfVersion() {
         return zosmfVersion;
+    }
+
+    public ZosmfInfoResponse withdrawZosmfPluginsInfo(final ZosmfPlugin[] zosmfPluginsInfo) {
+        this.zosmfPluginsInfo = zosmfPluginsInfo;
+        return this;
     }
 
     /**

@@ -23,77 +23,65 @@ public final class DefinedSystem {
     /**
      * Unique name assigned to the system definition.
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String systemNickName;
 
     /**
      * Comma-separated list of the groups to which the system is assigned.
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String groupNames;
 
     /**
      * Serial number of the CPC.
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String cpcSerial;
 
     /**
      * Version of z/OS
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String zosVR;
 
     /**
      * Name specified for the system on the SYSNAME parameter in the IEASYSxx parmlib member.
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String systemName;
 
     /**
      * Type for the primary job entry subsystem running on the system. The type is either JES2 or JES3.
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String jesType;
 
     /**
      * Name of the sysplex where the z/OS system is a member.
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String sysplexName;
 
     /**
      * JES2 multi-access spool (MAS) member name or JES3 complex member name
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String jesMemberName;
 
     /**
      * Name of the HTTP proxy definition that specifies the settings required to
      * access the system through an HTTP or SOCKS proxy server.
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String httpProxyName;
 
     /**
      * Name of the server definition that specifies the settings required to
      * access the FTP or SFTP server that is running on the system.
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String ftpDestinationName;
 
     /**
      * URL used to access the z/OSMF instance that resides in the same sysplex as
      * the system identified by the systemName attribute.
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String url;
 
     /**
      * Name specified for the central processor complex (CPC) at the support element (SE)
      * of that processor complex.
      */
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private final String cpcName;
 
     /**
@@ -127,18 +115,18 @@ public final class DefinedSystem {
             @JsonProperty("url") String url,
             @JsonProperty("cpcName") String cpcName
     ) {
-        this.systemNickName = systemNickName;
-        this.groupNames = groupNames;
-        this.cpcSerial = cpcSerial;
-        this.zosVR = zosVR;
-        this.systemName = systemName;
-        this.jesType = jesType;
-        this.sysplexName = sysplexName;
-        this.jesMemberName = jesMemberName;
-        this.httpProxyName = httpProxyName;
-        this.ftpDestinationName = ftpDestinationName;
-        this.url = url;
-        this.cpcName = cpcName;
+        this.systemNickName = systemNickName == null ? "" : systemNickName;
+        this.groupNames = groupNames == null ? "" : groupNames;
+        this.cpcSerial = cpcSerial == null ? "" : cpcSerial;
+        this.zosVR = zosVR == null ? "" : zosVR;
+        this.systemName = systemName == null ? "" : systemName;
+        this.jesType = jesType == null ? "" : jesType;
+        this.sysplexName = sysplexName == null ? "" : sysplexName;
+        this.jesMemberName = jesMemberName == null ? "" : jesMemberName;
+        this.httpProxyName = httpProxyName == null ? "" : httpProxyName;
+        this.ftpDestinationName = ftpDestinationName == null ? "" : ftpDestinationName;
+        this.url = url == null ? "" : url;
+        this.cpcName = cpcName == null ? "" : cpcName;
     }
 
     /**

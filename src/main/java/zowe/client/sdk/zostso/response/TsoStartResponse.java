@@ -25,19 +25,16 @@ public class TsoStartResponse {
     /**
      * Indicates if TSO start was successful
      */
-    @JsonProperty("success")
     private final boolean success;
 
     /**
      * TSO session identifier
      */
-    @JsonProperty("sessionId")
     private final String sessionId;
 
     /**
      * TSO start response message
      */
-    @JsonProperty("response")
     private final String response;
 
     /**
@@ -53,8 +50,8 @@ public class TsoStartResponse {
             @JsonProperty("sessionId") final String sessionId,
             @JsonProperty("response") final String response) {
         this.success = success;
-        this.sessionId = sessionId;
-        this.response = response;
+        this.sessionId = sessionId == null ? "" : sessionId;
+        this.response = response == null ? "" : response;
     }
 
     /**

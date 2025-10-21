@@ -23,49 +23,41 @@ public class Job {
     /**
      * Job id for a job. Uniquely identifies a job on a z/OS system
      */
-    @JsonSetter(value = "jobId", nulls = Nulls.AS_EMPTY)
     private final String jobId;
 
     /**
      * Job Name for a job
      */
-    @JsonSetter(value = "jobName", nulls = Nulls.AS_EMPTY)
     private final String jobName;
 
     /**
      * The primary or secondary JES subsystem.
      */
-    @JsonSetter(value = "subSystem", nulls = Nulls.AS_EMPTY)
     private final String subSystem;
 
     /**
      * Owner of the job
      */
-    @JsonSetter(value = "owner", nulls = Nulls.AS_EMPTY)
     private final String owner;
 
     /**
      * Status of the job
      */
-    @JsonSetter(value = "status", nulls = Nulls.AS_EMPTY)
     private final String status;
 
     /**
      * Type of job
      */
-    @JsonSetter(value = "type", nulls = Nulls.AS_EMPTY)
     private final String type;
 
     /**
      * Job class
      */
-    @JsonSetter(value = "classs", nulls = Nulls.AS_EMPTY)
     private final String classs;
 
     /**
      * Return code of the job
      */
-    @JsonSetter(value = "retCode", nulls = Nulls.AS_EMPTY)
     private final String retCode;
 
     /**
@@ -136,20 +128,20 @@ public class Job {
             @JsonProperty("job-correlator") final String jobCorrelator,
             @JsonProperty("phase") final Long phase,
             @JsonProperty("phase-name") final String phaseName) {
-        this.jobId = jobId;
-        this.jobName = jobName;
-        this.subSystem = subSystem;
-        this.owner = owner;
-        this.status = status;
-        this.type = type;
-        this.classs = classs;
-        this.retCode = retCode;
-        this.stepData = stepData;
+        this.jobId = jobId == null ? "" : jobId;
+        this.jobName = jobName == null ? "" : jobName;
+        this.subSystem = subSystem == null ? "" : subSystem;
+        this.owner = owner == null ? "" : owner;
+        this.status = status == null ? "" : status;
+        this.type = type == null ? "" : type;
+        this.classs = classs == null ? "" : classs;
+        this.retCode = retCode == null ? "" : retCode;
+        this.stepData = stepData == null ? new JobStepData[0] : stepData;
         this.url = url;
-        this.filesUrl = filesUrl;
-        this.jobCorrelator = jobCorrelator;
+        this.filesUrl = filesUrl == null ? "" : filesUrl;
+        this.jobCorrelator = jobCorrelator == null ? "" : jobCorrelator;
         this.phase = phase == null ? 0L : phase;
-        this.phaseName = phaseName;
+        this.phaseName = phaseName == null ? "" : phaseName;
     }
 
     /**
