@@ -119,7 +119,7 @@ public class ZosLog {
         final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no zos log response phrase")));
 
-        String context = "issueCommand";
+        final String context = "issueCommand";
         return JsonUtils.parseResponse(responsePhrase, ZosLogResponse.class, context);
     }
 
