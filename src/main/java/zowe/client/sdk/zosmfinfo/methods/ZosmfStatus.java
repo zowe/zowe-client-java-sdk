@@ -9,6 +9,9 @@
  */
 package zowe.client.sdk.zosmfinfo.methods;
 
+import kong.unirest.core.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -18,7 +21,11 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfinfo.ZosmfConstants;
+import zowe.client.sdk.zosmfinfo.model.ZosmfPlugin;
 import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
+
+import java.util.Optional;
+import java.util.stream.IntStream;
 
 /**
  * This class holds the helper functions that are used to gather z/OSMF information through the z/OSMF APIs.
@@ -27,6 +34,8 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
  * @version 5.0
  */
 public class ZosmfStatus {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ZosmfStatus.class);
 
     private final ZosConnection connection;
 
@@ -81,8 +90,33 @@ public class ZosmfStatus {
         final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no z/osmf status response phrase")));
 
-        final String context = "get";
-        return JsonUtils.parseResponse(responsePhrase, ZosmfInfoResponse.class, context);
+        final ZosmfInfoResponse response = JsonUtils.parseResponse(responsePhrase, ZosmfInfoResponse.class, "get");
+
+        JSONObject jsonStr = new JSONObject(responsePhrase);
+        Optional.ofNullable(jsonStr.optJSONArray("plugins"))
+                .ifPresent(plugins -> {
+                    ZosmfPlugin[] zosmfPluginsInfo = IntStream.range(0, plugins.length())
+                            .mapToObj(i -> safeParse(String.valueOf(plugins.get(i)), ZosmfPlugin.class))
+                            .filter(Optional::isPresent) // Filter out any empty Optionals (failed parses)
+                            .map(Optional::get) // Unwrap the Optionals
+                            .toArray(ZosmfPlugin[]::new);
+                    response.withZosmfPluginsInfo(zosmfPluginsInfo);
+                });
+
+        if (response.getZosmfPluginsInfo() == null) {
+            return response.withZosmfPluginsInfo(new ZosmfPlugin[0]);
+        }
+        return response;
+    }
+
+    // A helper method to wrap the potentially throwing `parseResponse` call.
+    private <T> Optional<T> safeParse(String responseString, Class<T> classs) {
+        try {
+            return Optional.ofNullable(JsonUtils.parseResponse(responseString, classs, "get"));
+        } catch (Exception e) {
+            LOG.error("Failed to parse response: {}", responseString, e);
+            return Optional.empty();
+        }
     }
 
 }

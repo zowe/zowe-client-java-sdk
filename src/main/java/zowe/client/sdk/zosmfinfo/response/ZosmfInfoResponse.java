@@ -168,7 +168,7 @@ public final class ZosmfInfoResponse {
         return zosmfVersion;
     }
 
-    public ZosmfInfoResponse withdrawZosmfPluginsInfo(final ZosmfPlugin[] zosmfPluginsInfo) {
+    public ZosmfInfoResponse withZosmfPluginsInfo(final ZosmfPlugin[] zosmfPluginsInfo) {
         this.zosmfPluginsInfo = zosmfPluginsInfo;
         return this;
     }
