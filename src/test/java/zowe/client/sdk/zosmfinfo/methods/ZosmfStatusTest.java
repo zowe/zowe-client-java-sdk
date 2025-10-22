@@ -42,7 +42,7 @@ public class ZosmfStatusTest {
     }
 
     @Test
-    public void tstGetParsesValidResponseSuccess() throws ZosmfRequestException {
+    public void tstZosmfStatusGetParsesValidResponseSuccess() throws ZosmfRequestException {
         String json = "{\n" +
                 " \"zosmf_saf_realm\": \"REALM\",\n" +
                 " \"zosmf_port\": \"1234\",\n" +
@@ -70,7 +70,7 @@ public class ZosmfStatusTest {
     }
 
     @Test
-    public void tstGetThrowsOnMissingResponseFailure() throws ZosmfRequestException {
+    public void tstZosmfStatusGetThrowsOnMissingResponseFailure() throws ZosmfRequestException {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response("{frank}", 200, "success"));
         ZosmfStatus status = new ZosmfStatus(connection, mockJsonGetRequest);
@@ -82,7 +82,7 @@ public class ZosmfStatusTest {
     }
 
     @Test
-    public void tstGetThrowsOnMissingResponseMessageCheckOnFailure() throws ZosmfRequestException {
+    public void tstZosmfStatusGetThrowsOnMissingResponseMessageCheckOnFailure() throws ZosmfRequestException {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response("{frank}", 200, "success"));
         ZosmfStatus status = new ZosmfStatus(connection, mockJsonGetRequest);
@@ -92,6 +92,84 @@ public class ZosmfStatusTest {
             String errMsg = "Failed to parse JSON response for [get] into ZosmfInfoResponse";
             assertEquals(errMsg, e.getMessage());
         }
+    }
+
+    @Test
+    public void tstZosmfStatusGetHandlesEmptyZosmfSafRealmSuccess() throws ZosmfRequestException {
+        String json = "{ \"zosmf_saf_realm\": \"\" }";
+        Mockito.when(mockJsonGetRequest.executeRequest())
+                .thenReturn(new Response(json, 200, "success"));
+
+        ZosmfStatus status = new ZosmfStatus(connection, mockJsonGetRequest);
+        ZosmfInfoResponse info = status.get();
+
+        assertNotNull(info);
+        assertEquals("", info.getZosmfSafRealm());
+    }
+
+    @Test
+    public void tstZosmfStatusGetHandlesEmptyZosmfPortSuccess() throws ZosmfRequestException {
+        String json = "{ \"zosmf_port\": \"\" }";
+        Mockito.when(mockJsonGetRequest.executeRequest())
+                .thenReturn(new Response(json, 200, "success"));
+
+        ZosmfStatus status = new ZosmfStatus(connection, mockJsonGetRequest);
+        ZosmfInfoResponse info = status.get();
+
+        assertNotNull(info);
+        assertEquals("", info.getZosmfPort());
+    }
+
+    @Test
+    public void tstZosmfStatusGetHandlesEmptyZosmfFullVersionSuccess() throws ZosmfRequestException {
+        String json = "{ \"zosmf_full_version\": \"\" }";
+        Mockito.when(mockJsonGetRequest.executeRequest())
+                .thenReturn(new Response(json, 200, "success"));
+
+        ZosmfStatus status = new ZosmfStatus(connection, mockJsonGetRequest);
+        ZosmfInfoResponse info = status.get();
+
+        assertNotNull(info);
+        assertEquals("", info.getZosmfFullVersion());
+    }
+
+    @Test
+    public void tstZosmfStatusGetHandlesEmptyPluginsArraySuccess() throws ZosmfRequestException {
+        String json = "{ \"plugins\": [] }";
+        Mockito.when(mockJsonGetRequest.executeRequest())
+                .thenReturn(new Response(json, 200, "success"));
+
+        ZosmfStatus status = new ZosmfStatus(connection, mockJsonGetRequest);
+        ZosmfInfoResponse info = status.get();
+
+        assertNotNull(info);
+        assertEquals(0, info.getZosmfPluginsInfo().length);
+    }
+
+    @Test
+    public void tstZosmfStatusGetHandlesNullPluginsArraySuccess() throws ZosmfRequestException {
+        String json = "{ \"plugins\": null }";
+        Mockito.when(mockJsonGetRequest.executeRequest())
+                .thenReturn(new Response(json, 200, "success"));
+
+        ZosmfStatus status = new ZosmfStatus(connection, mockJsonGetRequest);
+        ZosmfInfoResponse info = status.get();
+
+        assertNotNull(info);
+        assertEquals(0, info.getZosmfPluginsInfo().length);
+    }
+
+    @Test
+    public void tstZosmfStatusGetHandlesNullZosmfHostnameSuccess() throws ZosmfRequestException {
+        String json = "{ \"zosmf_hostname\": null }";
+        Mockito.when(mockJsonGetRequest.executeRequest())
+                .thenReturn(new Response(json, 200, "success"));
+
+        ZosmfStatus status = new ZosmfStatus(connection, mockJsonGetRequest);
+        ZosmfInfoResponse info = status.get();
+
+        assertNotNull(info);
+        assertEquals("", info.getZosmfHostName());
     }
 
 }
