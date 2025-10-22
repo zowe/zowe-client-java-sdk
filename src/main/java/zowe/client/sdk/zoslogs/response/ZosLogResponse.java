@@ -68,10 +68,10 @@ public final class ZosLogResponse {
      */
     @JsonCreator
     public ZosLogResponse(
-            @JsonProperty("timeZone") final Long timeZone,
-            @JsonProperty("nextTimeStamp") final Long nextTimeStamp,
+            @JsonProperty("timezone") final Long timeZone,
+            @JsonProperty("nextTimestamp") final Long nextTimeStamp,
             @JsonProperty("source") final String source,
-            @JsonProperty("totalItems") final Long totalItems,
+            @JsonProperty("totalitems") final Long totalItems,
             @JsonProperty("items") final List<ZosLogItem> items) {
         this.timeZone = timeZone == null ? 0L : timeZone;
         this.nextTimeStamp = nextTimeStamp == null ? 0L : nextTimeStamp;
