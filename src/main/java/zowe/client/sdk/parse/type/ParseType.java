@@ -26,10 +26,6 @@ public enum ParseType {
      */
     JOB_FILE,
     /**
-     * member type
-     */
-    MEMBER,
-    /**
      * property type
      */
     PROPS

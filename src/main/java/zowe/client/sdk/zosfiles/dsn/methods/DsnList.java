@@ -22,6 +22,7 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosconsole.response.ConsoleCmdResponse;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.dsn.input.DsnListInputData;
 import zowe.client.sdk.zosfiles.dsn.model.Dataset;
@@ -194,9 +195,10 @@ public class DsnList {
         }
 
         final JSONArray items = (JSONArray) jsonObject.get(ZosFilesConstants.RESPONSE_ITEMS);
+        final String context = "getResult";
         for (final Object obj : items) {
             if (datasetLst == null) {
-                memberLst.add((T) JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse(obj));
+                memberLst.add((T)JsonUtils.parseResponse(String.valueOf(obj), ConsoleCmdResponse.class, context));
             } else {
                 datasetLst.add((T) JsonParseFactory.buildParser(ParseType.DATASET).parseResponse(obj));
             }
