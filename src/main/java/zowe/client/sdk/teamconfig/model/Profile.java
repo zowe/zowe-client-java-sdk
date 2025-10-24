@@ -9,10 +9,11 @@
  */
 package zowe.client.sdk.teamconfig.model;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import zowe.client.sdk.parse.JsonParseFactory;
-import zowe.client.sdk.parse.type.ParseType;
+import zowe.client.sdk.teamconfig.exception.TeamConfigException;
+import zowe.client.sdk.utility.JsonUtils;
 
 import java.util.Map;
 
@@ -51,14 +52,19 @@ public class Profile {
      * @param type   profile type
      * @param obj    JSON object of property values within a profile section from Zowe Global Team Configuration
      * @param secure jsonarray value of a secure section
+     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
-    @SuppressWarnings("unchecked")
-    public Profile(final String name, final String type, final JSONObject obj, final JSONArray secure) {
+    public Profile(final String name, final String type, final JSONObject obj, final JSONArray secure)
+            throws TeamConfigException {
         this.name = name;
         this.type = type;
+        try {
+            this.properties = JsonUtils.parseMap(obj);
+        } catch (JsonProcessingException e) {
+            throw new TeamConfigException("Error parsing properties", e);
+        }
         this.secure = secure;
-        properties = (Map<String, String>) JsonParseFactory.buildParser(ParseType.PROPS).parseResponse(obj);
     }
 
     /**

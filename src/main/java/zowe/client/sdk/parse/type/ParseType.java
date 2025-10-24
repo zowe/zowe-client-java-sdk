@@ -24,10 +24,6 @@ public enum ParseType {
     /**
      * job file type
      */
-    JOB_FILE,
-    /**
-     * property type
-     */
-    PROPS
+    JOB_FILE
 
 }

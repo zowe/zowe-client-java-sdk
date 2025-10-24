@@ -47,9 +47,6 @@ public final class JsonParseFactory {
             case JOB_FILE:
                 parseResponse = JobFileJsonParse.getInstance();
                 break;
-            case PROPS:
-                parseResponse = PropsJsonParse.getInstance();
-                break;
             default:
                 throw new IllegalStateException("no valid ParseType type specified");
         }

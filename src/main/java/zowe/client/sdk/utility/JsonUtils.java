@@ -10,6 +10,7 @@
 package zowe.client.sdk.utility;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,6 +19,10 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Utility class contains helper methods for JSON parse processing.
@@ -91,6 +96,32 @@ public final class JsonUtils {
                             "] into " + clazz.getSimpleName(), e);
 
         }
+    }
+
+    /**
+     * Convert a JSONObject to a Map<String, String>, converting all values to String.
+     * <p>
+     * This method supports JSON values of any type (string, number, boolean, null, etc.)
+     * and ensures that all map values are safely represented as strings.
+     *
+     * @param jsonObject the JSONObject to convert (must not be null)
+     * @return a Map<String, String> with all keys its values as all String values
+     * @throws JsonProcessingException if JSON parsing fails
+     */
+    public static Map<String, String> parseMap(JSONObject jsonObject) throws JsonProcessingException {
+        // Convert the org.json.JSONObject to Jackson JsonNode for traversal
+        final JsonNode root = objectMapper.readTree(jsonObject.toString());
+
+        final Map<String, String> map = new HashMap<>();
+        final Iterator<Map.Entry<String, JsonNode>> fields = root.fields();
+
+        while (fields.hasNext()) {
+            final Map.Entry<String, JsonNode> entry = fields.next();
+            // Convert any type to string
+            map.put(entry.getKey(), entry.getValue().asText());
+        }
+
+        return map;
     }
 
 }
