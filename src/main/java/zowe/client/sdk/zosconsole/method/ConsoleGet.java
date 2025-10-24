@@ -1,6 +1,5 @@
 package zowe.client.sdk.zosconsole.method;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -28,7 +27,6 @@ import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
  */
 public class ConsoleGet {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private final ZosConnection connection;
     private ZosmfRequest request;
 

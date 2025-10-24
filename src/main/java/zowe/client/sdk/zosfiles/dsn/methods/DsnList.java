@@ -198,7 +198,7 @@ public class DsnList {
         final String context = "getResult";
         for (final Object obj : items) {
             if (datasetLst == null) {
-                memberLst.add((T)JsonUtils.parseResponse(String.valueOf(obj), ConsoleCmdResponse.class, context));
+                memberLst.add((T) JsonUtils.parseResponse(String.valueOf(obj), ConsoleCmdResponse.class, context));
             } else {
                 datasetLst.add((T) JsonParseFactory.buildParser(ParseType.DATASET).parseResponse(obj));
             }

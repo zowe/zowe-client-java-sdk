@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosconsole.method;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
@@ -54,7 +53,6 @@ public class ConsoleCmd {
     private static final String CMD = "cmd";
     private static final String SOL_KEY = "sol-key";
     private static final String SYSTEM = "system";
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private final ZosConnection connection;
     private ZosmfRequest request;
 
