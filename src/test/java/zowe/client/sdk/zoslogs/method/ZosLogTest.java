@@ -1,3 +1,12 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ */
 package zowe.client.sdk.zoslogs.method;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +25,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for ZosLog class
+ * Class containing unit test for ZosLog class.
+ *
+ * @author Frank Giordano
+ * @version 5.0
  */
 public class ZosLogTest {
 
@@ -31,7 +43,7 @@ public class ZosLogTest {
     }
 
     @Test
-    public void tstZosLogIssueCommandParsesValidResponse() throws ZosmfRequestException {
+    public void tstIssueCommandParsesValidResponse() throws ZosmfRequestException {
         String json = "{\n" +
                 "  \"nextTimestamp\": 1621920856259,\n" +
                 "  \"source\": \"OPERLOGS\",\n" +
@@ -90,13 +102,13 @@ public class ZosLogTest {
     }
 
     @Test
-    public void tstZosLogIssueCommandThrowsOnNullInputFailure() {
+    public void tstIssueCommandThrowsOnNullInputFailure() {
         ZosLog zosLog = new ZosLog(connection, mockJsonGetRequest);
         assertThrows(NullPointerException.class, () -> zosLog.issueCommand(null));
     }
 
     @Test
-    public void tstZosLogIssueCommandThrowsOnInvalidJsonFailure() throws ZosmfRequestException {
+    public void tstIssueCommandThrowsOnInvalidJsonFailure() throws ZosmfRequestException {
         String json = "{ invalid json }";
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
@@ -113,7 +125,7 @@ public class ZosLogTest {
     }
 
     @Test
-    public void tstZosLogIssueCommandParsesValidWithOneItemResponseSuccess() throws ZosmfRequestException {
+    public void tstIssueCommandParsesValidWithOneItemResponseSuccess() throws ZosmfRequestException {
         String json = "{\n" +
                 "  \"nextTimestamp\": 1621920856259,\n" +
                 "  \"source\": \"OPERLOGS\",\n" +
@@ -156,7 +168,7 @@ public class ZosLogTest {
     }
 
     @Test
-    public void tstZosLogIssueCommandHandlesEmptyItemsSuccess() throws ZosmfRequestException {
+    public void tstIssueCommandHandlesEmptyItemsSuccess() throws ZosmfRequestException {
         String json = "{ \"nextTimestamp\": 1234567890, \"source\": \"OPERLOGS\", \"totalitems\": 0, \"items\": [] }";
 
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
@@ -179,7 +191,7 @@ public class ZosLogTest {
     }
 
     @Test
-    public void tstZosLogIssueCommandHandlesEmptyOrNullMemberValuesSuccess() throws ZosmfRequestException {
+    public void tstIssueCommandHandlesEmptyOrNullMemberValuesSuccess() throws ZosmfRequestException {
         String json = "{\n" +
                 "  \"nextTimestamp\": null,\n" +
                 "  \"source\": \"\",\n" +
