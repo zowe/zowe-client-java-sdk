@@ -194,8 +194,7 @@ public class ZoweRequestTest {
 
         // Set URL for a hypothetical endpoint
         final String RESOURCE_PATH = "/resource/endpoint";
-        request.setUrl(connection.getZosmfUrl() +
-                RESOURCE_PATH);
+        request.setUrl(connection.getZosmfUrl() + RESOURCE_PATH);
 
         // Verify the constructed URL contains the base path
         final String expectedUrl = "https://test.host:443/custom/base/path/zosmf/resource/endpoint";
@@ -213,8 +212,7 @@ public class ZoweRequestTest {
 
         // Set URL for a hypothetical endpoint
         final String RESOURCE_PATH = "/resource/endpoint";
-        request.setUrl(connection.getZosmfUrl() +
-                RESOURCE_PATH);
+        request.setUrl(connection.getZosmfUrl() + RESOURCE_PATH);
 
         // Verify the constructed URL does not contain a base path
         final String expectedUrl = "https://test.host:443/zosmf/resource/endpoint";
