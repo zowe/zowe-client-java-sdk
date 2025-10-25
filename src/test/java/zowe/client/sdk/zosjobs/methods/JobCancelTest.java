@@ -194,11 +194,11 @@ public class JobCancelTest {
                 jobCancel.cancelByJob(null, "1"));
         assertTrue(exception.getMessage().contains("job is null"));
 
-        exception = assertThrows(java.lang.IllegalStateException.class, () ->
+        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
                 jobCancel.cancelByJob(new Job.Builder().jobName(null).jobId("1").build(), "1"));
         assertTrue(exception.getMessage().contains("jobName is either null or empty"));
 
-        exception = assertThrows(java.lang.IllegalStateException.class, () ->
+        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
                 jobCancel.cancelByJob(new Job.Builder().jobName("name").jobId(null).build(), "1"));
         assertTrue(exception.getMessage().contains("jobId is either null or empty"));
 
