@@ -252,6 +252,7 @@ public class ZoweRequestTest {
         };
 
         // Mock HttpResponse to simulate 404 error
+        @SuppressWarnings("unchecked")
         HttpResponse<String> httpResponse = Mockito.mock(HttpResponse.class);
         Mockito.when(httpResponse.getStatus()).thenReturn(404);
         Mockito.when(httpResponse.getStatusText()).thenReturn("Not Found");
