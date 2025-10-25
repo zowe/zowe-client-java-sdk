@@ -56,7 +56,7 @@ public class JobGetTextTest {
                 new Response("1\n2\n3\n", 200, "success"));
         Whitebox.setInternalState(getJobs, "request", mockTextGetRequest);
 
-        final String results = getJobs.getSpoolContent("jobName", "jobId", 1);
+        final String results = getJobs.getSpoolContent("jobName", "jobId", 1L);
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
         assertEquals("1\n2\n3\n", results);
     }
@@ -68,7 +68,7 @@ public class JobGetTextTest {
         // Create a mock request to verify URL
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
         final JobGet getJobs = new JobGet(connection, request);
-        assertThrows(IllegalArgumentException.class, () -> getJobs.getSpoolContent("jobName", "jobId", 1));
+        assertThrows(IllegalArgumentException.class, () -> getJobs.getSpoolContent("jobName", "jobId", 1L));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class JobGetTextTest {
         doCallRealMethod().when(mockTextGetRequestToken).setUrl(any());
         doCallRealMethod().when(mockTextGetRequestToken).getHeaders();
 
-        String results = getJobs.getSpoolContent("jobName", "jobId", 1);
+        String results = getJobs.getSpoolContent("jobName", "jobId", 1L);
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=text/plain; charset=UTF-8}",
                 mockTextGetRequestToken.getHeaders().toString());
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());

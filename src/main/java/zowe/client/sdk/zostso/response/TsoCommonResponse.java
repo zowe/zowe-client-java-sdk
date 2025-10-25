@@ -27,25 +27,21 @@ public class TsoCommonResponse {
     /**
      * TSO session identifier
      */
-    @JsonProperty("servletKey")
     private final String servletKey;
 
     /**
      * TSO version
      */
-    @JsonProperty("ver")
     private final String ver;
 
     /**
      * Indicates if timeout occurred
      */
-    @JsonProperty("timeout")
     private final Boolean timeout;
 
     /**
      * Indicates if a session was reused
      */
-    @JsonProperty("reused")
     private final Boolean reused;
 
     /**
@@ -62,8 +58,8 @@ public class TsoCommonResponse {
             @JsonProperty("ver") final String ver,
             @JsonProperty("timeout") final Boolean timeout,
             @JsonProperty("reused") final Boolean reused) {
-        this.servletKey = servletKey;
-        this.ver = ver;
+        this.servletKey = servletKey == null ? "" : servletKey;
+        this.ver = ver == null ? "" : ver;
         this.timeout = timeout;
         this.reused = reused;
     }

@@ -32,7 +32,6 @@ import zowe.client.sdk.zosmfauth.ZosmfAuthConstants;
 public class ZosmfLogout {
 
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**

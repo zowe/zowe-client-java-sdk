@@ -9,16 +9,19 @@
  */
 package zowe.client.sdk.zosfiles.uss.model;
 
-import java.util.Optional;
-import java.util.OptionalLong;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * ListItem object representing an item from Unix System Services (USS) list operation
+ * UnixFile object representing an item from Unix System Services (USS) file list operation.
+ * Immutable class using Jackson for JSON parsing.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class UnixFile {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public final class UnixFile {
 
     /**
      * File, symbolic file or directory name
@@ -59,27 +62,46 @@ public class UnixFile {
      * mtime of returned name item
      */
     private final String mtime;
+
     /**
      * target of returned name item
      */
     private final String target;
 
     /**
-     * UnixFile constructor
+     * Jackson constructor for UnixFile
      *
-     * @param builder UnixFile.Builder object
-     * @author Frank Giordano
+     * @param name   File, symbolic file or directory name
+     * @param mode   Permission (mode) of returned name item
+     * @param size   size of returned name item
+     * @param uid    uid of returned name item
+     * @param user   user of returned name item
+     * @param gid    gid of returned name item
+     * @param group  group of returned name items
+     * @param mtime  mtime of returned name item
+     * @param target target of returned name item
      */
-    public UnixFile(final UnixFile.Builder builder) {
-        this.name = builder.name;
-        this.mode = builder.mode;
-        this.size = builder.size;
-        this.uid = builder.uid;
-        this.user = builder.user;
-        this.gid = builder.gid;
-        this.group = builder.group;
-        this.mtime = builder.mtime;
-        this.target = builder.target;
+    @JsonCreator
+    public UnixFile(
+            @JsonProperty("name") String name,
+            @JsonProperty("mode") String mode,
+            @JsonProperty("size") Long size,
+            @JsonProperty("uid") Long uid,
+            @JsonProperty("user") String user,
+            @JsonProperty("gid") Long gid,
+            @JsonProperty("group") String group,
+            @JsonProperty("mtime") String mtime,
+            @JsonProperty("target") String target
+    ) {
+        this.name = name == null ? "" : name;
+        this.mode = mode == null ? "" : mode;
+        this.size = (size == null) ? 0L : size;
+        this.uid = (uid == null) ? 0L : uid;
+        this.gid = (gid == null) ? 0L : gid;
+        this.user = user == null ? "" : user;
+        this.group = group == null ? "" : group;
+        this.mtime = mtime == null ? "" : mtime;
+        this.target = target == null ? "" : target;
     }
 
     /**
@@ -87,8 +109,8 @@ public class UnixFile {
      *
      * @return name value
      */
-    public Optional<String> getName() {
-        return Optional.ofNullable(name);
+    public String getName() {
+        return name;
     }
 
     /**
@@ -96,8 +118,8 @@ public class UnixFile {
      *
      * @return mode value
      */
-    public Optional<String> getMode() {
-        return Optional.ofNullable(mode);
+    public String getMode() {
+        return mode;
     }
 
     /**
@@ -105,8 +127,8 @@ public class UnixFile {
      *
      * @return size value
      */
-    public OptionalLong getSize() {
-        return (size == null) ? OptionalLong.empty() : OptionalLong.of(size);
+    public Long getSize() {
+        return size;
     }
 
     /**
@@ -114,8 +136,8 @@ public class UnixFile {
      *
      * @return uid value
      */
-    public OptionalLong getUid() {
-        return (uid == null) ? OptionalLong.empty() : OptionalLong.of(uid);
+    public Long getUid() {
+        return uid;
     }
 
     /**
@@ -123,8 +145,8 @@ public class UnixFile {
      *
      * @return user value
      */
-    public Optional<String> getUser() {
-        return Optional.ofNullable(user);
+    public String getUser() {
+        return user;
     }
 
     /**
@@ -132,8 +154,8 @@ public class UnixFile {
      *
      * @return gid value
      */
-    public OptionalLong getGid() {
-        return (gid == null) ? OptionalLong.empty() : OptionalLong.of(gid);
+    public Long getGid() {
+        return gid;
     }
 
     /**
@@ -141,8 +163,8 @@ public class UnixFile {
      *
      * @return group value
      */
-    public Optional<String> getGroup() {
-        return Optional.ofNullable(group);
+    public String getGroup() {
+        return group;
     }
 
     /**
@@ -150,8 +172,8 @@ public class UnixFile {
      *
      * @return mtime value
      */
-    public Optional<String> getMtime() {
-        return Optional.ofNullable(mtime);
+    public String getMtime() {
+        return mtime;
     }
 
     /**
@@ -159,8 +181,8 @@ public class UnixFile {
      *
      * @return target value
      */
-    public Optional<String> getTarget() {
-        return Optional.ofNullable(target);
+    public String getTarget() {
+        return target;
     }
 
     /**
@@ -181,166 +203,6 @@ public class UnixFile {
                 ", mtime=" + mtime +
                 ", target=" + target +
                 '}';
-    }
-
-    /**
-     * Builder class for UnixFile
-     */
-    public static class Builder {
-
-        /**
-         * File, symbolic file or directory name
-         */
-        private String name;
-
-        /**
-         * Permission (mode) of returned name item
-         */
-        private String mode;
-
-        /**
-         * size of returned name item
-         */
-        private Long size;
-
-        /**
-         * uid of returned name item
-         */
-        private Long uid;
-
-        /**
-         * user of returned name item
-         */
-        private String user;
-
-        /**
-         * gid of returned name item
-         */
-        private Long gid;
-
-        /**
-         * group of returned name items
-         */
-        private String group;
-
-        /**
-         * mtime of returned name item
-         */
-        private String mtime;
-
-        /**
-         * target of returned name item
-         */
-        private String target;
-
-        /**
-         * Set name string value
-         *
-         * @param name string value
-         * @return Builder this object
-         */
-        public Builder name(final String name) {
-            this.name = name;
-            return this;
-        }
-
-        /**
-         * Set mode string value
-         *
-         * @param mode string value
-         * @return Builder this object
-         */
-        public Builder mode(final String mode) {
-            this.mode = mode;
-            return this;
-        }
-
-        /**
-         * Set size long value
-         *
-         * @param size long value
-         * @return Builder this object
-         */
-        public Builder size(final Long size) {
-            this.size = size;
-            return this;
-        }
-
-        /**
-         * Set uid long value
-         *
-         * @param uid long value
-         * @return Builder this object
-         */
-        public Builder uid(final Long uid) {
-            this.uid = uid;
-            return this;
-        }
-
-        /**
-         * Set user string value
-         *
-         * @param user string value
-         * @return Builder this object
-         */
-        public Builder user(final String user) {
-            this.user = user;
-            return this;
-        }
-
-        /**
-         * Set gid value
-         *
-         * @param gid long value
-         * @return Builder this object
-         */
-        public Builder gid(final Long gid) {
-            this.gid = gid;
-            return this;
-        }
-
-        /**
-         * Set group string value
-         *
-         * @param group string value
-         * @return .Builder this object
-         */
-        public Builder group(final String group) {
-            this.group = group;
-            return this;
-        }
-
-        /**
-         * Set mtime string value
-         *
-         * @param mtime string value
-         * @return Builder this object
-         */
-        public Builder mtime(final String mtime) {
-            this.mtime = mtime;
-            return this;
-        }
-
-        /**
-         * Set target string value
-         *
-         * @param target string value
-         * @return Builder this object
-         */
-        public Builder target(final String target) {
-            this.target = target;
-            return this;
-        }
-
-        /**
-         * Return UnixFile object based on Builder this object
-         *
-         * @return UnixFile this object
-         */
-        public UnixFile build() {
-            return new UnixFile(this);
-        }
-
     }
 
 }

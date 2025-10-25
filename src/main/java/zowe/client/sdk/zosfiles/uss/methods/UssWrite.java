@@ -36,9 +36,7 @@ import java.util.Map;
 public class UssWrite {
 
     private static final Logger LOG = LoggerFactory.getLogger(UssWrite.class);
-
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**

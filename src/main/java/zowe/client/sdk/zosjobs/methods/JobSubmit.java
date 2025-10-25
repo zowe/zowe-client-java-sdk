@@ -13,13 +13,11 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseFactory;
-import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.JsonParserUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.JobSubmitInputData;
@@ -38,9 +36,7 @@ import java.util.Map;
 public class JobSubmit {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobSubmit.class);
-
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**
@@ -140,12 +136,16 @@ public class JobSubmit {
         }
         request.setHeaders(headers);
         request.setUrl(url);
-        request.setBody(submitJclInputData.getJcl().orElseThrow(() -> new IllegalArgumentException("jcl not specified")));
+        request.setBody(submitJclInputData.getJcl()
+                .orElseThrow(() -> new IllegalArgumentException("jcl not specified")));
 
-        final String jsonStr = request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no job jcl submit response phrase")).toString();
-        final JSONObject jsonObject = JsonParserUtils.parse(jsonStr);
-        return (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no job jcl submit response phrase"))
+                .toString();
+
+        final String context = "submitJclCommon";
+        return JsonUtils.parseResponse(responsePhrase, Job.class, context);
     }
 
     /**
@@ -188,10 +188,13 @@ public class JobSubmit {
         request.setUrl(url);
         request.setBody(new JSONObject(submitMap).toString());
 
-        final String jsonStr = request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no job submit response phrase")).toString();
-        final JSONObject jsonObject = JsonParserUtils.parse(jsonStr);
-        return (Job) JsonParseFactory.buildParser(ParseType.JOB).parseResponse(jsonObject);
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no job submit response phrase"))
+                .toString();
+
+        final String context = "submitJclCommon";
+        return JsonUtils.parseResponse(responsePhrase, Job.class, context);
     }
 
     /**

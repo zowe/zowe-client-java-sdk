@@ -30,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -275,7 +276,7 @@ public abstract class ZosmfRequest {
             }
         }
 
-        final String responsePhraseStr = String.valueOf((responsePhrase.get()));
+        final String responsePhraseStr = Objects.toString(responsePhrase.get(), "");
         final String statusText = response.getStatusText().orElse("n\\a");
         String httpErrMsg = "http status error code: " + statusCode + ", status text: " + statusText;
         if (!statusText.equalsIgnoreCase(responsePhraseStr)) {

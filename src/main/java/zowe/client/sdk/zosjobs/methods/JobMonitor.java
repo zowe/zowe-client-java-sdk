@@ -16,7 +16,6 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.utility.timer.WaitUtil;
-import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.CommonJobInputData;
 import zowe.client.sdk.zosjobs.input.JobGetInputData;
 import zowe.client.sdk.zosjobs.input.JobMonitorInputData;
@@ -37,13 +36,12 @@ import java.util.List;
 public class JobMonitor {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobMonitor.class);
-
     /**
-     * Default number of poll attempts to check for the specified job status.
+     * The default number of polls attempts to check for the specified job status.
      */
     public static final int DEFAULT_ATTEMPTS = 1000;
     /**
-     * The default amount of lines to check from job output.
+     * The default number of lines to check from job output.
      */
     public static final int DEFAULT_LINE_LIMIT = 1000;
     /**
@@ -186,7 +184,7 @@ public class JobMonitor {
         final Job job = getJobs.getStatusCommon(new CommonJobInputData(
                 monitorInputData.getJobId().orElse(""), monitorInputData.getJobName().orElse(""), isStepData));
 
-        if (statusNameCheck.equals(job.getStatus().orElse(DEFAULT_STATUS.toString()))) {
+        if (statusNameCheck.equals(job.getStatus().isBlank() ? DEFAULT_STATUS.toString() : job.getStatus())) {
             return new CheckStatusResponse(true, job);
         }
 
@@ -196,8 +194,7 @@ public class JobMonitor {
             throw new IllegalStateException(invalidStatusMsg);
         }
 
-        final int orderIndexOfCurrRunningJobStatus = getOrderIndexOfStatus(
-                job.getStatus().orElseThrow(() -> new IllegalStateException("job status not specified")));
+        final int orderIndexOfCurrRunningJobStatus = getOrderIndexOfStatus(job.getStatus());
         if (orderIndexOfCurrRunningJobStatus == -1) {  // this should never happen, but let's check for it.
             throw new IllegalStateException(invalidStatusMsg);
         }
@@ -338,9 +335,7 @@ public class JobMonitor {
      */
     public boolean waitByMessage(final Job job, final String message) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        return waitMessageCommon(new JobMonitorInputData.Builder(
-                job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG)),
-                job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG)))
+        return waitMessageCommon(new JobMonitorInputData.Builder(job.getJobName(), job.getJobId())
                 .jobStatus(JobStatus.Type.OUTPUT)
                 .attempts(attempts)
                 .watchDelay(watchDelay)
@@ -387,9 +382,7 @@ public class JobMonitor {
      */
     public Job waitByOutputStatus(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        return waitStatusCommon(new JobMonitorInputData.Builder(
-                job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG)),
-                job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG)))
+        return waitStatusCommon(new JobMonitorInputData.Builder(job.getJobName(), job.getJobId())
                 .jobStatus(JobStatus.Type.OUTPUT)
                 .attempts(attempts)
                 .watchDelay(watchDelay)
@@ -435,7 +428,7 @@ public class JobMonitor {
     public Job waitByStatus(final Job job, final JobStatus.Type statusType) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
         return waitStatusCommon(
-                new JobMonitorInputData.Builder(job.getJobName().orElse(""), job.getJobId().orElse(""))
+                new JobMonitorInputData.Builder(job.getJobName(), job.getJobId())
                         .jobStatus(statusType)
                         .attempts(attempts)
                         .watchDelay(watchDelay)

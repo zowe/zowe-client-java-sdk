@@ -112,9 +112,10 @@ public class TeamConfig {
      *
      * @param profileType profile type
      * @return ProfileDao object
+     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
-    public ProfileDao getDefaultProfile(final String profileType) {
+    public ProfileDao getDefaultProfile(final String profileType) throws TeamConfigException {
         ValidateUtils.checkIllegalParameter(profileType, "profileType");
         final Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(profileType));
         final Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(profileType));
@@ -138,9 +139,10 @@ public class TeamConfig {
      * @param profileName   profile name
      * @param partitionName partition name
      * @return ProfileDao object
+     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
-    public ProfileDao getDefaultProfileFromPartition(final String profileName, final String partitionName) {
+    public ProfileDao getDefaultProfileFromPartition(final String profileName, final String partitionName) throws TeamConfigException {
         ValidateUtils.checkIllegalParameter(profileName, "profileName");
         ValidateUtils.checkIllegalParameter(partitionName, "partitionName");
         final Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(profileName));
@@ -169,9 +171,10 @@ public class TeamConfig {
      * @param target Profile object
      * @param base   Profile object
      * @return target profile object
+     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
-    private Profile merge(Profile target, final Profile base) {
+    private Profile merge(Profile target, final Profile base) throws TeamConfigException {
         Optional<Map<String, String>> targetProps = Optional.empty();
         Optional<Map<String, String>> baseProps = Optional.empty();
         if (target != null) {

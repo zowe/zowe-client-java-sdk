@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
  * @author Frank Giordano
  * @version 5.0
  */
-public class JsonParserUtilsTest {
+public class JsonUtilsTest {
 
     /**
      * Validate class structure
@@ -25,7 +25,7 @@ public class JsonParserUtilsTest {
     @Test
     public void tstJsonParserUtilsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Utility class";
-        UtilsTestHelper.validateClass(JsonParserUtils.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(JsonUtils.class, privateConstructorExceptionMsg);
     }
 
 }

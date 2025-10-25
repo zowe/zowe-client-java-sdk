@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
-import zowe.client.sdk.utility.JsonParserUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssGetAclInputData;
@@ -84,7 +84,7 @@ public class UssGetAcl {
         final Response response = useCommas ?
                 getAclCommon(targetPath, new UssGetAclInputData.Builder().usecommas(true).build()) :
                 getAclCommon(targetPath, new UssGetAclInputData.Builder().build());
-        final JSONObject json = JsonParserUtils.parse(response.getResponsePhrase()
+        final JSONObject json = JsonUtils.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
         final StringBuilder str = new StringBuilder();
         if (useCommas) {

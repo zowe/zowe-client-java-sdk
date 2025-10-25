@@ -9,10 +9,12 @@
  */
 package zowe.client.sdk.zosmfinfo.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import zowe.client.sdk.zosmfinfo.model.DefinedSystem;
 
-import java.util.Optional;
-import java.util.OptionalLong;
+import java.util.Arrays;
 
 /**
  * API response for list systems defined to z/OSMF.
@@ -20,7 +22,8 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 5.0
  */
-public class ZosmfSystemsResponse {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public final class ZosmfSystemsResponse {
 
     /**
      * Total items returned.
@@ -33,14 +36,18 @@ public class ZosmfSystemsResponse {
     private final DefinedSystem[] definedSystems;
 
     /**
-     * ZosmfListDefinedSystemsResponse constructor
+     * Jackson constructor for ZosmfSystemsResponse
      *
-     * @param builder ZosmfListDefinedSystemsResponse.Builder Object
-     * @author Frank Giordano
+     * @param numRows        total number of rows returned
+     * @param definedSystems array of defined systems
      */
-    private ZosmfSystemsResponse(final Builder builder) {
-        this.numRows = builder.numRows;
-        this.definedSystems = builder.definedSystems;
+    @JsonCreator
+    public ZosmfSystemsResponse(
+            @JsonProperty("numRows") Long numRows,
+            @JsonProperty("items") DefinedSystem[] definedSystems
+    ) {
+        this.numRows = (numRows == null) ? 0L : numRows;
+        this.definedSystems = definedSystems;
     }
 
     /**
@@ -48,8 +55,8 @@ public class ZosmfSystemsResponse {
      *
      * @return definedSystems value
      */
-    public Optional<DefinedSystem[]> getDefinedSystems() {
-        return Optional.ofNullable(definedSystems);
+    public DefinedSystem[] getDefinedSystems() {
+        return definedSystems;
     }
 
     /**
@@ -57,8 +64,8 @@ public class ZosmfSystemsResponse {
      *
      * @return numRows value
      */
-    public OptionalLong getNumRows() {
-        return (numRows == null) ? OptionalLong.empty() : OptionalLong.of(numRows);
+    public Long getNumRows() {
+        return numRows;
     }
 
     /**
@@ -70,62 +77,8 @@ public class ZosmfSystemsResponse {
     public String toString() {
         return "ZosmfSystemsResponse{" +
                 "numRows=" + numRows +
-                ", definedSystems=" + definedSystems +
+                ", definedSystems=" + Arrays.toString(definedSystems) +
                 '}';
-    }
-
-    /**
-     * Builder class for ZosmfSystemsResponse
-     */
-    public static class Builder {
-
-        /**
-         * Total items returned.
-         */
-        private Long numRows;
-
-        /**
-         * Properties of each defined system.
-         */
-        private DefinedSystem[] definedSystems;
-
-        /**
-         * Builder constructor
-         */
-        public Builder() {
-        }
-
-        /**
-         * Set definedSystems DefinedSystem[] value
-         *
-         * @param definedSystems DefinedSystem[] value
-         * @return Builder this object
-         */
-        public Builder definedSystems(final DefinedSystem[] definedSystems) {
-            this.definedSystems = definedSystems;
-            return this;
-        }
-
-        /**
-         * Set numRows long value
-         *
-         * @param numRows long value
-         * @return Builder this object
-         */
-        public Builder numRows(final Long numRows) {
-            this.numRows = numRows;
-            return this;
-        }
-
-        /**
-         * Return ZosmfSystemsResponse object based on Builder this object
-         *
-         * @return ZosmfSystemsResponse object
-         */
-        public ZosmfSystemsResponse build() {
-            return new ZosmfSystemsResponse(this);
-        }
-
     }
 
 }

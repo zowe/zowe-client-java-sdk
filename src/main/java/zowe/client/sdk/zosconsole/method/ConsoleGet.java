@@ -1,8 +1,5 @@
 package zowe.client.sdk.zosconsole.method;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -11,6 +8,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ConsoleUtils;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
@@ -29,7 +27,6 @@ import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
  */
 public class ConsoleGet {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -115,17 +112,13 @@ public class ConsoleGet {
         }
         request.setUrl(url);
 
-        final String jsonStr = request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no issue console response phrase")).toString();
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no issue console response phrase"))
+                .toString();
 
-        final JsonNode jsonNode;
-        try {
-            jsonNode = objectMapper.readTree(jsonStr);
-        } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException(e.getMessage());
-        }
-
-        ConsoleGetResponse response = objectMapper.convertValue(jsonNode, ConsoleGetResponse.class);
+        final String context = "getResponseCommon";
+        ConsoleGetResponse response = JsonUtils.parseResponse(responsePhrase, ConsoleGetResponse.class, context);
         if (processResponse) {
             response = response.withCmdResponse(ConsoleUtils.processCmdResponse(response.getCmdResponse()));
         }

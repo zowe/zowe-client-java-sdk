@@ -32,7 +32,6 @@ import zowe.client.sdk.zosmfauth.response.ZosmfLoginResponse;
 public class ZosmfLogin {
 
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**

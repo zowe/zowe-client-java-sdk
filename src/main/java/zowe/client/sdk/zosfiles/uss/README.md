@@ -154,7 +154,8 @@ public class UssDeleteExp extends TstZosConnection {
             return ussDelete.delete(value, true);
         } catch (ZosmfRequestException e) {
             String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);;
+            throw new RuntimeException(errMsg);
+            ;
         }
     }
 
