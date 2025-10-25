@@ -219,7 +219,7 @@ The following maven command at the root prompt of the project will produce zowe-
   
 ## Logger 
      
-For logging, the SDK does NOT include SLF4j (Simple Logging Facade for Java) dependency within its FATJAR. 
+For logging, the SDK does NOT include SLF4j (Simple Logging Facade for Java) dependency. 
   
 You will need to add SLF4j dependency and plug into your SLF4J by implementing a logging framework of your choice for your project. 
     
@@ -238,17 +238,34 @@ To install this library in your project, use a build tool such as Maven, Gradle 
 https://mvnrepository.com/artifact/org.zowe.client.java.sdk/zowe-client-java-sdk
 
 For a Maven project add the SDK as a dependency by updating your `pom.xml` as follows:
-
-    <dependency>
-        <groupId>org.zowe.client.java.sdk</groupId>
-        <artifactId>zowe-client-java-sdk</artifactId>
-        <version>5.1.1</version>
-    </dependency>
-
-For a Gradle project add the SDK as a dependency by updating your `build.gradle` as follows:
-
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '5.1.1'  
   
+Thin JAR (recommended):
+  
+        <dependency>
+          <groupId>org.zowe.client.java.sdk</groupId>
+          <artifactId>zowe-client-java-sdk</artifactId>
+          <version>5.2.0</version>
+        </dependency>
+  
+Fat JAR (with dependencies):
+
+        <dependency>
+          <groupId>org.zowe.client.java.sdk</groupId>
+          <artifactId>zowe-client-java-sdk</artifactId>
+          <version>5.2.0</version>
+          <classifier>jar-with-dependencies</classifier>
+        </dependency>  
+  
+For a Gradle project add the SDK as a dependency by updating your `build.gradle` as follows:  
+
+Thin JAR (recommended):  
+  
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '5.2.0'    
+
+Fat JAR (with dependencies):  
+  
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '5.2.0', classifier: 'jar-with-dependencies' 
+    
 ## Publishing to Maven Central  
   
 The following documents the steps taken to publish a new release of this project to maven central:
