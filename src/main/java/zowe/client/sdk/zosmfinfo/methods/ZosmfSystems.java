@@ -29,7 +29,6 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
 public class ZosmfSystems {
 
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**

@@ -36,9 +36,7 @@ import java.util.List;
 public class JobGet {
 
     private final ZosConnection connection;
-
     private ZosmfRequest request;
-
     private String url;
 
     /**

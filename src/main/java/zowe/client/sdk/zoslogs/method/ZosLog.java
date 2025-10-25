@@ -33,9 +33,7 @@ import java.time.format.DateTimeFormatter;
 public class ZosLog {
 
     private static final String RESOURCE = "/restconsoles/v1/log";
-
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**

@@ -36,7 +36,6 @@ import java.util.Map;
 public class ZosmfPassword {
 
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**

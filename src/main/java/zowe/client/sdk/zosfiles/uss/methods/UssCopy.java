@@ -37,7 +37,6 @@ import java.util.Map;
 public class UssCopy {
 
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**

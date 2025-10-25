@@ -43,7 +43,6 @@ import java.util.stream.IntStream;
 public class DsnGet {
 
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**

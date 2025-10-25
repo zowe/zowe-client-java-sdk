@@ -40,7 +40,6 @@ import java.util.Map;
 public class UssChangeTag {
 
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**

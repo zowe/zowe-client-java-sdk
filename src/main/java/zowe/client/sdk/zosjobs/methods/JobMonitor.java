@@ -36,7 +36,6 @@ import java.util.List;
 public class JobMonitor {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobMonitor.class);
-
     /**
      * The default number of polls attempts to check for the specified job status.
      */

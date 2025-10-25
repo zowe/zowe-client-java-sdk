@@ -36,9 +36,7 @@ import java.util.stream.IntStream;
 public class ZosmfStatus {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZosmfStatus.class);
-
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**
