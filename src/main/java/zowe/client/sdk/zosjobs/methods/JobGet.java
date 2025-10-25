@@ -12,8 +12,6 @@ package zowe.client.sdk.zosjobs.methods;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseFactory;
-import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
@@ -116,9 +114,15 @@ public class JobGet {
     public String getJclCommon(final CommonJobInputData commonInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(commonInputData == null, "commonInputData is null");
 
-        url = connection.getZosmfUrl() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) + "/" + commonInputData.getJobId().get() +
-                JobsConstants.RESOURCE_SPOOL_FILES + JobsConstants.RESOURCE_JCL_CONTENT + JobsConstants.RESOURCE_SPOOL_CONTENT;
+        url = connection.getZosmfUrl() +
+                JobsConstants.RESOURCE +
+                JobsConstants.FILE_DELIM +
+                EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
+                JobsConstants.FILE_DELIM +
+                commonInputData.getJobId().get() +
+                JobsConstants.RESOURCE_SPOOL_FILES +
+                JobsConstants.RESOURCE_JCL_CONTENT +
+                JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         if (request == null || !(request instanceof GetTextZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
@@ -303,8 +307,14 @@ public class JobGet {
         // use CommonJobInputData container class that does all the ValidateUtils checks
         final CommonJobInputData commonInputData = new CommonJobInputData(jobId, jobName);
         url = connection.getZosmfUrl() +
-                JobsConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) + "/" +
-                commonInputData.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES + "/" + spoolId +
+                JobsConstants.RESOURCE +
+                JobsConstants.FILE_DELIM +
+                EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
+                JobsConstants.FILE_DELIM +
+                commonInputData.getJobId().get() +
+                JobsConstants.RESOURCE_SPOOL_FILES +
+                JobsConstants.FILE_DELIM +
+                spoolId +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         if (request == null || !(request instanceof GetTextZosmfRequest)) {
@@ -313,8 +323,10 @@ public class JobGet {
         request.setUrl(url);
 
         final String spoolErrMsg = "no job spool content response phrase";
-        return (String) request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException(spoolErrMsg));
+        return request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(spoolErrMsg))
+                .toString();
     }
 
     /**
@@ -328,13 +340,19 @@ public class JobGet {
     public String getSpoolContentCommon(final JobFile jobFile) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(jobFile == null, "jobFile is null");
 
-        if (jobFile.getJobName().isEmpty() || jobFile.getJobId().isEmpty() || jobFile.getId().isEmpty()) {
+        if (jobFile.getJobName().isEmpty() || jobFile.getJobId().isEmpty() || jobFile.getId() == 0) {
             throw new ZosmfRequestException("jobFileName, JobId or jobFileId is either null or empty");
         }
 
         url = connection.getZosmfUrl() +
-                JobsConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(jobFile.getJobName().get()) + "/" +
-                jobFile.getJobId().get() + JobsConstants.RESOURCE_SPOOL_FILES + "/" + jobFile.getId().getAsLong() +
+                JobsConstants.RESOURCE +
+                JobsConstants.FILE_DELIM +
+                EncodeUtils.encodeURIComponent(jobFile.getJobName()) +
+                JobsConstants.FILE_DELIM +
+                jobFile.getJobId() +
+                JobsConstants.RESOURCE_SPOOL_FILES +
+                JobsConstants.FILE_DELIM +
+                jobFile.getId() +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
 
         if (request == null || !(request instanceof GetTextZosmfRequest)) {
@@ -343,8 +361,10 @@ public class JobGet {
         request.setUrl(url);
 
         final String spoolErrMsg = "no job spool file content response phrase";
-        return (String) request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException(spoolErrMsg));
+        return request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(spoolErrMsg))
+                .toString();
     }
 
     /**
@@ -375,8 +395,12 @@ public class JobGet {
         ValidateUtils.checkNullParameter(commonInputData == null, "commonInputData is null");
 
         url = connection.getZosmfUrl() +
-                JobsConstants.RESOURCE + "/" + EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
-                "/" + commonInputData.getJobId().get() + "/files";
+                JobsConstants.RESOURCE +
+                JobsConstants.FILE_DELIM +
+                EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
+                JobsConstants.FILE_DELIM +
+                commonInputData.getJobId().get()
+                + "/files";
 
         if (request == null || !(request instanceof GetJsonZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
@@ -384,15 +408,17 @@ public class JobGet {
         request.setUrl(url);
 
         final List<JobFile> files = new ArrayList<>();
-        final String jsonStr = request.executeRequest().getResponsePhrase().orElse("").toString();
-        if (jsonStr.isBlank()) {
-            return files;
-        }
+        final String spoolErrMsg = "no job spool files phrase";
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(spoolErrMsg))
+                .toString();
 
-        final JSONArray results = JsonUtils.parseArray(jsonStr);
+        final String context = "getSpoolFilesCommon";
+        final JSONArray results = JsonUtils.parseArray(responsePhrase);
         for (final Object obj : results) {
             final JSONObject jsonObj = (JSONObject) obj;
-            files.add((JobFile) JsonParseFactory.buildParser(ParseType.JOB_FILE).parseResponse(jsonObj));
+            files.add(JsonUtils.parseResponse(jsonObj.toJSONString(), JobFile.class, context));
         }
 
         return files;
