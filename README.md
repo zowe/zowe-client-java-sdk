@@ -248,7 +248,7 @@ Thin JAR (recommended):
         </dependency>
   
 Fat JAR (with dependencies):
-
+  
         <dependency>
           <groupId>org.zowe.client.java.sdk</groupId>
           <artifactId>zowe-client-java-sdk</artifactId>
