@@ -117,19 +117,18 @@ public class JobCancel {
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in JobModifyInputData
     public Response cancelCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
+        ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_NULL_MSG);
+        ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_NULL_MSG);
 
         // generate full url request
         final String url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
                 JobsConstants.FILE_DELIM +
-                modifyInputData.getJobName()
-                        .orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_NAME_NULL_MSG)) +
+                modifyInputData.getJobName().get() +
                 JobsConstants.FILE_DELIM +
-                modifyInputData.getJobId()
-                        .orElseThrow(() -> new IllegalStateException(JobsConstants.JOB_ID_NULL_MSG));
+                modifyInputData.getJobId().get();
 
         // set version to default value if none given
         final String version = modifyInputData.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
