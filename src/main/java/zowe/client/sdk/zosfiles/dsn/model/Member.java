@@ -114,18 +114,18 @@ public class Member {
             @JsonProperty("user") String user,
             @JsonProperty("sclm") String sclm
     ) {
-        this.member = member;
-        this.vers = vers;
-        this.mod = mod;
-        this.c4date = c4date;
-        this.m4date = m4date;
-        this.cnorc = cnorc;
-        this.inorc = inorc;
-        this.mnorc = mnorc;
-        this.mtime = mtime;
-        this.msec = msec;
-        this.user = user;
-        this.sclm = sclm;
+        this.member = member != null ? member : "";
+        this.vers = vers != null ? vers : 0;
+        this.mod = mod != null ? mod : 0;
+        this.c4date = c4date != null ? c4date : "";
+        this.m4date = m4date != null ? m4date : "";
+        this.cnorc = cnorc != null ? cnorc : 0;
+        this.inorc = inorc != null ? inorc : 0;
+        this.mnorc = mnorc != null ? mnorc : 0;
+        this.mtime = mtime != null ? mtime : "";
+        this.msec = msec != null ? msec : "";
+        this.user = user != null ? user : "";
+        this.sclm = sclm != null ? sclm : "";
     }
 
     /**
