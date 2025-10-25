@@ -41,9 +41,6 @@ public final class JsonParseFactory {
         LOG.debug(type.name());
         JsonParse parseResponse;
         switch (type) {
-            case DATASET:
-                parseResponse = DatasetJsonParse.getInstance();
-                break;
             case JOB_FILE:
                 parseResponse = JobFileJsonParse.getInstance();
                 break;

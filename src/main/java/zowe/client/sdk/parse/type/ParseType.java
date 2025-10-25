@@ -18,10 +18,6 @@ package zowe.client.sdk.parse.type;
 public enum ParseType {
 
     /**
-     * dataset type
-     */
-    DATASET,
-    /**
      * job file type
      */
     JOB_FILE
