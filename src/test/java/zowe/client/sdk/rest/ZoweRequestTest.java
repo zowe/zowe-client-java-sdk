@@ -131,11 +131,11 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeSslSetupFailure() {
-        ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
+        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
                 "/file/file1", "dummy");
-        String errMsgWindows = "kong.unirest.core.UnirestConfigException: " +
+        final String errMsgWindows = "kong.unirest.core.UnirestConfigException: " +
                 "java.io.FileNotFoundException: \\file\\file1 (The system cannot find the path specified)";
-        String errMsgMacOS = "kong.unirest.core.UnirestConfigException: " +
+        final String errMsgMacOS = "kong.unirest.core.UnirestConfigException: " +
                 "java.io.FileNotFoundException: /file/file1 (No such file or directory)";
         try {
             ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -146,9 +146,9 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeSslSetupCertPasswordFailure() {
-        ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
+        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
                 "src/test/resources/certs/badssl.com-client.p12", "dummy");
-        String errMsg = "java.io.IOException: keystore password was incorrect";
+        final String errMsg = "java.io.IOException: keystore password was incorrect";
         try {
             ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         } catch (Exception e) {
@@ -158,7 +158,7 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeSslSetupCertPasswordSuccess() {
-        ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
+        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
                 "src/test/resources/certs/badssl.com-client.p12", "badssl.com");
         try {
             ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -169,7 +169,7 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeBasicSetupSuccess() {
-        ZosConnection connection = ZosConnectionFactory
+        final ZosConnection connection = ZosConnectionFactory
                 .createBasicConnection("host", "port", "user", "password");
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         assertNotNull(request.getHeaders().get("Authorization"));
@@ -177,7 +177,7 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeTokenSetupSuccess() {
-        ZosConnection connection = ZosConnectionFactory
+        final ZosConnection connection = ZosConnectionFactory
                 .createTokenConnection("host", "port", new Cookie("hello", "world"));
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         assertNull(request.getHeaders().get("Authorization"));
@@ -236,7 +236,7 @@ public class ZoweRequestTest {
     @Test
     public void tstBuildResponseThrowsOnHttpErrorFailure() {
         // Create a minimal concrete ZosmfRequest
-        ZosmfRequest request = new ZosmfRequest(connection) {
+        final ZosmfRequest request = new ZosmfRequest(connection) {
             @Override
             public Response executeRequest() {
                 return null; // not used in this test
