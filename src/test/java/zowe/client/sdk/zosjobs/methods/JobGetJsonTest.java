@@ -152,7 +152,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonSpoolContentByIdJobIdNullExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getSpoolContent("jobName", null, 1);
+            getJobs.getSpoolContent("jobName", null, 1L);
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
@@ -163,7 +163,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonSpoolContentByIdJobNameNullExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getSpoolContent(null, "1", 1);
+            getJobs.getSpoolContent(null, "1", 1L);
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
@@ -174,7 +174,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonSpoolContentByIdSpoolIdNegativeNumberExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getSpoolContent("jobName", "1", -11);
+            getJobs.getSpoolContent("jobName", "1", -11L);
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
@@ -185,7 +185,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonSpoolContentByIdSpoolIdZeroExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getSpoolContent("jobName", "1", 0);
+            getJobs.getSpoolContent("jobName", "1", 0L);
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }

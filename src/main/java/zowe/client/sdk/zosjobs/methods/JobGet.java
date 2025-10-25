@@ -297,36 +297,12 @@ public class JobGet {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in CommonJobInputData
-    public String getSpoolContent(final String jobName, final String jobId, final int spoolId)
+    public String getSpoolContent(final String jobName, final String jobId, final Long spoolId)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jobName, "jobName");
         ValidateUtils.checkIllegalParameter(jobId, "jobId");
         ValidateUtils.checkIllegalParameter(spoolId <= 0, "spool id not specified");
-
-        // use CommonJobInputData container class that does all the ValidateUtils checks
-        final CommonJobInputData commonInputData = new CommonJobInputData(jobId, jobName);
-        url = connection.getZosmfUrl() +
-                JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM +
-                EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
-                JobsConstants.FILE_DELIM +
-                commonInputData.getJobId().get() +
-                JobsConstants.RESOURCE_SPOOL_FILES +
-                JobsConstants.FILE_DELIM +
-                spoolId +
-                JobsConstants.RESOURCE_SPOOL_CONTENT;
-
-        if (request == null || !(request instanceof GetTextZosmfRequest)) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_TEXT);
-        }
-        request.setUrl(url);
-
-        final String spoolErrMsg = "no job spool content response phrase";
-        return request.executeRequest()
-                .getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException(spoolErrMsg))
-                .toString();
+        return getSpoolContentCommon(new JobFile(jobName, jobId, spoolId));
     }
 
     /**
