@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 /**
@@ -87,12 +88,11 @@ public class DsnGet {
     public Dataset getDsnInfo(final String dataSetName) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
-        Dataset emptyDataSet = new Dataset.Builder().dsname(dataSetName).build();
 
         final String[] tokens = dataSetName.split("\\.");
         final int length = tokens.length - 1;
         if (1 >= length) {
-            return emptyDataSet;
+            throw new IllegalArgumentException("invalid dataset name");
         }
 
         final StringBuilder str = new StringBuilder();
@@ -104,9 +104,9 @@ public class DsnGet {
         final DsnListInputData listInputData = new DsnListInputData.Builder().attribute(AttributeType.BASE).build();
         final List<Dataset> dsLst = dsnList.getDatasets(dataSetSearchStr, listInputData);
 
-        final Optional<Dataset> dataSet = dsLst.stream()
-                .filter(d -> d.getDsname().orElse("n/a").contains(dataSetName)).findFirst();
-        return dataSet.orElse(emptyDataSet);
+        Predicate<Dataset> isExactMatch = d -> dataSetName.equals(d.getDsname());
+        final Optional<Dataset> dataSet = dsLst.stream().filter(isExactMatch).findFirst();
+        return dataSet.orElseThrow(() -> new ZosmfRequestException("dataset not found"));
     }
 
     /**
