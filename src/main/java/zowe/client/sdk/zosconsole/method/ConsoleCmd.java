@@ -143,8 +143,10 @@ public class ConsoleCmd {
         request.setUrl(url);
         request.setBody(new JSONObject(issueMap).toString());
 
-        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no issue console response phrase")));
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no issue console response phrase"))
+                .toString();
 
         final String context = "issueCommandCommon";
         ConsoleCmdResponse response = JsonUtils.parseResponse(responsePhrase, ConsoleCmdResponse.class, context);

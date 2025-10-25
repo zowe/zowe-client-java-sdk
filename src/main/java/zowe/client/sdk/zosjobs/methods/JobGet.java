@@ -256,8 +256,10 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no get job response phrase")));
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no get job response phrase"))
+                .toString();
 
         final String context = "getCommon";
         final JSONArray results = JsonUtils.parseArray(responsePhrase);
@@ -457,8 +459,10 @@ public class JobGet {
         }
         request.setUrl(url);
 
-        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no job get response phrase")));
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no get job response phrase"))
+                .toString();
 
         final String context = "getStatusCommon";
         return JsonUtils.parseResponse(responsePhrase, Job.class, context);

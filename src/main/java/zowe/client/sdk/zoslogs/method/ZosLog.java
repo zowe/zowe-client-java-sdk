@@ -18,6 +18,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zoslogs.input.ZosLogInputData;
 import zowe.client.sdk.zoslogs.response.ZosLogResponse;
 
@@ -116,8 +117,10 @@ public class ZosLog {
         }
         request.setUrl(url.toString().replace("?&", "?"));
 
-        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no zos log response phrase")));
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no zos log response phrase"))
+                .toString();
 
         final String context = "issueCommand";
         return JsonUtils.parseResponse(responsePhrase, ZosLogResponse.class, context);

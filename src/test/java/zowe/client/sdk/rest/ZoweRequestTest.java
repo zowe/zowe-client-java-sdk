@@ -54,7 +54,7 @@ public class ZoweRequestTest {
         } catch (ZosmfRequestException e) {
             errMsg = e.getMessage();
         }
-        final String expectedErrMsg = "http status error code: 300, status text: error, response phrase: null";
+        final String expectedErrMsg = "http status error code: 300, status text: error, response phrase: ";
         assertEquals(expectedErrMsg, errMsg);
     }
 

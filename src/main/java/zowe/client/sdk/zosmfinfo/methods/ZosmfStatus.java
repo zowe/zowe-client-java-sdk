@@ -87,8 +87,10 @@ public class ZosmfStatus {
         }
         request.setUrl(url);
 
-        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no z/osmf status response phrase")));
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no z/osmf status response phrase"))
+                .toString();
 
         final ZosmfInfoResponse response = JsonUtils.parseResponse(responsePhrase, ZosmfInfoResponse.class, "get");
 

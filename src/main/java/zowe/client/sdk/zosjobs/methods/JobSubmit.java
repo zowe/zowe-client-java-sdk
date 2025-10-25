@@ -141,8 +141,10 @@ public class JobSubmit {
         request.setBody(submitJclInputData.getJcl()
                 .orElseThrow(() -> new IllegalArgumentException("jcl not specified")));
 
-        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no job jcl submit response phrase")));
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no job jcl submit response phrase"))
+                .toString();
 
         final String context = "submitJclCommon";
         return JsonUtils.parseResponse(responsePhrase, Job.class, context);
@@ -188,8 +190,10 @@ public class JobSubmit {
         request.setUrl(url);
         request.setBody(new JSONObject(submitMap).toString());
 
-        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no job submit response phrase")));
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no job submit response phrase"))
+                .toString();
 
         final String context = "submitJclCommon";
         return JsonUtils.parseResponse(responsePhrase, Job.class, context);

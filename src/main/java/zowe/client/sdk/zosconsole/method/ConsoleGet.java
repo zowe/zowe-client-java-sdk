@@ -112,8 +112,10 @@ public class ConsoleGet {
         }
         request.setUrl(url);
 
-        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no issue console response phrase")));
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no issue console response phrase"))
+                .toString();
 
         final String context = "getResponseCommon";
         ConsoleGetResponse response = JsonUtils.parseResponse(responsePhrase, ConsoleGetResponse.class, context);

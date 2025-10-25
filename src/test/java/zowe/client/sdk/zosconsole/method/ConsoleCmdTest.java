@@ -165,7 +165,7 @@ public class ConsoleCmdTest {
             errorMsg = String.valueOf(e);
         }
         final String expectedMsg = "java.lang.IllegalStateException: http status error code: 401, " +
-                "status text: Unauthorized, response phrase: null";
+                "status text: Unauthorized, response phrase: ";
         assertEquals(expectedMsg, errorMsg);
     }
 

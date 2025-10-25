@@ -127,8 +127,10 @@ public class UssList {
         }
         request.setUrl(url.toString());
 
-        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)));
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))
+                .toString();
 
         final String context = "getFiles";
         UnixFileListResponse response = JsonUtils.parseResponse(responsePhrase, UnixFileListResponse.class, context);
@@ -170,8 +172,10 @@ public class UssList {
         }
         request.setUrl(url.toString());
 
-        final String responsePhrase = String.valueOf(request.executeRequest().getResponsePhrase().orElseThrow(
-                () -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)));
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))
+                .toString();
 
         final String context = "getZfsSystems";
         UnixZfsListResponse response = JsonUtils.parseResponse(responsePhrase, UnixZfsListResponse.class, context);
