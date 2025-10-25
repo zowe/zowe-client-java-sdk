@@ -38,11 +38,11 @@ public class JobMonitor {
     private static final Logger LOG = LoggerFactory.getLogger(JobMonitor.class);
 
     /**
-     * Default number of poll attempts to check for the specified job status.
+     * The default number of polls attempts to check for the specified job status.
      */
     public static final int DEFAULT_ATTEMPTS = 1000;
     /**
-     * The default amount of lines to check from job output.
+     * The default number of lines to check from job output.
      */
     public static final int DEFAULT_LINE_LIMIT = 1000;
     /**
