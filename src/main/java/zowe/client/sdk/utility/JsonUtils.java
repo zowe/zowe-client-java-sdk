@@ -80,9 +80,10 @@ public final class JsonUtils {
     /**
      * Parse a JSON string into a specified POJO type.
      *
-     * @param json  the JSON string to parse
-     * @param clazz the target class type
-     * @param <T>   the type parameter
+     * @param json    the JSON string to parse
+     * @param clazz   the target class type
+     * @param context the context for logging purposes
+     * @param <T>     the type parameter
      * @return deserialized object of type T
      * @throws ZosmfRequestException if parsing fails
      */
@@ -99,13 +100,13 @@ public final class JsonUtils {
     }
 
     /**
-     * Convert a JSONObject to a Map<String, String>, converting all values to String.
+     * Convert a JSONObject to a {@code Map<String, String>}, converting all values to String.
      * <p>
      * This method supports JSON values of any type (string, number, boolean, null, etc.)
      * and ensures that all map values are safely represented as strings.
      *
      * @param jsonObject the JSONObject to convert (must not be null)
-     * @return a Map<String, String> with all keys its values as all String values
+     * @return a {@code Map<String, String>} with all keys its values as all String values
      * @throws JsonProcessingException if JSON parsing fails
      */
     public static Map<String, String> parseMap(JSONObject jsonObject) throws JsonProcessingException {

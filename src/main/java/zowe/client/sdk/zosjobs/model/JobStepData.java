@@ -83,13 +83,15 @@ public class JobStepData {
     /**
      * JobStepData constructor
      *
-     * @param smfid        SMFID value
-     * @param completion   completion string
      * @param active       boolean value
+     * @param smfid        SMFID value
      * @param stepNumber   long step number
-     * @param procStepName procedure step name
-     * @param stepName     step name
+     * @param owner        job owner
      * @param programName  program name
+     * @param stepName     step name
+     * @param pathName     path name
+     * @param procStepName procedure step name
+     * @param completion   completion
      * @author Frank Giordano
      */
     @JsonCreator
