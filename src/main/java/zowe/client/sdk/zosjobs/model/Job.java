@@ -93,7 +93,7 @@ public class Job {
     private final String phaseName;
 
     /**
-     * Job constructor
+     * Job constructor for Jackson JSON parsing.
      *
      * @param jobId         job id value
      * @param jobName       job name value

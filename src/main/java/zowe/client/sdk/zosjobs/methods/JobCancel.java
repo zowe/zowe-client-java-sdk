@@ -38,7 +38,7 @@ public class JobCancel {
     private ZosmfRequest request;
 
     /**
-     * CancelJobs constructor
+     * CancelJobs constructor.
      *
      * @param connection for connection information, see ZosConnection object
      * @author Nikunj Goyal

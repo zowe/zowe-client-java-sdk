@@ -40,7 +40,7 @@ public class JobSubmit {
     private ZosmfRequest request;
 
     /**
-     * SubmitJobs Constructor
+     * SubmitJobs Constructor.
      *
      * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
@@ -71,7 +71,7 @@ public class JobSubmit {
     }
 
     /**
-     * Submit a string of JCL to run
+     * Submit a string of JCL to run.
      *
      * @param jcl                 JCL content that you want to be submitted
      * @param internalReaderRecfm record format of the jcl you want to submit. "F" (fixed) or "V" (variable)
@@ -198,7 +198,7 @@ public class JobSubmit {
     }
 
     /**
-     * Parse input string for JCL substitution
+     * Parse input string for JCL substitution.
      *
      * @param keyValues Map containing JCL substitution symbols e.g.: {"SYMBOL","SYM"},{"SYMBOL2","SYM2"}
      * @return String Map containing all keys and values

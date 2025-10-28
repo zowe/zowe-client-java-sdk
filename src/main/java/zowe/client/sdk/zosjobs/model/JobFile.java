@@ -123,7 +123,7 @@ public class JobFile {
     }
 
     /**
-     * JobFile constructor for Jackson JSON parsing
+     * JobFile constructor for Jackson JSON parsing.
      *
      * @param jobId         Job ID
      * @param jobName       Job name

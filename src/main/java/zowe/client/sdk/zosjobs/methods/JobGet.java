@@ -247,7 +247,7 @@ public class JobGet {
                 url += JobsConstants.QUERY_JOBID + getInputData.getJobId().get();
             }
         } else {
-            // if no user defined in ZosConnection then query jobs the z/OS user ID
+            // if no user defined in ZosConnection, then query jobs by the z/OS user ID
             if (connection.getUser() != null && !connection.getUser().isEmpty()) {
                 url += JobsConstants.QUERY_OWNER + connection.getUser();
             }
@@ -470,10 +470,9 @@ public class JobGet {
 
     /**
      * Get the status and other details (e.g., owner, return code) for a job, including step-data.
-     * Alternate version of the API that accepts a Job object returned by
-     * other APIs such as SubmitJobs. Even though the parameter and return
-     * value are of the same type, the Job object returned will have the
-     * current status of the job and will contain step-data.
+     * Alternate version of the API that accepts a Job object returned by other APIs such as SubmitJobs.
+     * Even though the parameter and return value are of the same type, the Job object returned
+     * will have the current status of the job and will contain step-data.
      *
      * @param job job document
      * @return job document (matching job)

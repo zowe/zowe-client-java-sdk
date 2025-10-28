@@ -81,7 +81,7 @@ public class JobStepData {
     private final String completion;
 
     /**
-     * JobStepData constructor
+     * JobStepData constructor for Jackson JSON parsing.
      *
      * @param active       boolean value
      * @param smfid        SMFID value

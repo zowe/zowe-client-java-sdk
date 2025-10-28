@@ -36,7 +36,7 @@ public class JobDelete {
     private ZosmfRequest request;
 
     /**
-     * DeleteJobs constructor
+     * DeleteJobs constructor.
      *
      * @param connection for connection information, see ZosConnection object
      * @author Nikunj Goyal
