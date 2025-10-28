@@ -95,8 +95,8 @@ public class Job {
     /**
      * Job constructor for Jackson JSON parsing.
      *
-     * @param jobId         job id value
-     * @param jobName       job name value
+     * @param id            job id value
+     * @param name          job name value
      * @param subSystem     JES subsystem
      * @param owner         job owner
      * @param status        job status
@@ -112,8 +112,8 @@ public class Job {
      */
     @JsonCreator
     public Job(
-            @JsonProperty("jobid") final String jobId,
-            @JsonProperty("jobname") final String jobName,
+            @JsonProperty("jobid") final String id,
+            @JsonProperty("jobname") final String name,
             @JsonProperty("subsystem") final String subSystem,
             @JsonProperty("owner") final String owner,
             @JsonProperty("status") final String status,
@@ -126,8 +126,8 @@ public class Job {
             @JsonProperty("job-correlator") final String jobCorrelator,
             @JsonProperty("phase") final Long phase,
             @JsonProperty("phase-name") final String phaseName) {
-        this.jobId = jobId == null ? "" : jobId;
-        this.jobName = jobName == null ? "" : jobName;
+        this.jobId = id == null ? "" : id;
+        this.jobName = name == null ? "" : name;
         this.subSystem = subSystem == null ? "" : subSystem;
         this.owner = owner == null ? "" : owner;
         this.status = status == null ? "" : status;
@@ -135,33 +135,11 @@ public class Job {
         this.classs = classs == null ? "" : classs;
         this.retCode = retCode == null ? "" : retCode;
         this.stepData = stepData == null ? new JobStepData[0] : stepData;
-        this.url = url;
+        this.url = url == null ? "" : url;
         this.filesUrl = filesUrl == null ? "" : filesUrl;
         this.jobCorrelator = jobCorrelator == null ? "" : jobCorrelator;
         this.phase = phase == null ? 0L : phase;
         this.phaseName = phaseName == null ? "" : phaseName;
-    }
-
-    /**
-     * Private constructor for Builder
-     *
-     * @param builder Builder object
-     */
-    private Job(final Builder builder) {
-        this.jobId = builder.jobId;
-        this.jobName = builder.jobName;
-        this.subSystem = builder.subSystem;
-        this.owner = builder.owner;
-        this.status = builder.status;
-        this.type = builder.type;
-        this.classs = builder.classs;
-        this.retCode = builder.retCode;
-        this.stepData = builder.stepData;
-        this.url = builder.url;
-        this.filesUrl = builder.filesUrl;
-        this.jobCorrelator = builder.jobCorrelator;
-        this.phase = builder.phase;
-        this.phaseName = builder.phaseName;
     }
 
     /**
@@ -313,255 +291,6 @@ public class Job {
                 ", phase=" + phase +
                 ", phaseName='" + phaseName + '\'' +
                 '}';
-    }
-
-    /**
-     * Builder class for Job
-     */
-    public static class Builder {
-
-        /**
-         * Job id value specified for request
-         */
-        private String jobId;
-
-        /**
-         * Job name value specified for the request
-         */
-        private String jobName;
-
-        /**
-         * The primary or secondary JES subsystem. If this value is null,
-         * the job was processed by the primary subsystem.
-         */
-        private String subSystem;
-
-        /**
-         * Owner of the job
-         */
-        private String owner;
-
-        /**
-         * Status of the job
-         */
-        private String status;
-
-        /**
-         * Type of job
-         */
-        private String type;
-
-        /**
-         * Job class
-         */
-        private String classs;
-
-        /**
-         * Return code of the job
-         */
-        private String retCode;
-
-        /**
-         * Detailed job step data
-         */
-        private JobStepData[] stepData;
-
-        /**
-         * Url for direct reference of job info
-         */
-        private String url;
-
-        /**
-         * Spool files url for direct reference
-         */
-        private String filesUrl;
-
-        /**
-         * Unique identifier of a job (substitute of job name and job id).
-         * If this value is null, the job was
-         * submitted to JES3.
-         */
-        private String jobCorrelator;
-
-        /**
-         * Job phase
-         */
-        private Long phase;
-
-        /**
-         * Job phase name
-         */
-        private String phaseName;
-
-        /**
-         * Builder constructor
-         */
-        public Builder() {
-        }
-
-        /**
-         * Set filesUrl string value
-         *
-         * @param classs string value
-         * @return Builder this object
-         */
-        public Builder classs(final String classs) {
-            this.classs = classs;
-            return this;
-        }
-
-        /**
-         * Set filesUrl string value
-         *
-         * @param filesUrl string value
-         * @return Builder this object
-         */
-        public Builder filesUrl(final String filesUrl) {
-            this.filesUrl = filesUrl;
-            return this;
-        }
-
-        /**
-         * Set jobCorrelator string value
-         *
-         * @param jobCorrelator string value
-         * @return Builder this object
-         */
-        public Builder jobCorrelator(final String jobCorrelator) {
-            this.jobCorrelator = jobCorrelator;
-            return this;
-        }
-
-        /**
-         * Set jobId string value
-         *
-         * @param jobId string value
-         * @return Builder this object
-         */
-        public Builder jobId(final String jobId) {
-            this.jobId = jobId;
-            return this;
-        }
-
-        /**
-         * Set jobName string value
-         *
-         * @param jobName string value
-         * @return Builder this object
-         */
-        public Builder jobName(final String jobName) {
-            this.jobName = jobName;
-            return this;
-        }
-
-        /**
-         * Set owner string value
-         *
-         * @param owner string value
-         * @return Builder this object
-         */
-        public Builder owner(final String owner) {
-            this.owner = owner;
-            return this;
-        }
-
-        /**
-         * Set phase long value
-         *
-         * @param phase long value
-         * @return Builder this object
-         */
-        public Builder phase(final Long phase) {
-            this.phase = phase;
-            return this;
-        }
-
-        /**
-         * Set phaseName string value
-         *
-         * @param phaseName string value
-         * @return Builder this object
-         */
-        public Builder phaseName(final String phaseName) {
-            this.phaseName = phaseName;
-            return this;
-        }
-
-        /**
-         * Set retCode string value
-         *
-         * @param retCode string value
-         * @return Builder this object
-         */
-        public Builder retCode(final String retCode) {
-            this.retCode = retCode;
-            return this;
-        }
-
-        /**
-         * Set status string value
-         *
-         * @param status string value
-         * @return Builder this object
-         */
-        public Builder status(final String status) {
-            this.status = status;
-            return this;
-        }
-
-        /**
-         * Set stepData JobStepData array value
-         *
-         * @param stepData JobStepData array value
-         * @return Builder this object
-         */
-        public Builder stepData(final JobStepData[] stepData) {
-            this.stepData = stepData;
-            return this;
-        }
-
-        /**
-         * Set subSystem string value
-         *
-         * @param subSystem string value
-         * @return Builder this object
-         */
-        public Builder subSystem(final String subSystem) {
-            this.subSystem = subSystem;
-            return this;
-        }
-
-        /**
-         * Set type string value
-         *
-         * @param type string value
-         * @return Builder this object
-         */
-        public Builder type(final String type) {
-            this.type = type;
-            return this;
-        }
-
-        /**
-         * Set url string value
-         *
-         * @param url string value
-         * @return Builder this object
-         */
-        public Builder url(final String url) {
-            this.url = url;
-            return this;
-        }
-
-        /**
-         * Return a Job object based on Builder this object
-         *
-         * @return Job this object
-         */
-        public Job build() {
-            return new Job(this);
-        }
-
     }
 
 }

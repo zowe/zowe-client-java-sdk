@@ -358,6 +358,21 @@ public class JobGet {
 
     /**
      * Get a list of all job spool files for a job.
+     * Alternate version of the API that accepts a Job object returned by
+     * other APIs such as SubmitJobs.
+     *
+     * @param job job for which you would like to get a list of job spool files
+     * @return list of JobFile objects
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public List<JobFile> getSpoolFilesByJob(final Job job) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(job == null, "job is null");
+        return getSpoolFilesCommon(new CommonJobInputData(job.getJobId(), job.getJobName()));
+    }
+
+    /**
+     * Get a list of all job spool files for a job.
      *
      * @param commonInputData for common job parameters, see CommonJobInputData object
      * @return list of JobFile objects
@@ -396,21 +411,6 @@ public class JobGet {
         }
 
         return files;
-    }
-
-    /**
-     * Get a list of all job spool files for a job.
-     * Alternate version of the API that accepts a Job object returned by
-     * other APIs such as SubmitJobs.
-     *
-     * @param job job for which you would like to get a list of job spool files
-     * @return list of JobFile objects
-     * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
-     */
-    public List<JobFile> getSpoolFilesByJob(final Job job) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
-        return getSpoolFilesCommon(new CommonJobInputData(job.getJobId(), job.getJobName()));
     }
 
     /**

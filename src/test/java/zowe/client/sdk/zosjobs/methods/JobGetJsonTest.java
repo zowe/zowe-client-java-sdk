@@ -196,7 +196,9 @@ public class JobGetJsonTest {
     public void tstJobGetJsonStatusForJobNoParamsExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getStatusByJob(new Job.Builder().build());
+            getJobs.getStatusByJob(new Job(null, null, null, null, null,
+                    null, null, null, null, null,
+                    null, null, null, null));
         } catch (IllegalStateException e) {
             errorMsg = e.getMessage();
         }
@@ -208,7 +210,9 @@ public class JobGetJsonTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(jobJson, 200, "success"));
 
-        final Job job = getJobs.getStatusByJob(new Job.Builder().jobId("1").jobName("jobName").build());
+        final Job job = getJobs.getStatusByJob(new Job("1", "jobName", null, null, null,
+                null, null, null, null, null,
+                null, null, null, null));
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/1?step-data=Y", getJobs.getUrl());
         assertEquals("jobid", job.getJobId());
         assertEquals("jobname", job.getJobName());
@@ -228,7 +232,9 @@ public class JobGetJsonTest {
     public void tstJobGetJsonStatusForJobWithJobIdOnlyExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getStatusByJob(new Job.Builder().jobId("1").build());
+            getJobs.getStatusByJob(new Job("1", null, null, null, null,
+                    null, null, null, null, null,
+                    null, null, null, null));
         } catch (IllegalStateException e) {
             errorMsg = e.getMessage();
         }
@@ -239,7 +245,9 @@ public class JobGetJsonTest {
     public void tstJobGetJsonStatusForJobWithJobNameOnlyExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getStatusByJob(new Job.Builder().jobName("jobName").build());
+            getJobs.getStatusByJob(new Job(null, "jobName", null, null, null,
+                    null, null, null, null, null,
+                    null, null, null, null));
         } catch (IllegalStateException e) {
             errorMsg = e.getMessage();
         }

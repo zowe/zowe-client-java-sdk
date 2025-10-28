@@ -190,20 +190,37 @@ public class JobCancelTest {
     public void tstJobCancelByJobNegativeParametersFailure() {
         final JobCancel jobCancel = new JobCancel(connection, mockPutJsonZosmfRequestToken);
 
-        Exception exception = assertThrows(java.lang.NullPointerException.class, () ->
+        Exception exception = assertThrows(NullPointerException.class, () ->
                 jobCancel.cancelByJob(null, "1"));
         assertTrue(exception.getMessage().contains("job is null"));
 
-        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
-                jobCancel.cancelByJob(new Job.Builder().jobName(null).jobId("1").build(), "1"));
+        // jobName is null or empty
+        exception = assertThrows(IllegalArgumentException.class, () ->
+                jobCancel.cancelByJob(
+                        new Job("1", null, null, null, null,
+                                null, null, null, null, null,
+                                null, null, null, null),
+                        "1"));
         assertTrue(exception.getMessage().contains("jobName is either null or empty"));
 
-        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
-                jobCancel.cancelByJob(new Job.Builder().jobName("name").jobId(null).build(), "1"));
+        // jobId is null or empty
+        exception = assertThrows(IllegalArgumentException.class, () ->
+                jobCancel.cancelByJob(
+                        new Job(
+                                null, "name", null, null, null,
+                                null, null, null, null, null,
+                                null, null, null, null),
+                        "1"));
         assertTrue(exception.getMessage().contains("jobId is either null or empty"));
 
-        exception = assertThrows(java.lang.IllegalArgumentException.class, () ->
-                jobCancel.cancelByJob(new Job.Builder().jobName("name").jobId("1").build(), "4"));
+        // invalid version specified
+        exception = assertThrows(IllegalArgumentException.class, () ->
+                jobCancel.cancelByJob(
+                        new Job(
+                                "name", "1", null, null, null,
+                                null, null, null, null, null,
+                                null, null, null, null),
+                        "4"));
         assertTrue(exception.getMessage().contains("invalid version specified"));
     }
 

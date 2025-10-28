@@ -100,26 +100,24 @@ public class JobFile {
      *
      * @param jobName Name of the job
      * @param jobId   Job ID
-     * @param id      Unique identifier for this spool file
+     * @param spoolId Unique identifier for this spool file
      * @author Frank Giordano
      */
-    public JobFile(final String jobName, final String jobId, final Long id) {
-        this.jobId = jobId != null ? jobId : "";
-        this.jobName = jobName != null ? jobName : "";
-        this.id = id != null ? id : 0;
-
-        // Set all other fields to default values
-        this.recfm = "";
-        this.byteCount = 0L;
-        this.recordCount = 0L;
-        this.jobCorrelator = "";
-        this.classs = "";
-        this.ddName = "";
-        this.recordsUrl = "";
-        this.lrecl = 0L;
-        this.subSystem = "";
-        this.stepName = "";
-        this.procStep = "";
+    public JobFile(final String jobName, final String jobId, final Long spoolId) {
+        this.jobId = jobId;
+        this.jobName = jobName;
+        this.id = spoolId;
+        this.recfm = null;
+        this.byteCount = null;
+        this.recordCount = null;
+        this.jobCorrelator = null;
+        this.classs = null;
+        this.ddName = null;
+        this.recordsUrl = null;
+        this.lrecl = null;
+        this.subSystem = null;
+        this.stepName = null;
+        this.procStep = null;
     }
 
     /**

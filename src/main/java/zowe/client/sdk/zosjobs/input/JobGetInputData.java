@@ -94,7 +94,7 @@ public class JobGetInputData {
     }
 
     /**
-     * Return string value representing a JobGetInputData object
+     * Return a string value representing a JobGetInputData object
      *
      * @return string representation of JobGetInputData
      */
