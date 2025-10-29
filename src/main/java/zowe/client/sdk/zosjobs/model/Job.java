@@ -93,22 +93,59 @@ public class Job {
     private final String phaseName;
 
     /**
+     * System name of the z/OS system on which the job ran (up to 8 characters)
+     */
+    private final String execSystem;
+
+    /**
+     * Member name of the z/OS system on which the job ran (up to 8 characters)
+     *
+     */
+    private final String execMember;
+
+    /**
+     * Time when the job was submitted to run (the input end time)
+     */
+    private final String execSubmitted;
+
+    /**
+     * Time when job execution started
+     */
+    private final String execStarted;
+
+    /**
+     * Time when job execution ended
+     */
+    private final String execEnded;
+
+    /**
+     * Text identifying one or more reasons why the job is not running
+     */
+    private final String reasonNotRunning;
+
+    /**
      * Job constructor for Jackson JSON parsing.
      *
-     * @param id            job id value
-     * @param name          job name value
-     * @param subSystem     JES subsystem
-     * @param owner         job owner
-     * @param status        job status
-     * @param type          job type
-     * @param classs        job class
-     * @param retCode       job return code
-     * @param stepData      array of step data
-     * @param url           job URL
-     * @param filesUrl      job spool files URL
-     * @param jobCorrelator job correlator
-     * @param phase         job phase
-     * @param phaseName     job phase name
+     * @param id               job id value
+     * @param name             job name value
+     * @param subSystem        JES subsystem
+     * @param owner            job owner
+     * @param status           job status
+     * @param type             job type
+     * @param classs           job class
+     * @param retCode          job return code
+     * @param stepData         array of step data
+     * @param url              job URL
+     * @param filesUrl         job spool files URL
+     * @param jobCorrelator    job correlator
+     * @param phase            job phase
+     * @param phaseName        job phase name
+     * @param execSystem       z/OS system name on which job ran
+     * @param execMember       member name of the z/OS system
+     * @param execSubmitted    time when the job was submitted
+     * @param execStarted      time when job execution started
+     * @param execEnded        time when job execution ended
+     * @param reasonNotRunning reason job is not running
      */
     @JsonCreator
     public Job(
@@ -125,7 +162,13 @@ public class Job {
             @JsonProperty("files-url") final String filesUrl,
             @JsonProperty("job-correlator") final String jobCorrelator,
             @JsonProperty("phase") final Long phase,
-            @JsonProperty("phase-name") final String phaseName) {
+            @JsonProperty("phase-name") final String phaseName,
+            @JsonProperty("exec-system") final String execSystem,
+            @JsonProperty("exec-member") final String execMember,
+            @JsonProperty("exec-submitted") final String execSubmitted,
+            @JsonProperty("exec-started") final String execStarted,
+            @JsonProperty("exec-ended") final String execEnded,
+            @JsonProperty("reason-not-running") final String reasonNotRunning) {
         this.jobId = id == null ? "" : id;
         this.jobName = name == null ? "" : name;
         this.subSystem = subSystem == null ? "" : subSystem;
@@ -140,6 +183,12 @@ public class Job {
         this.jobCorrelator = jobCorrelator == null ? "" : jobCorrelator;
         this.phase = phase == null ? 0L : phase;
         this.phaseName = phaseName == null ? "" : phaseName;
+        this.execSystem = execSystem == null ? "" : execSystem;
+        this.execMember = execMember == null ? "" : execMember;
+        this.execSubmitted = execSubmitted == null ? "" : execSubmitted;
+        this.execStarted = execStarted == null ? "" : execStarted;
+        this.execEnded = execEnded == null ? "" : execEnded;
+        this.reasonNotRunning = reasonNotRunning == null ? "" : reasonNotRunning;
     }
 
     /**
@@ -269,6 +318,48 @@ public class Job {
     }
 
     /**
+     * Retrieve system name on which the job ran
+     */
+    public String getExecSystem() {
+        return execSystem;
+    }
+
+    /**
+     * Retrieve system member name on which the job ran
+     */
+    public String getExecMember() {
+        return execMember;
+    }
+
+    /**
+     * Retrieve time when the job was submitted
+     */
+    public String getExecSubmitted() {
+        return execSubmitted;
+    }
+
+    /**
+     * Retrieve time when job execution started
+     */
+    public String getExecStarted() {
+        return execStarted;
+    }
+
+    /**
+     * Retrieve time when job execution ended
+     */
+    public String getExecEnded() {
+        return execEnded;
+    }
+
+    /**
+     * Retrieve reason text why the job is not running
+     */
+    public String getReasonNotRunning() {
+        return reasonNotRunning;
+    }
+
+    /**
      * Return string value representing a Job object
      *
      * @return string representation of Job
@@ -290,6 +381,12 @@ public class Job {
                 ", jobCorrelator='" + jobCorrelator + '\'' +
                 ", phase=" + phase +
                 ", phaseName='" + phaseName + '\'' +
+                ", execSystem='" + execSystem + '\'' +
+                ", execMember='" + execMember + '\'' +
+                ", execSubmitted='" + execSubmitted + '\'' +
+                ", execStarted='" + execStarted + '\'' +
+                ", execEnded='" + execEnded + '\'' +
+                ", reasonNotRunning='" + reasonNotRunning + '\'' +
                 '}';
     }
 
