@@ -14,7 +14,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Step info on a job interface
+ * Step data information. Provides information about each step in the job,
+ * such as the step name, step number, and completion code.
  *
  * @author Frank Giordano
  * @version 5.0
