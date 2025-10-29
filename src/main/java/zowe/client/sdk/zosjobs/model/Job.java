@@ -387,7 +387,7 @@ public class Job {
                 ", type='" + type + '\'' +
                 ", classs='" + classs + '\'' +
                 ", retCode='" + retCode + '\'' +
-                ", stepData=" + (stepData != null ? stepData.length : "null") +
+                ", stepData=" + stepData.length +
                 ", url='" + url + '\'' +
                 ", filesUrl='" + filesUrl + '\'' +
                 ", jobCorrelator='" + jobCorrelator + '\'' +
