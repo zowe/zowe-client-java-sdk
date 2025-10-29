@@ -319,6 +319,8 @@ public class Job {
 
     /**
      * Retrieve system name on which the job ran
+     *
+     * @return system name
      */
     public String getExecSystem() {
         return execSystem;
@@ -326,6 +328,8 @@ public class Job {
 
     /**
      * Retrieve system member name on which the job ran
+     *
+     * @return member name
      */
     public String getExecMember() {
         return execMember;
@@ -333,6 +337,8 @@ public class Job {
 
     /**
      * Retrieve time when the job was submitted
+     *
+     * @return time when the job was submitted
      */
     public String getExecSubmitted() {
         return execSubmitted;
@@ -340,6 +346,8 @@ public class Job {
 
     /**
      * Retrieve time when job execution started
+     *
+     * @return time when job execution started
      */
     public String getExecStarted() {
         return execStarted;
@@ -347,6 +355,8 @@ public class Job {
 
     /**
      * Retrieve time when job execution ended
+     *
+     * @return time when job execution ended
      */
     public String getExecEnded() {
         return execEnded;
@@ -354,6 +364,8 @@ public class Job {
 
     /**
      * Retrieve reason text why the job is not running
+     *
+     * @return reason text why the job is not running
      */
     public String getReasonNotRunning() {
         return reasonNotRunning;
