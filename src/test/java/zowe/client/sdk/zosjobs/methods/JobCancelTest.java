@@ -199,7 +199,9 @@ public class JobCancelTest {
                 jobCancel.cancelByJob(
                         new Job("1", null, null, null, null,
                                 null, null, null, null, null,
-                                null, null, null, null),
+                                null, null, null, null,
+                                null, null, null, null,
+                                null, null),
                         "1"));
         assertTrue(exception.getMessage().contains("jobName is either null or empty"));
 
@@ -209,7 +211,9 @@ public class JobCancelTest {
                         new Job(
                                 null, "name", null, null, null,
                                 null, null, null, null, null,
-                                null, null, null, null),
+                                null, null, null, null,
+                                null, null, null, null,
+                                null, null),
                         "1"));
         assertTrue(exception.getMessage().contains("jobId is either null or empty"));
 
@@ -219,7 +223,9 @@ public class JobCancelTest {
                         new Job(
                                 "name", "1", null, null, null,
                                 null, null, null, null, null,
-                                null, null, null, null),
+                                null, null, null, null,
+                                null, null, null, null,
+                                null, null),
                         "4"));
         assertTrue(exception.getMessage().contains("invalid version specified"));
     }
