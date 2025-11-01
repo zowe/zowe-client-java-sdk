@@ -392,7 +392,7 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstDeserializeFullJobJsonWithTwoStepDataEntries() throws Exception {
+    public void tstDeserializeFullJobJsonWithTwoStepDataEntriesSuccess() throws Exception {
         final String jsonString =
                 "{"
                         + "\"retcode\": \"null\","
