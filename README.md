@@ -25,7 +25,14 @@ This SDK may differ from some others with the JobMonitor class adding prebuilt f
 Issues worked on documenting the main feature set provided can be viewed within the following MVP issues:  
 [#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219) [#3](https://github.com/zowe/zowe-client-java-sdk/issues/281) [#4](https://github.com/zowe/zowe-client-java-sdk/issues/338)   
   
-In addition to the MVP issues noted, see the following release notes for [version 4](https://github.com/zowe/zowe-client-java-sdk/pull/363), [version 5](https://github.com/zowe/zowe-client-java-sdk/issues/414) and [version 5.1.0](https://github.com/zowe/zowe-client-java-sdk/issues/429) of the SDK.   
+In addition to the MVP issues noted, see the following other milestone releases and their release notes:    
+            
+    [version 4](https://github.com/zowe/zowe-client-java-sdk/pull/363)
+    [version 5](https://github.com/zowe/zowe-client-java-sdk/issues/414)
+    [version 5.1.0](https://github.com/zowe/zowe-client-java-sdk/issues/429)
+    [version 5.2.0](https://github.com/zowe/zowe-client-java-sdk/issues/432)
+  
+## Prebuilt API Services     
     
 Prebuilt API services are located in the following packages/classes:  
 
@@ -248,7 +255,7 @@ Thin JAR (recommended):
         </dependency>
   
 Fat JAR (with dependencies):
-  
+
         <dependency>
           <groupId>org.zowe.client.java.sdk</groupId>
           <artifactId>zowe-client-java-sdk</artifactId>
@@ -264,8 +271,7 @@ Thin JAR (recommended):
 
 Fat JAR (with dependencies):  
   
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '5.2.0', classifier: 'jar-with-dependencies' 
-    
+  
 ## Publishing to Maven Central  
   
 The following documents the steps taken to publish a new release of this project to maven central:
