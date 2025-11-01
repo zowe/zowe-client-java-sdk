@@ -32,13 +32,11 @@ import java.util.Map;
 public class JobDelete {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobDelete.class);
-
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**
-     * DeleteJobs constructor
+     * DeleteJobs constructor.
      *
      * @param connection for connection information, see ZosConnection object
      * @author Nikunj Goyal
@@ -95,9 +93,7 @@ public class JobDelete {
      */
     public Response deleteByJob(final Job job, final String version) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        final String jobName = job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG));
-        final String jobId = job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG));
-        return this.deleteCommon(new JobModifyInputData.Builder(jobName, jobId).version(version).build());
+        return this.deleteCommon(new JobModifyInputData.Builder(job.getJobName(), job.getJobId()).version(version).build());
     }
 
     /**

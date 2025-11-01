@@ -9,7 +9,9 @@
  */
 package zowe.client.sdk.zosmfinfo.model;
 
-import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * The z/OSMF object returned for every defined system.
@@ -17,7 +19,8 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 5.0
  */
-public class DefinedSystem {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public final class DefinedSystem {
 
     /**
      * Unique name assigned to the system definition.
@@ -60,47 +63,72 @@ public class DefinedSystem {
     private final String jesMemberName;
 
     /**
-     * Name of the HTTP proxy definition that specifies the settings required to access the system through
-     * an HTTP or SOCKS proxy server.
+     * Name of the HTTP proxy definition that specifies the settings required to
+     * access the system through an HTTP or SOCKS proxy server.
      */
     private final String httpProxyName;
 
     /**
-     * Name of the server definition that specifies the settings required to access the FTP or SFTP server
-     * that is running on the system.
+     * Name of the server definition that specifies the settings required to
+     * access the FTP or SFTP server that is running on the system.
      */
     private final String ftpDestinationName;
 
     /**
-     * URL used to access the z/OSMF instance that resides in the same sysplex as the system identified by
-     * the systemName attribute.
+     * URL used to access the z/OSMF instance that resides in the same sysplex as
+     * the system identified by the systemName attribute.
      */
     private final String url;
 
     /**
-     * Name specified for the central processor complex (CPC) at the support element (SE) of that processor complex.
+     * Name specified for the central processor complex (CPC) at the support element (SE)
+     * of that processor complex.
      */
     private final String cpcName;
 
     /**
-     * DefinedSystem constructor
+     * Jackson constructor for DefinedSystem
      *
-     * @param builder Builder Object
-     * @author Frank Giordano
+     * @param systemNickName     unique name assigned to the system definition
+     * @param groupNames         comma-separated list of the groups to which the system is assigned
+     * @param cpcSerial          serial number of the CPC
+     * @param zosVR              version of z/OS
+     * @param systemName         name specified for the system on the SYSNAME parameter
+     * @param jesType            type of JES subsystem (JES2 or JES3)
+     * @param sysplexName        name of the sysplex where the system is a member
+     * @param jesMemberName      JES2 MAS member name or JES3 complex member name
+     * @param httpProxyName      HTTP proxy definition name
+     * @param ftpDestinationName FTP/SFTP server definition name
+     * @param url                URL used to access the z/OSMF instance
+     * @param cpcName            name of the CPC at the support element
      */
-    private DefinedSystem(final Builder builder) {
-        this.systemNickName = builder.systemNickName;
-        this.groupNames = builder.groupNames;
-        this.cpcSerial = builder.cpcSerial;
-        this.zosVR = builder.zosVR;
-        this.systemName = builder.systemName;
-        this.jesType = builder.jesType;
-        this.sysplexName = builder.sysplexName;
-        this.jesMemberName = builder.jesMemberName;
-        this.httpProxyName = builder.httpProxyName;
-        this.ftpDestinationName = builder.ftpDestinationName;
-        this.url = builder.url;
-        this.cpcName = builder.cpcName;
+    @JsonCreator
+    public DefinedSystem(
+            @JsonProperty("systemNickName") String systemNickName,
+            @JsonProperty("groupNames") String groupNames,
+            @JsonProperty("cpcSerial") String cpcSerial,
+            @JsonProperty("zosVR") String zosVR,
+            @JsonProperty("systemName") String systemName,
+            @JsonProperty("jesType") String jesType,
+            @JsonProperty("sysplexName") String sysplexName,
+            @JsonProperty("jesMemberName") String jesMemberName,
+            @JsonProperty("httpProxyName") String httpProxyName,
+            @JsonProperty("ftpDestinationName") String ftpDestinationName,
+            @JsonProperty("url") String url,
+            @JsonProperty("cpcName") String cpcName
+    ) {
+        this.systemNickName = systemNickName == null ? "" : systemNickName;
+        this.groupNames = groupNames == null ? "" : groupNames;
+        this.cpcSerial = cpcSerial == null ? "" : cpcSerial;
+        this.zosVR = zosVR == null ? "" : zosVR;
+        this.systemName = systemName == null ? "" : systemName;
+        this.jesType = jesType == null ? "" : jesType;
+        this.sysplexName = sysplexName == null ? "" : sysplexName;
+        this.jesMemberName = jesMemberName == null ? "" : jesMemberName;
+        this.httpProxyName = httpProxyName == null ? "" : httpProxyName;
+        this.ftpDestinationName = ftpDestinationName == null ? "" : ftpDestinationName;
+        this.url = url == null ? "" : url;
+        this.cpcName = cpcName == null ? "" : cpcName;
     }
 
     /**
@@ -108,8 +136,8 @@ public class DefinedSystem {
      *
      * @return cpcName value
      */
-    public Optional<String> getCpcName() {
-        return Optional.ofNullable(cpcName);
+    public String getCpcName() {
+        return cpcName;
     }
 
     /**
@@ -117,8 +145,8 @@ public class DefinedSystem {
      *
      * @return cpcSerial value
      */
-    public Optional<String> getCpcSerial() {
-        return Optional.ofNullable(cpcSerial);
+    public String getCpcSerial() {
+        return cpcSerial;
     }
 
     /**
@@ -126,8 +154,8 @@ public class DefinedSystem {
      *
      * @return ftpDestinationName value
      */
-    public Optional<String> getFtpDestinationName() {
-        return Optional.ofNullable(ftpDestinationName);
+    public String getFtpDestinationName() {
+        return ftpDestinationName;
     }
 
     /**
@@ -135,8 +163,8 @@ public class DefinedSystem {
      *
      * @return groupNames value
      */
-    public Optional<String> getGroupNames() {
-        return Optional.ofNullable(groupNames);
+    public String getGroupNames() {
+        return groupNames;
     }
 
     /**
@@ -144,8 +172,8 @@ public class DefinedSystem {
      *
      * @return httpProxyName value
      */
-    public Optional<String> getHttpProxyName() {
-        return Optional.ofNullable(httpProxyName);
+    public String getHttpProxyName() {
+        return httpProxyName;
     }
 
     /**
@@ -153,8 +181,8 @@ public class DefinedSystem {
      *
      * @return jesMemberName value
      */
-    public Optional<String> getJesMemberName() {
-        return Optional.ofNullable(jesMemberName);
+    public String getJesMemberName() {
+        return jesMemberName;
     }
 
     /**
@@ -162,8 +190,8 @@ public class DefinedSystem {
      *
      * @return jesType value
      */
-    public Optional<String> getJesType() {
-        return Optional.ofNullable(jesType);
+    public String getJesType() {
+        return jesType;
     }
 
     /**
@@ -171,8 +199,8 @@ public class DefinedSystem {
      *
      * @return sysplexName value
      */
-    public Optional<String> getSysplexName() {
-        return Optional.ofNullable(sysplexName);
+    public String getSysplexName() {
+        return sysplexName;
     }
 
     /**
@@ -180,8 +208,8 @@ public class DefinedSystem {
      *
      * @return systemName value
      */
-    public Optional<String> getSystemName() {
-        return Optional.ofNullable(systemName);
+    public String getSystemName() {
+        return systemName;
     }
 
     /**
@@ -189,8 +217,8 @@ public class DefinedSystem {
      *
      * @return systemNickName value
      */
-    public Optional<String> getSystemNickName() {
-        return Optional.ofNullable(systemNickName);
+    public String getSystemNickName() {
+        return systemNickName;
     }
 
     /**
@@ -198,8 +226,8 @@ public class DefinedSystem {
      *
      * @return url value
      */
-    public Optional<String> getUrl() {
-        return Optional.ofNullable(url);
+    public String getUrl() {
+        return url;
     }
 
     /**
@@ -207,8 +235,8 @@ public class DefinedSystem {
      *
      * @return zosVR value
      */
-    public Optional<String> getZosVR() {
-        return Optional.ofNullable(zosVR);
+    public String getZosVR() {
+        return zosVR;
     }
 
     /**
@@ -232,223 +260,6 @@ public class DefinedSystem {
                 ", url=" + url +
                 ", cpcName=" + cpcName +
                 '}';
-    }
-
-    /**
-     * Builder class for DefinedSystem
-     */
-    public static class Builder {
-
-        /**
-         * Unique name assigned to the system definition.
-         */
-        private String systemNickName;
-
-        /**
-         * Comma-separated list of the groups to which the system is assigned.
-         */
-        private String groupNames;
-
-        /**
-         * Serial number of the CPC.
-         */
-        private String cpcSerial;
-
-        /**
-         * Version of z/OS
-         */
-        private String zosVR;
-
-        /**
-         * Name specified for the system on the SYSNAME parameter in the IEASYSxx parmlib member.
-         */
-        private String systemName;
-
-        /**
-         * Type for the primary job entry subsystem running on the system. The type is either JES2 or JES3.
-         */
-        private String jesType;
-
-        /**
-         * Name of the sysplex where the z/OS system is a member.
-         */
-        private String sysplexName;
-
-        /**
-         * JES2 multi-access spool (MAS) member name or JES3 complex member name
-         */
-        private String jesMemberName;
-
-        /**
-         * Name of the HTTP proxy definition that specifies the settings required to access the system through
-         * an HTTP or SOCKS proxy server.
-         */
-        private String httpProxyName;
-
-        /**
-         * Name of the server definition that specifies the settings required to access the FTP or SFTP server
-         * that is running on the system.
-         */
-        private String ftpDestinationName;
-
-        /**
-         * URL used to access the z/OSMF instance that resides in the same sysplex as the system identified by
-         * the systemName attribute.
-         */
-        private String url;
-
-        /**
-         * Name specified for the central processor complex (CPC) at the support element (SE) of that processor complex.
-         */
-        private String cpcName;
-
-        /**
-         * Builder constructor
-         */
-        public Builder() {
-        }
-
-        /**
-         * Set cpcName string value
-         *
-         * @param cpcName string value
-         * @return Builder this object
-         */
-        public Builder cpcName(final String cpcName) {
-            this.cpcName = cpcName;
-            return this;
-        }
-
-        /**
-         * Set cpcSerial string value
-         *
-         * @param cpcSerial string value
-         * @return Builder this object
-         */
-        public Builder cpcSerial(final String cpcSerial) {
-            this.cpcSerial = cpcSerial;
-            return this;
-        }
-
-        /**
-         * Set ftpDestinationName string value
-         *
-         * @param ftpDestinationName string value
-         * @return Builder this object
-         */
-        public Builder ftpDestinationName(final String ftpDestinationName) {
-            this.ftpDestinationName = ftpDestinationName;
-            return this;
-        }
-
-        /**
-         * Set groupNames string value
-         *
-         * @param groupNames string value
-         * @return Builder this object
-         */
-        public Builder groupNames(final String groupNames) {
-            this.groupNames = groupNames;
-            return this;
-        }
-
-        /**
-         * Set httpProxyName string value
-         *
-         * @param httpProxyName string value
-         * @return Builder this object
-         */
-        public Builder httpProxyName(final String httpProxyName) {
-            this.httpProxyName = httpProxyName;
-            return this;
-        }
-
-        /**
-         * Set jesMemberName string value
-         *
-         * @param jesMemberName string value
-         * @return Builder this object
-         */
-        public Builder jesMemberName(final String jesMemberName) {
-            this.jesMemberName = jesMemberName;
-            return this;
-        }
-
-        /**
-         * Set jesType string value
-         *
-         * @param jesType string value
-         * @return Builder this object
-         */
-        public Builder jesType(final String jesType) {
-            this.jesType = jesType;
-            return this;
-        }
-
-        /**
-         * Set sysplexName string value
-         *
-         * @param sysplexName string value
-         * @return Builder this object
-         */
-        public Builder sysplexName(final String sysplexName) {
-            this.sysplexName = sysplexName;
-            return this;
-        }
-
-        /**
-         * Set systemName string value
-         *
-         * @param systemName string value
-         * @return Builder this object
-         */
-        public Builder systemName(final String systemName) {
-            this.systemName = systemName;
-            return this;
-        }
-
-        /**
-         * Set systemNickName string value
-         *
-         * @param systemNickName string value
-         * @return Builder this object
-         */
-        public Builder systemNickName(final String systemNickName) {
-            this.systemNickName = systemNickName;
-            return this;
-        }
-
-        /**
-         * Set url string value
-         *
-         * @param url string value
-         * @return Builder this object
-         */
-        public Builder url(final String url) {
-            this.url = url;
-            return this;
-        }
-
-        /**
-         * Set zosVR string value
-         *
-         * @param zosVR string value
-         * @return Builder this object
-         */
-        public Builder zosVR(final String zosVR) {
-            this.zosVR = zosVR;
-            return this;
-        }
-
-        /**
-         * Return DefinedSystem object based on Builder this object
-         *
-         * @return DefinedSystem this object
-         */
-        public DefinedSystem build() {
-            return new DefinedSystem(this);
-        }
-
     }
 
 }

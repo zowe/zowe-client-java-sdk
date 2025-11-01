@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.utility.JsonParserUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssListInputData;
 import zowe.client.sdk.zosfiles.uss.input.UssListZfsInputData;
@@ -179,7 +179,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonParserUtils.parse(dataForFileList);
+        final JSONObject json = JsonUtils.parse(dataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -188,30 +188,30 @@ public class UssListTest {
         // should only contain two items
         assertEquals(2, items.size());
         // verify first item's data
-        assertEquals("test", items.get(0).getName().orElse("n\\a"));
-        assertEquals("drwxr-xr-x", items.get(0).getMode().orElse("n\\a"));
-        assertEquals(0, items.get(0).getSize().orElse(-1));
-        assertEquals(10000518, items.get(0).getUid().orElse(-1));
-        assertEquals("user", items.get(0).getUser().orElse("n\\a"));
-        assertEquals(8, items.get(0).getGid().orElse(-1));
-        assertEquals("FRAMEWKG", items.get(0).getGroup().orElse("n\\a"));
-        assertEquals("2022-11-03T10:48:32", items.get(0).getMtime().orElse("n\\a"));
-        assertEquals("target", items.get(0).getTarget().orElse("n\\a"));
+        assertEquals("test", items.get(0).getName());
+        assertEquals("drwxr-xr-x", items.get(0).getMode());
+        assertEquals(0, items.get(0).getSize());
+        assertEquals(10000518, items.get(0).getUid());
+        assertEquals("user", items.get(0).getUser());
+        assertEquals(8, items.get(0).getGid());
+        assertEquals("FRAMEWKG", items.get(0).getGroup());
+        assertEquals("2022-11-03T10:48:32", items.get(0).getMtime());
+        assertEquals("target", items.get(0).getTarget());
         // verify second item's data
-        assertEquals("test2", items.get(1).getName().orElse("n\\a"));
-        assertEquals("-rwxr-xr-x", items.get(1).getMode().orElse("n\\a"));
-        assertEquals(13545, items.get(1).getSize().orElse(-1));
-        assertEquals(10000518, items.get(1).getUid().orElse(-1));
-        assertEquals("user2", items.get(1).getUser().orElse("n\\a"));
-        assertEquals(8, items.get(1).getGid().orElse(-1));
-        assertEquals("FRAMEWKG", items.get(1).getGroup().orElse("n\\a"));
-        assertEquals("2022-11-12T15:20:11", items.get(1).getMtime().orElse("n\\a"));
-        assertEquals("target", items.get(1).getTarget().orElse("n\\a"));
+        assertEquals("test2", items.get(1).getName());
+        assertEquals("-rwxr-xr-x", items.get(1).getMode());
+        assertEquals(13545, items.get(1).getSize());
+        assertEquals(10000518, items.get(1).getUid());
+        assertEquals("user2", items.get(1).getUser());
+        assertEquals(8, items.get(1).getGid());
+        assertEquals("FRAMEWKG", items.get(1).getGroup());
+        assertEquals("2022-11-12T15:20:11", items.get(1).getMtime());
+        assertEquals("target", items.get(1).getTarget());
     }
 
     @Test
     public void tstUssListFileListPartialSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonParserUtils.parse(partialDataForFileList);
+        final JSONObject json = JsonUtils.parse(partialDataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -222,20 +222,21 @@ public class UssListTest {
         // verify first item's data
         assertTrue(items.get(0).getName().isEmpty());
         assertTrue(items.get(0).getMode().isEmpty());
-        assertEquals(0, items.get(0).getSize().orElse(-1));
-        assertTrue(items.get(0).getUid().isEmpty());
+        assertEquals(0, items.get(0).getSize());
+        assertEquals(0, items.get(0).getUid());
         assertTrue(items.get(0).getUser().isEmpty());
-        assertTrue(items.get(0).getGid().isEmpty());
+        assertEquals(0, items.get(0).getGid());
         assertTrue(items.get(0).getGroup().isEmpty());
         assertTrue(items.get(0).getMtime().isEmpty());
         assertTrue(items.get(0).getTarget().isEmpty());
         // verify second item's data
-        assertEquals("test2", items.get(1).getName().orElse("n\\a"));
+        assertEquals("test2", items.get(1).getName());
         assertTrue(items.get(1).getMode().isEmpty());
-        assertEquals(-1, items.get(1).getSize().orElse(-1));
-        assertTrue(items.get(1).getUid().isEmpty());
+        assertEquals(0, items.get(1).getSize());
+        final String toStr = "UnixFile{name=test2, mode=, size=0, uid=0, user=, gid=0, group=, mtime=, target=}";
+        assertEquals(toStr, items.get(1).toString());
         assertTrue(items.get(1).getUser().isEmpty());
-        assertTrue(items.get(1).getGid().isEmpty());
+        assertEquals(0, items.get(1).getGid());
         assertTrue(items.get(1).getGroup().isEmpty());
         assertTrue(items.get(1).getMtime().isEmpty());
         assertTrue(items.get(1).getTarget().isEmpty());
@@ -243,7 +244,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListEmptyFileListSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonParserUtils.parse("{}");
+        final JSONObject json = JsonUtils.parse("{}");
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -264,7 +265,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonParserUtils.parse(dataForZfsList);
+        final JSONObject json = JsonUtils.parse(dataForZfsList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -272,19 +273,19 @@ public class UssListTest {
         // should only contain one item
         assertEquals(1, items.size());
         // verify first item's data
-        assertEquals("OMVSGRP.USER.TNGFW.CA31", items.get(0).getName().orElse("n\\a"));
-        assertEquals("/CA31/u/users/framewrk", items.get(0).getMountpoint().orElse("n\\a"));
-        assertEquals("ZFS", items.get(0).getFstname().orElse("n\\a"));
-        assertEquals("noautomove,unmount,acl,synchonly", items.get(0).getMode().orElse("n\\a"));
-        assertEquals(2718, items.get(0).getDev().orElse(-1));
-        assertEquals(1, items.get(0).getFstype().orElse(-1));
-        assertEquals(1024, items.get(0).getBsize().orElse(-1));
-        assertEquals(269231, items.get(0).getBavail().orElse(-1));
-        assertEquals(1382400, items.get(0).getBlocks().orElse(-1));
-        assertEquals("CA31", items.get(0).getSysname().orElse("n\\a"));
-        assertEquals(907651, items.get(0).getReadibc().orElse(-1));
-        assertEquals(42, items.get(0).getWriteibc().orElse(-1));
-        assertEquals(453057, items.get(0).getDiribc().orElse(-1));
+        assertEquals("OMVSGRP.USER.TNGFW.CA31", items.get(0).getName());
+        assertEquals("/CA31/u/users/framewrk", items.get(0).getMountpoint());
+        assertEquals("ZFS", items.get(0).getFstname());
+        assertEquals("noautomove,unmount,acl,synchonly", items.get(0).getMode());
+        assertEquals(2718, items.get(0).getDev());
+        assertEquals(1, items.get(0).getFstype());
+        assertEquals(1024, items.get(0).getBsize());
+        assertEquals(269231, items.get(0).getBavail());
+        assertEquals(1382400, items.get(0).getBlocks());
+        assertEquals("CA31", items.get(0).getSysname());
+        assertEquals(907651, items.get(0).getReadibc());
+        assertEquals(42, items.get(0).getWriteibc());
+        assertEquals(453057, items.get(0).getDiribc());
         assertEquals("https://1:1/zosmf/restfiles/mfs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
     }
 

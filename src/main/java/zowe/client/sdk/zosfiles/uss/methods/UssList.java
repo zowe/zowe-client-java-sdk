@@ -9,29 +9,24 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseFactory;
-import zowe.client.sdk.parse.UnixZfsJsonParse;
-import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
-import zowe.client.sdk.utility.JsonParserUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssListInputData;
 import zowe.client.sdk.zosfiles.uss.input.UssListZfsInputData;
 import zowe.client.sdk.zosfiles.uss.model.UnixFile;
 import zowe.client.sdk.zosfiles.uss.model.UnixZfs;
+import zowe.client.sdk.zosfiles.uss.reaponse.UnixFileListResponse;
+import zowe.client.sdk.zosfiles.uss.reaponse.UnixZfsListResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +42,6 @@ import java.util.Map;
 public class UssList {
 
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**
@@ -91,17 +85,24 @@ public class UssList {
     public List<UnixFile> getFiles(final UssListInputData listInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(listInputData == null, "listInputData is null");
 
-        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES);
+        final String urlStart = connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES;
+        final StringBuilder url = new StringBuilder(urlStart);
 
         url.append("?path=").append(EncodeUtils.encodeURIComponent(FileUtils.validatePath(
                 listInputData.getPath().orElseThrow(() -> new IllegalArgumentException("path not specified")))));
-        listInputData.getGroup().ifPresent(group -> url.append("&group=").append(EncodeUtils.encodeURIComponent(group)));
-        listInputData.getUser().ifPresent(user -> url.append("&user=").append(EncodeUtils.encodeURIComponent(user)));
-        listInputData.getMtime().ifPresent(mtime -> url.append("&mtime=").append(EncodeUtils.encodeURIComponent(mtime)));
-        listInputData.getSize().ifPresent(size -> url.append("&size=").append(size));
-        listInputData.getName().ifPresent(name -> url.append("&name=").append(EncodeUtils.encodeURIComponent(name)));
-        listInputData.getPerm().ifPresent(perm -> url.append("&perm=").append(EncodeUtils.encodeURIComponent(perm)));
-        // If type parameter is specified with the size parameter, it must be set to 'f'.
+        listInputData.getGroup().ifPresent(group ->
+                url.append("&group=").append(EncodeUtils.encodeURIComponent(group)));
+        listInputData.getUser().ifPresent(user ->
+                url.append("&user=").append(EncodeUtils.encodeURIComponent(user)));
+        listInputData.getMtime().ifPresent(mtime ->
+                url.append("&mtime=").append(EncodeUtils.encodeURIComponent(mtime)));
+        listInputData.getSize().ifPresent(size ->
+                url.append("&size=").append(size));
+        listInputData.getName().ifPresent(name ->
+                url.append("&name=").append(EncodeUtils.encodeURIComponent(name)));
+        listInputData.getPerm().ifPresent(perm ->
+                url.append("&perm=").append(EncodeUtils.encodeURIComponent(perm)));
+        // If the type parameter is specified with the size parameter, it must be set to 'f'.
         // Sizes that are associated with all other types are unspecified.
         if (listInputData.getSize().isPresent() && listInputData.getType().isPresent()) {
             url.append("&type=f");
@@ -126,40 +127,40 @@ public class UssList {
         }
         request.setUrl(url.toString());
 
-        final Response response = request.executeRequest();
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))
+                .toString();
 
-        final List<UnixFile> items = new ArrayList<>();
-        final JSONObject jsonObject = JsonParserUtils.parse(String.valueOf(response.getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))));
-        final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
-        if (jsonArray != null) {
-            for (final Object jsonObj : jsonArray) {
-                items.add((UnixFile) JsonParseFactory.buildParser(ParseType.UNIX_FILE).parseResponse(jsonObj));
-            }
-        }
-
-        return items;
+        final String context = "getFiles";
+        UnixFileListResponse response = JsonUtils.parseResponse(responsePhrase, UnixFileListResponse.class, context);
+        return response.getItems() == null ? List.of() : response.getItems();
     }
 
     /**
      * Perform a list of UNIX filesystems operation
      *
      * @param listZfsInputData UssListZfsInputData parameter object
-     * @return list of UssZfsItem objects
+     * @return list of UssZfs objects
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
     public List<UnixZfs> getZfsSystems(final UssListZfsInputData listZfsInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(listZfsInputData == null, "listZfsInputData is null");
-        ValidateUtils.checkIllegalParameter(listZfsInputData.getPath().isEmpty() && listZfsInputData.getFsname().isEmpty(),
-                "no path or fsname specified");
+        ValidateUtils.checkIllegalParameter(
+                listZfsInputData.getPath().isEmpty() && listZfsInputData.getFsname().isEmpty(),
+                "no path or fsname specified"
+        );
 
-        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS);
+        final String urlStart = connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS;
+        final StringBuilder url = new StringBuilder(urlStart);
 
-        listZfsInputData.getPath().ifPresent(path -> url.append("?path=").append(
-                EncodeUtils.encodeURIComponent(FileUtils.validatePath(path))));
-        listZfsInputData.getFsname().ifPresent(fsname -> url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
+        listZfsInputData.getPath().ifPresent(path ->
+                url.append("?path=").append(EncodeUtils.encodeURIComponent(FileUtils.validatePath(path))));
+
+        listZfsInputData.getFsname().ifPresent(fsname ->
+                url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
@@ -171,35 +172,14 @@ public class UssList {
         }
         request.setUrl(url.toString());
 
-        final Response response = request.executeRequest();
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))
+                .toString();
 
-        final List<UnixZfs> items = new ArrayList<>();
-        final JSONObject jsonObject = JsonParserUtils.parse(String.valueOf(response.getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR))));
-        final JSONArray jsonArray = (JSONArray) jsonObject.get("items");
-        if (jsonArray != null) {
-            for (final Object obj : jsonArray) {
-                final JSONObject jsonObj = (JSONObject) obj;
-                final StringBuilder modeStr = new StringBuilder();
-                try {
-                    final JSONArray modeLst = (JSONArray) jsonObj.get("mode");
-                    final int size = modeLst.size();
-                    for (int i = 0; i < size; i++) {
-                        if (size - 1 == i) {
-                            modeStr.append(modeLst.get(i).toString());
-                        } else {
-                            modeStr.append(modeLst.get(i).toString()).append(",");
-                        }
-                    }
-                } catch (Exception ignored) {
-                }
-
-                final UnixZfsJsonParse parse = (UnixZfsJsonParse) JsonParseFactory.buildParser(ParseType.UNIX_ZFS);
-                items.add(parse.parseResponse(jsonObj, modeStr.toString()));
-            }
-        }
-        return items;
+        final String context = "getZfsSystems";
+        UnixZfsListResponse response = JsonUtils.parseResponse(responsePhrase, UnixZfsListResponse.class, context);
+        return response.getItems() == null ? List.of() : response.getItems();
     }
 
 }
-

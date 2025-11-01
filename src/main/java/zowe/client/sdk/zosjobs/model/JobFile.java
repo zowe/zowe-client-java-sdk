@@ -9,8 +9,9 @@
  */
 package zowe.client.sdk.zosjobs.model;
 
-import java.util.Optional;
-import java.util.OptionalLong;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents the name and details of an output (spool) DD for a z/OS batch job
@@ -18,6 +19,7 @@ import java.util.OptionalLong;
  * @author Frank Giordano
  * @version 5.0
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class JobFile {
 
     /**
@@ -51,7 +53,7 @@ public class JobFile {
     private final String jobCorrelator;
 
     /**
-     * Job class for which job ran
+     * Job class for which a job ran
      */
     private final String classs;
 
@@ -76,7 +78,8 @@ public class JobFile {
     private final Long lrecl;
 
     /**
-     * The primary or secondary JES subsystem. If this value is null, the job was processed by the primary subsystem.
+     * The primary or secondary JES subsystem.
+     * If this value is null, the job was processed by the primary subsystem.
      */
     private final String subSystem;
 
@@ -86,31 +89,87 @@ public class JobFile {
     private final String stepName;
 
     /**
-     * If this spool file was produced during a job procedure step, the name of the step will be here.
+     * If this spool file was produced during a job procedure step,
+     * the name of the step will be here.
      */
     private final String procStep;
 
     /**
-     * JobFile constructor
+     * Convenience constructor for creating a JobFile with only jobName, jobId, and id.
+     * All other fields will be set to default values.
      *
-     * @param builder JobFile.Builder object
+     * @param jobName Name of the job
+     * @param jobId   Job ID
+     * @param spoolId Unique identifier for this spool file
      * @author Frank Giordano
      */
-    private JobFile(final Builder builder) {
-        this.jobId = builder.jobId;
-        this.jobName = builder.jobName;
-        this.recfm = builder.recfm;
-        this.byteCount = builder.byteCount;
-        this.recordCount = builder.recordCount;
-        this.jobCorrelator = builder.jobCorrelator;
-        this.classs = builder.classs;
-        this.id = builder.id;
-        this.ddName = builder.ddName;
-        this.recordsUrl = builder.recordsUrl;
-        this.lrecl = builder.lrecl;
-        this.subSystem = builder.subSystem;
-        this.stepName = builder.stepName;
-        this.procStep = builder.procStep;
+    public JobFile(final String jobName, final String jobId, final Long spoolId) {
+        this.jobId = jobId;
+        this.jobName = jobName;
+        this.id = spoolId;
+        this.recfm = null;
+        this.byteCount = null;
+        this.recordCount = null;
+        this.jobCorrelator = null;
+        this.classs = null;
+        this.ddName = null;
+        this.recordsUrl = null;
+        this.lrecl = null;
+        this.subSystem = null;
+        this.stepName = null;
+        this.procStep = null;
+    }
+
+    /**
+     * JobFile constructor for Jackson JSON parsing.
+     *
+     * @param jobId         Job ID
+     * @param jobName       Job name
+     * @param recfm         Record format
+     * @param byteCount     Total bytes in a spool file
+     * @param recordCount   Total records in a spool file
+     * @param jobCorrelator Unique job identifier
+     * @param classs        Job class
+     * @param id            Spool file ID
+     * @param ddName        DD name
+     * @param recordsUrl    Records URL
+     * @param lrecl         Logical record length
+     * @param subSystem     JES subsystem
+     * @param stepName      Job step name
+     * @param procStep      Procedure step name
+     * @author Frank Giordano
+     */
+    @JsonCreator
+    public JobFile(
+            @JsonProperty("jobid") String jobId,
+            @JsonProperty("jobname") String jobName,
+            @JsonProperty("recfm") String recfm,
+            @JsonProperty("byte-count") Long byteCount,
+            @JsonProperty("record-count") Long recordCount,
+            @JsonProperty("job-correlator") String jobCorrelator,
+            @JsonProperty("class") String classs,
+            @JsonProperty("id") Long id,
+            @JsonProperty("ddname") String ddName,
+            @JsonProperty("records-url") String recordsUrl,
+            @JsonProperty("lrecl") Long lrecl,
+            @JsonProperty("subsystem") String subSystem,
+            @JsonProperty("stepname") String stepName,
+            @JsonProperty("procstep") String procStep
+    ) {
+        this.jobId = jobId != null ? jobId : "";
+        this.jobName = jobName != null ? jobName : "";
+        this.recfm = recfm != null ? recfm : "";
+        this.byteCount = byteCount != null ? byteCount : 0;
+        this.recordCount = recordCount != null ? recordCount : 0;
+        this.jobCorrelator = jobCorrelator != null ? jobCorrelator : "";
+        this.classs = classs != null ? classs : "";
+        this.id = id != null ? id : 0;
+        this.ddName = ddName != null ? ddName : "";
+        this.recordsUrl = recordsUrl != null ? recordsUrl : "";
+        this.lrecl = lrecl != null ? lrecl : 0;
+        this.subSystem = subSystem != null ? subSystem : "";
+        this.stepName = stepName != null ? stepName : "";
+        this.procStep = procStep != null ? procStep : "";
     }
 
     /**
@@ -118,8 +177,8 @@ public class JobFile {
      *
      * @return byteCount value
      */
-    public OptionalLong getByteCount() {
-        return (byteCount == null) ? OptionalLong.empty() : OptionalLong.of(byteCount);
+    public Long getByteCount() {
+        return byteCount;
     }
 
     /**
@@ -127,8 +186,8 @@ public class JobFile {
      *
      * @return classs value
      */
-    public Optional<String> getClasss() {
-        return Optional.ofNullable(classs);
+    public String getClasss() {
+        return classs;
     }
 
     /**
@@ -136,8 +195,8 @@ public class JobFile {
      *
      * @return ddName value
      */
-    public Optional<String> getDdName() {
-        return Optional.ofNullable(ddName);
+    public String getDdName() {
+        return ddName;
     }
 
     /**
@@ -145,8 +204,8 @@ public class JobFile {
      *
      * @return id value
      */
-    public OptionalLong getId() {
-        return (id == null) ? OptionalLong.empty() : OptionalLong.of(id);
+    public Long getId() {
+        return id;
     }
 
     /**
@@ -154,8 +213,8 @@ public class JobFile {
      *
      * @return jobCorrelator value
      */
-    public Optional<String> getJobCorrelator() {
-        return Optional.ofNullable(jobCorrelator);
+    public String getJobCorrelator() {
+        return jobCorrelator;
     }
 
     /**
@@ -163,8 +222,8 @@ public class JobFile {
      *
      * @return jobId value
      */
-    public Optional<String> getJobId() {
-        return Optional.ofNullable(jobId);
+    public String getJobId() {
+        return jobId;
     }
 
     /**
@@ -172,8 +231,8 @@ public class JobFile {
      *
      * @return jobName value
      */
-    public Optional<String> getJobName() {
-        return Optional.ofNullable(jobName);
+    public String getJobName() {
+        return jobName;
     }
 
     /**
@@ -181,8 +240,8 @@ public class JobFile {
      *
      * @return lrecl value
      */
-    public OptionalLong getLrecl() {
-        return (lrecl == null) ? OptionalLong.empty() : OptionalLong.of(lrecl);
+    public Long getLrecl() {
+        return lrecl;
     }
 
     /**
@@ -190,8 +249,8 @@ public class JobFile {
      *
      * @return procStep value
      */
-    public Optional<String> getProcStep() {
-        return Optional.ofNullable(procStep);
+    public String getProcStep() {
+        return procStep;
     }
 
     /**
@@ -199,8 +258,8 @@ public class JobFile {
      *
      * @return recfm value
      */
-    public Optional<String> getRecfm() {
-        return Optional.ofNullable(recfm);
+    public String getRecfm() {
+        return recfm;
     }
 
     /**
@@ -208,8 +267,8 @@ public class JobFile {
      *
      * @return recordCount value
      */
-    public OptionalLong getRecordCount() {
-        return (recordCount == null) ? OptionalLong.empty() : OptionalLong.of(recordCount);
+    public Long getRecordCount() {
+        return recordCount;
     }
 
     /**
@@ -217,8 +276,8 @@ public class JobFile {
      *
      * @return recordsUrl value
      */
-    public Optional<String> getRecordsUrl() {
-        return Optional.ofNullable(recordsUrl);
+    public String getRecordsUrl() {
+        return recordsUrl;
     }
 
     /**
@@ -226,8 +285,8 @@ public class JobFile {
      *
      * @return stepName value
      */
-    public Optional<String> getStepName() {
-        return Optional.ofNullable(stepName);
+    public String getStepName() {
+        return stepName;
     }
 
     /**
@@ -235,8 +294,8 @@ public class JobFile {
      *
      * @return subSystem value
      */
-    public Optional<String> getSubSystem() {
-        return Optional.ofNullable(subSystem);
+    public String getSubSystem() {
+        return subSystem;
     }
 
     /**
@@ -247,267 +306,21 @@ public class JobFile {
     @Override
     public String toString() {
         return "JobFile{" +
-                "jobId=" + jobId +
-                ", jobName=" + jobName +
-                ", recfm=" + recfm +
+                "jobId='" + jobId + '\'' +
+                ", jobName='" + jobName + '\'' +
+                ", recfm='" + recfm + '\'' +
                 ", byteCount=" + byteCount +
                 ", recordCount=" + recordCount +
-                ", jobCorrelator=" + jobCorrelator +
-                ", classs=" + classs +
+                ", jobCorrelator='" + jobCorrelator + '\'' +
+                ", classs='" + classs + '\'' +
                 ", id=" + id +
-                ", ddName=" + ddName +
-                ", recordsUrl=" + recordsUrl +
+                ", ddName='" + ddName + '\'' +
+                ", recordsUrl='" + recordsUrl + '\'' +
                 ", lrecl=" + lrecl +
-                ", subSystem=" + subSystem +
-                ", stepName=" + stepName +
-                ", procStep=" + procStep +
+                ", subSystem='" + subSystem + '\'' +
+                ", stepName='" + stepName + '\'' +
+                ", procStep='" + procStep + '\'' +
                 '}';
-    }
-
-    /**
-     * Builder class for JobFile
-     */
-    public static class Builder {
-
-        /**
-         * Job id for a job. Uniquely identifies a job on a z/OS system
-         */
-        private String jobId;
-
-        /**
-         * Job Name for a job
-         */
-        private String jobName;
-
-        /**
-         * Record format of the spool file (DD)
-         */
-        private String recfm;
-
-        /**
-         * Total bytes in the spool file
-         */
-        private Long byteCount;
-
-        /**
-         * Total records (roughly equivalent to lines) in the spool file
-         */
-        private Long recordCount;
-
-        /**
-         * Unique identifier of a job (substitute of job name and job id)
-         */
-        private String jobCorrelator;
-
-        /**
-         * Job class for which a job ran
-         */
-        private String classs;
-
-        /**
-         * Identifier for this spool file. Each JobFile for a single batch job will have a unique ID
-         */
-        private Long id;
-
-        /**
-         * DD name of a job spool file
-         */
-        private String ddName;
-
-        /**
-         * Direct access to job record content
-         */
-        private String recordsUrl;
-
-        /**
-         * Job DD lrecl (logical record length - how many bytes each record is)
-         */
-        private Long lrecl;
-
-        /**
-         * The primary or secondary JES subsystem. If this value is null, the job was processed by the primary subsystem.
-         */
-        private String subSystem;
-
-        /**
-         * The name of the job step during which this spool file was produced
-         */
-        private String stepName;
-
-        /**
-         * If this spool file was produced during a job procedure step, the name of the step will be here.
-         */
-        private String procStep;
-
-        /**
-         * Builder constructor
-         */
-        public Builder() {
-        }
-
-        /**
-         * Set byteCount long value
-         *
-         * @param byteCount long value
-         * @return Builder this object
-         */
-        public Builder byteCount(final Long byteCount) {
-            this.byteCount = byteCount;
-            return this;
-        }
-
-        /**
-         * Set classs string value
-         *
-         * @param classs string value
-         * @return Builder this object
-         */
-        public Builder classs(final String classs) {
-            this.classs = classs;
-            return this;
-        }
-
-        /**
-         * Set ddName string value
-         *
-         * @param ddName string value
-         * @return Builder this object
-         */
-        public Builder ddName(final String ddName) {
-            this.ddName = ddName;
-            return this;
-        }
-
-        /**
-         * Set id long value
-         *
-         * @param id long value
-         * @return Builder this object
-         */
-        public Builder id(final Long id) {
-            this.id = id;
-            return this;
-        }
-
-        /**
-         * Set jobCorrelator string value
-         *
-         * @param jobCorrelator string value
-         * @return Builder this object
-         */
-        public Builder jobCorrelator(final String jobCorrelator) {
-            this.jobCorrelator = jobCorrelator;
-            return this;
-        }
-
-        /**
-         * Set jobId string value
-         *
-         * @param jobId string value
-         * @return Builder this object
-         */
-        public Builder jobId(final String jobId) {
-            this.jobId = jobId;
-            return this;
-        }
-
-        /**
-         * Set jobName string value
-         *
-         * @param jobName string value
-         * @return Builder this object
-         */
-        public Builder jobName(final String jobName) {
-            this.jobName = jobName;
-            return this;
-        }
-
-        /**
-         * Set lrecl long value
-         *
-         * @param lrecl long value
-         * @return Builder this object
-         */
-        public Builder lrecl(final Long lrecl) {
-            this.lrecl = lrecl;
-            return this;
-        }
-
-        /**
-         * Set procStep string value
-         *
-         * @param procStep string value
-         * @return Builder this object
-         */
-        public Builder procStep(final String procStep) {
-            this.procStep = procStep;
-            return this;
-        }
-
-        /**
-         * Set recfm string value
-         *
-         * @param recfm string value
-         * @return Builder this object
-         */
-        public Builder recfm(final String recfm) {
-            this.recfm = recfm;
-            return this;
-        }
-
-        /**
-         * Set recordCount long value
-         *
-         * @param recordCount long value
-         * @return Builder this object
-         */
-        public Builder recordCount(final Long recordCount) {
-            this.recordCount = recordCount;
-            return this;
-        }
-
-        /**
-         * Set recordsUrl string value
-         *
-         * @param recordsUrl string value
-         * @return Builder this object
-         */
-        public Builder recordsUrl(final String recordsUrl) {
-            this.recordsUrl = recordsUrl;
-            return this;
-        }
-
-        /**
-         * Set stepName string value
-         *
-         * @param stepName string value
-         * @return Builder this object
-         */
-        public Builder stepName(final String stepName) {
-            this.stepName = stepName;
-            return this;
-        }
-
-        /**
-         * Set subSystem string value
-         *
-         * @param subSystem string value
-         * @return Builder this object
-         */
-        public Builder subSystem(final String subSystem) {
-            this.subSystem = subSystem;
-            return this;
-        }
-
-        /**
-         * Return JobFile object based on Builder this object
-         *
-         * @return JobFile this object
-         */
-        public JobFile build() {
-            return new JobFile(this);
-        }
-
     }
 
 }

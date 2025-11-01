@@ -9,41 +9,45 @@
  */
 package zowe.client.sdk.zosjobs.model;
 
-import java.util.Optional;
-import java.util.OptionalLong;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Step info on a job interface
+ * Step data information. Provides information about each step in the job,
+ * such as the step name, step number, and completion code.
  *
  * @author Frank Giordano
  * @version 5.0
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class JobStepData {
 
     /**
-     * SMFID
-     */
-    private final String smfid;
-
-    /**
-     * Completion
-     */
-    private final String completion;
-
-    /**
-     * Active
+     * Value is set to true if the step is running. Otherwise, the value is false.
      */
     private final boolean active;
 
     /**
-     * Job relevant step
+     * The SMF ID of the system where the step is running.
+     */
+    private final String smfid;
+
+    /**
+     * Step number.
      */
     private final Long stepNumber;
 
     /**
-     * Job relevant proc
+     * The z/OS user ID associated with the job.
      */
-    private final String procStepName;
+    private final String owner;
+
+    /**
+     * Name of the program to be run by the job step. This value is retrieved
+     * from the EXEC statement. Program EXEC=
+     */
+    private final String programName;
 
     /**
      * Step for which a job dd exists
@@ -51,24 +55,66 @@ public class JobStepData {
     private final String stepName;
 
     /**
-     * Program EXEC=
+     * Path to the program in the z/OS UNIX System Services (z/OS UNIX) file system
+     * that is run by the job step. Not returned if the step is active.
      */
-    private final String programName;
+    private final String pathName;
 
     /**
-     * JobStepData constructor
+     * Name of the procedure to be run by the job step.
+     * This value is retrieved from the EXEC statement.
+     */
+    private final String procStepName;
+
+    /**
+     * Step completion code. One of the following values:
+     * ABENDUnnnn
+     * Step ended with the user abend code nnnn.
+     * ABEND Sxxx
+     * Step ended with the system abend code xxx.
+     * CANCELED
+     * Step was canceled.
+     * CC nnnn
+     * Step ended with the completion code nnnn.
+     * FLUSHED
+     * Step was not processed.
+     */
+    private final String completion;
+
+    /**
+     * JobStepData constructor for Jackson JSON parsing.
      *
-     * @param builder JobStepData.Builder object
+     * @param active       boolean value
+     * @param smfid        SMFID value
+     * @param stepNumber   long step number
+     * @param owner        job owner
+     * @param programName  program name
+     * @param stepName     step name
+     * @param pathName     path name
+     * @param procStepName procedure step name
+     * @param completion   completion
      * @author Frank Giordano
      */
-    private JobStepData(final JobStepData.Builder builder) {
-        this.smfid = builder.smfid;
-        this.completion = builder.completion;
-        this.active = builder.active;
-        this.stepNumber = builder.stepNumber;
-        this.procStepName = builder.procStepName;
-        this.stepName = builder.stepName;
-        this.programName = builder.programName;
+    @JsonCreator
+    public JobStepData(
+            @JsonProperty("active") final boolean active,
+            @JsonProperty("smfid") final String smfid,
+            @JsonProperty("step-number") final Long stepNumber,
+            @JsonProperty("owner") final String owner,
+            @JsonProperty("program-name") final String programName,
+            @JsonProperty("step-name") final String stepName,
+            @JsonProperty("path-name") final String pathName,
+            @JsonProperty("proc-step-name") final String procStepName,
+            @JsonProperty("completion") final String completion) {
+        this.active = active;
+        this.smfid = smfid == null ? "" : smfid;
+        this.stepNumber = stepNumber == null ? 0L : stepNumber;
+        this.owner = owner == null ? "" : owner;
+        this.programName = programName == null ? "" : programName;
+        this.stepName = stepName == null ? "" : stepName;
+        this.pathName = pathName == null ? "" : pathName;
+        this.procStepName = procStepName == null ? "" : procStepName;
+        this.completion = completion == null ? "" : completion;
     }
 
     /**
@@ -81,21 +127,30 @@ public class JobStepData {
     }
 
     /**
-     * Retrieve completion optional string
+     * Retrieve smfid optional string
      *
      * @return optional string
      */
-    public Optional<String> getCompletion() {
-        return Optional.ofNullable(completion);
+    public String getSmfid() {
+        return smfid;
     }
 
     /**
-     * Retrieve procStepName optional string
+     * Retrieve stepNumber optional long
      *
-     * @return optional string
+     * @return optional long
      */
-    public Optional<String> getProcStepName() {
-        return Optional.ofNullable(procStepName);
+    public Long getStepNumber() {
+        return stepNumber;
+    }
+
+    /**
+     * Retrieve owner optional string.
+     *
+     * @return string value
+     */
+    public String getOwner() {
+        return owner;
     }
 
     /**
@@ -103,17 +158,8 @@ public class JobStepData {
      *
      * @return optional string
      */
-    public Optional<String> getProgramName() {
-        return Optional.ofNullable(programName);
-    }
-
-    /**
-     * Retrieve smfid optional string
-     *
-     * @return optional string
-     */
-    public Optional<String> getSmfid() {
-        return Optional.ofNullable(smfid);
+    public String getProgramName() {
+        return programName;
     }
 
     /**
@@ -121,17 +167,35 @@ public class JobStepData {
      *
      * @return optional string
      */
-    public Optional<String> getStepName() {
-        return Optional.ofNullable(stepName);
+    public String getStepName() {
+        return stepName;
     }
 
     /**
-     * Retrieve stepNumber optional string
+     * Retrieve pathName optional string.
      *
-     * @return optional long
+     * @return string value
      */
-    public OptionalLong getStepNumber() {
-        return (stepNumber == null) ? OptionalLong.empty() : OptionalLong.of(stepNumber);
+    public String getPathName() {
+        return pathName;
+    }
+
+    /**
+     * Retrieve procStepName optional string
+     *
+     * @return optional string
+     */
+    public String getProcStepName() {
+        return procStepName;
+    }
+
+    /**
+     * Retrieve completion optional string
+     *
+     * @return optional string
+     */
+    public String getCompletion() {
+        return completion;
     }
 
     /**
@@ -142,148 +206,16 @@ public class JobStepData {
     @Override
     public String toString() {
         return "JobStepData{" +
-                "smfid=" + smfid +
-                ", completion=" + completion +
-                ", active=" + active +
+                "active=" + active +
+                ", smfid='" + smfid + '\'' +
                 ", stepNumber=" + stepNumber +
-                ", procStepName=" + procStepName +
-                ", stepName=" + stepName +
-                ", programName=" + programName +
+                ", owner='" + owner + '\'' +
+                ", programName='" + programName + '\'' +
+                ", stepName='" + stepName + '\'' +
+                ", pathName='" + pathName + '\'' +
+                ", procStepName='" + procStepName + '\'' +
+                ", completion='" + completion + '\'' +
                 '}';
-    }
-
-    /**
-     * Builder class for JobStepData
-     */
-    public static class Builder {
-
-        /**
-         * SMFID
-         */
-        private String smfid;
-
-        /**
-         * Completion
-         */
-        private String completion;
-
-        /**
-         * Active
-         */
-        private boolean active;
-
-        /**
-         * Job relevant step
-         */
-        private Long stepNumber;
-
-        /**
-         * Job relevant proc
-         */
-        private String procStepName;
-
-        /**
-         * Step for which a job dd exists
-         */
-        private String stepName;
-
-        /**
-         * Program EXEC=
-         */
-        private String programName;
-
-        /**
-         * Builder constructor
-         */
-        public Builder() {
-        }
-
-        /**
-         * Set an active boolean value
-         *
-         * @param active boolean true or false value
-         * @return Builder this object
-         */
-        public Builder active(final boolean active) {
-            this.active = active;
-            return this;
-        }
-
-        /**
-         * Set completion string value
-         *
-         * @param completion string value
-         * @return Builder this object
-         */
-        public Builder completion(final String completion) {
-            this.completion = completion;
-            return this;
-        }
-
-        /**
-         * Set procStepName string value
-         *
-         * @param procStepName string value
-         * @return Builder this object
-         */
-        public Builder procStepName(final String procStepName) {
-            this.procStepName = procStepName;
-            return this;
-        }
-
-        /**
-         * Set programName string value
-         *
-         * @param programName string value
-         * @return Builder this object
-         */
-        public Builder programName(final String programName) {
-            this.programName = programName;
-            return this;
-        }
-
-        /**
-         * Set smfid string value
-         *
-         * @param smfid string value
-         * @return Builder this object
-         */
-        public Builder smfid(final String smfid) {
-            this.smfid = smfid;
-            return this;
-        }
-
-        /**
-         * Set stepName string value
-         *
-         * @param stepName string value
-         * @return Builder this object
-         */
-        public Builder stepName(final String stepName) {
-            this.stepName = stepName;
-            return this;
-        }
-
-        /**
-         * Set stepNumber long value
-         *
-         * @param stepNumber long value
-         * @return Builder this object
-         */
-        public Builder stepNumber(final Long stepNumber) {
-            this.stepNumber = stepNumber;
-            return this;
-        }
-
-        /**
-         * Return JobStepData object based on Builder this object
-         *
-         * @return JobStepData this object
-         */
-        public JobStepData build() {
-            return new JobStepData(this);
-        }
-
     }
 
 }

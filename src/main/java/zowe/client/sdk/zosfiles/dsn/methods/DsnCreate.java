@@ -35,7 +35,6 @@ import java.util.Map;
 public class DsnCreate {
 
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**

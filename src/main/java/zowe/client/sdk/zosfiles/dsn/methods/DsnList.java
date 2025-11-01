@@ -14,13 +14,11 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseFactory;
-import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.JsonParserUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.dsn.input.DsnListInputData;
@@ -41,7 +39,6 @@ public class DsnList {
     private static final Logger LOG = LoggerFactory.getLogger(DsnList.class);
 
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**
@@ -184,7 +181,7 @@ public class DsnList {
         }
 
         final String jsonStr = response.getResponsePhrase().get().toString();
-        final JSONObject jsonObject = JsonParserUtils.parse(jsonStr);
+        final JSONObject jsonObject = JsonUtils.parse(jsonStr);
         if (jsonObject.isEmpty()) {
             if (datasetLst == null) {
                 return memberLst;
@@ -194,11 +191,12 @@ public class DsnList {
         }
 
         final JSONArray items = (JSONArray) jsonObject.get(ZosFilesConstants.RESPONSE_ITEMS);
+        final String context = "getResult";
         for (final Object obj : items) {
             if (datasetLst == null) {
-                memberLst.add((T) JsonParseFactory.buildParser(ParseType.MEMBER).parseResponse(obj));
+                memberLst.add((T) JsonUtils.parseResponse(String.valueOf(obj), Member.class, context));
             } else {
-                datasetLst.add((T) JsonParseFactory.buildParser(ParseType.DATASET).parseResponse(obj));
+                datasetLst.add((T) JsonUtils.parseResponse(String.valueOf(obj), Dataset.class, context));
             }
         }
 

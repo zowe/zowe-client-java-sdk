@@ -9,17 +9,22 @@
  */
 package zowe.client.sdk.zosmfinfo.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import zowe.client.sdk.zosmfinfo.model.ZosmfPlugin;
 
-import java.util.Optional;
+import java.util.Arrays;
 
 /**
  * The z/OSMF info API response.
+ * Immutable class using Jackson for JSON parsing.
  *
  * @author Frank Giordano
  * @version 5.0
  */
-public class ZosmfInfoResponse {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public final class ZosmfInfoResponse {
 
     /**
      * z/OS version
@@ -59,23 +64,36 @@ public class ZosmfInfoResponse {
     /**
      * Zosmf plugin information
      */
-    private final ZosmfPlugin[] zosmfPluginsInfo;
+    private ZosmfPlugin[] zosmfPluginsInfo;
 
     /**
-     * ZosmfInfoResponse constructor
+     * Jackson constructor for ZosmfInfoResponse
      *
-     * @param builder Builder Object
-     * @author Frank Giordano
+     * @param zosVersion       z/OS version
+     * @param zosmfPort        Zosmf port number
+     * @param zosmfVersion     Zosmf version
+     * @param zosmfHostName    Zosmf host name
+     * @param zosmfSafRealm    Zosmf saf realm
+     * @param zosmfFullVersion Zosmf full version
+     * @param apiVersion       Zosmf api version
      */
-    private ZosmfInfoResponse(final Builder builder) {
-        this.zosVersion = builder.zosVersion;
-        this.zosmfPort = builder.zosmfPort;
-        this.zosmfVersion = builder.zosmfVersion;
-        this.zosmfHostName = builder.zosmfHostName;
-        this.zosmfSafRealm = builder.zosmfSafRealm;
-        this.zosmfFullVersion = builder.zosmfFullVersion;
-        this.apiVersion = builder.apiVersion;
-        this.zosmfPluginsInfo = builder.zosmfPluginsInfo;
+    @JsonCreator
+    public ZosmfInfoResponse(
+            @JsonProperty("zos_version") String zosVersion,
+            @JsonProperty("zosmf_port") String zosmfPort,
+            @JsonProperty("zosmf_version") String zosmfVersion,
+            @JsonProperty("zosmf_hostname") String zosmfHostName,
+            @JsonProperty("zosmf_saf_realm") String zosmfSafRealm,
+            @JsonProperty("zosmf_full_version") String zosmfFullVersion,
+            @JsonProperty("api_version") String apiVersion
+    ) {
+        this.zosVersion = zosVersion == null ? "" : zosVersion;
+        this.zosmfPort = zosmfPort == null ? "" : zosmfPort;
+        this.zosmfVersion = zosmfVersion == null ? "" : zosmfVersion;
+        this.zosmfHostName = zosmfHostName == null ? "" : zosmfHostName;
+        this.zosmfSafRealm = zosmfSafRealm == null ? "" : zosmfSafRealm;
+        this.zosmfFullVersion = zosmfFullVersion == null ? "" : zosmfFullVersion;
+        this.apiVersion = apiVersion == null ? "" : apiVersion;
     }
 
     /**
@@ -83,8 +101,8 @@ public class ZosmfInfoResponse {
      *
      * @return apiVersion value
      */
-    public Optional<String> getApiVersion() {
-        return Optional.ofNullable(apiVersion);
+    public String getApiVersion() {
+        return apiVersion;
     }
 
     /**
@@ -92,8 +110,8 @@ public class ZosmfInfoResponse {
      *
      * @return zosVersion value
      */
-    public Optional<String> getZosVersion() {
-        return Optional.ofNullable(zosVersion);
+    public String getZosVersion() {
+        return zosVersion;
     }
 
     /**
@@ -101,8 +119,8 @@ public class ZosmfInfoResponse {
      *
      * @return zosmfFullVersion value
      */
-    public Optional<String> getZosmfFullVersion() {
-        return Optional.ofNullable(zosmfFullVersion);
+    public String getZosmfFullVersion() {
+        return zosmfFullVersion;
     }
 
     /**
@@ -110,8 +128,8 @@ public class ZosmfInfoResponse {
      *
      * @return zosmfHostName value
      */
-    public Optional<String> getZosmfHostName() {
-        return Optional.ofNullable(zosmfHostName);
+    public String getZosmfHostName() {
+        return zosmfHostName;
     }
 
     /**
@@ -119,8 +137,8 @@ public class ZosmfInfoResponse {
      *
      * @return zosmfPluginsInfo value
      */
-    public Optional<ZosmfPlugin[]> getZosmfPluginsInfo() {
-        return Optional.ofNullable(zosmfPluginsInfo);
+    public ZosmfPlugin[] getZosmfPluginsInfo() {
+        return zosmfPluginsInfo;
     }
 
     /**
@@ -128,8 +146,8 @@ public class ZosmfInfoResponse {
      *
      * @return zosmfPort value
      */
-    public Optional<String> getZosmfPort() {
-        return Optional.ofNullable(zosmfPort);
+    public String getZosmfPort() {
+        return zosmfPort;
     }
 
     /**
@@ -137,8 +155,8 @@ public class ZosmfInfoResponse {
      *
      * @return zosmfSafRealm value
      */
-    public Optional<String> getZosmfSafRealm() {
-        return Optional.ofNullable(zosmfSafRealm);
+    public String getZosmfSafRealm() {
+        return zosmfSafRealm;
     }
 
     /**
@@ -146,8 +164,13 @@ public class ZosmfInfoResponse {
      *
      * @return zosmfVersion value
      */
-    public Optional<String> getZosmfVersion() {
-        return Optional.ofNullable(zosmfVersion);
+    public String getZosmfVersion() {
+        return zosmfVersion;
+    }
+
+    public ZosmfInfoResponse withZosmfPluginsInfo(final ZosmfPlugin[] zosmfPluginsInfo) {
+        this.zosmfPluginsInfo = zosmfPluginsInfo;
+        return this;
     }
 
     /**
@@ -165,158 +188,8 @@ public class ZosmfInfoResponse {
                 ", zosmfSafRealm=" + zosmfSafRealm +
                 ", zosmfFullVersion=" + zosmfFullVersion +
                 ", apiVersion=" + apiVersion +
-                ", zosmfPluginsInfo=" + zosmfPluginsInfo +
+                ", zosmfPluginsInfo=" + Arrays.toString(zosmfPluginsInfo) +
                 '}';
-    }
-
-    /**
-     * Builder class for ZosmfInfoResponse
-     */
-    public static class Builder {
-
-        /**
-         * z/OS version
-         */
-        private String zosVersion;
-
-        /**
-         * Zosmf port number
-         */
-        private String zosmfPort;
-
-        /**
-         * Zosmf version
-         */
-        private String zosmfVersion;
-
-        /**
-         * Zosmf host name
-         */
-        private String zosmfHostName;
-
-        /**
-         * Zosmf saf realm
-         */
-        private String zosmfSafRealm;
-
-        /**
-         * Zosmf full version
-         */
-        private String zosmfFullVersion;
-
-        /**
-         * Zosmf api version
-         */
-        private String apiVersion;
-
-        /**
-         * Zosmf plugin information
-         */
-        private ZosmfPlugin[] zosmfPluginsInfo;
-
-        /**
-         * Builder constructor
-         */
-        public Builder() {
-        }
-
-        /**
-         * Set apiVersion string value
-         *
-         * @param apiVersion string value
-         * @return Builder this object
-         */
-        public Builder apiVersion(final String apiVersion) {
-            this.apiVersion = apiVersion;
-            return this;
-        }
-
-        /**
-         * Set zosVersion string value
-         *
-         * @param zosVersion string value
-         * @return Builder this object
-         */
-        public Builder zosVersion(final String zosVersion) {
-            this.zosVersion = zosVersion;
-            return this;
-        }
-
-        /**
-         * Set zosmfFullVersion string value
-         *
-         * @param zosmfFullVersion string value
-         * @return Builder this object
-         */
-        public Builder zosmfFullVersion(final String zosmfFullVersion) {
-            this.zosmfFullVersion = zosmfFullVersion;
-            return this;
-        }
-
-        /**
-         * Set zosmfHostName string value
-         *
-         * @param zosmfHostName string value
-         * @return Builder this object
-         */
-        public Builder zosmfHostName(final String zosmfHostName) {
-            this.zosmfHostName = zosmfHostName;
-            return this;
-        }
-
-        /**
-         * Set zosmfPluginsInfo string value
-         *
-         * @param zosmfPluginsInfo string value
-         * @return Builder this object
-         */
-        public Builder zosmfPluginsInfo(final ZosmfPlugin[] zosmfPluginsInfo) {
-            this.zosmfPluginsInfo = zosmfPluginsInfo;
-            return this;
-        }
-
-        /**
-         * Set zosmfPort string value
-         *
-         * @param zosmfPort string value
-         * @return Builder this object
-         */
-        public Builder zosmfPort(final String zosmfPort) {
-            this.zosmfPort = zosmfPort;
-            return this;
-        }
-
-        /**
-         * Set zosmfSafRealm string value
-         *
-         * @param zosmfSafRealm string value
-         * @return Builder this object
-         */
-        public Builder zosmfSafRealm(final String zosmfSafRealm) {
-            this.zosmfSafRealm = zosmfSafRealm;
-            return this;
-        }
-
-        /**
-         * Set zosmfVersion string value
-         *
-         * @param zosmfVersion string value
-         * @return Builder this object
-         */
-        public Builder zosmfVersion(final String zosmfVersion) {
-            this.zosmfVersion = zosmfVersion;
-            return this;
-        }
-
-        /**
-         * Return ZosmfInfoResponse object based on Builder this object
-         *
-         * @return ZosmfInfoResponse this object
-         */
-        public ZosmfInfoResponse build() {
-            return new ZosmfInfoResponse(this);
-        }
-
     }
 
 }

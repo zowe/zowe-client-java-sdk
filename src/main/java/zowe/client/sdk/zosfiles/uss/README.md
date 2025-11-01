@@ -21,7 +21,7 @@ import zowe.client.sdk.zosfiles.uss.methods.UssCreate;
 import zowe.client.sdk.zosfiles.uss.types.CreateType;
 
 /**
- * Class example to test unix system services create command functionality via UssCreate class.
+ * Class example to test unix system services creates command functionality via UssCreate class.
  *
  * @author Frank Giordano
  * @version 5.0
@@ -154,7 +154,7 @@ public class UssDeleteExp extends TstZosConnection {
             return ussDelete.delete(value, true);
         } catch (ZosmfRequestException e) {
             String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);;
+            throw new RuntimeException(errMsg);
         }
     }
 
@@ -189,7 +189,7 @@ public class UssGetExp extends TstZosConnection {
     private static ZosConnection connection;
 
     /**
-     * Main method performs setup and method calls to test UssGet
+     * The main method performs setup and method calls to test UssGet
      *
      * @param args for main not used
      * @author Frank Giordano

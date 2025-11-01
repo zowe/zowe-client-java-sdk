@@ -25,27 +25,23 @@ public class ConsoleCmdResponse {
     /**
      * Key that can be used to retrieve the command response.
      */
-    @JsonProperty("cmd-response-key")
     private final String cmdResponseKey;
 
     /**
      * URL that can be used to retrieve the command response later
      * when the value for cmd-response is empty.
      */
-    @JsonProperty("cmd-response-url")
     private final String cmdResponseUrl;
 
     /**
      * URI that can be used to retrieve the command response later
      * when the value for cmd-response is empty. The URI starts with /zosmf.
      */
-    @JsonProperty("cmd-response-uri")
     private final String cmdResponseUri;
 
     /**
      * Command response text.
      */
-    @JsonProperty("cmd-response")
     private final String cmdResponse;
 
     /**
@@ -53,7 +49,6 @@ public class ConsoleCmdResponse {
      * as N or not specified. If the keyword was detected in the command response,
      * the value is true. Otherwise, the value is false.
      */
-    @JsonProperty("sol-key-detected")
     private final String solKeyDetected;
 
     /**
@@ -72,11 +67,11 @@ public class ConsoleCmdResponse {
             @JsonProperty("cmd-response-uri") final String cmdResponseUri,
             @JsonProperty("cmd-response") final String cmdResponse,
             @JsonProperty("sol-key-detected") final String solKeyDetected) {
-        this.cmdResponseKey = cmdResponseKey;
-        this.cmdResponseUrl = cmdResponseUrl;
-        this.cmdResponseUri = cmdResponseUri;
-        this.cmdResponse = cmdResponse;
-        this.solKeyDetected = solKeyDetected;
+        this.cmdResponseKey = cmdResponseKey == null ? "" : cmdResponseKey;
+        this.cmdResponseUrl = cmdResponseUrl == null ? "" : cmdResponseUrl;
+        this.cmdResponseUri = cmdResponseUri == null ? "" : cmdResponseUri;
+        this.cmdResponse = cmdResponse == null ? "" : cmdResponse;
+        this.solKeyDetected = solKeyDetected == null ? "" : solKeyDetected;
     }
 
     /**

@@ -34,13 +34,11 @@ import java.util.Map;
 public class JobCancel {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobCancel.class);
-
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**
-     * CancelJobs constructor
+     * CancelJobs constructor.
      *
      * @param connection for connection information, see ZosConnection object
      * @author Nikunj Goyal
@@ -105,9 +103,7 @@ public class JobCancel {
      */
     public Response cancelByJob(final Job job, final String version) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job == null, "job is null");
-        final String jobName = job.getJobName().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_NAME_ILLEGAL_MSG));
-        final String jobId = job.getJobId().orElseThrow(() -> new IllegalArgumentException(JobsConstants.JOB_ID_ILLEGAL_MSG));
-        return this.cancelCommon(new JobModifyInputData.Builder(jobName, jobId).version(version).build());
+        return this.cancelCommon(new JobModifyInputData.Builder(job.getJobName(), job.getJobId()).version(version).build());
     }
 
     /**
@@ -119,13 +115,18 @@ public class JobCancel {
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in JobModifyInputData
     public Response cancelCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
+        ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_NULL_MSG);
+        ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_NULL_MSG);
 
         // generate full url request
-        final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE + JobsConstants.FILE_DELIM +
-                modifyInputData.getJobName().get() + JobsConstants.FILE_DELIM + modifyInputData.getJobId().get();
+        final String url = connection.getZosmfUrl() +
+                JobsConstants.RESOURCE +
+                JobsConstants.FILE_DELIM +
+                modifyInputData.getJobName().get() +
+                JobsConstants.FILE_DELIM +
+                modifyInputData.getJobId().get();
 
         // set version to default value if none given
         final String version = modifyInputData.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);

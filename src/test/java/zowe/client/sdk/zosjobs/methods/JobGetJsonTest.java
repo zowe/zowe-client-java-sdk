@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosjobs.methods;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +22,9 @@ import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.zosjobs.JobsConstants;
+import zowe.client.sdk.zosjobs.input.CommonJobInputData;
 import zowe.client.sdk.zosjobs.model.Job;
+import zowe.client.sdk.zosjobs.model.JobStepData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,8 +45,10 @@ public class JobGetJsonTest {
     private GetJsonZosmfRequest mockJsonGetRequest;
     private JobGet getJobs;
     private JSONObject jobJson;
+    private JSONArray stepDataArray;
 
     @BeforeEach
+    @SuppressWarnings("unchecked")
     public void init() {
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
         getJobs = new JobGet(connection);
@@ -63,6 +68,18 @@ public class JobGetJsonTest {
         jsonMap.put("job-correlator", "job-correlator");
         jsonMap.put("phase-name", "phase-name");
         jobJson = new JSONObject(jsonMap);
+
+        // step data initialize
+        final Map<String, String> stepDataMap = new HashMap<>();
+        stepDataMap.put("smfid", "SP21");
+        stepDataMap.put("active", "true");
+        stepDataMap.put("step-number", "1");
+        stepDataMap.put("proc-step-name", "STARTING");
+        stepDataMap.put("step-name", "IEFPROC ");
+        stepDataMap.put("program-name", "BLSQPRMI");
+        final JSONObject stepData = new JSONObject(stepDataMap);
+        stepDataArray = new JSONArray();
+        stepDataArray.add(stepData);
     }
 
     @Test
@@ -106,18 +123,18 @@ public class JobGetJsonTest {
 
         final Job job = getJobs.getById("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
-        assertEquals("jobid", job.getJobId().get());
-        assertEquals("jobname", job.getJobName().get());
-        assertEquals("subsystem", job.getSubSystem().get());
-        assertEquals("owner", job.getOwner().get());
-        assertEquals("status", job.getStatus().get());
-        assertEquals("type", job.getType().get());
-        assertEquals("class", job.getClasss().get());
-        assertEquals("retcode", job.getRetCode().get());
-        assertEquals("url", job.getUrl().get());
-        assertEquals("files-url", job.getFilesUrl().get());
-        assertEquals("job-correlator", job.getJobCorrelator().get());
-        assertEquals("phase-name", job.getPhaseName().get());
+        assertEquals("jobid", job.getJobId());
+        assertEquals("jobname", job.getJobName());
+        assertEquals("subsystem", job.getSubSystem());
+        assertEquals("owner", job.getOwner());
+        assertEquals("status", job.getStatus());
+        assertEquals("type", job.getType());
+        assertEquals("class", job.getClasss());
+        assertEquals("retcode", job.getRetCode());
+        assertEquals("url", job.getUrl());
+        assertEquals("files-url", job.getFilesUrl());
+        assertEquals("job-correlator", job.getJobCorrelator());
+        assertEquals("phase-name", job.getPhaseName());
     }
 
     @Test
@@ -135,7 +152,148 @@ public class JobGetJsonTest {
 
         final Job job = getJobs.getById("1");
         assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
-        assertEquals("job", job.getJobId().get());
+        assertEquals("job", job.getJobId());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void tstJobGetJsonStatusWithOutStepDataAndSomeEmptyValuesSuccess() throws ZosmfRequestException {
+        final JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put("retcode", "null");
+        jsonResponse.put("jobname", "BLSJPRMI");
+        jsonResponse.put("status", "ACTIVE");
+        jsonResponse.put("step-data", null);
+        jsonResponse.put("owner", "IBMUSER");
+        jsonResponse.put("subsystem", "JES2");
+        jsonResponse.put("phase", 20);
+
+        final Response response = new Response(jsonResponse, 200, "success");
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(response);
+
+        final Job job = getJobs.getStatus("BLSJPRMI", "STC00052");
+
+        // Validate URL built correctly (no step-data param for getStatus)
+        assertEquals("https://1:1/zosmf/restjobs/jobs/BLSJPRMI/STC00052?step-data=Y", getJobs.getUrl());
+
+        // Core job fields
+        assertEquals("BLSJPRMI", job.getJobName());
+        assertEquals("", job.getJobId());
+        assertEquals("ACTIVE", job.getStatus());
+        assertEquals("", job.getType());
+        assertEquals("", job.getClasss());
+        assertEquals("IBMUSER", job.getOwner());
+        assertEquals("JES2", job.getSubSystem());
+        assertEquals("", job.getJobCorrelator());
+        assertEquals("", job.getPhaseName());
+        assertEquals("null", job.getRetCode());
+
+        // URLs and timing fields
+        assertEquals("", job.getUrl());
+        assertEquals("", job.getFilesUrl());
+        assertEquals("", job.getExecSystem());
+        assertEquals("", job.getExecMember());
+        assertEquals("", job.getExecSubmitted());
+        assertEquals("", job.getExecStarted());
+        assertEquals("", job.getExecEnded());
+
+        // Step data validation
+        assertNotNull(job.getStepData());
+        assertEquals(0, job.getStepData().length);
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void tstJobGetJsonStatusWithStepDataSuccess() throws ZosmfRequestException {
+        final JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put("retcode", "null");
+        jsonResponse.put("jobname", "BLSJPRMI");
+        jsonResponse.put("status", "ACTIVE");
+        jsonResponse.put("job-correlator", "S0000052SY1.....CE35BDE8.......:");
+        jsonResponse.put("class", "STC");
+        jsonResponse.put("type", "STC");
+        jsonResponse.put("jobid", "STC00052");
+        jsonResponse.put("url", "https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A");
+        jsonResponse.put("phase-name", "Job is on the hard copy queue");
+        jsonResponse.put("step-data", stepDataArray);
+        jsonResponse.put("owner", "IBMUSER");
+        jsonResponse.put("subsystem", "JES2");
+        jsonResponse.put("files-url", "https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A/files");
+        jsonResponse.put("phase", 20);
+        jsonResponse.put("exec-system", "SY1");
+        jsonResponse.put("exec-member", "SY1");
+        jsonResponse.put("exec-submitted", "2018-11-03T09:05:15.000Z");
+        jsonResponse.put("exec-started", "2018-11-03T09:05:18.010Z");
+        jsonResponse.put("exec-ended", "2018-11-03T09:05:25.332Z");
+
+        final Response response = new Response(jsonResponse, 200, "success");
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(response);
+
+        final Job job = getJobs.getStatus("BLSJPRMI", "STC00052");
+
+        // Validate URL built correctly (no step-data param for getStatus)
+        assertEquals("https://1:1/zosmf/restjobs/jobs/BLSJPRMI/STC00052?step-data=Y", getJobs.getUrl());
+
+        // Core job fields
+        assertEquals("BLSJPRMI", job.getJobName());
+        assertEquals("STC00052", job.getJobId());
+        assertEquals("ACTIVE", job.getStatus());
+        assertEquals("STC", job.getType());
+        assertEquals("STC", job.getClasss());
+        assertEquals("IBMUSER", job.getOwner());
+        assertEquals("JES2", job.getSubSystem());
+        assertEquals("S0000052SY1.....CE35BDE8.......:", job.getJobCorrelator());
+        assertEquals("Job is on the hard copy queue", job.getPhaseName());
+        assertEquals("null", job.getRetCode());
+
+        // URLs and timing fields
+        assertEquals("https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A", job.getUrl());
+        assertEquals("https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A/files", job.getFilesUrl());
+        assertEquals("SY1", job.getExecSystem());
+        assertEquals("SY1", job.getExecMember());
+        assertEquals("2018-11-03T09:05:15.000Z", job.getExecSubmitted());
+        assertEquals("2018-11-03T09:05:18.010Z", job.getExecStarted());
+        assertEquals("2018-11-03T09:05:25.332Z", job.getExecEnded());
+
+        // Step data validation
+        assertNotNull(job.getStepData());
+        assertEquals(1, job.getStepData().length);
+        assertEquals("SP21", job.getStepData()[0].getSmfid());
+        assertTrue(job.getStepData()[0].isActive());
+        assertEquals(1L, job.getStepData()[0].getStepNumber());
+        assertEquals("STARTING", job.getStepData()[0].getProcStepName());
+        assertEquals("IEFPROC ", job.getStepData()[0].getStepName());
+        assertEquals("BLSQPRMI", job.getStepData()[0].getProgramName());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void tstJobGetJsonStatusWithStepDataFlagTrue() throws ZosmfRequestException {
+        final JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put("jobname", "BLSJPRMI");
+        jsonResponse.put("jobid", "STC00052");
+        jsonResponse.put("status", "ACTIVE");
+        jsonResponse.put("step-data", stepDataArray);
+
+        final Response response = new Response(jsonResponse, 200, "success");
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(response);
+
+        final CommonJobInputData input = new CommonJobInputData("STC00052", "BLSJPRMI", true);
+        final Job job = getJobs.getStatusCommon(input);
+
+        assertEquals("https://1:1/zosmf/restjobs/jobs/BLSJPRMI/STC00052?step-data=Y", getJobs.getUrl());
+        assertEquals("BLSJPRMI", job.getJobName());
+        assertEquals("STC00052", job.getJobId());
+        assertEquals("ACTIVE", job.getStatus());
+
+        // Step data validation
+        assertNotNull(job.getStepData());
+        assertEquals(1, job.getStepData().length);
+        assertEquals("SP21", job.getStepData()[0].getSmfid());
+        assertTrue(job.getStepData()[0].isActive());
+        assertEquals(1L, job.getStepData()[0].getStepNumber());
+        assertEquals("STARTING", job.getStepData()[0].getProcStepName());
+        assertEquals("IEFPROC ", job.getStepData()[0].getStepName());
+        assertEquals("BLSQPRMI", job.getStepData()[0].getProgramName());
     }
 
     @Test
@@ -152,7 +310,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonSpoolContentByIdJobIdNullExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getSpoolContent("jobName", null, 1);
+            getJobs.getSpoolContent("jobName", null, 1L);
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
@@ -163,7 +321,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonSpoolContentByIdJobNameNullExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getSpoolContent(null, "1", 1);
+            getJobs.getSpoolContent(null, "1", 1L);
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
@@ -174,7 +332,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonSpoolContentByIdSpoolIdNegativeNumberExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getSpoolContent("jobName", "1", -11);
+            getJobs.getSpoolContent("jobName", "1", -11L);
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
@@ -185,7 +343,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonSpoolContentByIdSpoolIdZeroExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getSpoolContent("jobName", "1", 0);
+            getJobs.getSpoolContent("jobName", "1", 0L);
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
@@ -196,11 +354,15 @@ public class JobGetJsonTest {
     public void tstJobGetJsonStatusForJobNoParamsExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getStatusByJob(new Job.Builder().build());
-        } catch (IllegalArgumentException e) {
+            getJobs.getStatusByJob(new Job(null, null, null, null, null,
+                    null, null, null, null, null,
+                    null, null, null, null,
+                    null, null, null, null,
+                    null, null));
+        } catch (IllegalStateException e) {
             errorMsg = e.getMessage();
         }
-        assertEquals(JobsConstants.JOB_ID_ILLEGAL_MSG, errorMsg);
+        assertEquals(JobsConstants.JOB_NAME_ILLEGAL_MSG, errorMsg);
     }
 
     @Test
@@ -208,28 +370,128 @@ public class JobGetJsonTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(jobJson, 200, "success"));
 
-        final Job job = getJobs.getStatusByJob(new Job.Builder().jobId("1").jobName("jobName").build());
+        final Job job = getJobs.getStatusByJob(new Job("1", "jobName", null, null, null,
+                null, null, null, null, null,
+                null, null, null, null,
+                null, null, null, null,
+                null, null));
         assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/1?step-data=Y", getJobs.getUrl());
-        assertEquals("jobid", job.getJobId().get());
-        assertEquals("jobname", job.getJobName().get());
-        assertEquals("subsystem", job.getSubSystem().get());
-        assertEquals("owner", job.getOwner().get());
-        assertEquals("status", job.getStatus().get());
-        assertEquals("type", job.getType().get());
-        assertEquals("class", job.getClasss().get());
-        assertEquals("retcode", job.getRetCode().get());
-        assertEquals("url", job.getUrl().get());
-        assertEquals("files-url", job.getFilesUrl().get());
-        assertEquals("job-correlator", job.getJobCorrelator().get());
-        assertEquals("phase-name", job.getPhaseName().get());
+        assertEquals("jobid", job.getJobId());
+        assertEquals("jobname", job.getJobName());
+        assertEquals("subsystem", job.getSubSystem());
+        assertEquals("owner", job.getOwner());
+        assertEquals("status", job.getStatus());
+        assertEquals("type", job.getType());
+        assertEquals("class", job.getClasss());
+        assertEquals("retcode", job.getRetCode());
+        assertEquals("url", job.getUrl());
+        assertEquals("files-url", job.getFilesUrl());
+        assertEquals("job-correlator", job.getJobCorrelator());
+        assertEquals("phase-name", job.getPhaseName());
+    }
+
+    @Test
+    public void tstDeserializeFullJobJsonWithTwoStepDataEntriesSuccess() throws Exception {
+        final String jsonString =
+                "{"
+                        + "\"retcode\": \"null\","
+                        + "\"jobname\": \"BLSJPRMI\","
+                        + "\"status\": \"ACTIVE\","
+                        + "\"job-correlator\": \"S0000052SY1.....CE35BDE8.......:\","
+                        + "\"class\": \"STC\","
+                        + "\"type\": \"STC\","
+                        + "\"jobid\": \"STC00052\","
+                        + "\"url\": \"https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A\","
+                        + "\"phase-name\": \"Job is on the hard copy queue\","
+                        + "\"step-data\": ["
+                        + "  {"
+                        + "    \"smfid\": \"SP21\","
+                        + "    \"active\": true,"
+                        + "    \"step-number\": 1,"
+                        + "    \"proc-step-name\": \"STARTING\","
+                        + "    \"step-name\": \"IEFPROC \","
+                        + "    \"program-name\": \"BLSQPRMI\""
+                        + "  },"
+                        + "  {"
+                        + "    \"smfid\": \"SP22\","
+                        + "    \"active\": false,"
+                        + "    \"step-number\": 2,"
+                        + "    \"proc-step-name\": \"ENDING\","
+                        + "    \"step-name\": \"IEFPROC2\","
+                        + "    \"program-name\": \"IEFBR14\""
+                        + "  }"
+                        + "],"
+                        + "\"owner\": \"IBMUSER\","
+                        + "\"subsystem\": \"JES2\","
+                        + "\"files-url\": \"https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A/files\","
+                        + "\"phase\": 20,"
+                        + "\"exec-system\": \"SY1\","
+                        + "\"exec-member\": \"SY1\","
+                        + "\"exec-submitted\": \"2018-11-03T09:05:15.000Z\","
+                        + "\"exec-started\": \"2018-11-03T09:05:18.010Z\","
+                        + "\"exec-ended\": \"2018-11-03T09:05:25.332Z\""
+                        + "}";
+
+        // Deserialize JSON into Job using Jackson
+        ObjectMapper mapper = new ObjectMapper();
+        Job job = mapper.readValue(jsonString, Job.class);
+
+        // Validate core fields
+        assertEquals("BLSJPRMI", job.getJobName());
+        assertEquals("STC00052", job.getJobId());
+        assertEquals("ACTIVE", job.getStatus());
+        assertEquals("STC", job.getType());
+        assertEquals("STC", job.getClasss());
+        assertEquals("IBMUSER", job.getOwner());
+        assertEquals("JES2", job.getSubSystem());
+        assertEquals("null", job.getRetCode());
+        assertEquals("S0000052SY1.....CE35BDE8.......:", job.getJobCorrelator());
+        assertEquals("Job is on the hard copy queue", job.getPhaseName());
+        assertEquals(20L, job.getPhase());
+
+        // Validate execution timing fields
+        assertEquals("SY1", job.getExecSystem());
+        assertEquals("SY1", job.getExecMember());
+        assertEquals("2018-11-03T09:05:15.000Z", job.getExecSubmitted());
+        assertEquals("2018-11-03T09:05:18.010Z", job.getExecStarted());
+        assertEquals("2018-11-03T09:05:25.332Z", job.getExecEnded());
+        assertEquals("", job.getReasonNotRunning());
+
+        // Validate URLs
+        assertEquals("https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A", job.getUrl());
+        assertEquals("https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A/files", job.getFilesUrl());
+
+        // Step-data array validation
+        assertNotNull(job.getStepData());
+        assertEquals(2, job.getStepData().length);
+
+        JobStepData first = job.getStepData()[0];
+        assertEquals("SP21", first.getSmfid());
+        assertTrue(first.isActive());
+        assertEquals(1, first.getStepNumber());
+        assertEquals("STARTING", first.getProcStepName());
+        assertEquals("IEFPROC ", first.getStepName());
+        assertEquals("BLSQPRMI", first.getProgramName());
+
+        JobStepData second = job.getStepData()[1];
+        assertEquals("SP22", second.getSmfid());
+        assertFalse(second.isActive());
+        assertEquals(2, second.getStepNumber());
+        assertEquals("ENDING", second.getProcStepName());
+        assertEquals("IEFPROC2", second.getStepName());
+        assertEquals("IEFBR14", second.getProgramName());
     }
 
     @Test
     public void tstJobGetJsonStatusForJobWithJobIdOnlyExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getStatusByJob(new Job.Builder().jobId("1").build());
-        } catch (IllegalArgumentException e) {
+            getJobs.getStatusByJob(new Job("1", null, null, null, null,
+                    null, null, null, null, null,
+                    null, null, null, null,
+                    null, null, null, null,
+                    null, null));
+        } catch (IllegalStateException e) {
             errorMsg = e.getMessage();
         }
         assertEquals(JobsConstants.JOB_NAME_ILLEGAL_MSG, errorMsg);
@@ -239,8 +501,12 @@ public class JobGetJsonTest {
     public void tstJobGetJsonStatusForJobWithJobNameOnlyExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getStatusByJob(new Job.Builder().jobName("jobName").build());
-        } catch (IllegalArgumentException e) {
+            getJobs.getStatusByJob(new Job(null, "jobName", null, null, null,
+                    null, null, null, null, null,
+                    null, null, null, null,
+                    null, null, null, null,
+                    null, null));
+        } catch (IllegalStateException e) {
             errorMsg = e.getMessage();
         }
         assertEquals(JobsConstants.JOB_ID_ILLEGAL_MSG, errorMsg);

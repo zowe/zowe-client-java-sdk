@@ -9,16 +9,13 @@
  */
 package zowe.client.sdk.zosmfinfo.methods;
 
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.parse.JsonParseFactory;
-import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
-import zowe.client.sdk.utility.JsonParserUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfinfo.ZosmfConstants;
 import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
@@ -32,7 +29,6 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
 public class ZosmfSystems {
 
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**
@@ -47,8 +43,9 @@ public class ZosmfSystems {
     }
 
     /**
-     * Alternative ListDefinedSystems constructor with ZoweRequest object. This is mainly used for internal code unit testing
-     * with mockito, and it is not recommended to be used by the larger community.
+     * Alternative ListDefinedSystems constructor with ZoweRequest object.
+     * This is mainly used for internal code unit testing with mockito,
+     * and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private
      *
@@ -81,10 +78,12 @@ public class ZosmfSystems {
         }
         request.setUrl(url);
 
-        final String jsonStr = request.executeRequest().getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no z/osmf info response phrase")).toString();
-        final JSONObject jsonObject = JsonParserUtils.parse(jsonStr);
-        return (ZosmfSystemsResponse) JsonParseFactory.buildParser(ParseType.ZOSMF_SYSTEMS).parseResponse(jsonObject);
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no z/osmf info response phrase"))
+                .toString();
+
+        return JsonUtils.parseResponse(responsePhrase, ZosmfSystemsResponse.class, "get");
     }
 
 }

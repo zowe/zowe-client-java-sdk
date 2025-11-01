@@ -9,20 +9,20 @@
  */
 package zowe.client.sdk.teamconfig.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import zowe.client.sdk.parse.JsonParseFactory;
-import zowe.client.sdk.parse.type.ParseType;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
 import zowe.client.sdk.teamconfig.model.ConfigContainer;
 import zowe.client.sdk.teamconfig.model.Partition;
 import zowe.client.sdk.teamconfig.model.Profile;
 import zowe.client.sdk.teamconfig.types.SectionType;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 
 import java.io.FileReader;
@@ -48,7 +48,7 @@ public class TeamConfigService {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    private Partition getPartition(final String name, final JSONObject jsonObject) {
+    private Partition getPartition(final String name, final JSONObject jsonObject) throws TeamConfigException {
         final Set<String> keyObjs = jsonObject.keySet();
         final List<Profile> profiles = new ArrayList<>();
         Map<String, String> properties = new HashMap<>();
@@ -65,8 +65,11 @@ public class TeamConfigService {
                             (JSONArray) profileTypeJsonObj.get("secure")));
                 }
             } else if ("properties".equalsIgnoreCase(keyObj)) {
-                properties = (Map<String, String>) JsonParseFactory.buildParser(ParseType.PROPS)
-                        .parseResponse(jsonObject.get(keyObj));
+                try {
+                    properties = JsonUtils.parseMap((JSONObject) jsonObject.get(keyObj));
+                } catch (JsonProcessingException e) {
+                    throw new TeamConfigException("Error parsing properties", e);
+                }
             }
         }
         return new Partition(name, properties, profiles);
@@ -117,7 +120,7 @@ public class TeamConfigService {
      * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
-    private ConfigContainer parseJson(final JSONObject jsonObj) {
+    private ConfigContainer parseJson(final JSONObject jsonObj) throws TeamConfigException {
         String schema = null;
         Boolean autoStore = null;
         final List<Profile> profiles = new ArrayList<>();

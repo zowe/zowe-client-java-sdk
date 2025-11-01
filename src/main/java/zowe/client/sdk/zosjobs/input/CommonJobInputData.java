@@ -70,7 +70,10 @@ public class CommonJobInputData {
      * @return jobId value
      */
     public Optional<String> getJobId() {
-        return Optional.ofNullable(jobId);
+        if (jobId == null || jobId.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(jobId);
     }
 
     /**
@@ -79,11 +82,14 @@ public class CommonJobInputData {
      * @return jobName value
      */
     public Optional<String> getJobName() {
-        return Optional.ofNullable(jobName);
+        if (jobName == null || jobName.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(jobName);
     }
 
     /**
-     * Determines whether step data is included in rest call
+     * Determines whether step data is included in the rest call
      *
      * @return boolean true or false
      */

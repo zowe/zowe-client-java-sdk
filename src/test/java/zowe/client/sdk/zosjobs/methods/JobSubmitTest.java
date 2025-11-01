@@ -85,18 +85,18 @@ public class JobSubmitTest {
         final JobSubmit jobSubmit = new JobSubmit(connection, mockPutJsonZosmfRequest);
         final Job job = jobSubmit.submit("TEST.DATASET");
         assertEquals("https://1:1/zosmf/restjobs/jobs", mockPutJsonZosmfRequest.getUrl());
-        assertEquals("jobid", job.getJobId().get());
-        assertEquals("jobname", job.getJobName().get());
-        assertEquals("subsystem", job.getSubSystem().get());
-        assertEquals("owner", job.getOwner().get());
-        assertEquals("status", job.getStatus().get());
-        assertEquals("type", job.getType().get());
-        assertEquals("class", job.getClasss().get());
-        assertEquals("retcode", job.getRetCode().get());
-        assertEquals("url", job.getUrl().get());
-        assertEquals("files-url", job.getFilesUrl().get());
-        assertEquals("job-correlator", job.getJobCorrelator().get());
-        assertEquals("phase-name", job.getPhaseName().get());
+        assertEquals("jobid", job.getJobId());
+        assertEquals("jobname", job.getJobName());
+        assertEquals("subsystem", job.getSubSystem());
+        assertEquals("owner", job.getOwner());
+        assertEquals("status", job.getStatus());
+        assertEquals("type", job.getType());
+        assertEquals("class", job.getClasss());
+        assertEquals("retcode", job.getRetCode());
+        assertEquals("url", job.getUrl());
+        assertEquals("files-url", job.getFilesUrl());
+        assertEquals("job-correlator", job.getJobCorrelator());
+        assertEquals("phase-name", job.getPhaseName());
     }
 
     @Test
@@ -106,18 +106,18 @@ public class JobSubmitTest {
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockPutJsonZosmfRequestToken.getHeaders().toString());
         assertEquals("https://1:1/zosmf/restjobs/jobs", mockPutJsonZosmfRequestToken.getUrl());
-        assertEquals("jobid", job.getJobId().get());
-        assertEquals("jobname", job.getJobName().get());
-        assertEquals("subsystem", job.getSubSystem().get());
-        assertEquals("owner", job.getOwner().get());
-        assertEquals("status", job.getStatus().get());
-        assertEquals("type", job.getType().get());
-        assertEquals("class", job.getClasss().get());
-        assertEquals("retcode", job.getRetCode().get());
-        assertEquals("url", job.getUrl().get());
-        assertEquals("files-url", job.getFilesUrl().get());
-        assertEquals("job-correlator", job.getJobCorrelator().get());
-        assertEquals("phase-name", job.getPhaseName().get());
+        assertEquals("jobid", job.getJobId());
+        assertEquals("jobname", job.getJobName());
+        assertEquals("subsystem", job.getSubSystem());
+        assertEquals("owner", job.getOwner());
+        assertEquals("status", job.getStatus());
+        assertEquals("type", job.getType());
+        assertEquals("class", job.getClasss());
+        assertEquals("retcode", job.getRetCode());
+        assertEquals("url", job.getUrl());
+        assertEquals("files-url", job.getFilesUrl());
+        assertEquals("job-correlator", job.getJobCorrelator());
+        assertEquals("phase-name", job.getPhaseName());
     }
 
     @Test

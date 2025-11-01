@@ -54,7 +54,7 @@ public class ZoweRequestTest {
         } catch (ZosmfRequestException e) {
             errMsg = e.getMessage();
         }
-        final String expectedErrMsg = "http status error code: 300, status text: error, response phrase: null";
+        final String expectedErrMsg = "http status error code: 300, status text: error, response phrase: ";
         assertEquals(expectedErrMsg, errMsg);
     }
 
@@ -131,11 +131,11 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeSslSetupFailure() {
-        ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
+        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
                 "/file/file1", "dummy");
-        String errMsgWindows = "kong.unirest.core.UnirestConfigException: " +
+        final String errMsgWindows = "kong.unirest.core.UnirestConfigException: " +
                 "java.io.FileNotFoundException: \\file\\file1 (The system cannot find the path specified)";
-        String errMsgMacOS = "kong.unirest.core.UnirestConfigException: " +
+        final String errMsgMacOS = "kong.unirest.core.UnirestConfigException: " +
                 "java.io.FileNotFoundException: /file/file1 (No such file or directory)";
         try {
             ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -146,9 +146,9 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeSslSetupCertPasswordFailure() {
-        ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
+        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
                 "src/test/resources/certs/badssl.com-client.p12", "dummy");
-        String errMsg = "java.io.IOException: keystore password was incorrect";
+        final String errMsg = "java.io.IOException: keystore password was incorrect";
         try {
             ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         } catch (Exception e) {
@@ -158,7 +158,7 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeSslSetupCertPasswordSuccess() {
-        ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
+        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
                 "src/test/resources/certs/badssl.com-client.p12", "badssl.com");
         try {
             ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -169,7 +169,7 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeBasicSetupSuccess() {
-        ZosConnection connection = ZosConnectionFactory
+        final ZosConnection connection = ZosConnectionFactory
                 .createBasicConnection("host", "port", "user", "password");
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         assertNotNull(request.getHeaders().get("Authorization"));
@@ -177,7 +177,7 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeTokenSetupSuccess() {
-        ZosConnection connection = ZosConnectionFactory
+        final ZosConnection connection = ZosConnectionFactory
                 .createTokenConnection("host", "port", new Cookie("hello", "world"));
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         assertNull(request.getHeaders().get("Authorization"));
@@ -194,8 +194,7 @@ public class ZoweRequestTest {
 
         // Set URL for a hypothetical endpoint
         final String RESOURCE_PATH = "/resource/endpoint";
-        request.setUrl(connection.getZosmfUrl() +
-                RESOURCE_PATH);
+        request.setUrl(connection.getZosmfUrl() + RESOURCE_PATH);
 
         // Verify the constructed URL contains the base path
         final String expectedUrl = "https://test.host:443/custom/base/path/zosmf/resource/endpoint";
@@ -213,8 +212,7 @@ public class ZoweRequestTest {
 
         // Set URL for a hypothetical endpoint
         final String RESOURCE_PATH = "/resource/endpoint";
-        request.setUrl(connection.getZosmfUrl() +
-                RESOURCE_PATH);
+        request.setUrl(connection.getZosmfUrl() + RESOURCE_PATH);
 
         // Verify the constructed URL does not contain a base path
         final String expectedUrl = "https://test.host:443/zosmf/resource/endpoint";
@@ -233,6 +231,44 @@ public class ZoweRequestTest {
         final String RESOURCE_PATH = "/resource/endpoint";
         assertThrows(IllegalArgumentException.class,
                 () -> request.setUrl(connection.getZosmfUrl() + RESOURCE_PATH));
+    }
+
+    @Test
+    public void tstBuildResponseThrowsOnHttpErrorFailure() {
+        // Create a minimal concrete ZosmfRequest
+        final ZosmfRequest request = new ZosmfRequest(connection) {
+            @Override
+            public Response executeRequest() {
+                return null; // not used in this test
+            }
+
+            @Override
+            public void setBody(Object body) {
+            }
+
+            @Override
+            public void setStandardHeaders() {
+            }
+        };
+
+        // Mock HttpResponse to simulate 404 error
+        @SuppressWarnings("unchecked")
+        HttpResponse<String> httpResponse = Mockito.mock(HttpResponse.class);
+        Mockito.when(httpResponse.getStatus()).thenReturn(404);
+        Mockito.when(httpResponse.getStatusText()).thenReturn("Not Found");
+        Mockito.when(httpResponse.getBody()).thenReturn("Error occurred");
+        Mockito.when(httpResponse.getCookies()).thenReturn(null);
+
+        // Assert that buildResponse throws ZosmfRequestException
+        ZosmfRequestException thrown = assertThrows(
+                ZosmfRequestException.class,
+                () -> request.buildResponse(httpResponse),
+                "Expected buildResponse() to throw ZosmfRequestException"
+        );
+
+        // Verify correct message content
+        assertTrue(thrown.getMessage().contains("http status error code: 404"));
+        assertTrue(thrown.getMessage().contains("Not Found"));
     }
 
 }

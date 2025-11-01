@@ -9,23 +9,26 @@
  */
 package zowe.client.sdk.zosmfinfo.model;
 
-import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * The plugin information structure for the plugin property of the z/OSMF info response
+ * The plugin information structure for the plugin property of the z/OSMF info response.
  *
  * @author Frank Giordano
  * @version 5.0
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ZosmfPlugin {
 
     /**
-     * Plugin version
+     * Plugin version.
      */
     private final String pluginVersion;
 
     /**
-     * Plugin default name
+     * Plugin default name.
      */
     private final String pluginDefaultName;
 
@@ -35,126 +38,61 @@ public class ZosmfPlugin {
     private final String pluginStatus;
 
     /**
-     * ZosmfPluginInfo constructor
+     * ZosmfPlugin constructor.
      *
-     * @param builder Builder Object
-     * @author Frank Giordano
+     * @param pluginVersion     version of the plugin
+     * @param pluginDefaultName default name of the plugin
+     * @param pluginStatus      status of the plugin
      */
-    private ZosmfPlugin(final Builder builder) {
-        this.pluginVersion = builder.pluginVersion;
-        this.pluginDefaultName = builder.pluginDefaultName;
-        this.pluginStatus = builder.pluginStatus;
+    @JsonCreator
+    public ZosmfPlugin(
+            @JsonProperty("pluginVersion") final String pluginVersion,
+            @JsonProperty("pluginDefaultName") final String pluginDefaultName,
+            @JsonProperty("pluginStatus") final String pluginStatus) {
+        this.pluginVersion = pluginVersion == null ? "" : pluginVersion;
+        this.pluginDefaultName = pluginDefaultName == null ? "" : pluginDefaultName;
+        this.pluginStatus = pluginStatus == null ? "" : pluginStatus;
     }
 
     /**
-     * Retrieve pluginDefaultName specified
+     * Retrieve the plugin version specified.
      *
-     * @return pluginDefaultName value
+     * @return plugin version value
      */
-    public Optional<String> getPluginDefaultName() {
-        return Optional.ofNullable(pluginDefaultName);
+    public String getPluginVersion() {
+        return pluginVersion;
     }
 
     /**
-     * Retrieve pluginStatus specified
+     * Retrieve plugin default name specified.
      *
-     * @return pluginStatus value
+     * @return plugin default name value
      */
-    public Optional<String> getPluginStatus() {
-        return Optional.ofNullable(pluginStatus);
+    public String getPluginDefaultName() {
+        return pluginDefaultName;
     }
 
     /**
-     * Retrieve pluginVersion specified
+     * Retrieve plugin status specified.
      *
-     * @return pluginVersion value
+     * @return plugin status value
      */
-    public Optional<String> getPluginVersion() {
-        return Optional.ofNullable(pluginVersion);
+    public String getPluginStatus() {
+        return pluginStatus;
     }
 
     /**
-     * Return string value representing ZosmfPluginInfo object
+     * Return string value representing ZosmfPlugin object.
      *
-     * @return string representation of ZosmfPluginInfo
+     * @return string representation of ZosmfPlugin
      */
     @Override
     public String toString() {
-        return "ZosmfPluginInfo{" +
-                "pluginVersion=" + pluginVersion +
-                ", pluginDefaultName=" + pluginDefaultName +
-                ", pluginStatus=" + pluginStatus +
+        return "ZosmfPlugin{" +
+                "pluginVersion='" + pluginVersion + '\'' +
+                ", pluginDefaultName='" + pluginDefaultName + '\'' +
+                ", pluginStatus='" + pluginStatus + '\'' +
                 '}';
-    }
-
-    /**
-     * Builder class for ZosmfPluginInfo
-     */
-    public static class Builder {
-
-        /**
-         * Plugin version
-         */
-        private String pluginVersion;
-
-        /**
-         * Plugin default name
-         */
-        private String pluginDefaultName;
-
-        /**
-         * Plugin status.
-         */
-        private String pluginStatus;
-
-        /**
-         * Builder constructor
-         */
-        public Builder() {
-        }
-
-        /**
-         * Set pluginDefaultName string value
-         *
-         * @param pluginDefaultName string value
-         * @return Builder this object
-         */
-        public Builder pluginDefaultName(final String pluginDefaultName) {
-            this.pluginDefaultName = pluginDefaultName;
-            return this;
-        }
-
-        /**
-         * Set pluginStatus string value
-         *
-         * @param pluginStatus string value
-         * @return Builder this object
-         */
-        public Builder pluginStatus(final String pluginStatus) {
-            this.pluginStatus = pluginStatus;
-            return this;
-        }
-
-        /**
-         * Set pluginVersion string value
-         *
-         * @param pluginVersion string value
-         * @return Builder this object
-         */
-        public Builder pluginVersion(final String pluginVersion) {
-            this.pluginVersion = pluginVersion;
-            return this;
-        }
-
-        /**
-         * Return ZosmfPluginInfo object based on Builder this object
-         *
-         * @return ZosmfPluginInfo this object
-         */
-        public ZosmfPlugin build() {
-            return new ZosmfPlugin(this);
-        }
-
     }
 
 }

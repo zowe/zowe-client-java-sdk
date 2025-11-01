@@ -57,7 +57,10 @@ public class JobModifyInputData {
      * @return jobId value
      */
     public Optional<String> getJobId() {
-        return Optional.ofNullable(jobId);
+        if (jobId == null || jobId.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(jobId);
     }
 
     /**
@@ -66,7 +69,10 @@ public class JobModifyInputData {
      * @return jobName value
      */
     public Optional<String> getJobName() {
-        return Optional.ofNullable(jobName);
+        if (jobName == null || jobName.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(jobName);
     }
 
     /**

@@ -12,6 +12,7 @@ package zowe.client.sdk.zosfiles.dsn.methods;
 import kong.unirest.core.Cookie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedConstruction;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -20,9 +21,12 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosfiles.dsn.input.DsnDownloadInputData;
+import zowe.client.sdk.zosfiles.dsn.model.Dataset;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -167,16 +171,16 @@ public class DsnGetTest {
     }
 
     @Test
-    public void tstDsnGetSecondaryConstructorWithValidRequestType() {
-        ZosConnection connection = Mockito.mock(ZosConnection.class);
-        ZosmfRequest request = Mockito.mock(GetStreamZosmfRequest.class);
-        DsnGet dsnGet = new DsnGet(connection, request);
+    public void tstDsnGetSecondaryConstructorWithValidRequestTypeSuccess() {
+        final ZosConnection connection = Mockito.mock(ZosConnection.class);
+        final ZosmfRequest request = Mockito.mock(GetStreamZosmfRequest.class);
+        final DsnGet dsnGet = new DsnGet(connection, request);
         assertNotNull(dsnGet);
     }
 
     @Test
-    public void tstDsnGetSecondaryConstructorWithNullConnection() {
-        ZosmfRequest request = Mockito.mock(GetStreamZosmfRequest.class);
+    public void tstDsnGetSecondaryConstructorWithNullConnectionFailure() {
+        final ZosmfRequest request = Mockito.mock(GetStreamZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new DsnGet(null, request)
@@ -185,8 +189,8 @@ public class DsnGetTest {
     }
 
     @Test
-    public void tstDsnGetSecondaryConstructorWithNullRequest() {
-        ZosConnection connection = Mockito.mock(ZosConnection.class);
+    public void tstDsnGetSecondaryConstructorWithNullRequestFailure() {
+        final ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new DsnGet(connection, null)
@@ -195,9 +199,9 @@ public class DsnGetTest {
     }
 
     @Test
-    public void tstDsnGetSecondaryConstructorWithInvalidRequestType() {
-        ZosConnection connection = Mockito.mock(ZosConnection.class);
-        ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a GetZosmfRequest
+    public void tstDsnGetSecondaryConstructorWithInvalidRequestTypeFailure() {
+        final ZosConnection connection = Mockito.mock(ZosConnection.class);
+        final ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a GetZosmfRequest
         IllegalStateException exception = assertThrows(
                 IllegalStateException.class,
                 () -> new DsnGet(connection, request)
@@ -206,19 +210,66 @@ public class DsnGetTest {
     }
 
     @Test
-    public void tstDsnGetPrimaryConstructorWithValidConnection() {
-        ZosConnection connection = Mockito.mock(ZosConnection.class);
-        DsnGet dsnGet = new DsnGet(connection);
+    public void tstDsnGetPrimaryConstructorWithValidConnectionSuccess() {
+        final ZosConnection connection = Mockito.mock(ZosConnection.class);
+        final DsnGet dsnGet = new DsnGet(connection);
         assertNotNull(dsnGet);
     }
 
     @Test
-    public void tstDsnGetPrimaryConstructorWithNullConnection() {
+    public void tstDsnGetPrimaryConstructorWithNullConnectionFailure() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new DsnGet(null)
         );
         assertEquals("connection is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstGetDsnInfoSuccess() throws Exception {
+        final Dataset mockDataset = new Dataset("TEST.DATA.SET", "", "", "", "",
+                "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "");
+        final List<Dataset> mockList = Collections.singletonList(mockDataset);
+
+        try (MockedConstruction<DsnList> mocked = Mockito.mockConstruction(DsnList.class,
+                (mock, context) ->
+                        Mockito.when(mock.getDatasets(Mockito.anyString(), Mockito.any()))
+                                .thenReturn(mockList))) {
+
+            DsnGet dsnGet = new DsnGet(connection);
+            Dataset result = dsnGet.getDsnInfo("TEST.DATA.SET");
+
+            assertNotNull(result);
+            assertEquals("TEST.DATA.SET", result.getDsname());
+            assertEquals(1, mocked.constructed().size());
+        }
+    }
+
+    @Test
+    public void tstGetDsnInfoDatasetNotFoundFailure() {
+        try (MockedConstruction<DsnList> ignored = Mockito.mockConstruction(DsnList.class,
+                (mock, context) -> Mockito.when(mock.getDatasets(Mockito.anyString(), Mockito.any()))
+                        .thenReturn(Collections.emptyList()))) {
+
+            final DsnGet dsnGet = new DsnGet(connection);
+            ZosmfRequestException exception = assertThrows(ZosmfRequestException.class,
+                    () -> dsnGet.getDsnInfo("TEST.DATA.SET"));
+            assertEquals("dataset not found", exception.getMessage());
+        }
+    }
+
+    @Test
+    public void tstGetDsnInfoInvalidDatasetNameFailure() {
+        final DsnGet dsnGet = new DsnGet(connection);
+        assertThrows(IllegalArgumentException.class, () -> dsnGet.getDsnInfo("BADNAME"));
+    }
+
+    @Test
+    public void tstGetDsnInfoBlankDatasetNameFailure() {
+        final DsnGet dsnGet = new DsnGet(connection);
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> dsnGet.getDsnInfo(" "));
+        assertEquals("dataSetName not specified", ex.getMessage());
     }
 
 }
