@@ -45,7 +45,6 @@ public class JobGetJsonTest {
     private GetJsonZosmfRequest mockJsonGetRequest;
     private JobGet getJobs;
     private JSONObject jobJson;
-    private JSONObject stepData;
     private JSONArray stepDataArray;
 
     @BeforeEach
@@ -78,7 +77,7 @@ public class JobGetJsonTest {
         stepDataMap.put("proc-step-name", "STARTING");
         stepDataMap.put("step-name", "IEFPROC ");
         stepDataMap.put("program-name", "BLSQPRMI");
-        stepData = new JSONObject(stepDataMap);
+        final JSONObject stepData = new JSONObject(stepDataMap);
         stepDataArray = new JSONArray();
         stepDataArray.add(stepData);
     }
