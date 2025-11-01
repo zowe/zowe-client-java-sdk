@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosjobs.methods;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +24,7 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.CommonJobInputData;
 import zowe.client.sdk.zosjobs.model.Job;
+import zowe.client.sdk.zosjobs.model.JobStepData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -387,6 +389,98 @@ public class JobGetJsonTest {
         assertEquals("files-url", job.getFilesUrl());
         assertEquals("job-correlator", job.getJobCorrelator());
         assertEquals("phase-name", job.getPhaseName());
+    }
+
+    @Test
+    public void tstDeserializeFullJobJsonWithTwoStepDataEntries() throws Exception {
+        final String jsonString =
+                "{"
+                        + "\"retcode\": \"null\","
+                        + "\"jobname\": \"BLSJPRMI\","
+                        + "\"status\": \"ACTIVE\","
+                        + "\"job-correlator\": \"S0000052SY1.....CE35BDE8.......:\","
+                        + "\"class\": \"STC\","
+                        + "\"type\": \"STC\","
+                        + "\"jobid\": \"STC00052\","
+                        + "\"url\": \"https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A\","
+                        + "\"phase-name\": \"Job is on the hard copy queue\","
+                        + "\"step-data\": ["
+                        + "  {"
+                        + "    \"smfid\": \"SP21\","
+                        + "    \"active\": true,"
+                        + "    \"step-number\": 1,"
+                        + "    \"proc-step-name\": \"STARTING\","
+                        + "    \"step-name\": \"IEFPROC \","
+                        + "    \"program-name\": \"BLSQPRMI\""
+                        + "  },"
+                        + "  {"
+                        + "    \"smfid\": \"SP22\","
+                        + "    \"active\": false,"
+                        + "    \"step-number\": 2,"
+                        + "    \"proc-step-name\": \"ENDING\","
+                        + "    \"step-name\": \"IEFPROC2\","
+                        + "    \"program-name\": \"IEFBR14\""
+                        + "  }"
+                        + "],"
+                        + "\"owner\": \"IBMUSER\","
+                        + "\"subsystem\": \"JES2\","
+                        + "\"files-url\": \"https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A/files\","
+                        + "\"phase\": 20,"
+                        + "\"exec-system\": \"SY1\","
+                        + "\"exec-member\": \"SY1\","
+                        + "\"exec-submitted\": \"2018-11-03T09:05:15.000Z\","
+                        + "\"exec-started\": \"2018-11-03T09:05:18.010Z\","
+                        + "\"exec-ended\": \"2018-11-03T09:05:25.332Z\""
+                        + "}";
+
+        // Deserialize JSON into Job using Jackson
+        ObjectMapper mapper = new ObjectMapper();
+        Job job = mapper.readValue(jsonString, Job.class);
+
+        // Validate core fields
+        assertEquals("BLSJPRMI", job.getJobName());
+        assertEquals("STC00052", job.getJobId());
+        assertEquals("ACTIVE", job.getStatus());
+        assertEquals("STC", job.getType());
+        assertEquals("STC", job.getClasss());
+        assertEquals("IBMUSER", job.getOwner());
+        assertEquals("JES2", job.getSubSystem());
+        assertEquals("null", job.getRetCode());
+        assertEquals("S0000052SY1.....CE35BDE8.......:", job.getJobCorrelator());
+        assertEquals("Job is on the hard copy queue", job.getPhaseName());
+        assertEquals(20L, job.getPhase());
+
+        // Validate execution timing fields
+        assertEquals("SY1", job.getExecSystem());
+        assertEquals("SY1", job.getExecMember());
+        assertEquals("2018-11-03T09:05:15.000Z", job.getExecSubmitted());
+        assertEquals("2018-11-03T09:05:18.010Z", job.getExecStarted());
+        assertEquals("2018-11-03T09:05:25.332Z", job.getExecEnded());
+        assertEquals("", job.getReasonNotRunning());
+
+        // Validate URLs
+        assertEquals("https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A", job.getUrl());
+        assertEquals("https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A/files", job.getFilesUrl());
+
+        // Step-data array validation
+        assertNotNull(job.getStepData());
+        assertEquals(2, job.getStepData().length);
+
+        JobStepData first = job.getStepData()[0];
+        assertEquals("SP21", first.getSmfid());
+        assertTrue(first.isActive());
+        assertEquals(1, first.getStepNumber());
+        assertEquals("STARTING", first.getProcStepName());
+        assertEquals("IEFPROC ", first.getStepName());
+        assertEquals("BLSQPRMI", first.getProgramName());
+
+        JobStepData second = job.getStepData()[1];
+        assertEquals("SP22", second.getSmfid());
+        assertFalse(second.isActive());
+        assertEquals(2, second.getStepNumber());
+        assertEquals("ENDING", second.getProcStepName());
+        assertEquals("IEFPROC2", second.getStepName());
+        assertEquals("IEFBR14", second.getProgramName());
     }
 
     @Test
