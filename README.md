@@ -27,10 +27,8 @@ Issues worked on documenting the main feature set provided can be viewed within 
   
 In addition to the MVP issues noted, see the following other milestone releases and their release notes:    
             
-    [version 4](https://github.com/zowe/zowe-client-java-sdk/pull/363)
-    [version 5](https://github.com/zowe/zowe-client-java-sdk/issues/414)
-    [version 5.1.0](https://github.com/zowe/zowe-client-java-sdk/issues/429)
-    [version 5.2.0](https://github.com/zowe/zowe-client-java-sdk/issues/432)
+[version 4](https://github.com/zowe/zowe-client-java-sdk/pull/363)  [version 5](https://github.com/zowe/zowe-client-java-sdk/issues/414) 
+[version 5.1.0](https://github.com/zowe/zowe-client-java-sdk/issues/429)  [version 5.2.0](https://github.com/zowe/zowe-client-java-sdk/issues/432)
   
 ## Prebuilt API Services     
     
