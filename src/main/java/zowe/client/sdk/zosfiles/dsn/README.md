@@ -58,7 +58,7 @@ public class DsnCopyExp extends TstZosConnection {
      * - partition dataset member to partition dataset non-existing member
      * - partition dataset member to sequential dataset
      * <p>
-     * This example sends a false value for copyAllMembers parameter in copy method to indicate we
+     * This example sends a false value for copyAllMembers parameter in the copy method to indicate we
      * are not copying all members in a partition dataset to another.
      *
      * @param connection      ZosConnection object
@@ -394,7 +394,7 @@ public class DsnDeleteExp extends TstZosConnection {
     private static ZosConnection connection;
 
     /**
-     * Main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * DeleteDataset functionality. Calls DeleteDataset example methods.
      *
      * @param args for main not used

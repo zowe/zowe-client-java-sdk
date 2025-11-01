@@ -16,7 +16,6 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosmfinfo.methods.ZosmfStatus;
-import zowe.client.sdk.zosmfinfo.model.ZosmfPlugin;
 import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
 
 import java.util.Arrays;
@@ -48,7 +47,7 @@ public class ZosmfStatusExp extends TstZosConnection {
             throw new RuntimeException(errMsg);
         }
         System.out.println(zosmfInfoResponse.toString());
-        Arrays.stream(zosmfInfoResponse.getZosmfPluginsInfo().orElse(new ZosmfPlugin[0])).forEach(System.out::println);
+        Arrays.stream(zosmfInfoResponse.getZosmfPluginsInfo()).forEach(System.out::println);
     }
 
 }

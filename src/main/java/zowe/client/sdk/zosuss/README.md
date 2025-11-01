@@ -12,7 +12,6 @@ package zowe.client.sdk.examples.zosuss;
 import zowe.client.sdk.core.SshConnection;
 import zowe.client.sdk.zosuss.exception.UssCmdException;
 import zowe.client.sdk.zosuss.method.UssCmd;
-import zowe.client.sdk.zosuss.method.UssSshCmd;
 
 /**
  * Class example to test USS command functionality via UssCmd class.

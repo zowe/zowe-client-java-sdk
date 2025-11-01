@@ -55,8 +55,8 @@ public class ZosLogExp extends TstZosConnection {
             String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
             throw new RuntimeException(errMsg);
         }
-        zosLogReply.getItemLst().forEach(i -> {
-            String msg = i.getTime().orElse("n\\a") + " " + i.getMessage().orElse("n\\a");
+        zosLogReply.getItems().forEach(i -> {
+            String msg = i.getTime() + " " + i.getMessage();
             System.out.println(msg);
         });
 
@@ -73,8 +73,8 @@ public class ZosLogExp extends TstZosConnection {
             String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
             throw new RuntimeException(errMsg);
         }
-        zosLogReply.getItemLst().forEach(i -> {
-            String msg = i.getTime().orElse("n\\a") + " " + i.getMessage().orElse("n\\a");
+        zosLogReply.getItems().forEach(i -> {
+            String msg = i.getTime() + " " + i.getMessage();
             System.out.println(msg);
         });
     }

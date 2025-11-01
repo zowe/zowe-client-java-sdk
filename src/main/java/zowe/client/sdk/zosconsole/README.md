@@ -18,15 +18,8 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.input.ConsoleCmdInputData;
 import zowe.client.sdk.zosconsole.method.ConsoleCmd;
-import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
-import zowe.client.sdk.zosconsole.response.ConsoleResponse;
+import zowe.client.sdk.zosconsole.response.ConsoleCmdResponse;
 
-/**
- * Class example to showcase mvs console command functionality via IssueConsole class.
- *
- * @author Frank Giordano
- * @version 5.0
- */
 public class IssueConsoleExp extends TstZosConnection {
 
     /**
@@ -43,15 +36,15 @@ public class IssueConsoleExp extends TstZosConnection {
     }
 
     /**
-     * Issue IssueConsole issueCommand method which will execute the given simple mvs console command
-     * without a IssueConsoleInputData object.
+     * Issue issueCommand method for ConsoleCmd which will execute the given simple mvs console command
+     * without an IssueConsoleInputData object.
      *
      * @param connection for connection information, see ZosConnection object
      * @param cmd        mvs command to execute
      * @author Frank Giordano
      */
     public static void issueCommand(ZosConnection connection, String cmd) {
-        ConsoleGetResponse response;
+        ConsoleCmdResponse response;
         try {
             ConsoleCmd consoleCmd = new ConsoleCmd(connection);
             response = consoleCmd.issueCommand(cmd);
@@ -60,18 +53,18 @@ public class IssueConsoleExp extends TstZosConnection {
             throw new RuntimeException(errMsg);
         }
 
-        System.out.println(response.getCommandResponse().orElse("no command response"));
+        System.out.println(response.getCmdResponse());
     }
 
     /**
-     * Issue IssueConsole issueCommandCommon method which will execute the given mvs console command.
+     * Issue issueCommandCommon method for ConsoleCmd which will execute the given mvs console command.
      *
      * @param connection for connection information, see ZosConnection object
      * @param cmd        mvs command to execute
      * @author Frank Giordano
      */
     public static void issueCommandCommon(ZosConnection connection, String cmd) {
-        ConsoleGetResponse response;
+        ConsoleCmdResponse response;
         try {
             ConsoleCmd consoleCmd = new ConsoleCmd(connection);
             ConsoleCmdInputData consoleInputData = new ConsoleCmdInputData(cmd);
@@ -82,7 +75,7 @@ public class IssueConsoleExp extends TstZosConnection {
             throw new RuntimeException(errMsg);
         }
 
-        System.out.println(response.getCommandResponse().orElse("no command response"));
+        System.out.println(response.getCmdResponse());
     }
 
 }
