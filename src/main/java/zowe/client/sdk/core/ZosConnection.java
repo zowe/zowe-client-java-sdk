@@ -308,7 +308,7 @@ public class ZosConnection {
                 ", zosmfPort='" + zosmfPort + '\'' +
                 ", authType=" + authType +
                 ", user='" + user + '\'' +
-                ", password='" + password + '\'' +
+                ", password='*****'" + '\'' +
                 ", token=" + token +
                 ", certFilePath='" + certFilePath + '\'' +
                 ", certPassword='" + certPassword + '\'' +
