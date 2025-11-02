@@ -20,7 +20,7 @@ import java.util.Optional;
  * @author Frank Giordano
  * @version 5.0
  */
-public class ZosConnection {
+public final class ZosConnection {
 
     /**
      * Host name pointing to the backend z/OS instance

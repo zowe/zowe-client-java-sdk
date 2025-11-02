@@ -27,9 +27,9 @@ class ZosConnectionTest {
 
     @Test
     void tstBasicConnectionsEqualSuccess() {
-        ZosConnection conn1 = ZosConnectionFactory
+        final ZosConnection conn1 = ZosConnectionFactory
                 .createBasicConnection("host1", "443", "userA", "passA");
-        ZosConnection conn2 = ZosConnectionFactory
+        final ZosConnection conn2 = ZosConnectionFactory
                 .createBasicConnection("host1", "443", "userA", "passA");
 
         assertEquals(conn1, conn2);
@@ -38,9 +38,9 @@ class ZosConnectionTest {
 
     @Test
     void tstBasicConnectionsNotEqualWithDifferentUserSuccess() {
-        ZosConnection conn1 = ZosConnectionFactory
+        final ZosConnection conn1 = ZosConnectionFactory
                 .createBasicConnection("host1", "443", "userA", "passA");
-        ZosConnection conn2 = ZosConnectionFactory
+        final ZosConnection conn2 = ZosConnectionFactory
                 .createBasicConnection("host1", "443", "userB", "passA");
 
         assertNotEquals(conn1, conn2);
@@ -48,9 +48,9 @@ class ZosConnectionTest {
 
     @Test
     void tstBasicConnectionsNotEqualWithDifferentHost() {
-        ZosConnection conn1 = ZosConnectionFactory
+        final ZosConnection conn1 = ZosConnectionFactory
                 .createBasicConnection("host1", "443", "userA", "passA");
-        ZosConnection conn2 = ZosConnectionFactory
+        final ZosConnection conn2 = ZosConnectionFactory
                 .createBasicConnection("host2", "443", "userA", "passA");
 
         assertNotEquals(conn1, conn2);
@@ -59,9 +59,9 @@ class ZosConnectionTest {
     @Test
     void tstTokenConnectionsEqualSuccess() {
         Cookie cookie = new Cookie("LtpaToken2", "abcdef");
-        ZosConnection conn1 = ZosConnectionFactory
+        final ZosConnection conn1 = ZosConnectionFactory
                 .createTokenConnection("host1", "443", cookie);
-        ZosConnection conn2 = ZosConnectionFactory
+        final ZosConnection conn2 = ZosConnectionFactory
                 .createTokenConnection("host1", "443", new Cookie("LtpaToken2", "abcdef"));
 
         assertEquals(conn1, conn2);
@@ -73,17 +73,19 @@ class ZosConnectionTest {
         Cookie cookie1 = new Cookie("LtpaToken2", "abcdef");
         Cookie cookie2 = new Cookie("LtpaToken2", "xyz123");
 
-        ZosConnection conn1 = ZosConnectionFactory.createTokenConnection("host1", "443", cookie1);
-        ZosConnection conn2 = ZosConnectionFactory.createTokenConnection("host1", "443", cookie2);
+        final ZosConnection conn1 = ZosConnectionFactory.
+                createTokenConnection("host1", "443", cookie1);
+        final ZosConnection conn2 = ZosConnectionFactory.
+                createTokenConnection("host1", "443", cookie2);
 
         assertNotEquals(conn1, conn2);
     }
 
     @Test
     void tstSslConnectionsEqualSuccess() {
-        ZosConnection conn1 = ZosConnectionFactory
+        final ZosConnection conn1 = ZosConnectionFactory
                 .createSslConnection("host1", "443", "/certs/certA.p12", "certpass");
-        ZosConnection conn2 = ZosConnectionFactory
+        final ZosConnection conn2 = ZosConnectionFactory
                 .createSslConnection("host1", "443", "/certs/certA.p12", "certpass");
 
         assertEquals(conn1, conn2);
@@ -92,9 +94,9 @@ class ZosConnectionTest {
 
     @Test
     void tstSslConnectionsNotEqualWithDifferentCertFileSuccess() {
-        ZosConnection conn1 = ZosConnectionFactory
+        final ZosConnection conn1 = ZosConnectionFactory
                 .createSslConnection("host1", "443", "/certs/certA.p12", "certpass");
-        ZosConnection conn2 = ZosConnectionFactory
+        final ZosConnection conn2 = ZosConnectionFactory
                 .createSslConnection("host1", "443", "/certs/certB.p12", "certpass");
 
         assertNotEquals(conn1, conn2);
@@ -102,10 +104,10 @@ class ZosConnectionTest {
 
     @Test
     void tstDifferentAuthTypesNotEqualSuccess() {
-        ZosConnection basicConn = ZosConnectionFactory
+        final ZosConnection basicConn = ZosConnectionFactory
                 .createBasicConnection("host1", "443", "userA", "passA");
         Cookie cookie = new Cookie("LtpaToken2", "abcdef");
-        ZosConnection tokenConn = ZosConnectionFactory.
+        final ZosConnection tokenConn = ZosConnectionFactory.
                 createTokenConnection("host1", "443", cookie);
 
         assertNotEquals(basicConn, tokenConn);
@@ -113,9 +115,9 @@ class ZosConnectionTest {
 
     @Test
     void tstEqualityIsSymmetricAndConsistentSuccess() {
-        ZosConnection conn1 = ZosConnectionFactory
+        final ZosConnection conn1 = ZosConnectionFactory
                 .createBasicConnection("host1", "443", "userA", "passA");
-        ZosConnection conn2 = ZosConnectionFactory
+        final ZosConnection conn2 = ZosConnectionFactory
                 .createBasicConnection("host1", "443", "userA", "passA");
 
         assertTrue(conn1.equals(conn2) && conn2.equals(conn1));
@@ -128,7 +130,7 @@ class ZosConnectionTest {
 
     @Test
     void tstNotEqualToNullOrDifferentClassSuccess() {
-        ZosConnection conn = ZosConnectionFactory
+        final ZosConnection conn = ZosConnectionFactory
                 .createBasicConnection("host1", "443", "userA", "passA");
 
         assertNotEquals(null, conn);
@@ -137,8 +139,10 @@ class ZosConnectionTest {
 
     @Test
     void testBasicConnectionsEqualSuccess() {
-        ZosConnection conn1 = ZosConnectionFactory.createBasicConnection("host1", "443", "userA", "passA");
-        ZosConnection conn2 = ZosConnectionFactory.createBasicConnection("host1", "443", "userA", "passA");
+        final ZosConnection conn1 = ZosConnectionFactory
+                .createBasicConnection("host1", "443", "userA", "passA");
+        final ZosConnection conn2 = ZosConnectionFactory
+                .createBasicConnection("host1", "443", "userA", "passA");
 
         assertEquals(conn1, conn2);
         assertEquals(conn1.hashCode(), conn2.hashCode());
@@ -146,7 +150,7 @@ class ZosConnectionTest {
 
     @Test
     void tstSettersAndGettersForBasicAuthSuccess() {
-        ZosConnection conn = new ZosConnection("myhost", "1443", AuthType.BASIC);
+        final ZosConnection conn = new ZosConnection("myhost", "1443", AuthType.BASIC);
         conn.setUser("testuser");
         conn.setPassword("testpass");
         conn.setBasePath("/zosmf/api");
@@ -162,7 +166,7 @@ class ZosConnectionTest {
     @Test
     void tstSettersAndGettersForTokenAuthSuccess() {
         Cookie cookie = new Cookie("LtpaToken2", "abc123");
-        ZosConnection conn = new ZosConnection("zoshost", "443", AuthType.TOKEN);
+        final ZosConnection conn = new ZosConnection("zoshost", "443", AuthType.TOKEN);
         conn.setToken(cookie);
         conn.setBasePath("/api/v1");
 
@@ -175,7 +179,7 @@ class ZosConnectionTest {
 
     @Test
     void tstSettersAndGettersForSslAuthSuccess() {
-        ZosConnection conn = new ZosConnection("zosssl", "8443", AuthType.SSL);
+        final ZosConnection conn = new ZosConnection("zosssl", "8443", AuthType.SSL);
         conn.setCertFilePath("/certs/secure.p12");
         conn.setCertPassword("mypassword");
         conn.setBasePath("/zosmf");
@@ -190,7 +194,7 @@ class ZosConnectionTest {
 
     @Test
     void tstToStringIncludesImportantFieldsSuccess() {
-        ZosConnection conn = ZosConnectionFactory
+        final ZosConnection conn = ZosConnectionFactory
                 .createBasicConnection("zos", "443", "user", "pass", "/zosmf");
         String result = conn.toString();
         System.out.println(result);
@@ -203,9 +207,9 @@ class ZosConnectionTest {
 
     @Test
     void tstEqualsIsReflexiveSymmetricAndConsistentSuccess() {
-        ZosConnection conn1 = ZosConnectionFactory
+        final ZosConnection conn1 = ZosConnectionFactory
                 .createBasicConnection("host", "443", "user", "pass");
-        ZosConnection conn2 = ZosConnectionFactory
+        final ZosConnection conn2 = ZosConnectionFactory
                 .createBasicConnection("host", "443", "user", "pass");
 
         assertEquals(conn1, conn1);  // reflexive
@@ -216,14 +220,14 @@ class ZosConnectionTest {
 
     @Test
     void tstNotEqualToDifferentObjectTypeSuccess() {
-        ZosConnection conn = ZosConnectionFactory
+        final ZosConnection conn = ZosConnectionFactory
                 .createBasicConnection("zos", "443", "user", "pass");
         assertNotEquals("string", conn);
     }
 
     @Test
     void testBasePathOptionalBehavior() {
-        ZosConnection conn = ZosConnectionFactory.
+        final ZosConnection conn = ZosConnectionFactory.
                 createBasicConnection("zos", "443", "user", "pass");
         assertNull(conn.getBasePath().orElse(null));
 

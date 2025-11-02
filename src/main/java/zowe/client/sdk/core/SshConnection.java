@@ -17,7 +17,7 @@ import java.util.Objects;
  * @author Frank Giordano
  * @version 5.0
  */
-public class SshConnection {
+public final class SshConnection {
 
     /**
      * Host name pointing to the backend z / OS instance
