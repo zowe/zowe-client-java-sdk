@@ -231,46 +231,89 @@ public class ZosConnection {
     }
 
     /**
-     * Equals method. Use all members for equality except for TOKEN, which is a special case and
-     * uses a subset of members for equality.
+     * Equals method comparing fields based on the authentication type.
+     * <p>
+     * For BASIC authentication: compares host, port, authType, basePath, user, and password.
+     * For TOKEN authentication: compares host, port, authType, basePath, and token value.
+     * For SSL authentication: compares host, port, authType, basePath, certFilePath, and certPassword.
      *
-     * @param obj object
-     * @return true or false
-     * @author Frank Giordano
+     * @param obj object to compare
+     * @return true if equal, false otherwise
      */
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
+
         ZosConnection that = (ZosConnection) obj;
-        if (this.authType == AuthType.TOKEN) {
-            return Objects.equals(host, that.host) &&
-                    Objects.equals(zosmfPort, that.zosmfPort) &&
-                    Objects.equals(user, that.user) &&
-                    Objects.equals(token.getValue(), that.token.getValue()) &&
-                    Objects.equals(basePath, that.basePath);
-        } else {
-            return Objects.equals(host, that.host) &&
-                    Objects.equals(zosmfPort, that.zosmfPort) &&
-                    authType == that.authType &&
-                    Objects.equals(user, that.user) &&
-                    Objects.equals(password, that.password) &&
-                    Objects.equals(certFilePath, that.certFilePath) &&
-                    Objects.equals(certPassword, that.certPassword) &&
-                    Objects.equals(basePath, that.basePath);
+
+        // Common fields compared for all auth types
+        if (!Objects.equals(host, that.host)
+                || !Objects.equals(zosmfPort, that.zosmfPort)
+                || authType != that.authType
+                || !Objects.equals(basePath, that.basePath)) {
+            return false;
+        }
+
+        // Compare based on authType
+        switch (authType) {
+            case BASIC:
+                return Objects.equals(user, that.user)
+                        && Objects.equals(password, that.password);
+            case TOKEN:
+                String thisTokenValue = token != null ? token.getValue() : null;
+                String thatTokenValue = that.token != null ? that.token.getValue() : null;
+                return Objects.equals(thisTokenValue, thatTokenValue);
+            case SSL:
+                return Objects.equals(certFilePath, that.certFilePath)
+                        && Objects.equals(certPassword, that.certPassword);
+            default:
+                return false;
         }
     }
 
     /**
-     * Hashcode method. Use all members for hashing.
+     * Hashcode method consistent with equals().
      *
-     * @return int value
+     * @return int value representing the hash code
      */
     @Override
     public int hashCode() {
-        return Objects.hash(host, zosmfPort, authType, user, password, token,
-                certFilePath, certPassword, basePath);
+        switch (authType) {
+            case BASIC:
+                return Objects.hash(host, zosmfPort, authType, user, password, basePath);
+            case TOKEN:
+                String tokenValue = token != null ? token.getValue() : null;
+                return Objects.hash(host, zosmfPort, authType, tokenValue, basePath);
+            case SSL:
+                return Objects.hash(host, zosmfPort, authType, certFilePath, certPassword, basePath);
+            default:
+                return Objects.hash(host, zosmfPort, authType, basePath);
+        }
+    }
+
+    /**
+     * Return string value representing ZosConnection object
+     *
+     * @return string representation of ZosConnection
+     */
+    @Override
+    public String toString() {
+        return "ZosConnection{" +
+                "host='" + host + '\'' +
+                ", zosmfPort='" + zosmfPort + '\'' +
+                ", authType=" + authType +
+                ", user='" + user + '\'' +
+                ", password='" + password + '\'' +
+                ", token=" + token +
+                ", certFilePath='" + certFilePath + '\'' +
+                ", certPassword='" + certPassword + '\'' +
+                ", basePath='" + basePath + '\'' +
+                '}';
     }
 
 }
