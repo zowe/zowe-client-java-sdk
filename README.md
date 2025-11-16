@@ -249,7 +249,7 @@ Thin JAR (recommended):
         <dependency>
           <groupId>org.zowe.client.java.sdk</groupId>
           <artifactId>zowe-client-java-sdk</artifactId>
-          <version>5.2.1</version>
+          <version>5.2.3</version>
         </dependency>
   
 Fat JAR (with dependencies):
@@ -257,7 +257,7 @@ Fat JAR (with dependencies):
         <dependency>
           <groupId>org.zowe.client.java.sdk</groupId>
           <artifactId>zowe-client-java-sdk</artifactId>
-          <version>5.2.1</version>
+          <version>5.2.3</version>
           <classifier>jar-with-dependencies</classifier>
         </dependency>  
   
@@ -265,7 +265,7 @@ For a Gradle project add the SDK as a dependency by updating your `build.gradle`
 
 Thin JAR (recommended):  
   
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '5.2.1'    
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '5.2.3'    
 
 Fat JAR (with dependencies):  
   
