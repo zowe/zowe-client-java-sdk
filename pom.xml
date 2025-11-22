@@ -11,8 +11,7 @@
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>A SDK that lets you leverage the underlying z/OSMF REST APIs on a z/OS system to build applications
-        that
-        interface with the mainframe.
+        that interface with the mainframe.
     </description>
     <url>https://github.com/zowe/zowe-client-java-sdk</url>
 
