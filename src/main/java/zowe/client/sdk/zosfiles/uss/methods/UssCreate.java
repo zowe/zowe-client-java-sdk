@@ -114,7 +114,7 @@ public class UssCreate {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response createZfs(String fileSystemName) throws ZosmfRequestException {
+    public Response createZfs(final String fileSystemName) throws ZosmfRequestException {
         return createZfsCommon(fileSystemName, new UssCreateZfsInputData.Builder(10).cylsSec(2).timeout(20).build());
     }
 
@@ -127,7 +127,7 @@ public class UssCreate {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response createZfsCommon(String fileSystemName, UssCreateZfsInputData createZfsInputData)
+    public Response createZfsCommon(final String fileSystemName, final UssCreateZfsInputData createZfsInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileSystemName, "fileSystemName");
         ValidateUtils.checkNullParameter(createZfsInputData == null, "createZfsInputData is null");
