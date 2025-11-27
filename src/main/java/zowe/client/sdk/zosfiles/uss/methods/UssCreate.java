@@ -76,7 +76,7 @@ public class UssCreate {
      * Perform UNIX create a file or directory name request driven by UssCreateInputData object settings.
      *
      * @param targetPath      the name of the file or directory you are going to create
-     * @param createInputData to create response parameters, see UssCreateInputData object
+     * @param createInputData input create parameters, see UssCreateInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
@@ -122,7 +122,7 @@ public class UssCreate {
      * Create a ZFS request driven by the UssCreateZfsInputData object settings.
      *
      * @param fileSystemName     ZFS file system name
-     * @param createZfsInputData create ZFS response parameters, see UssCreateZfsInputData object
+     * @param createZfsInputData ZFS create input parameters, see UssCreateZfsInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
