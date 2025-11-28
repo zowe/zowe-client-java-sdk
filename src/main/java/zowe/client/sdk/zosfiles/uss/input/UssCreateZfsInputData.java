@@ -98,15 +98,6 @@ public class UssCreateZfsInputData {
     private final Integer timeout;
 
     /**
-     * Indicates the target system name (nickname) for this request, where the system name (nickname)
-     * is defined in the local system Systems table. The target host system must support single-sign-on by
-     * using either an LTPA token or a valid X-IBM-Target-System-User and X-IBM-Target-System-Password is
-     * provided for the target system. If the target system is the local system, this is ignored
-     * and has no effect.
-     */
-    private final String system;
-
-    /**
      * UssCreateZfsInputData constructor
      *
      * @param builder UssCreateZfsInputData.Builder object
@@ -123,7 +114,6 @@ public class UssCreateZfsInputData {
         this.dataClass = builder.dataClass;
         this.volumes = builder.volumes;
         this.timeout = builder.timeout;
-        this.system = builder.system;
     }
 
     /**
@@ -217,15 +207,6 @@ public class UssCreateZfsInputData {
     }
 
     /**
-     * Retrieve a system specified
-     *
-     * @return system value
-     */
-    public Optional<String> getSystem() {
-        return Optional.ofNullable(system);
-    }
-
-    /**
      * Return string value representing UssCreateZfsInputData object
      *
      * @return string representation of UssCreateZfsInputData
@@ -243,7 +224,6 @@ public class UssCreateZfsInputData {
                 ", dataClass=" + dataClass +
                 ", volumes=" + volumes +
                 ", timeout=" + timeout +
-                ", system=" + system +
                 '}';
     }
 
@@ -322,15 +302,6 @@ public class UssCreateZfsInputData {
          * Default value: 20. This property is not required.
          */
         private Integer timeout;
-
-        /**
-         * Indicates the target system name (nickname) for this request, where the system name (nickname)
-         * is defined in the local system Systems table. The target host system must support single-sign-on by
-         * using either an LTPA token or a valid X-IBM-Target-System-User and X-IBM-Target-System-Password is
-         * provided for the target system. If the target system is the local system, this is ignored
-         * and has no effect.
-         */
-        private String system;
 
         /**
          * Builder constructor
@@ -439,17 +410,6 @@ public class UssCreateZfsInputData {
          */
         public Builder timeout(final Integer timeout) {
             this.timeout = timeout;
-            return this;
-        }
-
-        /**
-         * Set system string value
-         *
-         * @param system string value
-         * @return Builder this object
-         */
-        public Builder system(final String system) {
-            this.system = system;
             return this;
         }
 
