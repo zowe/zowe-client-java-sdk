@@ -132,7 +132,8 @@ public class UssCreate {
         ValidateUtils.checkIllegalParameter(fileSystemName, "fileSystemName");
         ValidateUtils.checkNullParameter(createZfsInputData == null, "createZfsInputData is null");
 
-        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(fileSystemName));
         createZfsInputData.getTimeout().ifPresent(timeout -> url.append("?timeout=").append(timeout));
 
@@ -158,7 +159,7 @@ public class UssCreate {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
-        
+
         request.setUrl(url.toString());
         request.setBody(new JSONObject(createZfsMap).toString());
 
