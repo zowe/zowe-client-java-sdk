@@ -158,7 +158,7 @@ public class ZosConnectionFactory {
     }
 
     /**
-     * Creates a ZosConnection with SSL certificate authentication with isSecure
+     * Creates a ZosConnection with SSL certificate authentication
      *
      * @param host         Host address of the z/OSMF server
      * @param port         Port number of the z/OSMF server
@@ -176,7 +176,7 @@ public class ZosConnectionFactory {
     }
 
     /**
-     * Creates a ZosConnection with SSL certificate authentication with isSecure
+     * Creates a ZosConnection with SSL certificate authentication
      *
      * @param host         Host address of the z/OSMF server
      * @param port         Port number of the z/OSMF server
