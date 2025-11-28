@@ -160,7 +160,6 @@ public class UssCreate {
         }
 
         final Map<String, String> headers = new HashMap<>();
-        createZfsInputData.getSystem().ifPresent(system -> headers.put("X-IBM-Target-System", system));
 
         request.setHeaders(headers);
         request.setUrl(url.toString());
