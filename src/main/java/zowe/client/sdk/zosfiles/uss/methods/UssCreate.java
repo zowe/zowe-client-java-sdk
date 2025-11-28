@@ -158,10 +158,7 @@ public class UssCreate {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
-
-        final Map<String, String> headers = new HashMap<>();
-
-        request.setHeaders(headers);
+        
         request.setUrl(url.toString());
         request.setBody(new JSONObject(createZfsMap).toString());
 
