@@ -37,6 +37,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # 5. Build with Maven Wrapper (verbose for debugging)
+      # 5. Build with Maven Wrapper (for verbose for debugging add -X)
       - name: Build with Maven Wrapper
-        run: ./mvnw clean package -X
+        run: ./mvnw clean package 
+
