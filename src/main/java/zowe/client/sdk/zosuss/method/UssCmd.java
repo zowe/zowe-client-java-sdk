@@ -74,7 +74,7 @@ public class UssCmd {
     static class ManagedSession implements AutoCloseable {
         private final Session session;
 
-        ManagedSession(SshConnection connection, int timeout) throws JSchException {
+        ManagedSession(final SshConnection connection, final int timeout) throws JSchException {
             this.session = new JSch().getSession(connection.getUser(), connection.getHost(), connection.getPort());
             session.setPassword(connection.getPassword());
             final Properties config = new Properties();
@@ -102,7 +102,8 @@ public class UssCmd {
     static class ManagedChannel implements AutoCloseable {
         private final ChannelExec channel;
 
-        ManagedChannel(Session session, String command, OutputStream responseStream) throws JSchException {
+        ManagedChannel(final Session session, final String command, final OutputStream responseStream)
+                throws JSchException {
             this.channel = (ChannelExec) session.openChannel("exec");
             channel.setCommand(command);
             channel.setOutputStream(responseStream);
