@@ -229,7 +229,19 @@ public final class ZosConnection {
      * @author Shabaz Kowthalam
      */
     public String getZosmfUrl() {
-        return "https://" + host + ":" + zosmfPort + (basePath != null ? basePath : "") + "/zosmf";
+        String path;
+        if (basePath == null || basePath.isEmpty()) {
+            path = "/zosmf";
+        } else {
+            path = getNormalizedPath();
+        }
+        return "https://" + host + ":" + zosmfPort + path;
+    }
+
+    private String getNormalizedPath() {
+        String normalized = basePath.startsWith("/") ? basePath : "/" + basePath;
+        normalized = normalized.endsWith("/") ? normalized.substring(0, normalized.length() - 1) : normalized;
+        return normalized + "/zosmf";
     }
 
     /**
