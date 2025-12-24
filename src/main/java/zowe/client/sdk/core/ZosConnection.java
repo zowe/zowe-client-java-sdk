@@ -308,10 +308,10 @@ public final class ZosConnection {
                 ", zosmfPort='" + zosmfPort + '\'' +
                 ", authType=" + authType +
                 ", user='" + user + '\'' +
-                ", password='*****'" + '\'' +
-                ", token=" + token +
+                ", password='*****'" +
+                ", token=='*****'" +
                 ", certFilePath='" + certFilePath + '\'' +
-                ", certPassword='" + certPassword + '\'' +
+                ", certPassword=='*****'" +
                 ", basePath='" + basePath + '\'' +
                 '}';
     }
