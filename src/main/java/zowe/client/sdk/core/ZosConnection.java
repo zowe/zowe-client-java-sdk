@@ -113,10 +113,12 @@ public final class ZosConnection {
 
     /**
      * Set user value
+     * <p>
+     * This method's access level is private-package
      *
      * @param user string value
      */
-    public void setUser(String user) {
+    void setUser(String user) {
         this.user = user;
     }
 
