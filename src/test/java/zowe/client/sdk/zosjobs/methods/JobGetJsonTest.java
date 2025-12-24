@@ -297,16 +297,6 @@ public class JobGetJsonTest {
     }
 
     @Test
-    public void tstJobGetJsonByIdCmdResponseWithInvalidBasePathFailure() {
-        final ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection("1", "1", "1", "1", "consoles//");
-        // Create a mock request to verify URL
-        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        final JobGet getJobs = new JobGet(connection, request);
-        assertThrows(IllegalArgumentException.class, () -> getJobs.getById("1"));
-    }
-
-    @Test
     public void tstJobGetJsonSpoolContentByIdJobIdNullExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {

@@ -210,7 +210,17 @@ public final class ZosConnection {
      * @param basePath string value
      */
     void setBasePath(String basePath) {
-        this.basePath = basePath;
+        if (basePath == null || basePath.isBlank())
+            this.basePath = basePath;
+        else {
+            this.basePath = getNormalizedPath(basePath);
+        }
+    }
+
+    private String getNormalizedPath(String basePath) {
+        String normalizedPath = basePath.startsWith("/") ? basePath : "/" + basePath;
+        return normalizedPath.endsWith("/") ?
+                normalizedPath.substring(0, normalizedPath.length() - 1) : normalizedPath;
     }
 
     /**
@@ -229,19 +239,7 @@ public final class ZosConnection {
      * @author Shabaz Kowthalam
      */
     public String getZosmfUrl() {
-        String path;
-        if (basePath == null || basePath.isEmpty()) {
-            path = "/zosmf";
-        } else {
-            path = getNormalizedPath();
-        }
-        return "https://" + host + ":" + zosmfPort + path;
-    }
-
-    private String getNormalizedPath() {
-        String normalized = basePath.startsWith("/") ? basePath : "/" + basePath;
-        normalized = normalized.endsWith("/") ? normalized.substring(0, normalized.length() - 1) : normalized;
-        return normalized + "/zosmf";
+        return "https://" + host + ":" + zosmfPort + (basePath != null ? basePath : "") + "/zosmf";
     }
 
     /**
