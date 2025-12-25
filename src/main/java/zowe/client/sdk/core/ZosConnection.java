@@ -218,7 +218,8 @@ public final class ZosConnection {
     }
 
     private String getNormalizedPath(String basePath) {
-        String normalizedPath = basePath.startsWith("/") ? basePath : "/" + basePath;
+        String normalizedPath = basePath.replace('\\', '/');
+        normalizedPath = normalizedPath.startsWith("/") ? normalizedPath : "/" + normalizedPath;
         return normalizedPath.endsWith("/") ?
                 normalizedPath.substring(0, normalizedPath.length() - 1) : normalizedPath;
     }
