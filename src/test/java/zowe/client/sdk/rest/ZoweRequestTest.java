@@ -220,7 +220,7 @@ public class ZoweRequestTest {
     }
 
     @Test
-    public void tstUrlConstructionWithInvalidBasePathFailure() {
+    public void tstUrlConstructionWithInvalidHostNameFailure() {
         // Create a connection and set an empty base path
         final ZosConnection connection = ZosConnectionFactory
                 .createBasicConnection("test.host:123foo", "443", "user", "password", "frank///");
