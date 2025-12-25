@@ -91,16 +91,6 @@ public class ConsoleCmdTest {
     }
 
     @Test
-    public void tstIssueConsoleIssueCommandCmdResponseWithInvalidBasePathFailure() {
-        final ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection("1", "1", "1", "1", "consoles//");
-        // Create a mock request to verify URL
-        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        final ConsoleCmd issueCommand = new ConsoleCmd(connection, request);
-        assertThrows(IllegalArgumentException.class, () -> issueCommand.issueCommand("command"));
-    }
-
-    @Test
     public void tstIssueConsoleIssueCommandCmdResponseWithEmptyStringSuccess() throws ZosmfRequestException {
         final Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "");

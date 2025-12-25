@@ -204,9 +204,18 @@ public class ZosConnectionFactoryTest {
                 "test", "zosmfPort", "user", "password", "/custom/path");
         final ZosConnection zc2 = ZosConnectionFactory.createBasicConnection(
                 "test", "zosmfPort", "user", "password", "/custom/path");
+        final ZosConnection zc3 = ZosConnectionFactory.createBasicConnection(
+                "test", "zosmfPort", "user", "password", "custom/path/");
+        final ZosConnection zc4 = ZosConnectionFactory.createBasicConnection(
+                "test", "zosmfPort", "user", "password", "custom/path");
+        final ZosConnection zc5 = ZosConnectionFactory.createBasicConnection(
+                "test", "zosmfPort", "user", "password", "\\custom\\path");
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
+        zcs.put(zc3, 3);
+        zcs.put(zc4, 4);
+        zcs.put(zc5, 5);
         assertEquals(1, zcs.size());
     }
 

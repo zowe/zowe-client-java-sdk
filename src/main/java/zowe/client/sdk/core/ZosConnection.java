@@ -115,10 +115,12 @@ public final class ZosConnection {
 
     /**
      * Set user value
+     * <p>
+     * This method's access level is private-package
      *
      * @param user string value
      */
-    public void setUser(String user) {
+    void setUser(String user) {
         this.user = user;
     }
 
@@ -210,7 +212,18 @@ public final class ZosConnection {
      * @param basePath string value
      */
     void setBasePath(String basePath) {
-        this.basePath = basePath;
+        if (basePath == null || basePath.isBlank())
+            this.basePath = basePath;
+        else {
+            this.basePath = getNormalizedPath(basePath);
+        }
+    }
+
+    private String getNormalizedPath(String basePath) {
+        String normalizedPath = basePath.replace('\\', '/');
+        normalizedPath = normalizedPath.startsWith("/") ? normalizedPath : "/" + normalizedPath;
+        return normalizedPath.endsWith("/") ?
+                normalizedPath.substring(0, normalizedPath.length() - 1) : normalizedPath;
     }
 
     /**
@@ -310,10 +323,10 @@ public final class ZosConnection {
                 ", zosmfPort='" + zosmfPort + '\'' +
                 ", authType=" + authType +
                 ", user='" + user + '\'' +
-                ", password='*****'" + '\'' +
-                ", token=" + token +
+                ", password='*****'" +
+                ", token=='*****'" +
                 ", certFilePath='" + certFilePath + '\'' +
-                ", certPassword='" + certPassword + '\'' +
+                ", certPassword=='*****'" +
                 ", basePath='" + basePath + '\'' +
                 '}';
     }
