@@ -323,10 +323,10 @@ public final class ZosConnection {
                 ", zosmfPort='" + zosmfPort + '\'' +
                 ", authType=" + authType +
                 ", user='" + user + '\'' +
-                ", password='*****'" +
-                ", token=='*****'" +
+                ", password='" + ((password == null || password.isEmpty()) ? "" : "*****") + '\'' +
+                ", token='" + ((token == null) ? "" : "*****") + '\'' +
                 ", certFilePath='" + certFilePath + '\'' +
-                ", certPassword=='*****'" +
+                ", certPassword='" + ((certPassword == null || certPassword.isEmpty()) ? "" : "*****") + '\'' +
                 ", basePath='" + basePath + '\'' +
                 '}';
     }

@@ -102,7 +102,7 @@ public final class SshConnection {
                 "host='" + host + '\'' +
                 ", port='" + port + '\'' +
                 ", user='" + user + '\'' +
-                ", password='*****'" +
+                ", password='" + ((password == null || password.isEmpty()) ? "" : "*****") + '\'' +
                 '}';
     }
 

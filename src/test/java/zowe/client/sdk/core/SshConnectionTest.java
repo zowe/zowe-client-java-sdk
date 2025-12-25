@@ -101,4 +101,13 @@ public class SshConnectionTest {
         assertEquals(1, zcs.size());
     }
 
+    @Test
+    void tstSshConnectionsMaskPasswordSuccess() {
+        final SshConnection conn = new SshConnection("test", 1, "user", "password");
+        String result = conn.toString();
+        System.out.println(result);
+
+        assertTrue(result.contains("password='*****'"));
+    }
+
 }

@@ -57,6 +57,18 @@ class ZosConnectionTest {
     }
 
     @Test
+    void tstBasicConnectionsMaskPasswordAndOthersEmptySuccess() {
+        final ZosConnection conn = ZosConnectionFactory
+                .createBasicConnection("zos", "443", "user", "pass", "/zosmf");
+        String result = conn.toString();
+        System.out.println(result);
+
+        assertTrue(result.contains("password='*****'"));
+        assertTrue(result.contains("certPassword=''"));
+        assertTrue(result.contains("token=''"));
+    }
+
+    @Test
     void tstTokenConnectionsEqualSuccess() {
         Cookie cookie = new Cookie("LtpaToken2", "abcdef");
         final ZosConnection conn1 = ZosConnectionFactory
@@ -66,6 +78,19 @@ class ZosConnectionTest {
 
         assertEquals(conn1, conn2);
         assertEquals(conn1.hashCode(), conn2.hashCode());
+    }
+
+    @Test
+    void tstTokenConnectionsMaskTokenAndOtherPasswordsEmptySuccess() {
+        Cookie cookie = new Cookie("LtpaToken2", "abcdef");
+        final ZosConnection conn = ZosConnectionFactory
+                .createTokenConnection("host1", "443", cookie);
+        String result = conn.toString();
+        System.out.println(result);
+
+        assertTrue(result.contains("token='*****'"));
+        assertTrue(result.contains("password=''"));
+        assertTrue(result.contains("certPassword=''"));
     }
 
     @Test
@@ -100,6 +125,18 @@ class ZosConnectionTest {
                 .createSslConnection("host1", "443", "/certs/certB.p12", "certpass");
 
         assertNotEquals(conn1, conn2);
+    }
+
+    @Test
+    void tstSslConnectionsMaskCertPasswordAndOthersEmptySuccess() {
+        final ZosConnection conn = ZosConnectionFactory
+                .createSslConnection("host1", "443", "/certs/certA.p12", "certpass");
+        String result = conn.toString();
+        System.out.println(result);
+
+        assertTrue(result.contains("certPassword='*****'"));
+        assertTrue(result.contains("password=''"));
+        assertTrue(result.contains("token=''"));
     }
 
     @Test
