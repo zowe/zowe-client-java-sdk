@@ -220,6 +220,20 @@ public class ZoweRequestTest {
     }
 
     @Test
+    public void tstUrlConstructionWithInvalidBasePathFailure() {
+        // Create a connection and set an empty base path
+        final ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("test.host:123foo", "443", "user", "password", "frank///");
+        // Create a mock request to verify URL
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
+
+        // Set URL for a hypothetical endpoint
+        final String RESOURCE_PATH = "/resource/endpoint";
+        assertThrows(IllegalArgumentException.class,
+                () -> request.setUrl(connection.getZosmfUrl() + RESOURCE_PATH));
+    }
+
+    @Test
     public void tstBuildResponseThrowsOnHttpErrorFailure() {
         // Create a minimal concrete ZosmfRequest
         final ZosmfRequest request = new ZosmfRequest(connection) {

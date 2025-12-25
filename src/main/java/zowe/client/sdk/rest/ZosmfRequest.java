@@ -330,6 +330,9 @@ public abstract class ZosmfRequest {
      */
     public void setUrl(final String url) throws IllegalArgumentException {
         ValidateUtils.checkIllegalParameter(url, "url");
+        if (isUrlNotValid(url)) {
+            throw new IllegalArgumentException("url is invalid");
+        }
         this.url = url;
         LOG.debug(this.url);
     }
@@ -341,6 +344,22 @@ public abstract class ZosmfRequest {
      */
     public String getUrl() {
         return url;
+    }
+
+    /**
+     * Check if the url is a valid http(s) url
+     *
+     * @param url string value
+     * @return boolean true or false
+     * @author Frank Giordano
+     */
+    private static boolean isUrlNotValid(final String url) {
+        try {
+            new URL(url).toURI();
+            return false;
+        } catch (URISyntaxException | MalformedURLException exception) {
+            return true;
+        }
     }
 
     /**
