@@ -328,13 +328,17 @@ public abstract class ZosmfRequest {
      * @throws IllegalArgumentException error setting valid url string
      * @author Frank Giordano
      */
-    public void setUrl(final String url) throws IllegalArgumentException {
+    public void setUrl(final String url) {
         ValidateUtils.checkIllegalParameter(url, "url");
-        if (isUrlNotValid(url)) {
-            throw new IllegalArgumentException("url is invalid");
+
+        try {
+            new URL(url).toURI();
+        } catch (MalformedURLException | URISyntaxException e) {
+            throw new IllegalArgumentException("invalid url: " + url, e);
         }
+
         this.url = url;
-        LOG.debug(this.url);
+        LOG.debug("url set to {}", this.url);
     }
 
     /**
@@ -344,22 +348,6 @@ public abstract class ZosmfRequest {
      */
     public String getUrl() {
         return url;
-    }
-
-    /**
-     * Check if the url is a valid http(s) url
-     *
-     * @param url string value
-     * @return boolean true or false
-     * @author Frank Giordano
-     */
-    private static boolean isUrlNotValid(final String url) {
-        try {
-            new URL(url).toURI();
-            return false;
-        } catch (URISyntaxException | MalformedURLException exception) {
-            return true;
-        }
     }
 
     /**
