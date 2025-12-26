@@ -23,7 +23,7 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Class containing unit test for ZoweRequest.
+ * Class containing unit tests for ZoweRequest.
  *
  * @author Frank Giordano
  * @version 5.0
@@ -223,14 +223,11 @@ public class ZoweRequestTest {
     public void tstUrlConstructionWithInvalidHostNameFailure() {
         // Create a connection and set an empty base path
         final ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection("test.host:123foo", "443", "user", "password", "frank///");
+                .createBasicConnection("test.host:123foo", "443", "user", "password");
         // Create a mock request to verify URL
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
 
-        // Set URL for a hypothetical endpoint
-        final String RESOURCE_PATH = "/resource/endpoint";
-        assertThrows(IllegalArgumentException.class,
-                () -> request.setUrl(connection.getZosmfUrl() + RESOURCE_PATH));
+        assertThrows(IllegalArgumentException.class, () -> request.setUrl(connection.getZosmfUrl()));
     }
 
     @Test
