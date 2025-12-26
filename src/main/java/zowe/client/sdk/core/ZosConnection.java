@@ -221,11 +221,10 @@ public final class ZosConnection {
      * @param basePath string value
      */
     void setBasePath(String basePath) {
-        if (basePath == null || basePath.isBlank())
-            this.basePath = basePath;
-        else {
+        if (basePath == null)
+            this.basePath = null;
+        else
             this.basePath = getNormalizedPath(basePath);
-        }
     }
 
     private String getNormalizedPath(String basePath) {

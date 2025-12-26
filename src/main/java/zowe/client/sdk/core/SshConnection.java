@@ -50,10 +50,10 @@ public final class SshConnection {
      */
     public SshConnection(final String host, final int port, final String user, final String password) {
         this.host = host;
-        this.port = port;
         if (port < 1 || port > 65535) {
             throw new IllegalArgumentException("invalid port number: " + port);
         }
+        this.port = port;
         this.user = user;
         this.password = password;
     }
@@ -103,7 +103,7 @@ public final class SshConnection {
     public String toString() {
         return "SshConnection{" +
                 "host='" + ((host == null) ? "" : host) + '\'' +
-                ", port='" + (port == 0 ? "" : port) + '\'' +
+                ", port='" + port + '\'' +
                 ", user='" + ((user == null) ? "" : user) + '\'' +
                 ", password='" + ((password == null || password.isEmpty()) ? "" : "*****") + '\'' +
                 '}';
