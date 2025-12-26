@@ -104,9 +104,15 @@ class ZosConnectionTest {
         String result = conn.toString();
         System.out.println(result);
 
-        assertTrue(result.contains("token='*****'"));
+        assertTrue(result.contains("host='host1'"));
+        assertTrue(result.contains("zosmfPort='443'"));
+        assertTrue(result.contains("authType=TOKEN"));
+        assertTrue(result.contains("user=''"));
         assertTrue(result.contains("password=''"));
+        assertTrue(result.contains("token='*****'"));
+        assertTrue(result.contains("certFilePath=''"));
         assertTrue(result.contains("certPassword=''"));
+        assertTrue(result.contains("basePath=''"));
     }
 
     @Test
@@ -170,9 +176,15 @@ class ZosConnectionTest {
         String result = conn.toString();
         System.out.println(result);
 
-        assertTrue(result.contains("certPassword='*****'"));
+        assertTrue(result.contains("host='host1'"));
+        assertTrue(result.contains("zosmfPort='443'"));
+        assertTrue(result.contains("authType=SSL"));
+        assertTrue(result.contains("user=''"));
         assertTrue(result.contains("password=''"));
         assertTrue(result.contains("token=''"));
+        assertTrue(result.contains("certFilePath='/certs/certA.p12'"));
+        assertTrue(result.contains("certPassword='*****'"));
+        assertTrue(result.contains("basePath=''"));
     }
 
     @Test
@@ -290,10 +302,15 @@ class ZosConnectionTest {
         String result = conn.toString();
         System.out.println(result);
 
-        assertTrue(result.contains("zos"));
-        assertTrue(result.contains("443"));
-        assertTrue(result.contains("BASIC"));
-        assertTrue(result.contains("/zosmf"));
+        assertTrue(result.contains("host='zos'"));
+        assertTrue(result.contains("zosmfPort='443'"));
+        assertTrue(result.contains("authType=BASIC"));
+        assertTrue(result.contains("basePath='/zosmf'"));
+        assertTrue(result.contains("user='user'"));
+        assertTrue(result.contains("password='*****'"));
+        assertTrue(result.contains("token=''"));
+        assertTrue(result.contains("certFilePath=''"));
+        assertTrue(result.contains("certPassword=''"));
     }
 
     @Test

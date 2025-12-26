@@ -319,15 +319,15 @@ public final class ZosConnection {
     @Override
     public String toString() {
         return "ZosConnection{" +
-                "host='" + host + '\'' +
-                ", zosmfPort='" + zosmfPort + '\'' +
+                "host='" + ((host == null) ? "" : host) + '\'' +
+                ", zosmfPort='" + ((zosmfPort == null) ? "" : zosmfPort) + '\'' +
                 ", authType=" + authType +
-                ", user='" + user + '\'' +
+                ", user='" + ((user == null) ? "" : user) + '\'' +
                 ", password='" + ((password == null || password.isEmpty()) ? "" : "*****") + '\'' +
                 ", token='" + ((token == null) ? "" : "*****") + '\'' +
-                ", certFilePath='" + certFilePath + '\'' +
+                ", certFilePath='" + ((certFilePath == null) ? "" : certFilePath) + '\'' +
                 ", certPassword='" + ((certPassword == null || certPassword.isEmpty()) ? "" : "*****") + '\'' +
-                ", basePath='" + basePath + '\'' +
+                ", basePath='" + ((basePath == null) ? "" : basePath) + '\'' +
                 '}';
     }
 

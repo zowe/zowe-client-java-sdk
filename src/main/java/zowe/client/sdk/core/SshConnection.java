@@ -99,9 +99,9 @@ public final class SshConnection {
     @Override
     public String toString() {
         return "SshConnection{" +
-                "host='" + host + '\'' +
-                ", port='" + port + '\'' +
-                ", user='" + user + '\'' +
+                "host='" + ((host == null) ? "" : host) + '\'' +
+                ", port='" + (port == 0 ? "" : port) + '\'' +
+                ", user='" + ((user == null) ? "" : user) + '\'' +
                 ", password='" + ((password == null || password.isEmpty()) ? "" : "*****") + '\'' +
                 '}';
     }
