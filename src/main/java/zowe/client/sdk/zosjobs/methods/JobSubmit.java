@@ -86,11 +86,14 @@ public class JobSubmit {
     public Job submitByLocalFile(final String jclPath) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jclPath, "jclPath");
 
+        // Standardize the path to use forward slashes for cross-platform compatibility
+        final String standardizedPath = jclPath.replace('\\', '/');
+
         final String jclContent;
         try {
-            jclContent = Files.readString(Paths.get(jclPath));
+            jclContent = Files.readString(Paths.get(standardizedPath));
         } catch (NoSuchFileException e) {
-            throw new ZosmfRequestException("local file provided was not found: " + jclPath);
+            throw new ZosmfRequestException("local file provided was not found: " + standardizedPath);
         } catch (IOException e) {
             throw new ZosmfRequestException(e.getMessage());
         }
