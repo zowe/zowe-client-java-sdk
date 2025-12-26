@@ -231,6 +231,17 @@ public class ZoweRequestTest {
     }
 
     @Test
+    public void tstUrlConstructionWithInvalidBasePathFailure() {
+        // Create a connection and set an invalid base path
+        final ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("test.host", "443", "user", "password", "/test^/");
+        // Create a mock request to verify URL
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
+
+        assertThrows(IllegalArgumentException.class, () -> request.setUrl(connection.getZosmfUrl()));
+    }
+
+    @Test
     public void tstBuildResponseThrowsOnHttpErrorFailure() {
         // Create a minimal concrete ZosmfRequest
         final ZosmfRequest request = new ZosmfRequest(connection) {
