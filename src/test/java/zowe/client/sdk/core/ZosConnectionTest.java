@@ -69,6 +69,22 @@ class ZosConnectionTest {
     }
 
     @Test
+    void tstBasicConnectionBasePathNormalizationSuccess() {
+        final ZosConnection conn = ZosConnectionFactory
+                .createBasicConnection("host1", "443", "user", "pass", "zosmf/api/");
+
+        assertEquals("/zosmf/api", conn.getBasePath().orElse(null));
+    }
+
+    @Test
+    void tstBasicConnectionBasePathBackslashNormalizationSuccess() {
+        final ZosConnection conn = ZosConnectionFactory
+                .createBasicConnection("host1", "443", "user", "pass", "\\zosmf\\api\\");
+
+        assertEquals("/zosmf/api", conn.getBasePath().orElse(null));
+    }
+
+    @Test
     void tstTokenConnectionsEqualSuccess() {
         Cookie cookie = new Cookie("LtpaToken2", "abcdef");
         final ZosConnection conn1 = ZosConnectionFactory
@@ -107,6 +123,26 @@ class ZosConnectionTest {
     }
 
     @Test
+    void tstTokenConnectionBasePathNormalizationSuccess() {
+        Cookie cookie = new Cookie("LtpaToken2", "abc123");
+
+        final ZosConnection conn = ZosConnectionFactory
+                .createTokenConnection("host1", "443", cookie, "zosmf/api/");
+
+        assertEquals("/zosmf/api", conn.getBasePath().orElse(null));
+    }
+
+    @Test
+    void tstTokenConnectionBasePathBackslashNormalizationSuccess() {
+        Cookie cookie = new Cookie("LtpaToken2", "abc123");
+
+        final ZosConnection conn = ZosConnectionFactory
+                .createTokenConnection("host1", "443", cookie, "\\zosmf\\api\\");
+
+        assertEquals("/zosmf/api", conn.getBasePath().orElse(null));
+    }
+
+    @Test
     void tstSslConnectionsEqualSuccess() {
         final ZosConnection conn1 = ZosConnectionFactory
                 .createSslConnection("host1", "443", "/certs/certA.p12", "certpass");
@@ -137,6 +173,24 @@ class ZosConnectionTest {
         assertTrue(result.contains("certPassword='*****'"));
         assertTrue(result.contains("password=''"));
         assertTrue(result.contains("token=''"));
+    }
+
+    @Test
+    void tstSslConnectionBasePathNormalizationSuccess() {
+        final ZosConnection conn = ZosConnectionFactory
+                .createSslConnection("host1", "443",
+                        "/certs/cert.p12", "certpass", "zosmf/api/");
+
+        assertEquals("/zosmf/api", conn.getBasePath().orElse(null));
+    }
+
+    @Test
+    void tstSslConnectionBasePathBackslashNormalizationSuccess() {
+        final ZosConnection conn = ZosConnectionFactory
+                .createSslConnection("host1", "443",
+                        "/certs/cert.p12", "certpass", "\\zosmf\\api\\");
+
+        assertEquals("/zosmf/api", conn.getBasePath().orElse(null));
     }
 
     @Test
