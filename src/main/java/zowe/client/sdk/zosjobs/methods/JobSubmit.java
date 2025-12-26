@@ -78,7 +78,7 @@ public class JobSubmit {
      * Submits the contents of a local JCL file.
      * This function reads the local file and internally calls submitByJcl.
      *
-     * @param jclPath Path to the local file where the JCL is located
+     * @param jclPath path to the local file where the JCL is located
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state from z/OSMF
      * @author Frank Giordano
@@ -86,7 +86,7 @@ public class JobSubmit {
     public Job submitByLocalFile(final String jclPath) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jclPath, "jclPath");
 
-        // Standardize the path to use forward slashes for cross-platform compatibility
+        // standardize the path to use forward slashes for cross-platform compatibility
         final String standardizedPath = jclPath.replace('\\', '/');
 
         final String jclContent;
