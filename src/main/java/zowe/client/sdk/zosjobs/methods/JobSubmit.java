@@ -24,6 +24,10 @@ import zowe.client.sdk.zosjobs.input.JobSubmitInputData;
 import zowe.client.sdk.zosjobs.input.JobSubmitJclInputData;
 import zowe.client.sdk.zosjobs.model.Job;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +72,30 @@ public class JobSubmit {
         if (!(request instanceof PutJsonZosmfRequest) && !(request instanceof PutTextZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON or PUT_TEXT request type required");
         }
+    }
+
+    /**
+     * Submits the contents of a local JCL file.
+     * This function reads the local file and internally calls submitByJcl.
+     *
+     * @param jclPath Path to the local file where the JCL is located
+     * @return job document with details about the submitted job
+     * @throws ZosmfRequestException request error state from z/OSMF
+     * @author Frank Giordano
+     */
+    public Job submitByLocalFile(final String jclPath) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(jclPath, "jclPath");
+
+        final String jclContent;
+        try {
+            jclContent = Files.readString(Paths.get(jclPath));
+        } catch (NoSuchFileException e) {
+            throw new ZosmfRequestException("local file provided was not found: " + jclPath);
+        } catch (IOException e) {
+            throw new ZosmfRequestException(e.getMessage());
+        }
+
+        return this.submitByJcl(jclContent, "F", "80");
     }
 
     /**
