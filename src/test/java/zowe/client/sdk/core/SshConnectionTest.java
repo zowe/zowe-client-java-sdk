@@ -110,4 +110,17 @@ public class SshConnectionTest {
         assertTrue(result.contains("password='*****'"));
     }
 
+    @Test
+    void tstInvalidPortNumbersFailure() {
+        // capture and verify port out of range
+        IllegalArgumentException outOfRangeEx = assertThrows(IllegalArgumentException.class,
+                () -> new SshConnection("test", 999999, "user", "password"));
+        assertTrue(outOfRangeEx.getMessage().contains("port"), "invalid port number: 0");
+
+        // capture and verify invalid port 0
+        IllegalArgumentException zeroPortEx = assertThrows(IllegalArgumentException.class,
+                () -> new SshConnection("test", 0, "user", "password"));
+        assertTrue(outOfRangeEx.getMessage().contains("port"), "invalid port number: 0");
+    }
+
 }

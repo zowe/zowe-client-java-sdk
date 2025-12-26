@@ -51,6 +51,9 @@ public final class SshConnection {
     public SshConnection(final String host, final int port, final String user, final String password) {
         this.host = host;
         this.port = port;
+        if (port < 1 || port > 65535) {
+            throw new IllegalArgumentException("invalid port number: " + port);
+        }
         this.user = user;
         this.password = password;
     }

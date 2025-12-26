@@ -343,4 +343,22 @@ class ZosConnectionTest {
         assertEquals("/zosmf", conn.getBasePath().orElse(null));
     }
 
+    @Test
+    void tstInvalidPortNumbersFailure() {
+        // capture and verify port out of range
+        IllegalArgumentException outOfRangeEx = assertThrows(IllegalArgumentException.class,
+                () -> ZosConnectionFactory.createBasicConnection("zos", "443666666", "user", "pass"));
+        assertTrue(outOfRangeEx.getMessage().contains("port"), "invalid port number: 443666666");
+
+        // capture and verify invalid port 0
+        IllegalArgumentException zeroPortEx = assertThrows(IllegalArgumentException.class,
+                () -> ZosConnectionFactory.createSslConnection("host1", "0", "/certs/cert.p12", "certpass", "zosmf/api/"));
+        assertEquals("invalid port number: 0", zeroPortEx.getMessage());
+
+        // capture and verify non-numeric port
+        IllegalArgumentException nonNumericEx = assertThrows(IllegalArgumentException.class,
+                () -> ZosConnectionFactory.createTokenConnection("host1", "frank", new Cookie("LtpaToken2", "abcdef")));
+        assertEquals("non numeric exception: frank", nonNumericEx.getMessage());
+    }
+
 }

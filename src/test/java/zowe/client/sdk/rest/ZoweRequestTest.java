@@ -131,7 +131,7 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeSslSetupFailure() {
-        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
+        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "443",
                 "/file/file1", "dummy");
         final String errMsgWindows = "kong.unirest.core.UnirestConfigException: " +
                 "java.io.FileNotFoundException: \\file\\file1 (The system cannot find the path specified)";
@@ -146,7 +146,7 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeSslSetupCertPasswordFailure() {
-        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
+        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "443",
                 "src/test/resources/certs/badssl.com-client.p12", "dummy");
         final String errMsg = "java.io.IOException: keystore password was incorrect";
         try {
@@ -158,7 +158,7 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeSslSetupCertPasswordSuccess() {
-        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port",
+        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "443",
                 "src/test/resources/certs/badssl.com-client.p12", "badssl.com");
         try {
             ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -170,7 +170,7 @@ public class ZoweRequestTest {
     @Test
     public void tstZoweRequestInitializeBasicSetupSuccess() {
         final ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection("host", "port", "user", "password");
+                .createBasicConnection("host", "443", "user", "password");
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         assertNotNull(request.getHeaders().get("Authorization"));
     }
@@ -178,7 +178,7 @@ public class ZoweRequestTest {
     @Test
     public void tstZoweRequestInitializeTokenSetupSuccess() {
         final ZosConnection connection = ZosConnectionFactory
-                .createTokenConnection("host", "port", new Cookie("hello", "world"));
+                .createTokenConnection("host", "443", new Cookie("hello", "world"));
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         assertNull(request.getHeaders().get("Authorization"));
     }

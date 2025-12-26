@@ -73,7 +73,16 @@ public final class ZosConnection {
      */
     ZosConnection(final String host, final String zosmfPort, final AuthType authType) {
         this.host = host;
-        this.zosmfPort = zosmfPort;
+        int port;
+        try {
+            port = Integer.parseInt(zosmfPort);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("non numeric exception: " + zosmfPort);
+        }
+        if (port < 1 || port > 65535) {
+            throw new IllegalArgumentException("invalid port number: " + port);
+        }
+        this.zosmfPort = Integer.toString(port);
         this.authType = authType;
     }
 
