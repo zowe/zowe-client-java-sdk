@@ -872,7 +872,8 @@ public class JobSubmitExp extends TstZosConnection {
 
             // Get the return code
             String retCode = job.getRetCode();
-            System.out.println("Expected Return Code for submitJclJob = CC 0000 [" + retCode + "]");
+            System.out.println("Expected Return Code for submitJclJob = CC 0000");
+            System.out.println("The return code is [" + retCode + "]");
 
             // Submit a Job from local file
             String filePath = "C:\\ZosShell\\CCSQA.ASM.JCL.INSTHELP\\RECEIVE";
