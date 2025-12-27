@@ -253,10 +253,9 @@ class ZosConnectionTest {
 
     @Test
     void tstSettersAndGettersForBasicAuthSuccess() {
-        final ZosConnection conn = new ZosConnection("myhost", "1443", AuthType.BASIC);
+        final ZosConnection conn = new ZosConnection("myhost", "1443", "/zosmf/api", AuthType.BASIC);
         conn.setUser("testuser");
         conn.setPassword("testpass");
-        conn.setBasePath("/zosmf/api");
 
         assertEquals("myhost", conn.getHost());
         assertEquals("1443", conn.getZosmfPort());
@@ -269,9 +268,8 @@ class ZosConnectionTest {
     @Test
     void tstSettersAndGettersForTokenAuthSuccess() {
         Cookie cookie = new Cookie("LtpaToken2", "abc123");
-        final ZosConnection conn = new ZosConnection("zoshost", "443", AuthType.TOKEN);
+        final ZosConnection conn = new ZosConnection("zoshost", "443", "/api/v1", AuthType.TOKEN);
         conn.setToken(cookie);
-        conn.setBasePath("/api/v1");
 
         assertEquals(cookie, conn.getToken());
         assertEquals("zoshost", conn.getHost());
@@ -282,10 +280,9 @@ class ZosConnectionTest {
 
     @Test
     void tstSettersAndGettersForSslAuthSuccess() {
-        final ZosConnection conn = new ZosConnection("zosssl", "8443", AuthType.SSL);
+        final ZosConnection conn = new ZosConnection("zosssl", "8443", "/zosmf", AuthType.SSL);
         conn.setCertFilePath("/certs/secure.p12");
         conn.setCertPassword("mypassword");
-        conn.setBasePath("/zosmf");
 
         assertEquals("/certs/secure.p12", conn.getCertFilePath());
         assertEquals("mypassword", conn.getCertPassword());
@@ -331,16 +328,6 @@ class ZosConnectionTest {
         final ZosConnection conn = ZosConnectionFactory
                 .createBasicConnection("zos", "443", "user", "pass");
         assertNotEquals("string", conn);
-    }
-
-    @Test
-    void testBasePathOptionalBehavior() {
-        final ZosConnection conn = ZosConnectionFactory.
-                createBasicConnection("zos", "443", "user", "pass");
-        assertNull(conn.getBasePath().orElse(null));
-
-        conn.setBasePath("/zosmf");
-        assertEquals("/zosmf", conn.getBasePath().orElse(null));
     }
 
     @Test

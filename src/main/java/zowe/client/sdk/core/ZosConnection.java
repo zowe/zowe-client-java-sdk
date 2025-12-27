@@ -57,7 +57,7 @@ public final class ZosConnection {
     /**
      * Base path for z/OSMF REST endpoints
      */
-    private String basePath;
+    private final String basePath;
 
     /**
      * ZosConnection constructor
@@ -68,22 +68,29 @@ public final class ZosConnection {
      *
      * @param host      string value
      * @param zosmfPort string value
+     * @param basePath  string value
      * @param authType  AuthType enum value
      * @author Frank Giordano
      */
-    ZosConnection(final String host, final String zosmfPort, final AuthType authType) {
+    ZosConnection(final String host, final String zosmfPort, final String basePath, final AuthType authType) {
         this.host = host;
+        validatePort(zosmfPort);
+        this.zosmfPort = zosmfPort;
+        this.basePath = basePath == null ? null : getNormalizedPath(basePath);
+        this.authType = authType;
+    }
+
+    private static void validatePort(String zosmfPort) {
         int port;
         try {
             port = Integer.parseInt(zosmfPort);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("non numeric exception: " + zosmfPort);
         }
+
         if (port < 1 || port > 65535) {
             throw new IllegalArgumentException("invalid port number: " + port);
         }
-        this.zosmfPort = Integer.toString(port);
-        this.authType = authType;
     }
 
     /**
@@ -211,20 +218,6 @@ public final class ZosConnection {
      */
     void setCertPassword(String certPassword) {
         this.certPassword = certPassword;
-    }
-
-    /**
-     * Set the base path for z/OSMF REST endpoints
-     * <p>
-     * This method's access level is private-package
-     *
-     * @param basePath string value
-     */
-    void setBasePath(String basePath) {
-        if (basePath == null)
-            this.basePath = null;
-        else
-            this.basePath = getNormalizedPath(basePath);
     }
 
     private String getNormalizedPath(String basePath) {

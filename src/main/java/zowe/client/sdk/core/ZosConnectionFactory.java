@@ -89,10 +89,9 @@ public class ZosConnectionFactory {
         ValidateUtils.checkIllegalParameter(user, "user");
         ValidateUtils.checkIllegalParameter(password, "password");
 
-        ZosConnection zosConnection = new ZosConnection(host, port, AuthType.BASIC);
+        ZosConnection zosConnection = new ZosConnection(host, port, basePath, AuthType.BASIC);
         zosConnection.setUser(user);
         zosConnection.setPassword(password);
-        zosConnection.setBasePath(basePath);
         return zosConnection;
     }
 
@@ -151,9 +150,8 @@ public class ZosConnectionFactory {
         ValidateUtils.checkIllegalParameter(port, "port");
         ValidateUtils.checkNullParameter(token == null, "token is null");
 
-        ZosConnection zosConnection = new ZosConnection(host, port, AuthType.TOKEN);
+        ZosConnection zosConnection = new ZosConnection(host, port, basePath, AuthType.TOKEN);
         zosConnection.setToken(token);
-        zosConnection.setBasePath(basePath);
         return zosConnection;
     }
 
@@ -219,10 +217,9 @@ public class ZosConnectionFactory {
         ValidateUtils.checkIllegalParameter(certFilePath, "certificate file path (.p12)");
         ValidateUtils.checkIllegalParameter(certPassword, "certPassword");
 
-        ZosConnection zosConnection = new ZosConnection(host, port, AuthType.SSL);
+        ZosConnection zosConnection = new ZosConnection(host, port, basePath, AuthType.SSL);
         zosConnection.setCertFilePath(certFilePath);
         zosConnection.setCertPassword(certPassword);
-        zosConnection.setBasePath(basePath);
         return zosConnection;
     }
 
