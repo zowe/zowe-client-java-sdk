@@ -38,9 +38,9 @@ import static org.mockito.Mockito.withSettings;
 public class UssGetTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
-            .createTokenConnection("1", "1", new Cookie("hello=hello"));
+            .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private GetTextZosmfRequest mockTextGetRequest;
     private GetTextZosmfRequest mockTextGetRequestToken;
     private UssGet ussGet;
@@ -71,7 +71,7 @@ public class UssGetTest {
         final UssGet ussGet = new UssGet(connection, mockTextGetRequest);
         final String response = ussGet.getText("/xxx/xx");
         assertEquals("text", response);
-        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx", mockTextGetRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/fs%2Fxxx%2Fxx", mockTextGetRequest.getUrl());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class UssGetTest {
                 "Content-Type=text/plain; charset=UTF-8}";
         assertEquals(expectedResp, mockTextGetRequestToken.getHeaders().toString());
         assertEquals("text", response);
-        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx", mockTextGetRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/fs%2Fxxx%2Fxx", mockTextGetRequestToken.getUrl());
     }
 
     @Test
@@ -95,7 +95,7 @@ public class UssGetTest {
         final UssGet ussGet = new UssGet(connection, mockTextGetRequest);
         final String response = ussGet.getText("/xxx/xx");
         assertEquals("", response);
-        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx", mockTextGetRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/fs%2Fxxx%2Fxx", mockTextGetRequest.getUrl());
     }
 
     @Test
@@ -109,7 +109,7 @@ public class UssGetTest {
         final UssGet ussGet = new UssGet(connection, mockStreamGetRequest);
         final byte[] response = ussGet.getBinary("/xxx/xx");
         assertEquals(data, response);
-        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx", mockStreamGetRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/fs%2Fxxx%2Fxx", mockStreamGetRequest.getUrl());
     }
 
     @Test
@@ -123,7 +123,7 @@ public class UssGetTest {
         final UssGet ussGet = new UssGet(connection, mockStreamGetRequest);
         final byte[] response = ussGet.getBinary("/xxx/xx");
         assertEquals(data, response);
-        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxxx%2Fxx", mockStreamGetRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/fs%2Fxxx%2Fxx", mockStreamGetRequest.getUrl());
     }
 
     @Test

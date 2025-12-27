@@ -39,7 +39,7 @@ public class ZosConnectionFactory {
      * @author Shabaz Kowthalam
      */
     public static ZosConnection createBasicConnection(final String host,
-                                                      final String port,
+                                                      final int port,
                                                       final String user,
                                                       final String password) {
         return createBasicZosConnection(host, port, user, password, null);
@@ -58,7 +58,7 @@ public class ZosConnectionFactory {
      * @author Shabaz Kowthalam
      */
     public static ZosConnection createBasicConnection(final String host,
-                                                      final String port,
+                                                      final int port,
                                                       final String user,
                                                       final String password,
                                                       final String basePath) {
@@ -80,12 +80,11 @@ public class ZosConnectionFactory {
      * @author Shabaz Kowthalam
      */
     private static ZosConnection createBasicZosConnection(final String host,
-                                                          final String port,
+                                                          final int port,
                                                           final String user,
                                                           final String password,
                                                           final String basePath) {
         ValidateUtils.checkIllegalParameter(host, "host");
-        ValidateUtils.checkIllegalParameter(port, "port");
         ValidateUtils.checkIllegalParameter(user, "user");
         ValidateUtils.checkIllegalParameter(password, "password");
 
@@ -106,7 +105,7 @@ public class ZosConnectionFactory {
      * @author Shabaz Kowthalam
      */
     public static ZosConnection createTokenConnection(final String host,
-                                                      final String port,
+                                                      final int port,
                                                       final Cookie token) {
         return createTokenZosConnection(host, port, token, null);
     }
@@ -123,7 +122,7 @@ public class ZosConnectionFactory {
      * @author Shabaz Kowthalam
      */
     public static ZosConnection createTokenConnection(final String host,
-                                                      final String port,
+                                                      final int port,
                                                       final Cookie token,
                                                       final String basePath) {
         ValidateUtils.checkIllegalParameter(basePath, "basePath");
@@ -143,11 +142,10 @@ public class ZosConnectionFactory {
      * @author Shabaz Kowthalam
      */
     private static ZosConnection createTokenZosConnection(final String host,
-                                                          final String port,
+                                                          final int port,
                                                           final Cookie token,
                                                           final String basePath) {
         ValidateUtils.checkIllegalParameter(host, "host");
-        ValidateUtils.checkIllegalParameter(port, "port");
         ValidateUtils.checkNullParameter(token == null, "token is null");
 
         ZosConnection zosConnection = new ZosConnection(host, port, basePath, AuthType.TOKEN);
@@ -167,7 +165,7 @@ public class ZosConnectionFactory {
      * @author Shabaz Kowthalam
      */
     public static ZosConnection createSslConnection(final String host,
-                                                    final String port,
+                                                    final int port,
                                                     final String certFilePath,
                                                     final String certPassword) {
         return createSslZosConnection(host, port, certFilePath, certPassword, null);
@@ -186,7 +184,7 @@ public class ZosConnectionFactory {
      * @author Shabaz Kowthalam
      */
     public static ZosConnection createSslConnection(final String host,
-                                                    final String port,
+                                                    final int port,
                                                     final String certFilePath,
                                                     final String certPassword,
                                                     final String basePath) {
@@ -208,12 +206,11 @@ public class ZosConnectionFactory {
      * @author Shabaz Kowthalam
      */
     private static ZosConnection createSslZosConnection(final String host,
-                                                        final String port,
+                                                        final int port,
                                                         final String certFilePath,
                                                         final String certPassword,
                                                         final String basePath) {
         ValidateUtils.checkIllegalParameter(host, "host");
-        ValidateUtils.checkIllegalParameter(port, "port");
         ValidateUtils.checkIllegalParameter(certFilePath, "certificate file path (.p12)");
         ValidateUtils.checkIllegalParameter(certPassword, "certPassword");
 

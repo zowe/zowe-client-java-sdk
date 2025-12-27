@@ -36,9 +36,9 @@ import static org.mockito.Mockito.withSettings;
 public class DsnDeleteTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
-            .createTokenConnection("1", "1", new Cookie("hello=hello"));
+            .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private DeleteJsonZosmfRequest mockDeleteRequest;
     private DeleteJsonZosmfRequest mockDeleteRequestToken;
 
@@ -68,7 +68,7 @@ public class DsnDeleteTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET", mockDeleteRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET", mockDeleteRequest.getUrl());
     }
 
     @Test
@@ -79,14 +79,14 @@ public class DsnDeleteTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET", mockDeleteRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET", mockDeleteRequestToken.getUrl());
     }
 
     @Test
     public void tstDsnDeleteWithDatasetMemberNotationSuccess() throws ZosmfRequestException {
         final DsnDelete dsnDelete = new DsnDelete(connection, mockDeleteRequest);
         final Response response = dsnDelete.delete("TEST.DATASET(MEMBER)");
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET(MEMBER)", mockDeleteRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET(MEMBER)", mockDeleteRequest.getUrl());
         assertEquals(200, response.getStatusCode().orElse(-1));
     }
 
@@ -94,7 +94,7 @@ public class DsnDeleteTest {
     public void tstDsnDeleteWithDatasetMemberSeparateParametersSuccess() throws ZosmfRequestException {
         final DsnDelete dsnDelete = new DsnDelete(connection, mockDeleteRequest);
         final Response response = dsnDelete.delete("TEST.DATASET", "MEMBER");
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET(MEMBER)", mockDeleteRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET(MEMBER)", mockDeleteRequest.getUrl());
         assertEquals(200, response.getStatusCode().orElse(-1));
     }
 

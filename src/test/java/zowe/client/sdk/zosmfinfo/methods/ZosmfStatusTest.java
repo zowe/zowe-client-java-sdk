@@ -31,9 +31,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ZosmfStatusTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
-            .createTokenConnection("1", "1", new Cookie("hello=hello"));
+            .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private GetJsonZosmfRequest mockJsonGetRequest;
 
     @BeforeEach
@@ -61,7 +61,7 @@ public class ZosmfStatusTest {
         ZosmfInfoResponse info = status.get();
 
         assertNotNull(info);
-        assertEquals("https://1:1/zosmf", connection.getZosmfUrl());
+        assertEquals("https://1:443/zosmf", connection.getZosmfUrl());
         assertEquals("REALM", info.getZosmfSafRealm());
         assertEquals("1234", info.getZosmfPort());
         assertEquals("v1", info.getZosmfFullVersion());

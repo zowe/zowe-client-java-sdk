@@ -37,9 +37,9 @@ import static org.mockito.Mockito.withSettings;
 public class DsnCreateTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
-            .createTokenConnection("1", "1", new Cookie("hello=hello"));
+            .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private PostJsonZosmfRequest mockPostRequest;
     private PostJsonZosmfRequest mockPostRequestToken;
 
@@ -69,7 +69,7 @@ public class DsnCreateTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.PDS", mockPostRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.PDS", mockPostRequest.getUrl());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class DsnCreateTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.PDS", mockPostRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.PDS", mockPostRequestToken.getUrl());
     }
 
     @Test
@@ -91,7 +91,7 @@ public class DsnCreateTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.PDS", mockPostRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.PDS", mockPostRequest.getUrl());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class DsnCreateTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.PDS", mockPostRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.PDS", mockPostRequest.getUrl());
     }
 
     public static DsnCreateInputData classic() {

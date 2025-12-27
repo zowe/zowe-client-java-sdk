@@ -57,7 +57,7 @@ public class TsoSendTest {
         PutJsonZosmfRequest putJsonZosmfRequest = Mockito.mock(
                 PutJsonZosmfRequest.class,
                 withSettings().useConstructor(
-                        ZosConnectionFactory.createBasicConnection("1", "1", "1", "1")
+                        ZosConnectionFactory.createBasicConnection("1", 443, "1", "1")
                 )
         );
 

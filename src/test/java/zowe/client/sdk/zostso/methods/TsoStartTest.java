@@ -243,7 +243,7 @@ public class TsoStartTest {
         // withSettings().useConstructor() to force constructor being used.
         PostJsonZosmfRequest postJsonZosmfRequest = Mockito.mock(PostJsonZosmfRequest.class,
                 withSettings().useConstructor(ZosConnectionFactory
-                        .createBasicConnection("1", "1", "1", "1")));
+                        .createBasicConnection("1", 443, "1", "1")));
 
         doCallRealMethod().when(postJsonZosmfRequest).setStandardHeaders();
         doCallRealMethod().when(postJsonZosmfRequest).setHeaders(anyMap());

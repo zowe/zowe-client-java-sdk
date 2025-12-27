@@ -40,9 +40,9 @@ import static org.mockito.Mockito.withSettings;
 public class UssCreateTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
-            .createTokenConnection("1", "1", new Cookie("hello=hello"));
+            .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private PostJsonZosmfRequest mockJsonPostRequest;
     private PostJsonZosmfRequest mockJsonPostRequestToken;
     private UssCreate ussCreate;
@@ -75,7 +75,7 @@ public class UssCreateTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxx%2Fxx%2Fx", mockJsonPostRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/fs%2Fxx%2Fxx%2Fx", mockJsonPostRequest.getUrl());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class UssCreateTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restfiles/fs%2Fxx%2Fxx%2Fx", mockJsonPostRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/fs%2Fxx%2Fxx%2Fx", mockJsonPostRequestToken.getUrl());
     }
 
     @Test

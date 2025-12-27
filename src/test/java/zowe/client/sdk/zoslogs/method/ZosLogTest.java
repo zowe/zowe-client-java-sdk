@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ZosLogTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
 
     private GetJsonZosmfRequest mockJsonGetRequest;
 

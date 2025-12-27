@@ -75,7 +75,7 @@ public class TsoStopTest {
     public void tstTsoStopSetsCorrectHeadersSuccess() throws Exception {
         DeleteJsonZosmfRequest deleteJsonZosmfRequest = Mockito.mock(DeleteJsonZosmfRequest.class,
                 withSettings().useConstructor(ZosConnectionFactory
-                        .createBasicConnection("1", "1", "1", "1")));
+                        .createBasicConnection("1", 443, "1", "1")));
 
         doCallRealMethod().when(deleteJsonZosmfRequest).setStandardHeaders();
         doCallRealMethod().when(deleteJsonZosmfRequest).setHeaders(anyMap());

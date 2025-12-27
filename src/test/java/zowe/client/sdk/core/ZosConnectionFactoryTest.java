@@ -26,25 +26,25 @@ public class ZosConnectionFactoryTest {
     @Test
     public void tstZosConnectionFactoryReferenceNotEqualsSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password");
+                "test", 443, "user", "password");
         final ZosConnection zc2 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password");
+                "test", 443, "user", "password");
         assertNotSame(zc1, zc2);
     }
 
     @Test
     public void tstZosConnectionFactoryReferenceNotEqualsWithCookieSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createTokenConnection(
-                "test", "443", new Cookie("hello", "world"));
+                "test", 443, new Cookie("hello", "world"));
         final ZosConnection zc2 = ZosConnectionFactory.createTokenConnection(
-                "test", "443", new Cookie("hello1", "world"));
+                "test", 443, new Cookie("hello1", "world"));
         assertNotSame(zc1, zc2);
     }
 
     @Test
     public void tstZosConnectionFactoryReferenceEqualsSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password");
+                "test", 443, "user", "password");
         final ZosConnection zc2 = zc1;
         assertEquals(zc1, zc2);
     }
@@ -52,7 +52,7 @@ public class ZosConnectionFactoryTest {
     @Test
     public void tstZosConnectionFactoryReferenceEqualsWithCookieSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createTokenConnection(
-                "test", "443", new Cookie("hello", "world"));
+                "test", 443, new Cookie("hello", "world"));
         final ZosConnection zc2 = zc1;
         assertEquals(zc1, zc2);
     }
@@ -60,45 +60,45 @@ public class ZosConnectionFactoryTest {
     @Test
     public void tstZosConnectionFactoryEqualsSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password");
+                "test", 443, "user", "password");
         final ZosConnection zc2 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password");
+                "test", 443, "user", "password");
         assertEquals(zc1, zc2);
     }
 
     @Test
     public void tstZosConnectionFactoryEqualsWithCookieSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createTokenConnection(
-                "test", "1", new Cookie("hello", "world"));
+                "test", 443, new Cookie("hello", "world"));
         final ZosConnection zc2 = ZosConnectionFactory.createTokenConnection(
-                "test", "1", new Cookie("hello", "world"));
+                "test", 443, new Cookie("hello", "world"));
         assertEquals(zc1, zc2);
     }
 
     @Test
     public void tstZosConnectionFactoryNotEqualsSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
-                "test", "1", "user", "password");
+                "test", 443, "user", "password");
         final ZosConnection zc2 = ZosConnectionFactory.createBasicConnection(
-                "test2", "1", "user", "password");
+                "test2", 443, "user", "password");
         assertNotEquals(zc1, zc2);
     }
 
     @Test
     public void tstZosConnectionFactoryNotEqualsWithCookieSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createTokenConnection(
-                "test", "443", new Cookie("hello", "world1"));
+                "test", 443, new Cookie("hello", "world1"));
         final ZosConnection zc2 = ZosConnectionFactory.createTokenConnection(
-                "test", "443", new Cookie("hello", "world"));
+                "test", 443, new Cookie("hello", "world"));
         assertNotEquals(zc1, zc2);
     }
 
     @Test
     public void tstZosConnectionFactoryHashCodeMapWithSecondHostDifferentSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password");
+                "test", 443, "user", "password");
         final ZosConnection zc2 = ZosConnectionFactory.createBasicConnection(
-                "test2", "443", "user", "password");
+                "test2", 443, "user", "password");
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
@@ -108,9 +108,9 @@ public class ZosConnectionFactoryTest {
     @Test
     public void tstZosConnectionFactoryHashCodeMapWithSecondZosmfPortDifferentSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password");
+                "test", 443, "user", "password");
         final ZosConnection zc2 = ZosConnectionFactory.createBasicConnection(
-                "test", "4432", "user", "password");
+                "test", 4432, "user", "password");
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
@@ -120,9 +120,9 @@ public class ZosConnectionFactoryTest {
     @Test
     public void tstZosConnectionFactoryHashCodeMapWithSecondUserDifferentSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password");
+                "test", 443, "user", "password");
         final ZosConnection zc2 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user2", "password");
+                "test", 443, "user2", "password");
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
@@ -132,9 +132,9 @@ public class ZosConnectionFactoryTest {
     @Test
     public void tstZosConnectionFactoryHashCodeMapWithSecondPasswordDifferentSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password");
+                "test", 443, "user", "password");
         final ZosConnection zc2 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password2");
+                "test", 443, "user", "password2");
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
@@ -144,9 +144,9 @@ public class ZosConnectionFactoryTest {
     @Test
     public void tstZosConnectionFactoryHashCodeMapNoDuplicateSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password");
+                "test", 443, "user", "password");
         final ZosConnection zc2 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password");
+                "test", 443, "user", "password");
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
@@ -156,7 +156,7 @@ public class ZosConnectionFactoryTest {
     @Test
     public void tstZosConnectionFactoryBasePathSetGetSuccess() {
         final ZosConnection connection = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password", "/custom/path");
+                "test", 443, "user", "password", "/custom/path");
         assertEquals("/custom/path",
                 (connection.getBasePath().isPresent() ? connection.getBasePath().get() : ""));
     }
@@ -164,34 +164,34 @@ public class ZosConnectionFactoryTest {
     @Test
     public void tstZosConnectionFactoryBasePathDefaultEmptySuccess() {
         final ZosConnection connection = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password");
+                "test", 443, "user", "password");
         assertTrue(connection.getBasePath().isEmpty());
     }
 
     @Test
     public void tstZosConnectionFactoryBasePathEqualsSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password", "/custom/path");
+                "test", 443, "user", "password", "/custom/path");
         final ZosConnection zc2 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password", "/custom/path");
+                "test", 443, "user", "password", "/custom/path");
         assertEquals(zc1, zc2);
     }
 
     @Test
     public void tstZosConnectionFactoryBasePathNotEqualsSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password", "/custom/path1");
+                "test", 443, "user", "password", "/custom/path1");
         final ZosConnection zc2 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password", "/custom/path2");
+                "test", 443, "user", "password", "/custom/path2");
         assertNotEquals(zc1, zc2);
     }
 
     @Test
     public void tstZosConnectionFactoryBasePathHashCodeMapWithDifferentPathsSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password", "/custom/path1");
+                "test", 443, "user", "password", "/custom/path1");
         final ZosConnection zc2 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password", "/custom/path2");
+                "test", 443, "user", "password", "/custom/path2");
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
@@ -201,15 +201,15 @@ public class ZosConnectionFactoryTest {
     @Test
     public void tstZosConnectionFactoryBasePathHashCodeMapWithSamePathsSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password", "/custom/path");
+                "test", 443, "user", "password", "/custom/path");
         final ZosConnection zc2 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password", "/custom/path");
+                "test", 443, "user", "password", "/custom/path");
         final ZosConnection zc3 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password", "custom/path/");
+                "test", 443, "user", "password", "custom/path/");
         final ZosConnection zc4 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password", "custom/path");
+                "test", 443, "user", "password", "custom/path");
         final ZosConnection zc5 = ZosConnectionFactory.createBasicConnection(
-                "test", "443", "user", "password", "\\custom\\path");
+                "test", 443, "user", "password", "\\custom\\path");
         final var zcs = new HashMap<ZosConnection, Integer>();
         zcs.put(zc1, 1);
         zcs.put(zc2, 2);
@@ -222,81 +222,81 @@ public class ZosConnectionFactoryTest {
     @Test
     public void tstZosConnectionFactoryBasePathTokenSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createTokenConnection(
-                "test", "443", new Cookie("hello", "world"), "/custom/path");
+                "test", 443, new Cookie("hello", "world"), "/custom/path");
         assertEquals("/custom/path", (zc1.getBasePath().isPresent() ? zc1.getBasePath().get() : ""));
     }
 
     @Test
     public void tstZosConnectionFactoryBasePathSslSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createSslConnection(
-                "test", "4431", "certPath", "certPassword", "/custom/path");
+                "test", 4431, "certPath", "certPassword", "/custom/path");
         assertEquals("/custom/path", (zc1.getBasePath().isPresent() ? zc1.getBasePath().get() : ""));
     }
 
     @Test
     public void tstZosConnectionFactoryBasicInvalidStatesFailure() {
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
-                null, "443", "user", "password"));
+                null, 443, "user", "password"));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
-                "", "443", "user", "password"));
+                "", 443, "user", "password"));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
-                "host", null, "user", "password"));
+                "host", 657777, "user", "password"));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
-                "host", " ", "user", "password"));
+                "host", 0, "user", "password"));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
-                "host", "443", null, "password"));
+                "host", 443, null, "password"));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
-                "host", "443", "", "password"));
+                "host", 443, "", "password"));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
-                "host", "443", "user", null));
+                "host", 443, "user", null));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
-                "host", "443", "user", ""));
+                "host", 443, "user", ""));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
-                "host", "443", "user", "password", null));
+                "host", 443, "user", "password", null));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createBasicConnection(
-                "host", "443", "user", "password", ""));
+                "host", 443, "user", "password", ""));
     }
 
     @Test
     public void tstZosConnectionFactorySslInvalidStatesFailure() {
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createSslConnection(
-                null, "443", "user", "password"));
+                null, 443, "user", "password"));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createSslConnection(
-                "", "443", "user", "password"));
+                "", 443, "user", "password"));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createSslConnection(
-                "host", null, "user", "password"));
+                "host", 657777, "user", "password"));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createSslConnection(
-                "host", " ", "user", "password"));
+                "host", 0, "user", "password"));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createSslConnection(
-                "host", "443", null, "password"));
+                "host", 443, null, "password"));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createSslConnection(
-                "host", "443", "", "password"));
+                "host", 443, "", "password"));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createSslConnection(
-                "host", "443", "user", null));
+                "host", 443, "user", null));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createSslConnection(
-                "host", "443", "user", ""));
+                "host", 443, "user", ""));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createSslConnection(
-                "host", "443", "user", "password", null));
+                "host", 443, "user", "password", null));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createSslConnection(
-                "host", "443", "user", "password", ""));
+                "host", 443, "user", "password", ""));
     }
 
     @Test
     public void tstZosConnectionFactoryTokenInvalidStatesFailure() {
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createTokenConnection(
-                null, "443", new Cookie("foo", "bar")));
+                null, 443, new Cookie("foo", "bar")));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createTokenConnection(
-                "", "443", new Cookie("foo", "bar")));
+                "", 443, new Cookie("foo", "bar")));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createTokenConnection(
-                "host", null, new Cookie("foo", "bar")));
+                "host", 657777, new Cookie("foo", "bar")));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createTokenConnection(
-                "host", " ", new Cookie("foo", "bar")));
+                "host", 0, new Cookie("foo", "bar")));
         assertThrows(NullPointerException.class, () -> ZosConnectionFactory.createTokenConnection(
-                "host", "443", null));
+                "host", 443, null));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createTokenConnection(
-                "host", "443", new Cookie("foo", "bar"), null));
+                "host", 443, new Cookie("foo", "bar"), null));
         assertThrows(IllegalArgumentException.class, () -> ZosConnectionFactory.createTokenConnection(
-                "host", "443", new Cookie("foo", "bar"), ""));
+                "host", 443, new Cookie("foo", "bar"), ""));
     }
 
 }
