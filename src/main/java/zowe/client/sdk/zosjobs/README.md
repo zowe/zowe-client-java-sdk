@@ -881,12 +881,12 @@ public class JobSubmitExp extends TstZosConnection {
         } catch (ZosmfRequestException e) {
             // Safely extracts the response phrase as a string, ensuring it is neither null nor blank nor empty JSON object;
             // otherwise, falls back to the exception's default message.
-            Predicate<String> isNotBlank = s -> !s.isBlank();
-            Predicate<String> isNotEmptyJsonObj = s -> !s.equals("{}");
+            Predicate<String> isNotBlankStr = s -> !s.isBlank();
+            Predicate<String> isNotEmptyJson = s -> !s.equals("{}");
             final String errMsg = Optional.ofNullable(e.getResponse())
                     .flatMap(Response::getResponsePhrase)
                     .map(Object::toString)
-                    .filter(isNotBlank.and(isNotEmptyJsonObj))
+                    .filter(isNotBlankStr.and(isNotEmptyJson))
                     .orElse(e.getMessage());
             throw new RuntimeException(errMsg);
         }
