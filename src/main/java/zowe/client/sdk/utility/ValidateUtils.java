@@ -36,8 +36,9 @@ public final class ValidateUtils {
      * @author Frank Giordano
      */
     public static void checkIllegalParameter(String value, String name) {
-        if (value == null || value.isBlank())
+        if (value == null || value.isBlank()) {
             throw new IllegalArgumentException(name + " is either null or empty");
+        }
     }
 
     /**
