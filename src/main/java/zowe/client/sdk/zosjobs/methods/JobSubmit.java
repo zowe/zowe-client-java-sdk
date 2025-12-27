@@ -89,16 +89,15 @@ public class JobSubmit {
         // standardize the path to use forward slashes for cross-platform compatibility
         final String standardizedPath = jclPath.replace('\\', '/');
 
-        final String jclContent;
         try {
-            jclContent = Files.readString(Paths.get(standardizedPath));
-        } catch (NoSuchFileException e) {
-            throw new ZosmfRequestException("local file provided was not found: " + standardizedPath);
+            final String jclContent = Files.readString(Paths.get(standardizedPath));
+            return this.submitByJcl(jclContent, "F", "80");
         } catch (IOException e) {
-            throw new ZosmfRequestException(e.getMessage());
+            final String msg = (e instanceof NoSuchFileException)
+                    ? "local file provided was not found: " + standardizedPath
+                    : "error reading local file: " + e.getMessage();
+            throw new ZosmfRequestException(msg, e);
         }
-
-        return this.submitByJcl(jclContent, "F", "80");
     }
 
     /**
