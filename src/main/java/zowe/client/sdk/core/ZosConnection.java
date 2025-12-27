@@ -82,6 +82,13 @@ public final class ZosConnection {
         this.authType = authType;
     }
 
+    private String getNormalizedPath(String basePath) {
+        String normalizedPath = basePath.replace('\\', '/');
+        normalizedPath = normalizedPath.startsWith("/") ? normalizedPath : "/" + normalizedPath;
+        return normalizedPath.endsWith("/") ?
+                normalizedPath.substring(0, normalizedPath.length() - 1) : normalizedPath;
+    }
+
     /**
      * Retrieve host
      *
@@ -207,13 +214,6 @@ public final class ZosConnection {
      */
     void setCertPassword(String certPassword) {
         this.certPassword = certPassword;
-    }
-
-    private String getNormalizedPath(String basePath) {
-        String normalizedPath = basePath.replace('\\', '/');
-        normalizedPath = normalizedPath.startsWith("/") ? normalizedPath : "/" + normalizedPath;
-        return normalizedPath.endsWith("/") ?
-                normalizedPath.substring(0, normalizedPath.length() - 1) : normalizedPath;
     }
 
     /**
