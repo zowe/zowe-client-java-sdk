@@ -900,6 +900,7 @@ public class JobSubmitExp extends TstZosConnection {
      * @param connection ZosConnection object
      * @param jclString  jcl formatted string
      * @return job document
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public static Job submitJclJob(ZosConnection connection, String jclString) throws ZosmfRequestException {
@@ -914,6 +915,7 @@ public class JobSubmitExp extends TstZosConnection {
      * @param connection ZosConnection object
      * @param dsMember   dataset member value
      * @return job document
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public static Job submitJob(ZosConnection connection, String dsMember) throws ZosmfRequestException {
@@ -927,6 +929,7 @@ public class JobSubmitExp extends TstZosConnection {
      * @param connection ZosConnection object
      * @param filePath   path to the local file where the JCL is located
      * @return job document
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
     public static Job submitByLocalFile(ZosConnection connection, String filePath) throws ZosmfRequestException {
