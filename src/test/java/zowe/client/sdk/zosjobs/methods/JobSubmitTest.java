@@ -13,23 +13,26 @@ import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
+import zowe.client.sdk.rest.PutTextZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosjobs.model.Job;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.Mockito.doCallRealMethod;
-import static org.mockito.Mockito.withSettings;
+import static org.mockito.Mockito.*;
 
 /**
  * Class containing unit tests for JobSubmit.
@@ -44,7 +47,10 @@ public class JobSubmitTest {
     private final ZosConnection tokenConnection = ZosConnectionFactory
             .createTokenConnection("1", "1", new Cookie("hello=hello"));
     private PutJsonZosmfRequest mockPutJsonZosmfRequest;
+    private PutTextZosmfRequest mockPutTextZosmfRequest ;
     private PutJsonZosmfRequest mockPutJsonZosmfRequestToken;
+    @TempDir
+    private Path tempDir;
 
     @BeforeEach
     public void init() throws ZosmfRequestException {
@@ -64,10 +70,15 @@ public class JobSubmitTest {
         JSONObject jobJson = new JSONObject(jsonMap);
 
         mockPutJsonZosmfRequest = Mockito.mock(PutJsonZosmfRequest.class);
+        mockPutTextZosmfRequest = Mockito.mock(PutTextZosmfRequest.class);
         Mockito.when(mockPutJsonZosmfRequest.executeRequest()).thenReturn(
                 new Response(jobJson, 200, "success"));
         doCallRealMethod().when(mockPutJsonZosmfRequest).setUrl(any());
         doCallRealMethod().when(mockPutJsonZosmfRequest).getUrl();
+        Mockito.when(mockPutTextZosmfRequest.executeRequest()).thenReturn(
+                new Response(jobJson, 200, "success"));
+        doCallRealMethod().when(mockPutTextZosmfRequest).setUrl(any());
+        doCallRealMethod().when(mockPutTextZosmfRequest).getUrl();
 
         mockPutJsonZosmfRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
@@ -118,6 +129,25 @@ public class JobSubmitTest {
         assertEquals("files-url", job.getFilesUrl());
         assertEquals("job-correlator", job.getJobCorrelator());
         assertEquals("phase-name", job.getPhaseName());
+    }
+
+    @Test
+    void testSubmitByLocalFileSuccess() throws Exception {
+        // set up the local file
+        Path jclFile = tempDir.resolve("test.jcl");
+        String jclContent = "//TESTJOB JOB ...";
+        Files.writeString(jclFile, jclContent);
+
+        // initialize JobSubmit using existing mock request (from @BeforeEach)
+        final JobSubmit jobSubmit = new JobSubmit(connection, mockPutTextZosmfRequest);
+        final Job job = jobSubmit.submitByLocalFile(jclFile.toString());
+
+        // verify file contents reached the request layer
+        verify(mockPutTextZosmfRequest).setBody(jclContent);
+
+        // verified against @BeforeEach mock data
+        assertEquals("jobid", job.getJobId());
+        assertNotNull(job);
     }
 
     @Test
@@ -173,6 +203,27 @@ public class JobSubmitTest {
                 () -> new JobSubmit(null)
         );
         assertEquals("connection is null", exception.getMessage());
+    }
+
+    @Test
+    void tstSubmitByLocalFileFileNotFoundFailure() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        JobSubmit jobSubmit = new JobSubmit(connection);
+        String nonExistentPath = tempDir.resolve("missing.jcl").toString();
+
+        ZosmfRequestException exception = assertThrows(ZosmfRequestException.class,
+                () -> jobSubmit.submitByLocalFile(nonExistentPath));
+
+        assertTrue(exception.getMessage().contains("local file provided was not found"));
+    }
+
+    @Test
+    void tstSubmitByLocalFileInvalidParameterFailure() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        JobSubmit jobSubmit = new JobSubmit(connection);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> jobSubmit.submitByLocalFile(null));
     }
 
 }
