@@ -830,11 +830,15 @@ package zowe.client.sdk.examples.zosjobs;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosjobs.methods.JobMonitor;
 import zowe.client.sdk.zosjobs.methods.JobSubmit;
 import zowe.client.sdk.zosjobs.model.Job;
 import zowe.client.sdk.zosjobs.types.JobStatus;
+
+import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Class example to showcase JobSubmit class functionality.
@@ -845,30 +849,49 @@ import zowe.client.sdk.zosjobs.types.JobStatus;
 public class JobSubmitExp extends TstZosConnection {
 
     /**
-     * The main method defines z/OSMF host and user connection needed to showcase
-     * JobSubmit functionality.
+     * The main method defines z/OSMF connection and showcases the JobSubmit class functionality.
      *
      * @param args for main not used
      * @author Frank Giordano
      */
     public static void main(String[] args) {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
-        System.out.println(JobSubmitExp.submitJob(connection, "xxx.xxx.xxx.xxx(xxx)"));
-
-        String jclString = "//TESTJOBX JOB (),MSGCLASS=H\n// EXEC PGM=IEFBR14";
-        Job jobSubmitTest = JobSubmitExp.submitJclJob(connection, jclString);
-        // Wait for the job to complete
-        JobMonitor jobMonitor = new JobMonitor(connection);
         try {
-            jobSubmitTest = jobMonitor.waitByStatus(jobSubmitTest, JobStatus.Type.OUTPUT);
+            // Submit a Job from PDS member
+            Job job = JobSubmitExp.submitJob(connection, "ccsqa.asm.jcl.insthelp(receive)");
+            System.out.println("submitJob output: \n" + job);
+
+            // Submit a Job from text representing a JCL job
+            String jclString = "//TESTJOBX JOB (105200000),MSGCLASS=H\n// EXEC PGM=IEFBR14";
+            job = JobSubmitExp.submitJclJob(connection, jclString);
+
+            // Wait for the job to complete
+            JobMonitor jobMonitor = new JobMonitor(connection);
+            job = jobMonitor.waitByStatus(job, JobStatus.Type.OUTPUT);
+            System.out.println("submitJclJob output: \n" + job);
+
+            // Get the return code
+            String retCode = job.getRetCode();
+            System.out.println("Expected Return Code for submitJclJob = CC 0000");
+            System.out.println("The return code is [" + retCode + "]");
+
+            // Submit a Job from local file
+            String filePath = "C:\\ZosShell\\CCSQA.ASM.JCL.INSTHELP\\RECEIVE";
+            job = JobSubmitExp.submitByLocalFile(connection, filePath);
+            System.out.println("submitByLocalFile output: \n" + job);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
+            // Safely extracts the response phrase as a string, ensuring it is neither null nor blank nor empty JSON object;
+            // otherwise, falls back to the exception's default message.
+            Predicate<String> isNotBlankStr = s -> !s.isBlank();
+            Predicate<String> isNotEmptyJson = s -> !s.equals("{}");
+            final String errMsg = Optional.ofNullable(e.getResponse())
+                    .flatMap(Response::getResponsePhrase)
+                    .map(Object::toString)
+                    .filter(isNotBlankStr.and(isNotEmptyJson))
+                    .orElse(e.getMessage());
             throw new RuntimeException(errMsg);
         }
-        System.out.println(jobSubmitTest);
-        // Get the return code
-        String retCode = jobSubmitTest.getRetCode();
-        System.out.println("Expected Return Code = CC 0000 [" + retCode + "]");
+        
     }
 
     /**
@@ -878,16 +901,12 @@ public class JobSubmitExp extends TstZosConnection {
      * @param connection ZosConnection object
      * @param jclString  jcl formatted string
      * @return job document
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static Job submitJclJob(ZosConnection connection, String jclString) {
+    public static Job submitJclJob(ZosConnection connection, String jclString) throws ZosmfRequestException {
         JobSubmit jobSubmit = new JobSubmit(connection);
-        try {
-            return jobSubmit.submitByJcl(jclString, null, null);
-        } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
-        }
+        return jobSubmit.submitByJcl(jclString, null, null);
     }
 
     /**
@@ -897,16 +916,26 @@ public class JobSubmitExp extends TstZosConnection {
      * @param connection ZosConnection object
      * @param dsMember   dataset member value
      * @return job document
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static Job submitJob(ZosConnection connection, String dsMember) {
+    public static Job submitJob(ZosConnection connection, String dsMember) throws ZosmfRequestException {
         JobSubmit jobSubmit = new JobSubmit(connection);
-        try {
-            return jobSubmit.submit(dsMember);
-        } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
-        }
+        return jobSubmit.submit(dsMember);
+    }
+
+    /**
+     * Submits the contents of a local JCL file.
+     *
+     * @param connection ZosConnection object
+     * @param filePath   path to the local file where the JCL is located
+     * @return job document
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public static Job submitByLocalFile(ZosConnection connection, String filePath) throws ZosmfRequestException {
+        JobSubmit jobSubmit = new JobSubmit(connection);
+        return jobSubmit.submitByLocalFile(filePath);
     }
 
 }
