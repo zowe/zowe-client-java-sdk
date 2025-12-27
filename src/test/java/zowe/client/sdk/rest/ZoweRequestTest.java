@@ -37,7 +37,7 @@ public class ZoweRequestTest {
     @BeforeEach
     public void init() {
         mockReply = Mockito.mock(HttpResponse.class);
-        connection = ZosConnectionFactory.createBasicConnection("1", "1", "1", "1");
+        connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
     }
 
     @Test
@@ -131,7 +131,7 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeSslSetupFailure() {
-        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "443",
+        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", 443,
                 "/file/file1", "dummy");
         final String errMsgWindows = "kong.unirest.core.UnirestConfigException: " +
                 "java.io.FileNotFoundException: \\file\\file1 (The system cannot find the path specified)";
@@ -146,7 +146,7 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeSslSetupCertPasswordFailure() {
-        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "443",
+        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", 443,
                 "src/test/resources/certs/badssl.com-client.p12", "dummy");
         final String errMsg = "java.io.IOException: keystore password was incorrect";
         try {
@@ -158,7 +158,7 @@ public class ZoweRequestTest {
 
     @Test
     public void tstZoweRequestInitializeSslSetupCertPasswordSuccess() {
-        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "443",
+        final ZosConnection connection = ZosConnectionFactory.createSslConnection("host", 443,
                 "src/test/resources/certs/badssl.com-client.p12", "badssl.com");
         try {
             ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -170,7 +170,7 @@ public class ZoweRequestTest {
     @Test
     public void tstZoweRequestInitializeBasicSetupSuccess() {
         final ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection("host", "443", "user", "password");
+                .createBasicConnection("host", 443, "user", "password");
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         assertNotNull(request.getHeaders().get("Authorization"));
     }
@@ -178,7 +178,7 @@ public class ZoweRequestTest {
     @Test
     public void tstZoweRequestInitializeTokenSetupSuccess() {
         final ZosConnection connection = ZosConnectionFactory
-                .createTokenConnection("host", "443", new Cookie("hello", "world"));
+                .createTokenConnection("host", 443, new Cookie("hello", "world"));
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         assertNull(request.getHeaders().get("Authorization"));
     }
@@ -187,7 +187,7 @@ public class ZoweRequestTest {
     public void tstUrlConstructionWithBasePathSuccess() {
         // Create a connection with a base path
         final ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection("test.host", "443", "user", "password", "/custom/base/path");
+                .createBasicConnection("test.host", 443, "user", "password", "/custom/base/path");
 
         // Create a mock request to verify URL
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
@@ -205,7 +205,7 @@ public class ZoweRequestTest {
     public void tstUrlConstructionWithoutBasePathSuccess() {
         // Create a connection without setting a base path
         final ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection("test.host", "443", "user", "password");
+                .createBasicConnection("test.host", 443, "user", "password");
 
         // Create a mock request to verify URL
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
@@ -223,7 +223,7 @@ public class ZoweRequestTest {
     public void tstUrlConstructionWithInvalidHostNameFailure() {
         // Create a connection and set an empty base path
         final ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection("test.host:123foo", "443", "user", "password");
+                .createBasicConnection("test.host:123foo", 443, "user", "password");
         // Create a mock request to verify URL
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
 
@@ -234,7 +234,7 @@ public class ZoweRequestTest {
     public void tstUrlConstructionWithInvalidBasePathFailure() {
         // Create a connection and set an invalid base path
         final ZosConnection connection = ZosConnectionFactory
-                .createBasicConnection("test.host", "443", "user", "password", "/test^/");
+                .createBasicConnection("test.host", 443, "user", "password", "/test^/");
         // Create a mock request to verify URL
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
 

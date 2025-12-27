@@ -29,7 +29,7 @@ public final class ZosConnection {
     /**
      * Host z/OSMF port number pointing to the backend z/OS instance
      */
-    private final String zosmfPort;
+    private final int zosmfPort;
     /**
      * AuthType: BASIC, TOKEN or SSL enum value for http request processing
      */
@@ -67,30 +67,19 @@ public final class ZosConnection {
      * Use ZosConnectionFactory to initiate a ZosConnection Object.
      *
      * @param host      string value
-     * @param zosmfPort string value
+     * @param zosmfPort int value
      * @param basePath  string value
      * @param authType  AuthType enum value
      * @author Frank Giordano
      */
-    ZosConnection(final String host, final String zosmfPort, final String basePath, final AuthType authType) {
+    ZosConnection(final String host, final int zosmfPort, final String basePath, final AuthType authType) {
         this.host = host;
-        validatePort(zosmfPort);
+        if (zosmfPort < 1 || zosmfPort > 65535) {
+            throw new IllegalArgumentException("invalid port number: " + zosmfPort);
+        }
         this.zosmfPort = zosmfPort;
         this.basePath = basePath == null ? null : getNormalizedPath(basePath);
         this.authType = authType;
-    }
-
-    private static void validatePort(String zosmfPort) {
-        int port;
-        try {
-            port = Integer.parseInt(zosmfPort);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("non numeric exception: " + zosmfPort);
-        }
-
-        if (port < 1 || port > 65535) {
-            throw new IllegalArgumentException("invalid port number: " + port);
-        }
     }
 
     /**
@@ -107,7 +96,7 @@ public final class ZosConnection {
      *
      * @return string value
      */
-    public String getZosmfPort() {
+    public int getZosmfPort() {
         return zosmfPort;
     }
 
@@ -321,7 +310,7 @@ public final class ZosConnection {
     public String toString() {
         return "ZosConnection{" +
                 "host='" + ((host == null) ? "" : host) + '\'' +
-                ", zosmfPort='" + ((zosmfPort == null) ? "" : zosmfPort) + '\'' +
+                ", zosmfPort='" + zosmfPort + '\'' +
                 ", authType=" + authType +
                 ", user='" + ((user == null) ? "" : user) + '\'' +
                 ", password='" + ((password == null || password.isEmpty()) ? "" : "*****") + '\'' +

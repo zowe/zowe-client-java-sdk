@@ -76,7 +76,7 @@ public class TsoReplyTest {
     public void tstTsoReplySetsCorrectHeadersSuccess() throws Exception {
         PutJsonZosmfRequest putJsonZosmfRequest = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(ZosConnectionFactory
-                        .createBasicConnection("1", "1", "1", "1")));
+                        .createBasicConnection("1", 443, "1", "1")));
 
         doCallRealMethod().when(putJsonZosmfRequest).setStandardHeaders();
         doCallRealMethod().when(putJsonZosmfRequest).setHeaders(anyMap());

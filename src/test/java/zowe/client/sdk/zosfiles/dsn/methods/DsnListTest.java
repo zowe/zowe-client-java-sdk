@@ -37,9 +37,9 @@ import static org.mockito.Mockito.withSettings;
 public class DsnListTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
-            .createTokenConnection("1", "1", new Cookie("hello=hello"));
+            .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private GetJsonZosmfRequest mockGetRequest;
     private GetJsonZosmfRequest mockGetRequestToken;
 
@@ -67,7 +67,7 @@ public class DsnListTest {
         final DsnList dsnList = new DsnList(connection, mockGetRequest);
         final DsnListInputData listInputData = new DsnListInputData.Builder().responseTimeout("10").volume("vol1").build();
         dsnList.getMembers("TEST.DATASET", listInputData);
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET/member", mockGetRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET/member", mockGetRequest.getUrl());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class DsnListTest {
         assertEquals("{X-IBM-Max-Items=0, Accept-Encoding=gzip, X-IBM-Response-Timeout=10, " +
                         "X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockGetRequestToken.getHeaders().toString());
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET/member", mockGetRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET/member", mockGetRequestToken.getUrl());
     }
 
     @Test

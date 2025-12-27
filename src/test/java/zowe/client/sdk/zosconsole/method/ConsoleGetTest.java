@@ -40,9 +40,9 @@ import static org.mockito.Mockito.withSettings;
 public class ConsoleGetTest {
 
     private final ZosConnection connection =
-            ZosConnectionFactory.createBasicConnection("1", "1", "1", "1");
+            ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection =
-            ZosConnectionFactory.createTokenConnection("1", "1", new Cookie("hello=hello"));
+            ZosConnectionFactory.createTokenConnection("1", 443, new Cookie("hello=hello"));
     private GetJsonZosmfRequest mockJsonGetRequest;
 
     @BeforeEach

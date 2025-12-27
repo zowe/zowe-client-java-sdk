@@ -43,7 +43,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class JobGetJsonTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
     private GetJsonZosmfRequest mockJsonGetRequest;
     private JobGet getJobs;
     private JSONObject jobJson;
@@ -110,7 +110,7 @@ public class JobGetJsonTest {
             msgResult = e.getMessage();
 
         }
-        assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
         assertEquals(msg, msgResult);
     }
 
@@ -124,7 +124,7 @@ public class JobGetJsonTest {
                 new Response(jsonArray, 200, "success"));
 
         final Job job = getJobs.getById("1");
-        assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
         assertEquals("jobid", job.getJobId());
         assertEquals("jobname", job.getJobName());
         assertEquals("subsystem", job.getSubSystem());
@@ -153,7 +153,7 @@ public class JobGetJsonTest {
                 new Response(jsonArray, 200, "success"));
 
         final Job job = getJobs.getById("1");
-        assertEquals("https://1:1/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs?owner=*&jobid=1", getJobs.getUrl());
         assertEquals("job", job.getJobId());
     }
 
@@ -175,7 +175,7 @@ public class JobGetJsonTest {
         final Job job = getJobs.getStatus("BLSJPRMI", "STC00052");
 
         // Validate URL built correctly (no step-data param for getStatus)
-        assertEquals("https://1:1/zosmf/restjobs/jobs/BLSJPRMI/STC00052?step-data=Y", getJobs.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs/BLSJPRMI/STC00052?step-data=Y", getJobs.getUrl());
 
         // Core job fields
         assertEquals("BLSJPRMI", job.getJobName());
@@ -233,7 +233,7 @@ public class JobGetJsonTest {
         final Job job = getJobs.getStatus("BLSJPRMI", "STC00052");
 
         // Validate URL built correctly (no step-data param for getStatus)
-        assertEquals("https://1:1/zosmf/restjobs/jobs/BLSJPRMI/STC00052?step-data=Y", getJobs.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs/BLSJPRMI/STC00052?step-data=Y", getJobs.getUrl());
 
         // Core job fields
         assertEquals("BLSJPRMI", job.getJobName());
@@ -282,7 +282,7 @@ public class JobGetJsonTest {
         final CommonJobInputData input = new CommonJobInputData("STC00052", "BLSJPRMI", true);
         final Job job = getJobs.getStatusCommon(input);
 
-        assertEquals("https://1:1/zosmf/restjobs/jobs/BLSJPRMI/STC00052?step-data=Y", getJobs.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs/BLSJPRMI/STC00052?step-data=Y", getJobs.getUrl());
         assertEquals("BLSJPRMI", job.getJobName());
         assertEquals("STC00052", job.getJobId());
         assertEquals("ACTIVE", job.getStatus());
@@ -367,7 +367,7 @@ public class JobGetJsonTest {
                 null, null, null, null,
                 null, null, null, null,
                 null, null));
-        assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/1?step-data=Y", getJobs.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs/jobName/1?step-data=Y", getJobs.getUrl());
         assertEquals("jobid", job.getJobId());
         assertEquals("jobname", job.getJobName());
         assertEquals("subsystem", job.getSubSystem());

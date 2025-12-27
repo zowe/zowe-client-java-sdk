@@ -36,9 +36,9 @@ import static org.mockito.Mockito.withSettings;
 public class JobDeleteTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
-            .createTokenConnection("1", "1", new Cookie("hello=hello"));
+            .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private DeleteJsonZosmfRequest mockJsonDeleteRequest;
     private DeleteJsonZosmfRequest mockJsonDeleteRequestToken;
 
@@ -68,7 +68,7 @@ public class JobDeleteTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockJsonDeleteRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs/JOBNAME/JOBID", mockJsonDeleteRequest.getUrl());
     }
 
     @Test
@@ -80,7 +80,7 @@ public class JobDeleteTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockJsonDeleteRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs/JOBNAME/JOBID", mockJsonDeleteRequestToken.getUrl());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class JobDeleteTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restjobs/jobs/JOBNAME/JOBID", mockJsonDeleteRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs/JOBNAME/JOBID", mockJsonDeleteRequestToken.getUrl());
     }
 
     @Test

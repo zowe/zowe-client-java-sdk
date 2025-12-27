@@ -43,11 +43,11 @@ import static org.mockito.Mockito.*;
 public class JobSubmitTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
-            .createTokenConnection("1", "1", new Cookie("hello=hello"));
+            .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private PutJsonZosmfRequest mockPutJsonZosmfRequest;
-    private PutTextZosmfRequest mockPutTextZosmfRequest ;
+    private PutTextZosmfRequest mockPutTextZosmfRequest;
     private PutJsonZosmfRequest mockPutJsonZosmfRequestToken;
     @TempDir
     private Path tempDir;
@@ -95,7 +95,7 @@ public class JobSubmitTest {
     public void tstJobSubmitSuccess() throws ZosmfRequestException {
         final JobSubmit jobSubmit = new JobSubmit(connection, mockPutJsonZosmfRequest);
         final Job job = jobSubmit.submit("TEST.DATASET");
-        assertEquals("https://1:1/zosmf/restjobs/jobs", mockPutJsonZosmfRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs", mockPutJsonZosmfRequest.getUrl());
         assertEquals("jobid", job.getJobId());
         assertEquals("jobname", job.getJobName());
         assertEquals("subsystem", job.getSubSystem());
@@ -116,7 +116,7 @@ public class JobSubmitTest {
         final Job job = jobSubmit.submit("TEST.DATASET");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockPutJsonZosmfRequestToken.getHeaders().toString());
-        assertEquals("https://1:1/zosmf/restjobs/jobs", mockPutJsonZosmfRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs", mockPutJsonZosmfRequestToken.getUrl());
         assertEquals("jobid", job.getJobId());
         assertEquals("jobname", job.getJobName());
         assertEquals("subsystem", job.getSubSystem());

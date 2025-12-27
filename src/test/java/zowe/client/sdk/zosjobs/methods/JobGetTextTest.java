@@ -35,9 +35,9 @@ import static org.mockito.Mockito.withSettings;
 public class JobGetTextTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
-            .createTokenConnection("1", "1", new Cookie("hello=hello"));
+            .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private GetTextZosmfRequest mockTextGetRequest;
 
     @BeforeEach
@@ -53,7 +53,7 @@ public class JobGetTextTest {
         Whitebox.setInternalState(getJobs, "request", mockTextGetRequest);
 
         final String results = getJobs.getSpoolContent("jobName", "jobId", 1L);
-        assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
         assertEquals("1\n2\n3\n", results);
     }
 
@@ -73,7 +73,7 @@ public class JobGetTextTest {
         String results = getJobs.getSpoolContent("jobName", "jobId", 1L);
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=text/plain; charset=UTF-8}",
                 mockTextGetRequestToken.getHeaders().toString());
-        assertEquals("https://1:1/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
+        assertEquals("https://1:443/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
         assertEquals("1\n2\n3\n", results);
     }
 

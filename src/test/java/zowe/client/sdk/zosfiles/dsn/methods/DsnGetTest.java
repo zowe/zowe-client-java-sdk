@@ -43,9 +43,9 @@ import static org.mockito.Mockito.withSettings;
 public class DsnGetTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
-            .createTokenConnection("1", "1", new Cookie("hello=hello"));
+            .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private GetStreamZosmfRequest mockGetRequest;
     private GetStreamZosmfRequest mockGetRequestToken;
 
@@ -74,7 +74,7 @@ public class DsnGetTest {
         final DsnDownloadInputData downloadInputData = new DsnDownloadInputData.Builder().binary(true).build();
         final InputStream inputStream = dsnGet.get("TEST.DATASET", downloadInputData);
         assertEquals("test data", new String(inputStream.readAllBytes()));
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET", mockGetRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET", mockGetRequest.getUrl());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class DsnGetTest {
         assertEquals("{X-IBM-Data-Type=binary, Accept-Encoding=gzip, X-CSRF-ZOSMF-HEADER=true, " +
                 "Content-Type=application/json}", mockGetRequestToken.getHeaders().toString());
         assertEquals("test data", new String(inputStream.readAllBytes()));
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET", mockGetRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET", mockGetRequestToken.getUrl());
     }
 
     @Test
@@ -103,7 +103,7 @@ public class DsnGetTest {
                         "X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockGetRequestToken.getHeaders().toString());
         assertEquals("test data", new String(inputStream.readAllBytes()));
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET", mockGetRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET", mockGetRequestToken.getUrl());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class DsnGetTest {
                         "X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockGetRequestToken.getHeaders().toString());
         assertEquals("test data", new String(inputStream.readAllBytes()));
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET", mockGetRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET", mockGetRequestToken.getUrl());
     }
 
     @Test
@@ -135,7 +135,7 @@ public class DsnGetTest {
                         "X-IBM-Response-Timeout=30, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockGetRequestToken.getHeaders().toString());
         assertEquals("test data", new String(inputStream.readAllBytes()));
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET", mockGetRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET", mockGetRequestToken.getUrl());
     }
 
     @Test
@@ -151,7 +151,7 @@ public class DsnGetTest {
                         "X-IBM-Response-Timeout=30, X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockGetRequestToken.getHeaders().toString());
         assertEquals("test data", new String(inputStream.readAllBytes()));
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET", mockGetRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET", mockGetRequestToken.getUrl());
     }
 
     @Test
@@ -167,7 +167,7 @@ public class DsnGetTest {
                         " Content-Type=application/json}",
                 mockGetRequestToken.getHeaders().toString());
         assertEquals("test data", new String(inputStream.readAllBytes()));
-        assertEquals("https://1:1/zosmf/restfiles/ds/TEST.DATASET", mockGetRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET", mockGetRequestToken.getUrl());
     }
 
     @Test

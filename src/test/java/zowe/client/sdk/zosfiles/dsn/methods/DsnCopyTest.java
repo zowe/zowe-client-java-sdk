@@ -34,9 +34,9 @@ import static org.mockito.Mockito.*;
 public class DsnCopyTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
-            .createTokenConnection("1", "1", new Cookie("hello=hello"));
+            .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private PutJsonZosmfRequest mockJsonPutRequest;
     private PutJsonZosmfRequest mockJsonPutRequestToken;
 
@@ -66,7 +66,7 @@ public class DsnCopyTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restfiles/ds/to", mockJsonPutRequest.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/to", mockJsonPutRequest.getUrl());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class DsnCopyTest {
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:1/zosmf/restfiles/ds/to", mockJsonPutRequestToken.getUrl());
+        assertEquals("https://1:443/zosmf/restfiles/ds/to", mockJsonPutRequestToken.getUrl());
     }
 
     @Test

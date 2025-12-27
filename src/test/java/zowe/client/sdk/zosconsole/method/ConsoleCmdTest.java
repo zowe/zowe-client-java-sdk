@@ -45,9 +45,9 @@ import static org.mockito.Mockito.withSettings;
 public class ConsoleCmdTest {
 
     private final ZosConnection connection = ZosConnectionFactory
-            .createBasicConnection("1", "1", "1", "1");
+            .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
-            .createTokenConnection("1", "1", new Cookie("hello=hello"));
+            .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private PutJsonZosmfRequest mockJsonPutRequest;
 
     @BeforeEach
