@@ -269,6 +269,7 @@ Thin JAR (recommended):
 
 Fat JAR (with dependencies):  
   
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '6.0.0-RC1', classifier: 'jar-with-dependencies'
   
 ## Publishing to Maven Central  
   
