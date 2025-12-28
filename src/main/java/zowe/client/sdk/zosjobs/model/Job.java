@@ -99,7 +99,6 @@ public class Job {
 
     /**
      * Member name of the z/OS system on which the job ran (up to 8 characters)
-     *
      */
     private final String execMember;
 
@@ -122,6 +121,20 @@ public class Job {
      * Text identifying one or more reasons why the job is not running
      */
     private final String reasonNotRunning;
+
+    /* Null-handling helpers */
+
+    private static String orEmpty(String value) {
+        return value == null ? "" : value;
+    }
+
+    private static JobStepData[] orEmpty(JobStepData[] value) {
+        return value == null ? new JobStepData[0] : value;
+    }
+
+    private static Long orZero(Long value) {
+        return value == null ? 0L : value;
+    }
 
     /**
      * Job constructor for Jackson JSON parsing.
@@ -169,53 +182,204 @@ public class Job {
             @JsonProperty("exec-started") final String execStarted,
             @JsonProperty("exec-ended") final String execEnded,
             @JsonProperty("reason-not-running") final String reasonNotRunning) {
-        this.jobId = id == null ? "" : id;
-        this.jobName = name == null ? "" : name;
-        this.subSystem = subSystem == null ? "" : subSystem;
-        this.owner = owner == null ? "" : owner;
-        this.status = status == null ? "" : status;
-        this.type = type == null ? "" : type;
-        this.classs = classs == null ? "" : classs;
-        this.retCode = retCode == null ? "" : retCode;
-        this.stepData = stepData == null ? new JobStepData[0] : stepData;
-        this.url = url == null ? "" : url;
-        this.filesUrl = filesUrl == null ? "" : filesUrl;
-        this.jobCorrelator = jobCorrelator == null ? "" : jobCorrelator;
-        this.phase = phase == null ? 0L : phase;
-        this.phaseName = phaseName == null ? "" : phaseName;
-        this.execSystem = execSystem == null ? "" : execSystem;
-        this.execMember = execMember == null ? "" : execMember;
-        this.execSubmitted = execSubmitted == null ? "" : execSubmitted;
-        this.execStarted = execStarted == null ? "" : execStarted;
-        this.execEnded = execEnded == null ? "" : execEnded;
-        this.reasonNotRunning = reasonNotRunning == null ? "" : reasonNotRunning;
+
+        this.jobId = orEmpty(id);
+        this.jobName = orEmpty(name);
+        this.subSystem = orEmpty(subSystem);
+        this.owner = orEmpty(owner);
+        this.status = orEmpty(status);
+        this.type = orEmpty(type);
+        this.classs = orEmpty(classs);
+        this.retCode = orEmpty(retCode);
+        this.stepData = orEmpty(stepData);
+        this.url = orEmpty(url);
+        this.filesUrl = orEmpty(filesUrl);
+        this.jobCorrelator = orEmpty(jobCorrelator);
+        this.phase = orZero(phase);
+        this.phaseName = orEmpty(phaseName);
+        this.execSystem = orEmpty(execSystem);
+        this.execMember = orEmpty(execMember);
+        this.execSubmitted = orEmpty(execSubmitted);
+        this.execStarted = orEmpty(execStarted);
+        this.execEnded = orEmpty(execEnded);
+        this.reasonNotRunning = orEmpty(reasonNotRunning);
+    }
+
+    /* Builder */
+
+    /**
+     * Create a new {@link Builder} for {@link Job}.
+     *
+     * @return builder instance
+     */
+    public static Builder builder() {
+        return new Builder();
     }
 
     /**
-     * Retrieve classs specified
-     *
-     * @return classs value
+     * Builder for {@link Job}.
+     * <p>
+     * Required fields:
+     * <ul>
+     *   <li>{@code jobId}</li>
+     *   <li>{@code jobName}</li>
+     * </ul>
      */
-    public String getClasss() {
-        return classs;
-    }
+    public static final class Builder {
 
-    /**
-     * Retrieve filesUrl specified
-     *
-     * @return filesUrl value
-     */
-    public String getFilesUrl() {
-        return filesUrl;
-    }
+        private String jobId;
+        private String jobName;
+        private String subSystem;
+        private String owner;
+        private String status;
+        private String type;
+        private String classs;
+        private String retCode;
+        private JobStepData[] stepData;
+        private String url;
+        private String filesUrl;
+        private String jobCorrelator;
+        private Long phase;
+        private String phaseName;
+        private String execSystem;
+        private String execMember;
+        private String execSubmitted;
+        private String execStarted;
+        private String execEnded;
+        private String reasonNotRunning;
 
-    /**
-     * Retrieve jobCorrelator specified
-     *
-     * @return jobCorrelator value
-     */
-    public String getJobCorrelator() {
-        return jobCorrelator;
+        private Builder() {
+        }
+
+        public Builder jobId(String jobId) {
+            this.jobId = jobId;
+            return this;
+        }
+
+        public Builder jobName(String jobName) {
+            this.jobName = jobName;
+            return this;
+        }
+
+        public Builder subSystem(String subSystem) {
+            this.subSystem = subSystem;
+            return this;
+        }
+
+        public Builder owner(String owner) {
+            this.owner = owner;
+            return this;
+        }
+
+        public Builder status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder type(String type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder classs(String classs) {
+            this.classs = classs;
+            return this;
+        }
+
+        public Builder retCode(String retCode) {
+            this.retCode = retCode;
+            return this;
+        }
+
+        public Builder stepData(JobStepData[] stepData) {
+            this.stepData = stepData;
+            return this;
+        }
+
+        public Builder url(String url) {
+            this.url = url;
+            return this;
+        }
+
+        public Builder filesUrl(String filesUrl) {
+            this.filesUrl = filesUrl;
+            return this;
+        }
+
+        public Builder jobCorrelator(String jobCorrelator) {
+            this.jobCorrelator = jobCorrelator;
+            return this;
+        }
+
+        public Builder phase(Long phase) {
+            this.phase = phase;
+            return this;
+        }
+
+        public Builder phaseName(String phaseName) {
+            this.phaseName = phaseName;
+            return this;
+        }
+
+        public Builder execSystem(String execSystem) {
+            this.execSystem = execSystem;
+            return this;
+        }
+
+        public Builder execMember(String execMember) {
+            this.execMember = execMember;
+            return this;
+        }
+
+        public Builder execSubmitted(String execSubmitted) {
+            this.execSubmitted = execSubmitted;
+            return this;
+        }
+
+        public Builder execStarted(String execStarted) {
+            this.execStarted = execStarted;
+            return this;
+        }
+
+        public Builder execEnded(String execEnded) {
+            this.execEnded = execEnded;
+            return this;
+        }
+
+        public Builder reasonNotRunning(String reasonNotRunning) {
+            this.reasonNotRunning = reasonNotRunning;
+            return this;
+        }
+
+        /**
+         * Build a {@link Job}.
+         *
+         * @return immutable {@link Job}
+         */
+        public Job build() {
+            return new Job(
+                    jobId,
+                    jobName,
+                    subSystem,
+                    owner,
+                    status,
+                    type,
+                    classs,
+                    retCode,
+                    stepData,
+                    url,
+                    filesUrl,
+                    jobCorrelator,
+                    phase,
+                    phaseName,
+                    execSystem,
+                    execMember,
+                    execSubmitted,
+                    execStarted,
+                    execEnded,
+                    reasonNotRunning
+            );
+        }
     }
 
     /**
@@ -237,12 +401,92 @@ public class Job {
     }
 
     /**
+     * Retrieve subSystem specified
+     *
+     * @return subSystem value
+     */
+    public String getSubSystem() {
+        return subSystem;
+    }
+
+    /**
      * Retrieve an owner specified
      *
      * @return owner value
      */
     public String getOwner() {
         return owner;
+    }
+
+    /**
+     * Retrieve status specified
+     *
+     * @return status value
+     */
+    public String getStatus() {
+        return status;
+    }
+      /**
+     * Retrieve type specified
+     *
+     * @return type value
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Retrieve classs specified
+     *
+     * @return classs value
+     */
+    public String getClasss() {
+        return classs;
+    }
+
+    /**
+     * Retrieve retCode specified
+     *
+     * @return retCode value
+     */
+    public String getRetCode() {
+        return retCode;
+    }
+
+    /**
+     * Retrieve stepData specified
+     *
+     * @return stepData value
+     */
+    public JobStepData[] getStepData() {
+        return stepData;
+    }
+
+    /**
+     * Retrieve url specified
+     *
+     * @return url value
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Retrieve filesUrl specified
+     *
+     * @return filesUrl value
+     */
+    public String getFilesUrl() {
+        return filesUrl;
+    }
+
+    /**
+     * Retrieve jobCorrelator specified
+     *
+     * @return jobCorrelator value
+     */
+    public String getJobCorrelator() {
+        return jobCorrelator;
     }
 
     /**
@@ -261,60 +505,6 @@ public class Job {
      */
     public String getPhaseName() {
         return phaseName;
-    }
-
-    /**
-     * Retrieve retCode specified
-     *
-     * @return retCode value
-     */
-    public String getRetCode() {
-        return retCode;
-    }
-
-    /**
-     * Retrieve status specified
-     *
-     * @return status value
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
-     * Retrieve stepData specified
-     *
-     * @return stepData value
-     */
-    public JobStepData[] getStepData() {
-        return stepData;
-    }
-
-    /**
-     * Retrieve subSystem specified
-     *
-     * @return subSystem value
-     */
-    public String getSubSystem() {
-        return subSystem;
-    }
-
-    /**
-     * Retrieve type specified
-     *
-     * @return type value
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Retrieve url specified
-     *
-     * @return url value
-     */
-    public String getUrl() {
-        return url;
     }
 
     /**
