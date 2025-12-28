@@ -426,7 +426,8 @@ public class Job {
     public String getStatus() {
         return status;
     }
-      /**
+
+    /**
      * Retrieve type specified
      *
      * @return type value

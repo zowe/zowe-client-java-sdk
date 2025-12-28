@@ -42,10 +42,16 @@ public class ZosmfStatusExp extends TstZosConnection {
         ZosmfInfoResponse zosmfInfoResponse;
         try {
             zosmfInfoResponse = zosmfStatus.get();
-        } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+} catch (ZosmfRequestException e) {
+    String errMsg = e.getMessage();
+    if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+        String response = e.getResponse().getResponsePhrase().get().toString();
+        if (!resp.isBlank() && !"{}".equals(response)) {
+            errMsg = response;
         }
+    }
+    throw new RuntimeException(errMsg, e);
+}
         System.out.println(zosmfInfoResponse.toString());
         Arrays.stream(zosmfInfoResponse.getZosmfPluginsInfo()).forEach(System.out::println);
     }
@@ -91,8 +97,14 @@ public class ZosmfSystemsExp extends TstZosConnection {
         try {
             zosmfInfoResponse = zosmfSystems.get();
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         System.out.println(zosmfInfoResponse.toString());
         Arrays.stream(zosmfInfoResponse.getDefinedSystems().orElse(new DefinedSystem[0])).forEach(System.out::println);

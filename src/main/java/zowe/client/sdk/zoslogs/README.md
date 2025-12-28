@@ -52,8 +52,14 @@ public class ZosLogExp extends TstZosConnection {
         try {
             zosLogReply = zosLog.issueCommand(zosLogInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         zosLogReply.getItems().forEach(i -> {
             String msg = i.getTime() + " " + i.getMessage();
@@ -70,8 +76,14 @@ public class ZosLogExp extends TstZosConnection {
         try {
             zosLogReply = zosLog.issueCommand(zosLogInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         zosLogReply.getItems().forEach(i -> {
             String msg = i.getTime() + " " + i.getMessage();
