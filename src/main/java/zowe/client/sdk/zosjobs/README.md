@@ -65,8 +65,14 @@ public class JobCancelExp extends TstZosConnection {
         try {
             return new JobCancel(connection).cancelCommon(modifyInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -85,8 +91,14 @@ public class JobCancelExp extends TstZosConnection {
         try {
             return new JobCancel(connection).cancelCommon(modifyInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -104,8 +116,14 @@ public class JobCancelExp extends TstZosConnection {
             Job job = new Job(Job.builder().jobId(jobId).jobName("jobName").build());
             return new JobCancel(connection).cancelByJob(job, null);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -122,8 +140,14 @@ public class JobCancelExp extends TstZosConnection {
         try {
             return new JobCancel(connection).cancel(jobName, jobId, null);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -189,8 +213,14 @@ public class JobDeleteExp extends TstZosConnection {
         try {
             return new JobDelete(connection).deleteCommon(jobModifyInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -209,8 +239,14 @@ public class JobDeleteExp extends TstZosConnection {
         try {
             return new JobDelete(connection).deleteCommon(jobModifyInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -228,8 +264,14 @@ public class JobDeleteExp extends TstZosConnection {
             Job job = new Job(Job.builder().jobId(jobId).jobName("jobName").build());
             return new JobDelete(connection).deleteByJob(job, null);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -246,8 +288,14 @@ public class JobDeleteExp extends TstZosConnection {
         try {
             return new JobDelete(connection).delete(jobName, jobId, null);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -332,8 +380,14 @@ public class JobGetExp extends TstZosConnection {
             String response = jobGet.getJclCommon(commonJobInputData);
             System.out.println(response);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -349,8 +403,14 @@ public class JobGetExp extends TstZosConnection {
             List<Job> jobs = jobGet.getByPrefix(prefix);
             System.out.println(jobGet.getJclByJob(jobs.get(0)));
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -368,8 +428,14 @@ public class JobGetExp extends TstZosConnection {
             String jobId = jobs.get(0).getJobId();
             System.out.println(jobGet.getJcl(jobName, jobId));
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -386,8 +452,14 @@ public class JobGetExp extends TstZosConnection {
             Job job = jobGet.getStatusByJob(jobs.get(0));
             System.out.println(job);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -409,8 +481,14 @@ public class JobGetExp extends TstZosConnection {
             System.out.println(job.toString());
             Arrays.stream(job.getStepData()).forEach(System.out::println);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -429,8 +507,14 @@ public class JobGetExp extends TstZosConnection {
             Job job = jobGet.getStatus(jobName, jobId);
             System.out.println(job.toString());
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -445,8 +529,14 @@ public class JobGetExp extends TstZosConnection {
         try {
             jobGet.getById(jobId);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -464,8 +554,14 @@ public class JobGetExp extends TstZosConnection {
             Job job = jobGet.getById(jobId);
             System.out.println(job.toString());
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -483,8 +579,14 @@ public class JobGetExp extends TstZosConnection {
         try {
             jobs = jobGet.getByOwnerAndPrefix(owner, prefix);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         jobs.forEach(System.out::println);
     }
@@ -501,8 +603,14 @@ public class JobGetExp extends TstZosConnection {
         try {
             jobs = jobGet.getByPrefix(prefix);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         jobs.forEach(System.out::println);
     }
@@ -519,8 +627,14 @@ public class JobGetExp extends TstZosConnection {
         try {
             jobs = jobGet.getAll();
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         jobs.forEach(System.out::println);
     }
@@ -540,8 +654,14 @@ public class JobGetExp extends TstZosConnection {
             List<JobFile> files = jobGet.getSpoolFilesByJob(jobs.get(0));
             output = jobGet.getSpoolContent(files.get(0)).split("\n");
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         // get last 10 lines of output
         for (int i = output.length - 10; i < output.length; i++) {
@@ -561,8 +681,14 @@ public class JobGetExp extends TstZosConnection {
         try {
             jobs = jobGet.getByOwner(owner);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         jobs.forEach(System.out::println);
     }
@@ -581,8 +707,14 @@ public class JobGetExp extends TstZosConnection {
             List<Job> jobs = jobGet.getCommon(jobGetInputData);
             files = jobGet.getSpoolFilesByJob(jobs.get(0));
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         files.forEach(System.out::println);
     }
@@ -603,8 +735,14 @@ public class JobGetExp extends TstZosConnection {
             String jobId = jobs.get(0).getJobId();
             files = jobGet.getSpoolFiles(jobName, jobId);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         files.forEach(System.out::println);
     }
@@ -688,8 +826,14 @@ public class JobMonitorExp extends TstZosConnection {
         try {
             System.out.println(jobMonitor.isRunning(jobMonitorInputData));
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -708,8 +852,14 @@ public class JobMonitorExp extends TstZosConnection {
             JobMonitor jobMonitor = new JobMonitor(connection);
             job = jobMonitor.waitByOutputStatus(job);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         System.out.println(job.getStatus());
     }
@@ -731,8 +881,14 @@ public class JobMonitorExp extends TstZosConnection {
             String jobId = job.getJobId();
             job = jobMonitor.waitByOutputStatus(jobName, jobId);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         System.out.println(job.getStatus());
     }
@@ -752,8 +908,14 @@ public class JobMonitorExp extends TstZosConnection {
         try {
             job = jobMonitor.waitByStatus(job, statusType);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         System.out.println(job.getStatus());
     }
@@ -775,8 +937,14 @@ public class JobMonitorExp extends TstZosConnection {
             String jobId = job.getJobId();
             job = jobMonitor.waitByStatus(jobName, jobId, statusType);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         System.out.println(job.getStatus());
     }
@@ -796,8 +964,14 @@ public class JobMonitorExp extends TstZosConnection {
         try {
             System.out.println("Found message = " + jobMonitor.waitByMessage(job, message));
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -862,18 +1036,15 @@ public class JobSubmitExp extends TstZosConnection {
             job = JobSubmitExp.submitByLocalFile(connection, filePath);
             System.out.println("submitByLocalFile output: \n" + job);
         } catch (ZosmfRequestException e) {
-            // Safely extracts the response phrase as a string, ensuring it is neither null nor blank nor empty JSON object;
-            // otherwise, falls back to the exception's default message.
-            Predicate<String> isNotBlankStr = s -> !s.isBlank();
-            Predicate<String> isNotEmptyJson = s -> !s.equals("{}");
-            final String errMsg = Optional.ofNullable(e.getResponse())
-                    .flatMap(Response::getResponsePhrase)
-                    .map(Object::toString)
-                    .filter(isNotBlankStr.and(isNotEmptyJson))
-                    .orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
-
     }
 
     /**

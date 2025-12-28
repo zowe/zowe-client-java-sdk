@@ -60,8 +60,14 @@ public class UssCreateExp extends TstZosConnection {
             UssCreateInputData ussCreateInputData = new UssCreateInputData(CreateType.DIR, "-wx-wx-wx");
             return ussCreate.create(value, ussCreateInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -78,8 +84,14 @@ public class UssCreateExp extends TstZosConnection {
             UssCreateInputData ussCreateInputData = new UssCreateInputData(CreateType.FILE, "-wx-wx-wx");
             return ussCreate.create(value, ussCreateInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -137,8 +149,14 @@ public class UssDeleteExp extends TstZosConnection {
         try {
             return ussDelete.delete(value);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -153,8 +171,14 @@ public class UssDeleteExp extends TstZosConnection {
         try {
             return ussDelete.delete(value, true);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -228,8 +252,14 @@ public class UssGetExp extends TstZosConnection {
             UssGetInputData ussGetInputData = new UssGetInputData.Builder().insensitive(false).search("apple").build();
             response = ussGet.getCommon(fileNamePath, ussGetInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.getResponsePhrase().orElse("no response phrase"));
@@ -249,8 +279,14 @@ public class UssGetExp extends TstZosConnection {
             UssGetInputData ussGetInputData = new UssGetInputData.Builder().insensitive(false).search("Apple").build();
             response = ussGet.getCommon(fileNamePath, ussGetInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.getResponsePhrase().orElse("no response phrase"));
@@ -268,8 +304,14 @@ public class UssGetExp extends TstZosConnection {
             UssGet ussGet = new UssGet(connection);
             content = ussGet.getText(fileNamePath);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(content);
@@ -288,8 +330,14 @@ public class UssGetExp extends TstZosConnection {
             UssGetInputData ussGetInputData = new UssGetInputData.Builder().recordsRange("-2").build();
             response = ussGet.getCommon(fileNamePath, ussGetInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.getResponsePhrase().orElse("no response phrase"));
@@ -353,8 +401,14 @@ public class UssListExp extends TstZosConnection {
             UssListZfsInputData ussListZfsInputData = new UssListZfsInputData.Builder().path(value).build();
             items = ussList.getZfsSystems(ussListZfsInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         items.forEach(System.out::println);
@@ -373,8 +427,14 @@ public class UssListExp extends TstZosConnection {
             UssListInputData ussListInputData = new UssListInputData.Builder().path(value).build();
             items = ussList.getFiles(ussListInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         items.forEach(System.out::println);

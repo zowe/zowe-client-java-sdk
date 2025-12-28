@@ -72,8 +72,14 @@ public class DsnCopyExp extends TstZosConnection {
             DsnCopy dsnCopy = new DsnCopy(connection);
             response = dsnCopy.copy(fromDataSetName, toDataSetName, true, false);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.toString());
@@ -105,8 +111,14 @@ public class DsnCopyExp extends TstZosConnection {
             DsnCopyInputData dsnCopyInputData = new DsnCopyInputData.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).build();
             response = dsnCopy.copyCommon(dsnCopyInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.toString());
@@ -137,8 +149,14 @@ public class DsnCopyExp extends TstZosConnection {
                     .copyAllMembers(true).build();
             response = dsnCopy.copyCommon(dsnCopyInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.toString());
@@ -198,8 +216,14 @@ public class DsnCreateExp extends TstZosConnection {
             DsnCreate dsnCreate = new DsnCreate(connection);
             response = dsnCreate.create(dataSetName, sequential());
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.toString());
@@ -217,8 +241,14 @@ public class DsnCreateExp extends TstZosConnection {
             DsnCreate dsnCreate = new DsnCreate(connection);
             response = dsnCreate.create(dataSetName, partitioned());
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.toString());
@@ -362,8 +392,14 @@ public class DsnGetInfoExp extends TstZosConnection {
             DsnGet dsnGet = new DsnGet(connection);
             return dsnGet.getDsnInfo(dataSetName);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
     }
 
@@ -420,8 +456,14 @@ public class DsnDeleteExp extends TstZosConnection {
             DsnDelete zosDsn = new DsnDelete(connection);
             response = zosDsn.delete(dataSetName);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.toString());
@@ -440,8 +482,14 @@ public class DsnDeleteExp extends TstZosConnection {
             DsnDelete zosDsn = new DsnDelete(connection);
             response = zosDsn.delete(dataSetName, member);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.toString());
@@ -629,8 +677,14 @@ public class DsnListExp extends TstZosConnection {
             DsnList dsnList = new DsnList(connection);
             datasets = dsnList.getMembers(dataSetName, dsnListInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         datasets.forEach(m -> System.out.println(m.toString()));
     }
@@ -649,8 +703,14 @@ public class DsnListExp extends TstZosConnection {
             DsnList dsnList = new DsnList(connection);
             datasets = dsnList.getMembers(dataSetName, dsnListInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         datasets.forEach(m -> System.out.println(m.toString()));
     }
@@ -669,8 +729,14 @@ public class DsnListExp extends TstZosConnection {
             DsnList dsnList = new DsnList(connection);
             datasets = dsnList.getDatasets(dataSetName, dsnListInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         datasets.forEach(System.out::println);
     }
@@ -689,8 +755,14 @@ public class DsnListExp extends TstZosConnection {
             DsnList dsnList = new DsnList(connection);
             datasets = dsnList.getDatasets(dataSetName, dsnListInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
         datasets.forEach(System.out::println);
     }
@@ -752,8 +824,14 @@ public class DsnWriteExp extends TstZosConnection {
             DsnWrite dsnWrite = new DsnWrite(connection);
             response = dsnWrite.write(dataSetName, member, content);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.toString());
@@ -772,8 +850,14 @@ public class DsnWriteExp extends TstZosConnection {
             DsnWrite dsnWrite = new DsnWrite(connection);
             response = dsnWrite.write(dataSetName, content);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.toString());

@@ -49,8 +49,14 @@ public class IssueConsoleExp extends TstZosConnection {
             ConsoleCmd consoleCmd = new ConsoleCmd(connection);
             response = consoleCmd.issueCommand(cmd);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.getCmdResponse());
@@ -71,8 +77,14 @@ public class IssueConsoleExp extends TstZosConnection {
             consoleInputData.setProcessResponse();
             response = consoleCmd.issueCommandCommon(ConsoleConstants.RES_DEF_CN, consoleInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
-            throw new RuntimeException(errMsg);
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
 
         System.out.println(response.getCmdResponse());
