@@ -100,7 +100,7 @@ public class TsoStart {
         try {
             rootNode = objectMapper.readTree(responseStr);
         } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException(e.getMessage());
+            throw new ZosmfRequestException(e.getMessage(), e);
         }
 
         final JsonNode keyNode = rootNode.get("servletKey");
