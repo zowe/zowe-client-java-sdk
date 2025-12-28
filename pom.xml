@@ -6,7 +6,7 @@
 
     <groupId>org.zowe.client.java.sdk</groupId>
     <artifactId>zowe-client-java-sdk</artifactId>
-    <version>5.2.3</version>
+    <version>6.0.0-RC1</version>
 
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
