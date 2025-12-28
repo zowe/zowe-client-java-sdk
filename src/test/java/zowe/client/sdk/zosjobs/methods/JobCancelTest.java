@@ -196,37 +196,17 @@ public class JobCancelTest {
 
         // jobName is null or empty
         exception = assertThrows(IllegalArgumentException.class, () ->
-                jobCancel.cancelByJob(
-                        new Job("1", null, null, null, null,
-                                null, null, null, null, null,
-                                null, null, null, null,
-                                null, null, null, null,
-                                null, null),
-                        "1"));
+                jobCancel.cancelByJob(Job.builder().jobId("1").build(), "1"));
         assertTrue(exception.getMessage().contains("jobName is either null or empty"));
 
         // jobId is null or empty
         exception = assertThrows(IllegalArgumentException.class, () ->
-                jobCancel.cancelByJob(
-                        new Job(
-                                null, "name", null, null, null,
-                                null, null, null, null, null,
-                                null, null, null, null,
-                                null, null, null, null,
-                                null, null),
-                        "1"));
+                jobCancel.cancelByJob(Job.builder().jobName("name").build(), "1"));
         assertTrue(exception.getMessage().contains("jobId is either null or empty"));
 
         // invalid version specified
         exception = assertThrows(IllegalArgumentException.class, () ->
-                jobCancel.cancelByJob(
-                        new Job(
-                                "name", "1", null, null, null,
-                                null, null, null, null, null,
-                                null, null, null, null,
-                                null, null, null, null,
-                                null, null),
-                        "4"));
+                jobCancel.cancelByJob(Job.builder().jobId("name").jobName("1").build(), "4"));
         assertTrue(exception.getMessage().contains("invalid version specified"));
     }
 

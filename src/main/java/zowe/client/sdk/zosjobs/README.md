@@ -101,11 +101,7 @@ public class JobCancelExp extends TstZosConnection {
         jobId = "xxx";
         jobName = "xxx";
         try {
-            Job job = new Job(jobId, "jobName", null, null, null,
-                    null, null, null, null, null,
-                    null, null, null, null,
-                    null, null, null, null,
-                    null, null);
+            Job job = new Job(Job.builder().jobId(jobId).jobName("jobName").build());
             return new JobCancel(connection).cancelByJob(job, null);
         } catch (ZosmfRequestException e) {
             String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
@@ -229,11 +225,7 @@ public class JobDeleteExp extends TstZosConnection {
         jobId = "xxx";
         jobName = "xxx";
         try {
-            Job job =new Job(jobId, "jobName", null, null, null,
-                    null, null, null, null, null,
-                    null, null, null, null,
-                    null, null, null, null,
-                    null, null);
+            Job job = new Job(Job.builder().jobId(jobId).jobName("jobName").build());
             return new JobDelete(connection).deleteByJob(job, null);
         } catch (ZosmfRequestException e) {
             String errMsg = (String) e.getResponse().getResponsePhrase().orElse(e.getMessage());
@@ -276,8 +268,10 @@ import zowe.client.sdk.zosjobs.input.JobGetInputData;
 import zowe.client.sdk.zosjobs.methods.JobGet;
 import zowe.client.sdk.zosjobs.model.Job;
 import zowe.client.sdk.zosjobs.model.JobFile;
+
 import java.util.Arrays;
 import java.util.List;
+
 /**
  * Class example to showcase JobGet class functionality.
  *
@@ -752,12 +746,8 @@ public class JobMonitorExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void monitorJobForStatusByJobObject(JobStatus.Type statusType) {
-        // determine an existing job in your system that is in execute queue and make a Job for it
-        Job job = new Job("xxx", "xxx", null, null, null,
-                null, null, null, null, null,
-                null, null, null, null,
-                null, null, null, null,
-                null, null);
+        // define an existing job in your system that is in execute queue
+        Job job = new Job(Job.builder().jobId("xxx").jobName("xxx").build());
         JobMonitor jobMonitor = new JobMonitor(connection);
         try {
             job = jobMonitor.waitByStatus(job, statusType);
@@ -777,12 +767,8 @@ public class JobMonitorExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void monitorJobForStatusByJobNameAndId(JobStatus.Type statusType) {
-        // determine an existing job in your system that is in execute queue and make a Job for it
-        Job job = new Job("xxx", "xxx", null, null, null,
-                null, null, null, null, null,
-                null, null, null, null,
-                null, null, null, null,
-                null, null);
+        // define an existing job in your system that is in execute queue
+        Job job = new Job(Job.builder().jobId("xxx").jobName("xxx").build());
         JobMonitor jobMonitor = new JobMonitor(connection);
         try {
             String jobName = job.getJobName();
@@ -804,12 +790,8 @@ public class JobMonitorExp extends TstZosConnection {
      * @author Frank Giordano
      */
     public static void monitorWaitForJobMessage(String message) {
-        // determine an existing job in your system that is in execute queue and make a Job for it
-        Job job = new Job("xxx", "xxx", null, null, null,
-                null, null, null, null, null,
-                null, null, null, null,
-                null, null, null, null,
-                null, null);
+        // define an existing job in your system that is in execute queue
+        Job job = new Job(Job.builder().jobId("xxx").jobName("xxx").build());
         JobMonitor jobMonitor = new JobMonitor(connection);
         try {
             System.out.println("Found message = " + jobMonitor.waitByMessage(job, message));
@@ -891,7 +873,7 @@ public class JobSubmitExp extends TstZosConnection {
                     .orElse(e.getMessage());
             throw new RuntimeException(errMsg);
         }
-        
+
     }
 
     /**

@@ -346,11 +346,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonStatusForJobNoParamsExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getStatusByJob(new Job(null, null, null, null, null,
-                    null, null, null, null, null,
-                    null, null, null, null,
-                    null, null, null, null,
-                    null, null));
+            getJobs.getStatusByJob(Job.builder().build());
         } catch (IllegalStateException e) {
             errorMsg = e.getMessage();
         }
@@ -362,11 +358,7 @@ public class JobGetJsonTest {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(jobJson, 200, "success"));
 
-        final Job job = getJobs.getStatusByJob(new Job("1", "jobName", null, null, null,
-                null, null, null, null, null,
-                null, null, null, null,
-                null, null, null, null,
-                null, null));
+        final Job job = getJobs.getStatusByJob(Job.builder().jobId("1").jobName("jobName").build());
         assertEquals("https://1:443/zosmf/restjobs/jobs/jobName/1?step-data=Y", getJobs.getUrl());
         assertEquals("jobid", job.getJobId());
         assertEquals("jobname", job.getJobName());
@@ -478,11 +470,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonStatusForJobWithJobIdOnlyExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getStatusByJob(new Job("1", null, null, null, null,
-                    null, null, null, null, null,
-                    null, null, null, null,
-                    null, null, null, null,
-                    null, null));
+            getJobs.getStatusByJob(Job.builder().jobId("1").build());
         } catch (IllegalStateException e) {
             errorMsg = e.getMessage();
         }
@@ -493,11 +481,7 @@ public class JobGetJsonTest {
     public void tstJobGetJsonStatusForJobWithJobNameOnlyExceptionFailure() throws ZosmfRequestException {
         String errorMsg = "";
         try {
-            getJobs.getStatusByJob(new Job(null, "jobName", null, null, null,
-                    null, null, null, null, null,
-                    null, null, null, null,
-                    null, null, null, null,
-                    null, null));
+            getJobs.getStatusByJob(Job.builder().jobName("jobName").build());
         } catch (IllegalStateException e) {
             errorMsg = e.getMessage();
         }
