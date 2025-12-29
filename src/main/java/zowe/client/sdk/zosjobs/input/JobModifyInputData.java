@@ -40,6 +40,11 @@ public class JobModifyInputData {
     private final String version;
 
     /**
+     * Job class name
+     */
+    private final String jobClass;
+
+    /**
      * JobModifyInputData constructor
      *
      * @param builder JobModifyInputData.Builder object
@@ -49,6 +54,7 @@ public class JobModifyInputData {
         this.jobName = builder.jobName;
         this.jobId = builder.jobId;
         this.version = builder.version;
+        this.jobClass = builder.jobClass;
     }
 
     /**
@@ -81,7 +87,22 @@ public class JobModifyInputData {
      * @return version value
      */
     public Optional<String> getVersion() {
-        return Optional.ofNullable(version);
+        if (version == null || version.isBlank()) {
+            return Optional.empty();
+        }
+        return Optional.of(version);
+    }
+
+    /**
+     * Retrieve jobClass value
+     *
+     * @return jobClass value
+     */
+    public Optional<String> getJobClass() {
+        if (jobClass == null || jobClass.isBlank()) {
+            return Optional.empty();
+        }
+        return Optional.of(jobClass);
     }
 
     /**
@@ -95,6 +116,7 @@ public class JobModifyInputData {
                 "jobId=" + jobId +
                 ", jobName=" + jobName +
                 ", version=" + version +
+                ", jobClass=" + jobClass +
                 '}';
     }
 
@@ -112,6 +134,11 @@ public class JobModifyInputData {
          * Job id value specified for request
          */
         private final String jobId;
+
+        /**
+         * Job class name
+         */
+        private String jobClass;
 
         /**
          * Version value specified for the request.
@@ -142,6 +169,17 @@ public class JobModifyInputData {
          */
         public JobModifyInputData.Builder version(final String version) {
             this.version = version;
+            return this;
+        }
+
+        /**
+         * Set jobClass value
+         *
+         * @param jobClass jobClass value
+         * @return Builder object
+         */
+        public JobModifyInputData.Builder jobClass(final String jobClass) {
+            this.jobClass = jobClass;
             return this;
         }
 
