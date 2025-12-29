@@ -55,16 +55,6 @@ public final class JobsConstants {
     public static final String JOB_ID_ILLEGAL_MSG = "jobId is either null or empty";
 
     /**
-     * Use for a null exception error message
-     */
-    public static final String JOB_NAME_NULL_MSG = "jobName is either null or empty";
-
-    /**
-     * Use for a null exception error message
-     */
-    public static final String JOB_ID_NULL_MSG = "jobId is either null or empty";
-
-    /**
      * Query identifier
      */
     public static final String QUERY_ID = "?";
