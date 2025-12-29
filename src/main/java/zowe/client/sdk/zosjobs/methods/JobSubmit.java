@@ -112,7 +112,6 @@ public class JobSubmit {
      */
     public Job submitByJcl(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl)
             throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(jcl, "jcl");
         return this.submitJclCommon(new JobSubmitJclInputData(jcl, internalReaderRecfm, internalReaderLrecl));
     }
 
@@ -126,6 +125,7 @@ public class JobSubmit {
      */
     public Job submitJclCommon(final JobSubmitJclInputData submitJclInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(submitJclInputData == null, "submitJclInputData is null");
+        ValidateUtils.checkIllegalParameter(submitJclInputData.getJcl().isEmpty(), "jcl is either null or empty");
 
         String key, value;
         final Map<String, String> headers = new HashMap<>();
@@ -187,7 +187,6 @@ public class JobSubmit {
      * @author Frank Giordano
      */
     public Job submit(final String jobDataSet) throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(jobDataSet, "jobDataSet");
         return this.submitCommon(new JobSubmitInputData(jobDataSet));
     }
 
@@ -199,9 +198,9 @@ public class JobSubmit {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in JobSubmitInputData
     public Job submitCommon(final JobSubmitInputData submitInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(submitInputData == null, "submitInputData is null");
+        ValidateUtils.checkIllegalParameter(submitInputData.getJobDataSet().isEmpty(), "jobDataSet is either null or empty");
 
         final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE;
 

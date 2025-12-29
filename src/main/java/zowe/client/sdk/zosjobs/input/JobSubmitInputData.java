@@ -79,7 +79,10 @@ public class JobSubmitInputData {
      * @return jobDataSet value
      */
     public Optional<String> getJobDataSet() {
-        return Optional.ofNullable(jobDataSet);
+        if (jobDataSet == null || jobDataSet.isBlank()) {
+            return Optional.empty();
+        }
+        return Optional.of(jobDataSet);
     }
 
     /**

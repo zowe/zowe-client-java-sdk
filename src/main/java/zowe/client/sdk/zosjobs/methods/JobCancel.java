@@ -83,8 +83,6 @@ public class JobCancel {
      * @author Nikunj goyal
      */
     public Response cancel(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(jobName, JobsConstants.JOB_NAME_ILLEGAL_MSG);
-        ValidateUtils.checkIllegalParameter(jobId, JobsConstants.JOB_ID_ILLEGAL_MSG);
         return this.cancelCommon(new JobModifyInputData.Builder(jobName, jobId).version(version).build());
     }
 
@@ -117,8 +115,8 @@ public class JobCancel {
      */
     public Response cancelCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
-        ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_NULL_MSG);
-        ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_NULL_MSG);
+        ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
+        ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 
         // generate full url request
         final String url = connection.getZosmfUrl() +

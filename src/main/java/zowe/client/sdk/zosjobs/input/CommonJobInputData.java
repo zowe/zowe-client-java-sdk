@@ -70,7 +70,7 @@ public class CommonJobInputData {
      * @return jobId value
      */
     public Optional<String> getJobId() {
-        if (jobId == null || jobId.isEmpty()) {
+        if (jobId == null || jobId.isBlank()) {
             return Optional.empty();
         }
         return Optional.of(jobId);
@@ -82,7 +82,7 @@ public class CommonJobInputData {
      * @return jobName value
      */
     public Optional<String> getJobName() {
-        if (jobName == null || jobName.isEmpty()) {
+        if (jobName == null || jobName.isBlank()) {
             return Optional.empty();
         }
         return Optional.of(jobName);

@@ -105,7 +105,10 @@ public class JobMonitorInputData {
      * @return jobId value
      */
     public Optional<String> getJobId() {
-        return Optional.ofNullable(jobId);
+        if (jobId == null || jobId.isBlank()) {
+            return Optional.empty();
+        }
+        return Optional.of(jobId);
     }
 
     /**
@@ -114,7 +117,10 @@ public class JobMonitorInputData {
      * @return jobName value
      */
     public Optional<String> getJobName() {
-        return Optional.ofNullable(jobName);
+        if (jobName == null || jobName.isBlank()) {
+            return Optional.empty();
+        }
+        return Optional.of(jobName);
     }
 
     /**

@@ -77,8 +77,6 @@ public class JobDelete {
      * @author Nikunj goyal
      */
     public Response delete(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(jobName, "jobName");
-        ValidateUtils.checkIllegalParameter(jobId, "jobId");
         return deleteCommon(new JobModifyInputData.Builder(jobName, jobId).version(version).build());
     }
 
@@ -105,9 +103,10 @@ public class JobDelete {
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
-    @SuppressWarnings("OptionalGetWithoutIsPresent") // due to ValidateUtils done in JobModifyInputData
     public Response deleteCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(modifyInputData == null, "jobModifyInputData is null");
+        ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
+        ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 
         final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE + JobsConstants.FILE_DELIM +
                 modifyInputData.getJobName().get() + JobsConstants.FILE_DELIM + modifyInputData.getJobId().get();

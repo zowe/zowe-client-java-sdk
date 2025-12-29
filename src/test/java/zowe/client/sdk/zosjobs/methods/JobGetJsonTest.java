@@ -306,7 +306,7 @@ public class JobGetJsonTest {
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
-        assertEquals(JobsConstants.JOB_ID_NULL_MSG, errorMsg);
+        assertEquals(JobsConstants.JOB_ID_ILLEGAL_MSG, errorMsg);
     }
 
     @Test
@@ -317,7 +317,7 @@ public class JobGetJsonTest {
         } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
-        assertEquals(JobsConstants.JOB_NAME_NULL_MSG, errorMsg);
+        assertEquals(JobsConstants.JOB_NAME_ILLEGAL_MSG, errorMsg);
     }
 
     @Test
@@ -347,7 +347,7 @@ public class JobGetJsonTest {
         String errorMsg = "";
         try {
             getJobs.getStatusByJob(Job.builder().build());
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
         assertEquals(JobsConstants.JOB_NAME_ILLEGAL_MSG, errorMsg);
@@ -471,7 +471,7 @@ public class JobGetJsonTest {
         String errorMsg = "";
         try {
             getJobs.getStatusByJob(Job.builder().jobId("1").build());
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
         assertEquals(JobsConstants.JOB_NAME_ILLEGAL_MSG, errorMsg);
@@ -482,7 +482,7 @@ public class JobGetJsonTest {
         String errorMsg = "";
         try {
             getJobs.getStatusByJob(Job.builder().jobName("jobName").build());
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
             errorMsg = e.getMessage();
         }
         assertEquals(JobsConstants.JOB_ID_ILLEGAL_MSG, errorMsg);
