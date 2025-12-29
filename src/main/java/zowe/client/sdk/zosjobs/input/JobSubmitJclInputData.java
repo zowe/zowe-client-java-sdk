@@ -127,7 +127,10 @@ public class JobSubmitJclInputData {
      * @return jcl value
      */
     public Optional<String> getJcl() {
-        return Optional.ofNullable(jcl);
+        if (jcl == null || jcl.isBlank()) {
+            return Optional.empty();
+        }
+        return Optional.of(jcl);
     }
 
     /**
@@ -158,7 +161,7 @@ public class JobSubmitJclInputData {
     }
 
     /**
-     * Return string value representing JobSubmitJclInputData object
+     * Return a string value representing JobSubmitJclInputData object
      *
      * @return string representation of JobSubmitJclInputData
      */

@@ -63,7 +63,10 @@ public class JobGetInputData {
      * @return jobId value
      */
     public Optional<String> getJobId() {
-        return Optional.ofNullable(jobId);
+        if (jobId == null || jobId.isBlank()) {
+            return Optional.empty();
+        }
+        return Optional.of(jobId);
     }
 
     /**
@@ -81,7 +84,10 @@ public class JobGetInputData {
      * @return owner value
      */
     public Optional<String> getOwner() {
-        return Optional.ofNullable(owner);
+        if (owner == null || owner.isBlank()) {
+            return Optional.empty();
+        }
+        return Optional.of(owner);
     }
 
     /**
@@ -90,7 +96,10 @@ public class JobGetInputData {
      * @return prefix value
      */
     public Optional<String> getPrefix() {
-        return Optional.ofNullable(prefix);
+        if (prefix == null || prefix.isBlank()) {
+            return Optional.empty();
+        }
+        return Optional.of(prefix);
     }
 
     /**
