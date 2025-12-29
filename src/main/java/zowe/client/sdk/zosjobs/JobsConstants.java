@@ -25,14 +25,9 @@ public final class JobsConstants {
     }
 
     /**
-     * Default version of cancel
+     * Use request asynchronous processing represented by the default version 1.0
      */
-    public static final String DEFAULT_CANCEL_VERSION = "1.0";
-
-    /**
-     * Default version of delete
-     */
-    public static final String DEFAULT_DELETE_VERSION = "1.0";
+    public static final String DEFAULT_VERSION = "1.0";
 
     /**
      * Maximum number of jobs to obtain

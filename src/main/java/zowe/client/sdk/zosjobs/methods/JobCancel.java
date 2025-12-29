@@ -129,7 +129,7 @@ public class JobCancel {
                 modifyInputData.getJobId().get();
 
         // set version to default value if none given
-        final String version = modifyInputData.getVersion().orElse(JobsConstants.DEFAULT_CANCEL_VERSION);
+        final String version = modifyInputData.getVersion().orElse(JobsConstants.DEFAULT_VERSION);
 
         // To request asynchronous processing for this service (the default), set the "version" property to 1.0
         // or omit the property from the request. To request synchronous processing, set "version" to 2.0. If 2.0,
