@@ -16,7 +16,7 @@ import zowe.client.sdk.utility.UtilsTestHelper;
  * Class containing unit test for QueryConstantsTest.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class QueryConstantsTest {
 

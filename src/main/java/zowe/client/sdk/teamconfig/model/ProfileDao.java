@@ -14,7 +14,7 @@ package zowe.client.sdk.teamconfig.model;
  * with merged properties from other profiles i.e., base, and KeyTarConfig details (containing credential information).
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class ProfileDao {
 

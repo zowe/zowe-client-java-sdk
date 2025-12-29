@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * The z/OSMF tso start response.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TsoStartResponse {

@@ -13,7 +13,7 @@ package zowe.client.sdk.rest;
  * Constants for various Rest query info
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public final class QueryConstants {
 

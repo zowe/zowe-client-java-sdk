@@ -29,7 +29,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-delete-unix-file-directory">z/OSMF REST API</a>
  *
  * @author James Kostrewski
- * @version 5.0
+ * @version 6.0
  */
 public class UssDelete {
 

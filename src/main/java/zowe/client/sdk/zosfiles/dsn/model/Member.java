@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Represents a z/OS partition data set member
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Member {

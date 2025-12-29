@@ -28,7 +28,7 @@ import java.util.Map;
  * Utility class contains helper methods for JSON parse processing.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public final class JsonUtils {
 

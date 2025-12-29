@@ -31,7 +31,7 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for DsnWrite.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class DsnWriteTest {
 

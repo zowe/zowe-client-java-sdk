@@ -16,7 +16,7 @@ import java.util.Optional;
  * Parameter container class for the Zos Files function
  *
  * @author Leonid Baranov
- * @version 5.0
+ * @version 6.0
  */
 public class DsnZosFilesInputData {
 

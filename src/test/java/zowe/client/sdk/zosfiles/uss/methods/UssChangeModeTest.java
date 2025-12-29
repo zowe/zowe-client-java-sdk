@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
  * Class containing unit tests for UssChMod.
  *
  * @author James Kostrewski
- * @version 5.0
+ * @version 6.0
  */
 @SuppressWarnings("DataFlowIssue")
 public class UssChangeModeTest {

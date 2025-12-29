@@ -21,7 +21,7 @@ import java.util.List;
  * Immutable class using Jackson for JSON parsing.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class UnixZfsListResponse {

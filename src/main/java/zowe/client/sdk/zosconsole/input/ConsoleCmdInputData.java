@@ -17,7 +17,7 @@ import java.util.Optional;
  * The z/OSMF console command API parameters. See the z/OSMF REST API documentation for full details.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class ConsoleCmdInputData {
 

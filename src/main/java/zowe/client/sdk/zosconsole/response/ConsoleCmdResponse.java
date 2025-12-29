@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * z/OSMF synchronous console command response messages. See the z/OSMF REST API publication for complete details.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ConsoleCmdResponse {

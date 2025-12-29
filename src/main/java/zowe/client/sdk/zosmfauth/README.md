@@ -42,7 +42,7 @@ import java.io.StringWriter;
  * Class example to showcase z/OSMF AUTH APIs functionality.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class ZosmfLoginExp extends TstZosConnection {
 
@@ -188,7 +188,7 @@ import zowe.client.sdk.teamconfig.model.ProfileDao;
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class TstZosConnection {
 

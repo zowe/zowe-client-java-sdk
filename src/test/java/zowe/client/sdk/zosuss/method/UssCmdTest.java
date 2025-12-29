@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
  * Class containing unit tests for UssCmd.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class UssCmdTest {
 

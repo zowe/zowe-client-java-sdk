@@ -20,7 +20,7 @@ import java.util.OptionalInt;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-list-zos-unix-filesystems">z/OSMF REST API</a>
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class UssListZfsInputData {
 

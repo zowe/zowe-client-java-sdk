@@ -18,7 +18,7 @@ import java.util.OptionalInt;
  * Holds http response information
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class Response {
 

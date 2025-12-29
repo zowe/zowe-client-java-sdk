@@ -29,7 +29,7 @@ import java.util.Map;
  *
  * @author Nikunj Goyal
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class JobCancel {
 

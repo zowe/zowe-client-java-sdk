@@ -13,7 +13,7 @@ package zowe.client.sdk.teamconfig.types;
  * SectionType class provides type representation of Zowe Global Team Configuration sections.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public enum SectionType {
 

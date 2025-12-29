@@ -16,7 +16,7 @@ import zowe.client.sdk.zosjobs.model.Job;
  * Class used internally to help determine current job status
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class CheckStatusResponse {
 

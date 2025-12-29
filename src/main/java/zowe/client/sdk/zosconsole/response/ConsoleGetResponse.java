@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * The console response for a z/OSMF synchronous issue console command request.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ConsoleGetResponse {

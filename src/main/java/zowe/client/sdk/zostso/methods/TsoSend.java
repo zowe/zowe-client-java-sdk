@@ -23,7 +23,7 @@ import zowe.client.sdk.zostso.TsoConstants;
  * This class handles sending the TSO command to be performed via z/OSMF
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class TsoSend {
 

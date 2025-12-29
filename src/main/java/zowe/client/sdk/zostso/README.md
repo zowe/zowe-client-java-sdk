@@ -26,7 +26,7 @@ import java.util.List;
  * Example to showcase the tso package method classes.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class TsoCmdExp extends TstZosConnection {
 
@@ -104,7 +104,7 @@ import zowe.client.sdk.teamconfig.model.ProfileDao;
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class TstZosConnection {
 

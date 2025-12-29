@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
  * Class containing unit test for JsonParserUtils.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class JsonUtilsTest {
 

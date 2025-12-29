@@ -38,7 +38,7 @@ import java.util.stream.IntStream;
  *
  * @author Nikunj Goyal
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class DsnGet {
 

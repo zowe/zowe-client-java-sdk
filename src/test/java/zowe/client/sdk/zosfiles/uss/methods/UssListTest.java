@@ -39,7 +39,7 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for UssList.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 @SuppressWarnings("DataFlowIssue")
 public class UssListTest {

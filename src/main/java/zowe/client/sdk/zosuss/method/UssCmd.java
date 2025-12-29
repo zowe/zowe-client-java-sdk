@@ -27,7 +27,7 @@ import java.util.Properties;
  * UssCmd Class provides a way to execute USS commands via ssh connection
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class UssCmd {
 

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * The z/OSMF object returned for every defined system.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class DefinedSystem {

@@ -26,7 +26,7 @@ import java.util.List;
  * Issue tso command via z/OSMF restful api
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class TsoCmd {
 

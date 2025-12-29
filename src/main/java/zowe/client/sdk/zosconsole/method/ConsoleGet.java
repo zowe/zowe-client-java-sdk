@@ -23,7 +23,7 @@ import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
  * Response messages are stored in the response key of the console issue command request.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class ConsoleGet {
 

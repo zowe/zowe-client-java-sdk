@@ -16,7 +16,7 @@ import zowe.client.sdk.utility.UtilsTestHelper;
  * Class containing unit tests for ZoweRequestFactory.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class ZoweRequestFactoryTest {
 

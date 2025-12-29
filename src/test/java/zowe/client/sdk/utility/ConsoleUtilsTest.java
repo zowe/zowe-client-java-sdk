@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * Class containing unit test for ConsoleUtils.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class ConsoleUtilsTest {
 

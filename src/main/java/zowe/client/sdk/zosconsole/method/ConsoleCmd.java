@@ -46,7 +46,7 @@ import java.util.Map;
  * are retrieved. This is prebuilt for you via the ConsoleGet class in this package.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class ConsoleCmd {
 

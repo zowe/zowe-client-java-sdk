@@ -21,7 +21,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * Http delete operation with JSON content type
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class DeleteJsonZosmfRequest extends ZosmfRequest {
 

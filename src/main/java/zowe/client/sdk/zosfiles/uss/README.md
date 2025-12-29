@@ -24,7 +24,7 @@ import zowe.client.sdk.zosfiles.uss.types.CreateType;
  * Class example to test unix system services creates command functionality via UssCreate class.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class UssCreateExp extends TstZosConnection {
 
@@ -114,7 +114,7 @@ import zowe.client.sdk.zosfiles.uss.methods.UssDelete;
  * Class example to test unix system services delete command functionality via UssDelete class.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class UssDeleteExp extends TstZosConnection {
 
@@ -206,7 +206,7 @@ import zowe.client.sdk.zosfiles.uss.types.CreateType;
  * Class example to showcase UssGet class functionality.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class UssGetExp extends TstZosConnection {
 
@@ -367,7 +367,7 @@ import java.util.List;
  * Class example to showcase UssList class functionality.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class UssListExp extends TstZosConnection {
 
@@ -459,7 +459,7 @@ import zowe.client.sdk.teamconfig.model.ProfileDao;
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class TstZosConnection {
 

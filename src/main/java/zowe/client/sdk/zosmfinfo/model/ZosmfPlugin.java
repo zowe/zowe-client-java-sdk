@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * The plugin information structure for the plugin property of the z/OSMF info response.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ZosmfPlugin {

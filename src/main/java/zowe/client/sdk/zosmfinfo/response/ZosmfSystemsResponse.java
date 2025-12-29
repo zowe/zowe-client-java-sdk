@@ -20,7 +20,7 @@ import java.util.Arrays;
  * API response for list systems defined to z/OSMF.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class ZosmfSystemsResponse {

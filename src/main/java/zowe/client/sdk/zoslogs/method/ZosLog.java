@@ -28,7 +28,7 @@ import java.time.format.DateTimeFormatter;
  * Get z/OS log via z/OSMF restful api
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class ZosLog {
 

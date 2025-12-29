@@ -21,7 +21,7 @@ import java.util.List;
  * Contains a list of UnixFile items and metadata about the response.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class UnixFileListResponse {

@@ -13,7 +13,7 @@ package zowe.client.sdk.zosconsole;
  * Utility Class contains helper methods for console response commands response processing
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public final class ConsoleConstants {
 

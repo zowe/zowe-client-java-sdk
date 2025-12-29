@@ -26,7 +26,7 @@ import zowe.client.sdk.zostso.response.TsoCommonResponse;
  * This class handles sending a ping request to z/OSMF TSO to keep the session alive.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class TsoPing {
 

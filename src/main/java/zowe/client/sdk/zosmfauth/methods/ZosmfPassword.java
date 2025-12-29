@@ -31,7 +31,7 @@ import java.util.Map;
  *
  * @author Esteban Sandoval
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class ZosmfPassword {
 

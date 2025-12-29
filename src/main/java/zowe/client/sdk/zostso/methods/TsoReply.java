@@ -23,7 +23,7 @@ import zowe.client.sdk.zostso.TsoConstants;
  * This class handles sending a request to z/OSMF TSO for additional TSO message data
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class TsoReply {
 

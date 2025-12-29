@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * BASIC, TOKEN, and SSL.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 class ZosConnectionTest {
 

@@ -15,7 +15,7 @@ package zowe.client.sdk.zosfiles.uss.types;
  * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
- * @version 5.0
+ * @version 6.0
  */
 public enum DeleteAclType {
 

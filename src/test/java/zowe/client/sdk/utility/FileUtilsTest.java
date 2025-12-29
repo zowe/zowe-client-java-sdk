@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Class containing unit tests for FileUtils.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 @SuppressWarnings("DataFlowIssue")
 public class FileUtilsTest {

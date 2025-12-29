@@ -24,7 +24,7 @@ import java.util.List;
  * Uses primitive {@code long} defaults for numeric fields when null.</p>
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class ZosLogResponse {

@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Class containing unit tests for UssCreateZfsInputData.
  *
  * @author Frank Giordano
- * @version 5.0
+ * @version 6.0
  */
 public class UssCreateZfsInputDataTest {
 

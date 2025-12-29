@@ -32,7 +32,7 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for UssChangeOwner.
  *
  * @author James Kostrewski
- * @version 5.0
+ * @version 6.0
  */
 @SuppressWarnings("DataFlowIssue")
 public class UssChangeOwnerTest {
