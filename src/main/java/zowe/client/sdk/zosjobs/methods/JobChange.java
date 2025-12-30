@@ -78,9 +78,6 @@ public class JobChange {
      */
     public Job changeClass(final String jobName, final String jobId,
                            final String jobClass, final String version) throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(jobName, JobsConstants.JOB_NAME_ILLEGAL_MSG);
-        ValidateUtils.checkIllegalParameter(jobId, JobsConstants.JOB_ID_ILLEGAL_MSG);
-        ValidateUtils.checkIllegalParameter(jobClass == null || jobClass.isBlank(), JobsConstants.JOB_CLASS_ILLEGAL_MSG);
 
         return this.changeClassCommon(
                 new JobModifyInputData.Builder(jobName, jobId)
@@ -101,9 +98,6 @@ public class JobChange {
      */
     public Job changeClassByJob(final Job job, final String jobClass, final String version)
             throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
-        final boolean isJobClassEmpty = jobClass == null || jobClass.isBlank();
-        ValidateUtils.checkIllegalParameter(isJobClassEmpty, JobsConstants.JOB_CLASS_ILLEGAL_MSG);
 
         return this.changeClassCommon(
                 new JobModifyInputData.Builder(job.getJobName(), job.getJobId())
