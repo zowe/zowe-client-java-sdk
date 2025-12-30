@@ -88,7 +88,7 @@ public final class JsonUtils {
      * @throws ZosmfRequestException if parsing fails
      */
     public static <T> T parseResponse(final String json, final Class<T> clazz, final String context)
-            throws ZosmfRequestException {   // IDE sees this as "checked"
+            throws ZosmfRequestException {  
         try {
             return objectMapper.readValue(json, clazz);
         } catch (JsonProcessingException e) {
