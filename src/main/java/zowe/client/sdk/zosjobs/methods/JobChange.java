@@ -23,6 +23,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.JobModifyInputData;
 import zowe.client.sdk.zosjobs.model.Job;
+import zowe.client.sdk.zosjobs.response.JobFeedback;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,11 +74,11 @@ public class JobChange {
      * @param jobId   job id
      * @param jobClass new job class (for example A, B, C)
      * @param version version number - 1.0 or 2.0
-     * @return job document
+     * @return JobFeedback object
      * @throws ZosmfRequestException request error state
      */
-    public Job changeClass(final String jobName, final String jobId,
-                           final String jobClass, final String version) throws ZosmfRequestException {
+    public JobFeedback changeClass(final String jobName, final String jobId,
+                                   final String jobClass, final String version) throws ZosmfRequestException {
 
         return this.changeClassCommon(
                 new JobModifyInputData.Builder(jobName, jobId)
@@ -93,11 +94,12 @@ public class JobChange {
      * @param job      job document
      * @param jobClass new job class (for example A, B, C)
      * @param version  version number - 1.0 or 2.0
-     * @return job document
+     * @return JobFeedback object
      * @throws ZosmfRequestException request error state
      */
-    public Job changeClassByJob(final Job job, final String jobClass, final String version)
+    public JobFeedback changeClassByJob(final Job job, final String jobClass, final String version)
             throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(job == null, "job is null");
 
         return this.changeClassCommon(
                 new JobModifyInputData.Builder(job.getJobName(), job.getJobId())
@@ -111,10 +113,10 @@ public class JobChange {
      * Common change job class implementation.
      *
      * @param modifyInputData job modify parameters
-     * @return job document
+     * @return JobFeedback object
      * @throws ZosmfRequestException request error state
      */
-    public Job changeClassCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
+    public JobFeedback changeClassCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
         ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
         ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
@@ -153,7 +155,7 @@ public class JobChange {
                 .toString();
 
         final String context = "changeClassCommon";
-        return JsonUtils.parseResponse(String.valueOf(responsePhrase), Job.class, context);
+        return JsonUtils.parseResponse(String.valueOf(responsePhrase), JobFeedback.class, context);
     }
 
 }
