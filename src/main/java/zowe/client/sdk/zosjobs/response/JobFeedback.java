@@ -24,14 +24,74 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public final class JobFeedback {
 
+    /**
+     * Job id
+     */
     private final String jobId;
+
+    /**
+     * Job name
+     */
     private final String jobName;
+
+    /**
+     * Original job ID.
+     * <p>
+     * If the job was processed on another system, this value represents the
+     * original job identifier that was assigned when the job was submitted on the host system.
+     * If the target system cannot assign the original job identifier, the target system assigns
+     * a new ID to the job, which is indicated as "jobid" in this document.
+     */
     private final String originalJobId;
+
+    /**
+     * z/OS user ID associated with the job.
+     */
     private final String owner;
+
+    /**
+     * JES2 multi-access spool (MAS) member name.
+     */
     private final String member;
+
+    /**
+     * z/OS system name.
+     */
     private final String sysname;
+
+    /**
+     * Job correlator.
+     * <p>
+     * If this value is null, the job was submitted to JES3.
+     */
     private final String jobCorrelator;
+
+    /**
+     * Job processing status.
+     * <p>
+     * If set to zero (0), the request was processed successfully.
+     * Otherwise, there was an error. See the message property for a description of the error.
+     */
     private final String status;
+
+    /**
+     * If job processing status indicates an error (a value other than 0),
+     * this property contains the internal service routine return code.
+     * Otherwise, this property is omitted.
+     */
+    private final String internalCode;
+
+    /**
+     * If job processing status indicates an error (a value other than 0),
+     * this property contains a description of the error. Otherwise, this property is omitted.
+     */
+    private final String message;
+
+    /* Null-handling helpers */
+
+    private static String orEmpty(String value) {
+        return value == null ? "" : value;
+    }
 
     /**
      * JobFeedback constructor used by Jackson for JSON deserialization.
@@ -44,6 +104,7 @@ public final class JobFeedback {
      * @param sysname         system name
      * @param jobCorrelator   job correlator value
      * @param status          job status
+     * @author Frank Giordano
      */
     @JsonCreator
     public JobFeedback(
@@ -54,15 +115,19 @@ public final class JobFeedback {
             @JsonProperty("member") final String member,
             @JsonProperty("sysname") final String sysname,
             @JsonProperty("job-correlator") final String jobCorrelator,
-            @JsonProperty("status") final String status) {
-        this.jobId = jobId;
-        this.jobName = jobName;
-        this.originalJobId = originalJobId;
-        this.owner = owner;
-        this.member = member;
-        this.sysname = sysname;
-        this.jobCorrelator = jobCorrelator;
-        this.status = status;
+            @JsonProperty("status") final String status,
+            @JsonProperty("internal-code") final String internalCode,
+            @JsonProperty("message") final String message) {
+        this.jobId = orEmpty(jobId);
+        this.jobName = orEmpty(jobName);
+        this.originalJobId = orEmpty(originalJobId);
+        this.owner = orEmpty(owner);
+        this.member = orEmpty(member);
+        this.sysname = orEmpty(sysname);
+        this.jobCorrelator = orEmpty(jobCorrelator);
+        this.status = orEmpty(status);
+        this.internalCode = orEmpty(internalCode);
+        this.message = orEmpty(message);
     }
 
     /**
@@ -135,6 +200,24 @@ public final class JobFeedback {
      */
     public String getStatus() {
         return status;
+    }
+
+    /**
+     * Get internal code.
+     *
+     * @return internal code
+     */
+    public String getInternalCode() {
+        return internalCode;
+    }
+
+    /**
+     * Get message.
+     *
+     * @return message
+     */
+    public String getMessage() {
+        return message;
     }
 
 }
