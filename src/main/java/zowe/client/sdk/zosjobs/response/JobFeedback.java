@@ -131,7 +131,7 @@ public final class JobFeedback {
     }
 
     /**
-     * Get job id.
+     * Get a job id.
      *
      * @return job id
      */
@@ -140,7 +140,7 @@ public final class JobFeedback {
     }
 
     /**
-     * Get job name.
+     * Get a job name.
      *
      * @return job name
      */
@@ -149,7 +149,7 @@ public final class JobFeedback {
     }
 
     /**
-     * Get original job id.
+     * Get an original job id.
      *
      * @return original job id
      */
@@ -158,7 +158,7 @@ public final class JobFeedback {
     }
 
     /**
-     * Get job owner.
+     * Get a job owner.
      *
      * @return job owner
      */
@@ -185,7 +185,7 @@ public final class JobFeedback {
     }
 
     /**
-     * Get job correlator.
+     * Get a job correlator.
      *
      * @return job correlator
      */
