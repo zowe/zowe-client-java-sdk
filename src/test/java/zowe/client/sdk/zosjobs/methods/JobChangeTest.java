@@ -198,6 +198,116 @@ public class JobChangeTest {
     }
 
     @Test
+    public void tstHoldCommonSuccess() throws ZosmfRequestException {
+        JobModifyInputData inputData = new JobModifyInputData.Builder("JOBNAME", "JOBID")
+                .version(version)
+                .build();
+
+        final JobChange jobChange = new JobChange(connection, mockPutJsonZosmfRequest);
+        final JobFeedback result = jobChange.holdCommon(inputData);
+
+        assertNotNull(result);
+        assertEquals("JOBNAME", result.getJobName());
+        assertEquals("JOBID", result.getJobId());
+        assertEquals("IBMUSER", result.getOwner());
+        assertEquals("JES2", result.getMember());
+        assertEquals("SY1", result.getSysname());
+        assertEquals("J0000023SY1.....CC20F378.......:", result.getJobCorrelator());
+        assertEquals("0", result.getStatus());
+
+        final Map<String, String> holdMap = new HashMap<>();
+        holdMap.put("request", "hold");
+        holdMap.put("version", version);
+
+        verify(mockPutJsonZosmfRequest).setUrl(anyString());
+        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(holdMap).toString());
+        verify(mockPutJsonZosmfRequest).executeRequest();
+    }
+
+    @Test
+    public void tstHoldCommonWithTokenSuccess() throws ZosmfRequestException {
+        JobModifyInputData inputData = new JobModifyInputData.Builder("JOBNAME", "JOBID")
+                .version(version)
+                .build();
+
+        final JobChange jobChange = new JobChange(tokenConnection, mockPutJsonZosmfRequestToken);
+        final JobFeedback result = jobChange.holdCommon(inputData);
+
+        assertNotNull(result);
+        assertEquals("JOBNAME", result.getJobName());
+        assertEquals("JOBID", result.getJobId());
+
+        assertFalse(
+                mockPutJsonZosmfRequestToken.getHeaders().containsKey("Authorization"),
+                "Authorization header should not be present"
+        );
+
+        final Map<String, String> holdMap = new HashMap<>();
+        holdMap.put("request", "hold");
+        holdMap.put("version", version);
+
+        verify(mockPutJsonZosmfRequestToken).setUrl(anyString());
+        verify(mockPutJsonZosmfRequestToken).setBody(new JSONObject(holdMap).toString());
+        verify(mockPutJsonZosmfRequestToken).executeRequest();
+    }
+
+    @Test
+    public void tstHoldSuccess() throws ZosmfRequestException {
+        final JobChange jobChange = new JobChange(connection, mockPutJsonZosmfRequest);
+        final JobFeedback result = jobChange.hold("JOBNAME", "JOBID", version);
+
+        assertNotNull(result);
+        assertEquals("JOBNAME", result.getJobName());
+        assertEquals("JOBID", result.getJobId());
+
+        final Map<String, String> holdMap = new HashMap<>();
+        holdMap.put("request", "hold");
+        holdMap.put("version", version);
+
+        verify(mockPutJsonZosmfRequest).setUrl(anyString());
+        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(holdMap).toString());
+        verify(mockPutJsonZosmfRequest).executeRequest();
+    }
+
+    @Test
+    public void tstHoldByJobSuccess() throws ZosmfRequestException {
+        final JobChange jobChange = new JobChange(connection, mockPutJsonZosmfRequest);
+        final Job job = Job.builder().jobName("JOBNAME").jobId("JOBID").build();
+
+        final JobFeedback result = jobChange.holdByJob(job, version);
+
+        assertNotNull(result);
+        assertEquals("JOBNAME", result.getJobName());
+        assertEquals("JOBID", result.getJobId());
+
+        final Map<String, String> holdMap = new HashMap<>();
+        holdMap.put("request", "hold");
+        holdMap.put("version", version);
+
+        verify(mockPutJsonZosmfRequest).setUrl(anyString());
+        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(holdMap).toString());
+        verify(mockPutJsonZosmfRequest).executeRequest();
+    }
+
+    @Test
+    public void tstHoldCommonWithInvalidVersionFailure() {
+        JobModifyInputData inputData = new JobModifyInputData.Builder("JOBNAME", "JOBID")
+                .version("3.0")
+                .build();
+
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> jobChange.holdCommon(inputData));
+        assertEquals("invalid version specified", ex.getMessage());
+    }
+
+    @Test
+    public void tstHoldByJobWithNullJobFailure() {
+        NullPointerException ex = assertThrows(NullPointerException.class,
+                () -> jobChange.holdByJob(null, "1.0"));
+        assertEquals("job is null", ex.getMessage());
+    }
+
+    @Test
     public void tstConstructorWithNullConnectionFailure() {
         NullPointerException ex = assertThrows(NullPointerException.class,
                 () -> new JobChange(null));
@@ -223,6 +333,20 @@ public class JobChangeTest {
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
                 () -> jobChange.changeClass("JOBNAME", "JOBID", null, "1.0"));
         assertEquals("jobClass is either null or empty", ex.getMessage());
+    }
+
+    @Test
+    public void tstHoldWithNullJobNameFailure() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> jobChange.hold(null, "JOBID", "1.0"));
+        assertEquals("jobName is either null or empty", ex.getMessage());
+    }
+
+    @Test
+    public void tstHoldWithNullJobIdFailure() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> jobChange.hold("JOBNAME", null, "1.0"));
+        assertEquals("jobId is either null or empty", ex.getMessage());
     }
 
     @Test
