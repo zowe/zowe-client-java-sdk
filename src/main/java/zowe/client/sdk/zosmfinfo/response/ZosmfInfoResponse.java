@@ -168,6 +168,12 @@ public final class ZosmfInfoResponse {
         return zosmfVersion;
     }
 
+    /**
+     * Sets the z/OSMF plugin information for this response.
+     *
+     * @param zosmfPluginsInfo ZosmfPlugin[] object
+     * @return this
+     */
     public ZosmfInfoResponse withZosmfPluginsInfo(final ZosmfPlugin[] zosmfPluginsInfo) {
         this.zosmfPluginsInfo = zosmfPluginsInfo;
         return this;

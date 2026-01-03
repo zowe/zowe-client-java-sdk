@@ -182,7 +182,6 @@ public class Job {
             @JsonProperty("exec-started") final String execStarted,
             @JsonProperty("exec-ended") final String execEnded,
             @JsonProperty("reason-not-running") final String reasonNotRunning) {
-
         this.jobId = orEmpty(id);
         this.jobName = orEmpty(name);
         this.subSystem = orEmpty(subSystem);
@@ -251,101 +250,224 @@ public class Job {
         private Builder() {
         }
 
+        /**
+         * Set the job identifier.
+         *
+         * @param jobId job id value
+         * @return this builder instance
+         */
         public Builder jobId(String jobId) {
             this.jobId = jobId;
             return this;
         }
 
+        /**
+         * Set the job name.
+         *
+         * @param jobName job name value
+         * @return this builder instance
+         */
         public Builder jobName(String jobName) {
             this.jobName = jobName;
             return this;
         }
 
+        /**
+         * Set the JES subsystem.
+         *
+         * @param subSystem JES subsystem value
+         * @return this builder instance
+         */
         public Builder subSystem(String subSystem) {
             this.subSystem = subSystem;
             return this;
         }
 
+        /**
+         * Set the job owner.
+         *
+         * @param owner job owner value
+         * @return this builder instance
+         */
         public Builder owner(String owner) {
             this.owner = owner;
             return this;
         }
 
+        /**
+         * Set the job status.
+         *
+         * @param status job status value
+         * @return this builder instance
+         */
         public Builder status(String status) {
             this.status = status;
             return this;
         }
 
+        /**
+         * Set the job type.
+         *
+         * @param type job type value
+         * @return this builder instance
+         */
         public Builder type(String type) {
             this.type = type;
             return this;
         }
 
+        /**
+         * Set the job class.
+         *
+         * @param classs job class value
+         * @return this builder instance
+         */
         public Builder classs(String classs) {
             this.classs = classs;
             return this;
         }
 
+        /**
+         * Set the job return code.
+         *
+         * @param retCode job return code value
+         * @return this builder instance
+         */
         public Builder retCode(String retCode) {
             this.retCode = retCode;
             return this;
         }
 
+        /**
+         * Set detailed job step data.
+         *
+         * @param stepData array of job step data
+         * @return this builder instance
+         */
         public Builder stepData(JobStepData[] stepData) {
             this.stepData = stepData;
             return this;
         }
 
+        /**
+         * Set the job URL.
+         *
+         * @param url job URL value
+         * @return this builder instance
+         */
         public Builder url(String url) {
             this.url = url;
             return this;
         }
 
+        /**
+         * Set the spool files URL.
+         *
+         * @param filesUrl job spool files URL value
+         * @return this builder instance
+         */
         public Builder filesUrl(String filesUrl) {
             this.filesUrl = filesUrl;
             return this;
         }
 
+        /**
+         * Set the unique job correlator value.
+         * <p>
+         * The job correlator uniquely identifies a job instance across
+         * JES and system boundaries.
+         *
+         * @param jobCorrelator job correlator value
+         * @return this builder instance
+         */
         public Builder jobCorrelator(String jobCorrelator) {
             this.jobCorrelator = jobCorrelator;
             return this;
         }
 
+        /**
+         * Set the job phase.
+         *
+         * @param phase job phase value
+         * @return this builder instance
+         */
         public Builder phase(Long phase) {
             this.phase = phase;
             return this;
         }
 
+        /**
+         * Set the job phase name.
+         *
+         * @param phaseName job phase name value
+         * @return this builder instance
+         */
         public Builder phaseName(String phaseName) {
             this.phaseName = phaseName;
             return this;
         }
 
+        /**
+         * Set the z/OS system name on which the job ran.
+         *
+         * @param execSystem system name
+         * @return this builder instance
+         */
         public Builder execSystem(String execSystem) {
             this.execSystem = execSystem;
             return this;
         }
 
+        /**
+         * Set the member name of the z/OS system on which the job ran.
+         *
+         * @param execMember system member name
+         * @return this builder instance
+         */
         public Builder execMember(String execMember) {
             this.execMember = execMember;
             return this;
         }
 
+        /**
+         * Set the time when the job was submitted.
+         *
+         * @param execSubmitted submission time value
+         * @return this builder instance
+         */
         public Builder execSubmitted(String execSubmitted) {
             this.execSubmitted = execSubmitted;
             return this;
         }
 
+        /**
+         * Set the time when job execution started.
+         *
+         * @param execStarted execution start time value
+         * @return this builder instance
+         */
         public Builder execStarted(String execStarted) {
             this.execStarted = execStarted;
             return this;
         }
 
+        /**
+         * Set the time when job execution ended.
+         *
+         * @param execEnded execution end time value
+         * @return this builder instance
+         */
         public Builder execEnded(String execEnded) {
             this.execEnded = execEnded;
             return this;
         }
 
+        /**
+         * Set the reason text describing why the job is not running.
+         *
+         * @param reasonNotRunning reason text
+         * @return this builder instance
+         */
         public Builder reasonNotRunning(String reasonNotRunning) {
             this.reasonNotRunning = reasonNotRunning;
             return this;

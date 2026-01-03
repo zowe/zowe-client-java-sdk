@@ -106,6 +106,8 @@ public final class JobFeedback {
      * @param sysname         system name
      * @param jobCorrelator   job correlator value
      * @param status          job status
+     * @param internalCode    internal code
+     * @param message         message
      * @author Frank Giordano
      */
     @JsonCreator
