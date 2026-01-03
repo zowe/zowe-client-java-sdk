@@ -20,6 +20,13 @@ package zowe.client.sdk.zosjobs.types;
 public class JobStatus {
 
     /**
+     * Private constructor defined to avoid instantiation of class
+     */
+    private JobStatus() {
+        throw new IllegalStateException("enum class");
+    }
+
+    /**
      * Job statuses
      */
     public enum Type {

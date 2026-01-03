@@ -55,6 +55,13 @@ public class KeyTarImpl implements IKeyTar {
     private String keyString;
 
     /**
+     * Create a new KeyTarImpl instance.
+     */
+    public KeyTarImpl() {
+        // intentionally empty
+    }
+
+    /**
      * Return keyString JSON value parsed into a KeyTarConfig object.
      *
      * @return list of KeyTarConfig objects

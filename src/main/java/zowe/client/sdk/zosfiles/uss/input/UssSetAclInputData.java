@@ -228,6 +228,13 @@ public class UssSetAclInputData {
         private String delete;
 
         /**
+         * Create a new Builder instance.
+         */
+        public Builder() {
+            // intentionally empty
+        }
+
+        /**
          * Set abort value
          *
          * @param abort abort value

@@ -40,6 +40,13 @@ public class TeamConfigService {
     private static final Logger LOG = LoggerFactory.getLogger(TeamConfigService.class);
 
     /**
+     * Create a new TeamConfigService instance.
+     */
+    public TeamConfigService() {
+        // intentionally empty
+    }
+
+    /**
      * Parse a JSON representation of a Zowe Global Team Configuration partition section.
      *
      * @param name       partition name

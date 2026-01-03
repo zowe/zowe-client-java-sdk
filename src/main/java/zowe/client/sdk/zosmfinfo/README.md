@@ -42,16 +42,16 @@ public class ZosmfStatusExp extends TstZosConnection {
         ZosmfInfoResponse zosmfInfoResponse;
         try {
             zosmfInfoResponse = zosmfStatus.get();
-} catch (ZosmfRequestException e) {
-    String errMsg = e.getMessage();
-    if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-        String response = e.getResponse().getResponsePhrase().get().toString();
-        if (!resp.isBlank() && !"{}".equals(response)) {
-            errMsg = response;
+        } catch (ZosmfRequestException e) {
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
         }
-    }
-    throw new RuntimeException(errMsg, e);
-}
         System.out.println(zosmfInfoResponse.toString());
         Arrays.stream(zosmfInfoResponse.getZosmfPluginsInfo()).forEach(System.out::println);
     }
