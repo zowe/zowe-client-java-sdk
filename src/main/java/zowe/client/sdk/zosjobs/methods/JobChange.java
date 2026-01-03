@@ -55,7 +55,7 @@ public class JobChange {
      * This is mainly used for internal unit testing with mockito.
      * <p>
      * This constructor is package-private
-     * 
+     *
      * @param connection for connection information
      * @param request    compatible ZosmfRequest object
      */
@@ -131,15 +131,7 @@ public class JobChange {
                 + JobsConstants.FILE_DELIM
                 + modifyInputData.getJobId().get();
 
-        final String version = modifyInputData.getVersion().orElse(JobsConstants.DEFAULT_VERSION);
-
-        if ("1.0".equals(version)) {
-            LOG.debug("version 1.0 specified – asynchronous processing");
-        } else if ("2.0".equals(version)) {
-            LOG.debug("version 2.0 specified – synchronous processing");
-        } else {
-            throw new IllegalArgumentException("invalid version specified");
-        }
+        final String version = getVersion(modifyInputData);
 
         final Map<String, String> changeMap = new HashMap<>();
         changeMap.put("class", modifyInputData.getJobClass().get());
@@ -158,6 +150,97 @@ public class JobChange {
 
         final String context = "changeClassCommon";
         return JsonUtils.parseResponse(String.valueOf(responsePhrase), JobFeedback.class, context);
+    }
+
+    /**
+     * Hold a job by job name and job id.
+     *
+     * @param jobName job name
+     * @param jobId   job id
+     * @param version version number - 1.0 or 2.0
+     * @return JobFeedback object
+     * @throws ZosmfRequestException request error state
+     */
+    public JobFeedback hold(final String jobName, final String jobId, final String version)
+            throws ZosmfRequestException {
+
+        return this.holdCommon(
+                new JobModifyInputData.Builder(jobName, jobId)
+                        .version(version)
+                        .build()
+        );
+    }
+
+    /**
+     * Hold a job using a Job object.
+     *
+     * @param job     job document
+     * @param version version number - 1.0 or 2.0
+     * @return JobFeedback object
+     * @throws ZosmfRequestException request error state
+     */
+    public JobFeedback holdByJob(final Job job, final String version)
+            throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(job == null, "job is null");
+
+        return this.holdCommon(
+                new JobModifyInputData.Builder(job.getJobName(), job.getJobId())
+                        .version(version)
+                        .build()
+        );
+    }
+
+    /**
+     * Common hold job implementation.
+     *
+     * @param modifyInputData job modify parameters
+     * @return JobFeedback object
+     * @throws ZosmfRequestException request error state
+     */
+    public JobFeedback holdCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
+        ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
+        ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
+
+        final String url = connection.getZosmfUrl()
+                + JobsConstants.RESOURCE
+                + JobsConstants.FILE_DELIM
+                + modifyInputData.getJobName().get()
+                + JobsConstants.FILE_DELIM
+                + modifyInputData.getJobId().get();
+
+        final String version = getVersion(modifyInputData);
+
+        final Map<String, String> holdMap = new HashMap<>();
+        holdMap.put("request", "hold");
+        holdMap.put("version", version);
+
+        if (request == null) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        }
+        request.setUrl(url);
+        request.setBody(new JSONObject(holdMap).toString());
+
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no job hold response phrase"))
+                .toString();
+
+        final String context = "holdCommon";
+        return JsonUtils.parseResponse(responsePhrase, JobFeedback.class, context);
+    }
+
+    private static String getVersion(final JobModifyInputData modifyInputData) {
+        final String version = modifyInputData.getVersion().orElse(JobsConstants.DEFAULT_VERSION);
+
+        if ("1.0".equals(version)) {
+            LOG.debug("version 1.0 specified – asynchronous processing");
+        } else if ("2.0".equals(version)) {
+            LOG.debug("version 2.0 specified – synchronous processing");
+        } else {
+            throw new IllegalArgumentException("invalid version specified");
+        }
+        return version;
     }
 
 }
