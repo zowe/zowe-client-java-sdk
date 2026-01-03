@@ -18,6 +18,14 @@ package zowe.client.sdk.zosfiles;
 public class ZosFilesConstants {
 
     /**
+     * Private constructor defined to avoid instantiation of class
+     */
+    private ZosFilesConstants() {
+        throw new IllegalStateException("Constants class");
+    }
+
+
+    /**
      * Maximum value for primary and secondary allocation
      */
     public static final int MAX_ALLOC_QUANTITY = 16777215;
