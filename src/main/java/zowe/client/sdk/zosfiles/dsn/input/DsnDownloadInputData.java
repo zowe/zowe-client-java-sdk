@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.dsn.input;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.OptionalLong;
@@ -265,7 +266,7 @@ public class DsnDownloadInputData {
                 "file=" + file +
                 ", extension=" + extension +
                 ", directory=" + directory +
-                ", excludePatterns=" + excludePatterns +
+                ", excludePatterns=" + Arrays.toString(excludePatterns) +
                 ", extensionMap=" + extensionMap +
                 ", maxConcurrentRequests=" + maxConcurrentRequests +
                 ", returnEtag=" + returnEtag +

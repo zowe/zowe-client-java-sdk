@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.input;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -115,7 +116,7 @@ public class UssWriteInputData {
     public String toString() {
         return "UssWriteInputData{" +
                 "textContent=" + textContent +
-                ", binaryContent=" + binaryContent +
+                ", binaryContent=" + Arrays.toString(binaryContent) +
                 ", fileEncoding=" + fileEncoding +
                 ", crlf=" + crlf +
                 ", binary=" + binary +
