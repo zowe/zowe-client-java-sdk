@@ -1094,6 +1094,49 @@ public class JobSubmitExp extends TstZosConnection {
 }
 ```
 
+```java
+package zowe.client.sdk.examples.zosjobs;
+
+import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
+import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosjobs.methods.JobChange;
+import zowe.client.sdk.zosjobs.response.JobFeedback;
+
+/**
+ * Class example to showcase JobChange class functionality.
+ *
+ * @author Frank Giordano
+ * @version 6.0
+ */
+public class JobChangeExp extends TstZosConnection {
+
+    /**
+     * The main method defines z/OSMF connection and showcases the JobSubmit class functionality.
+     *
+     * @param args for main not used
+     * @author Frank Giordano
+     */
+    public static void main(String[] args) {
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
+        JobChange jobChange = new JobChange(connection);
+        try {
+            JobFeedback jobFeedback = jobChange.changeClass("xxx", "xxx", "B", "2,0");
+        } catch (ZosmfRequestException e) {
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
+                String response = e.getResponse().getResponsePhrase().get().toString();
+                if (!resp.isBlank() && !"{}".equals(response)) {
+                    errMsg = response;
+                }
+            }
+            throw new RuntimeException(errMsg, e);
+        }
+    }
+}
+```
+
 **Connection setup**
 
 ````java

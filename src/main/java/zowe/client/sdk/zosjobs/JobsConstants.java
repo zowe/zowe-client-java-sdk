@@ -47,6 +47,11 @@ public final class JobsConstants {
     /**
      * Use for an illegal exception error message
      */
+    public static final String JOB_CLASS_ILLEGAL_MSG = "jobClass is either null or empty";
+
+    /**
+     * Use for an illegal exception error message
+     */
     public static final String JOB_NAME_ILLEGAL_MSG = "jobName is either null or empty";
 
     /**
