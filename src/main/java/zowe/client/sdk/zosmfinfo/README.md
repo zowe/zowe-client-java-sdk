@@ -135,7 +135,7 @@ public class TstZosConnection {
 
     // replace "xxx" with hard coded values to execute the examples in this project
     public static final String hostName = "xxx";
-    public static final String zosmfPort = "xxx";
+    public static final int zosmfPort = 0;
     public static final String userName = "xxx";
     public static final String password = "xxx";
 
