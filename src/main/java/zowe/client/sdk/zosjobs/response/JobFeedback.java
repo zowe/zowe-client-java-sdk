@@ -222,4 +222,25 @@ public final class JobFeedback {
         return message;
     }
 
+    /**
+     * Return string value representing a JobFeedBack object
+     *
+     * @return string representation of JobFeedBack
+     */
+    @Override
+    public String toString() {
+        return "JobFeedback{" +
+                "jobId='" + jobId + '\'' +
+                ", jobName='" + jobName + '\'' +
+                ", originalJobId='" + originalJobId + '\'' +
+                ", owner='" + owner + '\'' +
+                ", member='" + member + '\'' +
+                ", sysname='" + sysname + '\'' +
+                ", jobCorrelator='" + jobCorrelator + '\'' +
+                ", status='" + status + '\'' +
+                ", internalCode='" + internalCode + '\'' +
+                ", message='" + message + '\'' +
+                '}';
+    }
+
 }
