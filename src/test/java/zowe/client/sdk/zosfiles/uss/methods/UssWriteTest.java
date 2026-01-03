@@ -98,7 +98,7 @@ public class UssWriteTest {
         doCallRealMethod().when(mockStreamPutRequest).getUrl();
         final UssWrite ussWrite = new UssWrite(connection, mockStreamPutRequest);
         final Response response = ussWrite.writeBinary("/xx/xx/x", new byte[0]);
-        assertTrue(response.getResponsePhrase().orElse(null) instanceof byte[]);
+        assertInstanceOf(byte[].class, response.getResponsePhrase().orElse(null));
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
         assertEquals("https://1:443/zosmf/restfiles/fs%2Fxx%2Fxx%2Fx", mockStreamPutRequest.getUrl());
