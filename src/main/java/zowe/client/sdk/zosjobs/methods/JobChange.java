@@ -29,7 +29,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * JobChange class to handle changing the job class on z/OS
+ * JobChange class to handle changing a running job on z/OS.
+ * <p>
+ * The following actions on a job are provided: change class, hold and release.
  *
  * @author Frank Giordano
  * @version 6.0
@@ -120,17 +122,9 @@ public class JobChange {
      */
     public JobFeedback changeClassCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
-        ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
-        ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
         ValidateUtils.checkIllegalParameter(modifyInputData.getJobClass().isEmpty(), JobsConstants.JOB_CLASS_ILLEGAL_MSG);
 
-        final String url = connection.getZosmfUrl()
-                + JobsConstants.RESOURCE
-                + JobsConstants.FILE_DELIM
-                + modifyInputData.getJobName().get()
-                + JobsConstants.FILE_DELIM
-                + modifyInputData.getJobId().get();
-
+        final String url = getUrl(connection.getZosmfUrl(), modifyInputData);
         final String version = getVersion(modifyInputData);
 
         final Map<String, String> changeMap = new HashMap<>();
@@ -199,16 +193,8 @@ public class JobChange {
      */
     public JobFeedback holdCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
-        ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
-        ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 
-        final String url = connection.getZosmfUrl()
-                + JobsConstants.RESOURCE
-                + JobsConstants.FILE_DELIM
-                + modifyInputData.getJobName().get()
-                + JobsConstants.FILE_DELIM
-                + modifyInputData.getJobId().get();
-
+        final String url = getUrl(connection.getZosmfUrl(), modifyInputData);
         final String version = getVersion(modifyInputData);
 
         final Map<String, String> holdMap = new HashMap<>();
@@ -228,6 +214,17 @@ public class JobChange {
 
         final String context = "holdCommon";
         return JsonUtils.parseResponse(responsePhrase, JobFeedback.class, context);
+    }
+
+    private static String getUrl(final String zosmfUrl, final JobModifyInputData modifyInputData) {
+        ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
+        ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
+        return zosmfUrl +
+                JobsConstants.RESOURCE +
+                JobsConstants.FILE_DELIM +
+                modifyInputData.getJobName().get() +
+                JobsConstants.FILE_DELIM +
+                modifyInputData.getJobId().get();
     }
 
     private static String getVersion(final JobModifyInputData modifyInputData) {
