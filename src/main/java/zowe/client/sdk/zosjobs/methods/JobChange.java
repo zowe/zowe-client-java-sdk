@@ -46,6 +46,7 @@ public class JobChange {
      * JobChange constructor.
      *
      * @param connection for connection information, see ZosConnection object
+     * @author Frank Giordano
      */
     public JobChange(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
@@ -60,6 +61,7 @@ public class JobChange {
      *
      * @param connection for connection information
      * @param request    compatible ZosmfRequest object
+     * @author Frank Giordano
      */
     JobChange(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection == null, "connection is null");
@@ -80,10 +82,10 @@ public class JobChange {
      * @param version version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
      */
     public JobFeedback changeClass(final String jobName, final String jobId,
                                    final String jobClass, final String version) throws ZosmfRequestException {
-
         return this.changeClassCommon(
                 new JobModifyInputData.Builder(jobName, jobId)
                         .jobClass(jobClass)
@@ -100,6 +102,7 @@ public class JobChange {
      * @param version  version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
      */
     public JobFeedback changeClassByJob(final Job job, final String jobClass, final String version)
             throws ZosmfRequestException {
@@ -119,6 +122,7 @@ public class JobChange {
      * @param modifyInputData job modify parameters
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
      */
     public JobFeedback changeClassCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
@@ -154,10 +158,10 @@ public class JobChange {
      * @param version version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
      */
     public JobFeedback hold(final String jobName, final String jobId, final String version)
             throws ZosmfRequestException {
-
         return this.holdCommon(
                 new JobModifyInputData.Builder(jobName, jobId)
                         .version(version)
@@ -172,6 +176,7 @@ public class JobChange {
      * @param version version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
      */
     public JobFeedback holdByJob(final Job job, final String version)
             throws ZosmfRequestException {
@@ -190,6 +195,7 @@ public class JobChange {
      * @param modifyInputData job modify parameters
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
      */
     public JobFeedback holdCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
@@ -213,6 +219,78 @@ public class JobChange {
                 .toString();
 
         final String context = "holdCommon";
+        return JsonUtils.parseResponse(responsePhrase, JobFeedback.class, context);
+    }
+
+    /**
+     * Release a job by job name and job id.
+     *
+     * @param jobName job name
+     * @param jobId   job id
+     * @param version version number - 1.0 or 2.0
+     * @return JobFeedback object
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public JobFeedback release(final String jobName, final String jobId, final String version)
+            throws ZosmfRequestException {
+        return this.releaseCommon(
+                new JobModifyInputData.Builder(jobName, jobId)
+                        .version(version)
+                        .build()
+        );
+    }
+
+    /**
+     * Release a job using a Job object.
+     *
+     * @param job     job document
+     * @param version version number - 1.0 or 2.0
+     * @return JobFeedback object
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public JobFeedback releaseByJob(final Job job, final String version)
+            throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(job == null, "job is null");
+
+        return this.releaseCommon(
+                new JobModifyInputData.Builder(job.getJobName(), job.getJobId())
+                        .version(version)
+                        .build()
+        );
+    }
+
+    /**
+     * Common release job implementation.
+     *
+     * @param modifyInputData job modify parameters
+     * @return JobFeedback object
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public JobFeedback releaseCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
+
+        final String url = getUrl(connection.getZosmfUrl(), modifyInputData);
+        final String version = getVersion(modifyInputData);
+
+        final Map<String, String> releaseMap = new HashMap<>();
+        releaseMap.put("request", "release");
+        releaseMap.put("version", version);
+
+        if (request == null) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        }
+        request.setUrl(url);
+        request.setBody(new JSONObject(releaseMap).toString());
+
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no job release response phrase"))
+                .toString();
+
+        final String context = "releaseCommon";
         return JsonUtils.parseResponse(responsePhrase, JobFeedback.class, context);
     }
 

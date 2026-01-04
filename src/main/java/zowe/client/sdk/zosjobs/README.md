@@ -1122,7 +1122,18 @@ public class JobChangeExp extends TstZosConnection {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         JobChange jobChange = new JobChange(connection);
         try {
-            JobFeedback jobFeedback = jobChange.changeClass("xxx", "xxx", "B", "2,0");
+            // change job name test to have class B while job is active 
+            JobFeedback jobFeedback = jobChange.changeClass("xxx", "xxx", "B", "2.0");
+            // inspect response object message for success indicator 
+            System.out.println(jobFeedback.getMessage());
+
+            // move the job into HOLD state
+            jobFeedback = jobChange.hold("xxx", "xxx", "2.0");
+            System.out.println(jobFeedback.getMessage());
+
+            // release the job from HOLD status for continue processing 
+            jobFeedback = jobChange.release("xxx", "xxx", "2.0");
+            System.out.println(jobFeedback.getMessage());
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
