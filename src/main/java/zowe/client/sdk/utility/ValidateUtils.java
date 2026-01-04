@@ -59,7 +59,7 @@ public final class ValidateUtils {
     /**
      * Check for null parameter
      *
-     * @param value Value to the input
+     * @param value Value of the input
      * @param name Name of the input
      * @throws NullPointerException - input is null
      * @author Frank Giordano
@@ -73,10 +73,10 @@ public final class ValidateUtils {
     /**
      * Check for null parameter
      *
-     * @param value Value to the input
+     * @param value Value of the input
      * @param name Name of the input
      * @param msg Message to be appended in the exception
-     * @throws NullPointerException - input is null
+     * @throws NullPointerException - input is null, msg
      * @author Frank Giordano
      */
     public static void checkNullParameter(final Object value, final String name, final String msg) {
