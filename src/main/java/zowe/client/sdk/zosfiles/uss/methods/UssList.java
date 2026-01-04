@@ -51,7 +51,7 @@ public class UssList {
      * @author Frank Giordano
      */
     public UssList(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -64,8 +64,8 @@ public class UssList {
      * @author Frank Giordano
      */
     UssList(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof GetJsonZosmfRequest)) {
             throw new IllegalStateException("GET_JSON request type required");
@@ -83,7 +83,7 @@ public class UssList {
      */
     @SuppressWarnings("DuplicatedCode")
     public List<UnixFile> getFiles(final UssListInputData listInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(listInputData == null, "listInputData is null");
+        ValidateUtils.checkNullParameter(listInputData, "listInputData");
 
         final String urlStart = connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES;
         final StringBuilder url = new StringBuilder(urlStart);
@@ -147,7 +147,7 @@ public class UssList {
      */
     @SuppressWarnings("DuplicatedCode")
     public List<UnixZfs> getZfsSystems(final UssListZfsInputData listZfsInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(listZfsInputData == null, "listZfsInputData is null");
+        ValidateUtils.checkNullParameter(listZfsInputData, "listZfsInputData");
         ValidateUtils.checkIllegalParameter(
                 listZfsInputData.getPath().isEmpty() && listZfsInputData.getFsname().isEmpty(),
                 "no path or fsname specified"

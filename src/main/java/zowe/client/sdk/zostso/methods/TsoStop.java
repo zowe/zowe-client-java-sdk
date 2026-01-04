@@ -41,7 +41,7 @@ public class TsoStop {
      * @author Frank Giordano
      */
     public TsoStop(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -56,8 +56,8 @@ public class TsoStop {
      * @author Frank Giordano
      */
     TsoStop(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof DeleteJsonZosmfRequest)) {
             throw new IllegalStateException("DELETE_JSON request type required");

@@ -49,7 +49,7 @@ public class JobChange {
      * @author Frank Giordano
      */
     public JobChange(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -64,8 +64,8 @@ public class JobChange {
      * @author Frank Giordano
      */
     JobChange(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");
@@ -106,7 +106,7 @@ public class JobChange {
      */
     public JobFeedback changeClassByJob(final Job job, final String jobClass, final String version)
             throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
+        ValidateUtils.checkNullParameter(job, "job");
 
         return this.changeClassCommon(
                 new JobModifyInputData.Builder(job.getJobName(), job.getJobId())
@@ -125,7 +125,7 @@ public class JobChange {
      * @author Frank Giordano
      */
     public JobFeedback changeClassCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
+        ValidateUtils.checkNullParameter(modifyInputData, "modifyInputData");
         ValidateUtils.checkIllegalParameter(modifyInputData.getJobClass().isEmpty(), JobsConstants.JOB_CLASS_ILLEGAL_MSG);
 
         final String url = getUrl(connection.getZosmfUrl(), modifyInputData);
@@ -180,7 +180,7 @@ public class JobChange {
      */
     public JobFeedback holdByJob(final Job job, final String version)
             throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
+        ValidateUtils.checkNullParameter(job, "job");
 
         return this.holdCommon(
                 new JobModifyInputData.Builder(job.getJobName(), job.getJobId())
@@ -198,7 +198,7 @@ public class JobChange {
      * @author Frank Giordano
      */
     public JobFeedback holdCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
+        ValidateUtils.checkNullParameter(modifyInputData, "modifyInputData");
 
         final String url = getUrl(connection.getZosmfUrl(), modifyInputData);
         final String version = getVersion(modifyInputData);
@@ -252,7 +252,7 @@ public class JobChange {
      */
     public JobFeedback releaseByJob(final Job job, final String version)
             throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
+        ValidateUtils.checkNullParameter(job, "job");
 
         return this.releaseCommon(
                 new JobModifyInputData.Builder(job.getJobName(), job.getJobId())
@@ -270,7 +270,7 @@ public class JobChange {
      * @author Frank Giordano
      */
     public JobFeedback releaseCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
+        ValidateUtils.checkNullParameter(modifyInputData, "modifyInputData");
 
         final String url = getUrl(connection.getZosmfUrl(), modifyInputData);
         final String version = getVersion(modifyInputData);

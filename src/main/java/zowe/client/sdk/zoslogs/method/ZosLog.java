@@ -43,7 +43,7 @@ public class ZosLog {
      * @author Frank Giordano
      */
     public ZosLog(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -58,8 +58,8 @@ public class ZosLog {
      * @author Frank Giordano
      */
     ZosLog(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof GetJsonZosmfRequest)) {
             throw new IllegalStateException("GET_JSON request type required");
@@ -78,7 +78,7 @@ public class ZosLog {
      * @author Frank Giordano
      */
     public ZosLogResponse issueCommand(final ZosLogInputData logInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(logInputData == null, "logInputData is null");
+        ValidateUtils.checkNullParameter(logInputData, "logInputData");
 
         final String defaultUrl = connection.getZosmfUrl() + RESOURCE;
         final StringBuilder url = new StringBuilder(defaultUrl);

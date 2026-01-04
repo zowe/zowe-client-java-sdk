@@ -44,7 +44,7 @@ public class DsnCreate {
      * @author Leonid Baranov
      */
     public DsnCreate(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -59,8 +59,8 @@ public class DsnCreate {
      * @author Frank Giordano
      */
     DsnCreate(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PostJsonZosmfRequest)) {
             throw new IllegalStateException("POST_JSON request type required");
@@ -79,7 +79,7 @@ public class DsnCreate {
      */
     public Response create(final String dataSetName, final DsnCreateInputData createInputData) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
-        ValidateUtils.checkNullParameter(createInputData == null, "createInputData is null");
+        ValidateUtils.checkNullParameter(createInputData, "createInputData");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +

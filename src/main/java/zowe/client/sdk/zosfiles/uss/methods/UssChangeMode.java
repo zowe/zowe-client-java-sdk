@@ -46,7 +46,7 @@ public class UssChangeMode {
      * @author James Kostrewski
      */
     public UssChangeMode(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -59,8 +59,8 @@ public class UssChangeMode {
      * @author James Kostrewski
      */
     UssChangeMode(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");
@@ -82,7 +82,7 @@ public class UssChangeMode {
     public Response change(final String targetPath, final UssChangeModeInputData changeModeInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
-        ValidateUtils.checkNullParameter(changeModeInputData == null, "changeModeInputData is null");
+        ValidateUtils.checkNullParameter(changeModeInputData, "changeModeInputData");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +

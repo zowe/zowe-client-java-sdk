@@ -50,7 +50,7 @@ public class JobSubmit {
      * @author Frank Giordano
      */
     public JobSubmit(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -65,8 +65,8 @@ public class JobSubmit {
      * @author Frank Giordano
      */
     JobSubmit(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         this.request = request;
         if (!(request instanceof PutJsonZosmfRequest) && !(request instanceof PutTextZosmfRequest)) {
@@ -124,7 +124,7 @@ public class JobSubmit {
      * @author Frank Giordano
      */
     public Job submitJclCommon(final JobSubmitJclInputData submitJclInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(submitJclInputData == null, "submitJclInputData is null");
+        ValidateUtils.checkNullParameter(submitJclInputData, "submitJclInputData");
         ValidateUtils.checkIllegalParameter(submitJclInputData.getJcl().isEmpty(), "jcl is either null or empty");
 
         String key, value;
@@ -199,7 +199,7 @@ public class JobSubmit {
      * @author Frank Giordano
      */
     public Job submitCommon(final JobSubmitInputData submitInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(submitInputData == null, "submitInputData is null");
+        ValidateUtils.checkNullParameter(submitInputData, "submitInputData");
         ValidateUtils.checkIllegalParameter(submitInputData.getJobDataSet().isEmpty(), "jobDataSet is either null or empty");
 
         final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE;

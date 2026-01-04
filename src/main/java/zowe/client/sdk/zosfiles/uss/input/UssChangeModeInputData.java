@@ -131,7 +131,7 @@ public class UssChangeModeInputData {
          * @return Builder this object
          */
         public Builder mode(final String mode) {
-            ValidateUtils.checkNullParameter(mode == null, "mode is null");
+            ValidateUtils.checkNullParameter(mode, "mode");
             ValidateUtils.checkIllegalParameter(mode.isBlank(), "mode not specified");
             this.mode = mode;
             return this;

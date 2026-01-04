@@ -41,7 +41,7 @@ public class ZosmfLogin {
      * @author Esteban Sandoval
      */
     public ZosmfLogin(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -56,8 +56,8 @@ public class ZosmfLogin {
      * @author Esteban Sandoval
      */
     ZosmfLogin(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");

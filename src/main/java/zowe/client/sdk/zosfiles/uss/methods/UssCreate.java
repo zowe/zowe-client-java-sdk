@@ -49,7 +49,7 @@ public class UssCreate {
      * @author James Kostrewski
      */
     public UssCreate(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -63,8 +63,8 @@ public class UssCreate {
      * @author Frank Giordano
      */
     UssCreate(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PostJsonZosmfRequest)) {
             throw new IllegalStateException("POST_JSON request type required");
@@ -86,7 +86,7 @@ public class UssCreate {
     public Response create(final String targetPath, final UssCreateInputData createInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
-        ValidateUtils.checkNullParameter(createInputData == null, "createInputData is null");
+        ValidateUtils.checkNullParameter(createInputData, "createInputData");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
@@ -130,7 +130,7 @@ public class UssCreate {
     public Response createZfsCommon(final String fileSystemName, final UssCreateZfsInputData createZfsInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileSystemName, "fileSystemName");
-        ValidateUtils.checkNullParameter(createZfsInputData == null, "createZfsInputData is null");
+        ValidateUtils.checkNullParameter(createZfsInputData, "createZfsInputData");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +

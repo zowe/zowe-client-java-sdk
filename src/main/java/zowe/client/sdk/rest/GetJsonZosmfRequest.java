@@ -44,7 +44,7 @@ public class GetJsonZosmfRequest extends ZosmfRequest {
      */
     @Override
     public Response executeRequest() throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(url == null, "url is null");
+        ValidateUtils.checkNullParameter(url, "url");
         HttpResponse<JsonNode> reply;
         try {
             reply = token != null ? Unirest.get(url).cookie(token).headers(headers).asJson() :

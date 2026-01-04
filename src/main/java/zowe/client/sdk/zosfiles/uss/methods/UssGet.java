@@ -44,7 +44,7 @@ public class UssGet {
      * @author James Kostrewski
      */
     public UssGet(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -58,8 +58,8 @@ public class UssGet {
      * @author James Kostrewski
      */
     UssGet(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         // request type check deferred 
         this.request = request;
@@ -107,7 +107,7 @@ public class UssGet {
      */
     public Response getCommon(final String fileNamePath, final UssGetInputData getInputData) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");
-        ValidateUtils.checkNullParameter(getInputData == null, "getInputData is null");
+        ValidateUtils.checkNullParameter(getInputData, "getInputData");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(fileNamePath)));

@@ -263,7 +263,7 @@ public class UssSetAclInputData {
          * @return UssSetAclInputData.Builder
          */
         public UssSetAclInputData.Builder setDeleteType(final DeleteAclType deleteType) {
-            ValidateUtils.checkNullParameter(deleteType == null, "deleteType is null");
+            ValidateUtils.checkNullParameter(deleteType, "deleteType");
             this.deleteType = deleteType;
             return this;
         }
@@ -275,7 +275,7 @@ public class UssSetAclInputData {
          * @return UssSetAclInputData.Builder
          */
         public UssSetAclInputData.Builder setSet(final String set) {
-            ValidateUtils.checkNullParameter(set == null, "set is null");
+            ValidateUtils.checkNullParameter(set, "set");
             ValidateUtils.checkIllegalParameter(set.isBlank(), "set not specified");
             this.set = set;
             return this;
@@ -288,7 +288,7 @@ public class UssSetAclInputData {
          * @return UssSetAclInputData.Builder
          */
         public UssSetAclInputData.Builder setModify(final String modify) {
-            ValidateUtils.checkNullParameter(modify == null, "modify is null");
+            ValidateUtils.checkNullParameter(modify, "modify");
             ValidateUtils.checkIllegalParameter(modify.isBlank(), "modify not specified");
             this.modify = modify;
             return this;
@@ -301,7 +301,7 @@ public class UssSetAclInputData {
          * @return UssSetAclInputData.Builder
          */
         public UssSetAclInputData.Builder setDelete(final String delete) {
-            ValidateUtils.checkNullParameter(delete == null, "delete is null");
+            ValidateUtils.checkNullParameter(delete, "delete");
             ValidateUtils.checkIllegalParameter(delete.isBlank(), "delete not specified");
             this.delete = delete;
             return this;

@@ -59,15 +59,29 @@ public final class ValidateUtils {
     /**
      * Check for null parameter
      *
-     * @param check check for true or false value
-     * @param msg   message to display if the check is true
-     * @throws IllegalArgumentException with message
+     * @param value Value of the input
+     * @param name Name of the input
+     * @throws NullPointerException - input is null
      * @author Frank Giordano
      */
-    public static void checkNullParameter(final boolean check, final String msg) {
-        Optional<String> message = Optional.ofNullable(msg);
-        if (check) {
-            throw new NullPointerException(message.orElse("empty message specified"));
+    public static void checkNullParameter(final Object value, final String name) {
+        if (value == null) {
+            throw new NullPointerException(name + " is null");
+        }
+    }
+
+    /**
+     * Check for null parameter
+     *
+     * @param value Value of the input
+     * @param name Name of the input
+     * @param msg Message to be appended in the exception
+     * @throws NullPointerException - input is null, msg
+     * @author Frank Giordano
+     */
+    public static void checkNullParameter(final Object value, final String name, final String msg) {
+        if (value == null) {
+            throw new NullPointerException(name + " is null, " + msg);
         }
     }
 

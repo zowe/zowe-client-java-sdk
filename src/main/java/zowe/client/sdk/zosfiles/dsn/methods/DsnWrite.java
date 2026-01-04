@@ -39,7 +39,7 @@ public class DsnWrite {
      * @author Leonid Baranov
      */
     public DsnWrite(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -54,8 +54,8 @@ public class DsnWrite {
      * @author Frank Giordano
      */
     DsnWrite(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PutTextZosmfRequest)) {
             throw new IllegalStateException("PUT_TEXT request type required");
@@ -93,7 +93,7 @@ public class DsnWrite {
      */
     public Response write(final String dataSetName, final String content) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
-        ValidateUtils.checkNullParameter(content == null, "content is null");
+        ValidateUtils.checkNullParameter(content, "content");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +

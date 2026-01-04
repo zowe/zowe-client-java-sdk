@@ -52,7 +52,7 @@ public class DsnGet {
      * @author Nikunj Goyal
      */
     public DsnGet(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -67,8 +67,8 @@ public class DsnGet {
      * @author Frank Giordano
      */
     DsnGet(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof GetStreamZosmfRequest)) {
             throw new IllegalStateException("GET_STREAM request type required");
@@ -85,7 +85,7 @@ public class DsnGet {
      * @author Frank Giordano
      */
     public Dataset getDsnInfo(final String dataSetName) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(dataSetName == null, "dataSetName is null");
+        ValidateUtils.checkNullParameter(dataSetName, "dataSetName");
         ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
 
         final String[] tokens = dataSetName.split("\\.");
@@ -121,7 +121,7 @@ public class DsnGet {
     public InputStream get(final String targetName, final DsnDownloadInputData downloadInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetName, "targetName");
-        ValidateUtils.checkNullParameter(downloadInputData == null, "downloadInputData is null");
+        ValidateUtils.checkNullParameter(downloadInputData, "downloadInputData");
 
         String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";

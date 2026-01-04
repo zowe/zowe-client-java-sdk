@@ -146,7 +146,7 @@ public class ZosConnectionFactory {
                                                           final Cookie token,
                                                           final String basePath) {
         ValidateUtils.checkIllegalParameter(host, "host");
-        ValidateUtils.checkNullParameter(token == null, "token is null");
+        ValidateUtils.checkNullParameter(token, "token");
 
         ZosConnection zosConnection = new ZosConnection(host, port, basePath, AuthType.TOKEN);
         zosConnection.setToken(token);

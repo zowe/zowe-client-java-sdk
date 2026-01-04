@@ -46,7 +46,7 @@ public class UssWrite {
      * @author Frank Giordano
      */
     public UssWrite(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -59,8 +59,8 @@ public class UssWrite {
      * @author Frank Giordano
      */
     UssWrite(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         // request type check deferred
         this.request = request;
@@ -107,7 +107,7 @@ public class UssWrite {
     public Response writeCommon(final String fileNamePath, final UssWriteInputData writeInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");
-        ValidateUtils.checkNullParameter(writeInputData == null, "writeInputData is null");
+        ValidateUtils.checkNullParameter(writeInputData, "writeInputData");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +

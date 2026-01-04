@@ -52,8 +52,8 @@ public class PutTextZosmfRequest extends ZosmfRequest {
      */
     @Override
     public Response executeRequest() throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(url == null, "url is null");
-        ValidateUtils.checkNullParameter(body == null, "body is null");
+        ValidateUtils.checkNullParameter(url, "url");
+        ValidateUtils.checkNullParameter(body, "body");
         HttpResponse<String> reply;
         try {
             reply = token != null ? Unirest.put(url).cookie(token).headers(headers).body(body).asString() :

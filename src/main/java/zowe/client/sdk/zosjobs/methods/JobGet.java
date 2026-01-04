@@ -46,7 +46,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     public JobGet(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -61,8 +61,8 @@ public class JobGet {
      * @author Frank Giordano
      */
     JobGet(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         this.request = request;
         if (!(request instanceof GetJsonZosmfRequest) && !(request instanceof GetTextZosmfRequest)) {
@@ -94,7 +94,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     public String getJclByJob(final Job job) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
+        ValidateUtils.checkNullParameter(job, "job");
         return getJclCommon(new CommonJobInputData(job.getJobId(), job.getJobName()));
     }
 
@@ -107,7 +107,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     public String getJclCommon(final CommonJobInputData commonInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(commonInputData == null, "commonInputData is null");
+        ValidateUtils.checkNullParameter(commonInputData, "commonInputData");
         ValidateUtils.checkIllegalParameter(commonInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
         ValidateUtils.checkIllegalParameter(commonInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 
@@ -280,7 +280,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     public String getSpoolContent(final JobFile jobFile) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(jobFile == null, "jobFile is null");
+        ValidateUtils.checkNullParameter(jobFile, "jobFile");
         return getSpoolContentCommon(jobFile);
     }
 
@@ -309,7 +309,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     public String getSpoolContentCommon(final JobFile jobFile) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(jobFile == null, "jobFile is null");
+        ValidateUtils.checkNullParameter(jobFile, "jobFile");
         ValidateUtils.checkIllegalParameter(jobFile.getJobName(), "jobName");
         ValidateUtils.checkIllegalParameter(jobFile.getJobId(), "jobId");
 
@@ -360,7 +360,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     public List<JobFile> getSpoolFilesByJob(final Job job) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
+        ValidateUtils.checkNullParameter(job, "job");
         return getSpoolFilesCommon(new CommonJobInputData(job.getJobId(), job.getJobName()));
     }
 
@@ -373,7 +373,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     public List<JobFile> getSpoolFilesCommon(final CommonJobInputData commonInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(commonInputData == null, "commonInputData is null");
+        ValidateUtils.checkNullParameter(commonInputData, "commonInputData");
         ValidateUtils.checkIllegalParameter(commonInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
         ValidateUtils.checkIllegalParameter(commonInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 
@@ -432,7 +432,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     public Job getStatusByJob(final Job job) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
+        ValidateUtils.checkNullParameter(job, "job");
         return getStatusCommon(new CommonJobInputData(job.getJobId(), job.getJobName(), true));
     }
 
@@ -459,7 +459,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     public String getStatusValueByJob(final Job job) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
+        ValidateUtils.checkNullParameter(job, "job");
         final Job result = getStatusCommon(new CommonJobInputData(job.getJobId(), job.getJobName()));
         return result.getStatus();
     }
@@ -473,7 +473,7 @@ public class JobGet {
      * @author Frank Giordano
      */
     public Job getStatusCommon(final CommonJobInputData commonInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(commonInputData == null, "commonInputData is null");
+        ValidateUtils.checkNullParameter(commonInputData, "commonInputData");
         ValidateUtils.checkIllegalParameter(commonInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
         ValidateUtils.checkIllegalParameter(commonInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 

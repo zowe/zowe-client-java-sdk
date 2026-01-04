@@ -148,7 +148,7 @@ public class UssChangeOwnerInputData {
          * @return Builder this object
          */
         public Builder owner(final String owner) {
-            ValidateUtils.checkNullParameter(owner == null, "owner is null");
+            ValidateUtils.checkNullParameter(owner, "owner");
             ValidateUtils.checkIllegalParameter(owner.isBlank(), "owner not specified");
             this.owner = owner;
             return this;

@@ -43,7 +43,7 @@ public class GetStreamZosmfRequest extends ZosmfRequest {
      */
     @Override
     public Response executeRequest() throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(url == null, "url is null");
+        ValidateUtils.checkNullParameter(url, "url");
         HttpResponse<byte[]> reply;
         try {
             reply = token != null ? Unirest.get(url).cookie(token).headers(headers).asBytes() :

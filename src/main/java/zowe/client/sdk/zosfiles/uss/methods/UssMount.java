@@ -48,7 +48,7 @@ public class UssMount {
      * @author Frank Giordano
      */
     public UssMount(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -61,8 +61,8 @@ public class UssMount {
      * @author Frank Giordano
      */
     UssMount(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");
@@ -115,7 +115,7 @@ public class UssMount {
     public Response mountCommon(final String fileSystemName, final UssMountInputData mountInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileSystemName, "fileSystemName");
-        ValidateUtils.checkNullParameter(mountInputData == null, "mountInputData is null");
+        ValidateUtils.checkNullParameter(mountInputData, "mountInputData");
         ValidateUtils.checkIllegalParameter(mountInputData.getAction().isEmpty(), "mountInputData action not specified");
 
         final String action = mountInputData.getAction().get().getValue();

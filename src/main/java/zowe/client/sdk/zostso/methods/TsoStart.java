@@ -44,7 +44,7 @@ public class TsoStart {
      * @author Frank Giordano
      */
     public TsoStart(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -59,8 +59,8 @@ public class TsoStart {
      * @author Frank Giordano
      */
     TsoStart(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PostJsonZosmfRequest)) {
             throw new IllegalStateException("POST_JSON request type required");
@@ -77,7 +77,7 @@ public class TsoStart {
      * @author Frank Giordano
      */
     public TsoStartResponse start(final StartTsoInputData inputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(inputData == null, "inputData is null");
+        ValidateUtils.checkNullParameter(inputData, "inputData");
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO +
                 "?" + "acct" + "=" + EncodeUtils.encodeURIComponent(inputData.getAccount()
                 .orElseThrow(() -> new ZosmfRequestException("accountNumber is not specified"))) +
