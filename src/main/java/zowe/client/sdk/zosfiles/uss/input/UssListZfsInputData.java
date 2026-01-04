@@ -144,7 +144,7 @@ public class UssListZfsInputData {
          * @return Builder this object
          */
         public Builder path(final String path) {
-            ValidateUtils.checkNullParameter(path == null, "path is null");
+            ValidateUtils.checkNullParameter(path, "path");
             ValidateUtils.checkIllegalParameter(path.isBlank(), "path not specified");
             if (this.fsname != null) {
                 throw new IllegalStateException("cannot specify both path and fsname parameters");
@@ -160,7 +160,7 @@ public class UssListZfsInputData {
          * @return Builder this object
          */
         public Builder fsname(final String fsname) {
-            ValidateUtils.checkNullParameter(fsname == null, "fsname is null");
+            ValidateUtils.checkNullParameter(fsname, "fsname");
             ValidateUtils.checkIllegalParameter(fsname.isBlank(), "fsname not specified");
             if (this.path != null) {
                 throw new IllegalStateException("cannot specify both path and fsname parameters");

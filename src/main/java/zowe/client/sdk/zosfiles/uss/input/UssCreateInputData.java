@@ -57,8 +57,8 @@ public class UssCreateInputData {
      * @author James Kostrewski
      */
     public UssCreateInputData(final CreateType type, final String mode) {
-        ValidateUtils.checkNullParameter(type == null, "type is null");
-        ValidateUtils.checkNullParameter(mode == null, "mode is null");
+        ValidateUtils.checkNullParameter(type, "type");
+        ValidateUtils.checkNullParameter(mode, "mode");
         this.type = type;
         this.mode = FileUtils.validatePermission(mode);
     }

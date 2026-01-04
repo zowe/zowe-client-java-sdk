@@ -41,7 +41,7 @@ public class ZosmfLogout {
      * @author Esteban Sandoval
      */
     public ZosmfLogout(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -56,8 +56,8 @@ public class ZosmfLogout {
      * @author Esteban Sandoval
      */
     ZosmfLogout(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof DeleteJsonZosmfRequest)) {
             throw new IllegalStateException("DELETE_JSON request type required");
@@ -75,7 +75,7 @@ public class ZosmfLogout {
      * @author Frank Giordano
      */
     public Response logout(Cookie token) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(token == null, "token is null");
+        ValidateUtils.checkNullParameter(token, "token");
         final String url = connection.getZosmfUrl() +
                 ZosmfAuthConstants.RESOURCE;
 

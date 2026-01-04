@@ -126,7 +126,7 @@ public class UssCopyInputData {
          * @return Builder this object
          */
         public Builder from(final String from) {
-            ValidateUtils.checkNullParameter(from == null, "from is null");
+            ValidateUtils.checkNullParameter(from, "from");
             ValidateUtils.checkIllegalParameter(from.isBlank(), "from not specified");
             this.from = from;
             return this;

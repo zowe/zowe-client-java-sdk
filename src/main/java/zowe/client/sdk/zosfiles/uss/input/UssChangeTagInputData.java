@@ -187,7 +187,7 @@ public class UssChangeTagInputData {
          * @return Builder this object
          */
         public Builder action(final ChangeTagAction action) {
-            ValidateUtils.checkNullParameter(action == null, "action is null");
+            ValidateUtils.checkNullParameter(action, "action");
             this.action = action;
             return this;
         }

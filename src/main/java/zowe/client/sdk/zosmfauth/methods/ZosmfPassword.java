@@ -45,7 +45,7 @@ public class ZosmfPassword {
      * @author Esteban Sandoval
      */
     public ZosmfPassword(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -60,8 +60,8 @@ public class ZosmfPassword {
      * @author Esteban Sandoval
      */
     ZosmfPassword(ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalArgumentException("PUT_JSON request type required");
@@ -79,7 +79,7 @@ public class ZosmfPassword {
      * @author Frank Giordano
      */
     public Response changePassword(final PasswordInputData pwdInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(pwdInputData == null, "pwdInputData is null");
+        ValidateUtils.checkNullParameter(pwdInputData, "pwdInputData");
 
         final String url = connection.getZosmfUrl() +
                 ZosmfAuthConstants.RESOURCE;

@@ -63,7 +63,7 @@ public class ConsoleCmd {
      * @author Frank Giordano
      */
     public ConsoleCmd(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -78,8 +78,8 @@ public class ConsoleCmd {
      * @author Frank Giordano
      */
     ConsoleCmd(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");
@@ -130,7 +130,7 @@ public class ConsoleCmd {
     public ConsoleCmdResponse issueCommandCommon(final String consoleName, final ConsoleCmdInputData consoleInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(consoleName, "consoleName");
-        ValidateUtils.checkNullParameter(consoleInputData == null, "consoleInputData is null");
+        ValidateUtils.checkNullParameter(consoleInputData, "consoleInputData");
 
         final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(consoleName);

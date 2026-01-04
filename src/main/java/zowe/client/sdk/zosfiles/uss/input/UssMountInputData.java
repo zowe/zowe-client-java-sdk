@@ -163,7 +163,7 @@ public class UssMountInputData {
          * @return .Builder this object
          */
         public Builder mountPoint(final String mountPoint) {
-            ValidateUtils.checkNullParameter(mountPoint == null, "mountPoint is null");
+            ValidateUtils.checkNullParameter(mountPoint, "mountPoint");
             ValidateUtils.checkIllegalParameter(mountPoint.isBlank(), "mountPoint not specified");
             this.mountPoint = mountPoint;
             return this;
@@ -176,7 +176,7 @@ public class UssMountInputData {
          * @return Builder this object
          */
         public Builder fsType(final String fsType) {
-            ValidateUtils.checkNullParameter(fsType == null, "fsType is null");
+            ValidateUtils.checkNullParameter(fsType, "fsType");
             ValidateUtils.checkIllegalParameter(fsType.isBlank(), "fsType not specified");
             this.fsType = fsType;
             return this;

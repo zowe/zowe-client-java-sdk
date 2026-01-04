@@ -48,7 +48,7 @@ public class UssGetAcl {
      * @author James Kostrewski
      */
     public UssGetAcl(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -61,8 +61,8 @@ public class UssGetAcl {
      * @author James Kostrewski
      */
     UssGetAcl(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");
@@ -107,7 +107,7 @@ public class UssGetAcl {
     public Response getAclCommon(final String targetPath, final UssGetAclInputData getAclInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
-        ValidateUtils.checkNullParameter(getAclInputData == null, "getAclInputData is null");
+        ValidateUtils.checkNullParameter(getAclInputData, "getAclInputData");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +

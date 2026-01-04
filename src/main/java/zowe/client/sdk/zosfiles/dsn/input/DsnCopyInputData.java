@@ -191,13 +191,15 @@ public class DsnCopyInputData {
         /**
          * Set fromDataSet string value
          *
-         * @param dataSet string value
+         * @param fromDataset string value
          * @return Builder this object
          */
-        public Builder fromDataSet(final String dataSet) {
-            ValidateUtils.checkNullParameter(dataSet == null, "fromDataSet is null");
-            ValidateUtils.checkNullParameter(dataSet.isEmpty(), "fromDataSet not specified");
-            this.fromDataSet = dataSet;
+        public Builder fromDataSet(final String fromDataset) {
+            ValidateUtils.checkNullParameter(fromDataset, "fromDataset");
+            if (fromDataset.isBlank()) {
+                throw new IllegalArgumentException("fromDataset not specified");
+            }
+            this.fromDataSet = fromDataset;
             return this;
         }
 
@@ -226,13 +228,15 @@ public class DsnCopyInputData {
         /**
          * Set dataSet string value
          *
-         * @param dataSet string value
+         * @param toDataset string value
          * @return Builder this object
          */
-        public Builder toDataSet(final String dataSet) {
-            ValidateUtils.checkNullParameter(dataSet == null, "toDataSet is null");
-            ValidateUtils.checkNullParameter(dataSet.isEmpty(), "toDataSet not specified");
-            this.toDataSet = dataSet;
+        public Builder toDataSet(final String toDataset) {
+            ValidateUtils.checkNullParameter(toDataset, "toDataset");
+            if (toDataset.isBlank()) {
+                throw new IllegalArgumentException("toDataset not specified");
+            }
+            this.toDataSet = toDataset;
             return this;
         }
 

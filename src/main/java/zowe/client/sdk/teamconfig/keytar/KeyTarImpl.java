@@ -69,7 +69,7 @@ public class KeyTarImpl implements IKeyTar {
      */
     @Override
     public List<KeyTarConfig> getKeyConfigs() throws TeamConfigException {
-        ValidateUtils.checkNullParameter(keyString == null, "keyString is null, perform processKey first");
+        ValidateUtils.checkNullParameter(keyString, "keyString", "perform processKey first");
         ValidateUtils.checkIllegalParameter(keyString.isBlank(), "keyString is empty");
         if (!keyTarConfigs.isEmpty()) {
             return keyTarConfigs;
@@ -84,7 +84,7 @@ public class KeyTarImpl implements IKeyTar {
      */
     @Override
     public String getKeyTarValue() {
-        ValidateUtils.checkNullParameter(keyString == null, "keyString is null, perform processKey first");
+        ValidateUtils.checkNullParameter(keyString, "keyString", "perform processKey first");
         ValidateUtils.checkIllegalParameter(keyString.isBlank(), "keyString is empty");
         return keyString;
     }

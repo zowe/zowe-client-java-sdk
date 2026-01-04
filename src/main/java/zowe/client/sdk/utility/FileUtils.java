@@ -37,36 +37,36 @@ public final class FileUtils {
      * <p>
      * Each group contains a value of either r w x or -.
      *
-     * @param value permission string
+     * @param permission permission string
      * @return same value string back to caller if valid
      * @author Frank Giordano
      */
-    public static String validatePermission(final String value) {
-        ValidateUtils.checkNullParameter(value == null, "permission value is null");
-        ValidateUtils.checkIllegalParameter(value.length() != 9, "specify 9 character permission");
+    public static String validatePermission(final String permission) {
+        ValidateUtils.checkNullParameter(permission, "permission value");
+        ValidateUtils.checkIllegalParameter(permission.length() != 9, "specify 9 character permission");
         Pattern p = Pattern.compile("(rwx|rw-|r--|r-x|--x|-wx|-w-)+");
-        Matcher m = p.matcher(value);
+        Matcher m = p.matcher(permission);
         if (!m.matches()) {
             throw new IllegalStateException("specify valid permission value");
         }
-        return value;
+        return permission;
     }
 
     /**
      * Validate permission i.e. /xxx/xx/x
      *
-     * @param value path string
+     * @param path path string
      * @return same value string back to caller if valid
      * @author Frank Giordano
      */
-    public static String validatePath(final String value) {
-        ValidateUtils.checkNullParameter(value == null, "path value is null");
+    public static String validatePath(final String path) {
+        ValidateUtils.checkNullParameter(path, "path value");
         Pattern p = Pattern.compile("/.*");
-        Matcher m = p.matcher(value);
+        Matcher m = p.matcher(path);
         if (!m.matches()) {
             throw new IllegalStateException("specify valid path value");
         }
-        return value;
+        return path;
     }
 
 }

@@ -309,7 +309,7 @@ public class UssCreateZfsInputData {
          * @param cylsPri value of required primary cylinders
          */
         public Builder(final Integer cylsPri) {
-            ValidateUtils.checkNullParameter(cylsPri == null, "cylsPri is null");
+            ValidateUtils.checkNullParameter(cylsPri, "cylsPri");
             ValidateUtils.checkIllegalParameter(cylsPri <= 0, "specify cylsPri greater than 0");
             this.cylsPri = cylsPri;
         }

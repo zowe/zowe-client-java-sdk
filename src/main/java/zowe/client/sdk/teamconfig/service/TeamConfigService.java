@@ -91,7 +91,7 @@ public class TeamConfigService {
      * @author Frank Giordano
      */
     public ConfigContainer getTeamConfig(final KeyTarConfig config) throws TeamConfigException {
-        ValidateUtils.checkNullParameter(config == null, "config is null");
+        ValidateUtils.checkNullParameter(config, "config");
         final JSONParser parser = new JSONParser();
         Object obj;
         try {

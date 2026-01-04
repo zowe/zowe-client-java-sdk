@@ -368,7 +368,7 @@ public class UssListInputData {
          * @return Builder this object
          */
         public Builder path(final String path) {
-            ValidateUtils.checkNullParameter(path == null, "path is null");
+            ValidateUtils.checkNullParameter(path, "path");
             ValidateUtils.checkIllegalParameter(path.isBlank(), "path not specified");
             this.path = path;
             return this;

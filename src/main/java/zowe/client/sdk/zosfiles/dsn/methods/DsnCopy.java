@@ -44,7 +44,7 @@ public class DsnCopy {
      * @author Leonid Baranov
      */
     public DsnCopy(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -59,8 +59,8 @@ public class DsnCopy {
      * @author Frank Giordano
      */
     DsnCopy(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");
@@ -109,7 +109,7 @@ public class DsnCopy {
      * @author Frank Giordano
      */
     public Response copyCommon(final DsnCopyInputData copyInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(copyInputData == null, "copyInputData is null");
+        ValidateUtils.checkNullParameter(copyInputData, "copyInputData");
 
         final String url = setUrl(copyInputData);
         // build the body key-value pairs needed for the request

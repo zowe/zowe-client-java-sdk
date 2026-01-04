@@ -48,7 +48,7 @@ public class DsnList {
      * @author Frank Giordano
      */
     public DsnList(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -63,8 +63,8 @@ public class DsnList {
      * @author Frank Giordano
      */
     DsnList(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof GetJsonZosmfRequest)) {
             throw new IllegalStateException("GET_JSON request type required");
@@ -84,7 +84,7 @@ public class DsnList {
     public List<Dataset> getDatasets(final String dataSetName, final DsnListInputData listInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
-        ValidateUtils.checkNullParameter(listInputData == null, "listInputData is null");
+        ValidateUtils.checkNullParameter(listInputData, "listInputData");
 
         final Map<String, String> headers = new HashMap<>();
         final List<Dataset> datasets = new ArrayList<>();
@@ -115,7 +115,7 @@ public class DsnList {
     public List<Member> getMembers(final String dataSetName, final DsnListInputData listInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
-        ValidateUtils.checkNullParameter(listInputData == null, "listInputData is null");
+        ValidateUtils.checkNullParameter(listInputData, "listInputData");
 
         final Map<String, String> headers = new HashMap<>();
         final List<Member> members = new ArrayList<>();

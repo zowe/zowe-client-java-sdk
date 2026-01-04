@@ -44,7 +44,7 @@ public class JobCancel {
      * @author Nikunj Goyal
      */
     public JobCancel(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -59,8 +59,8 @@ public class JobCancel {
      * @author Frank Giordano
      */
     JobCancel(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest) && !(request instanceof DeleteJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");
@@ -100,7 +100,7 @@ public class JobCancel {
      * @author Frank Giordano
      */
     public Response cancelByJob(final Job job, final String version) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
+        ValidateUtils.checkNullParameter(job, "job");
         return this.cancelCommon(new JobModifyInputData.Builder(job.getJobName(), job.getJobId()).version(version).build());
     }
 
@@ -114,7 +114,7 @@ public class JobCancel {
      * @author Frank Giordano
      */
     public Response cancelCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(modifyInputData == null, "modifyInputData is null");
+        ValidateUtils.checkNullParameter(modifyInputData, "modifyInputData");
         ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
         ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 

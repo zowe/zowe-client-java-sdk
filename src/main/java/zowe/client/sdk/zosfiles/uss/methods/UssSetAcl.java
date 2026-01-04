@@ -47,7 +47,7 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     public UssSetAcl(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -60,8 +60,8 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     UssSetAcl(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");
@@ -133,7 +133,7 @@ public class UssSetAcl {
     public Response setAclCommon(final String targetPath, final UssSetAclInputData setAclInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "fromPath");
-        ValidateUtils.checkNullParameter(setAclInputData == null, "setAclInputData is null");
+        ValidateUtils.checkNullParameter(setAclInputData, "setAclInputData");
         ValidateUtils.checkIllegalParameter(setAclInputData.getSet().isEmpty() &&
                 setAclInputData.getModify().isEmpty() && setAclInputData.getDelete().isEmpty() &&
                 setAclInputData.getDeleteType().isEmpty(), "set, modify, delete, and delete type are all empty");

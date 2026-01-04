@@ -42,7 +42,7 @@ public class JobDelete {
      * @author Nikunj Goyal
      */
     public JobDelete(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -57,8 +57,8 @@ public class JobDelete {
      * @author Frank Giordano
      */
     JobDelete(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof DeleteJsonZosmfRequest)) {
             throw new IllegalStateException("DELETE_JSON request type required");
@@ -90,7 +90,7 @@ public class JobDelete {
      * @author Frank Giordano
      */
     public Response deleteByJob(final Job job, final String version) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
+        ValidateUtils.checkNullParameter(job, "job");
         return this.deleteCommon(new JobModifyInputData.Builder(job.getJobName(), job.getJobId()).version(version).build());
     }
 

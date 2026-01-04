@@ -43,7 +43,7 @@ public class GetTextZosmfRequest extends ZosmfRequest {
      */
     @Override
     public Response executeRequest() throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(url == null, "url is null");
+        ValidateUtils.checkNullParameter(url, "url");
         HttpResponse<String> reply;
         try {
             reply = token != null ? Unirest.get(url).cookie(token).headers(headers).asString() :

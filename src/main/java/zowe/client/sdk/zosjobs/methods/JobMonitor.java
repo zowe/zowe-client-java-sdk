@@ -65,7 +65,7 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -77,7 +77,7 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection, final int attempts) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
         this.attempts = attempts;
     }
@@ -91,7 +91,7 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection, final int attempts, final int watchDelay) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
         this.attempts = attempts;
         this.watchDelay = watchDelay;
@@ -107,7 +107,7 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection, final int attempts, final int watchDelay, final int lineLimit) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
         this.attempts = attempts;
         this.watchDelay = watchDelay;
@@ -231,7 +231,7 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public boolean isRunning(final JobMonitorInputData monitorInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(monitorInputData == null, "monitorInputData is null");
+        ValidateUtils.checkNullParameter(monitorInputData, "monitorInputData");
         final JobGet getJobs = new JobGet(connection);
         final String jobName = monitorInputData.getJobName().orElse("");
         final String jobId = monitorInputData.getJobId().orElse("");
@@ -334,7 +334,7 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public boolean waitByMessage(final Job job, final String message) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
+        ValidateUtils.checkNullParameter(job, "job");
         return waitMessageCommon(new JobMonitorInputData.Builder(job.getJobName(), job.getJobId())
                 .jobStatus(JobStatus.Type.OUTPUT)
                 .attempts(attempts)
@@ -381,7 +381,7 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public Job waitByOutputStatus(final Job job) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
+        ValidateUtils.checkNullParameter(job, "job");
         return waitStatusCommon(new JobMonitorInputData.Builder(job.getJobName(), job.getJobId())
                 .jobStatus(JobStatus.Type.OUTPUT)
                 .attempts(attempts)
@@ -426,7 +426,7 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public Job waitByStatus(final Job job, final JobStatus.Type statusType) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(job == null, "job is null");
+        ValidateUtils.checkNullParameter(job, "job");
         return waitStatusCommon(
                 new JobMonitorInputData.Builder(job.getJobName(), job.getJobId())
                         .jobStatus(statusType)
@@ -470,7 +470,7 @@ public class JobMonitor {
      */
     public boolean waitMessageCommon(final JobMonitorInputData monitorInputData, final String message)
             throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(monitorInputData == null, "monitorInputData is null");
+        ValidateUtils.checkNullParameter(monitorInputData, "monitorInputData");
         ValidateUtils.checkIllegalParameter(message, "message");
 
         if (monitorInputData.getAttempts().isEmpty()) {
@@ -500,7 +500,7 @@ public class JobMonitor {
      * @author Frank Giordano
      */
     public Job waitStatusCommon(final JobMonitorInputData monitorInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(monitorInputData == null, "monitorInputData is null");
+        ValidateUtils.checkNullParameter(monitorInputData, "monitorInputData");
 
         if (monitorInputData.getJobStatus().isEmpty()) {
             monitorInputData.setJobStatus(DEFAULT_STATUS);

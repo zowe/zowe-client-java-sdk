@@ -46,7 +46,7 @@ public class UssCopy {
      * @author James Kostrewski
      */
     public UssCopy(final ZosConnection connection) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
@@ -59,8 +59,8 @@ public class UssCopy {
      * @author James Kostrewski
      */
     UssCopy(final ZosConnection connection, final ZosmfRequest request) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
-        ValidateUtils.checkNullParameter(request == null, "request is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
         if (!(request instanceof PutJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");
@@ -95,7 +95,7 @@ public class UssCopy {
     @SuppressWarnings("DuplicatedCode")
     public Response copyCommon(final String targetPath, final UssCopyInputData copyInputData) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
-        ValidateUtils.checkNullParameter(copyInputData == null, "copyInputData is null");
+        ValidateUtils.checkNullParameter(copyInputData, "copyInputData");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +

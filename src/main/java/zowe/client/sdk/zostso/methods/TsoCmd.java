@@ -49,7 +49,7 @@ public class TsoCmd {
      * @author Frank Giordano
      */
     public TsoCmd(final ZosConnection connection, final String accountNumber) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         ValidateUtils.checkIllegalParameter(accountNumber, "accountNumber");
         this.connection = connection;
         this.accountNumber = accountNumber;
@@ -75,7 +75,7 @@ public class TsoCmd {
            final TsoStop tsoStop,
            final TsoSend tsoSend,
            final TsoReply tsoReply) {
-        ValidateUtils.checkNullParameter(connection == null, "connection is null");
+        ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
         this.accountNumber = accountNumber;
         this.tsoStart = tsoStart;
