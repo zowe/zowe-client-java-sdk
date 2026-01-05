@@ -144,7 +144,7 @@ public class JobChange {
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no job change response phrase"))
+                .orElseThrow(() -> new IllegalStateException("no job change class response phrase"))
                 .toString();
 
         final String context = "changeClassCommon";
