@@ -29,9 +29,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * JobChange class to handle changing a running job on z/OS.
+ * JobChange class for managing running jobs on z/OS.
  * <p>
- * The following actions on a job are provided: change class, hold and release.
+ * Provides operations to modify a job’s attributes, including changing its job class,
+ * placing a job on hold, and releasing a held job.
  *
  * @author Frank Giordano
  * @version 6.0
