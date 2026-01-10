@@ -73,6 +73,7 @@ public class TsoStop {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
+    @SuppressWarnings("DuplicatedCode")
     public TsoCommonResponse stop(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
         final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +

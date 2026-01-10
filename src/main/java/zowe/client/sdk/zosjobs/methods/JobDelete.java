@@ -103,8 +103,9 @@ public class JobDelete {
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
+    @SuppressWarnings("DuplicatedCode")
     public Response deleteCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(modifyInputData, "modifyInputData is null");
+        ValidateUtils.checkNullParameter(modifyInputData, "modifyInputData");
         ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
         ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 

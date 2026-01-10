@@ -113,6 +113,7 @@ public class JobCancel {
      * @author Nikunj Goyal
      * @author Frank Giordano
      */
+    @SuppressWarnings("DuplicatedCode")
     public Response cancelCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(modifyInputData, "modifyInputData");
         ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);

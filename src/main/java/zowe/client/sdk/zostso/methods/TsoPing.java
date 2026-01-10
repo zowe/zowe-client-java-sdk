@@ -73,6 +73,7 @@ public class TsoPing {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
+    @SuppressWarnings("DuplicatedCode")
     public TsoCommonResponse ping(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
         final String url = connection.getZosmfUrl() + TsoConstants.RES_PING + "/" + sessionId;

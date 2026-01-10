@@ -20,6 +20,7 @@ import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosjobs.input.JobModifyInputData;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -101,6 +102,90 @@ public class JobDeleteTest {
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
         JobDelete jobDelete = new JobDelete(connection, request);
         assertNotNull(jobDelete);
+    }
+
+    @Test
+    public void tstJobDeleteCommonJobModifyInputDataNullFailure() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        JobDelete jobDelete = new JobDelete(connection);
+        JobModifyInputData modifyInputData = null;
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> jobDelete.deleteCommon(modifyInputData)
+        );
+        assertEquals("modifyInputData is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstJobDeleteCommonJobNameEmptyFailure() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        JobDelete jobDelete = new JobDelete(connection);
+        JobModifyInputData modifyInputData = new JobModifyInputData.Builder("", "").build();
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> jobDelete.deleteCommon(modifyInputData)
+        );
+        assertEquals("jobName is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void tstJobDeleteCommonJobIdEmptyFailure() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        JobDelete jobDelete = new JobDelete(connection);
+        JobModifyInputData modifyInputData = new JobModifyInputData.Builder("name", "").build();
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> jobDelete.deleteCommon(modifyInputData)
+        );
+        assertEquals("jobId is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void tstJobDeleteCommonJobNameWithSpacesEmptyFailure() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        JobDelete jobDelete = new JobDelete(connection);
+        JobModifyInputData modifyInputData = new JobModifyInputData.Builder("    ", "").build();
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> jobDelete.deleteCommon(modifyInputData)
+        );
+        assertEquals("jobName is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void tstJobDeleteCommonJobIdWithSpacesEmptyFailure() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        JobDelete jobDelete = new JobDelete(connection);
+        JobModifyInputData modifyInputData = new JobModifyInputData.Builder("name", " ").build();
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> jobDelete.deleteCommon(modifyInputData)
+        );
+        assertEquals("jobId is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void tstJobDeleteCommonJobNameNullFailure() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        JobDelete jobDelete = new JobDelete(connection);
+        JobModifyInputData modifyInputData = new JobModifyInputData.Builder(null, "").build();
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> jobDelete.deleteCommon(modifyInputData)
+        );
+        assertEquals("jobName is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void tstJobDeleteCommonJobIdNullFailure() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        JobDelete jobDelete = new JobDelete(connection);
+        JobModifyInputData modifyInputData = new JobModifyInputData.Builder("name", null).build();
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> jobDelete.deleteCommon(modifyInputData)
+        );
+        assertEquals("jobId is either null or empty", exception.getMessage());
     }
 
     @Test
