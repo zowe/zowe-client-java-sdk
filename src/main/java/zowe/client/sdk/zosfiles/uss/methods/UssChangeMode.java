@@ -84,7 +84,8 @@ public class UssChangeMode {
         ValidateUtils.checkNullParameter(changeModeInputData, "changeModeInputData");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
         final Map<String, Object> changeModeMap = new HashMap<>();

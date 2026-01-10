@@ -110,7 +110,8 @@ public class UssWrite {
         ValidateUtils.checkNullParameter(writeInputData, "writeInputData");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(fileNamePath));
 
         final Map<String, String> headers = new HashMap<>();

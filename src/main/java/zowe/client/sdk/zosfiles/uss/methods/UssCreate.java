@@ -88,7 +88,8 @@ public class UssCreate {
         ValidateUtils.checkNullParameter(createInputData, "createInputData");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
         final Map<String, Object> createMap = new HashMap<>();

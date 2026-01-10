@@ -141,7 +141,8 @@ public class UssChangeTag {
         ValidateUtils.checkIllegalParameter(changeTagInputData.getAction().isEmpty(), "action not specified");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(fileNamePath));
 
         final Map<String, Object> changeTagMap = new HashMap<>();

@@ -73,8 +73,10 @@ public class TsoSend {
     public String sendCommand(final String sessionId, final String command) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
         ValidateUtils.checkIllegalParameter(command, "command");
-        final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" + sessionId + TsoConstants.RES_DONT_READ_REPLY;
+        final String url = connection.getZosmfUrl() +
+                TsoConstants.RESOURCE + "/" +
+                TsoConstants.RES_START_TSO + "/" +
+                sessionId + TsoConstants.RES_DONT_READ_REPLY;
         final String body = "{\"TSO RESPONSE\":{\"VERSION\":\"0100\",\"DATA\":\"" + command + "\"}}";
 
         if (request == null || !(request instanceof PutJsonZosmfRequest)) {

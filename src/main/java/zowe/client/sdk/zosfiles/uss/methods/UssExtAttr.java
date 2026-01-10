@@ -138,7 +138,8 @@ public class UssExtAttr {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
         if (request == null) {

@@ -91,7 +91,8 @@ public class UssDelete {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
         if (request == null) {
@@ -118,7 +119,8 @@ public class UssDelete {
         ValidateUtils.checkIllegalParameter(fileSystemName, "fileSystemName");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_ZFS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 
         if (request == null) {

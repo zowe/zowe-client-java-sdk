@@ -91,7 +91,8 @@ public class DsnDelete {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
         if (request == null) {

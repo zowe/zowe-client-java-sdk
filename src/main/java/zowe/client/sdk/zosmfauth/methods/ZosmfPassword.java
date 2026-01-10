@@ -81,8 +81,7 @@ public class ZosmfPassword {
     public Response changePassword(final PasswordInputData pwdInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(pwdInputData, "pwdInputData");
 
-        final String url = connection.getZosmfUrl() +
-                ZosmfAuthConstants.RESOURCE;
+        final String url = connection.getZosmfUrl() + ZosmfAuthConstants.RESOURCE;
 
         final Map<String, Object> passwordMap = new HashMap<>();
         passwordMap.put("userID", pwdInputData.getUserId());

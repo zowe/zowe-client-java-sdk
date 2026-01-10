@@ -109,8 +109,12 @@ public class JobDelete {
         ValidateUtils.checkIllegalParameter(modifyInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
         ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 
-        final String url = connection.getZosmfUrl() + JobsConstants.RESOURCE + JobsConstants.FILE_DELIM +
-                modifyInputData.getJobName().get() + JobsConstants.FILE_DELIM + modifyInputData.getJobId().get();
+        final String url = connection.getZosmfUrl() +
+                JobsConstants.RESOURCE +
+                JobsConstants.FILE_DELIM +
+                modifyInputData.getJobName().get() +
+                JobsConstants.FILE_DELIM +
+                modifyInputData.getJobId().get();
 
         final Map<String, String> headers = new HashMap<>();
 

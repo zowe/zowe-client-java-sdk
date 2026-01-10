@@ -125,7 +125,8 @@ public class UssMount {
         }
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_MFS + "/" +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_MFS + "/" +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 
         final Map<String, Object> mountMap = new HashMap<>();

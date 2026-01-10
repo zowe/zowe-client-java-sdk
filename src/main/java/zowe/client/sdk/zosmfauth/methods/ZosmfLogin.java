@@ -74,8 +74,7 @@ public class ZosmfLogin {
      * @author Frank Giordano
      */
     public ZosmfLoginResponse login() throws ZosmfRequestException {
-        final String url = connection.getZosmfUrl() +
-                ZosmfAuthConstants.RESOURCE;
+        final String url = connection.getZosmfUrl() + ZosmfAuthConstants.RESOURCE;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);

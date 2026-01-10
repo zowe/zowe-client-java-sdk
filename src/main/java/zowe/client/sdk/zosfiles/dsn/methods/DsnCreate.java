@@ -82,7 +82,8 @@ public class DsnCreate {
         ValidateUtils.checkNullParameter(createInputData, "createInputData");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES + "/" +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
         final Map<String, Object> createMap = new HashMap<>();

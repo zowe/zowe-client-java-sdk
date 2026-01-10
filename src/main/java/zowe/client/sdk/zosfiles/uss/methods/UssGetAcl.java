@@ -110,7 +110,8 @@ public class UssGetAcl {
         ValidateUtils.checkNullParameter(getAclInputData, "getAclInputData");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
         final Map<String, Object> getAclMap = new HashMap<>();

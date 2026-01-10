@@ -132,7 +132,8 @@ public class ConsoleCmd {
         ValidateUtils.checkIllegalParameter(consoleName, "consoleName");
         ValidateUtils.checkNullParameter(consoleInputData, "consoleInputData");
 
-        final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + "/" +
+        final String url = connection.getZosmfUrl() +
+                ConsoleConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(consoleName);
 
         final Map<String, String> issueMap = getIssueMap(consoleInputData);

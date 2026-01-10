@@ -139,7 +139,8 @@ public class UssSetAcl {
                 setAclInputData.getDeleteType().isEmpty(), "set, modify, delete, and delete type are all empty");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
         final Map<String, Object> setAclMap = new HashMap<>();

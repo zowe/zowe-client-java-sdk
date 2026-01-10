@@ -76,8 +76,10 @@ public class TsoStop {
     @SuppressWarnings("DuplicatedCode")
     public TsoCommonResponse stop(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
-        final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" + sessionId;
+        final String url = connection.getZosmfUrl() +
+                TsoConstants.RESOURCE + "/" +
+                TsoConstants.RES_START_TSO + "/" +
+                sessionId;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);

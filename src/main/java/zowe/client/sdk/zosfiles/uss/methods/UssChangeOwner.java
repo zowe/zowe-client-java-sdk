@@ -95,7 +95,8 @@ public class UssChangeOwner {
         ValidateUtils.checkNullParameter(changeOwnerInputData, "changeOwnerInputData");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_USS_FILES +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
         final Map<String, Object> changeOnerMap = new HashMap<>();

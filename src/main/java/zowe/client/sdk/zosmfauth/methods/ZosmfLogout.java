@@ -76,8 +76,7 @@ public class ZosmfLogout {
      */
     public Response logout(Cookie token) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(token, "token");
-        final String url = connection.getZosmfUrl() +
-                ZosmfAuthConstants.RESOURCE;
+        final String url = connection.getZosmfUrl() + ZosmfAuthConstants.RESOURCE;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
