@@ -71,12 +71,12 @@ public final class ValidateUtils {
     }
 
     /**
-     * Check for null parameter with additional message concatenation
+     * Check for null parameter with additional message concatenated to returned exception 
      *
      * @param value value of the input
      * @param name name of the input
      * @param msg message to be appended in the exception
-     * @throws NullPointerException - input is null, msg
+     * @throws NullPointerException input is null with message appended to exception
      * @author Frank Giordano
      */
     public static void checkNullParameter(final Object value, final String name, final String msg) {
