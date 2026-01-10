@@ -70,8 +70,8 @@ public class UssMove {
     /**
      * Move a UNIX file or directory with overwriting set as true
      *
-     * @param fromPath   the source path of the file or directory to move
-     * @param targetPath the target path of where the file or directory will be moved too
+     * @param fromPath   UNIX path to the source file or directory to move
+     * @param targetPath UNIX path to the target file or directory will be moved too
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
@@ -84,8 +84,8 @@ public class UssMove {
     /**
      * Move a UNIX file or directory with overwritten value specified
      *
-     * @param fromPath   the source path of the file or directory to move
-     * @param targetPath the target path of where the file or directory will be moved too
+     * @param fromPath   UNIX path to the source file or directory to move
+     * @param targetPath UNIX path to the target file or directory will be moved too
      * @param overwrite  true if you want to override existing data at a target path or false to not override
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -99,8 +99,8 @@ public class UssMove {
     /**
      * Move a UNIX file or directory
      *
-     * @param fromPath   the source path of the file or directory to move
-     * @param targetPath the target path of where the file or directory will be moved too
+     * @param fromPath   UNIX path to the source file or directory to move
+     * @param targetPath UNIX path to the target file or directory will be moved too
      * @param overwrite  true if you want to override existing data at a target path or false to not override
      * @return Response object
      * @throws ZosmfRequestException request error state

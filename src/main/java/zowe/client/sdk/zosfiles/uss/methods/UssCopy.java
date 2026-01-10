@@ -71,8 +71,8 @@ public class UssCopy {
     /**
      * Copy a Unix file or directory to another location
      *
-     * @param fromPath   the source path of the file or directory to copy
-     * @param targetPath target path of where the file or directory will be copied too
+     * @param fromPath   UNIX path to the source file or directory to copy
+     * @param targetPath UNIX path to the target file or directory will be copied too
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
@@ -85,7 +85,7 @@ public class UssCopy {
     /**
      * Copy a Unix file or directory to another location request driven by UssCopyInputData object settings
      *
-     * @param targetPath    target path of where the file or directory will be copied too
+     * @param targetPath    UNIX path to the target file or directory will be copied too
      * @param copyInputData UssCopyInputData parameters that specify copy action request
      * @return Response object
      * @throws ZosmfRequestException request error state

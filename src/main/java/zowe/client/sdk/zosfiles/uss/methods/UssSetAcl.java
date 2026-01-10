@@ -72,7 +72,7 @@ public class UssSetAcl {
     /**
      * Sets the ACL for a USS file or directory
      *
-     * @param targetPath target path of the file or directory
+     * @param targetPath UNIX path to the target file or directory
      * @param value      sets the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -85,7 +85,7 @@ public class UssSetAcl {
     /**
      * Modifies the specified ACL entry for the file or directory
      *
-     * @param targetPath target path of the file or directory
+     * @param targetPath UNIX path to the target file or directory
      * @param value      modifies the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -98,7 +98,7 @@ public class UssSetAcl {
     /**
      * Deletes the specified ACL entry from the file or directory
      *
-     * @param targetPath target path of the file or directory
+     * @param targetPath UNIX path to the target file or directory
      * @param value      deletes the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -111,7 +111,7 @@ public class UssSetAcl {
     /**
      * Delete all extended ACL entries by type (setfacl -D type):
      *
-     * @param targetPath target path of the file or directory
+     * @param targetPath UNIX path to the target file or directory
      * @param deleteType deletes the extended ACL entries that are specified by type
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -124,7 +124,7 @@ public class UssSetAcl {
     /**
      * Sets the ACL for a USS file or directory request driven by UssSetAclInputData object settings
      *
-     * @param targetPath      target path of the file or directory
+     * @param targetPath      UNIX path to the target file or directory
      * @param setAclInputData UssSetAclInputData object to drive the request
      * @return Response object
      * @throws ZosmfRequestException request error state

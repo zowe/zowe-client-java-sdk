@@ -74,7 +74,7 @@ public class UssChangeTag {
     /**
      * Change the tag of a UNIX file to a binary type
      *
-     * @param fileNamePath file name with a path
+     * @param fileNamePath UNIX path that resolves to the target file
      * @return Response Object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
@@ -87,7 +87,7 @@ public class UssChangeTag {
     /**
      * Change the tag of a UNIX file to a text type
      *
-     * @param fileNamePath file name with a path
+     * @param fileNamePath UNIX path that resolves to the target file
      * @param codeSet      code set name. i.e., IBM-1047
      * @return Response Object
      * @throws ZosmfRequestException request error state
@@ -104,7 +104,7 @@ public class UssChangeTag {
     /**
      * Remove tag of a UNIX file
      *
-     * @param fileNamePath file name with a path
+     * @param fileNamePath UNIX path that resolves to the target file
      * @return Response Object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
@@ -116,7 +116,7 @@ public class UssChangeTag {
     /**
      * Retrieve existing UNIX file tag information
      *
-     * @param fileNamePath file name with a path
+     * @param fileNamePath UNIX path that resolves to the target file
      * @return Response Object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
@@ -128,7 +128,7 @@ public class UssChangeTag {
     /**
      * Change tag of a UNIX file request driven by UssChangeTagInputData object settings
      *
-     * @param fileNamePath       file name with a path
+     * @param fileNamePath       UNIX path that resolves to the target file
      * @param changeTagInputData for parameters for the change tag request, see UssChangeTagInputData object
      * @return Response Object
      * @throws ZosmfRequestException request error state

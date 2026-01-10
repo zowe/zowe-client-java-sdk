@@ -69,7 +69,7 @@ public class UssWrite {
     /**
      * Perform UNIX write text content request
      *
-     * @param fileNamePath file name with a path
+     * @param fileNamePath UNIX path that resolves to the target file
      * @param content      string content to write to file
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -83,7 +83,7 @@ public class UssWrite {
     /**
      * Perform UNIX write binary content request
      *
-     * @param fileNamePath file name with a path
+     * @param fileNamePath UNIX path that resolves to the target file
      * @param content      binary content to write to file
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -97,7 +97,7 @@ public class UssWrite {
     /**
      * Perform UNIX write request driven by UssWriteInputData settings
      *
-     * @param fileNamePath   file name with a path
+     * @param fileNamePath   UNIX path that resolves to the target file
      * @param writeInputData parameters within a UssWriteInputData object that drives the write action request
      * @return Response object
      * @throws ZosmfRequestException request error state

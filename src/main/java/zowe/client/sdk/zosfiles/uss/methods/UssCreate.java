@@ -75,7 +75,7 @@ public class UssCreate {
     /**
      * Perform UNIX create a file or directory name request driven by UssCreateInputData object settings.
      *
-     * @param targetPath      the name of the file or directory you are going to create
+     * @param targetPath      UNIX path to the target file or directory you are going to create
      * @param createInputData input create parameters, see UssCreateInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state

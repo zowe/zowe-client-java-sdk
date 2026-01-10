@@ -71,7 +71,7 @@ public class UssChangeMode {
     /**
      * Change the mode of a UNIX file or directory request driven by UssChangeModeInputData object settings
      *
-     * @param targetPath          identifies the UNIX file or directory to be the target of the operation
+     * @param targetPath          UNIX path to the target file or directory
      * @param changeModeInputData change mode response parameters, see UssChangeModeInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state

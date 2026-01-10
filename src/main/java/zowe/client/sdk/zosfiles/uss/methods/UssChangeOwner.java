@@ -69,7 +69,7 @@ public class UssChangeOwner {
     /**
      * Perform chown operation on a UNIX file or directory
      *
-     * @param targetPath identifies the UNIX file or directory to be the target of the operation
+     * @param targetPath UNIX path to the target file or directory
      * @param owner      new owner of the file or directory
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -82,7 +82,7 @@ public class UssChangeOwner {
     /**
      * Perform chown operation on a UNIX file or directory request driven by UssChangeOwnerInputData object settings
      *
-     * @param targetPath           identifies the UNIX file or directory to be the target of the operation
+     * @param targetPath           UNIX path to the target file or directory
      * @param changeOwnerInputData change owner response parameters, see UssChangeOwnerInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
