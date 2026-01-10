@@ -82,7 +82,6 @@ public class UssCreate {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    @SuppressWarnings("DuplicatedCode")
     public Response create(final String targetPath, final UssCreateInputData createInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");

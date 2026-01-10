@@ -92,7 +92,6 @@ public class UssCopy {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    @SuppressWarnings("DuplicatedCode")
     public Response copyCommon(final String targetPath, final UssCopyInputData copyInputData) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
         ValidateUtils.checkNullParameter(copyInputData, "copyInputData");

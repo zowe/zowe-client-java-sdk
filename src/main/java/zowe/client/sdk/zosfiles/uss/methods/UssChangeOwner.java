@@ -89,7 +89,6 @@ public class UssChangeOwner {
      * @author James Kostrewski
      * @author Frank Giordano
      */
-    @SuppressWarnings("DuplicatedCode")
     public Response changeCommon(final String targetPath, final UssChangeOwnerInputData changeOwnerInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");

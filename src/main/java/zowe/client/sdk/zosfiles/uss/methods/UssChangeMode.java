@@ -78,7 +78,6 @@ public class UssChangeMode {
      * @author James Kostrewsk
      * @author Frank Giordano
      */
-    @SuppressWarnings("DuplicatedCode")
     public Response change(final String targetPath, final UssChangeModeInputData changeModeInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
