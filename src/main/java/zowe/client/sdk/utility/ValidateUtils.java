@@ -44,7 +44,7 @@ public final class ValidateUtils {
     /**
      * Check for state of parameter
      *
-     * @param check Check for true or false value
+     * @param check check for true or false value
      * @param msg   message to display if the check is true
      * @throws IllegalArgumentException with message
      * @author Frank Giordano
@@ -59,8 +59,8 @@ public final class ValidateUtils {
     /**
      * Check for null parameter
      *
-     * @param value Value of the input
-     * @param name Name of the input
+     * @param value value of the input
+     * @param name name of the input
      * @throws NullPointerException - input is null
      * @author Frank Giordano
      */
@@ -71,11 +71,11 @@ public final class ValidateUtils {
     }
 
     /**
-     * Check for null parameter
+     * Check for null parameter with additional message concatenation
      *
-     * @param value Value of the input
-     * @param name Name of the input
-     * @param msg Message to be appended in the exception
+     * @param value value of the input
+     * @param name name of the input
+     * @param msg message to be appended in the exception
      * @throws NullPointerException - input is null, msg
      * @author Frank Giordano
      */
