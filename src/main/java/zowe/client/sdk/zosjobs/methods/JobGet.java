@@ -382,8 +382,8 @@ public class JobGet {
                 JobsConstants.FILE_DELIM +
                 EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
                 JobsConstants.FILE_DELIM +
-                commonInputData.getJobId().get()
-                + "/files";
+                commonInputData.getJobId().get() +
+                "/files";
 
         if (request == null || !(request instanceof GetJsonZosmfRequest)) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
