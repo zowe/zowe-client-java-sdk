@@ -108,7 +108,7 @@ public final class ZosConnection {
     }
 
     /**
-     * Retrieve AuthType: BASIC, TOKEN or SSL enum value for http request processing
+     * Retrieve AuthType: BASIC, TOKEN, or SSL enum value for http request processing
      *
      * @return AuthType enum value
      */
