@@ -110,7 +110,7 @@ public class ZosmfStatus {
     }
 
     // A helper method to wrap the potentially throwing `parseResponse` call.
-    private <T> Optional<T> safeParse(String responseString, Class<T> classs) {
+    private <T> Optional<T> safeParse(String responseString, @SuppressWarnings("SameParameterValue") Class<T> classs) {
         try {
             return Optional.ofNullable(JsonUtils.parseResponse(responseString, classs, "get"));
         } catch (Exception e) {
