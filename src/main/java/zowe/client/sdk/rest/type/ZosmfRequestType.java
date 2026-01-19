@@ -38,17 +38,9 @@ public enum ZosmfRequestType {
      */
     DELETE_JSON,
     /**
-     * Delete TEXT type
-     */
-    DELETE_TEXT,
-    /**
      * Post-JSON type
      */
     POST_JSON,
-    /**
-     * Post-TEXT type
-     */
-    POST_TEXT,
     /**
      * Get STREAM type
      */
