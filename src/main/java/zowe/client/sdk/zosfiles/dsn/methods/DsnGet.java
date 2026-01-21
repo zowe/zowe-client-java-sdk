@@ -139,8 +139,12 @@ public class DsnGet {
             value = ZosmfHeaders.HEADERS.get("X_IBM_BINARY").get(1);
             headers.put(key, value);
         } else if (downloadInputData.getEncoding().isPresent()) {
-            key = ZosmfHeaders.X_IBM_TEXT;
-            value = ZosmfHeaders.X_IBM_TEXT + ZosmfHeaders.X_IBM_TEXT_ENCODING + downloadInputData.getEncoding();
+            key = ZosmfHeaders.HEADERS.get("X_IBM_TEXT").get(0);
+            value = String.format("%s%sIBM-%s",
+                    ZosmfHeaders.HEADERS.get("X_IBM_TEXT").get(1),
+                    ZosmfHeaders.HEADERS.get("X_IBM_TEXT_ENCODING").get(0),
+                    downloadInputData.getEncoding().getAsLong()
+            );
             headers.put(key, value);
         }
 
