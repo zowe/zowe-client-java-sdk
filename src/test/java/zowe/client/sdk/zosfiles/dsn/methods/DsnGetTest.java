@@ -107,6 +107,21 @@ public class DsnGetTest {
     }
 
     @Test
+    public void tstDsnGetTokenWithOnlyEncodingParamsSuccess() throws ZosmfRequestException, IOException {
+        final DsnGet dsnGet = new DsnGet(connection, mockGetRequestToken);
+        final DsnDownloadInputData downloadInputData = new DsnDownloadInputData.Builder()
+                .encoding(1047L)
+                .build();
+        final InputStream inputStream = dsnGet.get("TEST.DATASET", downloadInputData);
+        assertEquals("{X-IBM-Data-Type=text;fileEncoding=IBM-1047, " +
+                        "Accept-Encoding=1047, X-CSRF-ZOSMF-HEADER=true, " +
+                        "Content-Type=application/json}",
+                mockGetRequestToken.getHeaders().toString());
+        assertEquals("test data", new String(inputStream.readAllBytes()));
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET", mockGetRequestToken.getUrl());
+    }
+
+    @Test
     public void tstDsnGetTokenWithMultipleParamsWithoutEncodingSuccess() throws ZosmfRequestException, IOException {
         final DsnGet dsnGet = new DsnGet(connection, mockGetRequestToken);
         final DsnDownloadInputData downloadInputData = new DsnDownloadInputData.Builder()
