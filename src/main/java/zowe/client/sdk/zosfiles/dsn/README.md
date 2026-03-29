@@ -75,7 +75,7 @@ public class DsnCopyExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -114,7 +114,7 @@ public class DsnCopyExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -152,7 +152,7 @@ public class DsnCopyExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -219,7 +219,7 @@ public class DsnCreateExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -244,7 +244,7 @@ public class DsnCreateExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -395,7 +395,7 @@ public class DsnGetInfoExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -459,7 +459,7 @@ public class DsnDeleteExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -485,7 +485,7 @@ public class DsnDeleteExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -680,7 +680,7 @@ public class DsnListExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -706,7 +706,7 @@ public class DsnListExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -732,7 +732,7 @@ public class DsnListExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -758,7 +758,7 @@ public class DsnListExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -827,7 +827,7 @@ public class DsnWriteExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -853,7 +853,7 @@ public class DsnWriteExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }

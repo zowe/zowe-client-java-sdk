@@ -63,7 +63,7 @@ public class UssCreateExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -87,7 +87,7 @@ public class UssCreateExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -152,7 +152,7 @@ public class UssDeleteExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -174,7 +174,7 @@ public class UssDeleteExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -255,7 +255,7 @@ public class UssGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -282,7 +282,7 @@ public class UssGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -307,7 +307,7 @@ public class UssGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -333,7 +333,7 @@ public class UssGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -404,7 +404,7 @@ public class UssListExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -430,7 +430,7 @@ public class UssListExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }

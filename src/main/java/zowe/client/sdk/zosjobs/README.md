@@ -68,7 +68,7 @@ public class JobCancelExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -94,7 +94,7 @@ public class JobCancelExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -119,7 +119,7 @@ public class JobCancelExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -143,7 +143,7 @@ public class JobCancelExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -216,7 +216,7 @@ public class JobDeleteExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -242,7 +242,7 @@ public class JobDeleteExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -267,7 +267,7 @@ public class JobDeleteExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -291,7 +291,7 @@ public class JobDeleteExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -383,7 +383,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -406,7 +406,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -431,7 +431,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -455,7 +455,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -484,7 +484,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -510,7 +510,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -532,7 +532,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -557,7 +557,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -582,7 +582,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -606,7 +606,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -630,7 +630,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -657,7 +657,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -684,7 +684,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -710,7 +710,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -738,7 +738,7 @@ public class JobGetExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -829,7 +829,7 @@ public class JobMonitorExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -855,7 +855,7 @@ public class JobMonitorExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -884,7 +884,7 @@ public class JobMonitorExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -911,7 +911,7 @@ public class JobMonitorExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -940,7 +940,7 @@ public class JobMonitorExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -967,7 +967,7 @@ public class JobMonitorExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -1039,7 +1039,7 @@ public class JobSubmitExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -1138,7 +1138,7 @@ public class JobChangeExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }

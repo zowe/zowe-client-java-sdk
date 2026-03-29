@@ -55,7 +55,7 @@ public class ZosLogExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
@@ -79,7 +79,7 @@ public class ZosLogExp extends TstZosConnection {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
                 String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!resp.isBlank() && !"{}".equals(response)) {
+                if (!response.isBlank() && !"{}".equals(response)) {
                     errMsg = response;
                 }
             }
