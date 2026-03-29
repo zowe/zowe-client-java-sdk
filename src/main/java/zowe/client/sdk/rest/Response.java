@@ -146,8 +146,12 @@ public class Response {
      * @return true if responsePhrase is a non-blank String, false otherwise
      */
     public boolean hasTextResponsePhrase() {
-        return responsePhrase instanceof String
-                && !((String) responsePhrase).isBlank();
+        if (!(responsePhrase instanceof String)) {
+            return false;
+        }
+
+        String str = (String) responsePhrase;
+        return !str.isBlank() && !"{}".equals(str);
     }
 
     /**
