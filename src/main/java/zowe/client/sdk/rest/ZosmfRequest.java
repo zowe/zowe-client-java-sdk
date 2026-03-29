@@ -145,7 +145,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Setup authentication SSL type for self-signed certificate
+     * Set up authentication SSL type for a self-signed certificate
      *
      * @param certFilePath certificate file (.p12) location
      * @param certPassword certificate password for certificate file (.p12)
@@ -179,7 +179,7 @@ public abstract class ZosmfRequest {
      * Build a Response object from a given HttpResponse reply
      *
      * @param reply HttpResponse object
-     * @param <T>   either JsonNode, String or byte[] type
+     * @param <T>   either JsonNode, String, or byte[] type
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
