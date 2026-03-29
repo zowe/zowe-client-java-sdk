@@ -17,7 +17,7 @@ import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.input.ConsoleCmdInputData;
-import zowe.client.sdk.zosconsole.method.ConsoleCmd;
+import zowe.client.sdk.zosconsole.methods.ConsoleCmd;
 import zowe.client.sdk.zosconsole.response.ConsoleCmdResponse;
 
 public class IssueConsoleExp extends TstZosConnection {

@@ -1,4 +1,4 @@
-package zowe.client.sdk.zosconsole.method;
+package zowe.client.sdk.zosconsole.methods;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;

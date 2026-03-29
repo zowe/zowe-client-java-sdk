@@ -34,7 +34,7 @@ In addition to the MVP issues noted, see the following other milestone releases 
     
 Prebuilt API services are located in the following packages/classes:  
 
-zowe.client.sdk.zosconsole.method  
+zowe.client.sdk.zosconsole.methods  
   
     ConsoleCmd
     ConsoleGet

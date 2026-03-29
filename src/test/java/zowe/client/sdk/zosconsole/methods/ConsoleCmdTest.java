@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosconsole.method;
+package zowe.client.sdk.zosconsole.methods;
 
 import kong.unirest.core.Cookie;
 import kong.unirest.core.HttpResponse;
