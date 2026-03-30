@@ -122,7 +122,7 @@ public class ConsoleCmd {
      * Issue an MVS console command on a given console name driven by ConsoleCmdInputData settings done synchronously.
      *
      * @param consoleName      name of the console that is used to issue the command
-     * @param consoleInputData synchronous console issue parameters, see ConsoleCmdInputData object
+     * @param consoleInputData for synchronous console issue parameters, see ConsoleCmdInputData object
      * @return IssueCommandResponse object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
