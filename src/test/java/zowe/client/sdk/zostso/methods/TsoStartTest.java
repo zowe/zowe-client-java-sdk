@@ -96,16 +96,14 @@ public class TsoStartTest {
             mocked.when(() -> TsoUtils.getResponseStr(any()))
                     .thenReturn("invalid json response");
 
-            ZosmfRequestException ex = assertThrows(
-                    ZosmfRequestException.class,
-                    () -> tsoStart.start(input)
-            );
-
+            ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
+                    () -> tsoStart.start(input));
             assertNotNull(ex.getMessage());
-            assertTrue(
-                    ex.getMessage().contains("Unrecognized token")
+            assertTrue(ex.getMessage().contains("invalid json response"));
+            assertTrue(ex.getMessage().contains("Unrecognized token")
                             || ex.getMessage().toLowerCase().contains("json")
             );
+
         }
     }
 
