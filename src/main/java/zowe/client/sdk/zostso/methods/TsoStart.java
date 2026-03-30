@@ -100,7 +100,9 @@ public class TsoStart {
         try {
             rootNode = objectMapper.readTree(responseStr);
         } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException(e.getMessage(), e);
+            throw new ZosmfRequestException(
+                    "Failed to parse TSO start response: " + responseStr + " | Error: " + e.getMessage(), e
+            );
         }
 
         final JsonNode keyNode = rootNode.get("servletKey");
