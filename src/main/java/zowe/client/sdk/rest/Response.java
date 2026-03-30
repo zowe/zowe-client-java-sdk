@@ -50,7 +50,9 @@ public class Response {
      * @param statusText     http response status text
      * @author Frank Giordano
      */
-    public Response(final Object responsePhrase, final Integer statusCode, final String statusText) {
+    public Response(final Object responsePhrase,
+                    final Integer statusCode,
+                    final String statusText) {
         this.responsePhrase = responsePhrase;
         this.statusCode = statusCode;
         this.statusText = statusText;
@@ -66,7 +68,9 @@ public class Response {
      * @param tokens         http response Cookies object representing TOKENS
      * @author Frank Giordano
      */
-    public Response(final Object responsePhrase, final Integer statusCode, final String statusText,
+    public Response(final Object responsePhrase,
+                    final Integer statusCode,
+                    final String statusText,
                     final Cookies tokens) {
         this.responsePhrase = responsePhrase;
         this.statusCode = statusCode;
