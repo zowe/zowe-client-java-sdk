@@ -197,6 +197,27 @@ public class ResponseTest {
     }
 
     @Test
+    public void tstGetResponsePhraseAsStringOrDefaultSuccess() {
+        final Response response = new Response("valid response", 200, "ok");
+
+        assertEquals("valid response", response.getResponsePhraseAsStringOrDefault("default"));
+    }
+
+    @Test
+    public void tstGetResponsePhraseAsStringOrDefaultForDefaultValueSuccess() {
+        final Response response = new Response(null, 200, "ok");
+
+        assertEquals("default", response.getResponsePhraseAsStringOrDefault("default"));
+    }
+
+    @Test
+    public void tstGetResponsePhraseAsStringOrDefaultWithBlankResponsePhraseSuccess() {
+        final Response response = new Response("", 200, "ok");
+
+        assertEquals("", response.getResponsePhraseAsStringOrDefault("default"));
+    }
+
+    @Test
     public void tstToStringSuccess() {
         final Response response = new Response("hello", 200, "ok");
 
