@@ -98,16 +98,16 @@ public final class JobFeedback {
     /**
      * JobFeedback constructor used by Jackson for JSON deserialization.
      *
-     * @param jobId           job id
-     * @param jobName         job name
-     * @param originalJobId   original job id
-     * @param owner           job owner
-     * @param member          JES member name
-     * @param sysname         system name
-     * @param jobCorrelator   job correlator value
-     * @param status          job status
-     * @param internalCode    internal code
-     * @param message         message
+     * @param jobId         job id
+     * @param jobName       job name
+     * @param originalJobId original job id
+     * @param owner         job owner
+     * @param member        JES member name
+     * @param sysname       system name
+     * @param jobCorrelator job correlator value
+     * @param status        job status
+     * @param internalCode  internal code
+     * @param message       message
      * @author Frank Giordano
      */
     @JsonCreator

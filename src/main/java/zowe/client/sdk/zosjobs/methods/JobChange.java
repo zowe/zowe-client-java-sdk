@@ -77,10 +77,10 @@ public class JobChange {
     /**
      * Change the class of a job by job name and job id.
      *
-     * @param jobName job name
-     * @param jobId   job id
+     * @param jobName  job name
+     * @param jobId    job id
      * @param jobClass new job class (for example A, B, C)
-     * @param version version number - 1.0 or 2.0
+     * @param version  version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
