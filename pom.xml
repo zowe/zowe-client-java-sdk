@@ -6,7 +6,7 @@
 
     <groupId>org.zowe.client.java.sdk</groupId>
     <artifactId>zowe-client-java-sdk</artifactId>
-    <version>6.1.1</version>
+    <version>6.1.2</version>
 
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -90,14 +90,8 @@
         </dependency>
         <dependency>
             <groupId>com.konghq</groupId>
-            <artifactId>unirest-objectmapper-jackson</artifactId>
-            <version>4.2.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.sonatype.central</groupId>
-            <artifactId>central-publishing-maven-plugin</artifactId>
-            <version>0.8.0</version>
-            <scope>provided</scope>
+            <artifactId>unirest-modules-jackson-legacy</artifactId>
+            <version>4.8.1</version>
         </dependency>
 
         <!-- Test -->
@@ -221,6 +215,22 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.10.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.plexus</groupId>
+                        <artifactId>plexus-utils</artifactId>
+                        <version>4.0.3</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

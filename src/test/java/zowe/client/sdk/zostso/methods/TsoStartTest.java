@@ -103,7 +103,6 @@ public class TsoStartTest {
             assertTrue(ex.getMessage().contains("Unrecognized token")
                             || ex.getMessage().toLowerCase().contains("json")
             );
-
         }
     }
 
