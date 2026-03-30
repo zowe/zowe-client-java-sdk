@@ -50,7 +50,9 @@ public class Response {
      * @param statusText     http response status text
      * @author Frank Giordano
      */
-    public Response(final Object responsePhrase, final Integer statusCode, final String statusText) {
+    public Response(final Object responsePhrase,
+                    final Integer statusCode,
+                    final String statusText) {
         this.responsePhrase = responsePhrase;
         this.statusCode = statusCode;
         this.statusText = statusText;
@@ -66,7 +68,9 @@ public class Response {
      * @param tokens         http response Cookies object representing TOKENS
      * @author Frank Giordano
      */
-    public Response(final Object responsePhrase, final Integer statusCode, final String statusText,
+    public Response(final Object responsePhrase,
+                    final Integer statusCode,
+                    final String statusText,
                     final Cookies tokens) {
         this.responsePhrase = responsePhrase;
         this.statusCode = statusCode;
@@ -112,7 +116,60 @@ public class Response {
     }
 
     /**
-     * Return string value representing Response object
+     * Retrieve responsePhrase value as a String
+     *
+     * @return responsePhrase Optional String value
+     */
+    public Optional<String> getResponsePhraseAsString() {
+        return getResponsePhrase().map(Object::toString);
+    }
+
+    /**
+     * Retrieve responsePhrase value as a byte array
+     *
+     * @return responsePhrase Optional byte array value
+     */
+    public Optional<byte[]> getResponsePhraseAsBytes() {
+        return (responsePhrase instanceof byte[])
+                ? Optional.of((byte[]) responsePhrase)
+                : Optional.empty();
+    }
+
+    /**
+     * Determine whether a responsePhrase has a value
+     *
+     * @return true if responsePhrase is not null, false otherwise
+     */
+    public boolean hasResponsePhrase() {
+        return responsePhrase != null;
+    }
+
+    /**
+     * Determine whether responsePhrase is a non-blank String
+     *
+     * @return true if responsePhrase is a non-blank String, false otherwise
+     */
+    public boolean hasTextResponsePhrase() {
+        if (!(responsePhrase instanceof String)) {
+            return false;
+        }
+
+        String str = (String) responsePhrase;
+        return !str.isBlank() && !"{}".equals(str);
+    }
+
+    /**
+     * Retrieve responsePhrase value as a String or return a default value
+     *
+     * @param defaultValue String value returned when responsePhrase is not present
+     * @return responsePhrase String value or provided default value
+     */
+    public String getResponsePhraseAsStringOrDefault(final String defaultValue) {
+        return getResponsePhraseAsString().orElse(defaultValue);
+    }
+
+    /**
+     * Return string value representing a Response object
      *
      * @return string representation of Response
      */

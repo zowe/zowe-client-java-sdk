@@ -44,11 +44,8 @@ public class ZosmfStatusExp extends TstZosConnection {
             zosmfInfoResponse = zosmfStatus.get();
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }
@@ -98,11 +95,8 @@ public class ZosmfSystemsExp extends TstZosConnection {
             zosmfInfoResponse = zosmfSystems.get();
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }

@@ -61,11 +61,8 @@ public class UssCreateExp extends TstZosConnection {
             return ussCreate.create(value, ussCreateInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }
@@ -85,11 +82,8 @@ public class UssCreateExp extends TstZosConnection {
             return ussCreate.create(value, ussCreateInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }
@@ -150,11 +144,8 @@ public class UssDeleteExp extends TstZosConnection {
             return ussDelete.delete(value);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }
@@ -172,11 +163,8 @@ public class UssDeleteExp extends TstZosConnection {
             return ussDelete.delete(value, true);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }
@@ -253,15 +241,11 @@ public class UssGetExp extends TstZosConnection {
             response = ussGet.getCommon(fileNamePath, ussGetInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }
-
         System.out.println(response.getResponsePhrase().orElse("no response phrase"));
     }
 
@@ -280,15 +264,11 @@ public class UssGetExp extends TstZosConnection {
             response = ussGet.getCommon(fileNamePath, ussGetInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }
-
         System.out.println(response.getResponsePhrase().orElse("no response phrase"));
     }
 
@@ -305,15 +285,11 @@ public class UssGetExp extends TstZosConnection {
             content = ussGet.getText(fileNamePath);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }
-
         System.out.println(content);
     }
 
@@ -331,15 +307,11 @@ public class UssGetExp extends TstZosConnection {
             response = ussGet.getCommon(fileNamePath, ussGetInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }
-
         System.out.println(response.getResponsePhrase().orElse("no response phrase"));
     }
 
@@ -402,15 +374,11 @@ public class UssListExp extends TstZosConnection {
             items = ussList.getZfsSystems(ussListZfsInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }
-
         items.forEach(System.out::println);
     }
 
@@ -428,15 +396,11 @@ public class UssListExp extends TstZosConnection {
             items = ussList.getFiles(ussListInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }
-
         items.forEach(System.out::println);
     }
 

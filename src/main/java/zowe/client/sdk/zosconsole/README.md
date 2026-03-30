@@ -25,7 +25,7 @@ public class IssueConsoleExp extends TstZosConnection {
     /**
      * The main method defines z/OSMF host and user connection, and mvs command used for the example tests.
      *
-     * @param args for main not used
+     * @param args for main isn't used
      * @author Frank Giordano
      */
     public static void main(String[] args) {
@@ -50,11 +50,8 @@ public class IssueConsoleExp extends TstZosConnection {
             response = consoleCmd.issueCommand(cmd);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }
@@ -78,11 +75,8 @@ public class IssueConsoleExp extends TstZosConnection {
             response = consoleCmd.issueCommandCommon(ConsoleConstants.RES_DEF_CN, consoleInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().getResponsePhrase().isPresent()) {
-                String response = e.getResponse().getResponsePhrase().get().toString();
-                if (!response.isBlank() && !"{}".equals(response)) {
-                    errMsg = response;
-                }
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
             }
             throw new RuntimeException(errMsg, e);
         }
