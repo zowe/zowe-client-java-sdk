@@ -217,20 +217,20 @@
                 </executions>
             </plugin>
             <plugin>
-                      <groupId>org.sonatype.central</groupId>
-                      <artifactId>central-publishing-maven-plugin</artifactId>
-                      <version>0.10.0</version>
-                      <extensions>true</extensions>
-                      <configuration>
-                          <publishingServerId>central</publishingServerId>
-                      </configuration>
-                      <dependencies>
-                          <dependency>
-                              <groupId>org.codehaus.plexus</groupId>
-                              <artifactId>plexus-utils</artifactId>
-                              <version>4.0.3</version>
-                          </dependency>
-                      </dependencies>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.10.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.plexus</groupId>
+                        <artifactId>plexus-utils</artifactId>
+                        <version>4.0.3</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
