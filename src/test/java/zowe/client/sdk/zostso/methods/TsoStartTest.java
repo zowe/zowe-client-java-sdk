@@ -98,7 +98,11 @@ public class TsoStartTest {
 
             ZosmfRequestException ex = assertThrows(ZosmfRequestException.class,
                     () -> tsoStart.start(input));
+            assertNotNull(ex.getMessage());
             assertTrue(ex.getMessage().contains("invalid json response"));
+            assertTrue(ex.getMessage().contains("Unrecognized token")
+                            || ex.getMessage().toLowerCase().contains("json")
+            );
         }
     }
 
