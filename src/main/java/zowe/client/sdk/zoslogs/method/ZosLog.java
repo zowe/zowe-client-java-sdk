@@ -87,32 +87,14 @@ public class ZosLog {
 
         logInputData.getStartTime().ifPresentOrElse(time -> url.append("?time=").append(time),
                 () -> url.append("?time=").append(LocalDateTime.now().format(formatter)));
-        logInputData.getTimeRange().ifPresent(timeRange -> {
-            if (logInputData.getQueryCount() > 1) {
-                url.append("&timeRange=").append(timeRange);
-            } else {
-                url.append("?timeRange=").append(timeRange);
-            }
-        });
-        logInputData.getDirection().ifPresent(direction -> {
-            if (logInputData.getQueryCount() > 1) {
-                url.append("&direction=").append(direction.getValue());
-            } else {
-                url.append("?direction=").append(direction.getValue());
-            }
-        });
-        logInputData.getHardCopy().ifPresent(hardCopy -> {
-            if (logInputData.getQueryCount() > 1) {
-                url.append("&hardcopy=").append(hardCopy.getValue());
-            } else {
-                url.append("?hardcopy=").append(hardCopy.getValue());
-            }
-        });
+        logInputData.getTimeRange().ifPresent(timeRange -> url.append("&timeRange=").append(timeRange));
+        logInputData.getDirection().ifPresent(direction -> url.append("&direction=").append(direction.getValue()));
+        logInputData.getHardCopy().ifPresent(hardCopy -> url.append("&hardcopy=").append(hardCopy.getValue()));
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
-        request.setUrl(url.toString().replace("?&", "?"));
+        request.setUrl(url.toString());
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()
