@@ -255,6 +255,7 @@ public class ZosLogTest {
 
         ZosLog zosLog = new ZosLog(connection, mockJsonGetRequest);
         ZosLogInputData inputData = new ZosLogInputData.Builder()
+                .startTime("2026-04-25T15:20:39Z")
                 .timeRange("10m")
                 .direction(DirectionType.FORWARD)
                 .build();
