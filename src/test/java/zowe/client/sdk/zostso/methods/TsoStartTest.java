@@ -101,7 +101,7 @@ public class TsoStartTest {
             assertNotNull(ex.getMessage());
             assertTrue(ex.getMessage().contains("invalid json response"));
             assertTrue(ex.getMessage().contains("Unrecognized token")
-                            || ex.getMessage().toLowerCase().contains("json")
+                    || ex.getMessage().toLowerCase().contains("json")
             );
         }
     }

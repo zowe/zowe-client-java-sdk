@@ -17,9 +17,9 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zoslogs.types.DirectionType;
 import zowe.client.sdk.zoslogs.input.ZosLogInputData;
 import zowe.client.sdk.zoslogs.response.ZosLogResponse;
+import zowe.client.sdk.zoslogs.types.DirectionType;
 
 import java.util.Optional;
 
