@@ -114,10 +114,8 @@ public final class JsonUtils {
         final JsonNode root = objectMapper.readTree(jsonObject.toString());
 
         final Map<String, String> map = new HashMap<>();
-        final Iterator<Map.Entry<String, JsonNode>> fields = root.fields();
 
-        while (fields.hasNext()) {
-            final Map.Entry<String, JsonNode> entry = fields.next();
+        for (Map.Entry<String, JsonNode> entry : root.properties()) {
             // Convert any type to string
             map.put(entry.getKey(), entry.getValue().asText());
         }
