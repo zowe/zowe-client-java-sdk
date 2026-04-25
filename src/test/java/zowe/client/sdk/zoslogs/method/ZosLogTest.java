@@ -255,6 +255,7 @@ public class ZosLogTest {
 
         ZosLog zosLog = new ZosLog(connection, mockJsonGetRequest);
         ZosLogInputData inputData = new ZosLogInputData.Builder()
+                .startTime("2026-04-25T15:20:39Z")
                 .timeRange("10m")
                 .direction(DirectionType.FORWARD)
                 .build();
@@ -263,6 +264,29 @@ public class ZosLogTest {
 
         assertTrue(mockJsonGetRequest.getUrl().matches(
                 "https://1:443/zosmf/restconsoles/v1/log\\?time=[^&]+&timeRange=10m&direction=forward"));
+    }
+
+    @Test
+    public void tstIssueCommandWithOutTimeSuccess() throws ZosmfRequestException {
+        String json = "{\n" +
+                "  \"nextTimestamp\": 0,\n" +
+                "  \"source\": \"OPERLOGS\",\n" +
+                "  \"totalitems\": 0,\n" +
+                "  \"items\": []\n" +
+                "}";
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response(json, 200, "success"));
+
+        ZosLog zosLog = new ZosLog(connection, mockJsonGetRequest);
+        ZosLogInputData inputData = new ZosLogInputData.Builder()
+                .timeRange("10m")
+                .direction(DirectionType.FORWARD)
+                .build();
+
+        zosLog.issueCommand(inputData);
+
+        assertTrue(mockJsonGetRequest.getUrl().matches(
+                "https://1:443/zosmf/restconsoles/v1/log\\?timeRange=10m&direction=forward"));
     }
 
 }

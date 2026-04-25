@@ -26,13 +26,18 @@ import java.util.Optional;
 public class ZosLogInputData {
 
     /**
-     * The z/OS log api time parameter. This field is optional.
+     * The z/OSMF log API {@code time} query parameter. This field is optional.
      * <p>
-     * Specifies when z/OSMF starts to retrieve messages in the ISO 8601 JSON date and time format.
-     * For example, 2021-01-26T03:33Z.
+     * Specifies the point in time from which z/OSMF starts retrieving messages.
+     * The value must be in ISO-8601 format, for example:
+     * {@code 2021-01-26T03:33:18.065Z} or {@code 2021-05-25T07:00Z}.
      * <p>
-     * The default value is the current UNIX timestamp on the server.
-     * This value is used if the timestamp parameter is not specified.
+     * When {@code direction} is {@code backward}, messages are retrieved backward from this time.
+     * When {@code direction} is {@code forward}, messages are retrieved forward from this time.
+     * <p>
+     * If this field is not specified, the SDK omits the {@code time} parameter and z/OSMF uses
+     * the current UNIX timestamp on the server. This avoids using a client-generated timestamp
+     * that could be ahead of the z/OSMF server time.
      */
     private final String startTime;
 

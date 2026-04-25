@@ -21,11 +21,11 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zoslogs.input.ZosLogInputData;
 import zowe.client.sdk.zoslogs.response.ZosLogResponse;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Get z/OS log via z/OSMF restful api
+ * Retrieves z/OS log data through the z/OSMF REST API.
  *
  * @author Frank Giordano
  * @version 6.0
@@ -33,8 +33,6 @@ import java.time.format.DateTimeFormatter;
 public class ZosLog {
 
     private static final String RESOURCE = "/restconsoles/v1/log";
-    private static final DateTimeFormatter DATE_TIME_FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm'Z'");
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -72,7 +70,7 @@ public class ZosLog {
     /**
      * Retrieve z/OS log data from the z/OSMF REST API.
      * <p>
-     * If the API fails, you may be missing APAR see PH35930 required for log operations.
+     * If the API fails, APAR PH35930 may be required for log operations.
      *
      * @param logInputData ZosLogInputData object
      * @return ZosLogResponse object with log messages/items
@@ -82,14 +80,29 @@ public class ZosLog {
     public ZosLogResponse issueCommand(final ZosLogInputData logInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(logInputData, "logInputData");
 
-        final String defaultUrl = connection.getZosmfUrl() + RESOURCE;
-        final StringBuilder url = new StringBuilder(defaultUrl);
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl())
+                .append(RESOURCE);
 
-        logInputData.getStartTime().ifPresentOrElse(time -> url.append("?time=").append(time),
-                () -> url.append("?time=").append(LocalDateTime.now().format(DATE_TIME_FORMATTER)));
-        logInputData.getTimeRange().ifPresent(timeRange -> url.append("&timeRange=").append(timeRange));
-        logInputData.getDirection().ifPresent(direction -> url.append("&direction=").append(direction.getValue()));
-        logInputData.getHardCopy().ifPresent(hardCopy -> url.append("&hardcopy=").append(hardCopy.getValue()));
+        final List<String> queryParams = new ArrayList<>();
+
+        // IBM documents the time parameter as optional. When it is omitted, z/OSMF defaults to the
+        // current UNIX timestamp on the server. This avoids sending a client-side "now" value that
+        // could be a few seconds ahead of the z/OSMF server’s current time.
+        logInputData.getStartTime()
+                .ifPresent(startTime -> queryParams.add("time=" + startTime));
+
+        logInputData.getTimeRange()
+                .ifPresent(timeRange -> queryParams.add("timeRange=" + timeRange));
+
+        logInputData.getDirection()
+                .ifPresent(direction -> queryParams.add("direction=" + direction.getValue()));
+
+        logInputData.getHardCopy()
+                .ifPresent(hardCopy -> queryParams.add("hardcopy=" + hardCopy.getValue()));
+
+        if (!queryParams.isEmpty()) {
+            url.append("?").append(String.join("&", queryParams));
+        }
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
