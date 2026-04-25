@@ -89,7 +89,7 @@ public class ZosLog {
 
         url.append("?time=")
                 .append(logInputData.getStartTime()
-                        .orElse(DATE_TIME_FORMATTER.format(Instant.now())));
+                        .orElseGet(() -> DATE_TIME_FORMATTER.format(Instant.now())));
 
         logInputData.getTimeRange()
                 .ifPresent(timeRange -> url.append("&timeRange=").append(timeRange));
