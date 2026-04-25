@@ -244,8 +244,14 @@ public class ZosLogTest {
 
     @Test
     public void tstIssueCommandAppendsAdditionalQueryParametersWithAmpersandsSuccess() throws ZosmfRequestException {
+        String json = "{\n" +
+                "  \"nextTimestamp\": 0,\n" +
+                "  \"source\": \"OPERLOGS\",\n" +
+                "  \"totalitems\": 0,\n" +
+                "  \"items\": []\n" +
+                "}";
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response("{\"nextTimestamp\":0,\"source\":\"OPERLOGS\",\"totalitems\":0,\"items\":[]}", 200, "success"));
+                new Response(json, 200, "success"));
 
         ZosLog zosLog = new ZosLog(connection, mockJsonGetRequest);
         ZosLogInputData inputData = new ZosLogInputData.Builder()
