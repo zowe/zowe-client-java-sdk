@@ -39,7 +39,7 @@ public class ZosLog {
     private ZosmfRequest request;
 
     /**
-     * GetZosLog constructor
+     * ZosLog constructor
      *
      * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
@@ -50,7 +50,7 @@ public class ZosLog {
     }
 
     /**
-     * Alternative GetZosLog constructor with ZoweRequest object. This is mainly used for internal code unit testing
+     * Alternative ZosLog constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with mockito, and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private
@@ -70,12 +70,12 @@ public class ZosLog {
     }
 
     /**
-     * Issue a z/OSMF log command and return log data.
+     * Retrieve z/OS log data from the z/OSMF REST API.
      * <p>
      * If the API fails, you may be missing APAR see PH35930 required for log operations.
      *
      * @param logInputData ZosLogInputData object
-     * @return ZosLogReply object with log messages/items
+     * @return ZosLogResponse object with log messages/items
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
