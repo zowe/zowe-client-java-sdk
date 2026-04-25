@@ -41,27 +41,43 @@ public class ZosLogExp extends TstZosConnection {
         ZosConnection connection = ZosConnectionFactory
                 .createBasicConnection(hostName, zosmfPort, userName, password);
         ZosLog zosLog = new ZosLog(connection);
+
         ZosLogInputData zosLogInputData = new ZosLogInputData.Builder()
-                .startTime("2026-04-25T15:20:39Z")
+                // example .startTime("2026-04-25T15:20:39Z")
+                .startTime("yyyy-MM-ddTHH:mm:ssZ")
                 .hardCopy(HardCopyType.SYSLOG)
                 .timeRange("24h")
                 .direction(DirectionType.BACKWARD)
                 .processResponses(true)
                 .build();
-        ZosLogResponse zosLogReply;
+
+        // Demonstrate the single-response API.
+        ZosLogResponse zosLogResponse;
         try {
-            zosLogReply = zosLog.issueCommand(zosLogInputData);
+            zosLogResponse = zosLog.issueCommand(zosLogInputData);
         } catch (ZosmfRequestException e) {
-            String errMsg = e.getMessage();
-            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
-                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
-            }
-            throw new RuntimeException(errMsg, e);
+            throw new RuntimeException(e);
         }
-        zosLogReply.getItems().forEach(i -> {
+
+        zosLogResponse.getItems().forEach(i -> {
             String msg = i.getTime() + " " + i.getMessage();
             System.out.println(msg);
         });
+
+        // Demonstrate the paginated API using the same input. This will retrieve the first
+        // batch again, then continue paging if z/OSMF returns 10,000 items.
+        List<ZosLogResponse> zosLogResponses;
+        try {
+            zosLogResponses = zosLog.issueCommand(zosLogInputData, 20000);
+        } catch (ZosmfRequestException e) {
+            throw new RuntimeException(e);
+        }
+
+        zosLogResponses.forEach(i -> i.getItems()
+                .forEach(j -> {
+                    String msg = j.getTime() + " " + j.getMessage();
+                    System.out.println(msg);
+                }));
 
         // get the last one minute of syslog from the date/time of now backwards...
         zosLogInputData = new ZosLogInputData.Builder()
@@ -71,7 +87,7 @@ public class ZosLogExp extends TstZosConnection {
                 .processResponses(true)
                 .build();
         try {
-            zosLogReply = zosLog.issueCommand(zosLogInputData);
+            zosLogResponse = zosLog.issueCommand(zosLogInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -79,7 +95,7 @@ public class ZosLogExp extends TstZosConnection {
             }
             throw new RuntimeException(errMsg, e);
         }
-        zosLogReply.getItems().forEach(i -> {
+        zosLogResponse.getItems().forEach(i -> {
             String msg = i.getTime() + " " + i.getMessage();
             System.out.println(msg);
         });

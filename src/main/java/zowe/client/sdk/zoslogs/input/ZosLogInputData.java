@@ -76,11 +76,6 @@ public class ZosLogInputData {
     private final boolean processResponses;
 
     /**
-     * Internal use to count the number of query parameters specified
-     */
-    private final int queryCount;
-
-    /**
      * ZosLogInputData constructor
      *
      * @param builder Builder object
@@ -92,7 +87,6 @@ public class ZosLogInputData {
         this.direction = builder.direction;
         this.timeRange = builder.timeRange;
         this.processResponses = builder.processResponses;
-        this.queryCount = builder.queryCount;
     }
 
     /**
@@ -138,15 +132,6 @@ public class ZosLogInputData {
      */
     public boolean isProcessResponses() {
         return processResponses;
-    }
-
-    /**
-     * Retrieve queryCount value
-     *
-     * @return queryCount value
-     */
-    public int getQueryCount() {
-        return queryCount;
     }
 
     /**

@@ -93,7 +93,6 @@ public class ZosLogTest {
         Mockito.when(inputData.getTimeRange()).thenReturn(Optional.empty());
         Mockito.when(inputData.getDirection()).thenReturn(Optional.empty());
         Mockito.when(inputData.getHardCopy()).thenReturn(Optional.empty());
-        Mockito.when(inputData.getQueryCount()).thenReturn(1);
 
         ZosLogResponse response = zosLog.issueCommand(inputData);
 
@@ -124,7 +123,6 @@ public class ZosLogTest {
         Mockito.when(inputData.getTimeRange()).thenReturn(Optional.empty());
         Mockito.when(inputData.getDirection()).thenReturn(Optional.empty());
         Mockito.when(inputData.getHardCopy()).thenReturn(Optional.empty());
-        Mockito.when(inputData.getQueryCount()).thenReturn(1);
 
         assertThrows(ZosmfRequestException.class, () -> zosLog.issueCommand(inputData));
     }
@@ -162,7 +160,6 @@ public class ZosLogTest {
         Mockito.when(inputData.getTimeRange()).thenReturn(Optional.empty());
         Mockito.when(inputData.getDirection()).thenReturn(Optional.empty());
         Mockito.when(inputData.getHardCopy()).thenReturn(Optional.empty());
-        Mockito.when(inputData.getQueryCount()).thenReturn(1);
 
         ZosLogResponse response = zosLog.issueCommand(inputData);
 
@@ -185,8 +182,6 @@ public class ZosLogTest {
         Mockito.when(inputData.getStartTime()).thenReturn(Optional.empty());
         Mockito.when(inputData.getTimeRange()).thenReturn(Optional.empty());
         Mockito.when(inputData.getDirection()).thenReturn(Optional.empty());
-        Mockito.when(inputData.getHardCopy()).thenReturn(Optional.empty());
-        Mockito.when(inputData.getQueryCount()).thenReturn(1);
 
         ZosLogResponse response = zosLog.issueCommand(inputData);
 
@@ -228,7 +223,6 @@ public class ZosLogTest {
         Mockito.when(inputData.getTimeRange()).thenReturn(Optional.empty());
         Mockito.when(inputData.getDirection()).thenReturn(Optional.empty());
         Mockito.when(inputData.getHardCopy()).thenReturn(Optional.empty());
-        Mockito.when(inputData.getQueryCount()).thenReturn(1);
 
         ZosLogResponse response = zosLog.issueCommand(inputData);
 
