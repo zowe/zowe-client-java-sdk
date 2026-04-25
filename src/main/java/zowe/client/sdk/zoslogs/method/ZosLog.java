@@ -21,7 +21,8 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zoslogs.input.ZosLogInputData;
 import zowe.client.sdk.zoslogs.response.ZosLogResponse;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -34,7 +35,8 @@ public class ZosLog {
 
     private static final String RESOURCE = "/restconsoles/v1/log";
     private static final DateTimeFormatter DATE_TIME_FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm'Z'");
+            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm'Z'")
+                    .withZone(ZoneOffset.UTC);
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -86,7 +88,7 @@ public class ZosLog {
         final StringBuilder url = new StringBuilder(defaultUrl);
 
         logInputData.getStartTime().ifPresentOrElse(time -> url.append("?time=").append(time),
-                () -> url.append("?time=").append(LocalDateTime.now().format(DATE_TIME_FORMATTER)));
+                () -> url.append("?time=").append((DATE_TIME_FORMATTER.format(Instant.now()))));
         logInputData.getTimeRange().ifPresent(timeRange -> url.append("&timeRange=").append(timeRange));
         logInputData.getDirection().ifPresent(direction -> url.append("&direction=").append(direction.getValue()));
         logInputData.getHardCopy().ifPresent(hardCopy -> url.append("&hardcopy=").append(hardCopy.getValue()));
