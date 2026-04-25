@@ -33,6 +33,8 @@ import java.time.format.DateTimeFormatter;
 public class ZosLog {
 
     private static final String RESOURCE = "/restconsoles/v1/log";
+    private static final DateTimeFormatter DATE_TIME_FORMATTER =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm'Z'");
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -82,11 +84,9 @@ public class ZosLog {
 
         final String defaultUrl = connection.getZosmfUrl() + RESOURCE;
         final StringBuilder url = new StringBuilder(defaultUrl);
-        final String customPattern = "yyyy-MM-dd'T'HH:mm'Z'";
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(customPattern);
 
         logInputData.getStartTime().ifPresentOrElse(time -> url.append("?time=").append(time),
-                () -> url.append("?time=").append(LocalDateTime.now().format(formatter)));
+                () -> url.append("?time=").append(LocalDateTime.now().format(DATE_TIME_FORMATTER)));
         logInputData.getTimeRange().ifPresent(timeRange -> url.append("&timeRange=").append(timeRange));
         logInputData.getDirection().ifPresent(direction -> url.append("&direction=").append(direction.getValue()));
         logInputData.getHardCopy().ifPresent(hardCopy -> url.append("&hardcopy=").append(hardCopy.getValue()));
