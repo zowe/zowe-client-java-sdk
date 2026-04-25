@@ -87,11 +87,18 @@ public class ZosLog {
         final String defaultUrl = connection.getZosmfUrl() + RESOURCE;
         final StringBuilder url = new StringBuilder(defaultUrl);
 
-        logInputData.getStartTime().ifPresentOrElse(time -> url.append("?time=").append(time),
-                () -> url.append("?time=").append((DATE_TIME_FORMATTER.format(Instant.now()))));
-        logInputData.getTimeRange().ifPresent(timeRange -> url.append("&timeRange=").append(timeRange));
-        logInputData.getDirection().ifPresent(direction -> url.append("&direction=").append(direction.getValue()));
-        logInputData.getHardCopy().ifPresent(hardCopy -> url.append("&hardcopy=").append(hardCopy.getValue()));
+        url.append("?time=")
+                .append(logInputData.getStartTime()
+                        .orElse(DATE_TIME_FORMATTER.format(Instant.now())));
+
+        logInputData.getTimeRange()
+                .ifPresent(timeRange -> url.append("&timeRange=").append(timeRange));
+
+        logInputData.getDirection()
+                .ifPresent(direction -> url.append("&direction=").append(direction.getValue()));
+
+        logInputData.getHardCopy()
+                .ifPresent(hardCopy -> url.append("&hardcopy=").append(hardCopy.getValue()));
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
