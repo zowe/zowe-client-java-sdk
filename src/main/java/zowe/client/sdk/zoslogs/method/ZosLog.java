@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Get z/OS log via z/OSMF restful api
+ * Retrieves z/OS log data through the z/OSMF REST API.
  *
  * @author Frank Giordano
  * @version 6.0
@@ -70,7 +70,7 @@ public class ZosLog {
     /**
      * Retrieve z/OS log data from the z/OSMF REST API.
      * <p>
-     * If the API fails, you may be missing APAR see PH35930 required for log operations.
+     * If the API fails, APAR PH35930 may be required for log operations.
      *
      * @param logInputData ZosLogInputData object
      * @return ZosLogResponse object with log messages/items
