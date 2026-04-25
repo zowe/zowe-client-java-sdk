@@ -17,12 +17,15 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zoslogs.types.DirectionType;
 import zowe.client.sdk.zoslogs.input.ZosLogInputData;
 import zowe.client.sdk.zoslogs.response.ZosLogResponse;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doCallRealMethod;
 
 /**
  * Class containing unit test for ZosLog class.
@@ -40,6 +43,8 @@ public class ZosLogTest {
     @BeforeEach
     public void init() {
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
     }
 
     @Test
@@ -235,6 +240,23 @@ public class ZosLogTest {
         assertEquals("", response.getItems().get(0).getSystem());
         assertEquals("", response.getItems().get(0).getColor());
         assertEquals("", response.getItems().get(0).getMessage());
+    }
+
+    @Test
+    public void tstIssueCommandAppendsAdditionalQueryParametersWithAmpersandsSuccess() throws ZosmfRequestException {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{\"nextTimestamp\":0,\"source\":\"OPERLOGS\",\"totalitems\":0,\"items\":[]}", 200, "success"));
+
+        ZosLog zosLog = new ZosLog(connection, mockJsonGetRequest);
+        ZosLogInputData inputData = new ZosLogInputData.Builder()
+                .timeRange("10m")
+                .direction(DirectionType.FORWARD)
+                .build();
+
+        zosLog.issueCommand(inputData);
+
+        assertTrue(mockJsonGetRequest.getUrl().matches(
+                "https://1:443/zosmf/restconsoles/v1/log\\?time=[^&]+&timeRange=10m&direction=forward"));
     }
 
 }
