@@ -31,7 +31,7 @@ import static org.mockito.Mockito.doCallRealMethod;
  * Class containing unit tests for ZosmfPassword.
  *
  * @author Ashish Kumar Dash
- * @version 6.2
+ * @version 6.0
  */
 public class ZosmfPasswordTest {
 
