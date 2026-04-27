@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
