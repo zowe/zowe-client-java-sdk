@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosmfauth.methods;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.PutJsonZosmfRequest;
+import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
@@ -59,8 +59,8 @@ public class ZosmfLogin {
         ValidateUtils.checkNullParameter(connection, "connection");
         ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
-        if (!(request instanceof PutJsonZosmfRequest)) {
-            throw new IllegalStateException("PUT_JSON request type required");
+        if (!(request instanceof PostJsonZosmfRequest)) {
+            throw new IllegalStateException("POST_JSON request type required");
         }
         this.request = request;
     }
