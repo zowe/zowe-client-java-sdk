@@ -251,7 +251,7 @@ public class JobMonitor {
     private boolean pollByMessage(final JobMonitorInputData monitorInputData, final String message)
             throws ZosmfRequestException {
         final int timeoutVal = monitorInputData.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
-        boolean messageFound;  // no assigment boolean means, by default, it is false
+        boolean messageFound;  
         boolean shouldContinue;
         int numOfAttempts = 0;
         final int maxAttempts = monitorInputData.getAttempts().orElse(DEFAULT_ATTEMPTS);
@@ -285,7 +285,7 @@ public class JobMonitor {
      */
     private Job pollByStatus(final JobMonitorInputData monitorInputData) throws ZosmfRequestException {
         final int timeoutVal = monitorInputData.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
-        boolean expectedStatus;  // no assigment boolean means by default it is false
+        boolean expectedStatus;
         boolean shouldContinue;
         int numOfAttempts = 0;
         final int maxAttempts = monitorInputData.getAttempts().orElse(DEFAULT_ATTEMPTS);
