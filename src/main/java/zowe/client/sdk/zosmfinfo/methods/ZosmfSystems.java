@@ -44,7 +44,7 @@ public class ZosmfSystems {
 
     /**
      * Alternative ListDefinedSystems constructor with ZoweRequest object.
-     * This is mainly used for internal code unit testing with mockito,
+     * This is mainly used for internal code unit testing with Mockito,
      * and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private

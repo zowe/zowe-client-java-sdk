@@ -52,7 +52,7 @@ public class UssExtAttr {
 
     /**
      * Alternative UssCopy constructor with ZoweRequest object. This is mainly used for internal code
-     * unit testing with mockito, and it is not recommended to be used by the larger community.
+     * unit testing with Mockito, and it is not recommended to be used by the larger community.
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object

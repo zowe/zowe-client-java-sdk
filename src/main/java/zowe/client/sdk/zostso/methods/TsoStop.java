@@ -47,7 +47,7 @@ public class TsoStop {
 
     /**
      * Alternative TsoStop constructor with ZoweRequest object. This is mainly used for internal code unit
-     * testing with mockito, and it is not recommended to be used by the larger community.
+     * testing with Mockito, and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private
      *

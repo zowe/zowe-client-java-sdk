@@ -47,7 +47,7 @@ public class ZosmfLogin {
 
     /**
      * Alternative Login constructor with ZosmfRequest object. This is mainly used for internal code
-     * unit testing with mockito, and it is not recommended to be used by the larger community.
+     * unit testing with Mockito, and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private
      *

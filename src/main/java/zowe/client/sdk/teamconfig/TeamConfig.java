@@ -78,7 +78,7 @@ public class TeamConfig {
     }
 
     /**
-     * TeamConfig constructor. This is mainly used for internal code unit testing with mockito.
+     * TeamConfig constructor. This is mainly used for internal code unit testing with Mockito.
      *
      * @param keyTarService     required KeyTarService dependency
      * @param teamConfigService required TeamConfigService dependency
