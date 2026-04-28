@@ -239,20 +239,24 @@ public class JobSubmit {
         // Check for matching quotes
         for (final String value : keyValues.values()) {
             if (value.chars().filter(ch -> ch == '"').count() % 2 != 0) {
-                throw new IllegalStateException("Encountered invalid key/value pair. Mismatched quotes.");
+                String errMsg = "Encountered invalid key/value pair. Mismatched quotes.";
+                throw new IllegalStateException(errMsg);
             }
             if (value.isEmpty()) {
-                throw new IllegalStateException("Encountered invalid key/value pair. Must define a value for key/value pair.");
+                String errMsg = "Encountered invalid key/value pair. Must define a value for key/value pair.";
+                throw new IllegalStateException(errMsg);
             }
         }
 
         for (String key : keyValues.keySet()) {
             final String value = keyValues.get(key);
             if (key.isEmpty()) {
-                throw new IllegalStateException("Encountered invalid key/value pair. Must define a key for key/value pair.");
+                String errMsg = "Encountered invalid key/value pair. Must define a key for key/value pair.";
+                throw new IllegalStateException(errMsg);
             }
             if (key.length() > 8) {
-                throw new IllegalStateException("Encountered invalid key/value pair. Key must be 8 characters or less.");
+                String errMsg = "Encountered invalid key/value pair. Key must be 8 characters or less.";
+                throw new IllegalStateException(errMsg);
             }
             key = ZosmfHeaders.HEADERS.get("X_IBM_JCL_SYMBOL_PARTIAL").get(0) + key;
             LOG.debug("JCL symbol header: {}:{}", key, value);
