@@ -37,7 +37,7 @@ public class ConsoleUtilsTest {
         constructor.setAccessible(true);
         InvocationTargetException exception = assertThrows(
                 InvocationTargetException.class,
-                () -> constructor.newInstance()
+                constructor::newInstance
         );
         assertEquals("java.lang.IllegalStateException: Utility class", exception.getCause().toString());
     }
