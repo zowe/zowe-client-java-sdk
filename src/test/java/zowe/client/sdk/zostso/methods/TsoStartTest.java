@@ -189,6 +189,7 @@ public class TsoStartTest {
      * Test successfully TsoStart execution when valid input and response are provided.
      * Ensures servletKey is correctly extracted from JSON response.
      */
+    @SuppressWarnings("resource")
     @Test
     public void tstTsoStartWithStartTsoInputDataSettersSuccess() throws Exception {
         when(mockConnection.getZosmfUrl()).thenReturn("https://zosmf");

@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class UssCreateZfsInputDataTest {
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void tstCreateZfsParamsValueCheckSuccess() {
         UssCreateZfsInputData createZfsInputData = new UssCreateZfsInputData.Builder(10).build();

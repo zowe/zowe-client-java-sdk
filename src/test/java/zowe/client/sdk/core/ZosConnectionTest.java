@@ -311,6 +311,7 @@ class ZosConnectionTest {
         assertTrue(result.contains("certPassword=''"));
     }
 
+    @SuppressWarnings("EqualsWithItself")
     @Test
     void tstEqualsIsReflexiveSymmetricAndConsistentSuccess() {
         final ZosConnection conn1 = ZosConnectionFactory

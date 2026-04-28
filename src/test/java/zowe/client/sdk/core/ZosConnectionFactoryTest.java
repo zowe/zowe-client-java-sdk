@@ -41,6 +41,7 @@ public class ZosConnectionFactoryTest {
         assertNotSame(zc1, zc2);
     }
 
+    @SuppressWarnings("UnnecessaryLocalVariable")
     @Test
     public void tstZosConnectionFactoryReferenceEqualsSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createBasicConnection(
@@ -49,6 +50,7 @@ public class ZosConnectionFactoryTest {
         assertEquals(zc1, zc2);
     }
 
+    @SuppressWarnings("UnnecessaryLocalVariable")
     @Test
     public void tstZosConnectionFactoryReferenceEqualsWithCookieSuccess() {
         final ZosConnection zc1 = ZosConnectionFactory.createTokenConnection(

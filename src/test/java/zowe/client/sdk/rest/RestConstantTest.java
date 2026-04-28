@@ -18,6 +18,7 @@ public class RestConstantTest {
     /**
      * Test immutability
      */
+    @SuppressWarnings("DataFlowIssue")
     @Test
     public void tstRestConstantIsImmutableSuccess() {
         try {

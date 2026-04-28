@@ -30,6 +30,7 @@ public class SshConnectionTest {
         assertNotSame(sc1, sc2);
     }
 
+    @SuppressWarnings("UnnecessaryLocalVariable")
     @Test
     public void tstSshConnectionReferenceEqualsSuccess() {
         final SshConnection sc1 = new SshConnection("test", 1, "user", "password");
