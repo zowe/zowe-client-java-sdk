@@ -51,9 +51,9 @@ public class ZosmfSystemsTest {
                     "    \"zosVR\":\"z/OS V2R1\",\n" +
                     "    \"jesMemberName\":\"SY1\",\n" +
                     "    \"jesType\":\"JES2\",\n" +
-                    "    \"cpcName\":\"\",\n" +
-                    "    \"cpcSerial\":\"\",\n" +
-                    "    \"httpProxyName\":\"No Proxy\",\n" +
+                    "    \"cpcName\":\"1\",\n" +
+                    "    \"cpcSerial\":\"1\",\n" +
+                    "    \"httpProxyName\":\"No Proxy1\",\n" +
                     "    \"ftpDestinationName\":\"IBM-testcase-mvs\"\n" +
                     "   },\n" +
                     "   {\n" +
@@ -62,12 +62,12 @@ public class ZosmfSystemsTest {
                     "    \"sysplexName\":\"plex2\",\n" +
                     "    \"groupNames\":\"production\",\n" +
                     "    \"url\":\"https://zosmf2.yourco.com/zosmf/\",\n" +
-                    "    \"zosVR\":\"z/OS V2R1\",\n" +
+                    "    \"zosVR\":\"z/OS V2R2\",\n" +
                     "    \"jesMemberName\":\"SY2\",\n" +
                     "    \"jesType\":\"JES3\",\n" +
-                    "    \"cpcName\":\"\",\n" +
-                    "    \"cpcSerial\":\"\",\n" +
-                    "    \"httpProxyName\":\"No Proxy\",\n" +
+                    "    \"cpcName\":\"2\",\n" +
+                    "    \"cpcSerial\":\"2\",\n" +
+                    "    \"httpProxyName\":\"No Proxy2\",\n" +
                     "    \"ftpDestinationName\":\"IBM-testcase-mvs-sftp\"\n" +
                     "   },\n" +
                     "   {\n" +
@@ -76,12 +76,12 @@ public class ZosmfSystemsTest {
                     "    \"sysplexName\":\"plex3\",\n" +
                     "    \"groupNames\":\"test\",\n" +
                     "    \"url\":\"https://zosmf3.yourco.com/zosmf/\",\n" +
-                    "    \"zosVR\":\"z/OS V2R1\",\n" +
+                    "    \"zosVR\":\"z/OS V2R3\",\n" +
                     "    \"jesMemberName\":\"SY3\",\n" +
                     "    \"jesType\":\"JES2\",\n" +
-                    "    \"cpcName\":\"\",\n" +
-                    "    \"cpcSerial\":\"\",\n" +
-                    "    \"httpProxyName\":\"No Proxy\",\n" +
+                    "    \"cpcName\":\"3\",\n" +
+                    "    \"cpcSerial\":\"3\",\n" +
+                    "    \"httpProxyName\":\"No Proxy3\",\n" +
                     "    \"ftpDestinationName\":\"IBM-testcase-mvs\"\n" +
                     "   }\n" +
                     " ],\n" +
@@ -99,13 +99,13 @@ public class ZosmfSystemsTest {
         return Stream.of(
                 new DefinedSystemTestData("sys1", "sys1", "plex1", "test,development",
                         "https://zosmf1.yourco.com/zosmf/", "z/OS V2R1", "SY1", "JES2",
-                        "", "", "No Proxy", "IBM-testcase-mvs"),
+                        "1", "1", "No Proxy1", "IBM-testcase-mvs"),
                 new DefinedSystemTestData("sys2", "sys2", "plex2", "production",
-                        "https://zosmf2.yourco.com/zosmf/", "z/OS V2R1", "SY2", "JES3",
-                        "", "", "No Proxy", "IBM-testcase-mvs-sftp"),
+                        "https://zosmf2.yourco.com/zosmf/", "z/OS V2R2", "SY2", "JES3",
+                        "2", "2", "No Proxy2", "IBM-testcase-mvs-sftp"),
                 new DefinedSystemTestData("sys3", "sys3", "plex3", "test",
-                        "https://zosmf3.yourco.com/zosmf/", "z/OS V2R1", "SY3", "JES2",
-                        "", "", "No Proxy", "IBM-testcase-mvs")
+                        "https://zosmf3.yourco.com/zosmf/", "z/OS V2R3", "SY3", "JES2",
+                        "3", "3", "No Proxy3", "IBM-testcase-mvs")
         );
     }
 
