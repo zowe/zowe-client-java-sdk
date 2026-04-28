@@ -90,8 +90,7 @@ public class JobSubmitTest {
         jsonMap.put("files-url", "files-url");
         jsonMap.put("job-correlator", "job-correlator");
         jsonMap.put("phase-name", "phase-name");
-        JSONObject jobJson = new JSONObject(jsonMap);
-        return jobJson;
+        return new JSONObject(jsonMap);
     }
 
     @Test

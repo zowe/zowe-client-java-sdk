@@ -33,7 +33,6 @@ import static org.mockito.Mockito.withSettings;
  * @author Frank Giordano
  * @version 6.0
  */
-@SuppressWarnings("DataFlowIssue")
 public class UssDeleteTest {
 
     private final ZosConnection connection = ZosConnectionFactory

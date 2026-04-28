@@ -35,7 +35,6 @@ import static org.mockito.Mockito.withSettings;
  * @author Frank Giordano
  * @version 6.0
  */
-@SuppressWarnings("DataFlowIssue")
 public class UssMountTest {
 
     private final ZosConnection connection = ZosConnectionFactory
