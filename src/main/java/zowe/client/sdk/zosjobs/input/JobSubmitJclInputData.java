@@ -38,7 +38,7 @@ public class JobSubmitJclInputData {
     /**
      * Specify internal reader LRECL and corresponding http(s) headers will be appended to the request accordingly
      * An integer value that specifies the internal reader logical record length (LRECL).
-     * If you omit this header or specify a non-integer value, the default of 80 is used.
+     * If you omit this header or specify a non integer value, the default of 80 is used.
      */
     private String internalReaderLrecl;
 

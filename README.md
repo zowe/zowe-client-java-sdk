@@ -18,7 +18,7 @@ The Java SDK lets you leverage the underlying z/OSMF REST APIs on a z/OS system 
 
 For instance, one API package provides the ability to upload and download z/OS data sets. You can leverage that package to rapidly build a client application that interacts with data sets.
 
-The Java SDK joins an existing community of other language-specific SDKs. It provides the Java community with similar capabilities based on the NodeJS SDK. 
+The Java SDK joins an existing community of other language-specific SDKs. It provides the Java community with similar capabilities based on the Node.js SDK. 
   
 This SDK may differ from some others with the JobMonitor class adding prebuilt functionality for automation tasks.  
   
