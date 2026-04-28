@@ -218,38 +218,12 @@ class ZosConnectionTest {
     }
 
     @Test
-    void tstEqualityIsSymmetricAndConsistentSuccess() {
-        final ZosConnection conn1 = ZosConnectionFactory
-                .createBasicConnection("host1", 443, "userA", "passA");
-        final ZosConnection conn2 = ZosConnectionFactory
-                .createBasicConnection("host1", 443, "userA", "passA");
-
-        assertTrue(conn1.equals(conn2) && conn2.equals(conn1));
-        assertEquals(conn1.hashCode(), conn2.hashCode());
-
-        // consistency
-        assertEquals(conn1, conn2);
-        assertEquals(conn1, conn2);
-    }
-
-    @Test
     void tstNotEqualToNullOrDifferentClassSuccess() {
         final ZosConnection conn = ZosConnectionFactory
                 .createBasicConnection("host1", 443, "userA", "passA");
 
         assertNotEquals(null, conn);
         assertNotEquals("stringValue", conn);
-    }
-
-    @Test
-    void testBasicConnectionsEqualSuccess() {
-        final ZosConnection conn1 = ZosConnectionFactory
-                .createBasicConnection("host1", 443, "userA", "passA");
-        final ZosConnection conn2 = ZosConnectionFactory
-                .createBasicConnection("host1", 443, "userA", "passA");
-
-        assertEquals(conn1, conn2);
-        assertEquals(conn1.hashCode(), conn2.hashCode());
     }
 
     @Test
@@ -298,7 +272,6 @@ class ZosConnectionTest {
         final ZosConnection conn = ZosConnectionFactory
                 .createBasicConnection("zos", 443, "user", "pass", "/zosmf");
         String result = conn.toString();
-        System.out.println(result);
 
         assertTrue(result.contains("host='zos'"));
         assertTrue(result.contains("zosmfPort='443'"));
@@ -319,17 +292,10 @@ class ZosConnectionTest {
         final ZosConnection conn2 = ZosConnectionFactory
                 .createBasicConnection("host", 443, "user", "pass");
 
-        assertEquals(conn1, conn1);  // reflexive
-        assertTrue(conn1.equals(conn2) && conn2.equals(conn1)); // symmetric
-        assertEquals(conn1, conn2); // consistent
-        assertNotEquals(null, conn1); // null
-    }
-
-    @Test
-    void tstNotEqualToDifferentObjectTypeSuccess() {
-        final ZosConnection conn = ZosConnectionFactory
-                .createBasicConnection("zos", 443, "user", "pass");
-        assertNotEquals("string", conn);
+        assertEquals(conn1, conn1, "equals must be reflexive");
+        assertTrue(conn1.equals(conn2) && conn2.equals(conn1), "equals must be symmetric");
+        assertEquals(conn1, conn2, "equal objects should compare equal");
+        assertNotEquals(null, conn1, "object must not equal null");
     }
 
     @Test
@@ -337,7 +303,7 @@ class ZosConnectionTest {
         // capture and verify port out of range
         IllegalArgumentException outOfRangeEx = assertThrows(IllegalArgumentException.class,
                 () -> ZosConnectionFactory.createBasicConnection("zos", 443666666, "user", "pass"));
-        assertTrue(outOfRangeEx.getMessage().contains("port"), "invalid port number: 443666666");
+        assertEquals("invalid port number: 443666666", outOfRangeEx.getMessage());
 
         // capture and verify invalid port 0
         IllegalArgumentException zeroPortEx = assertThrows(IllegalArgumentException.class,
