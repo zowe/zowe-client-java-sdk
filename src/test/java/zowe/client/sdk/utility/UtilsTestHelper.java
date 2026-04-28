@@ -42,6 +42,7 @@ public final class UtilsTestHelper {
      *
      * @param name class object
      */
+    @SuppressWarnings("rawtypes")
     public static void validateClass(Class name, String privateConstructorMsg) {
         try {
             UtilsTestHelper.assertUtilityClassWellDefined(name);

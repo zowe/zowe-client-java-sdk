@@ -203,9 +203,7 @@ public class ZosmfSystemsTest {
         when(mockRequest.executeRequest()).thenReturn(
                 new Response("", 200, "success"));
 
-        ZosmfRequestException ex = assertThrows(ZosmfRequestException.class, () -> {
-            zosmfSystems.get();
-        });
+        ZosmfRequestException ex = assertThrows(ZosmfRequestException.class, () -> zosmfSystems.get());
 
         String errMsg = "Failed to parse JSON response for [get] into ZosmfSystemsResponse";
         assertEquals(errMsg, ex.getMessage());
