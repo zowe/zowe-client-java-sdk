@@ -108,10 +108,9 @@ public class JobDeleteTest {
     public void tstJobDeleteCommonJobModifyInputDataNullFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         JobDelete jobDelete = new JobDelete(connection);
-        JobModifyInputData modifyInputData = null;
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> jobDelete.deleteCommon(modifyInputData)
+                () -> jobDelete.deleteCommon(null)
         );
         assertEquals("modifyInputData is null", exception.getMessage());
     }
