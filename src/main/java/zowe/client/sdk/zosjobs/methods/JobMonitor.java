@@ -251,7 +251,7 @@ public class JobMonitor {
     private boolean pollByMessage(final JobMonitorInputData monitorInputData, final String message)
             throws ZosmfRequestException {
         final int timeoutVal = monitorInputData.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
-        boolean messageFound;  
+        boolean messageFound;
         boolean shouldContinue;
         int numOfAttempts = 0;
         final int maxAttempts = monitorInputData.getAttempts().orElse(DEFAULT_ATTEMPTS);
@@ -264,15 +264,16 @@ public class JobMonitor {
             shouldContinue = !messageFound && (maxAttempts > 0 && numOfAttempts < maxAttempts);
 
             if (shouldContinue) {
-                WaitUtil.wait(timeoutVal);
                 if (!isRunning(monitorInputData)) {
                     return false;
                 }
+
+                WaitUtil.wait(timeoutVal);
                 LOG.info("Waiting for message \"{}\"", message);
             }
         } while (shouldContinue);
 
-        return numOfAttempts != maxAttempts;
+        return messageFound;
     }
 
     /**
@@ -313,7 +314,7 @@ public class JobMonitor {
             }
         } while (shouldContinue);
 
-        if (numOfAttempts == maxAttempts) {
+        if (!expectedStatus && numOfAttempts == maxAttempts) {
             throw new IllegalStateException("Desired status not seen. The number of maximum attempts reached.");
         }
 
