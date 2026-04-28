@@ -54,20 +54,7 @@ public class JobSubmitTest {
 
     @BeforeEach
     public void init() throws ZosmfRequestException {
-        final Map<String, String> jsonMap = new HashMap<>();
-        jsonMap.put("jobid", "jobid");
-        jsonMap.put("jobname", "jobname");
-        jsonMap.put("subsystem", "subsystem");
-        jsonMap.put("owner", "owner");
-        jsonMap.put("status", "status");
-        jsonMap.put("type", "type");
-        jsonMap.put("class", "class");
-        jsonMap.put("retcode", "retcode");
-        jsonMap.put("url", "url");
-        jsonMap.put("files-url", "files-url");
-        jsonMap.put("job-correlator", "job-correlator");
-        jsonMap.put("phase-name", "phase-name");
-        JSONObject jobJson = new JSONObject(jsonMap);
+        JSONObject jobJson = getJsonObject();
 
         mockPutJsonZosmfRequest = Mockito.mock(PutJsonZosmfRequest.class);
         mockPutTextZosmfRequest = Mockito.mock(PutTextZosmfRequest.class);
@@ -89,6 +76,24 @@ public class JobSubmitTest {
         doCallRealMethod().when(mockPutJsonZosmfRequestToken).setUrl(any());
         doCallRealMethod().when(mockPutJsonZosmfRequestToken).getHeaders();
         doCallRealMethod().when(mockPutJsonZosmfRequestToken).getUrl();
+    }
+
+    private static JSONObject getJsonObject() {
+        final Map<String, String> jsonMap = new HashMap<>();
+        jsonMap.put("jobid", "jobid");
+        jsonMap.put("jobname", "jobname");
+        jsonMap.put("subsystem", "subsystem");
+        jsonMap.put("owner", "owner");
+        jsonMap.put("status", "status");
+        jsonMap.put("type", "type");
+        jsonMap.put("class", "class");
+        jsonMap.put("retcode", "retcode");
+        jsonMap.put("url", "url");
+        jsonMap.put("files-url", "files-url");
+        jsonMap.put("job-correlator", "job-correlator");
+        jsonMap.put("phase-name", "phase-name");
+        JSONObject jobJson = new JSONObject(jsonMap);
+        return jobJson;
     }
 
     @Test

@@ -56,7 +56,7 @@ public class JobGetJsonTest {
         getJobs = new JobGet(connection);
         Whitebox.setInternalState(getJobs, "request", mockJsonGetRequest);
 
-        final Map<String, String> jsonMap = getStringStringMap();
+        final Map<String, String> jsonMap = getJsonObject();
         jobJson = new JSONObject(jsonMap);
 
         // step data initialize
@@ -72,7 +72,7 @@ public class JobGetJsonTest {
         stepDataArray.add(stepData);
     }
 
-    private static Map<String, String> getStringStringMap() {
+    private static Map<String, String> getJsonObject() {
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("jobid", "jobid");
         jsonMap.put("jobname", "jobname");
