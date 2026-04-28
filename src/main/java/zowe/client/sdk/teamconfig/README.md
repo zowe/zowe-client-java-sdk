@@ -58,11 +58,11 @@ public class TeamConfigExp {
 
     /**
      * Main method defines TeamConfig object and operation to retrieve the default
-     * zosmf profile from Zowe Team Configuration.
+     * z/OSMF profile from Zowe Team Configuration.
      * <p>
      * Zowe Team Configuration contains the connection information for z/OSMF REST API.
      * <p>
-     * Moreover, the retrieval of the zosmf profile will retrieve secure Zowe V2 credentials
+     * Moreover, the retrieval of the z/OSMF profile will retrieve secure Zowe V2 credentials
      * (username/password) entered via the Zowe Global Team Configuration command.
      * <p>
      * Calls TeamConfigExp.listMembers example method.

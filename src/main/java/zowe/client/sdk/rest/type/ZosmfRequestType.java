@@ -10,7 +10,7 @@
 package zowe.client.sdk.rest.type;
 
 /**
- * Zosmf Request CRUD types
+ * z/OSMF Request CRUD types
  *
  * @author Frank Giordano
  * @version 6.0

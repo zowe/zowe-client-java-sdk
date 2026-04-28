@@ -289,7 +289,7 @@ public class JobGet {
      *
      * @param jobName job name for the job containing the spool content
      * @param jobId   job id for the job containing the spool content
-     * @param spoolId id number assigned by zosmf that identifies the particular job spool file (DD)
+     * @param spoolId id number assigned by z/OSMF that identifies the particular job spool file (DD)
      * @return spool content
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano

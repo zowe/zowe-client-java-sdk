@@ -32,37 +32,37 @@ public final class ZosmfInfoResponse {
     private final String zosVersion;
 
     /**
-     * Zosmf port number
+     * z/OSMF port number
      */
     private final String zosmfPort;
 
     /**
-     * Zosmf version
+     * z/OSMF version
      */
     private final String zosmfVersion;
 
     /**
-     * Zosmf host name
+     * z/OSMF host name
      */
     private final String zosmfHostName;
 
     /**
-     * Zosmf saf realm
+     * z/OSMF saf realm
      */
     private final String zosmfSafRealm;
 
     /**
-     * Zosmf full version
+     * z/OSMF full version
      */
     private final String zosmfFullVersion;
 
     /**
-     * Zosmf api version
+     * z/OSMF api version
      */
     private final String apiVersion;
 
     /**
-     * Zosmf plugin information
+     * z/OSMF plugin information
      */
     private ZosmfPlugin[] zosmfPluginsInfo;
 
@@ -70,12 +70,12 @@ public final class ZosmfInfoResponse {
      * Jackson constructor for ZosmfInfoResponse
      *
      * @param zosVersion       z/OS version
-     * @param zosmfPort        Zosmf port number
-     * @param zosmfVersion     Zosmf version
-     * @param zosmfHostName    Zosmf host name
-     * @param zosmfSafRealm    Zosmf saf realm
-     * @param zosmfFullVersion Zosmf full version
-     * @param apiVersion       Zosmf api version
+     * @param zosmfPort        z/OSMF port number
+     * @param zosmfVersion     z/OSMF version
+     * @param zosmfHostName    z/OSMF host name
+     * @param zosmfSafRealm    z/OSMF saf realm
+     * @param zosmfFullVersion z/OSMF full version
+     * @param apiVersion       z/OSMF api version
      */
     @JsonCreator
     public ZosmfInfoResponse(
