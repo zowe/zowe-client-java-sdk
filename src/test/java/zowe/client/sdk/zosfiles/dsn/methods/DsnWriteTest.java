@@ -139,7 +139,7 @@ public class DsnWriteTest {
     }
 
     @Test
-    public void tstDsnWriteNullContentFailure() throws ZosmfRequestException {
+    public void tstDsnWriteNullContentFailure() {
         final DsnWrite dsnWrite = new DsnWrite(connection, mockTextPutRequest);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
