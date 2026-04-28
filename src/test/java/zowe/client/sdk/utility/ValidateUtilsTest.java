@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Frank Giordano
  * @version 6.0
  */
+@SuppressWarnings("ObviousNullCheck")
 public class ValidateUtilsTest {
 
     /**

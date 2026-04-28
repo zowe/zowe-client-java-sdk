@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Frank Giordano
  * @version 6.0
  */
+@SuppressWarnings("AssertBetweenInconvertibleTypes")
 class ZosConnectionTest {
 
     @Test
