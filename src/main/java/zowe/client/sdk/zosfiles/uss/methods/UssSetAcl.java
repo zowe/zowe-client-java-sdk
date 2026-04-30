@@ -117,7 +117,8 @@ public class UssSetAcl {
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response deleteByType(final String targetPath, final DeleteAclType deleteType) throws ZosmfRequestException {
+    public Response deleteByType(final String targetPath, final DeleteAclType deleteType)
+            throws ZosmfRequestException {
         return setAclCommon(targetPath, new UssSetAclInputData.Builder().setDeleteType(deleteType).build());
     }
 
@@ -132,7 +133,7 @@ public class UssSetAcl {
      */
     public Response setAclCommon(final String targetPath, final UssSetAclInputData setAclInputData)
             throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(targetPath, "fromPath");
+        ValidateUtils.checkIllegalParameter(targetPath, "filePathName");
         ValidateUtils.checkNullParameter(setAclInputData, "setAclInputData");
         ValidateUtils.checkIllegalParameter(setAclInputData.getSet().isEmpty() &&
                 setAclInputData.getModify().isEmpty() && setAclInputData.getDelete().isEmpty() &&
