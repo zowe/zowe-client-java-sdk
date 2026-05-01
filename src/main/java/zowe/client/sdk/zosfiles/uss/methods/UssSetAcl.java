@@ -21,7 +21,8 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.uss.input.UssSetAclInputData;
+import zowe.client.sdk.zosfiles.uss.input.factory.SetAclInputFactory;
+import zowe.client.sdk.zosfiles.uss.input.factory.UssSetAclInputData;
 import zowe.client.sdk.zosfiles.uss.types.DeleteAclType;
 
 import java.util.HashMap;
@@ -73,39 +74,39 @@ public class UssSetAcl {
      * Sets the ACL for a USS file or directory
      *
      * @param targetPath UNIX path to the target file or directory
-     * @param value      sets the extended ACL entries that are specified by 'entries'
+     * @param setValue sets the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response set(final String targetPath, final String value) throws ZosmfRequestException {
-        return setAclCommon(targetPath, new UssSetAclInputData.Builder().setSet(value).build());
+    public Response set(final String targetPath, final String setValue) throws ZosmfRequestException {
+        return setAclCommon(targetPath, new SetAclInputFactory().createSetInput(setValue));
     }
 
     /**
      * Modifies the specified ACL entry for the file or directory
      *
      * @param targetPath UNIX path to the target file or directory
-     * @param value      modifies the extended ACL entries that are specified by 'entries'
+     * @param modifyValue modifies the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response modify(final String targetPath, final String value) throws ZosmfRequestException {
-        return setAclCommon(targetPath, new UssSetAclInputData.Builder().setModify(value).build());
+    public Response modify(final String targetPath, final String modifyValue) throws ZosmfRequestException {
+        return setAclCommon(targetPath, new SetAclInputFactory().createModifyInput(modifyValue));
     }
 
     /**
      * Deletes the specified ACL entry from the file or directory
      *
      * @param targetPath UNIX path to the target file or directory
-     * @param value      deletes the extended ACL entries that are specified by 'entries'
+     * @param deleteValue deletes the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    public Response delete(final String targetPath, final String value) throws ZosmfRequestException {
-        return setAclCommon(targetPath, new UssSetAclInputData.Builder().setDelete(value).build());
+    public Response delete(final String targetPath, final String deleteValue) throws ZosmfRequestException {
+        return setAclCommon(targetPath, new SetAclInputFactory().createDeleteInput(deleteValue));
     }
 
     /**
@@ -119,7 +120,23 @@ public class UssSetAcl {
      */
     public Response deleteByType(final String targetPath, final DeleteAclType deleteType)
             throws ZosmfRequestException {
-        return setAclCommon(targetPath, new UssSetAclInputData.Builder().setDeleteType(deleteType).build());
+        return setAclCommon(targetPath, new SetAclInputFactory().createDeleteTypeInput(deleteType));
+    }
+
+    /**
+     * Modifies the specified ACL entry for the file or directory and deletes the specified ACL
+     * entry from the file or directory
+     *
+     * @param targetPath UNIX path to the target file or directory
+     * @param modifyValue modifies the extended ACL entries that are specified by 'entries'
+     * @param deleteValue deletes the extended ACL entries that are specified by 'entries' type
+     * @return Response object
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public Response modifyAndDelete(final String targetPath, final String modifyValue, final String deleteValue)
+            throws ZosmfRequestException {
+        return setAclCommon(targetPath, new SetAclInputFactory().createModifyDeleteInput(modifyValue, deleteValue));
     }
 
     /**

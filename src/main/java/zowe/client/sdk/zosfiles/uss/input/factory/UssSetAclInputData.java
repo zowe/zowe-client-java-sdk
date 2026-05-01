@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.input;
+package zowe.client.sdk.zosfiles.uss.input.factory;
 
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.uss.types.DeleteAclType;
@@ -86,7 +86,7 @@ public class UssSetAclInputData {
      *
      * @param builder UssSetAclInputData.Builder builder
      */
-    public UssSetAclInputData(final UssSetAclInputData.Builder builder) {
+    UssSetAclInputData(final UssSetAclInputData.Builder builder) {
         this.abort = builder.abort;
         this.links = builder.links;
         this.deleteType = builder.deleteType;
@@ -169,112 +169,93 @@ public class UssSetAclInputData {
     /**
      * Builder class for UssSetAclInputData
      */
-    public static class Builder {
+    static class Builder {
 
         /**
          * The default is false. When true, aborts processing if an error or warning occurs.
          * See the setfacl command documentation for complete documentation on the errors and warnings (setfacl -a).
          */
-        private boolean abort = false;
+        private boolean abort;
 
         /**
          * The default is 'follow'. 'suppress' does not follow symbolic links.
          * Because ACLs are not associated with symbolic links,
          * nothing happens if a symbolic link is encountered (setfacl -h).
          * <p>
-         * Note:  At least one of the following four keywords must be specified.
+         * Note: At least one of the following four keywords must be specified.
          * 'modify' and 'delete' may both be specified, but not with 'delete-type' and 'set'.
          */
-        private LinkType links = LinkType.FOLLOW;
+        private LinkType links;
 
         /**
-         * Delete all extended ACL entries by type (setfacl -D type):
-         * <p>
-         * access - Access ACL
-         * dir    - Directory default ACL
-         * file   - File default ACL
-         * every  - Every extended ACL for all ACL types that are applicable for the current path name.
-         * <p>
-         * Note: The 'delete-type' keyword cannot be specified with 'set', 'modify' or 'delete'.
+         * Delete all extended ACL entries by type (setfacl -D type).
          */
         private DeleteAclType deleteType;
 
         /**
-         * sets (replaces) all ACLs with 'entries'.
-         * 'entries' represents a string of ACL entries.
-         * Refer to the setfacl command reference for the string format (setfacl -s entries).
-         * <p>
-         * Note: The 'set' keyword cannot be specified with 'delete-type', 'modify' or 'delete'.
+         * Sets, or replaces, all ACLs with entries.
          */
         private String set;
 
         /**
-         * Modifies the ACL entries. 'entries' represents a string of ACL entries.
-         * Refer to the setfacl command reference for the string format.
-         * If an ACL entry does not exist for a user or group specified in 'entries', it is created.
-         * If an ACL entry exists for a user or group specified in 'entries', it is replaced.
-         * <p>
-         * Note: The 'modify' keyword cannot be specified with 'delete-type' or 'set'.
+         * Modifies ACL entries.
          */
         private String modify;
 
         /**
-         * Deletes the extended ACL entries that are specified by 'entries'. 'entries' is a string of ACL entries.
-         * Refer to the setfacl command reference for the string format.
-         * If an ACL entry does not exist for the user or group specified, no error is issued.
-         * <p>
-         * Note: The 'delete' keyword cannot be specified with 'delete-type' or 'set'.
+         * Deletes the specified extended ACL entries.
          */
         private String delete;
 
         /**
          * Create a new Builder instance.
          */
-        public Builder() {
+        Builder() {
             // intentionally empty
         }
 
         /**
-         * Set abort value
+         * Set abort value.
          *
          * @param abort abort value
          * @return UssSetAclInputData.Builder
          */
-        public UssSetAclInputData.Builder setAbort(final boolean abort) {
+        Builder setAbort(final boolean abort) {
             this.abort = abort;
             return this;
         }
 
         /**
-         * Set links value
+         * Set links value.
          *
          * @param links links value
          * @return UssSetAclInputData.Builder
          */
-        public UssSetAclInputData.Builder setLinks(final LinkType links) {
+        Builder setLinks(final LinkType links) {
+            ValidateUtils.checkNullParameter(links, "links");
             this.links = links;
             return this;
         }
 
         /**
-         * Set deleteType value
+         * Set deleteType value.
          *
          * @param deleteType deleteType value
          * @return UssSetAclInputData.Builder
          */
-        public UssSetAclInputData.Builder setDeleteType(final DeleteAclType deleteType) {
+        Builder setDeleteType(final DeleteAclType deleteType) {
             ValidateUtils.checkNullParameter(deleteType, "deleteType");
             this.deleteType = deleteType;
             return this;
         }
 
         /**
-         * Set the SET value
+         * Set the set value.
          *
          * @param set set value
          * @return UssSetAclInputData.Builder
          */
-        public UssSetAclInputData.Builder setSet(final String set) {
+        Builder setSet(final String set) {
             ValidateUtils.checkNullParameter(set, "set");
             ValidateUtils.checkIllegalParameter(set.isBlank(), "set not specified");
             this.set = set;
@@ -282,12 +263,12 @@ public class UssSetAclInputData {
         }
 
         /**
-         * Set modify value
+         * Set modify value.
          *
          * @param modify modify value
          * @return UssSetAclInputData.Builder
          */
-        public UssSetAclInputData.Builder setModify(final String modify) {
+        Builder setModify(final String modify) {
             ValidateUtils.checkNullParameter(modify, "modify");
             ValidateUtils.checkIllegalParameter(modify.isBlank(), "modify not specified");
             this.modify = modify;
@@ -295,12 +276,12 @@ public class UssSetAclInputData {
         }
 
         /**
-         * Set delete value
+         * Set delete value.
          *
          * @param delete delete value
          * @return UssSetAclInputData.Builder
          */
-        public UssSetAclInputData.Builder setDelete(final String delete) {
+        Builder setDelete(final String delete) {
             ValidateUtils.checkNullParameter(delete, "delete");
             ValidateUtils.checkIllegalParameter(delete.isBlank(), "delete not specified");
             this.delete = delete;
@@ -308,11 +289,11 @@ public class UssSetAclInputData {
         }
 
         /**
-         * Build UssSetAclInputData object
+         * Build UssSetAclInputData object.
          *
          * @return UssSetAclInputData
          */
-        public UssSetAclInputData build() {
+        UssSetAclInputData build() {
             return new UssSetAclInputData(this);
         }
 
