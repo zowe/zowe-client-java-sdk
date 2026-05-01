@@ -330,7 +330,7 @@ class SetAclInputFactoryTest {
                 new UssSetAclInputData.Builder().setDelete("")
         );
     }
-    
+
     @Test
     void tstBuilderRejectsNullLinksValueFailure() {
         assertThrows(NullPointerException.class, () ->
