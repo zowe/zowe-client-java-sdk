@@ -23,9 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class SetAclInputFactoryTest {
 
-    /**
-     * Verify createDeleteTypeInput creates input data with default values.
-     */
     @Test
     void tstCreateDeleteTypeInputWithDefaultValuesSuccess() {
         final SetAclInputFactory factory = new SetAclInputFactory();
@@ -40,9 +37,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.empty(), inputData.getDelete());
     }
 
-    /**
-     * Verify createDeleteTypeInput creates input data with abort value.
-     */
     @Test
     void tstCreateDeleteTypeInputWithAbortValueSuccess() {
         final SetAclInputFactory factory = new SetAclInputFactory();
@@ -57,9 +51,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.empty(), inputData.getDelete());
     }
 
-    /**
-     * Verify createDeleteTypeInput creates input data with abort and links values.
-     */
     @Test
     void tstCreateDeleteTypeInputWithAbortAndLinksValuesSuccess() {
         final SetAclInputFactory factory = new SetAclInputFactory();
@@ -78,9 +69,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.empty(), inputData.getDelete());
     }
 
-    /**
-     * Verify createDeleteInput creates input data with default values.
-     */
     @Test
     void tstCreateDeleteInputWithDefaultValuesSuccess() {
         final SetAclInputFactory factory = new SetAclInputFactory();
@@ -95,9 +83,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.of("user:test:rwx"), inputData.getDelete());
     }
 
-    /**
-     * Verify createDeleteInput creates input data with abort and links values.
-     */
     @Test
     void tstCreateDeleteInputWithAbortAndLinksValuesSuccess() {
         final SetAclInputFactory factory = new SetAclInputFactory();
@@ -116,9 +101,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.of("user:test:rwx"), inputData.getDelete());
     }
 
-    /**
-     * Verify createModifyInput creates input data with default values.
-     */
     @Test
     void tstCreateModifyInputWithDefaultValuesSuccess() {
         final SetAclInputFactory factory = new SetAclInputFactory();
@@ -133,9 +115,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.empty(), inputData.getDelete());
     }
 
-    /**
-     * Verify createModifyInput creates input data with abort and links values.
-     */
     @Test
     void tstCreateModifyInputWithAbortAndLinksValuesSuccess() {
         final SetAclInputFactory factory = new SetAclInputFactory();
@@ -154,9 +133,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.empty(), inputData.getDelete());
     }
 
-    /**
-     * Verify createSetInput creates input data with default values.
-     */
     @Test
     void tstCreateSetInputWithDefaultValuesSuccess() {
         final SetAclInputFactory factory = new SetAclInputFactory();
@@ -171,9 +147,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.empty(), inputData.getDelete());
     }
 
-    /**
-     * Verify createSetInput creates input data with abort and links values.
-     */
     @Test
     void tstCreateSetInputWithAbortAndLinksValuesSuccess() {
         final SetAclInputFactory factory = new SetAclInputFactory();
@@ -192,9 +165,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.empty(), inputData.getDelete());
     }
 
-    /**
-     * Verify createModifyDeleteInput creates input data with default values.
-     */
     @Test
     void tstCreateModifyDeleteInputWithDefaultValuesSuccess() {
         final SetAclInputFactory factory = new SetAclInputFactory();
@@ -212,9 +182,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.of("group:test:r-x"), inputData.getDelete());
     }
 
-    /**
-     * Verify createModifyDeleteInput creates input data with abort and links values.
-     */
     @Test
     void tstCreateModifyDeleteInputWithAbortAndLinksValuesSuccess() {
         final SetAclInputFactory factory = new SetAclInputFactory();
@@ -234,9 +201,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.of("group:test:r-x"), inputData.getDelete());
     }
 
-    /**
-     * Verify builder creates delete-type input data.
-     */
     @Test
     void tstBuilderCreatesDeleteTypeInputDataSuccess() {
         final UssSetAclInputData inputData = new UssSetAclInputData.Builder()
@@ -253,9 +217,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.empty(), inputData.getDelete());
     }
 
-    /**
-     * Verify builder creates set input data.
-     */
     @Test
     void tstBuilderCreatesSetInputDataSuccess() {
         final UssSetAclInputData inputData = new UssSetAclInputData.Builder()
@@ -272,9 +233,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.empty(), inputData.getDelete());
     }
 
-    /**
-     * Verify builder creates modify input data.
-     */
     @Test
     void tstBuilderCreatesModifyInputDataSuccess() {
         final UssSetAclInputData inputData = new UssSetAclInputData.Builder()
@@ -291,9 +249,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.empty(), inputData.getDelete());
     }
 
-    /**
-     * Verify builder creates delete input data.
-     */
     @Test
     void tstBuilderCreatesDeleteInputDataSuccess() {
         final UssSetAclInputData inputData = new UssSetAclInputData.Builder()
@@ -310,9 +265,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.of("user:test:rwx"), inputData.getDelete());
     }
 
-    /**
-     * Verify builder creates modify and delete input data.
-     */
     @Test
     void tstBuilderCreatesModifyDeleteInputDataSuccess() {
         final UssSetAclInputData inputData = new UssSetAclInputData.Builder()
@@ -330,9 +282,6 @@ class SetAclInputFactoryTest {
         assertEquals(Optional.of("group:test:r-x"), inputData.getDelete());
     }
 
-    /**
-     * Verify builder rejects null deleteType value.
-     */
     @Test
     void tstBuilderRejectsNullDeleteTypeValueFailure() {
         assertThrows(NullPointerException.class, () ->
@@ -340,9 +289,6 @@ class SetAclInputFactoryTest {
         );
     }
 
-    /**
-     * Verify builder rejects null set value.
-     */
     @Test
     void tstBuilderRejectsNullSetValueFailure() {
         assertThrows(NullPointerException.class, () ->
@@ -350,9 +296,6 @@ class SetAclInputFactoryTest {
         );
     }
 
-    /**
-     * Verify builder rejects blank set value.
-     */
     @Test
     void tstBuilderRejectsBlankSetValueFailure() {
         assertThrows(IllegalArgumentException.class, () ->
@@ -360,9 +303,6 @@ class SetAclInputFactoryTest {
         );
     }
 
-    /**
-     * Verify builder rejects null modify value.
-     */
     @Test
     void tstBuilderRejectsNullModifyValueFailure() {
         assertThrows(NullPointerException.class, () ->
@@ -370,9 +310,6 @@ class SetAclInputFactoryTest {
         );
     }
 
-    /**
-     * Verify builder rejects blank modify value.
-     */
     @Test
     void tstBuilderRejectsBlankModifyValueFailure() {
         assertThrows(IllegalArgumentException.class, () ->
@@ -380,9 +317,6 @@ class SetAclInputFactoryTest {
         );
     }
 
-    /**
-     * Verify builder rejects null delete value.
-     */
     @Test
     void tstBuilderRejectsNullDeleteValueFailure() {
         assertThrows(NullPointerException.class, () ->
@@ -390,19 +324,13 @@ class SetAclInputFactoryTest {
         );
     }
 
-    /**
-     * Verify builder rejects blank delete value.
-     */
     @Test
     void tstBuilderRejectsBlankDeleteValueFailure() {
         assertThrows(IllegalArgumentException.class, () ->
                 new UssSetAclInputData.Builder().setDelete("")
         );
     }
-
-    /**
-     * Verify builder rejects null links value.
-     */
+    
     @Test
     void tstBuilderRejectsNullLinksValueFailure() {
         assertThrows(NullPointerException.class, () ->

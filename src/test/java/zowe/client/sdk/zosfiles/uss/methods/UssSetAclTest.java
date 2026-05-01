@@ -216,7 +216,7 @@ class UssSetAclTest {
                 ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(TARGET_PATH));
     }
-    
+
     private JSONObject getRequestBody() throws Exception {
         final ArgumentCaptor<String> bodyCaptor = ArgumentCaptor.forClass(String.class);
         verify(request).setBody(bodyCaptor.capture());
