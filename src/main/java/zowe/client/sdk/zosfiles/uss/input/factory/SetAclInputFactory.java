@@ -28,13 +28,20 @@ import zowe.client.sdk.zosfiles.uss.types.LinkType;
 public class SetAclInputFactory {
 
     /**
+     * Private constructor defined to avoid instantiation of a static factory class
+     */
+    private SetAclInputFactory() {
+        throw new IllegalStateException("Factory class");
+    }
+
+    /**
      * Create delete-type input data using default abort and links values.
      *
      * @param deleteType ACL type whose extended ACL entries are deleted
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createDeleteTypeInput(final DeleteAclType deleteType) {
-        return this.createDeleteTypeInput(deleteType, false, LinkType.FOLLOW);
+    public static UssSetAclInputData createDeleteTypeInput(final DeleteAclType deleteType) {
+        return createDeleteTypeInput(deleteType, false, LinkType.FOLLOW);
     }
 
     /**
@@ -44,9 +51,9 @@ public class SetAclInputFactory {
      * @param abort      true to abort processing when an error or warning occurs; false otherwise
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createDeleteTypeInput(final DeleteAclType deleteType,
-                                                    final boolean abort) {
-        return this.createDeleteTypeInput(deleteType, abort, LinkType.FOLLOW);
+    public static UssSetAclInputData createDeleteTypeInput(final DeleteAclType deleteType,
+                                                           final boolean abort) {
+        return createDeleteTypeInput(deleteType, abort, LinkType.FOLLOW);
     }
 
     /**
@@ -57,9 +64,9 @@ public class SetAclInputFactory {
      * @param links      symbolic link handling option for the target path
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createDeleteTypeInput(final DeleteAclType deleteType,
-                                                    final boolean abort,
-                                                    final LinkType links) {
+    public static UssSetAclInputData createDeleteTypeInput(final DeleteAclType deleteType,
+                                                           final boolean abort,
+                                                           final LinkType links) {
         return new UssSetAclInputData.Builder()
                 .setDeleteType(deleteType)
                 .setAbort(abort)
@@ -73,8 +80,8 @@ public class SetAclInputFactory {
      * @param delete ACL entries to remove from the target path
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createDeleteInput(final String delete) {
-        return this.createDeleteInput(delete, false, LinkType.FOLLOW);
+    public static UssSetAclInputData createDeleteInput(final String delete) {
+        return createDeleteInput(delete, false, LinkType.FOLLOW);
     }
 
     /**
@@ -84,9 +91,9 @@ public class SetAclInputFactory {
      * @param abort  true to abort processing when an error or warning occurs; false otherwise
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createDeleteInput(final String delete,
-                                                final boolean abort) {
-        return this.createDeleteInput(delete, abort, LinkType.FOLLOW);
+    public static UssSetAclInputData createDeleteInput(final String delete,
+                                                       final boolean abort) {
+        return createDeleteInput(delete, abort, LinkType.FOLLOW);
     }
 
     /**
@@ -97,9 +104,9 @@ public class SetAclInputFactory {
      * @param links  symbolic link handling option for the target path
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createDeleteInput(final String delete,
-                                                final boolean abort,
-                                                final LinkType links) {
+    public static UssSetAclInputData createDeleteInput(final String delete,
+                                                       final boolean abort,
+                                                       final LinkType links) {
         return new UssSetAclInputData.Builder()
                 .setDelete(delete)
                 .setAbort(abort)
@@ -113,8 +120,8 @@ public class SetAclInputFactory {
      * @param modify ACL entries to add or replace on the target path
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createModifyInput(final String modify) {
-        return this.createModifyInput(modify, false, LinkType.FOLLOW);
+    public static UssSetAclInputData createModifyInput(final String modify) {
+        return createModifyInput(modify, false, LinkType.FOLLOW);
     }
 
     /**
@@ -124,9 +131,9 @@ public class SetAclInputFactory {
      * @param abort  true to abort processing when an error or warning occurs; false otherwise
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createModifyInput(final String modify,
-                                                final boolean abort) {
-        return this.createModifyInput(modify, abort, LinkType.FOLLOW);
+    public static UssSetAclInputData createModifyInput(final String modify,
+                                                       final boolean abort) {
+        return createModifyInput(modify, abort, LinkType.FOLLOW);
     }
 
     /**
@@ -137,9 +144,9 @@ public class SetAclInputFactory {
      * @param links  symbolic link handling option for the target path
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createModifyInput(final String modify,
-                                                final boolean abort,
-                                                final LinkType links) {
+    public static UssSetAclInputData createModifyInput(final String modify,
+                                                       final boolean abort,
+                                                       final LinkType links) {
         return new UssSetAclInputData.Builder()
                 .setModify(modify)
                 .setAbort(abort)
@@ -153,8 +160,8 @@ public class SetAclInputFactory {
      * @param set ACL entries used to replace all existing ACLs on the target path
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createSetInput(final String set) {
-        return this.createSetInput(set, false, LinkType.FOLLOW);
+    public static UssSetAclInputData createSetInput(final String set) {
+        return createSetInput(set, false, LinkType.FOLLOW);
     }
 
     /**
@@ -164,9 +171,9 @@ public class SetAclInputFactory {
      * @param abort true to abort processing when an error or warning occurs; false otherwise
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createSetInput(final String set,
-                                             final boolean abort) {
-        return this.createSetInput(set, abort, LinkType.FOLLOW);
+    public static UssSetAclInputData createSetInput(final String set,
+                                                    final boolean abort) {
+        return createSetInput(set, abort, LinkType.FOLLOW);
     }
 
     /**
@@ -177,9 +184,9 @@ public class SetAclInputFactory {
      * @param links symbolic link handling option for the target path
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createSetInput(final String set,
-                                             final boolean abort,
-                                             final LinkType links) {
+    public static UssSetAclInputData createSetInput(final String set,
+                                                    final boolean abort,
+                                                    final LinkType links) {
         return new UssSetAclInputData.Builder()
                 .setSet(set)
                 .setAbort(abort)
@@ -194,9 +201,9 @@ public class SetAclInputFactory {
      * @param delete ACL entries to remove from the target path
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createModifyDeleteInput(final String modify,
-                                                      final String delete) {
-        return this.createModifyDeleteInput(modify, delete, false, LinkType.FOLLOW);
+    public static UssSetAclInputData createModifyDeleteInput(final String modify,
+                                                             final String delete) {
+        return createModifyDeleteInput(modify, delete, false, LinkType.FOLLOW);
     }
 
     /**
@@ -207,10 +214,10 @@ public class SetAclInputFactory {
      * @param abort  true to abort processing when an error or warning occurs; false otherwise
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createModifyDeleteInput(final String modify,
-                                                      final String delete,
-                                                      final boolean abort) {
-        return this.createModifyDeleteInput(modify, delete, abort, LinkType.FOLLOW);
+    public static UssSetAclInputData createModifyDeleteInput(final String modify,
+                                                             final String delete,
+                                                             final boolean abort) {
+        return createModifyDeleteInput(modify, delete, abort, LinkType.FOLLOW);
     }
 
     /**
@@ -222,10 +229,10 @@ public class SetAclInputFactory {
      * @param links  symbolic link handling option for the target path
      * @return UssSetAclInputData
      */
-    public UssSetAclInputData createModifyDeleteInput(final String modify,
-                                                      final String delete,
-                                                      final boolean abort,
-                                                      final LinkType links) {
+    public static UssSetAclInputData createModifyDeleteInput(final String modify,
+                                                             final String delete,
+                                                             final boolean abort,
+                                                             final LinkType links) {
         return new UssSetAclInputData.Builder()
                 .setModify(modify)
                 .setDelete(delete)

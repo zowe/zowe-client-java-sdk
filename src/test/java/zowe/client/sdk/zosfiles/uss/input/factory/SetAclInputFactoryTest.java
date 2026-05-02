@@ -25,9 +25,7 @@ class SetAclInputFactoryTest {
 
     @Test
     void tstCreateDeleteTypeInputWithDefaultValuesSuccess() {
-        final SetAclInputFactory factory = new SetAclInputFactory();
-
-        final UssSetAclInputData inputData = factory.createDeleteTypeInput(DeleteAclType.ACCESS);
+        final UssSetAclInputData inputData = SetAclInputFactory.createDeleteTypeInput(DeleteAclType.ACCESS);
 
         assertFalse(inputData.isAbort());
         assertEquals(Optional.of(LinkType.FOLLOW), inputData.getLinks());
@@ -39,9 +37,7 @@ class SetAclInputFactoryTest {
 
     @Test
     void tstCreateDeleteTypeInputWithAbortValueSuccess() {
-        final SetAclInputFactory factory = new SetAclInputFactory();
-
-        final UssSetAclInputData inputData = factory.createDeleteTypeInput(DeleteAclType.ACCESS, true);
+        final UssSetAclInputData inputData = SetAclInputFactory.createDeleteTypeInput(DeleteAclType.ACCESS, true);
 
         assertTrue(inputData.isAbort());
         assertEquals(Optional.of(LinkType.FOLLOW), inputData.getLinks());
@@ -53,9 +49,7 @@ class SetAclInputFactoryTest {
 
     @Test
     void tstCreateDeleteTypeInputWithAbortAndLinksValuesSuccess() {
-        final SetAclInputFactory factory = new SetAclInputFactory();
-
-        final UssSetAclInputData inputData = factory.createDeleteTypeInput(
+        final UssSetAclInputData inputData = SetAclInputFactory.createDeleteTypeInput(
                 DeleteAclType.ACCESS,
                 true,
                 LinkType.SUPPRESS
@@ -71,9 +65,7 @@ class SetAclInputFactoryTest {
 
     @Test
     void tstCreateDeleteInputWithDefaultValuesSuccess() {
-        final SetAclInputFactory factory = new SetAclInputFactory();
-
-        final UssSetAclInputData inputData = factory.createDeleteInput("user:test:rwx");
+        final UssSetAclInputData inputData = SetAclInputFactory.createDeleteInput("user:test:rwx");
 
         assertFalse(inputData.isAbort());
         assertEquals(Optional.of(LinkType.FOLLOW), inputData.getLinks());
@@ -85,9 +77,7 @@ class SetAclInputFactoryTest {
 
     @Test
     void tstCreateDeleteInputWithAbortAndLinksValuesSuccess() {
-        final SetAclInputFactory factory = new SetAclInputFactory();
-
-        final UssSetAclInputData inputData = factory.createDeleteInput(
+        final UssSetAclInputData inputData = SetAclInputFactory.createDeleteInput(
                 "user:test:rwx",
                 true,
                 LinkType.SUPPRESS
@@ -103,9 +93,7 @@ class SetAclInputFactoryTest {
 
     @Test
     void tstCreateModifyInputWithDefaultValuesSuccess() {
-        final SetAclInputFactory factory = new SetAclInputFactory();
-
-        final UssSetAclInputData inputData = factory.createModifyInput("user:test:rwx");
+        final UssSetAclInputData inputData = SetAclInputFactory.createModifyInput("user:test:rwx");
 
         assertFalse(inputData.isAbort());
         assertEquals(Optional.of(LinkType.FOLLOW), inputData.getLinks());
@@ -117,9 +105,7 @@ class SetAclInputFactoryTest {
 
     @Test
     void tstCreateModifyInputWithAbortAndLinksValuesSuccess() {
-        final SetAclInputFactory factory = new SetAclInputFactory();
-
-        final UssSetAclInputData inputData = factory.createModifyInput(
+        final UssSetAclInputData inputData = SetAclInputFactory.createModifyInput(
                 "user:test:rwx",
                 true,
                 LinkType.SUPPRESS
@@ -135,9 +121,7 @@ class SetAclInputFactoryTest {
 
     @Test
     void tstCreateSetInputWithDefaultValuesSuccess() {
-        final SetAclInputFactory factory = new SetAclInputFactory();
-
-        final UssSetAclInputData inputData = factory.createSetInput("user:test:rwx");
+        final UssSetAclInputData inputData = SetAclInputFactory.createSetInput("user:test:rwx");
 
         assertFalse(inputData.isAbort());
         assertEquals(Optional.of(LinkType.FOLLOW), inputData.getLinks());
@@ -149,9 +133,7 @@ class SetAclInputFactoryTest {
 
     @Test
     void tstCreateSetInputWithAbortAndLinksValuesSuccess() {
-        final SetAclInputFactory factory = new SetAclInputFactory();
-
-        final UssSetAclInputData inputData = factory.createSetInput(
+        final UssSetAclInputData inputData = SetAclInputFactory.createSetInput(
                 "user:test:rwx",
                 true,
                 LinkType.SUPPRESS
@@ -167,9 +149,7 @@ class SetAclInputFactoryTest {
 
     @Test
     void tstCreateModifyDeleteInputWithDefaultValuesSuccess() {
-        final SetAclInputFactory factory = new SetAclInputFactory();
-
-        final UssSetAclInputData inputData = factory.createModifyDeleteInput(
+        final UssSetAclInputData inputData = SetAclInputFactory.createModifyDeleteInput(
                 "user:test:rwx",
                 "group:test:r-x"
         );
@@ -184,9 +164,7 @@ class SetAclInputFactoryTest {
 
     @Test
     void tstCreateModifyDeleteInputWithAbortAndLinksValuesSuccess() {
-        final SetAclInputFactory factory = new SetAclInputFactory();
-
-        final UssSetAclInputData inputData = factory.createModifyDeleteInput(
+        final UssSetAclInputData inputData = SetAclInputFactory.createModifyDeleteInput(
                 "user:test:rwx",
                 "group:test:r-x",
                 true,

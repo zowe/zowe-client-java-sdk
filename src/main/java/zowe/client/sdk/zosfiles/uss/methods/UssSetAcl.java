@@ -80,7 +80,7 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     public Response set(final String targetPath, final String setValue) throws ZosmfRequestException {
-        return setAclCommon(targetPath, new SetAclInputFactory().createSetInput(setValue));
+        return setAclCommon(targetPath, SetAclInputFactory.createSetInput(setValue));
     }
 
     /**
@@ -93,7 +93,7 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     public Response modify(final String targetPath, final String modifyValue) throws ZosmfRequestException {
-        return setAclCommon(targetPath, new SetAclInputFactory().createModifyInput(modifyValue));
+        return setAclCommon(targetPath, SetAclInputFactory.createModifyInput(modifyValue));
     }
 
     /**
@@ -106,7 +106,7 @@ public class UssSetAcl {
      * @author James Kostrewski
      */
     public Response delete(final String targetPath, final String deleteValue) throws ZosmfRequestException {
-        return setAclCommon(targetPath, new SetAclInputFactory().createDeleteInput(deleteValue));
+        return setAclCommon(targetPath, SetAclInputFactory.createDeleteInput(deleteValue));
     }
 
     /**
@@ -120,7 +120,7 @@ public class UssSetAcl {
      */
     public Response deleteByType(final String targetPath, final DeleteAclType deleteType)
             throws ZosmfRequestException {
-        return setAclCommon(targetPath, new SetAclInputFactory().createDeleteTypeInput(deleteType));
+        return setAclCommon(targetPath, SetAclInputFactory.createDeleteTypeInput(deleteType));
     }
 
     /**
@@ -136,7 +136,7 @@ public class UssSetAcl {
      */
     public Response modifyAndDelete(final String targetPath, final String modifyValue, final String deleteValue)
             throws ZosmfRequestException {
-        return setAclCommon(targetPath, new SetAclInputFactory().createModifyDeleteInput(modifyValue, deleteValue));
+        return setAclCommon(targetPath, SetAclInputFactory.createModifyDeleteInput(modifyValue, deleteValue));
     }
 
     /**

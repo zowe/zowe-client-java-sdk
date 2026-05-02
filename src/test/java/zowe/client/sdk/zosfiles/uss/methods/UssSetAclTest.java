@@ -168,7 +168,7 @@ class UssSetAclTest {
 
     @Test
     void tstSetAclCommonCreatesRequestBodyWithAbortAndSuppressLinksValuesSuccess() throws Exception {
-        final UssSetAclInputData inputData = new SetAclInputFactory().createSetInput(
+        final UssSetAclInputData inputData = SetAclInputFactory.createSetInput(
                 "user:test:rwx",
                 true,
                 LinkType.SUPPRESS
@@ -196,14 +196,14 @@ class UssSetAclTest {
 
     @Test
     void tstSetAclCommonRejectsBlankTargetPathFailure() {
-        final UssSetAclInputData inputData = new SetAclInputFactory().createSetInput("user:test:rwx");
+        final UssSetAclInputData inputData = SetAclInputFactory.createSetInput("user:test:rwx");
 
         assertThrows(IllegalArgumentException.class, () -> ussSetAcl.setAclCommon("", inputData));
     }
 
     @Test
     void tstSetAclCommonExecutesRequestSuccess() throws Exception {
-        final UssSetAclInputData inputData = new SetAclInputFactory().createSetInput("user:test:rwx");
+        final UssSetAclInputData inputData = SetAclInputFactory.createSetInput("user:test:rwx");
 
         ussSetAcl.setAclCommon(TARGET_PATH, inputData);
 
