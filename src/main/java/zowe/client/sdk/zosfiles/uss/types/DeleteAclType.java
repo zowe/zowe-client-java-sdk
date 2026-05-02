@@ -12,7 +12,7 @@ package zowe.client.sdk.zosfiles.uss.types;
 /**
  * DeleteType class provides delete ACL type representation of Unix System Services (USS) objects
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
  * @version 6.0

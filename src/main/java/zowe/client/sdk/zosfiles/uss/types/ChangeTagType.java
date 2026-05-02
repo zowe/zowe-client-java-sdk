@@ -12,7 +12,7 @@ package zowe.client.sdk.zosfiles.uss.types;
 /**
  * ChangeTagType class provides tag type representation of Unix System Services (USS) chtag operation
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  * <p>
  * The default is "mixed" This option can be specified only when the action is "set".
  *

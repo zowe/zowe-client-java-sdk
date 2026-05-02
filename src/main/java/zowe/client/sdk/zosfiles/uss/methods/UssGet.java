@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * Provides Unix System Services (USS) read from object functionality
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-retrieve-contents-zos-unix-file">z/OSMF REST API</a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-retrieve-contents-zos-unix-file">z/OSMF REST API</a>
  *
  * @author James Kostrewski
  * @author Frank Giordano

@@ -13,9 +13,9 @@ import java.util.Arrays;
 import java.util.Optional;
 
 /**
- * Parameter container class for Unix System Services (USS) write to file object
+ * Parameter container class for Unix System Services (USS) write to a file object
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-write-data-zos-unix-file">z/OSMF REST API</a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-write-data-zos-unix-file">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 6.0

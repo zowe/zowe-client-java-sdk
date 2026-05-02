@@ -23,7 +23,7 @@ import zowe.client.sdk.zosmfauth.response.ZosmfLoginResponse;
 /**
  * Provides z/OSMF authentication login and token service
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=services-log-in-zosmf-server">z/OSMF REST API </a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-log-in-zosmf-server">z/OSMF REST API </a>
  *
  * @author Esteban Sandoval
  * @author Frank Giordano

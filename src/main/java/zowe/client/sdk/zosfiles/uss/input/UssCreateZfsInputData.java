@@ -19,7 +19,7 @@ import java.util.OptionalInt;
 /**
  * Parameter container class for Unix System Services (USS) create Zfs file system
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-create-zos-unix-zfs-filesystem">z/OSMF REST API</a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-create-zos-unix-zfs-filesystem">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 6.0

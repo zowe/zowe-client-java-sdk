@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * Provides Unix System Services (USS) getfacl functionality
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
  * @version 6.0

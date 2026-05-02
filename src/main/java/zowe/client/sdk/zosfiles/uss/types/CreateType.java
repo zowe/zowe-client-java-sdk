@@ -12,7 +12,7 @@ package zowe.client.sdk.zosfiles.uss.types;
 /**
  * CreateType class provides type representation of Unix System Services (USS) objects
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-create-unix-file-directory">z/OSMF REST API</a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-create-unix-file-directory">z/OSMF REST API</a>
  *
  * @author James Kostrewski
  * @version 6.0

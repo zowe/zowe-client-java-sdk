@@ -12,7 +12,7 @@ package zowe.client.sdk.zosfiles.uss.types;
 /**
  * MountActionType class provides type representation of Unix System Services (USS) mount action
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.4.0?topic=interface-mount-zos-unix-file-system">z/OSMF REST API</a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-mount-zos-unix-file-system">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 6.0
