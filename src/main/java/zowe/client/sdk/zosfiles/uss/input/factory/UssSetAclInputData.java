@@ -45,17 +45,16 @@ public class UssSetAclInputData {
      * Delete all extended ACL entries by type (setfacl -D type):
      * <p>
      * access - Access ACL
-     * dir    - Directory default ACL
-     * file   - File default ACL
-     * every  - Every extended ACL for all ACL types that are applicable for the current path name.
+     * dir - Directory default ACL
+     * file - File default ACL
+     * every - Every extended ACL for all ACL types that are applicable for the current path name.
      * <p>
      * Note: The 'delete-type' keyword cannot be specified with 'set', 'modify' or 'delete'.
      */
     private final DeleteAclType deleteType;
 
     /**
-     * sets (replaces) all ACLs with 'entries'.
-     * 'entries' represents a string of ACL entries.
+     * Sets (replaces) all ACLs with 'entries'. 'entries' represents a string of ACL entries.
      * Refer to the setfacl command reference for the string format (setfacl -s entries).
      * <p>
      * Note: The 'set' keyword cannot be specified with 'delete-type', 'modify' or 'delete'.

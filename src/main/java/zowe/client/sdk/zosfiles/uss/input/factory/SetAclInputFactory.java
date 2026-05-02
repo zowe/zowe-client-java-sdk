@@ -15,8 +15,8 @@ import zowe.client.sdk.zosfiles.uss.types.LinkType;
 /**
  * Factory class for creating UssSetAclInputData instances.
  * <p>
- * This factory provides controlled creation methods for the supported USS setfacl operations.
- * The setfacl API requires at least one of the following keywords to be specified:
+ * This factory provides controlled creation methods for supported USS setfacl operations.
+ * The setfacl API requires at least one ACL operation keyword to be specified:
  * delete-type, set, modify, or delete.
  * <p>
  * The modify and delete keywords may be used together. The delete-type and set keywords
@@ -30,7 +30,7 @@ public class SetAclInputFactory {
     /**
      * Create delete-type input data using default abort and links values.
      *
-     * @param deleteType deleteType value
+     * @param deleteType ACL type whose extended ACL entries are deleted
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createDeleteTypeInput(final DeleteAclType deleteType) {
@@ -38,10 +38,10 @@ public class SetAclInputFactory {
     }
 
     /**
-     * Create delete-type input data using default links value.
+     * Create delete-type input data using the default links value.
      *
-     * @param deleteType deleteType value
-     * @param abort abort value
+     * @param deleteType ACL type whose extended ACL entries are deleted
+     * @param abort      true to abort processing when an error or warning occurs; false otherwise
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createDeleteTypeInput(final DeleteAclType deleteType,
@@ -52,9 +52,9 @@ public class SetAclInputFactory {
     /**
      * Create delete-type input data.
      *
-     * @param deleteType deleteType value
-     * @param abort abort value
-     * @param links links value
+     * @param deleteType ACL type whose extended ACL entries are deleted
+     * @param abort      true to abort processing when an error or warning occurs; false otherwise
+     * @param links      symbolic link handling option for the target path
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createDeleteTypeInput(final DeleteAclType deleteType,
@@ -70,7 +70,7 @@ public class SetAclInputFactory {
     /**
      * Create delete input data using default abort and links values.
      *
-     * @param delete delete value
+     * @param delete ACL entries to remove from the target path
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createDeleteInput(final String delete) {
@@ -78,10 +78,10 @@ public class SetAclInputFactory {
     }
 
     /**
-     * Create delete input data using default links value.
+     * Create delete input data using the default links value.
      *
-     * @param delete delete value
-     * @param abort abort value
+     * @param delete ACL entries to remove from the target path
+     * @param abort  true to abort processing when an error or warning occurs; false otherwise
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createDeleteInput(final String delete,
@@ -92,9 +92,9 @@ public class SetAclInputFactory {
     /**
      * Create delete input data.
      *
-     * @param delete delete value
-     * @param abort abort value
-     * @param links links value
+     * @param delete ACL entries to remove from the target path
+     * @param abort  true to abort processing when an error or warning occurs; false otherwise
+     * @param links  symbolic link handling option for the target path
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createDeleteInput(final String delete,
@@ -110,7 +110,7 @@ public class SetAclInputFactory {
     /**
      * Create modify input data using default abort and links values.
      *
-     * @param modify modify value
+     * @param modify ACL entries to add or replace on the target path
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createModifyInput(final String modify) {
@@ -120,8 +120,8 @@ public class SetAclInputFactory {
     /**
      * Create modify input data using default links value.
      *
-     * @param modify modify value
-     * @param abort abort value
+     * @param modify ACL entries to add or replace on the target path
+     * @param abort  true to abort processing when an error or warning occurs; false otherwise
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createModifyInput(final String modify,
@@ -132,9 +132,9 @@ public class SetAclInputFactory {
     /**
      * Create modify input data.
      *
-     * @param modify modify value
-     * @param abort abort value
-     * @param links links value
+     * @param modify ACL entries to add or replace on the target path
+     * @param abort  true to abort processing when an error or warning occurs; false otherwise
+     * @param links  symbolic link handling option for the target path
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createModifyInput(final String modify,
@@ -150,7 +150,7 @@ public class SetAclInputFactory {
     /**
      * Create set input data using default abort and links values.
      *
-     * @param set set value
+     * @param set ACL entries used to replace all existing ACLs on the target path
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createSetInput(final String set) {
@@ -158,10 +158,10 @@ public class SetAclInputFactory {
     }
 
     /**
-     * Create set input data using default links value.
+     * Create set input data using the default links value.
      *
-     * @param set set value
-     * @param abort abort value
+     * @param set   ACL entries used to replace all existing ACLs on the target path
+     * @param abort true to abort processing when an error or warning occurs; false otherwise
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createSetInput(final String set,
@@ -172,9 +172,9 @@ public class SetAclInputFactory {
     /**
      * Create set input data.
      *
-     * @param set set value
-     * @param abort abort value
-     * @param links links value
+     * @param set   ACL entries used to replace all existing ACLs on the target path
+     * @param abort true to abort processing when an error or warning occurs; false otherwise
+     * @param links symbolic link handling option for the target path
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createSetInput(final String set,
@@ -190,8 +190,8 @@ public class SetAclInputFactory {
     /**
      * Create modify and delete input data using default abort and links values.
      *
-     * @param modify modify value
-     * @param delete delete value
+     * @param modify ACL entries to add or replace on the target path
+     * @param delete ACL entries to remove from the target path
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createModifyDeleteInput(final String modify,
@@ -202,9 +202,9 @@ public class SetAclInputFactory {
     /**
      * Create modify and delete input data using default links value.
      *
-     * @param modify modify value
-     * @param delete delete value
-     * @param abort abort value
+     * @param modify ACL entries to add or replace on the target path
+     * @param delete ACL entries to remove from the target path
+     * @param abort  true to abort processing when an error or warning occurs; false otherwise
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createModifyDeleteInput(final String modify,
@@ -216,10 +216,10 @@ public class SetAclInputFactory {
     /**
      * Create modify and delete input data.
      *
-     * @param modify modify value
-     * @param delete delete value
-     * @param abort abort value
-     * @param links links value
+     * @param modify ACL entries to add or replace on the target path
+     * @param delete ACL entries to remove from the target path
+     * @param abort  true to abort processing when an error or warning occurs; false otherwise
+     * @param links  symbolic link handling option for the target path
      * @return UssSetAclInputData
      */
     public UssSetAclInputData createModifyDeleteInput(final String modify,
