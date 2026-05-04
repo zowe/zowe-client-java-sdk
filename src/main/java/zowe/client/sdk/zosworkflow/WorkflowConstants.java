@@ -10,7 +10,7 @@ public final class WorkflowConstants {
     /**
      * prefix of the URI of the workflow API
      */
-    public static final String RESOURCE_PREFIX = "/zosmf/workflow/rest";
+    public static final String RESOURCE_PREFIX = "/workflow/rest";
 
     /**
      * suffix of the URI of the workflow API

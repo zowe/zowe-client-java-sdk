@@ -37,6 +37,16 @@ public class WorkflowCreate {
         this.connection = connection;
     }
 
+    WorkflowCreate(final ZosConnection connection, final ZosmfRequest request) {
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
+        this.connection = connection;
+        if (!(request instanceof PostJsonZosmfRequest)) {
+            throw new IllegalStateException("POST_JSON request type required");
+        }
+        this.request = request;
+    }
+
     /**
      * Create a workflow on z/OS by workflow name, workflow definition file, system, owner and
      * eventual other optional properties.
@@ -53,8 +63,8 @@ public class WorkflowCreate {
                            final String workflowDefinitionFile,
                            final String system,
                            final String owner,
-                           final Map<String, Object> optionalProperties,
-                           final String version) throws ZosmfRequestException {
+                           final String version,
+                           final Map<String, Object> optionalProperties) throws ZosmfRequestException {
         return this.createCommon(WorkflowCreateInputData.builder()
                 .workflowName(workflowName)
                 .workflowDefinitionFile(workflowDefinitionFile)
@@ -88,7 +98,6 @@ public class WorkflowCreate {
                 WorkflowConstants.RESOURCE_PREFIX +
                 WorkflowConstants.FILE_DELIM +
                 createInputData.getVersion().get() +
-                WorkflowConstants.FILE_DELIM +
                 WorkflowConstants.RESOURCE_SUFFIX;
 
         // generate JSON string body for the request; mandatory properties
