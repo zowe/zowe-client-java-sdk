@@ -184,8 +184,7 @@ to true value.
 See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
   
 ## Requirements  
-    
-    Maven  
+
     Compatible with all Java versions 11 and above.
     z/OSMF installed on your backend z/OS instance.  
   
