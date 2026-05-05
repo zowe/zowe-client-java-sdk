@@ -152,9 +152,6 @@ public class UssSetAcl {
             throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
         ValidateUtils.checkNullParameter(setAclInputData, "setAclInputData");
-        ValidateUtils.checkIllegalParameter(setAclInputData.getSet().isEmpty() &&
-                setAclInputData.getModify().isEmpty() && setAclInputData.getDelete().isEmpty() &&
-                setAclInputData.getDeleteType().isEmpty(), "set, modify, delete, and delete type are all empty");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
