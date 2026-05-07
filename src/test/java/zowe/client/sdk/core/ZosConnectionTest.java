@@ -9,13 +9,10 @@
  */
 package zowe.client.sdk.core;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import kong.unirest.core.Cookie;
 import org.junit.jupiter.api.Test;
 
-import kong.unirest.core.Cookie;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the equals() and hashCode() implementations of ZosConnection.
@@ -301,38 +298,37 @@ class ZosConnectionTest {
         assertNotEquals(null, conn1, "object must not equal null");
     }
 
-@Test
-void tstGetZosmfUrlWithoutBasePathSuccess() {
-    final ZosConnection conn = ZosConnectionFactory
-            .createBasicConnection("myhost", 443, "user", "pass");
+    @Test
+    void tstGetZosmfUrlWithoutBasePathSuccess() {
+        final ZosConnection conn = ZosConnectionFactory
+                .createBasicConnection("myhost", 443, "user", "pass");
 
-    assertEquals("https://myhost:443/zosmf", conn.getZosmfUrl());
-}
+        assertEquals("https://myhost:443/zosmf", conn.getZosmfUrl());
+    }
 
-@Test
-void tstGetZosmfUrlWithBasePathSuccess() {
-    final ZosConnection conn = ZosConnectionFactory
-            .createBasicConnection("myhost", 443, "user", "pass", "/custom/api");
+    @Test
+    void tstGetZosmfUrlWithBasePathSuccess() {
+        final ZosConnection conn = ZosConnectionFactory
+                .createBasicConnection("myhost", 443, "user", "pass", "/custom/api");
 
-    assertEquals("https://myhost:443/custom/api/zosmf", conn.getZosmfUrl());
-}
+        assertEquals("https://myhost:443/custom/api/zosmf", conn.getZosmfUrl());
+    }
 
-@Test
-void tstGetZosmfUrlBasePathNormalizationNoDoubleSlashSuccess() {
-    final ZosConnection conn = ZosConnectionFactory
-            .createBasicConnection("myhost", 443, "user", "pass", "custom/api/");
+    @Test
+    void tstGetZosmfUrlBasePathNormalizationNoDoubleSlashSuccess() {
+        final ZosConnection conn = ZosConnectionFactory
+                .createBasicConnection("myhost", 443, "user", "pass", "custom/api/");
 
-    assertEquals("https://myhost:443/custom/api/zosmf", conn.getZosmfUrl());
-}
+        assertEquals("https://myhost:443/custom/api/zosmf", conn.getZosmfUrl());
+    }
 
-@Test
-void tstGetZosmfUrlWithNonStandardPortSuccess() {
-    final ZosConnection conn = ZosConnectionFactory
-            .createBasicConnection("zos.example.com", 1443, "user", "pass");
+    @Test
+    void tstGetZosmfUrlWithNonStandardPortSuccess() {
+        final ZosConnection conn = ZosConnectionFactory
+                .createBasicConnection("zos.example.com", 1443, "user", "pass");
 
-    assertEquals("https://zos.example.com:1443/zosmf", conn.getZosmfUrl());
-}
-
+        assertEquals("https://zos.example.com:1443/zosmf", conn.getZosmfUrl());
+    }
 
 
     @Test
