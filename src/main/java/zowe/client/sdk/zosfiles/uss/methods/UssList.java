@@ -159,8 +159,14 @@ public class UssList {
         listZfsInputData.getPath().ifPresent(path ->
                 url.append("?path=").append(EncodeUtils.encodeURIComponent(FileUtils.validatePath(path))));
 
-        listZfsInputData.getFsname().ifPresent(fsname ->
-                url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
+        listZfsInputData.getFsname().ifPresent(fsname -> {
+            if (listZfsInputData.getPath().isPresent()) {
+                url.append("&fsname=");
+            } else {
+                url.append("?fsname=");
+            }
+            url.append(EncodeUtils.encodeURIComponent(fsname));
+        });
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
