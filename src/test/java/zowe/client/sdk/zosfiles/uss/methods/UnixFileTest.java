@@ -85,7 +85,7 @@ public class UnixFileTest {
         UssList ussList = new UssList(connection, mockJsonGetRequest);
         List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
 
-        assertTrue(items.size() == 1);
+        assertEquals(1, items.size());
         assertEquals("", items.get(0).getName());
         assertEquals("", items.get(0).getMode());
         assertEquals(0L, items.get(0).getSize());

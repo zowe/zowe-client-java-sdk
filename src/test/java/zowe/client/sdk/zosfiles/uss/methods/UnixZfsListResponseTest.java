@@ -21,9 +21,7 @@ import zowe.client.sdk.zosfiles.uss.model.UnixZfs;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Class containing unit tests for UnixZfsListResponse.
