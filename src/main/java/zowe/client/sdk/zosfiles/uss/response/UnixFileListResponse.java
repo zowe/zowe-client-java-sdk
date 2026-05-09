@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.reaponse;
+package zowe.client.sdk.zosfiles.uss.response;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -22,9 +22,7 @@ import java.util.List;
  *
  * @author Frank Giordano
  * @version 6.0
- * @deprecated Use zowe.client.sdk.zosfiles.uss.response.UnixFileListResponse.
  */
-@Deprecated
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class UnixFileListResponse {
 

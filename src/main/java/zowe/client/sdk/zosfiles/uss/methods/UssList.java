@@ -24,8 +24,8 @@ import zowe.client.sdk.zosfiles.uss.input.UssListInputData;
 import zowe.client.sdk.zosfiles.uss.input.UssListZfsInputData;
 import zowe.client.sdk.zosfiles.uss.model.UnixFile;
 import zowe.client.sdk.zosfiles.uss.model.UnixZfs;
-import zowe.client.sdk.zosfiles.uss.reaponse.UnixFileListResponse;
-import zowe.client.sdk.zosfiles.uss.reaponse.UnixZfsListResponse;
+import zowe.client.sdk.zosfiles.uss.response.UnixFileListResponse;
+import zowe.client.sdk.zosfiles.uss.response.UnixZfsListResponse;
 
 import java.util.List;
 import java.util.Map;
