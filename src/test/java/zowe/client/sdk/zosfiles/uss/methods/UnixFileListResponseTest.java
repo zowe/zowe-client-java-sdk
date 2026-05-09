@@ -7,15 +7,22 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss.reaponse;
+package zowe.client.sdk.zosfiles.uss.methods;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
+import zowe.client.sdk.rest.GetJsonZosmfRequest;
+import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.utility.JsonUtils;
+import zowe.client.sdk.zosfiles.uss.input.UssListInputData;
+import zowe.client.sdk.zosfiles.uss.model.UnixFile;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Class containing unit tests for UnixFileListResponse.
@@ -57,24 +64,30 @@ public class UnixFileListResponseTest {
                 "  ]\n" +
                 "}";
 
-        UnixFileListResponse response = JsonUtils.parseResponse(json, UnixFileListResponse.class, "fileList");
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
+        GetJsonZosmfRequest mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(new Response(json, 200, "success"));
 
-        assertEquals(1, response.getJsonVersion());
-        assertEquals(2, response.getReturnedRows());
-        assertEquals(2, response.getTotalRows());
-        assertNotNull(response.getItems());
-        assertEquals(2, response.getItems().size());
-        assertEquals("/u/test", response.getItems().get(0).getName());
-        assertEquals("/u/test2", response.getItems().get(1).getName());
+        UssList ussList = new UssList(connection, mockJsonGetRequest);
+        List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
+
+        assertNotNull(items);
+        assertEquals(2, items.size());
+        assertEquals("/u/test", items.get(0).getName());
+        assertEquals("/u/test2", items.get(1).getName());
     }
 
     @Test
     public void tstUnixFileListResponseDefaultsWhenMissingSuccess() throws ZosmfRequestException {
-        UnixFileListResponse response = JsonUtils.parseResponse("{}", UnixFileListResponse.class, "fileListEmpty");
-        assertEquals(0, response.getJsonVersion());
-        assertEquals(0, response.getReturnedRows());
-        assertEquals(0, response.getTotalRows());
-        assertNull(response.getItems());
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
+        GetJsonZosmfRequest mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(new Response("{}", 200, "success"));
+
+        UssList ussList = new UssList(connection, mockJsonGetRequest);
+        List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
+
+        assertNotNull(items);
+        assertEquals(0, items.size());
     }
 
 }
