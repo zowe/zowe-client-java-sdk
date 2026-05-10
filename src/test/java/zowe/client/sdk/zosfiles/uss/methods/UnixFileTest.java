@@ -22,7 +22,6 @@ import zowe.client.sdk.zosfiles.uss.model.UnixFile;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Class containing unit tests for UnixFile.
