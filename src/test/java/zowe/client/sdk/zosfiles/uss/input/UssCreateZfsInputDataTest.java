@@ -7,10 +7,9 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosfiles.uss;
+package zowe.client.sdk.zosfiles.uss.input;
 
 import org.junit.jupiter.api.Test;
-import zowe.client.sdk.zosfiles.uss.input.UssCreateZfsInputData;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
