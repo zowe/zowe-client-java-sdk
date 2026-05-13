@@ -144,7 +144,7 @@ public class JobSubmit {
         }
         if (submitJclInputData.getInternalReaderRecfm().isPresent()) {
             key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_RECFM").get(0);
-            headers.put(key, submitJclInputData.getInternalReaderLrecl().get());
+            headers.put(key, submitJclInputData.getInternalReaderRecfm().get());
         } else {
             key = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_RECFM_F").get(0);
             value = ZosmfHeaders.HEADERS.get("X_IBM_INTRDR_RECFM_F").get(1);
