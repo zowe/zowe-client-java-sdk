@@ -285,62 +285,62 @@ public class ZosLogTest {
                 "https://1:443/zosmf/restconsoles/v1/log\\?timeRange=10m&direction=forward"));
     }
 
-        @Test
-        public void tstIssueCommandPaginatesUntilLastPageSuccess() throws ZosmfRequestException {
-                String firstPage = buildLogResponseJson(111L, 10_000L);
-                String secondPage = buildLogResponseJson(222L, 10_000L);
-                String lastPage = buildLogResponseJson(0L, 3L);
+    @Test
+    public void tstIssueCommandPaginatesUntilLastPageSuccess() throws ZosmfRequestException {
+        String firstPage = buildLogResponseJson(111L, 10_000L);
+        String secondPage = buildLogResponseJson(222L, 10_000L);
+        String lastPage = buildLogResponseJson(0L, 3L);
 
-                Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                                new Response(firstPage, 200, "success"),
-                                new Response(secondPage, 200, "success"),
-                                new Response(lastPage, 200, "success"));
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response(firstPage, 200, "success"),
+                new Response(secondPage, 200, "success"),
+                new Response(lastPage, 200, "success"));
 
-                ZosLog zosLog = new ZosLog(connection, mockJsonGetRequest);
-                ZosLogInputData inputData = new ZosLogInputData.Builder().build();
+        ZosLog zosLog = new ZosLog(connection, mockJsonGetRequest);
+        ZosLogInputData inputData = new ZosLogInputData.Builder().build();
 
-                List<ZosLogResponse> responses = zosLog.issueCommand(inputData, 25_000);
+        List<ZosLogResponse> responses = zosLog.issueCommand(inputData, 25_000);
 
-                assertEquals(3, responses.size());
+        assertEquals(3, responses.size());
 
-                ArgumentCaptor<String> urlCaptor = ArgumentCaptor.forClass(String.class);
-                Mockito.verify(mockJsonGetRequest, Mockito.times(3)).setUrl(urlCaptor.capture());
-                List<String> urls = urlCaptor.getAllValues();
-                assertEquals("https://1:443/zosmf/restconsoles/v1/log", urls.get(0));
-                assertTrue(urls.stream().anyMatch(url -> url.contains("timestamp=111")));
-                assertTrue(urls.stream().anyMatch(url -> url.contains("timestamp=222")));
-        }
+        ArgumentCaptor<String> urlCaptor = ArgumentCaptor.forClass(String.class);
+        Mockito.verify(mockJsonGetRequest, Mockito.times(3)).setUrl(urlCaptor.capture());
+        List<String> urls = urlCaptor.getAllValues();
+        assertEquals("https://1:443/zosmf/restconsoles/v1/log", urls.get(0));
+        assertTrue(urls.stream().anyMatch(url -> url.contains("timestamp=111")));
+        assertTrue(urls.stream().anyMatch(url -> url.contains("timestamp=222")));
+    }
 
-        @Test
-        public void tstIssueCommandStopsWhenThresholdReachedSuccess() throws ZosmfRequestException {
-                String firstPage = buildLogResponseJson(111L, 10_000L);
-                String secondPage = buildLogResponseJson(222L, 10_000L);
+    @Test
+    public void tstIssueCommandStopsWhenThresholdReachedSuccess() throws ZosmfRequestException {
+        String firstPage = buildLogResponseJson(111L, 10_000L);
+        String secondPage = buildLogResponseJson(222L, 10_000L);
 
-                Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                                new Response(firstPage, 200, "success"),
-                                new Response(secondPage, 200, "success"));
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response(firstPage, 200, "success"),
+                new Response(secondPage, 200, "success"));
 
-                ZosLog zosLog = new ZosLog(connection, mockJsonGetRequest);
-                ZosLogInputData inputData = new ZosLogInputData.Builder().build();
+        ZosLog zosLog = new ZosLog(connection, mockJsonGetRequest);
+        ZosLogInputData inputData = new ZosLogInputData.Builder().build();
 
-                List<ZosLogResponse> responses = zosLog.issueCommand(inputData, 15_000);
+        List<ZosLogResponse> responses = zosLog.issueCommand(inputData, 15_000);
 
-                assertEquals(2, responses.size());
+        assertEquals(2, responses.size());
 
-                ArgumentCaptor<String> urlCaptor = ArgumentCaptor.forClass(String.class);
-                Mockito.verify(mockJsonGetRequest, Mockito.times(2)).setUrl(urlCaptor.capture());
-                List<String> urls = urlCaptor.getAllValues();
-                assertTrue(urls.stream().anyMatch(url -> url.contains("timestamp=111")));
-                assertFalse(urls.stream().anyMatch(url -> url.contains("timestamp=222")));
-        }
+        ArgumentCaptor<String> urlCaptor = ArgumentCaptor.forClass(String.class);
+        Mockito.verify(mockJsonGetRequest, Mockito.times(2)).setUrl(urlCaptor.capture());
+        List<String> urls = urlCaptor.getAllValues();
+        assertTrue(urls.stream().anyMatch(url -> url.contains("timestamp=111")));
+        assertFalse(urls.stream().anyMatch(url -> url.contains("timestamp=222")));
+    }
 
-        private String buildLogResponseJson(final long nextTimestamp, final long totalItems) {
-                return "{\n" +
-                                "  \"nextTimestamp\": " + nextTimestamp + ",\n" +
-                                "  \"source\": \"OPERLOGS\",\n" +
-                                "  \"totalitems\": " + totalItems + ",\n" +
-                                "  \"items\": []\n" +
-                                "}";
-        }
+    private String buildLogResponseJson(final long nextTimestamp, final long totalItems) {
+        return "{\n" +
+                "  \"nextTimestamp\": " + nextTimestamp + ",\n" +
+                "  \"source\": \"OPERLOGS\",\n" +
+                "  \"totalitems\": " + totalItems + ",\n" +
+                "  \"items\": []\n" +
+                "}";
+    }
 
 }

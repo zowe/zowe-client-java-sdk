@@ -229,23 +229,23 @@ public class JobSubmitTest {
     }
 
     @Test
-    void testSubmitByJclSetsCorrectCustomRecfmAndLreclHeaders() throws ZosmfRequestException {
+    void tstSubmitByJclSetsCorrectCustomRecfmAndLreclHeaderSuccess() throws ZosmfRequestException {
         final JobSubmit jobSubmit = new JobSubmit(connection, mockPutTextZosmfRequest);
         jobSubmit.submitByJcl("//TESTJOB JOB ...", "V", "256");
         verify(mockPutTextZosmfRequest).setHeaders(argThat(headers ->
                 "V".equals(headers.get("X-IBM-Intrdr-Recfm")) &&
-                "256".equals(headers.get("X-IBM-Intrdr-Lrecl")) &&
-                "TEXT".equals(headers.get("X-IBM-Intrdr-Mode")) &&
-                "A".equals(headers.get("X-IBM-Intrdr-Class"))));
+                        "256".equals(headers.get("X-IBM-Intrdr-Lrecl")) &&
+                        "TEXT".equals(headers.get("X-IBM-Intrdr-Mode")) &&
+                        "A".equals(headers.get("X-IBM-Intrdr-Class"))));
     }
 
     @Test
-    void testSubmitByJclSetsCorrectDefaultRecfmAndLreclHeaders() throws ZosmfRequestException {
+    void tstSubmitByJclSetsCorrectDefaultRecfmAndLreclHeadersSuccess() throws ZosmfRequestException {
         final JobSubmit jobSubmit = new JobSubmit(connection, mockPutTextZosmfRequest);
         jobSubmit.submitByJcl("//TESTJOB JOB ...", "F", "80");
         verify(mockPutTextZosmfRequest).setHeaders(argThat(headers ->
                 "F".equals(headers.get("X-IBM-Intrdr-Recfm")) &&
-                "80".equals(headers.get("X-IBM-Intrdr-Lrecl"))));
+                        "80".equals(headers.get("X-IBM-Intrdr-Lrecl"))));
     }
 
 }
