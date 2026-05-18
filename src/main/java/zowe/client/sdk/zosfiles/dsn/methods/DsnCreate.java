@@ -77,7 +77,8 @@ public class DsnCreate {
      * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
      */
-    public Response create(final String dataSetName, final DsnCreateInputData createInputData) throws ZosmfRequestException {
+    public Response create(final String dataSetName, final DsnCreateInputData createInputData)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
         ValidateUtils.checkNullParameter(createInputData, "createInputData");
 
@@ -99,7 +100,6 @@ public class DsnCreate {
         createInputData.getBlksize().ifPresent(v -> createMap.put("blksize", v));
         createInputData.getLrecl().ifPresent(v -> createMap.put("lrecl", v));
         createInputData.getStorclass().ifPresent(v -> createMap.put("storclass", v));
-        createInputData.getStorclass().ifPresent(v -> createMap.put("mgntclass", v));
         createInputData.getMgntclass().ifPresent(v -> createMap.put("mgntclass", v));
         createInputData.getDataclass().ifPresent(v -> createMap.put("dataclass", v));
         createInputData.getDsntype().ifPresent(v -> createMap.put("dsntype", v));
