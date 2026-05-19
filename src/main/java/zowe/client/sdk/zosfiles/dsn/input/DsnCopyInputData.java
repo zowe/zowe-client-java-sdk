@@ -133,6 +133,7 @@ public class DsnCopyInputData {
                 ", toVolser=" + toVolser +
                 ", toDataSet=" + toDataSet +
                 ", replace=" + replace +
+                ", copyAllMembers=" + copyAllMembers +
                 '}';
     }
 
