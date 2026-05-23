@@ -24,6 +24,7 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import java.io.*;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -332,7 +333,7 @@ public abstract class ZosmfRequest {
         ValidateUtils.checkIllegalParameter(url, "url");
 
         try {
-            new URL(url).toURI();
+            new URI(url).toURL();
         } catch (MalformedURLException | URISyntaxException e) {
             throw new IllegalArgumentException("invalid url: " + url, e);
         }
