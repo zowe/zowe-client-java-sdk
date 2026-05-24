@@ -158,6 +158,8 @@ public class TsoReplyTest {
         try (MockedStatic<TsoUtils> mockResponseUtil = mockStatic(TsoUtils.class)) {
             mockResponseUtil.when(() -> TsoUtils.getResponseStr(any()))
                     .thenReturn(responseJson);
+            mockResponseUtil.when(() -> TsoUtils.getMsgDataText(any()))
+                .thenCallRealMethod();
 
             final TsoReply tsoReply = new TsoReply(mockConnection, mockPutRequest);
             ZosmfRequestException ex = assertThrows(
