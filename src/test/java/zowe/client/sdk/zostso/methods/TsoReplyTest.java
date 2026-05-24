@@ -159,7 +159,7 @@ public class TsoReplyTest {
             mockResponseUtil.when(() -> TsoUtils.getResponseStr(any()))
                     .thenReturn(responseJson);
             mockResponseUtil.when(() -> TsoUtils.getMsgDataText(any()))
-                .thenCallRealMethod();
+                    .thenCallRealMethod();
 
             final TsoReply tsoReply = new TsoReply(mockConnection, mockPutRequest);
             ZosmfRequestException ex = assertThrows(
