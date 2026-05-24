@@ -9,6 +9,9 @@
  */
 package zowe.client.sdk.zostso.methods;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -29,6 +32,7 @@ public class TsoReply {
 
     private final ZosConnection connection;
     private ZosmfRequest request;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * TsoReply constructor
@@ -83,11 +87,24 @@ public class TsoReply {
         request.setBody("");
 
         final String responseStr = TsoUtils.getResponseStr(request);
-        if (responseStr.contains("msgData")) {
-            final String errMsg = TsoUtils.getMsgDataText(responseStr);
+        if (containsMsgData(responseStr)) {
+            String errMsg = TsoUtils.getMsgDataText(responseStr);
+            if (errMsg.isBlank()) {
+                errMsg = "Response contains msgData";
+            }
             throw new ZosmfRequestException(errMsg);
         }
         return responseStr;
+    }
+
+    private boolean containsMsgData(final String responseStr) {
+        try {
+            final JsonNode rootNode = objectMapper.readTree(responseStr);
+            final JsonNode msgDataNode = rootNode.get("msgData");
+            return msgDataNode != null && !msgDataNode.isNull();
+        } catch (JsonProcessingException ignored) {
+            return false;
+        }
     }
 
 }

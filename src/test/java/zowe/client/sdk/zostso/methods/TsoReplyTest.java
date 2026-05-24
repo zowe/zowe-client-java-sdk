@@ -133,6 +133,44 @@ public class TsoReplyTest {
     }
 
     /**
+     * Test that a response containing the text "msgData" does not fail unless a msgData field exists.
+     */
+    @Test
+    public void tstTsoReplyIgnoresMsgDataTextInMessageSuccess() {
+        String responseJson = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"contains msgData text\"}}]}";
+
+        try (MockedStatic<TsoUtils> mockResponseUtil = mockStatic(TsoUtils.class)) {
+            mockResponseUtil.when(() -> TsoUtils.getResponseStr(any()))
+                    .thenReturn(responseJson);
+
+            final TsoReply tsoReply = new TsoReply(mockConnection, mockPutRequest);
+            assertDoesNotThrow(() -> tsoReply.reply("SESSION123"));
+        }
+    }
+
+    /**
+     * Test that a response with a msgData object triggers an exception with the message text.
+     */
+    @Test
+    public void tstTsoReplyThrowsOnMsgDataErrorPayloadFailure() {
+        String responseJson = "{\"msgData\":[{\"messageText\":\"TSO error\"}]}";
+
+        try (MockedStatic<TsoUtils> mockResponseUtil = mockStatic(TsoUtils.class)) {
+            mockResponseUtil.when(() -> TsoUtils.getResponseStr(any()))
+                    .thenReturn(responseJson);
+            mockResponseUtil.when(() -> TsoUtils.getMsgDataText(any()))
+                .thenCallRealMethod();
+
+            final TsoReply tsoReply = new TsoReply(mockConnection, mockPutRequest);
+            ZosmfRequestException ex = assertThrows(
+                    ZosmfRequestException.class,
+                    () -> tsoReply.reply("SESSION123")
+            );
+            assertEquals("TSO error", ex.getMessage());
+        }
+    }
+
+    /**
      * Test that the alternative constructor throws an exception if the connection is null.
      */
     @Test
