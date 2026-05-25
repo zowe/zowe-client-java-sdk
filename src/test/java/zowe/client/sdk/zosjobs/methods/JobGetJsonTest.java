@@ -15,7 +15,6 @@ import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
@@ -53,8 +52,7 @@ public class JobGetJsonTest {
     @SuppressWarnings("unchecked")
     public void init() {
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
-        getJobs = new JobGet(connection);
-        Whitebox.setInternalState(getJobs, "request", mockJsonGetRequest);
+        getJobs = new JobGet(connection, mockJsonGetRequest);
 
         final Map<String, String> jsonMap = getJsonObject();
         jobJson = new JSONObject(jsonMap);
