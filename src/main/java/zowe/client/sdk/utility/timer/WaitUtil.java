@@ -31,11 +31,10 @@ public final class WaitUtil {
      * @author Frank Giordano
      */
     public static void wait(final int time) {
-        final Timer timer = new Timer(time).initialize();
-        while (true) {
-            if (timer.isEnded()) {
-                break;
-            }
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 
