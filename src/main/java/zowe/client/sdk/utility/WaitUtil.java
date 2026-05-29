@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.utility.timer;
+package zowe.client.sdk.utility;
 
 /**
  * Global Utility Class with static helper methods.

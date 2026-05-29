@@ -15,7 +15,7 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import zowe.client.sdk.core.SshConnection;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.timer.WaitUtil;
+import zowe.client.sdk.utility.WaitUtil;
 import zowe.client.sdk.zosuss.exception.UssCmdException;
 
 import java.io.ByteArrayOutputStream;

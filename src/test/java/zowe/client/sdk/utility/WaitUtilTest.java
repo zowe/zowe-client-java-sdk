@@ -7,10 +7,9 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.utility.timer;
+package zowe.client.sdk.utility;
 
 import org.junit.jupiter.api.Test;
-import zowe.client.sdk.utility.UtilsTestHelper;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
