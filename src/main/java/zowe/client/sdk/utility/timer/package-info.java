@@ -1,4 +1,4 @@
 /**
- * Timer class to helper with wait processing
+ * Wait utility helper processing
  */
 package zowe.client.sdk.utility.timer;
