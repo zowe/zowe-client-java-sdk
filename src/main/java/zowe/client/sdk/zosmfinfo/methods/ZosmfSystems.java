@@ -82,7 +82,7 @@ public class ZosmfSystems {
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()
-                .orElseThrow(() -> new IllegalStateException("no z/osmf info response phrase"))
+                .orElseThrow(() -> new IllegalStateException("no z/osmf systems response phrase"))
                 .toString();
 
         return JsonUtils.parseResponse(responsePhrase, ZosmfSystemsResponse.class, "get");
