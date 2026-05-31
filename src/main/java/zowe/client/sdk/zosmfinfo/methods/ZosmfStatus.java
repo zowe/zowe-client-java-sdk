@@ -96,7 +96,7 @@ public class ZosmfStatus {
         Optional.ofNullable(jsonStr.optJSONArray("plugins"))
                 .ifPresent(plugins -> {
                     ZosmfPlugin[] zosmfPluginsInfo = IntStream.range(0, plugins.length())
-                            .mapToObj(i -> safeParse(String.valueOf(plugins.get(i)), ZosmfPlugin.class))
+                            .mapToObj(i -> safeParsePlugin(String.valueOf(plugins.get(i)), ZosmfPlugin.class))
                             .filter(Optional::isPresent) // Filter out any empty Optionals (failed parses)
                             .map(Optional::get) // Unwrap the Optionals
                             .toArray(ZosmfPlugin[]::new);
@@ -110,7 +110,8 @@ public class ZosmfStatus {
     }
 
     // A helper method to wrap the potentially throwing `parseResponse` call.
-    private <T> Optional<T> safeParse(String responseString, @SuppressWarnings("SameParameterValue") Class<T> classs) {
+    private <T> Optional<T> safeParsePlugin(String responseString,
+                                            @SuppressWarnings("SameParameterValue") Class<T> classs) {
         try {
             return Optional.ofNullable(JsonUtils.parseResponse(responseString, classs, "get"));
         } catch (Exception e) {
