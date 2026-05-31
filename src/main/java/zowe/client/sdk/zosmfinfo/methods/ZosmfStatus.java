@@ -114,7 +114,7 @@ public class ZosmfStatus {
         try {
             return Optional.ofNullable(JsonUtils.parseResponse(responseString, classs, "get"));
         } catch (Exception e) {
-            LOG.error("Failed to parse response: {}", responseString, e);
+            LOG.warn("Skipping invalid z/OSMF plugin entry: {}", responseString, e);
             return Optional.empty();
         }
     }
