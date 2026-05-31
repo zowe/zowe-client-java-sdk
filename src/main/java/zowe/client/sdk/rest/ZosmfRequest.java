@@ -328,6 +328,7 @@ public abstract class ZosmfRequest {
      * @throws IllegalArgumentException error setting valid url string
      * @author Frank Giordano
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void setUrl(final String url) {
         ValidateUtils.checkIllegalParameter(url, "url");
 
