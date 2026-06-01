@@ -329,7 +329,7 @@ class ZosConnectionTest {
 
         assertEquals("https://zos.example.com:1443/zosmf", conn.getZosmfUrl());
     }
-    
+
     @Test
     void tstInvalidPortNumbersFailure() {
         // capture and verify port out of range

@@ -74,7 +74,7 @@ public class UssSetAcl {
      * Sets the ACL for a USS file or directory
      *
      * @param targetPath UNIX path to the target file or directory
-     * @param setValue sets the extended ACL entries that are specified by 'entries'
+     * @param setValue   sets the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
@@ -86,7 +86,7 @@ public class UssSetAcl {
     /**
      * Modifies the specified ACL entry for the file or directory
      *
-     * @param targetPath UNIX path to the target file or directory
+     * @param targetPath  UNIX path to the target file or directory
      * @param modifyValue modifies the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -99,7 +99,7 @@ public class UssSetAcl {
     /**
      * Deletes the specified ACL entry from the file or directory
      *
-     * @param targetPath UNIX path to the target file or directory
+     * @param targetPath  UNIX path to the target file or directory
      * @param deleteValue deletes the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -127,7 +127,7 @@ public class UssSetAcl {
      * Modifies the specified ACL entry for the file or directory and deletes the specified ACL
      * entry from the file or directory
      *
-     * @param targetPath UNIX path to the target file or directory
+     * @param targetPath  UNIX path to the target file or directory
      * @param modifyValue modifies the extended ACL entries that are specified by 'entries'
      * @param deleteValue deletes the extended ACL entries that are specified by 'entries' type
      * @return Response object
