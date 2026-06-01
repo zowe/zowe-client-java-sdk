@@ -32,7 +32,7 @@ public final class EncodeUtils {
 
     /**
      * Encodes the passed String as UTF-8 using an algorithm that's compatible
-     * with JavaScript's encodeURIComponent function. Returns incoming string un-encoded if exception occurs.
+     * with JavaScript's encodeURIComponent function.
      *
      * @param value string to be encoded
      * @return encoded String or original string
