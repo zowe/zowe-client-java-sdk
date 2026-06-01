@@ -56,7 +56,7 @@ public final class EncodeUtils {
      * @return encoded String
      * @author Frank Giordano
      */
-    public static String encodeAuthComponent(final ZosConnection connection) {
+    public static String encodeBasicAuthCredentials(final ZosConnection connection) {
         final String user = connection.getUser() != null && !connection.getUser().isEmpty() ? connection.getUser() : "";
         final String pwd = connection.getPassword() != null && !connection.getPassword().isEmpty() ? connection.getPassword() : "";
         return Base64.getEncoder().encodeToString((user + ":" + pwd).getBytes(StandardCharsets.UTF_8));

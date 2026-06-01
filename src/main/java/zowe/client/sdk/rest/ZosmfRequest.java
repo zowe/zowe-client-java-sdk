@@ -111,7 +111,7 @@ public abstract class ZosmfRequest {
     private void setupBasic() {
         LOG.debug("basic authentication type");
         Unirest.config().verifySsl(false);
-        headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
+        headers.put("Authorization", "Basic " + EncodeUtils.encodeBasicAuthCredentials(connection));
     }
 
     /**
