@@ -31,22 +31,26 @@ public final class EncodeUtils {
     }
 
     /**
-     * Encodes the passed String as UTF-8 using an algorithm that's compatible
-     * with JavaScript's encodeURIComponent function.
+     * Encodes the given String using UTF-8 in a manner compatible with JavaScript's
+     * {@code encodeURIComponent} function.
      *
-     * @param value string to be encoded
-     * @return encoded String or original string
-     * @author Frank Giordano
+     * <p>Note: the input value must be non-null and non-empty. Validation is enforced
+     * to match SDK defensive programming standards.</p>
+     *
+     * @param value the string to encode
+     * @return the encoded string
+     * @throws IllegalArgumentException if {@code value} is null or empty
      */
     public static String encodeURIComponent(final String value) {
         ValidateUtils.checkIllegalParameter(value, "value");
+
         return URLEncoder.encode(value, StandardCharsets.UTF_8)
-                .replaceAll("\\+", "%20")
-                .replaceAll("%21", "!")
-                .replaceAll("%27", "'")
-                .replaceAll("%28", "(")
-                .replaceAll("%29", ")")
-                .replaceAll("%7E", "~");
+                .replace("+", "%20")
+                .replace("%21", "!")
+                .replace("%27", "'")
+                .replace("%28", "(")
+                .replace("%29", ")")
+                .replace("%7E", "~");
     }
 
     /**
