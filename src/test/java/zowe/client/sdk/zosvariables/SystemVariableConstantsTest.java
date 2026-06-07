@@ -26,7 +26,7 @@ public class SystemVariableConstantsTest {
     @Test
     public void tstSystemVariableConstantsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Constants class";
-        UtilsTestHelper.validateClass(SystemVariableConstants.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(VariableConstants.class, privateConstructorExceptionMsg);
     }
 
 }

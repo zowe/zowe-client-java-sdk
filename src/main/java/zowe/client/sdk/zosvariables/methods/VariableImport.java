@@ -19,7 +19,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosvariables.SystemVariableConstants;
+import zowe.client.sdk.zosvariables.VariableConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,7 +87,7 @@ public class VariableImport {
         ValidateUtils.checkIllegalParameter(variablesImportFile, "variablesImportFile");
 
         final String url = connection.getZosmfUrl() +
-                SystemVariableConstants.SYSTEM_VARIABLES + "/" +
+                VariableConstants.SYSTEM_VARIABLES + "/" +
                 EncodeUtils.encodeURIComponent(sysplexName) + "." +
                 EncodeUtils.encodeURIComponent(systemName) + "/actions/import";
 

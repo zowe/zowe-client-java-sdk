@@ -15,12 +15,12 @@ package zowe.client.sdk.zosvariables;
  * @author Chaitanya Katore
  * @version 7.0
  */
-public final class SystemVariableConstants {
+public final class VariableConstants {
 
     /**
      * Private constructor defined to avoid instantiation of class.
      */
-    private SystemVariableConstants() {
+    private VariableConstants() {
         throw new IllegalStateException("Constants class");
     }
 
