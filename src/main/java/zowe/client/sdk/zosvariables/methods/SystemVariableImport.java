@@ -39,6 +39,7 @@ public class SystemVariableImport {
      * SystemVariableImport Constructor.
      *
      * @param connection for connection information, see ZosConnection object
+     * @author Chaitanya Katore
      */
     public SystemVariableImport(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -55,6 +56,7 @@ public class SystemVariableImport {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZosmfRequest Interface object
+     * @author Chaitanya Katore
      */
     SystemVariableImport(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -74,6 +76,7 @@ public class SystemVariableImport {
      * @param variablesImportFile absolute path of the variables import file on USS (e.g. '/u/user1/myvars.csv')
      * @return http response object
      * @throws ZosmfRequestException request error state
+     * @author Chaitanya Katore
      */
     public Response importVariables(final String sysplexName, final String systemName, final String variablesImportFile)
             throws ZosmfRequestException {
