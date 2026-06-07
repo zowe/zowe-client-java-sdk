@@ -12,9 +12,8 @@ package zowe.client.sdk.zosvariables;
 /**
  * Constants for z/OS system variables REST processing.
  *
- * @author Frank Giordano
  * @author Chaitanya Katore
- * @version 6.0
+ * @version 7.0
  */
 public final class SystemVariableConstants {
 

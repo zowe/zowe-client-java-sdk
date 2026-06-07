@@ -30,9 +30,8 @@ import static org.mockito.Mockito.withSettings;
 /**
  * Class containing unit tests for SystemVariableImport.
  *
- * @author Frank Giordano
  * @author Chaitanya Katore
- * @version 6.0
+ * @version 7.0
  */
 public class SystemVariableImportTest {
 
@@ -177,7 +176,7 @@ public class SystemVariableImportTest {
     @Test
     public void tstSystemVariableImportSecondaryConstructorWithInvalidRequestType() {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
-        ZosmfRequest mockRequest = Mockito.mock(ZosmfRequest.class); // Not a PostJsonZosmfRequest
+        ZosmfRequest mockRequest = Mockito.mock(ZosmfRequest.class);
         IllegalStateException exception = assertThrows(
                 IllegalStateException.class,
                 () -> new SystemVariableImport(mockConnection, mockRequest)

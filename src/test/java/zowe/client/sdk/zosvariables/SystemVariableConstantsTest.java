@@ -15,9 +15,8 @@ import zowe.client.sdk.utility.UtilsTestHelper;
 /**
  * Class containing unit test for SystemVariableConstants.
  *
- * @author Frank Giordano
  * @author Chaitanya Katore
- * @version 6.0
+ * @version 7.0
  */
 public class SystemVariableConstantsTest {
 

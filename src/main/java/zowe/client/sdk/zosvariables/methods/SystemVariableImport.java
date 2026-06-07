@@ -27,9 +27,8 @@ import java.util.Map;
 /**
  * Class to handle importing of z/OS system variables.
  *
- * @author Frank Giordano
  * @author Chaitanya Katore
- * @version 6.0
+ * @version 7.0
  */
 public class SystemVariableImport {
 
@@ -40,7 +39,6 @@ public class SystemVariableImport {
      * SystemVariableImport Constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public SystemVariableImport(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -57,7 +55,6 @@ public class SystemVariableImport {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZosmfRequest Interface object
-     * @author Frank Giordano
      */
     SystemVariableImport(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -77,7 +74,6 @@ public class SystemVariableImport {
      * @param variablesImportFile absolute path of the variables import file on USS (e.g. '/u/user1/myvars.csv')
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response importVariables(final String sysplexName, final String systemName, final String variablesImportFile)
             throws ZosmfRequestException {
