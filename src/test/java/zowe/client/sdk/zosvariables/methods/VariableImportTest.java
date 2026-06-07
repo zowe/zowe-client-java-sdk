@@ -28,12 +28,12 @@ import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.withSettings;
 
 /**
- * Class containing unit tests for SystemVariableImport.
+ * Class containing unit tests for VariableImport.
  *
  * @author Chaitanya Katore
  * @version 7.0
  */
-public class SystemVariableImportTest {
+public class VariableImportTest {
 
     private final ZosConnection connection = ZosConnectionFactory
             .createBasicConnection("1", 443, "1", "1");
@@ -64,9 +64,9 @@ public class SystemVariableImportTest {
     }
 
     @Test
-    public void tstSystemVariableImportSuccess() throws ZosmfRequestException {
-        final SystemVariableImport variablesImport = new SystemVariableImport(connection, mockPostRequest);
-        final Response response = variablesImport.importVariables("PLEX1", "SYS1", "/path/to/import.csv");
+    public void tstVariableImportSuccess() throws ZosmfRequestException {
+        final VariableImport variablesImport = new VariableImport(connection, mockPostRequest);
+        final Response response = variablesImport.load("PLEX1", "SYS1", "/path/to/import.csv");
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(204, response.getStatusCode().orElse(-1));
         assertEquals("No Content", response.getStatusText().orElse("n\\a"));
@@ -74,9 +74,9 @@ public class SystemVariableImportTest {
     }
 
     @Test
-    public void tstSystemVariableImportTokenSuccess() throws ZosmfRequestException {
-        final SystemVariableImport variablesImport = new SystemVariableImport(connection, mockPostRequestToken);
-        final Response response = variablesImport.importVariables("PLEX1", "SYS1", "/path/to/import.csv");
+    public void tstVariableImportTokenSuccess() throws ZosmfRequestException {
+        final VariableImport variablesImport = new VariableImport(connection, mockPostRequestToken);
+        final Response response = variablesImport.load("PLEX1", "SYS1", "/path/to/import.csv");
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockPostRequestToken.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
@@ -86,115 +86,115 @@ public class SystemVariableImportTest {
     }
 
     @Test
-    public void tstSystemVariableImportNullSysplexName() {
-        final SystemVariableImport variablesImport = new SystemVariableImport(connection, mockPostRequest);
+    public void tstVariableImportNullSysplexNameFailure() {
+        final VariableImport variablesImport = new VariableImport(connection, mockPostRequest);
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> variablesImport.importVariables(null, "SYS1", "/path/to/import.csv")
+                () -> variablesImport.load(null, "SYS1", "/path/to/import.csv")
         );
         assertEquals("sysplexName is either null or empty", exception.getMessage());
     }
 
     @Test
-    public void tstSystemVariableImportEmptySysplexName() {
-        final SystemVariableImport variablesImport = new SystemVariableImport(connection, mockPostRequest);
+    public void tstVariableImportEmptySysplexNameFailure() {
+        final VariableImport variablesImport = new VariableImport(connection, mockPostRequest);
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> variablesImport.importVariables("", "SYS1", "/path/to/import.csv")
+                () -> variablesImport.load("", "SYS1", "/path/to/import.csv")
         );
         assertEquals("sysplexName is either null or empty", exception.getMessage());
     }
 
     @Test
-    public void tstSystemVariableImportNullSystemName() {
-        final SystemVariableImport variablesImport = new SystemVariableImport(connection, mockPostRequest);
+    public void tstVariableImportNullSystemNameFailure() {
+        final VariableImport variablesImport = new VariableImport(connection, mockPostRequest);
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> variablesImport.importVariables("PLEX1", null, "/path/to/import.csv")
+                () -> variablesImport.load("PLEX1", null, "/path/to/import.csv")
         );
         assertEquals("systemName is either null or empty", exception.getMessage());
     }
 
     @Test
-    public void tstSystemVariableImportEmptySystemName() {
-        final SystemVariableImport variablesImport = new SystemVariableImport(connection, mockPostRequest);
+    public void tstVariableImportEmptySystemNameFailure() {
+        final VariableImport variablesImport = new VariableImport(connection, mockPostRequest);
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> variablesImport.importVariables("PLEX1", "", "/path/to/import.csv")
+                () -> variablesImport.load("PLEX1", "", "/path/to/import.csv")
         );
         assertEquals("systemName is either null or empty", exception.getMessage());
     }
 
     @Test
-    public void tstSystemVariableImportNullVariablesImportFile() {
-        final SystemVariableImport variablesImport = new SystemVariableImport(connection, mockPostRequest);
+    public void tstVariableImportNullVariablesDataFileFailure() {
+        final VariableImport variablesImport = new VariableImport(connection, mockPostRequest);
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> variablesImport.importVariables("PLEX1", "SYS1", null)
+                () -> variablesImport.load("PLEX1", "SYS1", null)
         );
         assertEquals("variablesImportFile is either null or empty", exception.getMessage());
     }
 
     @Test
-    public void tstSystemVariableImportEmptyVariablesImportFile() {
-        final SystemVariableImport variablesImport = new SystemVariableImport(connection, mockPostRequest);
+    public void tstVariableImportEmptyVariablesDataFileFailure() {
+        final VariableImport variablesImport = new VariableImport(connection, mockPostRequest);
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> variablesImport.importVariables("PLEX1", "SYS1", "")
+                () -> variablesImport.load("PLEX1", "SYS1", "")
         );
         assertEquals("variablesImportFile is either null or empty", exception.getMessage());
     }
 
     @Test
-    public void tstSystemVariableImportSecondaryConstructorWithValidRequestType() {
+    public void tstVariableImportSecondaryConstructorWithValidRequestTypeSuccess() {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
         ZosmfRequest mockRequest = Mockito.mock(PostJsonZosmfRequest.class);
-        SystemVariableImport variablesImport = new SystemVariableImport(mockConnection, mockRequest);
+        VariableImport variablesImport = new VariableImport(mockConnection, mockRequest);
         assertNotNull(variablesImport);
     }
 
     @Test
-    public void tstSystemVariableImportSecondaryConstructorWithNullConnection() {
+    public void tstVariableImportSecondaryConstructorWithNullConnectionFailure() {
         ZosmfRequest mockRequest = Mockito.mock(PostJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new SystemVariableImport(null, mockRequest)
+                () -> new VariableImport(null, mockRequest)
         );
         assertEquals("connection is null", exception.getMessage());
     }
 
     @Test
-    public void tstSystemVariableImportSecondaryConstructorWithNullRequest() {
+    public void tstVariableImportSecondaryConstructorWithNullRequestFailure() {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new SystemVariableImport(mockConnection, null)
+                () -> new VariableImport(mockConnection, null)
         );
         assertEquals("request is null", exception.getMessage());
     }
 
     @Test
-    public void tstSystemVariableImportSecondaryConstructorWithInvalidRequestType() {
+    public void tstVariableImportSecondaryConstructorWithInvalidRequestTypeFailure() {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
         ZosmfRequest mockRequest = Mockito.mock(ZosmfRequest.class);
         IllegalStateException exception = assertThrows(
                 IllegalStateException.class,
-                () -> new SystemVariableImport(mockConnection, mockRequest)
+                () -> new VariableImport(mockConnection, mockRequest)
         );
         assertEquals("POST_JSON request type required", exception.getMessage());
     }
 
     @Test
-    public void tstSystemVariableImportPrimaryConstructorWithValidConnection() {
-        SystemVariableImport variablesImport = new SystemVariableImport(connection);
+    public void tstVariableImportPrimaryConstructorWithValidConnectionSuccess() {
+        VariableImport variablesImport = new VariableImport(connection);
         assertNotNull(variablesImport);
     }
 
     @Test
-    public void tstSystemVariableImportPrimaryConstructorWithNullConnection() {
+    public void tstVariableImportPrimaryConstructorWithNullConnectionFailure() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new SystemVariableImport(null)
+                () -> new VariableImport(null)
         );
         assertEquals("connection is null", exception.getMessage());
     }
