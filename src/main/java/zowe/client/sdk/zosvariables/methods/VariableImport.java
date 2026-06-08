@@ -80,14 +80,13 @@ public class VariableImport {
      */
     public Response load(final String sysplexName,
                          final String systemName,
-                         final String variablesImportFile)
-            throws ZosmfRequestException {
+                         final String variablesImportFile) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
         ValidateUtils.checkIllegalParameter(systemName, "systemName");
         ValidateUtils.checkIllegalParameter(variablesImportFile, "variablesImportFile");
 
         final String url = connection.getZosmfUrl() +
-                VariableConstants.SYSTEM_VARIABLES + "/" +
+                VariableConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(sysplexName) + "." +
                 EncodeUtils.encodeURIComponent(systemName) + "/actions/import";
 

@@ -25,8 +25,13 @@ public final class VariableConstants {
     }
 
     /**
+     * Version of the z/OSMF system variables service.
+     */
+    private static final String VERSION = "1.0";
+
+    /**
      * z/OS system variables service path.
      */
-    public static final String SYSTEM_VARIABLES = "/variables/rest/1.0/systems";
+    public static final String RESOURCE = "/variables/rest/" + VERSION + "/systems";
 
 }
