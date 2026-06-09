@@ -11,32 +11,29 @@ package zowe.client.sdk.zosworkflow;
 
 /**
  * Constants to be used by the z/OSMF workflow API.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-zosmf-workflow-services">z/OSMF REST API</a>
  *
  * @author Ashish Kumar Dash
- * @version 6.0
+ * @version 7.0
  */
 public final class WorkflowConstants {
 
     /**
-     * Private constructor defined to avoid instantiation of class
+     * Private constructor defined to avoid instantiation of class.
      */
     private WorkflowConstants() {
         throw new IllegalStateException("Constants class");
     }
 
     /**
-     * Indicator for the workflow REST service.
+     * Version of the z/OSMF workflow service.
      */
-    public static final String RESOURCE = "/workflow/rest";
+    private static final String VERSION = "1.0";
 
     /**
-     * Supported workflow service version.
+     * z/OSMF workflow service path.
      */
-    public static final String VERSION = "/1.0";
-
-    /**
-     * Indicator for workflow collection operations.
-     */
-    public static final String WORKFLOWS = "/workflows";
+    public static final String RESOURCE = "/workflow/rest/" + VERSION + "/workflows";
 
 }

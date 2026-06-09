@@ -25,9 +25,11 @@ import zowe.client.sdk.zosworkflow.response.WorkflowCreateResponse;
 
 /**
  * Provides create workflow functionality through the z/OSMF workflow REST API.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-zosmf-workflow-services">z/OSMF REST API</a>
  *
  * @author Ashish Kumar Dash
- * @version 6.0
+ * @version 7.0
  */
 public class WorkflowCreate {
 
@@ -81,9 +83,7 @@ public class WorkflowCreate {
         ValidateUtils.checkIllegalParameter(createInputData.getOwner(), "owner");
 
         final String url = connection.getZosmfUrl() +
-                WorkflowConstants.RESOURCE +
-                WorkflowConstants.VERSION +
-                WorkflowConstants.WORKFLOWS;
+            WorkflowConstants.RESOURCE;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);

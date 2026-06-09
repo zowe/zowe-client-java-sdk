@@ -20,9 +20,7 @@ public class WorkflowConstantsTest {
 
     @Test
     public void tstWorkflowConstantsValuesSuccess() {
-        assertEquals("/workflow/rest", WorkflowConstants.RESOURCE);
-        assertEquals("/1.0", WorkflowConstants.VERSION);
-        assertEquals("/workflows", WorkflowConstants.WORKFLOWS);
+        assertEquals("/workflow/rest/1.0/workflows", WorkflowConstants.RESOURCE);
     }
 
 }

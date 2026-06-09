@@ -16,31 +16,108 @@ import java.util.List;
 
 /**
  * Parameters for the z/OSMF create workflow API input data.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-zosmf-workflow-services">z/OSMF REST API</a>
  *
  * @author Ashish Kumar Dash
- * @version 6.0
+ * @version 7.0
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WorkflowCreateInputData {
 
+    /**
+     * Descriptive name for the workflow.
+     */
     private final String workflowName;
+
+    /**
+     * Location of the workflow definition file.
+     */
     private final String workflowDefinitionFile;
+
+    /**
+     * Nickname of the system on which the workflow definition file resides.
+     */
     private final String workflowDefinitionFileSystem;
+
+    /**
+     * Optional workflow variable input file.
+     */
     private final String variableInputFile;
+
+    /**
+     * Workflow variables supplied on the request.
+     */
     private final List<WorkflowVariable> variables;
+
+    /**
+     * Resolve conflict behavior for global variables.
+     */
     private final String resolveGlobalConflictByUsing;
+
+    /**
+     * Nickname of the system where the workflow is created.
+     */
     private final String system;
+
+    /**
+     * User ID of the workflow owner.
+     */
     private final String owner;
+
+    /**
+     * SAF group or workflow owner user ID for archived workflow access.
+     */
     private final String workflowArchiveSAFID;
+
+    /**
+     * Workflow creation comments.
+     */
     private final String comments;
+
+    /**
+     * Indicator that workflow steps are assigned to the owner on create.
+     */
     private final Boolean assignToOwner;
+
+    /**
+     * Workflow access type.
+     */
     private final String accessType;
+
+    /**
+     * Account information for job-submitting workflows.
+     */
     private final String accountInfo;
+
+    /**
+     * JOB statement for job-submitting workflows.
+     */
     private final List<String> jobStatement;
+
+    /**
+     * Indicator that completed jobs are deleted from JES spool.
+     */
     private final Boolean deleteCompletedJobs;
+
+    /**
+     * Directory used to save job spool files.
+     */
     private final String jobsOutputDirectory;
+
+    /**
+     * Indicator that the workflow is automatically deleted on completion.
+     */
     private final Boolean autoDeleteOnCompletion;
+
+    /**
+     * User ID used for remote system basic authentication.
+     */
     private final String targetSystemuid;
+
+    /**
+     * Password used for remote system basic authentication.
+     */
     private final String targetSystempwd;
 
     /**
@@ -70,6 +147,82 @@ public class WorkflowCreateInputData {
         this.targetSystempwd = builder.targetSystempwd;
     }
 
+    public String getWorkflowName() {
+        return workflowName;
+    }
+
+    public String getWorkflowDefinitionFile() {
+        return workflowDefinitionFile;
+    }
+
+    public String getWorkflowDefinitionFileSystem() {
+        return workflowDefinitionFileSystem;
+    }
+
+    public String getVariableInputFile() {
+        return variableInputFile;
+    }
+
+    public List<WorkflowVariable> getVariables() {
+        return variables;
+    }
+
+    public String getResolveGlobalConflictByUsing() {
+        return resolveGlobalConflictByUsing;
+    }
+
+    public String getSystem() {
+        return system;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public String getWorkflowArchiveSAFID() {
+        return workflowArchiveSAFID;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public Boolean getAssignToOwner() {
+        return assignToOwner;
+    }
+
+    public String getAccessType() {
+        return accessType;
+    }
+
+    public String getAccountInfo() {
+        return accountInfo;
+    }
+
+    public List<String> getJobStatement() {
+        return jobStatement;
+    }
+
+    public Boolean getDeleteCompletedJobs() {
+        return deleteCompletedJobs;
+    }
+
+    public String getJobsOutputDirectory() {
+        return jobsOutputDirectory;
+    }
+
+    public Boolean getAutoDeleteOnCompletion() {
+        return autoDeleteOnCompletion;
+    }
+
+    public String getTargetSystemuid() {
+        return targetSystemuid;
+    }
+
+    public String getTargetSystempwd() {
+        return targetSystempwd;
+    }
+
     /**
      * Create a new builder for workflow create input data.
      *
@@ -77,6 +230,36 @@ public class WorkflowCreateInputData {
      */
     public static Builder builder() {
         return new Builder();
+    }
+
+    /**
+     * Return string value representing WorkflowCreateInputData object.
+     *
+     * @return string representation of WorkflowCreateInputData
+     */
+    @Override
+    public String toString() {
+        return "WorkflowCreateInputData{" +
+                "workflowName='" + workflowName + '\'' +
+                ", workflowDefinitionFile='" + workflowDefinitionFile + '\'' +
+                ", workflowDefinitionFileSystem='" + workflowDefinitionFileSystem + '\'' +
+                ", variableInputFile='" + variableInputFile + '\'' +
+                ", variables=" + variables +
+                ", resolveGlobalConflictByUsing='" + resolveGlobalConflictByUsing + '\'' +
+                ", system='" + system + '\'' +
+                ", owner='" + owner + '\'' +
+                ", workflowArchiveSAFID='" + workflowArchiveSAFID + '\'' +
+                ", comments='" + comments + '\'' +
+                ", assignToOwner=" + assignToOwner +
+                ", accessType='" + accessType + '\'' +
+                ", accountInfo='" + accountInfo + '\'' +
+                ", jobStatement=" + jobStatement +
+                ", deleteCompletedJobs=" + deleteCompletedJobs +
+                ", jobsOutputDirectory='" + jobsOutputDirectory + '\'' +
+                ", autoDeleteOnCompletion=" + autoDeleteOnCompletion +
+                ", targetSystemuid='" + targetSystemuid + '\'' +
+                ", targetSystempwd='" + targetSystempwd + '\'' +
+                '}';
     }
 
     /**
@@ -206,112 +389,6 @@ public class WorkflowCreateInputData {
             return new WorkflowCreateInputData(this);
         }
 
-    }
-
-    public String getWorkflowName() {
-        return workflowName;
-    }
-
-    public String getWorkflowDefinitionFile() {
-        return workflowDefinitionFile;
-    }
-
-    public String getWorkflowDefinitionFileSystem() {
-        return workflowDefinitionFileSystem;
-    }
-
-    public String getVariableInputFile() {
-        return variableInputFile;
-    }
-
-    public List<WorkflowVariable> getVariables() {
-        return variables;
-    }
-
-    public String getResolveGlobalConflictByUsing() {
-        return resolveGlobalConflictByUsing;
-    }
-
-    public String getSystem() {
-        return system;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public String getWorkflowArchiveSAFID() {
-        return workflowArchiveSAFID;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public Boolean getAssignToOwner() {
-        return assignToOwner;
-    }
-
-    public String getAccessType() {
-        return accessType;
-    }
-
-    public String getAccountInfo() {
-        return accountInfo;
-    }
-
-    public List<String> getJobStatement() {
-        return jobStatement;
-    }
-
-    public Boolean getDeleteCompletedJobs() {
-        return deleteCompletedJobs;
-    }
-
-    public String getJobsOutputDirectory() {
-        return jobsOutputDirectory;
-    }
-
-    public Boolean getAutoDeleteOnCompletion() {
-        return autoDeleteOnCompletion;
-    }
-
-    public String getTargetSystemuid() {
-        return targetSystemuid;
-    }
-
-    public String getTargetSystempwd() {
-        return targetSystempwd;
-    }
-
-    /**
-     * Return string value representing WorkflowCreateInputData object.
-     *
-     * @return string representation of WorkflowCreateInputData
-     */
-    @Override
-    public String toString() {
-        return "WorkflowCreateInputData{" +
-                "workflowName='" + workflowName + '\'' +
-                ", workflowDefinitionFile='" + workflowDefinitionFile + '\'' +
-                ", workflowDefinitionFileSystem='" + workflowDefinitionFileSystem + '\'' +
-                ", variableInputFile='" + variableInputFile + '\'' +
-                ", variables=" + variables +
-                ", resolveGlobalConflictByUsing='" + resolveGlobalConflictByUsing + '\'' +
-                ", system='" + system + '\'' +
-                ", owner='" + owner + '\'' +
-                ", workflowArchiveSAFID='" + workflowArchiveSAFID + '\'' +
-                ", comments='" + comments + '\'' +
-                ", assignToOwner=" + assignToOwner +
-                ", accessType='" + accessType + '\'' +
-                ", accountInfo='" + accountInfo + '\'' +
-                ", jobStatement=" + jobStatement +
-                ", deleteCompletedJobs=" + deleteCompletedJobs +
-                ", jobsOutputDirectory='" + jobsOutputDirectory + '\'' +
-                ", autoDeleteOnCompletion=" + autoDeleteOnCompletion +
-                ", targetSystemuid='" + targetSystemuid + '\'' +
-                ", targetSystempwd='" + targetSystempwd + '\'' +
-                '}';
     }
 
 }

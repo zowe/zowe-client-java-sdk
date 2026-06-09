@@ -13,9 +13,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Workflow variable name/value pair.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-zosmf-workflow-services">z/OSMF REST API</a>
  *
  * @author Ashish Kumar Dash
- * @version 6.0
+ * @version 7.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class WorkflowVariable {
