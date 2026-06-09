@@ -26,6 +26,8 @@ import java.util.Map;
 
 /**
  * Class to handle importing of z/OS system variables.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-import-system-variables">z/OSMF REST API</a>
  *
  * @author Chaitanya Katore
  * @version 7.0
