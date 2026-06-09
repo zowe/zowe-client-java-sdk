@@ -11,6 +11,9 @@ package zowe.client.sdk.zosmfworkflow;
 
 /**
  * Workflow API constants.
+ *
+ * Version: 7.0
+ * Author: Adithe Das
  */
 public final class WorkflowConstants {
 
@@ -22,7 +25,12 @@ public final class WorkflowConstants {
     }
 
     /**
+     * Version of the workflow service.
+     */
+    private static final String VERSION = "1.0";
+
+    /**
      * Workflow REST resource path.
      */
-    public static final String RESOURCE = "/zosmf/workflow/rest/1.0/workflows";
+    public static final String RESOURCE = "/zosmf/workflow/rest/" + VERSION + "/workflows";
 }

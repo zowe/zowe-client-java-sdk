@@ -21,11 +21,12 @@ import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
 
 /**
  * Delete a z/OSMF workflow instance.
+ *
+ * Version: 7.0
+ * Author: Adithe Das
  */
 public class WorkflowDelete {
-
     private final ZosConnection connection;
-
     private ZosmfRequest request;
 
     /**
@@ -34,31 +35,23 @@ public class WorkflowDelete {
      * @param connection z/OS connection
      */
     public WorkflowDelete(final ZosConnection connection) {
-
         ValidateUtils.checkNullParameter(connection, "connection");
-
         this.connection = connection;
     }
 
     /**
-     * Alternative WorkflowDelete constructor for unit testing.
+     * Package private constructor defined for unit testing.
      *
      * @param connection z/OS connection
      * @param request z/OSMF request instance
      */
     WorkflowDelete(final ZosConnection connection, final ZosmfRequest request) {
-
         ValidateUtils.checkNullParameter(connection, "connection");
-
         ValidateUtils.checkNullParameter(request, "request");
-
         this.connection = connection;
-
         if (!(request instanceof DeleteJsonZosmfRequest)) {
-
             throw new IllegalStateException("DELETE_JSON request type required");
         }
-
         this.request = request;
     }
 
@@ -70,9 +63,7 @@ public class WorkflowDelete {
      * @throws ZosmfRequestException error executing request
      */
     public Response delete(final String workflowKey)
-
             throws ZosmfRequestException {
-
         ValidateUtils.checkNullParameter(workflowKey, "workflowKey");
 
         final String url =
@@ -88,7 +79,6 @@ public class WorkflowDelete {
         }
 
         request.setUrl(url);
-
         return request.executeRequest();
     }
 }
