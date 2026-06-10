@@ -11,8 +11,6 @@ package zowe.client.sdk.zosworkflow;
 
 /**
  * Constants to be used by the z/OSMF workflow API.
- * <p>
- * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-zosmf-workflow-services">z/OSMF REST API</a>
  *
  * @author Ashish Kumar Dash
  * @version 7.0
