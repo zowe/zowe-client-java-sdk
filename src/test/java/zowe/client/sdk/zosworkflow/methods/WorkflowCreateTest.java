@@ -34,9 +34,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.Mockito.doCallRealMethod;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.withSettings;
+import static org.mockito.Mockito.*;
 
 /**
  * Class containing unit tests for WorkflowCreate.
@@ -172,27 +170,27 @@ public class WorkflowCreateTest {
         assertEquals("workflow-description", response.getWorkflowDescription());
     }
 
-        @Test
-        public void tstWorkflowCreateJsonStringResponseSuccess() throws Exception {
-                final JSONObject workflowJson = getJsonObject();
-                final PostJsonZosmfRequest mockPostJsonZosmfRequestString = Mockito.mock(PostJsonZosmfRequest.class);
-                Mockito.when(mockPostJsonZosmfRequestString.executeRequest()).thenReturn(
-                                new Response(workflowJson.toString(), 201, "Created"));
-                doCallRealMethod().when(mockPostJsonZosmfRequestString).setUrl(any());
-                doCallRealMethod().when(mockPostJsonZosmfRequestString).getUrl();
-                doCallRealMethod().when(mockPostJsonZosmfRequestString).setBody(any());
+    @Test
+    public void tstWorkflowCreateJsonStringResponseSuccess() throws Exception {
+        final JSONObject workflowJson = getJsonObject();
+        final PostJsonZosmfRequest mockPostJsonZosmfRequestString = Mockito.mock(PostJsonZosmfRequest.class);
+        Mockito.when(mockPostJsonZosmfRequestString.executeRequest()).thenReturn(
+                new Response(workflowJson.toString(), 201, "Created"));
+        doCallRealMethod().when(mockPostJsonZosmfRequestString).setUrl(any());
+        doCallRealMethod().when(mockPostJsonZosmfRequestString).getUrl();
+        doCallRealMethod().when(mockPostJsonZosmfRequestString).setBody(any());
 
-                final WorkflowCreate workflowCreate = new WorkflowCreate(connection, mockPostJsonZosmfRequestString);
-                final WorkflowCreateResponse response = workflowCreate.create(createInputData());
+        final WorkflowCreate workflowCreate = new WorkflowCreate(connection, mockPostJsonZosmfRequestString);
+        final WorkflowCreateResponse response = workflowCreate.create(createInputData());
 
-                assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows",
-                                mockPostJsonZosmfRequestString.getUrl());
-                assertEquals("workflow-key", response.getWorkflowKey());
-                assertEquals("workflow-description", response.getWorkflowDescription());
-                assertEquals("workflow-id", response.getWorkflowID());
-                assertEquals("1.0", response.getWorkflowVersion());
-                assertEquals("IBM", response.getVendor());
-        }
+        assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows",
+                mockPostJsonZosmfRequestString.getUrl());
+        assertEquals("workflow-key", response.getWorkflowKey());
+        assertEquals("workflow-description", response.getWorkflowDescription());
+        assertEquals("workflow-id", response.getWorkflowID());
+        assertEquals("1.0", response.getWorkflowVersion());
+        assertEquals("IBM", response.getVendor());
+    }
 
     @Test
     public void tstWorkflowCreateSecondaryConstructorWithValidRequestType() {
