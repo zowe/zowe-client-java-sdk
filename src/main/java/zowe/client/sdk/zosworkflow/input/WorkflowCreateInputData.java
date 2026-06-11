@@ -146,78 +146,173 @@ public class WorkflowCreateInputData {
         this.targetSystempwd = builder.targetSystempwd;
     }
 
+    /**
+     * Retrieve workflowName value.
+     *
+     * @return workflowName value
+     */
     public String getWorkflowName() {
         return workflowName;
     }
 
+    /**
+     * Retrieve workflowDefinitionFile value.
+     *
+     * @return workflowDefinitionFile value
+     */
     public String getWorkflowDefinitionFile() {
         return workflowDefinitionFile;
     }
 
+    /**
+     * Retrieve workflowDefinitionFileSystem value.
+     *
+     * @return workflowDefinitionFileSystem value
+     */
     public String getWorkflowDefinitionFileSystem() {
         return workflowDefinitionFileSystem;
     }
 
+    /**
+     * Retrieve variableInputFile value.
+     *
+     * @return variableInputFile value
+     */
     public String getVariableInputFile() {
         return variableInputFile;
     }
 
+    /**
+     * Retrieve variables value.
+     *
+     * @return variables value
+     */
     public List<WorkflowVariable> getVariables() {
         return variables;
     }
 
+    /**
+     * Retrieve resolveGlobalConflictByUsing value.
+     *
+     * @return resolveGlobalConflictByUsing value
+     */
     public String getResolveGlobalConflictByUsing() {
         return resolveGlobalConflictByUsing;
     }
 
+    /**
+     * Retrieve system value.
+     *
+     * @return system value
+     */
     public String getSystem() {
         return system;
     }
 
+    /**
+     * Retrieve owner value.
+     *
+     * @return owner value
+     */
     public String getOwner() {
         return owner;
     }
 
+    /**
+     * Retrieve workflowArchiveSAFID value.
+     *
+     * @return workflowArchiveSAFID value
+     */
     public String getWorkflowArchiveSAFID() {
         return workflowArchiveSAFID;
     }
 
+    /**
+     * Retrieve comments value.
+     *
+     * @return comments value
+     */
     public String getComments() {
         return comments;
     }
 
+    /**
+     * Retrieve assignToOwner value.
+     *
+     * @return assignToOwner value
+     */
     public Boolean getAssignToOwner() {
         return assignToOwner;
     }
 
+    /**
+     * Retrieve accessType value.
+     *
+     * @return accessType value
+     */
     public String getAccessType() {
         return accessType;
     }
 
+    /**
+     * Retrieve accountInfo value.
+     *
+     * @return accountInfo value
+     */
     public String getAccountInfo() {
         return accountInfo;
     }
 
+    /**
+     * Retrieve jobStatement value.
+     *
+     * @return jobStatement value
+     */
     public List<String> getJobStatement() {
         return jobStatement;
     }
 
+    /**
+     * Retrieve deleteCompletedJobs value.
+     *
+     * @return deleteCompletedJobs value
+     */
     public Boolean getDeleteCompletedJobs() {
         return deleteCompletedJobs;
     }
 
+    /**
+     * Retrieve jobsOutputDirectory value.
+     *
+     * @return jobsOutputDirectory value
+     */
     public String getJobsOutputDirectory() {
         return jobsOutputDirectory;
     }
 
+    /**
+     * Retrieve autoDeleteOnCompletion value.
+     *
+     * @return autoDeleteOnCompletion value
+     */
     public Boolean getAutoDeleteOnCompletion() {
         return autoDeleteOnCompletion;
     }
 
+    /**
+     * Retrieve targetSystemuid value.
+     *
+     * @return targetSystemuid value
+     */
     public String getTargetSystemuid() {
         return targetSystemuid;
     }
 
+    /**
+     * Retrieve targetSystempwd value.
+     *
+     * @return targetSystempwd value
+     */
     public String getTargetSystempwd() {
         return targetSystempwd;
     }
@@ -289,101 +384,220 @@ public class WorkflowCreateInputData {
         private Builder() {
         }
 
+        /**
+         * Set the workflow name.
+         *
+         * @param workflowName workflow name value
+         * @return this builder instance
+         */
         public Builder workflowName(final String workflowName) {
             this.workflowName = workflowName;
             return this;
         }
 
+        /**
+         * Set the workflow definition file.
+         *
+         * @param workflowDefinitionFile workflow definition file value
+         * @return this builder instance
+         */
         public Builder workflowDefinitionFile(final String workflowDefinitionFile) {
             this.workflowDefinitionFile = workflowDefinitionFile;
             return this;
         }
 
+        /**
+         * Set the workflow definition file system.
+         *
+         * @param workflowDefinitionFileSystem workflow definition file system value
+         * @return this builder instance
+         */
         public Builder workflowDefinitionFileSystem(final String workflowDefinitionFileSystem) {
             this.workflowDefinitionFileSystem = workflowDefinitionFileSystem;
             return this;
         }
 
+        /**
+         * Set the variable input file.
+         *
+         * @param variableInputFile variable input file value
+         * @return this builder instance
+         */
         public Builder variableInputFile(final String variableInputFile) {
             this.variableInputFile = variableInputFile;
             return this;
         }
 
+        /**
+         * Set the workflow variables.
+         *
+         * @param variables workflow variables value
+         * @return this builder instance
+         */
         public Builder variables(final List<WorkflowVariable> variables) {
             this.variables = variables;
             return this;
         }
 
+        /**
+         * Set the resolve global conflict by using.
+         *
+         * @param resolveGlobalConflictByUsing resolve global conflict by using value
+         * @return this builder instance
+         */
         public Builder resolveGlobalConflictByUsing(final String resolveGlobalConflictByUsing) {
             this.resolveGlobalConflictByUsing = resolveGlobalConflictByUsing;
             return this;
         }
 
+        /**
+         * Set the system.
+         *
+         * @param system system value
+         * @return this builder instance
+         */
         public Builder system(final String system) {
             this.system = system;
             return this;
         }
 
+        /**
+         * Set the owner.
+         *
+         * @param owner owner value
+         * @return this builder instance
+         */
         public Builder owner(final String owner) {
             this.owner = owner;
             return this;
         }
 
+        /**
+         * Set the workflow archive SAF ID.
+         *
+         * @param workflowArchiveSAFID workflow archive SAF ID value
+         * @return this builder instance
+         */
         public Builder workflowArchiveSAFID(final String workflowArchiveSAFID) {
             this.workflowArchiveSAFID = workflowArchiveSAFID;
             return this;
         }
 
+        /**
+         * Set the comments.
+         *
+         * @param comments comments value
+         * @return this builder instance
+         */
         public Builder comments(final String comments) {
             this.comments = comments;
             return this;
         }
 
+        /**
+         * Set assign to owner.
+         *
+         * @param assignToOwner assign to owner value
+         * @return this builder instance
+         */
         public Builder assignToOwner(final Boolean assignToOwner) {
             this.assignToOwner = assignToOwner;
             return this;
         }
 
+        /**
+         * Set the access type.
+         *
+         * @param accessType access type value
+         * @return this builder instance
+         */
         public Builder accessType(final String accessType) {
             this.accessType = accessType;
             return this;
         }
 
+        /**
+         * Set the account info.
+         *
+         * @param accountInfo account info value
+         * @return this builder instance
+         */
         public Builder accountInfo(final String accountInfo) {
             this.accountInfo = accountInfo;
             return this;
         }
 
+        /**
+         * Set the job statement.
+         *
+         * @param jobStatement job statement value
+         * @return this builder instance
+         */
         public Builder jobStatement(final List<String> jobStatement) {
             this.jobStatement = jobStatement;
             return this;
         }
 
+        /**
+         * Set delete completed jobs.
+         *
+         * @param deleteCompletedJobs delete completed jobs value
+         * @return this builder instance
+         */
         public Builder deleteCompletedJobs(final Boolean deleteCompletedJobs) {
             this.deleteCompletedJobs = deleteCompletedJobs;
             return this;
         }
 
+        /**
+         * Set the jobs output directory.
+         *
+         * @param jobsOutputDirectory jobs output directory value
+         * @return this builder instance
+         */
         public Builder jobsOutputDirectory(final String jobsOutputDirectory) {
             this.jobsOutputDirectory = jobsOutputDirectory;
             return this;
         }
 
+        /**
+         * Set auto delete on completion.
+         *
+         * @param autoDeleteOnCompletion auto delete on completion value
+         * @return this builder instance
+         */
         public Builder autoDeleteOnCompletion(final Boolean autoDeleteOnCompletion) {
             this.autoDeleteOnCompletion = autoDeleteOnCompletion;
             return this;
         }
 
+        /**
+         * Set the target system UID.
+         *
+         * @param targetSystemuid target system UID value
+         * @return this builder instance
+         */
         public Builder targetSystemuid(final String targetSystemuid) {
             this.targetSystemuid = targetSystemuid;
             return this;
         }
 
+        /**
+         * Set the target system password.
+         *
+         * @param targetSystempwd target system password value
+         * @return this builder instance
+         */
         public Builder targetSystempwd(final String targetSystempwd) {
             this.targetSystempwd = targetSystempwd;
             return this;
         }
 
+        /**
+         * Build WorkflowCreateInputData instance.
+         *
+         * @return WorkflowCreateInputData instance
+         */
         public WorkflowCreateInputData build() {
             return new WorkflowCreateInputData(this);
         }
