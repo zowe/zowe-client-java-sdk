@@ -71,22 +71,47 @@ public final class WorkflowCreateResponse {
         this.vendor = vendor == null ? "" : vendor;
     }
 
+    /**
+     * Retrieve workflowKey value.
+     *
+     * @return workflowKey value
+     */
     public String getWorkflowKey() {
         return workflowKey;
     }
 
+    /**
+     * Retrieve workflowDescription value.
+     *
+     * @return workflowDescription value
+     */
     public String getWorkflowDescription() {
         return workflowDescription;
     }
 
+    /**
+     * Retrieve workflowID value.
+     *
+     * @return workflowID value
+     */
     public String getWorkflowID() {
         return workflowID;
     }
 
+    /**
+     * Retrieve workflowVersion value.
+     *
+     * @return workflowVersion value
+     */
     public String getWorkflowVersion() {
         return workflowVersion;
     }
 
+    /**
+     * Retrieve vendor value.
+     *
+     * @return vendor value
+     */
     public String getVendor() {
         return vendor;
     }
