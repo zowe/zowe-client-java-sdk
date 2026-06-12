@@ -21,9 +21,13 @@ import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
 
 /**
  * Delete a z/OSMF workflow instance.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-delete-workflow-instance">
+ *     z/OSMF REST API
+ * </a>
  *
- * Version: 7.0
- * Author: Adithe Das
+ * @author Adithe Das
+ * @version 7.0
  */
 public class WorkflowDelete {
     private final ZosConnection connection;
@@ -40,10 +44,15 @@ public class WorkflowDelete {
     }
 
     /**
-     * Package private constructor defined for unit testing.
+     * Alternative WorkflowDelete constructor with ZosmfRequest object.
+     * This is mainly used for internal code unit testing with Mockito,
+     * and it is not recommended to be used by the larger community.
      *
-     * @param connection z/OS connection
-     * @param request z/OSMF request instance
+     * <p>
+     * This constructor is package-private.
+     *
+     * @param connection z/OS connection information, see ZosConnection object
+     * @param request compatible ZosmfRequest interface object
      */
     WorkflowDelete(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
