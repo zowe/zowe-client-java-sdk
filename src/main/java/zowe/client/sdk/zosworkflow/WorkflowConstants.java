@@ -32,6 +32,6 @@ public final class WorkflowConstants {
     /**
      * z/OSMF workflow service path.
      */
-    public static final String RESOURCE = "/workflow/rest/" + VERSION + "/workflows";
+    public static final String RESOURCE = "/workflow/rest/" + VERSION;
 
 }
