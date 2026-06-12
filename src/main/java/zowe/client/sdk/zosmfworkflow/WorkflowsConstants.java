@@ -7,7 +7,6 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-
 package zowe.client.sdk.zosmfworkflow;
 
 /**
@@ -77,5 +76,3 @@ public final class WorkflowsConstants {
     public static final String QUERY_STATUS_NAME = "statusName=";
 
 }
-
-

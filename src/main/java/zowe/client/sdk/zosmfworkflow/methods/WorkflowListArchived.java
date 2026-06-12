@@ -27,9 +27,7 @@ import java.util.List;
 /**
  * Handles listing archived workflows on z/OS.
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-zosmf-workflow">
- *   z/OSMF REST API
- * </a>
+ * <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-zosmf-workflow">z/OSMF REST API</a>
  *
  * @author Muhammad Imran
  * @version 7.0
@@ -89,7 +87,7 @@ public class WorkflowListArchived {
      * @throws ZosmfRequestException request error state
      * @author Muhammad Imran
      */
-    public List<WorkflowKey> listArchivedCommon() throws ZosmfRequestException {
+    private List<WorkflowKey> listArchivedCommon() throws ZosmfRequestException {
         final String url = connection.getZosmfUrl() + WorkflowsConstants.RESOURCE_ARCHIVED;
 
         if (request == null) {

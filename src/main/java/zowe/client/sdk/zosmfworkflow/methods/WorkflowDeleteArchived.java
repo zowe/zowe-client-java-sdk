@@ -22,9 +22,7 @@ import zowe.client.sdk.zosmfworkflow.WorkflowsConstants;
 /**
  * Handles deleting an archived workflow on z/OS.
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-zosmf-workflow">
- *   z/OSMF REST API
- * </a>
+ * <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-zosmf-workflow">z/OSMF REST API</a>
  *
  * @author Muhammad Imran
  * @version 7.0
@@ -86,7 +84,7 @@ public class WorkflowDeleteArchived {
      * @throws ZosmfRequestException request error state
      * @author Muhammad Imran
      */
-    public Response deleteCommon(final String workflowKey) throws ZosmfRequestException {
+    private Response deleteCommon(final String workflowKey) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(workflowKey, WorkflowsConstants.WORKFLOW_KEY_ILLEGAL_MSG);
 
         final String url = connection.getZosmfUrl() +
