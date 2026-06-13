@@ -11,9 +11,15 @@ package zowe.client.sdk.zosmfworkflow.methods;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import static org.junit.jupiter.api.Assertions.*;
+import org.json.simple.JSONObject;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doCallRealMethod;
 
 /**
  * Class containing unit tests for WorkflowDelete.
@@ -109,5 +115,132 @@ public class WorkflowDeleteTest {
         );
 
         assertEquals("connection is null", exception.getMessage());
+    }
+
+    /**
+     * Test workflow delete success path.
+     *
+     * @throws ZosmfRequestException error executing request
+     */
+    @Test
+    public void tstWorkflowDeleteSuccess() throws ZosmfRequestException {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+
+        Mockito.when(connection.getZosmfUrl())
+                .thenReturn("https://1:443");
+
+        DeleteJsonZosmfRequest mockDeleteRequest =
+                Mockito.mock(DeleteJsonZosmfRequest.class);
+
+
+        Mockito.when(mockDeleteRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+
+        doCallRealMethod().when(mockDeleteRequest).setUrl(any());
+        doCallRealMethod().when(mockDeleteRequest).getUrl();
+
+        WorkflowDelete workflowDelete =
+                new WorkflowDelete(connection, mockDeleteRequest);
+
+        Response response = workflowDelete.delete("TESTKEY");
+
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+    }
+
+    /**
+     * Test workflow delete with null workflow key.
+     */
+    @Test
+    public void tstWorkflowDeleteWithNullWorkflowKey() {
+        ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("1", 443, "1", "1");
+
+        WorkflowDelete workflowDelete =
+                new WorkflowDelete(connection);
+
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> workflowDelete.delete(null)
+        );
+
+        assertEquals("workflowKey is null", exception.getMessage());
+    }
+
+    /**
+     * Test workflow delete secondary constructor creates object.
+     */
+    @Test
+    public void tstWorkflowDeleteSecondaryConstructorObjectCreated() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        DeleteJsonZosmfRequest request =
+                Mockito.mock(DeleteJsonZosmfRequest.class);
+
+        assertNotNull(new WorkflowDelete(connection, request));
+    }
+
+    /**
+     * Test workflow delete URL contains workflow key.
+     *
+     * @throws ZosmfRequestException error executing request
+     */
+    @Test
+    public void tstWorkflowDeleteUrlContainsWorkflowKey()
+            throws ZosmfRequestException {
+
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+
+        Mockito.when(connection.getZosmfUrl())
+                .thenReturn("https://1:443");
+
+        DeleteJsonZosmfRequest mockDeleteRequest =
+                Mockito.mock(DeleteJsonZosmfRequest.class);
+
+        Mockito.when(mockDeleteRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+
+        doCallRealMethod().when(mockDeleteRequest).setUrl(any());
+        doCallRealMethod().when(mockDeleteRequest).getUrl();
+
+        WorkflowDelete workflowDelete =
+                new WorkflowDelete(connection, mockDeleteRequest);
+
+        workflowDelete.delete("MYWORKFLOW");
+
+        assertTrue(mockDeleteRequest.getUrl().contains("MYWORKFLOW"));
+    }
+
+    /**
+     * Test workflow delete URL generation.
+     *
+     * @throws ZosmfRequestException error executing request
+     */
+    @Test
+    public void tstWorkflowDeleteUrlGeneration() throws ZosmfRequestException {
+
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+
+        Mockito.when(connection.getZosmfUrl())
+                .thenReturn("https://1:443");
+
+        DeleteJsonZosmfRequest mockDeleteRequest =
+                Mockito.mock(DeleteJsonZosmfRequest.class);
+
+        Mockito.when(mockDeleteRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+
+        doCallRealMethod().when(mockDeleteRequest).setUrl(any());
+        doCallRealMethod().when(mockDeleteRequest).getUrl();
+
+        WorkflowDelete workflowDelete =
+                new WorkflowDelete(connection, mockDeleteRequest);
+
+        workflowDelete.delete("TESTKEY");
+
+        assertEquals(
+                "https://1:443/zosmf/workflow/rest/1.0/workflows/TESTKEY",
+                mockDeleteRequest.getUrl()
+        );
     }
 }
