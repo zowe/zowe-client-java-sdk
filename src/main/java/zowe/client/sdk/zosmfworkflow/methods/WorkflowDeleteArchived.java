@@ -69,7 +69,7 @@ public class WorkflowDeleteArchived {
      * @throws ZosmfRequestException request error state
      */
     public Response delete(final String workflowKey) throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(workflowKey, WorkflowsConstants.WORKFLOW_KEY_ILLEGAL_MSG);
+        ValidateUtils.checkIllegalParameter(workflowKey, "workflowKey");
 
         final String url = connection.getZosmfUrl() +
                 WorkflowsConstants.RESOURCE + "/archivedworkflows" +
