@@ -26,8 +26,7 @@ import java.util.List;
 
 /**
  * Handles listing archived workflows on z/OS.
- * <p>
- * <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-zosmf-workflow">z/OSMF REST API</a>
+ * <p><a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-list-archived-workflow-instances">z/OSMF REST API</a>
  *
  * @author Muhammad Imran
  * @version 7.0
@@ -41,7 +40,6 @@ public class WorkflowListArchived {
      * WorkflowListArchived constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Muhammad Imran
      */
     public WorkflowListArchived(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -49,15 +47,14 @@ public class WorkflowListArchived {
     }
 
     /**
-     * Alternative WorkflowListArchived constructor with ZosmfRequest object. This is mainly used
-     * for internal code unit testing with Mockito, and it is not recommended to be used by the
-     * larger community.
+     * Alternative WorkflowListArchived constructor with ZosmfRequest object.
+     * This is mainly used for internal code unit testing with Mockito,
+     * and it is not recommended to be used by the larger community.
      * <p>
-     * This constructor is package-private
+     * This constructor is package-private.
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
-     * @author Muhammad Imran
      */
     WorkflowListArchived(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -70,25 +67,14 @@ public class WorkflowListArchived {
     }
 
     /**
-     * List all archived workflows on z/OS.
+     * Get all archived workflows on z/OS.
      *
      * @return list of WorkflowKey objects
      * @throws ZosmfRequestException request error state
-     * @author Muhammad Imran
      */
-    public List<WorkflowKey> listArchived() throws ZosmfRequestException {
-        return listArchivedCommon();
-    }
-
-    /**
-     * List all archived workflows on z/OS.
-     *
-     * @return list of WorkflowKey objects
-     * @throws ZosmfRequestException request error state
-     * @author Muhammad Imran
-     */
-    private List<WorkflowKey> listArchivedCommon() throws ZosmfRequestException {
-        final String url = connection.getZosmfUrl() + WorkflowsConstants.RESOURCE_ARCHIVED;
+    public List<WorkflowKey> get() throws ZosmfRequestException {
+        final String url = connection.getZosmfUrl() +
+                WorkflowsConstants.RESOURCE + "/archivedworkflows";
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
@@ -103,7 +89,7 @@ public class WorkflowListArchived {
         final List<WorkflowKey> workflows = new ArrayList<>();
         final JSONArray results = JsonUtils.parseArray(responsePhrase);
         for (final Object obj : results) {
-            workflows.add(JsonUtils.parseResponse(String.valueOf(obj), WorkflowKey.class, "listArchivedCommon"));
+            workflows.add(JsonUtils.parseResponse(String.valueOf(obj), WorkflowKey.class, "get"));
         }
 
         return workflows;
