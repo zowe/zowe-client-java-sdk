@@ -71,7 +71,7 @@ public class VariableExportTest {
         assertEquals(204, response.getStatusCode().orElse(-1));
         assertEquals("No Content", response.getStatusText().orElse("n\\a"));
         assertEquals("https://1:443/zosmf/variables/rest/1.0/systems/PLEX1.SYS1/actions/export", mockPostRequest.getUrl());
-        Mockito.verify(mockPostRequest).setBody("{\"variables-export-file\":\"\\/path\\/to\\/export.csv\"}");
+        Mockito.verify(mockPostRequest).setBody("{\"overwrite\":false,\"variables-export-file\":\"\\/path\\/to\\/export.csv\"}");
     }
 
     @Test
@@ -106,7 +106,7 @@ public class VariableExportTest {
         assertEquals(204, response.getStatusCode().orElse(-1));
         assertEquals("No Content", response.getStatusText().orElse("n\\a"));
         assertEquals("https://1:443/zosmf/variables/rest/1.0/systems/PLEX1.SYS1/actions/export", mockPostRequestToken.getUrl());
-        Mockito.verify(mockPostRequestToken).setBody("{\"variables-export-file\":\"\\/path\\/to\\/export.csv\"}");
+        Mockito.verify(mockPostRequestToken).setBody("{\"overwrite\":false,\"variables-export-file\":\"\\/path\\/to\\/export.csv\"}");
     }
 
     @Test

@@ -83,7 +83,7 @@ public class VariableExport {
     public Response export(final String sysplexName,
                            final String systemName,
                            final String variablesExportFile) throws ZosmfRequestException {
-        return exportCommon(sysplexName, systemName, variablesExportFile, null);
+        return exportCommon(sysplexName, systemName, variablesExportFile, false);
     }
 
     /**
@@ -110,7 +110,7 @@ public class VariableExport {
      * @param sysplexName         name of the sysplex (e.g. 'PLEX1')
      * @param systemName          name of the system (e.g. 'SYS1')
      * @param variablesExportFile absolute path of the variables export file on USS (e.g. '/u/user1/vars.csv')
-     * @param overwrite           boolean value or null to indicate if file should be overwritten
+     * @param overwrite           boolean value to indicate if file should be overwritten
      * @return http response object
      * @throws ZosmfRequestException request error state
      */
