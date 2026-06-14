@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosworkflow.methods;
+package zowe.client.sdk.zosmfworkflow.methods;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,9 +19,9 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosworkflow.WorkflowConstants;
-import zowe.client.sdk.zosworkflow.input.WorkflowCreateInputData;
-import zowe.client.sdk.zosworkflow.response.WorkflowCreateResponse;
+import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
+import zowe.client.sdk.zosmfworkflow.input.WorkflowCreateInputData;
+import zowe.client.sdk.zosmfworkflow.response.WorkflowCreateResponse;
 
 /**
  * Provides create workflow functionality through the z/OSMF workflow REST API.

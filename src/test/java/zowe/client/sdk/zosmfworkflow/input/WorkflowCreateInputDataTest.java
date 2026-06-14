@@ -7,10 +7,10 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosworkflow.input;
+package zowe.client.sdk.zosmfworkflow.input;
 
 import org.junit.jupiter.api.Test;
-import zowe.client.sdk.zosworkflow.model.WorkflowVariable;
+import zowe.client.sdk.zosmfworkflow.model.WorkflowVariable;
 
 import java.util.Arrays;
 

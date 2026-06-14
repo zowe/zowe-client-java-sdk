@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosworkflow.methods;
+package zowe.client.sdk.zosmfworkflow.methods;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONArray;
@@ -23,9 +23,9 @@ import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosworkflow.input.WorkflowCreateInputData;
-import zowe.client.sdk.zosworkflow.model.WorkflowVariable;
-import zowe.client.sdk.zosworkflow.response.WorkflowCreateResponse;
+import zowe.client.sdk.zosmfworkflow.input.WorkflowCreateInputData;
+import zowe.client.sdk.zosmfworkflow.model.WorkflowVariable;
+import zowe.client.sdk.zosmfworkflow.response.WorkflowCreateResponse;
 
 import java.util.Arrays;
 import java.util.HashMap;

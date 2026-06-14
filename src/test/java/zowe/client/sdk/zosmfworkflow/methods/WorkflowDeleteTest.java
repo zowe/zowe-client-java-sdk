@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosworkflow.methods;
+package zowe.client.sdk.zosmfworkflow.methods;
 
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;

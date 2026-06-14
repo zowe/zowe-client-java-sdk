@@ -1,4 +1,4 @@
 /**
  * Model objects for z/OSMF workflow processing
  */
-package zowe.client.sdk.zosworkflow.model;
+package zowe.client.sdk.zosmfworkflow.model;

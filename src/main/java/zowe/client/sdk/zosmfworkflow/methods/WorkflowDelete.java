@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosworkflow.methods;
+package zowe.client.sdk.zosmfworkflow.methods;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
@@ -17,7 +17,7 @@ import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosworkflow.WorkflowConstants;
+import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
 
 /**
  * Delete a z/OSMF workflow instance.

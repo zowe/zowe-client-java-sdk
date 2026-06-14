@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosworkflow;
+package zowe.client.sdk.zosmfworkflow;
 
 /**
  * Constants to be used by the z/OSMF workflow API.
