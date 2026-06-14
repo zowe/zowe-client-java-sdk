@@ -11,10 +11,6 @@ package zowe.client.sdk.zosmfworkflow;
 
 /**
  * Workflow API constants.
- * <p>
- * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-delete-workflow-instance">
- *     z/OSMF REST API
- * </a>
  *
  * Version: 7.0
  * Author: Adithe Das

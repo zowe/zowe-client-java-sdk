@@ -21,10 +21,7 @@ import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
 
 /**
  * Delete a z/OSMF workflow instance.
- * <p>
- * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-delete-workflow-instance">
- *     z/OSMF REST API
- * </a>
+ * <p> <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-delete-workflow-instance"> z/OSMF REST API </a>
  *
  * @author Adithe Das
  * @version 7.0
@@ -71,8 +68,7 @@ public class WorkflowDelete {
      * @return response object
      * @throws ZosmfRequestException error executing request
      */
-    public Response delete(final String workflowKey)
-            throws ZosmfRequestException {
+    public Response delete(final String workflowKey) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(workflowKey, "workflowKey");
 
         final String url =
@@ -82,11 +78,8 @@ public class WorkflowDelete {
                         + workflowKey;
 
         if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(
-                    connection,
-                    ZosmfRequestType.DELETE_JSON);
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
-
         request.setUrl(url);
         return request.executeRequest();
     }
