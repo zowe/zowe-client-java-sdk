@@ -18,7 +18,7 @@ import zowe.client.sdk.utility.UtilsTestHelper;
  * @author Chaitanya Katore
  * @version 7.0
  */
-public class SystemVariableConstantsTest {
+public class VariableConstantsTest {
 
     /**
      * Validate class structure
