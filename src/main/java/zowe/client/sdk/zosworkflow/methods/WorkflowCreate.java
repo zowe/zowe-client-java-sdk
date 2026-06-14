@@ -25,7 +25,8 @@ import zowe.client.sdk.zosworkflow.response.WorkflowCreateResponse;
 
 /**
  * Provides create workflow functionality through the z/OSMF workflow REST API.
- * <p><a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-create-workflow">z/OSMF REST API</a>
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-create-workflow">z/OSMF REST API</a>
  *
  * @author Ashish Kumar Dash
  * @version 7.0

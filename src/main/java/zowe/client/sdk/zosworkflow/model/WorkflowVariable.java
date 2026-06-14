@@ -13,7 +13,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Workflow variable name/value pair.
- * <p><a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-create-workflow">z/OSMF REST API</a>
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-create-workflow">z/OSMF REST API</a>
  *
  * @author Ashish Kumar Dash
  * @version 7.0
