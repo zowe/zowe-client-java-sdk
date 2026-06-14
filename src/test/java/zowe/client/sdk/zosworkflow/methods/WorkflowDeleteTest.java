@@ -9,17 +9,17 @@
  */
 package zowe.client.sdk.zosworkflow.methods;
 
+import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequest;
-import static org.junit.jupiter.api.Assertions.*;
-import org.json.simple.JSONObject;
 import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doCallRealMethod;
 
@@ -42,14 +42,14 @@ public class WorkflowDeleteTest {
     @Test
     public void tstWorkflowDeleteSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
-        NullPointerException exception = assertThrows(NullPointerException.class,() -> new WorkflowDelete(null, request));
+        NullPointerException exception = assertThrows(NullPointerException.class, () -> new WorkflowDelete(null, request));
         assertEquals("connection is null", exception.getMessage());
     }
 
     @Test
     public void tstWorkflowDeleteSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
-        NullPointerException exception = assertThrows(NullPointerException.class,() -> new WorkflowDelete(connection, null));
+        NullPointerException exception = assertThrows(NullPointerException.class, () -> new WorkflowDelete(connection, null));
         assertEquals("request is null", exception.getMessage());
     }
 
@@ -113,7 +113,7 @@ public class WorkflowDeleteTest {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         Mockito.when(connection.getZosmfUrl()).thenReturn("https://1:443");
         DeleteJsonZosmfRequest mockDeleteRequest = Mockito.mock(DeleteJsonZosmfRequest.class);
-        Mockito.when(mockDeleteRequest.executeRequest()).thenReturn( new Response(new JSONObject(), 200, "success"));
+        Mockito.when(mockDeleteRequest.executeRequest()).thenReturn(new Response(new JSONObject(), 200, "success"));
 
         doCallRealMethod().when(mockDeleteRequest).setUrl(any());
         doCallRealMethod().when(mockDeleteRequest).getUrl();
@@ -137,6 +137,6 @@ public class WorkflowDeleteTest {
         WorkflowDelete workflowDelete = new WorkflowDelete(connection, mockDeleteRequest);
 
         workflowDelete.delete("TESTKEY");
-        assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows/TESTKEY",mockDeleteRequest.getUrl());
+        assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows/TESTKEY", mockDeleteRequest.getUrl());
     }
 }
