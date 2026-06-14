@@ -90,7 +90,8 @@ public class VariableImport {
         final String url = connection.getZosmfUrl() +
                 VariableConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(sysplexName) + "." +
-                EncodeUtils.encodeURIComponent(systemName) + "/actions/import";
+                EncodeUtils.encodeURIComponent(systemName) +
+                "/actions/import";
 
         final Map<String, Object> bodyMap = new HashMap<>();
         bodyMap.put("variables-import-file", variablesImportFile);

@@ -125,7 +125,8 @@ public class VariableExport {
         final String url = connection.getZosmfUrl() +
                 VariableConstants.RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(sysplexName) + "." +
-                EncodeUtils.encodeURIComponent(systemName) + "/actions/export";
+                EncodeUtils.encodeURIComponent(systemName) +
+                "/actions/export";
 
         final Map<String, Object> bodyMap = new HashMap<>();
         bodyMap.put("variables-export-file", variablesExportFile);
