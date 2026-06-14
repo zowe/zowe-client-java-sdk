@@ -82,7 +82,7 @@ public class WorkflowCreate {
         ValidateUtils.checkIllegalParameter(createInputData.getSystem(), "system");
         ValidateUtils.checkIllegalParameter(createInputData.getOwner(), "owner");
 
-        final String url = connection.getZosmfUrl() + WorkflowConstants.RESOURCE + "/workflows";
+        final String url = connection.getZosmfUrl() + WorkflowConstants.RESOURCE;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);

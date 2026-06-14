@@ -7,7 +7,7 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosmfworkflow.methods;
+package zowe.client.sdk.zosworkflow.methods;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
@@ -17,7 +17,7 @@ import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
+import zowe.client.sdk.zosworkflow.WorkflowConstants;
 
 /**
  * Delete a z/OSMF workflow instance.
@@ -28,6 +28,7 @@ import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
  * @version 7.0
  */
 public class WorkflowDelete {
+
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -72,16 +73,16 @@ public class WorkflowDelete {
     public Response delete(final String workflowKey) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(workflowKey, "workflowKey");
 
-        final String url =
-                connection.getZosmfUrl()
-                        + WorkflowConstants.RESOURCE
-                        + "/"
-                        + workflowKey;
+        final String url = connection.getZosmfUrl() +
+                        WorkflowConstants.RESOURCE + "/" +
+                        workflowKey;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
+
         request.setUrl(url);
         return request.executeRequest();
     }
+
 }

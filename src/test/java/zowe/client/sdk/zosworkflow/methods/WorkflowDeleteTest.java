@@ -7,7 +7,8 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.zosmfworkflow.methods;
+package zowe.client.sdk.zosworkflow.methods;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doCallRealMethod;
 
@@ -125,7 +127,7 @@ public class WorkflowDeleteTest {
     public void tstWorkflowDeleteUrlGeneration() throws ZosmfRequestException {
 
         ZosConnection connection = Mockito.mock(ZosConnection.class);
-        Mockito.when(connection.getZosmfUrl()).thenReturn("https://1:443");
+        Mockito.when(connection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
         DeleteJsonZosmfRequest mockDeleteRequest = Mockito.mock(DeleteJsonZosmfRequest.class);
         Mockito.when(mockDeleteRequest.executeRequest()).thenReturn(new Response(new JSONObject(), 200, "success"));
 
