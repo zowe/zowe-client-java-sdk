@@ -215,7 +215,7 @@ In the project, you will find code examples located in each package's README.MD 
       
 ## Build  
 
-Java 11 and above is required to compile JAR file. Maven is required to build JAR file.     
+Java 11 and above is required to compile JAR file.      
   
 The following maven command at the root prompt of the project will produce zowe-client-java-sdk.jar in the target directory:
   
