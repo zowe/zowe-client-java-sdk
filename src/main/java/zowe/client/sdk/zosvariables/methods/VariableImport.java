@@ -73,19 +73,19 @@ public class VariableImport {
     /**
      * Import variables from a CSV data file on USS.
      *
-     * @param sysplexName         name of the sysplex (e.g. 'PLEX1')
-     * @param systemName          name of the system (e.g. 'SYS1')
-     * @param variablesImportFile absolute path of the variables import file on USS (e.g. '/u/user1/vars.csv')
+     * @param sysplexName name of the sysplex (e.g. 'PLEX1')
+     * @param systemName name of the system (e.g. 'SYS1')
+     * @param targetFile UNIX path to variables export file on USS (e.g. '/u/user1/vars.csv')
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Chaitanya Katore
      */
     public Response load(final String sysplexName,
                          final String systemName,
-                         final String variablesImportFile) throws ZosmfRequestException {
+                         final String targetFile) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
         ValidateUtils.checkIllegalParameter(systemName, "systemName");
-        ValidateUtils.checkIllegalParameter(variablesImportFile, "variablesImportFile");
+        ValidateUtils.checkIllegalParameter(targetFile, "targetFile");
 
         final String url = connection.getZosmfUrl() +
                 VariableConstants.RESOURCE + "/" +
@@ -94,7 +94,7 @@ public class VariableImport {
                 "/actions/import";
 
         final Map<String, Object> bodyMap = new HashMap<>();
-        bodyMap.put("variables-import-file", variablesImportFile);
+        bodyMap.put("variables-import-file", targetFile);
 
         request.setUrl(url);
         request.setBody(new JSONObject(bodyMap).toString());

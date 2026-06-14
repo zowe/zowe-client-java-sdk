@@ -73,54 +73,54 @@ public class VariableExport {
     /**
      * Export variables to a CSV data file on USS.
      *
-     * @param sysplexName         name of the sysplex (e.g. 'PLEX1')
-     * @param systemName          name of the system (e.g. 'SYS1')
-     * @param variablesExportFile absolute path of the variables export file on USS (e.g. '/u/user1/vars.csv')
+     * @param sysplexName name of the sysplex (e.g. 'PLEX1')
+     * @param systemName name of the system (e.g. 'SYS1')
+     * @param targetFile UNIX path to variables export file on USS (e.g. '/u/user1/vars.csv')
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Chaitanya Katore
      */
     public Response export(final String sysplexName,
                            final String systemName,
-                           final String variablesExportFile) throws ZosmfRequestException {
-        return exportCommon(sysplexName, systemName, variablesExportFile, false);
+                           final String targetFile) throws ZosmfRequestException {
+        return exportCommon(sysplexName, systemName, targetFile, false);
     }
 
     /**
      * Export variables to a CSV data file on USS with overwrite option.
      *
-     * @param sysplexName         name of the sysplex (e.g. 'PLEX1')
-     * @param systemName          name of the system (e.g. 'SYS1')
-     * @param variablesExportFile absolute path of the variables export file on USS (e.g. '/u/user1/vars.csv')
-     * @param overwrite           boolean to indicate if file should be overwritten if it already exists
+     * @param sysplexName name of the sysplex (e.g. 'PLEX1')
+     * @param systemName name of the system (e.g. 'SYS1')
+     * @param targetFile UNIX path to variables export file on USS (e.g. '/u/user1/vars.csv')
+     * @param overwrite boolean to indicate if file should be overwritten if it already exists
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Chaitanya Katore
      */
     public Response export(final String sysplexName,
                            final String systemName,
-                           final String variablesExportFile,
+                           final String targetFile,
                            final boolean overwrite) throws ZosmfRequestException {
-        return exportCommon(sysplexName, systemName, variablesExportFile, overwrite);
+        return exportCommon(sysplexName, systemName, targetFile, overwrite);
     }
 
     /**
      * Common method to handle exporting of variables.
      *
-     * @param sysplexName         name of the sysplex (e.g. 'PLEX1')
-     * @param systemName          name of the system (e.g. 'SYS1')
-     * @param variablesExportFile absolute path of the variables export file on USS (e.g. '/u/user1/vars.csv')
-     * @param overwrite           boolean value to indicate if file should be overwritten
+     * @param sysplexName name of the sysplex (e.g. 'PLEX1')
+     * @param systemName name of the system (e.g. 'SYS1')
+     * @param targetFile UNIX path to variables export file on USS (e.g. '/u/user1/vars.csv')
+     * @param overwrite boolean value to indicate if file should be overwritten
      * @return http response object
      * @throws ZosmfRequestException request error state
      */
     private Response exportCommon(final String sysplexName,
                                   final String systemName,
-                                  final String variablesExportFile,
+                                  final String targetFile,
                                   final boolean overwrite) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
         ValidateUtils.checkIllegalParameter(systemName, "systemName");
-        ValidateUtils.checkIllegalParameter(variablesExportFile, "variablesExportFile");
+        ValidateUtils.checkIllegalParameter(targetFile, "targetFile");
 
         final String url = connection.getZosmfUrl() +
                 VariableConstants.RESOURCE + "/" +
@@ -129,7 +129,7 @@ public class VariableExport {
                 "/actions/export";
 
         final Map<String, Object> bodyMap = new HashMap<>();
-        bodyMap.put("variables-export-file", variablesExportFile);
+        bodyMap.put("variables-export-file", targetFile);
         bodyMap.put("overwrite", overwrite);
 
         request.setUrl(url);

@@ -156,7 +156,7 @@ public class VariableExportTest {
                 IllegalArgumentException.class,
                 () -> variablesExport.export("PLEX1", "SYS1", null)
         );
-        assertEquals("variablesExportFile is either null or empty", exception.getMessage());
+        assertEquals("targetFile is either null or empty", exception.getMessage());
     }
 
     @Test
@@ -166,7 +166,7 @@ public class VariableExportTest {
                 IllegalArgumentException.class,
                 () -> variablesExport.export("PLEX1", "SYS1", "")
         );
-        assertEquals("variablesExportFile is either null or empty", exception.getMessage());
+        assertEquals("targetFile is either null or empty", exception.getMessage());
     }
 
     @Test

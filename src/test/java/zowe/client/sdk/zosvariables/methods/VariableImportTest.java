@@ -132,7 +132,7 @@ public class VariableImportTest {
                 IllegalArgumentException.class,
                 () -> variablesImport.load("PLEX1", "SYS1", null)
         );
-        assertEquals("variablesImportFile is either null or empty", exception.getMessage());
+        assertEquals("targetFile is either null or empty", exception.getMessage());
     }
 
     @Test
@@ -142,7 +142,7 @@ public class VariableImportTest {
                 IllegalArgumentException.class,
                 () -> variablesImport.load("PLEX1", "SYS1", "")
         );
-        assertEquals("variablesImportFile is either null or empty", exception.getMessage());
+        assertEquals("targetFile is either null or empty", exception.getMessage());
     }
 
     @Test
