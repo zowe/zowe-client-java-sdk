@@ -117,7 +117,7 @@ public class VariableExport {
     private Response exportCommon(final String sysplexName,
                                   final String systemName,
                                   final String variablesExportFile,
-                                  final Boolean overwrite) throws ZosmfRequestException {
+                                  final boolean overwrite) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
         ValidateUtils.checkIllegalParameter(systemName, "systemName");
         ValidateUtils.checkIllegalParameter(variablesExportFile, "variablesExportFile");
@@ -129,9 +129,7 @@ public class VariableExport {
 
         final Map<String, Object> bodyMap = new HashMap<>();
         bodyMap.put("variables-export-file", variablesExportFile);
-        if (overwrite != null) {
-            bodyMap.put("overwrite", overwrite);
-        }
+        bodyMap.put("overwrite", overwrite);
 
         request.setUrl(url);
         request.setBody(new JSONObject(bodyMap).toString());
