@@ -44,34 +44,4 @@ public final class WorkflowsConstants {
      */
     public static final String RESOURCE = "/workflow/rest/" + VERSION;
 
-    /**
-     * Query parameter for filtering by workflow name.
-     */
-    public static final String QUERY_WORKFLOW_NAME = "workflowName=";
-
-    /**
-     * Query parameter for filtering by category.
-     */
-    public static final String QUERY_CATEGORY = "category=";
-
-    /**
-     * Query parameter for filtering by system.
-     */
-    public static final String QUERY_SYSTEM = "system=";
-
-    /**
-     * Query parameter for filtering by owner.
-     */
-    public static final String QUERY_OWNER = "owner=";
-
-    /**
-     * Query parameter for filtering by vendor.
-     */
-    public static final String QUERY_VENDOR = "vendor=";
-
-    /**
-     * Query parameter for filtering by status name.
-     */
-    public static final String QUERY_STATUS_NAME = "statusName=";
-
 }

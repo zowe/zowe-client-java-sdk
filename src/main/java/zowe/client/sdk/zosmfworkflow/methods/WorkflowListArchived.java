@@ -10,6 +10,9 @@
 package zowe.client.sdk.zosmfworkflow.methods;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -19,14 +22,16 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfworkflow.WorkflowsConstants;
-import zowe.client.sdk.zosmfworkflow.response.WorkflowKey;
+import zowe.client.sdk.zosmfworkflow.input.WorkflowListArchivedInputData;
+import zowe.client.sdk.zosmfworkflow.response.WorkflowArchivedResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Handles listing archived workflows on z/OS.
- * <p><a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-list-archived-workflow-instances">z/OSMF REST API</a>
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-list-archived-workflows-system">z/OSMF REST API</a>
  *
  * @author Muhammad Imran
  * @version 7.0
@@ -69,12 +74,26 @@ public class WorkflowListArchived {
     /**
      * Get all archived workflows on z/OS.
      *
-     * @return list of WorkflowKey objects
+     * @param inputData workflow list archived input parameters
+     * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
      */
-    public List<WorkflowKey> get() throws ZosmfRequestException {
-        final String url = connection.getZosmfUrl() +
-                WorkflowsConstants.RESOURCE + "/archivedworkflows";
+    public List<WorkflowArchivedResponse> get(final WorkflowListArchivedInputData inputData)
+            throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(inputData, "inputData");
+
+        final StringBuilder urlBuilder = new StringBuilder(
+                connection.getZosmfUrl() + WorkflowsConstants.RESOURCE + "/archivedworkflows");
+
+        boolean hasParam = false;
+        if (inputData.getOrderBy() != null) {
+            urlBuilder.append("?orderBy=").append(inputData.getOrderBy());
+            hasParam = true;
+        }
+        if (inputData.getView() != null) {
+            urlBuilder.append(hasParam ? "&" : "?").append("view=").append(inputData.getView());
+        }
+        final String url = urlBuilder.toString();
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
@@ -86,10 +105,18 @@ public class WorkflowListArchived {
                 .orElseThrow(() -> new IllegalStateException("no list archived workflows response phrase"))
                 .toString();
 
-        final List<WorkflowKey> workflows = new ArrayList<>();
-        final JSONArray results = JsonUtils.parseArray(responsePhrase);
-        for (final Object obj : results) {
-            workflows.add(JsonUtils.parseResponse(String.valueOf(obj), WorkflowKey.class, "get"));
+        final List<WorkflowArchivedResponse> workflows = new ArrayList<>();
+        try {
+            final JSONObject jsonObject = (JSONObject) new JSONParser().parse(responsePhrase);
+            final JSONArray results = (JSONArray) jsonObject.get("archivedWorkflows");
+            if (results != null) {
+                for (final Object obj : results) {
+                    workflows.add(JsonUtils.parseResponse(
+                            String.valueOf(obj), WorkflowArchivedResponse.class, "get"));
+                }
+            }
+        } catch (ParseException e) {
+            throw new ZosmfRequestException(e.getMessage());
         }
 
         return workflows;

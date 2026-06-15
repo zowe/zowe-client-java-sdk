@@ -16,12 +16,14 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfworkflow.WorkflowsConstants;
 
 /**
  * Handles deleting an archived workflow on z/OS.
- * <p><a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-delete-archived-workflow-instance">z/OSMF REST API</a>
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-delete-archived-workflow">z/OSMF REST API</a>
  *
  * @author Muhammad Imran
  * @version 7.0
@@ -72,8 +74,8 @@ public class WorkflowDeleteArchived {
         ValidateUtils.checkIllegalParameter(workflowKey, "workflowKey");
 
         final String url = connection.getZosmfUrl() +
-                WorkflowsConstants.RESOURCE + "/archivedworkflows" +
-                WorkflowsConstants.FILE_DELIM + workflowKey;
+                WorkflowsConstants.RESOURCE + "/archivedworkflows/" +
+                EncodeUtils.encodeURIComponent(workflowKey);
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);

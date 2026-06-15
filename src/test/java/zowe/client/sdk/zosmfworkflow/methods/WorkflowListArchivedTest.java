@@ -11,6 +11,7 @@ package zowe.client.sdk.zosmfworkflow.methods;
 
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -20,7 +21,8 @@ import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-import zowe.client.sdk.zosmfworkflow.response.WorkflowKey;
+import zowe.client.sdk.zosmfworkflow.input.WorkflowListArchivedInputData;
+import zowe.client.sdk.zosmfworkflow.response.WorkflowArchivedResponse;
 
 import java.util.List;
 
@@ -42,18 +44,22 @@ public class WorkflowListArchivedTest {
     private GetJsonZosmfRequest mockJsonGetRequest;
     private GetJsonZosmfRequest mockJsonGetRequestToken;
 
+    @SuppressWarnings("unchecked")
     @BeforeEach
     public void init() throws ZosmfRequestException {
+        final JSONObject archivedObj = new JSONObject();
+        archivedObj.put("archivedWorkflows", new JSONArray());
+
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONArray(), 200, "success"));
+                new Response(archivedObj, 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
         mockJsonGetRequestToken = Mockito.mock(GetJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONArray(), 200, "success"));
+                new Response(archivedObj, 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonGetRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());
@@ -117,7 +123,8 @@ public class WorkflowListArchivedTest {
     public void tstWorkflowListArchivedGetSuccess() throws ZosmfRequestException {
         final WorkflowListArchived workflowListArchived =
                 new WorkflowListArchived(connection, mockJsonGetRequest);
-        final List<WorkflowKey> result = workflowListArchived.get();
+        final List<WorkflowArchivedResponse> result = workflowListArchived.get(
+                WorkflowListArchivedInputData.builder().build());
         assertTrue(result.isEmpty());
         assertEquals("https://1:443/zosmf/workflow/rest/1.0/archivedworkflows",
                 mockJsonGetRequest.getUrl());
@@ -127,12 +134,24 @@ public class WorkflowListArchivedTest {
     public void tstWorkflowListArchivedGetTokenSuccess() throws ZosmfRequestException {
         final WorkflowListArchived workflowListArchived =
                 new WorkflowListArchived(connection, mockJsonGetRequestToken);
-        final List<WorkflowKey> result = workflowListArchived.get();
+        final List<WorkflowArchivedResponse> result = workflowListArchived.get(
+                WorkflowListArchivedInputData.builder().build());
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestToken.getHeaders().toString());
         assertTrue(result.isEmpty());
         assertEquals("https://1:443/zosmf/workflow/rest/1.0/archivedworkflows",
                 mockJsonGetRequestToken.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowListArchivedGetNullInputFailure() {
+        final WorkflowListArchived workflowListArchived =
+                new WorkflowListArchived(connection, mockJsonGetRequest);
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> workflowListArchived.get(null)
+        );
+        assertEquals("inputData is null", exception.getMessage());
     }
 
 }
