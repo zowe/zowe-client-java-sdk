@@ -23,6 +23,8 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosmfworkflow.input.WorkflowListArchivedInputData;
 import zowe.client.sdk.zosmfworkflow.response.WorkflowArchivedResponse;
+import zowe.client.sdk.zosmfworkflow.types.OrderByType;
+import zowe.client.sdk.zosmfworkflow.types.ViewType;
 
 import java.util.List;
 
@@ -123,10 +125,9 @@ public class WorkflowListArchivedTest {
     public void tstWorkflowListArchivedGetSuccess() throws ZosmfRequestException {
         final WorkflowListArchived workflowListArchived =
                 new WorkflowListArchived(connection, mockJsonGetRequest);
-        final List<WorkflowArchivedResponse> result = workflowListArchived.get(
-                WorkflowListArchivedInputData.builder().build());
+        final List<WorkflowArchivedResponse> result = workflowListArchived.get();
         assertTrue(result.isEmpty());
-        assertEquals("https://1:443/zosmf/workflow/rest/1.0/archivedworkflows",
+        assertEquals("https://1:443/zosmf/workflow/rest/1.0/archivedworkflows?orderBy=desc",
                 mockJsonGetRequest.getUrl());
     }
 
@@ -134,13 +135,46 @@ public class WorkflowListArchivedTest {
     public void tstWorkflowListArchivedGetTokenSuccess() throws ZosmfRequestException {
         final WorkflowListArchived workflowListArchived =
                 new WorkflowListArchived(connection, mockJsonGetRequestToken);
-        final List<WorkflowArchivedResponse> result = workflowListArchived.get(
-                WorkflowListArchivedInputData.builder().build());
+        final List<WorkflowArchivedResponse> result = workflowListArchived.get();
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestToken.getHeaders().toString());
         assertTrue(result.isEmpty());
-        assertEquals("https://1:443/zosmf/workflow/rest/1.0/archivedworkflows",
+        assertEquals("https://1:443/zosmf/workflow/rest/1.0/archivedworkflows?orderBy=desc",
                 mockJsonGetRequestToken.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowListArchivedGetByOrderBySuccess() throws ZosmfRequestException {
+        final WorkflowListArchived workflowListArchived =
+                new WorkflowListArchived(connection, mockJsonGetRequest);
+        final List<WorkflowArchivedResponse> result = workflowListArchived.getByOrderBy(OrderByType.ASC);
+        assertTrue(result.isEmpty());
+        assertEquals("https://1:443/zosmf/workflow/rest/1.0/archivedworkflows?orderBy=asc",
+                mockJsonGetRequest.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowListArchivedGetByViewSuccess() throws ZosmfRequestException {
+        final WorkflowListArchived workflowListArchived =
+                new WorkflowListArchived(connection, mockJsonGetRequest);
+        final List<WorkflowArchivedResponse> result = workflowListArchived.getByView(ViewType.DOMAIN);
+        assertTrue(result.isEmpty());
+        assertEquals("https://1:443/zosmf/workflow/rest/1.0/archivedworkflows?orderBy=desc&view=domain",
+                mockJsonGetRequest.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowListArchivedGetCommonSuccess() throws ZosmfRequestException {
+        final WorkflowListArchived workflowListArchived =
+                new WorkflowListArchived(connection, mockJsonGetRequest);
+        final WorkflowListArchivedInputData inputData = WorkflowListArchivedInputData.builder()
+                .orderBy(OrderByType.DESC)
+                .view(ViewType.USER)
+                .build();
+        final List<WorkflowArchivedResponse> result = workflowListArchived.getCommon(inputData);
+        assertTrue(result.isEmpty());
+        assertEquals("https://1:443/zosmf/workflow/rest/1.0/archivedworkflows?orderBy=desc&view=user",
+                mockJsonGetRequest.getUrl());
     }
 
     @Test
@@ -149,9 +183,31 @@ public class WorkflowListArchivedTest {
                 new WorkflowListArchived(connection, mockJsonGetRequest);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> workflowListArchived.get(null)
+                () -> workflowListArchived.getCommon(null)
         );
         assertEquals("inputData is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstWorkflowListArchivedGetByOrderByNullFailure() {
+        final WorkflowListArchived workflowListArchived =
+                new WorkflowListArchived(connection, mockJsonGetRequest);
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> workflowListArchived.getByOrderBy(null)
+        );
+        assertEquals("orderByType is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstWorkflowListArchivedGetByViewNullFailure() {
+        final WorkflowListArchived workflowListArchived =
+                new WorkflowListArchived(connection, mockJsonGetRequest);
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> workflowListArchived.getByView(null)
+        );
+        assertEquals("viewType is null", exception.getMessage());
     }
 
 }

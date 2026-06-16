@@ -9,8 +9,15 @@
  */
 package zowe.client.sdk.zosmfworkflow.input;
 
+import zowe.client.sdk.zosmfworkflow.types.OrderByType;
+import zowe.client.sdk.zosmfworkflow.types.ViewType;
+
+import java.util.Optional;
+
 /**
  * Parameters for the z/OSMF list archived workflows API input data.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-list-archived-workflows-system">z/OSMF REST API</a>
  *
  * @author Muhammad Imran
  * @version 7.0
@@ -20,12 +27,12 @@ public class WorkflowListArchivedInputData {
     /**
      * Sort order for archived workflow instances.
      */
-    private final String orderBy;
+    private final OrderByType orderBy;
 
     /**
      * View type for archived workflow instances.
      */
-    private final String view;
+    private final ViewType view;
 
     /**
      * WorkflowListArchivedInputData constructor.
@@ -42,8 +49,8 @@ public class WorkflowListArchivedInputData {
      *
      * @return orderBy value
      */
-    public String getOrderBy() {
-        return orderBy;
+    public Optional<OrderByType> getOrderBy() {
+        return Optional.ofNullable(orderBy);
     }
 
     /**
@@ -51,8 +58,8 @@ public class WorkflowListArchivedInputData {
      *
      * @return view value
      */
-    public String getView() {
-        return view;
+    public Optional<ViewType> getView() {
+        return Optional.ofNullable(view);
     }
 
     /**
@@ -72,8 +79,8 @@ public class WorkflowListArchivedInputData {
     @Override
     public String toString() {
         return "WorkflowListArchivedInputData{" +
-                "orderBy='" + orderBy + '\'' +
-                ", view='" + view + '\'' +
+                "orderBy=" + orderBy +
+                ", view=" + view +
                 '}';
     }
 
@@ -82,8 +89,8 @@ public class WorkflowListArchivedInputData {
      */
     public static final class Builder {
 
-        private String orderBy;
-        private String view;
+        private OrderByType orderBy;
+        private ViewType view;
 
         private Builder() {
         }
@@ -94,7 +101,7 @@ public class WorkflowListArchivedInputData {
          * @param orderBy order by value
          * @return this builder instance
          */
-        public Builder orderBy(final String orderBy) {
+        public Builder orderBy(final OrderByType orderBy) {
             this.orderBy = orderBy;
             return this;
         }
@@ -105,7 +112,7 @@ public class WorkflowListArchivedInputData {
          * @param view view value
          * @return this builder instance
          */
-        public Builder view(final String view) {
+        public Builder view(final ViewType view) {
             this.view = view;
             return this;
         }

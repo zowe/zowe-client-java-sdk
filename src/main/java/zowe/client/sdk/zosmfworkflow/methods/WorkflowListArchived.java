@@ -24,6 +24,8 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfworkflow.WorkflowsConstants;
 import zowe.client.sdk.zosmfworkflow.input.WorkflowListArchivedInputData;
 import zowe.client.sdk.zosmfworkflow.response.WorkflowArchivedResponse;
+import zowe.client.sdk.zosmfworkflow.types.OrderByType;
+import zowe.client.sdk.zosmfworkflow.types.ViewType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,27 +74,67 @@ public class WorkflowListArchived {
     }
 
     /**
-     * Get all archived workflows on z/OS.
+     * Get all archived workflows on z/OS using default ordering.
+     *
+     * @return list of WorkflowArchivedResponse objects
+     * @throws ZosmfRequestException request error state
+     */
+    public List<WorkflowArchivedResponse> get() throws ZosmfRequestException {
+        return getCommon(WorkflowListArchivedInputData.builder().build());
+    }
+
+    /**
+     * Get all archived workflows on z/OS ordered by the given order type.
+     *
+     * @param orderByType order type for sorting archived workflow instances
+     * @return list of WorkflowArchivedResponse objects
+     * @throws ZosmfRequestException request error state
+     */
+    public List<WorkflowArchivedResponse> getByOrderBy(final OrderByType orderByType)
+            throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(orderByType, "orderByType");
+        return getCommon(WorkflowListArchivedInputData.builder().orderBy(orderByType).build());
+    }
+
+    /**
+     * Get all archived workflows on z/OS filtered by the given view type.
+     *
+     * @param viewType view type for filtering archived workflow instances
+     * @return list of WorkflowArchivedResponse objects
+     * @throws ZosmfRequestException request error state
+     */
+    public List<WorkflowArchivedResponse> getByView(final ViewType viewType)
+            throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(viewType, "viewType");
+        return getCommon(WorkflowListArchivedInputData.builder().view(viewType).build());
+    }
+
+    /**
+     * Get all archived workflows on z/OS with full input control.
      *
      * @param inputData workflow list archived input parameters
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
      */
-    public List<WorkflowArchivedResponse> get(final WorkflowListArchivedInputData inputData)
+    public List<WorkflowArchivedResponse> getCommon(final WorkflowListArchivedInputData inputData)
             throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData, "inputData");
 
         final StringBuilder urlBuilder = new StringBuilder(
                 connection.getZosmfUrl() + WorkflowsConstants.RESOURCE + "/archivedworkflows");
 
-        boolean hasParam = false;
-        if (inputData.getOrderBy() != null) {
-            urlBuilder.append("?orderBy=").append(inputData.getOrderBy());
-            hasParam = true;
+        final List<String> queryParams = new ArrayList<>();
+
+        final OrderByType orderBy = inputData.getOrderBy().orElse(OrderByType.DESC);
+        queryParams.add("orderBy=" + orderBy.getValue());
+
+        inputData.getView()
+                .ifPresent(view -> queryParams.add("view=" + view.getValue()));
+
+        if (!queryParams.isEmpty()) {
+            urlBuilder.append("?").append(String.join("&", queryParams));
         }
-        if (inputData.getView() != null) {
-            urlBuilder.append(hasParam ? "&" : "?").append("view=").append(inputData.getView());
-        }
+
         final String url = urlBuilder.toString();
 
         if (request == null) {
@@ -112,7 +154,7 @@ public class WorkflowListArchived {
             if (results != null) {
                 for (final Object obj : results) {
                     workflows.add(JsonUtils.parseResponse(
-                            String.valueOf(obj), WorkflowArchivedResponse.class, "get"));
+                            String.valueOf(obj), WorkflowArchivedResponse.class, "getCommon"));
                 }
             }
         } catch (ParseException e) {

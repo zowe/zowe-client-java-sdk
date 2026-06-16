@@ -10,10 +10,13 @@
 package zowe.client.sdk.zosmfworkflow.input;
 
 import org.junit.jupiter.api.Test;
+import zowe.client.sdk.zosmfworkflow.types.OrderByType;
+import zowe.client.sdk.zosmfworkflow.types.ViewType;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Class containing unit tests for WorkflowListArchivedInputData.
@@ -23,13 +26,13 @@ public class WorkflowListArchivedInputDataTest {
     @Test
     public void tstWorkflowListArchivedInputDataBuilderSuccess() {
         final WorkflowListArchivedInputData inputData = WorkflowListArchivedInputData.builder()
-                .orderBy("desc")
-                .view("user")
+                .orderBy(OrderByType.DESC)
+                .view(ViewType.USER)
                 .build();
 
         assertNotNull(inputData);
-        assertEquals("desc", inputData.getOrderBy());
-        assertEquals("user", inputData.getView());
+        assertEquals(Optional.of(OrderByType.DESC), inputData.getOrderBy());
+        assertEquals(Optional.of(ViewType.USER), inputData.getView());
     }
 
     @Test
@@ -38,8 +41,8 @@ public class WorkflowListArchivedInputDataTest {
                 .build();
 
         assertNotNull(inputData);
-        assertNull(inputData.getOrderBy());
-        assertNull(inputData.getView());
+        assertEquals(Optional.empty(), inputData.getOrderBy());
+        assertEquals(Optional.empty(), inputData.getView());
     }
 
 }
