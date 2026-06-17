@@ -20,7 +20,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosmfworkflow.WorkflowsConstants;
+import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
 import zowe.client.sdk.zosmfworkflow.input.WorkflowListArchivedInputData;
 import zowe.client.sdk.zosmfworkflow.response.WorkflowArchivedResponse;
 import zowe.client.sdk.zosmfworkflow.types.OrderByType;
@@ -39,6 +39,7 @@ import java.util.List;
  */
 public class WorkflowListArchived {
 
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -118,50 +119,37 @@ public class WorkflowListArchived {
             throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData, "inputData");
 
-        final StringBuilder urlBuilder = new StringBuilder(connection.getZosmfUrl() +
-                WorkflowsConstants.RESOURCE + "/" +
-                "archivedworkflows"
-        );
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + WorkflowConstants.ARCHIVED_RESOURCE);
 
-        inputData.getOrderBy()
-                .ifPresent(orderBy -> urlBuilder.append("?orderBy=").append(orderBy.getValue()));
-
-        inputData.getView()
-                .ifPresent(view -> urlBuilder.append("&view=").append(view.getValue()));
-
-        final String url = urlBuilder.toString();
+        inputData.getOrderBy().ifPresent(orderBy -> url.append("?orderBy=").append(orderBy.getValue()));
+        inputData.getView().ifPresent(view -> url.append("&view=").append(view.getValue()));
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
-        request.setUrl(url);
+        request.setUrl(url.toString());
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException("no list archived workflows response phrase"))
                 .toString();
 
-        final List<WorkflowArchivedResponse> workflows = new ArrayList<>();
-        final ObjectMapper mapper = new ObjectMapper();
+        final List<WorkflowArchivedResponse> results = new ArrayList<>();
         final JsonNode root;
         try {
-            root = mapper.readTree(responsePhrase);
+            root = OBJECT_MAPPER.readTree(responsePhrase);
         } catch (JsonProcessingException e) {
             throw new ZosmfRequestException(e.getMessage());
         }
-        final JsonNode results = root.path("archivedWorkflows");
+        final JsonNode nodes = root.path("archivedWorkflows");
 
-        if (results.isArray()) {
-            for (final JsonNode node : results) {
-                workflows.add(JsonUtils.parseResponse(
-                        node.toString(),
-                        WorkflowArchivedResponse.class,
-                        "getCommon"
-                ));
+        if (nodes.isArray()) {
+            for (final JsonNode node : nodes) {
+                results.add(JsonUtils.parseResponse(node.toString(), WorkflowArchivedResponse.class, "getCommon"));
             }
         }
 
-        return workflows;
+        return results;
     }
 
 }

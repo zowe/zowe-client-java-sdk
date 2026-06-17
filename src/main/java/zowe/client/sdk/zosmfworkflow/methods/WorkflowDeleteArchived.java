@@ -18,7 +18,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosmfworkflow.WorkflowsConstants;
+import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
 
 /**
  * Handles deleting an archived workflow on z/OS.
@@ -74,8 +74,7 @@ public class WorkflowDeleteArchived {
         ValidateUtils.checkIllegalParameter(workflowKey, "workflowKey");
 
         final String url = connection.getZosmfUrl() +
-                WorkflowsConstants.RESOURCE + "/" +
-                "archivedworkflows" + "/" +
+                WorkflowConstants.ARCHIVED_RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(workflowKey);
 
         if (request == null) {

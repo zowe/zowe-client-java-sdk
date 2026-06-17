@@ -75,7 +75,7 @@ public class WorkflowDelete {
         ValidateUtils.checkNullParameter(workflowKey, "workflowKey");
 
         final String url = connection.getZosmfUrl() +
-                WorkflowConstants.RESOURCE + "/" +
+                WorkflowConstants.WORKFLOWS_RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(workflowKey);
 
         if (request == null) {
