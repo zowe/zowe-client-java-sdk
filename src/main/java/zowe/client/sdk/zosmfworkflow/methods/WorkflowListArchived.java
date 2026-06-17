@@ -102,8 +102,7 @@ public class WorkflowListArchived {
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
      */
-    public List<WorkflowArchivedResponse> getByView(final ViewType viewType)
-            throws ZosmfRequestException {
+    public List<WorkflowArchivedResponse> getByView(final ViewType viewType) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(viewType, "viewType");
         return getCommon(WorkflowListArchivedInputData.builder().view(viewType).build());
     }
@@ -119,8 +118,10 @@ public class WorkflowListArchived {
             throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData, "inputData");
 
-        final StringBuilder urlBuilder = new StringBuilder(
-                connection.getZosmfUrl() + WorkflowsConstants.RESOURCE + "/archivedworkflows");
+        final StringBuilder urlBuilder = new StringBuilder(connection.getZosmfUrl() +
+                WorkflowsConstants.RESOURCE + "/" +
+                "archivedworkflows"
+        );
 
         inputData.getOrderBy()
                 .ifPresent(orderBy -> urlBuilder.append("?orderBy=").append(orderBy.getValue()));
