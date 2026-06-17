@@ -16,6 +16,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
 
@@ -73,9 +74,13 @@ public class WorkflowArchive {
     public Response archive(final String workflowKey) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(workflowKey, "workflowKey");
         final String url = connection.getZosmfUrl()
-                + WorkflowConstants.RESOURCE + "/"
-                + workflowKey
-                + "/operations/archive";
+                + WorkflowConstants.WORKFLOWS_RESOURCE
+                + WorkflowConstants.FILE_DELIM
+                + EncodeUtils.encodeURIComponent(workflowKey)
+                + WorkflowConstants.FILE_DELIM
+                + "operations"
+                + WorkflowConstants.FILE_DELIM
+                + "archive";
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
