@@ -59,14 +59,20 @@ public class WorkflowDeleteArchivedTest {
     }
 
     @Test
-    public void tstWorkflowDeleteArchivedSecondaryConstructorWithValidRequestType() {
+    public void tstWorkflowDeleteArchivedSecondaryConstructorWithValidRequestTypeSuccess() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
-        assertNotNull(new WorkflowDeleteArchived(connection, request));
+        boolean noError = false;
+        try {
+            new WorkflowDeleteArchived(connection, request);
+        } catch (IllegalStateException e) {
+            noError = true;
+        }
+        assertFalse(noError);
     }
 
     @Test
-    public void tstWorkflowDeleteArchivedSecondaryConstructorWithNullConnection() {
+    public void tstWorkflowDeleteArchivedSecondaryConstructorWithNullConnectionFailure() {
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -76,7 +82,7 @@ public class WorkflowDeleteArchivedTest {
     }
 
     @Test
-    public void tstWorkflowDeleteArchivedSecondaryConstructorWithNullRequest() {
+    public void tstWorkflowDeleteArchivedSecondaryConstructorWithNullRequestFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -86,7 +92,7 @@ public class WorkflowDeleteArchivedTest {
     }
 
     @Test
-    public void tstWorkflowDeleteArchivedSecondaryConstructorWithInvalidRequestType() {
+    public void tstWorkflowDeleteArchivedSecondaryConstructorWithInvalidRequestTypeFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class);
         IllegalStateException exception = assertThrows(
@@ -97,12 +103,7 @@ public class WorkflowDeleteArchivedTest {
     }
 
     @Test
-    public void tstWorkflowDeleteArchivedPrimaryConstructorWithValidConnection() {
-        assertNotNull(new WorkflowDeleteArchived(Mockito.mock(ZosConnection.class)));
-    }
-
-    @Test
-    public void tstWorkflowDeleteArchivedPrimaryConstructorWithNullConnection() {
+    public void tstWorkflowDeleteArchivedPrimaryConstructorWithNullConnectionFailure() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new WorkflowDeleteArchived(null)

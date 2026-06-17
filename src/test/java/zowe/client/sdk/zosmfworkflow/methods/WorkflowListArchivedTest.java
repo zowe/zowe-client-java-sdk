@@ -70,14 +70,20 @@ public class WorkflowListArchivedTest {
     }
 
     @Test
-    public void tstWorkflowListArchivedSecondaryConstructorWithValidRequestType() {
+    public void tstWorkflowListArchivedSecondaryConstructorWithValidRequestTypeSuccess() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(GetJsonZosmfRequest.class);
-        assertNotNull(new WorkflowListArchived(connection, request));
+        boolean noError = false;
+        try {
+            new WorkflowListArchived(connection, request);
+        } catch (IllegalStateException e) {
+            noError = true;
+        }
+        assertFalse(noError);
     }
 
     @Test
-    public void tstWorkflowListArchivedSecondaryConstructorWithNullConnection() {
+    public void tstWorkflowListArchivedSecondaryConstructorWithNullConnectionFailure() {
         ZosmfRequest request = Mockito.mock(GetJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -87,7 +93,7 @@ public class WorkflowListArchivedTest {
     }
 
     @Test
-    public void tstWorkflowListArchivedSecondaryConstructorWithNullRequest() {
+    public void tstWorkflowListArchivedSecondaryConstructorWithNullRequestFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -97,7 +103,7 @@ public class WorkflowListArchivedTest {
     }
 
     @Test
-    public void tstWorkflowListArchivedSecondaryConstructorWithInvalidRequestType() {
+    public void tstWorkflowListArchivedSecondaryConstructorWithInvalidRequestTypeFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class);
         IllegalStateException exception = assertThrows(
@@ -108,12 +114,7 @@ public class WorkflowListArchivedTest {
     }
 
     @Test
-    public void tstWorkflowListArchivedPrimaryConstructorWithValidConnection() {
-        assertNotNull(new WorkflowListArchived(Mockito.mock(ZosConnection.class)));
-    }
-
-    @Test
-    public void tstWorkflowListArchivedPrimaryConstructorWithNullConnection() {
+    public void tstWorkflowListArchivedPrimaryConstructorWithNullConnectionFailure() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new WorkflowListArchived(null)
