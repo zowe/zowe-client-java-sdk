@@ -37,7 +37,7 @@ public final class WorkflowsConstants {
     /**
      * Use for an illegal exception error message.
      */
-    public static final String WORKFLOW_KEY_ILLEGAL_MSG = "workflowKey is either null or empty";
+    public static final String WORKFLOW_KEY_ILLEGAL_MSG = "key is either null or empty";
 
     /**
      * z/OSMF workflow service path.

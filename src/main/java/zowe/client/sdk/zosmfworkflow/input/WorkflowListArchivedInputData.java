@@ -89,7 +89,7 @@ public class WorkflowListArchivedInputData {
      */
     public static final class Builder {
 
-        private OrderByType orderBy;
+        private OrderByType orderBy = OrderByType.DESC;
         private ViewType view;
 
         private Builder() {

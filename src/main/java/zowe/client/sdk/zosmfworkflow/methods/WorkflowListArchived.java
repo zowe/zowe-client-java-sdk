@@ -9,10 +9,9 @@
  */
 package zowe.client.sdk.zosmfworkflow.methods;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -123,17 +122,11 @@ public class WorkflowListArchived {
         final StringBuilder urlBuilder = new StringBuilder(
                 connection.getZosmfUrl() + WorkflowsConstants.RESOURCE + "/archivedworkflows");
 
-        final List<String> queryParams = new ArrayList<>();
-
-        final OrderByType orderBy = inputData.getOrderBy().orElse(OrderByType.DESC);
-        queryParams.add("orderBy=" + orderBy.getValue());
+        inputData.getOrderBy()
+                .ifPresent(orderBy -> urlBuilder.append("?orderBy=").append(orderBy.getValue()));
 
         inputData.getView()
-                .ifPresent(view -> queryParams.add("view=" + view.getValue()));
-
-        if (!queryParams.isEmpty()) {
-            urlBuilder.append("?").append(String.join("&", queryParams));
-        }
+                .ifPresent(view -> urlBuilder.append("&view=").append(view.getValue()));
 
         final String url = urlBuilder.toString();
 
@@ -148,17 +141,23 @@ public class WorkflowListArchived {
                 .toString();
 
         final List<WorkflowArchivedResponse> workflows = new ArrayList<>();
+        final ObjectMapper mapper = new ObjectMapper();
+        final JsonNode root;
         try {
-            final JSONObject jsonObject = (JSONObject) new JSONParser().parse(responsePhrase);
-            final JSONArray results = (JSONArray) jsonObject.get("archivedWorkflows");
-            if (results != null) {
-                for (final Object obj : results) {
-                    workflows.add(JsonUtils.parseResponse(
-                            String.valueOf(obj), WorkflowArchivedResponse.class, "getCommon"));
-                }
-            }
-        } catch (ParseException e) {
+            root = mapper.readTree(responsePhrase);
+        } catch (JsonProcessingException e) {
             throw new ZosmfRequestException(e.getMessage());
+        }
+        final JsonNode results = root.path("archivedWorkflows");
+
+        if (results.isArray()) {
+            for (final JsonNode node : results) {
+                workflows.add(JsonUtils.parseResponse(
+                        node.toString(),
+                        WorkflowArchivedResponse.class,
+                        "getCommon"
+                ));
+            }
         }
 
         return workflows;

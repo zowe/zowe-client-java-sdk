@@ -41,7 +41,7 @@ public class WorkflowListArchivedInputDataTest {
                 .build();
 
         assertNotNull(inputData);
-        assertEquals(Optional.empty(), inputData.getOrderBy());
+        assertEquals(Optional.of(OrderByType.DESC), inputData.getOrderBy());
         assertEquals(Optional.empty(), inputData.getView());
     }
 
