@@ -32,7 +32,7 @@ import static org.mockito.Mockito.doCallRealMethod;
 public class WorkflowDeleteTest {
 
     @Test
-    public void tstWorkflowDeleteSecondaryConstructorWithValidRequestType() {
+    public void tstWorkflowDeleteSecondaryConstructorWithValidRequestTypeSuccess() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
         WorkflowDelete workflowDelete = new WorkflowDelete(connection, request);
@@ -40,21 +40,21 @@ public class WorkflowDeleteTest {
     }
 
     @Test
-    public void tstWorkflowDeleteSecondaryConstructorWithNullConnection() {
+    public void tstWorkflowDeleteSecondaryConstructorWithNullConnectionFailure() {
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(NullPointerException.class, () -> new WorkflowDelete(null, request));
         assertEquals("connection is null", exception.getMessage());
     }
 
     @Test
-    public void tstWorkflowDeleteSecondaryConstructorWithNullRequest() {
+    public void tstWorkflowDeleteSecondaryConstructorWithNullRequestFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(NullPointerException.class, () -> new WorkflowDelete(connection, null));
         assertEquals("request is null", exception.getMessage());
     }
 
     @Test
-    public void tstWorkflowDeleteSecondaryConstructorWithInvalidRequestType() {
+    public void tstWorkflowDeleteSecondaryConstructorWithInvalidRequestTypeFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class);
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> new WorkflowDelete(connection, request));
@@ -62,14 +62,14 @@ public class WorkflowDeleteTest {
     }
 
     @Test
-    public void tstWorkflowDeletePrimaryConstructorWithValidConnection() {
+    public void tstWorkflowDeletePrimaryConstructorWithValidConnectionSuccess() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         WorkflowDelete workflowDelete = new WorkflowDelete(connection);
         assertNotNull(workflowDelete);
     }
 
     @Test
-    public void tstWorkflowDeletePrimaryConstructorWithNullConnection() {
+    public void tstWorkflowDeletePrimaryConstructorWithNullConnectionFailure() {
         NullPointerException exception = assertThrows(NullPointerException.class, () -> new WorkflowDelete(null));
         assertEquals("connection is null", exception.getMessage());
     }
@@ -93,7 +93,7 @@ public class WorkflowDeleteTest {
     }
 
     @Test
-    public void tstWorkflowDeleteWithNullWorkflowKey() {
+    public void tstWorkflowDeleteWithNullWorkflowKeyFailure() {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
         WorkflowDelete workflowDelete = new WorkflowDelete(connection);
         NullPointerException exception = assertThrows(NullPointerException.class, () -> workflowDelete.delete(null));
@@ -101,31 +101,20 @@ public class WorkflowDeleteTest {
     }
 
     @Test
-    public void tstWorkflowDeleteSecondaryConstructorObjectCreated() {
+    public void tstWorkflowDeleteSecondaryConstructorObjectCreateSuccess() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         DeleteJsonZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
-        assertNotNull(new WorkflowDelete(connection, request));
+        boolean noError = false;
+        try {
+            new WorkflowDelete(connection, request);
+        } catch (IllegalStateException e) {
+            noError = true;
+        }
+        assertFalse(noError);
     }
 
     @Test
-    public void tstWorkflowDeleteUrlContainsWorkflowKey() throws ZosmfRequestException {
-
-        ZosConnection connection = Mockito.mock(ZosConnection.class);
-        Mockito.when(connection.getZosmfUrl()).thenReturn("https://1:443");
-        DeleteJsonZosmfRequest mockDeleteRequest = Mockito.mock(DeleteJsonZosmfRequest.class);
-        Mockito.when(mockDeleteRequest.executeRequest()).thenReturn(new Response(new JSONObject(), 200, "success"));
-
-        doCallRealMethod().when(mockDeleteRequest).setUrl(any());
-        doCallRealMethod().when(mockDeleteRequest).getUrl();
-
-        WorkflowDelete workflowDelete = new WorkflowDelete(connection, mockDeleteRequest);
-        workflowDelete.delete("MYWORKFLOW");
-        assertTrue(mockDeleteRequest.getUrl().contains("MYWORKFLOW"));
-    }
-
-    @Test
-    public void tstWorkflowDeleteUrlGeneration() throws ZosmfRequestException {
-
+    public void tstWorkflowDeleteUrlGenerationSuccess() throws ZosmfRequestException {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         Mockito.when(connection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
         DeleteJsonZosmfRequest mockDeleteRequest = Mockito.mock(DeleteJsonZosmfRequest.class);
@@ -139,4 +128,5 @@ public class WorkflowDeleteTest {
         workflowDelete.delete("TESTKEY");
         assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows/TESTKEY", mockDeleteRequest.getUrl());
     }
+
 }

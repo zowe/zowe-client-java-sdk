@@ -21,40 +21,39 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
 
 /**
- * Delete a z/OSMF workflow instance.
+ * Handles deleting an archived workflow on z/OS.
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-delete-workflow"> z/OSMF REST API </a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-delete-archived-workflow">z/OSMF REST API</a>
  *
- * @author Adithe Das
+ * @author Muhammad Imran
  * @version 7.0
  */
-public class WorkflowDelete {
+public class WorkflowDeleteArchived {
 
     private final ZosConnection connection;
     private ZosmfRequest request;
 
     /**
-     * WorkflowDelete constructor.
+     * WorkflowDeleteArchived constructor.
      *
-     * @param connection z/OS connection
+     * @param connection for connection information, see ZosConnection object
      */
-    public WorkflowDelete(final ZosConnection connection) {
+    public WorkflowDeleteArchived(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
 
     /**
-     * Alternative WorkflowDelete constructor with ZosmfRequest object.
+     * Alternative WorkflowDeleteArchived constructor with ZosmfRequest object.
      * This is mainly used for internal code unit testing with Mockito,
      * and it is not recommended to be used by the larger community.
-     *
      * <p>
      * This constructor is package-private.
      *
-     * @param connection z/OS connection information, see ZosConnection object
-     * @param request compatible ZosmfRequest interface object
+     * @param connection for connection information, see ZosConnection object
+     * @param request    any compatible ZoweRequest Interface object
      */
-    WorkflowDelete(final ZosConnection connection, final ZosmfRequest request) {
+    WorkflowDeleteArchived(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
         ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
@@ -65,24 +64,24 @@ public class WorkflowDelete {
     }
 
     /**
-     * Delete a workflow instance.
+     * Delete an archived workflow on z/OS.
      *
-     * @param workflowKey workflow key
-     * @return response object
-     * @throws ZosmfRequestException error executing request
+     * @param workflowKey workflow key of the archived workflow to delete
+     * @return http response object
+     * @throws ZosmfRequestException request error state
      */
     public Response delete(final String workflowKey) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(workflowKey, "workflowKey");
+        ValidateUtils.checkIllegalParameter(workflowKey, "workflowKey");
 
         final String url = connection.getZosmfUrl() +
-                WorkflowConstants.WORKFLOWS_RESOURCE + "/" +
+                WorkflowConstants.ARCHIVED_RESOURCE + "/" +
                 EncodeUtils.encodeURIComponent(workflowKey);
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
         }
-
         request.setUrl(url);
+
         return request.executeRequest();
     }
 
