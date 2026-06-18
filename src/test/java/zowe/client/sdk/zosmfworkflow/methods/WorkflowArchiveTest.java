@@ -33,7 +33,7 @@ import static org.mockito.Mockito.doCallRealMethod;
 public class WorkflowArchiveTest {
 
     @Test
-    public void tstWorkflowArchiveSecondaryConstructorWithValidRequestType() {
+    public void tstWorkflowArchiveSecondaryConstructorWithValidRequestTypeSuccess() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(PostJsonZosmfRequest.class);
         WorkflowArchive workflowArchive = new WorkflowArchive(connection, request);
@@ -41,36 +41,36 @@ public class WorkflowArchiveTest {
     }
 
     @Test
-    public void tstWorkflowArchiveSecondaryConstructorWithNullConnection() {
+    public void tstWorkflowArchiveSecondaryConstructorWithNullConnectionFailure() {
         ZosmfRequest request = Mockito.mock(PostJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(NullPointerException.class, () -> new WorkflowArchive(null, request));
         assertEquals("connection is null", exception.getMessage());
     }
 
     @Test
-    public void tstWorkflowArchiveSecondaryConstructorWithNullRequest() {
+    public void tstWorkflowArchiveSecondaryConstructorWithNullRequestFailure() {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
         NullPointerException exception = assertThrows(NullPointerException.class, () -> new WorkflowArchive(connection, null));
         assertEquals("request is null", exception.getMessage());
     }
 
     @Test
-    public void tstWorkflowArchiveSecondaryConstructorWithInvalidRequestType() {
+    public void tstWorkflowArchiveSecondaryConstructorWithInvalidRequestTypeFailure() {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class);
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> new WorkflowArchive(connection, request));
-        assertEquals("request not PostJsonZosmfRequest", exception.getMessage());
+        assertEquals("POST_JSON request type required", exception.getMessage());
     }
 
     @Test
-    public void tstWorkflowArchivePrimaryConstructorWithValidConnection() {
+    public void tstWorkflowArchivePrimaryConstructorWithValidConnectionSuccess() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         WorkflowArchive workflowArchive = new WorkflowArchive(connection);
         assertNotNull(workflowArchive);
     }
 
     @Test
-    public void tstWorkflowArchivePrimaryConstructorWithNullConnection() {
+    public void tstWorkflowArchivePrimaryConstructorWithNullConnectionFailure() {
         NullPointerException exception = assertThrows(NullPointerException.class, () -> new WorkflowArchive(null));
         assertEquals("connection is null", exception.getMessage());
     }
@@ -92,7 +92,7 @@ public class WorkflowArchiveTest {
     }
 
     @Test
-    public void tstWorkflowArchiveWithEmptyWorkflowKey() {
+    public void tstWorkflowArchiveWithEmptyWorkflowKeyFailure() {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
         WorkflowArchive workflowArchive = new WorkflowArchive(connection);
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> workflowArchive.archive(""));
@@ -100,7 +100,7 @@ public class WorkflowArchiveTest {
     }
 
     @Test
-    public void tstWorkflowArchiveUrlGeneration() throws ZosmfRequestException {
+    public void tstWorkflowArchiveUrlGenerationSuccess() throws ZosmfRequestException {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
         PostJsonZosmfRequest mockRequest = Mockito.mock(PostJsonZosmfRequest.class);
         Mockito.when(mockRequest.executeRequest()).thenReturn(new Response(new JSONObject(), 200, "success"));
