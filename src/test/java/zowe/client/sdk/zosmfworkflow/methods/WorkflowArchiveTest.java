@@ -19,8 +19,10 @@ import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doCallRealMethod;
 
 /**
  * Class containing unit tests for WorkflowArchive.
@@ -51,6 +53,7 @@ public class WorkflowArchiveTest {
         NullPointerException exception = assertThrows(NullPointerException.class, () -> new WorkflowArchive(connection, null));
         assertEquals("request is null", exception.getMessage());
     }
+
     @Test
     public void tstWorkflowArchiveSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
@@ -68,7 +71,7 @@ public class WorkflowArchiveTest {
 
     @Test
     public void tstWorkflowArchivePrimaryConstructorWithNullConnection() {
-        NullPointerException exception = assertThrows(NullPointerException.class,() -> new WorkflowArchive(null));
+        NullPointerException exception = assertThrows(NullPointerException.class, () -> new WorkflowArchive(null));
         assertEquals("connection is null", exception.getMessage());
     }
 
@@ -92,8 +95,8 @@ public class WorkflowArchiveTest {
     public void tstWorkflowArchiveWithEmptyWorkflowKey() {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
         WorkflowArchive workflowArchive = new WorkflowArchive(connection);
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,() -> workflowArchive.archive(""));
-        assertEquals("workflowKey is either null or empty",exception.getMessage());
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> workflowArchive.archive(""));
+        assertEquals("workflowKey is either null or empty", exception.getMessage());
     }
 
     @Test
