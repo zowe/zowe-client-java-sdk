@@ -29,6 +29,9 @@ import static org.mockito.Mockito.withSettings;
 
 /**
  * Class containing unit tests for WorkflowDeleteArchived.
+ *
+ * @author Muhammad Imran
+ * @version 7.0
  */
 public class WorkflowDeleteArchivedTest {
 

@@ -27,8 +27,8 @@ import static org.mockito.Mockito.doCallRealMethod;
 /**
  * Class containing unit tests for WorkflowArchive.
  *
- * Version: 7.0
- * Author: Adithe Das
+ * @author Adithe Das
+ * @version 7.0
  */
 public class WorkflowArchiveTest {
 

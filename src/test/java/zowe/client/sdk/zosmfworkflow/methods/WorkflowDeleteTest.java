@@ -25,9 +25,9 @@ import static org.mockito.Mockito.doCallRealMethod;
 
 /**
  * Class containing unit tests for WorkflowDelete.
- * <p>
- * Version: 7.0
- * Author: Adithe Das
+ *
+ * @author Adithe Das
+ * @version 7.0
  */
 public class WorkflowDeleteTest {
 

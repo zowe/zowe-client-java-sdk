@@ -17,6 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Class containing unit tests for WorkflowArchivedResponse.
+ *
+ * @author Muhammad Imran
+ * @version 7.0
  */
 public class WorkflowArchivedResponseTest {
 

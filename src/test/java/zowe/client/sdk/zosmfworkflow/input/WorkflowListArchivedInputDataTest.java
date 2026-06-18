@@ -20,6 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Class containing unit tests for WorkflowListArchivedInputData.
+ *
+ * @author Muhammad Imran
+ * @version 7.0
  */
 public class WorkflowListArchivedInputDataTest {
 
