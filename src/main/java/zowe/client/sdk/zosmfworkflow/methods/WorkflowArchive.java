@@ -62,7 +62,7 @@ public class WorkflowArchive {
         ValidateUtils.checkNullParameter(request, "request");
 
         if (!(request instanceof PostJsonZosmfRequest)) {
-            throw new IllegalStateException("request not PostJsonZosmfRequest");
+            throw new IllegalStateException("POST_JSON request type required");
         }
         this.connection = connection;
         this.request = request;
