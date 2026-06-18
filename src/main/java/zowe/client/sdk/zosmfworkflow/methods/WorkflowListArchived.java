@@ -119,7 +119,8 @@ public class WorkflowListArchived {
             throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData, "inputData");
 
-        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE);
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
+                WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE);
 
         inputData.getOrderBy().ifPresent(orderBy -> url.append("?orderBy=").append(orderBy.getValue()));
         inputData.getView().ifPresent(view -> url.append("&view=").append(view.getValue()));
