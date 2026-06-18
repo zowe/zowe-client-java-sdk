@@ -27,7 +27,7 @@ public final class WorkflowConstants {
     /**
      * File delimiter.
      */
-    public static final String FILE_DELIM = "/";
+    public static final String URL_PATH_DELIM = "/";
 
     /**
      * Version of the z/OSMF workflow service.
@@ -42,11 +42,11 @@ public final class WorkflowConstants {
     /**
      * z/OSMF workflows service path.
      */
-    public static final String WORKFLOWS_RESOURCE = BASE_RESOURCE + FILE_DELIM + "workflows";
+    public static final String WORKFLOWS_RESOURCE = BASE_RESOURCE + URL_PATH_DELIM + "workflows";
 
     /**
      * z/OSMF archived workflows service path.
      */
-    public static final String ARCHIVED_RESOURCE = BASE_RESOURCE + FILE_DELIM + "archivedworkflows";
+    public static final String ARCHIVED_RESOURCE = BASE_RESOURCE + URL_PATH_DELIM + "archivedworkflows";
 
 }
