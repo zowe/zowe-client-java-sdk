@@ -74,8 +74,8 @@ public class VariableImport {
      * Import variables from a CSV data file on USS.
      *
      * @param sysplexName name of the sysplex (e.g. 'PLEX1')
-     * @param systemName name of the system (e.g. 'SYS1')
-     * @param targetFile UNIX path to variables export file on USS (e.g. '/u/user1/vars.csv')
+     * @param systemName  name of the system (e.g. 'SYS1')
+     * @param targetFile  UNIX path to variables export file on USS (e.g. '/u/user1/vars.csv')
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Chaitanya Katore

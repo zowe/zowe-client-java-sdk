@@ -26,6 +26,8 @@ import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-delete-workflow"> z/OSMF REST API </a>
  *
  * @author Adithe Das
+ * @author Muhammad Imran
+ * @author Frank Giordano
  * @version 7.0
  */
 public class WorkflowDelete {
@@ -36,7 +38,7 @@ public class WorkflowDelete {
     /**
      * WorkflowDelete constructor.
      *
-     * @param connection z/OS connection
+     * @param connection for connection information, see ZosConnection object
      */
     public WorkflowDelete(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -47,12 +49,11 @@ public class WorkflowDelete {
      * Alternative WorkflowDelete constructor with ZosmfRequest object.
      * This is mainly used for internal code unit testing with Mockito,
      * and it is not recommended to be used by the larger community.
-     *
      * <p>
      * This constructor is package-private.
      *
-     * @param connection z/OS connection information, see ZosConnection object
-     * @param request compatible ZosmfRequest interface object
+     * @param connection for connection information, see ZosConnection object
+     * @param request    compatible ZosmfRequest interface object
      */
     WorkflowDelete(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -67,15 +68,37 @@ public class WorkflowDelete {
     /**
      * Delete a workflow instance.
      *
-     * @param workflowKey workflow key
-     * @return response object
+     * @param workflowKey workflow key of the workflow to delete
+     * @return http response object
      * @throws ZosmfRequestException error executing request
      */
     public Response delete(final String workflowKey) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(workflowKey, "workflowKey");
+        return deleteCommon(workflowKey, false);
+    }
+
+    /**
+     * Delete an archived workflow instance.
+     *
+     * @param workflowKey workflow key of the archived workflow to delete
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     */
+    public Response deleteArchived(final String workflowKey) throws ZosmfRequestException {
+        return deleteCommon(workflowKey, true);
+    }
+
+    /**
+     * Common method to control deletion type: workflow or archived workflow instance.
+     *
+     * @param workflowKey workflow key of either a workflow or archived workflow to delete
+     * @return http response object
+     * @throws ZosmfRequestException error executing request
+     */
+    private Response deleteCommon(final String workflowKey, final boolean isArchived) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(workflowKey, "workflowKey");
 
         final String url = connection.getZosmfUrl() +
-                WorkflowConstants.WORKFLOWS_RESOURCE +
+                (!isArchived ? WorkflowConstants.WORKFLOWS_RESOURCE : WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE) +
                 WorkflowConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(workflowKey);
 
