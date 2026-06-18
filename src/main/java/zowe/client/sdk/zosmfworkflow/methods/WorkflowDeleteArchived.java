@@ -74,7 +74,7 @@ public class WorkflowDeleteArchived {
         ValidateUtils.checkIllegalParameter(workflowKey, "workflowKey");
 
         final String url = connection.getZosmfUrl() +
-                WorkflowConstants.ARCHIVED_RESOURCE + WorkflowConstants.URL_PATH_DELIM +
+                WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE + WorkflowConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(workflowKey);
 
         if (request == null) {
