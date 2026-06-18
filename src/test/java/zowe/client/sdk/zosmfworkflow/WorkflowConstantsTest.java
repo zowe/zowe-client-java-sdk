@@ -15,6 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Class containing unit tests for WorkflowConstants.
+ *
+ * @author Ashish Kumar Dash
+ * @version 7.0
  */
 public class WorkflowConstantsTest {
 

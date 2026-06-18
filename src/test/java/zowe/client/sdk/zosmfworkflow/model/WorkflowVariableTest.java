@@ -16,6 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Class containing unit tests for WorkflowVariable.
+ *
+ * @author Ashish Kumar Dash
+ * @version 7.0
  */
 public class WorkflowVariableTest {
 

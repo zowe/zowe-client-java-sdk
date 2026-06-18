@@ -71,16 +71,16 @@ public class WorkflowCreate {
     /**
      * Create a z/OSMF workflow on the target system.
      *
-     * @param createInputData workflow creation parameters
+     * @param inputData workflow creation parameters
      * @return workflow details returned by z/OSMF
      * @throws ZosmfRequestException request error state
      */
-    public WorkflowCreateResponse create(final WorkflowCreateInputData createInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(createInputData, "createInputData");
-        ValidateUtils.checkIllegalParameter(createInputData.getWorkflowName(), "workflowName");
-        ValidateUtils.checkIllegalParameter(createInputData.getWorkflowDefinitionFile(), "workflowDefinitionFile");
-        ValidateUtils.checkIllegalParameter(createInputData.getSystem(), "system");
-        ValidateUtils.checkIllegalParameter(createInputData.getOwner(), "owner");
+    public WorkflowCreateResponse create(final WorkflowCreateInputData inputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(inputData, "inputData");
+        ValidateUtils.checkIllegalParameter(inputData.getWorkflowName(), "workflowName");
+        ValidateUtils.checkIllegalParameter(inputData.getWorkflowDefinitionFile(), "workflowDefinitionFile");
+        ValidateUtils.checkIllegalParameter(inputData.getSystem(), "system");
+        ValidateUtils.checkIllegalParameter(inputData.getOwner(), "owner");
 
         final String url = connection.getZosmfUrl() + WorkflowConstants.WORKFLOWS_RESOURCE;
 
@@ -90,7 +90,7 @@ public class WorkflowCreate {
         request.setUrl(url);
 
         try {
-            request.setBody(OBJECT_MAPPER.writeValueAsString(createInputData));
+            request.setBody(OBJECT_MAPPER.writeValueAsString(inputData));
         } catch (JsonProcessingException e) {
             throw new IllegalStateException("error serializing workflow create request", e);
         }

@@ -36,6 +36,9 @@ import static org.mockito.Mockito.withSettings;
 
 /**
  * Class containing unit tests for WorkflowListArchived.
+ *
+ * @author Muhammad Imran
+ * @version 7.0
  */
 public class WorkflowListArchivedTest {
 
