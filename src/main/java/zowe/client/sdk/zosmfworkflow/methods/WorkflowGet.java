@@ -101,27 +101,27 @@ public class WorkflowGet {
     /**
      * Retrieve a z/OSMF workflow definition.
      *
-     * @param getInputData workflow definition retrieval parameters
+     * @param inputData workflow definition retrieval parameters
      * @return workflow definition details returned by z/OSMF
      * @throws ZosmfRequestException request error state
      */
-    public WorkflowGetResponse getCommon(final WorkflowGetInputData getInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(getInputData, "getInputData");
+    public WorkflowGetResponse getCommon(final WorkflowGetInputData inputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(inputData, "inputData");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl())
                 .append(WorkflowConstants.WORKFLOW_DEFINITION_RESOURCE)
                 .append(QueryConstants.QUERY_ID);
 
-        getInputData.getDefinitionFilePath().ifPresent(target ->
+        inputData.getDefinitionFilePath().ifPresent(target ->
                 url.append("definitionFilePath=")
                         .append(EncodeUtils.encodeURIComponent(target)));
 
-        getInputData.getWorkflowDefinitionFileSystem().ifPresent(fileSystem ->
+        inputData.getWorkflowDefinitionFileSystem().ifPresent(fileSystem ->
                 url.append(QueryConstants.COMBO_ID)
                         .append("workflowDefinitionFileSystem=")
                         .append(EncodeUtils.encodeURIComponent(fileSystem)));
 
-        final String returnData = buildReturnData(getInputData);
+        final String returnData = buildReturnData(inputData);
         if (!returnData.isEmpty()) {
             url.append(QueryConstants.COMBO_ID)
                     .append("returnData=")
@@ -144,15 +144,15 @@ public class WorkflowGet {
     /**
      * Build the returnData query parameter value from the requested attributes.
      *
-     * @param getInputData workflow definition retrieval parameters
+     * @param inputData workflow definition retrieval parameters
      * @return returnData value, or an empty string when no attributes are requested
      */
-    private static String buildReturnData(final WorkflowGetInputData getInputData) {
+    private static String buildReturnData(final WorkflowGetInputData inputData) {
         final StringBuilder returnData = new StringBuilder();
-        if (getInputData.isReturnSteps()) {
+        if (inputData.isReturnSteps()) {
             returnData.append("steps");
         }
-        if (getInputData.isReturnVariables()) {
+        if (inputData.isReturnVariables()) {
             if (returnData.length() > 0) {
                 returnData.append(',');
             }

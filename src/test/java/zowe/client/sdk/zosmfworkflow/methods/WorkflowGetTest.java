@@ -298,10 +298,29 @@ public class WorkflowGetTest {
         assertEquals("st_group", response.getSteps().get(0).getVariableSpecifications().get(0).getName());
         assertEquals(Boolean.TRUE, response.getSteps().get(0).getVariableSpecifications().get(0).getRequired());
 
+        assertEquals("TSO-UNIX-REXX_Execution", response.getSteps().get(1).getName());
+        assertEquals("A step that runs a UNIX REXX exec program.", response.getSteps().get(1).getTitle());
+        assertEquals(Boolean.FALSE, response.getSteps().get(1).getOptional());
+        assertEquals(3, response.getSteps().get(1).getVariableSpecifications().size());
+        assertEquals("st_user", response.getSteps().get(1).getVariableSpecifications().get(1).getName());
+
+        assertEquals("TSO-TSO-REXX_Execution", response.getSteps().get(2).getName());
+        assertEquals("A step that runs a REXX exec program.", response.getSteps().get(2).getTitle());
+        assertEquals(Boolean.FALSE, response.getSteps().get(2).getOptional());
+        assertEquals("procNameVariable", response.getSteps().get(2).getVariableSpecifications().get(2).getName());
+
         assertEquals(3, response.getVariables().size());
         assertEquals("procNameVariable", response.getVariables().get(0).getName());
         assertEquals("instance", response.getVariables().get(0).getScope());
         assertEquals("TSO procName", response.getVariables().get(0).getCategory());
+
+        assertEquals("st_group", response.getVariables().get(1).getName());
+        assertEquals("instance", response.getVariables().get(1).getScope());
+        assertEquals("Started", response.getVariables().get(1).getCategory());
+        assertEquals("SYS1", response.getVariables().get(1).getDefaultValue());
+        assertEquals("GROUP", response.getVariables().get(1).getValidationType());
+        assertEquals("Group name for the started task.", response.getVariables().get(1).getAbstractInfo());
+
         assertEquals("st_user", response.getVariables().get(2).getName());
         assertEquals("MYSTUSER", response.getVariables().get(2).getDefaultValue());
         assertEquals("USERID", response.getVariables().get(2).getValidationType());
@@ -374,7 +393,7 @@ public class WorkflowGetTest {
         WorkflowGet workflowGet = new WorkflowGet(connection);
         NullPointerException exception = assertThrows(NullPointerException.class,
                 () -> workflowGet.getCommon(null));
-        assertEquals("getInputData is null", exception.getMessage());
+        assertEquals("inputData is null", exception.getMessage());
     }
 
     @Test
