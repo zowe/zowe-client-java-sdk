@@ -30,6 +30,9 @@ import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
  * @version 7.0
  */
 public class WorkflowArchive {
+
+    public static final String OPERATIONS_RESOURCE = "operations";
+    public static final String ARCHIVE_RESOURCE = "archive";
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -74,11 +77,11 @@ public class WorkflowArchive {
      */
     public Response archive(final String workflowKey) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(workflowKey, "workflowKey");
+
         final String url = connection.getZosmfUrl() +
                 WorkflowConstants.WORKFLOWS_RESOURCE + WorkflowConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(workflowKey) + WorkflowConstants.URL_PATH_DELIM +
-                "operations" + WorkflowConstants.URL_PATH_DELIM +
-                "archive";
+                OPERATIONS_RESOURCE + WorkflowConstants.URL_PATH_DELIM + ARCHIVE_RESOURCE;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
