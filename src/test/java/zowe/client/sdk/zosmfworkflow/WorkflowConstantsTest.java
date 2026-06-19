@@ -11,6 +11,7 @@ package zowe.client.sdk.zosmfworkflow;
 
 import org.junit.jupiter.api.Test;
 import zowe.client.sdk.utility.UtilsTestHelper;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -50,6 +51,7 @@ public class WorkflowConstantsTest {
     public void tstWorkflowConstantsArchivedWorkflowsResourceSuccess() {
         assertEquals("/workflow/rest/1.0/archivedworkflows", WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE);
     }
+
     @Test
     public void tstWorkflowConstantsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Constants class";
