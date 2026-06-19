@@ -23,9 +23,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class WorkflowConstantsTest {
 
     @Test
-    public void tstWorkflowConstantsValuesSuccess() {
+    public void tstWorkflowConstantsClassStructureSuccess() {
+        final String privateConstructorExceptionMsg = "Constants class";
+        UtilsTestHelper.validateClass(WorkflowConstants.class, privateConstructorExceptionMsg);
+    }
+    
+    @Test
+    public void tstWorkflowConstantsFullPathValuesSuccess() {
         assertEquals("/workflow/rest/1.0", WorkflowConstants.BASE_RESOURCE);
         assertEquals("/workflow/rest/1.0/workflowDefinition", WorkflowConstants.WORKFLOW_DEFINITION_RESOURCE);
+        assertEquals("/workflow/rest/1.0/archivedworkflows", WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE);
     }
 
     @Test
@@ -46,17 +53,6 @@ public class WorkflowConstantsTest {
     @Test
     public void tstWorkflowConstantsArchivedWorkflowsSuccess() {
         assertEquals("archivedworkflows", WorkflowConstants.ARCHIVED_WORKFLOWS);
-    }
-
-    @Test
-    public void tstWorkflowConstantsArchivedWorkflowsResourceSuccess() {
-        assertEquals("/workflow/rest/1.0/archivedworkflows", WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE);
-    }
-
-    @Test
-    public void tstWorkflowConstantsClassStructureSuccess() {
-        final String privateConstructorExceptionMsg = "Constants class";
-        UtilsTestHelper.validateClass(WorkflowConstants.class, privateConstructorExceptionMsg);
     }
 
 }
