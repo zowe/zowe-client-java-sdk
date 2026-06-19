@@ -140,8 +140,8 @@ public class WorkflowListArchived {
         try {
             root = OBJECT_MAPPER.readTree(responsePhrase);
         } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException(e.getMessage());
-        }
+                throw new ZosmfRequestException("Failed to parse archived workflows response", e);
+            }
         final JsonNode nodes = root.path("archivedWorkflows");
 
         if (nodes.isArray()) {
