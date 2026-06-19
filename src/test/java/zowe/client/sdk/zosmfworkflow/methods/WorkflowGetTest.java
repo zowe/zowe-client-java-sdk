@@ -401,7 +401,7 @@ public class WorkflowGetTest {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
         WorkflowGet workflowGet = new WorkflowGet(connection);
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> workflowGet.get((String) null));
+                () -> workflowGet.get(null));
         assertEquals("definitionFilePath is either null or empty", exception.getMessage());
     }
 

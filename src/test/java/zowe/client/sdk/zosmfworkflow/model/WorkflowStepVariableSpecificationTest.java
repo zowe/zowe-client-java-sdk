@@ -12,7 +12,8 @@ package zowe.client.sdk.zosmfworkflow.model;
 import org.junit.jupiter.api.Test;
 import zowe.client.sdk.utility.JsonUtils;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Class containing unit tests for WorkflowStepVariableSpecification.

@@ -15,7 +15,8 @@ import zowe.client.sdk.utility.JsonUtils;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Class containing unit tests for WorkflowVariableDefinition.

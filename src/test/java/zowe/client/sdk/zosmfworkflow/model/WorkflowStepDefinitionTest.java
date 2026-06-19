@@ -14,6 +14,7 @@ import zowe.client.sdk.utility.JsonUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,7 +28,7 @@ public class WorkflowStepDefinitionTest {
         final WorkflowStepVariableSpecification spec =
                 new WorkflowStepVariableSpecification("st_user", "instance", Boolean.TRUE);
         final WorkflowStepDefinition step = new WorkflowStepDefinition(
-                "step1", "Step One", "first step", Arrays.asList("step0"), Boolean.FALSE,
+                "step1", "Step One", "first step", List.of("step0"), Boolean.FALSE,
                 Collections.emptyList(), Collections.singletonList(spec));
 
         assertEquals("step1", step.getName());
