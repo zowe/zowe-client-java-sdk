@@ -30,14 +30,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Handles listing archived workflows on z/OS.
+ * Handles retrieval of archived workflows from z/OSMF.
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-list-archived-workflows-system">z/OSMF REST API</a>
  *
  * @author Muhammad Imran
  * @version 7.0
  */
-public class WorkflowListArchived {
+public class WorkflowArchivedList {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final ZosConnection connection;
@@ -48,7 +48,7 @@ public class WorkflowListArchived {
      *
      * @param connection for connection information, see ZosConnection object
      */
-    public WorkflowListArchived(final ZosConnection connection) {
+    public WorkflowArchivedList(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
@@ -63,7 +63,7 @@ public class WorkflowListArchived {
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      */
-    WorkflowListArchived(final ZosConnection connection, final ZosmfRequest request) {
+    WorkflowArchivedList(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
         ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
@@ -122,6 +122,7 @@ public class WorkflowListArchived {
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
                 WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE);
 
+        // orderBy is always present; WorkflowListArchivedInputData enforces this invariant
         inputData.getOrderBy().ifPresent(orderBy -> url.append("?orderBy=").append(orderBy.getValue()));
         inputData.getView().ifPresent(view -> url.append("&view=").append(view.getValue()));
 
@@ -140,7 +141,7 @@ public class WorkflowListArchived {
         try {
             root = OBJECT_MAPPER.readTree(responsePhrase);
         } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException(e.getMessage());
+            throw new ZosmfRequestException("Failed to parse archived workflows response", e);
         }
         final JsonNode nodes = root.path("archivedWorkflows");
 
