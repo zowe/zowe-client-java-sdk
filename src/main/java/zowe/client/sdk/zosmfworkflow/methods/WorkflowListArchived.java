@@ -122,6 +122,7 @@ public class WorkflowListArchived {
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
                 WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE);
 
+        // orderBy is always present; WorkflowListArchivedInputData enforces this invariant
         inputData.getOrderBy().ifPresent(orderBy -> url.append("?orderBy=").append(orderBy.getValue()));
         inputData.getView().ifPresent(view -> url.append("&view=").append(view.getValue()));
 
