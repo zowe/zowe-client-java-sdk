@@ -40,7 +40,7 @@ import static org.mockito.Mockito.withSettings;
  * @author Muhammad Imran
  * @version 7.0
  */
-public class WorkflowListArchivedTest {
+public class WorkflowArchivedListTest {
 
     private final ZosConnection connection = ZosConnectionFactory
             .createBasicConnection("1", 443, "1", "1");
@@ -78,7 +78,7 @@ public class WorkflowListArchivedTest {
         ZosmfRequest request = Mockito.mock(GetJsonZosmfRequest.class);
         boolean noError = false;
         try {
-            new WorkflowListArchived(connection, request);
+            new WorkflowArchivedList(connection, request);
         } catch (IllegalStateException e) {
             noError = true;
         }
@@ -90,7 +90,7 @@ public class WorkflowListArchivedTest {
         ZosmfRequest request = Mockito.mock(GetJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new WorkflowListArchived(null, request)
+                () -> new WorkflowArchivedList(null, request)
         );
         assertEquals("connection is null", exception.getMessage());
     }
@@ -100,7 +100,7 @@ public class WorkflowListArchivedTest {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new WorkflowListArchived(connection, null)
+                () -> new WorkflowArchivedList(connection, null)
         );
         assertEquals("request is null", exception.getMessage());
     }
@@ -111,7 +111,7 @@ public class WorkflowListArchivedTest {
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class);
         IllegalStateException exception = assertThrows(
                 IllegalStateException.class,
-                () -> new WorkflowListArchived(connection, request)
+                () -> new WorkflowArchivedList(connection, request)
         );
         assertEquals("GET_JSON request type required", exception.getMessage());
     }
@@ -120,16 +120,16 @@ public class WorkflowListArchivedTest {
     public void tstWorkflowListArchivedPrimaryConstructorWithNullConnectionFailure() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new WorkflowListArchived(null)
+                () -> new WorkflowArchivedList(null)
         );
         assertEquals("connection is null", exception.getMessage());
     }
 
     @Test
     public void tstWorkflowListArchivedGetSuccess() throws ZosmfRequestException {
-        final WorkflowListArchived workflowListArchived =
-                new WorkflowListArchived(connection, mockJsonGetRequest);
-        final List<WorkflowArchivedResponse> result = workflowListArchived.get();
+        final WorkflowArchivedList workflowArchivedList =
+                new WorkflowArchivedList(connection, mockJsonGetRequest);
+        final List<WorkflowArchivedResponse> result = workflowArchivedList.get();
         assertTrue(result.isEmpty());
         assertEquals("https://1:443/zosmf/workflow/rest/1.0/archivedworkflows?orderBy=desc",
                 mockJsonGetRequest.getUrl());
@@ -137,9 +137,9 @@ public class WorkflowListArchivedTest {
 
     @Test
     public void tstWorkflowListArchivedGetTokenSuccess() throws ZosmfRequestException {
-        final WorkflowListArchived workflowListArchived =
-                new WorkflowListArchived(connection, mockJsonGetRequestToken);
-        final List<WorkflowArchivedResponse> result = workflowListArchived.get();
+        final WorkflowArchivedList workflowArchivedList =
+                new WorkflowArchivedList(connection, mockJsonGetRequestToken);
+        final List<WorkflowArchivedResponse> result = workflowArchivedList.get();
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonGetRequestToken.getHeaders().toString());
         assertTrue(result.isEmpty());
@@ -149,9 +149,9 @@ public class WorkflowListArchivedTest {
 
     @Test
     public void tstWorkflowListArchivedGetByOrderBySuccess() throws ZosmfRequestException {
-        final WorkflowListArchived workflowListArchived =
-                new WorkflowListArchived(connection, mockJsonGetRequest);
-        final List<WorkflowArchivedResponse> result = workflowListArchived.getByOrderBy(OrderByType.ASC);
+        final WorkflowArchivedList workflowArchivedList =
+                new WorkflowArchivedList(connection, mockJsonGetRequest);
+        final List<WorkflowArchivedResponse> result = workflowArchivedList.getByOrderBy(OrderByType.ASC);
         assertTrue(result.isEmpty());
         assertEquals("https://1:443/zosmf/workflow/rest/1.0/archivedworkflows?orderBy=asc",
                 mockJsonGetRequest.getUrl());
@@ -159,9 +159,9 @@ public class WorkflowListArchivedTest {
 
     @Test
     public void tstWorkflowListArchivedGetByViewSuccess() throws ZosmfRequestException {
-        final WorkflowListArchived workflowListArchived =
-                new WorkflowListArchived(connection, mockJsonGetRequest);
-        final List<WorkflowArchivedResponse> result = workflowListArchived.getByView(ViewType.DOMAIN);
+        final WorkflowArchivedList workflowArchivedList =
+                new WorkflowArchivedList(connection, mockJsonGetRequest);
+        final List<WorkflowArchivedResponse> result = workflowArchivedList.getByView(ViewType.DOMAIN);
         assertTrue(result.isEmpty());
         assertEquals("https://1:443/zosmf/workflow/rest/1.0/archivedworkflows?orderBy=desc&view=domain",
                 mockJsonGetRequest.getUrl());
@@ -169,13 +169,13 @@ public class WorkflowListArchivedTest {
 
     @Test
     public void tstWorkflowListArchivedGetCommonSuccess() throws ZosmfRequestException {
-        final WorkflowListArchived workflowListArchived =
-                new WorkflowListArchived(connection, mockJsonGetRequest);
+        final WorkflowArchivedList workflowArchivedList =
+                new WorkflowArchivedList(connection, mockJsonGetRequest);
         final WorkflowListArchivedInputData inputData = WorkflowListArchivedInputData.builder()
                 .orderBy(OrderByType.DESC)
                 .view(ViewType.USER)
                 .build();
-        final List<WorkflowArchivedResponse> result = workflowListArchived.getCommon(inputData);
+        final List<WorkflowArchivedResponse> result = workflowArchivedList.getCommon(inputData);
         assertTrue(result.isEmpty());
         assertEquals("https://1:443/zosmf/workflow/rest/1.0/archivedworkflows?orderBy=desc&view=user",
                 mockJsonGetRequest.getUrl());
@@ -183,33 +183,33 @@ public class WorkflowListArchivedTest {
 
     @Test
     public void tstWorkflowListArchivedGetNullInputFailure() {
-        final WorkflowListArchived workflowListArchived =
-                new WorkflowListArchived(connection, mockJsonGetRequest);
+        final WorkflowArchivedList workflowArchivedList =
+                new WorkflowArchivedList(connection, mockJsonGetRequest);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> workflowListArchived.getCommon(null)
+                () -> workflowArchivedList.getCommon(null)
         );
         assertEquals("inputData is null", exception.getMessage());
     }
 
     @Test
     public void tstWorkflowListArchivedGetByOrderByNullFailure() {
-        final WorkflowListArchived workflowListArchived =
-                new WorkflowListArchived(connection, mockJsonGetRequest);
+        final WorkflowArchivedList workflowArchivedList =
+                new WorkflowArchivedList(connection, mockJsonGetRequest);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> workflowListArchived.getByOrderBy(null)
+                () -> workflowArchivedList.getByOrderBy(null)
         );
         assertEquals("orderByType is null", exception.getMessage());
     }
 
     @Test
     public void tstWorkflowListArchivedGetByViewNullFailure() {
-        final WorkflowListArchived workflowListArchived =
-                new WorkflowListArchived(connection, mockJsonGetRequest);
+        final WorkflowArchivedList workflowArchivedList =
+                new WorkflowArchivedList(connection, mockJsonGetRequest);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> workflowListArchived.getByView(null)
+                () -> workflowArchivedList.getByView(null)
         );
         assertEquals("viewType is null", exception.getMessage());
     }

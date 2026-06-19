@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * @author Muhammad Imran
  * @version 7.0
  */
-public class WorkflowListArchivedInputDataTest {
+public class WorkflowArchivedListInputDataTest {
 
     @Test
     public void tstWorkflowListArchivedInputDataBuilderSuccess() {

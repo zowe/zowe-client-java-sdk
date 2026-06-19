@@ -37,7 +37,7 @@ import java.util.List;
  * @author Muhammad Imran
  * @version 7.0
  */
-public class WorkflowListArchived {
+public class WorkflowArchivedList {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final ZosConnection connection;
@@ -48,7 +48,7 @@ public class WorkflowListArchived {
      *
      * @param connection for connection information, see ZosConnection object
      */
-    public WorkflowListArchived(final ZosConnection connection) {
+    public WorkflowArchivedList(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
@@ -63,7 +63,7 @@ public class WorkflowListArchived {
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      */
-    WorkflowListArchived(final ZosConnection connection, final ZosmfRequest request) {
+    WorkflowArchivedList(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
         ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
@@ -141,8 +141,8 @@ public class WorkflowListArchived {
         try {
             root = OBJECT_MAPPER.readTree(responsePhrase);
         } catch (JsonProcessingException e) {
-                throw new ZosmfRequestException("Failed to parse archived workflows response", e);
-            }
+            throw new ZosmfRequestException("Failed to parse archived workflows response", e);
+        }
         final JsonNode nodes = root.path("archivedWorkflows");
 
         if (nodes.isArray()) {
