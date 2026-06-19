@@ -17,11 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Class containing unit tests for WorkflowGetResponse.
  */
-public class WorkflowGetResponseTest {
+public class WorkflowGetDefinitionResponseTest {
 
     @Test
     public void tstWorkflowGetResponseConstructorSuccess() {
-        final WorkflowGetResponse response = new WorkflowGetResponse(
+        final WorkflowGetDefinitionResponse response = new WorkflowGetDefinitionResponse(
                 "sample", "desc", "programExecutionSample", "1.0", "IBM",
                 "5c5dd66eb3ca3cd1c578ccf323d57cc0", null, Boolean.FALSE, "none", null,
                 "configuration", "ABC123", "Product ABC", "Version 1", null, Boolean.FALSE,
@@ -48,14 +48,14 @@ public class WorkflowGetResponseTest {
 
     @Test
     public void tstWorkflowGetResponseParseWithStepsAndVariablesSuccess() throws Exception {
-        final WorkflowGetResponse response = JsonUtils.parseResponse(
+        final WorkflowGetDefinitionResponse response = JsonUtils.parseResponse(
                 "{\"workflowID\":\"programExecutionSample\",\"workflowVersion\":\"1.0\",\"vendor\":\"IBM\"," +
                         "\"category\":\"configuration\",\"scope\":\"none\",\"containsParallelSteps\":false," +
                         "\"steps\":[{\"name\":\"step1\",\"title\":\"Step One\",\"optional\":false," +
                         "\"variable-specifications\":[{\"name\":\"st_user\",\"scope\":\"instance\",\"required\":true}]}]," +
                         "\"variables\":[{\"name\":\"st_user\",\"scope\":\"instance\",\"type\":\"string\"," +
                         "\"default\":\"MYSTUSER\",\"abstract\":\"User ID.\",\"visibility\":\"private\"}]}",
-                WorkflowGetResponse.class,
+                WorkflowGetDefinitionResponse.class,
                 "test");
 
         assertEquals("programExecutionSample", response.getWorkflowID());
@@ -81,9 +81,9 @@ public class WorkflowGetResponseTest {
 
     @Test
     public void tstWorkflowGetResponseParseNullDefaultsSuccess() throws Exception {
-        final WorkflowGetResponse response = JsonUtils.parseResponse(
+        final WorkflowGetDefinitionResponse response = JsonUtils.parseResponse(
                 "{\"workflowID\":\"programExecutionSample\"}",
-                WorkflowGetResponse.class,
+                WorkflowGetDefinitionResponse.class,
                 "test");
 
         assertEquals("programExecutionSample", response.getWorkflowID());

@@ -27,7 +27,7 @@ import java.util.List;
  * @version 7.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class WorkflowGetResponse {
+public final class WorkflowGetDefinitionResponse {
 
     /**
      * Default name for the workflow.
@@ -142,7 +142,7 @@ public final class WorkflowGetResponse {
      * @param variables                       array of variable-definition objects
      */
     @JsonCreator
-    public WorkflowGetResponse(
+    public WorkflowGetDefinitionResponse(
             @JsonProperty("workflowDefaultName") final String workflowDefaultName,
             @JsonProperty("workflowDescription") final String workflowDescription,
             @JsonProperty("workflowID") final String workflowID,

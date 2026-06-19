@@ -12,7 +12,6 @@ package zowe.client.sdk.zosmfworkflow.model;
 import org.junit.jupiter.api.Test;
 import zowe.client.sdk.utility.JsonUtils;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

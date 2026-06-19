@@ -19,8 +19,8 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
-import zowe.client.sdk.zosmfworkflow.input.WorkflowGetInputData;
-import zowe.client.sdk.zosmfworkflow.response.WorkflowGetResponse;
+import zowe.client.sdk.zosmfworkflow.input.WorkflowGetDefinitionInputData;
+import zowe.client.sdk.zosmfworkflow.response.WorkflowGetDefinitionResponse;
 
 /**
  * Provides retrieve workflow definition functionality through the z/OSMF workflow REST API.
@@ -73,8 +73,8 @@ public class WorkflowGet {
      * @return workflow definition details returned by z/OSMF
      * @throws ZosmfRequestException request error state
      */
-    public WorkflowGetResponse get(final String definitionFilePath) throws ZosmfRequestException {
-        return getCommon(WorkflowGetInputData.builder().definitionFilePath(definitionFilePath).build());
+    public WorkflowGetDefinitionResponse getDefinition(final String definitionFilePath) throws ZosmfRequestException {
+        return getDefinitionCommon(WorkflowGetDefinitionInputData.builder().definitionFilePath(definitionFilePath).build());
     }
 
     /**
@@ -86,10 +86,10 @@ public class WorkflowGet {
      * @return workflow definition details returned by z/OSMF
      * @throws ZosmfRequestException request error state
      */
-    public WorkflowGetResponse get(final String definitionFilePath, final String workflowDefinitionFileSystem)
+    public WorkflowGetDefinitionResponse getDefinition(final String definitionFilePath, final String workflowDefinitionFileSystem)
             throws ZosmfRequestException {
-        return getCommon(
-                WorkflowGetInputData.builder()
+        return getDefinitionCommon(
+                WorkflowGetDefinitionInputData.builder()
                         .definitionFilePath(definitionFilePath)
                         .workflowDefinitionFileSystem(workflowDefinitionFileSystem)
                         .build()
@@ -103,7 +103,7 @@ public class WorkflowGet {
      * @return workflow definition details returned by z/OSMF
      * @throws ZosmfRequestException request error state
      */
-    public WorkflowGetResponse getCommon(final WorkflowGetInputData inputData) throws ZosmfRequestException {
+    public WorkflowGetDefinitionResponse getDefinitionCommon(final WorkflowGetDefinitionInputData inputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData, "inputData");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl());
@@ -132,7 +132,7 @@ public class WorkflowGet {
                 .orElseThrow(() -> new IllegalStateException("no workflow get response phrase"))
                 .toString();
 
-        return JsonUtils.parseResponse(responsePhrase, WorkflowGetResponse.class, "getCommon");
+        return JsonUtils.parseResponse(responsePhrase, WorkflowGetDefinitionResponse.class, "getCommon");
     }
 
     /**
@@ -151,7 +151,7 @@ public class WorkflowGet {
      * @param inputData workflow definition retrieval parameters
      * @return returnData value, or an empty string when no attributes are requested
      */
-    private static String buildReturnData(final WorkflowGetInputData inputData) {
+    private static String buildReturnData(final WorkflowGetDefinitionInputData inputData) {
         final StringBuilder returnData = new StringBuilder();
         if (inputData.isReturnSteps()) {
             returnData.append("steps");

@@ -21,7 +21,7 @@ import java.util.Optional;
  * @author Ashish Kumar Dash
  * @version 7.0
  */
-public class WorkflowGetInputData {
+public class WorkflowGetDefinitionInputData {
 
     /**
      * Location of the workflow definition file, which is either a UNIX path name (including the file name)
@@ -49,7 +49,7 @@ public class WorkflowGetInputData {
      *
      * @param builder builder instance
      */
-    private WorkflowGetInputData(final Builder builder) {
+    private WorkflowGetDefinitionInputData(final Builder builder) {
         ValidateUtils.checkIllegalParameter(builder.definitionFilePath, "definitionFilePath");
         this.definitionFilePath = builder.definitionFilePath;
         this.workflowDefinitionFileSystem = builder.workflowDefinitionFileSystem;
@@ -185,8 +185,8 @@ public class WorkflowGetInputData {
          *
          * @return WorkflowGetInputData instance
          */
-        public WorkflowGetInputData build() {
-            return new WorkflowGetInputData(this);
+        public WorkflowGetDefinitionInputData build() {
+            return new WorkflowGetDefinitionInputData(this);
         }
 
     }

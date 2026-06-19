@@ -18,8 +18,8 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.zosmfworkflow.input.WorkflowGetInputData;
-import zowe.client.sdk.zosmfworkflow.response.WorkflowGetResponse;
+import zowe.client.sdk.zosmfworkflow.input.WorkflowGetDefinitionInputData;
+import zowe.client.sdk.zosmfworkflow.response.WorkflowGetDefinitionResponse;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -262,13 +262,13 @@ public class WorkflowGetTest {
         doCallRealMethod().when(mockGetRequest).getUrl();
 
         WorkflowGet workflowGet = new WorkflowGet(connection, mockGetRequest);
-        WorkflowGetInputData inputData = WorkflowGetInputData.builder()
+        WorkflowGetDefinitionInputData inputData = WorkflowGetDefinitionInputData.builder()
                 .definitionFilePath(DEFINITION_FILE_PATH)
                 .workflowDefinitionFileSystem("SY1")
                 .returnSteps(true)
                 .returnVariables(true)
                 .build();
-        WorkflowGetResponse response = workflowGet.getCommon(inputData);
+        WorkflowGetDefinitionResponse response = workflowGet.getDefinitionCommon(inputData);
 
         String expectedUrl = "https://1:443/workflow/rest/1.0/workflowDefinition" +
                 "?definitionFilePath=" + EncodeUtils.encodeURIComponent(DEFINITION_FILE_PATH) +
@@ -338,7 +338,7 @@ public class WorkflowGetTest {
         doCallRealMethod().when(mockGetRequest).getUrl();
 
         WorkflowGet workflowGet = new WorkflowGet(connection, mockGetRequest);
-        WorkflowGetResponse response = workflowGet.get(DEFINITION_FILE_PATH);
+        WorkflowGetDefinitionResponse response = workflowGet.getDefinition(DEFINITION_FILE_PATH);
 
         String expectedUrl = "https://1:443/workflow/rest/1.0/workflowDefinition" +
                 "?definitionFilePath=" + EncodeUtils.encodeURIComponent(DEFINITION_FILE_PATH);
@@ -357,7 +357,7 @@ public class WorkflowGetTest {
         doCallRealMethod().when(mockGetRequest).getUrl();
 
         WorkflowGet workflowGet = new WorkflowGet(connection, mockGetRequest);
-        workflowGet.get(DEFINITION_FILE_PATH, "SY1");
+        workflowGet.getDefinition(DEFINITION_FILE_PATH, "SY1");
 
         String expectedUrl = "https://1:443/workflow/rest/1.0/workflowDefinition" +
                 "?definitionFilePath=" + EncodeUtils.encodeURIComponent(DEFINITION_FILE_PATH) +
@@ -376,7 +376,7 @@ public class WorkflowGetTest {
         doCallRealMethod().when(mockGetRequest).getUrl();
 
         WorkflowGet workflowGet = new WorkflowGet(connection, mockGetRequest);
-        workflowGet.getCommon(WorkflowGetInputData.builder()
+        workflowGet.getDefinitionCommon(WorkflowGetDefinitionInputData.builder()
                 .definitionFilePath(DEFINITION_FILE_PATH)
                 .returnSteps(true)
                 .build());
@@ -392,7 +392,7 @@ public class WorkflowGetTest {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
         WorkflowGet workflowGet = new WorkflowGet(connection);
         NullPointerException exception = assertThrows(NullPointerException.class,
-                () -> workflowGet.getCommon(null));
+                () -> workflowGet.getDefinitionCommon(null));
         assertEquals("inputData is null", exception.getMessage());
     }
 
@@ -401,7 +401,7 @@ public class WorkflowGetTest {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
         WorkflowGet workflowGet = new WorkflowGet(connection);
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> workflowGet.get(null));
+                () -> workflowGet.getDefinition(null));
         assertEquals("definitionFilePath is either null or empty", exception.getMessage());
     }
 

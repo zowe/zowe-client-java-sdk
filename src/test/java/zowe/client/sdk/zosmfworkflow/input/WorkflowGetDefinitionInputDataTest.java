@@ -16,11 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Class containing unit tests for WorkflowGetInputData.
  */
-public class WorkflowGetInputDataTest {
+public class WorkflowGetDefinitionInputDataTest {
 
     @Test
     public void tstWorkflowGetInputDataBuilderSuccess() {
-        final WorkflowGetInputData inputData = WorkflowGetInputData.builder()
+        final WorkflowGetDefinitionInputData inputData = WorkflowGetDefinitionInputData.builder()
                 .definitionFilePath("/usr/lpp/zosmf/samples/workflow_sample_program_execution.xml")
                 .workflowDefinitionFileSystem("SY1")
                 .returnSteps(true)
@@ -39,7 +39,7 @@ public class WorkflowGetInputDataTest {
 
     @Test
     public void tstWorkflowGetInputDataBuilderDefaultsSuccess() {
-        final WorkflowGetInputData inputData = WorkflowGetInputData.builder()
+        final WorkflowGetDefinitionInputData inputData = WorkflowGetDefinitionInputData.builder()
                 .definitionFilePath("/tmp/workflow.xml")
                 .build();
 
@@ -51,7 +51,7 @@ public class WorkflowGetInputDataTest {
 
     @Test
     public void tstWorkflowGetInputDataBlankFileSystemReturnsEmptyOptional() {
-        final WorkflowGetInputData inputData = WorkflowGetInputData.builder()
+        final WorkflowGetDefinitionInputData inputData = WorkflowGetDefinitionInputData.builder()
                 .definitionFilePath("/tmp/workflow.xml")
                 .workflowDefinitionFileSystem("  ")
                 .build();
@@ -63,20 +63,20 @@ public class WorkflowGetInputDataTest {
     @Test
     public void tstWorkflowGetInputDataNullDefinitionFilePathThrows() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> WorkflowGetInputData.builder().build());
+                () -> WorkflowGetDefinitionInputData.builder().build());
         assertEquals("definitionFilePath is either null or empty", exception.getMessage());
     }
 
     @Test
     public void tstWorkflowGetInputDataEmptyDefinitionFilePathThrows() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> WorkflowGetInputData.builder().definitionFilePath("").build());
+                () -> WorkflowGetDefinitionInputData.builder().definitionFilePath("").build());
         assertEquals("definitionFilePath is either null or empty", exception.getMessage());
     }
 
     @Test
     public void tstWorkflowGetInputDataToStringSuccess() {
-        final WorkflowGetInputData inputData = WorkflowGetInputData.builder()
+        final WorkflowGetDefinitionInputData inputData = WorkflowGetDefinitionInputData.builder()
                 .definitionFilePath("/tmp/workflow.xml")
                 .workflowDefinitionFileSystem("SY1")
                 .returnSteps(true)
