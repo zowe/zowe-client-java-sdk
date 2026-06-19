@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosmfworkflow;
 
 import org.junit.jupiter.api.Test;
-
+import zowe.client.sdk.utility.UtilsTestHelper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -24,6 +24,36 @@ public class WorkflowConstantsTest {
     @Test
     public void tstWorkflowConstantsValuesSuccess() {
         assertEquals("/workflow/rest/1.0", WorkflowConstants.BASE_RESOURCE);
+    }
+
+    @Test
+    public void tstWorkflowConstantsUrlPathDelimSuccess() {
+        assertEquals("/", WorkflowConstants.URL_PATH_DELIM);
+    }
+
+    @Test
+    public void tstWorkflowConstantsWorkflowsSuccess() {
+        assertEquals("workflows", WorkflowConstants.WORKFLOWS);
+    }
+
+    @Test
+    public void tstWorkflowConstantsWorkflowsResourceSuccess() {
+        assertEquals("/workflow/rest/1.0/workflows", WorkflowConstants.WORKFLOWS_RESOURCE);
+    }
+
+    @Test
+    public void tstWorkflowConstantsArchivedWorkflowsSuccess() {
+        assertEquals("archivedworkflows", WorkflowConstants.ARCHIVED_WORKFLOWS);
+    }
+
+    @Test
+    public void tstWorkflowConstantsArchivedWorkflowsResourceSuccess() {
+        assertEquals("/workflow/rest/1.0/archivedworkflows", WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE);
+    }
+    @Test
+    public void tstWorkflowConstantsClassStructureSuccess() {
+        final String privateConstructorExceptionMsg = "Constants class";
+        UtilsTestHelper.validateClass(WorkflowConstants.class, privateConstructorExceptionMsg);
     }
 
 }
