@@ -59,4 +59,14 @@ public final class WorkflowConstants {
      */
     public static final String ARCHIVED_WORKFLOWS_RESOURCE = BASE_RESOURCE + URL_PATH_DELIM + ARCHIVED_WORKFLOWS;
 
+    /**
+     * Workflow definition resource segment.
+     */
+    public static final String WORKFLOW_DEFINITION = "workflowDefinition";
+
+    /**
+     * z/OSMF workflow definition service path.
+     */
+    public static final String WORKFLOW_DEFINITION_RESOURCE = BASE_RESOURCE + URL_PATH_DELIM + WORKFLOW_DEFINITION;
+
 }

@@ -25,6 +25,7 @@ public class WorkflowConstantsTest {
     @Test
     public void tstWorkflowConstantsValuesSuccess() {
         assertEquals("/workflow/rest/1.0", WorkflowConstants.BASE_RESOURCE);
+        assertEquals("/workflow/rest/1.0/workflowDefinition", WorkflowConstants.WORKFLOW_DEFINITION_RESOURCE);
     }
 
     @Test
