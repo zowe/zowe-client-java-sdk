@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Handles listing archived workflows on z/OS.
+ * Handles retrieval of archived workflows from z/OSMF.
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-list-archived-workflows-system">z/OSMF REST API</a>
  *
