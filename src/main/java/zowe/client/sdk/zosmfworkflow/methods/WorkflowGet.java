@@ -11,7 +11,6 @@ package zowe.client.sdk.zosmfworkflow.methods;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
-import zowe.client.sdk.rest.QueryConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -75,27 +74,26 @@ public class WorkflowGet {
      * @throws ZosmfRequestException request error state
      */
     public WorkflowGetResponse get(final String definitionFilePath) throws ZosmfRequestException {
-        return getCommon(WorkflowGetInputData.builder()
-                .definitionFilePath(definitionFilePath)
-                .build());
+        return getCommon(WorkflowGetInputData.builder().definitionFilePath(definitionFilePath).build());
     }
 
     /**
      * Retrieve a z/OSMF workflow definition by definition file path on a specific system.
      *
-     * @param definitionFilePath           specifies the location of the workflow definition file, which is either
-     *                                     a UNIX path name (including the file name) or a fully qualified z/OS
-     *                                     data set name
+     * @param definitionFilePath specifies the location of the workflow definition file, which is either
+     *                           a UNIX path name (including the file name) or a fully qualified z/OS data set name
      * @param workflowDefinitionFileSystem nickname of the system on which the workflow definition file resides
      * @return workflow definition details returned by z/OSMF
      * @throws ZosmfRequestException request error state
      */
     public WorkflowGetResponse get(final String definitionFilePath, final String workflowDefinitionFileSystem)
             throws ZosmfRequestException {
-        return getCommon(WorkflowGetInputData.builder()
-                .definitionFilePath(definitionFilePath)
-                .workflowDefinitionFileSystem(workflowDefinitionFileSystem)
-                .build());
+        return getCommon(
+                WorkflowGetInputData.builder()
+                        .definitionFilePath(definitionFilePath)
+                        .workflowDefinitionFileSystem(workflowDefinitionFileSystem)
+                        .build()
+        );
     }
 
     /**
@@ -108,29 +106,25 @@ public class WorkflowGet {
     public WorkflowGetResponse getCommon(final WorkflowGetInputData inputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData, "inputData");
 
-        final StringBuilder url = new StringBuilder(connection.getZosmfUrl())
-                .append(WorkflowConstants.WORKFLOW_DEFINITION_RESOURCE)
-                .append(QueryConstants.QUERY_ID);
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl());
+        url.append(WorkflowConstants.WORKFLOW_DEFINITION_RESOURCE);
 
-        inputData.getDefinitionFilePath().ifPresent(target ->
-                url.append("definitionFilePath=")
-                        .append(EncodeUtils.encodeURIComponent(target)));
+        // definitionFilePath is always present; WorkflowGetInputData enforces this invariant
+        inputData.getDefinitionFilePath()
+                .ifPresent(target -> url.append("?definitionFilePath=").append(getEncodeURIComponent(target)));
 
-        inputData.getWorkflowDefinitionFileSystem().ifPresent(fileSystem ->
-                url.append(QueryConstants.COMBO_ID)
-                        .append("workflowDefinitionFileSystem=")
-                        .append(EncodeUtils.encodeURIComponent(fileSystem)));
+        inputData.getWorkflowDefinitionFileSystem()
+                .ifPresent(sys -> url.append("&workflowDefinitionFileSystem=").append(getEncodeURIComponent(sys)));
 
         final String returnData = buildReturnData(inputData);
         if (!returnData.isEmpty()) {
-            url.append(QueryConstants.COMBO_ID)
-                    .append("returnData=")
-                    .append(returnData);
+            url.append("&returnData=").append(returnData);
         }
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
+
         request.setUrl(url.toString());
 
         final String responsePhrase = request.executeRequest()
@@ -139,6 +133,16 @@ public class WorkflowGet {
                 .toString();
 
         return JsonUtils.parseResponse(responsePhrase, WorkflowGetResponse.class, "getCommon");
+    }
+
+    /**
+     * Helper wrapper method.
+     *
+     * @param str String value
+     * @return string value
+     */
+    private static String getEncodeURIComponent(final String str) {
+        return EncodeUtils.encodeURIComponent(str);
     }
 
     /**

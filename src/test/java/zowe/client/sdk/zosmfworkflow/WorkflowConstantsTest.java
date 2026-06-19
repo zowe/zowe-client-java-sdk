@@ -27,7 +27,7 @@ public class WorkflowConstantsTest {
         final String privateConstructorExceptionMsg = "Constants class";
         UtilsTestHelper.validateClass(WorkflowConstants.class, privateConstructorExceptionMsg);
     }
-    
+
     @Test
     public void tstWorkflowConstantsFullPathValuesSuccess() {
         assertEquals("/workflow/rest/1.0", WorkflowConstants.BASE_RESOURCE);
