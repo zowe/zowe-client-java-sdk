@@ -36,11 +36,6 @@ public class WorkflowConstantsTest {
     }
 
     @Test
-    public void tstWorkflowConstantsUrlPathDelimSuccess() {
-        assertEquals("/", WorkflowConstants.URL_PATH_DELIM);
-    }
-
-    @Test
     public void tstWorkflowConstantsWorkflowsSuccess() {
         assertEquals("workflows", WorkflowConstants.WORKFLOWS);
     }

@@ -10,10 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.methods;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -120,7 +117,8 @@ public class UssDelete {
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_ZFS_FILES + "/" +
+                ZosFilesConstants.RES_ZFS_FILES +
+                QueryConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 
         if (request == null) {

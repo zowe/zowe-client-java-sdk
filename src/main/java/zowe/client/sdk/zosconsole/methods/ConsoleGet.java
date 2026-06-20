@@ -2,6 +2,7 @@ package zowe.client.sdk.zosconsole.methods;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
+import zowe.client.sdk.rest.QueryConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -103,7 +104,7 @@ public class ConsoleGet {
                                                 boolean processResponse) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(responseKey, "responseKey");
 
-        final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + "/" +
+        final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + QueryConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(consoleName.isBlank() ? ConsoleConstants.RES_DEF_CN : consoleName) +
                 "/solmsgs/" + responseKey;
 

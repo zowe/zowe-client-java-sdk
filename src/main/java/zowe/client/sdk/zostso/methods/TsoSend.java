@@ -11,6 +11,7 @@ package zowe.client.sdk.zostso.methods;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
+import zowe.client.sdk.rest.QueryConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -74,9 +75,12 @@ public class TsoSend {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
         ValidateUtils.checkIllegalParameter(command, "command");
         final String url = connection.getZosmfUrl() +
-                TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" +
-                sessionId + TsoConstants.RES_DONT_READ_REPLY;
+                TsoConstants.RESOURCE +
+                QueryConstants.URL_PATH_DELIM +
+                TsoConstants.RES_START_TSO +
+                QueryConstants.URL_PATH_DELIM +
+                sessionId +
+                TsoConstants.RES_DONT_READ_REPLY;
         final String body = "{\"TSO RESPONSE\":{\"VERSION\":\"0100\",\"DATA\":\"" + command + "\"}}";
 
         if (request == null || !(request instanceof PutJsonZosmfRequest)) {

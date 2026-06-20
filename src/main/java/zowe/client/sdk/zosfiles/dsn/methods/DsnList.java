@@ -120,8 +120,11 @@ public class DsnList {
         final Map<String, String> headers = new HashMap<>();
         final List<Member> members = new ArrayList<>();
         String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
-                EncodeUtils.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES +
+                QueryConstants.URL_PATH_DELIM +
+                EncodeUtils.encodeURIComponent(dataSetName) +
+                ZosFilesConstants.RES_DS_MEMBERS;
 
         if (listInputData.getPattern().isPresent()) {
             url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN +

@@ -113,9 +113,9 @@ public class JobGet {
 
         url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM +
+                QueryConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
-                JobsConstants.FILE_DELIM +
+                QueryConstants.URL_PATH_DELIM +
                 commonInputData.getJobId().get() +
                 JobsConstants.RESOURCE_SPOOL_FILES +
                 JobsConstants.RESOURCE_JCL_CONTENT +
@@ -315,12 +315,12 @@ public class JobGet {
 
         url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM +
+                QueryConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(jobFile.getJobName()) +
-                JobsConstants.FILE_DELIM +
+                QueryConstants.URL_PATH_DELIM +
                 jobFile.getJobId() +
                 JobsConstants.RESOURCE_SPOOL_FILES +
-                JobsConstants.FILE_DELIM +
+                QueryConstants.URL_PATH_DELIM +
                 jobFile.getId() +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
 
@@ -379,9 +379,9 @@ public class JobGet {
 
         url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM +
+                QueryConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
-                JobsConstants.FILE_DELIM +
+                QueryConstants.URL_PATH_DELIM +
                 commonInputData.getJobId().get() +
                 "/files";
 
@@ -477,8 +477,10 @@ public class JobGet {
         ValidateUtils.checkIllegalParameter(commonInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
         ValidateUtils.checkIllegalParameter(commonInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 
-        url = connection.getZosmfUrl() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) + "/" +
+        url = connection.getZosmfUrl() + JobsConstants.RESOURCE +
+                QueryConstants.URL_PATH_DELIM +
+                EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
+                QueryConstants.URL_PATH_DELIM +
                 commonInputData.getJobId().get();
 
         if (commonInputData.isStepData()) {

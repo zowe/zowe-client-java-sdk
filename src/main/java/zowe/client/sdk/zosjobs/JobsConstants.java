@@ -40,11 +40,6 @@ public final class JobsConstants {
     public static final String DEFAULT_PREFIX = "*";
 
     /**
-     * File delimiter
-     */
-    public static final String FILE_DELIM = "/";
-
-    /**
      * Use for an illegal exception error message
      */
     public static final String JOB_CLASS_ILLEGAL_MSG = "jobClass is either null or empty";

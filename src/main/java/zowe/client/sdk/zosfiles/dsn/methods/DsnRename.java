@@ -12,10 +12,7 @@ package zowe.client.sdk.zosfiles.dsn.methods;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.PutJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -113,7 +110,9 @@ public class DsnRename {
      */
     private void setUrl(final String... args) {
         url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES +
+                QueryConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(args[0]);
         if (args.length > 1) {
             url += "(" + EncodeUtils.encodeURIComponent(args[1]) + ")";

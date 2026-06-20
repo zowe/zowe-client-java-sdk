@@ -11,10 +11,7 @@ package zowe.client.sdk.zosfiles.uss.methods;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.PutJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -126,7 +123,8 @@ public class UssMount {
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_MFS + "/" +
+                ZosFilesConstants.RES_MFS +
+                QueryConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 
         final Map<String, Object> mountMap = new HashMap<>();

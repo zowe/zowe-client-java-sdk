@@ -111,9 +111,9 @@ public class JobDelete {
 
         final String url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM +
+                QueryConstants.URL_PATH_DELIM +
                 modifyInputData.getJobName().get() +
-                JobsConstants.FILE_DELIM +
+                QueryConstants.URL_PATH_DELIM +
                 modifyInputData.getJobId().get();
 
         final Map<String, String> headers = new HashMap<>();

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
+import zowe.client.sdk.rest.QueryConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -76,8 +77,10 @@ public class TsoReply {
     public String reply(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
         final String url = connection.getZosmfUrl() +
-                TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" +
+                TsoConstants.RESOURCE +
+                QueryConstants.URL_PATH_DELIM +
+                TsoConstants.RES_START_TSO +
+                QueryConstants.URL_PATH_DELIM +
                 sessionId;
 
         if (request == null || !(request instanceof PutJsonZosmfRequest)) {

@@ -10,10 +10,7 @@
 package zowe.client.sdk.zosmfworkflow.methods;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -99,7 +96,7 @@ public class WorkflowDelete {
 
         final String url = connection.getZosmfUrl() +
                 (!isArchived ? WorkflowConstants.WORKFLOWS_RESOURCE : WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE) +
-                WorkflowConstants.URL_PATH_DELIM +
+                QueryConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(workflowKey);
 
         if (request == null) {

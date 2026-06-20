@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.zosmfworkflow;
 
+import static zowe.client.sdk.rest.QueryConstants.URL_PATH_DELIM;
+
 /**
  * Constants to be used by the z/OSMF workflow API.
  *
@@ -23,11 +25,6 @@ public final class WorkflowConstants {
     private WorkflowConstants() {
         throw new IllegalStateException("Constants class");
     }
-
-    /**
-     * URL path segment delimiter.
-     */
-    public static final String URL_PATH_DELIM = "/";
 
     /**
      * Version of the z/OSMF workflow service.

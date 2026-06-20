@@ -33,4 +33,9 @@ public final class QueryConstants {
      */
     public static final String QUERY_ID = "?";
 
+    /**
+     * URL path segment delimiter.
+     */
+    public static final String URL_PATH_DELIM = "/";
+
 }

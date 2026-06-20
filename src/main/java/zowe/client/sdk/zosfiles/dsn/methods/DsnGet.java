@@ -10,10 +10,7 @@
 package zowe.client.sdk.zosfiles.dsn.methods;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.GetStreamZosmfRequest;
-import zowe.client.sdk.rest.ZosmfHeaders;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -124,7 +121,9 @@ public class DsnGet {
         ValidateUtils.checkNullParameter(downloadInputData, "downloadInputData");
 
         String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES +
+                QueryConstants.URL_PATH_DELIM;
 
         if (downloadInputData.getVolume().isPresent()) {
             url += "-(" + downloadInputData.getVolume().get() + ")/";

@@ -11,10 +11,7 @@ package zowe.client.sdk.zosvariables.methods;
 
 import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.PostJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -123,7 +120,8 @@ public class VariableExport {
         ValidateUtils.checkIllegalParameter(targetFile, "targetFile");
 
         final String url = connection.getZosmfUrl() +
-                VariableConstants.RESOURCE + "/" +
+                VariableConstants.RESOURCE +
+                QueryConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(sysplexName) + "." +
                 EncodeUtils.encodeURIComponent(systemName) +
                 "/actions/export";
