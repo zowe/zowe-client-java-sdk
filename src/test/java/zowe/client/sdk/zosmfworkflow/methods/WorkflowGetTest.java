@@ -19,7 +19,9 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.zosmfworkflow.input.WorkflowGetDefinitionInputData;
+import zowe.client.sdk.zosmfworkflow.input.WorkflowGetPropertiesInputData;
 import zowe.client.sdk.zosmfworkflow.response.WorkflowGetDefinitionResponse;
+import zowe.client.sdk.zosmfworkflow.response.WorkflowGetPropertiesResponse;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -403,6 +405,104 @@ public class WorkflowGetTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 () -> workflowGet.getDefinition(null));
         assertEquals("definitionFilePath is either null or empty", exception.getMessage());
+    }
+
+    private static final String WORKFLOW_KEY = "7a2263a7-7c91-40b4-8892-2a4342a222c3";
+
+    private static String getWorkflowPropertiesJson() {
+        return "{\n" +
+                "  \"workflowName\": \"testProgramExecutionSample\",\n" +
+                "  \"workflowKey\": \"7a2263a7-7c91-40b4-8892-2a4342a222c3\",\n" +
+                "  \"workflowID\": \"programExecutionSample\",\n" +
+                "  \"owner\": \"zosmfad\",\n" +
+                "  \"system\": \"PLEX1.SY1\",\n" +
+                "  \"statusName\": \"in-progress\",\n" +
+                "  \"access\": \"Public\",\n" +
+                "  \"percentComplete\": 0\n" +
+                "}";
+    }
+
+    @Test
+    public void tstWorkflowGetPropertiesByKeySuccess() throws ZosmfRequestException {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        Mockito.when(connection.getZosmfUrl()).thenReturn("https://1:443");
+        GetJsonZosmfRequest mockGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        Mockito.when(mockGetRequest.executeRequest()).thenReturn(
+                new Response(getWorkflowPropertiesJson(), 200, "success"));
+        doCallRealMethod().when(mockGetRequest).setUrl(any());
+        doCallRealMethod().when(mockGetRequest).getUrl();
+
+        WorkflowGet workflowGet = new WorkflowGet(connection, mockGetRequest);
+        WorkflowGetPropertiesResponse response = workflowGet.getProperties(WORKFLOW_KEY);
+
+        String expectedUrl = "https://1:443/workflow/rest/1.0/workflows/" +
+                EncodeUtils.encodeURIComponent(WORKFLOW_KEY);
+        assertEquals(expectedUrl, mockGetRequest.getUrl());
+        assertEquals("testProgramExecutionSample", response.getWorkflowName());
+        assertEquals(WORKFLOW_KEY, response.getWorkflowKey());
+        assertEquals("programExecutionSample", response.getWorkflowID());
+        assertEquals("zosmfad", response.getOwner());
+        assertEquals("PLEX1.SY1", response.getSystem());
+        assertEquals("Public", response.getAccess());
+        assertEquals("in-progress", response.getStatusName());
+        assertEquals(0, response.getPercentComplete().intValue());
+    }
+
+    @Test
+    public void tstWorkflowGetPropertiesWithReturnDataUrlGeneration() throws ZosmfRequestException {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        Mockito.when(connection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
+        GetJsonZosmfRequest mockGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        Mockito.when(mockGetRequest.executeRequest()).thenReturn(
+                new Response(getWorkflowPropertiesJson(), 200, "success"));
+        doCallRealMethod().when(mockGetRequest).setUrl(any());
+        doCallRealMethod().when(mockGetRequest).getUrl();
+
+        WorkflowGet workflowGet = new WorkflowGet(connection, mockGetRequest);
+        workflowGet.getProperties(WORKFLOW_KEY, true, true);
+
+        String expectedUrl = "https://1:443/zosmf/workflow/rest/1.0/workflows/" +
+                EncodeUtils.encodeURIComponent(WORKFLOW_KEY) + "?returnData=steps,variables";
+        assertEquals(expectedUrl, mockGetRequest.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowGetPropertiesCommonReturnStepsOnlyUrlGeneration() throws ZosmfRequestException {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        Mockito.when(connection.getZosmfUrl()).thenReturn("https://1:443");
+        GetJsonZosmfRequest mockGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        Mockito.when(mockGetRequest.executeRequest()).thenReturn(
+                new Response(getWorkflowPropertiesJson(), 200, "success"));
+        doCallRealMethod().when(mockGetRequest).setUrl(any());
+        doCallRealMethod().when(mockGetRequest).getUrl();
+
+        WorkflowGet workflowGet = new WorkflowGet(connection, mockGetRequest);
+        workflowGet.getPropertiesCommon(WorkflowGetPropertiesInputData.builder()
+                .workflowKey(WORKFLOW_KEY)
+                .returnSteps(true)
+                .build());
+
+        String expectedUrl = "https://1:443/workflow/rest/1.0/workflows/" +
+                EncodeUtils.encodeURIComponent(WORKFLOW_KEY) + "?returnData=steps";
+        assertEquals(expectedUrl, mockGetRequest.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowGetPropertiesWithNullInputData() {
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
+        WorkflowGet workflowGet = new WorkflowGet(connection);
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                () -> workflowGet.getPropertiesCommon(null));
+        assertEquals("propertiesInputData is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstWorkflowGetPropertiesWithNullWorkflowKey() {
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
+        WorkflowGet workflowGet = new WorkflowGet(connection);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> workflowGet.getProperties(null));
+        assertEquals("workflowKey is either null or empty", exception.getMessage());
     }
 
 }
