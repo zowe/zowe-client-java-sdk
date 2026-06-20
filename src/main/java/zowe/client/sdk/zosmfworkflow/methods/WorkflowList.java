@@ -37,10 +37,10 @@ import java.util.List;
  * @author Muhammad Imran
  * @version 7.0
  */
-public class WorkflowArchivedList {
+public class WorkflowList {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final String CONTEXT = "getCommon";
+    private static final String ARCHIVED_CONTEXT = "getArchivedCommon";
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -49,7 +49,7 @@ public class WorkflowArchivedList {
      *
      * @param connection for connection information, see ZosConnection object
      */
-    public WorkflowArchivedList(final ZosConnection connection) {
+    public WorkflowList(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
     }
@@ -64,7 +64,7 @@ public class WorkflowArchivedList {
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
      */
-    WorkflowArchivedList(final ZosConnection connection, final ZosmfRequest request) {
+    WorkflowList(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
         ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
@@ -80,8 +80,8 @@ public class WorkflowArchivedList {
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
      */
-    public List<WorkflowArchivedResponse> get() throws ZosmfRequestException {
-        return getCommon(WorkflowListArchivedInputData.builder().build());
+    public List<WorkflowArchivedResponse> getArchived() throws ZosmfRequestException {
+        return getArchivedCommon(WorkflowListArchivedInputData.builder().build());
     }
 
     /**
@@ -91,10 +91,10 @@ public class WorkflowArchivedList {
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
      */
-    public List<WorkflowArchivedResponse> getByOrderBy(final OrderByType orderByType)
+    public List<WorkflowArchivedResponse> getArchivedByOrderBy(final OrderByType orderByType)
             throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(orderByType, "orderByType");
-        return getCommon(WorkflowListArchivedInputData.builder().orderBy(orderByType).build());
+        return getArchivedCommon(WorkflowListArchivedInputData.builder().orderBy(orderByType).build());
     }
 
     /**
@@ -104,9 +104,9 @@ public class WorkflowArchivedList {
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
      */
-    public List<WorkflowArchivedResponse> getByView(final ViewType viewType) throws ZosmfRequestException {
+    public List<WorkflowArchivedResponse> getArchivedByView(final ViewType viewType) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(viewType, "viewType");
-        return getCommon(WorkflowListArchivedInputData.builder().view(viewType).build());
+        return getArchivedCommon(WorkflowListArchivedInputData.builder().view(viewType).build());
     }
 
     /**
@@ -116,7 +116,7 @@ public class WorkflowArchivedList {
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
      */
-    public List<WorkflowArchivedResponse> getCommon(final WorkflowListArchivedInputData listInputData)
+    public List<WorkflowArchivedResponse> getArchivedCommon(final WorkflowListArchivedInputData listInputData)
             throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(listInputData, "listInputData");
 
@@ -148,7 +148,7 @@ public class WorkflowArchivedList {
 
         if (nodes.isArray()) {
             for (final JsonNode node : nodes) {
-                results.add(JsonUtils.parseResponse(node.toString(), WorkflowArchivedResponse.class, CONTEXT));
+                results.add(JsonUtils.parseResponse(node.toString(), WorkflowArchivedResponse.class, ARCHIVED_CONTEXT));
             }
         }
 
