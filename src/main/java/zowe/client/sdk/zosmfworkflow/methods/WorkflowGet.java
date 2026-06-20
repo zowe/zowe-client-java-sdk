@@ -66,7 +66,7 @@ public class WorkflowGet {
     }
 
     /**
-     * Retrieve a z/OSMF workflow definition by definition file path.
+     * Retrieve a z/OSMF workflow definition-by-definition file path.
      *
      * @param definitionFilePath specifies the location of the workflow definition file, which is either a UNIX
      *                           path name (including the file name) or a fully qualified z/OS data set name
@@ -78,10 +78,10 @@ public class WorkflowGet {
     }
 
     /**
-     * Retrieve a z/OSMF workflow definition by definition file path on a specific system.
+     * Retrieve a z/OSMF workflow definition-by-definition file path on a specific system.
      *
-     * @param definitionFilePath specifies the location of the workflow definition file, which is either
-     *                           a UNIX path name (including the file name) or a fully qualified z/OS data set name
+     * @param definitionFilePath           specifies the location of the workflow definition file, which is either
+     *                                     a UNIX path name (including the file name) or a fully qualified z/OS data set name
      * @param workflowDefinitionFileSystem nickname of the system on which the workflow definition file resides
      * @return workflow definition details returned by z/OSMF
      * @throws ZosmfRequestException request error state
@@ -99,24 +99,25 @@ public class WorkflowGet {
     /**
      * Retrieve a z/OSMF workflow definition.
      *
-     * @param inputData workflow definition retrieval parameters
+     * @param definitionInputData workflow definition retrieval parameters
      * @return workflow definition details returned by z/OSMF
      * @throws ZosmfRequestException request error state
      */
-    public WorkflowGetDefinitionResponse getDefinitionCommon(final WorkflowGetDefinitionInputData inputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(inputData, "inputData");
+    public WorkflowGetDefinitionResponse getDefinitionCommon(final WorkflowGetDefinitionInputData definitionInputData)
+            throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(definitionInputData, "definitionInputData");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl());
         url.append(WorkflowConstants.WORKFLOW_DEFINITION_RESOURCE);
 
         // definitionFilePath is always present; WorkflowGetInputData enforces this invariant
-        inputData.getDefinitionFilePath()
+        definitionInputData.getDefinitionFilePath()
                 .ifPresent(target -> url.append("?definitionFilePath=").append(getEncodeURIComponent(target)));
 
-        inputData.getWorkflowDefinitionFileSystem()
+        definitionInputData.getWorkflowDefinitionFileSystem()
                 .ifPresent(sys -> url.append("&workflowDefinitionFileSystem=").append(getEncodeURIComponent(sys)));
 
-        final String returnData = buildReturnData(inputData);
+        final String returnData = buildReturnData(definitionInputData);
         if (!returnData.isEmpty()) {
             url.append("&returnData=").append(returnData);
         }
@@ -148,15 +149,15 @@ public class WorkflowGet {
     /**
      * Build the returnData query parameter value from the requested attributes.
      *
-     * @param inputData workflow definition retrieval parameters
-     * @return returnData value, or an empty string when no attributes are requested
+     * @param definitionInputData workflow definition retrieval parameters
+     * @return returnData value or an empty string when no attributes are requested
      */
-    private static String buildReturnData(final WorkflowGetDefinitionInputData inputData) {
+    private static String buildReturnData(final WorkflowGetDefinitionInputData definitionInputData) {
         final StringBuilder returnData = new StringBuilder();
-        if (inputData.isReturnSteps()) {
+        if (definitionInputData.isReturnSteps()) {
             returnData.append("steps");
         }
-        if (inputData.isReturnVariables()) {
+        if (definitionInputData.isReturnVariables()) {
             if (returnData.length() > 0) {
                 returnData.append(',');
             }

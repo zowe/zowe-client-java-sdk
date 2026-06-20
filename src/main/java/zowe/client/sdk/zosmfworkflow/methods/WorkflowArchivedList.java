@@ -111,20 +111,20 @@ public class WorkflowArchivedList {
     /**
      * Get all archived workflows on z/OS with full input control.
      *
-     * @param inputData workflow list archived input parameters
+     * @param listInputData workflow list archived input parameters
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
      */
-    public List<WorkflowArchivedResponse> getCommon(final WorkflowListArchivedInputData inputData)
+    public List<WorkflowArchivedResponse> getCommon(final WorkflowListArchivedInputData listInputData)
             throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(inputData, "inputData");
+        ValidateUtils.checkNullParameter(listInputData, "listInputData");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
                 WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE);
 
         // orderBy is always present; WorkflowListArchivedInputData enforces this invariant
-        inputData.getOrderBy().ifPresent(orderBy -> url.append("?orderBy=").append(orderBy.getValue()));
-        inputData.getView().ifPresent(view -> url.append("&view=").append(view.getValue()));
+        listInputData.getOrderBy().ifPresent(orderBy -> url.append("?orderBy=").append(orderBy.getValue()));
+        listInputData.getView().ifPresent(view -> url.append("&view=").append(view.getValue()));
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
