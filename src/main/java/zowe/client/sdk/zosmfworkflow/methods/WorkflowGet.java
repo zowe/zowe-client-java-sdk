@@ -34,7 +34,8 @@ import zowe.client.sdk.zosmfworkflow.response.WorkflowGetPropertiesResponse;
  */
 public class WorkflowGet {
 
-    private static final String CONTEXT = "getCommon";
+    private static final String DEFINITION_CONTEXT = "getDefinitionCommon";
+    private static final String PROPERTIES_CONTEXT = "getPropertiesCommon";
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -83,8 +84,8 @@ public class WorkflowGet {
     /**
      * Retrieve a z/OSMF workflow definition-by-definition file path on a specific system.
      *
-     * @param definitionFilePath           specifies the location of the workflow definition file, which is either
-     *                                     a UNIX path name (including the file name) or a fully qualified z/OS data set name
+     * @param definitionFilePath specifies the location of the workflow definition file, which is either a UNIX
+     *                           path name (including the file name) or a fully qualified z/OS data set name
      * @param workflowDefinitionFileSystem nickname of the system on which the workflow definition file resides
      * @return workflow definition details returned by z/OSMF
      * @throws ZosmfRequestException request error state
@@ -137,7 +138,7 @@ public class WorkflowGet {
                 .orElseThrow(() -> new IllegalStateException("no workflow get response phrase"))
                 .toString();
 
-        return JsonUtils.parseResponse(responsePhrase, WorkflowGetDefinitionResponse.class, CONTEXT);
+        return JsonUtils.parseResponse(responsePhrase, WorkflowGetDefinitionResponse.class, DEFINITION_CONTEXT);
     }
 
     /**
@@ -160,7 +161,8 @@ public class WorkflowGet {
      * @return workflow properties returned by z/OSMF
      * @throws ZosmfRequestException request error state
      */
-    public WorkflowGetPropertiesResponse getProperties(final String workflowKey, final boolean returnSteps,
+    public WorkflowGetPropertiesResponse getProperties(final String workflowKey,
+                                                       final boolean returnSteps,
                                                        final boolean returnVariables) throws ZosmfRequestException {
         return getPropertiesCommon(
                 WorkflowGetPropertiesInputData.builder()
@@ -189,8 +191,10 @@ public class WorkflowGet {
         propertiesInputData.getWorkflowKey()
                 .ifPresent(key -> url.append(WorkflowConstants.URL_PATH_DELIM).append(getEncodeURIComponent(key)));
 
-        final String returnData = buildReturnData(propertiesInputData.isReturnSteps(),
-                propertiesInputData.isReturnVariables());
+        final String returnData = buildReturnData(
+                propertiesInputData.isReturnSteps(),
+                propertiesInputData.isReturnVariables()
+        );
         if (!returnData.isEmpty()) {
             url.append("?returnData=").append(returnData);
         }
@@ -206,7 +210,7 @@ public class WorkflowGet {
                 .orElseThrow(() -> new IllegalStateException("no workflow get response phrase"))
                 .toString();
 
-        return JsonUtils.parseResponse(responsePhrase, WorkflowGetPropertiesResponse.class, CONTEXT);
+        return JsonUtils.parseResponse(responsePhrase, WorkflowGetPropertiesResponse.class, PROPERTIES_CONTEXT);
     }
 
     /**
