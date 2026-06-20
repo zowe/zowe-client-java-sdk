@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Workflow jobstatus information returned within a step jobInfo object.
+ * Workflow job status information returned within a step jobInfo object.
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-get-properties-workflow">z/OSMF REST API</a>
  *
@@ -52,7 +52,7 @@ public final class WorkflowJobStatus {
     /**
      * Job execution class.
      */
-    private final String classs;
+    private final String jobClass;
 
     /**
      * Job type, which is one of JOB, STC, or TSU.
@@ -72,7 +72,7 @@ public final class WorkflowJobStatus {
      * @param status    job status
      * @param owner     z/OS user ID associated with the job
      * @param subsystem JES subsystem
-     * @param classs    job execution class
+     * @param jobClass  job execution class
      * @param type      job type
      * @param jobid     job identifier
      */
@@ -83,7 +83,7 @@ public final class WorkflowJobStatus {
             @JsonProperty("status") final String status,
             @JsonProperty("owner") final String owner,
             @JsonProperty("subsystem") final String subsystem,
-            @JsonProperty("class") final String classs,
+            @JsonProperty("class") final String jobClass,
             @JsonProperty("type") final String type,
             @JsonProperty("jobid") final String jobid) {
         this.retcode = orEmpty(retcode);
@@ -91,7 +91,7 @@ public final class WorkflowJobStatus {
         this.status = orEmpty(status);
         this.owner = orEmpty(owner);
         this.subsystem = orEmpty(subsystem);
-        this.classs = orEmpty(classs);
+        this.jobClass = orEmpty(jobClass);
         this.type = orEmpty(type);
         this.jobid = orEmpty(jobid);
     }
@@ -152,8 +152,8 @@ public final class WorkflowJobStatus {
      *
      * @return class value
      */
-    public String getClasss() {
-        return classs;
+    public String getJobClass() {
+        return jobClass;
     }
 
     /**
@@ -187,7 +187,7 @@ public final class WorkflowJobStatus {
                 ", status='" + status + '\'' +
                 ", owner='" + owner + '\'' +
                 ", subsystem='" + subsystem + '\'' +
-                ", classs='" + classs + '\'' +
+                ", jobClass='" + jobClass + '\'' +
                 ", type='" + type + '\'' +
                 ", jobid='" + jobid + '\'' +
                 '}';

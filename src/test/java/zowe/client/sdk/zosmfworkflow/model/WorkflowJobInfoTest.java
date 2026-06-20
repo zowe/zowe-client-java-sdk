@@ -35,7 +35,7 @@ public class WorkflowJobInfoTest {
         assertEquals("OUTPUT", jobStatus.getStatus());
         assertEquals("IBMUSER", jobStatus.getOwner());
         assertEquals("JES2", jobStatus.getSubsystem());
-        assertEquals("A", jobStatus.getClasss());
+        assertEquals("A", jobStatus.getJobClass());
         assertEquals("JOB", jobStatus.getType());
         assertEquals("JOB00001", jobStatus.getJobid());
 
