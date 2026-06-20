@@ -28,27 +28,27 @@ import java.util.List;
 public final class WorkflowJobInfo {
 
     /**
-     * The jobstatus object that contains details about the job.
+     * The jobStatus object that contains details about the job.
      */
-    private final WorkflowJobStatus jobstatus;
+    private final WorkflowJobStatus jobStatus;
 
     /**
      * Array of objects that contain details about each of the files created by the job.
      */
-    private final List<WorkflowJobFile> jobfiles;
+    private final List<WorkflowJobFile> jobFiles;
 
     /**
      * WorkflowJobInfo Jackson constructor.
      *
-     * @param jobstatus details about the job
-     * @param jobfiles  details about each file created by the job
+     * @param jobStatus details about the job
+     * @param jobFiles  details about each file created by the job
      */
     @JsonCreator
     public WorkflowJobInfo(
-            @JsonProperty("jobstatus") final WorkflowJobStatus jobstatus,
-            @JsonProperty("jobfiles") final List<WorkflowJobFile> jobfiles) {
-        this.jobstatus = jobstatus;
-        this.jobfiles = orEmpty(jobfiles);
+            @JsonProperty("jobstatus") final WorkflowJobStatus jobStatus,
+            @JsonProperty("jobfiles") final List<WorkflowJobFile> jobFiles) {
+        this.jobStatus = jobStatus;
+        this.jobFiles = orEmpty(jobFiles);
     }
 
     /* Null-handling helpers */
@@ -58,21 +58,21 @@ public final class WorkflowJobInfo {
     }
 
     /**
-     * Retrieve jobstatus value.
+     * Retrieve jobStatus value.
      *
-     * @return jobstatus value
+     * @return jobStatus value
      */
-    public WorkflowJobStatus getJobstatus() {
-        return jobstatus;
+    public WorkflowJobStatus getJobStatus() {
+        return jobStatus;
     }
 
     /**
-     * Retrieve jobfiles value.
+     * Retrieve jobFiles value.
      *
-     * @return jobfiles value
+     * @return jobFiles value
      */
-    public List<WorkflowJobFile> getJobfiles() {
-        return jobfiles;
+    public List<WorkflowJobFile> getJobFiles() {
+        return jobFiles;
     }
 
     /**
@@ -83,8 +83,8 @@ public final class WorkflowJobInfo {
     @Override
     public String toString() {
         return "WorkflowJobInfo{" +
-                "jobstatus=" + jobstatus +
-                ", jobfiles=" + jobfiles +
+                "jobStatus=" + jobStatus +
+                ", jobFiles=" + jobFiles +
                 '}';
     }
 

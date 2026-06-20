@@ -28,7 +28,7 @@ public class WorkflowJobInfoTest {
                         "\"class\":\"A\",\"stepname\":\"STEP1\",\"procstep\":\"PROC1\"}]}",
                 WorkflowJobInfo.class, "test");
 
-        final WorkflowJobStatus jobStatus = jobInfo.getJobstatus();
+        final WorkflowJobStatus jobStatus = jobInfo.getJobStatus();
         assertNotNull(jobStatus);
         assertEquals("CC 0000", jobStatus.getRetcode());
         assertEquals("TESTJOB", jobStatus.getJobname());
@@ -39,8 +39,8 @@ public class WorkflowJobInfoTest {
         assertEquals("JOB", jobStatus.getType());
         assertEquals("JOB00001", jobStatus.getJobid());
 
-        assertEquals(1, jobInfo.getJobfiles().size());
-        final WorkflowJobFile jobFile = jobInfo.getJobfiles().get(0);
+        assertEquals(1, jobInfo.getJobFiles().size());
+        final WorkflowJobFile jobFile = jobInfo.getJobFiles().get(0);
         assertEquals(1, jobFile.getId().intValue());
         assertEquals("JESMSGLG", jobFile.getDdname());
         assertEquals(500, jobFile.getByteCount().intValue());
@@ -54,8 +54,8 @@ public class WorkflowJobInfoTest {
     public void tstWorkflowJobInfoNullDefaultsSuccess() {
         final WorkflowJobInfo jobInfo = new WorkflowJobInfo(null, null);
 
-        assertNull(jobInfo.getJobstatus());
-        assertTrue(jobInfo.getJobfiles().isEmpty());
+        assertNull(jobInfo.getJobStatus());
+        assertTrue(jobInfo.getJobFiles().isEmpty());
     }
 
 }
