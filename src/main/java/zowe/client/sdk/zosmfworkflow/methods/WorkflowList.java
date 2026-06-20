@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Handles retrieval of archived workflows from z/OSMF.
+ * Handles retrieval of workflows from z/OSMF.
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-list-archived-workflows-system">z/OSMF REST API</a>
  *
@@ -45,7 +45,7 @@ public class WorkflowList {
     private ZosmfRequest request;
 
     /**
-     * WorkflowListArchived constructor.
+     * WorkflowList constructor.
      *
      * @param connection for connection information, see ZosConnection object
      */
@@ -55,7 +55,7 @@ public class WorkflowList {
     }
 
     /**
-     * Alternative WorkflowListArchived constructor with ZosmfRequest object.
+     * Alternative WorkflowList constructor with ZosmfRequest object.
      * This is mainly used for internal code unit testing with Mockito,
      * and it is not recommended to be used by the larger community.
      * <p>
