@@ -393,7 +393,7 @@ public class WorkflowGetTest {
         WorkflowGet workflowGet = new WorkflowGet(connection);
         NullPointerException exception = assertThrows(NullPointerException.class,
                 () -> workflowGet.getDefinitionCommon(null));
-        assertEquals("inputData is null", exception.getMessage());
+        assertEquals("definitionInputData is null", exception.getMessage());
     }
 
     @Test

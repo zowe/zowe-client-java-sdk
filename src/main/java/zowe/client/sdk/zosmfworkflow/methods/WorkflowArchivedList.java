@@ -40,6 +40,7 @@ import java.util.List;
 public class WorkflowArchivedList {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final String CONTEXT = "getCommon";
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -147,7 +148,7 @@ public class WorkflowArchivedList {
 
         if (nodes.isArray()) {
             for (final JsonNode node : nodes) {
-                results.add(JsonUtils.parseResponse(node.toString(), WorkflowArchivedResponse.class, "getCommon"));
+                results.add(JsonUtils.parseResponse(node.toString(), WorkflowArchivedResponse.class, CONTEXT));
             }
         }
 

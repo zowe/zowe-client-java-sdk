@@ -176,8 +176,7 @@ public class ZosLog {
     private @NonNull String getUrl(final ZosLogInputData logInputData, final long nextTimestamp) {
         ValidateUtils.checkNullParameter(logInputData, "logInputData");
 
-        final StringBuilder url = new StringBuilder(connection.getZosmfUrl())
-                .append(RESOURCE);
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl()).append(RESOURCE);
 
         final List<String> queryParams = new ArrayList<>();
 

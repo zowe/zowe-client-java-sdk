@@ -34,7 +34,7 @@ import zowe.client.sdk.zosmfworkflow.response.WorkflowCreateResponse;
 public class WorkflowCreate {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
+    private static final String CONTEXT = "create";
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -100,7 +100,7 @@ public class WorkflowCreate {
                 .orElseThrow(() -> new IllegalStateException("no workflow create response phrase"))
                 .toString();
 
-        return JsonUtils.parseResponse(responsePhrase, WorkflowCreateResponse.class, "create");
+        return JsonUtils.parseResponse(responsePhrase, WorkflowCreateResponse.class, CONTEXT);
     }
 
 }

@@ -32,6 +32,7 @@ import zowe.client.sdk.zosmfworkflow.response.WorkflowGetDefinitionResponse;
  */
 public class WorkflowGet {
 
+    private static final String CONTEXT = "getCommon";
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -86,7 +87,8 @@ public class WorkflowGet {
      * @return workflow definition details returned by z/OSMF
      * @throws ZosmfRequestException request error state
      */
-    public WorkflowGetDefinitionResponse getDefinition(final String definitionFilePath, final String workflowDefinitionFileSystem)
+    public WorkflowGetDefinitionResponse getDefinition(final String definitionFilePath,
+                                                       final String workflowDefinitionFileSystem)
             throws ZosmfRequestException {
         return getDefinitionCommon(
                 WorkflowGetDefinitionInputData.builder()
@@ -133,7 +135,7 @@ public class WorkflowGet {
                 .orElseThrow(() -> new IllegalStateException("no workflow get response phrase"))
                 .toString();
 
-        return JsonUtils.parseResponse(responsePhrase, WorkflowGetDefinitionResponse.class, "getCommon");
+        return JsonUtils.parseResponse(responsePhrase, WorkflowGetDefinitionResponse.class, CONTEXT);
     }
 
     /**

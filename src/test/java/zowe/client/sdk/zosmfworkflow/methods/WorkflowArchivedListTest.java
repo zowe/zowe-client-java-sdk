@@ -189,7 +189,7 @@ public class WorkflowArchivedListTest {
                 NullPointerException.class,
                 () -> workflowArchivedList.getCommon(null)
         );
-        assertEquals("inputData is null", exception.getMessage());
+        assertEquals("listInputData is null", exception.getMessage());
     }
 
     @Test
