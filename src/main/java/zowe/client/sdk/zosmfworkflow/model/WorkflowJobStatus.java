@@ -32,7 +32,7 @@ public final class WorkflowJobStatus {
     /**
      * Job name.
      */
-    private final String jobname;
+    private final String jobName;
 
     /**
      * Job status, which is one of INPUT, ACTIVE, or OUTPUT.
@@ -62,38 +62,38 @@ public final class WorkflowJobStatus {
     /**
      * Job identifier.
      */
-    private final String jobid;
+    private final String jobId;
 
     /**
      * WorkflowJobStatus Jackson constructor.
      *
      * @param retcode   job completion code
-     * @param jobname   job name
+     * @param jobName   job name
      * @param status    job status
      * @param owner     z/OS user ID associated with the job
      * @param subsystem JES subsystem
      * @param jobClass  job execution class
      * @param type      job type
-     * @param jobid     job identifier
+     * @param jobId     job identifier
      */
     @JsonCreator
     public WorkflowJobStatus(
             @JsonProperty("retcode") final String retcode,
-            @JsonProperty("jobname") final String jobname,
+            @JsonProperty("jobname") final String jobName,
             @JsonProperty("status") final String status,
             @JsonProperty("owner") final String owner,
             @JsonProperty("subsystem") final String subsystem,
             @JsonProperty("class") final String jobClass,
             @JsonProperty("type") final String type,
-            @JsonProperty("jobid") final String jobid) {
+            @JsonProperty("jobid") final String jobId) {
         this.retcode = orEmpty(retcode);
-        this.jobname = orEmpty(jobname);
+        this.jobName = orEmpty(jobName);
         this.status = orEmpty(status);
         this.owner = orEmpty(owner);
         this.subsystem = orEmpty(subsystem);
         this.jobClass = orEmpty(jobClass);
         this.type = orEmpty(type);
-        this.jobid = orEmpty(jobid);
+        this.jobId = orEmpty(jobId);
     }
 
     /* Null-handling helpers */
@@ -116,8 +116,8 @@ public final class WorkflowJobStatus {
      *
      * @return jobname value
      */
-    public String getJobname() {
-        return jobname;
+    public String getJobName() {
+        return jobName;
     }
 
     /**
@@ -170,8 +170,8 @@ public final class WorkflowJobStatus {
      *
      * @return jobid value
      */
-    public String getJobid() {
-        return jobid;
+    public String getJobId() {
+        return jobId;
     }
 
     /**
@@ -183,13 +183,13 @@ public final class WorkflowJobStatus {
     public String toString() {
         return "WorkflowJobStatus{" +
                 "retcode='" + retcode + '\'' +
-                ", jobname='" + jobname + '\'' +
+                ", jobName='" + jobName + '\'' +
                 ", status='" + status + '\'' +
                 ", owner='" + owner + '\'' +
                 ", subsystem='" + subsystem + '\'' +
                 ", jobClass='" + jobClass + '\'' +
                 ", type='" + type + '\'' +
-                ", jobid='" + jobid + '\'' +
+                ", jobId='" + jobId + '\'' +
                 '}';
     }
 

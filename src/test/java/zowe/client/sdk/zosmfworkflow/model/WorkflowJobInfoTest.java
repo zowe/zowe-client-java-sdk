@@ -31,13 +31,13 @@ public class WorkflowJobInfoTest {
         final WorkflowJobStatus jobStatus = jobInfo.getJobStatus();
         assertNotNull(jobStatus);
         assertEquals("CC 0000", jobStatus.getRetcode());
-        assertEquals("TESTJOB", jobStatus.getJobname());
+        assertEquals("TESTJOB", jobStatus.getJobName());
         assertEquals("OUTPUT", jobStatus.getStatus());
         assertEquals("IBMUSER", jobStatus.getOwner());
         assertEquals("JES2", jobStatus.getSubsystem());
         assertEquals("A", jobStatus.getJobClass());
         assertEquals("JOB", jobStatus.getType());
-        assertEquals("JOB00001", jobStatus.getJobid());
+        assertEquals("JOB00001", jobStatus.getJobId());
 
         assertEquals(1, jobInfo.getJobFiles().size());
         final WorkflowJobFile jobFile = jobInfo.getJobFiles().get(0);
