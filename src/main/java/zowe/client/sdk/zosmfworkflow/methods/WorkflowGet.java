@@ -20,7 +20,9 @@ import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
 import zowe.client.sdk.zosmfworkflow.input.WorkflowGetDefinitionInputData;
+import zowe.client.sdk.zosmfworkflow.input.WorkflowGetPropertiesInputData;
 import zowe.client.sdk.zosmfworkflow.response.WorkflowGetDefinitionResponse;
+import zowe.client.sdk.zosmfworkflow.response.WorkflowGetPropertiesResponse;
 
 /**
  * Provides retrieve workflow definition functionality through the z/OSMF workflow REST API.
@@ -139,6 +141,75 @@ public class WorkflowGet {
     }
 
     /**
+     * Get the properties of a z/OSMF workflow by workflow key.
+     *
+     * @param workflowKey workflow key that uniquely identifies the workflow instance
+     * @return workflow properties returned by z/OSMF
+     * @throws ZosmfRequestException request error state
+     */
+    public WorkflowGetPropertiesResponse getProperties(final String workflowKey) throws ZosmfRequestException {
+        return getPropertiesCommon(WorkflowGetPropertiesInputData.builder().workflowKey(workflowKey).build());
+    }
+
+    /**
+     * Get the properties of a z/OSMF workflow by workflow key, optionally including step and variable information.
+     *
+     * @param workflowKey     workflow key that uniquely identifies the workflow instance
+     * @param returnSteps     whether the response includes the workflow step information
+     * @param returnVariables whether the response includes the workflow variable information
+     * @return workflow properties returned by z/OSMF
+     * @throws ZosmfRequestException request error state
+     */
+    public WorkflowGetPropertiesResponse getProperties(final String workflowKey, final boolean returnSteps,
+                                                       final boolean returnVariables) throws ZosmfRequestException {
+        return getPropertiesCommon(
+                WorkflowGetPropertiesInputData.builder()
+                        .workflowKey(workflowKey)
+                        .returnSteps(returnSteps)
+                        .returnVariables(returnVariables)
+                        .build()
+        );
+    }
+
+    /**
+     * Get the properties of a z/OSMF workflow.
+     *
+     * @param propertiesInputData workflow properties retrieval parameters
+     * @return workflow properties returned by z/OSMF
+     * @throws ZosmfRequestException request error state
+     */
+    public WorkflowGetPropertiesResponse getPropertiesCommon(final WorkflowGetPropertiesInputData propertiesInputData)
+            throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(propertiesInputData, "propertiesInputData");
+
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl());
+        url.append(WorkflowConstants.WORKFLOWS_RESOURCE);
+
+        // workflowKey is always present; WorkflowGetPropertiesInputData enforces this invariant
+        propertiesInputData.getWorkflowKey()
+                .ifPresent(key -> url.append(WorkflowConstants.URL_PATH_DELIM).append(getEncodeURIComponent(key)));
+
+        final String returnData = buildReturnData(propertiesInputData.isReturnSteps(),
+                propertiesInputData.isReturnVariables());
+        if (!returnData.isEmpty()) {
+            url.append("?returnData=").append(returnData);
+        }
+
+        if (request == null) {
+            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
+        }
+
+        request.setUrl(url.toString());
+
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no workflow get response phrase"))
+                .toString();
+
+        return JsonUtils.parseResponse(responsePhrase, WorkflowGetPropertiesResponse.class, CONTEXT);
+    }
+
+    /**
      * Helper wrapper method.
      *
      * @param str String value
@@ -155,11 +226,22 @@ public class WorkflowGet {
      * @return returnData value or an empty string when no attributes are requested
      */
     private static String buildReturnData(final WorkflowGetDefinitionInputData definitionInputData) {
+        return buildReturnData(definitionInputData.isReturnSteps(), definitionInputData.isReturnVariables());
+    }
+
+    /**
+     * Build the returnData query parameter value from the requested attributes.
+     *
+     * @param returnSteps     whether to request the workflow step information
+     * @param returnVariables whether to request the workflow variable information
+     * @return returnData value or an empty string when no attributes are requested
+     */
+    private static String buildReturnData(final boolean returnSteps, final boolean returnVariables) {
         final StringBuilder returnData = new StringBuilder();
-        if (definitionInputData.isReturnSteps()) {
+        if (returnSteps) {
             returnData.append("steps");
         }
-        if (definitionInputData.isReturnVariables()) {
+        if (returnVariables) {
             if (returnData.length() > 0) {
                 returnData.append(',');
             }
