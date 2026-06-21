@@ -140,7 +140,7 @@ public class DsnCopy {
         String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES +
-                QueryConstants.URL_PATH_DELIM;
+                UrlConstants.URL_PATH_DELIM;
 
         if (copyInputData.getToVolser().isPresent()) {
             url += "-(" + copyInputData.getToVolser().get() + ")/";

@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
-import zowe.client.sdk.rest.QueryConstants;
+import zowe.client.sdk.rest.UrlConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -301,9 +301,9 @@ public class JobChange {
         ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
         return zosmfUrl +
                 JobsConstants.RESOURCE +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 modifyInputData.getJobName().get() +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 modifyInputData.getJobId().get();
     }
 

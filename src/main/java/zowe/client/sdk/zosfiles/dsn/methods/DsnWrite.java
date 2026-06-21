@@ -95,7 +95,7 @@ public class DsnWrite {
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
         if (request == null) {

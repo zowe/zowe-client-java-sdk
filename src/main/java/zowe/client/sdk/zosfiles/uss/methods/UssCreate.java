@@ -132,7 +132,7 @@ public class UssCreate {
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_ZFS_FILES +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(fileSystemName));
         createZfsInputData.getTimeout().ifPresent(timeout -> url.append("?timeout=").append(timeout));
 

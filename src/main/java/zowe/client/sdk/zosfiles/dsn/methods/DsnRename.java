@@ -112,7 +112,7 @@ public class DsnRename {
         url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(args[0]);
         if (args.length > 1) {
             url += "(" + EncodeUtils.encodeURIComponent(args[1]) + ")";

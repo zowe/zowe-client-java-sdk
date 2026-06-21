@@ -123,7 +123,7 @@ public class DsnGet {
         String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES +
-                QueryConstants.URL_PATH_DELIM;
+                UrlConstants.URL_PATH_DELIM;
 
         if (downloadInputData.getVolume().isPresent()) {
             url += "-(" + downloadInputData.getVolume().get() + ")/";

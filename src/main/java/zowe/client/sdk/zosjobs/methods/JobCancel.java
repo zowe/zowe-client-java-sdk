@@ -122,9 +122,9 @@ public class JobCancel {
         // generate full url request
         final String url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 modifyInputData.getJobName().get() +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 modifyInputData.getJobId().get();
 
         // set version to default value if none given

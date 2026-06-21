@@ -11,7 +11,7 @@ package zowe.client.sdk.zosmfworkflow.methods;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
-import zowe.client.sdk.rest.QueryConstants;
+import zowe.client.sdk.rest.UrlConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -190,7 +190,7 @@ public class WorkflowGet {
 
         // workflowKey is always present; WorkflowGetPropertiesInputData enforces this invariant
         propertiesInputData.getWorkflowKey()
-                .ifPresent(key -> url.append(QueryConstants.URL_PATH_DELIM).append(getEncodeURIComponent(key)));
+                .ifPresent(key -> url.append(UrlConstants.URL_PATH_DELIM).append(getEncodeURIComponent(key)));
 
         final String returnData = buildReturnData(
                 propertiesInputData.isReturnSteps(),

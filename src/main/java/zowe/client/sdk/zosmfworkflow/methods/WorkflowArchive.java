@@ -76,11 +76,11 @@ public class WorkflowArchive {
 
         final String url = connection.getZosmfUrl() +
                 WorkflowConstants.WORKFLOWS_RESOURCE +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(workflowKey) +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 OPERATIONS_RESOURCE +
-                QueryConstants.URL_PATH_DELIM + ARCHIVE_RESOURCE;
+                UrlConstants.URL_PATH_DELIM + ARCHIVE_RESOURCE;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);

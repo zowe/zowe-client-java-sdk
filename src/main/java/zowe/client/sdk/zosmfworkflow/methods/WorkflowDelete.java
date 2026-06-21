@@ -96,7 +96,7 @@ public class WorkflowDelete {
 
         final String url = connection.getZosmfUrl() +
                 (!isArchived ? WorkflowConstants.WORKFLOWS_RESOURCE : WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE) +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(workflowKey);
 
         if (request == null) {

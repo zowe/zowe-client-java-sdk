@@ -89,15 +89,15 @@ public class DsnList {
         final Map<String, String> headers = new HashMap<>();
         final List<Dataset> datasets = new ArrayList<>();
         String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + UrlConstants.QUERY_ID +
                 ZosFilesConstants.QUERY_DS_LEVEL + EncodeUtils.encodeURIComponent(dataSetName);
 
         if (listInputData.getVolume().isPresent()) {
-            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
+            url += UrlConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
                     EncodeUtils.encodeURIComponent(listInputData.getVolume().get());
         }
         if (listInputData.getStart().isPresent()) {
-            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + listInputData.getStart().get();
+            url += UrlConstants.COMBO_ID + ZosFilesConstants.QUERY_START + listInputData.getStart().get();
         }
 
         return getResult(getResponse(listInputData, headers, url), datasets, null);
@@ -122,12 +122,12 @@ public class DsnList {
         String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(dataSetName) +
                 ZosFilesConstants.RES_DS_MEMBERS;
 
         if (listInputData.getPattern().isPresent()) {
-            url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN +
+            url += UrlConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN +
                     EncodeUtils.encodeURIComponent(listInputData.getPattern().get());
         }
 

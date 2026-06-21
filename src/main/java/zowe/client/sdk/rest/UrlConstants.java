@@ -15,12 +15,12 @@ package zowe.client.sdk.rest;
  * @author Frank Giordano
  * @version 6.0
  */
-public final class QueryConstants {
+public final class UrlConstants {
 
     /**
      * Private constructor defined to avoid instantiation of class
      */
-    private QueryConstants() {
+    private UrlConstants() {
         throw new IllegalStateException("Constants class");
     }
 

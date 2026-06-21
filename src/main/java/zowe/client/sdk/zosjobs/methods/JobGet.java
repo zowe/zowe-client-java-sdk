@@ -113,9 +113,9 @@ public class JobGet {
 
         url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 commonInputData.getJobId().get() +
                 JobsConstants.RESOURCE_SPOOL_FILES +
                 JobsConstants.RESOURCE_JCL_CONTENT +
@@ -217,7 +217,7 @@ public class JobGet {
         List<Job> jobs = new ArrayList<>();
 
         url = connection.getZosmfUrl() +
-                JobsConstants.RESOURCE + QueryConstants.QUERY_ID;
+                JobsConstants.RESOURCE + UrlConstants.QUERY_ID;
 
         if (getInputData != null) {
             if (getInputData.getOwner().isPresent()) {
@@ -225,23 +225,23 @@ public class JobGet {
             }
             if (getInputData.getPrefix().isPresent()) {
                 if (!JobsConstants.DEFAULT_PREFIX.equals(getInputData.getPrefix().get())) {
-                    if (url.contains(QueryConstants.QUERY_ID)) {
-                        url += QueryConstants.COMBO_ID;
+                    if (url.contains(UrlConstants.QUERY_ID)) {
+                        url += UrlConstants.COMBO_ID;
                     }
                     url += JobsConstants.QUERY_PREFIX + EncodeUtils.encodeURIComponent(getInputData.getPrefix().get());
                 }
             }
             if (getInputData.getMaxJobs().isPresent()) {
                 if (getInputData.getMaxJobs().getAsInt() != JobsConstants.DEFAULT_MAX_JOBS) {
-                    if (url.contains(QueryConstants.QUERY_ID)) {
-                        url += QueryConstants.COMBO_ID;
+                    if (url.contains(UrlConstants.QUERY_ID)) {
+                        url += UrlConstants.COMBO_ID;
                     }
                     url += JobsConstants.QUERY_MAX_JOBS + getInputData.getMaxJobs().getAsInt();
                 }
             }
             if (getInputData.getJobId().isPresent()) {
-                if (url.contains(QueryConstants.QUERY_ID)) {
-                    url += QueryConstants.COMBO_ID;
+                if (url.contains(UrlConstants.QUERY_ID)) {
+                    url += UrlConstants.COMBO_ID;
                 }
                 url += JobsConstants.QUERY_JOBID + getInputData.getJobId().get();
             }
@@ -315,12 +315,12 @@ public class JobGet {
 
         url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(jobFile.getJobName()) +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 jobFile.getJobId() +
                 JobsConstants.RESOURCE_SPOOL_FILES +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 jobFile.getId() +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
 
@@ -379,9 +379,9 @@ public class JobGet {
 
         url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 commonInputData.getJobId().get() +
                 "/files";
 
@@ -478,9 +478,9 @@ public class JobGet {
         ValidateUtils.checkIllegalParameter(commonInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 
         url = connection.getZosmfUrl() + JobsConstants.RESOURCE +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 commonInputData.getJobId().get();
 
         if (commonInputData.isStepData()) {

@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zostso;
 
-import static zowe.client.sdk.rest.QueryConstants.URL_PATH_DELIM;
+import static zowe.client.sdk.rest.UrlConstants.URL_PATH_DELIM;
 
 /**
  * Constants for various tso related info

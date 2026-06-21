@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosmfworkflow;
 
-import static zowe.client.sdk.rest.QueryConstants.URL_PATH_DELIM;
+import static zowe.client.sdk.rest.UrlConstants.URL_PATH_DELIM;
 
 /**
  * Constants to be used by the z/OSMF workflow API.

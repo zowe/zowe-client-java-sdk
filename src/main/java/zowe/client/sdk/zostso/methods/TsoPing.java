@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
-import zowe.client.sdk.rest.QueryConstants;
+import zowe.client.sdk.rest.UrlConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -79,7 +79,7 @@ public class TsoPing {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
         final String url = connection.getZosmfUrl() +
                 TsoConstants.RES_PING +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 sessionId;
 
         if (request == null || !(request instanceof PutJsonZosmfRequest)) {

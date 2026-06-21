@@ -18,7 +18,7 @@ import zowe.client.sdk.utility.UtilsTestHelper;
  * @author Frank Giordano
  * @version 6.0
  */
-public class QueryConstantsTest {
+public class UrlConstantsTest {
 
     /**
      * Validate class structure
@@ -26,7 +26,7 @@ public class QueryConstantsTest {
     @Test
     public void tstQueryConstantsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Constants class";
-        UtilsTestHelper.validateClass(QueryConstants.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(UrlConstants.class, privateConstructorExceptionMsg);
     }
 
 }

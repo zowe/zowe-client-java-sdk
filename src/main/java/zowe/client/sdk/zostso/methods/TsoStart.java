@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PostJsonZosmfRequest;
-import zowe.client.sdk.rest.QueryConstants;
+import zowe.client.sdk.rest.UrlConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -81,7 +81,7 @@ public class TsoStart {
         ValidateUtils.checkNullParameter(inputData, "inputData");
         final String url = connection.getZosmfUrl() +
                 TsoConstants.RESOURCE +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 TsoConstants.RES_START_TSO +
                 "?" + "acct" + "=" + EncodeUtils.encodeURIComponent(inputData.getAccount()
                 .orElseThrow(() -> new ZosmfRequestException("accountNumber is not specified"))) +

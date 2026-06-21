@@ -86,7 +86,7 @@ public class VariableImport {
 
         final String url = connection.getZosmfUrl() +
                 VariableConstants.RESOURCE +
-                QueryConstants.URL_PATH_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(sysplexName) + "." +
                 EncodeUtils.encodeURIComponent(systemName) +
                 "/actions/import";
