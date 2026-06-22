@@ -13,18 +13,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.UrlConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
 import zowe.client.sdk.zosmfworkflow.input.WorkflowStartInputData;
-import zowe.client.sdk.zosmfworkflow.response.WorkflowStartResponse;
-
-import static zowe.client.sdk.rest.UrlConstants.URL_PATH_DELIM;
 
 /**
  * Provides start workflow functionality through the z/OSMF workflow REST API.
@@ -37,7 +35,6 @@ import static zowe.client.sdk.rest.UrlConstants.URL_PATH_DELIM;
 public class WorkflowStart {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final String CONTEXT = "start";
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -75,50 +72,39 @@ public class WorkflowStart {
      * Start a z/OSMF workflow on the target system.
      *
      * @param workflowKey workflow key identifying the workflow to start
-     * @return workflow start response
+     * @return http response object
      * @throws ZosmfRequestException request error state
      */
-    public WorkflowStartResponse start(final String workflowKey) throws ZosmfRequestException {
-        return start(workflowKey, null);
+    public Response start(final String workflowKey) throws ZosmfRequestException {
+        return startCommon(new WorkflowStartInputData.Builder(workflowKey).build());
     }
 
     /**
-     * Start a z/OSMF workflow on the target system with optional input parameters.
+     * Start a z/OSMF workflow on the target system with input parameters.
      *
-     * @param workflowKey  workflow key identifying the workflow to start
-     * @param startInputData optional workflow start parameters
-     * @return workflow start response
+     * @param startInputData workflow start parameters
+     * @return http response object
      * @throws ZosmfRequestException request error state
      */
-    public WorkflowStartResponse start(final String workflowKey, final WorkflowStartInputData startInputData)
-            throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(workflowKey, "workflowKey");
+    public Response startCommon(final WorkflowStartInputData startInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(startInputData, "startInputData");
 
         final String url = connection.getZosmfUrl() + WorkflowConstants.WORKFLOWS_RESOURCE
-                + URL_PATH_DELIM + EncodeUtils.encodeURIComponent(workflowKey)
-                + URL_PATH_DELIM + "operations" + URL_PATH_DELIM + "start";
+                + UrlConstants.URL_PATH_DELIM + EncodeUtils.encodeURIComponent(startInputData.getWorkflowKey())
+                + UrlConstants.URL_PATH_DELIM + "operations" + UrlConstants.URL_PATH_DELIM + "start";
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
 
-        if (startInputData != null) {
-            try {
-                request.setBody(OBJECT_MAPPER.writeValueAsString(startInputData));
-            } catch (JsonProcessingException e) {
-                throw new IllegalStateException("error serializing workflow start request", e);
-            }
-        } else {
-            request.setBody("{}");
+        try {
+            request.setBody(OBJECT_MAPPER.writeValueAsString(startInputData));
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException("error serializing workflow start request", e);
         }
 
-        final String responsePhrase = request.executeRequest()
-                .getResponsePhrase()
-                .orElse("{\"statusMessage\":\"Workflow started successfully\"}")
-                .toString();
-
-        return JsonUtils.parseResponse(responsePhrase, WorkflowStartResponse.class, CONTEXT);
+        return request.executeRequest();
     }
 
 }

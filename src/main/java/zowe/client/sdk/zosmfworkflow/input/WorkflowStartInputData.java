@@ -9,7 +9,10 @@
  */
 package zowe.client.sdk.zosmfworkflow.input;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosmfworkflow.types.ConflictResolutionType;
 
 /**
  * Parameters for the z/OSMF start workflow API input data.
@@ -21,6 +24,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WorkflowStartInputData {
+
+    /**
+     * Workflow key identifying the workflow to start.
+     */
+    @JsonIgnore
+    private final String workflowKey;
 
     /**
      * Determines how to resolve variable conflicts.
@@ -58,12 +67,25 @@ public class WorkflowStartInputData {
      * @param builder builder instance
      */
     private WorkflowStartInputData(final Builder builder) {
-        this.resolveConflictByUsing = builder.resolveConflictByUsing;
+        ValidateUtils.checkIllegalParameter(builder.workflowKey, "workflowKey");
+        this.workflowKey = builder.workflowKey;
+        this.resolveConflictByUsing = builder.resolveConflictByUsing != null
+                ? builder.resolveConflictByUsing.getValue()
+                : null;
         this.stepName = builder.stepName;
         this.performSubsequent = builder.performSubsequent;
         this.notificationUrl = builder.notificationUrl;
         this.targetSystemuid = builder.targetSystemuid;
         this.targetSystempwd = builder.targetSystempwd;
+    }
+
+    /**
+     * Retrieve workflowKey value.
+     *
+     * @return workflowKey value
+     */
+    public String getWorkflowKey() {
+        return workflowKey;
     }
 
     /**
@@ -121,15 +143,6 @@ public class WorkflowStartInputData {
     }
 
     /**
-     * Create a new builder for workflow start input data.
-     *
-     * @return builder instance
-     */
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    /**
      * Return string value representing WorkflowStartInputData object.
      *
      * @return string representation of WorkflowStartInputData
@@ -137,7 +150,8 @@ public class WorkflowStartInputData {
     @Override
     public String toString() {
         return "WorkflowStartInputData{" +
-                "resolveConflictByUsing='" + resolveConflictByUsing + '\'' +
+                "workflowKey='" + workflowKey + '\'' +
+                ", resolveConflictByUsing='" + resolveConflictByUsing + '\'' +
                 ", stepName='" + stepName + '\'' +
                 ", performSubsequent=" + performSubsequent +
                 ", notificationUrl='" + notificationUrl + '\'' +
@@ -151,23 +165,30 @@ public class WorkflowStartInputData {
      */
     public static final class Builder {
 
-        private String resolveConflictByUsing;
+        private final String workflowKey;
+        private ConflictResolutionType resolveConflictByUsing;
         private String stepName;
         private Boolean performSubsequent;
         private String notificationUrl;
         private String targetSystemuid;
         private String targetSystempwd;
 
-        private Builder() {
+        /**
+         * Builder constructor.
+         *
+         * @param workflowKey workflow key identifying the workflow to start
+         */
+        public Builder(final String workflowKey) {
+            this.workflowKey = workflowKey;
         }
 
         /**
-         * Set the resolve conflict by using value.
+         * Set the conflict resolution strategy.
          *
-         * @param resolveConflictByUsing resolve conflict by using value
+         * @param resolveConflictByUsing conflict resolution type
          * @return this builder instance
          */
-        public Builder resolveConflictByUsing(final String resolveConflictByUsing) {
+        public Builder resolveConflictByUsing(final ConflictResolutionType resolveConflictByUsing) {
             this.resolveConflictByUsing = resolveConflictByUsing;
             return this;
         }

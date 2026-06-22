@@ -10,9 +10,9 @@
 package zowe.client.sdk.zosmfworkflow.input;
 
 import org.junit.jupiter.api.Test;
+import zowe.client.sdk.zosmfworkflow.types.ConflictResolutionType;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Class containing unit tests for WorkflowStartInputData.
@@ -24,8 +24,8 @@ public class WorkflowStartInputDataTest {
 
     @Test
     public void testWorkflowStartInputDataBuilderSuccess() {
-        final WorkflowStartInputData inputData = WorkflowStartInputData.builder()
-                .resolveConflictByUsing("outputFileValue")
+        final WorkflowStartInputData inputData = new WorkflowStartInputData.Builder("workflow-key-123")
+                .resolveConflictByUsing(ConflictResolutionType.OUTPUT_FILE_VALUE)
                 .stepName("Step1")
                 .performSubsequent(Boolean.TRUE)
                 .notificationUrl("https://example.com/notification")
@@ -34,6 +34,7 @@ public class WorkflowStartInputDataTest {
                 .build();
 
         assertNotNull(inputData);
+        assertEquals("workflow-key-123", inputData.getWorkflowKey());
         assertEquals("outputFileValue", inputData.getResolveConflictByUsing());
         assertEquals("Step1", inputData.getStepName());
         assertEquals(Boolean.TRUE, inputData.getPerformSubsequent());
@@ -44,9 +45,46 @@ public class WorkflowStartInputDataTest {
 
     @Test
     public void testWorkflowStartInputDataBuilderWithMinimalParameters() {
-        final WorkflowStartInputData inputData = WorkflowStartInputData.builder().build();
+        final WorkflowStartInputData inputData = new WorkflowStartInputData.Builder("workflow-key-123").build();
 
         assertNotNull(inputData);
+        assertEquals("workflow-key-123", inputData.getWorkflowKey());
+    }
+
+    @Test
+    public void testWorkflowStartInputDataWithNullWorkflowKey() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> new WorkflowStartInputData.Builder(null).build()
+        );
+        assertEquals("workflowKey is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void testWorkflowStartInputDataWithEmptyWorkflowKey() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> new WorkflowStartInputData.Builder("").build()
+        );
+        assertEquals("workflowKey is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void testAllConflictResolutionTypes() {
+        final WorkflowStartInputData outputFileData = new WorkflowStartInputData.Builder("key1")
+                .resolveConflictByUsing(ConflictResolutionType.OUTPUT_FILE_VALUE)
+                .build();
+        assertEquals("outputFileValue", outputFileData.getResolveConflictByUsing());
+
+        final WorkflowStartInputData existingValueData = new WorkflowStartInputData.Builder("key2")
+                .resolveConflictByUsing(ConflictResolutionType.EXISTING_VALUE)
+                .build();
+        assertEquals("existingValue", existingValueData.getResolveConflictByUsing());
+
+        final WorkflowStartInputData leaveConflictData = new WorkflowStartInputData.Builder("key3")
+                .resolveConflictByUsing(ConflictResolutionType.LEAVE_CONFLICT)
+                .build();
+        assertEquals("leaveConflict", leaveConflictData.getResolveConflictByUsing());
     }
 
 }
