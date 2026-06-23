@@ -17,7 +17,7 @@ package zowe.client.sdk.zosmfworkflow.types;
  * @author Eshaan Gupta
  * @version 7.0
  */
-public enum ConflictResolutionType {
+public enum StartConflictType {
 
     /**
      * Use the value from the output file when a variable conflict occurs.
@@ -36,7 +36,7 @@ public enum ConflictResolutionType {
 
     private final String value;
 
-    ConflictResolutionType(final String value) {
+    StartConflictType(final String value) {
         this.value = value;
     }
 

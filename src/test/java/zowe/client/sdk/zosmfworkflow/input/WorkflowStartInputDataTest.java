@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosmfworkflow.input;
 
 import org.junit.jupiter.api.Test;
-import zowe.client.sdk.zosmfworkflow.types.ConflictResolutionType;
+import zowe.client.sdk.zosmfworkflow.types.StartConflictType;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,7 +25,7 @@ public class WorkflowStartInputDataTest {
     @Test
     public void testWorkflowStartInputDataBuilderSuccess() {
         final WorkflowStartInputData inputData = new WorkflowStartInputData.Builder("workflow-key-123")
-                .resolveConflictByUsing(ConflictResolutionType.OUTPUT_FILE_VALUE)
+                .resolveConflictByUsing(StartConflictType.OUTPUT_FILE_VALUE)
                 .stepName("Step1")
                 .performSubsequent(Boolean.TRUE)
                 .notificationUrl("https://example.com/notification")
@@ -70,19 +70,19 @@ public class WorkflowStartInputDataTest {
     }
 
     @Test
-    public void testAllConflictResolutionTypes() {
+    public void testAllStartConflictTypes() {
         final WorkflowStartInputData outputFileData = new WorkflowStartInputData.Builder("key1")
-                .resolveConflictByUsing(ConflictResolutionType.OUTPUT_FILE_VALUE)
+                .resolveConflictByUsing(StartConflictType.OUTPUT_FILE_VALUE)
                 .build();
         assertEquals("outputFileValue", outputFileData.getResolveConflictByUsing());
 
         final WorkflowStartInputData existingValueData = new WorkflowStartInputData.Builder("key2")
-                .resolveConflictByUsing(ConflictResolutionType.EXISTING_VALUE)
+                .resolveConflictByUsing(StartConflictType.EXISTING_VALUE)
                 .build();
         assertEquals("existingValue", existingValueData.getResolveConflictByUsing());
 
         final WorkflowStartInputData leaveConflictData = new WorkflowStartInputData.Builder("key3")
-                .resolveConflictByUsing(ConflictResolutionType.LEAVE_CONFLICT)
+                .resolveConflictByUsing(StartConflictType.LEAVE_CONFLICT)
                 .build();
         assertEquals("leaveConflict", leaveConflictData.getResolveConflictByUsing());
     }

@@ -12,7 +12,7 @@ package zowe.client.sdk.zosmfworkflow.input;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.zosmfworkflow.types.ConflictResolutionType;
+import zowe.client.sdk.zosmfworkflow.types.StartConflictType;
 
 /**
  * Parameters for the z/OSMF start workflow API input data.
@@ -166,7 +166,7 @@ public class WorkflowStartInputData {
     public static final class Builder {
 
         private final String workflowKey;
-        private ConflictResolutionType resolveConflictByUsing;
+        private StartConflictType resolveConflictByUsing;
         private String stepName;
         private Boolean performSubsequent;
         private String notificationUrl;
@@ -185,11 +185,11 @@ public class WorkflowStartInputData {
         /**
          * Set the conflict resolution strategy.
          *
-         * @param resolveConflictByUsing conflict resolution type
+         * @param type conflict resolution type
          * @return this builder instance
          */
-        public Builder resolveConflictByUsing(final ConflictResolutionType resolveConflictByUsing) {
-            this.resolveConflictByUsing = resolveConflictByUsing;
+        public Builder resolveConflictByUsing(final StartConflictType type) {
+            this.resolveConflictByUsing = type;
             return this;
         }
 

@@ -22,7 +22,7 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosmfworkflow.input.WorkflowStartInputData;
-import zowe.client.sdk.zosmfworkflow.types.ConflictResolutionType;
+import zowe.client.sdk.zosmfworkflow.types.StartConflictType;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -44,7 +44,7 @@ public class WorkflowStartTest {
 
     private static WorkflowStartInputData createInputData(final String workflowKey) {
         return new WorkflowStartInputData.Builder(workflowKey)
-                .resolveConflictByUsing(ConflictResolutionType.OUTPUT_FILE_VALUE)
+                .resolveConflictByUsing(StartConflictType.OUTPUT_FILE_VALUE)
                 .stepName("Step1")
                 .performSubsequent(Boolean.TRUE)
                 .notificationUrl("https://example.com/notification")
