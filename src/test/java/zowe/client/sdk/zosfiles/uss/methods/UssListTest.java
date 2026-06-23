@@ -143,15 +143,6 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListFileListEmptyResponseSuccess() throws Exception {
-        final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
-        // should only contain two items
-        assertEquals(0, items.size());
-        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
-    }
-
-    @Test
     public void tstUssListFileListEmptyResponseToggleTokenSuccess() throws Exception {
         final UssList ussList = new UssList(tokenConnection, mockJsonGetRequestToken);
         List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
@@ -453,7 +444,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListSecondaryConstructorWithValidRequestType() {
+    public void tstUssListSecondaryConstructorWithValidRequestTypeSuccess() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(GetJsonZosmfRequest.class);
         UssList ussList = new UssList(connection, request);
@@ -461,7 +452,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListSecondaryConstructorWithNullConnection() {
+    public void tstUssListSecondaryConstructorWithNullConnectionFailure() {
         ZosmfRequest request = Mockito.mock(GetJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -471,7 +462,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListSecondaryConstructorWithNullRequest() {
+    public void tstUssListSecondaryConstructorWithNullRequestFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -481,7 +472,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListSecondaryConstructorWithInvalidRequestType() {
+    public void tstUssListSecondaryConstructorWithInvalidRequestTypeFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a GetJsonZosmfRequest
         IllegalStateException exception = assertThrows(
@@ -490,7 +481,6 @@ public class UssListTest {
         );
         assertEquals("GET_JSON request type required", exception.getMessage());
     }
-
 
     @Test
     public void tstUssListFileListWithAllOptionalParamsSuccess() throws Exception {
@@ -825,7 +815,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListFileListNullInputDataAssertThrows() throws ZosmfRequestException {
+    public void tstUssListFileListNullInputDataAssertThrowsFailure() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> ussList.getFiles(null)
@@ -834,7 +824,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListFileListMissingPathThrows() throws ZosmfRequestException {
+    public void tstUssListFileListMissingPathThrowsFailure() throws ZosmfRequestException {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
@@ -849,7 +839,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListZfsListZeroMaxLengthNoHeader() throws Exception {
+    public void tstUssListZfsListZeroMaxLengthNoHeaderSuccess() throws Exception {
         final JSONObject json = JsonUtils.parse(dataForZfsList);
         Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
@@ -871,7 +861,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListZfsListNullResponsePhraseThrows() throws ZosmfRequestException {
+    public void tstUssListZfsListNullResponsePhraseThrowsFailure() throws ZosmfRequestException {
         Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
                 new Response(null, 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());
