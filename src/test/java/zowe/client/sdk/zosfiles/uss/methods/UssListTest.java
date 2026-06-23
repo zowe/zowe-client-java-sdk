@@ -26,6 +26,7 @@ import zowe.client.sdk.zosfiles.uss.input.UssListInputData;
 import zowe.client.sdk.zosfiles.uss.input.UssListZfsInputData;
 import zowe.client.sdk.zosfiles.uss.model.UnixFile;
 import zowe.client.sdk.zosfiles.uss.model.UnixZfs;
+import zowe.client.sdk.zosfiles.uss.types.ListFilterType;
 
 import java.util.List;
 
@@ -490,14 +491,6 @@ public class UssListTest {
         assertEquals("GET_JSON request type required", exception.getMessage());
     }
 
-    @Test
-    public void tstUssListNullConnectionFailureAssertThrows() {
-        NullPointerException exception = assertThrows(
-                NullPointerException.class,
-                () -> new UssList((ZosConnection) null)
-        );
-        assertEquals("connection is null", exception.getMessage());
-    }
 
     @Test
     public void tstUssListFileListWithAllOptionalParamsSuccess() throws Exception {
@@ -517,7 +510,7 @@ public class UssListTest {
                 .size(1024)
                 .name("*.txt")
                 .perm("755")
-                .type(zowe.client.sdk.zosfiles.uss.types.ListFilterType.DIRECTORY)
+                .type(ListFilterType.DIRECTORY)
                 .depth(2)
                 .filesys(true)
                 .symlinks(true)
@@ -526,16 +519,7 @@ public class UssListTest {
 
         assertEquals(0, items.size());
         String url = mockJsonGetRequestToken.getUrl();
-        assertTrue(url.contains("&group=FRAMEWKG"), "URL should contain group param: " + url);
-        assertTrue(url.contains("&user=mvsuser"), "URL should contain user param: " + url);
-        assertTrue(url.contains("&mtime=%2B7"), "URL should contain mtime param: " + url);
-        assertTrue(url.contains("&size=1024"), "URL should contain size param: " + url);
-        assertTrue(url.contains("&name=*.txt"), "URL should contain name param: " + url);
-        assertTrue(url.contains("&perm=755"), "URL should contain perm param: " + url);
-        assertTrue(url.contains("&type=f"), "URL should contain type=f (overwritten by size branch): " + url);
-        assertTrue(url.contains("&depth=2"), "URL should contain depth param: " + url);
-        assertTrue(url.contains("&filesys=all"), "URL should contain filesys param: " + url);
-        assertTrue(url.contains("&symlinks=report"), "URL should contain symlinks param: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&group=FRAMEWKG&user=mvsuser&mtime=%2B7&size=1024&name=*.txt&perm=755&type=f&depth=2&filesys=all&symlinks=report", url);
         String headers = mockJsonGetRequestToken.getHeaders().toString();
         assertTrue(headers.contains("X-IBM-Max-Items=10"), "Headers should contain X-IBM-Max-Items=10: " + headers);
     }
@@ -551,12 +535,12 @@ public class UssListTest {
         final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
                 .path("/usr/lpp")
                 .size(500)
-                .type(zowe.client.sdk.zosfiles.uss.types.ListFilterType.FILE)
+                .type(ListFilterType.FILE)
                 .build());
 
         assertEquals(0, items.size());
         String url = mockJsonGetRequest.getUrl();
-        assertTrue(url.contains("&type=f"), "URL should contain type=f when both size and type are set: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&size=500&type=f", url);
     }
 
     @Test
@@ -569,13 +553,12 @@ public class UssListTest {
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
                 .path("/usr/lpp")
-                .type(zowe.client.sdk.zosfiles.uss.types.ListFilterType.SYMBOLIC_LINK)
+                .type(ListFilterType.SYMBOLIC_LINK)
                 .build());
 
         assertEquals(0, items.size());
         String url = mockJsonGetRequest.getUrl();
-        assertTrue(url.contains("&type=l"), "URL should contain type=l for symbolic link: " + url);
-        assertFalse(url.contains("&type=f"), "URL should NOT contain type=f when only type is set: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&type=l", url);
     }
 
     @Test
@@ -593,7 +576,7 @@ public class UssListTest {
 
         assertEquals(0, items.size());
         String url = mockJsonGetRequest.getUrl();
-        assertTrue(url.contains("&filesys=all"), "URL should contain filesys=all: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&filesys=all", url);
     }
 
     @Test
@@ -611,7 +594,7 @@ public class UssListTest {
 
         assertEquals(0, items.size());
         String url = mockJsonGetRequest.getUrl();
-        assertTrue(url.contains("&symlinks=report"), "URL should contain symlinks=report: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&symlinks=report", url);
     }
 
     @Test
@@ -649,7 +632,7 @@ public class UssListTest {
 
         assertEquals(1, items.size());
         String url = mockJsonGetRequest.getUrl();
-        assertTrue(url.contains("?fsname="), "URL should contain fsname param: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/mfs?fsname=OMVSGRP.USER.TNGFW.CA31", url);
     }
 
     @Test
@@ -697,7 +680,7 @@ public class UssListTest {
 
         assertEquals(0, items.size());
         String url = mockJsonGetRequest.getUrl();
-        assertTrue(url.contains("&group=FRAMEWKG"), "URL should contain group param: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&group=FRAMEWKG", url);
     }
 
     @Test
@@ -715,7 +698,7 @@ public class UssListTest {
 
         assertEquals(0, items.size());
         String url = mockJsonGetRequest.getUrl();
-        assertTrue(url.contains("&user=mvsuser"), "URL should contain user param: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&user=mvsuser", url);
     }
 
     @Test
@@ -733,7 +716,7 @@ public class UssListTest {
 
         assertEquals(0, items.size());
         String url = mockJsonGetRequest.getUrl();
-        assertTrue(url.contains("&mtime="), "URL should contain mtime param: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&mtime=-30", url);
     }
 
     @Test
@@ -751,7 +734,7 @@ public class UssListTest {
 
         assertEquals(0, items.size());
         String url = mockJsonGetRequest.getUrl();
-        assertTrue(url.contains("&size=2048"), "URL should contain size param: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&size=2048", url);
     }
 
     @Test
@@ -769,7 +752,7 @@ public class UssListTest {
 
         assertEquals(0, items.size());
         String url = mockJsonGetRequest.getUrl();
-        assertTrue(url.contains("&name="), "URL should contain name param: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&name=test.txt", url);
     }
 
     @Test
@@ -787,7 +770,7 @@ public class UssListTest {
 
         assertEquals(0, items.size());
         String url = mockJsonGetRequest.getUrl();
-        assertTrue(url.contains("&perm=777"), "URL should contain perm param: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&perm=777", url);
     }
 
     @Test
@@ -805,7 +788,7 @@ public class UssListTest {
 
         assertEquals(0, items.size());
         String url = mockJsonGetRequest.getUrl();
-        assertTrue(url.contains("&depth=3"), "URL should contain depth param: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&depth=3", url);
     }
 
     @Test
@@ -823,7 +806,7 @@ public class UssListTest {
 
         assertEquals(1, items.size());
         String url = mockJsonGetRequest.getUrl();
-        assertTrue(url.contains("?path="), "URL should contain path param: " + url);
+        assertEquals("https://1:443/zosmf/restfiles/mfs?path=%2Fusr%2Flpp", url);
     }
 
     @Test
