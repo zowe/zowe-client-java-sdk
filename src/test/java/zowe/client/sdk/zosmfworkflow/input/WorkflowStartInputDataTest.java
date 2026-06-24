@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosmfworkflow.input;
 
 import org.junit.jupiter.api.Test;
-import zowe.client.sdk.zosmfworkflow.types.StartConflictType;
+import zowe.client.sdk.zosmfworkflow.types.ConflictStartType;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,7 +25,7 @@ public class WorkflowStartInputDataTest {
     @Test
     public void testWorkflowStartInputDataBuilderSuccess() {
         final WorkflowStartInputData inputData = new WorkflowStartInputData.Builder("workflow-key-123")
-                .resolveConflictByUsing(StartConflictType.OUTPUT_FILE_VALUE)
+                .resolveConflictByUsing(ConflictStartType.OUTPUT_FILE_VALUE)
                 .stepName("Step1")
                 .performSubsequent(Boolean.TRUE)
                 .notificationUrl("https://example.com/notification")
@@ -70,19 +70,19 @@ public class WorkflowStartInputDataTest {
     }
 
     @Test
-    public void testAllStartConflictTypes() {
+    public void testAllConflictStartTypes() {
         final WorkflowStartInputData outputFileData = new WorkflowStartInputData.Builder("key1")
-                .resolveConflictByUsing(StartConflictType.OUTPUT_FILE_VALUE)
+                .resolveConflictByUsing(ConflictStartType.OUTPUT_FILE_VALUE)
                 .build();
         assertEquals("outputFileValue", outputFileData.getResolveConflictByUsing());
 
         final WorkflowStartInputData existingValueData = new WorkflowStartInputData.Builder("key2")
-                .resolveConflictByUsing(StartConflictType.EXISTING_VALUE)
+                .resolveConflictByUsing(ConflictStartType.EXISTING_VALUE)
                 .build();
         assertEquals("existingValue", existingValueData.getResolveConflictByUsing());
 
         final WorkflowStartInputData leaveConflictData = new WorkflowStartInputData.Builder("key3")
-                .resolveConflictByUsing(StartConflictType.LEAVE_CONFLICT)
+                .resolveConflictByUsing(ConflictStartType.LEAVE_CONFLICT)
                 .build();
         assertEquals("leaveConflict", leaveConflictData.getResolveConflictByUsing());
     }

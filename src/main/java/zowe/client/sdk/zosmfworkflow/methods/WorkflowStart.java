@@ -91,7 +91,7 @@ public class WorkflowStart {
 
         final String url = connection.getZosmfUrl() + WorkflowConstants.WORKFLOWS_RESOURCE
                 + UrlConstants.URL_PATH_DELIM + EncodeUtils.encodeURIComponent(startInputData.getWorkflowKey())
-                + UrlConstants.URL_PATH_DELIM + WorkflowConstants.OPERATIONS_START;
+                + WorkflowConstants.OPERATIONS_START;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);

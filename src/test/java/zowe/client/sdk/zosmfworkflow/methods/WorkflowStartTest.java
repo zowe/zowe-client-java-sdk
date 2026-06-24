@@ -20,9 +20,8 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosmfworkflow.input.WorkflowStartInputData;
-import zowe.client.sdk.zosmfworkflow.types.StartConflictType;
+import zowe.client.sdk.zosmfworkflow.types.ConflictStartType;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -44,7 +43,7 @@ public class WorkflowStartTest {
 
     private static WorkflowStartInputData createInputData(final String workflowKey) {
         return new WorkflowStartInputData.Builder(workflowKey)
-                .resolveConflictByUsing(StartConflictType.OUTPUT_FILE_VALUE)
+                .resolveConflictByUsing(ConflictStartType.OUTPUT_FILE_VALUE)
                 .stepName("Step1")
                 .performSubsequent(Boolean.TRUE)
                 .notificationUrl("https://example.com/notification")
@@ -106,7 +105,7 @@ public class WorkflowStartTest {
 
         assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows/workflow-key-123/operations/start",
                 mockPutRequest.getUrl());
-        assertTrue(body.contains("workflow-key-123") || body.equals("{}"));
+        assertEquals("{}", body);
         assertEquals(202, response.getStatusCode().orElse(-1));
         assertEquals("Accepted", response.getStatusText().orElse("n\\a"));
     }
@@ -127,24 +126,6 @@ public class WorkflowStartTest {
         workflowStart.startCommon(inputData);
 
         assertTrue(mockPutRequest.getUrl().contains("workflow%20key%2Fwith%20spaces"));
-    }
-
-    @Test
-    public void testWorkflowStartUrlGenerationSuccess() throws ZosmfRequestException {
-        ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
-        Mockito.when(mockConnection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
-        PutJsonZosmfRequest mockPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
-        Mockito.when(mockPutRequest.executeRequest()).thenReturn(new Response(new JSONObject(), 202, "Accepted"));
-
-        doCallRealMethod().when(mockPutRequest).setUrl(any());
-        doCallRealMethod().when(mockPutRequest).getUrl();
-        doCallRealMethod().when(mockPutRequest).setBody(any());
-
-        final WorkflowStart workflowStart = new WorkflowStart(mockConnection, mockPutRequest);
-        workflowStart.start("TESTKEY");
-
-        assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows/TESTKEY/operations/start",
-                mockPutRequest.getUrl());
     }
 
     @Test
