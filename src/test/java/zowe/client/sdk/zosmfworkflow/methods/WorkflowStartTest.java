@@ -53,7 +53,7 @@ public class WorkflowStartTest {
     }
 
     @Test
-    public void testWorkflowStartSuccess() throws Exception {
+    public void tstWorkflowStartSuccess() throws Exception {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
         Mockito.when(mockConnection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
         PutJsonZosmfRequest mockPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
@@ -86,7 +86,7 @@ public class WorkflowStartTest {
     }
 
     @Test
-    public void testWorkflowStartWithOnlyWorkflowKey() throws Exception {
+    public void tstWorkflowStartWithOnlyWorkflowKey() throws Exception {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
         Mockito.when(mockConnection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
         PutJsonZosmfRequest mockPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
@@ -111,7 +111,7 @@ public class WorkflowStartTest {
     }
 
     @Test
-    public void testWorkflowStartWithSpecialCharactersInWorkflowKey() throws Exception {
+    public void tstWorkflowStartWithSpecialCharactersInWorkflowKey() throws Exception {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
         Mockito.when(mockConnection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
         PutJsonZosmfRequest mockPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
@@ -129,7 +129,7 @@ public class WorkflowStartTest {
     }
 
     @Test
-    public void testWorkflowStartTokenSuccess() throws Exception {
+    public void tstWorkflowStartTokenSuccess() throws Exception {
         PutJsonZosmfRequest mockPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockPutRequestToken.executeRequest()).thenReturn(new Response(new JSONObject(), 202, "Accepted"));
@@ -152,14 +152,14 @@ public class WorkflowStartTest {
     }
 
     @Test
-    public void testWorkflowStartSecondaryConstructorWithValidRequestType() {
+    public void tstWorkflowStartSecondaryConstructorWithValidRequestType() {
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         WorkflowStart workflowStart = new WorkflowStart(connection, request);
         assertNotNull(workflowStart);
     }
 
     @Test
-    public void testWorkflowStartSecondaryConstructorWithNullConnection() {
+    public void tstWorkflowStartSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -169,7 +169,7 @@ public class WorkflowStartTest {
     }
 
     @Test
-    public void testWorkflowStartSecondaryConstructorWithNullRequest() {
+    public void tstWorkflowStartSecondaryConstructorWithNullRequest() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new WorkflowStart(connection, null)
@@ -178,7 +178,7 @@ public class WorkflowStartTest {
     }
 
     @Test
-    public void testWorkflowStartSecondaryConstructorWithInvalidRequestType() {
+    public void tstWorkflowStartSecondaryConstructorWithInvalidRequestType() {
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class);
         IllegalStateException exception = assertThrows(
                 IllegalStateException.class,
@@ -188,13 +188,13 @@ public class WorkflowStartTest {
     }
 
     @Test
-    public void testWorkflowStartPrimaryConstructorWithValidConnection() {
+    public void tstWorkflowStartPrimaryConstructorWithValidConnection() {
         WorkflowStart workflowStart = new WorkflowStart(connection);
         assertNotNull(workflowStart);
     }
 
     @Test
-    public void testWorkflowStartPrimaryConstructorWithNullConnection() {
+    public void tstWorkflowStartPrimaryConstructorWithNullConnection() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new WorkflowStart(null)
@@ -203,7 +203,7 @@ public class WorkflowStartTest {
     }
 
     @Test
-    public void testWorkflowStartCommonWithNullInputData() {
+    public void tstWorkflowStartCommonWithNullInputData() {
         final WorkflowStart workflowStart = new WorkflowStart(connection);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,

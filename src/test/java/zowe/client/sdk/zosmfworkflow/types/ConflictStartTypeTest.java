@@ -23,29 +23,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ConflictStartTypeTest {
 
     @Test
-    public void testOutputFileValueSuccess() {
+    public void tstOutputFileValueSuccess() {
         assertEquals("outputFileValue", ConflictStartType.OUTPUT_FILE_VALUE.getValue());
     }
 
     @Test
-    public void testExistingValueSuccess() {
+    public void tstExistingValueSuccess() {
         assertEquals("existingValue", ConflictStartType.EXISTING_VALUE.getValue());
     }
 
     @Test
-    public void testLeaveConflictSuccess() {
+    public void tstLeaveConflictSuccess() {
         assertEquals("leaveConflict", ConflictStartType.LEAVE_CONFLICT.getValue());
     }
 
     @Test
-    public void testEnumNamesSuccess() {
+    public void tstEnumNamesSuccess() {
         assertEquals("OUTPUT_FILE_VALUE", ConflictStartType.OUTPUT_FILE_VALUE.name());
         assertEquals("EXISTING_VALUE", ConflictStartType.EXISTING_VALUE.name());
         assertEquals("LEAVE_CONFLICT", ConflictStartType.LEAVE_CONFLICT.name());
     }
 
     @Test
-    public void testValuesContainsAllTypesSuccess() {
+    public void tstValuesContainsAllTypesSuccess() {
         final ConflictStartType[] values = ConflictStartType.values();
         assertEquals(3, values.length);
         assertTrue(java.util.Arrays.asList(values).contains(ConflictStartType.OUTPUT_FILE_VALUE));
@@ -54,7 +54,7 @@ public class ConflictStartTypeTest {
     }
 
     @Test
-    public void testValueOfEnumSuccess() {
+    public void tstValueOfEnumSuccess() {
         assertEquals(ConflictStartType.OUTPUT_FILE_VALUE, ConflictStartType.valueOf("OUTPUT_FILE_VALUE"));
         assertEquals(ConflictStartType.EXISTING_VALUE, ConflictStartType.valueOf("EXISTING_VALUE"));
         assertEquals(ConflictStartType.LEAVE_CONFLICT, ConflictStartType.valueOf("LEAVE_CONFLICT"));

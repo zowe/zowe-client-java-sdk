@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class WorkflowStartInputDataTest {
 
     @Test
-    public void testWorkflowStartInputDataBuilderSuccess() {
+    public void tstWorkflowStartInputDataBuilderSuccess() {
         final WorkflowStartInputData inputData = new WorkflowStartInputData.Builder("workflow-key-123")
                 .resolveConflictByUsing(ConflictStartType.OUTPUT_FILE_VALUE)
                 .stepName("Step1")
@@ -44,7 +44,7 @@ public class WorkflowStartInputDataTest {
     }
 
     @Test
-    public void testWorkflowStartInputDataBuilderWithMinimalParameters() {
+    public void tstWorkflowStartInputDataBuilderWithMinimalParameters() {
         final WorkflowStartInputData inputData = new WorkflowStartInputData.Builder("workflow-key-123").build();
 
         assertNotNull(inputData);
@@ -52,7 +52,7 @@ public class WorkflowStartInputDataTest {
     }
 
     @Test
-    public void testWorkflowStartInputDataWithNullWorkflowKey() {
+    public void tstWorkflowStartInputDataWithNullWorkflowKey() {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> new WorkflowStartInputData.Builder(null).build()
@@ -61,7 +61,7 @@ public class WorkflowStartInputDataTest {
     }
 
     @Test
-    public void testWorkflowStartInputDataWithEmptyWorkflowKey() {
+    public void tstWorkflowStartInputDataWithEmptyWorkflowKey() {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> new WorkflowStartInputData.Builder("").build()
@@ -70,7 +70,7 @@ public class WorkflowStartInputDataTest {
     }
 
     @Test
-    public void testAllConflictStartTypes() {
+    public void tstAllConflictStartTypes() {
         final WorkflowStartInputData outputFileData = new WorkflowStartInputData.Builder("key1")
                 .resolveConflictByUsing(ConflictStartType.OUTPUT_FILE_VALUE)
                 .build();

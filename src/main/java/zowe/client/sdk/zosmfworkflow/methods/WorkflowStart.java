@@ -89,9 +89,11 @@ public class WorkflowStart {
     public Response startCommon(final WorkflowStartInputData startInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(startInputData, "startInputData");
 
-        final String url = connection.getZosmfUrl() + WorkflowConstants.WORKFLOWS_RESOURCE
-                + UrlConstants.URL_PATH_DELIM + EncodeUtils.encodeURIComponent(startInputData.getWorkflowKey())
-                + WorkflowConstants.OPERATIONS_START;
+        final String url = connection.getZosmfUrl() +
+                WorkflowConstants.WORKFLOWS_RESOURCE +
+                UrlConstants.URL_PATH_DELIM +
+                EncodeUtils.encodeURIComponent(startInputData.getWorkflowKey()) +
+                WorkflowConstants.OPERATIONS_START;
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
