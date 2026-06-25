@@ -66,4 +66,9 @@ public final class WorkflowConstants {
      */
     public static final String WORKFLOW_DEFINITION_RESOURCE = BASE_RESOURCE + URL_PATH_DELIM + WORKFLOW_DEFINITION;
 
+    /**
+     * Operations start path segment for workflow start operation.
+     */
+    public static final String OPERATIONS_START = URL_PATH_DELIM + "operations" + URL_PATH_DELIM + "start";
+
 }
