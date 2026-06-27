@@ -13,6 +13,8 @@ import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
 import kong.unirest.core.Unirest;
 import kong.unirest.core.UnirestException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -24,6 +26,13 @@ import zowe.client.sdk.utility.ValidateUtils;
  * @version 7.0
  */
 public class DeleteJsonZosmfRequest extends ZosmfRequest {
+
+    private static final Logger LOG = LoggerFactory.getLogger(DeleteJsonZosmfRequest.class);
+
+    /**
+     * JSON String representation of an optional request body. A delete request may be issued with or without a body.
+     */
+    private String body;
 
     /**
      * DeleteJsonZosmfRequest constructor
@@ -47,8 +56,13 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(url, "url");
         HttpResponse<JsonNode> reply;
         try {
-            reply = token != null ? Unirest.delete(url).cookie(token).headers(headers).asJson() :
-                    Unirest.delete(url).headers(headers).asJson();
+            if (body == null) {
+                reply = token != null ? Unirest.delete(url).cookie(token).headers(headers).asJson() :
+                        Unirest.delete(url).headers(headers).asJson();
+            } else {
+                reply = token != null ? Unirest.delete(url).cookie(token).headers(headers).body(body).asJson() :
+                        Unirest.delete(url).headers(headers).body(body).asJson();
+            }
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
         }
@@ -56,14 +70,15 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
     }
 
     /**
-     * Method to set the body information for the http request which is not used for this request.
+     * Set the body information for the http request. The body is optional for a delete request.
      *
-     * @param body object value
+     * @param body String value
      * @author Frank Giordano
      */
     @Override
-    public void setBody(Object body) {
-        throw new IllegalStateException("setting body for this request is invalid");
+    public void setBody(final Object body) {
+        this.body = (String) body;
+        LOG.debug(this.body);
     }
 
     /**
