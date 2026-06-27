@@ -9,7 +9,8 @@
  */
 package zowe.client.sdk.zosvariables.methods;
 
-import org.json.simple.JSONArray;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -33,6 +34,8 @@ import java.util.List;
  * @version 7.0
  */
 public class VariableDelete {
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private final ZosConnection connection;
     private final ZosmfRequest request;
@@ -86,6 +89,8 @@ public class VariableDelete {
      * Delete the specified system variables from the target system's variable pool.
      * <p>
      * The request body is an array of strings, each representing the name of a system variable to delete.
+     * If {@code variableNames} is empty, the request succeeds but no variables are deleted, as defined by the
+     * z/OSMF REST API.
      *
      * @param sysplexName   name of the sysplex (e.g. 'PLEX1')
      * @param systemName    name of the system (e.g. 'SYS1')
@@ -103,13 +108,16 @@ public class VariableDelete {
      *
      * @param sysplexName   name of the sysplex (e.g. 'PLEX1')
      * @param systemName    name of the system (e.g. 'SYS1')
-     * @param variableNames names of the system variables to delete, ignored when isAll is true
-     * @param isAll         true to delete the entire system variable pool with no request body
+     * @param variableNames names of the system variables to delete, ignored when deleteAll is true
+     * @param deleteAll     true to delete the entire system variable pool with no request body
      * @return http response object
      * @throws ZosmfRequestException request error state
      */
-    private Response deleteCommon(final String sysplexName, final String systemName,
-                                  final List<String> variableNames, final boolean isAll) throws ZosmfRequestException {
+    private Response deleteCommon(final String sysplexName,
+                                  final String systemName,
+                                  final List<String> variableNames,
+                                  final boolean deleteAll)
+            throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
         ValidateUtils.checkIllegalParameter(systemName, "systemName");
 
@@ -119,15 +127,16 @@ public class VariableDelete {
                 EncodeUtils.encodeURIComponent(sysplexName) + "." +
                 EncodeUtils.encodeURIComponent(systemName);
 
-        if (isAll) {
+        if (deleteAll) {
             // whole-pool delete: clear any prior body so the reused request issues a true bodyless request
             request.setBody(null);
         } else {
             ValidateUtils.checkNullParameter(variableNames, "variableNames");
-            ValidateUtils.checkIllegalParameter(variableNames.isEmpty(), "variableNames is empty");
-            final JSONArray bodyArray = new JSONArray();
-            bodyArray.addAll(variableNames);
-            request.setBody(bodyArray.toJSONString());
+            try {
+                request.setBody(OBJECT_MAPPER.writeValueAsString(variableNames));
+            } catch (JsonProcessingException e) {
+                throw new IllegalStateException("error serializing variable names", e);
+            }
         }
 
         request.setUrl(url);

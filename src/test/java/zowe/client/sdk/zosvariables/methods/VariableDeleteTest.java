@@ -138,11 +138,15 @@ public class VariableDeleteTest {
     }
 
     @Test
-    public void tstVariableDeleteEmptyVariableNamesFailure() {
+    public void tstVariableDeleteEmptyVariableNamesSuccess() throws ZosmfRequestException {
         final VariableDelete variableDelete = new VariableDelete(connection, mockDeleteRequest);
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> variableDelete.delete("PLEX1", "SYS1", Collections.emptyList()));
-        assertEquals("variableNames is empty", exception.getMessage());
+        // the z/OSMF REST API allows an empty array; the request succeeds and no variables are deleted
+        final Response response = variableDelete.delete("PLEX1", "SYS1", Collections.emptyList());
+
+        assertEquals(204, response.getStatusCode().orElse(-1));
+        final ArgumentCaptor<Object> bodyCaptor = ArgumentCaptor.forClass(Object.class);
+        verify(mockDeleteRequest).setBody(bodyCaptor.capture());
+        assertEquals("[]", bodyCaptor.getValue().toString());
     }
 
     @Test
