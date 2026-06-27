@@ -78,14 +78,8 @@ public class VariableDelete {
      * @return http response object
      * @throws ZosmfRequestException request error state
      */
-    public Response delete(final String sysplexName, final String systemName) throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
-        ValidateUtils.checkIllegalParameter(systemName, "systemName");
-
-        // clear any body from a prior call so the reused request issues a true bodyless (whole-pool) delete
-        request.setBody(null);
-        request.setUrl(buildUrl(sysplexName, systemName));
-        return request.executeRequest();
+    public Response deleteAll(final String sysplexName, final String systemName) throws ZosmfRequestException {
+        return deleteCommon(sysplexName, systemName, null, true);
     }
 
     /**
@@ -101,32 +95,43 @@ public class VariableDelete {
      */
     public Response delete(final String sysplexName, final String systemName, final List<String> variableNames)
             throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
-        ValidateUtils.checkIllegalParameter(systemName, "systemName");
-        ValidateUtils.checkNullParameter(variableNames, "variableNames");
-        ValidateUtils.checkIllegalParameter(variableNames.isEmpty(), "variableNames is empty");
-
-        final JSONArray bodyArray = new JSONArray();
-        bodyArray.addAll(variableNames);
-
-        request.setUrl(buildUrl(sysplexName, systemName));
-        request.setBody(bodyArray.toJSONString());
-        return request.executeRequest();
+        return deleteCommon(sysplexName, systemName, variableNames, false);
     }
 
     /**
-     * Build the system variable pool url for the target system.
+     * Common method to handle deleting of system variables.
      *
-     * @param sysplexName name of the sysplex
-     * @param systemName  name of the system
-     * @return system variable pool url
+     * @param sysplexName   name of the sysplex (e.g. 'PLEX1')
+     * @param systemName    name of the system (e.g. 'SYS1')
+     * @param variableNames names of the system variables to delete, ignored when isAll is true
+     * @param isAll         true to delete the entire system variable pool with no request body
+     * @return http response object
+     * @throws ZosmfRequestException request error state
      */
-    private String buildUrl(final String sysplexName, final String systemName) {
-        return connection.getZosmfUrl() +
+    private Response deleteCommon(final String sysplexName, final String systemName,
+                                  final List<String> variableNames, final boolean isAll) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
+        ValidateUtils.checkIllegalParameter(systemName, "systemName");
+
+        final String url = connection.getZosmfUrl() +
                 VariableConstants.RESOURCE +
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(sysplexName) + "." +
                 EncodeUtils.encodeURIComponent(systemName);
+
+        if (isAll) {
+            // whole-pool delete: clear any prior body so the reused request issues a true bodyless request
+            request.setBody(null);
+        } else {
+            ValidateUtils.checkNullParameter(variableNames, "variableNames");
+            ValidateUtils.checkIllegalParameter(variableNames.isEmpty(), "variableNames is empty");
+            final JSONArray bodyArray = new JSONArray();
+            bodyArray.addAll(variableNames);
+            request.setBody(bodyArray.toJSONString());
+        }
+
+        request.setUrl(url);
+        return request.executeRequest();
     }
 
 }

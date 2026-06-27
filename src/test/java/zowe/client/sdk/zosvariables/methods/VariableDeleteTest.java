@@ -68,7 +68,7 @@ public class VariableDeleteTest {
     @Test
     public void tstVariableDeletePoolSuccess() throws ZosmfRequestException {
         final VariableDelete variableDelete = new VariableDelete(connection, mockDeleteRequest);
-        final Response response = variableDelete.delete("PLEX1", "SYS1");
+        final Response response = variableDelete.deleteAll("PLEX1", "SYS1");
 
         assertEquals(204, response.getStatusCode().orElse(-1));
         assertEquals("No Content", response.getStatusText().orElse("n\\a"));
@@ -82,7 +82,7 @@ public class VariableDeleteTest {
         final VariableDelete variableDelete = new VariableDelete(connection, mockDeleteRequest);
         // a specific-variable delete sets a body, then a whole-pool delete on the same instance must clear it
         variableDelete.delete("PLEX1", "SYS1", Collections.singletonList("var1"));
-        variableDelete.delete("PLEX1", "SYS1");
+        variableDelete.deleteAll("PLEX1", "SYS1");
 
         final ArgumentCaptor<Object> bodyCaptor = ArgumentCaptor.forClass(Object.class);
         verify(mockDeleteRequest, times(2)).setBody(bodyCaptor.capture());
@@ -117,7 +117,7 @@ public class VariableDeleteTest {
     public void tstVariableDeleteNullSysplexNameFailure() {
         final VariableDelete variableDelete = new VariableDelete(connection, mockDeleteRequest);
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> variableDelete.delete(null, "SYS1"));
+                () -> variableDelete.deleteAll(null, "SYS1"));
         assertEquals("sysplexName is either null or empty", exception.getMessage());
     }
 
@@ -125,7 +125,7 @@ public class VariableDeleteTest {
     public void tstVariableDeleteEmptySystemNameFailure() {
         final VariableDelete variableDelete = new VariableDelete(connection, mockDeleteRequest);
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> variableDelete.delete("PLEX1", ""));
+                () -> variableDelete.deleteAll("PLEX1", ""));
         assertEquals("systemName is either null or empty", exception.getMessage());
     }
 
