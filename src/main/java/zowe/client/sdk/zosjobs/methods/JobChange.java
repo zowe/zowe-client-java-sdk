@@ -36,7 +36,7 @@ import java.util.Map;
  * placing a job on hold, and releasing a held job.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobChange {
 

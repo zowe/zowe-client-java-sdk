@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
  * Class containing unit tests for UssChMod.
  *
  * @author James Kostrewski
- * @version 6.0
+ * @version 7.0
  */
 public class UssChangeModeTest {
 

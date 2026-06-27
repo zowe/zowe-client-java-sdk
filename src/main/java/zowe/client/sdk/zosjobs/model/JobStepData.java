@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * such as the step name, step number, and completion code.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JobStepData {

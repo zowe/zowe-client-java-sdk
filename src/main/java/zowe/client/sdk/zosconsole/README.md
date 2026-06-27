@@ -104,7 +104,7 @@ import zowe.client.sdk.teamconfig.model.ProfileDao;
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class TstZosConnection {
 

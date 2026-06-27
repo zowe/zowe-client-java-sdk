@@ -26,7 +26,7 @@ import zowe.client.sdk.zoslogs.types.HardCopyType;
  * Class example to showcase ZosLog class functionality.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ZosLogExp extends TstZosConnection {
 
@@ -120,7 +120,7 @@ import zowe.client.sdk.teamconfig.model.ProfileDao;
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class TstZosConnection {
 

@@ -17,7 +17,7 @@ import zowe.client.sdk.zosuss.method.UssCmd;
  * Class example to test USS command functionality via UssCmd class.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class UssCmdExp {
 

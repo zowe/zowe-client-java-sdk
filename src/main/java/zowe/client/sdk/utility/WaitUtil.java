@@ -13,7 +13,7 @@ package zowe.client.sdk.utility;
  * Global Utility Class with static helper methods.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public final class WaitUtil {
 

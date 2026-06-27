@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Base abstract class that conforms to http CRUD operations
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public abstract class ZosmfRequest {
 

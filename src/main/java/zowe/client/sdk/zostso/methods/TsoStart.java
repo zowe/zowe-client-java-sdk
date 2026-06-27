@@ -30,7 +30,7 @@ import zowe.client.sdk.zostso.response.TsoStartResponse;
  * This class handles sending the request to start the TSO session via z/OSMF
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class TsoStart {
 

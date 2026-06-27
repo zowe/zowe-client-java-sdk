@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Class containing unit tests for ValidateUtils.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 @SuppressWarnings("ObviousNullCheck")
 public class ValidateUtilsTest {

@@ -15,7 +15,7 @@ import java.util.Optional;
  * Parameters for delete (JobDelete) and cancel (JobCancel) job operations
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobModifyInputData {
 

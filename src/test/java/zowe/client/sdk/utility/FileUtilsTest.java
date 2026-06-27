@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Class containing unit tests for FileUtils.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class FileUtilsTest {
 

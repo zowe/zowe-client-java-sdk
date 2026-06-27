@@ -19,7 +19,7 @@ import java.util.OptionalInt;
  * Parameters for MonitorJobs "waitFor..." API input data
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobMonitorInputData {
 

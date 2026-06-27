@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Class containing unit tests for Response.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ResponseTest {
 

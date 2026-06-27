@@ -29,7 +29,7 @@ import java.util.List;
  * Retrieves z/OS log data through the z/OSMF REST API.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ZosLog {
 

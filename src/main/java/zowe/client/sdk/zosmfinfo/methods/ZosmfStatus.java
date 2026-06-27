@@ -31,7 +31,7 @@ import java.util.stream.IntStream;
  * This class holds the helper functions that are used to gather z/OSMF information through the z/OSMF APIs.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ZosmfStatus {
 

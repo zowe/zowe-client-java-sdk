@@ -21,7 +21,7 @@ import java.util.Optional;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-get-messages-from-hardcopy-log">IBM Reference</a>
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ZosLogInputData {
 

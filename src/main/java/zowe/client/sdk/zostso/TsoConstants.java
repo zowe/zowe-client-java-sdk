@@ -15,7 +15,7 @@ import static zowe.client.sdk.rest.UrlConstants.URL_PATH_DELIM;
  * Constants for various tso related info
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public final class TsoConstants {
 

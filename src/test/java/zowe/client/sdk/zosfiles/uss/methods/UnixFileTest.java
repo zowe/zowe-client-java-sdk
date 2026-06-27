@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Class containing unit tests for UnixFile.
  *
  * @author Ashish Kumar Dash
- * @version 6.0
+ * @version 7.0
  */
 public class UnixFileTest {
 

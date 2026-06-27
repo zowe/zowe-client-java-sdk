@@ -32,7 +32,7 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for UssChangeOwner.
  *
  * @author James Kostrewski
- * @version 6.0
+ * @version 7.0
  */
 public class UssChangeOwnerTest {
 

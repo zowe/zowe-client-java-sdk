@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
  * Class containing unit test for TsoUtils.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 class TsoUtilsTest {
 

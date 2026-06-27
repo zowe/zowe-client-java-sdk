@@ -32,7 +32,7 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for JobDelete.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobDeleteTest {
 

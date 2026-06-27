@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * Utility class for the test package.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public final class UtilsTestHelper {
 

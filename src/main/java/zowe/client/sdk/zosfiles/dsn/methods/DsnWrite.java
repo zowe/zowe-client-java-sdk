@@ -22,7 +22,7 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class DsnWrite {
 

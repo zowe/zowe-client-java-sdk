@@ -33,7 +33,7 @@ import java.util.*;
  * TeamConfigService class that provides a service layer to perform Zowe Global Team Configuration processing.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class TeamConfigService {
 

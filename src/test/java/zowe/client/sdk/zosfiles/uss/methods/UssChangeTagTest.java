@@ -34,7 +34,7 @@ import static org.mockito.Mockito.withSettings;
  *
  * @author James Kostrewski
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class UssChangeTagTest {
 

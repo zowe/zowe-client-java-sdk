@@ -21,7 +21,7 @@ import java.util.Arrays;
  * Immutable class using Jackson for JSON parsing.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class ZosmfInfoResponse {

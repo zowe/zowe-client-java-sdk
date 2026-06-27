@@ -16,7 +16,7 @@ import zowe.client.sdk.utility.UtilsTestHelper;
  * Class containing unit test for ConsoleConstantsTest.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ConsoleConstantsTest {
 

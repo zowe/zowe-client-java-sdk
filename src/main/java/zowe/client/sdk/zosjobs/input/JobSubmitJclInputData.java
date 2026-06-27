@@ -16,7 +16,7 @@ import java.util.Optional;
  * Parameters for JobSubmit jcl API input data
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobSubmitJclInputData {
 

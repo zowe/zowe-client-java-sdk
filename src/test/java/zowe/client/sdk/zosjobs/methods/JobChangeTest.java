@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
  * Class containing unit tests for JobChange.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobChangeTest {
 
