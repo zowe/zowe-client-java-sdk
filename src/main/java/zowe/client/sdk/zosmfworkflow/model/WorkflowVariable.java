@@ -55,7 +55,7 @@ public final class WorkflowVariable {
     /**
      * Retrieve value specified.
      *
-     * @return value value
+     * @return String value
      */
     public String getValue() {
         return value;

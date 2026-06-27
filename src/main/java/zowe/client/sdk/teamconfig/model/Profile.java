@@ -97,7 +97,7 @@ public class Profile {
     /**
      * Return secure value
      *
-     * @return secure Json object
+     * @return secure JSON object
      */
     public JSONArray getSecure() {
         return secure;

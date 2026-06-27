@@ -108,7 +108,7 @@ public final class WorkflowVariableInfo {
     /**
      * Retrieve value value.
      *
-     * @return value value
+     * @return String value
      */
     public String getValue() {
         return value;
