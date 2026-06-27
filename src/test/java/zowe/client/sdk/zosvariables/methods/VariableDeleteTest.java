@@ -122,10 +122,26 @@ public class VariableDeleteTest {
     }
 
     @Test
+    public void tstVariableDeleteEmptySysplexNameFailure() {
+        final VariableDelete variableDelete = new VariableDelete(connection, mockDeleteRequest);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> variableDelete.deleteAll("", "SYS1"));
+        assertEquals("sysplexName is either null or empty", exception.getMessage());
+    }
+
+    @Test
     public void tstVariableDeleteEmptySystemNameFailure() {
         final VariableDelete variableDelete = new VariableDelete(connection, mockDeleteRequest);
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 () -> variableDelete.deleteAll("PLEX1", ""));
+        assertEquals("systemName is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void tstVariableDeleteNullSystemNameFailure() {
+        final VariableDelete variableDelete = new VariableDelete(connection, mockDeleteRequest);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> variableDelete.deleteAll("PLEX1", null));
         assertEquals("systemName is either null or empty", exception.getMessage());
     }
 
