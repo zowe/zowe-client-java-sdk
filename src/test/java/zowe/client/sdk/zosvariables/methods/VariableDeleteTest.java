@@ -169,7 +169,7 @@ public class VariableDeleteTest {
     public void tstVariableDeleteSecondaryConstructorWithValidRequestTypeSuccess() {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
         ZosmfRequest mockRequest = Mockito.mock(DeleteJsonZosmfRequest.class);
-        assertNotNull(new VariableDelete(mockConnection, mockRequest));
+        new VariableDelete(mockConnection, mockRequest);
     }
 
     @Test
@@ -199,7 +199,7 @@ public class VariableDeleteTest {
 
     @Test
     public void tstVariableDeletePrimaryConstructorWithValidConnectionSuccess() {
-        assertNotNull(new VariableDelete(connection));
+        new VariableDelete(connection);
     }
 
     @Test
