@@ -95,8 +95,9 @@ public class VariableDelete {
      * @return http response object
      * @throws ZosmfRequestException request error state
      */
-    public Response delete(final String sysplexName, final String systemName, final List<String> variableNames)
-            throws ZosmfRequestException {
+    public Response delete(final String sysplexName,
+                           final String systemName,
+                           final List<String> variableNames) throws ZosmfRequestException {
         return deleteCommon(sysplexName, systemName, variableNames, false);
     }
 
@@ -113,8 +114,7 @@ public class VariableDelete {
     private Response deleteCommon(final String sysplexName,
                                   final String systemName,
                                   final List<String> variableNames,
-                                  final boolean deleteAll)
-            throws ZosmfRequestException {
+                                  final boolean deleteAll) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
         ValidateUtils.checkIllegalParameter(systemName, "systemName");
 
