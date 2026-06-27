@@ -85,6 +85,7 @@ public class VariableDelete {
      * Delete the specified system variables from the target system's variable pool.
      * <p>
      * The request body is an array of strings, each representing the name of a system variable to delete.
+     * <p>
      * If {@code variableNames} is empty, the request succeeds but no variables are deleted, as defined by the
      * z/OSMF REST API.
      *
