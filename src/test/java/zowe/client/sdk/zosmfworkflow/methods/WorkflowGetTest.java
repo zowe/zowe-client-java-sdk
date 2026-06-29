@@ -449,7 +449,7 @@ public class WorkflowGetTest {
     }
 
     @Test
-    public void tstWorkflowGetPropertiesWithReturnDataUrlGeneration() throws ZosmfRequestException {
+    public void tstWorkflowGetPropertiesCommonReturnStepsAndVariablesUrlGeneration() throws ZosmfRequestException {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         Mockito.when(connection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
         GetJsonZosmfRequest mockGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
@@ -459,7 +459,11 @@ public class WorkflowGetTest {
         doCallRealMethod().when(mockGetRequest).getUrl();
 
         WorkflowGet workflowGet = new WorkflowGet(connection, mockGetRequest);
-        workflowGet.getProperties(WORKFLOW_KEY, true, true);
+        workflowGet.getPropertiesCommon(WorkflowGetPropertiesInputData.builder()
+                .workflowKey(WORKFLOW_KEY)
+                .returnSteps(true)
+                .returnVariables(true)
+                .build());
 
         String expectedUrl = "https://1:443/zosmf/workflow/rest/1.0/workflows/" +
                 EncodeUtils.encodeURIComponent(WORKFLOW_KEY) + "?returnData=steps,variables";
