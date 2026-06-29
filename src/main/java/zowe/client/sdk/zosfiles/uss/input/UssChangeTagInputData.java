@@ -102,7 +102,7 @@ public class UssChangeTagInputData {
     }
 
     /**
-     * Retrieve is recursive specified
+     * Retrieve is recursively specified
      *
      * @return boolean true or false
      */
@@ -120,7 +120,7 @@ public class UssChangeTagInputData {
     }
 
     /**
-     * Return string value representing UssChangeTagInputData object
+     * Return a string value representing UssChangeTagInputData object
      *
      * @return string representation of UssChangeTagInputData
      */
@@ -181,7 +181,7 @@ public class UssChangeTagInputData {
         }
 
         /**
-         * Set ChangeTagAction type value
+         * Set the ChangeTagAction type value
          *
          * @param action ChangeTagAction type value
          * @return Builder this object

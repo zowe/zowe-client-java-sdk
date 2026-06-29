@@ -206,7 +206,7 @@ public final class WorkflowRestStepInfo extends WorkflowStepInfo {
     }
 
     /**
-     * Retrieve expectedStatusCode value.
+     * Retrieve the expectedStatusCode value.
      *
      * @return expectedStatusCode value
      */
@@ -332,7 +332,7 @@ public final class WorkflowRestStepInfo extends WorkflowStepInfo {
     }
 
     /**
-     * Return string value representing WorkflowRestStepInfo object.
+     * Return a string value representing a WorkflowRestStepInfo object.
      *
      * @return string representation of WorkflowRestStepInfo
      */

@@ -82,7 +82,7 @@ public class UssChangeModeInputData {
     }
 
     /**
-     * Return string value representing UssChangeModeInputData object
+     * Return a string value representing UssChangeModeInputData object
      *
      * @return string representation of UssChangeModeInputData
      */

@@ -42,6 +42,7 @@ public class WorkflowCreate {
      * WorkflowCreate constructor.
      *
      * @param connection for connection information, see ZosConnection object
+     * @author Ashish Kumar Dash
      */
     public WorkflowCreate(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -57,6 +58,7 @@ public class WorkflowCreate {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
+     * @author Ashish Kumar Dash
      */
     WorkflowCreate(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -74,6 +76,7 @@ public class WorkflowCreate {
      * @param createInputData workflow creation parameters
      * @return workflow details returned by z/OSMF
      * @throws ZosmfRequestException request error state
+     * @author Ashish Kumar Dash
      */
     public WorkflowCreateResponse create(final WorkflowCreateInputData createInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(createInputData, "createInputData");

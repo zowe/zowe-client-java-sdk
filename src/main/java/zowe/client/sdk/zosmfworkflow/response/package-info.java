@@ -1,4 +1,4 @@
 /**
- * Workflow API response models.
+ * z/OSMF Workflow API response models.
  */
 package zowe.client.sdk.zosmfworkflow.response;

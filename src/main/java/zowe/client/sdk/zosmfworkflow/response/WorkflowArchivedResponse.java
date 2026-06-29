@@ -84,7 +84,7 @@ public final class WorkflowArchivedResponse {
     }
 
     /**
-     * Return string value representing WorkflowArchivedResponse object.
+     * Return a string value representing a WorkflowArchivedResponse object.
      *
      * @return string representation of WorkflowArchivedResponse
      */

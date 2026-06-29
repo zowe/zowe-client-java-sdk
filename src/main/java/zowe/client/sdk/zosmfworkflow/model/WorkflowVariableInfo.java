@@ -106,7 +106,7 @@ public final class WorkflowVariableInfo {
     }
 
     /**
-     * Retrieve value value.
+     * Retrieve String value.
      *
      * @return String value
      */
@@ -124,7 +124,7 @@ public final class WorkflowVariableInfo {
     }
 
     /**
-     * Return string value representing WorkflowVariableInfo object.
+     * Return a string value representing a WorkflowVariableInfo object.
      *
      * @return string representation of WorkflowVariableInfo
      */

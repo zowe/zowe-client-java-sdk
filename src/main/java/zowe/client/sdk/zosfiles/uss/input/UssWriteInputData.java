@@ -205,7 +205,7 @@ public class UssWriteInputData {
         }
 
         /**
-         * Set binary boolean value
+         * Set a binary boolean value
          *
          * @param binary boolean true or false value
          * @return Builder this object

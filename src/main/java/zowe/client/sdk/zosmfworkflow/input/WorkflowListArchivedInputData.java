@@ -38,6 +38,7 @@ public class WorkflowListArchivedInputData {
      * WorkflowListArchivedInputData constructor.
      *
      * @param builder builder instance
+     * @author Muhammad Imran
      */
     private WorkflowListArchivedInputData(final Builder builder) {
         this.orderBy = builder.orderBy;
@@ -63,7 +64,7 @@ public class WorkflowListArchivedInputData {
     }
 
     /**
-     * Create a new builder for workflow list archived input data.
+     * Create a new builder for the workflow list archived input data.
      *
      * @return builder instance
      */
@@ -72,7 +73,7 @@ public class WorkflowListArchivedInputData {
     }
 
     /**
-     * Return string value representing WorkflowListArchivedInputData object.
+     * Return a string value representing a WorkflowListArchivedInputData object.
      *
      * @return string representation of WorkflowListArchivedInputData
      */
@@ -85,7 +86,7 @@ public class WorkflowListArchivedInputData {
     }
 
     /**
-     * Builder for workflow list archived input data.
+     * Builders for workflow list archived input data.
      */
     public static final class Builder {
 

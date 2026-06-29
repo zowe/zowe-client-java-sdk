@@ -40,6 +40,7 @@ public class VariableDelete {
      * VariableDelete constructor.
      *
      * @param connection for connection information, see ZosConnection object
+     * @author Ashish Kumar Dash
      */
     public VariableDelete(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -56,6 +57,7 @@ public class VariableDelete {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZosmfRequest Interface object
+     * @author Ashish Kumar Dash
      */
     VariableDelete(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -76,6 +78,7 @@ public class VariableDelete {
      * @param systemName  name of the system (e.g. 'SYS1')
      * @return http response object
      * @throws ZosmfRequestException request error state
+     * @author Ashish Kumar Dash
      */
     public Response deleteAll(final String sysplexName, final String systemName) throws ZosmfRequestException {
         return deleteCommon(sysplexName, systemName, null, true);
@@ -94,6 +97,7 @@ public class VariableDelete {
      * @param variableNames names of the system variables to delete
      * @return http response object
      * @throws ZosmfRequestException request error state
+     * @author Ashish Kumar Dash
      */
     public Response delete(final String sysplexName,
                            final String systemName,
@@ -110,6 +114,7 @@ public class VariableDelete {
      * @param deleteAll     true to delete the entire system variable pool with no request body
      * @return http response object
      * @throws ZosmfRequestException request error state
+     * @author Ashish Kumar Dash
      */
     private Response deleteCommon(final String sysplexName,
                                   final String systemName,

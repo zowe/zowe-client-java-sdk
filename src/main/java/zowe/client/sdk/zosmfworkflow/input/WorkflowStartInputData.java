@@ -65,13 +65,13 @@ public class WorkflowStartInputData {
      * WorkflowStartInputData constructor.
      *
      * @param builder builder instance
+     * @author Eshaan Gupta
      */
     private WorkflowStartInputData(final Builder builder) {
         ValidateUtils.checkIllegalParameter(builder.workflowKey, "workflowKey");
         this.workflowKey = builder.workflowKey;
-        this.resolveConflictByUsing = builder.resolveConflictByUsing != null
-                ? builder.resolveConflictByUsing.getValue()
-                : null;
+        this.resolveConflictByUsing =
+                builder.resolveConflictByUsing != null ? builder.resolveConflictByUsing.getValue() : null;
         this.stepName = builder.stepName;
         this.performSubsequent = builder.performSubsequent;
         this.notificationUrl = builder.notificationUrl;
@@ -143,7 +143,7 @@ public class WorkflowStartInputData {
     }
 
     /**
-     * Return string value representing WorkflowStartInputData object.
+     * Return a string value representing a WorkflowStartInputData object.
      *
      * @return string representation of WorkflowStartInputData
      */

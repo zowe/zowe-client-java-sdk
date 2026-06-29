@@ -124,6 +124,7 @@ public class WorkflowCreateInputData {
      * WorkflowCreateInputData constructor.
      *
      * @param builder builder instance
+     * @author Ashish Kumar Dash
      */
     private WorkflowCreateInputData(final Builder builder) {
         this.workflowName = builder.workflowName;
@@ -328,7 +329,7 @@ public class WorkflowCreateInputData {
     }
 
     /**
-     * Return string value representing WorkflowCreateInputData object.
+     * Return a string value representing a WorkflowCreateInputData object.
      *
      * @return string representation of WorkflowCreateInputData
      */

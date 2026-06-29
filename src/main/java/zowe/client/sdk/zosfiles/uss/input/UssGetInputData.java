@@ -261,7 +261,7 @@ public class UssGetInputData {
          * Set research value
          *
          * @param research string value
-         * @return UssGetInputData.Builder this object
+         * @return Builder this object
          */
         public Builder research(final String research) {
             if (this.search != null) {

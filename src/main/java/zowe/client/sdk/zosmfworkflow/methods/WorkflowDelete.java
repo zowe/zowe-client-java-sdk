@@ -36,6 +36,7 @@ public class WorkflowDelete {
      * WorkflowDelete constructor.
      *
      * @param connection for connection information, see ZosConnection object
+     * @author Adithe Das
      */
     public WorkflowDelete(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -51,6 +52,7 @@ public class WorkflowDelete {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    compatible ZosmfRequest interface object
+     * @author Adithe Das
      */
     WorkflowDelete(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -68,6 +70,8 @@ public class WorkflowDelete {
      * @param workflowKey workflow key of the workflow to delete
      * @return http response object
      * @throws ZosmfRequestException error executing request
+     * @author Muhammad Imran
+     * @author Frank Giordano
      */
     public Response delete(final String workflowKey) throws ZosmfRequestException {
         return deleteCommon(workflowKey, false);
@@ -79,6 +83,8 @@ public class WorkflowDelete {
      * @param workflowKey workflow key of the archived workflow to delete
      * @return http response object
      * @throws ZosmfRequestException request error state
+     * @author Adithe Das
+     * @author Frank Giordano
      */
     public Response deleteArchived(final String workflowKey) throws ZosmfRequestException {
         return deleteCommon(workflowKey, true);
@@ -90,6 +96,9 @@ public class WorkflowDelete {
      * @param workflowKey workflow key of either a workflow or archived workflow to delete
      * @return http response object
      * @throws ZosmfRequestException error executing request
+     * @author Adithe Das
+     * @author Muhammad Imran
+     * @author Frank Giordano
      */
     private Response deleteCommon(final String workflowKey, final boolean isArchived) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(workflowKey, "workflowKey");

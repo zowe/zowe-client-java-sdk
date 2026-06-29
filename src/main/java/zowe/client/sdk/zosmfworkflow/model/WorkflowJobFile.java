@@ -158,7 +158,7 @@ public final class WorkflowJobFile {
     }
 
     /**
-     * Return string value representing WorkflowJobFile object.
+     * Return a string value representing a WorkflowJobFile object.
      *
      * @return string representation of WorkflowJobFile
      */

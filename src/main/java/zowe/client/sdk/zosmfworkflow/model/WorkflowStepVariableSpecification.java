@@ -81,7 +81,7 @@ public final class WorkflowStepVariableSpecification {
     }
 
     /**
-     * Retrieve required value.
+     * Retrieve the required value.
      *
      * @return required value
      */
@@ -90,7 +90,7 @@ public final class WorkflowStepVariableSpecification {
     }
 
     /**
-     * Return string value representing WorkflowStepVariableSpecification object.
+     * Return a string value representing a WorkflowStepVariableSpecification object.
      *
      * @return string representation of WorkflowStepVariableSpecification
      */

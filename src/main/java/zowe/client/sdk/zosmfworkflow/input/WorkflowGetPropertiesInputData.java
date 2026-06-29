@@ -14,7 +14,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 import java.util.Optional;
 
 /**
- * Parameters for the z/OSMF get properties of a workflow API input data.
+ * Parameters for the z/OSMF get properties of workflow API input data.
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-get-properties-workflow">z/OSMF REST API</a>
  *
@@ -43,6 +43,7 @@ public class WorkflowGetPropertiesInputData {
      * WorkflowGetPropertiesInputData constructor.
      *
      * @param builder builder instance
+     * @author Ashish Kumar Dash
      */
     private WorkflowGetPropertiesInputData(final Builder builder) {
         ValidateUtils.checkIllegalParameter(builder.workflowKey, "workflowKey");
@@ -91,7 +92,7 @@ public class WorkflowGetPropertiesInputData {
     }
 
     /**
-     * Return string value representing WorkflowGetPropertiesInputData object.
+     * Return a string value representing a WorkflowGetPropertiesInputData object.
      *
      * @return string representation of WorkflowGetPropertiesInputData
      */
@@ -105,7 +106,7 @@ public class WorkflowGetPropertiesInputData {
     }
 
     /**
-     * Builder for workflow get properties input data.
+     * Builder for the workflow get property input data.
      */
     public static final class Builder {
 

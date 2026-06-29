@@ -48,6 +48,7 @@ public class WorkflowList {
      * WorkflowList constructor.
      *
      * @param connection for connection information, see ZosConnection object
+     * @author Muhammad Imran
      */
     public WorkflowList(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -63,6 +64,7 @@ public class WorkflowList {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
+     * @author Muhammad Imran
      */
     WorkflowList(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -79,6 +81,7 @@ public class WorkflowList {
      *
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
+     * @author Muhammad Imran
      */
     public List<WorkflowArchivedResponse> getArchived() throws ZosmfRequestException {
         return getArchivedCommon(WorkflowListArchivedInputData.builder().build());
@@ -90,6 +93,7 @@ public class WorkflowList {
      * @param orderByType order type for sorting archived workflow instances
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
+     * @author Muhammad Imran
      */
     public List<WorkflowArchivedResponse> getArchivedByOrderBy(final OrderByType orderByType)
             throws ZosmfRequestException {
@@ -103,6 +107,7 @@ public class WorkflowList {
      * @param viewType view type for filtering archived workflow instances
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
+     * @author Muhammad Imran
      */
     public List<WorkflowArchivedResponse> getArchivedByView(final ViewType viewType) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(viewType, "viewType");
@@ -115,6 +120,7 @@ public class WorkflowList {
      * @param listInputData workflow list archived input parameters
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
+     * @author Muhammad Imran
      */
     public List<WorkflowArchivedResponse> getArchivedCommon(final WorkflowListArchivedInputData listInputData)
             throws ZosmfRequestException {

@@ -35,7 +35,7 @@ import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.withSettings;
 
 /**
- * Class containing unit tests for WorkflowListArchived.
+ * Class containing unit tests for WorkflowList.
  *
  * @author Muhammad Imran
  * @version 7.0
@@ -73,7 +73,7 @@ public class WorkflowListTest {
     }
 
     @Test
-    public void tstWorkflowListArchivedSecondaryConstructorWithValidRequestTypeSuccess() {
+    public void tstWorkflowListSecondaryConstructorWithValidRequestTypeSuccess() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(GetJsonZosmfRequest.class);
         boolean noError = false;
@@ -86,7 +86,7 @@ public class WorkflowListTest {
     }
 
     @Test
-    public void tstWorkflowListArchivedSecondaryConstructorWithNullConnectionFailure() {
+    public void tstWorkflowListSecondaryConstructorWithNullConnectionFailure() {
         ZosmfRequest request = Mockito.mock(GetJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -96,7 +96,7 @@ public class WorkflowListTest {
     }
 
     @Test
-    public void tstWorkflowListArchivedSecondaryConstructorWithNullRequestFailure() {
+    public void tstWorkflowListSecondaryConstructorWithNullRequestFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -106,7 +106,7 @@ public class WorkflowListTest {
     }
 
     @Test
-    public void tstWorkflowListArchivedSecondaryConstructorWithInvalidRequestTypeFailure() {
+    public void tstWorkflowListSecondaryConstructorWithInvalidRequestTypeFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class);
         IllegalStateException exception = assertThrows(
@@ -117,7 +117,7 @@ public class WorkflowListTest {
     }
 
     @Test
-    public void tstWorkflowListArchivedPrimaryConstructorWithNullConnectionFailure() {
+    public void tstWorkflowListPrimaryConstructorWithNullConnectionFailure() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new WorkflowList(null)

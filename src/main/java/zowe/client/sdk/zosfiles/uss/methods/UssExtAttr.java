@@ -125,7 +125,7 @@ public class UssExtAttr {
     }
 
     /**
-     * Execute request for given path and JSON map
+     * Execute a request for a given path and JSON map
      *
      * @param targetPath UNIX path to the target file or directory
      * @param jsonMap    map representing request body

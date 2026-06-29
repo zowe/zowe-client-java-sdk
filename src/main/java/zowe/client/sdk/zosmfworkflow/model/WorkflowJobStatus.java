@@ -175,7 +175,7 @@ public final class WorkflowJobStatus {
     }
 
     /**
-     * Return string value representing WorkflowJobStatus object.
+     * Return a string value representing a WorkflowJobStatus object.
      *
      * @return string representation of WorkflowJobStatus
      */

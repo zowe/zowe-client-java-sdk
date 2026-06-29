@@ -325,7 +325,7 @@ public final class UnixZfs {
     }
 
     /**
-     * Return string value representing UnixZfs object
+     * Return string value representing a UnixZfs object
      *
      * @return string representation of UnixZfs
      */

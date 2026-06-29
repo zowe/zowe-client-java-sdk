@@ -132,7 +132,7 @@ public final class WorkflowAutomationStatus {
     }
 
     /**
-     * Retrieve currentStepName value.
+     * Retrieve the currentStepName value.
      *
      * @return currentStepName value
      */
@@ -141,7 +141,7 @@ public final class WorkflowAutomationStatus {
     }
 
     /**
-     * Retrieve currentStepNumber value.
+     * Retrieve the currentStepNumber value.
      *
      * @return currentStepNumber value
      */
@@ -150,7 +150,7 @@ public final class WorkflowAutomationStatus {
     }
 
     /**
-     * Retrieve currentStepTitle value.
+     * Retrieve the currentStepTitle value.
      *
      * @return currentStepTitle value
      */
@@ -177,7 +177,7 @@ public final class WorkflowAutomationStatus {
     }
 
     /**
-     * Return string value representing WorkflowAutomationStatus object.
+     * Return a string value representing a WorkflowAutomationStatus object.
      *
      * @return string representation of WorkflowAutomationStatus
      */

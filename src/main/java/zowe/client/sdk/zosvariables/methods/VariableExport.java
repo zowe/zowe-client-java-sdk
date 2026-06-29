@@ -84,12 +84,12 @@ public class VariableExport {
     }
 
     /**
-     * Export variables to a CSV data file on USS with overwrite option.
+     * Export variables to a CSV data file on USS with an overwrite option.
      *
      * @param sysplexName name of the sysplex (e.g. 'PLEX1')
      * @param systemName  name of the system (e.g. 'SYS1')
      * @param targetFile  UNIX path to variables export file on USS (e.g. '/u/user1/vars.csv')
-     * @param overwrite   boolean to indicate if file should be overwritten if it already exists
+     * @param overwrite   boolean to indicate if the file should be overwritten if it already exists
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Chaitanya Katore
@@ -107,9 +107,10 @@ public class VariableExport {
      * @param sysplexName name of the sysplex (e.g. 'PLEX1')
      * @param systemName  name of the system (e.g. 'SYS1')
      * @param targetFile  UNIX path to variables export file on USS (e.g. '/u/user1/vars.csv')
-     * @param overwrite   boolean value to indicate if file should be overwritten
+     * @param overwrite   boolean value to indicate if the file should be overwritten
      * @return http response object
      * @throws ZosmfRequestException request error state
+     * @author Chaitanya Katore
      */
     private Response exportCommon(final String sysplexName,
                                   final String systemName,

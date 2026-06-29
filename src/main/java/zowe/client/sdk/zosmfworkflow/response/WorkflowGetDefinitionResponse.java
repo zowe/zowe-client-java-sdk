@@ -354,7 +354,7 @@ public final class WorkflowGetDefinitionResponse {
     }
 
     /**
-     * Return string value representing WorkflowGetResponse object.
+     * Return a string value representing a WorkflowGetResponse object.
      *
      * @return string representation of WorkflowGetResponse
      */

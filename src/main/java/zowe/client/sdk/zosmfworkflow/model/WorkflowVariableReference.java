@@ -73,7 +73,7 @@ public final class WorkflowVariableReference {
     }
 
     /**
-     * Return string value representing WorkflowVariableReference object.
+     * Return a string value representing a WorkflowVariableReference object.
      *
      * @return string representation of WorkflowVariableReference
      */

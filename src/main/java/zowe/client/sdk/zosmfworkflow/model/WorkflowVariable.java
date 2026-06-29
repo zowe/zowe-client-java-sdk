@@ -62,7 +62,7 @@ public final class WorkflowVariable {
     }
 
     /**
-     * Return string value representing WorkflowVariable object.
+     * Return a string value representing a WorkflowVariable object.
      *
      * @return string representation of WorkflowVariable
      */

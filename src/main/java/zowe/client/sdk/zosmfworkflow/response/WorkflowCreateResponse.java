@@ -118,7 +118,7 @@ public final class WorkflowCreateResponse {
     }
 
     /**
-     * Return string value representing WorkflowCreateResponse object.
+     * Return a string value representing a WorkflowCreateResponse object.
      *
      * @return string representation of WorkflowCreateResponse
      */

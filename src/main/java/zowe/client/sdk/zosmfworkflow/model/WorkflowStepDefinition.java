@@ -165,7 +165,7 @@ public final class WorkflowStepDefinition {
     }
 
     /**
-     * Return string value representing WorkflowStepDefinition object.
+     * Return a string value representing a WorkflowStepDefinition object.
      *
      * @return string representation of WorkflowStepDefinition
      */

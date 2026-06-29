@@ -80,7 +80,7 @@ public class JobChange {
      *
      * @param jobName  job name
      * @param jobId    job id
-     * @param jobClass new job class (for example A, B, C)
+     * @param jobClass new job class (for example, A, B, C)
      * @param version  version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
@@ -100,7 +100,7 @@ public class JobChange {
      * Change the class of a job using a Job object.
      *
      * @param job      job document
-     * @param jobClass new job class (for example A, B, C)
+     * @param jobClass new job class (for example, A, B, C)
      * @param version  version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state

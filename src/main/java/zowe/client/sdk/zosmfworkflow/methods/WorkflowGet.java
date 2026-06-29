@@ -44,6 +44,7 @@ public class WorkflowGet {
      * WorkflowGet constructor.
      *
      * @param connection for connection information, see ZosConnection object
+     * @author Ashish Kumar Dash
      */
     public WorkflowGet(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -59,6 +60,7 @@ public class WorkflowGet {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
+     * @author Ashish Kumar Dash
      */
     WorkflowGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -77,6 +79,7 @@ public class WorkflowGet {
      *                           path name (including the file name) or a fully qualified z/OS data set name
      * @return workflow definition details returned by z/OSMF
      * @throws ZosmfRequestException request error state
+     * @author Ashish Kumar Dash
      */
     public WorkflowGetDefinitionResponse getDefinition(final String definitionFilePath) throws ZosmfRequestException {
         return getDefinitionCommon(WorkflowGetDefinitionInputData.builder().definitionFilePath(definitionFilePath).build());
@@ -85,11 +88,12 @@ public class WorkflowGet {
     /**
      * Retrieve a z/OSMF workflow definition-by-definition file path on a specific system.
      *
-     * @param definitionFilePath specifies the location of the workflow definition file, which is either a UNIX
-     *                           path name (including the file name) or a fully qualified z/OS data set name
+     * @param definitionFilePath           specifies the location of the workflow definition file, which is either a UNIX
+     *                                     path name (including the file name) or a fully qualified z/OS data set name
      * @param workflowDefinitionFileSystem nickname of the system on which the workflow definition file resides
      * @return workflow definition details returned by z/OSMF
      * @throws ZosmfRequestException request error state
+     * @author Ashish Kumar Dash
      */
     public WorkflowGetDefinitionResponse getDefinition(final String definitionFilePath,
                                                        final String workflowDefinitionFileSystem)
@@ -108,6 +112,7 @@ public class WorkflowGet {
      * @param definitionInputData workflow definition retrieval parameters
      * @return workflow definition details returned by z/OSMF
      * @throws ZosmfRequestException request error state
+     * @author Ashish Kumar Dash
      */
     public WorkflowGetDefinitionResponse getDefinitionCommon(final WorkflowGetDefinitionInputData definitionInputData)
             throws ZosmfRequestException {
@@ -148,6 +153,7 @@ public class WorkflowGet {
      * @param workflowKey workflow key that uniquely identifies the workflow instance
      * @return workflow properties returned by z/OSMF
      * @throws ZosmfRequestException request error state
+     * @author Ashish Kumar Dash
      */
     public WorkflowGetPropertiesResponse getProperties(final String workflowKey) throws ZosmfRequestException {
         return getPropertiesCommon(WorkflowGetPropertiesInputData.builder().workflowKey(workflowKey).build());
@@ -161,6 +167,7 @@ public class WorkflowGet {
      * @param returnVariables whether the response includes the workflow variable information
      * @return workflow properties returned by z/OSMF
      * @throws ZosmfRequestException request error state
+     * @author Ashish Kumar Dash
      */
     public WorkflowGetPropertiesResponse getProperties(final String workflowKey,
                                                        final boolean returnSteps,
@@ -180,6 +187,7 @@ public class WorkflowGet {
      * @param propertiesInputData workflow properties retrieval parameters
      * @return workflow properties returned by z/OSMF
      * @throws ZosmfRequestException request error state
+     * @author Ashish Kumar Dash
      */
     public WorkflowGetPropertiesResponse getPropertiesCommon(final WorkflowGetPropertiesInputData propertiesInputData)
             throws ZosmfRequestException {
@@ -219,6 +227,7 @@ public class WorkflowGet {
      *
      * @param str String value
      * @return string value
+     * @author Frank Giordano
      */
     private static String getEncodeURIComponent(final String str) {
         return EncodeUtils.encodeURIComponent(str);
@@ -229,6 +238,7 @@ public class WorkflowGet {
      *
      * @param definitionInputData workflow definition retrieval parameters
      * @return returnData value or an empty string when no attributes are requested
+     * @author Ashish Kumar Dash
      */
     private static String buildReturnData(final WorkflowGetDefinitionInputData definitionInputData) {
         return buildReturnData(definitionInputData.isReturnSteps(), definitionInputData.isReturnVariables());
@@ -240,6 +250,7 @@ public class WorkflowGet {
      * @param returnSteps     whether to request the workflow step information
      * @param returnVariables whether to request the workflow variable information
      * @return returnData value or an empty string when no attributes are requested
+     * @author Ashish Kumar Dash
      */
     private static String buildReturnData(final boolean returnSteps, final boolean returnVariables) {
         final StringBuilder returnData = new StringBuilder();

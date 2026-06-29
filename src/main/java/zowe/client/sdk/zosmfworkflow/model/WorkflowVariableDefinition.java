@@ -386,7 +386,7 @@ public final class WorkflowVariableDefinition {
     }
 
     /**
-     * Return string value representing WorkflowVariableDefinition object.
+     * Return a string value representing a WorkflowVariableDefinition object.
      *
      * @return string representation of WorkflowVariableDefinition
      */

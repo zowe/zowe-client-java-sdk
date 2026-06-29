@@ -186,7 +186,7 @@ public final class UnixFile {
     }
 
     /**
-     * Return string value representing UnixFile object
+     * Return string value representing a UnixFile object
      *
      * @return string representation of UnixFile
      */

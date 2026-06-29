@@ -70,32 +70,32 @@ public final class WorkflowCallingStepInfo extends WorkflowStepInfo {
     /**
      * WorkflowCallingStepInfo Jackson constructor.
      *
-     * @param name                        step name
-     * @param title                       step title
-     * @param description                 step description
-     * @param state                       state of the step
-     * @param stepNumber                  step number
-     * @param optional                    indicates whether the step is optional
-     * @param autoEnable                  indicates whether the step can be performed automatically
-     * @param prereqStep                  names of prerequisite steps
-     * @param userDefined                 indicates whether the step was added manually
-     * @param runAsUser                   user ID under which the step is performed
-     * @param runAsUserDynamic            indicates whether the runAsUser ID can change
-     * @param isRestStep                  indicates whether this step is a REST API step
-     * @param owner                       user ID of the step owner
-     * @param assignees                   step assignees
-     * @param skills                      skills required to perform the step
-     * @param weight                      relative difficulty of the step
-     * @param hasCalledWorkflow           indicates whether this step calls another workflow
-     * @param isConditionStep             indicates whether this step is a conditional step
-     * @param steps                       nested step-info objects
-     * @param calledInstanceKey           key of the called workflow instance
-     * @param calledInstanceScope         scope of the called workflow instance
-     * @param calledInstanceURI           URI path of the called workflow instance
-     * @param calledWorkflowID            workflow ID used to locate an existing workflow instance
-     * @param calledWorkflowVersion       workflow version used to locate an existing workflow instance
-     * @param calledWorkflowMD5           hash value used to locate an existing workflow instance
-     * @param calledWorkflowDescription   description of the workflow to be called
+     * @param name                         step name
+     * @param title                        step title
+     * @param description                  step description
+     * @param state                        state of the step
+     * @param stepNumber                   step number
+     * @param optional                     indicates whether the step is optional
+     * @param autoEnable                   indicates whether the step can be performed automatically
+     * @param prereqStep                   names of prerequisite steps
+     * @param userDefined                  indicates whether the step was added manually
+     * @param runAsUser                    user ID under which the step is performed
+     * @param runAsUserDynamic             indicates whether the runAsUser ID can change
+     * @param isRestStep                   indicates whether this step is a REST API step
+     * @param owner                        user ID of the step owner
+     * @param assignees                    step assignees
+     * @param skills                       skills required to perform the step
+     * @param weight                       relative difficulty of the step
+     * @param hasCalledWorkflow            indicates whether this step calls another workflow
+     * @param isConditionStep              indicates whether this step is a conditional step
+     * @param steps                        nested step-info objects
+     * @param calledInstanceKey            key of the called workflow instance
+     * @param calledInstanceScope          scope of the called workflow instance
+     * @param calledInstanceURI            URI path of the called workflow instance
+     * @param calledWorkflowID             workflow ID used to locate an existing workflow instance
+     * @param calledWorkflowVersion        workflow version used to locate an existing workflow instance
+     * @param calledWorkflowMD5            hash value used to locate an existing workflow instance
+     * @param calledWorkflowDescription    description of the workflow to be called
      * @param calledWorkflowDefinitionFile name of the workflow definition file for the called workflow
      */
     @JsonCreator
@@ -213,7 +213,7 @@ public final class WorkflowCallingStepInfo extends WorkflowStepInfo {
     }
 
     /**
-     * Return string value representing WorkflowCallingStepInfo object.
+     * Return a string value representing a WorkflowCallingStepInfo object.
      *
      * @return string representation of WorkflowCallingStepInfo
      */

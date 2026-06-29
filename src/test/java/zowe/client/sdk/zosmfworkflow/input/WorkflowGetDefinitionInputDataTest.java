@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Class containing unit tests for WorkflowGetInputData.
+ * Class containing unit tests for WorkflowGetDefinitionInputData.
  */
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class WorkflowGetDefinitionInputDataTest {

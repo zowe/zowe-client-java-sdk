@@ -451,7 +451,7 @@ public final class WorkflowTemplateStepInfo extends WorkflowStepInfo {
     }
 
     /**
-     * Return string value representing WorkflowTemplateStepInfo object.
+     * Return a string value representing a WorkflowTemplateStepInfo object.
      *
      * @return string representation of WorkflowTemplateStepInfo
      */

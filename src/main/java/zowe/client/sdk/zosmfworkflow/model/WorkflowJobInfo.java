@@ -76,7 +76,7 @@ public final class WorkflowJobInfo {
     }
 
     /**
-     * Return string value representing WorkflowJobInfo object.
+     * Return a string value representing a WorkflowJobInfo object.
      *
      * @return string representation of WorkflowJobInfo
      */

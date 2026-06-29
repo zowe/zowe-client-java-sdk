@@ -695,7 +695,7 @@ public final class WorkflowGetPropertiesResponse {
     }
 
     /**
-     * Return string value representing WorkflowGetPropertiesResponse object.
+     * Return a string value representing a WorkflowGetPropertiesResponse object.
      *
      * @return string representation of WorkflowGetPropertiesResponse
      */

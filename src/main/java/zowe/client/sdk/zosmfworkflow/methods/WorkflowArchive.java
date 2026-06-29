@@ -37,6 +37,7 @@ public class WorkflowArchive {
      * WorkflowArchive Constructor.
      *
      * @param connection ZosConnection object
+     * @author Adithe Das
      */
     public WorkflowArchive(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -52,6 +53,7 @@ public class WorkflowArchive {
      *
      * @param connection z/OS connection information
      * @param request    compatible ZosmfRequest interface object
+     * @author Adithe Das
      */
     WorkflowArchive(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -70,6 +72,7 @@ public class WorkflowArchive {
      * @param workflowKey unique workflow key identifying the workflow instance to archive
      * @return response object
      * @throws ZosmfRequestException error executing request
+     * @author Adithe Das
      */
     public Response archive(final String workflowKey) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(workflowKey, "workflowKey");
