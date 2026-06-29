@@ -130,7 +130,7 @@ public class VariableDelete {
                 EncodeUtils.encodeURIComponent(systemName);
 
         if (deleteAll) {
-            // whole-pool delete: clear any prior body so the reused request issues a true bodyless request
+            // whole-pool delete: clear any prior body so the reused request issues a true bodiless request
             request.setBody(null);
         } else {
             ValidateUtils.checkNullParameter(variableNames, "variableNames");
