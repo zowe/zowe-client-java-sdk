@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class WorkflowGetDefinitionResponseTest {
 
     @Test
-    public void tstWorkflowGetResponseConstructorSuccess() {
+    public void tstWorkflowGetDefinitionResponseConstructorSuccess() {
         final WorkflowGetDefinitionResponse response = new WorkflowGetDefinitionResponse(
                 "sample", "desc", "programExecutionSample", "1.0", "IBM",
                 "5c5dd66eb3ca3cd1c578ccf323d57cc0", null, Boolean.FALSE, "none", null,
@@ -47,7 +47,7 @@ public class WorkflowGetDefinitionResponseTest {
     }
 
     @Test
-    public void tstWorkflowGetResponseParseWithStepsAndVariablesSuccess() throws Exception {
+    public void tstWorkflowGetDefinitionResponseParseWithStepsAndVariablesSuccess() throws Exception {
         final WorkflowGetDefinitionResponse response = JsonUtils.parseResponse(
                 "{\"workflowID\":\"programExecutionSample\",\"workflowVersion\":\"1.0\",\"vendor\":\"IBM\"," +
                         "\"category\":\"configuration\",\"scope\":\"none\",\"containsParallelSteps\":false," +
@@ -80,7 +80,7 @@ public class WorkflowGetDefinitionResponseTest {
     }
 
     @Test
-    public void tstWorkflowGetResponseParseNullDefaultsSuccess() throws Exception {
+    public void tstWorkflowGetDefinitionResponseParseNullDefaultsSuccess() throws Exception {
         final WorkflowGetDefinitionResponse response = JsonUtils.parseResponse(
                 "{\"workflowID\":\"programExecutionSample\"}",
                 WorkflowGetDefinitionResponse.class,
