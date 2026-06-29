@@ -160,28 +160,6 @@ public class WorkflowGet {
     }
 
     /**
-     * Get the properties of a z/OSMF workflow by workflow key, optionally including step and variable information.
-     *
-     * @param workflowKey     workflow key that uniquely identifies the workflow instance
-     * @param returnSteps     whether the response includes the workflow step information
-     * @param returnVariables whether the response includes the workflow variable information
-     * @return workflow properties returned by z/OSMF
-     * @throws ZosmfRequestException request error state
-     * @author Ashish Kumar Dash
-     */
-    public WorkflowGetPropertiesResponse getProperties(final String workflowKey,
-                                                       final boolean returnSteps,
-                                                       final boolean returnVariables) throws ZosmfRequestException {
-        return getPropertiesCommon(
-                WorkflowGetPropertiesInputData.builder()
-                        .workflowKey(workflowKey)
-                        .returnSteps(returnSteps)
-                        .returnVariables(returnVariables)
-                        .build()
-        );
-    }
-
-    /**
      * Get the properties of a z/OSMF workflow.
      *
      * @param propertiesInputData workflow properties retrieval parameters
