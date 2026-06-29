@@ -88,6 +88,15 @@ zowe.client.sdk.zosmfinfo.methods
     ZosmfStatus  
     ZosmfSystems   
 
+zowe.client.sdk.zosmfworkflow.methods
+
+    WrokflowArchive
+    WorkflowCreate  
+    WorkflowDelete
+    WorkflowGet
+    WorkflowList
+    WorkflowStart
+
 zowe.client.sdk.zostso.methods  
   
     TsoCmd
@@ -99,6 +108,12 @@ zowe.client.sdk.zostso.methods
 zowe.client.sdk.zosuss.method  
   
     UssCmd   
+
+zowe.client.sdk.zosvariables.method
+
+    VariableDelete
+    VariableExport
+    VariableImport
           
 ## TeamConfig Package  
   
@@ -209,9 +224,11 @@ In the project, you will find code examples located in each package's README.MD 
   [zosjobs](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosjobs/README.md)  
   [zoslogs](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zoslogs/README.md)  
   [zosmfauth](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md)  
-  [zosmfinfo](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfinfo/README.md)  
+  [zosmfinfo](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfinfo/README.md)
+  [zosmfworkflow](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfworkflow/README.md)
   [zostso](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zostso/README.md)    
   [zosuss](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosuss/README.md)  
+  [zosvariables](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosvariables/README.md)
       
 ## Build  
 
@@ -248,7 +265,7 @@ Thin JAR (recommended):
         <dependency>
           <groupId>org.zowe.client.java.sdk</groupId>
           <artifactId>zowe-client-java-sdk</artifactId>
-          <version>6.3.4</version>
+          <version>7.0.0-RC2</version>
         </dependency>
   
 Fat JAR (with dependencies):
@@ -256,7 +273,7 @@ Fat JAR (with dependencies):
         <dependency>
           <groupId>org.zowe.client.java.sdk</groupId>
           <artifactId>zowe-client-java-sdk</artifactId>
-          <version>6.3.4</version>
+          <version>7.0.0-RC2</version>
           <classifier>jar-with-dependencies</classifier>
         </dependency>  
   
@@ -264,11 +281,11 @@ For a Gradle project add the SDK as a dependency by updating your `build.gradle`
 
 Thin JAR (recommended):  
   
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '6.3.4'    
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.0-RC2'    
 
 Fat JAR (with dependencies):  
   
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '6.3.4', classifier: 'jar-with-dependencies'
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.0-RC2', classifier: 'jar-with-dependencies'
   
 ## Publishing to Maven Central  
   
