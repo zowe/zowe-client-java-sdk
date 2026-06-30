@@ -112,9 +112,24 @@ public class VariableGetTest {
     public void tstVariableGetSuccess() throws Exception {
         GetJsonZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
         Mockito.when(mockRequest.executeRequest()).thenReturn(new zowe.client.sdk.rest.Response("{\"system-variable-list\":[]}", 200, "OK"));
+        Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
+        Mockito.doCallRealMethod().when(mockRequest).getUrl();
         VariableGet variableGet = new VariableGet(connection, mockRequest);
 
         assertNotNull(variableGet.get("PLEX1", "SYS1"));
+        assertEquals("https://1:443/zosmf/variables/rest/1.0/systems/PLEX1.SYS1", mockRequest.getUrl());
+    }
+
+    @Test
+    public void tstVariableGetLocalSuccess() throws Exception {
+        GetJsonZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        Mockito.when(mockRequest.executeRequest()).thenReturn(new zowe.client.sdk.rest.Response("{\"system-variable-list\":[]}", 200, "OK"));
+        Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
+        Mockito.doCallRealMethod().when(mockRequest).getUrl();
+        VariableGet variableGet = new VariableGet(connection, mockRequest);
+
+        assertNotNull(variableGet.getLocal());
+        assertEquals("https://1:443/zosmf/variables/rest/1.0/systems/local", mockRequest.getUrl());
     }
 
     @Test
@@ -124,6 +139,15 @@ public class VariableGetTest {
         VariableGet variableGet = new VariableGet(connection, mockRequest);
 
         assertThrows(zowe.client.sdk.rest.exception.ZosmfRequestException.class,() -> variableGet.get("PLEX1", "SYS1"));
+    }
+
+    @Test
+    public void tstVariableGetWithQueryParametersSuccess() throws Exception {
+        GetJsonZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        Mockito.when(mockRequest.executeRequest()).thenReturn(new zowe.client.sdk.rest.Response("{\"system-variable-list\":[]}", 200, "OK"));
+        VariableGet variableGet = new VariableGet(connection, mockRequest);
+
+        assertNotNull(variableGet.get("PLEX1", "SYS1", java.util.Arrays.asList("VAR1", "VAR2"), "variable"));
     }
 
 }

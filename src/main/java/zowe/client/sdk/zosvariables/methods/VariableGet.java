@@ -20,6 +20,7 @@ import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosvariables.VariableConstants;
 import zowe.client.sdk.zosvariables.response.VariableGetResponse;
+import java.util.List;
 
 /**
  * Class to handle retrieval of z/OS system variables.
@@ -49,8 +50,7 @@ public class VariableGet {
 
     /**
      * Alternative VariableGet constructor with ZosmfRequest object.
-     * This is mainly used for internal code unit testing with Mockito,
-     * and it is not recommended to be used by the larger community.
+     * This is mainly used for internal code unit testing with Mockito, and it is not recommended to be used by the larger community.
      * <p>
      * This constructor is package-private.
      *
@@ -66,6 +66,7 @@ public class VariableGet {
         if (!(request instanceof GetJsonZosmfRequest)) {
             throw new IllegalStateException("GET_JSON request type required");
         }
+
         this.request = request;
     }
 
@@ -80,14 +81,90 @@ public class VariableGet {
     public VariableGetResponse get(final String sysplexName, final String systemName) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
         ValidateUtils.checkIllegalParameter(systemName, "systemName");
+        return getCommon(sysplexName, systemName, false, null, null);
+    }
 
-        final String url = connection.getZosmfUrl()
-                + VariableConstants.RESOURCE
-                + UrlConstants.URL_PATH_DELIM
-                + EncodeUtils.encodeURIComponent(sysplexName) + "."
-                + EncodeUtils.encodeURIComponent(systemName);
+    /**
+     * Retrieve variables for a specified system with optional filters.
+     *
+     * @param sysplexName sysplex name
+     * @param systemName system name
+     * @param variableNames variable names to retrieve
+     * @param variableType variable type filter
+     * @return VariableGetResponse object
+     * @throws ZosmfRequestException request error state
+     */
+    public VariableGetResponse get(final String sysplexName, final String systemName, final List<String> variableNames, final String variableType) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
+        ValidateUtils.checkIllegalParameter(systemName, "systemName");
+        return getCommon(sysplexName, systemName, false, variableNames, variableType);
+    }
 
-        request.setUrl(url);
+    /**
+     * Retrieve variables for the local system.
+     *
+     * @return VariableGetResponse object
+     * @throws ZosmfRequestException request error state
+     */
+    public VariableGetResponse getLocal() throws ZosmfRequestException {
+        return getCommon(null, null, true, null, null);
+    }
+
+    /**
+     * Retrieve variables for the local system with optional filters.
+     *
+     * @param variableNames variable names to retrieve
+     * @param variableType variable type filter
+     * @return VariableGetResponse object
+     * @throws ZosmfRequestException request error state
+     */
+    public VariableGetResponse getLocal(final List<String> variableNames, final String variableType) throws ZosmfRequestException {
+        return getCommon(null, null, true, variableNames, variableType);
+    }
+
+    /**
+     * Common implementation for retrieving variables.
+     *
+     * @param sysplexName sysplex name
+     * @param systemName system name
+     * @param isLocal true to retrieve the local system
+     * @param variableNames optional variable names
+     * @param variableType optional variable type
+     * @return VariableGetResponse object
+     * @throws ZosmfRequestException request error state
+     */
+    private VariableGetResponse getCommon(final String sysplexName, final String systemName, final boolean isLocal, final List<String> variableNames, final String variableType) throws ZosmfRequestException {
+        final StringBuilder url = new StringBuilder();
+
+        if (isLocal) {
+            url.append(connection.getZosmfUrl())
+                    .append(VariableConstants.RESOURCE)
+                    .append(UrlConstants.URL_PATH_DELIM).append("local");
+        } else {
+            url.append(connection.getZosmfUrl())
+                    .append(VariableConstants.RESOURCE)
+                    .append(UrlConstants.URL_PATH_DELIM)
+                    .append(EncodeUtils.encodeURIComponent(sysplexName))
+                    .append(".").append(EncodeUtils.encodeURIComponent(systemName));
+        }
+
+        boolean first = true;
+
+        if (variableNames != null && !variableNames.isEmpty()) {
+            for (final String variableName : variableNames) {
+                ValidateUtils.checkIllegalParameter(variableName, "variableName");
+                url.append(first ? "?" : "&");
+                first = false;
+                url.append("var-name=").append(EncodeUtils.encodeURIComponent(variableName));
+            }
+        }
+
+        if (variableType != null && !variableType.trim().isEmpty()) {
+            url.append(first ? "?" : "&");
+            url.append("variable-type=").append(EncodeUtils.encodeURIComponent(variableType));
+        }
+
+        request.setUrl(url.toString());
 
         final String response = request.executeRequest().getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase")).toString();
         return JsonUtils.parseResponse(response, VariableGetResponse.class, GET_CONTEXT);
