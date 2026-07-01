@@ -25,6 +25,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -69,23 +70,23 @@ public class UssExtAttr {
     }
 
     /**
-     * Returns a response string documenting listing attributes
+     * Returns a list documenting listing attributes
      *
-     * @param targetPath UNIX path to the target file or directory
-     * @return string output
+     * @param targetPath UNIX path to the target file; an attribute listing is only returned for a file,
+     *                   if a directory path is given without specifying a file, an IBM JSON error document
+     *                   is returned instead
+     * @return list of attribute strings
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     @SuppressWarnings("unchecked")
-    public String display(final String targetPath) throws ZosmfRequestException {
+    public List<String> get(final String targetPath) throws ZosmfRequestException {
         final Map<String, String> requestMap = new HashMap<>();
         requestMap.put("request", "extattr");
         final Response response = executeRequest(targetPath, requestMap);
         final JsonNode json = JsonUtils.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
-        final StringBuilder str = new StringBuilder();
-        json.get("stdout").forEach(item -> str.append(item.asText()).append("\n"));
-        return str.toString();
+        return JsonUtils.getStdoutList(json);
     }
 
     /**

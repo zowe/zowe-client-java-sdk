@@ -197,10 +197,10 @@ public class UssExtAttrTest {
     }
 
     @Test
-    public void tstUssExtAttrDisplayNullTargetPathFailure4() throws ZosmfRequestException {
+    public void tstUssExtAttrGetNullTargetPathFailure4() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussExtAttr.display(null);
+            ussExtAttr.get(null);
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }

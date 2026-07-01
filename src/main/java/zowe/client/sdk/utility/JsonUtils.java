@@ -20,7 +20,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -96,6 +98,18 @@ public final class JsonUtils {
                             "] into " + clazz.getSimpleName(), e);
 
         }
+    }
+
+    /**
+     * Extract the "stdout" JSON field from a parsed z/OSMF response into a {@code List<String>}.
+     *
+     * @param json JsonNode object containing a "stdout" field
+     * @return list of strings representing each "stdout" entry
+     */
+    public static List<String> getStdoutList(final JsonNode json) {
+        final List<String> result = new ArrayList<>();
+        json.get("stdout").forEach(item -> result.add(item.asText()));
+        return result;
     }
 
     /**
