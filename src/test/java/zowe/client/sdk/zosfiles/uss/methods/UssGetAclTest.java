@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosfiles.uss.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -67,19 +66,11 @@ public class UssGetAclTest {
         ussGetAcl = new UssGetAcl(connection);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void tstUssGetAclGetSuccess() throws ZosmfRequestException {
         final UssGetAcl ussGetAcl = new UssGetAcl(connection, mockJsonPutRequest);
-        final JSONArray stdout = new JSONArray();
-        stdout.add("#file: /etc/inetd.conf");
-        stdout.add("#owner: USER1");
-        stdout.add("#group: GROUP1");
-        stdout.add("user::rwx");
-        stdout.add("group::r-x");
-        stdout.add("other::r--");
-        final JSONObject jsonResponse = new JSONObject();
-        jsonResponse.put("stdout", stdout);
+        final String jsonResponse = "{\"stdout\":[\"#file: /etc/inetd.conf\",\"#owner: USER1\"," +
+                "\"#group: GROUP1\",\"user::rwx\",\"group::r-x\",\"other::r--\"]}";
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(jsonResponse, 200, "success"));
 
@@ -95,14 +86,10 @@ public class UssGetAclTest {
         ), attributes);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void tstUssGetAclGetWithCommasSuccess() throws ZosmfRequestException {
         final UssGetAcl ussGetAcl = new UssGetAcl(connection, mockJsonPutRequest);
-        final JSONArray stdout = new JSONArray();
-        stdout.add("user::rwx,group::r-x,other::r--");
-        final JSONObject jsonResponse = new JSONObject();
-        jsonResponse.put("stdout", stdout);
+        final String jsonResponse = "{\"stdout\":[\"user::rwx,group::r-x,other::r--\"]}";
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
                 new Response(jsonResponse, 200, "success"));
 
@@ -111,14 +98,22 @@ public class UssGetAclTest {
         assertEquals(List.of("user::rwx,group::r-x,other::r--"), attributes);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void tstUssGetAclGetEmptyStdoutSuccess() throws ZosmfRequestException {
         final UssGetAcl ussGetAcl = new UssGetAcl(connection, mockJsonPutRequest);
-        final JSONObject jsonResponse = new JSONObject();
-        jsonResponse.put("stdout", new JSONArray());
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
-                new Response(jsonResponse, 200, "success"));
+                new Response("{\"stdout\":[]}", 200, "success"));
+
+        final List<String> attributes = ussGetAcl.get("/etc/inetd.conf", false);
+
+        assertTrue(attributes.isEmpty());
+    }
+
+    @Test
+    public void tstUssGetAclGetMissingStdoutFieldSuccess() throws ZosmfRequestException {
+        final UssGetAcl ussGetAcl = new UssGetAcl(connection, mockJsonPutRequest);
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
 
         final List<String> attributes = ussGetAcl.get("/etc/inetd.conf", false);
 

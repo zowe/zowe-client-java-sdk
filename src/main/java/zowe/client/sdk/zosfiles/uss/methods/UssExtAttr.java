@@ -88,7 +88,10 @@ public class UssExtAttr {
         final JsonNode json = JsonUtils.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
         final List<String> attributes = new ArrayList<>();
-        json.get("stdout").forEach(item -> attributes.add(item.asText()));
+        final JsonNode stdout = json.get("stdout");
+        if (stdout != null && stdout.isArray()) {
+            stdout.forEach(item -> attributes.add(item.asText()));
+        }
         return attributes;
     }
 
