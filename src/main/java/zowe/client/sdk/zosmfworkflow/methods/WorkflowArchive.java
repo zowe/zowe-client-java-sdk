@@ -28,7 +28,13 @@ import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
  */
 public class WorkflowArchive {
 
+    /**
+     * Url resource act type
+     */
     public static final String OPERATIONS_RESOURCE = "operations";
+    /**
+     * Url resource end point identifier
+     */
     public static final String ARCHIVE_RESOURCE = "archive";
     private final ZosConnection connection;
     private ZosmfRequest request;
