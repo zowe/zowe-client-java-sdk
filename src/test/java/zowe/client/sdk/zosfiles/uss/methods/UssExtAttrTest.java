@@ -10,6 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.methods;
 
 import kong.unirest.core.Cookie;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,8 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -84,6 +87,46 @@ public class UssExtAttrTest {
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
         assertEquals("https://1:443/zosmf/restfiles/fs%2Ftest", mockJsonPutRequestToken.getUrl());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void tstUssExtAttrGetSuccess() throws ZosmfRequestException {
+        final UssExtAttr ussExtAttr = new UssExtAttr(connection, mockJsonPutRequest);
+        final JSONArray stdout = new JSONArray();
+        stdout.add("/etc/inetd.conf");
+        stdout.add("APF authorized = NO");
+        stdout.add("Program controlled = NO");
+        stdout.add("Shared address space = YES");
+        stdout.add("Shared library = NO");
+        final JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put("stdout", stdout);
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
+                new Response(jsonResponse, 200, "success"));
+
+        final List<String> attributes = ussExtAttr.get("/etc/inetd.conf");
+
+        assertEquals(List.of(
+                "/etc/inetd.conf",
+                "APF authorized = NO",
+                "Program controlled = NO",
+                "Shared address space = YES",
+                "Shared library = NO"
+        ), attributes);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void tstUssExtAttrGetEmptyStdoutSuccess() throws ZosmfRequestException {
+        final UssExtAttr ussExtAttr = new UssExtAttr(connection, mockJsonPutRequest);
+        final JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put("stdout", new JSONArray());
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
+                new Response(jsonResponse, 200, "success"));
+
+        final List<String> attributes = ussExtAttr.get("/etc/inetd.conf");
+
+        assertTrue(attributes.isEmpty());
     }
 
     @Test

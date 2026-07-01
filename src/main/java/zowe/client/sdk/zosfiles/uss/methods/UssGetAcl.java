@@ -25,6 +25,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssGetAclInputData;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +88,9 @@ public class UssGetAcl {
                 getAclCommon(targetPath, new UssGetAclInputData.Builder().build());
         final JsonNode json = JsonUtils.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
-        return JsonUtils.getStdoutList(json);
+        final List<String> attributes = new ArrayList<>();
+        json.get("stdout").forEach(item -> attributes.add(item.asText()));
+        return attributes;
     }
 
     /**
