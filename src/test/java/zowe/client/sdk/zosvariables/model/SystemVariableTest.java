@@ -10,12 +10,10 @@
 package zowe.client.sdk.zosvariables.model;
 
 import org.junit.jupiter.api.Test;
+import zowe.client.sdk.utility.JsonUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Class containing unit tests for SystemVariable.
@@ -43,56 +41,28 @@ public class SystemVariableTest {
         assertNotNull(systemVariable);
         assertEquals("var1", systemVariable.getName());
         assertEquals("value1", systemVariable.getValue());
-        assertNull(systemVariable.getDescription());
+        assertEquals("", systemVariable.getDescription());
     }
 
     @Test
-    public void tstSystemVariableNullNameFailure() {
-        final IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
-                () -> new SystemVariable(null, "value1", "desc1"));
-        assertEquals("name is either null or empty", e.getMessage());
+    public void tstSystemVariableNullDefaultsSuccess() {
+        final SystemVariable systemVariable = new SystemVariable(null, null, null);
+
+        assertEquals("", systemVariable.getName());
+        assertEquals("", systemVariable.getValue());
+        assertEquals("", systemVariable.getDescription());
     }
 
     @Test
-    public void tstSystemVariableEmptyNameFailure() {
-        final IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
-                () -> new SystemVariable("", "value1", "desc1"));
-        assertEquals("name is either null or empty", e.getMessage());
-    }
+    public void tstSystemVariableParseSuccess() throws Exception {
+        final SystemVariable systemVariable = JsonUtils.parseResponse(
+                "{\"name\":\"var1\",\"value\":\"value1\",\"description\":\"desc1\"}",
+                SystemVariable.class,
+                "test");
 
-    @Test
-    public void tstSystemVariableNullValueFailure() {
-        final IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
-                () -> new SystemVariable("var1", null, "desc1"));
-        assertEquals("value is either null or empty", e.getMessage());
-    }
-
-    @Test
-    public void tstSystemVariableEmptyValueFailure() {
-        final IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
-                () -> new SystemVariable("var1", "", "desc1"));
-        assertEquals("value is either null or empty", e.getMessage());
-    }
-
-    @Test
-    public void tstSystemVariableEqualsSuccess() {
-        final SystemVariable systemVariable1 = new SystemVariable("var1", "value1", "desc1");
-        final SystemVariable systemVariable2 = new SystemVariable("var1", "value1", "desc1");
-        final SystemVariable systemVariable3 = new SystemVariable("var2", "value2", "desc2");
-
-        assertEquals(systemVariable1, systemVariable2);
-        assertNotEquals(systemVariable1, systemVariable3);
-        assertNotEquals(systemVariable1, null);
-        assertNotEquals(systemVariable1, "not a SystemVariable");
-        assertEquals(systemVariable1, systemVariable1);
-    }
-
-    @Test
-    public void tstSystemVariableHashCodeSuccess() {
-        final SystemVariable systemVariable1 = new SystemVariable("var1", "value1", "desc1");
-        final SystemVariable systemVariable2 = new SystemVariable("var1", "value1", "desc1");
-
-        assertEquals(systemVariable1.hashCode(), systemVariable2.hashCode());
+        assertEquals("var1", systemVariable.getName());
+        assertEquals("value1", systemVariable.getValue());
+        assertEquals("desc1", systemVariable.getDescription());
     }
 
 }

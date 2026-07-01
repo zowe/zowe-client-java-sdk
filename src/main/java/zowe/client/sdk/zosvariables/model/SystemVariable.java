@@ -13,9 +13,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import zowe.client.sdk.utility.ValidateUtils;
-
-import java.util.Objects;
 
 /**
  * z/OSMF system variable name, value, and optional description.
@@ -55,11 +52,9 @@ public final class SystemVariable {
             @JsonProperty("name") final String name,
             @JsonProperty("value") final String value,
             @JsonProperty("description") final String description) {
-        ValidateUtils.checkIllegalParameter(name, "name");
-        ValidateUtils.checkIllegalParameter(value, "value");
-        this.name = name;
-        this.value = value;
-        this.description = description;
+        this.name = orEmpty(name);
+        this.value = orEmpty(value);
+        this.description = orEmpty(description);
     }
 
     /**
@@ -104,38 +99,6 @@ public final class SystemVariable {
     }
 
     /**
-     * Indicates whether some other object is "equal to" this SystemVariable.
-     *
-     * @param obj the reference object with which to compare
-     * @return true if this object is the same as the obj argument
-     * @author Muhammad Imran
-     */
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof SystemVariable)) {
-            return false;
-        }
-        final SystemVariable other = (SystemVariable) obj;
-        return Objects.equals(name, other.name)
-                && Objects.equals(value, other.value)
-                && Objects.equals(description, other.description);
-    }
-
-    /**
-     * Return a hash code value for this SystemVariable.
-     *
-     * @return hash code value
-     * @author Muhammad Imran
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, value, description);
-    }
-
-    /**
      * Return string value representing SystemVariable object.
      *
      * @return string representation of SystemVariable
@@ -148,6 +111,10 @@ public final class SystemVariable {
                 ", value='" + value + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    private static String orEmpty(final String s) {
+        return s == null ? "" : s;
     }
 
 }
