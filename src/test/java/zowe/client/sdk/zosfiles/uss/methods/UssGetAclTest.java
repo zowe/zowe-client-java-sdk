@@ -42,7 +42,6 @@ public class UssGetAclTest {
     private final ZosConnection tokenConnection = ZosConnectionFactory
             .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private PutJsonZosmfRequest mockJsonPutRequest;
-    private PutJsonZosmfRequest mockJsonPutRequestToken;
     public UssGetAcl ussGetAcl;
 
     @BeforeEach
@@ -53,7 +52,7 @@ public class UssGetAclTest {
         doCallRealMethod().when(mockJsonPutRequest).setUrl(any());
         doCallRealMethod().when(mockJsonPutRequest).getUrl();
 
-        mockJsonPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
+        final PutJsonZosmfRequest mockJsonPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonPutRequestToken.executeRequest()).thenReturn(
                 new Response(new JSONObject(), 200, "success"));

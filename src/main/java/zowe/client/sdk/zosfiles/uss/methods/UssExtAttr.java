@@ -80,7 +80,6 @@ public class UssExtAttr {
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    @SuppressWarnings("unchecked")
     public List<String> get(final String targetPath) throws ZosmfRequestException {
         final Map<String, String> requestMap = new HashMap<>();
         requestMap.put("request", "extattr");

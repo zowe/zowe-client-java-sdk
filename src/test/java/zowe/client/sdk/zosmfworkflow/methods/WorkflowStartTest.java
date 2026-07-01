@@ -24,8 +24,6 @@ import zowe.client.sdk.zosmfworkflow.input.WorkflowStartInputData;
 import zowe.client.sdk.zosmfworkflow.types.ConflictStartType;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.*;
 
 /**
