@@ -9,6 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import kong.unirest.core.Cookie;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,7 +62,7 @@ public class UssListTest {
             "         \"user\": \"user\",\n" +
             "         \"gid\": 8,\n" +
             "         \"group\": \"FRAMEWKG\",\n" +
-            "         \"mtime\": \"2022-11-03T10:48:32\"\n" +
+            "         \"mtime\": \"2022-11-03T10:48:32\",\n" +
             "         \"target\": \"target\"\n" +
             "      },\n" +
             "      {\n" +
@@ -72,7 +73,7 @@ public class UssListTest {
             "         \"user\": \"user2\",\n" +
             "         \"gid\": 8,\n" +
             "         \"group\": \"FRAMEWKG\",\n" +
-            "         \"mtime\": \"2022-11-12T15:20:11\"\n" +
+            "         \"mtime\": \"2022-11-12T15:20:11\",\n" +
             "         \"target\": \"target\"\n" +
             "      }\n" +
             "   ],\n" +
@@ -83,10 +84,10 @@ public class UssListTest {
     private final static String partialDataForFileList = "{\n" +
             "   \"items\": [\n" +
             "      {\n" +
-            "         \"size\": 0,\n" +
+            "         \"size\": 0\n" +
             "      },\n" +
             "      {\n" +
-            "         \"name\": \"test2\",\n" +
+            "         \"name\": \"test2\"\n" +
             "      }\n" +
             "   ],\n" +
             "   \"returnedRows\": 7,\n" +
@@ -170,7 +171,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonUtils.parse(dataForFileList);
+        final JsonNode json = JsonUtils.parse(dataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -202,7 +203,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListPartialSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonUtils.parse(partialDataForFileList);
+        final JsonNode json = JsonUtils.parse(partialDataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -235,7 +236,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListEmptyFileListSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonUtils.parse("{}");
+        final JsonNode json = JsonUtils.parse("{}");
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -256,7 +257,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonUtils.parse(dataForZfsList);
+        final JsonNode json = JsonUtils.parse(dataForZfsList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -609,7 +610,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListWithFsnameSuccess() throws Exception {
-        final JSONObject json = JsonUtils.parse(dataForZfsList);
+        final JsonNode json = JsonUtils.parse(dataForZfsList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
@@ -627,7 +628,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListWithMaxLengthSuccess() throws Exception {
-        final JSONObject json = JsonUtils.parse(dataForZfsList);
+        final JsonNode json = JsonUtils.parse(dataForZfsList);
         Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());
@@ -783,7 +784,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListWithPathSuccess() throws Exception {
-        final JSONObject json = JsonUtils.parse(dataForZfsList);
+        final JsonNode json = JsonUtils.parse(dataForZfsList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
@@ -840,7 +841,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListZeroMaxLengthNoHeaderSuccess() throws Exception {
-        final JSONObject json = JsonUtils.parse(dataForZfsList);
+        final JsonNode json = JsonUtils.parse(dataForZfsList);
         Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());

@@ -43,17 +43,17 @@ public final class JsonUtils {
     }
 
     /**
-     * This method is a wrapper for JSONParser().parse() call to parse z/OSMF response
+     * This method is a wrapper for ObjectMapper.readTree() call to parse z/OSMF response
      * which may return ZosmfRequestException.
      *
      * @param item JSON string representation
-     * @return JSONObject object
+     * @return JsonNode object
      * @throws ZosmfRequestException indicates the JSON item from z/OSMF request is invalid for parsing
      */
-    public static JSONObject parse(final String item) throws ZosmfRequestException {
+    public static JsonNode parse(final String item) throws ZosmfRequestException {
         try {
-            return (JSONObject) new JSONParser().parse(item);
-        } catch (ParseException e) {
+            return objectMapper.readTree(item);
+        } catch (JsonProcessingException e) {
             LOG.debug(PARSE_ERROR_MSG, e);
             throw new ZosmfRequestException(e.getMessage(), e);
         }
