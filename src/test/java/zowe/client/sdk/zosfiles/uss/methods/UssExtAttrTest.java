@@ -21,6 +21,8 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
@@ -84,6 +86,47 @@ public class UssExtAttrTest {
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
         assertEquals("https://1:443/zosmf/restfiles/fs%2Ftest", mockJsonPutRequestToken.getUrl());
+    }
+
+    @Test
+    public void tstUssExtAttrGetSuccess() throws ZosmfRequestException {
+        final UssExtAttr ussExtAttr = new UssExtAttr(connection, mockJsonPutRequest);
+        final String jsonResponse = "{\"stdout\":[\"/etc/inetd.conf\",\"APF authorized = NO\"," +
+                "\"Program controlled = NO\",\"Shared address space = YES\",\"Shared library = NO\"]}";
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
+                new Response(jsonResponse, 200, "success"));
+
+        final List<String> attributes = ussExtAttr.get("/etc/inetd.conf");
+
+        assertEquals(List.of(
+                "/etc/inetd.conf",
+                "APF authorized = NO",
+                "Program controlled = NO",
+                "Shared address space = YES",
+                "Shared library = NO"
+        ), attributes);
+    }
+
+    @Test
+    public void tstUssExtAttrGetEmptyStdoutSuccess() throws ZosmfRequestException {
+        final UssExtAttr ussExtAttr = new UssExtAttr(connection, mockJsonPutRequest);
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
+                new Response("{\"stdout\":[]}", 200, "success"));
+
+        final List<String> attributes = ussExtAttr.get("/etc/inetd.conf");
+
+        assertTrue(attributes.isEmpty());
+    }
+
+    @Test
+    public void tstUssExtAttrGetMissingStdoutFieldSuccess() throws ZosmfRequestException {
+        final UssExtAttr ussExtAttr = new UssExtAttr(connection, mockJsonPutRequest);
+        Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+
+        final List<String> attributes = ussExtAttr.get("/etc/inetd.conf");
+
+        assertTrue(attributes.isEmpty());
     }
 
     @Test
@@ -197,10 +240,10 @@ public class UssExtAttrTest {
     }
 
     @Test
-    public void tstUssExtAttrDisplayNullTargetPathFailure4() throws ZosmfRequestException {
+    public void tstUssExtAttrGetNullTargetPathFailure4() throws ZosmfRequestException {
         String errMsg = "";
         try {
-            ussExtAttr.display(null);
+            ussExtAttr.get(null);
         } catch (IllegalArgumentException e) {
             errMsg = e.getMessage();
         }

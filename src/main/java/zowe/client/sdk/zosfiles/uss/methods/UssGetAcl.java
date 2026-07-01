@@ -25,7 +25,9 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssGetAclInputData;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,24 +77,23 @@ public class UssGetAcl {
      *
      * @param targetPath UNIX path to the target file or directory
      * @param useCommas  true if commas are to be used in the output
-     * @return string representation of response phrase
+     * @return list of attribute strings
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
     @SuppressWarnings("unchecked")
-    public String get(final String targetPath, final boolean useCommas) throws ZosmfRequestException {
+    public List<String> get(final String targetPath, final boolean useCommas) throws ZosmfRequestException {
         final Response response = useCommas ?
                 getAclCommon(targetPath, new UssGetAclInputData.Builder().usecommas(true).build()) :
                 getAclCommon(targetPath, new UssGetAclInputData.Builder().build());
         final JsonNode json = JsonUtils.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
-        final StringBuilder str = new StringBuilder();
-        if (useCommas) {
-            json.get("stdout").forEach(item -> str.append(item.asText()));
-        } else {
-            json.get("stdout").forEach(item -> str.append(item.asText()).append("\n"));
+        final List<String> attributes = new ArrayList<>();
+        final JsonNode stdout = json.get("stdout");
+        if (stdout != null && stdout.isArray()) {
+            stdout.forEach(item -> attributes.add(item.asText()));
         }
-        return str.toString();
+        return attributes;
     }
 
     /**
