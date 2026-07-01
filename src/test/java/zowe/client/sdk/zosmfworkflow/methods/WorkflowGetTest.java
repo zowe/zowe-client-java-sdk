@@ -509,4 +509,103 @@ public class WorkflowGetTest {
         assertEquals("workflowKey is either null or empty", exception.getMessage());
     }
 
+    private static String getArchivedWorkflowPropertiesJson() {
+        return "{\n" +
+                "  \"workflowName\": \"archivedProgramExecutionSample\",\n" +
+                "  \"workflowKey\": \"2535b19e-a8c3-4a52-9d77-e30bb920f912\",\n" +
+                "  \"workflowID\": \"programExecutionSample\",\n" +
+                "  \"owner\": \"zosmfad\",\n" +
+                "  \"system\": \"PLEX1.SY1\",\n" +
+                "  \"statusName\": \"archived\",\n" +
+                "  \"access\": \"Public\",\n" +
+                "  \"percentComplete\": 100\n" +
+                "}";
+    }
+
+    @Test
+    public void tstWorkflowGetArchivedPropertiesByKeySuccess() throws ZosmfRequestException {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        Mockito.when(connection.getZosmfUrl()).thenReturn("https://1:443");
+        GetJsonZosmfRequest mockGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        Mockito.when(mockGetRequest.executeRequest()).thenReturn(
+                new Response(getArchivedWorkflowPropertiesJson(), 200, "success"));
+        doCallRealMethod().when(mockGetRequest).setUrl(any());
+        doCallRealMethod().when(mockGetRequest).getUrl();
+
+        WorkflowGet workflowGet = new WorkflowGet(connection, mockGetRequest);
+        WorkflowGetPropertiesResponse response = workflowGet.getArchivedProperties(
+                "2535b19e-a8c3-4a52-9d77-e30bb920f912");
+
+        String expectedUrl = "https://1:443/workflow/rest/1.0/archivedworkflows/" +
+                EncodeUtils.encodeURIComponent("2535b19e-a8c3-4a52-9d77-e30bb920f912");
+        assertEquals(expectedUrl, mockGetRequest.getUrl());
+        assertEquals("archivedProgramExecutionSample", response.getWorkflowName());
+        assertEquals("2535b19e-a8c3-4a52-9d77-e30bb920f912", response.getWorkflowKey());
+        assertEquals("programExecutionSample", response.getWorkflowID());
+        assertEquals("zosmfad", response.getOwner());
+        assertEquals("PLEX1.SY1", response.getSystem());
+        assertEquals("Public", response.getAccess());
+        assertEquals("archived", response.getStatusName());
+        assertEquals(100, response.getPercentComplete().intValue());
+    }
+
+    @Test
+    public void tstWorkflowGetArchivedPropertiesWithReturnDataUrlGeneration() throws ZosmfRequestException {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        Mockito.when(connection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
+        GetJsonZosmfRequest mockGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        Mockito.when(mockGetRequest.executeRequest()).thenReturn(
+                new Response(getArchivedWorkflowPropertiesJson(), 200, "success"));
+        doCallRealMethod().when(mockGetRequest).setUrl(any());
+        doCallRealMethod().when(mockGetRequest).getUrl();
+
+        WorkflowGet workflowGet = new WorkflowGet(connection, mockGetRequest);
+        workflowGet.getArchivedProperties("2535b19e-a8c3-4a52-9d77-e30bb920f912", true, true);
+
+        String expectedUrl = "https://1:443/zosmf/workflow/rest/1.0/archivedworkflows/" +
+                EncodeUtils.encodeURIComponent("2535b19e-a8c3-4a52-9d77-e30bb920f912") +
+                "?returnData=steps,variables";
+        assertEquals(expectedUrl, mockGetRequest.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowGetArchivedPropertiesCommonReturnStepsOnlyUrlGeneration() throws ZosmfRequestException {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        Mockito.when(connection.getZosmfUrl()).thenReturn("https://1:443");
+        GetJsonZosmfRequest mockGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        Mockito.when(mockGetRequest.executeRequest()).thenReturn(
+                new Response(getArchivedWorkflowPropertiesJson(), 200, "success"));
+        doCallRealMethod().when(mockGetRequest).setUrl(any());
+        doCallRealMethod().when(mockGetRequest).getUrl();
+
+        WorkflowGet workflowGet = new WorkflowGet(connection, mockGetRequest);
+        workflowGet.getArchivedPropertiesCommon(WorkflowGetPropertiesInputData.builder()
+                .workflowKey("2535b19e-a8c3-4a52-9d77-e30bb920f912")
+                .returnSteps(true)
+                .build());
+
+        String expectedUrl = "https://1:443/workflow/rest/1.0/archivedworkflows/" +
+                EncodeUtils.encodeURIComponent("2535b19e-a8c3-4a52-9d77-e30bb920f912") +
+                "?returnData=steps";
+        assertEquals(expectedUrl, mockGetRequest.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowGetArchivedPropertiesWithNullInputData() {
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
+        WorkflowGet workflowGet = new WorkflowGet(connection);
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                () -> workflowGet.getArchivedPropertiesCommon(null));
+        assertEquals("propertiesInputData is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstWorkflowGetArchivedPropertiesWithNullWorkflowKey() {
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
+        WorkflowGet workflowGet = new WorkflowGet(connection);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> workflowGet.getArchivedProperties(null));
+        assertEquals("workflowKey is either null or empty", exception.getMessage());
+    }
+
 }
