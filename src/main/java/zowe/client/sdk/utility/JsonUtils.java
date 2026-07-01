@@ -12,10 +12,8 @@ package zowe.client.sdk.utility;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.simple.JSONArray;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -43,12 +41,15 @@ public final class JsonUtils {
     }
 
     /**
-     * This method is a wrapper for ObjectMapper.readTree() call to parse z/OSMF response
-     * which may return ZosmfRequestException.
+     * Centralized JSON parsing for z/OSMF responses using Jackson.
+     * <p>
+     * The returned JsonNode may represent either a JSON object or a JSON array.
+     * Callers can inspect the node type as needed.
+     * </p>
      *
      * @param item JSON string representation
-     * @return JsonNode object
-     * @throws ZosmfRequestException indicates the JSON item from z/OSMF request is invalid for parsing
+     * @return JsonNode (ObjectNode, ArrayNode, etc.)
+     * @throws ZosmfRequestException if parsing fails
      */
     public static JsonNode parse(final String item) throws ZosmfRequestException {
         try {
@@ -60,20 +61,22 @@ public final class JsonUtils {
     }
 
     /**
-     * This method is a wrapper for JSONParser().parse() call to parse z/OSMF response
-     * which may return ZosmfRequestException.
+     * Convenience method for array responses.
+     * <p>
+     * This method validates that the parsed JSON content is an array and throws
+     * a {@link ZosmfRequestException} if the content is not a JSON array.
+     * </p>
      *
-     * @param item JSON array representation
-     * @return JSONArray object
-     * @throws ZosmfRequestException indicates the JSON item from z/OSMF request is invalid for parsing
+     * @param item JSON array string representation returned from a z/OSMF request
+     * @return ArrayNode representing the parsed JSON array
+     * @throws ZosmfRequestException if parsing fails or root is not an array
      */
-    public static JSONArray parseArray(final String item) throws ZosmfRequestException {
-        try {
-            return (JSONArray) new JSONParser().parse(item);
-        } catch (ParseException e) {
-            LOG.debug(PARSE_ERROR_MSG, e);
-            throw new ZosmfRequestException(e.getMessage(), e);
+    public static ArrayNode parseArray(final String item) throws ZosmfRequestException {
+        JsonNode node = parse(item);
+        if (!node.isArray()) {
+            throw new ZosmfRequestException("Expected JSON array but got: " + node.getNodeType());
         }
+        return (ArrayNode) node;
     }
 
     /**
