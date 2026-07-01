@@ -9,8 +9,8 @@
  */
 package zowe.client.sdk.zosjobs.methods;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -263,8 +263,8 @@ public class JobGet {
                 .toString();
 
         final String context = "getCommon";
-        final JSONArray results = JsonUtils.parseArray(responsePhrase);
-        for (final Object jsonObj : results) {
+        final ArrayNode results = (ArrayNode) JsonUtils.parse(responsePhrase);
+        for (final JsonNode jsonObj : results) {
             jobs.add(JsonUtils.parseResponse(String.valueOf(jsonObj), Job.class, context));
         }
 
@@ -398,10 +398,9 @@ public class JobGet {
                 .toString();
 
         final String context = "getSpoolFilesCommon";
-        final JSONArray results = JsonUtils.parseArray(responsePhrase);
-        for (final Object obj : results) {
-            final JSONObject jsonObj = (JSONObject) obj;
-            files.add(JsonUtils.parseResponse(jsonObj.toJSONString(), JobFile.class, context));
+        final ArrayNode results = (ArrayNode) JsonUtils.parse(responsePhrase);
+        for (final JsonNode jsonObj : results) {
+            files.add(JsonUtils.parseResponse(String.valueOf(jsonObj), JobFile.class, context));
         }
 
         return files;
