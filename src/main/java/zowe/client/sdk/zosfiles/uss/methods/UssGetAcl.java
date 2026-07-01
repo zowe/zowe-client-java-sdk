@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONArray;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
@@ -84,13 +84,13 @@ public class UssGetAcl {
         final Response response = useCommas ?
                 getAclCommon(targetPath, new UssGetAclInputData.Builder().usecommas(true).build()) :
                 getAclCommon(targetPath, new UssGetAclInputData.Builder().build());
-        final JSONObject json = JsonUtils.parse(response.getResponsePhrase()
+        final JsonNode json = JsonUtils.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
         final StringBuilder str = new StringBuilder();
         if (useCommas) {
-            ((JSONArray) json.get("stdout")).forEach(item -> str.append(item.toString()));
+            json.get("stdout").forEach(item -> str.append(item.asText()));
         } else {
-            ((JSONArray) json.get("stdout")).forEach(item -> str.append(item.toString()).append("\n"));
+            json.get("stdout").forEach(item -> str.append(item.asText()).append("\n"));
         }
         return str.toString();
     }

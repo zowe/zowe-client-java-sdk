@@ -9,8 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -184,7 +183,7 @@ public class DsnList {
         }
 
         final String jsonStr = response.getResponsePhrase().get().toString();
-        final JSONObject jsonObject = JsonUtils.parse(jsonStr);
+        final JsonNode jsonObject = JsonUtils.parse(jsonStr);
         if (jsonObject.isEmpty()) {
             if (datasetLst == null) {
                 return memberLst;
@@ -193,13 +192,13 @@ public class DsnList {
             }
         }
 
-        final JSONArray items = (JSONArray) jsonObject.get(ZosFilesConstants.RESPONSE_ITEMS);
+        final JsonNode items = jsonObject.get(ZosFilesConstants.RESPONSE_ITEMS);
         final String context = "getResult";
-        for (final Object obj : items) {
+        for (final JsonNode obj : items) {
             if (datasetLst == null) {
-                memberLst.add((T) JsonUtils.parseResponse(String.valueOf(obj), Member.class, context));
+                memberLst.add((T) JsonUtils.parseResponse(obj.toString(), Member.class, context));
             } else {
-                datasetLst.add((T) JsonUtils.parseResponse(String.valueOf(obj), Dataset.class, context));
+                datasetLst.add((T) JsonUtils.parseResponse(obj.toString(), Dataset.class, context));
             }
         }
 

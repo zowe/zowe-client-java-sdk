@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONArray;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
@@ -81,10 +81,10 @@ public class UssExtAttr {
         final Map<String, String> requestMap = new HashMap<>();
         requestMap.put("request", "extattr");
         final Response response = executeRequest(targetPath, requestMap);
-        final JSONObject json = JsonUtils.parse(response.getResponsePhrase()
+        final JsonNode json = JsonUtils.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
         final StringBuilder str = new StringBuilder();
-        ((JSONArray) json.get("stdout")).forEach(item -> str.append(item.toString()).append("\n"));
+        json.get("stdout").forEach(item -> str.append(item.asText()).append("\n"));
         return str.toString();
     }
 
