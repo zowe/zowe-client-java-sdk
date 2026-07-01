@@ -36,26 +36,6 @@ public final class JsonUtils {
     private static final String PARSE_ERROR_MSG = "json response parse error";
 
     /**
-     * Defines the target JSON representation for parsing a z/OSMF response.
-     * <p>
-     * This enum is used internally to determine which JSON parsing implementation
-     * should be used when converting a JSON string into a concrete representation.
-     * </p>
-     */
-    private enum ParseTarget {
-
-        /**
-         * Parse the JSON content into a Jackson {@link JsonNode}.
-         */
-        NODE,
-
-        /**
-         * Parse the JSON content into a json-simple {@link JSONArray}.
-         */
-        ARRAY
-    }
-
-    /**
      * Private constructor defined to avoid instantiation of class
      */
     private JsonUtils() {
@@ -63,62 +43,34 @@ public final class JsonUtils {
     }
 
     /**
-     * Parses a JSON string returned from a z/OSMF request into a Jackson
-     * {@link JsonNode}.
-     * <p>
-     * This method is intended for general JSON parsing and supports both JSON
-     * objects and arrays. Callers can inspect the returned {@link JsonNode}
-     * to determine its structure.
-     * </p>
+     * This method is a wrapper for ObjectMapper.readTree() call to parse z/OSMF response
+     * which may return ZosmfRequestException.
      *
-     * @param item JSON string representation returned from a z/OSMF request
-     * @return {@link JsonNode} representing the parsed JSON content
-     * @throws ZosmfRequestException indicates the JSON item from the z/OSMF request
-     *                               is invalid or cannot be parsed
+     * @param item JSON string representation
+     * @return JsonNode object
+     * @throws ZosmfRequestException indicates the JSON item from z/OSMF request is invalid for parsing
      */
     public static JsonNode parse(final String item) throws ZosmfRequestException {
-        return (JsonNode) parseInternal(item, ParseTarget.NODE);
+        try {
+            return objectMapper.readTree(item);
+        } catch (JsonProcessingException e) {
+            LOG.debug(PARSE_ERROR_MSG, e);
+            throw new ZosmfRequestException(e.getMessage(), e);
+        }
     }
 
     /**
-     * Parses a JSON array string returned from a z/OSMF request into a
-     * json-simple {@link JSONArray}.
-     * <p>
-     * This method exists primarily for backward compatibility with existing
-     * code that depends on json-simple types. New implementations should
-     * prefer {@link #parse(String)} and work with {@link JsonNode} instead.
-     * </p>
+     * This method is a wrapper for JSONParser().parse() call to parse z/OSMF response
+     * which may return ZosmfRequestException.
      *
-     * @param item JSON array string representation returned from a z/OSMF request
-     * @return {@link JSONArray} representing the parsed JSON array
-     * @throws ZosmfRequestException indicates the JSON item from the z/OSMF request
-     *                               is invalid or cannot be parsed
+     * @param item JSON array representation
+     * @return JSONArray object
+     * @throws ZosmfRequestException indicates the JSON item from z/OSMF request is invalid for parsing
      */
     public static JSONArray parseArray(final String item) throws ZosmfRequestException {
-        return (JSONArray) parseInternal(item, ParseTarget.ARRAY);
-    }
-
-    /**
-     * Internal helper method that performs JSON parsing for z/OSMF responses.
-     * <p>
-     * This method centralizes parsing logic and exception handling for all JSON
-     * parsing operations, ensuring consistent logging and error translation into
-     * {@link ZosmfRequestException}.
-     * </p>
-     *
-     * @param item   JSON string representation returned from a z/OSMF request
-     * @param target the desired target representation for the parsed JSON
-     * @return parsed JSON object in the requested representation
-     * @throws ZosmfRequestException indicates the JSON item from the z/OSMF request
-     *                               is invalid or cannot be parsed
-     */
-    private static Object parseInternal(final String item, final ParseTarget target)
-            throws ZosmfRequestException {
         try {
-            return target == ParseTarget.ARRAY
-                    ? new JSONParser().parse(item)
-                    : objectMapper.readTree(item);
-        } catch (Exception e) {
+            return (JSONArray) new JSONParser().parse(item);
+        } catch (ParseException e) {
             LOG.debug(PARSE_ERROR_MSG, e);
             throw new ZosmfRequestException(e.getMessage(), e);
         }
