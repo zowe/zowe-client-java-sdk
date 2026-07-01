@@ -9,8 +9,13 @@
  */
 package zowe.client.sdk.zosvariables.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import zowe.client.sdk.utility.ValidateUtils;
+
+import java.util.Objects;
 
 /**
  * z/OSMF system variable name, value, and optional description.
@@ -22,19 +27,36 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"name", "value", "description"})
 public final class SystemVariable {
 
+    /**
+     * Variable name (required).
+     */
     private final String name;
+
+    /**
+     * Variable value (required).
+     */
     private final String value;
+
+    /**
+     * Variable description (optional).
+     */
     private final String description;
 
     /**
      * SystemVariable constructor.
      *
-     * @param name        variable name
-     * @param value       variable value
-     * @param description variable description
+     * @param name        variable name (required)
+     * @param value       variable value (required)
+     * @param description variable description (optional)
      * @author Muhammad Imran
      */
-    public SystemVariable(final String name, final String value, final String description) {
+    @JsonCreator
+    public SystemVariable(
+            @JsonProperty("name") final String name,
+            @JsonProperty("value") final String value,
+            @JsonProperty("description") final String description) {
+        ValidateUtils.checkIllegalParameter(name, "name");
+        ValidateUtils.checkIllegalParameter(value, "value");
         this.name = name;
         this.value = value;
         this.description = description;
@@ -43,8 +65,8 @@ public final class SystemVariable {
     /**
      * SystemVariable constructor without a description.
      *
-     * @param name  variable name
-     * @param value variable value
+     * @param name  variable name (required)
+     * @param value variable value (required)
      * @author Muhammad Imran
      */
     public SystemVariable(final String name, final String value) {
@@ -79,6 +101,38 @@ public final class SystemVariable {
      */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * Indicates whether some other object is "equal to" this SystemVariable.
+     *
+     * @param obj the reference object with which to compare
+     * @return true if this object is the same as the obj argument
+     * @author Muhammad Imran
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof SystemVariable)) {
+            return false;
+        }
+        final SystemVariable other = (SystemVariable) obj;
+        return Objects.equals(name, other.name)
+                && Objects.equals(value, other.value)
+                && Objects.equals(description, other.description);
+    }
+
+    /**
+     * Return a hash code value for this SystemVariable.
+     *
+     * @return hash code value
+     * @author Muhammad Imran
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, value, description);
     }
 
     /**
