@@ -1,0 +1,210 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ */
+
+package zowe.client.sdk.zosvariables.input.factory;
+
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * Parameter container class for z/OS system variables GET operation.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-get-system-variables">z/OSMF REST API</a>
+ *
+ * @author Adithe Das
+ * @version 7.0
+ */
+
+public class VariableGetInputData {
+    /**
+     * Sysplex name.
+     */
+    private final String sysplexName;
+
+    /**
+     * System name.
+     */
+    private final String systemName;
+
+    /**
+     * Indicates whether to retrieve variables from the local system.
+     */
+    private final boolean local;
+
+    /**
+     * Optional list of variable names.
+     */
+    private final List<String> variableNames;
+
+    /**
+     * Optional variable type filter.
+     */
+    private final String variableType;
+
+    /**
+     * VariableGetInputData constructor.
+     *
+     * @param builder VariableGetInputData.Builder builder
+     */
+    VariableGetInputData(final Builder builder) {
+        this.sysplexName = builder.sysplexName;
+        this.systemName = builder.systemName;
+        this.local = builder.local;
+        this.variableNames = builder.variableNames;
+        this.variableType = builder.variableType;
+    }
+
+    /**
+     * Retrieve sysplex name.
+     *
+     * @return sysplex name
+     */
+    public Optional<String> getSysplexName() {
+        return Optional.ofNullable(sysplexName);
+    }
+
+    /**
+     * Retrieve system name.
+     *
+     * @return system name
+     */
+    public Optional<String> getSystemName() {
+        return Optional.ofNullable(systemName);
+    }
+
+    /**
+     * Determine whether the local system is requested.
+     *
+     * @return true if retrieving variables from the local system; false otherwise
+     */
+    public boolean isLocal() {
+        return local;
+    }
+
+    /**
+     * Retrieve variable names.
+     *
+     * @return optional list of variable names
+     */
+    public Optional<List<String>> getVariableNames() {
+        return Optional.ofNullable(variableNames);
+    }
+
+    /**
+     * Retrieve variable type.
+     *
+     * @return optional variable type
+     */
+    public Optional<String> getVariableType() {
+        return Optional.ofNullable(variableType);
+    }
+
+    /**
+     * Builder class for VariableGetInputData.
+     */
+    static class Builder {
+
+        /**
+         * Sysplex name.
+         */
+        private String sysplexName;
+
+        /**
+         * System name.
+         */
+        private String systemName;
+
+        /**
+         * Indicates whether the local system is requested.
+         */
+        private boolean local;
+
+        /**
+         * Variable names.
+         */
+        private List<String> variableNames;
+
+        /**
+         * Variable type.
+         */
+        private String variableType;
+
+        /**
+         * Create a new Builder instance.
+         */
+        Builder() {
+        }
+
+        /**
+         * Set sysplex name.
+         *
+         * @param sysplexName sysplex name
+         * @return VariableGetInputData.Builder
+         */
+        Builder setSysplexName(final String sysplexName) {
+            this.sysplexName = sysplexName;
+            return this;
+        }
+
+        /**
+         * Set system name.
+         *
+         * @param systemName system name
+         * @return VariableGetInputData.Builder
+         */
+        Builder setSystemName(final String systemName) {
+            this.systemName = systemName;
+            return this;
+        }
+
+        /**
+         * Set local system flag.
+         *
+         * @param local true if retrieving variables from the local system
+         * @return VariableGetInputData.Builder
+         */
+        Builder setLocal(final boolean local) {
+            this.local = local;
+            return this;
+        }
+
+        /**
+         * Set variable names.
+         *
+         * @param variableNames variable names
+         * @return VariableGetInputData.Builder
+         */
+        Builder setVariableNames(final List<String> variableNames) {
+            this.variableNames = variableNames;
+            return this;
+        }
+
+        /**
+         * Set variable type.
+         *
+         * @param variableType variable type
+         * @return VariableGetInputData.Builder
+         */
+        Builder setVariableType(final String variableType) {
+            this.variableType = variableType;
+            return this;
+        }
+
+        /**
+         * Build VariableGetInputData object.
+         *
+         * @return VariableGetInputData
+         */
+        VariableGetInputData build() {
+            return new VariableGetInputData(this);
+        }
+    }
+
+}
