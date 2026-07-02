@@ -1,0 +1,87 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., 7.0.0). Leave empty to use the current pom.xml version.'
+        required: false
+        type: string
+      skip-tests:
+        description: 'Skip running the test suite before deploying'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up JDK 11 and register Maven Central / GPG credentials
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
+
+      # 3. Grant execute permission to Maven Wrapper
+      - name: Grant execute permission to mvnw
+        run: chmod +x ./mvnw
+
+      # 4. Cache Maven dependencies
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-release-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-release-
+
+      # 5. Bump version in pom.xml (only if a version was provided)
+      - name: Set release version
+        if: ${{ inputs.version != '' }}
+        run: ./mvnw versions:set -DnewVersion=${{ inputs.version }} -DgenerateBackupPoms=false
+
+      # 6. Run test suite (unless skipped)
+      - name: Build and test
+        if: ${{ !inputs.skip-tests }}
+        run: ./mvnw clean package
+
+      # 7. Deploy to Maven Central
+      - name: Deploy to Maven Central
+        run: ./mvnw clean deploy -Pci-cd -DskipTests
+        env:
+          MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          MAVEN_OPTS: -Dgpg.keyname=${{ secrets.GPG_KEYID }}
+
+      # 8. Determine the released version
+      - name: Determine release version
+        id: release_version
+        run: echo "version=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)" >> "$GITHUB_OUTPUT"
+
+      # 9. Tag the release commit
+      - name: Create git tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "v${{ steps.release_version.outputs.version }}" -m "Release v${{ steps.release_version.outputs.version }}"
+          git push origin "v${{ steps.release_version.outputs.version }}"
+
+      # 10. Create the GitHub Release
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.release_version.outputs.version }}
+          generate_release_notes: true
