@@ -41,16 +41,16 @@ public class SystemVariableTest {
         assertNotNull(systemVariable);
         assertEquals("var1", systemVariable.getName());
         assertEquals("value1", systemVariable.getValue());
-        assertEquals("", systemVariable.getDescription());
+        assertEquals(null, systemVariable.getDescription());
     }
 
     @Test
     public void tstSystemVariableNullDefaultsSuccess() {
         final SystemVariable systemVariable = new SystemVariable(null, null, null);
 
-        assertEquals("", systemVariable.getName());
-        assertEquals("", systemVariable.getValue());
-        assertEquals("", systemVariable.getDescription());
+        assertEquals(null, systemVariable.getName());
+        assertEquals(null, systemVariable.getValue());
+        assertEquals(null, systemVariable.getDescription());
     }
 
     @Test
