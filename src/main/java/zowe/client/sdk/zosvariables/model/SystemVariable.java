@@ -16,6 +16,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * z/OSMF system variable name, value, and optional description.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-create-update-system-variables">z/OSMF REST API</a>
  *
  * @author Muhammad Imran
  * @version 7.0
