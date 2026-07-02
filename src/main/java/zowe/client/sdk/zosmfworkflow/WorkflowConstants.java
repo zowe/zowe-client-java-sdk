@@ -71,4 +71,9 @@ public final class WorkflowConstants {
      */
     public static final String OPERATIONS_START = URL_PATH_DELIM + "operations" + URL_PATH_DELIM + "start";
 
+    /**
+     * Default USS directory used to hold local workflow files temporarily uploaded for a local create.
+     */
+    public static final String TEMP_PATH = "/tmp";
+
 }

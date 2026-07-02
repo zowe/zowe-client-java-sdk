@@ -329,6 +329,35 @@ public class WorkflowCreateInputData {
     }
 
     /**
+     * Create a builder pre-populated with the values of this instance. Useful for producing a modified copy,
+     * for example swapping local file paths for the uploaded USS paths during a local workflow create.
+     *
+     * @return builder instance populated with this instance's values
+     */
+    public Builder toBuilder() {
+        return new Builder()
+                .workflowName(workflowName)
+                .workflowDefinitionFile(workflowDefinitionFile)
+                .workflowDefinitionFileSystem(workflowDefinitionFileSystem)
+                .variableInputFile(variableInputFile)
+                .variables(variables)
+                .resolveGlobalConflictByUsing(resolveGlobalConflictByUsing)
+                .system(system)
+                .owner(owner)
+                .workflowArchiveSAFID(workflowArchiveSAFID)
+                .comments(comments)
+                .assignToOwner(assignToOwner)
+                .accessType(accessType)
+                .accountInfo(accountInfo)
+                .jobStatement(jobStatement)
+                .deleteCompletedJobs(deleteCompletedJobs)
+                .jobsOutputDirectory(jobsOutputDirectory)
+                .autoDeleteOnCompletion(autoDeleteOnCompletion)
+                .targetSystemuid(targetSystemuid)
+                .targetSystempwd(targetSystempwd);
+    }
+
+    /**
      * Return a string value representing a WorkflowCreateInputData object.
      *
      * @return string representation of WorkflowCreateInputData

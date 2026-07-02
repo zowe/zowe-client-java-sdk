@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
@@ -23,10 +24,15 @@ import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosfiles.uss.methods.UssDelete;
+import zowe.client.sdk.zosfiles.uss.methods.UssWrite;
 import zowe.client.sdk.zosmfworkflow.input.WorkflowCreateInputData;
 import zowe.client.sdk.zosmfworkflow.model.WorkflowVariable;
+import zowe.client.sdk.zosmfworkflow.response.WorkflowCreateLocalResponse;
 import zowe.client.sdk.zosmfworkflow.response.WorkflowCreateResponse;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -246,6 +252,106 @@ public class WorkflowCreateTest {
                 () -> new WorkflowCreate(null)
         );
         assertEquals("connection is null", exception.getMessage());
+    }
+
+    private WorkflowCreate workflowCreateWithUss(final UssWrite ussWrite, final UssDelete ussDelete) {
+        final WorkflowCreate workflowCreate = new WorkflowCreate(connection, mockPostJsonZosmfRequest);
+        workflowCreate.ussWrite = ussWrite;
+        workflowCreate.ussDelete = ussDelete;
+        return workflowCreate;
+    }
+
+    private static WorkflowCreateInputData localInputData(final Path tempDir, final boolean withVarFile)
+            throws Exception {
+        final Path definitionFile = Files.write(tempDir.resolve("workflow.xml"), "<workflow/>".getBytes());
+        final WorkflowCreateInputData.Builder builder = WorkflowCreateInputData.builder()
+                .workflowName("AutomationExample")
+                .workflowDefinitionFile(definitionFile.toString())
+                .system("SY1")
+                .owner("zosmfad");
+        if (withVarFile) {
+            final Path variableFile = Files.write(tempDir.resolve("vars.properties"), "k=v".getBytes());
+            builder.variableInputFile(variableFile.toString());
+        }
+        return builder.build();
+    }
+
+    @Test
+    public void tstWorkflowCreateLocalDeletesTempFilesSuccess(@TempDir Path tempDir) throws Exception {
+        final UssWrite mockUssWrite = Mockito.mock(UssWrite.class);
+        final UssDelete mockUssDelete = Mockito.mock(UssDelete.class);
+        final WorkflowCreate workflowCreate = workflowCreateWithUss(mockUssWrite, mockUssDelete);
+
+        final WorkflowCreateLocalResponse response = workflowCreate.createLocal(localInputData(tempDir, true));
+
+        // definition and variable files uploaded as binary, then both temp files deleted
+        verify(mockUssWrite, times(2)).writeBinary(any(), any());
+        verify(mockUssDelete, times(2)).delete(any());
+
+        // create request body points at the uploaded USS temp paths, not the local paths
+        final ArgumentCaptor<Object> bodyCaptor = ArgumentCaptor.forClass(Object.class);
+        verify(mockPostJsonZosmfRequest).setBody(bodyCaptor.capture());
+        final JSONObject requestBody = (JSONObject) new JSONParser().parse(bodyCaptor.getValue().toString());
+        assertTrue(requestBody.get("workflowDefinitionFile").toString().startsWith("/tmp/"));
+        assertTrue(requestBody.get("variableInputFile").toString().startsWith("/tmp/"));
+        // non-file fields are preserved through toBuilder
+        assertEquals("AutomationExample", requestBody.get("workflowName"));
+        assertEquals("SY1", requestBody.get("system"));
+        assertEquals("zosmfad", requestBody.get("owner"));
+
+        assertEquals("workflow-key", response.getWorkflow().getWorkflowKey());
+        assertTrue(response.getFilesKept().isEmpty());
+        assertTrue(response.getFailedToDelete().isEmpty());
+    }
+
+    @Test
+    public void tstWorkflowCreateLocalKeepFilesSuccess(@TempDir Path tempDir) throws Exception {
+        final UssWrite mockUssWrite = Mockito.mock(UssWrite.class);
+        final UssDelete mockUssDelete = Mockito.mock(UssDelete.class);
+        final WorkflowCreate workflowCreate = workflowCreateWithUss(mockUssWrite, mockUssDelete);
+
+        final WorkflowCreateLocalResponse response =
+                workflowCreate.createLocal(localInputData(tempDir, true), true, null);
+
+        verify(mockUssDelete, never()).delete(any());
+        assertEquals(2, response.getFilesKept().size());
+        assertTrue(response.getFailedToDelete().isEmpty());
+    }
+
+    @Test
+    public void tstWorkflowCreateLocalCustomDirSuccess(@TempDir Path tempDir) throws Exception {
+        final UssWrite mockUssWrite = Mockito.mock(UssWrite.class);
+        final UssDelete mockUssDelete = Mockito.mock(UssDelete.class);
+        final WorkflowCreate workflowCreate = workflowCreateWithUss(mockUssWrite, mockUssDelete);
+
+        workflowCreate.createLocal(localInputData(tempDir, false), true, "/u/user/uploads");
+
+        final ArgumentCaptor<String> pathCaptor = ArgumentCaptor.forClass(String.class);
+        verify(mockUssWrite).writeBinary(pathCaptor.capture(), any());
+        assertEquals("/u/user/uploads/workflow.xml", pathCaptor.getValue());
+    }
+
+    @Test
+    public void tstWorkflowCreateLocalFailedDeleteTracked(@TempDir Path tempDir) throws Exception {
+        final UssWrite mockUssWrite = Mockito.mock(UssWrite.class);
+        final UssDelete mockUssDelete = Mockito.mock(UssDelete.class);
+        Mockito.when(mockUssDelete.delete(any())).thenThrow(new ZosmfRequestException("delete failed"));
+        final WorkflowCreate workflowCreate = workflowCreateWithUss(mockUssWrite, mockUssDelete);
+
+        final WorkflowCreateLocalResponse response =
+                workflowCreate.createLocal(localInputData(tempDir, false));
+
+        assertEquals(1, response.getFailedToDelete().size());
+        assertTrue(response.getFailedToDelete().get(0).startsWith("/tmp/"));
+        assertTrue(response.getFilesKept().isEmpty());
+    }
+
+    @Test
+    public void tstWorkflowCreateLocalNullInputData() {
+        final WorkflowCreate workflowCreate = new WorkflowCreate(connection, mockPostJsonZosmfRequest);
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                () -> workflowCreate.createLocal(null));
+        assertEquals("createInputData is null", exception.getMessage());
     }
 
 }
