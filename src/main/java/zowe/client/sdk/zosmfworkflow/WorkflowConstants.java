@@ -70,5 +70,9 @@ public final class WorkflowConstants {
      * Operations start path segment for workflow start operation.
      */
     public static final String OPERATIONS_START = URL_PATH_DELIM + "operations" + URL_PATH_DELIM + "start";
+    /**
+     * Operations cancel path segment for workflow cancel operation.
+     */
+    public static final String OPERATIONS_CANCEL = URL_PATH_DELIM + "operations" + URL_PATH_DELIM + "cancel";
 
 }
