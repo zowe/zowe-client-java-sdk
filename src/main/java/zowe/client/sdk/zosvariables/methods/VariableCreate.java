@@ -74,7 +74,7 @@ public class VariableCreate {
     /**
      * Create or update z/OS system variables in the system variable pool.
      * <p>
-     * If {@code variables} is empty, the request succeeds but no variables are created or updated,
+     * If {@code variables} is empty, the request succeeds, but no variables are created or updated,
      * as defined by the z/OSMF REST API.
      *
      * @param sysplexName name of the sysplex (e.g. 'PLEX1')
