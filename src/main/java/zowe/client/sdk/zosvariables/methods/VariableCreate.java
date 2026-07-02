@@ -85,8 +85,8 @@ public class VariableCreate {
      * @author Muhammad Imran
      */
     public Response create(final String sysplexName,
-                            final String systemName,
-                            final List<SystemVariable> variables) throws ZosmfRequestException {
+                           final String systemName,
+                           final List<SystemVariable> variables) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
         ValidateUtils.checkIllegalParameter(systemName, "systemName");
         ValidateUtils.checkNullParameter(variables, "variables");
