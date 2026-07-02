@@ -26,11 +26,14 @@ import zowe.client.sdk.zosmfworkflow.response.WorkflowGetDefinitionResponse;
 import zowe.client.sdk.zosmfworkflow.response.WorkflowGetPropertiesResponse;
 
 /**
- * Provides retrieve workflow definition functionality through the z/OSMF workflow REST API.
+ * Provides retrieve workflow definition and properties functionality through the z/OSMF workflow REST API.
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-retrieve-workflow-definition">z/OSMF REST API</a>
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-get-properties-archived-workflow">z/OSMF REST API (Archived)</a>
  *
  * @author Ashish Kumar Dash
+ * @author Eshaan Gupta
  * @version 7.0
  */
 public class WorkflowGet {
@@ -156,23 +159,39 @@ public class WorkflowGet {
      * @author Ashish Kumar Dash
      */
     public WorkflowGetPropertiesResponse getProperties(final String workflowKey) throws ZosmfRequestException {
-        return getPropertiesCommon(WorkflowGetPropertiesInputData.builder().workflowKey(workflowKey).build());
+        return getPropertiesCommon(WorkflowGetPropertiesInputData.builder().workflowKey(workflowKey).build(), false);
     }
 
     /**
-     * Get the properties of a z/OSMF workflow.
+     * Get the properties of an archived z/OSMF workflow by workflow key.
+     *
+     * @param workflowKey workflow key that uniquely identifies the archived workflow instance
+     * @return archived workflow properties returned by z/OSMF
+     * @throws ZosmfRequestException request error state
+     * @author Eshaan Gupta
+     */
+    public WorkflowGetPropertiesResponse getArchivedProperties(final String workflowKey) throws ZosmfRequestException {
+        return getPropertiesCommon(WorkflowGetPropertiesInputData.builder().workflowKey(workflowKey).build(), true);
+    }
+
+    /**
+     * Get the properties of a z/OSMF workflow or archived workflow.
      *
      * @param propertiesInputData workflow properties retrieval parameters
+     * @param isArchived          whether to use the archived workflows endpoint
      * @return workflow properties returned by z/OSMF
      * @throws ZosmfRequestException request error state
      * @author Ashish Kumar Dash
+     * @author Eshaan Gupta
      */
-    public WorkflowGetPropertiesResponse getPropertiesCommon(final WorkflowGetPropertiesInputData propertiesInputData)
-            throws ZosmfRequestException {
+    public WorkflowGetPropertiesResponse getPropertiesCommon(
+            final WorkflowGetPropertiesInputData propertiesInputData,
+            final boolean isArchived) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(propertiesInputData, "propertiesInputData");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl());
-        url.append(WorkflowConstants.WORKFLOWS_RESOURCE);
+        url.append(isArchived ? WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE
+                : WorkflowConstants.WORKFLOWS_RESOURCE);
 
         // workflowKey is always present; WorkflowGetPropertiesInputData enforces this invariant
         propertiesInputData.getWorkflowKey()
