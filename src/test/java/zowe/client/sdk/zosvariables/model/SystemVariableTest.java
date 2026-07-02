@@ -12,8 +12,7 @@ package zowe.client.sdk.zosvariables.model;
 import org.junit.jupiter.api.Test;
 import zowe.client.sdk.utility.JsonUtils;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Class containing unit tests for SystemVariable.
@@ -41,16 +40,17 @@ public class SystemVariableTest {
         assertNotNull(systemVariable);
         assertEquals("var1", systemVariable.getName());
         assertEquals("value1", systemVariable.getValue());
-        assertEquals(null, systemVariable.getDescription());
+        assertNull(systemVariable.getDescription());
     }
 
     @Test
-    public void tstSystemVariableNullDefaultsSuccess() {
-        final SystemVariable systemVariable = new SystemVariable(null, null, null);
+    public void tstSystemVariableNullDescriptionSuccess() {
+        final SystemVariable systemVariable = new SystemVariable("var1", "value1", null);
 
-        assertEquals(null, systemVariable.getName());
-        assertEquals(null, systemVariable.getValue());
-        assertEquals(null, systemVariable.getDescription());
+        assertNotNull(systemVariable);
+        assertEquals("var1", systemVariable.getName());
+        assertEquals("value1", systemVariable.getValue());
+        assertNull(systemVariable.getDescription());
     }
 
     @Test
@@ -63,6 +63,28 @@ public class SystemVariableTest {
         assertEquals("var1", systemVariable.getName());
         assertEquals("value1", systemVariable.getValue());
         assertEquals("desc1", systemVariable.getDescription());
+    }
+
+    @Test
+    void tstSystemVariableNullNameFailure() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new SystemVariable(
+                        null,
+                        "123",
+                        "desc"
+                )
+        );
+    }
+
+    @Test
+    void tstSystemVariableNullValueSuccess() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new SystemVariable(
+                        "MY_VAR",
+                        null,
+                        "desc"
+                )
+        );
     }
 
 }

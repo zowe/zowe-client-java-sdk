@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import zowe.client.sdk.utility.ValidateUtils;
 
 /**
  * z/OSMF system variable name, value, and optional description.
@@ -54,6 +55,8 @@ public final class SystemVariable {
             @JsonProperty("name") final String name,
             @JsonProperty("value") final String value,
             @JsonProperty("description") final String description) {
+        ValidateUtils.checkIllegalParameter(name, "name");
+        ValidateUtils.checkIllegalParameter(value, "value");
         this.name = name;
         this.value = value;
         this.description = description;
@@ -83,7 +86,7 @@ public final class SystemVariable {
     /**
      * Retrieve value specified.
      *
-     * @return value value
+     * @return String value
      * @author Muhammad Imran
      */
     public String getValue() {
@@ -101,7 +104,7 @@ public final class SystemVariable {
     }
 
     /**
-     * Return string value representing SystemVariable object.
+     * Return a string value representing a SystemVariable object.
      *
      * @return string representation of SystemVariable
      * @author Muhammad Imran
