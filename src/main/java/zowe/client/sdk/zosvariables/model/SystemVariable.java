@@ -52,9 +52,9 @@ public final class SystemVariable {
             @JsonProperty("name") final String name,
             @JsonProperty("value") final String value,
             @JsonProperty("description") final String description) {
-        this.name = orEmpty(name);
-        this.value = orEmpty(value);
-        this.description = orEmpty(description);
+        this.name = name;
+        this.value = value;
+        this.description = description;
     }
 
     /**
