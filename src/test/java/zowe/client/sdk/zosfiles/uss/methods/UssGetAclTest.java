@@ -118,7 +118,7 @@ public class UssGetAclTest {
 
     @Test
     public void tstUssGetAclGetNullTargetPathFailure() throws ZosmfRequestException {
-        UssGetAcl ussGetAcl = new UssGetAcl(connection);
+        final UssGetAcl ussGetAcl = new UssGetAcl(connection);
         String errMsg = "";
         try {
             ussGetAcl.get(null, false);
@@ -138,16 +138,16 @@ public class UssGetAclTest {
     }
 
     @Test
-    public void tstUssGetAclSecondaryConstructorWithValidRequestType() {
-        ZosConnection connection = Mockito.mock(ZosConnection.class);
-        ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
+    public void tstUssGetAclSecondaryConstructorWithValidRequestTypeSuccess() {
+        final ZosConnection connection = Mockito.mock(ZosConnection.class);
+        final ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         UssGetAcl ussGetAcl = new UssGetAcl(connection, request);
         assertNotNull(ussGetAcl);
     }
 
     @Test
-    public void tstUssGetAclSecondaryConstructorWithNullConnection() {
-        ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
+    public void tstUssGetAclSecondaryConstructorWithNullConnectionFailure() {
+        final ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new UssGetAcl(null, request)
@@ -156,8 +156,8 @@ public class UssGetAclTest {
     }
 
     @Test
-    public void tstUssGetAclSecondaryConstructorWithNullRequest() {
-        ZosConnection connection = Mockito.mock(ZosConnection.class);
+    public void tstUssGetAclSecondaryConstructorWithNullRequestFailure() {
+        final ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new UssGetAcl(connection, null)
@@ -166,9 +166,9 @@ public class UssGetAclTest {
     }
 
     @Test
-    public void tstUssGetAclSecondaryConstructorWithInvalidRequestType() {
-        ZosConnection connection = Mockito.mock(ZosConnection.class);
-        ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PutJsonZosmfRequest
+    public void tstUssGetAclSecondaryConstructorWithInvalidRequestTypeFailure() {
+        final ZosConnection connection = Mockito.mock(ZosConnection.class);
+        final ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PutJsonZosmfRequest
         IllegalStateException exception = assertThrows(
                 IllegalStateException.class,
                 () -> new UssGetAcl(connection, request)
