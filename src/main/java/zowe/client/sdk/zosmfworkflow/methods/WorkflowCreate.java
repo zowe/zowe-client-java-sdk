@@ -182,7 +182,7 @@ public class WorkflowCreate {
                 .workflowDefinitionFile(tempDefinitionFile)
                 .variableInputFile(tempVariableInputFile)
                 .build();
-        final WorkflowCreateResponse workflow = create(ussInputData);
+        final WorkflowCreateResponse workflowCreateResponse = create(ussInputData);
 
         // retain or delete the uploaded temporary files
         final List<String> tempFiles = new ArrayList<>();
@@ -205,7 +205,7 @@ public class WorkflowCreate {
             }
         }
 
-        return new WorkflowCreateLocalResponse(workflow, filesKept, failedToDelete);
+        return new WorkflowCreateLocalResponse(workflowCreateResponse, filesKept, failedToDelete);
     }
 
     /**
