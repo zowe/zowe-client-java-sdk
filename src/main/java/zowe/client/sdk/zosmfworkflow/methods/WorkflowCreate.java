@@ -139,11 +139,11 @@ public class WorkflowCreate {
      * <p>
      * The workflow definition file and optional variable input file referenced in the input data are treated as
      * local paths. They are uploaded to a temporary USS location before the workflow is created. When keepFiles
-     * is false, the uploaded temporary files are deleted after the create completes.
+     * is false, the uploaded temporary files are deleted after the creation completes.
      *
      * @param createInputData workflow creation parameters holding local file paths
-     * @param keepFiles       true to retain the uploaded temporary USS files, false to delete them after create
-     * @param customDir       optional USS directory to upload the temporary files to; when null or empty a default
+     * @param keepFiles       true to retain the uploaded temporary USS files, false to delete them after creation
+     * @param customDir       optional USS directory to upload the temporary files to; when null or empty, a default
      *                        temporary directory is used
      * @return local create workflow details, see WorkflowCreateLocalResponse object
      * @throws ZosmfRequestException request error state
