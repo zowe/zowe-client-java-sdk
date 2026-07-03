@@ -81,6 +81,7 @@ public class UssGetAcl {
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
+    @SuppressWarnings("DuplicatedCode")
     public List<String> get(final String targetPath, final boolean useCommas) throws ZosmfRequestException {
         final Response response = useCommas ?
                 getAclCommon(targetPath, new UssGetAclInputData.Builder().usecommas(true).build()) :
