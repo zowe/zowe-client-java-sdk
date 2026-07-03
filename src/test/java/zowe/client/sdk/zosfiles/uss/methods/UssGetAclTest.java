@@ -42,7 +42,6 @@ public class UssGetAclTest {
     private final ZosConnection tokenConnection = ZosConnectionFactory
             .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private PutJsonZosmfRequest mockJsonPutRequest;
-    public UssGetAcl ussGetAcl;
 
     @BeforeEach
     public void init() throws ZosmfRequestException {
@@ -61,8 +60,6 @@ public class UssGetAclTest {
         doCallRealMethod().when(mockJsonPutRequestToken).setUrl(any());
         doCallRealMethod().when(mockJsonPutRequestToken).getHeaders();
         doCallRealMethod().when(mockJsonPutRequestToken).getUrl();
-
-        ussGetAcl = new UssGetAcl(connection);
     }
 
     @Test
@@ -121,6 +118,7 @@ public class UssGetAclTest {
 
     @Test
     public void tstUssGetAclGetNullTargetPathFailure() throws ZosmfRequestException {
+        UssGetAcl ussGetAcl = new UssGetAcl(connection);
         String errMsg = "";
         try {
             ussGetAcl.get(null, false);
