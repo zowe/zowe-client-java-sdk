@@ -648,7 +648,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListZfsListNullInputDataFailure() throws ZosmfRequestException {
+    public void tstUssListZfsListNullInputDataFailure() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> ussList.getZfsSystems(null)
