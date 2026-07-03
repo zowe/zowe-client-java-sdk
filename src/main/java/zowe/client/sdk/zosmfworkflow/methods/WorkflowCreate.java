@@ -11,6 +11,8 @@ package zowe.client.sdk.zosmfworkflow.methods;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -42,6 +44,7 @@ import java.util.List;
  */
 public class WorkflowCreate {
 
+    private static final Logger LOG = LoggerFactory.getLogger(WorkflowCreate.class);
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final String CONTEXT = "create";
     private final ZosConnection connection;
@@ -107,7 +110,7 @@ public class WorkflowCreate {
         try {
             request.setBody(OBJECT_MAPPER.writeValueAsString(createInputData));
         } catch (JsonProcessingException e) {
-            throw new IllegalStateException("error serializing workflow create request", e);
+            throw new ZosmfRequestException("error serializing workflow create request", e);
         }
 
         final String responsePhrase = request.executeRequest()
@@ -200,6 +203,7 @@ public class WorkflowCreate {
                 try {
                     ussDelete.delete(tempFile);
                 } catch (ZosmfRequestException e) {
+                    LOG.debug("failed to delete temporary USS file: {}", tempFile, e);
                     failedToDelete.add(tempFile);
                 }
             }
