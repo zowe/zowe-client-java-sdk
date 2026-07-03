@@ -74,4 +74,32 @@ public class WorkflowCreateInputDataTest {
         assertEquals("remotepwd", inputData.getTargetSystempwd());
     }
 
+    @Test
+    public void tstWorkflowCreateInputDataToBuilderCopiesAndOverridesSuccess() {
+        final WorkflowCreateInputData original = WorkflowCreateInputData.builder()
+                .workflowName("AutomationExample")
+                .workflowDefinitionFile("/local/workflow.xml")
+                .variableInputFile("/local/vars.properties")
+                .system("SY1")
+                .owner("zosmfad")
+                .accessType("Public")
+                .build();
+
+        final WorkflowCreateInputData copy = original.toBuilder()
+                .workflowDefinitionFile("/tmp/workflow.xml")
+                .variableInputFile("/tmp/vars.properties")
+                .build();
+
+        // overridden values
+        assertEquals("/tmp/workflow.xml", copy.getWorkflowDefinitionFile());
+        assertEquals("/tmp/vars.properties", copy.getVariableInputFile());
+        // copied values
+        assertEquals("AutomationExample", copy.getWorkflowName());
+        assertEquals("SY1", copy.getSystem());
+        assertEquals("zosmfad", copy.getOwner());
+        assertEquals("Public", copy.getAccessType());
+        // original is unchanged
+        assertEquals("/local/workflow.xml", original.getWorkflowDefinitionFile());
+    }
+
 }
