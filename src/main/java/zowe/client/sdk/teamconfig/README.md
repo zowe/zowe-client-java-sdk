@@ -91,7 +91,7 @@ public class TeamConfigExp {
         
         // example of updating the profile
         System.out.println(teamConfig.getDefaultProfile("zosmf"));
-        System.out.println(teamConfig.updateProfile("zosmf", Map.of("port", 133)));
+        System.out.println(teamConfig.updateProfile("frank", Map.of("port", 133)));
         System.out.println(teamConfig.getDefaultProfile("zosmf"));
     }
 
