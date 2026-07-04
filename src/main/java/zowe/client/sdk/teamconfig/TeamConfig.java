@@ -175,6 +175,24 @@ public class TeamConfig {
     }
 
     /**
+     * Update a profile's properties in the Zowe Global Team Configuration file on disk.
+     * Only the properties present in {@code updatedProperties} are written; existing properties
+     * not included in the map are left unchanged. The in-memory configuration is refreshed after the update.
+     *
+     * @param profileName       name of the profile to update
+     * @param updatedProperties map of property key/value pairs to set on the profile
+     * @throws TeamConfigException error reading or writing the team configuration file
+     * @author Frank Giordano
+     */
+    public void updateProfile(final String profileName, final Map<String, String> updatedProperties)
+            throws TeamConfigException {
+        ValidateUtils.checkIllegalParameter(profileName, "profileName");
+        ValidateUtils.checkNullParameter(updatedProperties, "updatedProperties");
+        teamConfigService.updateTeamConfig(keyTarConfig, profileName, updatedProperties);
+        config();
+    }
+
+    /**
      * Take two profile objects and merge all non-duplicate properties into the target.
      *
      * @param target Profile object
