@@ -11,6 +11,7 @@ package zowe.client.sdk.teamconfig.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
@@ -62,6 +63,44 @@ public class TeamConfigService {
             throw new TeamConfigException("Error reading zowe global team configuration file", e);
         }
         return parseJson(root);
+    }
+
+    /**
+     * Update a profile's properties in the Zowe Global Team Configuration file on disk.
+     * Only the properties present in {@code updatedProperties} are written; existing properties
+     * not included in the map are left unchanged.
+     *
+     * @param config            KeyTarConfig object providing the file location
+     * @param profileName       name of the profile to update
+     * @param updatedProperties map of property key/value pairs to set on the profile
+     * @throws TeamConfigException error reading or writing the team configuration file
+     * @author Frank Giordano
+     */
+    public void updateTeamConfig(final KeyTarConfig config, final String profileName,
+                                 final Map<String, String> updatedProperties) throws TeamConfigException {
+        ValidateUtils.checkNullParameter(config, "config");
+        ValidateUtils.checkIllegalParameter(profileName, "profileName");
+        ValidateUtils.checkNullParameter(updatedProperties, "updatedProperties");
+        final File file = new File(config.getLocation());
+        final JsonNode root;
+        try {
+            root = MAPPER.readTree(file);
+        } catch (IOException e) {
+            throw new TeamConfigException("Error reading zowe global team configuration file", e);
+        }
+        final JsonNode profilesNode = root.path("profiles");
+        final JsonNode profileNode = profilesNode.path(profileName);
+        if (profileNode.isMissingNode()) {
+            throw new TeamConfigException("Profile '" + profileName + "' not found in configuration file");
+        }
+        final ObjectNode propertiesNode = (ObjectNode) profileNode.path("properties");
+        updatedProperties.forEach(propertiesNode::put);
+        try {
+            MAPPER.writerWithDefaultPrettyPrinter().writeValue(file, root);
+        } catch (IOException e) {
+            throw new TeamConfigException("Error writing zowe global team configuration file", e);
+        }
+        LOG.debug("updateTeamConfig profile {} updated with {}", profileName, updatedProperties);
     }
 
     /**

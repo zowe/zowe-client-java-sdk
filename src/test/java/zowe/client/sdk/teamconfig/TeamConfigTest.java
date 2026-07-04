@@ -420,4 +420,79 @@ public class TeamConfigTest {
         assertEquals("Found no profile of type ftp in Zowe client configuration.", errMsg);
     }
 
+    // -------------------------------------------------------------------------
+    // Tests for updateProfile
+    // -------------------------------------------------------------------------
+
+    @Test
+    public void tstUpdateProfileSuccess() throws TeamConfigException {
+        Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
+        Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
+                new KeyTarConfig("", "myuser", "mypassword"));
+        Mockito.doNothing().when(teamConfigServiceMock).updateTeamConfig(any(), any(), any());
+
+        final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
+        final Map<String, String> updates = Map.of("host", "newhost.ibm.com", "port", "8443");
+        teamConfig.updateProfile("zosmf", updates);
+
+        Mockito.verify(teamConfigServiceMock).updateTeamConfig(any(), Mockito.eq("zosmf"), Mockito.eq(updates));
+    }
+
+    @Test
+    public void tstUpdateProfileNullPropertiesFailure() throws TeamConfigException {
+        Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
+        Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
+                new KeyTarConfig("", "myuser", "mypassword"));
+
+        final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
+        String errMsg = "";
+        try {
+            teamConfig.updateProfile("zosmf", null);
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("updatedProperties is null", errMsg);
+    }
+
+    @Test
+    public void tstUpdateProfileBlankNameFailure() throws TeamConfigException {
+        Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
+        Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
+                new KeyTarConfig("", "myuser", "mypassword"));
+
+        final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
+        String errMsg = "";
+        try {
+            teamConfig.updateProfile("  ", Map.of("host", "newhost.ibm.com"));
+        } catch (Exception e) {
+            errMsg = e.getMessage();
+        }
+        assertEquals("profileName is either null or empty", errMsg);
+    }
+
+    @Test
+    public void tstUpdateProfileRefreshesInMemoryConfigSuccess() throws TeamConfigException {
+        final ConfigContainer initialConfig = buildZoweConfig();
+        final Profile updatedZosmf = new Profile("zosmf", "zosmf", Map.of("port", "8443"), List.of());
+        final Profile base = new Profile("base", "base",
+                Map.of("host", "newhost.ibm.com", "rejectUnauthorized", "true"), List.of("user", "password"));
+        final ConfigContainer refreshedConfig = new ConfigContainer(
+                List.of(), "./zowe.schema.json", List.of(updatedZosmf, base),
+                Map.of("zosmf", "zosmf", "base", "base"), true);
+
+        Mockito.when(teamConfigServiceMock.getTeamConfig(any()))
+                .thenReturn(initialConfig)
+                .thenReturn(refreshedConfig);
+        Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
+                new KeyTarConfig("", "myuser", "mypassword"));
+        Mockito.doNothing().when(teamConfigServiceMock).updateTeamConfig(any(), any(), any());
+
+        final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
+        teamConfig.updateProfile("zosmf", Map.of("host", "newhost.ibm.com", "port", "8443"));
+
+        final ProfileDao profileDao = teamConfig.getDefaultProfile("zosmf");
+        assertEquals("8443", profileDao.getPort());
+        assertEquals("newhost.ibm.com", profileDao.getHost());
+    }
+
 }
