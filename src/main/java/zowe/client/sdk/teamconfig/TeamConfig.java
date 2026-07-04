@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.teamconfig;
 
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
@@ -42,6 +41,14 @@ public class TeamConfig {
 
     private static final Logger LOG = LoggerFactory.getLogger(TeamConfig.class);
     /**
+     * Base profile constant
+     */
+    private static final String BASE_PROFILE_NAME = "base";
+    /**
+     * Is Base profile predicate?
+     */
+    private static final Predicate<Profile> isBaseProfile = i -> i.getName().equals(BASE_PROFILE_NAME);
+    /**
      * TeamConfigService dependency
      */
     private final TeamConfigService teamConfigService;
@@ -49,14 +56,6 @@ public class TeamConfig {
      * KeyTarService dependency
      */
     private final KeyTarService keyTarService;
-    /**
-     * Base profile constant
-     */
-    private final String BASE_PROFILE_NAME = "base";
-    /**
-     * Is Base profile predicate?
-     */
-    private final Predicate<Profile> isBaseProfile = i -> i.getName().equals(BASE_PROFILE_NAME);
     /**
      * KeyTarConfig dependency
      */
@@ -125,9 +124,14 @@ public class TeamConfig {
         if (target.isEmpty() || !target.get().getType().equalsIgnoreCase(profileType)) {
             throw new IllegalStateException("Found no profile of type " + profileType + " in Zowe client configuration.");
         } else {
-            target = Optional.of(merge(target.orElse(null), base.orElse(null)));
-            return new ProfileDao(target.get(), keyTarConfig.getUserName(), keyTarConfig.getPassword(),
-                    target.get().getProperties().get("host"), target.get().getProperties().get("port"));
+            final Profile merged = merge(target.get(), base.orElse(null));
+            return new ProfileDao(
+                    merged,
+                    keyTarConfig.getUserName(),
+                    keyTarConfig.getPassword(),
+                    merged.getProperties().get("host"),
+                    merged.getProperties().get("port")
+            );
         }
     }
 
@@ -160,9 +164,14 @@ public class TeamConfig {
             throw new IllegalStateException("Found no " + profileName + " within Zowe client configuration partition");
         }
 
-        target = Optional.of(merge(target.orElse(null), base.orElse(null)));
-        return new ProfileDao(target.get(), keyTarConfig.getUserName(), keyTarConfig.getPassword(),
-                target.get().getProperties().get("host"), target.get().getProperties().get("port"));
+        final Profile merged = merge(target.get(), base.orElse(null));
+        return new ProfileDao(
+                merged,
+                keyTarConfig.getUserName(),
+                keyTarConfig.getPassword(),
+                merged.getProperties().get("host"),
+                merged.getProperties().get("port")
+        );
     }
 
     /**
@@ -171,10 +180,9 @@ public class TeamConfig {
      * @param target Profile object
      * @param base   Profile object
      * @return target profile object
-     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
-    private Profile merge(Profile target, final Profile base) throws TeamConfigException {
+    private Profile merge(final Profile target, final Profile base) {
         Optional<Map<String, String>> targetProps = Optional.empty();
         Optional<Map<String, String>> baseProps = Optional.empty();
         if (target != null) {
@@ -193,7 +201,7 @@ public class TeamConfig {
                                     Map.Entry::getKey,
                                     Map.Entry::getValue,
                                     (oldValue, newValue) -> oldValue));
-            return new Profile(target.getName(), target.getType(), new JSONObject(mergedMap), target.getSecure());
+            return new Profile(target.getName(), target.getType(), mergedMap, target.getSecure());
         }
 
         return target;
