@@ -106,9 +106,9 @@ public final class JsonUtils {
      *
      * @param body object to serialize (Map or POJO)
      * @return JSON string
-     * @throws IllegalArgumentException if serialization fails
+     * @throws ZosmfRequestException if serialization fails
      */
-    public static String asRequestBodyJson(final Object body) {
+    public static String asRequestBodyJson(final Object body) throws ZosmfRequestException {
         if (body == null) {
             return null;
         }
@@ -116,7 +116,7 @@ public final class JsonUtils {
         try {
             return objectMapper.writeValueAsString(body);
         } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException(
+            throw new ZosmfRequestException(
                     "Failed to serialize request body to JSON", e);
         }
     }
