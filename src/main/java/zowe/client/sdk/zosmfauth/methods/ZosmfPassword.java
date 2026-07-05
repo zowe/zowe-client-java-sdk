@@ -36,7 +36,7 @@ import java.util.Map;
 public class ZosmfPassword {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * ZosmfPassword constructor
@@ -47,6 +47,7 @@ public class ZosmfPassword {
     public ZosmfPassword(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -88,9 +89,7 @@ public class ZosmfPassword {
         passwordMap.put("oldPwd", pwdInputData.getOldPwd());
         passwordMap.put("newPwd", pwdInputData.getNewPwd());
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
+
 
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(passwordMap));

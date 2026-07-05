@@ -27,7 +27,7 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
 public class DsnWrite {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * DsnWrite Constructor
@@ -38,6 +38,7 @@ public class DsnWrite {
     public DsnWrite(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
     }
 
     /**
@@ -98,9 +99,7 @@ public class DsnWrite {
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_TEXT);
-        }
+
         request.setUrl(url);
         request.setBody(content);
 

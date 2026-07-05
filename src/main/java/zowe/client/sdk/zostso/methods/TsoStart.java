@@ -35,7 +35,7 @@ import zowe.client.sdk.zostso.response.TsoStartResponse;
 public class TsoStart {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
@@ -47,6 +47,7 @@ public class TsoStart {
     public TsoStart(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
     }
 
     /**
@@ -92,9 +93,7 @@ public class TsoStart {
                 "&" + "cols" + "=" + inputData.getColumns().orElse(TsoConstants.DEFAULT_COLS) +
                 "&" + "rsize" + "=" + inputData.getRegionSize().orElse(TsoConstants.DEFAULT_RSIZE);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
-        }
+
         request.setUrl(url);
         request.setBody("");
 

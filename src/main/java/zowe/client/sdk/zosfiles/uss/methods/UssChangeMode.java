@@ -37,7 +37,7 @@ import java.util.Map;
 public class UssChangeMode {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssChangeMode Constructor
@@ -48,6 +48,7 @@ public class UssChangeMode {
     public UssChangeMode(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -97,9 +98,7 @@ public class UssChangeMode {
         changeModeMap.put("mode", changeModeInputData.getMode()
                 .orElseThrow(() -> new IllegalArgumentException("mode not specified")));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
+
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(changeModeMap));
 

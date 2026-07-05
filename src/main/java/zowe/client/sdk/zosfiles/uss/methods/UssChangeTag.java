@@ -40,7 +40,7 @@ import java.util.Map;
 public class UssChangeTag {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssChangeTag Constructor
@@ -51,6 +51,7 @@ public class UssChangeTag {
     public UssChangeTag(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -155,9 +156,7 @@ public class UssChangeTag {
         }
         changeTagInputData.getLinks().ifPresent(links -> changeTagMap.put("links", links.getValue()));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
+
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(changeTagMap));
 

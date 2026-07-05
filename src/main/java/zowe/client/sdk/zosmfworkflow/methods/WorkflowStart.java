@@ -30,7 +30,7 @@ import zowe.client.sdk.zosmfworkflow.input.WorkflowStartInputData;
 public class WorkflowStart {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * WorkflowStart constructor.
@@ -41,6 +41,7 @@ public class WorkflowStart {
     public WorkflowStart(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -93,9 +94,7 @@ public class WorkflowStart {
                 EncodeUtils.encodeURIComponent(startInputData.getWorkflowKey()) +
                 WorkflowConstants.OPERATIONS_START;
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
+
         request.setUrl(url);
 
         request.setBody(JsonUtils.asRequestBodyJson(startInputData));

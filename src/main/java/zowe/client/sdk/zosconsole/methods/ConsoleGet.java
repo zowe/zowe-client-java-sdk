@@ -29,7 +29,7 @@ import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
 public class ConsoleGet {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * ConsoleGet constructor
@@ -40,6 +40,7 @@ public class ConsoleGet {
     public ConsoleGet(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
     }
 
     /**
@@ -108,9 +109,7 @@ public class ConsoleGet {
                 EncodeUtils.encodeURIComponent(consoleName.isBlank() ? ConsoleConstants.RES_DEF_CN : consoleName) +
                 "/solmsgs/" + responseKey;
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        }
+
         request.setUrl(url);
 
         final String responsePhrase = request.executeRequest()

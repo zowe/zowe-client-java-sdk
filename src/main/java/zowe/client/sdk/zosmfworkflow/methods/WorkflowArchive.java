@@ -37,7 +37,7 @@ public class WorkflowArchive {
      */
     public static final String ARCHIVE_RESOURCE = "archive";
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * WorkflowArchive Constructor.
@@ -48,6 +48,7 @@ public class WorkflowArchive {
     public WorkflowArchive(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
     }
 
     /**
@@ -91,9 +92,7 @@ public class WorkflowArchive {
                 OPERATIONS_RESOURCE +
                 UrlConstants.URL_PATH_DELIM + ARCHIVE_RESOURCE;
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
-        }
+
 
         request.setUrl(url);
         return request.executeRequest();

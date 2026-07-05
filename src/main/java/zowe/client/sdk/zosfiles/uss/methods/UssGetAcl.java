@@ -41,7 +41,7 @@ import java.util.Map;
 public class UssGetAcl {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssGetAcl Constructor
@@ -52,6 +52,7 @@ public class UssGetAcl {
     public UssGetAcl(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -129,9 +130,7 @@ public class UssGetAcl {
             getAclMap.put("suppress-baseacl", getAclInputData.getSuppressBaseAcl());
         }
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
+
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(getAclMap));
 

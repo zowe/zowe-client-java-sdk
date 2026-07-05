@@ -32,7 +32,7 @@ import zowe.client.sdk.zostso.response.TsoCommonResponse;
 public class TsoPing {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
@@ -44,6 +44,7 @@ public class TsoPing {
     public TsoPing(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -82,9 +83,7 @@ public class TsoPing {
                 UrlConstants.URL_PATH_DELIM +
                 sessionId;
 
-        if (request == null || !(request instanceof PutJsonZosmfRequest)) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
+
         request.setUrl(url);
         request.setBody("");
 

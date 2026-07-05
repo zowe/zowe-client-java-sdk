@@ -46,7 +46,7 @@ public class WorkflowCreate {
     private static final Logger LOG = LoggerFactory.getLogger(WorkflowCreate.class);
     private static final String CONTEXT = "create";
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
     // package-private so unit tests can inject mock USS helpers; lazily created for real use
     UssWrite ussWrite;
     UssDelete ussDelete;
@@ -60,6 +60,7 @@ public class WorkflowCreate {
     public WorkflowCreate(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
     }
 
     /**
@@ -100,9 +101,7 @@ public class WorkflowCreate {
 
         final String url = connection.getZosmfUrl() + WorkflowConstants.WORKFLOWS_RESOURCE;
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
-        }
+
         request.setUrl(url);
 
         request.setBody(JsonUtils.asRequestBodyJson(createInputData));

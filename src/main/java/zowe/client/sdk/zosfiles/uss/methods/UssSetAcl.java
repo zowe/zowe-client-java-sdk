@@ -39,7 +39,7 @@ import java.util.Map;
 public class UssSetAcl {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssSetAcl Constructor
@@ -50,6 +50,7 @@ public class UssSetAcl {
     public UssSetAcl(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -169,9 +170,7 @@ public class UssSetAcl {
         setAclInputData.getModify().ifPresent(modify -> setAclMap.put("modify", modify));
         setAclInputData.getDelete().ifPresent(delete -> setAclMap.put("delete", delete));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
+
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(setAclMap));
 

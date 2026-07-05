@@ -37,7 +37,7 @@ import java.util.Map;
 public class UssCreate {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssCreate Constructor
@@ -48,6 +48,7 @@ public class UssCreate {
     public UssCreate(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
     }
 
     /**
@@ -93,9 +94,7 @@ public class UssCreate {
         createMap.put("type", createInputData.getType().getValue());
         createMap.put("mode", createInputData.getMode());
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
-        }
+
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(createMap));
 
@@ -155,9 +154,7 @@ public class UssCreate {
         }
         createZfsMap.put("JSONversion", 1);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
-        }
+
 
         request.setUrl(url.toString());
         request.setBody(JsonUtils.asRequestBodyJson(createZfsMap));

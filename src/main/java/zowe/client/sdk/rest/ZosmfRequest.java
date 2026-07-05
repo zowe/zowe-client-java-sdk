@@ -84,6 +84,9 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void initialize() {
+        if (connection == null || connection.getAuthType() == null) {
+            return;
+        }
         Unirest.config().reset();
         Unirest.config().enableCookieManagement(false);
         this.setStandardHeaders();

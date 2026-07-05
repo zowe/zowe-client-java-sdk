@@ -37,7 +37,7 @@ public class ZosLog {
     private static final String CONTEXT = "issueCommand";
     private static final int ZOSMF_MAX_LOG_ITEMS = 10_000;
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * ZosLog constructor
@@ -48,6 +48,7 @@ public class ZosLog {
     public ZosLog(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
     }
 
     /**
@@ -209,9 +210,7 @@ public class ZosLog {
      * @author Frank Giordano
      */
     private void setUrl(final String url) {
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        }
+
         request.setUrl(url);
     }
 

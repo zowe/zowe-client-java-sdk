@@ -32,7 +32,7 @@ import zowe.client.sdk.zosmfauth.ZosmfAuthConstants;
 public class ZosmfLogout {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * ZosmfLogout constructor
@@ -43,6 +43,7 @@ public class ZosmfLogout {
     public ZosmfLogout(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
     }
 
     /**
@@ -78,9 +79,7 @@ public class ZosmfLogout {
         ValidateUtils.checkNullParameter(token, "token");
         final String url = connection.getZosmfUrl() + ZosmfAuthConstants.RESOURCE;
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
-        }
+
         request.setUrl(url);
 
         return request.executeRequest();

@@ -36,7 +36,7 @@ import java.util.Map;
 public class UssMount {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssMount Constructor
@@ -47,6 +47,7 @@ public class UssMount {
     public UssMount(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -133,9 +134,7 @@ public class UssMount {
         mountInputData.getFsType().ifPresent(str -> mountMap.put("fs-type", str));
         mountInputData.getMode().ifPresent(str -> mountMap.put("mode", str.getValue()));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
+
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(mountMap));
 

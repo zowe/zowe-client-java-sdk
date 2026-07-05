@@ -29,7 +29,7 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
 public class ZosmfSystems {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * ListDefinedSystems Constructor.
@@ -40,6 +40,7 @@ public class ZosmfSystems {
     public ZosmfSystems(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
     }
 
     /**
@@ -75,9 +76,7 @@ public class ZosmfSystems {
                 ZosmfConstants.TOPOLOGY +
                 ZosmfConstants.SYSTEMS;
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        }
+
         request.setUrl(url);
 
         final String responsePhrase = request.executeRequest()

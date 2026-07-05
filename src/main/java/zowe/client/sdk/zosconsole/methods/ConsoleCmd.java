@@ -55,7 +55,7 @@ public class ConsoleCmd {
     private static final String SOL_KEY = "sol-key";
     private static final String SYSTEM = "system";
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * ConsoleCmd constructor
@@ -66,6 +66,7 @@ public class ConsoleCmd {
     public ConsoleCmd(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -140,9 +141,7 @@ public class ConsoleCmd {
 
         final Map<String, String> issueMap = getIssueMap(consoleInputData);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
+
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(issueMap));
 
