@@ -51,7 +51,7 @@ public class KeyTarImplTest {
     }
 
     @Test
-    void shouldParseValidKeyTarJson() throws Exception {
+    void tstShouldParseValidKeyTarJsonSuccess() throws Exception {
         String json =
                 "{"
                         + "\"store1\": {"
@@ -72,7 +72,7 @@ public class KeyTarImplTest {
     }
 
     @Test
-    void shouldHandleMultipleStores() throws Exception {
+    void tstShouldHandleMultipleStoresSuccess() throws Exception {
         String json =
                 "{"
                         + "\"store1\": {"
@@ -91,10 +91,16 @@ public class KeyTarImplTest {
         List<KeyTarConfig> configs = keyTar.getKeyConfigs();
 
         assertEquals(2, configs.size());
+        assertEquals("store1", configs.get(0).getStoreName());
+        assertEquals("user1", configs.get(0).getUser());
+        assertEquals("pass1", configs.get(0).getPassword());
+        assertEquals("store2", configs.get(1).getStoreName());
+        assertEquals("user2", configs.get(1).getUser());
+        assertEquals("pass2", configs.get(1).getPassword());
     }
 
     @Test
-    void shouldSkipNonObjectStoreNodes() throws Exception {
+    void tstShouldSkipNonObjectStoreNodesSuccess() throws Exception {
         String json =
                 "{"
                         + "\"store1\": \"unexpected\","
@@ -111,10 +117,12 @@ public class KeyTarImplTest {
 
         assertEquals(1, configs.size());
         assertEquals("store2", configs.get(0).getStoreName());
+        assertEquals("user", configs.get(0).getUser());
+        assertEquals("pass", configs.get(0).getPassword());
     }
 
     @Test
-    void shouldThrowWhenRequiredFieldMissing() {
+    void tstShouldThrowWhenRequiredFieldMissingFailure() {
         String json =
                 "{"
                         + "\"store1\": {"
@@ -134,7 +142,7 @@ public class KeyTarImplTest {
     }
 
     @Test
-    void shouldFailIfGettersCalledBeforeProcessKey() {
+    void tstShouldFailIfGettersCalledBeforeProcessKeyFailure() {
         KeyTarImpl keyTar = new KeyTarImpl();
 
         assertThrows(

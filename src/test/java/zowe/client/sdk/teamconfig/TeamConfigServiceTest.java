@@ -56,7 +56,7 @@ public class TeamConfigServiceTest {
     }
 
     @Test
-    public void tstParseJsonFlatProfilesConfig() throws Exception {
+    public void tstParseJsonFlatProfilesConfigSuccess() throws Exception {
         final String json = stripComments(
                 "{\n" +
                         "  \"$schema\": \"./zowe.schema.json\",\n" +
@@ -179,7 +179,7 @@ public class TeamConfigServiceTest {
     }
 
     @Test
-    public void tstParseJsonNestedLparConfig() throws Exception {
+    public void tstParseJsonNestedLparConfigSuccess() throws Exception {
         final String json = stripComments(
                 "{\n" +
                         "  \"$schema\": \"./zowe.schema.json\",\n" +
