@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -137,7 +137,7 @@ public class UssMount {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(mountMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(mountMap));
 
         return request.executeRequest();
     }

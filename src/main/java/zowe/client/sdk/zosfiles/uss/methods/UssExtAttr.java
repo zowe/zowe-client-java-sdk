@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.methods;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.json.simple.JSONObject;
+
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -153,7 +153,7 @@ public class UssExtAttr {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(jsonMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(jsonMap));
 
         return request.executeRequest();
     }

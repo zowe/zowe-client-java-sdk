@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -97,7 +97,7 @@ public class UssCreate {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(createMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(createMap));
 
         return request.executeRequest();
     }
@@ -160,7 +160,7 @@ public class UssCreate {
         }
 
         request.setUrl(url.toString());
-        request.setBody(new JSONObject(createZfsMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(createZfsMap));
 
         return request.executeRequest();
     }

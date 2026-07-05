@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosjobs.methods;
 
-import org.json.simple.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -141,7 +141,7 @@ public class JobChange {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(changeMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(changeMap));
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()
@@ -213,7 +213,7 @@ public class JobChange {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(holdMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(holdMap));
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()
@@ -285,7 +285,7 @@ public class JobChange {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(releaseMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(releaseMap));
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()

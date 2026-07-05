@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
-import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -113,14 +113,14 @@ public class DsnCopy {
         final Map<String, Object> fromDataSetMap = setFromDataSetMapValues(copyInputData);
         final Map<String, Object> copyMap = new HashMap<>();
         copyMap.put("request", "copy");
-        copyMap.put("from-dataset", new JSONObject(fromDataSetMap));
+        copyMap.put("from-dataset", fromDataSetMap);
         copyMap.put("replace", copyInputData.isReplace());
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(copyMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(copyMap));
 
         return request.executeRequest();
     }

@@ -102,6 +102,26 @@ public final class JsonUtils {
     }
 
     /**
+     * Serialize the given object as a JSON request body.
+     *
+     * @param body object to serialize (Map or POJO)
+     * @return JSON string
+     * @throws IllegalArgumentException if serialization fails
+     */
+    public static String asRequestBodyJson(final Object body) {
+        if (body == null) {
+            return null;
+        }
+
+        try {
+            return objectMapper.writeValueAsString(body);
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException(
+                    "Failed to serialize request body to JSON", e);
+        }
+    }
+
+    /**
      * Convert a JSONObject to a {@code Map<String, String>}, converting all values to String.
      * <p>
      * This method supports JSON values of any type (string, number, boolean, null, etc.)

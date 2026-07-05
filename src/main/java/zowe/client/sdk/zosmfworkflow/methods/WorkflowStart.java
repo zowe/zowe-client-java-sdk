@@ -9,8 +9,7 @@
  */
 package zowe.client.sdk.zosmfworkflow.methods;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -30,7 +29,6 @@ import zowe.client.sdk.zosmfworkflow.input.WorkflowStartInputData;
  */
 public class WorkflowStart {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final ZosConnection connection;
     private ZosmfRequest request;
 
@@ -100,11 +98,7 @@ public class WorkflowStart {
         }
         request.setUrl(url);
 
-        try {
-            request.setBody(OBJECT_MAPPER.writeValueAsString(startInputData));
-        } catch (JsonProcessingException e) {
-            throw new IllegalStateException("error serializing workflow start request", e);
-        }
+        request.setBody(JsonUtils.asRequestBodyJson(startInputData));
 
         return request.executeRequest();
     }

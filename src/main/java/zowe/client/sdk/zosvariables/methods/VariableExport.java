@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosvariables.methods;
 
-import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -132,7 +132,7 @@ public class VariableExport {
         bodyMap.put("overwrite", overwrite);
 
         request.setUrl(url);
-        request.setBody(new JSONObject(bodyMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(bodyMap));
 
         return request.executeRequest();
     }

@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -101,7 +101,7 @@ public class UssChangeMode {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(changeModeMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(changeModeMap));
 
         return request.executeRequest();
     }
