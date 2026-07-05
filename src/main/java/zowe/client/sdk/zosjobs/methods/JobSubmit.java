@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosjobs.methods;
 
-import org.json.simple.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -215,7 +215,7 @@ public class JobSubmit {
             request.setHeaders(getSubstitutionHeaders(submitInputData.getJclSymbols().get()));
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(submitMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(submitMap));
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()

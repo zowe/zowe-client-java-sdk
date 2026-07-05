@@ -10,7 +10,7 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
-import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -139,14 +139,13 @@ public class DsnRename {
             fromDataSetReq.put("member", args[1]);
         }
 
-        final JSONObject fromDataSetObj = new JSONObject(fromDataSetReq);
-        renameMap.put("from-dataset", fromDataSetObj);
+        renameMap.put("from-dataset", fromDataSetReq);
 
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(renameMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(renameMap));
 
         return request.executeRequest();
     }

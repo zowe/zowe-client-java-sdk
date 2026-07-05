@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosjobs.methods;
 
-import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -150,7 +150,7 @@ public class JobCancel {
         if (request == null) {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
-        request.setBody(new JSONObject(cancelMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(cancelMap));
         request.setUrl(url);
 
         // if synchronously response should contain a job document that was canceled and http return code

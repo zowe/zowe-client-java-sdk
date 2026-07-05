@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosconsole.methods;
 
-import org.json.simple.JSONObject;
+
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.UrlConstants;
@@ -144,7 +144,7 @@ public class ConsoleCmd {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(issueMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(issueMap));
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()

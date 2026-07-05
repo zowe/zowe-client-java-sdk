@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosmfauth.methods;
 
-import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -93,7 +93,7 @@ public class ZosmfPassword {
         }
 
         request.setUrl(url);
-        request.setBody(new JSONObject(passwordMap).toJSONString());
+        request.setBody(JsonUtils.asRequestBodyJson(passwordMap));
 
         return request.executeRequest();
     }

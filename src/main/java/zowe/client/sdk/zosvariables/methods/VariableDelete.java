@@ -9,8 +9,7 @@
  */
 package zowe.client.sdk.zosvariables.methods;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -31,7 +30,6 @@ import java.util.List;
  */
 public class VariableDelete {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private final ZosConnection connection;
     private final ZosmfRequest request;
@@ -134,11 +132,7 @@ public class VariableDelete {
             request.setBody(null);
         } else {
             ValidateUtils.checkNullParameter(variableNames, "variableNames");
-            try {
-                request.setBody(OBJECT_MAPPER.writeValueAsString(variableNames));
-            } catch (JsonProcessingException e) {
-                throw new IllegalStateException("error serializing variable names", e);
-            }
+            request.setBody(JsonUtils.asRequestBodyJson(variableNames));
         }
 
         request.setUrl(url);
