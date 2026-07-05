@@ -9,13 +9,13 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssCreateInputData;

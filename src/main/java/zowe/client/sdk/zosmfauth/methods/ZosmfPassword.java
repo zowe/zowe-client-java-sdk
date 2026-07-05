@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosmfauth.methods;
 
-import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -17,6 +16,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfauth.ZosmfAuthConstants;
 import zowe.client.sdk.zosmfauth.input.PasswordInputData;
