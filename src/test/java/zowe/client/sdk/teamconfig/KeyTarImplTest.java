@@ -71,6 +71,7 @@ public class KeyTarImplTest {
         assertEquals("secret", configs.get(0).getPassword());
     }
 
+    @SuppressWarnings("ExtractMethodRecommender")
     @Test
     void tstShouldHandleMultipleStoresSuccess() throws Exception {
         String json =
