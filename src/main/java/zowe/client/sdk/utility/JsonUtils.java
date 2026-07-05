@@ -13,13 +13,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Utility class contains helper methods for JSON parse processing.
@@ -119,30 +115,6 @@ public final class JsonUtils {
             throw new ZosmfRequestException(
                     "Failed to serialize request body to JSON", e);
         }
-    }
-
-    /**
-     * Convert a JSONObject to a {@code Map<String, String>}, converting all values to String.
-     * <p>
-     * This method supports JSON values of any type (string, number, boolean, null, etc.)
-     * and ensures that all map values are safely represented as strings.
-     *
-     * @param jsonObject the JSONObject to convert (must not be null)
-     * @return a {@code Map<String, String>} with all keys its values as all String values
-     * @throws JsonProcessingException if JSON parsing fails
-     */
-    public static Map<String, String> parseMap(JSONObject jsonObject) throws JsonProcessingException {
-        // Convert the org.json.JSONObject to Jackson JsonNode for traversal
-        final JsonNode root = objectMapper.readTree(jsonObject.toString());
-
-        final Map<String, String> map = new HashMap<>();
-
-        for (Map.Entry<String, JsonNode> entry : root.properties()) {
-            // Convert any type to string
-            map.put(entry.getKey(), entry.getValue().asText());
-        }
-
-        return map;
     }
 
 }
