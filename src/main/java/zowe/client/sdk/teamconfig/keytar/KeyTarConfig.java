@@ -33,17 +33,27 @@ public class KeyTarConfig {
     private final String password;
 
     /**
+     * Represents a string value of the OS credential store name
+     */
+    private final String storeName;
+
+    /**
      * KeyTarConfig constructor
      *
      * @param location location of the Zowe Global Team Configuration filename and path
      * @param userName userName specified from parsed KeyTar keyValue
      * @param password password specified from parsed KeyTar keyValue
+     * @param storeName store name specified in the OS credential store
      * @author Frank Giordano
      */
-    public KeyTarConfig(final String location, final String userName, final String password) {
+    public KeyTarConfig(final String location,
+                        final String userName,
+                        final String password,
+                        final String storeName) {
         this.location = location;
         this.userName = userName;
         this.password = password;
+        this.storeName = storeName;
     }
 
     /**
@@ -67,13 +77,30 @@ public class KeyTarConfig {
     }
 
     /**
+     * Return username
+     *
+     * @return username string value from OS credential store
+     */
+    public String getUser() {
+        return userName;
+    }
+
+    /**
      * Return userName
      *
      * @return userName string value from OS credential store
-     * @author Frank Giordano
      */
     public String getUserName() {
         return userName;
+    }
+
+    /**
+     * Return storeName
+     *
+     * @return storeName string value from OS credential store
+     */
+    public String getStoreName() {
+        return storeName;
     }
 
     /**
