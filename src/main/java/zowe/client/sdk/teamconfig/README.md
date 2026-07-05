@@ -88,7 +88,7 @@ public class TeamConfigExp {
         );
 
         TeamConfigExp.listMembers(connection, "CCSQA.ASM.JCL");
-        
+
         // example of updating the profile
         System.out.println(teamConfig.getDefaultProfile("zosmf"));
         System.out.println(teamConfig.updateProfile("frank", Map.of("port", 133)));
